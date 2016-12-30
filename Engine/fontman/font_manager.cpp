@@ -121,7 +121,7 @@ void RasterFont::loadFont(QString font_ini)
 
     font.endGroup();
 
-    foreach(QString tbl, tables_list)
+    for(QString &tbl : tables_list)
         loadFontMap(root + tbl);
 }
 
@@ -187,7 +187,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
 
     //qDebug()<<entries;
 
-    foreach(QString x, entries)
+    for(QString &x : entries)
     {
         bool okX = false;
         bool okY = false;
@@ -352,7 +352,7 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
     GLint w = letter_width;
     GLint h = letter_height;
 
-    foreach(QChar cx, text)
+    for(QChar &cx : text)
     {
         switch(cx.toLatin1())
         {
@@ -476,7 +476,7 @@ void FontManager::initFull()
     filter << "*.font.ini";
     fontsDir.setNameFilters(filter);
 
-    foreach(QString fonFile, fontsDir.entryList(QDir::Files))
+    for(QString &fonFile : fontsDir.entryList(QDir::Files))
     {
         RasterFont rfont;
         rasterFonts.push_back(rfont);
@@ -652,7 +652,7 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
         int width = 32;
         GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
 
-        foreach(QChar cx, text)
+        for(QChar &cx : text)
         {
             switch(cx.toLatin1())
             {

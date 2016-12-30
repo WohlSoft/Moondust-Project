@@ -39,12 +39,12 @@ void Controller::setKeyMap(KeyMap map)
 
 void Controller::resetControls()
 {
-    keys=ResetControlKeys();
+    keys = ResetControlKeys();
 }
 
 void Controller::sendControls()
 {
-    foreach(ControllableObject* x, m_objects)
+    for(ControllableObject *x : m_objects)
         x->applyControls(keys);
 }
 
@@ -52,12 +52,13 @@ void Controller::update() {}
 
 void Controller::registerInControl(ControllableObject *obj)
 {
-    if(!m_objects.contains(obj))
-        m_objects.push_back(obj);
+    if(m_objects.find(obj) == m_objects.end())
+        m_objects.insert(obj);
 }
 
 void Controller::removeFromControl(ControllableObject *obj)
 {
-    if(m_objects.contains(obj))
-        m_objects.remove(m_objects.indexOf(obj));
+    std::set<ControllableObject *>::iterator i = m_objects.find(obj);
+    if(i != m_objects.end())
+        m_objects.erase(i);
 }

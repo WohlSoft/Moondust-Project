@@ -79,7 +79,7 @@ void SpawnEffectDef::fill(QString prefix, QSettings *setup)
         bool ok;
         QStringList fr = frame_sequence_str.remove(" ").split(",", QString::SkipEmptyParts);
 
-        foreach(QString f, fr)
+        for(QString &f : fr)
         {
             frame_sequence.push_back(f.toInt(&ok));
 

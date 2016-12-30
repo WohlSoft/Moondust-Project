@@ -19,7 +19,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <QVector>
+#include <set>
 #include "control_keys.h"
 #include "controllable_object.h"
 #include "controller_key_map.h"
@@ -36,6 +36,7 @@ public:
      * \brief Constructor
      */
     Controller();
+
     /*!
      * \brief Desctructor
      */
@@ -46,7 +47,7 @@ public:
      */
     enum commands
     {
-        key_start=0,
+        key_start = 0,
         key_left,
         key_right,
         key_up,
@@ -90,13 +91,13 @@ public:
      * \brief Register controllable object to this controller.
      * \param obj Pointer to controllable object
      */
-    void registerInControl(ControllableObject* obj);
+    void registerInControl(ControllableObject *obj);
 
     /*!
      * \brief Remove controllable object from this controller
      * \param obj Pointer to controllable object which must be removed from this controller
      */
-    void removeFromControl(ControllableObject* obj);
+    void removeFromControl(ControllableObject *obj);
 
     //! Current state of control keys
     controller_keys keys;
@@ -107,7 +108,7 @@ protected:
 
 private:
     //! Array of registered controllabl objects
-    QVector<ControllableObject* > m_objects;
+    std::set<ControllableObject * > m_objects;
 };
 
 #endif // CONTROLLER_H

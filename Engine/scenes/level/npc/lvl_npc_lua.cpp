@@ -18,12 +18,14 @@
 
 #include "../lvl_npc.h"
 #include <script/lua_engine.h>
+#include <Utils/maths.h>
 #include "../../scene_level.h"
 
 void LVL_Npc::lua_setSequenceLeft(luabind::object frames)
 {
     int ltype = luabind::type(frames);
-    if(luabind::type(frames) != LUA_TTABLE){
+    if(luabind::type(frames) != LUA_TTABLE)
+    {
         luaL_error(frames.interpreter(), "setSequenceLeft exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
         return;
     }
@@ -33,7 +35,8 @@ void LVL_Npc::lua_setSequenceLeft(luabind::object frames)
 void LVL_Npc::lua_setSequenceRight(luabind::object frames)
 {
     int ltype = luabind::type(frames);
-    if(luabind::type(frames) != LUA_TTABLE){
+    if(luabind::type(frames) != LUA_TTABLE)
+    {
         luaL_error(frames.interpreter(), "setSequenceRight exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
         return;
     }
@@ -43,7 +46,8 @@ void LVL_Npc::lua_setSequenceRight(luabind::object frames)
 void LVL_Npc::lua_setSequence(luabind::object frames)
 {
     int ltype = luabind::type(frames);
-    if(luabind::type(frames) != LUA_TTABLE){
+    if(luabind::type(frames) != LUA_TTABLE)
+    {
         luaL_error(frames.interpreter(), "setSequence exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
         return;
     }
@@ -72,21 +76,21 @@ void LVL_Npc::lua_setFrameDelay(int ms)
 
 int LVL_Npc::lua_activate_neighbours()
 {
-    QVector<PGE_Phys_Object*> bodies;
+    QVector<PGE_Phys_Object *> bodies;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
     _scene->queryItems(posRectC, &bodies);
 
-    int found=0;
-    for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
+    int found = 0;
+    for(PGE_RenderList::iterator it = bodies.begin(); it != bodies.end(); it++)
     {
-        PGE_Phys_Object* item=*it;
-        if(item->type!=PGE_Phys_Object::LVLNPC) continue;
-        LVL_Npc*body=dynamic_cast<LVL_Npc*>(item);
+        PGE_Phys_Object *item = *it;
+        if(item->type != PGE_Phys_Object::LVLNPC) continue;
+        LVL_Npc *body = dynamic_cast<LVL_Npc *>(item);
         if(!body) continue;
-        if(body==this) continue;
+        if(body == this) continue;
         if(!body->isVisible()) continue;
         if(body->killed) continue;
-        if(body->_npc_id!=_npc_id) continue;
+        if(body->_npc_id != _npc_id) continue;
         if(!body->isActivated)
         {
             body->Activate();
@@ -100,20 +104,20 @@ int LVL_Npc::lua_activate_neighbours()
 LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable)
 {
     LevelNPC def = data;
-    def.id=npcID;
-    def.x=round(posX());
-    def.y=round(posY());
-    def.direct=_direction;
-    def.generator=false;
-    def.layer="Spawned NPCs";
+    def.id = static_cast<unsigned long>(npcID);
+    def.x = Maths::lRound(posX());
+    def.y = Maths::lRound(posY());
+    def.direct = _direction;
+    def.generator = false;
+    def.layer = "Spawned NPCs";
     def.attach_layer = "";
     def.event_activate = "";
     def.event_die = "";
     def.event_talk = "";
     def.event_emptylayer = "";
     return _scene->spawnNPC(def,
-                           (LevelScene::NpcSpawnType)sp_type,
-                           (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
+                            (LevelScene::NpcSpawnType)sp_type,
+                            (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
 }
 
 PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
@@ -123,17 +127,22 @@ PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
     return &detector_player_pos;
 }
 
-InAreaDetector *LVL_Npc::lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::object filters)
+InAreaDetector *LVL_Npc::lua_installInAreaDetector(double left, double top, double right, double bottom, luabind::object filters)
 {
     int ltype = luabind::type(filters);
     QList<int> _filters;
-    if(ltype == LUA_TNIL){
+    if(ltype == LUA_TNIL)
+    {
         _filters = QList<int>({InAreaDetector::F_BLOCK,
                                InAreaDetector::F_BGO,
                                InAreaDetector::F_NPC,
-                               InAreaDetector::F_PLAYER});
-    } else {
-        if(ltype != LUA_TTABLE){
+                               InAreaDetector::F_PLAYER
+                              });
+    }
+    else
+    {
+        if(ltype != LUA_TTABLE)
+        {
             luaL_error(filters.interpreter(), "installPlayerInAreaDetector exptected int-array, got %s", lua_typename(filters.interpreter(), ltype));
             return NULL;
         }
@@ -141,22 +150,30 @@ InAreaDetector *LVL_Npc::lua_installInAreaDetector(float left, float top, float 
     }
 
     int tfilters = 0;
-    foreach(int filter, _filters)
+    for(int &filter : _filters)
     {
         switch(filter)
         {
-            case 1: tfilters |= InAreaDetector::F_BLOCK; break;
-            case 2: tfilters |= InAreaDetector::F_BGO; break;
-            case 3: tfilters |= InAreaDetector::F_NPC; break;
-            case 4: tfilters |= InAreaDetector::F_PLAYER; break;
+        case 1:
+            tfilters |= InAreaDetector::F_BLOCK;
+            break;
+        case 2:
+            tfilters |= InAreaDetector::F_BGO;
+            break;
+        case 3:
+            tfilters |= InAreaDetector::F_NPC;
+            break;
+        case 4:
+            tfilters |= InAreaDetector::F_PLAYER;
+            break;
         }
     }
 
     PGE_RectF r;
-        r.setLeft(left);
-        r.setTop(top);
-        r.setRight(right);
-        r.setBottom(bottom);
+    r.setLeft(left);
+    r.setTop(top);
+    r.setRight(right);
+    r.setBottom(bottom);
 
     detectors_inarea.push_back(InAreaDetector(this, r, tfilters));
     detectors.push_back(&detectors_inarea.last());
@@ -169,5 +186,3 @@ ContactDetector *LVL_Npc::lua_installContactDetector()
     detectors.push_back(&detectors_contact.last());
     return &detectors_contact.last();
 }
-
-

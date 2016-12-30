@@ -33,7 +33,7 @@ bool LevelScene::setEntrance(unsigned long entr)
     player_defs.clear();
     unsigned int plr = 1;
 
-    foreach(unsigned long xxx, gameState->game_state.currentCharacter)
+    for(unsigned long &xxx : gameState->game_state.currentCharacter)
     {
         LVL_PlayerDef def;
         def.setPlayerID(static_cast<int>(plr));
@@ -165,7 +165,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
         return point;
     }
 
-    foreach(PlayerPoint p, data.players)
+    for(PlayerPoint &p : data.players)
     {
         //Return player ID specific spawn point
         if(p.id == unsigned(playerID))
@@ -188,7 +188,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
         }
     }
 
-    foreach(PlayerPoint p, data.players)
+    for(PlayerPoint &p : data.players)
     {
         //Return first not null point
         if((p.w != 0) && (p.h != 0))
@@ -566,7 +566,7 @@ bool LevelScene::init()
 {
     isInitFinished = false;
     isInitFailed = false;
-#if 0
+    #if 0
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext_background);
     initializer_thread = SDL_CreateThread(init_thread, "LevelInitializer", this);
     setLoaderAnimation(62);
@@ -581,11 +581,11 @@ bool LevelScene::init()
 
     stopLoaderAnimation();
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
-#else
+    #else
     //Load everything without loading animation, in the main thread
     //(because in the threaded loading some issues are appearence)
     init_thread(this);
-#endif
+    #endif
 
     if(isInitFailed)
         PGE_MsgBox::error(_errorString);

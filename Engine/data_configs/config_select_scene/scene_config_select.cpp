@@ -64,7 +64,7 @@ ConfigSelectScene::ConfigSelectScene():
     QDir    configDir(configPath);
     QStringList configs = configDir.entryList(QDir::AllDirs);
 
-    foreach(QString c, configs)
+    for(QString &c : configs)
     {
         QString config_dir = configPath + c + "/";
         configPackPair path;
@@ -79,7 +79,7 @@ ConfigSelectScene::ConfigSelectScene():
         QDir configUserDir(configPath_user);
         configs = configUserDir.entryList(QDir::AllDirs);
 
-        foreach(QString c, configs)
+        for(QString &c : configs)
         {
             QString config_dir = configPath_user + c + "/";
             configPackPair path;
@@ -89,7 +89,7 @@ ConfigSelectScene::ConfigSelectScene():
         }
     }
 
-    foreach(configPackPair confD, config_paths)
+    for(configPackPair &confD : config_paths)
     {
         QString c = confD.first;
         QString config_dir = confD.second;

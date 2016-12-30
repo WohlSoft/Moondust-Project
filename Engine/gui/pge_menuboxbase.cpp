@@ -232,7 +232,7 @@ void PGE_MenuBoxBase::addMenuItem(QString &menuitem)
 
 void PGE_MenuBoxBase::addMenuItems(QStringList &menuitems)
 {
-    foreach(QString menuitem, menuitems)
+    for(QString &menuitem : menuitems)
         _menu.addMenuItem(menuitem.simplified().replace(' ', '_'), menuitem);
 
     updateSize();

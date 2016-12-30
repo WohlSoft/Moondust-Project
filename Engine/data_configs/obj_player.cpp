@@ -245,13 +245,13 @@ bool ConfigManager::loadPlayableCharacters()
             {
                 QStringList frms;
                 frms = setup.value("frames-down", "").toString().split(",");
-                foreach(QString x, frms) splayer.wld_frames_down.push_back(x.toInt());
+                for(QString &x : frms) splayer.wld_frames_down.push_back(x.toInt());
                 frms = setup.value("frames-right", "").toString().split(",");
-                foreach(QString x, frms) splayer.wld_frames_right.push_back(x.toInt());
+                for(QString &x : frms) splayer.wld_frames_right.push_back(x.toInt());
                 frms = setup.value("frames-left", "").toString().split(",");
-                foreach(QString x, frms) splayer.wld_frames_left.push_back(x.toInt());
+                for(QString &x : frms) splayer.wld_frames_left.push_back(x.toInt());
                 frms = setup.value("frames-up", "").toString().split(",");
-                foreach(QString x, frms) splayer.wld_frames_up.push_back(x.toInt());
+                for(QString &x : frms) splayer.wld_frames_up.push_back(x.toInt());
             }
             setup.endGroup();
             splayer.states.allocateSlots(total_states);

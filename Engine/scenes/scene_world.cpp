@@ -957,7 +957,7 @@ void WorldScene::updateCenter()
     long py = Maths::lRound(posY + _indexTable.grid_half());
     _indexTable.query(px, py, nodes);
 
-    foreach(WorldNode *x, nodes)
+    for(WorldNode *x : nodes)
     {
         //Skip uncollided elements!
         if(!x->collidePoint(px, py))

@@ -158,7 +158,7 @@ void LVL_Player::update(double tickTime)
     {
         int newEnv = section->getPhysicalEnvironment();
 
-        foreach(int x, environments_map)
+        for(int &x : environments_map)
             newEnv = x;
 
         if((newEnv != LVL_PhysEnv::Env_SameAsAround) && (last_environment != newEnv))

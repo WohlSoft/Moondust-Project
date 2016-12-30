@@ -31,7 +31,6 @@ LVL_EventAction::~LVL_EventAction()
 
 
 
-
 LVL_EventEngine::LVL_EventEngine() :
     m_scene(nullptr)
 {}
@@ -46,15 +45,17 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     LVL_EventAction evntAct;
     evntAct.m_eventName = evt.name;
     evntAct.m_timeDelayLeft = 0.0;
+    char byte_padding7[7];
+    char byte_padding4[4];
 
     if(!evt.layers_hide.empty())
     {
         EventQueueEntry<LVL_EventAction> hideLayers;
         QStringList layers = evt.layers_hide;
         bool        smoke  = !evt.nosmoke;
-        hideLayers.makeCaller([this, layers, smoke]()->void
+        hideLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
         {
-            foreach(QString ly, layers)
+            for(const QString &ly : layers)
                 m_scene->layers.hide(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(hideLayers);
@@ -65,9 +66,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         EventQueueEntry<LVL_EventAction> showLayers;
         QStringList layers = evt.layers_show;
         bool        smoke  = !evt.nosmoke;
-        showLayers.makeCaller([this, layers, smoke]()->void
+        showLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
         {
-            foreach(QString ly, layers)
+            for(const QString &ly : layers)
                 m_scene->layers.show(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(showLayers);
@@ -78,9 +79,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         EventQueueEntry<LVL_EventAction> toggleLayers;
         QStringList layers = evt.layers_toggle;
         bool        smoke  = !evt.nosmoke;
-        toggleLayers.makeCaller([this, layers, smoke]()->void
+        toggleLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
         {
-            foreach(QString ly, layers)
+            for(const QString &ly : layers)
                 m_scene->layers.toggle(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(toggleLayers);
@@ -105,7 +106,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
             if(evt.sets[i].background_id < 0)
             {
-                bgToggle.makeCaller([this, i]()->void
+                bgToggle.makeCaller([this, i, byte_padding4]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -123,7 +124,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             else
             {
                 unsigned long bgID = static_cast<unsigned long>(evt.sets[i].background_id);
-                bgToggle.makeCaller([this, bgID, i]()->void
+                bgToggle.makeCaller([this, bgID, i, byte_padding4]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -147,7 +148,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
             if(evt.sets[i].music_id < 0)
             {
-                musToggle.makeCaller([this, i]()->void
+                musToggle.makeCaller([this, i, byte_padding4]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -188,7 +189,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
             if(evt.sets[i].position_left == -2)
             {
-                bordersToggle.makeCaller([this, i]()->void
+                bordersToggle.makeCaller([this, i, byte_padding4]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -205,7 +206,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     evt.sets[i].position_right,
                     evt.sets[i].position_bottom
                 };
-                bordersToggle.makeCaller([this, box, i]()->void
+                bordersToggle.makeCaller([this, box, i, byte_padding4]()->void
                 {
                     if(i < m_scene->sections.size())
                     {

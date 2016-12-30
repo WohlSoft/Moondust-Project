@@ -89,14 +89,14 @@ void WldPathOpener::fetchSideNodes(bool &side, QVector<WorldNode * > &nodes, dou
     long lcx = Maths::lRound(cx);
     long lcy = Maths::lRound(cy);
 
-    foreach(WorldNode *x, nodes)
+    for(WorldNode *x : nodes)
     {
         if(x->type == WorldNode::path)
         {
             bool contact = x->collidePoint(lcx, lcy);
-#ifdef DEBUG_BUILD
+            #ifdef DEBUG_BUILD
             LogDebug(QString("Level node collision %1...").arg(contact ? "passed" : "missed"));
-#endif
+            #endif
 
             if(contact && !x->vizible)
             {
@@ -110,9 +110,9 @@ void WldPathOpener::fetchSideNodes(bool &side, QVector<WorldNode * > &nodes, dou
         else if(x->type == WorldNode::level)
         {
             bool contact = x->collidePoint(lcx, lcy);
-#ifdef DEBUG_BUILD
+            #ifdef DEBUG_BUILD
             LogDebug(QString("Path node collision %1...").arg(contact ? "passed" : "missed"));
-#endif
+            #endif
 
             if(contact && !x->vizible)
             {
@@ -128,9 +128,9 @@ void WldPathOpener::doFetch()
     QVector<WorldNode * > nodes;
     bool found = false;
     double x, y;
-#ifdef DEBUG_BUILD
+    #ifdef DEBUG_BUILD
     LogDebug("Fetch leaf....");
-#endif
+    #endif
 
     if(!next.isEmpty())
     {
@@ -216,7 +216,7 @@ void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
                          relativeTo->y + relativeTo->h,
                          nodes);
 
-    foreach(WorldNode *x, nodes)
+    for(WorldNode *x : nodes)
     {
         if(x->type == WorldNode::scenery)
         {
@@ -235,12 +235,12 @@ void WldPathOpener::initFetcher()
     long lx, ly;
     lx = Maths::lRound(_current_pos.x() + s->_indexTable.grid_half());
     ly = Maths::lRound(_current_pos.y() + s->_indexTable.grid_half());
-#ifdef DEBUG_BUILD
+    #ifdef DEBUG_BUILD
     LogDebug("Initialization of the path opener....");
-#endif
+    #endif
     s->_indexTable.query(lx, ly, lvlnodes);
 
-    foreach(WorldNode *n, lvlnodes)
+    for(WorldNode *n : lvlnodes)
     {
         if(!n->collidePoint(lx, ly))
             continue;
@@ -257,9 +257,9 @@ void WldPathOpener::initFetcher()
                 QVector<WorldNode * > nodes;
                 bool found = false;
                 double x, y;
-#ifdef DEBUG_BUILD
+                #ifdef DEBUG_BUILD
                 LogDebug("FETCH LEFT");
-#endif
+                #endif
 
                 if(isAllowedSide(wl->data.left_exit, exitCode))
                 {
@@ -269,30 +269,30 @@ void WldPathOpener::initFetcher()
                     x = _current_pos.x() + s->_indexTable.grid_half() - s->_indexTable.grid();
                     y = _current_pos.y() + s->_indexTable.grid_half();
                     s->_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(nodes.isEmpty())
                         LogDebug("No nodes at left");
 
-#endif
+                    #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(found)
                         LogDebug("Objects are been detected at left");
 
-#endif
+                    #endif
                 }
 
-#ifdef DEBUG_BUILD
+                #ifdef DEBUG_BUILD
                 else
                     LogDebug("Left side skipped");
 
-#endif
-#ifdef DEBUG_BUILD
+                #endif
+                #ifdef DEBUG_BUILD
                 LogDebug("FETCH RIGHT");
-#endif
+                #endif
 
                 if(isAllowedSide(wl->data.right_exit, exitCode))
                 {
@@ -302,30 +302,30 @@ void WldPathOpener::initFetcher()
                     x = _current_pos.x() + s->_indexTable.grid_half() + s->_indexTable.grid();
                     y = _current_pos.y() + s->_indexTable.grid_half();
                     s->_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(nodes.isEmpty())
                         LogDebug("No nodes at right");
 
-#endif
+                    #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(found)
                         LogDebug("Objects are been detected at right");
 
-#endif
+                    #endif
                 }
 
-#ifdef DEBUG_BUILD
+                #ifdef DEBUG_BUILD
                 else
                     LogDebug("Right side skipped");
 
-#endif
-#ifdef DEBUG_BUILD
+                #endif
+                #ifdef DEBUG_BUILD
                 LogDebug("FETCH TOP");
-#endif
+                #endif
 
                 if(isAllowedSide(wl->data.top_exit, exitCode))
                 {
@@ -335,30 +335,30 @@ void WldPathOpener::initFetcher()
                     x = _current_pos.x() + s->_indexTable.grid_half();
                     y = _current_pos.y() + s->_indexTable.grid_half() - s->_indexTable.grid();
                     s->_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(nodes.isEmpty())
                         LogDebug("No nodes at top");
 
-#endif
+                    #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(found)
                         LogDebug("Objects are been detected at top");
 
-#endif
+                    #endif
                 }
 
-#ifdef DEBUG_BUILD
+                #ifdef DEBUG_BUILD
                 else
                     LogDebug("Top side skipped");
 
-#endif
-#ifdef DEBUG_BUILD
+                #endif
+                #ifdef DEBUG_BUILD
                 LogDebug("FETCH BOTTOM");
-#endif
+                #endif
 
                 if(isAllowedSide(wl->data.bottom_exit, exitCode))
                 {
@@ -368,27 +368,27 @@ void WldPathOpener::initFetcher()
                     x = _current_pos.x() + s->_indexTable.grid_half();
                     y = _current_pos.y() + s->_indexTable.grid_half() + s->_indexTable.grid();
                     s->_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(nodes.isEmpty())
                         LogDebug("No nodes at bottom");
 
-#endif
+                    #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
-#ifdef DEBUG_BUILD
+                    #ifdef DEBUG_BUILD
 
                     if(found)
                         LogDebug("Objects are been detected at bottom");
 
-#endif
+                    #endif
                 }
 
-#ifdef DEBUG_BUILD
+                #ifdef DEBUG_BUILD
                 else
                     LogDebug("Bottom side skipped");
 
-#endif
+                #endif
                 break;
             }
 

@@ -38,54 +38,55 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
 
     switch(_dir)
     {
-        case Attack_Up:
-            attackZone.setRect(posCenterX()-5, top()-17, 10, 5);
+    case Attack_Up:
+        attackZone.setRect(posCenterX() - 5, top() - 17, 10, 5);
         break;
-        case Attack_Down:
-            attackZone.setRect(posCenterX()-5, bottom(), 10, 5);
+    case Attack_Down:
+        attackZone.setRect(posCenterX() - 5, bottom(), 10, 5);
         break;
-        case Attack_Forward:
-            if(_direction>=0)
-                attackZone.setRect(right(), bottom()-32, 10, 10);
-            else
-                attackZone.setRect(left()-10, bottom()-32, 10, 10);
+    case Attack_Forward:
+        if(_direction >= 0)
+            attackZone.setRect(right(), bottom() - 32, 10, 10);
+        else
+            attackZone.setRect(left() - 10, bottom() - 32, 10, 10);
         break;
     }
 
 
-    QVector<PGE_Phys_Object*> bodies;
+    QVector<PGE_Phys_Object *> bodies;
     _scene->queryItems(attackZone, &bodies);
     int contacts = 0;
 
     QList<LVL_Block *> target_blocks;
-    QList<LVL_Npc*> target_npcs;
-    for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
+    QList<LVL_Npc *> target_npcs;
+    for(PGE_RenderList::iterator it = bodies.begin(); it != bodies.end(); it++)
     {
-        PGE_Phys_Object*visibleBody=*it;
+        PGE_Phys_Object *visibleBody = *it;
         contacts++;
-        if(visibleBody==this) continue;
-        if(visibleBody==NULL)
+        if(visibleBody == this) continue;
+        if(visibleBody == NULL)
             continue;
         if(!visibleBody->isVisible()) //Don't whip elements from hidden layers!
             continue;
         switch(visibleBody->type)
         {
-            case PGE_Phys_Object::LVLBlock:
-                target_blocks.push_back(static_cast<LVL_Block*>(visibleBody));
-                break;
-            case PGE_Phys_Object::LVLNPC:
-                target_npcs.push_back(static_cast<LVL_Npc*>(visibleBody));
-                break;
-            case PGE_Phys_Object::LVLPlayer:
-                default:break;
+        case PGE_Phys_Object::LVLBlock:
+            target_blocks.push_back(static_cast<LVL_Block *>(visibleBody));
+            break;
+        case PGE_Phys_Object::LVLNPC:
+            target_npcs.push_back(static_cast<LVL_Npc *>(visibleBody));
+            break;
+        case PGE_Phys_Object::LVLPlayer:
+        default:
+            break;
         }
     }
 
-    foreach(LVL_Block *x, target_blocks)
+    for(LVL_Block *x : target_blocks)
     {
         if(!x) continue;
         if(x->m_destroyed) continue;
-        if(x->sizable && _dir==Attack_Forward)
+        if(x->sizable && _dir == Attack_Forward)
             continue;
         x->hit();
         if(!x->m_destroyed)
@@ -95,7 +96,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         }
         x->setDestroyed(true);
     }
-    foreach(LVL_Npc *x, target_npcs)
+    for(LVL_Npc *x : target_npcs)
     {
         if(!x) continue;
         if(x->isPaused()) continue; //Don't attack NPC with paused physics!
@@ -115,30 +116,41 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 
     switch(reason)
     {
-        case NPC_Unknown:
-            break;
-        case NPC_Stomped:
-            PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp); break;
-        case NPC_Kicked:
-            PGE_Audio::playSoundByRole(obj_sound_role::PlayerKick); break;
-        case NPC_Taked_Coin:
-            PGE_Audio::playSoundByRole(obj_sound_role::BonusCoin); break;
-        case NPC_Taked_Powerup:
-            break;
+    case NPC_Unknown:
+        break;
+    case NPC_Stomped:
+        PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
+        break;
+    case NPC_Kicked:
+        PGE_Audio::playSoundByRole(obj_sound_role::PlayerKick);
+        break;
+    case NPC_Taked_Coin:
+        PGE_Audio::playSoundByRole(obj_sound_role::BonusCoin);
+        break;
+    case NPC_Taked_Powerup:
+        break;
     }
 
-    if(reason==NPC_Taked_Coin)
+    if(reason == NPC_Taked_Coin)
     {
-        try{
+        try
+        {
             lua_onTakeNpc(target);
-        } catch (luabind::error& e) {
+        }
+        catch(luabind::error &e)
+        {
             _scene->getLuaEngine()->postLateShutdownError(e);
             return;
         }
-    } else {
-        try{
+    }
+    else
+    {
+        try
+        {
             lua_onKillNpc(target);
-        } catch (luabind::error& e) {
+        }
+        catch(luabind::error &e)
+        {
             _scene->getLuaEngine()->postLateShutdownError(e);
             return;
         }
@@ -146,25 +158,46 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 
     if(target->setup->setup.exit_is)
     {
-        long snd=target->setup->setup.exit_snd;
-        if(snd<=0)
+        long snd = target->setup->setup.exit_snd;
+        if(snd <= 0)
         {
             switch(target->setup->setup.exit_code)
             {
-                case  1: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit01); break;
-                case  2: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit02); break;
-                case  3: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit03); break;
-                case  4: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit04); break;
-                case  5: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit05); break;
-                case  6: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit06); break;
-                case  7: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit07); break;
-                case  8: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit08); break;
-                case  9: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit09); break;
-                case 10: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit10); break;
-                default: break;
+            case  1:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit01);
+                break;
+            case  2:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit02);
+                break;
+            case  3:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit03);
+                break;
+            case  4:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit04);
+                break;
+            case  5:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit05);
+                break;
+            case  6:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit06);
+                break;
+            case  7:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit07);
+                break;
+            case  8:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit08);
+                break;
+            case  9:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit09);
+                break;
+            case 10:
+                snd = ConfigManager::getSoundByRole(obj_sound_role::LevelExit10);
+                break;
+            default:
+                break;
             }
         }
-        if(snd>0)
+        if(snd > 0)
         {
             PGE_MusPlayer::stop();
             PGE_Audio::playSound(snd);
@@ -177,27 +210,29 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         _scene->player2Controller->sendControls();
         _scene->player2Controller->removeFromControl(this);
         /***********************Reset and unplug controllers*end********************/
-        if(target->setup->setup.exit_walk_direction<0)
-            keys.left=true;
-        else
-        if(target->setup->setup.exit_walk_direction>0)
-            keys.right=true;
-        isExiting=true;
+        if(target->setup->setup.exit_walk_direction < 0)
+            keys.left = true;
+        else if(target->setup->setup.exit_walk_direction > 0)
+            keys.right = true;
+        isExiting = true;
         _scene->setExiting(target->setup->setup.exit_delay, target->setup->setup.exit_code);
     }
 }
 
 void LVL_Player::harm(int _damage)
 {
-    if(invincible||PGE_Debugger::cheat_pagangod) return;
+    if(invincible || PGE_Debugger::cheat_pagangod) return;
 
     LVL_Player_harm_event dmg;
-    dmg.doHarm=true;
-    dmg.doHarm_damage=_damage;
+    dmg.doHarm = true;
+    dmg.doHarm_damage = _damage;
 
-    try{
+    try
+    {
         lua_onHarm(&dmg);
-    } catch (luabind::error& e) {
+    }
+    catch(luabind::error &e)
+    {
         _scene->getLuaEngine()->postLateShutdownError(e);
     }
 
@@ -205,11 +240,11 @@ void LVL_Player::harm(int _damage)
     _damage = dmg.doHarm_damage;
 
     //doHarm=true;
-    health-=_damage;
-    if(health<=0)
-    {
+    health -= _damage;
+    if(health <= 0)
         kill(DEAD_killed);
-    } else {
+    else
+    {
         //PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
         setInvincible(true, 3000, true);
     }
@@ -217,34 +252,34 @@ void LVL_Player::harm(int _damage)
 
 void LVL_Player::setInvincible(bool state, float delay, bool enableScreenBlink)
 {
-    invincible=state;
-    invincible_delay=delay;
-    blink_screen=enableScreenBlink;
+    invincible = state;
+    invincible_delay = delay;
+    blink_screen = enableScreenBlink;
 }
 
 
 void LVL_Player::kill(deathReason reason)
 {
-    if( (reason!=DEAD_fall) && PGE_Debugger::cheat_pagangod) return;
+    if((reason != DEAD_fall) && PGE_Debugger::cheat_pagangod) return;
 
-    doKill=true;
+    doKill = true;
     isAlive = false;
     kill_reason = reason;
 
     if(global_state)
-        global_state->setHealth( 0 );
+        global_state->setHealth(0);
 
     setPaused(true);
-    if(kill_reason==DEAD_burn)
+    if(kill_reason == DEAD_burn)
     {
         _scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
-                                          posCenterX(),
-                                          posCenterY(), 1, 0, 0, 0, 0, _direction);
+                                    posCenterX(),
+                                    posCenterY(), 1, 0, 0, 0, 0, _direction);
     }
-    else if(kill_reason==DEAD_killed)
+    else if(kill_reason == DEAD_killed)
     {
         SpawnEffectDef effect = setup.fail_effect;
-        if(effect.id>0)
+        if(effect.id > 0)
         {
             effect.startX = m_momentum.centerX();
             effect.startY = m_momentum.centerY();
@@ -259,7 +294,7 @@ void LVL_Player::kill(deathReason reason)
 void LVL_Player::unregister()
 {
     isAlive = false;
-    m_is_visible=false;
+    m_is_visible = false;
     //Unregister controllers
     if(_scene->player1Controller) _scene->player1Controller->removeFromControl(this);
     if(_scene->player2Controller) _scene->player2Controller->removeFromControl(this);
@@ -269,6 +304,5 @@ void LVL_Player::unregister()
     //Store into death list
     _scene->dead_players.push_back(this);
 }
-
 
 

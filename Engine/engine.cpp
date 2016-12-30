@@ -657,7 +657,7 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
         pLogDebug("Attempt to take Finder args...");
         QStringList openArgs = m_qApp->getOpenFileChain();
 
-        foreach(QString file, openArgs)
+        for(QString &file : openArgs)
         {
             if(QFile::exists(file))
             {
