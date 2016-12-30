@@ -27,69 +27,70 @@ WorldData WldScene::copy(bool cut)
 {
 
     //Get Selected Items
-    QList<QGraphicsItem*> selectedList = selectedItems();
+    QList<QGraphicsItem *> selectedList = selectedItems();
 
     WorldData copyData;
     FileFormats::CreateWorldData(copyData);
 
-    if (!selectedList.isEmpty())
+    if(!selectedList.isEmpty())
     {
-        for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
+        for(QList<QGraphicsItem *>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
         {
             QString ObjType = (*it)->data(ITEM_TYPE).toString();
 
-            if( ObjType == "TILE")
+            if(ObjType == "TILE")
             {
-                ItemTile* sourceTile = (ItemTile*)(*it);
+                ItemTile *sourceTile = (ItemTile *)(*it);
                 copyData.tiles.push_back(sourceTile->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceTile->removeFromArray();
                     removeItem(*it);
-                    delete (*it);
+                    delete(*it);
                 }
             }
-            else
-            if( ObjType == "SCENERY")
+            else if(ObjType == "SCENERY")
             {
-                ItemScene* sourceScene = (ItemScene *)(*it);
+                ItemScene *sourceScene = (ItemScene *)(*it);
                 copyData.scenery.push_back(sourceScene->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceScene->removeFromArray();
                     removeItem(*it);
-                    delete (*it);
+                    delete(*it);
                 }
             }
-            else
-            if( ObjType == "PATH")
+            else if(ObjType == "PATH")
             {
-                ItemPath* sourcePath = (ItemPath *)(*it);
+                ItemPath *sourcePath = (ItemPath *)(*it);
                 copyData.paths.push_back(sourcePath->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourcePath->removeFromArray();
                     removeItem(*it);
-                    delete (*it);
+                    delete(*it);
                 }
             }
-            else
-            if( ObjType == "LEVEL")
+            else if(ObjType == "LEVEL")
             {
-                ItemLevel* sourceLevel = (ItemLevel *)(*it);
+                ItemLevel *sourceLevel = (ItemLevel *)(*it);
                 copyData.levels.push_back(sourceLevel->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceLevel->removeFromArray();
                     removeItem(*it);
-                    delete (*it);
+                    delete(*it);
                 }
             }
-            else
-            if( ObjType == "MUSICBOX")
+            else if(ObjType == "MUSICBOX")
             {
-                ItemMusic* sourceMusic = (ItemMusic *)(*it);
+                ItemMusic *sourceMusic = (ItemMusic *)(*it);
                 copyData.music.push_back(sourceMusic->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceMusic->removeFromArray();
                     removeItem(*it);
-                    delete (*it);
+                    delete(*it);
                 }
             }
 
@@ -106,74 +107,81 @@ WorldData WldScene::copy(bool cut)
     return copyData;
 }
 
-void WldScene::paste(WorldData BufferIn, QPoint pos)
+void WldScene::paste(WorldData &BufferIn, QPoint pos)
 {
     WorldData newData;
     long baseX, baseY;
     //set first base
-    if(!BufferIn.tiles.isEmpty()){
+    if(!BufferIn.tiles.isEmpty())
+    {
         baseX = BufferIn.tiles[0].x;
         baseY = BufferIn.tiles[0].y;
-    }else if(!BufferIn.scenery.isEmpty()){
+    }
+    else if(!BufferIn.scenery.isEmpty())
+    {
         baseX = BufferIn.scenery[0].x;
         baseY = BufferIn.scenery[0].y;
-    }else if(!BufferIn.paths.isEmpty()){
+    }
+    else if(!BufferIn.paths.isEmpty())
+    {
         baseX = BufferIn.paths[0].x;
         baseY = BufferIn.paths[0].y;
-    }else if(!BufferIn.levels.isEmpty()){
+    }
+    else if(!BufferIn.levels.isEmpty())
+    {
         baseX = BufferIn.levels[0].x;
         baseY = BufferIn.levels[0].y;
-    }else if(!BufferIn.music.isEmpty()){
+    }
+    else if(!BufferIn.music.isEmpty())
+    {
         baseX = BufferIn.music[0].x;
         baseY = BufferIn.music[0].y;
-    }else{
+    }
+    else
+    {
         //nothing to paste
         return;
     }
 
-    foreach (WorldTerrainTile tile, BufferIn.tiles) {
-        if(tile.x<baseX){
+    for(WorldTerrainTile &tile : BufferIn.tiles)
+    {
+        if(tile.x < baseX)
             baseX = tile.x;
-        }
-        if(tile.y<baseY){
+        if(tile.y < baseY)
             baseY = tile.y;
-        }
     }
-    foreach (WorldScenery scene, BufferIn.scenery){
-        if(scene.x<baseX){
+    for(WorldScenery &scene : BufferIn.scenery)
+    {
+        if(scene.x < baseX)
             baseX = scene.x;
-        }
-        if(scene.y<baseY){
+        if(scene.y < baseY)
             baseY = scene.y;
-        }
     }
-    foreach (WorldPathTile path, BufferIn.paths){
-        if(path.x<baseX){
+    for(WorldPathTile &path : BufferIn.paths)
+    {
+        if(path.x < baseX)
             baseX = path.x;
-        }
-        if(path.y<baseY){
+        if(path.y < baseY)
             baseY = path.y;
-        }
     }
-    foreach (WorldLevelTile level, BufferIn.levels){
-        if(level.x<baseX){
+    for(WorldLevelTile &level : BufferIn.levels)
+    {
+        if(level.x < baseX)
             baseX = level.x;
-        }
-        if(level.y<baseY){
+        if(level.y < baseY)
             baseY = level.y;
-        }
     }
-    foreach (WorldMusicBox music, BufferIn.music){
-        if(music.x<baseX){
+    for(WorldMusicBox &music : BufferIn.music)
+    {
+        if(music.x < baseX)
             baseX = music.x;
-        }
-        if(music.y<baseY){
+        if(music.y < baseY)
             baseY = music.y;
-        }
     }
 
 
-    foreach (WorldTerrainTile tile, BufferIn.tiles){
+    for(WorldTerrainTile &tile : BufferIn.tiles)
+    {
         //Gen Copy of Tile
         WorldTerrainTile dumpTile = tile;
         dumpTile.x = (long)pos.x() + tile.x - baseX;
@@ -187,7 +195,8 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         newData.tiles.push_back(dumpTile);
     }
 
-    foreach (WorldScenery scene, BufferIn.scenery){
+    for(WorldScenery &scene : BufferIn.scenery)
+    {
         //Gen Copy of Scenery
         WorldScenery dumpScene = scene;
         dumpScene.x = (long)pos.x() + scene.x - baseX;
@@ -201,7 +210,8 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         newData.scenery.push_back(dumpScene);
     }
 
-    foreach (WorldPathTile path, BufferIn.paths){
+    for(WorldPathTile &path : BufferIn.paths)
+    {
         //Gen Copy of Path
         WorldPathTile dumpPath = path;
         dumpPath.x = (long)pos.x() + path.x - baseX;
@@ -215,7 +225,8 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         newData.paths.push_back(dumpPath);
     }
 
-    foreach (WorldLevelTile level, BufferIn.levels){
+    for(WorldLevelTile &level : BufferIn.levels)
+    {
         //Gen Copy of Level
         WorldLevelTile dumpLevel = level;
         dumpLevel.x = (long)pos.x() + level.x - baseX;
@@ -229,7 +240,8 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
         newData.levels.push_back(dumpLevel);
     }
 
-    foreach (WorldMusicBox music, BufferIn.music){
+    for(WorldMusicBox &music : BufferIn.music)
+    {
         //Gen Copy of Level
         WorldMusicBox dumpMusic = music;
         dumpMusic.x = (long)pos.x() + music.x - baseX;
@@ -247,5 +259,4 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
 
     m_data->meta.modified = true;
     m_history->addPlaceHistory(newData);
-
 }

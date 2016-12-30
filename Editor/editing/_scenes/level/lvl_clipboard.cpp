@@ -26,56 +26,57 @@ LevelData LvlScene::copy(bool cut)
 {
 
     //Get Selected Items
-    QList<QGraphicsItem*> selectedList = selectedItems();
+    QList<QGraphicsItem *> selectedList = selectedItems();
 
     LevelData copyData;
     FileFormats::CreateLevelData(copyData);
     copyData.layers.clear();
     copyData.events.clear();
 
-    if (!selectedList.isEmpty())
+    if(!selectedList.isEmpty())
     {
-        for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
+        for(QList<QGraphicsItem *>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
         {
             QString ObjType = (*it)->data(ITEM_TYPE).toString();
 
-            if( ObjType == "Block")
+            if(ObjType == "Block")
             {
-                ItemBlock* sourceBlock = (ItemBlock *)(*it);
+                ItemBlock *sourceBlock = (ItemBlock *)(*it);
                 copyData.blocks.push_back(sourceBlock->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceBlock->removeFromArray();
-                    delete (*it);
+                    delete(*it);
                 }
             }
-            else
-            if( ObjType == "BGO")
+            else if(ObjType == "BGO")
             {
-                ItemBGO* sourceBGO = (ItemBGO *)(*it);
+                ItemBGO *sourceBGO = (ItemBGO *)(*it);
                 copyData.bgo.push_back(sourceBGO->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceBGO->removeFromArray();
-                    delete (*it);
+                    delete(*it);
                 }
             }
-            else
-            if( ObjType == "NPC")
+            else if(ObjType == "NPC")
             {
-                ItemNPC* sourceNPC = (ItemNPC *)(*it);
+                ItemNPC *sourceNPC = (ItemNPC *)(*it);
                 copyData.npc.push_back(sourceNPC->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceNPC->removeFromArray();
-                    delete (*it);
+                    delete(*it);
                 }
             }
-            else
-            if( ObjType == "Water")
+            else if(ObjType == "Water")
             {
-                ItemPhysEnv* sourceWater = (ItemPhysEnv *)(*it);
+                ItemPhysEnv *sourceWater = (ItemPhysEnv *)(*it);
                 copyData.physez.push_back(sourceWater->m_data);
-                if(cut){
+                if(cut)
+                {
                     sourceWater->removeFromArray();
-                    delete (*it);
+                    delete(*it);
                 }
             }
 
@@ -92,62 +93,69 @@ LevelData LvlScene::copy(bool cut)
     return copyData;
 }
 
-void LvlScene::paste(LevelData BufferIn, QPoint pos)
+void LvlScene::paste(LevelData &BufferIn, QPoint pos)
 {
     LevelData newData;
     long baseX, baseY;
+
     //set first base
-    if(!BufferIn.blocks.isEmpty()){
+    if(!BufferIn.blocks.isEmpty())
+    {
         baseX = BufferIn.blocks[0].x;
         baseY = BufferIn.blocks[0].y;
-    }else if(!BufferIn.bgo.isEmpty()){
+    }
+    else if(!BufferIn.bgo.isEmpty())
+    {
         baseX = BufferIn.bgo[0].x;
         baseY = BufferIn.bgo[0].y;
-    }else if(!BufferIn.npc.isEmpty()){
+    }
+    else if(!BufferIn.npc.isEmpty())
+    {
         baseX = BufferIn.npc[0].x;
         baseY = BufferIn.npc[0].y;
-    }else if(!BufferIn.physez.isEmpty()){
+    }
+    else if(!BufferIn.physez.isEmpty())
+    {
         baseX = BufferIn.physez[0].x;
         baseY = BufferIn.physez[0].y;
-    }else{
+    }
+    else
+    {
         //nothing to paste
         return;
     }
 
-    foreach (LevelBlock block, BufferIn.blocks) {
-        if(block.x<baseX){
+    for(LevelBlock &block : BufferIn.blocks)
+    {
+        if(block.x < baseX)
             baseX = block.x;
-        }
-        if(block.y<baseY){
+        if(block.y < baseY)
             baseY = block.y;
-        }
     }
-    foreach (LevelBGO bgo, BufferIn.bgo){
-        if(bgo.x<baseX){
+    for(LevelBGO &bgo : BufferIn.bgo)
+    {
+        if(bgo.x < baseX)
             baseX = bgo.x;
-        }
-        if(bgo.y<baseY){
+        if(bgo.y < baseY)
             baseY = bgo.y;
-        }
     }
-    foreach (LevelNPC npc, BufferIn.npc){
-        if(npc.x<baseX){
+    for(LevelNPC &npc : BufferIn.npc)
+    {
+        if(npc.x < baseX)
             baseX = npc.x;
-        }
-        if(npc.y<baseY){
+        if(npc.y < baseY)
             baseY = npc.y;
-        }
     }
-    foreach (LevelPhysEnv water, BufferIn.physez){
-        if(water.x<baseX){
+    for(LevelPhysEnv &water : BufferIn.physez)
+    {
+        if(water.x < baseX)
             baseX = water.x;
-        }
-        if(water.y<baseY){
+        if(water.y < baseY)
             baseY = water.y;
-        }
     }
 
-    foreach (LevelBlock block, BufferIn.blocks){
+    for(LevelBlock &block : BufferIn.blocks)
+    {
         //Gen Copy of Block
         LevelBlock dumpBlock = block;
         dumpBlock.x = (long)pos.x() + block.x - baseX;
@@ -160,7 +168,9 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         m_data->blocks.push_back(dumpBlock);
         newData.blocks.push_back(dumpBlock);
     }
-    foreach (LevelBGO bgo, BufferIn.bgo){
+
+    for(LevelBGO &bgo : BufferIn.bgo)
+    {
         //Gen Copy of BGO
         LevelBGO dumpBGO = bgo;
         dumpBGO.x = (long)pos.x() + bgo.x - baseX;
@@ -171,29 +181,35 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         placeBGO(dumpBGO);
 
         m_data->bgo.push_back(dumpBGO);
-
-        //WriteToLog(QtDebugMsg, QString("History-> added items pos %1 %2").arg(dumpBGO.x).arg(dumpBGO.y));
         newData.bgo.push_back(dumpBGO);
     }
-    foreach (LevelNPC npc, BufferIn.npc){
+
+    for(LevelNPC &npc : BufferIn.npc)
+    {
         //Gen Copy of NPC
         LevelNPC dumpNPC = npc;
         dumpNPC.x = (long)pos.x() + npc.x - baseX;
         dumpNPC.y = (long)pos.y() + npc.y - baseY;
         m_data->npc_array_id++;
         dumpNPC.meta.array_id = m_data->npc_array_id;
+
         placeNPC(dumpNPC);
+
         m_data->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
     }
-    foreach (LevelPhysEnv water, BufferIn.physez){
+
+    for(LevelPhysEnv &water : BufferIn.physez)
+    {
         //Gen Copy of Water
         LevelPhysEnv dumpWater = water;
         dumpWater.x = (long)pos.x() + water.x - baseX;
         dumpWater.y = (long)pos.y() + water.y - baseY;
-        m_data->npc_array_id++;
-        dumpWater.meta.array_id = m_data->npc_array_id;
+        m_data->physenv_array_id++;
+        dumpWater.meta.array_id = m_data->physenv_array_id;
+
         placeEnvironmentZone(dumpWater);
+
         m_data->physez.push_back(dumpWater);
         newData.physez.push_back(dumpWater);
     }
@@ -202,9 +218,4 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
 
     m_data->meta.modified = true;
     m_history->addPlace(newData);
-
-    //refresh Animation control
-    //if(opts.animationEnabled) stopAnimation();
-    //if(opts.animationEnabled) startBlockAnimation();
-
 }
