@@ -35,9 +35,9 @@ LocalServer::LocalServer() :
     #endif
 
     if(!m_shmem.create(4096, QSharedMemory::ReadWrite))
-    {
         qWarning() << m_shmem.errorString();
-    } else {
+    else
+    {
         //! Zero data in the memory
         memset(m_shmem.data(), 0, 4096);
     }
@@ -72,16 +72,17 @@ void LocalServer::exec()
     while(m_isWorking)
     {
         {
-            PGE_SemaphoreLocker semaLock(&m_sema); Q_UNUSED(semaLock);
-            typedef char* pchar;
-            typedef int*  pint;
-            char* inData = pchar(m_shmem.data());
+            PGE_SemaphoreLocker semaLock(&m_sema);
+            Q_UNUSED(semaLock);
+            typedef char *pchar;
+            typedef int  *pint;
+            char *inData = pchar(m_shmem.data());
             if(inData[0] == 1) // If any data detected
             {
-                char out[4095-sizeof(int)];
-                int  size = *pint(inData+1);
-                size = qMin(size, int(4095-sizeof(int)));
-                memcpy(out, inData+1+sizeof(int), size);
+                char out[4095 - sizeof(int)];
+                int  size = *pint(inData + 1);
+                size = qMin(size, int(4095 - sizeof(int)));
+                memcpy(out, inData + 1 + sizeof(int), size);
                 memset(m_shmem.data(), 0, 4096);
                 QMetaObject::invokeMethod(this,
                                           "slotOnData",
@@ -109,16 +110,12 @@ void LocalServer::slotOnData(QString data)
 {
     qDebug() << data;
     QStringList args = data.split('\n');
-    foreach(QString c, args)
+    for(QString &c : args)
     {
         if(c.startsWith("CMD:", Qt::CaseInsensitive))
-        {
             onCMD(c);
-        }
         else
-        {
             emit dataReceived(c);
-        }
     }
 }
 
@@ -149,7 +146,7 @@ void LocalServer::onCMD(QString data)
         {
             int splitAt = data.indexOf(':');
             cmd      = data.mid(0, splitAt);
-            argsPart = data.mid(splitAt+1, -1);
+            argsPart = data.mid(splitAt + 1, -1);
         }
 
         LogDebugQD("Accepted data: " + data);
@@ -159,15 +156,15 @@ void LocalServer::onCMD(QString data)
 
         IPCCMD cmdID = IPCCMD(m_commands.key(cmd, int(IPCCMD::Unknown)));
 
-        if( (cmdID==IPCCMD::EngineClosed) || (MainWinConnect::pMainWin->m_isAppInited) )
-        switch(cmdID)
-        {
+        if((cmdID == IPCCMD::EngineClosed) || (MainWinConnect::pMainWin->m_isAppInited))
+            switch(cmdID)
+            {
             case IPCCMD::ShowUP:
             {
                 emit showUp();
-                MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState()&
-                                             (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))
-                                              |Qt::WindowActive);
+                MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState() &
+                        (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))
+                        | Qt::WindowActive);
                 if(MainWinConnect::pMainWin->isMinimized())
                 {
                     MainWinConnect::pMainWin->raise();
@@ -191,20 +188,22 @@ void LocalServer::onCMD(QString data)
             case IPCCMD::TestSetup:
             {
                 QStringList args = argsPart.split(',');
-                SETTINGS_TestSettings& t = GlobalSettings::testing;
-                if( args.size() >= 5 )
+                SETTINGS_TestSettings &t = GlobalSettings::testing;
+                if(args.size() >= 5)
                 {
                     bool ok;
                     int playerID = args[0].toInt(&ok);
                     if(ok)
                     {
-                        if(playerID==0)
+                        if(playerID == 0)
                         {
                             if(ok) t.p1_char        = args[1].toInt(&ok);
                             if(ok) t.p1_state       = args[2].toInt(&ok);
                             if(ok) t.p1_vehicleID   = args[3].toInt(&ok);
                             if(ok) t.p1_vehicleType = args[4].toInt(&ok);
-                        } else if(playerID==1) {
+                        }
+                        else if(playerID == 1)
+                        {
                             if(ok) t.p2_char        = args[1].toInt(&ok);
                             if(ok) t.p2_state       = args[2].toInt(&ok);
                             if(ok) t.p2_vehicleID   = args[3].toInt(&ok);
@@ -216,7 +215,7 @@ void LocalServer::onCMD(QString data)
             }
             default:
                 emit acceptedCommand(data);
-        }
+            }
     }
     else
         emit acceptedCommand(data);

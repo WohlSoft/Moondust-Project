@@ -35,7 +35,7 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
     int searchType = typeBox->currentIndex();
     for(int i = 0; i < itemList->count(); i++)
     {
-        QListWidgetItem * item = itemList->item(i);
+        QListWidgetItem *item = itemList->item(i);
         if(toSearch.isEmpty())
         {
             itemList->setItemHidden(item, false);
@@ -43,43 +43,45 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
         }
         switch(searchType)
         {
-            case 0:
-            { //search by text
-                if( !item->text().contains(toSearch, Qt::CaseInsensitive) ) {
-                    itemList->setItemHidden(item, true);
-                } else {
-                    itemList->setItemHidden(item, false);
-                }
+        case 0:
+        {
+            //search by text
+            if(!item->text().contains(toSearch, Qt::CaseInsensitive))
+                itemList->setItemHidden(item, true);
+            else
+                itemList->setItemHidden(item, false);
+            break;
+        }
+        case 1:
+        {
+            //search by id
+            bool conv = false;
+            int toIdSearch = toSearch.toInt(&conv);
+            if(!conv)
+            {
+                //cannot convert
                 break;
             }
-            case 1:
-            { //search by id
-                bool conv = false;
-                int toIdSearch = toSearch.toInt(&conv);
-                if(!conv)
-                {//cannot convert
-                    break;
-                }
-                if( item->data(Qt::UserRole).toInt() == toIdSearch ) {
-                    itemList->setItemHidden(item, false);
-                } else {
-                    itemList->setItemHidden(item, true);
-                }
-                break;
-            }
-            case 2:
-            { //search by ID (contains)
-                if( !item->data(Qt::UserRole).toString().contains(toSearch, Qt::CaseInsensitive) ) {
-                    itemList->setItemHidden(item, true);
-                } else {
-                    itemList->setItemHidden(item, false);
-                }
-                break;
-            }
-            default:
-            {//else do nothing
-                break;
-            }
+            if(item->data(Qt::UserRole).toInt() == toIdSearch)
+                itemList->setItemHidden(item, false);
+            else
+                itemList->setItemHidden(item, true);
+            break;
+        }
+        case 2:
+        {
+            //search by ID (contains)
+            if(!item->data(Qt::UserRole).toString().contains(toSearch, Qt::CaseInsensitive))
+                itemList->setItemHidden(item, true);
+            else
+                itemList->setItemHidden(item, false);
+            break;
+        }
+        default:
+        {
+            //else do nothing
+            break;
+        }
         }
     }
     itemList->update();
@@ -87,7 +89,7 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
 
 void util::memclear(QListWidget *wid)
 {
-    QList<QListWidgetItem*> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    QList<QListWidgetItem *> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
     while(!items.isEmpty())
     {
         QListWidgetItem *tmp = items.first();
@@ -98,7 +100,7 @@ void util::memclear(QListWidget *wid)
 
 void util::memclear(QTableWidget *wid)
 {
-    QList<QTableWidgetItem*> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    QList<QTableWidgetItem *> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
     while(!items.isEmpty())
     {
         QTableWidgetItem *tmp = items.first();
@@ -110,11 +112,11 @@ void util::memclear(QTableWidget *wid)
 void util::clearLayoutItems(QLayout *layout)
 {
     QLayoutItem *child;
-    while ((child = layout->takeAt(0)) != 0) {
-        QWidgetItem* i = dynamic_cast<QWidgetItem*>(child);
-        if(i){
+    while((child = layout->takeAt(0)) != 0)
+    {
+        QWidgetItem *i = dynamic_cast<QWidgetItem *>(child);
+        if(i)
             delete i->widget();
-        }
 
         delete child;
     }
@@ -122,10 +124,10 @@ void util::clearLayoutItems(QLayout *layout)
 
 bool util::contains(const QComboBox *b, const QString &s)
 {
-    for(int i = 0; i < b->count(); ++i){
-        if(b->itemText(i) == s){
+    for(int i = 0; i < b->count(); ++i)
+    {
+        if(b->itemText(i) == s)
             return true;
-        }
     }
     return false;
 }
@@ -154,7 +156,7 @@ QString util::filePath(QString s)
 void util::DialogToCenter(QDialog *dialog, bool CloseButtonOnly)
 {
     if(CloseButtonOnly)
-        dialog->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        dialog->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     dialog->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
                                             dialog->size(), qApp->desktop()->availableGeometry(0)));
 }
@@ -162,9 +164,9 @@ void util::DialogToCenter(QDialog *dialog, bool CloseButtonOnly)
 QString util::getBaseFilename(QString str)
 {
     //why >0 and not >=0? Because >=0 means that possible to have empty basename (with zero length, like .htaccess)
-    for(int i=str.size()-1; i>0; i--)
+    for(int i = str.size() - 1; i > 0; i--)
     {
-        if(str[i]=='.')
+        if(str[i] == '.')
         {
             str.resize(i);
             break;
@@ -174,14 +176,14 @@ QString util::getBaseFilename(QString str)
 }
 
 template<class TList>
-inline void CSV2IntArr_CODE(const QString& source, TList& dest, const typename TList::value_type& def)
+inline void CSV2IntArr_CODE(const QString &source, TList &dest, const typename TList::value_type &def)
 {
     typedef typename TList::value_type T;
     if(!source.isEmpty())
     {
         bool ok;
         QStringList tmlL = source.split(',', QString::SkipEmptyParts);
-        foreach(QString fr, tmlL)
+        for(QString &fr : tmlL)
         {
             if(std::is_same<T, int>::value)
                 dest.push_back(fr.toInt(&ok));
@@ -192,9 +194,7 @@ inline void CSV2IntArr_CODE(const QString& source, TList& dest, const typename T
         if(dest.isEmpty()) dest.push_back(def);
     }
     else
-    {
         dest.push_back(def);
-    }
 }
 
 void util::CSV2IntArr(QString source, QList<int> &dest)

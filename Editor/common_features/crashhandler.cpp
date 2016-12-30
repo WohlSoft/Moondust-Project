@@ -83,7 +83,7 @@ static bool GetStackWalk(std::string &outWalk)
 
 QString CrashHandler::getStacktrace()
 {
-#ifdef _WIN32
+    #ifdef _WIN32
     //StackTracer tracer;
     //tracer.runStackTracerForAllThreads();
     //return tracer.theOutput();
@@ -93,7 +93,7 @@ QString CrashHandler::getStacktrace()
     std::string stack;
     GetStackWalk(stack);
     return QString::fromStdString(stack);
-#elif (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__)
+    #elif (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__)
     void *array[401];
     int size;
     char **strings;
@@ -105,9 +105,9 @@ QString CrashHandler::getStacktrace()
         bkTrace += QString(strings[j]) + "\n";
 
     return bkTrace;
-#else
+    #else
     return QString("");
-#endif
+    #endif
 }
 
 CrashHandler::CrashHandler(QString &crashText, QWidget *parent) :
@@ -141,7 +141,7 @@ void CrashHandler::crashBySIGNAL(int signalid)
 
     switch(signalid)
     {
-#ifndef _WIN32  //Unsupported signals by Windows
+        #ifndef _WIN32  //Unsupported signals by Windows
 
     case SIGHUP:
         sigtype = QObject::tr("Terminal was closed [SIGHUP]");
@@ -163,7 +163,7 @@ void CrashHandler::crashBySIGNAL(int signalid)
     case SIGUSR1:
     case SIGUSR2:
         return;
-#endif
+        #endif
 
     case SIGILL:
         sigtype = QObject::tr("Wrong CPU Instruction [SIGILL]");
@@ -246,7 +246,7 @@ void CrashHandler::attemptCrashsave()
 
     QList<QMdiSubWindow *> listOfAllSubWindows = mw->allEditWins();
 
-    foreach(QMdiSubWindow *subWin, listOfAllSubWindows)
+    for(QMdiSubWindow *subWin : listOfAllSubWindows)
     {
         if(mw->activeChildWindow(subWin) == 1)
         {
@@ -332,7 +332,7 @@ void CrashHandler::checkCrashsaves()
         crashSave.cd("__crashsave");
         QStringList allCrashFiles = crashSave.entryList(QDir::Files | QDir::NoDotAndDotDot);
 
-        foreach(QString file, allCrashFiles)
+        for(QString &file : allCrashFiles)
         {
             QString fPath = crashSave.absoluteFilePath(file);
             mw->OpenFile(fPath, false);
@@ -340,7 +340,7 @@ void CrashHandler::checkCrashsaves()
 
         QList<QMdiSubWindow *> listOfAllSubWindows = mw->allEditWins();
 
-        foreach(QMdiSubWindow *subWin, listOfAllSubWindows)
+        for(QMdiSubWindow *subWin : listOfAllSubWindows)
         {
             /*if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1){
                 MainWinConnect::pMainWin->activeLvlEditWin()->makeCrashState();
@@ -366,9 +366,9 @@ void CrashHandler::checkCrashsaves()
 void CrashHandler::initCrashHandlers()
 {
     std::set_terminate(&crashByUnhandledException);
-#ifndef DEBUG_BUILD
+    #ifndef DEBUG_BUILD
     std::set_new_handler(&crashByFlood);
-#ifndef _WIN32 //Unsupported signals by Windows
+    #ifndef _WIN32 //Unsupported signals by Windows
     signal(SIGHUP,  &crashBySIGNAL);
     signal(SIGQUIT, &crashBySIGNAL);
     signal(SIGALRM, &crashBySIGNAL);
@@ -376,13 +376,13 @@ void CrashHandler::initCrashHandlers()
     signal(SIGURG,  &crashBySIGNAL);
     signal(SIGUSR1, &crashBySIGNAL);
     signal(SIGUSR2, &crashBySIGNAL);
-#endif
+    #endif
     signal(SIGILL,  &crashBySIGNAL);
     signal(SIGFPE,  &crashBySIGNAL);
     signal(SIGSEGV, &crashBySIGNAL);
     signal(SIGINT,  &crashBySIGNAL);
     signal(SIGABRT, &crashBySIGNAL);
-#endif
+    #endif
 }
 
 void CrashHandler::on_pgeForumButton_clicked()

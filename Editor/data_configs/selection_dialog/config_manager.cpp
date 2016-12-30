@@ -53,8 +53,8 @@ class ListDelegate : public QAbstractItemDelegate
 public:
     ListDelegate(QObject *parent = 0);
 
-    void paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
-    QSize sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const;
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
     virtual ~ListDelegate();
 };
@@ -64,44 +64,44 @@ ListDelegate::ListDelegate(QObject *parent)
 
 ListDelegate::~ListDelegate() {}
 
-void ListDelegate::paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QRect r = option.rect;
 
     //Color: #C4C4C4
-    QPen linePen(QColor::fromRgb(211,211,211), 2, Qt::SolidLine);
+    QPen linePen(QColor::fromRgb(211, 211, 211), 2, Qt::SolidLine);
 
     //Color: #005A83
-    QPen lineMarkedPen(QColor::fromRgb(0,90,131), 1, Qt::SolidLine);
+    QPen lineMarkedPen(QColor::fromRgb(0, 90, 131), 1, Qt::SolidLine);
 
     //Color: #333
-    QPen fontPen(QColor::fromRgb(51,51,51), 1, Qt::SolidLine);
+    QPen fontPen(QColor::fromRgb(51, 51, 51), 1, Qt::SolidLine);
 
     //Color: #fff
     QPen fontMarkedPen(Qt::white, 1, Qt::SolidLine);
 
     //BORDER
     painter->setPen(linePen);
-    painter->drawLine(r.topLeft(),r.topRight());
-    painter->drawLine(r.topRight(),r.bottomRight());
-    painter->drawLine(r.bottomLeft(),r.bottomRight());
-    painter->drawLine(r.topLeft(),r.bottomLeft());
+    painter->drawLine(r.topLeft(), r.topRight());
+    painter->drawLine(r.topRight(), r.bottomRight());
+    painter->drawLine(r.bottomLeft(), r.bottomRight());
+    painter->drawLine(r.topLeft(), r.bottomLeft());
 
     if(option.state & QStyle::State_Selected)
     {
-        QLinearGradient gradientSelected(r.left(),r.top(),r.left(),r.height()+r.top());
-        gradientSelected.setColorAt(0.0, QColor::fromRgb(119,213,247));
-        gradientSelected.setColorAt(0.9, QColor::fromRgb(27,134,183));
-        gradientSelected.setColorAt(1.0, QColor::fromRgb(0,120,174));
+        QLinearGradient gradientSelected(r.left(), r.top(), r.left(), r.height() + r.top());
+        gradientSelected.setColorAt(0.0, QColor::fromRgb(119, 213, 247));
+        gradientSelected.setColorAt(0.9, QColor::fromRgb(27, 134, 183));
+        gradientSelected.setColorAt(1.0, QColor::fromRgb(0, 120, 174));
         painter->setBrush(gradientSelected);
         painter->drawRect(r);
 
         //BORDER
         painter->setPen(lineMarkedPen);
-        painter->drawLine(r.topLeft(),r.topRight());
-        painter->drawLine(r.topRight(),r.bottomRight());
-        painter->drawLine(r.bottomLeft(),r.bottomRight());
-        painter->drawLine(r.topLeft(),r.bottomLeft());
+        painter->drawLine(r.topLeft(), r.topRight());
+        painter->drawLine(r.topRight(), r.bottomRight());
+        painter->drawLine(r.bottomLeft(), r.bottomRight());
+        painter->drawLine(r.topLeft(), r.bottomLeft());
 
         painter->setPen(fontMarkedPen);
     }
@@ -109,45 +109,45 @@ void ListDelegate::paint( QPainter * painter, const QStyleOptionViewItem & optio
     {
         //BACKGROUND
         //ALTERNATING COLORS
-        painter->setBrush( (index.row() % 2) ? Qt::white : QColor(252,252,252) );
+        painter->setBrush((index.row() % 2) ? Qt::white : QColor(252, 252, 252));
         painter->drawRect(r);
 
         //BORDER
         painter->setPen(linePen);
-        painter->drawLine(r.topLeft(),r.topRight());
-        painter->drawLine(r.topRight(),r.bottomRight());
-        painter->drawLine(r.bottomLeft(),r.bottomRight());
-        painter->drawLine(r.topLeft(),r.bottomLeft());
+        painter->drawLine(r.topLeft(), r.topRight());
+        painter->drawLine(r.topRight(), r.bottomRight());
+        painter->drawLine(r.bottomLeft(), r.bottomRight());
+        painter->drawLine(r.topLeft(), r.bottomLeft());
 
         painter->setPen(fontPen);
     }
 
     //GET TITLE, DESCRIPTION AND ICON
     QIcon ic = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
-    QString title       = index.data( Qt::DisplayRole ).toString();
-    QString description = index.data( CP_DESC_ROLE ).toString();
+    QString title       = index.data(Qt::DisplayRole).toString();
+    QString description = index.data(CP_DESC_ROLE).toString();
 
     int imageSpace = 10;
-    if (!ic.isNull())
+    if(!ic.isNull())
     {
         //ICON
         r = option.rect.adjusted(5, 10, -10, -10);
-        ic.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+        ic.paint(painter, r, Qt::AlignVCenter | Qt::AlignLeft);
         imageSpace = 80;
     }
 
     //TITLE
     r = option.rect.adjusted(imageSpace, 0, -10, -30);
-    painter->setFont( QFont( "Lucida Grande", PGEDefaultFontSize+2, QFont::Bold ) );
-    painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, title, &r);
+    painter->setFont(QFont("Lucida Grande", PGEDefaultFontSize + 2, QFont::Bold));
+    painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom | Qt::AlignLeft, title, &r);
 
     //DESCRIPTION
     r = option.rect.adjusted(imageSpace, 30, -10, 30);
-    painter->setFont( QFont( "Lucida Grande", PGEDefaultFontSize, QFont::Normal ) );
+    painter->setFont(QFont("Lucida Grande", PGEDefaultFontSize, QFont::Normal));
     painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignLeft, description, &r);
 }
 
-QSize ListDelegate::sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const
+QSize ListDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(index);
     Q_UNUSED(option);
@@ -169,31 +169,31 @@ ConfigManager::ConfigManager(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowFlags( Qt::Window|
-                    Qt::WindowTitleHint|
-                    Qt::WindowCloseButtonHint|
-                    Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::Window |
+                   Qt::WindowTitleHint |
+                   Qt::WindowCloseButtonHint |
+                   Qt::WindowStaysOnTopHint);
 
     setGeometry(QStyle::alignedRect(Qt::LeftToRight,
                                     Qt::AlignCenter,
                                     size(),
                                     qApp->desktop()->availableGeometry()));
 
-#ifdef Q_OS_MAC
+    #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
     ui->frame->setAutoFillBackground(false);
     ui->frame->setFrameShape(QFrame::NoFrame);
     ui->frame->setLineWidth(0);
-#endif
-#ifdef Q_OS_WIN
+    #endif
+    #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
     {
         if(QtWin::isCompositionEnabled())
         {
             this->setAttribute(Qt::WA_TranslucentBackground, true);
-            QtWin::extendFrameIntoClientArea(this, -1,-1,-1,1);
+            QtWin::extendFrameIntoClientArea(this, -1, -1, -1, 1);
             QtWin::enableBlurBehindWindow(this);
         }
         else
@@ -202,7 +202,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-#endif
+    #endif
 
     connect(ui->configList, SIGNAL(clicked(QModelIndex)), ui->configList, SLOT(update()));
     connect(this, SIGNAL(accepted()), this, SLOT(saveCurrentSettings()));
@@ -224,7 +224,7 @@ void ConfigManager::loadConfigPackList()
     typedef QPair<QString, QString > configPackPair;
     QList<configPackPair > config_paths;
 
-    QListWidgetItem * item;
+    QListWidgetItem *item;
 
     //! Stuff PGE config dir
     QString     configPath      = ApplicationPath + "/configs/";
@@ -232,36 +232,36 @@ void ConfigManager::loadConfigPackList()
     QString     configPath_user = AppPathManager::userAppDir() + "/configs/";
 
     //Create empty config directory if not exists
-    if( !QDir(configPath).exists() )
-         QDir().mkdir( configPath );
+    if(!QDir(configPath).exists())
+        QDir().mkdir(configPath);
 
-    if( AppPathManager::userDirIsAvailable() )
+    if(AppPathManager::userDirIsAvailable())
     {
         if(!QDir(configPath_user).exists())
-             QDir().mkdir( configPath_user);
+            QDir().mkdir(configPath_user);
     }
 
-    if( QDir(configPath).exists() )
+    if(QDir(configPath).exists())
     {
         QDir configDir(configPath);
         QStringList configs = configDir.entryList(QDir::AllDirs);
-        foreach(QString cpName, configs)
+        for(QString &cpName : configs)
         {
             QString config_dir = configPath + cpName + "/";
             configPackPair path;
             path.first  = cpName;       //name of config dir
             path.second = config_dir;   //Full path
-            config_paths.append( path );
+            config_paths.append(path);
         }
     }
 
-    if( AppPathManager::userDirIsAvailable() )
+    if(AppPathManager::userDirIsAvailable())
     {
-        QDir configUserDir(configPath_user );
-        QStringList configs = configUserDir.entryList( QDir::AllDirs );
-        foreach(QString cpName, configs)
+        QDir configUserDir(configPath_user);
+        QStringList configs = configUserDir.entryList(QDir::AllDirs);
+        for(QString &cpName : configs)
         {
-            QString config_dir = configPath_user + cpName +"/";
+            QString config_dir = configPath_user + cpName + "/";
             configPackPair path;
             path.first  = cpName;//Name of config dir
             path.second = config_dir;//Full path
@@ -273,7 +273,7 @@ void ConfigManager::loadConfigPackList()
     ui->configList->setStyleSheet("* { paint-alternating-row-colors-for-empty-area: true; "
                                   "alternate-background-color: #2C2C2CFF; }");
 
-    foreach(configPackPair confD, config_paths)
+    for(configPackPair &confD : config_paths)
     {
         QString cpName          = confD.first;
         QString cpFullDirPath   = confD.second;
@@ -285,53 +285,51 @@ void ConfigManager::loadConfigPackList()
 
         QString gui_ini = cpFullDirPath + "main.ini";
 
-        if( !QFileInfo(gui_ini).exists() )
+        if(!QFileInfo(gui_ini).exists())
             continue; //Skip if it is not a config pack directory
 
         QSettings guiset(gui_ini, QSettings::IniFormat);
         guiset.setIniCodec("UTF-8");
 
         guiset.beginGroup("gui");
-            splash_logo = guiset.value("editor-splash", "").toString();
-            splash_logo = guiset.value("editor-icon", /* show splash if alternate icon is not defined */ splash_logo).toString();
-            m_themePackName   = guiset.value("default-theme", "").toString();
+        splash_logo = guiset.value("editor-splash", "").toString();
+        splash_logo = guiset.value("editor-icon", /* show splash if alternate icon is not defined */ splash_logo).toString();
+        m_themePackName   = guiset.value("default-theme", "").toString();
         guiset.endGroup();
 
         guiset.beginGroup("main");
-            data_dir = (guiset.value("application-dir", "0").toBool() ?
-                                                    ApplicationPath + "/" :
-                                                    cpFullDirPath + "data/" );
+        data_dir = (guiset.value("application-dir", "0").toBool() ?
+                    ApplicationPath + "/" :
+                    cpFullDirPath + "data/");
 
-            configName = guiset.value("config_name", QDir(cpFullDirPath).dirName()).toString();
-            cpDesc = guiset.value("config_desc", cpFullDirPath).toString();
-            cpSmbx64Flag =  guiset.value("smbx-compatible", false).toBool();
+        configName = guiset.value("config_name", QDir(cpFullDirPath).dirName()).toString();
+        cpDesc = guiset.value("config_desc", cpFullDirPath).toString();
+        cpSmbx64Flag =  guiset.value("smbx-compatible", false).toBool();
         guiset.endGroup();
 
         QPixmap cpSplashImg;
 
         //Default splash image
         if(splash_logo.isEmpty())
-        {
             splash_logo = ":/images/splash_editor.png";
-        } else {
+        else
+        {
             splash_logo = data_dir + splash_logo;
             if(QPixmap(splash_logo).isNull())
-            {
                 splash_logo = ":/images/splash_editor.png";
-            }
         }
 
         cpSplashImg.load(splash_logo);
         GraphicsHelps::squareImageR(cpSplashImg, QSize(70, 40));
 
-        item = new QListWidgetItem( configName );
+        item = new QListWidgetItem(configName);
         item->setData(Qt::DecorationRole,   cpSplashImg);
         item->setData(CP_NAME_ROLE,         cpName);
         item->setData(CP_DESC_ROLE,         cpDesc);
         item->setData(CP_SMBX64FLAG_ROLE,   cpSmbx64Flag);
         item->setData(CP_FULLDIR_ROLE,      cpFullDirPath);
-        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-        ui->configList->addItem( item);
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        ui->configList->addItem(item);
     }
 }
 
@@ -342,8 +340,8 @@ void ConfigManager::saveCurrentSettings()
     if(!m_currentConfigPath.endsWith('/'))
         m_currentConfigPath.append('/');
     settings.beginGroup("Main");
-        settings.setValue("current-config",     m_currentConfigPath);
-        settings.setValue("ask-config-again",   m_doAskAgain);
+    settings.setValue("current-config",     m_currentConfigPath);
+    settings.setValue("ask-config-again",   m_doAskAgain);
     settings.endGroup();
 }
 
@@ -359,18 +357,18 @@ bool ConfigManager::hasConfigPacks()
         msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
         #endif
         msgBox.setText(
-                    tr("Available configuration packages are not found!<br>\n"
-                       "Please download and install them into directory<br>\n<br>\n%1<br>\n<br>\n"
-                       "You can take any configuration package here:<br>%2")
-                    .arg(AppPathManager::userAppDir()+"/configs")
-                    .arg("<a href=\"http://engine.wohlnet.ru/config_packs/\">"
-                         "http://engine.wohlnet.ru/config_packs/"
-                         "</a>")
-                    );
+            tr("Available configuration packages are not found!<br>\n"
+               "Please download and install them into directory<br>\n<br>\n%1<br>\n<br>\n"
+               "You can take any configuration package here:<br>%2")
+            .arg(AppPathManager::userAppDir() + "/configs")
+            .arg("<a href=\"http://engine.wohlnet.ru/config_packs/\">"
+                 "http://engine.wohlnet.ru/config_packs/"
+                 "</a>")
+        );
         QSize mSize = msgBox.sizeHint();
         QRect screenRect = QDesktopWidget().screen()->rect();
-        msgBox.move( QPoint( screenRect.width()/2 - mSize.width()/2,
-            screenRect.height()/2 - mSize.height()/2 ) );
+        msgBox.move(QPoint(screenRect.width() / 2 - mSize.width() / 2,
+                           screenRect.height() / 2 - mSize.height() / 2));
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
         return false;
@@ -389,9 +387,9 @@ QString ConfigManager::loadConfigs()
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
-        QString configPath  = settings.value("current-config", "").toString();
-        QString saved_theme = settings.value("current-theme", "").toString();
-        m_doAskAgain        = settings.value("ask-config-again", false).toBool();
+    QString configPath  = settings.value("current-config", "").toString();
+    QString saved_theme = settings.value("current-theme", "").toString();
+    m_doAskAgain        = settings.value("ask-config-again", false).toBool();
     settings.endGroup();
 
     if(!configPath.endsWith('/'))
@@ -400,7 +398,7 @@ QString ConfigManager::loadConfigs()
     if(!saved_theme.isEmpty())
         m_themePackName = saved_theme;
 
-    QList<QListWidgetItem*> AvailableConfigs=ui->configList->findItems(QString("*"), Qt::MatchWrap|Qt::MatchWildcard);
+    QList<QListWidgetItem *> AvailableConfigs = ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
     //Automatically choice config pack if alone detected
     if(AvailableConfigs.size() == 1)
@@ -412,33 +410,34 @@ QString ConfigManager::loadConfigs()
     }
     else
 
-    //check exists of config in list
-    foreach(QListWidgetItem * it, AvailableConfigs)
-    {
-        if(configPath.isEmpty())
+        //check exists of config in list
+        for(QListWidgetItem *it : AvailableConfigs)
         {
-            m_currentConfig = ""; break;
-        }
+            if(configPath.isEmpty())
+            {
+                m_currentConfig = "";
+                break;
+            }
 
-        //If full config pack path is same
-        if(it->data(CP_FULLDIR_ROLE).toString() == configPath)
-        {
-            m_currentConfig     = it->data(CP_NAME_ROLE).toString();
-            m_currentConfigPath = it->data(CP_FULLDIR_ROLE).toString();
-            it->setSelected(true);
-            ui->configList->scrollToItem(it);
-            break;
+            //If full config pack path is same
+            if(it->data(CP_FULLDIR_ROLE).toString() == configPath)
+            {
+                m_currentConfig     = it->data(CP_NAME_ROLE).toString();
+                m_currentConfigPath = it->data(CP_FULLDIR_ROLE).toString();
+                it->setSelected(true);
+                ui->configList->scrollToItem(it);
+                break;
+            }
         }
-    }
     ui->AskAgain->setChecked(m_doAskAgain);
 
     //Don't spawn dialog on load if alone config pack detected
-    if(AvailableConfigs.size()==1)
+    if(AvailableConfigs.size() == 1)
         m_doAskAgain = false;
 
-    if( (!m_currentConfigPath.isEmpty()) && (!m_doAskAgain) )
+    if((!m_currentConfigPath.isEmpty()) && (!m_doAskAgain))
     {
-        if( !checkForConfigureTool() )
+        if(!checkForConfigureTool())
             return QString();
     }
 
@@ -457,7 +456,7 @@ void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
     m_currentConfigPath   = item->data(CP_FULLDIR_ROLE).toString();
     m_doAskAgain            = ui->AskAgain->isChecked();
 
-    if( checkForConfigureTool() )
+    if(checkForConfigureTool())
         this->accept();
 }
 
@@ -468,16 +467,16 @@ void ConfigManager::on_buttonBox_accepted()
     m_currentConfigPath = ui->configList->selectedItems().first()->data(CP_FULLDIR_ROLE).toString();
     m_doAskAgain = ui->AskAgain->isChecked();
 
-    if( checkForConfigureTool() )
+    if(checkForConfigureTool())
         this->accept();
 }
 
 bool ConfigManager::isConfigured()
 {
     bool isConfigured = false;
-    QSettings settings( m_currentConfigPath + "main.ini", QSettings::IniFormat );
+    QSettings settings(m_currentConfigPath + "main.ini", QSettings::IniFormat);
     settings.beginGroup("main");
-        isConfigured = settings.value("application-path-configured", false).toBool();
+    isConfigured = settings.value("application-path-configured", false).toBool();
     settings.endGroup();
     return isConfigured;
 }
@@ -487,23 +486,19 @@ bool ConfigManager::checkForConfigureTool()
     QString configureToolApp = m_currentConfigPath + CONFIGURE_TOOL_NAME;
 
     //If configure tool has been detected
-    if( QFile::exists(configureToolApp) && (!isConfigured()) )
+    if(QFile::exists(configureToolApp) && (!isConfigured()))
     {
         QMessageBox::StandardButton reply =
             QMessageBox::information(this,
                                      tr("Configuration package is not configured!"),
                                      tr("\"%1\" configuration package is not configured yet.\n"
                                         "Do you want to configure it?")
-                                        .arg(m_currentConfig),
-                                             QMessageBox::Yes|QMessageBox::No);
-        if(reply==QMessageBox::Yes)
-        {
+                                     .arg(m_currentConfig),
+                                     QMessageBox::Yes | QMessageBox::No);
+        if(reply == QMessageBox::Yes)
             return runConfigureTool();
-        }
         else
-        {
             return false;
-        }
     }
 
     return true;
@@ -513,11 +508,11 @@ bool ConfigManager::checkForConfigureTool()
 bool ConfigManager::runConfigureTool()
 {
     QString configureToolApp = m_currentConfigPath + CONFIGURE_TOOL_NAME;
-    QWidget *parentW = qobject_cast<QWidget*>(parent());
-    if( !parentW || isVisible() )
+    QWidget *parentW = qobject_cast<QWidget *>(parent());
+    if(!parentW || isVisible())
         parentW = this;
 
-    if( QFile::exists(configureToolApp) )
+    if(QFile::exists(configureToolApp))
     {
         PGE_JsEngine js;
         js.bindProxy(new PGE_JS_Common(parentW), "PGE");
@@ -527,19 +522,17 @@ bool ConfigManager::runConfigureTool()
         bool successfulLoaded = false;
         js.loadFileByExpcetedResult<void>(configureToolApp, &successfulLoaded);
 
-        if( successfulLoaded )
+        if(successfulLoaded)
         {
             setEnabled(false);
-            if( !js.call<bool>("onConfigure", nullptr) )
+            if(!js.call<bool>("onConfigure", nullptr))
             {
                 setEnabled(true);
                 return false;
             }
             setEnabled(true);
-            if( !isConfigured() )
-            {
+            if(!isConfigured())
                 return false;
-            }
             return true;
         }
         else
@@ -548,10 +541,10 @@ bool ConfigManager::runConfigureTool()
                                   tr("Error of the configuring script"),
                                   tr("Configuring tool has error: %1 at line %2.\n"
                                      "File path: %3")
-                                        .arg(js.getLastError())
-                                        .arg(js.getLastErrorLine())
-                                        .arg(configureToolApp),
-                                      QMessageBox::Ok);
+                                  .arg(js.getLastError())
+                                  .arg(js.getLastErrorLine())
+                                  .arg(configureToolApp),
+                                  QMessageBox::Ok);
             return false;
         }
     }

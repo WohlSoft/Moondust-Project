@@ -90,7 +90,7 @@ void DevConsole::log(const QString &logText, const QString &channel, bool raise)
         init();
 
     if(currentDevConsole)
-           currentDevConsole->logToConsole(logText, channel, raise);
+        currentDevConsole->logToConsole(logText, channel, raise);
 }
 
 bool DevConsole::isConsoleShown()
@@ -124,12 +124,12 @@ DevConsole::DevConsole(QWidget *parent) :
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
     {
         if(QtWin::isCompositionEnabled())
         {
             this->setAttribute(Qt::WA_TranslucentBackground, true);
-            QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+            QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
             QtWin::enableBlurBehindWindow(this);
         }
         else
@@ -152,12 +152,14 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
 {
     QString target_channel = channel;
 
-    if(channel=="System") //Prevent creation another "system" tab if switched another UI language
+    if(channel == "System") //Prevent creation another "system" tab if switched another UI language
         target_channel = ui->tabWidget->tabText(0);
 
-    for(int i = 0; i < ui->tabWidget->count(); ++i){
-        if(ui->tabWidget->tabText(i)==target_channel){
-            QPlainTextEdit* tarEdit = getEditByIndex(i);
+    for(int i = 0; i < ui->tabWidget->count(); ++i)
+    {
+        if(ui->tabWidget->tabText(i) == target_channel)
+        {
+            QPlainTextEdit *tarEdit = getEditByIndex(i);
             if(!tarEdit)
                 return;
             tarEdit->appendPlainText(logText);
@@ -167,14 +169,14 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
         }
     }
     //create new channel
-    QWidget* w = new QWidget();
+    QWidget *w = new QWidget();
     QGridLayout *l = new QGridLayout(w);
     l->setContentsMargins(0, 0, 0, 0);
     l->setSpacing(0);
     QPlainTextEdit *e = new QPlainTextEdit(w);
-    l->addWidget(e,0,0,1,1);
+    l->addWidget(e, 0, 0, 1, 1);
     QPushButton *p = new QPushButton(w);
-    l->addWidget(p,1,0,1,1);
+    l->addWidget(p, 1, 0, 1, 1);
     p->setFlat(true);
     p->connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
     p->setText(tr("Clear %1 Log").arg(target_channel));
@@ -188,7 +190,7 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
 
 QPlainTextEdit *DevConsole::getEditByIndex(const int &index)
 {
-    return qobject_cast<QPlainTextEdit*>((dynamic_cast<QWidgetItem*>(ui->tabWidget->widget(index)->layout()->itemAt(0)))->widget());
+    return qobject_cast<QPlainTextEdit *>((dynamic_cast<QWidgetItem *>(ui->tabWidget->widget(index)->layout()->itemAt(0)))->widget());
 }
 
 QPlainTextEdit *DevConsole::getCurrentEdit()
@@ -203,15 +205,15 @@ void DevConsole::registerCommand(const QString commandName, DevConsole::command 
 
 void DevConsole::registerCommand(const std::initializer_list<QString> commandNames, DevConsole::command cmd, const QString helpText)
 {
-    foreach(QString tarCmd, commandNames){
+    for(const QString &tarCmd : commandNames)
         commands[tarCmd.toLower()] = qMakePair<command, QString>(cmd, helpText);
-    }
 }
 
 void DevConsole::on_button_clearAllLogs_clicked()
 {
-    for(int i = 0; i < ui->tabWidget->count(); ++i){
-        QPlainTextEdit* e = getEditByIndex(i);
+    for(int i = 0; i < ui->tabWidget->count(); ++i)
+    {
+        QPlainTextEdit *e = getEditByIndex(i);
         e->clear();
     }
 }
@@ -235,12 +237,12 @@ void DevConsole::closeEvent(QCloseEvent *event)
 
 void DevConsole::focusInEvent(QFocusEvent *)
 {
-     setWindowOpacity(1.0);
+    setWindowOpacity(1.0);
 }
 
 void DevConsole::focusOutEvent(QFocusEvent *)
 {
-     setWindowOpacity(0.9);
+    setWindowOpacity(0.9);
 }
 
 void DevConsole::on_button_send_clicked()
@@ -285,21 +287,16 @@ void DevConsole::doCommand()
     cmdList.pop_front();
 
     if(commands.contains(baseCommand.toLower()))
-    {
         (this->*(commands[baseCommand].first))(cmdList);
-    }
     else
-    {
         log("-> Unknown command. Type 'help' to show available command list", ui->tabWidget->tabText(0));
-    }
 }
 
 void DevConsole::doHelp(QStringList /*args*/)
 {
     QStringList keys = commands.keys();
-    for(int i = 0; i < keys.size(); ++i){
+    for(int i = 0; i < keys.size(); ++i)
         log(keys[i] + QString(" - " + commands[keys[i]].second));
-    }
 }
 
 void DevConsole::doTest(QStringList /*args*/)
@@ -309,18 +306,16 @@ void DevConsole::doTest(QStringList /*args*/)
 
 void DevConsole::doPlayMusic(QStringList args)
 {
-    if(args.size()!=2)
+    if(args.size() != 2)
     {
         log("-> Bad command syntax!", ui->tabWidget->tabText(0));
         return;
     }
-    if(args[0]=="lvl")
+    if(args[0] == "lvl")
         LvlMusPlay::setMusic(LvlMusPlay::LevelMusic, args[1].toLong(), "");
-    else
-    if(args[0]=="wld")
+    else if(args[0] == "wld")
         LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, args[1].toLong(), "");
-    else
-    if(args[0]=="spc")
+    else if(args[0] == "spc")
         LvlMusPlay::setMusic(LvlMusPlay::SpecialMusic, args[1].toLong(), "");
     else
     {
@@ -338,8 +333,8 @@ void DevConsole::doMd5(QStringList args)
 {
     QString src;
 
-    foreach(QString s, args)
-        src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+    for(QString &s : args)
+        src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
     QString encoded = QString(QCryptographicHash::hash(src.toUtf8(), QCryptographicHash::Md5).toHex());
 
@@ -350,11 +345,11 @@ void DevConsole::doValidateStrArray(QStringList args)
 {
     QString src;
 
-    foreach(QString s, args)
-        src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+    for(QString &s : args)
+        src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
     log(QString("%1").arg(src), ui->tabWidget->tabText(0));
-    log(QString("String array is: %1").arg(PGEFile::IsStringArray(src)?"valid":"wrong" ), ui->tabWidget->tabText(0));
+    log(QString("String array is: %1").arg(PGEFile::IsStringArray(src) ? "valid" : "wrong"), ui->tabWidget->tabText(0));
 }
 
 
@@ -377,13 +372,14 @@ void DevConsole::doSavesettings(QStringList /*args*/)
 
 void DevConsole::doFlood(QStringList args)
 {
-    if(args.size() > 0){
+    if(args.size() > 0)
+    {
         bool succ;
         int floodSize = args[0].toInt(&succ);
         if(!succ)
             return;
-        log("Flooding with " + QString::number(floodSize*1024*1024) + "bytes");
-        char* fl = new char[floodSize*1024*1024];
+        log("Flooding with " + QString::number(floodSize * 1024 * 1024) + "bytes");
+        char *fl = new char[floodSize * 1024 * 1024];
         if(fl == 0)
             log("No memory assigned");
         Q_UNUSED(fl)
@@ -398,29 +394,27 @@ void DevConsole::doThrowUnhandledException(QStringList /*args*/)
 
 void DevConsole::doSegmentationViolation(QStringList)
 {
-    int* my_nullptr = 0;
+    int *my_nullptr = 0;
     *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
 }
 
 
-QString ______recourseBuildPGEX_Tree(QList<PGEFile::PGEX_Entry > &entry, int depth=1)
+QString ______recourseBuildPGEX_Tree(QList<PGEFile::PGEX_Entry > &entry, int depth = 1)
 {
-    QString treeView="";
+    QString treeView = "";
 
-    for(int i=0; i<entry.size(); i++)
+    for(int i = 0; i < entry.size(); i++)
     {
-        for(int k=0;k<depth;k++) treeView += "--";
-            treeView += QString("=============\n");
-        for(int k=0;k<depth;k++) treeView += "--";
-            treeView += QString("SubTree name: %1\n").arg(entry[i].name);
-        for(int k=0;k<depth;k++) treeView += "--";
-            treeView += QString("Branch type: %1\n").arg(entry[i].type);
-        for(int k=0;k<depth;k++) treeView += "--";
-            treeView += QString("Entries: %1\n").arg(entry[i].data.size());
-        if(entry[i].subTree.size()>0)
-        {
-            treeView += ______recourseBuildPGEX_Tree(entry[i].subTree, depth+1);
-        }
+        for(int k = 0; k < depth; k++) treeView += "--";
+        treeView += QString("=============\n");
+        for(int k = 0; k < depth; k++) treeView += "--";
+        treeView += QString("SubTree name: %1\n").arg(entry[i].name);
+        for(int k = 0; k < depth; k++) treeView += "--";
+        treeView += QString("Branch type: %1\n").arg(entry[i].type);
+        for(int k = 0; k < depth; k++) treeView += "--";
+        treeView += QString("Entries: %1\n").arg(entry[i].data.size());
+        if(entry[i].subTree.size() > 0)
+            treeView += ______recourseBuildPGEX_Tree(entry[i].subTree, depth + 1);
     }
 
     return treeView;
@@ -434,11 +428,11 @@ void DevConsole::doPgeXTest(QStringList args)
     {
         QString src;
 
-        foreach(QString s, args)
-            src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+        for(QString &s : args)
+            src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
         QFile file(src);
-        if (!file.open(QIODevice::ReadOnly))
+        if(!file.open(QIODevice::ReadOnly))
         {
             log(QString("-> Error: Can't open the file."));
             return;
@@ -447,39 +441,35 @@ void DevConsole::doPgeXTest(QStringList args)
         QTextStream in(&file);   //Read File
         PGEFile pgeX_Data;
         QString raw = in.readAll();
-        pgeX_Data.setRawData( raw );
+        pgeX_Data.setRawData(raw);
 
-        if( pgeX_Data.buildTreeFromRaw() )
+        if(pgeX_Data.buildTreeFromRaw())
         {
-            QString treeView="";
-            for(int i=0; i<pgeX_Data.dataTree.size(); i++)
+            QString treeView = "";
+            for(int i = 0; i < pgeX_Data.dataTree.size(); i++)
             {
                 treeView += QString("=============\n");
                 treeView += QString("Section Name %1\n").arg(pgeX_Data.dataTree[i].name);
                 treeView += QString("Section type: %1\n").arg(pgeX_Data.dataTree[i].type);
                 treeView += QString("Entries %1\n").arg(pgeX_Data.dataTree[i].data.size());
 
-//                foreach(PGEFile::PGEX_Item x, pgeX_Data.dataTree[i].data)
-//                {
-//                    if(x.values.size()>0)
-//                    {
-//                        treeView += x.values.first().marker + ":"+x.values.first().value + ";\n";
-//                    }
-//                }
+                //                foreach(PGEFile::PGEX_Item x, pgeX_Data.dataTree[i].data)
+                //                {
+                //                    if(x.values.size()>0)
+                //                    {
+                //                        treeView += x.values.first().marker + ":"+x.values.first().value + ";\n";
+                //                    }
+                //                }
 
-                if(pgeX_Data.dataTree[i].subTree.size()>0)
-                {
+                if(pgeX_Data.dataTree[i].subTree.size() > 0)
                     treeView += ______recourseBuildPGEX_Tree(pgeX_Data.dataTree[i].subTree);
-                }
             }
             log(QString("-> File read:\nRaw size is %1\n%2").arg(raw.size()).arg(treeView),
                 ui->tabWidget->tabText(0));
 
         }
         else
-        {
             log(QString("-> File invalid: %1").arg(pgeX_Data.lastError()), ui->tabWidget->tabText(0));
-        }
 
     }
 
@@ -488,8 +478,8 @@ void DevConsole::doPgeXTest(QStringList args)
 void DevConsole::doSendCheat(QStringList args)
 {
     QString src;
-    foreach(QString s, args)
-        src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+    for(QString &s : args)
+        src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
     if(src.isEmpty())
     {
@@ -512,4 +502,3 @@ void DevConsole::doOutputPaths(QStringList /*args*/)
     log(QString("Settings file: ") + AppPathManager::settingsFile());
     log(QString("Current log file: ") + LogWriter::DebugLogFile);
 }
-

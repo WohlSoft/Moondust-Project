@@ -94,7 +94,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *newLayer = LayerName->addAction(tr("Add to new layer..."));
     LayerName->addSeparator();
 
-    foreach(LevelLayer layer, m_scene->m_data->layers)
+    for(LevelLayer &layer : m_scene->m_data->layers)
     {
         //Skip system layers
         if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs")) continue;

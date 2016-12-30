@@ -37,38 +37,32 @@ QString CustomDirManager::getCustomFile(QString name, bool ignoreDefaultDirector
     //Try to look up for a backup images (if original not found, try to search images in second format)
     if(name.endsWith(".gif", Qt::CaseInsensitive))
     {
-       backupName=name;
-       backupName.replace(backupName.size()-3, 3, "png");
-       //find PNG's first!
-       QString tmp=backupName;
-       backupName=name;
-       name=tmp;
-    } else if(name.endsWith(".png", Qt::CaseInsensitive)) {
-        backupName=name;
-        backupName.replace(backupName.size()-3, 3, "gif");
+        backupName = name;
+        backupName.replace(backupName.size() - 3, 3, "png");
+        //find PNG's first!
+        QString tmp = backupName;
+        backupName = name;
+        name = tmp;
+    }
+    else if(name.endsWith(".png", Qt::CaseInsensitive))
+    {
+        backupName = name;
+        backupName.replace(backupName.size() - 3, 3, "gif");
     }
 
     QString target = "";
 tryBackup:
-    if((QFile::exists(dirCustom) ) &&
-            (QFile::exists(dirCustom+"/" + name)) )
-    {
-        target = dirCustom+"/"+name;
-    }
-    else
-    if(QFile::exists(dirEpisode + "/" + name) )
-    {
+    if((QFile::exists(dirCustom)) &&
+       (QFile::exists(dirCustom + "/" + name)))
+        target = dirCustom + "/" + name;
+    else if(QFile::exists(dirEpisode + "/" + name))
         target = dirEpisode + "/" + name;
-    }
-    else
-    if((!ignoreDefaultDirectory) && (!defaultDirectory.isEmpty()) && (QFile::exists(defaultDirectory + "/" + name)))
-    {
+    else if((!ignoreDefaultDirectory) && (!defaultDirectory.isEmpty()) && (QFile::exists(defaultDirectory + "/" + name)))
         target = defaultDirectory + "/" + name;
-    }
 
-    if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName!=name))
+    if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName != name))
     {
-        name=backupName;
+        name = backupName;
         goto tryBackup;
     }
 
@@ -88,7 +82,8 @@ void CustomDirManager::setDefaultDir(QString dPath)
 
 void CustomDirManager::createDirIfNotExsist()
 {
-    if(!QFile::exists(dirCustom)){
+    if(!QFile::exists(dirCustom))
+    {
         QDir tarDir(dirCustom);
         tarDir.mkpath(".");
     }
@@ -98,7 +93,8 @@ void CustomDirManager::import(QStringList &files, bool local)
 {
     QString targetDir = (local ? dirCustom : dirEpisode);
     targetDir = (!targetDir.endsWith("/") ? targetDir.append('/') : targetDir);
-    foreach (QString targetFile, files) {
+    for(QString &targetFile : files)
+    {
         QFile sourceFile(targetFile);
         sourceFile.copy(targetDir + targetFile.section("/", -1));
     }

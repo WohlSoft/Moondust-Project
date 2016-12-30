@@ -32,32 +32,32 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     QGraphicsView(parent),
     lastMouseEvent(QEvent::None, QPointF(), QPointF(), QPointF(), Qt::NoButton, 0, 0)
 {
-    useLastMouseEvent=true;
-    handScrolling=false;
-    rubberBanding=false;
-    rubberBandRect = QRect(0,0,0,0);
-    originPoint = QPoint(0,0);
+    useLastMouseEvent = true;
+    handScrolling = false;
+    rubberBanding = false;
+    rubberBandRect = QRect(0, 0, 0, 0);
+    originPoint = QPoint(0, 0);
     rubberBandX = new QRubberBand(QRubberBand::Rectangle, this->viewport());
     rubberBandX->setGeometry(QRect(this->viewport()->mapFromGlobal(originPoint), QSize()));
-    hasStoredOriginalCursor=false;
-    handScrollMotions=0;
+    hasStoredOriginalCursor = false;
+    handScrollMotions = 0;
     originalCursor = this->cursor();
     rubberBandSelectionMode = Qt::IntersectsItemBoundingRect;
     this->setMouseTracking(true);
     this->setRubberBandSelectionMode(Qt::IntersectsItemBoundingRect);
 
-    movement=MOVE_IDLE;
+    movement = MOVE_IDLE;
 
     Mover.setTimerType(Qt::PreciseTimer);
 
-    step=32;
-    keyTime=25;
+    step = 32;
+    keyTime = 25;
 
-    zoomValue=1.0;
+    zoomValue = 1.0;
     scaleFactor = 1.15;
 
-    scaleMin=0.01;
-    scaleMax=20.0;
+    scaleMin = 0.01;
+    scaleMax = 20.0;
 
     connect(&Mover, SIGNAL(timeout()), this, SLOT(doMove()));
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
@@ -78,32 +78,32 @@ qreal GraphicsWorkspace::zoom()
 
 void GraphicsWorkspace::setZoom(qreal zoom)
 {
-    if(zoom>=scaleMax || zoom<=scaleMin) return;
-    scale(1.0/zoomValue, 1.0/zoomValue);
+    if(zoom >= scaleMax || zoom <= scaleMin) return;
+    scale(1.0 / zoomValue, 1.0 / zoomValue);
     zoomValue = zoom;
     scale(zoom, zoom);
-    emit zoomValueChanged(qRound(zoomValue*100));
-    emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
+    emit zoomValueChanged(qRound(zoomValue * 100));
+    emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
 }
 
 void GraphicsWorkspace::zoomIn()
 {
-    if(zoomValue*scaleFactor>=scaleMax) return;
+    if(zoomValue * scaleFactor >= scaleMax) return;
 
     zoomValue *= scaleFactor;
     scale(scaleFactor, scaleFactor);
-    emit zoomValueChanged(qRound(zoomValue*100));
-    emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
+    emit zoomValueChanged(qRound(zoomValue * 100));
+    emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
 }
 
 void GraphicsWorkspace::zoomOut()
 {
-    if(zoomValue*scaleFactor<=scaleMin) return;
+    if(zoomValue * scaleFactor <= scaleMin) return;
 
-    zoomValue *= 1.0/scaleFactor;
+    zoomValue *= 1.0 / scaleFactor;
     scale(1.0 / scaleFactor, 1.0 / scaleFactor);
-    emit zoomValueChanged(qRound(zoomValue*100));
-    emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
+    emit zoomValueChanged(qRound(zoomValue * 100));
+    emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
 }
 
 QRubberBand *GraphicsWorkspace::rubberBand() const
@@ -116,115 +116,115 @@ QRubberBand *GraphicsWorkspace::rubberBand() const
 
 void GraphicsWorkspace::moveLeft()
 {
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value()-step);
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value() - step);
 }
 
 void GraphicsWorkspace::moveRight()
 {
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value()+step);
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value() + step);
 }
 
 void GraphicsWorkspace::moveUp()
 {
-    verticalScrollBar()->setValue(verticalScrollBar()->value()-step);
+    verticalScrollBar()->setValue(verticalScrollBar()->value() - step);
 }
 
 void GraphicsWorkspace::moveDown()
 {
-    verticalScrollBar()->setValue(verticalScrollBar()->value()+step);
+    verticalScrollBar()->setValue(verticalScrollBar()->value() + step);
 }
 
 void GraphicsWorkspace::doMove()
 {
-    if((movement&MOVE_LEFT)!=0)
+    if((movement & MOVE_LEFT) != 0)
         moveLeft();
-    if((movement&MOVE_RIGHT)!=0)
+    if((movement & MOVE_RIGHT) != 0)
         moveRight();
-    if((movement&MOVE_UP)!=0)
+    if((movement & MOVE_UP) != 0)
         moveUp();
-    if((movement&MOVE_DOWN)!=0)
+    if((movement & MOVE_DOWN) != 0)
         moveDown();
 }
 
 void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
 {
-    if(event->isAutoRepeat() )
-           {
-               event->ignore();
-               return;
-           }
+    if(event->isAutoRepeat())
+    {
+        event->ignore();
+        return;
+    }
 
     event->accept();
     replayLastMouseEvent();
 
-    int lastMov=movement;
+    int lastMov = movement;
     switch(event->key())
     {
     case Qt::Key_Left:
-        movement|=MOVE_LEFT;
+        movement |= MOVE_LEFT;
         break;
     case Qt::Key_Right:
-        movement|=MOVE_RIGHT;
+        movement |= MOVE_RIGHT;
         break;
     case Qt::Key_Up:
-        movement|=MOVE_UP;
+        movement |= MOVE_UP;
         break;
     case Qt::Key_Down:
-        movement|=MOVE_DOWN;
+        movement |= MOVE_DOWN;
         break;
     case Qt::Key_Shift:
-        keyTime=5;
+        keyTime = 5;
         updateTimerInterval();
         break;
     default:
         break;
     }
 
-    if((movement!=MOVE_IDLE)&&(!Mover.isActive()))
+    if((movement != MOVE_IDLE) && (!Mover.isActive()))
         Mover.start(keyTime);
 
-    if(lastMov!=movement) return;
+    if(lastMov != movement) return;
 
     QGraphicsView::keyPressEvent(event);
 }
 
 void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
 {
-    if(event->isAutoRepeat() )
-           {
-               event->ignore();
-               return;
-           }
+    if(event->isAutoRepeat())
+    {
+        event->ignore();
+        return;
+    }
 
     event->accept();
     replayLastMouseEvent();
-    int lastMov=movement;
+    int lastMov = movement;
     switch(event->key())
     {
     case Qt::Key_Left:
-        movement&= ~MOVE_LEFT;
+        movement &= ~MOVE_LEFT;
         return;
     case Qt::Key_Right:
-        movement&= ~MOVE_RIGHT;
+        movement &= ~MOVE_RIGHT;
         return;
     case Qt::Key_Up:
-        movement&= ~MOVE_UP;
+        movement &= ~MOVE_UP;
         return;
     case Qt::Key_Down:
-        movement&= ~MOVE_DOWN;
+        movement &= ~MOVE_DOWN;
         return;
     case Qt::Key_Shift:
-        keyTime=25;
+        keyTime = 25;
         updateTimerInterval();
         break;
     default:
         break;
     }
 
-    if((movement==MOVE_IDLE)&&(Mover.isActive()))
+    if((movement == MOVE_IDLE) && (Mover.isActive()))
         Mover.stop();
 
-    if(lastMov!=movement) return;
+    if(lastMov != movement) return;
 
     QGraphicsView::keyReleaseEvent(event);
 }
@@ -237,7 +237,7 @@ void GraphicsWorkspace::updateTimerInterval()
 
 void GraphicsWorkspace::focusOutEvent(QFocusEvent *event)
 {
-    movement=MOVE_IDLE;
+    movement = MOVE_IDLE;
     Mover.stop();
     QGraphicsView::focusOutEvent(event);
 }
@@ -245,63 +245,56 @@ void GraphicsWorkspace::focusOutEvent(QFocusEvent *event)
 
 void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
 {
-    int modS=128;
-    if(event->modifiers() & Qt::ShiftModifier) modS=256;
+    int modS = 128;
+    if(event->modifiers() & Qt::ShiftModifier) modS = 256;
 
     if(event->modifiers() & Qt::AltModifier)
     {
-      // Scale the view / do the zoom
-      if(event->delta() > 0) {
-          if(zoomValue*scaleFactor>=scaleMax) return;
-          // Zoom in
-          zoomValue *= scaleFactor;
-          scale(scaleFactor, scaleFactor);
-          emit zoomValueChanged(qRound(zoomValue*100));
-          emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
-      } else {
-          if(zoomValue*scaleFactor<=scaleMin) return;
-          // Zooming out
-          zoomValue *= 1.0/scaleFactor;
-          scale(1.0 / scaleFactor, 1.0 / scaleFactor);
-          emit zoomValueChanged(qRound(zoomValue*100));
-          emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
-      }
-      replayLastMouseEvent();
-      return;
+        // Scale the view / do the zoom
+        if(event->delta() > 0)
+        {
+            if(zoomValue * scaleFactor >= scaleMax) return;
+            // Zoom in
+            zoomValue *= scaleFactor;
+            scale(scaleFactor, scaleFactor);
+            emit zoomValueChanged(qRound(zoomValue * 100));
+            emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
+        }
+        else
+        {
+            if(zoomValue * scaleFactor <= scaleMin) return;
+            // Zooming out
+            zoomValue *= 1.0 / scaleFactor;
+            scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+            emit zoomValueChanged(qRound(zoomValue * 100));
+            emit zoomValueChanged(QString::number(qRound(zoomValue * 100)));
+        }
+        replayLastMouseEvent();
+        return;
     }
 
     if(event->modifiers() & Qt::ControlModifier)
     {
-        if(event->delta() > 0) {
-            horizontalScrollBar()->setValue(horizontalScrollBar()->value()-modS);
-        }
+        if(event->delta() > 0)
+            horizontalScrollBar()->setValue(horizontalScrollBar()->value() - modS);
         else
-        {
-            horizontalScrollBar()->setValue(horizontalScrollBar()->value()+modS);
-        }
+            horizontalScrollBar()->setValue(horizontalScrollBar()->value() + modS);
         //event->accept();
         replayLastMouseEvent();
         if(scene())
-        {
             scene()->update();
-        }
         return;
     }
     else
     {
-        if(event->delta() > 0) {
-            verticalScrollBar()->setValue(verticalScrollBar()->value()-modS);
-        }
+        if(event->delta() > 0)
+            verticalScrollBar()->setValue(verticalScrollBar()->value() - modS);
         else
-        {
-            verticalScrollBar()->setValue(verticalScrollBar()->value()+modS);
-        }
+            verticalScrollBar()->setValue(verticalScrollBar()->value() + modS);
         //event->accept();
         replayLastMouseEvent();
         if(scene())
-        {
             scene()->update();
-        }
         return;
     }
     replayLastMouseEvent();
@@ -325,7 +318,7 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
     ///d->storeMouseEvent(event); //END
     lastMouseEvent.setAccepted(false);
 
-    if (this->isInteractive())
+    if(this->isInteractive())
     {
         // Store some of the event's button-down data.
         mousePressViewPoint = event->pos();
@@ -335,7 +328,7 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
         lastMouseMoveScreenPoint = mousePressScreenPoint;
         mousePressButton = event->button();
 
-        if (this->scene())
+        if(this->scene())
         {
             // Convert and deliver the mouse event to the scene.
             QGraphicsSceneMouseEvent mouseEvent(QEvent::GraphicsSceneMousePress);
@@ -352,7 +345,7 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
             mouseEvent.setAccepted(false);
             if(!multiSelect)//Don't send event on ctrl-key
             {
-                if (event->spontaneous())
+                if(event->spontaneous())
                     qt_sendSpontaneousEvent(scene(), &mouseEvent);
                 else
                     QApplication::sendEvent(scene(), &mouseEvent);
@@ -365,44 +358,42 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
             // Update the last mouse event accepted state.
             lastMouseEvent.setAccepted(isAccepted);
 
-            if (isAccepted)
+            if(isAccepted)
                 return;
         }
-    } else {
+    }
+    else
+    {
         LvlScene *s = dynamic_cast<LvlScene *>(scene());
         WldScene *w = dynamic_cast<WldScene *>(scene());
-        bool setSelect=false;
+        bool setSelect = false;
         if(s)
-        {
-            setSelect=(s->m_editMode==LvlScene::MODE_HandScroll);
-        } else if(w)
-        {
-            setSelect=((!w->m_isSelectionDialog)&&(w->m_editMode==WldScene::MODE_HandScroll));
-        }
+            setSelect = (s->m_editMode == LvlScene::MODE_HandScroll);
+        else if(w)
+            setSelect = ((!w->m_isSelectionDialog) && (w->m_editMode == WldScene::MODE_HandScroll));
         if(setSelect)
         {
-            if( event->buttons() & Qt::RightButton )
-            {
+            if(event->buttons() & Qt::RightButton)
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
-            }
         }
     }
 
-#ifndef QT_NO_RUBBERBAND
-    if (dragMode() == QGraphicsView::RubberBandDrag && !rubberBanding && (event->button()&Qt::LeftButton) )
+    #ifndef QT_NO_RUBBERBAND
+    if(dragMode() == QGraphicsView::RubberBandDrag && !rubberBanding && (event->button()&Qt::LeftButton))
     {
-        if (this->isInteractive()) {
+        if(this->isInteractive())
+        {
             // Rubberbanding is only allowed in interactive mode.
             event->accept();
             rubberBanding = true;
             rubberBandRect = QRect();
             if(scene())
             {
-                if ( multiSelect )
-                   rubberBandExtendSelection = scene()->selectedItems();
+                if(multiSelect)
+                    rubberBandExtendSelection = scene()->selectedItems();
                 else
-                   // Initiating a rubber band always clears the selection.
-                   scene()->clearSelection();
+                    // Initiating a rubber band always clears the selection.
+                    scene()->clearSelection();
             }
             //originPoint = mapToScene(mousePressViewPoint);
             rubberBandX->setGeometry(QRect(mapFromScene(mousePressScenePoint), QSize()));
@@ -410,23 +401,25 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
         }
     }
     else
-#endif
-        if (dragMode() == QGraphicsView::ScrollHandDrag && event->button() == Qt::LeftButton)
+    #endif
+        if(dragMode() == QGraphicsView::ScrollHandDrag && event->button() == Qt::LeftButton)
         {
             // Left-button press in scroll hand mode initiates hand scrolling.
             event->accept();
             handScrolling = true;
             handScrollMotions = 0;
-#ifndef QT_NO_CURSOR
+            #ifndef QT_NO_CURSOR
             viewport()->setCursor(Qt::ClosedHandCursor);
-#endif
+            #endif
         }
 }
 
 void GraphicsWorkspace::mouseMoveEvent(QMouseEvent *event)
 {
-    if (dragMode() == QGraphicsView::ScrollHandDrag) {
-        if (handScrolling) {
+    if(dragMode() == QGraphicsView::ScrollHandDrag)
+    {
+        if(handScrolling)
+        {
             QScrollBar *hBar = horizontalScrollBar();
             QScrollBar *vBar = verticalScrollBar();
             QPoint delta = event->pos() - lastMouseEvent.pos();
@@ -451,9 +444,9 @@ void GraphicsWorkspace::storeMouseEvent(QMouseEvent *event)
 
 void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
 {
-#if !defined(QT_NO_RUBBERBAND)
+    #if !defined(QT_NO_RUBBERBAND)
     updateRubberBand(event);
-#endif
+    #endif
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler start");
@@ -461,11 +454,11 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     storeMouseEvent(event);
     lastMouseEvent.setAccepted(false);
 
-    if (!isInteractive())
+    if(!isInteractive())
         return;
-    if (handScrolling)
+    if(handScrolling)
         return;
-    if (!scene())
+    if(!scene())
         return;
 
     QGraphicsSceneMouseEvent mouseEvent(QEvent::GraphicsSceneMouseMove);
@@ -482,7 +475,7 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     lastMouseMoveScenePoint = mouseEvent.scenePos();
     lastMouseMoveScreenPoint = mouseEvent.screenPos();
     mouseEvent.setAccepted(false);
-    if (event->spontaneous())
+    if(event->spontaneous())
         qt_sendSpontaneousEvent(scene(), &mouseEvent);
     else
         QApplication::sendEvent(scene(), &mouseEvent);
@@ -490,13 +483,14 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     // Remember whether the last event was accepted or not.
     lastMouseEvent.setAccepted(mouseEvent.isAccepted());
 
-    if (mouseEvent.isAccepted() && mouseEvent.buttons() != 0) {
+    if(mouseEvent.isAccepted() && mouseEvent.buttons() != 0)
+    {
         // The event was delivered to a mouse grabber; the press is likely to
         // have set a cursor, and we must not change it.
         return;
     }
 
-#ifndef QT_NO_CURSOR
+    #ifndef QT_NO_CURSOR
     // If all the items ignore hover events, we don't look-up any items
     // in QGraphicsScenePrivate::dispatchHoverEvent, hence the
     // cachedItemsUnderMouse list will be empty. We therefore do the look-up
@@ -504,22 +498,21 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     if(/*scene()->d_func()->allItemsIgnoreHoverEvents && !scene()->d_func()->allItemsUseDefaultCursor
         && */ cachedItemsUnderMouse.isEmpty())
     {
-        QRectF target( mapToScene(mouseEvent.screenPos()), mapToScene(mouseEvent.screenPos()+QPoint(1,1)) );
-        LvlScene* lsc=qobject_cast<LvlScene* >(scene());
-        WldScene* wsc=qobject_cast<WldScene* >(scene());
-        if(lsc) {
+        QRectF target(mapToScene(mouseEvent.screenPos()), mapToScene(mouseEvent.screenPos() + QPoint(1, 1)));
+        LvlScene *lsc = qobject_cast<LvlScene * >(scene());
+        WldScene *wsc = qobject_cast<WldScene * >(scene());
+        if(lsc)
             lsc->queryItems(target, &cachedItemsUnderMouse);
-        } else if(wsc) {
+        else if(wsc)
             wsc->queryItems(target, &cachedItemsUnderMouse);
-        } else {
+        else
             cachedItemsUnderMouse = scene()->items(target, Qt::IntersectsItemBoundingRect);
-        }
     }
     // Find the topmost item under the mouse with a cursor.
-    foreach (QGraphicsItem *item, cachedItemsUnderMouse)
+    for(QGraphicsItem *item : cachedItemsUnderMouse)
     {
         if(item)
-            if (item->hasCursor())
+            if(item->hasCursor())
             {
                 _q_setViewportCursor(item->cursor());
                 return;
@@ -528,22 +521,24 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     cachedItemsUnderMouse.clear();
 
     // No items with cursors found; revert to the view cursor.
-    if (hasStoredOriginalCursor) {
+    if(hasStoredOriginalCursor)
+    {
         // Restore the original viewport cursor.
         hasStoredOriginalCursor = false;
         viewport()->setCursor(originalCursor);
     }
-#endif
+    #endif
 
-#ifdef _DEBUG_
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler End");
-#endif
+    #endif
 }
 
 
 void GraphicsWorkspace::_q_setViewportCursor(const QCursor &cursor)
 {
-    if (!hasStoredOriginalCursor) {
+    if(!hasStoredOriginalCursor)
+    {
         hasStoredOriginalCursor = true;
         originalCursor = viewport()->cursor();
     }
@@ -552,20 +547,20 @@ void GraphicsWorkspace::_q_setViewportCursor(const QCursor &cursor)
 
 void GraphicsWorkspace::_q_unsetViewportCursor()
 {
-    QList<QGraphicsItem*> theItems;
-    QRectF target( lastMouseEvent.pos(), lastMouseEvent.pos()+QPoint(1,1) );
-    LvlScene* lsc=qobject_cast<LvlScene* >(scene());
-    WldScene* wsc=qobject_cast<WldScene* >(scene());
-    if(lsc) {
+    QList<QGraphicsItem *> theItems;
+    QRectF target(lastMouseEvent.pos(), lastMouseEvent.pos() + QPoint(1, 1));
+    LvlScene *lsc = qobject_cast<LvlScene * >(scene());
+    WldScene *wsc = qobject_cast<WldScene * >(scene());
+    if(lsc)
         lsc->queryItems(target, &theItems);
-    } else if(wsc) {
+    else if(wsc)
         wsc->queryItems(target, &theItems);
-    } else {
+    else
         theItems = scene()->items(target, Qt::IntersectsItemBoundingRect);
-    }
 
-    foreach (QGraphicsItem *item, theItems) {
-        if (item->hasCursor())
+    for(QGraphicsItem *item : theItems)
+    {
+        if(item->hasCursor())
         {
             _q_setViewportCursor(item->cursor());
             return;
@@ -573,10 +568,10 @@ void GraphicsWorkspace::_q_unsetViewportCursor()
     }
 
     // Restore the original viewport cursor.
-    if (hasStoredOriginalCursor)
+    if(hasStoredOriginalCursor)
     {
         hasStoredOriginalCursor = false;
-        if (dragMode() == QGraphicsView::ScrollHandDrag)
+        if(dragMode() == QGraphicsView::ScrollHandDrag)
             viewport()->setCursor(Qt::OpenHandCursor);
         else
             viewport()->setCursor(originalCursor);
@@ -586,7 +581,7 @@ void GraphicsWorkspace::_q_unsetViewportCursor()
 void GraphicsWorkspace::replayLastMouseEvent(int x)
 {
     Q_UNUSED(x);
-    if (!useLastMouseEvent || !scene())
+    if(!useLastMouseEvent || !scene())
         return;
     mouseMoveEventHandler(&lastMouseEvent);
 }
@@ -602,23 +597,24 @@ QRegion GraphicsWorkspace::rubberBandRegion(const QWidget *widget, const QRect &
 
     QRegion tmp;
     tmp += rect;
-    if (widget->style()->styleHint(QStyle::SH_RubberBand_Mask, &option, widget, &mask))
+    if(widget->style()->styleHint(QStyle::SH_RubberBand_Mask, &option, widget, &mask))
         tmp &= mask.region;
     return tmp;
 }
 
 void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
 {
-#if !defined(QT_NO_RUBBERBAND)
-    if (dragMode() != QGraphicsView::RubberBandDrag || !isInteractive() || !rubberBanding)
+    #if !defined(QT_NO_RUBBERBAND)
+    if(dragMode() != QGraphicsView::RubberBandDrag || !isInteractive() || !rubberBanding)
         return;
     // Check for enough drag distance
-    if ((mousePressViewPoint - event->pos()).manhattanLength() < QApplication::startDragDistance())
+    if((mousePressViewPoint - event->pos()).manhattanLength() < QApplication::startDragDistance())
         return;
 
     // Update old rubberband
-    if (viewportUpdateMode() != QGraphicsView::NoViewportUpdate && !rubberBandRect.isEmpty()) {
-        if (viewportUpdateMode() != QGraphicsView::FullViewportUpdate)
+    if(viewportUpdateMode() != QGraphicsView::NoViewportUpdate && !rubberBandRect.isEmpty())
+    {
+        if(viewportUpdateMode() != QGraphicsView::FullViewportUpdate)
             viewport()->update(rubberBandRegion(viewport(), rubberBandRect));
         else
             update();
@@ -626,9 +622,11 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
 
     // Stop rubber banding if the user has let go of all buttons (even
     // if we didn't get the release events).
-    if (!event->buttons()) {
+    if(!event->buttons())
+    {
         rubberBanding = false;
-        if (!rubberBandRect.isNull()) {
+        if(!rubberBandRect.isNull())
+        {
             rubberBandRect = QRect();
             #if (QT_VERSION >= 0x050100)
             emit rubberBandChanged(rubberBandRect, QPointF(), QPointF());
@@ -645,7 +643,8 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
     rubberBandRect = QRect(qMin(mp.x(), ep.x()), qMin(mp.y(), ep.y()),
                            qAbs(mp.x() - ep.x()) + 1, qAbs(mp.y() - ep.y()) + 1);
 
-    if (rubberBandRect != oldRubberband || lastRubberbandScenePoint != lastMouseMoveScenePoint) {
+    if(rubberBandRect != oldRubberband || lastRubberbandScenePoint != lastMouseMoveScenePoint)
+    {
         lastRubberbandScenePoint = lastMouseMoveScenePoint;
         oldRubberband = rubberBandRect;
         #if (QT_VERSION >= 0x050100)
@@ -654,47 +653,50 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
     }
 
     // Update new rubberband
-    if (viewportUpdateMode() != QGraphicsView::NoViewportUpdate) {
-        if (viewportUpdateMode() != QGraphicsView::FullViewportUpdate)
+    if(viewportUpdateMode() != QGraphicsView::NoViewportUpdate)
+    {
+        if(viewportUpdateMode() != QGraphicsView::FullViewportUpdate)
             viewport()->update(rubberBandRegion(viewport(), rubberBandRect));
         else
             update();
     }
-            // Set the new selection area
+    // Set the new selection area
     QPainterPath selectionArea;
     selectionArea.addPolygon(mapToScene(rubberBandRect));
     selectionArea.closeSubpath();
-    if (scene())
+    if(scene())
     {
         scene()->setSelectionArea(selectionArea, rubberBandSelectionMode, viewportTransform());
-        if ( !rubberBandExtendSelection.isEmpty() )
+        if(!rubberBandExtendSelection.isEmpty())
         {
-           foreach (QGraphicsItem *item, rubberBandExtendSelection) {
-               item->setSelected(true);
-           }
+            for(QGraphicsItem *item : rubberBandExtendSelection)
+                item->setSelected(true);
         }
     }
 
     rubberBandX->setGeometry(rubberBandRect);
-#else
+    #else
     Q_UNUSED(event);
-#endif
+    #endif
 }
 
 void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
 {
-#if !defined(QT_NO_RUBBERBAND)
-    if (dragMode() == QGraphicsView::RubberBandDrag && isInteractive() && !event->buttons()) {
-        if (rubberBanding) {
-            if (viewportUpdateMode() != QGraphicsView::NoViewportUpdate){
-                if (viewportUpdateMode() != FullViewportUpdate)
+    #if !defined(QT_NO_RUBBERBAND)
+    if(dragMode() == QGraphicsView::RubberBandDrag && isInteractive() && !event->buttons())
+    {
+        if(rubberBanding)
+        {
+            if(viewportUpdateMode() != QGraphicsView::NoViewportUpdate)
+            {
+                if(viewportUpdateMode() != FullViewportUpdate)
                     viewport()->update(rubberBandRegion(viewport(), rubberBandRect));
                 else
                     update();
             }
             rubberBanding = false;
             rubberBandX->hide();
-            if (!rubberBandRect.isNull())
+            if(!rubberBandRect.isNull())
             {
                 rubberBandRect = QRect();
                 #if (QT_VERSION >= 0x050100)
@@ -703,31 +705,34 @@ void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
             }
             rubberBandExtendSelection.clear();
         }
-    } else
-#endif
-    if (dragMode() == QGraphicsView::ScrollHandDrag && event->button() == Qt::LeftButton) {
-#ifndef QT_NO_CURSOR
-        // Restore the open hand cursor. ### There might be items
-        // under the mouse that have a valid cursor at this time, so
-        // we could repeat the steps from mouseMoveEvent().
-        viewport()->setCursor(Qt::OpenHandCursor);
-#endif
-        handScrolling = false;
-
-        if (scene() && isInteractive() && !lastMouseEvent.isAccepted() && handScrollMotions <= 6) {
-            // If we've detected very little motion during the hand drag, and
-            // no item accepted the last event, we'll interpret that as a
-            // click to the scene, and reset the selection.
-            scene()->clearSelection();
-        }
     }
+    else
+    #endif
+        if(dragMode() == QGraphicsView::ScrollHandDrag && event->button() == Qt::LeftButton)
+        {
+            #ifndef QT_NO_CURSOR
+            // Restore the open hand cursor. ### There might be items
+            // under the mouse that have a valid cursor at this time, so
+            // we could repeat the steps from mouseMoveEvent().
+            viewport()->setCursor(Qt::OpenHandCursor);
+            #endif
+            handScrolling = false;
+
+            if(scene() && isInteractive() && !lastMouseEvent.isAccepted() && handScrollMotions <= 6)
+            {
+                // If we've detected very little motion during the hand drag, and
+                // no item accepted the last event, we'll interpret that as a
+                // click to the scene, and reset the selection.
+                scene()->clearSelection();
+            }
+        }
 
     storeMouseEvent(event);
 
-    if (!isInteractive())
+    if(!isInteractive())
         return;
 
-    if (!scene())
+    if(!scene())
         return;
 
     QGraphicsSceneMouseEvent mouseEvent(QEvent::GraphicsSceneMouseRelease);
@@ -742,7 +747,7 @@ void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
     mouseEvent.setButton(event->button());
     mouseEvent.setModifiers(event->modifiers());
     mouseEvent.setAccepted(false);
-    if (event->spontaneous())
+    if(event->spontaneous())
         qt_sendSpontaneousEvent(scene(), &mouseEvent);
     else
         QApplication::sendEvent(scene(), &mouseEvent);
@@ -750,13 +755,13 @@ void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
     // Update the last mouse event selected state.
     lastMouseEvent.setAccepted(mouseEvent.isAccepted());
 
-#ifndef QT_NO_CURSOR
-    if (mouseEvent.isAccepted() && mouseEvent.buttons() == 0 && viewport()->testAttribute(Qt::WA_SetCursor))
+    #ifndef QT_NO_CURSOR
+    if(mouseEvent.isAccepted() && mouseEvent.buttons() == 0 && viewport()->testAttribute(Qt::WA_SetCursor))
     {
         // The last mouse release on the viewport will trigger clearing the cursor.
         _q_unsetViewportCursor();
     }
-#endif
+    #endif
 }
 
 #ifdef QT_SHARED // avoid conflict with symbol in static lib
