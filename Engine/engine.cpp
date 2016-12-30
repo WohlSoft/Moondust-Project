@@ -161,15 +161,15 @@ void PGEEngineApp::unloadAll()
     }
 }
 
-PGE_Application *PGEEngineApp::loadQApp(int argc, char **argv)
+PGE_Application *PGEEngineApp::loadQApp(int &argc, char **argv)
 {
     PGE_Application::addLibraryPath(".");
     PGE_Application::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
     PGE_Application::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
     QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
-#endif
+    #endif
     PGE_Application::setAttribute(Qt::AA_Use96Dpi);
     m_qApp = new PGE_Application(argc, argv);
 
@@ -180,6 +180,8 @@ PGE_Application *PGEEngineApp::loadQApp(int argc, char **argv)
     }
 
     m_args = m_qApp->arguments();
+    //! Because Qt Application removes some flags from original argv, need to update the size value
+    argc   = m_args.size();
     //Generating application path
     //Init system paths
     AppPathManager::initAppPath();
@@ -308,7 +310,7 @@ static void printUsage(char *arg0)
         "=================================================\n"
         "\n";
 
-#ifndef _WIN32
+    #ifndef _WIN32
 #define OPTIONAL_BREAK "\n"
     #else
 #define OPTIONAL_BREAK " "
@@ -489,7 +491,7 @@ static int takeIntFromArg(std::string &arg, bool &ok)
     return atoi(s);
 }
 
-void PGEEngineApp::parseHighArgs(int argc, char**argv)
+void PGEEngineApp::parseHighArgs(int argc, char **argv)
 {
     /* Set defaults to global properties */
     g_Episode.character = 0;
@@ -633,7 +635,7 @@ void PGEEngineApp::parseHighArgs(int argc, char**argv)
         }
         else
         {
-            char* str = &param_s[0];
+            char *str = &param_s[0];
             size_t len = param_s.size();
             removeQuotes(str, len);
 

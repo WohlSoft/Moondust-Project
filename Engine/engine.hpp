@@ -163,7 +163,7 @@ public:
      * @param argv Pointer to array of command line arguments
      * @return pointer to instance of Qt Application sub-system. Null if failed to initalize Qt Application
      */
-    PGE_Application *loadQApp(int argc, char **argv);
+    PGE_Application *loadQApp(int &argc, char **argv);
 
     /**
      * @brief Command line arguments
