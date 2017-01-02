@@ -276,15 +276,10 @@ bool ConfigManager::loadPlayableCharacters()
 
             if(splayer.wld_framespeed < 1) splayer.wld_framespeed = 1;
             {
-                QStringList frms;
-                frms = setup.value("frames-down", "").toQString().split(",");
-                for(QString &x : frms) splayer.wld_frames_down.push_back(x.toInt());
-                frms = setup.value("frames-right", "").toQString().split(",");
-                for(QString &x : frms) splayer.wld_frames_right.push_back(x.toInt());
-                frms = setup.value("frames-left", "").toQString().split(",");
-                for(QString &x : frms) splayer.wld_frames_left.push_back(x.toInt());
-                frms = setup.value("frames-up", "").toQString().split(",");
-                for(QString &x : frms) splayer.wld_frames_up.push_back(x.toInt());
+                setup.read("frames-down",   splayer.wld_frames_down);
+                setup.read("frames-right",  splayer.wld_frames_right);
+                setup.read("frames-left",   splayer.wld_frames_left);
+                setup.read("frames-up",     splayer.wld_frames_up);
             }
             setup.endGroup();
             splayer.states.allocateSlots(total_states);
