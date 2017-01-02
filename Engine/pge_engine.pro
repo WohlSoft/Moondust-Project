@@ -112,6 +112,7 @@ unix:{
 }
 
 include($$PWD/../_common/fmt/fmt.pri)
+include($$PWD/../_common/tclap/tclap.pri)
 DEFINES += INI_PROCESSING_ALLOW_QT_TYPES
 include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
