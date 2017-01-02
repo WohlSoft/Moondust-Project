@@ -87,7 +87,7 @@ struct obj_player_state
     double  floating_amplitude;
 
     PGE_DataArray<obj_player_physics > phys;
-    QString event_script;   //!< LUA-Script with events
+    std::string event_script;   //!< LUA-Script with events
 
     obj_player_calibration  sprite_setup;
 
@@ -133,7 +133,7 @@ struct obj_player
     QString script;
 
     std::string name;
-    QString sprite_folder;
+    std::string sprite_folder;
     enum StateTypes
     {
         powerup = 0,

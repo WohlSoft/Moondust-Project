@@ -286,12 +286,12 @@ int  ConfigManager::getLvlPlayerTexture(unsigned long playerID, unsigned long st
         QString imgFile = Dir_PlayerLvl.getCustomFile(state.image_n, &isDefault);
 
         if(isDefault)
-            imgFile = playerLvlPath + plr.sprite_folder + "/" + state.image_n;
+            imgFile = playerLvlPath + QString::fromStdString(plr.sprite_folder) + "/" + state.image_n;
 
         QString maskFile = Dir_PlayerLvl.getCustomFile(state.mask_n, &isDefault);
 
         if(isDefault)
-            maskFile  = playerLvlPath + plr.sprite_folder + "/" + state.mask_n;
+            maskFile  = playerLvlPath + QString::fromStdString(plr.sprite_folder) + "/" + state.mask_n;
 
         int id = level_textures.size();
         state.textureArrayId = id;

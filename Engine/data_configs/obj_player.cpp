@@ -213,12 +213,12 @@ bool ConfigManager::loadPlayableCharacters()
             goto skipPLAYER;
         }
 
-        splayer.sprite_folder = setup.value("sprite-folder", QString("player-%1").arg(i)).toQString();
-        splayer.state_type =  setup.value("sprite-folder", 0).toInt();
-        splayer.matrix_width = setup.value("matrix-width", 10).toInt();
-        splayer.matrix_height = setup.value("matrix-height", 10).toInt();
-        splayer.script =  setup.value("script-file", "").toQString();
-        total_states = setup.value("states-number", 0).toULongLong();
+        setup.read("sprite-folder", splayer.sprite_folder, fmt::format("player-{0}", i));
+        setup.read("sprite-folder", splayer.state_type, 0);
+        setup.read("matrix-width",  splayer.matrix_width, 10);
+        setup.read("matrix-height", splayer.matrix_height, 10);
+        setup.read("script-file",   splayer.script, "");
+        setup.read("states-number", total_states, 0);
 
         if(total_states == 0)
         {
@@ -303,7 +303,7 @@ bool ConfigManager::loadPlayableCharacters()
                     pstate.image_n = imgFile;
                     {
                         QString err;
-                        GraphicsHelps::getMaskedImageInfo(playerLvlPath + splayer.sprite_folder + "/", imgFile, pstate.mask_n, err);
+                        GraphicsHelps::getMaskedImageInfo(playerLvlPath + QString::fromStdString(splayer.sprite_folder) + "/", imgFile, pstate.mask_n, err);
 
                         if(imgFile == "")
                         {
@@ -318,10 +318,10 @@ bool ConfigManager::loadPlayableCharacters()
                     setup.read("default-duck-height", pstate.duck_height, 30);
                     setup.read("default-height", pstate.height, 54);
                     setup.read("default-width", pstate.width, 24);
-                    setup.read("events", pstate.event_script, QString("script/player/%2-%1.lua").arg(i).arg(splayer.sprite_folder));
+                    setup.read("events", pstate.event_script, fmt::format("script/player/{1}-{0}.lua", i, splayer.sprite_folder));
 
                     std::string sprite_settings;
-                    setup.read("sprite-settings", sprite_settings, fmt::format("{1}-{0}.ini", i, splayer.sprite_folder.toStdString()));
+                    setup.read("sprite-settings", sprite_settings, fmt::format("{1}-{0}.ini", i, splayer.sprite_folder));
 
                     if(pstate.sprite_setup.load(config_dir.toStdString() + "characters/" + sprite_settings))
                     {
