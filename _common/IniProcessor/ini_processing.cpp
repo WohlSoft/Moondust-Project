@@ -1,7 +1,7 @@
 /*
 INI Processor - a small library which allows you parsing INI-files
 
-Copyright (c) 2016 Vitaliy Novichkov <admin@wohlnet.ru>
+Copyright (c) 2017 Vitaliy Novichkov <admin@wohlnet.ru>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -842,20 +842,19 @@ inline void StrToNumVectorHelper(const std::string &source, TList &dest, const t
     {
         std::stringstream ss(source);
         std::string item;
-        std::vector<std::string> splittedStrings;
-
         while(std::getline(ss, item, ','))
         {
             try
             {
-                if(std::is_same<T, int>::value)
-                    dest.push_back(static_cast<int>(std::strtoul(item.c_str(), NULL, 0)));
-                else if(std::is_same<T, long>::value)
-                    dest.push_back(std::atol(item.c_str()));
-                else if(std::is_same<T, unsigned int>::value)
-                    dest.push_back(static_cast<unsigned int>(std::strtoul(item.c_str(), NULL, 0)));
-                else if(std::is_same<T, unsigned long>::value)
-                    dest.push_back(std::strtoul(item.c_str(), NULL, 0));
+                if(std::is_same<T, int>::value ||
+                   std::is_same<T, long>::value ||
+                   std::is_same<T, short>::value)
+                    dest.push_back(static_cast<T>(std::strtol(item.c_str(), NULL, 0)));
+                else
+                if(std::is_same<T, unsigned int>::value ||
+                   std::is_same<T, unsigned long>::value ||
+                   std::is_same<T, unsigned short>::value)
+                    dest.push_back(static_cast<T>(std::strtoul(item.c_str(), NULL, 0)));
                 else if(std::is_same<T, float>::value)
                     dest.push_back(std::strtof(item.c_str(), NULL));
                 else
@@ -874,10 +873,11 @@ inline void StrToNumVectorHelper(const std::string &source, TList &dest, const t
         dest.push_back(def);
 }
 
-void IniProcessing::read(const char *key, std::vector<unsigned int> &dest, const std::vector<unsigned int> &defVal)
+template<class TList, typename T>
+void readNumArrHelper(IniProcessing* self, const char *key, TList &dest, const TList &defVal)
 {
     bool ok = false;
-    params::IniKeys::iterator e = readHelper(key, ok);
+    IniProcessing::params::IniKeys::iterator e = self->readHelper(key, ok);
 
     if(!ok)
     {
@@ -885,73 +885,135 @@ void IniProcessing::read(const char *key, std::vector<unsigned int> &dest, const
         return;
     }
 
-    StrToNumVectorHelper(e->second, dest, 0u);
+    StrToNumVectorHelper(e->second, dest, static_cast<T>(0));
+}
+
+void IniProcessing::read(const char* key, std::vector<unsigned short>& dest, const std::vector<unsigned short>& defVal)
+{
+    readNumArrHelper<std::vector<unsigned short>, unsigned short>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, std::vector<short>& dest, const std::vector<short>& defVal)
+{
+    readNumArrHelper<std::vector<short>, short>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char *key, std::vector<unsigned int> &dest, const std::vector<unsigned int> &defVal)
+{
+    readNumArrHelper<std::vector<unsigned int>, unsigned int>(this, key, dest, defVal);
 }
 void IniProcessing::read(const char *key, std::vector<int> &dest, const std::vector<int> &defVal)
 {
-    bool ok = false;
-    params::IniKeys::iterator e = readHelper(key, ok);
-
-    if(!ok)
-    {
-        dest = defVal;
-        return;
-    }
-
-    StrToNumVectorHelper(e->second, dest, 0);
+    readNumArrHelper<std::vector<int>, int>(this, key, dest, defVal);
 }
 void IniProcessing::read(const char *key, std::vector<unsigned long> &dest, const std::vector<unsigned long> &defVal)
 {
-    bool ok = false;
-    params::IniKeys::iterator e = readHelper(key, ok);
-
-    if(!ok)
-    {
-        dest = defVal;
-        return;
-    }
-
-    StrToNumVectorHelper(e->second, dest, 0ul);
+    readNumArrHelper<std::vector<unsigned long>, unsigned long>(this, key, dest, defVal);
 }
 void IniProcessing::read(const char *key, std::vector<long> &dest, const std::vector<long> &defVal)
 {
-    bool ok = false;
-    params::IniKeys::iterator e = readHelper(key, ok);
-
-    if(!ok)
-    {
-        dest = defVal;
-        return;
-    }
-
-    StrToNumVectorHelper(e->second, dest, 0l);
+    readNumArrHelper<std::vector<long>, long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, std::vector<unsigned long long>& dest, const std::vector<unsigned long long>& defVal)
+{
+    readNumArrHelper<std::vector<unsigned long long>, unsigned long long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, std::vector<long long>& dest, const std::vector<long long>& defVal)
+{
+    readNumArrHelper<std::vector<long long>, long long>(this, key, dest, defVal);
 }
 void IniProcessing::read(const char *key, std::vector<float> &dest, const std::vector<float> &defVal)
 {
-    bool ok = false;
-    params::IniKeys::iterator e = readHelper(key, ok);
-
-    if(!ok)
-    {
-        dest = defVal;
-        return;
-    }
-
-    StrToNumVectorHelper(e->second, dest, 0.0f);
+    readNumArrHelper<std::vector<float>, float>(this, key, dest, defVal);
 }
 void IniProcessing::read(const char *key, std::vector<double> &dest, const std::vector<double> &defVal)
 {
-    bool ok = false;
-    params::IniKeys::iterator e = readHelper(key, ok);
-
-    if(!ok)
-    {
-        dest = defVal;
-        return;
-    }
-
-    StrToNumVectorHelper(e->second, dest, 0.0);
+    readNumArrHelper<std::vector<double>, double>(this, key, dest, defVal);
 }
+
+#ifdef INI_PROCESSING_ALLOW_QT_TYPES
+void IniProcessing::read(const char* key, QList<short>& dest, const QList<short>& defVal)
+{
+    readNumArrHelper<QList<short>, short>(this, key, dest, defVal);
+}
+
+void IniProcessing::read(const char* key, QList<unsigned short>& dest, const QList<unsigned short>& defVal)
+{
+    readNumArrHelper<QList<unsigned short>, unsigned short>(this, key, dest, defVal);
+}
+
+void IniProcessing::read(const char* key, QList<int>& dest, const QList<int>& defVal)
+{
+    readNumArrHelper<QList<int>, int>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QList<unsigned int>& dest, const QList<unsigned int>& defVal)
+{
+    readNumArrHelper<QList<unsigned int>, unsigned int>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QList<long>& dest, const QList<long>& defVal)
+{
+    readNumArrHelper<QList<long>, long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QList<unsigned long>& dest, const QList<unsigned long>& defVal)
+{
+    readNumArrHelper<QList<unsigned long>, unsigned long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QList<long long>& dest, const QList<long long>& defVal)
+{
+    readNumArrHelper<QList<long long>, long long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QList<unsigned long long>& dest, const QList<unsigned long long>& defVal)
+{
+    readNumArrHelper<QList<unsigned long long>, unsigned long long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QList<float>& dest, const QList<float>& defVal)
+{
+    readNumArrHelper<QList<float>, float>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QList<double>& dest, const QList<double>& defVal)
+{
+    readNumArrHelper<QList<double>, double>(this, key, dest, defVal);
+}
+
+void IniProcessing::read(const char* key, QVector<short>& dest, const QVector<short>& defVal)
+{
+    readNumArrHelper<QVector<short>, short>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<unsigned short>& dest, const QVector<unsigned short>& defVal)
+{
+    readNumArrHelper<QVector<unsigned short>, unsigned short>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<int>& dest, const QVector<int>& defVal)
+{
+    readNumArrHelper<QVector<int>, int>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<unsigned int>& dest, const QVector<unsigned int>& defVal)
+{
+    readNumArrHelper<QVector<unsigned int>, unsigned int>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<long>& dest, const QVector<long>& defVal)
+{
+    readNumArrHelper<QVector<long>, long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<unsigned long>& dest, const QVector<unsigned long>& defVal)
+{
+    readNumArrHelper<QVector<unsigned long>, unsigned long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<long long>& dest, const QVector<long long>& defVal)
+{
+    readNumArrHelper<QVector<long long>, long long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<unsigned long long>& dest, const QVector<unsigned long long>& defVal)
+{
+    readNumArrHelper<QVector<unsigned long long>, unsigned long long>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<float>& dest, const QVector<float>& defVal)
+{
+    readNumArrHelper<QVector<float>, float>(this, key, dest, defVal);
+}
+void IniProcessing::read(const char* key, QVector<double>& dest, const QVector<double>& defVal)
+{
+    readNumArrHelper<QVector<double>, double>(this, key, dest, defVal);
+}
+#endif
 
 
 IniProcessingVariant IniProcessing::value(const char *key, const IniProcessingVariant &defVal)

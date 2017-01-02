@@ -1,7 +1,7 @@
 /*
 INI Processor - a small library which allows you parsing INI-files
 
-Copyright (c) 2016 Vitaliy Novichkov <admin@wohlnet.ru>
+Copyright (c) 2017 Vitaliy Novichkov <admin@wohlnet.ru>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -32,6 +32,8 @@ DEALINGS IN THE SOFTWARE.
 #include <unordered_map>
 #ifdef INI_PROCESSING_ALLOW_QT_TYPES
 #include <QString>
+#include <QList>
+#include <QVector>
 #endif
 
 #include "ini_processing_variant.h"
@@ -73,6 +75,9 @@ private:
         IniKeys    *currentGroup;
         std::string currentGroupName;
     } m_params;
+
+    template<class TList, typename T>
+    friend void readNumArrHelper(IniProcessing* self, const char *key, TList &dest, const TList &defVal);
 
     bool parseHelper(char *data, size_t size);
 
@@ -285,6 +290,20 @@ public:
      * @param [_OUT] dest Reference to destination variable to store retrieved value
      * @param [_IN] defVal Default value for case of non-existing key
      */
+    void read(const char *key, std::vector<unsigned short> &dest, const std::vector<unsigned short> &defVal = std::vector<unsigned short>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, std::vector<short> &dest, const std::vector<short> &defVal = std::vector<short>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
     void read(const char *key, std::vector<unsigned int> &dest, const std::vector<unsigned int> &defVal = std::vector<unsigned int>());
     /**
      * @brief Retreive value by specific key and pass it via reference
@@ -313,6 +332,20 @@ public:
      * @param [_OUT] dest Reference to destination variable to store retrieved value
      * @param [_IN] defVal Default value for case of non-existing key
      */
+    void read(const char *key, std::vector<unsigned long long> &dest, const std::vector<unsigned long long> &defVal = std::vector<unsigned long long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, std::vector<long long> &dest, const std::vector<long long> &defVal = std::vector<long long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
     void read(const char *key, std::vector<float> &dest, const std::vector<float> &defVal = std::vector<float>());
     /**
      * @brief Retreive value by specific key and pass it via reference
@@ -322,7 +355,151 @@ public:
      */
     void read(const char *key, std::vector<double> &dest, const std::vector<double> &defVal = std::vector<double>());
 
+    #ifdef INI_PROCESSING_ALLOW_QT_TYPES
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<short> &dest, const QList<short> &defVal = QList<short>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<unsigned short> &dest, const QList<unsigned short> &defVal = QList<unsigned short>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<int> &dest, const QList<int> &defVal = QList<int>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<unsigned int> &dest, const QList<unsigned int> &defVal = QList<unsigned int>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<long> &dest, const QList<long> &defVal = QList<long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<unsigned long> &dest, const QList<unsigned long> &defVal = QList<unsigned long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<long long> &dest, const QList<long long> &defVal = QList<long long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<unsigned long long> &dest, const QList<unsigned long long> &defVal = QList<unsigned long long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<float> &dest, const QList<float> &defVal = QList<float>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<double> &dest, const QList<double> &defVal = QList<double>());
 
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<short> &dest, const QVector<short> &defVal = QVector<short>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<unsigned short> &dest, const QVector<unsigned short> &defVal = QVector<unsigned short>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<int> &dest, const QVector<int> &defVal = QVector<int>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<unsigned int> &dest, const QVector<unsigned int> &defVal = QVector<unsigned int>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<long> &dest, const QVector<long> &defVal = QVector<long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<unsigned long> &dest, const QVector<unsigned long> &defVal = QVector<unsigned long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<long long> &dest, const QVector<long long> &defVal = QVector<long long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<unsigned long long> &dest, const QVector<unsigned long long> &defVal = QVector<unsigned long long>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<float> &dest, const QVector<float> &defVal = QVector<float>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<double> &dest, const QVector<double> &defVal = QVector<double>());
+    #endif
+
+    //! Hash-table for the fast string to enum conversion
     typedef std::unordered_map<std::string, int> StrEnumMap;
 
 
