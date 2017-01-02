@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <IniProcessor/ini_processing.h>
 
 namespace ConfigManager
 {

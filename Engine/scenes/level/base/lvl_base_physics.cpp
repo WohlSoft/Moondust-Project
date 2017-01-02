@@ -97,15 +97,15 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
         int target_id = static_cast<int>(nearest->setup->setup.plSwitch_Button_id - 1);
-        QVector<saveCharState> &states = player->_scene->getGameState()->game_state.characterStates;
+        QVector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
 
         if(target_id >= states.size())
         {
-            PlayerState x = player->_scene->getGameState()->getPlayerState(player->playerID);
+            PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
             x.characterID    = static_cast<unsigned int>(target_id + 1);
             x.stateID        = 1;
             x._chsetup.state = 1;
-            player->_scene->getGameState()->setPlayerState(player->playerID, x);
+            player->m_scene->getGameState()->setPlayerState(player->playerID, x);
         }
 
         saveCharState &st = states[target_id];
@@ -118,7 +118,7 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     if(m_paused && !force)
         return;
 
-    double G = phys_setup.gravityScale * _scene->globalGravity;
+    double G = phys_setup.gravityScale * m_scene->globalGravity;
     double accelCof = ticks / 1000.0;
     double Xmod = 0.0;
 
@@ -662,7 +662,7 @@ void PGE_Phys_Object::updateCollisions()
         posRectC.setBottom(posRectC.bottom() + m_slopeFloor.rect.h * 1.5);
     }
 
-    _scene->queryItems(posRectC, &objs);
+    m_scene->queryItems(posRectC, &objs);
     double k = 0;
     int tm = -1, td = 0;
     PhysObject::ContactAt contactAt = PhysObject::Contact_None;

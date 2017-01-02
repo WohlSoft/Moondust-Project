@@ -34,16 +34,22 @@ WorldScene_Portrait::WorldScene_Portrait(
     int framedelay,
     int dir)
 {
-    init(CharacterID, stateID, posX, posY, ani, framedelay, dir);
+    init(CharacterID, stateID, posX, posY, ani.toStdString(), framedelay, dir);
 }
 
 WorldScene_Portrait::~WorldScene_Portrait()
 {}
 
-void WorldScene_Portrait::init(unsigned long CharacterID, unsigned long stateID, int _posX, int _posY, QString ani, int framedelay, int dir)
+void WorldScene_Portrait::init(unsigned long CharacterID,
+                               unsigned long stateID,
+                               int posX,
+                               int posY,
+                               std::string ani,
+                               int framedelay,
+                               int dir)
 {
-    m_posX = _posX;
-    m_posY = _posY;
+    m_posX = posX;
+    m_posY = posY;
     m_setup = ConfigManager::playable_characters[CharacterID];
     m_state_cur = ConfigManager::playable_characters[CharacterID].states[stateID];
     m_posX_render = m_posX - m_state_cur.width / 2;
@@ -51,16 +57,14 @@ void WorldScene_Portrait::init(unsigned long CharacterID, unsigned long stateID,
     m_frameW = 0;
     m_frameH = 0;
     int tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
-
     if(tID >= 0)
     {
-        m_texture = ConfigManager::level_textures[tID];
-        m_frameW = ConfigManager::level_textures[tID].w / m_setup.matrix_width;
-        m_frameH = ConfigManager::level_textures[tID].h / m_setup.matrix_height;
+        m_texture   = ConfigManager::level_textures[tID];
+        m_frameW    = ConfigManager::level_textures[tID].w / m_setup.matrix_width;
+        m_frameH    = ConfigManager::level_textures[tID].h / m_setup.matrix_height;
     }
-
     m_animator.setSize(m_setup.matrix_width, m_setup.matrix_height);
-    m_animator.installAnimationSet(m_state_cur.sprite_setup);
+    m_isValid = m_animator.installAnimationSet(m_state_cur.sprite_setup);
     m_animator.switchAnimation(m_animator.toEnum(ani), dir, framedelay);
 }
 
@@ -88,4 +92,9 @@ void WorldScene_Portrait::render()
 void WorldScene_Portrait::update(double ticks)
 {
     m_animator.tickAnimation(ticks);
+}
+
+bool WorldScene_Portrait::isValid() const
+{
+    return m_isValid;
 }

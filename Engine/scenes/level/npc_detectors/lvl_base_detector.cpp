@@ -29,7 +29,7 @@ BasicDetector::BasicDetector()
 BasicDetector::BasicDetector(LVL_Npc *parent)
 {
     _parentNPC = parent;
-    _scene = parent->_scene;
+    _scene = parent->m_scene;
     _detected=false;
 }
 

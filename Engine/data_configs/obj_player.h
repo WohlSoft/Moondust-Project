@@ -24,6 +24,7 @@
 #include <common_features/data_array.h>
 #include "spawn_effect_def.h"
 
+#include <string>
 #include <QString>
 #include <QPixmap>
 #include <QMap>
@@ -76,7 +77,7 @@ struct obj_player_physics
 
 struct obj_player_state
 {
-    QString name;
+    std::string name;
     int     width;
     int     height;
     bool    duck_allow;
@@ -131,7 +132,7 @@ struct obj_player
     //! LUA-Script of playable character
     QString script;
 
-    QString name;
+    std::string name;
     QString sprite_folder;
     enum StateTypes
     {

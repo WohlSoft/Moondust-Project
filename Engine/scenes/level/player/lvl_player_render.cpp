@@ -24,7 +24,7 @@
 void LVL_Player::render(double camX, double camY)
 {
     if(!isAlive) return;
-    if(!_isInited) return;
+    if(!m_isInited) return;
     if(_no_render) return;
 
     if(blink_screen)

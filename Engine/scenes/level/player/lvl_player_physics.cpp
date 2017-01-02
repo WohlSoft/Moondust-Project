@@ -33,15 +33,15 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
         unsigned long target_id = (nearest->setup->setup.plSwitch_Button_id - 1);
-        QVector<saveCharState> &states = player->_scene->getGameState()->game_state.characterStates;
+        QVector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
 
         if(target_id >= static_cast<unsigned long>(states.size()))
         {
-            PlayerState x = player->_scene->getGameState()->getPlayerState(player->playerID);
+            PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
             x.characterID    = target_id + 1;
             x.stateID        = 1;
             x._chsetup.state = 1;
-            player->_scene->getGameState()->setPlayerState(player->playerID, x);
+            player->m_scene->getGameState()->setPlayerState(player->playerID, x);
         }
 
         saveCharState &st = states[static_cast<int>(target_id)];

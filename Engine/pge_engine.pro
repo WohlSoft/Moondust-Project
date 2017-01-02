@@ -111,6 +111,9 @@ unix:{
     CONFIG(debug, debug|release):||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
 }
 
+include($$PWD/../_common/fmt/fmt.pri)
+DEFINES += INI_PROCESSING_ALLOW_QT_TYPES
+include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)

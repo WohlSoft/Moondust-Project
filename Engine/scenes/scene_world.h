@@ -168,7 +168,7 @@ class WorldScene : public Scene
         QVector<WorldScene_misc_img > imgs;
         QVector<WorldScene_Portrait > portraits;
 
-        TileBox _indexTable;
+        TileBox m_indexTable;
         QList<WldTileItem >     wld_tiles;
         QList<WldSceneryItem >  wld_sceneries;
         QList<WldPathItem >     wld_paths;

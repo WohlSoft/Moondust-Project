@@ -44,18 +44,18 @@ void LVL_Npc::init()
         }
         catch(luabind::error &e)
         {
-            _scene->getLuaEngine()->postLateShutdownError(e);
+            m_scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
 
     m_isInited = true;
-    _scene->layers.registerItem(data.layer, this);
+    m_scene->layers.registerItem(data.layer, this);
     m_momentum.saveOld();
 }
 
 void LVL_Npc::setScenePointer(LevelScene *_pointer)
 {
-    _scene = _pointer;
+    m_scene = _pointer;
     detector_player_pos._scene = _pointer;
 }
 
@@ -96,9 +96,9 @@ void LVL_Npc::transformTo(unsigned long id, int type)
         if(transformedFromBlock)
         {
             def = transformedFromBlock->data;
-            _scene->layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
+            m_scene->layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
             transformedFromBlock->data.layer = data.layer;
-            _scene->layers.registerItem(data.layer, transformedFromBlock);
+            m_scene->layers.registerItem(data.layer, transformedFromBlock);
             transformedFromBlock->setPos(round(posX()), round(posY()));
             transformedFromBlock->setDestroyed(false);
             transformedFromBlock->transformTo(id, 2);
@@ -113,7 +113,7 @@ void LVL_Npc::transformTo(unsigned long id, int type)
             def.w = static_cast<long>(round(width()));
             def.h = static_cast<long>(round(height()));
             def.id = id;
-            LVL_Block *res = _scene->spawnBlock(def);
+            LVL_Block *res = m_scene->spawnBlock(def);
 
             if(res)
             {
@@ -177,11 +177,11 @@ void LVL_Npc::transformTo_x(unsigned long id)
         targetZ = LevelScene::zOrder.npcStd;
 
     z_index = targetZ + static_cast<long double>(setup->setup.z_offset);
-    _scene->zCounter += 0.0000000000001L;
-    z_index += _scene->zCounter;
+    m_scene->zCounter += 0.0000000000001L;
+    z_index += m_scene->zCounter;
 
-    if(_scene->zCounter >= 1.0L)
-        _scene->zCounter = 0.0L;
+    if(m_scene->zCounter >= 1.0L)
+        m_scene->zCounter = 0.0L;
 
     int tID = ConfigManager::getNpcTexture(_npc_id);
 
@@ -288,7 +288,7 @@ void LVL_Npc::transformTo_x(unsigned long id)
         }
         catch(luabind::error &e)
         {
-            _scene->getLuaEngine()->postLateShutdownError(e);
+            m_scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
 }

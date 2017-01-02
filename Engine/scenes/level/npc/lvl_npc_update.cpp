@@ -117,6 +117,6 @@ void LVL_Npc::update(double tickTime)
     }
     catch(luabind::error &e)
     {
-        _scene->getLuaEngine()->postLateShutdownError(e);
+        m_scene->getLuaEngine()->postLateShutdownError(e);
     }
 }

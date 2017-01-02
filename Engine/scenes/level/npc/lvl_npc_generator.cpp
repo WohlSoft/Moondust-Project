@@ -39,7 +39,7 @@ void LVL_Npc::updateGenerator(double tickTime)
         def.y = Maths::lRound(posY());
         def.generator = false;
         def.layer = "Spawned NPCs";
-        _scene->spawnNPC(def,
+        m_scene->spawnNPC(def,
                          static_cast<LevelScene::NpcSpawnType>(generatorType),
                          static_cast<LevelScene::NpcSpawnDirection>(generatorDirection), false);
     }

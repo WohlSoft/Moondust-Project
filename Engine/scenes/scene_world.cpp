@@ -124,7 +124,7 @@ WorldScene::~WorldScene()
 {
     PGE_MusPlayer::stop();
     wld_events.abort();
-    _indexTable.clean();
+    m_indexTable.clean();
     wldItems.clear();
     _itemsToRender.clear();
     wld_tiles.clear();
@@ -242,14 +242,18 @@ bool WorldScene::init()
     luaEngine.setUserFile(ConfigManager::setup_WorldMap.luaFile);
     luaEngine.setErrorReporterFunc([this](const QString & errorMessage, const QString & stacktrace)
     {
-        qWarning() << "Lua-Error: ";
-        qWarning() << "Error Message: " << errorMessage;
-        qWarning() << "Stacktrace: \n" << stacktrace;
-        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        pLogWarning("Lua-Error: ");
+        pLogWarning("Error Message: %s", errorMessage.toUtf8().data());
+        pLogWarning("Stacktrace: \n%s", stacktrace.toUtf8().data());
+        PGE_MsgBox msgBox(this,
+                          QString("A lua error has been thrown: \n")
+                          + errorMessage + "\n\n"
+                          "More details in the log!",
+                          PGE_MsgBox::msg_error);
         msgBox.exec();
     });
     luaEngine.init();
-    _indexTable.clean();
+    m_indexTable.clean();
     wldItems.clear();
     _itemsToRender.clear();
     wld_tiles.clear();
@@ -301,8 +305,17 @@ bool WorldScene::init()
                                          common_setup.portrait_animation,
                                          common_setup.portrait_frame_delay,
                                          common_setup.portrait_direction);
-            portraits.push_back(portrait);
-            player_portrait_x += player_portrait_step;
+            if(portrait.isValid())
+            {
+                portraits.push_back(portrait);
+                player_portrait_x += player_portrait_step;
+            }
+            else
+            {
+                pLogWarning("Fail to initialize portrait "
+                            "of playable character %ul with state %ul",
+                            state.characterID, state.stateID);
+            }
         }
     }
 
@@ -332,7 +345,7 @@ bool WorldScene::init()
             continue;
 
         wld_tiles << tile;
-        _indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &(wld_tiles.last()));
+        m_indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &(wld_tiles.last()));
     }
 
     for(int i = 0; i < data.scenery.size(); i++)
@@ -343,7 +356,7 @@ bool WorldScene::init()
             continue;
 
         wld_sceneries << scenery;
-        _indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &(wld_sceneries.last()));
+        m_indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &(wld_sceneries.last()));
     }
 
     for(int i = 0; i < data.paths.size(); i++)
@@ -354,7 +367,7 @@ bool WorldScene::init()
             continue;
 
         wld_paths << path;
-        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
+        m_indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
     }
 
     for(int i = 0; i < data.levels.size(); i++)
@@ -365,7 +378,7 @@ bool WorldScene::init()
             continue;
 
         wld_levels << levelp;
-        _indexTable.addNode(levelp.x + static_cast<long>(levelp.offset_x),
+        m_indexTable.addNode(levelp.x + static_cast<long>(levelp.offset_x),
                             levelp.y + static_cast<long>(levelp.offset_y),
                             levelp.texture.w,
                             levelp.texture.h,
@@ -379,7 +392,7 @@ bool WorldScene::init()
         musicbox.g = 0.5f;
         musicbox.b = 1.f;
         wld_musicboxes << musicbox;
-        _indexTable.addNode(musicbox.x, musicbox.y, musicbox.w, musicbox.h, &(wld_musicboxes.last()));
+        m_indexTable.addNode(musicbox.x, musicbox.y, musicbox.w, musicbox.h, &(wld_musicboxes.last()));
     }
 
     //Apply vizibility settings to elements
@@ -812,7 +825,7 @@ void WorldScene::update()
         }
 
         _itemsToRender.clear();
-        _indexTable.query(Maths::lRound(posX - (viewportRect.width() / 2)),
+        m_indexTable.query(Maths::lRound(posX - (viewportRect.width() / 2)),
                           Maths::lRound(posY - (viewportRect.height() / 2)),
                           Maths::lRound(posX + (viewportRect.width() / 2)),
                           Maths::lRound(posY + (viewportRect.height() / 2)),
@@ -917,27 +930,27 @@ void WorldScene::updateAvailablePaths()
     QVector<WorldNode * > nodes;
     long x, y;
     //left
-    x = Maths::lRound(posX + _indexTable.grid_half() - _indexTable.grid());
-    y = Maths::lRound(posY + _indexTable.grid_half());
-    _indexTable.query(x, y, nodes);
+    x = Maths::lRound(posX + m_indexTable.grid_half() - m_indexTable.grid());
+    y = Maths::lRound(posY + m_indexTable.grid_half());
+    m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_left, nodes, x, y);
     nodes.clear();
     //Right
-    x = Maths::lRound(posX + _indexTable.grid_half() + _indexTable.grid());
-    y = Maths::lRound(posY + _indexTable.grid_half());
-    _indexTable.query(x, y, nodes);
+    x = Maths::lRound(posX + m_indexTable.grid_half() + m_indexTable.grid());
+    y = Maths::lRound(posY + m_indexTable.grid_half());
+    m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_right, nodes, x, y);
     nodes.clear();
     //Top
-    x = Maths::lRound(posX + _indexTable.grid_half());
-    y = Maths::lRound(posY + _indexTable.grid_half() - _indexTable.grid());
-    _indexTable.query(x, y, nodes);
+    x = Maths::lRound(posX + m_indexTable.grid_half());
+    y = Maths::lRound(posY + m_indexTable.grid_half() - m_indexTable.grid());
+    m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_up, nodes, x, y);
     nodes.clear();
     //Bottom
-    x = Maths::lRound(posX + _indexTable.grid_half());
-    y = Maths::lRound(posY + _indexTable.grid_half() + _indexTable.grid());
-    _indexTable.query(x, y, nodes);
+    x = Maths::lRound(posX + m_indexTable.grid_half());
+    y = Maths::lRound(posY + m_indexTable.grid_half() + m_indexTable.grid());
+    m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_down, nodes, x, y);
     nodes.clear();
 }
@@ -953,9 +966,9 @@ void WorldScene::updateCenter()
     levelTitle.clear();
     jumpTo = false;
     QVector<WorldNode * > nodes;
-    long px = Maths::lRound(posX + _indexTable.grid_half());
-    long py = Maths::lRound(posY + _indexTable.grid_half());
-    _indexTable.query(px, py, nodes);
+    long px = Maths::lRound(posX + m_indexTable.grid_half());
+    long py = Maths::lRound(posY + m_indexTable.grid_half());
+    m_indexTable.query(px, py, nodes);
 
     for(WorldNode *x : nodes)
     {
@@ -1288,7 +1301,7 @@ void WorldScene::render()
                                .arg(posX)
                                .arg(posY), 300, 10);
         {
-            PGE_Point grid = _indexTable.applyGrid(Maths::lRound(posX), Maths::lRound(posY));
+            PGE_Point grid = m_indexTable.applyGrid(Maths::lRound(posX), Maths::lRound(posY));
             FontManager::printText(QString("TILE X=%1 Y=%2")
                                    .arg(grid.x())
                                    .arg(grid.y()), 300, 45);

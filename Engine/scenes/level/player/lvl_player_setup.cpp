@@ -21,22 +21,25 @@
 
 #include <audio/pge_audio.h>
 #include <data_configs/config_manager.h>
+#include <common_features/logger.h>
 
 #include <script/bindings/level/classes/luaclass_level_playerstate.h>
 
 bool LVL_Player::isInited()
 {
-    return _isInited;
+    return m_isInited;
 }
 
-void LVL_Player::init()
+bool LVL_Player::init()
 {
-    setCharacter(characterID, stateID);
+    if(!setCharacter(characterID, stateID))
+        return false;
     _direction = data.direction;
     long posX = data.x + (data.w / 2) - (state_cur.width / 2);
     long posY = data.y = data.y + data.h - state_cur.height;
     setSize(state_cur.width, state_cur.height);
     setPos(posX, posY);
+
     phys_setup.max_vel_y = 12;
     animator.tickAnimation(0.0);
     isLocked = false;
@@ -49,24 +52,25 @@ void LVL_Player::init()
         }
         catch(luabind::error &e)
         {
-            _scene->getLuaEngine()->postLateShutdownError(e);
-            return;
+            m_scene->getLuaEngine()->postLateShutdownError(e);
+            return false;
         }
     }
 
-    _isInited = true;
+    m_isInited = true;
     _syncSection();
     m_momentum.saveOld();
+    return true;
 }
 
-void LVL_Player::setCharacter(unsigned long CharacterID, unsigned long _stateID)
+bool LVL_Player::setCharacter(unsigned long CharacterID, unsigned long _stateID)
 {
     if(!_doSafeSwitchCharacter)
     {
         if(!ConfigManager::playable_characters.contains(CharacterID))
         {
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerSpring);
-            return;
+            return false;
         }
         else
             setup = ConfigManager::playable_characters[CharacterID];
@@ -76,12 +80,13 @@ void LVL_Player::setCharacter(unsigned long CharacterID, unsigned long _stateID)
         if(!states.contains(_stateID))
         {
             PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
-            return;
+            return false;
         }
         else
             state_cur = states[_stateID];
     }
-    else _doSafeSwitchCharacter = false;
+    else
+        _doSafeSwitchCharacter = false;
 
     physics = setup.phys_default;
     physics_cur = physics[static_cast<unsigned long>(abs(environment))];
@@ -96,24 +101,29 @@ void LVL_Player::setCharacter(unsigned long CharacterID, unsigned long _stateID)
     }
 
     animator.setSize(setup.matrix_width, setup.matrix_height);
-    animator.installAnimationSet(state_cur.sprite_setup);
-    phys_setup.max_vel_x = fabs(_isRunning ?
-                                physics_cur.MaxSpeed_run :
-                                physics_cur.MaxSpeed_walk);
+    if(!animator.installAnimationSet(state_cur.sprite_setup))
+    {
+        pLogCritical("Fail to initialize animator for the playable character %lu with state %1u.",
+                     characterID, stateID);
+        return false;
+    }
+    phys_setup.max_vel_x =  fabs(_isRunning ?
+                                 physics_cur.MaxSpeed_run :
+                                 physics_cur.MaxSpeed_walk);
     phys_setup.min_vel_x = -fabs(_isRunning ?
                                  physics_cur.MaxSpeed_run :
                                  physics_cur.MaxSpeed_walk);
-    phys_setup.max_vel_y = fabs(physics_cur.MaxSpeed_down);
+    phys_setup.max_vel_y =  fabs(physics_cur.MaxSpeed_down);
     phys_setup.min_vel_y = -fabs(physics_cur.MaxSpeed_up);
     phys_setup.decelerate_x = physics_cur.decelerate_air;
     phys_setup.gravityScale = physics_cur.gravity_scale;
     phys_setup.gravityAccel = physics_cur.gravity_accel;
     phys_setup.grd_dec_x    = physics_cur.walk_force;
     /********************floating************************/
-    floating_allow = state_cur.allow_floating;
-    floating_maxtime = state_cur.floating_max_time; //!< Max time to float
+    floating_allow   = state_cur.allow_floating;
+    floating_maxtime = state_cur.floating_max_time; // Max time to float
 
-    if(_isInited)
+    if(m_isInited)
     {
         if(!floating_allow && floating_isworks)
             floating_timer = 0;
@@ -133,20 +143,20 @@ void LVL_Player::setCharacter(unsigned long CharacterID, unsigned long _stateID)
         global_state->setStateID(_stateID);
     }
 
-    if(_isInited)
+    if(m_isInited)
     {
         ducking = (ducking & state_cur.duck_allow);
         double cx = m_momentum.centerX();
         double b = m_momentum.bottom();
         setSize(state_cur.width, ducking ? state_cur.duck_height : state_cur.height);
         setPos(cx - m_width_registered / 2, b - m_height_registered);
-        PlayerState x = _scene->getGameState()->getPlayerState(playerID);
+        PlayerState x = m_scene->getGameState()->getPlayerState(playerID);
         x.characterID    = characterID;
         x.stateID        = stateID;
         x._chsetup.state = stateID;
-        _scene->getGameState()->setPlayerState(playerID, x);
+        m_scene->getGameState()->setPlayerState(playerID, x);
         //Apply changed animation on character switchers and configure switches and filters
-        _scene->character_switchers.refreshState();
+        m_scene->character_switchers.refreshState();
 
         try
         {
@@ -154,9 +164,11 @@ void LVL_Player::setCharacter(unsigned long CharacterID, unsigned long _stateID)
         }
         catch(luabind::error &e)
         {
-            _scene->getLuaEngine()->postLateShutdownError(e);
+            m_scene->getLuaEngine()->postLateShutdownError(e);
+            return false;
         }
     }
+    return true;
 }
 
 void LVL_Player::setCharacterSafe(unsigned long CharacterID, unsigned long _stateID)
@@ -193,7 +205,7 @@ void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
 {
     data = pt;
     playerID = static_cast<int>(pt.id);
-    PlayerState x = _scene->getGameState()->getPlayerState(playerID);
+    PlayerState x = m_scene->getGameState()->getPlayerState(playerID);
     characterID = x.characterID;
     stateID     = x._chsetup.state;
     health      = static_cast<int>(x._chsetup.health);
@@ -201,7 +213,7 @@ void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
     if(global_state)
         global_state->setHealth(health);
 
-    if(_isInited)
+    if(m_isInited)
         setCharacter(characterID, stateID);
 }
 
@@ -234,9 +246,9 @@ LVL_Npc *LVL_Player::lua_spawnNPC(unsigned long npcID, int sp_type, int sp_dir, 
     def.event_die = "";
     def.event_talk = "";
     def.event_emptylayer = "";
-    return _scene->spawnNPC(def,
-                            static_cast<LevelScene::NpcSpawnType>(sp_type),
-                            static_cast<LevelScene::NpcSpawnDirection>(sp_dir), reSpawnable);
+    return m_scene->spawnNPC(def,
+                             static_cast<LevelScene::NpcSpawnType>(sp_type),
+                             static_cast<LevelScene::NpcSpawnDirection>(sp_dir), reSpawnable);
 }
 
 void LVL_Player::setHealth(int _health)

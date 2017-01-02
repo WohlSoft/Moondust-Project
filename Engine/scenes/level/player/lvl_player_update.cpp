@@ -54,7 +54,7 @@ void LVL_Player::lua_processKeyEvents()
     }
     catch(luabind::error &e)
     {
-        _scene->getLuaEngine()->postLateShutdownError(e);
+        m_scene->getLuaEngine()->postLateShutdownError(e);
     }
 }
 
@@ -62,7 +62,7 @@ void LVL_Player::update(double tickTime)
 {
     if(isLocked) return;
 
-    if(!_isInited) return;
+    if(!m_isInited) return;
 
     if(!camera) return;
 
@@ -340,7 +340,7 @@ void LVL_Player::update(double tickTime)
                 SpawnEffectDef effect = setup.slide_effect;
                 effect.startX = posCenterX();
                 effect.startY = bottom() + 2.0;
-                _scene->launchEffect(effect, true);
+                m_scene->launchEffect(effect, true);
             }
         }
     }
@@ -571,7 +571,7 @@ void LVL_Player::update(double tickTime)
             {
                 setLocked(true);
                 _no_render = true;
-                _scene->setExiting(1000, LvlExit::EXIT_OffScreen);
+                m_scene->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
         }
@@ -630,7 +630,7 @@ void LVL_Player::update(double tickTime)
     }
     catch(luabind::error &e)
     {
-        _scene->getLuaEngine()->postLateShutdownError(e);
+        m_scene->getLuaEngine()->postLateShutdownError(e);
     }
 
     _syncPosition();

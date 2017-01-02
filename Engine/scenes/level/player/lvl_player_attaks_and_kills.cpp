@@ -54,7 +54,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
 
 
     QVector<PGE_Phys_Object *> bodies;
-    _scene->queryItems(attackZone, &bodies);
+    m_scene->queryItems(attackZone, &bodies);
     int contacts = 0;
 
     QList<LVL_Block *> target_blocks;
@@ -91,7 +91,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         x->hit();
         if(!x->m_destroyed)
         {
-            _scene->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
+            m_scene->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
             PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
         }
         x->setDestroyed(true);
@@ -103,7 +103,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         if(x->isKilled()) continue;
         if(x->m_isGenerator) continue;
         x->doHarm(LVL_Npc::DAMAGE_BY_PLAYER_ATTACK);
-        _scene->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
+        m_scene->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
         kill_npc(x, NPC_Kicked);
     }
 }
@@ -139,7 +139,7 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         }
         catch(luabind::error &e)
         {
-            _scene->getLuaEngine()->postLateShutdownError(e);
+            m_scene->getLuaEngine()->postLateShutdownError(e);
             return;
         }
     }
@@ -151,7 +151,7 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         }
         catch(luabind::error &e)
         {
-            _scene->getLuaEngine()->postLateShutdownError(e);
+            m_scene->getLuaEngine()->postLateShutdownError(e);
             return;
         }
     }
@@ -203,19 +203,19 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
             PGE_Audio::playSound(snd);
         }
         /***********************Reset and unplug controllers************************/
-        _scene->player1Controller->resetControls();
-        _scene->player1Controller->sendControls();
-        _scene->player1Controller->removeFromControl(this);
-        _scene->player2Controller->resetControls();
-        _scene->player2Controller->sendControls();
-        _scene->player2Controller->removeFromControl(this);
+        m_scene->player1Controller->resetControls();
+        m_scene->player1Controller->sendControls();
+        m_scene->player1Controller->removeFromControl(this);
+        m_scene->player2Controller->resetControls();
+        m_scene->player2Controller->sendControls();
+        m_scene->player2Controller->removeFromControl(this);
         /***********************Reset and unplug controllers*end********************/
         if(target->setup->setup.exit_walk_direction < 0)
             keys.left = true;
         else if(target->setup->setup.exit_walk_direction > 0)
             keys.right = true;
         isExiting = true;
-        _scene->setExiting(target->setup->setup.exit_delay, target->setup->setup.exit_code);
+        m_scene->setExiting(target->setup->setup.exit_delay, target->setup->setup.exit_code);
     }
 }
 
@@ -233,7 +233,7 @@ void LVL_Player::harm(int _damage)
     }
     catch(luabind::error &e)
     {
-        _scene->getLuaEngine()->postLateShutdownError(e);
+        m_scene->getLuaEngine()->postLateShutdownError(e);
     }
 
     if(!dmg.doHarm) return;
@@ -272,7 +272,7 @@ void LVL_Player::kill(deathReason reason)
     setPaused(true);
     if(kill_reason == DEAD_burn)
     {
-        _scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
+        m_scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
                                     posCenterX(),
                                     posCenterY(), 1, 0, 0, 0, 0, _direction);
     }
@@ -285,7 +285,7 @@ void LVL_Player::kill(deathReason reason)
             effect.startY = m_momentum.centerY();
             effect.velocityX *= _direction;
             effect.direction *= _direction;
-            _scene->launchEffect(effect, true);
+            m_scene->launchEffect(effect, true);
         }
     }
     unregister();
@@ -296,13 +296,13 @@ void LVL_Player::unregister()
     isAlive = false;
     m_is_visible = false;
     //Unregister controllers
-    if(_scene->player1Controller) _scene->player1Controller->removeFromControl(this);
-    if(_scene->player2Controller) _scene->player2Controller->removeFromControl(this);
+    if(m_scene->player1Controller) m_scene->player1Controller->removeFromControl(this);
+    if(m_scene->player2Controller) m_scene->player2Controller->removeFromControl(this);
 
     unregisterFromTree();
 
     //Store into death list
-    _scene->dead_players.push_back(this);
+    m_scene->dead_players.push_back(this);
 }
 
 

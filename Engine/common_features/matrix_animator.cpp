@@ -17,6 +17,8 @@
  */
 
 #include "matrix_animator.h"
+#include "logger.h"
+#include <gui/pge_msgbox.h>
 
 #include <cassert>
 #include <cmath>
@@ -98,7 +100,7 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a):
 MatrixAnimator::~MatrixAnimator()
 {}
 
-void MatrixAnimator::setFrameSequance(QList<MatrixAnimatorFrame> _sequence)
+void MatrixAnimator::setFrameSequance(std::vector<MatrixAnimatorFrame> _sequence)
 {
     m_currentFrameIndex = 0;
     m_sequence.clear();
@@ -134,19 +136,21 @@ void MatrixAnimator::setDirection(int _direction, bool force)
 
     if(m_direction < 0)
     {
+        AniBank::iterator left = s_bank_left.find(m_current_sequance);
         //left
-        if(!s_bank_left.contains(m_current_sequance))
+        if(left == s_bank_left.end())
             return;
 
-        m_sequenceP = &s_bank_left[m_current_sequance];
+        m_sequenceP = &(left->second);
     }
     else
     {
+        AniBank::iterator right = s_bank_right.find(m_current_sequance);
         //right
-        if(!s_bank_right.contains(m_current_sequance))
+        if(right == s_bank_right.end())
             return;
 
-        m_sequenceP = &s_bank_right[m_current_sequance];
+        m_sequenceP = &(right->second);
     }
 
     assert(m_sequenceP);
@@ -189,7 +193,7 @@ void MatrixAnimator::tickAnimation(double frametime)
 
 void MatrixAnimator::nextFrame()
 {
-    if(!m_sequenceP || m_sequenceP->isEmpty())
+    if(!m_sequenceP || m_sequenceP->empty())
     {
         buildRect();
         return;
@@ -223,7 +227,7 @@ void MatrixAnimator::nextFrame()
 
 void MatrixAnimator::buildRect()
 {
-    if(!m_sequenceP || m_sequenceP->isEmpty())
+    if(!m_sequenceP || m_sequenceP->empty())
         m_currentFrameRect.setRect(0.0, 0.0, m_width_f, m_height_f);
     else
     {
@@ -257,7 +261,7 @@ int MatrixAnimator::curFramespeed()
     return m_frameDelay;
 }
 
-void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
+bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 {
     s_bank_left.clear();
     s_bank_right.clear();
@@ -311,22 +315,53 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
         }
     }
 
-    if(!s_bank_left.contains(m_current_sequance))
-        m_current_sequance = Idle;
+    AniBank::iterator seq_left;
+    AniBank::iterator seq_right;
 
-    if(!s_bank_right.contains(m_current_sequance))
+    seq_left  = s_bank_left.find(m_current_sequance);
+    seq_right = s_bank_right.find(m_current_sequance);
+    bool seq_error = false;
+
+    if(seq_left == s_bank_left.end())
+    {
         m_current_sequance = Idle;
+        seq_left  = s_bank_left.find(m_current_sequance);
+        if(seq_left == s_bank_left.end())
+        {
+            pLogCritical("Idle matrix animation for left direction is not set!");
+            PGE_MsgBox::error("Idle matrix animation for left direction is not set!");
+            seq_error = true;
+        }
+    }
+
+    if(seq_right == s_bank_right.end())
+    {
+        m_current_sequance = Idle;
+        seq_right = s_bank_right.find(m_current_sequance);
+        if(seq_right == s_bank_right.end())
+        {
+            pLogCritical("Idle matrix animation for right direction is not set!");
+            seq_error = true;
+        }
+    }
+
+    if(seq_error)
+    {
+        m_sequenceP = &m_sequence;
+        m_currentFrameIndex = 0;
+        return false;
+    }
 
     /*Update sequence settings*/
     if(m_direction < 0)
     {
         //left
-        m_sequenceP = &s_bank_left[m_current_sequance];
+        m_sequenceP = &(seq_left->second);
     }
     else
     {
         //right
-        m_sequenceP = &s_bank_right[m_current_sequance];
+        m_sequenceP = &(seq_right->second);
     }
 
     if(m_currentFrameIndex > (m_sequenceP->size() - 1))
@@ -344,6 +379,7 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
     }
 
     buildRect();
+    return true;
 }
 
 void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed, bool fixed_speed, bool locked, int skipLastFrames)
@@ -424,47 +460,49 @@ void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int
 
 void MatrixAnimator::buildEnums()
 {
-    StrToEnum["Idle"] =              MatrixAnimates::Idle;
-    StrToEnum["Run"] =               MatrixAnimates::Run;
-    StrToEnum["JumpFloat"] =         MatrixAnimates::JumpFloat;
-    StrToEnum["JumpFall"] =          MatrixAnimates::JumpFall;
-    StrToEnum["SpinJump"] =          MatrixAnimates::SpinJump;
-    StrToEnum["Sliding"] =           MatrixAnimates::Sliding;
-    StrToEnum["Climbing"] =          MatrixAnimates::Climbing;
-    StrToEnum["Fire"] =              MatrixAnimates::Fire;
-    StrToEnum["SitDown"] =           MatrixAnimates::SitDown;
-    StrToEnum["Dig"] =               MatrixAnimates::Dig;
-    StrToEnum["GrabIdle"] =          MatrixAnimates::GrabIdle;
-    StrToEnum["GrabRun"] =           MatrixAnimates::GrabRun;
-    StrToEnum["GrabJump"] =          MatrixAnimates::GrabJump;
-    StrToEnum["GrabSitDown"] =       MatrixAnimates::GrabSitDown;
-    StrToEnum["RacoonRun"] =         MatrixAnimates::RacoonRun;
-    StrToEnum["RacoonFloat"] =       MatrixAnimates::RacoonFloat;
-    StrToEnum["RacoonFly"] =         MatrixAnimates::RacoonFly;
-    StrToEnum["RacoonFlyDown"] =     MatrixAnimates::RacoonFlyDown;
-    StrToEnum["RacoonTail"] =        MatrixAnimates::RacoonTail;
-    StrToEnum["Swim"] =              MatrixAnimates::Swim;
-    StrToEnum["SwimUp"] =            MatrixAnimates::SwimUp;
-    StrToEnum["OnYoshi"] =           MatrixAnimates::OnYoshi;
-    StrToEnum["OnYoshiSit"] =        MatrixAnimates::OnYoshiSit;
-    StrToEnum["PipeUpDown"] =        MatrixAnimates::PipeUpDown;
-    StrToEnum["PipeUpDownRear"] =    MatrixAnimates::PipeUpDownRear;
-    StrToEnum["SlopeSlide"] =        MatrixAnimates::SlopeSlide;
-    StrToEnum["TanookiStatue"] =     MatrixAnimates::TanookiStatue;
-    StrToEnum["SwordAttak"] =        MatrixAnimates::SwordAttak;
-    StrToEnum["JumpSwordUp"] =       MatrixAnimates::JumpSwordUp;
-    StrToEnum["JumpSwordDown"] =     MatrixAnimates::JumpSwordDown;
-    StrToEnum["DownSwordAttak"] =    MatrixAnimates::DownSwordAttak;
-    StrToEnum["Hurted"] =            MatrixAnimates::Hurted;
+    m_strToEnum["Idle"] =              MatrixAnimates::Idle;
+    m_strToEnum["Run"] =               MatrixAnimates::Run;
+    m_strToEnum["JumpFloat"] =         MatrixAnimates::JumpFloat;
+    m_strToEnum["JumpFall"] =          MatrixAnimates::JumpFall;
+    m_strToEnum["SpinJump"] =          MatrixAnimates::SpinJump;
+    m_strToEnum["Sliding"] =           MatrixAnimates::Sliding;
+    m_strToEnum["Climbing"] =          MatrixAnimates::Climbing;
+    m_strToEnum["Fire"] =              MatrixAnimates::Fire;
+    m_strToEnum["SitDown"] =           MatrixAnimates::SitDown;
+    m_strToEnum["Dig"] =               MatrixAnimates::Dig;
+    m_strToEnum["GrabIdle"] =          MatrixAnimates::GrabIdle;
+    m_strToEnum["GrabRun"] =           MatrixAnimates::GrabRun;
+    m_strToEnum["GrabJump"] =          MatrixAnimates::GrabJump;
+    m_strToEnum["GrabSitDown"] =       MatrixAnimates::GrabSitDown;
+    m_strToEnum["RacoonRun"] =         MatrixAnimates::RacoonRun;
+    m_strToEnum["RacoonFloat"] =       MatrixAnimates::RacoonFloat;
+    m_strToEnum["RacoonFly"] =         MatrixAnimates::RacoonFly;
+    m_strToEnum["RacoonFlyDown"] =     MatrixAnimates::RacoonFlyDown;
+    m_strToEnum["RacoonTail"] =        MatrixAnimates::RacoonTail;
+    m_strToEnum["Swim"] =              MatrixAnimates::Swim;
+    m_strToEnum["SwimUp"] =            MatrixAnimates::SwimUp;
+    m_strToEnum["OnYoshi"] =           MatrixAnimates::OnYoshi;
+    m_strToEnum["OnYoshiSit"] =        MatrixAnimates::OnYoshiSit;
+    m_strToEnum["PipeUpDown"] =        MatrixAnimates::PipeUpDown;
+    m_strToEnum["PipeUpDownRear"] =    MatrixAnimates::PipeUpDownRear;
+    m_strToEnum["SlopeSlide"] =        MatrixAnimates::SlopeSlide;
+    m_strToEnum["TanookiStatue"] =     MatrixAnimates::TanookiStatue;
+    m_strToEnum["SwordAttak"] =        MatrixAnimates::SwordAttak;
+    m_strToEnum["JumpSwordUp"] =       MatrixAnimates::JumpSwordUp;
+    m_strToEnum["JumpSwordDown"] =     MatrixAnimates::JumpSwordDown;
+    m_strToEnum["DownSwordAttak"] =    MatrixAnimates::DownSwordAttak;
+    m_strToEnum["Hurted"] =            MatrixAnimates::Hurted;
 }
 
-MatrixAnimator::MatrixAnimates MatrixAnimator::toEnum(QString aniName)
+MatrixAnimator::MatrixAnimates MatrixAnimator::toEnum(const std::string &aniName)
 {
-    if(StrToEnum.isEmpty())
+    if(m_strToEnum.empty())
         buildEnums();
 
-    if(StrToEnum.contains(aniName))
-        return StrToEnum[aniName];
+    AniEnums::iterator ani = m_strToEnum.find(aniName);
+
+    if(ani != m_strToEnum.end())
+        return ani->second;
     else
         return MatrixAnimates::Nothing;
 }

@@ -74,7 +74,7 @@ void LVL_Block::init(bool force)
         data = dataInitial;
     }
 
-    _scene->layers.registerItem(data.layer, this);
+    m_scene->layers.registerItem(data.layer, this);
     transformTo_x(data.id);
     _isInited = true;
     m_momentum.saveOld();
@@ -90,7 +90,7 @@ void LVL_Block::transformTo(unsigned long id, int type)
         t.block = this;
         t.id = id;
         t.type = type;
-        _scene->block_transforms.push_back(t);
+        m_scene->block_transforms.push_back(t);
     }
 
     if(type == 1) //Other NPC
@@ -107,7 +107,7 @@ void LVL_Block::transformTo(unsigned long id, int type)
         def.event_die = "";
         def.event_talk = "";
         def.event_emptylayer = "";
-        LVL_Npc *npc = _scene->spawnNPC(def,
+        LVL_Npc *npc = m_scene->spawnNPC(def,
                                         LevelScene::GENERATOR_APPEAR,
                                         LevelScene::SPAWN_UP, true);
 
@@ -143,8 +143,8 @@ void LVL_Block::transformTo_x(unsigned long id)
         if(setup->setup.switch_Block &&
            (((setup->setup.switch_ID != newSetup->setup.switch_ID) && (newSetup->setup.switch_Block)) || (!newSetup->setup.switch_Block)))
         {
-            if(_scene->switch_blocks.contains(setup->setup.switch_ID))
-                _scene->switch_blocks[setup->setup.switch_ID].removeAll(this);
+            if(m_scene->switch_blocks.contains(setup->setup.switch_ID))
+                m_scene->switch_blocks[setup->setup.switch_ID].removeAll(this);
         }
 
         transformedFromBlockID = data.id;//Remember transform source
@@ -168,11 +168,11 @@ void LVL_Block::transformTo_x(unsigned long id)
         else
             z_index = LevelScene::zOrder.blockBack1;
 
-        _scene->zCounter += 0.0000000000001L;
-        z_index += _scene->zCounter;
+        m_scene->zCounter += 0.0000000000001L;
+        z_index += m_scene->zCounter;
 
-        if(_scene->zCounter >= 1.0L)
-            _scene->zCounter = 0.0L;
+        if(m_scene->zCounter >= 1.0L)
+            m_scene->zCounter = 0.0L;
     }
 
     bool do_init_player_switch = ((setup->animator_ID <= 0) && (setup->setup.plSwitch_Button));
@@ -281,23 +281,23 @@ void LVL_Block::transformTo_x(unsigned long id)
     // Register switch block
     if(setup->setup.switch_Block)
     {
-        if(!_scene->switch_blocks.contains(setup->setup.switch_ID))
-            _scene->switch_blocks[setup->setup.switch_ID].clear();
+        if(!m_scene->switch_blocks.contains(setup->setup.switch_ID))
+            m_scene->switch_blocks[setup->setup.switch_ID].clear();
 
-        _scene->switch_blocks[static_cast<unsigned int>(setup->setup.switch_ID)].push_back(this);
+        m_scene->switch_blocks[static_cast<unsigned int>(setup->setup.switch_ID)].push_back(this);
 
         //Fill switch states until it will be fited to defined SwitchID
-        while(static_cast<unsigned int>(_scene->switch_states.size()) <= setup->setup.switch_ID)
-            _scene->switch_states.push_back(false);
+        while(static_cast<unsigned int>(m_scene->switch_states.size()) <= setup->setup.switch_ID)
+            m_scene->switch_states.push_back(false);
     }
 
     //Register player switch block if needed
     if(do_init_player_switch)
-        _scene->character_switchers.buildSwitch(*setup);
+        m_scene->character_switchers.buildSwitch(*setup);
 
     //Register player filter block if needed
     if(do_init_player_filter)
-        _scene->character_switchers.buildBrick(*setup);
+        m_scene->character_switchers.buildBrick(*setup);
 }
 
 
@@ -588,8 +588,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
                 transformTo(static_cast<unsigned long>(setup->setup.transfororm_on_hit_into), 2);
         }
 
-        if(!_scene->player_states.isEmpty())
-            _scene->player_states[0].appendCoins(1);
+        if(!m_scene->player_states.isEmpty())
+            m_scene->player_states[0].appendCoins(1);
 
         //! TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
         {
@@ -609,7 +609,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.append(2);
             effect.frame_sequence.append(3);
             effect.framespeed = 32;
-            _scene->launchEffect(effect, true);
+            m_scene->launchEffect(effect, true);
             effect.id = 11;
             effect.startX = posCenterX();
             effect.startY = top() - 32.0;
@@ -624,7 +624,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.append(6);
             effect.framespeed = 125;
             effect.delay = 0;
-            _scene->launchEffect(effect, true);
+            m_scene->launchEffect(effect, true);
             //Points!
             effect.id = 79;
             effect.startX = posCenterX() + static_cast<double>((rand() % 16) * (rand() % 2 ? 1 : -1));
@@ -638,7 +638,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.append(0);
             effect.framespeed = 125;
             effect.delay = 1000;
-            _scene->launchEffect(effect, true);
+            m_scene->launchEffect(effect, true);
         }
     }
     else if(data.npc_id > 0)
@@ -666,7 +666,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             npcDef.x = data.x;
             npcDef.y = data.y - (hitDirection == up ? data.h : (-data.h * 2));
             LVL_Npc *npc;
-            npc = _scene->spawnNPC(npcDef,
+            npc = m_scene->spawnNPC(npcDef,
                                    (npcSet.block_spawn_type == 0) ?
                                    LevelScene::GENERATOR_WARP :
                                    LevelScene::GENERATOR_APPEAR,
@@ -691,7 +691,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(setup->setup.switch_Button)
     {
         triggerEvent = true;
-        _scene->toggleSwitch(setup->setup.switch_ID);
+        m_scene->toggleSwitch(setup->setup.switch_ID);
     }
 
     if(setup->setup.hitable)
@@ -708,16 +708,16 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(triggerEvent)
     {
         //Register block as "destroyed" to be able turn it into it's initial state
-        _scene->layers.registerItem(DESTROYED_LAYER_NAME, this);
+        m_scene->layers.registerItem(DESTROYED_LAYER_NAME, this);
     }
 
     if(triggerEvent && (!data.event_hit.isEmpty()))
-        _scene->events.triggerEvent(data.event_hit);
+        m_scene->events.triggerEvent(data.event_hit);
 
     if(doFade)
     {
         if(!isFading())
-            _scene->fading_blocks.push_back(this);
+            m_scene->fading_blocks.push_back(this);
 
         fadeOffset = 0.0;
         setFade(5, 1.0, 0.07);
@@ -746,10 +746,10 @@ void LVL_Block::destroy(bool playEffect)
         p.decelerate_x = 1.5;
         p.max_vel_y    = 25.0;
 #define ROFFSET ((static_cast<double>(rand()%10))*0.1)
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -3.0 + ROFFSET, -6.0 + ROFFSET, 18.0, 0, p);
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -4.0 + ROFFSET, -7.0 + ROFFSET, 18.0, 0, p);
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  3.0 + ROFFSET, -6.0 + ROFFSET, 18.0, 0, p);
-        _scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  4.0 + ROFFSET, -7.0 + ROFFSET, 18.0, 0, p);
+        m_scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -3.0 + ROFFSET, -6.0 + ROFFSET, 18.0, 0, p);
+        m_scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -4.0 + ROFFSET, -7.0 + ROFFSET, 18.0, 0, p);
+        m_scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  3.0 + ROFFSET, -6.0 + ROFFSET, 18.0, 0, p);
+        m_scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  4.0 + ROFFSET, -7.0 + ROFFSET, 18.0, 0, p);
 #undef ROFFSET
     }
 
@@ -757,17 +757,17 @@ void LVL_Block::destroy(bool playEffect)
     m_blocked[2] = Block_NONE;
     m_destroyed = true;
     QString oldLayer = data.layer;
-    _scene->layers.removeRegItem(data.layer, this);
+    m_scene->layers.removeRegItem(data.layer, this);
     data.layer = DESTROYED_LAYER_NAME;
-    _scene->layers.registerItem(data.layer, this);
+    m_scene->layers.registerItem(data.layer, this);
 
     if(!data.event_destroy.isEmpty())
-        _scene->events.triggerEvent(data.event_destroy);
+        m_scene->events.triggerEvent(data.event_destroy);
 
     if(!data.event_emptylayer.isEmpty())
     {
-        if(_scene->layers.isEmpty(oldLayer))
-            _scene->events.triggerEvent(data.event_emptylayer);
+        if(m_scene->layers.isEmpty(oldLayer))
+            m_scene->events.triggerEvent(data.event_emptylayer);
     }
 }
 

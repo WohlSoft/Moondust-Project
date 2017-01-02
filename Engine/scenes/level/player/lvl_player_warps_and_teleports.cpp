@@ -131,7 +131,7 @@ void LVL_Player::processWarpChecking()
                 WarpTo(contactedWarp->data);
                 wasEntered = true;
                 wasEnteredTimeout = 100;
-                _scene->events.triggerEvent(contactedWarp->data.event_enter);
+                m_scene->events.triggerEvent(contactedWarp->data.event_enter);
             }
         }
     }
@@ -154,7 +154,7 @@ void LVL_Player::processWarpChecking()
                 WarpTo(contactedWarp->data);
                 wasEntered = true;
                 wasEnteredTimeout = 100;
-                _scene->events.triggerEvent(contactedWarp->data.event_enter);
+                m_scene->events.triggerEvent(contactedWarp->data.event_enter);
             }
         }
 
@@ -168,7 +168,7 @@ void LVL_Player::processWarpChecking()
             WarpTo(contactedWarp->data.ox, contactedWarp->data.oy, contactedWarp->data.type);
             wasEnteredTimeout = ((contactedWarp->data.type == LevelDoor::WARP_INSTANT) ? 400 : 200);
             wasEntered = true;
-            _scene->events.triggerEvent(contactedWarp->data.event_enter);
+            m_scene->events.triggerEvent(contactedWarp->data.event_enter);
         }
 
         break;
@@ -478,7 +478,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             EventQueueEntry<LVL_Player >event2;
             event2.makeCaller([this, warp]()->void
             {
-                _scene->lastWarpID = static_cast<unsigned long>(warp.meta.array_id);
+                m_scene->lastWarpID = static_cast<unsigned long>(warp.meta.array_id);
                 exitFromLevel(warp.lname, static_cast<unsigned long>(warp.warpto),
                 warp.world_x, warp.world_y);
             }, 200);
@@ -486,9 +486,9 @@ void LVL_Player::WarpTo(LevelDoor warp)
         }
         else
         {
-            int sID = _scene->findNearestSection(warp.ox, warp.oy);
+            int sID = m_scene->findNearestSection(warp.ox, warp.oy);
 
-            if(camera->section->id != _scene->levelData()->sections[sID].id)
+            if(camera->section->id != m_scene->levelData()->sections[sID].id)
             {
                 EventQueueEntry<LVL_Player >event3;
                 event3.makeCaller([this]()->void
@@ -584,7 +584,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             EventQueueEntry<LVL_Player >event2;
             event2.makeCaller([this, warp]()->void
             {
-                _scene->lastWarpID = static_cast<unsigned long>(warp.meta.array_id);
+                m_scene->lastWarpID = static_cast<unsigned long>(warp.meta.array_id);
                 exitFromLevel(warp.lname, static_cast<unsigned long>(warp.warpto),
                 warp.world_x, warp.world_y);
             }, 200);
@@ -592,9 +592,9 @@ void LVL_Player::WarpTo(LevelDoor warp)
         }
         else
         {
-            int sID = _scene->findNearestSection(warp.ox, warp.oy);
+            int sID = m_scene->findNearestSection(warp.ox, warp.oy);
 
-            if(camera->section->id != _scene->levelData()->sections[sID].id)
+            if(camera->section->id != m_scene->levelData()->sections[sID].id)
             {
                 EventQueueEntry<LVL_Player >event3;
                 event3.makeCaller([this]()->void
@@ -623,11 +623,11 @@ void LVL_Player::WarpTo(LevelDoor warp)
 
 void LVL_Player::teleport(double x, double y)
 {
-    if(!_scene) return;
+    if(!m_scene) return;
 
     this->setPos(x, y);
-    int sID = _scene->findNearestSection(static_cast<long>(x), static_cast<long>(y));
-    LVL_Section *t_sct = _scene->getSection(sID);
+    int sID = m_scene->findNearestSection(static_cast<long>(x), static_cast<long>(y));
+    LVL_Section *t_sct = m_scene->getSection(sID);
 
     if(t_sct)
     {
@@ -647,19 +647,19 @@ void LVL_Player::exitFromLevel(QString levelFile, unsigned long targetWarp, long
 
     if(!levelFile.isEmpty())
     {
-        _scene->warpToLevelFile =
-            _scene->levelData()->meta.path + "/" + levelFile;
-        _scene->warpToArrayID = targetWarp;
+        m_scene->warpToLevelFile =
+            m_scene->levelData()->meta.path + "/" + levelFile;
+        m_scene->warpToArrayID = targetWarp;
     }
     else
     {
         if((wX != -1) && (wY != -1))
         {
-            _scene->warpToWorld = true;
-            _scene->warpToWorldXY.setX(static_cast<int>(wX));
-            _scene->warpToWorldXY.setY(static_cast<int>(wY));
+            m_scene->warpToWorld = true;
+            m_scene->warpToWorldXY.setX(static_cast<int>(wX));
+            m_scene->warpToWorldXY.setY(static_cast<int>(wY));
         }
     }
 
-    _scene->setExiting(2000, LvlExit::EXIT_Warp);
+    m_scene->setExiting(2000, LvlExit::EXIT_Warp);
 }

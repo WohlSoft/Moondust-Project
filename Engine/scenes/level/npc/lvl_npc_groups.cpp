@@ -58,7 +58,7 @@ void LVL_Npc::buildLeaf(QList<LVL_Npc *> &needtochec, QList<LVL_Npc *> *&list, L
     Q_UNUSED(leader);
     QVector<PGE_Phys_Object*> bodies;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
-    _scene->queryItems(posRectC, &bodies);
+    m_scene->queryItems(posRectC, &bodies);
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
     {
         PGE_Phys_Object* item=*it;

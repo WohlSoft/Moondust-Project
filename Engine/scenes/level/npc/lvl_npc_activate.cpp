@@ -40,7 +40,7 @@ void LVL_Npc::Activate()
     isActivated = true;
 
     if(!data.event_activate.isEmpty())
-        _scene->events.triggerEvent(data.event_activate);
+        m_scene->events.triggerEvent(data.event_activate);
 
     if(isLuaNPC)
     {
@@ -50,7 +50,7 @@ void LVL_Npc::Activate()
         }
         catch(luabind::error &e)
         {
-            _scene->getLuaEngine()->postLateShutdownError(e);
+            m_scene->getLuaEngine()->postLateShutdownError(e);
         }
     }
 

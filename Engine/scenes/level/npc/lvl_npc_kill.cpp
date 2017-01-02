@@ -45,7 +45,7 @@ void LVL_Npc::harm(int damage, int damageReason)
         if(event.cancel) return;
         damage = event.damage;
     } catch (luabind::error& e) {
-        _scene->getLuaEngine()->postLateShutdownError(e);
+        m_scene->getLuaEngine()->postLateShutdownError(e);
         return;
     }
 
@@ -78,10 +78,10 @@ void LVL_Npc::talkWith()
 {
     if(data.msg.isEmpty())
         return;
-    _scene->m_messages.showMsg( data.msg );
+    m_scene->m_messages.showMsg( data.msg );
     if(!data.event_talk.isEmpty())
     {
-        _scene->events.triggerEvent(data.event_talk);
+        m_scene->events.triggerEvent(data.event_talk);
     }
 }
 
@@ -96,13 +96,13 @@ void LVL_Npc::kill(int damageReason)
         lua_onKill(&event);
         if(event.cancel) return;
     } catch (luabind::error& e) {
-        _scene->getLuaEngine()->postLateShutdownError(e);
+        m_scene->getLuaEngine()->postLateShutdownError(e);
         return;
     }
 
     //Pre-unregistring event
     if(!data.event_die.isEmpty())
-        _scene->events.triggerEvent(data.event_die);
+        m_scene->events.triggerEvent(data.event_die);
 
     unregister();
 
@@ -111,7 +111,7 @@ void LVL_Npc::kill(int damageReason)
         case DAMAGE_NOREASON:
             if(setup->setup.effect_1 > 0)
             {
-                _scene->launchStaticEffectC(setup->setup.effect_1,
+                m_scene->launchStaticEffectC(setup->setup.effect_1,
                                             posCenterX(),
                                             posCenterY(),
                                             1, 0, 0, 0, 0,
@@ -121,7 +121,7 @@ void LVL_Npc::kill(int damageReason)
         case DAMAGE_STOMPED:
             if(setup->setup.effect_1 > 0)
             {
-                _scene->launchStaticEffectC(setup->setup.effect_1,
+                m_scene->launchStaticEffectC(setup->setup.effect_1,
                                             posCenterX(),
                                             posCenterY(),
                                             0, 500, 0, 0, 0,
@@ -131,7 +131,7 @@ void LVL_Npc::kill(int damageReason)
         case DAMAGE_TAKEN:
             if(setup->setup.effect_1 > 0)
             {
-                _scene->launchStaticEffectC(setup->setup.effect_1,
+                m_scene->launchStaticEffectC(setup->setup.effect_1,
                                             posCenterX(),
                                             posCenterY(),
                                             1, 0, 0, 0, 0,
@@ -141,7 +141,7 @@ void LVL_Npc::kill(int damageReason)
         case DAMAGE_LAVABURN:
             if(ConfigManager::g_setup_npc.eff_lava_burn>0)
             {
-                _scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
+                m_scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
                                             posCenterX(),
                                             posCenterY(),
                                             1, 0, 0, 0, 0,
@@ -154,7 +154,7 @@ void LVL_Npc::kill(int damageReason)
         case DAMAGE_BY_KICK:
             if( setup->setup.effect_2 > 0 )
             {
-                _scene->launchStaticEffectC(setup->setup.effect_2,
+                m_scene->launchStaticEffectC(setup->setup.effect_2,
                                             posCenterX(),
                                             posCenterY(),
                                             0, 5000, -3.0f*_direction, -6.0f, 18.0f,
@@ -168,7 +168,7 @@ void LVL_Npc::kill(int damageReason)
                 eff.startX = posCenterX();
                 eff.startY = posCenterY();
                 eff.direction = _direction;
-                _scene->launchEffect(eff, true);
+                m_scene->launchEffect(eff, true);
             }
         break;
     }
@@ -189,8 +189,8 @@ void LVL_Npc::kill(int damageReason)
     //Post-unregistring event
     if(!data.event_emptylayer.isEmpty())
     {
-        if(_scene->layers.isEmpty(data.layer))
-            _scene->events.triggerEvent(data.event_emptylayer);
+        if(m_scene->layers.isEmpty(data.layer))
+            m_scene->events.triggerEvent(data.event_emptylayer);
     }
 
 }
@@ -200,7 +200,7 @@ void LVL_Npc::unregister()
     killed=true;
     m_is_visible=false;
     unregisterFromTree();
-    _scene->dead_npcs.push_back(this);
-    _scene->layers.removeRegItem(data.layer, this);
+    m_scene->dead_npcs.push_back(this);
+    m_scene->layers.removeRegItem(data.layer, this);
 }
 

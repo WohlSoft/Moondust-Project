@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSettings>
+#include <IniProcessor/ini_processing.h>
 #include <QList>
 
 #include <luabind/luabind.hpp>
@@ -10,37 +11,38 @@
 
 class SpawnEffectDef
 {
-    public:
-        SpawnEffectDef();
-        SpawnEffectDef(const SpawnEffectDef &c);
-        void fill(QString prefix, QSettings *setup);
+public:
+    SpawnEffectDef();
+    SpawnEffectDef(const SpawnEffectDef &c);
+    void fill(QString prefix, QSettings *setup);
+    void fill(const std::string &prefix, IniProcessing *setup);
 
-        //Call lua-function instead of spawning this effect
-        QString lua_function;
+    //Call lua-function instead of spawning this effect
+    QString lua_function;
 
-        void lua_setSequence(luabind::object frames);
+    void lua_setSequence(luabind::object frames);
 
-        unsigned int start_delay;
+    unsigned int start_delay;
 
-        unsigned long id;
-        double startX;
-        double startY;
-        int animationLoops;
-        int delay;
-        int framespeed;
-        QList<int> frame_sequence;
-        double velocityX;
-        double velocityY;
-        long double zIndex;
-        double gravity;
-        int direction;
+    unsigned long id;
+    double startX;
+    double startY;
+    int animationLoops;
+    int delay;
+    int framespeed;
+    QList<int> frame_sequence;
+    double velocityX;
+    double velocityY;
+    long double zIndex;
+    double gravity;
+    int direction;
 
-        double min_vel_x;
-        double min_vel_y;
-        double max_vel_x;
-        double max_vel_y;
-        double decelerate_x;
-        double decelerate_y;
+    double min_vel_x;
+    double min_vel_y;
+    double max_vel_x;
+    double max_vel_y;
+    double decelerate_x;
+    double decelerate_y;
 };
 
 #endif // SPAWNEFFECTDEF_H

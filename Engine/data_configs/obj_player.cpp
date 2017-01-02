@@ -23,6 +23,8 @@
 #include <common_features/number_limiter.h>
 #include <common_features/logger.h>
 #include <scenes/level/lvl_physenv.h>
+#include <Utils/files.h>
+#include <fmt/fmt_format.h>
 
 /*****Playable Characters************/
 PGE_DataArray<obj_player > ConfigManager::playable_characters;
@@ -31,65 +33,92 @@ CustomDirManager ConfigManager::Dir_PlayerLvl;
 CustomDirManager ConfigManager::Dir_PlayerScript;
 /*****Playable Characters************/
 
-void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString grp)
+static void loadPlayerPhysicsSettings(IniProcessing &set, obj_player_physics &t, const std::string &grp)
 {
     set.beginGroup(grp);
-    t.walk_force = set.value("walk_force", t.walk_force).toDouble();
-    NumberLimiter::applyD(t.walk_force, 6.5, 0.0);
-    t.run_force = set.value("run_force", t.run_force).toDouble();
-    NumberLimiter::applyD(t.run_force, 3.25, 0.0);
-    t.decelerate_stop = set.value("decelerate_stop", t.decelerate_stop).toDouble();
-    NumberLimiter::applyD(t.decelerate_stop, 4.55, 0.0);
-    t.decelerate_run = set.value("decelerate_run", t.decelerate_run).toDouble();
-    NumberLimiter::applyD(t.decelerate_run, 10.88, 0.0);
-    t.decelerate_turn = set.value("decelerate_turn", t.decelerate_turn).toDouble();
-    NumberLimiter::applyD(t.decelerate_turn, 18.2, 0.0);
-    t.decelerate_air = set.value("decelerate_air", t.decelerate_air).toDouble();
-    NumberLimiter::applyD(t.decelerate_air, 0.0, 0.0);
-    t.ground_c = set.value("ground_c", t.ground_c).toDouble();
-    NumberLimiter::applyD(t.ground_c, 0.0, 0.0);
-    t.ground_c_max = set.value("ground_c_max", t.ground_c_max).toDouble();
-    NumberLimiter::applyD(t.ground_c_max, 0.0, 0.0);
-    t.slippery_c = set.value("slippery_c", t.slippery_c).toDouble();
-    NumberLimiter::applyD(t.slippery_c, 0.0, 0.0);
-    t.gravity_accel = set.value("gravity_accel", t.gravity_accel).toDouble();
-    NumberLimiter::applyD(t.gravity_accel, 26.0, 0.0);
-    t.gravity_scale = set.value("gravity_scale", t.gravity_scale).toDouble();
-    t.velocity_jump = set.value("velocity_jump", t.velocity_jump).toDouble();
-    NumberLimiter::applyD(t.velocity_jump, 5.3, 0.0);
-    t.velocity_jump_bounce = set.value("velocity_jump_bounce", t.velocity_jump_bounce).toDouble();
-    NumberLimiter::applyD(t.velocity_jump_bounce, 5.3, 0.0);
-    t.velocity_jump_spring = set.value("velocity_jump_spring", t.velocity_jump_spring).toDouble();
-    NumberLimiter::applyD(t.velocity_jump_spring, 9.3, 0.0);
-    t.velocity_jump_c = set.value("velocity_jump_c", t.velocity_jump_c).toDouble();
-    NumberLimiter::applyD(t.velocity_jump_c, 5.8, 0.0);
-    t.jump_time     = set.value("jump_time", t.jump_time).toInt();
-    NumberLimiter::applyD(t.jump_time, 260, 0);
-    t.jump_time_bounce     = set.value("jump_time_bounce", t.jump_time_bounce).toInt();
-    NumberLimiter::applyD(t.jump_time_bounce, 370, 0);
-    t.jump_time_spring     = set.value("jump_time_spring", t.jump_time_spring).toInt();
-    NumberLimiter::applyD(t.jump_time_spring, 530, 0);
-    t.velocity_climb_x = set.value("velocity_climb_x", t.velocity_climb_x).toDouble();
-    NumberLimiter::applyD(t.velocity_climb_x, 1.5, 0.0);
-    t.velocity_climb_y_up = set.value("velocity_climb_y_up", t.velocity_climb_y_up).toDouble();
-    NumberLimiter::applyD(t.velocity_climb_y_up, 2.0, 0.0);
-    t.velocity_climb_y_down = set.value("velocity_climb_y_down", t.velocity_climb_y_down).toDouble();
-    NumberLimiter::applyD(t.velocity_climb_y_down, 3.0, 0.0);
-    t.MaxSpeed_walk = set.value("MaxSpeed_walk", t.MaxSpeed_walk).toDouble();
-    NumberLimiter::applyD(t.velocity_climb_x, 3.0, 0.0);
-    t.MaxSpeed_run = set.value("MaxSpeed_run", t.MaxSpeed_run).toDouble();
-    NumberLimiter::applyD(t.MaxSpeed_run, 6.0, 0.0);
-    t.MaxSpeed_up = set.value("MaxSpeed_up", t.MaxSpeed_up).toDouble();
-    NumberLimiter::applyD(t.MaxSpeed_up, 74.0, 0.0);
-    t.MaxSpeed_down = set.value("MaxSpeed_down", t.MaxSpeed_down).toDouble();
-    NumberLimiter::applyD(t.MaxSpeed_down, 12.0, 0.0);
-    t.strict_max_speed_on_ground = set.value("strict_max_speed_on_ground", false).toBool();
-    t.zero_speed_y_on_enter = set.value("zero_speed_y_on_enter", false).toBool();
-    t.slow_up_speed_y_coeff = set.value("slow_up_speed_y_coeff", t.slow_up_speed_y_coeff).toDouble();
-    NumberLimiter::applyD(t.slow_up_speed_y_coeff, 0.325, 0.0);
-    t.slow_speed_x_on_enter = set.value("slow_speed_x_on_enter", false).toBool();
-    t.slow_speed_x_coeff = set.value("slow_speed_x_coeff", t.slow_speed_x_coeff).toDouble();
-    NumberLimiter::applyD(t.slow_speed_x_coeff, 0.125, 0.0);
+    {
+        set.read("walk_force", t.walk_force, t.walk_force);
+        NumberLimiter::applyD(t.walk_force, 6.5, 0.0);
+
+        set.read("run_force", t.run_force, t.run_force);
+        NumberLimiter::applyD(t.run_force, 3.25, 0.0);
+
+        set.read("decelerate_stop", t.decelerate_stop, t.decelerate_stop);
+        NumberLimiter::applyD(t.decelerate_stop, 4.55, 0.0);
+
+        set.read("decelerate_run", t.decelerate_run, t.decelerate_run);
+        NumberLimiter::applyD(t.decelerate_run, 10.88, 0.0);
+
+        set.read("decelerate_turn", t.decelerate_turn, t.decelerate_turn);
+        NumberLimiter::applyD(t.decelerate_turn, 18.2, 0.0);
+
+        set.read("decelerate_air", t.decelerate_air, t.decelerate_air);
+        NumberLimiter::applyD(t.decelerate_air, 0.0, 0.0);
+
+        set.read("ground_c", t.ground_c, t.ground_c);
+        NumberLimiter::applyD(t.ground_c, 0.0, 0.0);
+
+        set.read("ground_c_max", t.ground_c_max, t.ground_c_max);
+        NumberLimiter::applyD(t.ground_c_max, 0.0, 0.0);
+
+        set.read("slippery_c", t.slippery_c, t.slippery_c);
+        NumberLimiter::applyD(t.slippery_c, 0.0, 0.0);
+
+        set.read("gravity_accel", t.gravity_accel, t.gravity_accel);
+        NumberLimiter::applyD(t.gravity_accel, 26.0, 0.0);
+
+        set.read("gravity_scale", t.gravity_scale, t.gravity_scale);
+        set.read("velocity_jump", t.velocity_jump, t.velocity_jump);
+        NumberLimiter::applyD(t.velocity_jump, 5.3, 0.0);
+
+        set.read("velocity_jump_bounce", t.velocity_jump_bounce, t.velocity_jump_bounce);
+        NumberLimiter::applyD(t.velocity_jump_bounce, 5.3, 0.0);
+
+        set.read("velocity_jump_spring", t.velocity_jump_spring, t.velocity_jump_spring);
+        NumberLimiter::applyD(t.velocity_jump_spring, 9.3, 0.0);
+
+        set.read("velocity_jump_c", t.velocity_jump_c, t.velocity_jump_c);
+        NumberLimiter::applyD(t.velocity_jump_c, 5.8, 0.0);
+
+        set.read("jump_time", t.jump_time, t.jump_time);
+        NumberLimiter::applyD(t.jump_time, 260, 0);
+
+        set.read("jump_time_bounce", t.jump_time_bounce, t.jump_time_bounce);
+        NumberLimiter::applyD(t.jump_time_bounce, 370, 0);
+
+        set.read("jump_time_spring", t.jump_time_spring, t.jump_time_spring);
+        NumberLimiter::applyD(t.jump_time_spring, 530, 0);
+
+        set.read("velocity_climb_x", t.velocity_climb_x, t.velocity_climb_x);
+        NumberLimiter::applyD(t.velocity_climb_x, 1.5, 0.0);
+
+        set.read("velocity_climb_y_up", t.velocity_climb_y_up, t.velocity_climb_y_up);
+        NumberLimiter::applyD(t.velocity_climb_y_up, 2.0, 0.0);
+
+        set.read("velocity_climb_y_down", t.velocity_climb_y_down, t.velocity_climb_y_down);
+        NumberLimiter::applyD(t.velocity_climb_y_down, 3.0, 0.0);
+
+        set.read("MaxSpeed_walk", t.MaxSpeed_walk, t.MaxSpeed_walk);
+        NumberLimiter::applyD(t.velocity_climb_x, 3.0, 0.0);
+
+        set.read("MaxSpeed_run", t.MaxSpeed_run, t.MaxSpeed_run);
+        NumberLimiter::applyD(t.MaxSpeed_run, 6.0, 0.0);
+
+        set.read("MaxSpeed_up", t.MaxSpeed_up, t.MaxSpeed_up);
+        NumberLimiter::applyD(t.MaxSpeed_up, 74.0, 0.0);
+
+        set.read("MaxSpeed_down", t.MaxSpeed_down, t.MaxSpeed_down);
+        NumberLimiter::applyD(t.MaxSpeed_down, 12.0, 0.0);
+
+        set.read("strict_max_speed_on_ground", t.strict_max_speed_on_ground, false);
+        set.read("zero_speed_y_on_enter", t.zero_speed_y_on_enter, false);
+        set.read("slow_up_speed_y_coeff", t.slow_up_speed_y_coeff, t.slow_up_speed_y_coeff);
+        NumberLimiter::applyD(t.slow_up_speed_y_coeff, 0.325, 0.0);
+
+        set.read("slow_speed_x_on_enter", t.slow_speed_x_on_enter, false);
+        set.read("slow_speed_x_coeff", t.slow_speed_x_coeff, t.slow_speed_x_coeff);
+        NumberLimiter::applyD(t.slow_speed_x_coeff, 0.125, 0.0);
+    }
     set.endGroup();
 }
 
@@ -134,9 +163,9 @@ bool ConfigManager::loadPlayableCharacters()
     pLogDebug("Loading playable characters...");
     unsigned int i;
     unsigned long players_total = 0;
-    QString plr_ini = config_dir + "lvl_characters.ini";
+    std::string plr_ini = config_dir.toStdString() + "lvl_characters.ini";
 
-    if(!QFile::exists(plr_ini))
+    if(!Files::fileExists(plr_ini))
     {
         addError(QString("ERROR LOADING lvl_characters.ini: file does not exist"), QtCriticalMsg);
         PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_characters.ini: file does not exist"),
@@ -145,8 +174,7 @@ bool ConfigManager::loadPlayableCharacters()
         return false;
     }
 
-    QSettings setup(plr_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(plr_ini);
     playable_characters.clear();   //Clear old
     setup.beginGroup("main-characters");
     players_total = setup.value("total", 0).toULongLong();
@@ -171,24 +199,25 @@ bool ConfigManager::loadPlayableCharacters()
         splayer.textureArrayId_wld = 0;
         splayer.animator_ID_wld = 0;
         splayer.wld_offset_y = 0;
+
         //Default size of frame is 100x100, but re-calculates from matrix size and size of target sprite
         splayer.frame_width = 100;
         splayer.frame_height = 100;
         unsigned long total_states = 0;
-        setup.beginGroup(QString("character-%1").arg(i));
-        splayer.name = setup.value("name", QString("player %1").arg(i)).toString();
+        setup.beginGroup(fmt::format("character-{0}", i));
+        setup.read("name", splayer.name, fmt::format("player {0}", i));
 
-        if(splayer.name == "")
+        if(splayer.name.empty())
         {
             addError(QString("Player-%1 Item name isn't defined").arg(i));
             goto skipPLAYER;
         }
 
-        splayer.sprite_folder = setup.value("sprite-folder", QString("player-%1").arg(i)).toString();
+        splayer.sprite_folder = setup.value("sprite-folder", QString("player-%1").arg(i)).toQString();
         splayer.state_type =  setup.value("sprite-folder", 0).toInt();
         splayer.matrix_width = setup.value("matrix-width", 10).toInt();
         splayer.matrix_height = setup.value("matrix-height", 10).toInt();
-        splayer.script =  setup.value("script-file", "").toString();
+        splayer.script =  setup.value("script-file", "").toQString();
         total_states = setup.value("states-number", 0).toULongLong();
 
         if(total_states == 0)
@@ -205,23 +234,28 @@ bool ConfigManager::loadPlayableCharacters()
             bool default_duck = false;
             int floating_max_time = 1500;
             double floating_amplutude = 0.8;
-            setup.beginGroup(QString("character-%1-physics-common").arg(i));
-            default_duck =  setup.value("duck-allow", false).toBool();
-            splayer.allowFloating =  setup.value("allow-floating", false).toBool();
-            floating_max_time = setup.value("floating-max-time", 1500).toInt();
-            floating_amplutude = setup.value("floating-amplitude", 0.8).toDouble();
+            setup.beginGroup(fmt::format("character-{0}-physics-common", i));
+            {
+                setup.read("duck-allow", default_duck, false);
+                setup.read("allow-floating", splayer.allowFloating, false);
+                setup.read("floating-max-time", floating_max_time, 1500);
+                setup.read("floating-amplitude", floating_amplutude, 0.8);
+            }
             setup.endGroup();
+
             //default environment specific physics
             splayer.phys_default.allocateSlots(LVL_PhysEnv::numOfEnvironments);
+
             obj_player_physics physicsDef;
             splayer.phys_default.storeElement(LVL_PhysEnv::Env_Air, physicsDef);
             splayer.phys_default.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
             splayer.phys_default.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
-            loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Air], QString("character-%1-env-common-air").arg(i));
-            loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Water], QString("character-%1-env-common-water").arg(i));
-            loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-common-quicksand").arg(i));
-            setup.beginGroup(QString("character-%1-world").arg(i));
-            imgFile = setup.value("sprite-name", "").toString();
+            loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Air], fmt::format("character-{0}-env-common-air", i));
+            loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Water], fmt::format("character-{0}-env-common-water", i));
+            loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], fmt::format("character-{0}-env-common-quicksand", i));
+
+            setup.beginGroup(fmt::format("character-{0}-world", i));
+            imgFile = setup.value("sprite-name", "").toQString();
             splayer.image_wld_n = imgFile;
             {
                 QString err;
@@ -233,24 +267,23 @@ bool ConfigManager::loadPlayableCharacters()
                     goto skipPLAYER;
                 }
             }
-            splayer.wld_offset_y = setup.value("offset-y", "0").toInt();
-            splayer.wld_frames = setup.value("frames-total", "1").toInt();
+            setup.read("offset-y", splayer.wld_offset_y, 0);
+            setup.read("frames-total", splayer.wld_frames, 1);
 
             if(splayer.wld_frames < 1) splayer.wld_frames = 1;
 
-            splayer.wld_framespeed = setup.value("frame-speed", "128").toInt();
+            setup.read("frame-speed", splayer.wld_framespeed, 128);
 
             if(splayer.wld_framespeed < 1) splayer.wld_framespeed = 1;
-
             {
                 QStringList frms;
-                frms = setup.value("frames-down", "").toString().split(",");
+                frms = setup.value("frames-down", "").toQString().split(",");
                 for(QString &x : frms) splayer.wld_frames_down.push_back(x.toInt());
-                frms = setup.value("frames-right", "").toString().split(",");
+                frms = setup.value("frames-right", "").toQString().split(",");
                 for(QString &x : frms) splayer.wld_frames_right.push_back(x.toInt());
-                frms = setup.value("frames-left", "").toString().split(",");
+                frms = setup.value("frames-left", "").toQString().split(",");
                 for(QString &x : frms) splayer.wld_frames_left.push_back(x.toInt());
-                frms = setup.value("frames-up", "").toString().split(",");
+                frms = setup.value("frames-up", "").toQString().split(",");
                 for(QString &x : frms) splayer.wld_frames_up.push_back(x.toInt());
             }
             setup.endGroup();
@@ -263,56 +296,68 @@ bool ConfigManager::loadPlayableCharacters()
                 pstate.image = NULL;
                 pstate.textureArrayId = 0;
                 pstate.animator_ID = 0;
-                setup.beginGroup(QString("character-%1-state-%2").arg(i).arg(j));
-                pstate.name = setup.value("name", QString("State %1").arg(j)).toString();
-                imgFile = setup.value("sprite-name", "").toString();
-                pstate.image_n = imgFile;
+                setup.beginGroup(fmt::format("character-{0}-state-{1}", i, j));
                 {
-                    QString err;
-                    GraphicsHelps::getMaskedImageInfo(playerLvlPath + splayer.sprite_folder + "/", imgFile, pstate.mask_n, err);
-
-                    if(imgFile == "")
+                    setup.read("name", pstate.name, fmt::format("State {0}", j));
+                    setup.read("sprite-name", imgFile, "");
+                    pstate.image_n = imgFile;
                     {
-                        addError(QString("Character-%1 state-%2 Image filename isn't defined").arg(i).arg(j));
-                        goto skipPLAYER;
+                        QString err;
+                        GraphicsHelps::getMaskedImageInfo(playerLvlPath + splayer.sprite_folder + "/", imgFile, pstate.mask_n, err);
+
+                        if(imgFile == "")
+                        {
+                            addError(QString("Character-%1 state-%2 Image filename isn't defined").arg(i).arg(j));
+                            goto skipPLAYER;
+                        }
+                    }
+                    setup.read("duck-allow", pstate.duck_allow, default_duck);
+                    setup.read("allow-floating", pstate.allow_floating, splayer.allowFloating);
+                    setup.read("floating-max-time", pstate.floating_max_time, floating_max_time);
+                    setup.read("floating-amplitude", pstate.floating_amplitude, floating_amplutude);
+                    setup.read("default-duck-height", pstate.duck_height, 30);
+                    setup.read("default-height", pstate.height, 54);
+                    setup.read("default-width", pstate.width, 24);
+                    setup.read("events", pstate.event_script, QString("script/player/%2-%1.lua").arg(i).arg(splayer.sprite_folder));
+
+                    std::string sprite_settings;
+                    setup.read("sprite-settings", sprite_settings, fmt::format("{1}-{0}.ini", i, splayer.sprite_folder.toStdString()));
+
+                    if(pstate.sprite_setup.load(config_dir.toStdString() + "characters/" + sprite_settings))
+                    {
+                        pstate.width = pstate.sprite_setup.frameWidth;
+                        pstate.height = pstate.sprite_setup.frameHeight;
+                        pstate.duck_height = pstate.sprite_setup.frameHeightDuck;
                     }
                 }
-                pstate.duck_allow = setup.value("duck-allow", default_duck).toBool();
-                pstate.allow_floating = setup.value("allow-floating", splayer.allowFloating).toBool();
-                pstate.floating_max_time  = setup.value("floating-max-time", floating_max_time).toInt();
-                pstate.floating_amplitude = setup.value("floating-amplitude", floating_amplutude).toDouble();
-                pstate.duck_height = setup.value("default-duck-height", 30).toInt();
-                pstate.height = setup.value("default-height", 54).toInt();
-                pstate.width = setup.value("default-width", 24).toInt();
-                pstate.event_script = setup.value("events", QString("script/player/%2-%1.lua").arg(i).arg(splayer.sprite_folder)).toString();
-                QString sprite_settings = setup.value("sprite-settings", QString("%2-%1.ini").arg(i).arg(splayer.sprite_folder)).toString();
-
-                if(pstate.sprite_setup.load(config_dir + "characters/" + sprite_settings))
-                {
-                    pstate.width = pstate.sprite_setup.frameWidth;
-                    pstate.height = pstate.sprite_setup.frameHeight;
-                    pstate.duck_height = pstate.sprite_setup.frameHeightDuck;
-                }
-
                 setup.endGroup();
+
                 pstate.phys.allocateSlots(LVL_PhysEnv::numOfEnvironments);
                 pstate.phys.storeElement(LVL_PhysEnv::Env_Air, physicsDef);
                 pstate.phys.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
                 pstate.phys.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
-                loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Air], QString("character-%1-env-%2-air").arg(i).arg(j));
-                loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Water], QString("character-%1-env-%2-water").arg(i).arg(j));
-                loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Quicksand], QString("character-%1-env-%2-quicksand").arg(i).arg(j));
+                loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Air], fmt::format("character-{0}-env-{1}-air", i, j));
+                loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Water], fmt::format("character-{0}-env-{1}-water", i, j));
+                loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Quicksand], fmt::format("character-{0}-env-{1}-quicksand", i, j));
                 splayer.states.storeElement(j, pstate);
             }
         }//States
+
         splayer.id = i;
         playable_characters.storeElement(i, splayer);
 skipPLAYER:
 
-        if(setup.status() != QSettings::NoError)
+        if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString("ERROR LOADING lvl_characters.ini N:%1 (character-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
-            PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_characters.ini N:%1 (character-%2)").arg(setup.status()).arg(i),
+            addError(QString("ERROR LOADING lvl_characters.ini:%1 N:%2 (character-%3)")
+                     .arg(setup.lineWithError())
+                     .arg(setup.lastError())
+                     .arg(i), QtCriticalMsg);
+            PGE_MsgBox msgBox(NULL,
+                              QString("ERROR LOADING lvl_characters.ini:%1 N:%2 (character-%3)")
+                              .arg(setup.lineWithError())
+                              .arg(setup.lastError())
+                              .arg(i),
                               PGE_MsgBox::msg_error);
             msgBox.exec();
             break;
@@ -321,7 +366,9 @@ skipPLAYER:
 
     if(playable_characters.stored() < players_total)
     {
-        addError(QString("Not all characters are loaded! Total: %1, Loaded: %2)").arg(players_total).arg(playable_characters.stored()), QtWarningMsg);
+        addError(QString("Not all characters are loaded! Total: %1, Loaded: %2)")
+                 .arg(players_total)
+                 .arg(playable_characters.stored()), QtWarningMsg);
         PGE_MsgBox msgBox(NULL, QString("Not all characters are loaded! Total: %1, Loaded: %2).\n\nGame can't be started!").arg(players_total).arg(playable_characters.stored()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();

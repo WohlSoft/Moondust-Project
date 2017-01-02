@@ -262,7 +262,7 @@ bool LevelScene::lua_switchState(int switch_id)
 
 void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect, bool cannon, double cannon_speed)
 {
-    LVL_Player *player;
+    LVL_Player *player = nullptr;
 
     if(luaEngine.isValid())
     {
@@ -274,9 +274,10 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     else
         player = new LVL_Player(this);
 
-    if(!player) throw("Out of memory [new LVL_Player] addPlayer");
+    if(!player)
+        throw(std::runtime_error("Out of memory [new LVL_Player] addPlayer"));
 
-    player->_scene = this;
+    player->m_scene = this;
 
     if(players.size() == 0)
         player->camera = &cameras.first();
@@ -297,7 +298,14 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     player->global_state = ((static_cast<unsigned>(player_states.size()) > (playerData.id - 1)) ?
                             &player_states[static_cast<int>(playerData.id - 1)] : nullptr);
     player->setPlayerPointInfo(playerData);
-    player->init();
+    if(!player->init())
+    {
+        delete player;
+        errorMsg = "Failed to initialize playable character!\nSee log file for more information!";
+        m_fader.setFade(10, 1.0, 1.0);
+        setExiting(0, LvlExit::EXIT_Error);
+        return;
+    }
     players.push_back(player);
 
     if(playerData.id == 1)

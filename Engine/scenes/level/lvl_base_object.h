@@ -54,7 +54,7 @@ class PGE_Phys_Object: public PGE_physBody
         }
     public:
         //! Pointer of the parent scene
-        LevelScene  *_scene;
+        LevelScene  *m_scene;
     protected:
         //! Is this object registered in the R-Tree?
         bool             _is_registered;

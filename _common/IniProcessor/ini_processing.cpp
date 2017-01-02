@@ -220,9 +220,9 @@ inline bool memfgets(char *&line, char *data, char *&pos, char *end)
 bool IniProcessing::parseHelper(char *data, size_t size)
 {
     char *section = nullptr;
-#if defined(INI_ALLOW_MULTILINE)
+    #if defined(INI_ALLOW_MULTILINE)
     char *prev_name = nullptr;
-#endif
+    #endif
     char *start;
     char *end;
     char *name;
@@ -305,9 +305,9 @@ bool IniProcessing::parseHelper(char *data, size_t size)
                     if(!recentKeys)
                         recentKeys = &m_params.iniData["General"];
 
-#ifdef INIDEBUG
+                    #ifdef INIDEBUG
                     printf("-> [%s]; %s = %s\n", section, name, v);
-#endif
+                    #endif
                     (*recentKeys)[name] = removeQuotes(v, v + strlen(v));
                 }
             }
@@ -322,12 +322,12 @@ bool IniProcessing::parseHelper(char *data, size_t size)
         }
         }//switch(*start)
 
-#if defined(INI_STOP_ON_FIRST_ERROR)
+        #if defined(INI_STOP_ON_FIRST_ERROR)
 
         if(error)
             break;
 
-#endif
+        #endif
     }
 
     m_params.lineWithError = error;
@@ -339,7 +339,7 @@ bool IniProcessing::parseFile(const char *filename)
 {
     bool valid = true;
     char *tmp = nullptr;
-#ifdef USE_FILE_MAPPER
+    #ifdef USE_FILE_MAPPER
     //By mystical reasons, reading whole file form fread() is faster than mapper :-P
     PGE_FileMapper file(filename);
 
@@ -360,8 +360,8 @@ bool IniProcessing::parseFile(const char *filename)
     memcpy(tmp, file.data, static_cast<size_t>(file.size));
     *(tmp + file.size) = '\0';//null terminate last line
     valid = ini_parse_file(tmp, static_cast<size_t>(file.size));
-#else
-#ifdef _WIN32
+    #else
+    #ifdef _WIN32
     //Convert UTF8 file path into UTF16 to support non-ASCII paths on Windows
     std::wstring dest;
     dest.resize(std::strlen(filename));
@@ -373,9 +373,9 @@ bool IniProcessing::parseFile(const char *filename)
                                       dest.size());
     dest.resize(newSize);
     FILE *cFile = _wfopen(dest.c_str(), L"rb");
-#else
+    #else
     FILE *cFile = fopen64(filename, "rb");
-#endif
+    #endif
 
     if(!cFile)
     {
@@ -399,7 +399,7 @@ bool IniProcessing::parseFile(const char *filename)
         valid = parseHelper(tmp, size/*file.size*/);
     }
 
-#endif
+    #endif
     free(tmp);
     return valid;
 }
@@ -452,14 +452,14 @@ bool IniProcessing::open(const std::string &iniFileName)
         m_params.errorCode = ERR_OK;
         m_params.filePath  = iniFileName;
         bool res = parseFile(m_params.filePath.c_str());
-#ifdef INIDEBUG
+        #ifdef INIDEBUG
 
         if(res)
             printf("\n==========WOOHOO!!!==============\n\n");
         else
             printf("\n==========OOOUCH!!!==============\n\n");
 
-#endif
+        #endif
         m_params.opened = res;
         return res;
     }
@@ -816,6 +816,22 @@ void IniProcessing::read(const char *key, std::string &dest, const std::string &
 
     dest = e->second;
 }
+
+#ifdef INI_PROCESSING_ALLOW_QT_TYPES
+void IniProcessing::read(const char *key, QString &dest, const QString &defVal)
+{
+    bool ok = false;
+    params::IniKeys::iterator e = readHelper(key, ok);
+
+    if(!ok)
+    {
+        dest = defVal;
+        return;
+    }
+
+    dest = QString::fromStdString(e->second);
+}
+#endif
 
 template<class TList>
 inline void StrToNumVectorHelper(const std::string &source, TList &dest, const typename TList::value_type &def)

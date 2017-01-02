@@ -56,6 +56,6 @@ void LVL_PhysEnv::init()
 
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
-    _scene->layers.registerItem(data.layer, this);
+    m_scene->layers.registerItem(data.layer, this);
     m_momentum.saveOld();
 }

@@ -16,10 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QSettings>
 #include <QFileInfo>
 #include <QDir>
 
+#include <fmt/fmt_format.h>
+#include <IniProcessor/ini_processing.h>
+#include <Utils/files.h>
 #include "player_calibration.h"
 
 void obj_player_calibration::init(size_t x, size_t y)
@@ -32,27 +34,31 @@ void obj_player_calibration::init(size_t x, size_t y)
         frames[i] = frameOpts();
 }
 
-bool obj_player_calibration::load(QString fileName)
+bool obj_player_calibration::load(std::string fileName)
 {
-    QFileInfo ourFile(fileName);
-    QString ini_sprite;
+    QFileInfo ourFile(QString::fromStdString(fileName));
+    std::string folderPath  = ourFile.absoluteDir().path().toStdString();
+    std::string baseName    = ourFile.baseName().toStdString();
+
+    std::string ini_sprite  = folderPath + "/" + baseName + ".ini";
+    std::string group;
 
     //Load Customized
-    if(QFileInfo(ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini").exists())
-        ini_sprite = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
-    else
+    if(!Files::fileExists(ini_sprite))
         return false;
 
-    QSettings conf(ini_sprite, QSettings::IniFormat);
+    IniProcessing conf(ini_sprite);
     conf.beginGroup("common");
-    matrixWidth =       static_cast<size_t>(conf.value("matrix-width",  10u).toUInt());
-    matrixHeight =      static_cast<size_t>(conf.value("matrix-height", 10u).toUInt());
-    frameWidth =        conf.value("width", -1).toInt();
-    frameHeight =       conf.value("height", -1).toInt();
-    frameHeightDuck =   conf.value("height-duck", -1).toInt();
-    frameGrabOffsetX =  conf.value("grab-offset-x", 0).toInt();
-    frameGrabOffsetY =  conf.value("grab-offset-y", 0).toInt();
-    frameOverTopGrab =  conf.value("over-top-grab", false).toBool();
+    {
+        conf.read("matrix-width",  matrixWidth,  10u);
+        conf.read("matrix-height", matrixHeight, 10u);
+        conf.read("width", frameWidth, -1);
+        conf.read("height", frameHeight, -1);
+        conf.read("height-duck", frameHeightDuck, -1);
+        conf.read("grab-offset-x", frameGrabOffsetX, 0);
+        conf.read("grab-offset-y", frameGrabOffsetY, 0);
+        conf.read("over-top-grab", frameOverTopGrab, false);
+    }
     conf.endGroup();
     init(matrixWidth, matrixHeight);
     size_t x, y;
@@ -62,15 +68,19 @@ bool obj_player_calibration::load(QString fileName)
         for(y = 0; y < matrixHeight; y++)
         {
             frameOpts &f = frame(x, y);
-            conf.beginGroup(QString("frame-%1-%2").arg(x).arg(y));
-            f.H = conf.value("height", 100).toUInt();
-            f.W = conf.value("width", 100).toUInt();
-            f.offsetX = conf.value("offsetX", 0).toInt();
-            f.offsetY = conf.value("offsetY", 0).toInt();
-            f.used = conf.value("used", false).toBool();
-            f.isDuck = conf.value("duck", false).toBool();
-            f.isRightDir = conf.value("isRightDir", false).toBool();
-            f.showGrabItem = conf.value("showGrabItem", false).toBool();
+            group = fmt::format("frame-{0}-{1}", x, y);
+            //sprintf(group, "frame-%lu-%lu", (unsigned long)x, (unsigned long)y);
+            conf.beginGroup(group.c_str());
+            {
+                conf.read("height", f.H, 100);
+                conf.read("width", f.W, 100);
+                conf.read("offsetX", f.offsetX, 0);
+                conf.read("offsetY", f.offsetY, 0);
+                conf.read("used", f.used, false);
+                conf.read("duck", f.isDuck, false);
+                conf.read("isRightDir", f.isRightDir, false);
+                conf.read("showGrabItem", f.showGrabItem, false);
+            }
             conf.endGroup();
 
             if(frameWidth < 0)
@@ -94,38 +104,46 @@ bool obj_player_calibration::load(QString fileName)
     }
 
     AniFrames.set.clear();
+
     //get Animation frameSets
-    getSpriteAniData(conf, "Idle");
-    getSpriteAniData(conf, "Run");
-    getSpriteAniData(conf, "JumpFloat");
-    getSpriteAniData(conf, "JumpFall");
-    getSpriteAniData(conf, "SpinJump");
-    getSpriteAniData(conf, "Sliding");
-    getSpriteAniData(conf, "Climbing");
-    getSpriteAniData(conf, "Fire");
-    getSpriteAniData(conf, "SitDown");
-    getSpriteAniData(conf, "Dig");
-    getSpriteAniData(conf, "GrabIdle");
-    getSpriteAniData(conf, "GrabRun");
-    getSpriteAniData(conf, "GrabJump");
-    getSpriteAniData(conf, "GrabSitDown");
-    getSpriteAniData(conf, "RacoonRun");
-    getSpriteAniData(conf, "RacoonFloat");
-    getSpriteAniData(conf, "RacoonFly");
-    getSpriteAniData(conf, "RacoonTail");
-    getSpriteAniData(conf, "Swim");
-    getSpriteAniData(conf, "SwimUp");
-    getSpriteAniData(conf, "OnYoshi");
-    getSpriteAniData(conf, "OnYoshiSit");
-    getSpriteAniData(conf, "PipeUpDown");
-    getSpriteAniData(conf, "PipeUpDownRear");
-    getSpriteAniData(conf, "SlopeSlide");
-    getSpriteAniData(conf, "TanookiStatue");
-    getSpriteAniData(conf, "SwordAttak");
-    getSpriteAniData(conf, "JumpSwordUp");
-    getSpriteAniData(conf, "JumpSwordDown");
-    getSpriteAniData(conf, "DownSwordAttak");
-    getSpriteAniData(conf, "Hurted");
+    try
+    {
+        getSpriteAniData(conf, "Idle");
+        getSpriteAniData(conf, "Run");
+        getSpriteAniData(conf, "JumpFloat");
+        getSpriteAniData(conf, "JumpFall");
+        getSpriteAniData(conf, "SpinJump");
+        getSpriteAniData(conf, "Sliding");
+        getSpriteAniData(conf, "Climbing");
+        getSpriteAniData(conf, "Fire");
+        getSpriteAniData(conf, "SitDown");
+        getSpriteAniData(conf, "Dig");
+        getSpriteAniData(conf, "GrabIdle");
+        getSpriteAniData(conf, "GrabRun");
+        getSpriteAniData(conf, "GrabJump");
+        getSpriteAniData(conf, "GrabSitDown");
+        getSpriteAniData(conf, "RacoonRun");
+        getSpriteAniData(conf, "RacoonFloat");
+        getSpriteAniData(conf, "RacoonFly");
+        getSpriteAniData(conf, "RacoonTail");
+        getSpriteAniData(conf, "Swim");
+        getSpriteAniData(conf, "SwimUp");
+        getSpriteAniData(conf, "OnYoshi");
+        getSpriteAniData(conf, "OnYoshiSit");
+        getSpriteAniData(conf, "PipeUpDown");
+        getSpriteAniData(conf, "PipeUpDownRear");
+        getSpriteAniData(conf, "SlopeSlide");
+        getSpriteAniData(conf, "TanookiStatue");
+        getSpriteAniData(conf, "SwordAttak");
+        getSpriteAniData(conf, "JumpSwordUp");
+        getSpriteAniData(conf, "JumpSwordDown");
+        getSpriteAniData(conf, "DownSwordAttak");
+        getSpriteAniData(conf, "Hurted");
+    }
+    catch(...)
+    {
+        return false;
+    }
     return true;
 }
 
@@ -139,33 +157,33 @@ frameOpts &obj_player_calibration::frame(size_t x, size_t y)
     return frames[get];
 }
 
-void obj_player_calibration::getSpriteAniData(QSettings &set, QString name)
+void obj_player_calibration::getSpriteAniData(IniProcessing &set, const char *name)
 {
     AniFrameSet frameSet;
     AniFrame frameXY;
     int frameTotal, i;
-    set.beginGroup(QString("Animation%1_L").arg(name));
-    frameTotal = set.value("frames", 0).toInt();
+    std::string group[2];
+    std::vector<AniFrame > *frameSets[2] = {&frameSet.L, &frameSet.R};
 
-    for(i = 0; i < frameTotal; i++)
+    group[0] = fmt::format("Animation{0}_L", name);
+    group[1] = fmt::format("Animation{0}_R", name);
+
+    for(int side = 0; side < 2; side++)
     {
-        frameXY.x = static_cast<size_t>(set.value(QString("frame%1x").arg(i), 0).toUInt());
-        frameXY.y = static_cast<size_t>(set.value(QString("frame%1y").arg(i), 0).toUInt());
-        frameSet.L.push_back(frameXY);
+        set.beginGroup(group[side].c_str());
+        {
+            set.read("frames", frameTotal, 0);
+            frameSets[side]->reserve(frameTotal);
+            for(i = 0; i < frameTotal; i++)
+            {
+                set.read(fmt::format("frame{0}x", i).c_str(), frameXY.x, 0);
+                set.read(fmt::format("frame{0}y", i).c_str(), frameXY.y, 0);
+                frameSets[side]->push_back(frameXY);
+            }
+        }
+        set.endGroup();
     }
 
-    set.endGroup();
-    set.beginGroup("Animation" + name + "_R");
-    frameTotal = set.value("frames", 0).toInt();
-
-    for(i = 0; i < frameTotal; i++)
-    {
-        frameXY.x = static_cast<size_t>(set.value(QString("frame%1x").arg(i), 0).toUInt());
-        frameXY.y = static_cast<size_t>(set.value(QString("frame%1y").arg(i), 0).toUInt());
-        frameSet.R.push_back(frameXY);
-    }
-
-    set.endGroup();
     frameSet.name = name;
     AniFrames.set.push_back(frameSet);
 }

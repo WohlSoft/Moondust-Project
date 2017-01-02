@@ -78,7 +78,7 @@ int LVL_Npc::lua_activate_neighbours()
 {
     QVector<PGE_Phys_Object *> bodies;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
-    _scene->queryItems(posRectC, &bodies);
+    m_scene->queryItems(posRectC, &bodies);
 
     int found = 0;
     for(PGE_RenderList::iterator it = bodies.begin(); it != bodies.end(); it++)
@@ -94,7 +94,7 @@ int LVL_Npc::lua_activate_neighbours()
         if(!body->isActivated)
         {
             body->Activate();
-            _scene->active_npcs.push_back(body);
+            m_scene->active_npcs.push_back(body);
             found++;
         }
     }
@@ -115,7 +115,7 @@ LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawna
     def.event_die = "";
     def.event_talk = "";
     def.event_emptylayer = "";
-    return _scene->spawnNPC(def,
+    return m_scene->spawnNPC(def,
                             (LevelScene::NpcSpawnType)sp_type,
                             (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
 }

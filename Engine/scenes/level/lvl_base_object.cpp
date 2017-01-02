@@ -38,7 +38,7 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     /*****Renderer flags*******/
     _vizible_on_screen(false),
     _render_list(false),
-    _scene(_parent),
+    m_scene(_parent),
     _is_registered(false),
     /*****Renderer flags*END***/
 
@@ -87,19 +87,19 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
 
 PGE_Phys_Object::~PGE_Phys_Object()
 {
-    if(_is_registered) _scene->unregisterElement(this);
+    if(_is_registered) m_scene->unregisterElement(this);
 }
 
 void PGE_Phys_Object::registerInTree()
 {
-    if(!_is_registered) _scene->registerElement(this);
+    if(!_is_registered) m_scene->registerElement(this);
 
     _is_registered = true;
 }
 
 void PGE_Phys_Object::unregisterFromTree()
 {
-    if(_is_registered) _scene->unregisterElement(this);
+    if(_is_registered) m_scene->unregisterElement(this);
 
     _is_registered = false;
 }
@@ -299,30 +299,30 @@ void PGE_Phys_Object::applyAccel(double x, double y)
 
 void PGE_Phys_Object::_syncPosition()
 {
-    if(_is_registered) _scene->unregisterElement(this);
+    if(_is_registered) m_scene->unregisterElement(this);
 
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
-    _scene->registerElement(this);
+    m_scene->registerElement(this);
     _is_registered = true;
 }
 
 void PGE_Phys_Object::_syncPositionAndSize()
 {
-    if(_is_registered) _scene->unregisterElement(this);
+    if(_is_registered) m_scene->unregisterElement(this);
 
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
     m_width_registered = m_width_toRegister;
     m_height_registered = m_height_toRegister;
-    _scene->registerElement(this);
+    m_scene->registerElement(this);
     _is_registered = true;
 }
 
 void PGE_Phys_Object::_syncSection(bool sync_position)
 {
-    int sID = _scene->findNearestSection(long(posX()), long(posY()));
-    LVL_Section *sct = _scene->getSection(sID);
+    int sID = m_scene->findNearestSection(long(posX()), long(posY()));
+    LVL_Section *sct = m_scene->getSection(sID);
 
     if(sct)
         setParentSection(sct);

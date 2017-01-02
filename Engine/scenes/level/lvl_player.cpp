@@ -38,7 +38,7 @@ LVL_Player::LVL_Player(LevelScene *_parent) : PGE_Phys_Object(_parent)
     data = FileFormats::CreateLvlPlayerPoint(0);
     isLocked = false;
     _no_render = false;
-    _isInited = false;
+    m_isInited = false;
     global_state = nullptr;
     keys_prev = ResetControlKeys();
     isLuaPlayer = false;
