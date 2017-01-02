@@ -374,7 +374,7 @@ bool IniProcessing::parseFile(const char *filename)
     dest.resize(newSize);
     FILE *cFile = _wfopen(dest.c_str(), L"rb");
     #else
-    FILE *cFile = fopen64(filename, "rb");
+    FILE *cFile = fopen(filename, "rb");
     #endif
 
     if(!cFile)
