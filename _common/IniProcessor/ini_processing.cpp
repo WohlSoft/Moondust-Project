@@ -32,6 +32,7 @@ DEALINGS IN THE SOFTWARE.
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <clocale>
 #include <sstream>
 #include <assert.h>
 #ifdef _WIN32
