@@ -637,6 +637,7 @@ bool GraphicsHelps::toGif(QImage &img, QString &path)
 
     if(unfinished)
     {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         qWarning() << "Unfinished\n";
         return false;
@@ -647,6 +648,7 @@ bool GraphicsHelps::toGif(QImage &img, QString &path)
 
     if(tarQImg.colorTable().size() != 256)
     {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         qWarning()  << "A lot of colors\n";
         return false;
@@ -667,6 +669,7 @@ bool GraphicsHelps::toGif(QImage &img, QString &path)
 
     if(errcode != GIF_OK)
     {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         qWarning()  << "EGifPutScreenDesc error 1\n";
         return false;
@@ -676,6 +679,7 @@ bool GraphicsHelps::toGif(QImage &img, QString &path)
 
     if(errcode != GIF_OK)
     {
+        GifFreeMapObject(cmo);
         EGifCloseFile(t, &errcode);
         qWarning()  << "EGifPutImageDesc error 2\n";
         return false;
@@ -690,6 +694,7 @@ bool GraphicsHelps::toGif(QImage &img, QString &path)
 
         if(errcode != GIF_OK)
         {
+            GifFreeMapObject(cmo);
             EGifCloseFile(t, &errcode);
             qWarning()  << "EGifPutLine error 3\n";
             return false;
@@ -698,6 +703,8 @@ bool GraphicsHelps::toGif(QImage &img, QString &path)
         byteArr += tarQImg.width();
         byteArr += ((tarQImg.width() % 4) != 0 ? 4 - (tarQImg.width() % 4) : 0);
     }
+
+    GifFreeMapObject(cmo);
 
     if(errcode != GIF_OK)
     {

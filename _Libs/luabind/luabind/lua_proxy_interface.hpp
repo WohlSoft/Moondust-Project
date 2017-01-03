@@ -276,7 +276,7 @@ namespace luabind {
 					   "luabind::set_error_callback()");
 				std::terminate();
 #endif
-				return *(typename std::remove_reference<T>::type*)0;
+                //return *(typename std::remove_reference<T>::type*)0; //DEAD CODE!
 			}
 		};
 

@@ -297,8 +297,8 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
             scene()->update();
         return;
     }
-    replayLastMouseEvent();
-    QGraphicsView::wheelEvent(event);
+    //replayLastMouseEvent(); //DEAD CODE
+    //QGraphicsView::wheelEvent(event);
 }
 
 

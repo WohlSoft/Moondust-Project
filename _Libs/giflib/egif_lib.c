@@ -705,13 +705,13 @@ int EGifGCBToSavedExtension(const GraphicsControlBlock *GCB,
 int
 EGifPutCode(GifFileType *GifFile, int CodeSize, const GifByteType *CodeBlock)
 {
+    (void)CodeSize;//fixes warning
     GifFilePrivateType *Private = (GifFilePrivateType *)GifFile->Private;
 
     if (!IS_WRITEABLE(Private)) {
         /* This file was NOT open for writing: */
         GifFile->Error = E_GIF_ERR_NOT_WRITEABLE;
         return GIF_ERROR;
-        if(CodeSize) {} //fixes warning. after return it will not be used
     }
 
     /* No need to dump code size as Compression set up does any for us: */

@@ -20,6 +20,7 @@
 #include <common_features/items.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <Utils/maths.h>
 
 #include "../../../../defines.h"
 
@@ -29,12 +30,12 @@
 //Search and load custom User's files
 void LvlScene::loadUserData(QProgressDialog &progress)
 {
-    int i, total=0;
+    int i, total = 0;
 
     //UserNPCs uNPC;
     QImage tempImg;
 
-    bool WrongImagesDetected=false;
+    bool WrongImagesDetected = false;
 
     m_localConfigBlocks.clear();
     m_localConfigBGOs.clear();
@@ -55,35 +56,33 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         QStringList rules = rTableINI.childGroups();
 
-        int count=0;
+        int count = 0;
         foreach(QString x, rules)
         {
             obj_rotation_table t;
             rTableINI.beginGroup(x);
-                t.id = rTableINI.value("id", 0).toInt();
-                t.type = Items::getItemType(rTableINI.value("type", "-1").toString());
-                t.rotate_left = rTableINI.value("rotate-left", 0).toInt();
-                t.rotate_right = rTableINI.value("rotate-right", 0).toInt();
-                t.flip_h = rTableINI.value("flip-h", 0).toInt();
-                t.flip_v = rTableINI.value("flip-v", 0).toInt();
+            t.id = rTableINI.value("id", 0).toInt();
+            t.type = Items::getItemType(rTableINI.value("type", "-1").toString());
+            t.rotate_left = rTableINI.value("rotate-left", 0).toInt();
+            t.rotate_right = rTableINI.value("rotate-right", 0).toInt();
+            t.flip_h = rTableINI.value("flip-h", 0).toInt();
+            t.flip_v = rTableINI.value("flip-v", 0).toInt();
             rTableINI.endGroup();
-            if(t.id<=0) continue;
+            if(t.id <= 0) continue;
 
-            if(t.type==ItemTypes::LVL_Block)
+            if(t.type == ItemTypes::LVL_Block)
             {
-                local_rotation_table_blocks[t.id]=t;
+                local_rotation_table_blocks[t.id] = t;
                 count++;
             }
-            else
-            if(t.type==ItemTypes::LVL_BGO)
+            else if(t.type == ItemTypes::LVL_BGO)
             {
-                local_rotation_table_bgo[t.id]=t;
+                local_rotation_table_bgo[t.id] = t;
                 count++;
             }
-            else
-            if(t.type==ItemTypes::LVL_NPC)
+            else if(t.type == ItemTypes::LVL_NPC)
             {
-                local_rotation_table_npc[t.id]=t;
+                local_rotation_table_npc[t.id] = t;
                 count++;
             }
         }
@@ -92,150 +91,154 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
     if(!progress.wasCanceled())
         progress.setLabelText(
-                    tr("Search User Backgrounds %1")
-                    .arg(QString::number(m_configs->main_bg.stored()) ) );
+            tr("Search User Backgrounds %1")
+            .arg(QString::number(m_configs->main_bg.stored())));
 
     qApp->processEvents();
     uLVL.setDefaultDir(m_configs->getBGPath());
     //Load Backgrounds
-    for(int i=1; i<m_configs->main_bg.size(); i++)
+    for(int i = 1; i < m_configs->main_bg.size(); i++)
+    {
+        loaded1 = false;
+        loaded2 = false;
+        obj_BG *bgD = &m_configs->main_bg[i];
+        UserBGs uBG;
+
+        QString CustomTxt = uLVL.getCustomFile("background2-" + QString::number(bgD->id) + ".ini", true);
+        if(CustomTxt.isEmpty())
+            CustomTxt = uLVL.getCustomFile("background2-" + QString::number(bgD->id) + ".txt", true);
+        if(!CustomTxt.isEmpty())
         {
-            loaded1 = false;
-            loaded2 = false;
-            obj_BG *bgD = &m_configs->main_bg[i];
-            UserBGs uBG;
+            m_localConfigBackgrounds[bgD->id] = *bgD;
+            obj_BG &bgN = m_localConfigBackgrounds[bgD->id];
+            m_configs->loadLevelBackground(bgN, "background2", bgD, CustomTxt);
+            bgD = &bgN;
+        }
 
-            QString CustomTxt=uLVL.getCustomFile("background2-" + QString::number(bgD->id)+".ini", true);
-            if(CustomTxt.isEmpty())
-                CustomTxt=uLVL.getCustomFile("background2-" + QString::number(bgD->id)+".txt", true);
-            if(!CustomTxt.isEmpty())
-            {
-                m_localConfigBackgrounds[bgD->id]=*bgD;
-                obj_BG &bgN=m_localConfigBackgrounds[bgD->id];
-                m_configs->loadLevelBackground(bgN, "background2", bgD, CustomTxt);
-                bgD=&bgN;
-            }
+        //check for first image
+        QString CustomFile = uLVL.getCustomFile(bgD->image_n, true);
+        if(!CustomFile.isEmpty())
+        {
+            GraphicsHelps::loadQImage(tempImg, CustomFile);
+            if(tempImg.isNull())
+                WrongImagesDetected = true;
+            else
+                uBG.image = std::move(QPixmap::fromImage(tempImg));
+            uBG.id = bgD->id;
+            loaded1 = true;
+        }
 
-            //check for first image
-            QString CustomFile=uLVL.getCustomFile(bgD->image_n, true);
+        if((loaded1) && (bgD->animated))
+        {
+            double h      = static_cast<double>(uBG.image.height());
+            double frames = static_cast<double>(bgD->frames);
+            uBG.image = uBG.image.copy(0, 0,
+                                       uBG.image.width(),
+                                       Maths::iRound(h / frames));
+        }
+
+        //check for second image
+        if(bgD->type == 1)
+        {
+            QString CustomFile = uLVL.getCustomFile(bgD->second_image_n, true);
             if(!CustomFile.isEmpty())
             {
                 GraphicsHelps::loadQImage(tempImg, CustomFile);
                 if(tempImg.isNull())
-                    WrongImagesDetected=true;
+                    WrongImagesDetected = true;
                 else
-                    uBG.image = std::move(QPixmap::fromImage(tempImg));
+                    uBG.second_image = std::move(QPixmap::fromImage(tempImg));
                 uBG.id = bgD->id;
-                loaded1 = true;
+                loaded2 = true;
             }
+        }
 
-            if((loaded1)&&(bgD->animated) )
-            {
-                uBG.image=uBG.image.copy(0, 0, uBG.image.width(), (int)round(uBG.image.height()/bgD->frames));
-            }
+        if((loaded1) && (!loaded2)) uBG.q = 0;
+        if((!loaded1) && (loaded2)) uBG.q = 1;
+        if((loaded1) && (loaded2)) uBG.q = 2;
 
-            //check for second image
-            if(bgD->type == 1)
-            {
-                QString CustomFile=uLVL.getCustomFile(bgD->second_image_n, true);
-                if(!CustomFile.isEmpty())
-                {
-                    GraphicsHelps::loadQImage(tempImg, CustomFile);
-                    if(tempImg.isNull())
-                        WrongImagesDetected=true;
-                    else
-                        uBG.second_image = std::move(QPixmap::fromImage(tempImg));
-                    uBG.id = bgD->id;
-                    loaded2 = true;
-                }
-            }
-
-            if((loaded1)&&(!loaded2)) uBG.q = 0;
-            if((!loaded1)&&(loaded2)) uBG.q = 1;
-            if((loaded1)&&(loaded2)) uBG.q = 2;
-
-            //If user images found and loaded
-            if( (loaded1) || (loaded2) )
-            {
-                if(!m_localConfigBackgrounds.contains(uBG.id)) m_localConfigBackgrounds[uBG.id]=*bgD;
-                obj_BG &bgU=m_localConfigBackgrounds[uBG.id];
-                if(loaded1) bgU.image=uBG.image;
-                if(loaded2) bgU.second_image=uBG.second_image;
-            }
+        //If user images found and loaded
+        if((loaded1) || (loaded2))
+        {
+            if(!m_localConfigBackgrounds.contains(uBG.id)) m_localConfigBackgrounds[uBG.id] = *bgD;
+            obj_BG &bgU = m_localConfigBackgrounds[uBG.id];
+            if(loaded1) bgU.image = uBG.image;
+            if(loaded2) bgU.second_image = uBG.second_image;
+        }
 
         total++;
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);
-        else*/ return;
-        }
+            else*/ return;
+    }
 
-///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 
     if(!progress.wasCanceled())
     {
         progress.setLabelText(
-                    tr("Search User Blocks %1")
-                    .arg(QString::number(m_configs->main_block.stored()) ) );
-        progress.setValue(progress.value()+1);
+            tr("Search User Blocks %1")
+            .arg(QString::number(m_configs->main_block.stored())));
+        progress.setValue(progress.value() + 1);
     }
     m_localConfigBlocks.allocateSlots(m_configs->main_block.total());
     qApp->processEvents();
     uLVL.setDefaultDir(m_configs->getBlockPath());
     //Load Blocks
-    for(i=1; i<m_configs->main_block.size(); i++) //Add user images
+    for(i = 1; i < m_configs->main_block.size(); i++) //Add user images
     {
         obj_block *blockD = &m_configs->main_block[i];
         obj_block t_block;
         blockD->copyTo(t_block);
 
-        bool custom=false;
+        bool custom = false;
 
-        QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->setup.id)+".ini", true);
+        QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->setup.id) + ".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uLVL.getCustomFile("block-" + QString::number(blockD->setup.id)+".txt", true);
+            CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->setup.id) + ".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
-            custom=true;
+            custom = true;
         }
 
-        QString CustomFile=uLVL.getCustomFile(t_block.setup.image_n, true);
+        QString CustomFile = uLVL.getCustomFile(t_block.setup.image_n, true);
         if(!CustomFile.isEmpty())
         {
             if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_block.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask);
-            } else {
-                GraphicsHelps::loadQImage(tempImg, CustomFile);
             }
+            else
+                GraphicsHelps::loadQImage(tempImg, CustomFile);
             if(tempImg.isNull())
-                WrongImagesDetected=true;
+                WrongImagesDetected = true;
             else
             {
                 m_localImages.push_back(QPixmap::fromImage(tempImg));
                 t_block.cur_image = &m_localImages.last();
             }
-            custom=true;
+            custom = true;
         }
 
-        SimpleAnimator * aniBlock = new SimpleAnimator(
-                    ((t_block.cur_image->isNull())?
-                            m_dummyBlockImg : *t_block.cur_image),
-                              t_block.setup.animated,
-                              t_block.setup.frames,
-                              t_block.setup.framespeed, 0, -1,
-                              t_block.setup.animation_rev,
-                              t_block.setup.animation_bid
-                              );
+        SimpleAnimator *aniBlock = new SimpleAnimator(
+            ((t_block.cur_image->isNull()) ?
+             m_dummyBlockImg : *t_block.cur_image),
+            t_block.setup.animated,
+            t_block.setup.frames,
+            t_block.setup.framespeed, 0, -1,
+            t_block.setup.animation_rev,
+            t_block.setup.animation_bid
+        );
 
         if(!t_block.setup.frame_sequence.isEmpty())
             aniBlock->setFrameSequance(t_block.setup.frame_sequence);
 
         t_block.animator_id = m_animatorsBlocks.size();
-        m_animatorsBlocks.push_back( aniBlock );
-        m_animationTimer.registerAnimation( aniBlock );
+        m_animatorsBlocks.push_back(aniBlock);
+        m_animationTimer.registerAnimation(aniBlock);
 
         m_localConfigBlocks.storeElement(i, t_block);
         if(custom)
@@ -248,70 +251,70 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             return;
     }
 
-///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 
     if(!progress.wasCanceled())
     {
         progress.setLabelText(
-                    tr("Search User BGOs %1")
-                    .arg(QString::number(m_configs->main_bgo.stored()) ) );
+            tr("Search User BGOs %1")
+            .arg(QString::number(m_configs->main_bgo.stored())));
 
-        progress.setValue(progress.value()+1);
+        progress.setValue(progress.value() + 1);
     }
 
     qApp->processEvents();
     uLVL.setDefaultDir(m_configs->getBgoPath());
     //Load BGO
     m_localConfigBGOs.allocateSlots(m_configs->main_bgo.total());
-    for(int i=1; i<m_configs->main_bgo.size(); i++)
+    for(int i = 1; i < m_configs->main_bgo.size(); i++)
     {
         obj_bgo *bgoD = &m_configs->main_bgo[i];
         obj_bgo t_bgo; //Allocate new BGO Config entry
-        bool custom=false;
+        bool custom = false;
 
         bgoD->copyTo(t_bgo);//init configs
 
-        QString CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id)+".ini", true);
+        QString CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id) + ".ini", true);
         if(CustomTxt.isEmpty())
-            CustomTxt=uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id)+".txt", true);
+            CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id) + ".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadLevelBGO(t_bgo, "background", bgoD, CustomTxt);
-            custom=true;
+            custom = true;
         }
 
-        QString CustomImage=uLVL.getCustomFile(t_bgo.setup.image_n, true);
+        QString CustomImage = uLVL.getCustomFile(t_bgo.setup.image_n, true);
         if(!CustomImage.isEmpty())
         {
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_bgo.setup.mask_n, false);
                 GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
-            } else {
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
+            else
+                GraphicsHelps::loadQImage(tempImg, CustomImage);
             if(tempImg.isNull())
-                WrongImagesDetected=true;
+                WrongImagesDetected = true;
             else
             {
                 m_localImages.push_back(QPixmap::fromImage(tempImg));
                 t_bgo.cur_image = &m_localImages.last();
             }
-            custom=true;
+            custom = true;
         }
 
-        SimpleAnimator * aniBGO = new SimpleAnimator(
-                    ((t_bgo.cur_image->isNull())?
-                            m_dummyBgoImg : *t_bgo.cur_image
-                               ),
-                              t_bgo.setup.animated,
-                              t_bgo.setup.frames,
-                              t_bgo.setup.framespeed
-                              );
+        SimpleAnimator *aniBGO = new SimpleAnimator(
+            ((t_bgo.cur_image->isNull()) ?
+             m_dummyBgoImg : *t_bgo.cur_image
+            ),
+            t_bgo.setup.animated,
+            t_bgo.setup.frames,
+            t_bgo.setup.framespeed
+        );
 
         t_bgo.animator_id = m_animatorsBGO.size();
-        m_animatorsBGO.push_back( aniBGO );
-        m_animationTimer.registerAnimation( aniBGO );
+        m_animatorsBGO.push_back(aniBGO);
+        m_animationTimer.registerAnimation(aniBGO);
 
         m_localConfigBGOs.storeElement(i, t_bgo);
         if(custom)
@@ -324,16 +327,16 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             return;
     }
 
-///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 
 
     if(!progress.wasCanceled())
     {
         progress.setLabelText(
-                    tr("Search User NPCs %1")
-                    .arg(QString::number(m_configs->main_npc.stored()) ) );
+            tr("Search User NPCs %1")
+            .arg(QString::number(m_configs->main_npc.stored())));
 
-        progress.setValue(progress.value()+1);
+        progress.setValue(progress.value() + 1);
     }
     qApp->processEvents();
     uLVL.setDefaultDir(m_configs->getNpcPath());
@@ -341,114 +344,113 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     m_localConfigNPCs.allocateSlots(m_configs->main_npc.total());
     NPCConfigFile sets;
 
-    for(i=1; i<m_configs->main_npc.size(); i++) //Add user images
+    for(i = 1; i < m_configs->main_npc.size(); i++) //Add user images
     {
         obj_npc *npcD = &m_configs->main_npc[i];
         obj_npc t_npc; //Allocate new NPC Config entry
-        bool custom=false;
-        bool cimage=false;
-        bool npctxt=false;
+        bool custom = false;
+        bool cimage = false;
+        bool npctxt = false;
 
         npcD->copyTo(t_npc);//init configs
 
-             QSize capturedS = QSize(0,0);
+        QSize capturedS = QSize(0, 0);
 
-             if(!t_npc.cur_image->isNull())
-                 capturedS = t_npc.cur_image->size();
+        if(!t_npc.cur_image->isNull())
+            capturedS = t_npc.cur_image->size();
 
-             // /////////////////////// Looking for user's NPC.txt ////////////////////////////
-             // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
-             QString CustomTxt=uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id)+".txt", true);
-             if(!CustomTxt.isEmpty())
-             {
-                QFile file(CustomTxt);
-                if(file.open(QIODevice::ReadOnly))
-                {
-                    file.close();
-                    FileFormats::ReadNpcTXTFileF(CustomTxt, sets, true);
-                    npctxt = true;
-                    custom = true;
-                }
-             }
-             QString imgFileName = (npctxt && sets.en_image) ? sets.image : t_npc.setup.image_n;
+        // /////////////////////// Looking for user's NPC.txt ////////////////////////////
+        // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
+        QString CustomTxt = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".txt", true);
+        if(!CustomTxt.isEmpty())
+        {
+            QFile file(CustomTxt);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                file.close();
+                FileFormats::ReadNpcTXTFileF(CustomTxt, sets, true);
+                npctxt = true;
+                custom = true;
+            }
+        }
+        QString imgFileName = (npctxt && sets.en_image) ? sets.image : t_npc.setup.image_n;
 
-             // ///////////////////////Looking for user's GFX
-             QString CustomImage=uLVL.getCustomFile(imgFileName, true);
-             if(CustomImage.isEmpty())
-                CustomImage=uLVL.getCustomFile(t_npc.setup.image_n, true);
+        // ///////////////////////Looking for user's GFX
+        QString CustomImage = uLVL.getCustomFile(imgFileName, true);
+        if(CustomImage.isEmpty())
+            CustomImage = uLVL.getCustomFile(t_npc.setup.image_n, true);
 
-             if(!CustomImage.isEmpty())
-             {
-                 if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
-                 {
-                     QString CustomMask = uLVL.getCustomFile(t_npc.setup.mask_n, false);
-                     GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
-                 } else {
-                     GraphicsHelps::loadQImage(tempImg, CustomImage);
-                 }
-                 if(tempImg.isNull())
-                 {
-                     WrongImagesDetected=true;
-                 } else {
-                     m_localImages.push_back(QPixmap::fromImage(tempImg));
-                     t_npc.cur_image = &m_localImages.last();
-                     capturedS = QSize(t_npc.cur_image->width(), t_npc.cur_image->height());
-                 }
-                 cimage=true;
-                 custom=true;
-             }
+        if(!CustomImage.isEmpty())
+        {
+            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+            {
+                QString CustomMask = uLVL.getCustomFile(t_npc.setup.mask_n, false);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+            }
+            else
+                GraphicsHelps::loadQImage(tempImg, CustomImage);
+            if(tempImg.isNull())
+                WrongImagesDetected = true;
+            else
+            {
+                m_localImages.push_back(QPixmap::fromImage(tempImg));
+                t_npc.cur_image = &m_localImages.last();
+                capturedS = QSize(t_npc.cur_image->width(), t_npc.cur_image->height());
+            }
+            cimage = true;
+            custom = true;
+        }
 
-             if(npctxt)
-             {  //Merge global and user's settings from NPC.txt file
-                 t_npc.setup.applyNPCtxt(&sets, t_npc.setup, capturedS);
-             }
-             else
-             {
-                 if(cimage)
-                 {
-                     NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXT();
-                     autoConf.gfxwidth = capturedS.width();
-                     t_npc.setup.applyNPCtxt(&autoConf, t_npc.setup, capturedS);
-                 }
-             }
+        if(npctxt)
+        {
+            //Merge global and user's settings from NPC.txt file
+            t_npc.setup.applyNPCtxt(&sets, t_npc.setup, capturedS);
+        }
+        else
+        {
+            if(cimage)
+            {
+                NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXT();
+                autoConf.gfxwidth = capturedS.width();
+                t_npc.setup.applyNPCtxt(&autoConf, t_npc.setup, capturedS);
+            }
+        }
 
-//             //Apply only if custom config or image was found
-//             if(custom)
-//             {
-//                 //Apply index;
-//                 if(uNPC.id < (unsigned int)index_npc.size())
-//                 {
-//                     index_npc[uNPC.id].type = 1;
-//                     index_npc[uNPC.id].i = (uNPCs.size()-1);
-//                 }
-//             }
-             AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
-                         ((t_npc.cur_image->isNull())?
-                              m_dummyNpcImg:
-                              *t_npc.cur_image),
-                         t_npc );
+        //             //Apply only if custom config or image was found
+        //             if(custom)
+        //             {
+        //                 //Apply index;
+        //                 if(uNPC.id < (unsigned int)index_npc.size())
+        //                 {
+        //                     index_npc[uNPC.id].type = 1;
+        //                     index_npc[uNPC.id].i = (uNPCs.size()-1);
+        //                 }
+        //             }
+        AdvNpcAnimator *aniNPC = new AdvNpcAnimator(
+            ((t_npc.cur_image->isNull()) ?
+             m_dummyNpcImg :
+             *t_npc.cur_image),
+            t_npc);
 
-             t_npc.animator_id = m_animatorsNPC.size();
-             m_animatorsNPC.push_back( aniNPC );
+        t_npc.animator_id = m_animatorsNPC.size();
+        m_animatorsNPC.push_back(aniNPC);
 
-             m_localConfigNPCs.storeElement(i, t_npc);
-             if(custom)
-             {
-                 m_customNPCs.push_back(&m_localConfigNPCs[i]);
-             }
+        m_localConfigNPCs.storeElement(i, t_npc);
+        if(custom)
+            m_customNPCs.push_back(&m_localConfigNPCs[i]);
 
-         //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-         if(progress.wasCanceled())
-             return;
+        //qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+        if(progress.wasCanceled())
+            return;
     }
 
-    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value() + 1);
     qApp->processEvents();
 
     //Notification about wrong custom image sprites
     if(WrongImagesDetected)
     {
-        QMessageBox * msg = new QMessageBox();
+        QMessageBox *msg = new QMessageBox();
         msg->setWindowFlags(msg->windowFlags() | Qt::WindowStaysOnTopHint);
         msg->setWindowTitle(tr("Wrong custom images"));
         msg->setText(tr("This level have a wrong custom graphics files.\nYou will see 'ghosties' or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.\nPlease, reconvert your images to valid format and try to reload this level."));
@@ -461,13 +463,11 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
 QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
 {
-    bool found=false;
-    found = (npcID>0) && m_localConfigNPCs.contains(npcID);
+    bool found = false;
+    found = (npcID > 0) && m_localConfigNPCs.contains(npcID);
 
     if(!found)
-    {
         return m_dummyNpcImg;
-    }
 
     int gfxH = 0;
     obj_npc &merged = m_localConfigNPCs[npcID];
@@ -475,34 +475,28 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
     gfxH  = merged.setup.gfx_h;
 
     if(merged.cur_image->isNull())
-    {
         return m_dummyNpcImg;
-    }
 
     if(Direction <= 0)
     {
         int frame = 0;
         if(merged.setup.custom_animate)
-        {
             frame = merged.setup.custom_ani_fl;
-        }
-        return merged.cur_image->copy(0, frame*gfxH, merged.cur_image->width(), gfxH );
+        return merged.cur_image->copy(0, frame * gfxH, merged.cur_image->width(), gfxH);
     }
     else
     {
-        int frame=0;
+        int frame = 0;
         int framesQ;
         if(merged.setup.custom_animate)
-        {
             frame = merged.setup.custom_ani_fr;
-        }
         else
         {
             switch(merged.setup.framestyle)
             {
             case 2:
                 framesQ = merged.setup.frames * 4;
-                frame = (int)(framesQ-(framesQ/4)*3);
+                frame = (int)(framesQ - (framesQ / 4) * 3);
                 break;
             case 1:
                 framesQ = merged.setup.frames * 2;
@@ -513,6 +507,6 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
                 break;
             }
         }
-        return merged.cur_image->copy(0,frame*gfxH, merged.cur_image->width(), gfxH );
+        return merged.cur_image->copy(0, frame * gfxH, merged.cur_image->width(), gfxH);
     }
 }

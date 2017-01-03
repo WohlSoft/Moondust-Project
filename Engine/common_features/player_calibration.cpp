@@ -22,6 +22,7 @@
 #include <fmt/fmt_format.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
+#include <common_features/logger.h>
 #include "player_calibration.h"
 
 void obj_player_calibration::init(size_t x, size_t y)
@@ -36,112 +37,130 @@ void obj_player_calibration::init(size_t x, size_t y)
 
 bool obj_player_calibration::load(std::string fileName)
 {
-    QFileInfo ourFile(QString::fromStdString(fileName));
-    std::string folderPath  = ourFile.absoluteDir().path().toStdString();
-    std::string baseName    = ourFile.baseName().toStdString();
-
-    std::string ini_sprite  = folderPath + "/" + baseName + ".ini";
-    std::string group;
-
-    //Load Customized
-    if(!Files::fileExists(ini_sprite))
-        return false;
-
-    IniProcessing conf(ini_sprite);
-    conf.beginGroup("common");
-    {
-        conf.read("matrix-width",  matrixWidth,  10u);
-        conf.read("matrix-height", matrixHeight, 10u);
-        conf.read("width", frameWidth, -1);
-        conf.read("height", frameHeight, -1);
-        conf.read("height-duck", frameHeightDuck, -1);
-        conf.read("grab-offset-x", frameGrabOffsetX, 0);
-        conf.read("grab-offset-y", frameGrabOffsetY, 0);
-        conf.read("over-top-grab", frameOverTopGrab, false);
-    }
-    conf.endGroup();
-    init(matrixWidth, matrixHeight);
-    size_t x, y;
-
-    for(x = 0; x < matrixWidth; x++)
-    {
-        for(y = 0; y < matrixHeight; y++)
-        {
-            frameOpts &f = frame(x, y);
-            group = fmt::format("frame-{0}-{1}", x, y);
-            //sprintf(group, "frame-%lu-%lu", (unsigned long)x, (unsigned long)y);
-            conf.beginGroup(group.c_str());
-            {
-                conf.read("height", f.H, 100);
-                conf.read("width", f.W, 100);
-                conf.read("offsetX", f.offsetX, 0);
-                conf.read("offsetY", f.offsetY, 0);
-                conf.read("used", f.used, false);
-                conf.read("duck", f.isDuck, false);
-                conf.read("isRightDir", f.isRightDir, false);
-                conf.read("showGrabItem", f.showGrabItem, false);
-            }
-            conf.endGroup();
-
-            if(frameWidth < 0)
-            {
-                if(f.used)
-                    frameWidth = static_cast<int>(f.W);
-            }
-
-            if(frameHeight < 0)
-            {
-                if(f.used)
-                    frameHeight = static_cast<int>(f.H);
-            }
-
-            if(frameHeightDuck < 0)
-            {
-                if(f.used)
-                    frameHeightDuck = static_cast<int>(f.H);
-            }
-        }
-    }
-
-    AniFrames.set.clear();
-
-    //get Animation frameSets
     try
     {
-        getSpriteAniData(conf, "Idle");
-        getSpriteAniData(conf, "Run");
-        getSpriteAniData(conf, "JumpFloat");
-        getSpriteAniData(conf, "JumpFall");
-        getSpriteAniData(conf, "SpinJump");
-        getSpriteAniData(conf, "Sliding");
-        getSpriteAniData(conf, "Climbing");
-        getSpriteAniData(conf, "Fire");
-        getSpriteAniData(conf, "SitDown");
-        getSpriteAniData(conf, "Dig");
-        getSpriteAniData(conf, "GrabIdle");
-        getSpriteAniData(conf, "GrabRun");
-        getSpriteAniData(conf, "GrabJump");
-        getSpriteAniData(conf, "GrabSitDown");
-        getSpriteAniData(conf, "RacoonRun");
-        getSpriteAniData(conf, "RacoonFloat");
-        getSpriteAniData(conf, "RacoonFly");
-        getSpriteAniData(conf, "RacoonTail");
-        getSpriteAniData(conf, "Swim");
-        getSpriteAniData(conf, "SwimUp");
-        getSpriteAniData(conf, "OnYoshi");
-        getSpriteAniData(conf, "OnYoshiSit");
-        getSpriteAniData(conf, "PipeUpDown");
-        getSpriteAniData(conf, "PipeUpDownRear");
-        getSpriteAniData(conf, "SlopeSlide");
-        getSpriteAniData(conf, "TanookiStatue");
-        getSpriteAniData(conf, "SwordAttak");
-        getSpriteAniData(conf, "JumpSwordUp");
-        getSpriteAniData(conf, "JumpSwordDown");
-        getSpriteAniData(conf, "DownSwordAttak");
-        getSpriteAniData(conf, "Hurted");
+        QFileInfo ourFile(QString::fromStdString(fileName));
+        std::string folderPath  = ourFile.absoluteDir().path().toStdString();
+        std::string baseName    = ourFile.baseName().toStdString();
+
+        std::string ini_sprite  = folderPath + "/" + baseName + ".ini";
+        std::string group;
+
+        //Load Customized
+        if(!Files::fileExists(ini_sprite))
+            return false;
+
+        IniProcessing conf(ini_sprite);
+        conf.beginGroup("common");
+        {
+            conf.read("matrix-width",  matrixWidth,  10u);
+            conf.read("matrix-height", matrixHeight, 10u);
+            conf.read("width", frameWidth, -1);
+            conf.read("height", frameHeight, -1);
+            conf.read("height-duck", frameHeightDuck, -1);
+            conf.read("grab-offset-x", frameGrabOffsetX, 0);
+            conf.read("grab-offset-y", frameGrabOffsetY, 0);
+            conf.read("over-top-grab", frameOverTopGrab, false);
+        }
+        conf.endGroup();
+        init(matrixWidth, matrixHeight);
+        size_t x, y;
+
+        for(x = 0; x < matrixWidth; x++)
+        {
+            for(y = 0; y < matrixHeight; y++)
+            {
+                frameOpts &f = frame(x, y);
+                group = fmt::format("frame-{0}-{1}", x, y);
+                //sprintf(group, "frame-%lu-%lu", (unsigned long)x, (unsigned long)y);
+                conf.beginGroup(group.c_str());
+                {
+                    conf.read("height", f.H, 100);
+                    conf.read("width", f.W, 100);
+                    conf.read("offsetX", f.offsetX, 0);
+                    conf.read("offsetY", f.offsetY, 0);
+                    conf.read("used", f.used, false);
+                    conf.read("duck", f.isDuck, false);
+                    conf.read("isRightDir", f.isRightDir, false);
+                    conf.read("showGrabItem", f.showGrabItem, false);
+                }
+                conf.endGroup();
+
+                if(frameWidth < 0)
+                {
+                    if(f.used)
+                        frameWidth = static_cast<int>(f.W);
+                }
+
+                if(frameHeight < 0)
+                {
+                    if(f.used)
+                        frameHeight = static_cast<int>(f.H);
+                }
+
+                if(frameHeightDuck < 0)
+                {
+                    if(f.used)
+                        frameHeightDuck = static_cast<int>(f.H);
+                }
+            }
+        }
+
+        AniFrames.set.clear();
+
+        //get Animation frameSets
+        try
+        {
+            getSpriteAniData(conf, "Idle");
+            getSpriteAniData(conf, "Run");
+            getSpriteAniData(conf, "JumpFloat");
+            getSpriteAniData(conf, "JumpFall");
+            getSpriteAniData(conf, "SpinJump");
+            getSpriteAniData(conf, "Sliding");
+            getSpriteAniData(conf, "Climbing");
+            getSpriteAniData(conf, "Fire");
+            getSpriteAniData(conf, "SitDown");
+            getSpriteAniData(conf, "Dig");
+            getSpriteAniData(conf, "GrabIdle");
+            getSpriteAniData(conf, "GrabRun");
+            getSpriteAniData(conf, "GrabJump");
+            getSpriteAniData(conf, "GrabSitDown");
+            getSpriteAniData(conf, "RacoonRun");
+            getSpriteAniData(conf, "RacoonFloat");
+            getSpriteAniData(conf, "RacoonFly");
+            getSpriteAniData(conf, "RacoonTail");
+            getSpriteAniData(conf, "Swim");
+            getSpriteAniData(conf, "SwimUp");
+            getSpriteAniData(conf, "OnYoshi");
+            getSpriteAniData(conf, "OnYoshiSit");
+            getSpriteAniData(conf, "PipeUpDown");
+            getSpriteAniData(conf, "PipeUpDownRear");
+            getSpriteAniData(conf, "SlopeSlide");
+            getSpriteAniData(conf, "TanookiStatue");
+            getSpriteAniData(conf, "SwordAttak");
+            getSpriteAniData(conf, "JumpSwordUp");
+            getSpriteAniData(conf, "JumpSwordDown");
+            getSpriteAniData(conf, "DownSwordAttak");
+            getSpriteAniData(conf, "Hurted");
+        }
+        catch(std::exception &e)
+        {
+            pLogCritical("Caugh std::exception exception: %s", e.what());
+            return false;
+        }
+        catch(...)
+        {
+            return false;
+        }
+    }
+    catch (fmt::FormatError e)
+    {
+        pLogCritical("Caugh fmt::FormatError exception: %s", e.what());
+        return false;
     }
     catch(...)
     {
+        pLogCritical("Caugh unknown exception!");
         return false;
     }
     return true;

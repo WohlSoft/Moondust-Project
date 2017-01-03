@@ -29,12 +29,13 @@
 #elif _WIN32
 #include <windows.h>
 
-namespace charsets_utils {
+namespace charsets_utils
+{
     size_t utf8len(const char *s)
     {
         size_t len = 0;
         while(*s)
-            len += (*(s++)&0xC0)!=0x80;
+            len += (*(s++) & 0xC0) != 0x80;
         return len;
     }
 
@@ -43,9 +44,10 @@ namespace charsets_utils {
     {
         #ifdef _WIN32
         dest.resize(utf8len(source.c_str()));
-        return MultiByteToWideChar(CP_UTF8, 0, source.c_str(), source.length(), (wchar_t*)dest.c_str(), source.length());
+        return MultiByteToWideChar(CP_UTF8, 0, source.c_str(), source.length(), (wchar_t *)dest.c_str(), source.length());
         #else
-        (void)dest; (void)source;
+        (void)dest;
+        (void)source;
         return utf8len(source.c_str());
         #endif
     }
@@ -58,7 +60,8 @@ namespace charsets_utils {
         WideCharToMultiByte(CP_UTF8, 0, source.c_str(), source.length(), (LPSTR)dest.c_str(), dest_len, NULL, NULL);
         return dest_len;
         #else
-        (void)dest; (void)source;
+        (void)dest;
+        (void)source;
         return source.size();
         #endif
     }
@@ -68,9 +71,9 @@ namespace charsets_utils {
 
 PGE_FileMapper::PGE_FileMapper() :
     #ifdef _WIN32
-        m_File(NULL),m_Map(NULL),m_Address(NULL),
+    m_File(NULL), m_Map(NULL), m_Address(NULL),
     #endif
-        data(NULL),size(0)
+    data(NULL), size(0)
 {}
 
 PGE_FileMapper::PGE_FileMapper(std::string file)
@@ -80,38 +83,36 @@ PGE_FileMapper::PGE_FileMapper(std::string file)
 
 PGE_FileMapper::PGE_FileMapper(const PGE_FileMapper &fm) :
     #ifdef _WIN32
-        m_File(NULL),m_Map(NULL),m_Address(NULL),
+    m_File(NULL), m_Map(NULL), m_Address(NULL),
     #endif
-        data(NULL),size(0)
+    data(NULL), size(0)
 {
     if(fm.data)
-    {
         open_file(fm.m_path);
-    }
-    m_error=fm.m_error;
+    m_error = fm.m_error;
 }
 
 bool PGE_FileMapper::open_file(std::string path)
 {
-#if defined(__unix__) || defined(__APPLE__)
+    #if defined(__unix__) || defined(__APPLE__)
     struct  stat sb;
     int     m_fd;
     m_fd = open(path.c_str(), O_RDONLY);
 
-    if(m_fd == -1 )
-    {
+    if(m_fd == -1)
         return false;
-    }
 
     if(fstat(m_fd, &sb) == -1)
     {
-        m_error="Failed to take state of file "+path;
+        close(m_fd);
+        m_error = "Failed to take state of file " + path;
         return false;
     }
 
-    if(!S_ISREG (sb.st_mode))
+    if(!S_ISREG(sb.st_mode))
     {
-        m_error=path+" is not a file";
+        close(m_fd);
+        m_error = path + " is not a file";
         return false;
     }
 
@@ -119,33 +120,34 @@ bool PGE_FileMapper::open_file(std::string path)
 
     if(data == MAP_FAILED)
     {
-        m_error="Failed to map file "+path;
+        close(m_fd);
+        m_error = "Failed to map file " + path;
         return false;
     }
 
-    if(close(m_fd) ==-1 )
+    if(close(m_fd) == -1)
     {
-        m_error="fd is not closed validely "+path;
+        m_error = "fd is not closed validely " + path;
         return false;
     }
     size = sb.st_size;
-#elif _WIN32
+    #elif _WIN32
     std::wstring wpath;
     charsets_utils::UTF8Str_To_WStr(wpath, path);
     m_File = CreateFileW(wpath.c_str(), GENERIC_READ, 1, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (m_File == INVALID_HANDLE_VALUE)
+    if(m_File == INVALID_HANDLE_VALUE)
     {
-        m_error="Failed to open file "+path;
+        m_error = "Failed to open file " + path;
         return false;
     }
 
     size = GetFileSize(m_File, NULL);
 
     m_Map = CreateFileMappingW(m_File, NULL, PAGE_READONLY, 0, 0, NULL);
-    if( m_Map == NULL )
+    if(m_Map == NULL)
     {
         CloseHandle(m_File);
-        m_error="Failed to map file "+path;
+        m_error = "Failed to map file " + path;
         return false;
     }
 
@@ -154,14 +156,14 @@ bool PGE_FileMapper::open_file(std::string path)
     {
         CloseHandle(m_Map);
         CloseHandle(m_File);
-        m_error="Failed to take map address for a file "+path;
+        m_error = "Failed to take map address for a file " + path;
         return false;
     }
 
     data = m_Address;
-#endif
+    #endif
 
-    m_path=path;
+    m_path = path;
     return true;
 }
 
@@ -170,27 +172,39 @@ bool PGE_FileMapper::close_file()
     if(data)
     {
         #if defined(__unix__) || defined(__APPLE__)
-        if(munmap(data, size)==-1)
+        if(munmap(data, size) == -1)
         {
-            m_error="Fail to unmap";
+            m_error = "Fail to unmap";
             return false;
         }
         #elif _WIN32
-        if (m_Address != NULL)
+        if(m_Address != NULL)
         {
-            try{ UnmapViewOfFile(m_Address); } catch(void * /*e*/) {}
-            m_Address=NULL;
+            try
+            {
+                UnmapViewOfFile(m_Address);
+            }
+            catch(void * /*e*/) {}
+            m_Address = NULL;
         }
 
-        if (m_Map != NULL)
+        if(m_Map != NULL)
         {
-            try{ CloseHandle(m_Map); } catch(void * /*e*/) {}
-            m_Map=NULL;
+            try
+            {
+                CloseHandle(m_Map);
+            }
+            catch(void * /*e*/) {}
+            m_Map = NULL;
         }
 
-        if (m_File != INVALID_HANDLE_VALUE)
+        if(m_File != INVALID_HANDLE_VALUE)
         {
-            try{ CloseHandle(m_File);} catch(void* /*e*/) {}
+            try
+            {
+                CloseHandle(m_File);
+            }
+            catch(void * /*e*/) {}
             m_File = NULL;
         }
         #endif
@@ -203,9 +217,7 @@ bool PGE_FileMapper::close_file()
 PGE_FileMapper::~PGE_FileMapper()
 {
     if(data)
-    {
         close_file();
-    }
 }
 
 std::string PGE_FileMapper::error()
