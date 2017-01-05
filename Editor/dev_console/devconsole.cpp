@@ -124,6 +124,10 @@ DevConsole::DevConsole(QWidget *parent) :
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
+    QFont font = ui->plainTextEdit->font();
+    font.setFamily("Courier New");
+    ui->plainTextEdit->setFont(font);
+
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
     {
         if(QtWin::isCompositionEnabled())

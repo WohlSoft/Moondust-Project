@@ -123,7 +123,7 @@ void gifs2png_gui::on_startTool_clicked()
 void gifs2png_gui::consoleMessage()
 {
     QByteArray strdata = proc.readAllStandardOutput();
-    QString out = QString::fromLocal8Bit(strdata);
+    QString out = QString::fromUtf8(strdata);
 #ifdef Q_OS_WIN
     out.remove('\r');
 #endif
