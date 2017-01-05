@@ -37,9 +37,9 @@
 
 #include "common_features/config_manager.h"
 
-static FIBITMAP *loadImage(std::string file, bool convertTo32bit = true)
+static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
 {
-    #if  defined(__unix__) || defined(_WIN32)
+    #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
     FileMapper fileMap;
     if(!fileMap.open_file(file.c_str()))
         return NULL;
@@ -75,7 +75,7 @@ static FIBITMAP *loadImage(std::string file, bool convertTo32bit = true)
     return img;
 }
 
-static void mergeBitBltToRGBA(FIBITMAP *image, std::string pathToMask)
+static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
 {
     if(!image)
         return;
@@ -148,14 +148,32 @@ struct GIFs2PNG_Setup
     unsigned int count_skipped  = 0;
 };
 
+static inline void delEndSlash(std::string &dirPath)
+{
+    if(!dirPath.empty())
+    {
+        char last = dirPath[dirPath.size() - 1];
+        if((last == '/')||(last == '\\'))
+            dirPath.resize(dirPath.size() - 1);
+    }
+}
+
+static inline void getGifMask(std::string &mask, const std::string &front)
+{
+    mask = front;
+    //Make mask filename
+    size_t dotPos = mask.find_last_of('.');
+    if(dotPos == std::string::npos)
+        mask.push_back('m');
+    else
+        mask.insert(mask.begin() + dotPos, 'm');
+}
+
 void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
                 std::string pathOut,
                 GIFs2PNG_Setup &setup,
                 ConfigPackMiniManager &cnf)
 {
-    if(Files::hasSuffix(pathIn, "/_backup"))
-        return; //Skip LazyFix's backup directories
-
     if(Files::hasSuffix(imgFileIn, "m.gif"))
         return; //Skip mask files
 
@@ -173,23 +191,17 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
         return;
     }
 
-    std::string maskFileIn = imgFileIn;
-    {
-        // Make mask name
-        size_t dotPos = maskFileIn.find_last_of('.');
-        if(dotPos == std::string::npos)
-            maskFileIn.push_back('m');
-        else
-            maskFileIn.insert(maskFileIn.begin() + dotPos, 'm');
-    }
+    std::string maskFileIn;
+    getGifMask(maskFileIn, imgFileIn);
 
     maskPathIn = cnf.getFile(maskFileIn, pathIn);
 
     FIBITMAP *image = loadImage(imgPathIn);
     if(!image)
     {
-        std::cerr << " - CAN'T OPEN!\n";
-        std::cerr.flush();
+        setup.count_failed++;
+        std::cout << "...CAN'T OPEN!\n";
+        std::cout.flush();
         return;
     }
 
@@ -204,9 +216,10 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
         {
             if(setup.removeMode)// Detele old files
             {
-                Files::deleteFile(imgPathIn);
-                Files::deleteFile(maskPathIn);
-                std::cout << ".DEL.";
+                if(Files::deleteFile(imgPathIn))
+                    std::cout << ".F-DEL.";
+                if(Files::deleteFile(maskPathIn))
+                    std::cout << ".M-DEL.";
                 std::cout.flush();
             }
         }
@@ -217,20 +230,11 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     else
     {
         setup.count_failed++;
-        std::cout << " - FAILED!\n";
+        std::cout << "...FAILED!\n";
     }
     std::cout.flush();
 }
 
-static inline void delEndSlash(std::string &dirPath)
-{
-    if(!dirPath.empty())
-    {
-        char last = dirPath[dirPath.size() - 1];
-        if((last == '/')||(last == '\\'))
-            dirPath.resize(dirPath.size() - 1);
-    }
-}
 
 int main(int argc, char *argv[])
 {
@@ -248,38 +252,34 @@ int main(int argc, char *argv[])
     try
     {
         // Define the command line object.
-        TCLAP::CmdLine cmd(_FILE_DESC "\n"
-                           "Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>\n"
-                           "This program is distributed under the GNU GPLv3+ license\n", ' ', _FILE_VERSION _FILE_RELEASE);
+        TCLAP::CmdLine  cmd(_FILE_DESC "\n"
+                            "Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>\n"
+                            "This program is distributed under the GNU GPLv3+ license\n", ' ', _FILE_VERSION _FILE_RELEASE);
 
         TCLAP::SwitchArg switchRemove("r", "remove", "Remove source images after a succesful conversion", false);
-        cmd.add(switchRemove);
-
         TCLAP::SwitchArg switchSkipBG("b", "ingnore-bg", "Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)", false);
-        cmd.add(switchSkipBG);
-
         TCLAP::SwitchArg switchDigRecursive("d", "dig-recursive", "Look for images in subdirectories", false);
-        cmd.add(switchDigRecursive);
-
         TCLAP::SwitchArg switchDigRecursiveDEP("w", "dig-recursive-old", "Look for images in subdirectories [deprecated]", false);
-        cmd.add(switchDigRecursiveDEP);
 
         TCLAP::ValueArg<std::string> outputDirectory("O", "output",
                 "path to a directory where the PNG images will be saved",
                 false, "", "/path/to/output/directory/");
-        cmd.add(outputDirectory);
-
         TCLAP::ValueArg<std::string> configDirectory("C", "config",
                 "Allow usage of default masks from specific PGE config pack "
                 "(Useful for cases where the GFX designer didn't make a mask image)",
                 false, "", "/path/to/config/pack");
-        cmd.add(configDirectory);
-
         TCLAP::UnlabeledMultiArg<std::string> inputFileNames("filePath(s)",
                 "Input GIF file(s)",
                 true,
                 "Input file path(s)");
-        cmd.add(inputFileNames);
+
+        cmd.add(&switchRemove);
+        cmd.add(&switchSkipBG);
+        cmd.add(&switchDigRecursive);
+        cmd.add(&switchDigRecursiveDEP);
+        cmd.add(&outputDirectory);
+        cmd.add(&configDirectory);
+        cmd.add(&inputFileNames);
 
         cmd.parse(argc, argv);
 
@@ -405,8 +405,11 @@ int main(int argc, char *argv[])
             std::string curPath;
             while(imagesDir.fetchListFromWalker(curPath, fileList))
             {
+                if(Files::hasSuffix(curPath, "/_backup"))
+                    continue; //Skip LazyFix's backup directories
                 for(std::string &file : fileList)
                 {
+
                     if(setup.pathOutSame)
                         setup.pathOut = curPath;
                     doGifs2PNG(curPath, file, setup.pathOut, setup, config);
