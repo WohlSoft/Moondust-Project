@@ -2,26 +2,31 @@
 #ifndef CONFIGMANAGER_H
 #define CONFIGMANAGER_H
 
-#include <QString>
-#include <QStringList>
+#include <string>
+#include <vector>
+#include <set>
+
+extern std::string g_ApplicationPath;
 
 class ConfigPackMiniManager
 {
 public:
+    typedef std::vector<std::string> StringList;
     ConfigPackMiniManager();
     ~ConfigPackMiniManager() {}
 
-    void setConfigDir(QString config_dir);
+    void setConfigDir(const std::string &config_dir);
     bool isUsing();
-    void appendDirList(QString &dir);
+    void addIntoDirList(std::string dir);
+    void appendDirList(const std::string &dir);
 
-    QString getFile(QString file, QString customPath);
+    std::string getFile(const std::string &file, std::string customPath);
 
 private:
-    bool        m_is_using;
-    QString     m_cp_root_path;
-    QString     m_custom_path;
-    QStringList m_dir_list;
+    bool                    m_is_using;
+    std::string             m_cp_root_path;
+    std::string             m_custom_path;
+    std::set<std::string>   m_dir_list;
 };
 
 #endif // CONFIGMANAGER_H

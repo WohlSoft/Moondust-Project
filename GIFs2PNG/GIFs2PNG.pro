@@ -21,9 +21,6 @@
 #
 #-------------------------------------------------
 
-QT       += core
-QT       -= opengl gui
-
 include($$PWD/../_common/dest_dir.pri)
 include($$PWD/../_common/build_props.pri)
 
@@ -35,10 +32,10 @@ DEFINES += QT_NO_TRANSLATION
 
 TEMPLATE = app
 TARGET = GIFs2PNG
+CONFIG   -= qt
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
-CONFIG   -= import_plugins
 CONFIG   += c++11
 
 QTPLUGIN =
@@ -47,16 +44,22 @@ QTPLUGIN.platforms = qminimal
 include ($$PWD/../_common/lib_destdir.pri)
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+INCLUDEPATH += $$PWD/../_common
+
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lfreeimagelite
 
+include($$PWD/../_common/tclap/tclap.pri)
+include($$PWD/../_common/DirManager/dirman.pri)
+include($$PWD/../_common/Utils/Utils.pri)
+include($$PWD/../_common/FileMapper/FileMapper.pri)
+include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 
 RC_FILE = _resources/gifs2png.rc
 
 SOURCES += \
     gifs2png.cpp \
-    common_features/config_manager.cpp \
-    common_features/file_mapper.cpp
+    common_features/config_manager.cpp
 
 RESOURCES += \
     _resources/gifs2png.qrc
@@ -66,6 +69,5 @@ OTHER_FILES += \
 
 HEADERS += \
     version.h \
-    common_features/config_manager.h \
-    common_features/file_mapper.h
+    common_features/config_manager.h
 

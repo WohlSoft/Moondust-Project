@@ -24,16 +24,15 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "2.0.1"
+#define _FILE_VERSION "3.0"
 #define _FILE_RELEASE ""
 
-#define _VF1 2
+#define _VF1 3
 #define _VF2 0
-#define _VF3 1
+#define _VF3 0
 #define _VF4 0
 
-
-#define _FILE_DESC "Masked GIFs to PNG converter"
+#define _FILE_DESC "Bit-Mask GIFs pair to PNG with transparency converter by Wohlstand"
 
 #define _INTERNAL_NAME "GIFs2PNG"
 

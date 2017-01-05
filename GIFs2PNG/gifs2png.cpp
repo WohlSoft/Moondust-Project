@@ -17,12 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QCoreApplication>
-#include <QDir>
-#include <QDirIterator>
-#include <QString>
-#include <QTextStream>
-#include <QFileInfo>
+#include <locale>
+#include <iostream>
+#include <stdio.h>
+
+#include <FileMapper/file_mapper.h>
+#include <DirManager/dirman.h>
+#include <Utils/files.h>
+
+#include <Utils/files.h>
+#include <tclap/CmdLine.h>
 #include "version.h"
 
 #ifdef _WIN32
@@ -32,90 +36,91 @@
 
 #include "common_features/config_manager.h"
 
-#include "common_features/file_mapper.h"
-
-FIBITMAP* loadImage(QString file, bool convertTo32bit=true)
+static FIBITMAP *loadImage(std::string file, bool convertTo32bit = true)
 {
     #if  defined(__unix__) || defined(_WIN32)
-    PGE_FileMapper fileMap;
-    if( !fileMap.open_file(file.toUtf8().data()) )
-    {
+    FileMapper fileMap;
+    if(!fileMap.open_file(file.c_str()))
         return NULL;
-    }
 
-    FIMEMORY *imgMEM = FreeImage_OpenMemory((unsigned char*)fileMap.data, (unsigned int)fileMap.size);
+    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
+                                            (unsigned int)fileMap.size());
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
-    if(formato  == FIF_UNKNOWN) { return NULL; }
-    FIBITMAP* img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+    if(formato  == FIF_UNKNOWN)
+        return NULL;
+    FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
     FreeImage_CloseMemory(imgMEM);
     fileMap.close_file();
-    if(!img) {
+    if(!img)
         return NULL;
-    }
     #else
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
-    if(formato  == FIF_UNKNOWN) { return NULL; }
-    FIBITMAP* img = FreeImage_Load(formato, file.toUtf8().data());
-    if(!img) { return NULL; }
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
+    if(formato  == FIF_UNKNOWN)
+        return NULL;
+    FIBITMAP *img = FreeImage_Load(formato, file.c_str());
+    if(!img)
+        return NULL;
     #endif
+
     if(convertTo32bit)
     {
-        FIBITMAP* temp;
+        FIBITMAP *temp;
         temp = FreeImage_ConvertTo32Bits(img);
-        if(!temp) { return NULL; }
+        if(!temp)
+            return NULL;
         FreeImage_Unload(img);
         img = temp;
     }
     return img;
 }
 
-void mergeBitBltToRGBA(FIBITMAP *image, QString pathToMask)
+static void mergeBitBltToRGBA(FIBITMAP *image, std::string pathToMask)
 {
-    if(!image) return;
-    if(!QFileInfo(pathToMask).exists()) return; //Nothing to do
-    FIBITMAP* mask = loadImage( pathToMask );
-    if(!mask) return;//Nothing to do
+    if(!image)
+        return;
 
-    unsigned int img_w = FreeImage_GetWidth(image);
-    unsigned int img_h = FreeImage_GetHeight(image);
+    if(!Files::fileExists(pathToMask))
+        return; //Nothing to do
+
+    FIBITMAP *mask = loadImage(pathToMask);
+
+    if(!mask)
+        return;//Nothing to do
+
+    unsigned int img_w  = FreeImage_GetWidth(image);
+    unsigned int img_h  = FreeImage_GetHeight(image);
     unsigned int mask_w = FreeImage_GetWidth(mask);
     unsigned int mask_h = FreeImage_GetHeight(mask);
 
-    for(unsigned int y=0; (y<img_h) && (y<mask_h); y++)
+    RGBQUAD Fpix;
+    RGBQUAD Bpix;
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
+
+    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
     {
-        for(unsigned int x=0; (x<img_w) && (x<mask_w); x++ )
+        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
         {
-            RGBQUAD Fpix;
+
             FreeImage_GetPixelColor(image, x, y, &Fpix);
+            FreeImage_GetPixelColor(mask, x, y, &Bpix);
 
-            RGBQUAD Dpix = {0x7F, 0x7F, 0x7F, 0xFF};
-
-            RGBQUAD Spix;
-            FreeImage_GetPixelColor(mask, x, y, &Spix);
-
-            RGBQUAD Npix = {0x0, 0x0, 0x0, 0xff};
-
-            Npix.rgbRed = (Dpix.rgbRed & Spix.rgbRed);
-            Npix.rgbGreen = (Dpix.rgbGreen & Spix.rgbGreen);
-            Npix.rgbBlue = (Dpix.rgbBlue & Spix.rgbBlue);
-            Npix.rgbRed = (Npix.rgbRed | Fpix.rgbRed);
-            Npix.rgbGreen = (Npix.rgbGreen | Fpix.rgbGreen);
-            Npix.rgbBlue = (Npix.rgbBlue | Fpix.rgbBlue);
-            int newAlpha= 255-
-                      ( ( int(Spix.rgbRed)+
-                          int(Spix.rgbGreen)+
-                          int(Spix.rgbBlue) ) / 3);
-            if(  (Spix.rgbRed>240u) //is almost White
-               &&(Spix.rgbGreen>240u)
-               &&(Spix.rgbBlue>240u))
-            {
+            Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
+            Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
+            Npix.rgbBlue    = ((0x7F & Bpix.rgbBlue) | Fpix.rgbBlue);
+            int newAlpha = 255 -
+                           ((int(Bpix.rgbRed) +
+                             int(Bpix.rgbGreen) +
+                             int(Bpix.rgbBlue)) / 3);
+            if((Bpix.rgbRed > 240u) //is almost White
+               && (Bpix.rgbGreen > 240u)
+               && (Bpix.rgbBlue > 240u))
                 newAlpha = 0;
-            }
 
-            newAlpha= newAlpha+( ( int(Fpix.rgbRed)+
-                                   int(Fpix.rgbGreen)+
-                                   int(Fpix.rgbBlue) ) / 3);
-            if(newAlpha > 255) newAlpha=255;
+            newAlpha = newAlpha + ((int(Fpix.rgbRed) +
+                                    int(Fpix.rgbGreen) +
+                                    int(Fpix.rgbBlue)) / 3);
+            if(newAlpha > 255)
+                newAlpha = 255;
             Npix.rgbReserved = newAlpha;
 
             FreeImage_SetPixelColor(image, x, y, &Npix);
@@ -124,368 +129,312 @@ void mergeBitBltToRGBA(FIBITMAP *image, QString pathToMask)
     FreeImage_Unload(mask);
 }
 
-void doMagicIn(QString path, QString q, QString OPath, bool removeMode, ConfigPackMiniManager &cnf)
+static bool endsWithCI(const std::string &str, const std::string &what)
 {
-    QTextStream pout(stdout);
-    QRegExp isMask = QRegExp("*m.gif");
-    isMask.setPatternSyntax(QRegExp::Wildcard);
+    if(what.size() > str.size())
+        return false;
 
-    QRegExp isBackupDir = QRegExp("*/_backup/");
-    isBackupDir.setPatternSyntax(QRegExp::Wildcard);
+    std::locale loc;
+    std::string f;
+    f.reserve(str.size());
+    for(const char &c : str)
+        f.push_back(std::tolower(c, loc));
 
-    if(isBackupDir.exactMatch(path))
+    return (f.compare(f.size() - what.size(), what.size(), what) == 0);
+}
+
+void doGifs2PNG(std::string pathIn, std::string imgFileIn, std::string pathOut, bool removeMode, ConfigPackMiniManager &cnf)
+{
+    if(endsWithCI(pathIn, "/_backup/"))
         return; //Skip backup directories
 
-    if(isMask.exactMatch(q))
-        return;
+    if(endsWithCI(imgFileIn, "m.gif"))
+        return; //Skip mask files
 
-    QString imgFileM;
-    QStringList tmp = q.split(".", QString::SkipEmptyParts);
-    if(tmp.size()==2)
-        imgFileM = tmp[0] + "m." + tmp[1];
-    else
-        return;
+    std::string maskFileIn = imgFileIn;
+    {
+        //Make mask name
+        size_t dotPos = maskFileIn.find_last_of('.');
+        if(dotPos == std::string::npos)
+            maskFileIn.push_back('m');
+        else
+            maskFileIn.insert(maskFileIn.begin() + dotPos, 'm');
+    }
 
-    QString maskPath = cnf.getFile(imgFileM, path);
+    std::string maskPath = cnf.getFile(maskFileIn, pathIn);
 
-    FIBITMAP* image=loadImage(path+q);
+    FIBITMAP *image = loadImage(pathIn + imgFileIn);
     if(!image)
     {
-        QTextStream(stderr) << path+q+" - CAN'T OPEN!\n";
+        std::cerr << pathIn + imgFileIn + " - CAN'T OPEN!\n";
+        std::cerr.flush();
         return;
     }
 
-    if(QFileInfo(maskPath).exists())
-    {
-        //mask.load(maskPath);
+    if(Files::fileExists(maskPath))
         mergeBitBltToRGBA(image, maskPath);
-    }
 
     if(image)
     {
-        pout << path+q <<"\n";
-        if(FreeImage_Save(FIF_PNG, image, QString(OPath+tmp[0]+".png").toLocal8Bit().data()))
+        std::cout << pathIn + imgFileIn << "\n";
+        std::cout.flush();
+
+        std::string outPath = pathOut + "/" + Files::changeSuffix(imgFileIn, ".png");
+
+        if(FreeImage_Save(FIF_PNG, image, outPath.c_str()))
         {
             if(removeMode) // Detele old files
             {
-                QFile::remove( path+q );
-                QFile::remove( path+imgFileM );
+                Files::deleteFile(pathIn + imgFileIn);
+                Files::deleteFile(pathIn + maskFileIn);
             }
-            pout << OPath+tmp[0]+".png" <<"\n";
+            std::cout << outPath << "\n";
         }
         FreeImage_Unload(image);
     }
     else
-    {
-        QTextStream(stderr) << path+q+" - WRONG!\n";
-    }
-}
-
-bool isQuotesdString(QString in) // QUOTED STRING
-{
-    //This is INVERTED validator. If false - good, true - bad.
-    #define QStrGOOD true
-    #define QStrBAD false
-    int i=0;
-    for(i=0; i<(signed)in.size();i++)
-    {
-        if(i==0)
-        {
-            if(in[i]!='"') return QStrBAD;
-        } else if(i==(signed)in.size()-1) {
-            if(in[i]!='"') return QStrBAD;
-        } else if(in[i]=='"') return QStrBAD;
-        else if(in[i]=='"') return QStrBAD;
-    }
-    if(i==0) return QStrBAD; //This is INVERTED validator. If false - good, true - bad.
-    return QStrGOOD;
-}
-
-QString removeQuotes(QString str)
-{
-    QString target = str;
-    if(target.isEmpty())
-        return target;
-    if(target[0]==QChar('\"'))
-        target.remove(0,1);
-    if((!target.isEmpty()) && (target[target.size()-1]==QChar('\"')))
-        target.remove(target.size()-1,1);
-    return target;
+        std::cerr << pathIn + imgFileIn + " - WRONG!\n";
 }
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::addLibraryPath( "." );
-    QCoreApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
-    QCoreApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
+    if(argc > 0)
+        g_ApplicationPath = Files::dirname(argv[0]);
+    g_ApplicationPath = DirMan(g_ApplicationPath).absolutePath();
 
-    QCoreApplication a(argc, argv);
-    QStringList filters;
-    QDir imagesDir;
-    QString path;
-    QString OPath;
-    bool removeMode=false;
-    QStringList fileList;
-
-    QTextStream pout(stdout);
-
+    DirMan imagesDir;
+    std::vector<std::string> fileList;
     FreeImage_Initialise();
-
     ConfigPackMiniManager config;
 
-    bool nopause=false;
-    bool walkSubDirs=false;
-    bool cOpath=false;
-    bool singleFiles=false;
-    bool skipBackground2=false;
+    std::string pathIn;
+    bool listOfFiles        = false;
+    std::string pathOut;
+    bool pathOutSame        = false;
+    std::string configPath;
+    bool removeMode         = false;
+    bool walkSubDirs        = false;
+    bool skipBackground2    = false;
 
-    QString argPath;
-    QString argOPath;
-
-    QString configPath;
-
-    pout <<"============================================================================\n";
-    pout <<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
-    pout <<"============================================================================\n";
-    pout <<"This program is distributed under the GNU GPLv3 license \n";
-    pout <<"============================================================================\n";
-    pout.flush();
-
-    QRegExp isGif("*.gif");
-    isGif.setPatternSyntax(QRegExp::Wildcard);
-    isGif.setCaseSensitivity(Qt::CaseInsensitive);
-
-    QRegExp isMask("*m.gif");
-    isMask.setPatternSyntax(QRegExp::Wildcard);
-    isMask.setCaseSensitivity(Qt::CaseInsensitive);
-
-    QRegExp bg2("background2\\-\\d+\\.gif");
-    bg2.setPatternSyntax(QRegExp::RegExp);
-    bg2.setCaseSensitivity(Qt::CaseInsensitive);
-
-    if(a.arguments().size()==1)
+    try
     {
-        goto DisplayHelp;
-    }
+        // Define the command line object.
+        TCLAP::CmdLine cmd(_FILE_DESC "\n"
+                           "Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>\n"
+                           "This program is distributed under the GNU GPLv3+ license\n", ' ', _FILE_VERSION _FILE_RELEASE);
 
-    for(int arg=0; arg<a.arguments().size(); arg++)
-    {
-        if(QString(a.arguments().at(arg)).toLower()=="--help")
+        TCLAP::SwitchArg switchRemove("r", "remove", "Remove source images after a succesful conversion", false);
+        cmd.add(switchRemove);
+
+        TCLAP::SwitchArg switchSkipBG("b", "ingnore-bg", "Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)", false);
+        cmd.add(switchSkipBG);
+
+        TCLAP::SwitchArg switchDigRecursive("d", "dig-recursive", "Look for images in subdirectories", false);
+        cmd.add(switchDigRecursive);
+
+        TCLAP::SwitchArg switchDigRecursiveDEP("w", "dig-recursive-old", "Look for images in subdirectories [deprecated]", false);
+        cmd.add(switchDigRecursiveDEP);
+
+        TCLAP::ValueArg<std::string> outputDirectory("O", "output",
+                "path to a directory where the PNG images will be saved",
+                false, "", "/path/to/output/directory/");
+        cmd.add(outputDirectory);
+
+        TCLAP::ValueArg<std::string> configDirectory("C", "config",
+                "Allow usage of default masks from specific PGE config pack "
+                "(Useful for cases where the GFX designer didn't make a mask image)",
+                false, "", "/path/to/config/pack");
+        cmd.add(configDirectory);
+
+        TCLAP::UnlabeledMultiArg<std::string> inputFileNames("filePath(s)",
+                "Input GIF file(s)",
+                true,
+                "Input file path(s)");
+        cmd.add(inputFileNames);
+
+        cmd.parse(argc, argv);
+
+        removeMode      = switchRemove.getValue();
+        skipBackground2 = switchSkipBG.getValue();
+        walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
+        //nopause         = switchNoPause.getValue();
+
+        pathOut     = outputDirectory.getValue();
+        configPath  = configDirectory.getValue();
+
+        for(const std::string &fpath : inputFileNames.getValue())
         {
-            goto DisplayHelp;
-        }
-        else
-        if( (QString(a.arguments().at(arg)).toLower()==("-r"))||
-            (QString(a.arguments().at(arg)).toLower()=="/r"))
-        {
-            removeMode=true;
-        }
-        else
-        if( (QString(a.arguments().at(arg)).toLower()==("-b"))||
-            (QString(a.arguments().at(arg)).toLower()=="/b"))
-        {
-            skipBackground2=true;
-        }
-        else
-        if( (QString(a.arguments().at(arg)).toLower()=="-d")||
-            (QString(a.arguments().at(arg)).toLower()=="/d")||
-            (QString(a.arguments().at(arg)).toLower()=="-w")||
-            (QString(a.arguments().at(arg)).toLower()=="/w") )
-        {
-            walkSubDirs=true;
-        }
-        else
-        if(QString(a.arguments().at(arg)).toLower()=="--nopause")
-        {
-            nopause=true;
-        }
-        else
-        if(QString(a.arguments().at(arg)).toLower().startsWith("--config="))
-        {
-            QStringList tmp;
-            tmp = a.arguments().at(arg).split('=');
-            if(tmp.size()>1)
-            {
-                configPath = tmp.last();
-                if(isQuotesdString(configPath))
-                {
-                    configPath = removeQuotes(configPath);
-                    configPath = QDir(configPath).absolutePath();
-                }
-            }
-        }
-        else
-        {
-            //if begins from "-O"
-            if(a.arguments().at(arg).size()>=2 && a.arguments().at(arg).at(0)=='-' && QChar(a.arguments().at(arg).at(1)).toLower()=='o')
-            {
-                argOPath=a.arguments().at(arg);
-                argOPath.remove(0,2);
-                //check if user put a space between "-O" and the path and remove it
-                if(a.arguments().at(arg).at(0)==' ')
-                    argOPath.remove(0,1);
-            }
+            if(endsWithCI(fpath, "m.gif"))
+                continue;
+            else if(DirMan::exists(fpath))
+                pathIn = fpath;
             else
             {
-                if(isMask.exactMatch(a.arguments().at(arg)))
-                    continue;
-                else
-                    if(isGif.exactMatch(a.arguments().at(arg)))
-                    {
-                        fileList << a.arguments().at(arg);
-                        singleFiles=true;
-                    }
-                else
-                    argPath=a.arguments().at(arg);
+                fileList.push_back(fpath);
+                listOfFiles = true;
             }
         }
+
+        if((argc <= 1) || (pathIn.empty() && !listOfFiles))
+        {
+            fprintf(stderr, "\n"
+                            "ERROR: Missing input files!\n"
+                            "Type \"%s --help\" to display usage.\n\n", argv[0]);
+            return 2;
+        }
+    }
+    catch(TCLAP::ArgException &e)   // catch any exceptions
+    {
+        std::cerr << "Error: " << e.error() << " for arg " << e.argId() << std::endl;
+        return 2;
     }
 
-    if(!singleFiles)
-    {
-        if(argPath.isEmpty()) goto WrongInputPath;
-        if(!QDir(argPath).exists()) goto WrongInputPath;
+    fprintf(stderr, "============================================================================\n"
+                    "Pair of GIFs to PNG converter tool by Wohlstand. Version " _FILE_VERSION _FILE_RELEASE "\n"
+                    "============================================================================\n"
+                    "This program is distributed under the GNU GPLv3 license \n"
+                    "============================================================================\n");
+    fflush(stderr);
 
-        imagesDir.setPath(argPath);
-        filters << "*.gif" << "*.GIF";
-        imagesDir.setSorting(QDir::Name);
-        imagesDir.setNameFilters(filters);
-        path = imagesDir.absolutePath() + "/";
+    if(!listOfFiles)
+    {
+        if(pathIn.empty())
+            goto WrongInputPath;
+        if(!DirMan::exists(pathIn))
+            goto WrongInputPath;
+
+        imagesDir.setPath(pathIn);
+        pathIn = imagesDir.absolutePath() + "/";
     }
 
-    if(!argOPath.isEmpty())
+    if(!pathOut.empty())
     {
-        OPath = argOPath;
-        if(!QFileInfo(OPath).isDir())
+        if(!DirMan::exists(pathOut))
             goto WrongOutputPath;
 
-        OPath = QDir(OPath).absolutePath() + "/";
+        pathOut = DirMan(pathOut).absolutePath();
     }
     else
     {
-        OPath=path;
-        cOpath=true;
+        pathOut         = pathIn;
+        pathOutSame     = true;
     }
 
-    pout <<"============================================================================\n";
-    pout <<"Converting images...\n";
-    pout <<"============================================================================\n";
-    pout.flush();
+    std::cout << "============================================================================\n";
+    std::cout << "Converting images...\n";
+    std::cout << "============================================================================\n";
+    std::cout.flush();
+
+    if(!listOfFiles)
+        std::cout << ("Input path:  " + pathIn + "\n");
+
+    std::cout << ("Output path: " + pathOut + "\n");
+
+    std::cout << "============================================================================\n";
+    std::cout.flush();
 
     config.setConfigDir(configPath);
 
-    if(!singleFiles)
-      pout << QString("Input path:  "+path+"\n");
-    pout << QString("Output path: "+OPath+"\n");
-    pout <<"============================================================================\n";
-    pout.flush();
-    if(!configPath.isEmpty())
+    if(config.isUsing())
     {
-        pout <<"============================================================================\n";
-        pout <<QString("Used config pack: "+configPath+"\n");
-        pout <<"============================================================================\n";
-        pout.flush();
+        std::cout << "============================================================================\n";
+        std::cout << ("Used config pack: " + configPath + "\n");
+        std::cout << "============================================================================\n";
+        std::cout.flush();
     }
-    if(singleFiles) //By files
+
+    if(listOfFiles)// Process a list of flies
     {
-        foreach(QString q, fileList)
+        for(std::string &file : fileList)
         {
-            path=QFileInfo(q).absoluteDir().path()+"/";
-            QString fname = QFileInfo(q).fileName();
-            if(skipBackground2 && (bg2.indexIn(fname) != -1))
+            pathIn = Files::dirname(file);
+            std::string fname = Files::basename(file);
+            if(skipBackground2 && (fname.compare(0, 11, "background2", 11) == 0))
                 continue;
-            if(cOpath) OPath=path;
-            doMagicIn(path, fname , OPath, removeMode, config);
+            if(pathOutSame)
+                pathOut = pathIn;
+            doGifs2PNG(pathIn + "/", fname , pathOut, removeMode, config);
         }
     }
-    else
+    else // Process directories with a source files
     {
-        fileList << imagesDir.entryList(filters);
+        imagesDir.getListOfFiles(fileList, {".gif"});
         if(!walkSubDirs) //By directories
         {
-            foreach(QString q, fileList)
+            for(std::string &fname : fileList)
             {
-                if(skipBackground2 && (bg2.indexIn(q) != -1))
+                if(skipBackground2 && (fname.compare(0, 11, "background2", 11) == 0))
                     continue;
-                doMagicIn(path, q, OPath, removeMode, config);
+                doGifs2PNG(pathIn, fname, pathOut, removeMode, config);
             }
         }
         else
         {
-            QDirIterator dirsList(imagesDir.absolutePath(), filters,
-                                      QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
-                                  QDirIterator::Subdirectories);
-
-            while(dirsList.hasNext())
+            imagesDir.beginWalking({".gif"});
+            std::string curPath;
+            while(imagesDir.fetchListFromWalker(curPath, fileList))
             {
-                dirsList.next();
-                if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip LazyFix's Backup dirs
-                    continue;
-
-                if(skipBackground2 && (bg2.indexIn(dirsList.filePath()) != -1))
-                    continue;
-
-                if(cOpath) OPath = QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
-
-                doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath, removeMode, config);
+                for(std::string &file : fileList)
+                {
+                    if(skipBackground2 && (file.compare(0, 11, "background2", 11) == 0))
+                        continue;
+                    if(pathOutSame)
+                        pathOut = curPath;
+                    //if(cOpath)
+                    //pathOut = QFileInfo(dirsList.filePath()).dir().absolutePath();
+                    doGifs2PNG(pathOut + "/", file, curPath, removeMode, config);
+                }
             }
         }
     }
 
-    pout <<"============================================================================\n";
-    pout <<"Done!\n\n";
-    pout.flush();
-
-    if(!nopause)
-    {
-        pout <<"Press any key to exit...\n";
-        pout.flush();
-        getchar();
-    }
-
+    std::cout << "============================================================================\n";
+    std::cout << "Done!\n\n";
+    std::cout.flush();
     return 0;
 
+#if 0
 DisplayHelp:
     //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
     //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
 
-    pout <<"============================================================================\n";
-    pout <<"This utility will merge GIF images and their masks into solid PNG images:\n";
-    pout <<"============================================================================\n";
-    pout <<"Syntax:\n\n";
-#ifdef Q_OS_WIN
+    std::cerr << "============================================================================\n";
+    std::cerr << "This utility will merge GIF images and their masks into solid PNG images:\n";
+    std::cerr << "============================================================================\n";
+    std::cerr << "Syntax:\n\n";
+    #ifdef Q_OS_WIN
 #define ARGSIGN "/"
-#else
+    #else
 #define ARGSIGN "-"
+    #endif
+    std::cerr << "   GIFs2PNG [--help] [" ARGSIGN "R] file1.gif [file2.gif] [...] [" ARGSIGN "O path/to/output]\n";
+    std::cerr << "   GIFs2PNG [--help] [" ARGSIGN "D] [" ARGSIGN "R] path/to/input [" ARGSIGN "O path/to/output]\n\n";
+    std::cerr << " --help              - Display this help\n";
+    std::cerr << " path/to/input       - path to a directory with pairs of GIF files\n";
+    std::cerr << " " ARGSIGN "O path/to/output   - path to a directory where the PNG images will be saved\n";
+    std::cerr << " " ARGSIGN "R                  - Remove source images after a succesful conversion\n";
+    std::cerr << " " ARGSIGN "D                  - Look for images in subdirectories\n";
+    std::cerr << " " ARGSIGN "B                  - Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)\n";
+
+    std::cerr << "\n";
+    std::cerr << " --config /path/to/config/pack\n";
+    std::cerr << "                     - Allow usage of default masks from specific PGE config pack\n";
+    std::cerr << "                       (Useful for cases where the GFX designer didn't make a mask image)\n";
+    std::cerr << " --nopause           - Don't pause application after processing finishes (useful for script integration)\n";
+    std::cerr << "\n\n";
+    std::cerr.flush();
+    return 1;
 #endif
-    pout <<"   GIFs2PNG [--help] [" ARGSIGN "R] file1.gif [file2.gif] [...] [" ARGSIGN "O path/to/output]\n";
-    pout <<"   GIFs2PNG [--help] [" ARGSIGN "D] [" ARGSIGN "R] path/to/input [" ARGSIGN "O path/to/output]\n\n";
-    pout <<" --help              - Display this help\n";
-    pout <<" path/to/input       - path to a directory with pairs of GIF files\n";
-    pout <<" " ARGSIGN "O path/to/output   - path to a directory where the PNG images will be saved\n";
-    pout <<" " ARGSIGN "R                  - Remove source images after a succesful conversion\n";
-    pout <<" " ARGSIGN "D                  - Look for images in subdirectories\n";
-    pout <<" " ARGSIGN "B                  - Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)\n";
 
-    pout <<"\n";
-    pout <<" --config=/path/to/config/pack\n";
-    pout <<"                     - Allow usage of default masks from specific PGE config pack\n";
-    pout <<"                       (Useful for cases where the GFX designer didn't make a mask image)\n";
-    pout <<" --nopause           - Don't pause application after processing finishes (useful for script integration)\n";
-    pout <<"\n\n";
-    pout.flush();
-
-    getchar();
-
-    exit(0);
-    return 0;
 WrongInputPath:
-    pout <<"============================================================================\n";
-    QTextStream(stderr) <<"Wrong input path!\n";
-    goto DisplayHelp;
+    std::cerr << "============================================================================\n";
+    std::cerr << "Wrong input path!\n";
+    std::cerr.flush();
+    return 2;
+
 WrongOutputPath:
-    pout <<"============================================================================\n";
-    pout.flush();
-    QTextStream(stderr) <<"Wrong output path!\n";
-    goto DisplayHelp;
+    std::cerr << "============================================================================\n";
+    std::cerr << "Wrong output path!\n";
+    std::cerr.flush();
+    return 2;
 }
