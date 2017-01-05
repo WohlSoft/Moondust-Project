@@ -1,7 +1,10 @@
 #include "files.h"
 #include <stdio.h>
+#include <locale>
+
 #ifdef _WIN32
 #include <windows.h>
+#include <shlwapi.h>
 
 static std::wstring Str2WStr(const std::string &path)
 {
@@ -125,4 +128,16 @@ std::string Files::changeSuffix(std::string path, const std::string &suffix)
     else
         path.replace(pos, suffix.size(), suffix);
     return path;
+}
+
+bool Files::hasSuffix(const std::string &path, const std::string &suffix)
+{
+    if(suffix.size() > path.size())
+        return false;
+
+    std::locale loc;
+    std::string f = path.substr(path.size() - suffix.size(), suffix.size());
+    for(char &c : f)
+        c = std::tolower(c, loc);
+    return (f.compare(suffix) == 0);
 }

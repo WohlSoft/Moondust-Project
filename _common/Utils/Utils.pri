@@ -1,4 +1,6 @@
 
+win32: LIBS += -lshlwapi
+
 HEADERS += \
     $$PWD/maths.h \
     $$PWD/files.h
