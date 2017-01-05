@@ -26,9 +26,13 @@
 #pragma warning (disable : 4786) // identifier was truncated to 'number' characters
 #endif
 
-#if defined(_WIN32) && !defined(__MINGW32__)
+#ifdef _WIN32
+#ifdef __MINGW32__
+#include "FreeImage_misc.h"
+#else
 #include <windows.h>
 #include <io.h>
+#endif
 #else
 #include <ctype.h>
 #endif // _WIN32
@@ -412,8 +416,13 @@ FIBITMAP * DLL_CALLCONV
 FreeImage_Load(FREE_IMAGE_FORMAT fif, const char *filename, int flags) {
 	FreeImageIO io;
 	SetDefaultIO(&io);
-	
-	FILE *handle = fopen(filename, "rb");
+    #ifndef _WIN32
+    FILE *handle = fopen(filename, "rb");
+    #else
+    std::wstring fileNameW;
+    FreeImage_utf8_to_utf16(fileNameW, filename);
+    FILE *handle = _wfopen(fileNameW.c_str(), L"rb");
+    #endif
 
 	if (handle) {
 		FIBITMAP *bitmap = FreeImage_LoadFromHandle(fif, &io, (fi_handle)handle, flags);
@@ -482,10 +491,15 @@ BOOL DLL_CALLCONV
 FreeImage_Save(FREE_IMAGE_FORMAT fif, FIBITMAP *dib, const char *filename, int flags) {
 	FreeImageIO io;
 	SetDefaultIO(&io);
-	
+    #ifndef _WIN32
 	FILE *handle = fopen(filename, "w+b");
-	
-	if (handle) {
+    #else
+    std::wstring fileNameW;
+    FreeImage_utf8_to_utf16(fileNameW, filename);
+    FILE *handle = _wfopen(fileNameW.c_str(), L"w+b");
+    #endif
+
+    if (handle) {
 		BOOL success = FreeImage_SaveToHandle(fif, dib, &io, (fi_handle)handle, flags);
 
 		fclose(handle);

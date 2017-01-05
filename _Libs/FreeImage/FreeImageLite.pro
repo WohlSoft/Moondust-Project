@@ -7,7 +7,7 @@ CONFIG += c++11
 
 DEFINES += VER_MAJOR=3 VER_MINOR=17.0 FREEIMAGE_LITE
 
-QMAKE_CFLAGS += -std=c99
+QMAKE_CFLAGS += -std=c11
 
 QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign \
@@ -104,28 +104,30 @@ win32: {
 }
 INSTALLS = FreeImageH FreeImageSO
 
-INCLUDEPATH +=  $$PWD/Source \
-                $$PWD/Source/Metadata \
-                $$PWD/Source/FreeImageToolkit \
-                $$PWD/Source/LibPNG \
-                $$PWD/Source/ZLib \
-                $$PWD/Source/OpenEXR \
-                $$PWD/Source/OpenEXR/Half \
-                $$PWD/Source/OpenEXR/Iex \
-                $$PWD/Source/OpenEXR/IlmImf \
-                $$PWD/Source/OpenEXR/IlmThread \
-                $$PWD/Source/OpenEXR/Imath \
-                $$PWD/Source/OpenEXR/IexMath \
-                $$PWD/Source/LibRawLite \
-                $$PWD/Source/LibRawLite/dcraw \
-                $$PWD/Source/LibRawLite/internal \
-                $$PWD/Source/LibRawLite/libraw \
-                $$PWD/Source/LibRawLite/src \
-                $$PWD/Source/LibWebP \
-                $$PWD/Source/LibJXR \
-                $$PWD/Source/LibJXR/common/include \
-                $$PWD/Source/LibJXR/image/sys \
-                $$PWD/Source/LibJXR/jxrgluelib
+INCLUDEPATH +=  $$PWD/Source
+
+#INCLUDEPATH +=  $$PWD/Source \
+#                $$PWD/Source/Metadata \
+#                $$PWD/Source/FreeImageToolkit \
+#                $$PWD/Source/LibPNG \
+#                $$PWD/Source/ZLib \
+#                $$PWD/Source/OpenEXR \
+#                $$PWD/Source/OpenEXR/Half \
+#                $$PWD/Source/OpenEXR/Iex \
+#                $$PWD/Source/OpenEXR/IlmImf \
+#                $$PWD/Source/OpenEXR/IlmThread \
+#                $$PWD/Source/OpenEXR/Imath \
+#                $$PWD/Source/OpenEXR/IexMath \
+#                $$PWD/Source/LibRawLite \
+#                $$PWD/Source/LibRawLite/dcraw \
+#                $$PWD/Source/LibRawLite/internal \
+#                $$PWD/Source/LibRawLite/libraw \
+#                $$PWD/Source/LibRawLite/src \
+#                $$PWD/Source/LibWebP \
+#                $$PWD/Source/LibJXR \
+#                $$PWD/Source/LibJXR/common/include \
+#                $$PWD/Source/LibJXR/image/sys \
+#                $$PWD/Source/LibJXR/jxrgluelib
 
 HEADERS += \
     Source/DeprecationManager/DeprecationMgr.h \
@@ -159,7 +161,8 @@ HEADERS += \
     Source/ToneMapping.h \
     Source/Utilities.h \
     Source/FreeImage.h \
-    Source/FreeImageLite.h
+    Source/FreeImageLite.h \
+    Source/FreeImage/FreeImage_misc.h
 
 SOURCES += \
     Source/FreeImage/BitmapAccess.cpp \
@@ -247,7 +250,8 @@ SOURCES += \
     Source/ZLib/inftrees.c \
     Source/ZLib/trees.c \
     Source/ZLib/uncompr.c \
-    Source/ZLib/zutil.c
+    Source/ZLib/zutil.c \
+    Source/FreeImage/freeimage_misc.cpp
 
 
 
