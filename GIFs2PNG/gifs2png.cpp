@@ -24,6 +24,7 @@
 #include <FileMapper/file_mapper.h>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <Utf8Main/utf8main.h>
 
 #include <Utils/files.h>
 #include <tclap/CmdLine.h>
@@ -129,31 +130,52 @@ static void mergeBitBltToRGBA(FIBITMAP *image, std::string pathToMask)
     FreeImage_Unload(mask);
 }
 
-static bool endsWithCI(const std::string &str, const std::string &what)
+struct GIFs2PNG_Setup
 {
-    if(what.size() > str.size())
-        return false;
+    std::string pathIn;
+    bool listOfFiles        = false;
 
-    std::locale loc;
-    std::string f;
-    f.reserve(str.size());
-    for(const char &c : str)
-        f.push_back(std::tolower(c, loc));
+    std::string pathOut;
+    bool pathOutSame        = false;
 
-    return (f.compare(f.size() - what.size(), what.size(), what) == 0);
-}
+    std::string configPath;
 
-void doGifs2PNG(std::string pathIn, std::string imgFileIn, std::string pathOut, bool removeMode, ConfigPackMiniManager &cnf)
+    bool removeMode         = false;
+    bool walkSubDirs        = false;
+    bool skipBackground2    = false;
+    unsigned int count_success  = 0;
+    unsigned int count_failed   = 0;
+    unsigned int count_skipped  = 0;
+};
+
+void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
+                std::string pathOut,
+                GIFs2PNG_Setup &setup,
+                ConfigPackMiniManager &cnf)
 {
-    if(endsWithCI(pathIn, "/_backup/"))
-        return; //Skip backup directories
+    if(Files::hasSuffix(pathIn, "/_backup"))
+        return; //Skip LazyFix's backup directories
 
-    if(endsWithCI(imgFileIn, "m.gif"))
+    if(Files::hasSuffix(imgFileIn, "m.gif"))
         return; //Skip mask files
+
+    std::string imgPathIn = pathIn + "/" + imgFileIn;
+    std::string maskPathIn;
+
+    std::cout << imgPathIn;
+    std::cout.flush();
+
+    if(setup.skipBackground2 && (imgFileIn.compare(0, 11, "background2", 11) == 0))
+    {
+        setup.count_skipped++;
+        std::cout << "...SKIP!\n";
+        std::cout.flush();
+        return;
+    }
 
     std::string maskFileIn = imgFileIn;
     {
-        //Make mask name
+        // Make mask name
         size_t dotPos = maskFileIn.find_last_of('.');
         if(dotPos == std::string::npos)
             maskFileIn.push_back('m');
@@ -161,39 +183,53 @@ void doGifs2PNG(std::string pathIn, std::string imgFileIn, std::string pathOut, 
             maskFileIn.insert(maskFileIn.begin() + dotPos, 'm');
     }
 
-    std::string maskPath = cnf.getFile(maskFileIn, pathIn);
+    maskPathIn = cnf.getFile(maskFileIn, pathIn);
 
-    FIBITMAP *image = loadImage(pathIn + imgFileIn);
+    FIBITMAP *image = loadImage(imgPathIn);
     if(!image)
     {
-        std::cerr << pathIn + imgFileIn + " - CAN'T OPEN!\n";
+        std::cerr << " - CAN'T OPEN!\n";
         std::cerr.flush();
         return;
     }
 
-    if(Files::fileExists(maskPath))
-        mergeBitBltToRGBA(image, maskPath);
+    if(Files::fileExists(maskPathIn))
+        mergeBitBltToRGBA(image, maskPathIn);
 
     if(image)
     {
-        std::cout << pathIn + imgFileIn << "\n";
-        std::cout.flush();
-
         std::string outPath = pathOut + "/" + Files::changeSuffix(imgFileIn, ".png");
 
         if(FreeImage_Save(FIF_PNG, image, outPath.c_str()))
         {
-            if(removeMode) // Detele old files
+            if(setup.removeMode)// Detele old files
             {
-                Files::deleteFile(pathIn + imgFileIn);
-                Files::deleteFile(pathIn + maskFileIn);
+                Files::deleteFile(imgPathIn);
+                Files::deleteFile(maskPathIn);
+                std::cout << ".DEL.";
+                std::cout.flush();
             }
-            std::cout << outPath << "\n";
         }
         FreeImage_Unload(image);
+        setup.count_success++;
+        std::cout << "...done\n";
     }
     else
-        std::cerr << pathIn + imgFileIn + " - WRONG!\n";
+    {
+        setup.count_failed++;
+        std::cout << " - FAILED!\n";
+    }
+    std::cout.flush();
+}
+
+static inline void delEndSlash(std::string &dirPath)
+{
+    if(!dirPath.empty())
+    {
+        char last = dirPath[dirPath.size() - 1];
+        if((last == '/')||(last == '\\'))
+            dirPath.resize(dirPath.size() - 1);
+    }
 }
 
 int main(int argc, char *argv[])
@@ -207,14 +243,7 @@ int main(int argc, char *argv[])
     FreeImage_Initialise();
     ConfigPackMiniManager config;
 
-    std::string pathIn;
-    bool listOfFiles        = false;
-    std::string pathOut;
-    bool pathOutSame        = false;
-    std::string configPath;
-    bool removeMode         = false;
-    bool walkSubDirs        = false;
-    bool skipBackground2    = false;
+    GIFs2PNG_Setup setup;
 
     try
     {
@@ -254,28 +283,28 @@ int main(int argc, char *argv[])
 
         cmd.parse(argc, argv);
 
-        removeMode      = switchRemove.getValue();
-        skipBackground2 = switchSkipBG.getValue();
-        walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
+        setup.removeMode      = switchRemove.getValue();
+        setup.skipBackground2 = switchSkipBG.getValue();
+        setup.walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
         //nopause         = switchNoPause.getValue();
 
-        pathOut     = outputDirectory.getValue();
-        configPath  = configDirectory.getValue();
+        setup.pathOut     = outputDirectory.getValue();
+        setup.configPath  = configDirectory.getValue();
 
         for(const std::string &fpath : inputFileNames.getValue())
         {
-            if(endsWithCI(fpath, "m.gif"))
+            if(Files::hasSuffix(fpath, "m.gif"))
                 continue;
             else if(DirMan::exists(fpath))
-                pathIn = fpath;
+                setup.pathIn = fpath;
             else
             {
                 fileList.push_back(fpath);
-                listOfFiles = true;
+                setup.listOfFiles = true;
             }
         }
 
-        if((argc <= 1) || (pathIn.empty() && !listOfFiles))
+        if((argc <= 1) || (setup.pathIn.empty() && !setup.listOfFiles))
         {
             fprintf(stderr, "\n"
                             "ERROR: Missing input files!\n"
@@ -296,76 +325,78 @@ int main(int argc, char *argv[])
                     "============================================================================\n");
     fflush(stderr);
 
-    if(!listOfFiles)
+    if(!setup.listOfFiles)
     {
-        if(pathIn.empty())
+        if(setup.pathIn.empty())
             goto WrongInputPath;
-        if(!DirMan::exists(pathIn))
+        if(!DirMan::exists(setup.pathIn))
             goto WrongInputPath;
 
-        imagesDir.setPath(pathIn);
-        pathIn = imagesDir.absolutePath() + "/";
+        imagesDir.setPath(setup.pathIn);
+        setup.pathIn = imagesDir.absolutePath();
     }
 
-    if(!pathOut.empty())
+    if(!setup.pathOut.empty())
     {
-        if(!DirMan::exists(pathOut))
+        if(!DirMan::exists(setup.pathOut))
             goto WrongOutputPath;
 
-        pathOut = DirMan(pathOut).absolutePath();
+        setup.pathOut = DirMan(setup.pathOut).absolutePath();
+        setup.pathOutSame   = false;
     }
     else
     {
-        pathOut         = pathIn;
-        pathOutSame     = true;
+        setup.pathOut       = setup.pathIn;
+        setup.pathOutSame   = true;
     }
 
-    std::cout << "============================================================================\n";
-    std::cout << "Converting images...\n";
+    delEndSlash(setup.pathIn);
+    delEndSlash(setup.pathOut);
+
+    printf("============================================================================\n"
+           "Converting images...\n"
+           "============================================================================\n");
+    fflush(stdout);
+
+    if(!setup.listOfFiles)
+        std::cout << ("Input path:  " + setup.pathIn + "\n");
+
+    std::cout << ("Output path: " + setup.pathOut + "\n");
+
     std::cout << "============================================================================\n";
     std::cout.flush();
 
-    if(!listOfFiles)
-        std::cout << ("Input path:  " + pathIn + "\n");
-
-    std::cout << ("Output path: " + pathOut + "\n");
-
-    std::cout << "============================================================================\n";
-    std::cout.flush();
-
-    config.setConfigDir(configPath);
+    config.setConfigDir(setup.configPath);
 
     if(config.isUsing())
     {
         std::cout << "============================================================================\n";
-        std::cout << ("Used config pack: " + configPath + "\n");
+        std::cout << ("Used config pack: " + setup.configPath + "\n");
         std::cout << "============================================================================\n";
         std::cout.flush();
     }
 
-    if(listOfFiles)// Process a list of flies
+    if(setup.listOfFiles)// Process a list of flies
     {
         for(std::string &file : fileList)
         {
-            pathIn = Files::dirname(file);
-            std::string fname = Files::basename(file);
-            if(skipBackground2 && (fname.compare(0, 11, "background2", 11) == 0))
-                continue;
-            if(pathOutSame)
-                pathOut = pathIn;
-            doGifs2PNG(pathIn + "/", fname , pathOut, removeMode, config);
+            std::string fname   = Files::basename(file);
+            if(setup.pathOutSame)
+            {
+                setup.pathIn = Files::dirname(file);
+                delEndSlash(setup.pathIn);
+            }
+            doGifs2PNG(setup.pathIn, fname , setup.pathOut, setup, config);
         }
     }
     else // Process directories with a source files
     {
         imagesDir.getListOfFiles(fileList, {".gif"});
-        if(!walkSubDirs) //By directories
+        if(!setup.walkSubDirs) //By directories
         {
             for(std::string &fname : fileList)
             {
-                if(skipBackground2 && (fname.compare(0, 11, "background2", 11) == 0))
-                    continue;
-                doGifs2PNG(pathIn, fname, pathOut, removeMode, config);
+                doGifs2PNG(setup.pathIn, fname, setup.pathOut, setup, config);
             }
         }
         else
@@ -376,65 +407,42 @@ int main(int argc, char *argv[])
             {
                 for(std::string &file : fileList)
                 {
-                    if(skipBackground2 && (file.compare(0, 11, "background2", 11) == 0))
-                        continue;
-                    if(pathOutSame)
-                        pathOut = curPath;
-                    //if(cOpath)
-                    //pathOut = QFileInfo(dirsList.filePath()).dir().absolutePath();
-                    doGifs2PNG(pathOut + "/", file, curPath, removeMode, config);
+                    if(setup.pathOutSame)
+                        setup.pathOut = curPath;
+                    doGifs2PNG(curPath, file, setup.pathOut, setup, config);
                 }
             }
         }
     }
 
-    std::cout << "============================================================================\n";
-    std::cout << "Done!\n\n";
-    std::cout.flush();
-    return 0;
-
-#if 0
-DisplayHelp:
-    //If we are running on windows, we want the "help" screen to display the arg options in the Windows style
-    //to be consistent with native Windows applications (using '/' instead of '-' before single-letter args)
-
-    std::cerr << "============================================================================\n";
-    std::cerr << "This utility will merge GIF images and their masks into solid PNG images:\n";
-    std::cerr << "============================================================================\n";
-    std::cerr << "Syntax:\n\n";
-    #ifdef Q_OS_WIN
-#define ARGSIGN "/"
-    #else
-#define ARGSIGN "-"
-    #endif
-    std::cerr << "   GIFs2PNG [--help] [" ARGSIGN "R] file1.gif [file2.gif] [...] [" ARGSIGN "O path/to/output]\n";
-    std::cerr << "   GIFs2PNG [--help] [" ARGSIGN "D] [" ARGSIGN "R] path/to/input [" ARGSIGN "O path/to/output]\n\n";
-    std::cerr << " --help              - Display this help\n";
-    std::cerr << " path/to/input       - path to a directory with pairs of GIF files\n";
-    std::cerr << " " ARGSIGN "O path/to/output   - path to a directory where the PNG images will be saved\n";
-    std::cerr << " " ARGSIGN "R                  - Remove source images after a succesful conversion\n";
-    std::cerr << " " ARGSIGN "D                  - Look for images in subdirectories\n";
-    std::cerr << " " ARGSIGN "B                  - Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)\n";
-
-    std::cerr << "\n";
-    std::cerr << " --config /path/to/config/pack\n";
-    std::cerr << "                     - Allow usage of default masks from specific PGE config pack\n";
-    std::cerr << "                       (Useful for cases where the GFX designer didn't make a mask image)\n";
-    std::cerr << " --nopause           - Don't pause application after processing finishes (useful for script integration)\n";
-    std::cerr << "\n\n";
-    std::cerr.flush();
-    return 1;
-#endif
+    printf("============================================================================\n"
+           "                      Conversion has been completed!\n"
+           "============================================================================\n"
+           "Successfully merged:        %d\n"
+           "Conversion failed:          %d\n"
+           "Skipped files (bg2-*):      %d\n"
+           "\n",
+           setup.count_success,
+           setup.count_failed,
+           setup.count_skipped);
+    fflush(stdout);
+    return (setup.count_failed == 0) ? 0 : 1;
 
 WrongInputPath:
-    std::cerr << "============================================================================\n";
-    std::cerr << "Wrong input path!\n";
+    std::cout.flush();
     std::cerr.flush();
+    printf("============================================================================\n"
+           "                           Wrong input path!\n"
+           "============================================================================\n");
+    fflush(stdout);
     return 2;
 
 WrongOutputPath:
-    std::cerr << "============================================================================\n";
-    std::cerr << "Wrong output path!\n";
+    std::cout.flush();
     std::cerr.flush();
+    printf("============================================================================\n"
+           "                          Wrong output path!\n"
+           "============================================================================\n");
+    fflush(stdout);
     return 2;
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>372</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,21 +29,44 @@
    <iconset resource="../../_resources/editor.qrc">
     <normaloff>:/images/external_tools/cat_gif2png_128.png</normaloff>:/images/external_tools/cat_gif2png_128.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,10,0,0,0,0,0,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,10,0,0,0,0,0,0,0,0,0,0">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
-   <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="label_2">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
-     </property>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLabel" name="label_7">
      <property name="text">
-      <string notr="true">GIFs2PNG Converter</string>
+      <string>Note: If you got broken images after conversion, please run the LazyFix tool and retry conversion</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QPushButton" name="close">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="5">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="5">
+    <widget class="QCheckBox" name="WalkSubDirs">
+     <property name="text">
+      <string>Look for images in subdirectories</string>
      </property>
     </widget>
    </item>
@@ -67,48 +90,56 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="5">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="5">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="2" colspan="3">
-    <widget class="QPushButton" name="startTool">
-     <property name="text">
-      <string>Start</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="5">
-    <widget class="QCheckBox" name="WalkSubDirs">
-     <property name="text">
-      <string>Look for images in subdirectories</string>
-     </property>
-    </widget>
+   <item row="5" column="0" colspan="4">
+    <widget class="QLineEdit" name="inputDir"/>
    </item>
    <item row="7" column="0" colspan="4">
     <widget class="QLineEdit" name="outputDir"/>
    </item>
-   <item row="11" column="0">
-    <widget class="QPushButton" name="close">
+   <item row="0" column="3" rowspan="3" colspan="2">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Close</string>
+      <string notr="true"/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../../_resources/editor.qrc">:/images/external_tools/cat_gif2png_128.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string notr="true">GIFs2PNG Converter</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="4">
+    <widget class="QPushButton" name="BrowseInput">
+     <property name="text">
+      <string>Browse</string>
      </property>
     </widget>
    </item>
@@ -126,49 +157,31 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="4">
-    <widget class="QPushButton" name="BrowseInput">
+   <item row="6" column="0" colspan="5">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Browse</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3" rowspan="3" colspan="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string notr="true"/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../../_resources/editor.qrc">:/images/external_tools/cat_gif2png_128.png</pixmap>
+      <string>Output dir, where will be saved a PNG images
+(if this field will not be set, target images will be stored into the same directory)</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Note: If you got broken images after conversion, please run the LazyFix tool and retry conversion</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="4">
-    <widget class="QLineEdit" name="inputDir"/>
-   </item>
-   <item row="4" column="0" colspan="5">
-    <widget class="QLabel" name="label_4">
+   <item row="12" column="2" colspan="3">
+    <widget class="QPushButton" name="startTool">
      <property name="text">
-      <string>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</string>
+      <string>Start</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="5">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -179,18 +192,15 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="11" column="0" colspan="5">
+    <widget class="QCheckBox" name="SkipBackgrounds">
+     <property name="text">
+      <string>Skip conversion of backgrounds (don't convert background2-*.gif due bug in the LunaLua)</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
+     <property name="checked">
+      <bool>true</bool>
      </property>
-    </spacer>
+    </widget>
    </item>
   </layout>
  </widget>

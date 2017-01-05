@@ -28,18 +28,14 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 include($$PWD/../_common/strip_garbage.pri)
 
-DEFINES += QT_NO_TRANSLATION
-
 TEMPLATE = app
 TARGET = GIFs2PNG
 CONFIG   -= qt
+CONFIG   -= windows
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
 CONFIG   += c++11
-
-QTPLUGIN =
-QTPLUGIN.platforms = qminimal
 
 include ($$PWD/../_common/lib_destdir.pri)
 
@@ -52,6 +48,7 @@ LIBS += -lfreeimagelite
 include($$PWD/../_common/tclap/tclap.pri)
 include($$PWD/../_common/DirManager/dirman.pri)
 include($$PWD/../_common/Utils/Utils.pri)
+include($$PWD/../_common/Utf8Main/utf8main.pri)
 include($$PWD/../_common/FileMapper/FileMapper.pri)
 include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 

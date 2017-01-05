@@ -31,14 +31,12 @@ gifs2png_gui::gifs2png_gui(QWidget *parent) :
     ui(new Ui::gifs2png_gui)
 {
     ui->setupUi(this);
-    proc= new QProcess();
-    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
+    connect(&proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
 }
 
 gifs2png_gui::~gifs2png_gui()
 {
-    disconnect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
-    delete proc;
+    disconnect(&proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     delete ui;
 }
 
@@ -76,12 +74,12 @@ void gifs2png_gui::on_startTool_clicked()
     QString command;
 
     #ifdef _WIN32
-    command = ApplicationPath+"/GIFs2PNG.exe";
+    command = ApplicationPath + "/GIFs2PNG.exe";
     #else
-    command = ApplicationPath+"/GIFs2PNG";
+    command = ApplicationPath + "/GIFs2PNG";
     #endif
 
-    if(proc->state()==QProcess::Running)
+    if(proc.state()==QProcess::Running)
         return;
 
     if(!QFile(command).exists())
@@ -92,25 +90,39 @@ void gifs2png_gui::on_startTool_clicked()
 
 
     QStringList args;
-    if(ui->WalkSubDirs->isChecked()) args << "-W";
-    if(ui->RemoveSource->isChecked()) args << "-R";
-    args << "--config=\""+ConfStatus::configPath+"\"";
-    args << "--nopause";
-    args << ui->inputDir->text();
-    if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());
 
+    args << "--config";
+    args << ConfStatus::configPath;
+
+    if(!ui->outputDir->text().isEmpty())
+    {
+        args << "--output";
+        args << ui->outputDir->text();
+    }
+
+    if(ui->WalkSubDirs->isChecked())
+        args << "-d";
+
+    if(ui->RemoveSource->isChecked())
+        args << "-r";
+
+    if(ui->SkipBackgrounds->isChecked())
+        args << "-b";
+
+    args << "--";
+    args << ui->inputDir->text();
 
     DevConsole::show();
     DevConsole::log("Ready>>>", "GIFs2PNG");
     DevConsole::log("----------------------------------", "GIFs2PNG", true);
-    proc->waitForFinished(1);
-    proc->start(command, args);
+    proc.waitForFinished(1);
+    proc.start(command, args);
     //connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessage()) );
 }
 
 void gifs2png_gui::consoleMessage()
 {
-    QByteArray strdata = proc->readAllStandardOutput();
+    QByteArray strdata = proc.readAllStandardOutput();
     QString out = QString::fromLocal8Bit(strdata);
 #ifdef Q_OS_WIN
     out.remove('\r');
