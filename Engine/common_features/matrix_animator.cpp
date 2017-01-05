@@ -266,11 +266,11 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
     s_bank_left.clear();
     s_bank_right.clear();
 
-    for(int i = 0; i < calibration.AniFrames.set.size(); i++)
+    for(size_t i = 0; i < calibration.AniFrames.set.size(); i++)
     {
         MatrixAnimator::MatrixAnimates seq = toEnum(calibration.AniFrames.set[i].name);
 
-        for(int j = 0; j < calibration.AniFrames.set[i].L.size(); j++)
+        for(size_t j = 0; j < calibration.AniFrames.set[i].L.size(); j++)
         {
             size_t x = calibration.AniFrames.set[i].L[j].x;
             size_t y = calibration.AniFrames.set[i].L[j].y;
@@ -292,7 +292,7 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
             }
         }
 
-        for(int j = 0; j < calibration.AniFrames.set[i].R.size(); j++)
+        for(size_t j = 0; j < calibration.AniFrames.set[i].R.size(); j++)
         {
             size_t x = calibration.AniFrames.set[i].R[j].x;
             size_t y = calibration.AniFrames.set[i].R[j].y;
@@ -364,7 +364,7 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
         m_sequenceP = &(seq_right->second);
     }
 
-    if(m_currentFrameIndex > (m_sequenceP->size() - 1))
+    if(m_currentFrameIndex >= m_sequenceP->size())
     {
         m_currentFrameIndex = 0;
 
@@ -436,7 +436,7 @@ void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int
         {
             setDirection(_direction);
 
-            if(m_currentFrameIndex > (m_sequenceP->size() - 1))
+            if(m_currentFrameIndex >= m_sequenceP->size())
                 m_currentFrameIndex = 0;
         }
     }
@@ -450,7 +450,7 @@ void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int
     setFrameSpeed(speed);
     setDirection(_direction);
 
-    if((m_current_sequance != aniName) || (m_currentFrameIndex > (m_sequenceP->size() - 1)))
+    if((m_current_sequance != aniName) || (m_currentFrameIndex >= m_sequenceP->size()))
         m_currentFrameIndex = 0;
 
     m_once = false;

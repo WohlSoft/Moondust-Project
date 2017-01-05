@@ -21,7 +21,7 @@
 
 #include <gui/pge_msgbox.h>
 #include <common_features/app_path.h>
-#include <common_features/file_mapper.h>
+#include <FileMapper/file_mapper.h>
 
 /***********************************PGE_Sounds********************************************/
 std::unordered_map<std::string, Mix_Chunk*> PGE_SfxPlayer::chunksBuffer;
@@ -38,10 +38,10 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(QString sndFile)
     if(snd == chunksBuffer.end())
     {
         #if  defined(__unix__) || defined(_WIN32)
-        PGE_FileMapper fileMap;
+        FileMapper fileMap;
         if( fileMap.open_file(filePath) )
         {
-            tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data, fileMap.size), fileMap.size);
+            tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(), fileMap.size()), fileMap.size());
             fileMap.close_file();
         }
         #else

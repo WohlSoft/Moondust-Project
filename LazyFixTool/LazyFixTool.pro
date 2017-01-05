@@ -39,6 +39,8 @@ TEMPLATE = app
 include($$PWD/../_common/strip_garbage.pri)
 
 # Dependent libraries
+include($$PWD/../_common/DirManager/dirman.pri)
+include($$PWD/../_common/FileMapper/FileMapper.pri)
 include($$PWD/../_Libs/EasyBMP/EasyBMP.pri)
 include($$PWD/../_Libs/giflib/giflib.pri)
 

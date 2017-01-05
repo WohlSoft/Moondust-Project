@@ -125,6 +125,7 @@ include($$PWD/../_Libs/EasyBMP/EasyBMP.pri)
 include($$PWD/../_Libs/giflib/giflib.pri)
 
 # Common code
+include($$PWD/../_common/FileMapper/FileMapper.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
@@ -357,7 +358,6 @@ SOURCES += main.cpp\
     main_window/tip_of_day/tip_of_day.cpp \
     ../_common/data_functions/smbx64_validation_messages.cpp \
     main_window/testing/testing_settings.cpp \
-    common_features/file_mapper.cpp \
     editing/_scenes/level/edit_modes/mode_circle.cpp \
     editing/_scenes/world/edit_modes/wld_mode_circle.cpp \
     main_window/dock/variables_box.cpp \
@@ -551,7 +551,6 @@ HEADERS  += \
     main_window/tip_of_day/tip_of_day.h \
     main_window/testing/testing_settings.h \
     common_features/data_array.h \
-    common_features/file_mapper.h \
     editing/_scenes/level/edit_modes/mode_circle.h \
     editing/_scenes/world/edit_modes/wld_mode_circle.h \
     main_window/dock/variables_box.h \

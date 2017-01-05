@@ -24,10 +24,9 @@
 #include <memory>
 
 #include <common_features/logger.h>
+#include <FileMapper/file_mapper.h>
 
 #include "graphics_funcs.h"
-
-#include <common_features/file_mapper.h>
 
 #include <EasyBMP.h>
 #include <giflib.hpp>
@@ -43,13 +42,13 @@
 FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 {
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
-    PGE_FileMapper fileMap;
+    FileMapper fileMap;
 
     if(!fileMap.open_file(file.toUtf8().data()))
         return nullptr;
 
-    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data),
-                                            static_cast<unsigned int>(fileMap.size));
+    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
+                                            static_cast<unsigned int>(fileMap.size()));
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
     if(formato  == FIF_UNKNOWN)

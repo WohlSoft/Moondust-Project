@@ -129,7 +129,7 @@ private:
     //! delay between frames for "once" mode
     int m_frameDelay_once;
     //! index of current frame
-    int m_currentFrameIndex;
+    size_t m_currentFrameIndex;
 
     //! Current frame rectangle
     PGE_RectF   m_currentFrameRect;

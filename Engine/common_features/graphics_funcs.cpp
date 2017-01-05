@@ -23,8 +23,9 @@
 #include <QFileInfo>
 #include <QSysInfo>
 
+#include <FileMapper/file_mapper.h>
+
 #include "graphics_funcs.h"
-#include "file_mapper.h"
 #include "logger.h"
 
 #ifdef DEBUG_BUILD
@@ -61,13 +62,13 @@ FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     fReadTime.start();
 #endif
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
-    PGE_FileMapper fileMap;
+    FileMapper fileMap;
 
     if(!fileMap.open_file(file.toUtf8().data()))
         return NULL;
 
-    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data),
-                                            static_cast<unsigned int>(fileMap.size));
+    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
+                                            static_cast<unsigned int>(fileMap.size()));
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
     if(formato  == FIF_UNKNOWN)

@@ -8,7 +8,7 @@
 #include <SDL2/SDL_mixer_ext.h>
 #include <QVector>
 #include <common_features/logger.h>
-#include <common_features/file_mapper.h>
+#include <FileMapper/file_mapper.h>
 #include <QtDebug>
 
 #ifdef DEBUG_BUILD
@@ -92,12 +92,12 @@ void ConfigManager::buildSoundIndex()
             {
                 obj_sound &snd = main_sound[i];
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
-                PGE_FileMapper fileMap;
+                FileMapper fileMap;
 
                 if(fileMap.open_file(snd.absPath.toUtf8().data()))
                 {
-                    sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data,
-                                                 static_cast<int>(fileMap.size)), 1);
+                    sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
+                                                 static_cast<int>(fileMap.size())), 1);
                     fileMap.close_file();
                 }
 
@@ -130,13 +130,13 @@ void ConfigManager::buildSoundIndex()
                 if(sound.need_reload)
                 {
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
-                    PGE_FileMapper fileMap;
+                    FileMapper fileMap;
 
                     if(fileMap.open_file(snd.absPath.toUtf8().data()))
                     {
-                        sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data,
-                                                     static_cast<int>(fileMap.size)),
-                                                     static_cast<int>(fileMap.size));
+                        sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
+                                                     static_cast<int>(fileMap.size())),
+                                                     static_cast<int>(fileMap.size()));
                         fileMap.close_file();
                     }
 
