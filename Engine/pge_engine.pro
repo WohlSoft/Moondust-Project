@@ -113,6 +113,7 @@ unix:{
 
 include($$PWD/../_common/fmt/fmt.pri)
 include($$PWD/../_common/tclap/tclap.pri)
+include($$PWD/../_common/Utf8Main/utf8main.pri)
 include($$PWD/../_common/DirManager/dirman.pri)
 include($$PWD/../_common/FileMapper/FileMapper.pri)
 DEFINES += INI_PROCESSING_ALLOW_QT_TYPES

@@ -80,7 +80,7 @@ class EpisodeState
         QString WorldFile;
         QString WorldPath;
         QString saveFileName;
-        QString _episodePath;
+        std::string _episodePath;
         int _recent_ExitCode_level;
         int _recent_ExitCode_world;
 

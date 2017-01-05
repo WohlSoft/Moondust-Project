@@ -17,13 +17,6 @@
  */
 
 #include <memory> //shared_ptr
-
-#ifdef _WIN32
-#include <windows.h>
-#include <shellapi.h>
-#endif
-
-#include <QDir> //QDir
 #include "engine.hpp"
 
 #include "version.h"
@@ -32,6 +25,9 @@
 #include <common_features/logger.h>
 
 #include <PGE_File_Formats/pge_x.h>
+
+#include <Utils/files.h>
+#include <DirManager/dirman.h>
 
 #include <gui/pge_msgbox.h>
 #include <gui/pge_textinputbox.h>
@@ -49,53 +45,6 @@
 #include <scenes/scene_gameover.h>
 
 #include <networking/intproc.h>
-
-#ifdef _WIN32
-/************************************************************
- * A wrapper to pass into the main() function the UTF8 args *
- ************************************************************/
-extern int main(int argc, char *argv[]);
-
-static void buildUtf8Args(std::vector<std::string> &utf8_args)
-{
-    //Get raw UTF-16 command line
-    wchar_t    *cmdLineW = GetCommandLineW();
-    int         argc     = 0;
-    //Convert it into array of strings
-    wchar_t   **argvW    = CommandLineToArgvW(cmdLineW, &argc);
-
-    utf8_args.reserve(argc);
-    //Convert every argument into UTF-8
-    for(int i = 0; i < argc; i++)
-    {
-        wchar_t *argW = argvW[i];
-        int argWlen = wcslen(argW);
-        std::string arg;
-        arg.resize(argWlen * 2);
-        size_t newLen = WideCharToMultiByte(CP_UTF8, 0, argW, argWlen, &arg[0], arg.size(), 0, 0);
-        arg.resize(newLen);
-        utf8_args.push_back(arg);
-    }
-}
-
-int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int)
-{
-    //! Storage of UTF8-encoded command line arguments
-    std::vector<std::string> g_utf8_args;
-    //! Storage of the pointers to begin of every argument
-    std::vector<char *>       g_utf8_argvV;
-
-    buildUtf8Args(g_utf8_args);
-
-    size_t argc = g_utf8_args.size();
-    g_utf8_argvV.reserve(argc);
-    for(size_t i = 0; i < argc; i++)
-        g_utf8_argvV.push_back(&g_utf8_args[i][0]);
-
-    return  main((int)argc, g_utf8_argvV.data());
-}
-#endif
-
 
 /*!
  * \brief Apply test settings to the game state
@@ -194,7 +143,7 @@ int main(int argc, char *argv[])
         ConfigSelectScene GOScene;
         QString configPath_manager = GOScene.isPreLoaded();
 
-        if(!g_fileToOpen.isEmpty())
+        if(!g_fileToOpen.empty())
         {
             //% "Choose a game to test:"
             GOScene.setLabel(qtTrId("CONFIG_SELECT_TEST"));
@@ -241,18 +190,15 @@ int main(int argc, char *argv[])
         app.initFontFull();
     }
 
-    if(!g_fileToOpen.isEmpty())
+    if(!g_fileToOpen.empty())
     {
         g_GameState.reset();
         //Apply custom game parameters from command line
         applyTestSettings(g_GameState);
 
-        if(
-            (g_fileToOpen.endsWith(".lvl", Qt::CaseInsensitive))
-            ||
-            (g_fileToOpen.endsWith(".lvlx", Qt::CaseInsensitive)))
+        if(Files::hasSuffix(g_fileToOpen, ".lvl") || Files::hasSuffix(g_fileToOpen, ".lvlx"))
         {
-            g_GameState.LevelFile = g_fileToOpen;
+            g_GameState.LevelFile = QString::fromStdString(g_fileToOpen);
             g_GameState.isEpisode = false;
             g_GameState.isTestingModeL = true;
             g_GameState.isTestingModeW = false;
@@ -260,18 +206,15 @@ int main(int argc, char *argv[])
             g_flags.testWorld = false;
             goto PlayLevel;
         }
-        else if(
-            (g_fileToOpen.endsWith(".wld", Qt::CaseInsensitive))
-            ||
-            (g_fileToOpen.endsWith(".wldx", Qt::CaseInsensitive)))
+        else if(Files::hasSuffix(g_fileToOpen, ".wld") || Files::hasSuffix(g_fileToOpen, ".wldx"))
         {
             g_Episode.character = 1;
             g_Episode.savefile = "save1.savx";
-            g_Episode.worldfile = g_fileToOpen;
-            g_GameState._episodePath = QFileInfo(g_fileToOpen).absoluteDir().absolutePath() + "/";
+            g_Episode.worldfile = QString::fromStdString(g_fileToOpen);
+            g_GameState._episodePath = DirMan(Files::dirname(g_fileToOpen)).absolutePath() + "/";
             g_GameState.saveFileName = g_Episode.savefile;
             g_GameState.isEpisode = true;
-            g_GameState.WorldFile = g_fileToOpen;
+            g_GameState.WorldFile = QString::fromStdString(g_fileToOpen);
             g_GameState.isTestingModeL = false;
             g_GameState.isTestingModeW = true;
             g_flags.testLevel = false;
@@ -397,7 +340,7 @@ MainMenu:
             g_GameState.setPlayerState(2, plr);
             g_GameState.isEpisode = true;
             g_Episode = res_episode;
-            g_GameState._episodePath = QFileInfo(g_Episode.worldfile).absoluteDir().absolutePath() + "/";
+            g_GameState._episodePath = DirMan(Files::dirname(g_Episode.worldfile.toStdString())).absolutePath() + "/";
             g_GameState.saveFileName = g_Episode.savefile;
             g_GameState.load();
             goto PlayWorldMap;

@@ -34,7 +34,7 @@ void EpisodeState::reset()
 
 bool EpisodeState::load()
 {
-    QString file = _episodePath + saveFileName;
+    QString file = QString::fromStdString(_episodePath) + saveFileName;
 
     if(!QFile(file).exists())
         return false;
@@ -62,7 +62,7 @@ bool EpisodeState::save()
 {
     if(!isEpisode) return false;
 
-    QString file = _episodePath + saveFileName;
+    QString file = QString::fromStdString(_episodePath) + saveFileName;
     return FileFormats::WriteExtendedSaveFileF(file, game_state);
 }
 

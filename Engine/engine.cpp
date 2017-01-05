@@ -34,6 +34,8 @@
 
 #include <audio/pge_audio.h>
 
+#include <Utils/files.h>
+
 #include <common_features/crash_handler.h>
 #include <common_features/logger.h>
 #include <common_features/translator.h>
@@ -53,7 +55,7 @@ PGEEngineCmdArgs    g_flags;
 Level_returnTo      g_jumpOnLevelEndTo = RETURN_TO_EXIT;
 
 QString             g_configPackPath  = "";
-QString             g_fileToOpen  = "";
+std::string         g_fileToOpen  = "";
 EpisodeState        g_GameState;
 PlayEpisodeResult   g_Episode;
 
@@ -638,11 +640,10 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
             char *str = &param_s[0];
             size_t len = param_s.size();
             removeQuotes(str, len);
-
-            QString param = QString::fromUtf8(str, (int)len);
-            if(QFile::exists(param))
+            if(Files::fileExists(str))
             {
-                g_fileToOpen = param;
+                //QString param = QString::fromUtf8(str, (int)len);
+                g_fileToOpen = str;
                 pLogDebug("Got file path: [%s]", str);
             }
             else

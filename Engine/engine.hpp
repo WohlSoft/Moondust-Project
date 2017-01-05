@@ -62,7 +62,7 @@ extern Level_returnTo       g_jumpOnLevelEndTo;
 //! Path to config pack configured from the command line
 extern QString              g_configPackPath;
 //! Path to the file to open (requested from a command line)
-extern QString              g_fileToOpen;
+extern std::string          g_fileToOpen;
 //! Global game state
 extern EpisodeState         g_GameState;
 //! Episode state meta data
