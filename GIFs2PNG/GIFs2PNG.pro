@@ -58,9 +58,6 @@ SOURCES += \
     gifs2png.cpp \
     common_features/config_manager.cpp
 
-RESOURCES += \
-    _resources/gifs2png.qrc
-
 OTHER_FILES += \
     _resources/gifs2png.rc
 

@@ -25,8 +25,6 @@
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 #include <Utf8Main/utf8main.h>
-
-#include <Utils/files.h>
 #include <tclap/CmdLine.h>
 #include "version.h"
 

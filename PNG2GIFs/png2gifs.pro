@@ -1,7 +1,6 @@
-# LazyFixTool, a free tool for fix lazily-made image masks
-# and also, convert all BMPs into GIF
+# PNG2GIFs, a free tool for convert PNG into GIF images with his masks
 # This is a part of Platformer Game Engine by Wohlstand, a free platform for game making
-# Copyright (c) 2016 Vitaly Novichkov <admin@wohlnet.ru>
+# Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,9 +59,5 @@ SOURCES += \
 HEADERS += \
     version.h
 
-RESOURCES += \
-    _resources/png2gifs.qrc
-
 OTHER_FILES += \
     _resources/png2gifs.rc
-

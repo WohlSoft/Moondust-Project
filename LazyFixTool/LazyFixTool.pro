@@ -38,7 +38,6 @@ CONFIG   -= app_bundle
 CONFIG   += static
 CONFIG   += c++11
 
-
 include ($$PWD/../_common/lib_destdir.pri)
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
@@ -60,9 +59,6 @@ SOURCES += \
 
 HEADERS += \
     version.h
-
-RESOURCES += \
-    _resources/lazyfix_tool.qrc
 
 OTHER_FILES += \
     _resources/lazyfix_tool.rc

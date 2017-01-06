@@ -1,6 +1,5 @@
 /*
- * LazyFixTool, a free tool for fix lazily-made image masks
- * and also, convert all BMPs into GIF
+ * PNG2GIFs, a free tool for convert PNG into GIF images with his masks
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -18,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include <locale>
 #include <iostream>
 #include <stdio.h>
@@ -27,8 +25,6 @@
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 #include <Utf8Main/utf8main.h>
-
-#include <Utils/files.h>
 #include <tclap/CmdLine.h>
 #include "version.h"
 
@@ -87,11 +83,13 @@ static void splitRGBAtoBitBlt(FIBITMAP*&image, FIBITMAP *&mask)
 {
     unsigned int img_w   = FreeImage_GetWidth(image);
     unsigned int img_h   = FreeImage_GetHeight(image);
-    unsigned int img_bpp = FreeImage_GetBPP(image);
-    unsigned int img_rm  = FreeImage_GetRedMask(image);
-    unsigned int img_bm  = FreeImage_GetBlueMask(image);
-    unsigned int img_gm  = FreeImage_GetGreenMask(image);
-    mask = FreeImage_AllocateT(FIT_BITMAP, img_w, img_h, img_bpp, img_rm, img_gm, img_bm);
+
+    mask = FreeImage_AllocateT(FIT_BITMAP,
+                               img_w, img_h,
+                               FreeImage_GetBPP(image),
+                               FreeImage_GetRedMask(image),
+                               FreeImage_GetGreenMask(image),
+                               FreeImage_GetBlueMask(image));
 
     RGBQUAD Fpix;
     RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
