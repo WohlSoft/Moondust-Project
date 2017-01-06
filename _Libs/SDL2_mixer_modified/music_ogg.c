@@ -146,14 +146,20 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
             int isMusicAlbum = strcasecmp(argument, "ALBUM");
             int isMusicCopyright = strcasecmp(argument, "COPYRIGHT");
 
+#ifdef __USE_ISOC99
+#define A_TO_OGG64(x) (ogg_int64_t)atoll(x)
+#else
+#define A_TO_OGG64(x) (ogg_int64_t)atol(x)
+#endif
+
             if(isLoopStart==0) {
-                music->loop_start = atoi(value);
+                music->loop_start = A_TO_OGG64(value);
             } else if(isLoopLen == 0) {
-                music->loop_len = atoi(value);
+                music->loop_len = A_TO_OGG64(value);
                 isLength=1;
             } else if(isLoopEnd == 0) {
                 isLength=0;
-                music->loop_end = atoi(value);
+                music->loop_end = A_TO_OGG64(value);
             } else if(isMusicTitle == 0) {
                 music->mus_title = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
                 strcpy(music->mus_title, value);
@@ -169,6 +175,8 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
             }
             doValue = 0;
         }
+
+#undef A_TO_OGG64
 
         if(isLength == 1)
             music->loop_end = music->loop_start + music->loop_len;
