@@ -1,611 +1,505 @@
-/*
- * LazyFixTool, a free tool for fix lazily-made image masks
- * and also, convert all BMPs into GIF
- * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+#include <locale>
+#include <iostream>
+#include <stdio.h>
 
-#include <QCoreApplication>
-#include <QImage>
-#include <QColor>
-#include <QDir>
-#include <QDirIterator>
-#include <QString>
-#include <QTextStream>
-#include <QFileInfo>
+#include <FileMapper/file_mapper.h>
+#include <DirManager/dirman.h>
+#include <Utils/files.h>
+#include <Utf8Main/utf8main.h>
+
+#include <Utils/files.h>
+#include <tclap/CmdLine.h>
 #include "version.h"
 
-#include <EasyBMP.h>
-#include <giflib.hpp>
+#ifdef _WIN32
+#define FREEIMAGE_LIB 1
+#endif
+#include <FreeImageLite.h>
 
-bool   noBackUp = false;
-
-QImage setAlphaMask(QImage image, QImage mask);
-QImage setAlphaMask_VB(QImage image, QImage mask);
-
-
-bool   toGif(QImage& img, QString& path);
-QImage fromBMP(QString &file);
-QImage loadQImage(QString file);
-
-void   doMagicIn(QString path, QString q, QString OPath);
-
-
-QImage setAlphaMask(QImage image, QImage mask)
+static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
 {
-    if(mask.isNull())
-        return image;
+    #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+    FileMapper fileMap;
+    if(!fileMap.open_file(file.c_str()))
+        return NULL;
 
-    if(image.isNull())
-        return image;
+    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
+                                            (unsigned int)fileMap.size());
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
+    if(formato  == FIF_UNKNOWN)
+        return NULL;
+    FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+    FreeImage_CloseMemory(imgMEM);
+    fileMap.close_file();
+    if(!img)
+        return NULL;
+    #else
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
+    if(formato  == FIF_UNKNOWN)
+        return NULL;
+    FIBITMAP *img = FreeImage_Load(formato, file.c_str());
+    if(!img)
+        return NULL;
+    #endif
 
-    QImage target = image;
-    QImage newmask = mask;
-
-    if(target.size()!= newmask.size())
+    if(convertTo32bit)
     {
-        newmask = newmask.copy(0,0, target.width(), target.height());
+        FIBITMAP *temp;
+        temp = FreeImage_ConvertTo32Bits(img);
+        if(!temp)
+            return NULL;
+        FreeImage_Unload(img);
+        img = temp;
     }
-    target = setAlphaMask_VB(target, newmask);
-
-    return target;
+    return img;
 }
 
-//Implementation of VB similar transparency function
-QImage setAlphaMask_VB(QImage image, QImage mask)
+static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
 {
-    if(mask.isNull())
-        return image;
+    if(!image)
+        return false;
 
-    if(image.isNull())
-        return image;
+    if(!Files::fileExists(pathToMask))
+        return false; //Nothing to do
 
-    bool isWhiteMask = true;
+    FIBITMAP *mask = loadImage(pathToMask);
 
-    QImage target;
+    if(!mask)
+        return false;//Nothing to do
 
-    target = QImage(image.width(), image.height(), QImage::Format_ARGB32);
-    target.fill(qRgb(128,128,128));
+    unsigned int img_w  = FreeImage_GetWidth(image);
+    unsigned int img_h  = FreeImage_GetHeight(image);
+    unsigned int mask_w = FreeImage_GetWidth(mask);
+    unsigned int mask_h = FreeImage_GetHeight(mask);
 
-    QImage newmask = mask;
-    target=target.convertToFormat(QImage::Format_ARGB32);
+    RGBQUAD Fpix;
+    RGBQUAD Bpix;
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
 
-    if(target.size()!= newmask.size())
+    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
     {
-        newmask = newmask.copy(0, 0, target.width(), target.height());
-    }
-
-    QImage alphaChannel = image.alphaChannel();
-
-    //vbSrcAnd
-    for(int y=0; y< image.height(); y++ )
-        for(int x=0; x < image.width(); x++ )
+        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
         {
-            QColor Dpix = QColor(target.pixel(x,y));
-            QColor Spix = QColor(newmask.pixel(x,y));
-            QColor Npix;
 
-            Npix.setAlpha(255);
-            Npix.setRed( Dpix.red() & Spix.red());
-            Npix.setGreen( Dpix.green() & Spix.green());
-            Npix.setBlue( Dpix.blue() & Spix.blue());
-            target.setPixel(x, y, Npix.rgba());
+            FreeImage_GetPixelColor(image, x, y, &Fpix);
+            FreeImage_GetPixelColor(mask, x, y, &Bpix);
 
-            isWhiteMask &= ( (Spix.red()>240) //is almost White
-                             &&(Spix.green()>240)
-                             &&(Spix.blue()>240));
-
-            int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
-
-            if( (Spix.red()>240) //is almost White
-                            &&(Spix.green()>240)
-                            &&(Spix.blue()>240))
-            {
+            Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
+            Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
+            Npix.rgbBlue    = ((0x7F & Bpix.rgbBlue) | Fpix.rgbBlue);
+            int newAlpha = 255 -
+                           ((int(Bpix.rgbRed) +
+                             int(Bpix.rgbGreen) +
+                             int(Bpix.rgbBlue)) / 3);
+            if((Bpix.rgbRed > 240u) //is almost White
+               && (Bpix.rgbGreen > 240u)
+               && (Bpix.rgbBlue > 240u))
                 newAlpha = 0;
-            }
 
-            alphaChannel.setPixel(x,y, newAlpha);
-        }
+            newAlpha = newAlpha + ((int(Fpix.rgbRed) +
+                                    int(Fpix.rgbGreen) +
+                                    int(Fpix.rgbBlue)) / 3);
+            if(newAlpha > 255)
+                newAlpha = 255;
+            Npix.rgbReserved = newAlpha;
 
-    //vbSrcPaint
-    for(int y=0; y< image.height(); y++ )
-        for(int x=0; x < image.width(); x++ )
-        {
-            QColor Dpix = QColor(image.pixel(x,y));
-            QColor Spix = QColor(target.pixel(x,y));
-            QColor Npix;
-
-            Npix.setAlpha(255);
-            Npix.setRed( Dpix.red() | Spix.red());
-            Npix.setGreen( Dpix.green() | Spix.green());
-            Npix.setBlue( Dpix.blue() | Spix.blue());
-            target.setPixel(x, y, Npix.rgba());
-
-            //QColor curAlpha;
-            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
-            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
-
-            if(newAlpha>255) newAlpha=255;
-            alphaChannel.setPixel(x,y, newAlpha);
-        }
-
-    target.setAlphaChannel(alphaChannel);
-
-    return target;
-}
-
-
-bool toGif(QImage& img, QString& path)
-{
-    int errcode;
-
-    if(QFile(path).exists()) // Remove old file
-        QFile::remove(path);
-
-    GifFileType* t = EGifOpenFileName(path.toLocal8Bit().data(),true, &errcode);
-    if(!t){
-        EGifCloseFile(t, &errcode);
-        QTextStream(stdout)  << "Can't open\n";
-        return false;
-    }
-
-    EGifSetGifVersion(t, true);
-
-    GifColorType* colorArr = new GifColorType[256];
-    ColorMapObject* cmo = GifMakeMapObject(256, colorArr);
-
-    bool unfinished = false;
-    QImage tarQImg(img.width(), img.height(), QImage::Format_Indexed8);
-    QVector<QRgb> table;
-    for(int y = 0; y < img.height(); y++){
-        for(int x = 0; x < img.width(); x++){
-            if(table.size() >= 256){
-                unfinished = true;
-                break;
-            }
-            QRgb pix;
-            if(!table.contains(pix = img.pixel(x,y))){
-                table.push_back(pix);
-                tarQImg.setColor(tarQImg.colorCount(), pix);
-            }
-            tarQImg.setPixel(x,y,table.indexOf(pix));
-        }
-        if(table.size() >= 256){
-            unfinished = true;
-            break;
+            FreeImage_SetPixelColor(image, x, y, &Npix);
         }
     }
-
-    if(unfinished){
-        EGifCloseFile(t, &errcode);
-        QTextStream(stdout)  << "Unfinished\n";
-        return false;
-    }
-
-
-    for(int l = tarQImg.colorCount(); l < 256; l++){
-        tarQImg.setColor(l,0);
-    }
-
-    if(tarQImg.colorTable().size() != 256){
-        EGifCloseFile(t, &errcode);
-        QTextStream(stdout)  << "A lot of colors\n";
-        return false;
-    }
-
-    QVector<QRgb> clTab = tarQImg.colorTable();
-
-    for(int i = 0; i < 255; i++){
-        QRgb rgb = clTab[i];
-        colorArr[i].Red = qRed(rgb);
-        colorArr[i].Green = qGreen(rgb);
-        colorArr[i].Blue = qBlue(rgb);
-    }
-    cmo->Colors = colorArr;
-
-    errcode = EGifPutScreenDesc(t, img.width(), img.height(), 256, 0, cmo);
-    if(errcode != GIF_OK){
-        EGifCloseFile(t, &errcode);
-        QTextStream(stdout)  << "EGifPutScreenDesc error 1\n";
-        return false;
-    }
-
-    errcode = EGifPutImageDesc(t, 0, 0, img.width(), img.height(), false, 0);
-    if(errcode != GIF_OK){
-        EGifCloseFile(t, &errcode);
-        QTextStream(stdout)  << "EGifPutImageDesc error 2\n";
-        return false;
-    }
-
-    //gen byte array
-    GifByteType* byteArr = tarQImg.bits();
-
-    for(int h = 0; h < tarQImg.height(); h++){
-        errcode = EGifPutLine(t, byteArr, tarQImg.width());
-        if(errcode != GIF_OK){
-            EGifCloseFile(t, &errcode);
-            QTextStream(stdout)  << "EGifPutLine error 3\n";
-            return false;
-        }
-
-        byteArr += tarQImg.width();
-        byteArr += ((tarQImg.width() % 4)!=0 ? 4 - (tarQImg.width() % 4) : 0);
-    }
-
-    if(errcode != GIF_OK){
-        QTextStream(stdout)  << "GIF error 4\n";
-        return false;
-    }
-    EGifCloseFile(t, &errcode);
-
+    FreeImage_Unload(mask);
     return true;
 }
 
-QImage fromBMP(QString &file)
+static inline uint8_t subtractAlpha(const uint8_t channel, const uint8_t alpha)
 {
-    QImage errImg;
+    int16_t ch = static_cast<int16_t>(channel) - static_cast<int16_t>(alpha);
+    if(ch < 0)
+        ch = 0;
+    return static_cast<uint8_t>(ch);
+}
 
-    BMP tarBMP;
-    if(!tarBMP.ReadFromFile( file.toLocal8Bit().data() )){
-        //WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
-        return errImg; //Check if empty with errImg.isNull();
-    }
+static void splitRGBAtoBitBlt(FIBITMAP * &image, FIBITMAP *&mask)
+{
+    unsigned int img_w   = FreeImage_GetWidth(image);
+    unsigned int img_h   = FreeImage_GetHeight(image);
+    unsigned int img_bpp = FreeImage_GetBPP(image);
+    unsigned int img_rm  = FreeImage_GetRedMask(image);
+    unsigned int img_bm  = FreeImage_GetBlueMask(image);
+    unsigned int img_gm  = FreeImage_GetGreenMask(image);
+    mask = FreeImage_AllocateT(FIT_BITMAP, img_w, img_h, img_bpp, img_rm, img_gm, img_bm);
 
-    QImage bmpImg(tarBMP.TellWidth(),tarBMP.TellHeight(),QImage::Format_RGB666);
+    RGBQUAD Fpix;
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
 
-    for(int x = 0; x < tarBMP.TellWidth(); x++){
-        for(int y = 0; y < tarBMP.TellHeight(); y++){
-            RGBApixel pixAt = tarBMP.GetPixel(x,y);
-            bmpImg.setPixel(x,y,qRgb(pixAt.Red, pixAt.Green, pixAt.Blue));
+    for(unsigned int y = 0; (y < img_h); y++)
+    {
+        for(unsigned int x = 0; (x < img_w); x++)
+        {
+            FreeImage_GetPixelColor(image, x, y, &Fpix);
+
+            uint8_t grey = (255 - Fpix.rgbReserved);
+            Npix.rgbRed  = grey;
+            Npix.rgbGreen= grey;
+            Npix.rgbBlue = grey;
+            Npix.rgbReserved = 255;
+
+            Fpix.rgbRed  = subtractAlpha(Fpix.rgbRed, grey);
+            Fpix.rgbGreen= subtractAlpha(Fpix.rgbGreen, grey);
+            Fpix.rgbBlue = subtractAlpha(Fpix.rgbBlue, grey);
+            Fpix.rgbReserved = 255;
+
+            FreeImage_SetPixelColor(image, x, y, &Fpix);
+            FreeImage_SetPixelColor(mask,  x, y, &Npix);
         }
     }
-
-    return bmpImg;
 }
 
-QImage loadQImage(QString file)
+struct LazyFixTool_Setup
 {
-    QImage image = QImage(file);
-    if(image.isNull())
-        image = fromBMP(file);
-    return image;
+    std::string pathIn;
+    bool listOfFiles        = false;
+
+    std::string pathOut;
+    bool pathOutSame        = false;
+
+    bool noMakeBackup       = false;
+    bool walkSubDirs        = false;
+    unsigned int count_success  = 0;
+    unsigned int count_backups  = 0;
+    unsigned int count_nomask   = 0;
+    unsigned int count_failed   = 0;
+};
+
+static inline void delEndSlash(std::string &dirPath)
+{
+    if(!dirPath.empty())
+    {
+        char last = dirPath[dirPath.size() - 1];
+        if((last == '/')||(last == '\\'))
+            dirPath.resize(dirPath.size() - 1);
+    }
 }
 
-
-void doMagicIn(QString path, QString q, QString OPath)
+static inline void getGifMask(std::string &mask, const std::string &front)
 {
-    QRegExp isMask = QRegExp("*m.gif");
-    isMask.setPatternSyntax(QRegExp::Wildcard);
-
-    QRegExp isBackupDir = QRegExp("*/_backup/");
-    isBackupDir.setPatternSyntax(QRegExp::Wildcard);
-
-    if(isBackupDir.exactMatch(path))
-        return; //Skip backup directories
-
-    if(isMask.exactMatch(q))
-        return;
-
-    QImage target;
-    QString imgFileM;
-    QStringList tmp = q.split(".", QString::SkipEmptyParts);
-    if(tmp.size()==2)
-        imgFileM = tmp[0] + "m." + tmp[1];
+    mask = front;
+    //Make mask filename
+    size_t dotPos = mask.find_last_of('.');
+    if(dotPos == std::string::npos)
+        mask.push_back('m');
     else
-        return;
-
-    //skip unexists pairs
-    if(!QFile(path+q).exists())
-        return;
-
-    if(!QFile(path+imgFileM).exists())
-    {
-        QString saveTo;
-
-        QImage image = loadQImage(path+q);
-        if(image.isNull()) return;
-
-        QTextStream(stdout) << QString(path+q+"\n").toUtf8().data();
-
-        saveTo = QString(OPath+(tmp[0].toLower())+".gif");
-        //overwrite source image (convert BMP to GIF)
-        if(toGif( image, saveTo ) ) //Write gif
-        {
-            QTextStream(stdout) <<"GIF-1 only\n";
-        }
-        else
-        {
-            QTextStream(stdout) <<"BMP-1 only\n";
-            image.save(saveTo, "BMP"); //If failed, write BMP
-        }
-        return;
-    }
-
-    if(!noBackUp)
-    {
-        //create backup dir
-        QDir backup(path+"_backup/");
-        if(!backup.exists())
-        {
-            QTextStream(stdout) << QString("Create backup with path %1\n").arg(path+"_backup");
-            if(!backup.mkdir("."))
-                QTextStream(stderr) << QString("WARNING! Can't create backup directory %1\n").arg(path+"_backup");
-
-        }
-
-        //create Back UP of source images
-        if(!QFile(path+"_backup/"+q).exists())
-            QFile::copy(path+q, path+"_backup/"+q);
-        if(!QFile(path+"_backup/"+imgFileM).exists())
-            QFile::copy(path+imgFileM, path+"_backup/"+imgFileM);
-    }
-
-    QImage image = loadQImage(path+q);
-    QImage mask = loadQImage(path+imgFileM);
-
-    if(mask.isNull()) //Skip null masks
-        return;
-
-    target = setAlphaMask(image, mask);
-
-    if(!target.isNull())
-    {
-        //Save before fix
-        //target.save(OPath+tmp[0]+"_before.png");
-        //mask.save(OPath+tmp[0]+"_mask_before.png");
-        QTextStream(stdout) << QString(path+q+"\n").toUtf8().data();
-
-        //fix
-        if(image.size()!= mask.size())
-            mask = mask.copy(0,0, image.width(), image.height());
-
-        mask = target.alphaChannel();
-        mask.invertPixels();
-
-        //Save after fix
-        //target.save(OPath+tmp[0]+"_after.bmp", "BMP");
-        QString saveTo;
-
-
-        saveTo = QString(OPath+(tmp[0].toLower())+".gif");
-
-        //overwrite source image (convert BMP to GIF)
-        if(toGif(image, saveTo ) ) //Write gif
-        {
-            QTextStream(stdout) <<"GIF-1 ";
-        }
-        else
-        {
-            QTextStream(stdout) <<"BMP-1 ";
-            image.save(saveTo, "BMP"); //If failed, write BMP
-        }
-
-        saveTo = QString(OPath+(tmp[0].toLower())+"m.gif");
-
-        //overwrite mask image
-        if( toGif(mask, saveTo ) ) //Write gif
-        {
-            QTextStream(stdout) <<"GIF-2\n";
-        }
-        else
-        {
-            mask.save(saveTo, "BMP"); //If failed, write BMP
-            QTextStream(stdout) <<"BMP-2\n";
-        }
-    }
-    else
-        QTextStream(stderr) << path+q+" - WRONG!\n";
+        mask.insert(mask.begin() + dotPos, 'm');
 }
 
+void doLazyFixer(std::string pathIn,  std::string imgFileIn,
+                std::string pathOut,
+                LazyFixTool_Setup &setup)
+{
+    if(Files::hasSuffix(imgFileIn, "m.gif"))
+        return; //Skip mask files
 
+    std::string imgPathIn = pathIn + "/" + imgFileIn;
+    std::string maskPathIn;
 
+    std::cout << imgPathIn;
+    std::cout.flush();
+
+    std::string maskFileIn;
+    getGifMask(maskFileIn, imgFileIn);
+
+    maskPathIn = pathIn + "/" + maskFileIn;
+
+    //Create backup in case of source and target are same
+    if(!setup.noMakeBackup && (pathIn == pathOut))
+    {
+        DirMan backupDir(pathIn + "/_backup");
+        bool ret = false;
+        if(!backupDir.exists())
+        {
+            std::cout << ".MKDIR.";
+            std::cout.flush();
+            if(!backupDir.mkdir(""))
+            {
+                std::cout << ".FAIL!.";
+                std::cout.flush();
+                goto skipBackpDir;
+            }
+        }
+        ret |= Files::copyFile(backupDir.absolutePath() + "/" + imgFileIn,  imgPathIn,  false);
+        ret |= Files::copyFile(backupDir.absolutePath() + "/" + maskFileIn, maskPathIn, false);
+
+        if(ret)
+            setup.count_backups++;
+        skipBackpDir:;
+    }
+
+    FIBITMAP *image = loadImage(imgPathIn);
+    if(!image)
+    {
+        setup.count_failed++;
+        std::cout << "...CAN'T OPEN!\n";
+        std::cout.flush();
+        return;
+    }
+
+    FIBITMAP *mask = NULL;
+    if(Files::fileExists(maskPathIn))
+    {
+        bool hasMask = mergeBitBltToRGBA(image, maskPathIn);
+        if(hasMask) // Split in case is mask presented
+            splitRGBAtoBitBlt(image, mask);
+    }
+
+    bool isFail = false;
+    if(image)
+    {
+        std::string outPathF = pathOut + "/" + imgFileIn;
+        FIBITMAP *image8 = FreeImage_ColorQuantize(image, FIQ_WUQUANT);
+        if(image8)
+        {
+            int ret = FreeImage_Save(FIF_GIF, image8, outPathF.c_str());
+            if(!ret)
+            {
+                std::cout << "...F-WRT FAILED!\n";
+                isFail = true;
+            }
+            FreeImage_Unload(image8);
+        }
+        else
+            isFail = true;
+        FreeImage_Unload(image);
+
+    }
+    else
+    {
+        isFail = true;
+    }
+
+    if(mask)
+    {
+        std::string outPathB = pathOut + "/" + maskFileIn;
+        FIBITMAP *mask8  = FreeImage_ColorQuantize(mask, FIQ_WUQUANT);
+        if(mask8)
+        {
+            int ret = FreeImage_Save(FIF_GIF, mask8, outPathB.c_str());
+            if(!ret)
+            {
+                std::cout << "...B-WRT FAILED!\n";
+                isFail = true;
+            }
+            FreeImage_Unload(mask8);
+        }
+        else
+            isFail = true;
+        FreeImage_Unload(mask);
+    } else {
+        setup.count_nomask++;
+    }
+
+    if(isFail)
+    {
+        setup.count_failed++;
+        std::cout << "...FAILED!\n";
+    } else {
+        setup.count_success++;
+        std::cout << "...done\n";
+    }
+
+    std::cout.flush();
+}
 
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::addLibraryPath( "." );
-    QCoreApplication::addLibraryPath( QFileInfo(QString::fromUtf8(argv[0])).dir().path() );
-    QCoreApplication::addLibraryPath( QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path() );
+//    if(argc > 0)
+//        g_ApplicationPath = Files::dirname(argv[0]);
+//    g_ApplicationPath = DirMan(g_ApplicationPath).absolutePath();
 
-    QCoreApplication a(argc, argv);
+    DirMan imagesDir;
+    std::vector<std::string> fileList;
+    FreeImage_Initialise();
 
-    QStringList filters;
-    QDir imagesDir;
-    QString path;
-    QString OPath;
-    QStringList fileList;
+    LazyFixTool_Setup setup;
 
-    bool walkSubDirs=false;
-    bool nopause=false;
-    bool cOpath=false;
-    bool singleFiles=false;
-
-    QString argPath;
-    QString argOPath;
-
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Lazily-made image masks fix tool by Wohlstand. Version "<< _FILE_VERSION << _FILE_RELEASE << "\n";
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"This program is distributed under the GNU GPLv3 license\n";
-    QTextStream(stdout) <<"============================================================================\n";
-
-    QRegExp isGif = QRegExp("*.gif");
-    isGif.setPatternSyntax(QRegExp::Wildcard);
-
-    QRegExp isMask = QRegExp("*m.gif");
-    isMask.setPatternSyntax(QRegExp::Wildcard);
-
-    if(a.arguments().size()==1)
+    try
     {
-        goto DisplayHelp;
-    }
+        // Define the command line object.
+        TCLAP::CmdLine  cmd(_FILE_DESC "\n"
+                            "Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>\n"
+                            "This program is distributed under the GNU GPLv3+ license\n", ' ', _FILE_VERSION _FILE_RELEASE);
 
-    for(int arg=0; arg<a.arguments().size(); arg++)
-    {
-        if(a.arguments().at(arg)=="--help")
+        TCLAP::SwitchArg switchNoBackups("n",       "no-backup", "Don't create backup", false);
+        TCLAP::SwitchArg switchDigRecursive("d",    "dig-recursive", "Look for images in subdirectories", false);
+        TCLAP::SwitchArg switchDigRecursiveDEP("w", "dig-recursive-old", "Look for images in subdirectories [deprecated]", false);
+
+        TCLAP::ValueArg<std::string> outputDirectory("O", "output",
+                "path to a directory where the fixed images will be saved",
+                false, "", "/path/to/output/directory/");
+        TCLAP::UnlabeledMultiArg<std::string> inputFileNames("filePath(s)",
+                "Input GIF file(s)",
+                true,
+                "Input file path(s)");
+
+        cmd.add(&switchNoBackups);
+        cmd.add(&switchDigRecursive);
+        cmd.add(&switchDigRecursiveDEP);
+        cmd.add(&outputDirectory);
+        cmd.add(&inputFileNames);
+
+        cmd.parse(argc, argv);
+
+        setup.noMakeBackup      = switchNoBackups.getValue();
+        setup.walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
+        //nopause         = switchNoPause.getValue();
+
+        setup.pathOut     = outputDirectory.getValue();
+
+        for(const std::string &fpath : inputFileNames.getValue())
         {
-            goto DisplayHelp;
-        }
-        else
-        if(a.arguments().at(arg)=="-N")
-        {
-            noBackUp=true;
-        }
-        else
-        if(a.arguments().at(arg)=="-W")
-        {
-            walkSubDirs=true;
-        }
-//        else
-//        if(a.arguments().at(arg)=="-G")
-//        {
-//            DarkGray=true;
-//        }
-        else
-        if(a.arguments().at(arg)=="--nopause")
-        {
-            nopause=true;
-        }
-        else
-        {
-            //if begins from "-O"
-            if(a.arguments().at(arg).size()>=2 && a.arguments().at(arg).at(0)=='-'&& a.arguments().at(arg).at(1)=='O')
-              {  argOPath=a.arguments().at(arg); argOPath.remove(0,2); }
+            if(Files::hasSuffix(fpath, "m.gif"))
+                continue;
+            else if(DirMan::exists(fpath))
+                setup.pathIn = fpath;
             else
             {
-                if(isMask.exactMatch(a.arguments().at(arg)))
-                    continue;
-                else
-                    if(isGif.exactMatch(a.arguments().at(arg)))
-                    {
-                        fileList << a.arguments().at(arg);
-                        singleFiles=true;
-                    }
-                else
-                    argPath=a.arguments().at(arg);
+                fileList.push_back(fpath);
+                setup.listOfFiles = true;
+            }
+        }
+
+        if((argc <= 1) || (setup.pathIn.empty() && !setup.listOfFiles))
+        {
+            fprintf(stderr, "\n"
+                            "ERROR: Missing input files!\n"
+                            "Type \"%s --help\" to display usage.\n\n", argv[0]);
+            return 2;
+        }
+    }
+    catch(TCLAP::ArgException &e)   // catch any exceptions
+    {
+        std::cerr << "Error: " << e.error() << " for arg " << e.argId() << std::endl;
+        return 2;
+    }
+
+    fprintf(stderr, "============================================================================\n"
+                    "Lazily-made image masks fix tool by Wohlstand. Version " _FILE_VERSION _FILE_RELEASE "\n"
+                    "============================================================================\n"
+                    "This program is distributed under the GNU GPLv3 license \n"
+                    "============================================================================\n");
+    fflush(stderr);
+
+    if(!setup.listOfFiles)
+    {
+        if(setup.pathIn.empty())
+            goto WrongInputPath;
+        if(!DirMan::exists(setup.pathIn))
+            goto WrongInputPath;
+
+        imagesDir.setPath(setup.pathIn);
+        setup.pathIn = imagesDir.absolutePath();
+    }
+
+    if(!setup.pathOut.empty())
+    {
+        if(!DirMan::exists(setup.pathOut))
+            goto WrongOutputPath;
+
+        setup.pathOut = DirMan(setup.pathOut).absolutePath();
+        setup.pathOutSame   = false;
+    }
+    else
+    {
+        setup.pathOut       = setup.pathIn;
+        setup.pathOutSame   = true;
+    }
+
+    delEndSlash(setup.pathIn);
+    delEndSlash(setup.pathOut);
+
+    printf("============================================================================\n"
+           "Converting images...\n"
+           "============================================================================\n");
+    fflush(stdout);
+
+    if(!setup.listOfFiles)
+        std::cout << ("Input path:  " + setup.pathIn + "\n");
+
+    std::cout << ("Output path: " + setup.pathOut + "\n");
+
+    std::cout << "============================================================================\n";
+    std::cout.flush();
+
+    if(setup.listOfFiles)// Process a list of flies
+    {
+        for(std::string &file : fileList)
+        {
+            std::string fname   = Files::basename(file);
+            if(setup.pathOutSame)
+            {
+                setup.pathIn = Files::dirname(file);
+                delEndSlash(setup.pathIn);
+            }
+            doLazyFixer(setup.pathIn, fname , setup.pathOut, setup);
+        }
+    }
+    else // Process directories with a source files
+    {
+        imagesDir.getListOfFiles(fileList, {".gif"});
+        if(!setup.walkSubDirs) //By directories
+        {
+            for(std::string &fname : fileList)
+            {
+                doLazyFixer(setup.pathIn, fname, setup.pathOut, setup);
+            }
+        }
+        else
+        {
+            imagesDir.beginWalking({".gif"});
+            std::string curPath;
+            while(imagesDir.fetchListFromWalker(curPath, fileList))
+            {
+                if(Files::hasSuffix(curPath, "/_backup"))
+                    continue; //Skip backup directories
+                for(std::string &file : fileList)
+                {
+                    if(setup.pathOutSame)
+                        setup.pathOut = curPath;
+                    doLazyFixer(curPath, file, setup.pathOut, setup);
+                }
             }
         }
     }
 
-    if(!singleFiles)
-    {
-        if(argPath.isEmpty()) goto WrongInputPath;
-        if(!QDir(argPath).exists()) goto WrongInputPath;
+    printf("============================================================================\n"
+           "                      Conversion has been completed!\n"
+           "============================================================================\n"
+           "Successfully fixed:         %d\n"
+           "Masks are not found:        %d\n"
+           "Backups created:            %d\n"
+           "Fixes failed:               %d\n"
+           "\n",
+           setup.count_success,
+           setup.count_nomask,
+           setup.count_backups,
+           setup.count_failed);
+    fflush(stdout);
+    return (setup.count_failed == 0) ? 0 : 1;
 
-        imagesDir.setPath(argPath);
-        filters << "*.gif" << "*.GIF";
-        imagesDir.setSorting(QDir::Name);
-        imagesDir.setNameFilters(filters);
-
-        path = imagesDir.absolutePath() + "/";
-    }
-
-    if(!argOPath.isEmpty())
-    {
-        OPath = argOPath;
-        if(!QFileInfo(OPath).isDir())
-            goto WrongOutputPath;
-
-        OPath = QDir(OPath).absolutePath() + "/";
-    }
-    else
-    {
-        cOpath=true;
-        OPath=path;
-    }
-
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Converting images...\n";
-    QTextStream(stdout) <<"============================================================================\n";
-
-    if(!singleFiles)
-        QTextStream(stdout) << QString("Input path:  "+path+"\n").toUtf8().data();
-    QTextStream(stdout) << QString("Output path: "+OPath+"\n").toUtf8().data();
-    QTextStream(stdout) <<"============================================================================\n";
-    if(singleFiles) //By files
-    {
-        foreach(QString q, fileList)
-        {
-            path=QFileInfo(q).absoluteDir().path()+"/";
-            QString fname = QFileInfo(q).fileName();
-            if(cOpath) OPath=path;
-            doMagicIn(path, fname, OPath);
-        }
-    }
-    else
-    {
-        fileList << imagesDir.entryList(filters);
-        if(!walkSubDirs)
-        foreach(QString q, fileList)
-        {
-            doMagicIn(path, q, OPath);
-        }
-        else
-        {
-            QDirIterator dirsList(imagesDir.absolutePath(), filters,
-                                      QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
-                                  QDirIterator::Subdirectories);
-
-            while(dirsList.hasNext())
-              {
-                    dirsList.next();
-                    if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip Backup dirs
-                        continue;
-
-                    if(cOpath) OPath=QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
-
-                    doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath);
-              }
-
-
-        }
-    }
-
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Done!\n\n";
-
-    if(!nopause) getchar();
-
-    return 0;
-
-DisplayHelp:
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"This utility will fix lazily-made image masks:\n";
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Syntax:\n\n";
-    QTextStream(stdout) <<"   LazyFixTool [--help] [-N] [-G] file1.gif [file2.gif] [...] [-O/path/to/out]\n";
-    QTextStream(stdout) <<"   LazyFixTool [--help] [-W] [-N] [-G] /path/to/folder [-O/path/to/out]\n\n";
-    QTextStream(stdout) <<" --help              - Display this help\n";
-    QTextStream(stdout) <<" /path/to/folder     - path to a directory with a pair of GIF files\n";
-    QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the new images will be saved\n";
-    QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
-    QTextStream(stdout) <<" -N                  - Don't create backup\n";
-    //QTextStream(stdout) <<" -G                  - Make gray shades on masks darker\n";
-    QTextStream(stdout) <<"\n\n";
-
-    getchar();
-
-    exit(0);
-    return 0;
 WrongInputPath:
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Wrong output path!\n";
-    goto DisplayHelp;
+    std::cout.flush();
+    std::cerr.flush();
+    printf("============================================================================\n"
+           "                           Wrong input path!\n"
+           "============================================================================\n");
+    fflush(stdout);
+    return 2;
+
 WrongOutputPath:
-    QTextStream(stdout) <<"============================================================================\n";
-    QTextStream(stdout) <<"Wrong output path!\n";
-    goto DisplayHelp;
+    std::cout.flush();
+    std::cerr.flush();
+    printf("============================================================================\n"
+           "                          Wrong output path!\n"
+           "============================================================================\n");
+    fflush(stdout);
+    return 2;
 }

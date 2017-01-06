@@ -25,7 +25,7 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "2.0.0"
+#define _FILE_VERSION "3.0.0"
 #define _FILE_RELEASE ""
 
 #define _VF1 2
@@ -33,7 +33,7 @@
 #define _VF3 0
 #define _VF4 0
 
-#define _FILE_DESC "LazyFix, a fix wrong graphics tool"
+#define _FILE_DESC "LazyFix, a lazily-drawn graphic mask fixing tool"
 
 #define _INTERNAL_NAME "LazyFixTool"
 
