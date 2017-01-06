@@ -44,7 +44,7 @@ private slots:
     void consoleMessage();
 
 private:
-    QProcess * proc;
+    QProcess proc;
 
     Ui::LazyFixTool_gui *ui;
 };

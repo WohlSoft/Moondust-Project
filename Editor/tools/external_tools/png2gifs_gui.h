@@ -27,7 +27,7 @@ private slots:
     void consoleMessage();
 
 private:
-    QProcess * proc;
+    QProcess proc;
     Ui::png2gifs_gui *ui;
 };
 

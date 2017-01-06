@@ -30,14 +30,12 @@ png2gifs_gui::png2gifs_gui(QWidget *parent) :
     ui(new Ui::png2gifs_gui)
 {
     ui->setupUi(this);
-    proc= new QProcess();
-    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
+    connect(&proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
 }
 
 png2gifs_gui::~png2gifs_gui()
 {
-    disconnect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
-    delete proc;
+    disconnect(&proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     delete ui;
 }
 
@@ -72,7 +70,7 @@ void png2gifs_gui::on_startTool_clicked()
         return;
     }
 
-    if(proc->state()==QProcess::Running)
+    if(proc.state()==QProcess::Running)
         return;
 
     QString command;
@@ -90,25 +88,34 @@ void png2gifs_gui::on_startTool_clicked()
     }
 
     QStringList args;
-    if(ui->WalkSubDirs->isChecked()) args << "-W";
-    if(ui->RemoveSource->isChecked()) args << "-R";
-    args << "--nopause";
-    args << ui->inputDir->text();
-    if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());
 
+    if(!ui->outputDir->text().isEmpty())
+    {
+        args << "--output";
+        args << ui->outputDir->text();
+    }
+
+    if(ui->WalkSubDirs->isChecked())
+        args << "-d";
+
+    if(ui->RemoveSource->isChecked())
+        args << "-r";
+
+    args << "--";
+    args << ui->inputDir->text();
 
     DevConsole::show();
     DevConsole::log("Ready>>>", "PNG2GIFs");
     DevConsole::log("----------------------------------", "PNG2GIFs", true);
-    proc->waitForFinished(1);
-    proc->start(command, args);
+    proc.waitForFinished(1);
+    proc.start(command, args);
     //connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessage()) );
 }
 
 void png2gifs_gui::consoleMessage()
 {
-    QByteArray strdata = proc->readAllStandardOutput();
-    QString out = QString::fromLocal8Bit(strdata);
+    QByteArray strdata = proc.readAllStandardOutput();
+    QString out = QString::fromUtf8(strdata);
 #ifdef Q_OS_WIN
     out.remove('\r');
 #endif

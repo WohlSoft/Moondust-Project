@@ -29,15 +29,13 @@ LazyFixTool_gui::LazyFixTool_gui(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LazyFixTool_gui)
 {
-    proc = new QProcess;
-    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
+    connect(&proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     ui->setupUi(this);
 }
 
 LazyFixTool_gui::~LazyFixTool_gui()
 {
-    disconnect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
-    delete proc;
+    disconnect(&proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     delete ui;
 }
 
@@ -73,7 +71,7 @@ void LazyFixTool_gui::on_startTool_clicked()
 
     QString command;
 
-    if(proc->state()==QProcess::Running)
+    if(proc.state()==QProcess::Running)
         return;
 
     #ifdef _WIN32
@@ -89,25 +87,34 @@ void LazyFixTool_gui::on_startTool_clicked()
     }
 
     QStringList args;
-    if(ui->WalkSubDirs->isChecked()) args << "-W";
-    if(ui->noBackUp->isChecked()) args << "-N";
-    //if(ui->grayMasks->isChecked()) args << "-G";
-    args << "--nopause";
+
+    if(!ui->outputDir->text().isEmpty())
+    {
+        args << "--output";
+        args << ui->outputDir->text();
+    }
+
+    if(ui->WalkSubDirs->isChecked())
+        args << "-d";
+
+    if(ui->noBackUp->isChecked())
+        args << "-n";
+
+    args << "--";
     args << ui->inputDir->text();
-    if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());
 
     DevConsole::show();
     DevConsole::log("Ready>>>", "LazyFix Tool");
     DevConsole::log("----------------------------------", "LazyFix Tool", true);
-    proc->waitForFinished(1);
-    proc->start(command, args);
+    proc.waitForFinished(1);
+    proc.start(command, args);
     //connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessage()) );
 }
 
 void LazyFixTool_gui::consoleMessage()
 {
-    QByteArray strdata = proc->readAllStandardOutput();
-    QString out = QString::fromLocal8Bit(strdata);
+    QByteArray strdata = proc.readAllStandardOutput();
+    QString out = QString::fromUtf8(strdata);
 #ifdef Q_OS_WIN
     out.remove('\r');
 #endif
