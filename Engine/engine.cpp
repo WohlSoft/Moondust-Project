@@ -652,7 +652,7 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
     }
 
     #ifdef __APPLE__
-    if(g_fileToOpen.isEmpty())
+    if(g_fileToOpen.empty())
     {
         m_qApp->processEvents(QEventLoop::QEventLoop::AllEvents);
         pLogDebug("Attempt to take Finder args...");
@@ -662,11 +662,11 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
         {
             if(QFile::exists(file))
             {
-                g_fileToOpen = file;
-                pLogDebug("Got file path: [%s]", file.toStdString().c_str());
+                g_fileToOpen = file.toStdString();
+                pLogDebug("Got file path: [%s]", file.toUtf8().data());
             }
             else
-                pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.toStdString().c_str());
+                pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.toUtf8().data());
         }
     }
     #endif
