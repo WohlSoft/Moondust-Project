@@ -1,6 +1,6 @@
 Platform Game Engine by Wohlstand
 ===========
-a free and open source game engine and toolkit which gives the ability to create games of platform genre.
+a free and open source game engine and toolkit which gives the ability to create games of the platform genre.
 
 ------
 
@@ -12,11 +12,12 @@ Created by Vitaly Novichkov "Wohlstand" &lt;admin@wohlnet.ru&gt;
 [![Official community](https://img.shields.io/badge/Community-Visit-green.svg)](http://wohlsoft.ru/forum/)
 [![Official documentation](https://img.shields.io/badge/Documentation-Read-green.svg)](http://wohlsoft.ru/pgewiki/)
 [![Contact us by special form](https://img.shields.io/badge/Contact-us-blue.svg)](http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin)
+[![Join to our chat server](https://img.shields.io/badge/Discord-Join%20us-7289DA.svg)](http://discord.gg/zC2PY8q)
 
 How to build (Linux, Windows, Mac OS X):
 http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
 
-## Downloads 
+## Downloads
 [![Download latest stable release](https://img.shields.io/badge/Download-Stable-green.svg)](http://wohlsoft.ru/PGE/#links)
 [![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)
 [![Configuration packages are requires to work with PGE Project](https://img.shields.io/badge/Download-Config%20packs-blue.svg)](http://wohlsoft.ru/config_packs/)
@@ -34,7 +35,7 @@ http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
 ------------ | ------------- | -------------
 [![Build Status](https://semaphoreci.com/api/v1/projects/604cbe8f-44de-4754-99a5-28bc11764b39/471601/badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project)
 
-Get a most fresh assembies you can get here: [![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)!
+Get a most fresh assemblies you can get here: [![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)!
 
 # Components
 A list of components are included with PGE Project
@@ -66,7 +67,7 @@ Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (wh
 
 ![PGE Calibrator](https://github.com/WohlSoft/PGE-Project/blob/master/PlayableCalibrator/_resourses/icon/calibrator_256.png)
 
-It's a PGE development tool intended for game creators. It allows the user to define a hit (collision) box for each respective frame of a playable character, and also allows developers to calibrate any incorrect positions of the frames in an SMBX64 playable character sprite. 
+It's a PGE development tool intended for game creators. It allows the user to define a hit (collision) box for each respective frame of a playable character, and also allows developers to calibrate any incorrect positions of the frames in an SMBX64 playable character sprite.
 
 [More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/Playable_character_Calibrator)
 
@@ -79,7 +80,7 @@ Light-weight music player based on [SDL Mixer X audio library](http://wohlsoft.r
 
 ## GIFs to PNG Converter
 
-A small console utility which merges bit-mask based GIF pairs used in legacy engine into PNG format with alpha-channel (semi-transparency) support.
+A small console utility which merges bit-mask based GIF pairs used in the legacy engine into PNG format with alpha channel (semi-transparency) support.
 
 ## PNG to GIFs Converter
 
@@ -100,12 +101,12 @@ A small utility which provides a toolset to convert and fix various data: musics
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-    
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
