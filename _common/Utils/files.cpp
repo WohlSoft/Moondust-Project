@@ -145,9 +145,9 @@ bool Files::copyFile(const std::string &to, const std::string &from, bool overri
 
     #else
 
-    char buf[BUFSIZ];
-    size_t size;
-    size_t sizeOut;
+    char    buf[BUFSIZ];
+    ssize_t size;
+    ssize_t sizeOut;
 
     int source  = open(from.c_str(), O_RDONLY, 0);
     if(source == -1)
@@ -162,7 +162,7 @@ bool Files::copyFile(const std::string &to, const std::string &from, bool overri
 
     while((size = read(source, buf, BUFSIZ)) > 0)
     {
-        sizeOut = write(dest, buf, size);
+        sizeOut = write(dest, buf, static_cast<size_t>(size));
         if(sizeOut != size)
         {
             ret = false;

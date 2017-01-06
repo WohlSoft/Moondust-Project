@@ -29,6 +29,7 @@
 #error Unsupported operating system!
 #endif
 
+#include <stdio.h>
 #ifdef FileMapper_POSIX
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -233,15 +234,15 @@ FileMapper::FileMapper() :
 FileMapper::FileMapper(std::string file) :
     d(new FileMapper_private)
 {
-    open_file(file);
+    if(!open_file(file))
+        fprintf(stderr, "FileMapper: Failed to open %s file!\n", file.c_str());
 }
 
 FileMapper::FileMapper(const FileMapper &fm) :
     d(new FileMapper_private)
 {
-    if(fm.d->m_Address)
-        open_file(fm.d->m_path);
-    d->m_error = fm.d->m_error;
+    if(fm.d->m_Address && !open_file(fm.d->m_path))
+        d->m_error = fm.d->m_error;
 }
 
 FileMapper::~FileMapper()

@@ -176,7 +176,11 @@ bool DirMan::mkAbsPath(const std::string &dirPath)
         if(*p == '/')
         {
             *p = 0;
-            ::mkdir(tmp, S_IRWXU | S_IRWXG);
+            if(::mkdir(tmp, S_IRWXU | S_IRWXG) != 0)
+            {
+                *p = '/';
+                return false;
+            }
             *p = '/';
         }
     }

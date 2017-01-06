@@ -219,10 +219,6 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
         }
         FreeImage_Unload(image);
     }
-    else
-    {
-        isFail = true;
-    }
 
     if(isFail)
     {
