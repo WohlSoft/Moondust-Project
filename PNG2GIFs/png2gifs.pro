@@ -22,36 +22,43 @@
 #
 #-------------------------------------------------
 
-QT       += gui widgets
+include($$PWD/../_common/dest_dir.pri)
+include($$PWD/../_common/build_props.pri)
 
-include(../_common/dest_dir.pri)
-include(../_common/build_props.pri)
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
+include($$PWD/../_common/strip_garbage.pri)
+
+TEMPLATE = app
 TARGET = PNG2GIFs
+CONFIG   -= qt
+CONFIG   -= windows
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
-CONFIG   += thread
 CONFIG   += c++11
 
-TEMPLATE = app
+include ($$PWD/../_common/lib_destdir.pri)
 
-include(../_common/strip_garbage.pri)
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+INCLUDEPATH += $$PWD/../_common
 
-# Dependent libraries
-include($$PWD/../_Libs/giflib/giflib.pri)
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+LIBS += -lfreeimagelite
+
+include($$PWD/../_common/tclap/tclap.pri)
+include($$PWD/../_common/DirManager/dirman.pri)
+include($$PWD/../_common/Utils/Utils.pri)
+include($$PWD/../_common/Utf8Main/utf8main.pri)
+include($$PWD/../_common/FileMapper/FileMapper.pri)
 
 RC_FILE = _resources/png2gifs.rc
 
 SOURCES += \
-    png2gifs.cpp \
-    png2gifs_gui.cpp \
-    png2gifs_converter.cpp
+    png2gifs.cpp
 
 HEADERS += \
-    version.h \
-    png2gifs_gui.h \
-    png2gifs_converter.h
+    version.h
 
 RESOURCES += \
     _resources/png2gifs.qrc
@@ -59,5 +66,3 @@ RESOURCES += \
 OTHER_FILES += \
     _resources/png2gifs.rc
 
-FORMS += \
-    png2gifs_gui.ui

@@ -23,16 +23,15 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "1.1.0"
+#define _FILE_VERSION "2.0.0"
 #define _FILE_RELEASE ""
 
-#define _VF1 1
-#define _VF2 1
+#define _VF1 2
+#define _VF2 0
 #define _VF3 0
 #define _VF4 0
 
-
-#define _FILE_DESC "PNG to Masked GIFs converter"
+#define _FILE_DESC "PNG to Bit-Mask GIFs pair converter"
 
 #define _INTERNAL_NAME "PNG2GIFs"
 
