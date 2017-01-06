@@ -140,7 +140,7 @@ struct GIFs2PNG_Setup
 
     std::string configPath;
 
-    bool removeMode         = false;
+    bool removeSource       = false;
     bool walkSubDirs        = false;
     bool skipBackground2    = false;
     unsigned int count_success  = 0;
@@ -205,33 +205,46 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
         return;
     }
 
+    bool isFail = false;
+
     if(Files::fileExists(maskPathIn))
         mergeBitBltToRGBA(image, maskPathIn);
 
     if(image)
     {
         std::string outPath = pathOut + "/" + Files::changeSuffix(imgFileIn, ".png");
-
-        if(FreeImage_Save(FIF_PNG, image, outPath.c_str()))
+        int ret = FreeImage_Save(FIF_PNG, image, outPath.c_str());
+        if(!ret)
         {
-            if(setup.removeMode)// Detele old files
-            {
-                if(Files::deleteFile(imgPathIn))
-                    std::cout << ".F-DEL.";
-                if(Files::deleteFile(maskPathIn))
-                    std::cout << ".M-DEL.";
-                std::cout.flush();
-            }
+            std::cout << "...F-WRT FAILED!\n";
+            isFail = true;
         }
         FreeImage_Unload(image);
-        setup.count_success++;
-        std::cout << "...done\n";
     }
     else
+    {
+        isFail = true;
+    }
+
+    if(isFail)
     {
         setup.count_failed++;
         std::cout << "...FAILED!\n";
     }
+    else
+    {
+        setup.count_success++;
+        if(setup.removeSource)// Detele old files
+        {
+            if(Files::deleteFile(imgPathIn))
+                std::cout << ".F-DEL.";
+            if(Files::deleteFile(maskPathIn))
+                std::cout << ".M-DEL.";
+        }
+        std::cout << "...done\n";
+    }
+
+
     std::cout.flush();
 }
 
@@ -283,7 +296,7 @@ int main(int argc, char *argv[])
 
         cmd.parse(argc, argv);
 
-        setup.removeMode      = switchRemove.getValue();
+        setup.removeSource      = switchRemove.getValue();
         setup.skipBackground2 = switchSkipBG.getValue();
         setup.walkSubDirs     = switchDigRecursive.getValue() | switchDigRecursiveDEP.getValue();
         //nopause         = switchNoPause.getValue();
@@ -407,7 +420,6 @@ int main(int argc, char *argv[])
                     continue; //Skip LazyFix's backup directories
                 for(std::string &file : fileList)
                 {
-
                     if(setup.pathOutSame)
                         setup.pathOut = curPath;
                     doGifs2PNG(curPath, file, setup.pathOut, setup, config);
