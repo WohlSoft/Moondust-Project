@@ -153,7 +153,7 @@ static inline void delEndSlash(std::string &dirPath)
     if(!dirPath.empty())
     {
         char last = dirPath[dirPath.size() - 1];
-        if((last == '/')||(last == '\\'))
+        if((last == '/') || (last == '\\'))
             dirPath.resize(dirPath.size() - 1);
     }
 }
@@ -307,8 +307,8 @@ int main(int argc, char *argv[])
         if((argc <= 1) || (setup.pathIn.empty() && !setup.listOfFiles))
         {
             fprintf(stderr, "\n"
-                            "ERROR: Missing input files!\n"
-                            "Type \"%s --help\" to display usage.\n\n", argv[0]);
+                    "ERROR: Missing input files!\n"
+                    "Type \"%s --help\" to display usage.\n\n", argv[0]);
             return 2;
         }
     }
@@ -319,10 +319,10 @@ int main(int argc, char *argv[])
     }
 
     fprintf(stderr, "============================================================================\n"
-                    "Pair of GIFs to PNG converter tool by Wohlstand. Version " _FILE_VERSION _FILE_RELEASE "\n"
-                    "============================================================================\n"
-                    "This program is distributed under the GNU GPLv3 license \n"
-                    "============================================================================\n");
+            "Pair of GIFs to PNG converter tool by Wohlstand. Version " _FILE_VERSION _FILE_RELEASE "\n"
+            "============================================================================\n"
+            "This program is distributed under the GNU GPLv3 license \n"
+            "============================================================================\n");
     fflush(stderr);
 
     if(!setup.listOfFiles)
@@ -395,9 +395,7 @@ int main(int argc, char *argv[])
         if(!setup.walkSubDirs) //By directories
         {
             for(std::string &fname : fileList)
-            {
                 doGifs2PNG(setup.pathIn, fname, setup.pathOut, setup, config);
-            }
         }
         else
         {
