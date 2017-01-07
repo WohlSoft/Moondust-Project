@@ -982,7 +982,7 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
                 SetFocus(wSmbx);
             }
             else
-                msg.warning("LunaTester (switchToSmbxWindow, obj["error"])",
+                msg.warning("LunaTester (switchToSmbxWindow, obj[\"error\"])",
                             "LunaLua returned error message:\n" +
                             QString::fromStdString(inMessage),
                             QMessageBox::Ok);
