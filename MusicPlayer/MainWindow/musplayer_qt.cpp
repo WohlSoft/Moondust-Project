@@ -228,7 +228,7 @@ void MusPlayer_Qt::openMusicByArg(QString musPath)
     if(ui->recordWav->isChecked()) return;
 
     currentMusic = musPath;
-    ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
+    //ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
     Mix_HaltMusic();
     on_play_clicked();
 }
@@ -242,7 +242,7 @@ void MusPlayer_Qt::on_open_clicked()
         return;
 
     currentMusic = file;
-    ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
+    //ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
     Mix_HaltMusic();
     on_play_clicked();
 }
@@ -390,7 +390,12 @@ void MusPlayer_Qt::on_recordWav_clicked(bool checked)
         ui->play->setText(tr("Play"));
         QFileInfo twav(currentMusic);
         PGE_MusicPlayer::stopWavRecording();
-        PGE_MusicPlayer::startWavRecording(twav.absoluteDir().absolutePath() + "/" + twav.baseName() + ".wav");
+        QString wavPathBase = twav.absoluteDir().absolutePath() + "/" + twav.baseName();
+        QString wavPath = wavPathBase + ".wav";
+        int count = 1;
+        while(QFile::exists(wavPath))
+            wavPath = wavPathBase + QString("-%1.wav").arg(count++);
+        PGE_MusicPlayer::startWavRecording(wavPath);
         on_play_clicked();
         ui->open->setEnabled(false);
         ui->play->setEnabled(false);
