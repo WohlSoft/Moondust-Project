@@ -45,6 +45,9 @@ INCLUDEPATH += $$PWD/../_common
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lfreeimagelite
 
+!macx: LIBS += -static-libgcc -static-libstdc++
+win32: LIBS += -static -lpthread
+
 include($$PWD/../_common/tclap/tclap.pri)
 include($$PWD/../_common/DirManager/dirman.pri)
 include($$PWD/../_common/Utils/Utils.pri)
