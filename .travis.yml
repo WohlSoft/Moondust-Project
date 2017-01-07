@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #
 # Platform Game Engine Project by Wohlstand, a free platform for making games of platform genre
-# Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+# Copyright (c) 2014-2017 Vitaly Novichkov <admin@wohlnet.ru>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +35,12 @@ branches:
     - master
 
 language: cpp
+
+cache:
+  bundler: true
+  directories:
+    - /home/runner/Qt/qtcache560
+    - /Users/StaticQt/qtcache570
 
 matrix:
   include:
