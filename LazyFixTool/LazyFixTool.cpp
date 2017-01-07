@@ -421,7 +421,7 @@ int main(int argc, char *argv[])
 
     if(!setup.pathOut.empty())
     {
-        if(!DirMan::exists(setup.pathOut))
+        if(!DirMan::exists(setup.pathOut) && !DirMan::mkAbsPath(setup.pathOut))
             goto WrongOutputPath;
 
         setup.pathOut = DirMan(setup.pathOut).absolutePath();
@@ -454,11 +454,9 @@ int main(int argc, char *argv[])
         for(std::string &file : fileList)
         {
             std::string fname   = Files::basename(file);
+            setup.pathIn = DirMan(Files::dirname(file)).absolutePath();
             if(setup.pathOutSame)
-            {
-                setup.pathIn = Files::dirname(file);
-                delEndSlash(setup.pathIn);
-            }
+                setup.pathOut = DirMan(Files::dirname(file)).absolutePath();
             doLazyFixer(setup.pathIn, fname , setup.pathOut, setup);
         }
     }
@@ -468,9 +466,7 @@ int main(int argc, char *argv[])
         if(!setup.walkSubDirs) //By directories
         {
             for(std::string &fname : fileList)
-            {
                 doLazyFixer(setup.pathIn, fname, setup.pathOut, setup);
-            }
         }
         else
         {
