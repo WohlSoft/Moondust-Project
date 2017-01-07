@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -232,6 +232,8 @@ extern DECLSPEC void SDLCALL SDL_JoystickUpdate(void);
  */
 extern DECLSPEC int SDLCALL SDL_JoystickEventState(int state);
 
+#define SDL_JOYSTICK_AXIS_MAX   32767
+#define SDL_JOYSTICK_AXIS_MIN   -32768
 /**
  *  Get the current state of an axis control on a joystick.
  *
