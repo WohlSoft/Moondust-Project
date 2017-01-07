@@ -459,6 +459,7 @@ RESOURCES += \
     _resources/engine.qrc
 
 DISTFILES += \
+    ../changelog.engine.txt \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/AndroidManifest.xml \
     android/res/values/libs.xml \
