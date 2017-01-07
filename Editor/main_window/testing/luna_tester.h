@@ -39,12 +39,14 @@ class MainWindow;
 class LunaTester : public QObject
 {
     Q_OBJECT
+
 public:
-#ifdef Q_OS_WIN
+    #ifdef Q_OS_WIN
     /**
      * @brief LunaLoader result code
      */
-    enum LunaLoaderResult {
+    enum LunaLoaderResult
+    {
         LUNALOADER_OK = 0,
         LUNALOADER_CREATEPROCESS_FAIL,
         LUNALOADER_PATCH_FAIL
@@ -53,9 +55,9 @@ public:
     LunaTester();
     ~LunaTester();
     //! Pointer to main window
-    MainWindow* m_mw;
+    MainWindow *m_mw;
     //! List of registered menu items
-    QAction* m_menuItems[5];
+    QAction *m_menuItems[5];
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
@@ -65,12 +67,12 @@ public:
      * @param secondaryTestAction pointer to second test launcher (run test of saved file)
      * @param startEngineAction pointer to engine launcher
      */
-    void initLunaMenu(MainWindow*   mw,
-                      QMenu*        mainmenu,
-                      QAction*      insert_before,
-                      QAction*      defaultTestAction,
-                      QAction*      secondaryTestAction,
-                      QAction*      startEngineAction);
+    void initLunaMenu(MainWindow   *mw,
+                      QMenu        *mainmenu,
+                      QAction      *insert_before,
+                      QAction      *defaultTestAction,
+                      QAction      *secondaryTestAction,
+                      QAction      *startEngineAction);
     /**
      * @brief Refresh menu text
      */
@@ -88,7 +90,7 @@ public:
     //! Helper which protects from editor freezing
     QFuture<void>       m_helper;
     //! Ranner thread
-    QThread*            m_helperThread;
+    QThread            *m_helperThread;
     //! Don't run same function multiple times
     QMutex              m_engine_mutex;
     //! Disable OpenGL on LunaLua side
@@ -163,6 +165,6 @@ private:
     LunaLoaderResult LunaLoaderRun(const wchar_t *pathToLegacyEngine,
                                    const wchar_t *cmdLineArgs,
                                    const wchar_t *workingDir);
-#endif
+    #endif
 };
 #endif // LUNA_TESTER_H
