@@ -379,6 +379,11 @@ int main(int argc, char *argv[])
     {
         std::cout << "============================================================================\n";
         std::cout << ("Used config pack: " + setup.configPath + "\n");
+        if(!setup.listOfFiles)
+        {
+            config.appendDir(setup.pathIn);
+            std::cout << ("With episode directory: " + setup.pathIn + "\n");
+        }
         std::cout << "============================================================================\n";
         std::cout.flush();
     }

@@ -56,7 +56,7 @@ void ConfigPackMiniManager::setConfigDir(const std::string &config_dir)
     customAppPath.push_back('/');
 
     m_dir_list.clear();
-    m_dir_list.insert(m_cp_root_path);
+    m_dir_listUQ.insert(m_cp_root_path);
 
     mainset.beginGroup("main");
     {
@@ -92,11 +92,21 @@ bool ConfigPackMiniManager::isUsing()
 
 void ConfigPackMiniManager::addIntoDirList(std::string dir)
 {
+    appendDir(dir);
+    appendDirList(dir);
+}
+
+void ConfigPackMiniManager::appendDir(std::string dir)
+{
     std::replace(dir.begin(), dir.end(), '\\', '/');
     removeDoubleSlash(dir);
     addSlashToTail(dir);
-    m_dir_list.insert(dir);
-    appendDirList(dir);
+    if(m_dir_listUQ.find(dir) == m_dir_listUQ.end())
+    {
+        m_dir_list.push_back(dir);
+        m_dir_listUQ.insert(dir);
+    }
+
 }
 
 void ConfigPackMiniManager::appendDirList(const std::string& dir)
@@ -108,8 +118,7 @@ void ConfigPackMiniManager::appendDirList(const std::string& dir)
         for(std::string &f : folders)
         {
             std::string newpath = dirs.absolutePath() + "/" + f;
-            removeDoubleSlash(newpath);
-            m_dir_list.insert(newpath);
+            appendDir(newpath);
         }
     }
 }
@@ -124,8 +133,11 @@ std::string ConfigPackMiniManager::getFile(const std::string &file, std::string 
     if(Files::fileExists(customPath + file))
         return customPath + file;
 
-    for(std::string path : m_dir_list)
+    for(std::vector<std::string>::reverse_iterator it = m_dir_list.rbegin();
+        it != m_dir_list.rend();
+        it++)
     {
+        std::string path = *it;
         addSlashToTail(path);
         if(Files::fileExists(path + file))
             return path + file;
