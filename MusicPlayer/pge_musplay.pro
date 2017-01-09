@@ -95,19 +95,23 @@ macx:{
     }
 }
 
+usewinapi:{
+    SOURCES += MainWindow/musplayer_winapi.cpp
+    HEADERS += MainWindow/musplayer_winapi.h
+} else {
+    SOURCES += MainWindow/musplayer_qt.cpp
+    HEADERS += MainWindow/musplayer_qt.h
+}
 
 SOURCES += main.cpp\
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
-    main_sdl_android.c \
     wave_writer.c \
     AssocFiles/assoc_files.cpp \
     SingleApplication/pge_application.cpp \
     Effects/reverb.cpp \
     MainWindow/musplayer_base.cpp \
-    Player/mus_player.cpp \
-    MainWindow/musplayer_winapi.cpp \
-    MainWindow/musplayer_qt.cpp
+    Player/mus_player.cpp
 
 HEADERS  += \
     SingleApplication/localserver.h \
@@ -119,9 +123,7 @@ HEADERS  += \
     Effects/reverb.h \
     defines.h \
     MainWindow/musplayer_base.h \
-    Player/mus_player.h \
-    MainWindow/musplayer_winapi.h \
-    MainWindow/musplayer_qt.h
+    Player/mus_player.h
 
 FORMS    += \
     AssocFiles/assoc_files.ui \
@@ -129,17 +131,5 @@ FORMS    += \
 
 RESOURCES += \
     _resources/musicplayer.qrc
-
-DISTFILES += \
-    android/AndroidManifest.xml \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat \
-    android/src/SDLActivity.java
-
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 
