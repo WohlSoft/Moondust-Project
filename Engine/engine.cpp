@@ -70,6 +70,24 @@ PGEEngineCmdArgs::PGEEngineCmdArgs() :
     rendererType(GlRenderer::RENDER_AUTO)
 {}
 
+void PGEEngineCmdArgs::applyTestSettings(EpisodeState &state)
+{
+    state.numOfPlayers = test_NumPlayers;
+
+    for(int i = 0; i < 4; i++)
+    {
+        if(test_Characters[i] == -1)
+            continue;
+
+        PlayerState st = state.getPlayerState(i + 1);
+        st.characterID = static_cast<unsigned long>(test_Characters[i]);
+        st.stateID = static_cast<unsigned long>(test_States[i]);
+        st._chsetup.id = static_cast<unsigned long>(test_Characters[i]);
+        st._chsetup.state = static_cast<unsigned long>(test_States[i]);
+        state.setPlayerState(i + 1, st);
+    }
+}
+
 
 
 PGEEngineApp::PGEEngineApp() :

@@ -53,6 +53,11 @@ struct PGEEngineCmdArgs
     int  test_States[4];
     //! Renderer type (OpenGL or software)
     GlRenderer::RenderEngineType rendererType;
+    /*!
+     * \brief Apply test settings to the game state
+     * \param state Reference to the current episode state
+     */
+    void applyTestSettings(EpisodeState &state);
 };
 
 //! Global flags states configured from the command line

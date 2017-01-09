@@ -46,27 +46,6 @@
 
 #include <networking/intproc.h>
 
-/*!
- * \brief Apply test settings to the game state
- * \param state Reference to the current episode state
- */
-static void applyTestSettings(EpisodeState &state)
-{
-    state.numOfPlayers = g_flags.test_NumPlayers;
-
-    for(int i = 0; i < 4; i++)
-    {
-        if(g_flags.test_Characters[i] == -1)
-            continue;
-
-        PlayerState st = state.getPlayerState(i + 1);
-        st.characterID = static_cast<unsigned long>(g_flags.test_Characters[i]);
-        st.stateID = static_cast<unsigned long>(g_flags.test_States[i]);
-        st._chsetup.id = static_cast<unsigned long>(g_flags.test_Characters[i]);
-        st._chsetup.state = static_cast<unsigned long>(g_flags.test_States[i]);
-        state.setPlayerState(i + 1, st);
-    }
-}
 
 int main(int argc, char *argv[])
 {
@@ -194,7 +173,7 @@ int main(int argc, char *argv[])
     {
         g_GameState.reset();
         //Apply custom game parameters from command line
-        applyTestSettings(g_GameState);
+        g_flags.applyTestSettings(g_GameState);
 
         if(Files::hasSuffix(g_fileToOpen, ".lvl") || Files::hasSuffix(g_fileToOpen, ".lvlx"))
         {
@@ -226,7 +205,7 @@ int main(int argc, char *argv[])
     if(g_AppSettings.interprocessing)
     {
         //Apply custom game parameters from command line
-        applyTestSettings(g_GameState);
+        g_flags.applyTestSettings(g_GameState);
         goto PlayLevel;
     }
 
