@@ -1,11 +1,14 @@
 INCLUDEPATH += $$PWD/
 
+win32:{
+    SOURCES += $$PWD/dirman_winapi.cpp
+} else {
+    SOURCES += $$PWD/dirman_posix.cpp
+}
+
 SOURCES += \
-    $$PWD/dirman.cpp \
-    $$PWD/dirman_winapi.cpp \
-    $$PWD/dirman_posix.cpp
+    $$PWD/dirman.cpp
 
 HEADERS += \
     $$PWD/dirman.h \
     $$PWD/dirman_private.h
-
