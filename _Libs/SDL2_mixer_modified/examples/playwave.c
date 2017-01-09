@@ -30,7 +30,7 @@
 #endif
 
 #include "SDL.h"
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
