@@ -4,3 +4,11 @@ Content/* linguist-vendored
 Documents/* linguist-vendored
 Engine/languages/* linguist-vendored
 Editor/languages/* linguist-vendored
+Manager.mono/* linguist-vendored
+luadoc/* linguist-vendored
+*.bat linguist-vendored
+*.cmd linguist-vendored
+*.sh  linguist-vendored
+*.pro linguist-vendored
+*.pri linguist-vendored
+*.ini linguist-vendored
