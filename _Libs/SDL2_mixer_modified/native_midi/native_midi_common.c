@@ -303,9 +303,9 @@ static int ReadMIDIFile(MIDIFile *mididata, SDL_RWops *src)
     SDL_RWread(src, &ID, 1, 4);
     switch(BE_LONG(ID))
     {
-    case (Uint32)0x4D546864://'MThd'
+    case (Uint32)0x4D546864:/* 'MThd' */
         break;
-    case (Uint32)0x52494646://'RIFF'
+    case (Uint32)0x52494646:/* 'RIFF' */
         SDL_RWseek(src, 24, RW_SEEK_SET);
         break;
     default:

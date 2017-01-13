@@ -29,7 +29,7 @@
 
 #include "my_resample.h"
 
-//Upsample ANY number of channels
+/* Upsample ANY number of channels */
 static void SDL_Upsample_S16LSB_Xc_MixerX(struct MyResampler *res)
 {
 #ifdef DEBUG_CONVERT
@@ -38,7 +38,7 @@ static void SDL_Upsample_S16LSB_Xc_MixerX(struct MyResampler *res)
 #define SAMPLE_TYPE Sint16
     static const int sampleSize = sizeof(SAMPLE_TYPE);
     int channels = res->channels;
-    // Size of one sample multipled to number of channels
+    /*  Size of one sample multipled to number of channels */
     int cpy = sampleSize * channels;
     int s_size = res->buf_len / cpy;
     int d_size = (int)(((double)s_size) * res->ratio);
@@ -91,7 +91,7 @@ static void SDL_Upsample_S16LSB_Xc_MixerX(struct MyResampler *res)
 #undef SAMPLE_TYPE
 }
 
-//Downsample ANY number of channels
+/* Downsample ANY number of channels */
 static void SDL_Downsample_S16LSB_Xc_MixerX(struct MyResampler *res)
 {
 #ifdef DEBUG_CONVERT
@@ -100,7 +100,7 @@ static void SDL_Downsample_S16LSB_Xc_MixerX(struct MyResampler *res)
 #define SAMPLE_TYPE Sint16
     static const int sampleSize = sizeof(SAMPLE_TYPE);
     int channels = res->channels;
-    // Size of one sample multipled to number of channels
+    /*  Size of one sample multipled to number of channels */
     int cpy = sampleSize * channels;
     int s_size = res->buf_len / cpy;
     int d_size = (int)(((double)s_size) * res->ratio);
@@ -160,7 +160,7 @@ static void doNothing(struct MyResampler *res) {
 
 void MyResample_init(struct MyResampler *res, int rate_in, int rate_out , int channels, SDL_AudioFormat format)
 {
-    (void)format; // Temporary not needed :-P
+    (void)format; /*  Temporary not needed :-P */
     res->needed = (rate_in != rate_out);
     res->ratio = (double)rate_out/(double)rate_in;
     res->len_mult = (res->ratio >= 1.0) ? (int)ceil(res->ratio) : 1;
@@ -196,7 +196,7 @@ void MyResample_Process(struct MyResampler *res)
 void MyResample_dequeueBytes(struct MyResampler *res, int numbytes)
 {
     if( (res->buf_len-numbytes) > 0 )
-    {   //Move tail of buffer into begin of array
+    {   /* Move tail of buffer into begin of array */
         int i=numbytes;
         Uint8 *dst = &res->buf[0];
         Uint8 *src = &res->buf[i];

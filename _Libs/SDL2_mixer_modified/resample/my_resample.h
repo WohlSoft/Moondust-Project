@@ -36,7 +36,7 @@ struct MyResampler
     int len_mult;
     int buf_len;
     int channels;
-    Uint8 buf[MyResampler_BUFFER_SIZE];//200 KB for backup stuff;
+    Uint8 buf[MyResampler_BUFFER_SIZE]; /* 200 KB for backup stuff; */
     void (*filter)(struct MyResampler *res);
 };
 

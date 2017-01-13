@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -255,8 +255,8 @@ void modplug_stop(modplug_data *music)
 void modplug_delete(modplug_data *music)
 {
     modplug.ModPlug_Unload(music->file);
-//    if( music->mus_title )
-//        SDL_free(music->mus_title);
+/*     if( music->mus_title ) */
+/*         SDL_free(music->mus_title); */
     SDL_free(music);
 }
 

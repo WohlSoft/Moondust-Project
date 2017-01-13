@@ -28,13 +28,12 @@ char customPath[10240]="";
    defined compressor extensions, pipe the file through the decompressor */
 static FILE *try_to_open(const char *name, int decompress, int noise_mode)
 {
-  (void)decompress;(void)noise_mode;
-  FILE *fp;
+    FILE *fp;
+    (void)decompress;(void)noise_mode;
+    fp = fopen(name, OPEN_MODE); /* First just check that the file exists */
 
-  fp=fopen(name, OPEN_MODE); /* First just check that the file exists */
-
-  if (!fp)
-    return 0;
+    if(!fp)
+        return 0;
 
 #ifdef DECOMPRESSOR_LIST
   if (decompress)

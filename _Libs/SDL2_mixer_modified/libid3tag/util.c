@@ -26,7 +26,7 @@
 # include "global.h"
 
 # include <stdlib.h>
-//# include <zlib.h>
+/* # include <zlib.h> */
 
 # include "id3tag.h"
 # include "util.h"

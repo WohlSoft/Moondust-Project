@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -150,7 +150,7 @@ int Mix_InitFLAC()
             Mix_SetError("Missing FLAC.framework");
             return -1;
         }
-#endif // __MACOSX__
+#endif /*  __MACOSX__ */
 
         flac.FLAC__stream_decoder_new = FLAC__stream_decoder_new;
         flac.FLAC__stream_decoder_delete = FLAC__stream_decoder_delete;

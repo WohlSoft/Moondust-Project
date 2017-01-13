@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -55,16 +55,16 @@ static FLAC__StreamDecoderReadStatus flac_read_load_cb(
                                     void *client_data)
 {
     (void)decoder;
-    // make sure there is something to be reading
+    /*  make sure there is something to be reading */
     if (*bytes > 0) {
         FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
         *bytes = SDL_RWread (data->sdl_src, buffer, sizeof (FLAC__byte),
                                 *bytes);
 
-        if (*bytes == 0) { // error or no data was read (EOF)
+        if (*bytes == 0) { /*  error or no data was read (EOF) */
             return FLAC__STREAM_DECODER_READ_STATUS_END_OF_STREAM;
-        } else { // data was read, continue
+        } else { /*  data was read, continue */
             return FLAC__STREAM_DECODER_READ_STATUS_CONTINUE;
         }
     } else {
@@ -77,8 +77,8 @@ static FLAC__StreamDecoderSeekStatus flac_seek_load_cb(
                                     FLAC__uint64 absolute_byte_offset,
                                     void *client_data)
 {
-    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
+    (void)decoder;
 
     if (SDL_RWseek (data->sdl_src, absolute_byte_offset, RW_SEEK_SET) < 0) {
         return FLAC__STREAM_DECODER_SEEK_STATUS_ERROR;
@@ -92,10 +92,10 @@ static FLAC__StreamDecoderTellStatus flac_tell_load_cb(
                                     FLAC__uint64 *absolute_byte_offset,
                                     void *client_data)
 {
-    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
     Sint64 pos = SDL_RWtell (data->sdl_src);
+    (void)decoder;
 
     if (pos < 0) {
         return FLAC__STREAM_DECODER_TELL_STATUS_ERROR;
@@ -110,11 +110,11 @@ static FLAC__StreamDecoderLengthStatus flac_length_load_cb(
                                     FLAC__uint64 *stream_length,
                                     void *client_data)
 {
-    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
     Sint64 pos = SDL_RWtell (data->sdl_src);
     Sint64 length = SDL_RWseek (data->sdl_src, 0, RW_SEEK_END);
+    (void)decoder;
 
     if (SDL_RWseek (data->sdl_src, pos, RW_SEEK_SET) != pos || length < 0) {
         /* there was an error attempting to return the stream to the original
@@ -129,18 +129,18 @@ static FLAC__StreamDecoderLengthStatus flac_length_load_cb(
 static FLAC__bool flac_eof_load_cb(const FLAC__StreamDecoder *decoder,
                                     void *client_data)
 {
-    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
 
     Sint64 pos = SDL_RWtell (data->sdl_src);
     Sint64 end = SDL_RWseek (data->sdl_src, 0, RW_SEEK_END);
+    (void)decoder;
 
-    // was the original position equal to the end (a.k.a. the seek didn't move)?
+    /*  was the original position equal to the end (a.k.a. the seek didn't move)? */
     if (pos == end) {
-        // must be EOF
+        /*  must be EOF */
         return true;
     } else {
-        // not EOF, return to the original position
+        /*  not EOF, return to the original position */
         SDL_RWseek (data->sdl_src, pos, RW_SEEK_SET);
         return false;
     }
@@ -152,10 +152,10 @@ static FLAC__StreamDecoderWriteStatus flac_write_load_cb(
                                     const FLAC__int32 *const buffer[],
                                     void *client_data)
 {
-    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
     size_t i;
     Uint8 *buf;
+    (void)decoder;
 
     if (data->flac_total_samples == 0) {
         SDL_SetError ("Given FLAC file does not specify its sample count.");
@@ -167,12 +167,12 @@ static FLAC__StreamDecoderWriteStatus flac_write_load_cb(
         return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
     }
 
-    // check if it is the first audio frame so we can initialize the output
-    // buffer
+    /*  check if it is the first audio frame so we can initialize the output */
+    /*  buffer */
     if (frame->header.number.sample_number == 0) {
         *(data->sdl_audio_len) = data->sdl_spec->size;
         data->sdl_audio_read = 0;
-        *(data->sdl_audio_buf) = SDL_malloc (*(data->sdl_audio_len));
+        *(data->sdl_audio_buf) = (Uint8*)SDL_malloc (*(data->sdl_audio_len));
 
         if (*(data->sdl_audio_buf) == NULL) {
             SDL_SetError
@@ -208,13 +208,13 @@ static void flac_metadata_load_cb(
                     const FLAC__StreamMetadata *metadata,
                     void *client_data)
 {
-    (void)decoder;
     FLAC_SDL_Data *data = (FLAC_SDL_Data *)client_data;
     FLAC__uint64 total_samples;
     unsigned bps;
+    (void)decoder;
 
     if (metadata->type == FLAC__METADATA_TYPE_STREAMINFO) {
-        // save the metadata right now for use later on
+        /*  save the metadata right now for use later on */
         *(data->sdl_audio_buf) = NULL;
         *(data->sdl_audio_len) = 0;
         memset (data->sdl_spec, '\0', sizeof (SDL_AudioSpec));
@@ -239,7 +239,7 @@ static void flac_error_load_cb(
                 void *client_data)
 {
     (void)decoder;(void)client_data;
-    // print an SDL error based on the error status
+    /*  print an SDL error based on the error status */
     switch (status) {
         case FLAC__STREAM_DECODER_ERROR_STATUS_LOST_SYNC:
             SDL_SetError ("Error processing the FLAC file [LOST_SYNC].");
@@ -269,7 +269,7 @@ SDL_AudioSpec *Mix_LoadFLAC_RW (SDL_RWops *src, int freesrc,
     int was_init = 0;
     Uint32 samplesize;
 
-    // create the client data passing information
+    /*  create the client data passing information */
     FLAC_SDL_Data* client_data;
     client_data = (FLAC_SDL_Data *)SDL_malloc (sizeof (FLAC_SDL_Data));
 
@@ -334,4 +334,4 @@ done:
     return spec;
 }
 
-#endif // FLAC_MUSIC
+#endif /*  FLAC_MUSIC */

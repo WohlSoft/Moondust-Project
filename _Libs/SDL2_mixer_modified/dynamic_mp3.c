@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -148,7 +148,7 @@ int Mix_InitMP3()
             Mix_SetError("Missing smpeg2.framework");
             return -1;
         }
-#endif // __MACOSX__
+#endif /*  __MACOSX__ */
 
         smpeg.SMPEG_actualSpec = SMPEG_actualSpec;
         smpeg.SMPEG_delete = SMPEG_delete;

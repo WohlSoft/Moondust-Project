@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -307,10 +307,10 @@ static void *Mix_DoEffects(int chan, void *snd, int len)
 /* Mixing function */
 static void mix_channels(void *udata, Uint8 *stream, int len)
 {
-    (void)udata;
     Uint8 *mix_input;
     int i, mixable, volume = SDL_MIX_MAXVOLUME;
     Uint32 sdl_ticks;
+    (void)udata;
 
 #if SDL_VERSION_ATLEAST(1, 3, 0)
     /* Need to initialize the stream in SDL 1.3+ */
@@ -575,35 +575,21 @@ int SDLCALLCC Mix_QuerySpec(int *frequency, Uint16 *format, int *channels)
     return(audio_opened);
 }
 
-//Hey, it's VERY inaccurate :P it's SHIT, not an MP3 detection, because I has lot's of MP3 files with null headers :P
-static int detect_mp3(Uint8 *magic)
-{
-    if ( strncmp((char *)magic, "ID3", 3) == 0 ) {
-        return 1;
-    }
-//Inaccurate, MP3 sometimes would has NULL header :P.
-
-//    /* Detection code lifted from SMPEG */
-//    if(((magic[0] & 0xff) != 0xff) || // No sync bits
-//       ((magic[1] & 0xf0) != 0xf0) || //
-//       ((magic[2] & 0xf0) == 0x00) || // Bitrate is 0
-//       ((magic[2] & 0xf0) == 0xf0) || // Bitrate is 15
-//       ((magic[2] & 0x0c) == 0x0c) || // Frequency is 3
-//       ((magic[1] & 0x06) == 0x00)) { // Layer is 4
-//        return(0);
-//    }
-
-    return 1;
-}
+#if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
+/* function in the music.c! */
+extern int SDLMixerX_detect_mp3(Uint8 *magic, SDL_RWops *src, Sint64 start);
+#endif
 
 /* Load a wave file */
 Mix_Chunk * SDLCALLCC Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
 {
     Uint32 magic;
+    Uint8  extramagic[25];
     Mix_Chunk *chunk;
     SDL_AudioSpec wavespec, *loaded;
     SDL_AudioCVT wavecvt;
     int samplesize;
+    Sint64 start = 0;
 
     /* rcg06012001 Make sure src is valid */
     if ( ! src ) {
@@ -630,12 +616,14 @@ Mix_Chunk * SDLCALLCC Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
         return(NULL);
     }
 
+    start = SDL_RWtell(src);
     /* Find out what kind of audio file this is */
     magic = SDL_ReadLE32(src);
     /* Seek backwards for compatibility with older loaders */
     SDL_RWseek(src, -(int)sizeof(Uint32), RW_SEEK_CUR);
 
-    switch (magic) {
+    switch (magic)
+    {
         case WAVE:
         case RIFF:
             loaded = SDL_LoadWAV_RW(src, freesrc, &wavespec,
@@ -663,7 +651,15 @@ Mix_Chunk * SDLCALLCC Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
             break;
         default:
 #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
-			if (detect_mp3((Uint8*)&magic))
+        {
+            if( SDL_RWread(src, extramagic, 1, 24) != 24 )
+            {
+                Mix_SetError("Couldn't read from RWops");
+                break;
+            }
+            SDL_RWseek(src, -24, RW_SEEK_CUR);
+
+            if(SDLMixerX_detect_mp3(extramagic, src, start))
 			{
 				/* note: send a copy of the mixer spec */
 				wavespec = mixer;
@@ -671,6 +667,7 @@ Mix_Chunk * SDLCALLCC Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
 						(Uint8 **)&chunk->abuf, &chunk->alen);
 				break;
 			}
+        }
 #endif
             SDL_SetError("Unrecognized sound file type");
             if ( freesrc ) {

@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -57,10 +57,10 @@
 
 static void _Eff_reversestereo16(int chan, void *stream, int len, void *udata)
 {
-    (void)chan;(void)udata;
     /* 16 bits * 2 channels. */
     Uint32 *ptr = (Uint32 *) stream;
     int i;
+    (void)chan;(void)udata;
 
     for (i = 0; i < len; i += sizeof (Uint32), ptr++) {
         *ptr = (((*ptr) & 0xFFFF0000) >> 16) | (((*ptr) & 0x0000FFFF) << 16);
@@ -70,10 +70,10 @@ static void _Eff_reversestereo16(int chan, void *stream, int len, void *udata)
 
 static void _Eff_reversestereo8(int chan, void *stream, int len, void *udata)
 {
-    (void)chan;(void)udata;
     /* 8 bits * 2 channels. */
     Uint32 *ptr = (Uint32 *) stream;
     int i;
+    (void)chan;(void)udata;
 
     /* get the last two bytes if len is not divisible by four... */
     if (len % sizeof (Uint32) != 0) {

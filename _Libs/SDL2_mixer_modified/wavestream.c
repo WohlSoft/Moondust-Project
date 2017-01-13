@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -91,7 +91,7 @@ typedef struct {
     Uint32  SMTPE_offset;
     Uint32  sample_loops;
     Uint32  sampler_data;
-    SampleLoop loops[];
+    SampleLoop *loops;
 } SamplerChunk;
 
 /*********************************************/
@@ -160,7 +160,7 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
 
         if (!loaded)
         {
-            //Don't free SRC on error (to avoid crash in future)
+            /* Don't free SRC on error (to avoid crash in future) */
             wave->freesrc = SDL_FALSE;
             WAVStream_FreeSong(wave);
             return(NULL);
@@ -169,7 +169,7 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
         #if 0
         if(wave->spec.format == AUDIO_S16)
         {
-            //Build resampler for Signed-16 PCM files only!
+            /* Build resampler for Signed-16 PCM files only! */
             MyResample_init(&wave->resample,
                             wave->spec.freq,
                             mixer.freq,
@@ -177,13 +177,13 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
                             AUDIO_S16);
             SDL_BuildAudioCVT(&wave->cvt,
                 wave->spec.format, wave->spec.channels,
-                mixer.freq, //HACK: Use same frequency as mixer to don't use internal resampler
+                mixer.freq, /* HACK: Use same frequency as mixer to don't use internal resampler */
                 mixer.format, mixer.channels, mixer.freq);
         }
         else
         #endif
         {
-            //Overwise, use SDL's <s>shitty</s> hardcoded resamplers
+            /* Overwise, use SDL's <s>shitty</s> hardcoded resamplers */
             SDL_BuildAudioCVT(&wave->cvt,
                 wave->spec.format, wave->spec.channels, wave->spec.freq,
                 mixer.format, mixer.channels, mixer.freq);
@@ -312,10 +312,10 @@ static void PlaySome(WAVStream* music)
 
 int WAVStream_PlaySome(Uint8 *stream, int len)
 {
+    int mixable;
+
     if (!music)
         return 0;
-
-    int mixable;
 
     while ((SDL_RWtell(music->src) < music->stop) && (len > 0))
     {
@@ -379,7 +379,7 @@ int WAVStream_Active(void)
 
 static SDL_bool ParseFMT(WAVStream *wave, Uint32 chunk_length)
 {
-    //SDL_RWops *src = wave->src;
+    /* SDL_RWops *src = wave->src; */
     SDL_AudioSpec *spec = &wave->spec;
     WaveFMT *format;
     Uint8 *data;
@@ -464,7 +464,7 @@ static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
 {
     SamplerChunk *chunk;
     Uint8 *data;
-    int i;
+    int i, loops = 0;
     SDL_bool loaded = SDL_FALSE;
 
     data = (Uint8 *)SDL_malloc(chunk_length);
@@ -477,8 +477,10 @@ static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
         return SDL_FALSE;
     }
     chunk = (SamplerChunk *)data;
+    loops = SDL_SwapLE32(chunk->sample_loops);
 
-    for (i = 0; (unsigned)i < (unsigned)SDL_SwapLE32(chunk->sample_loops); ++i) {
+    for (i = 0; i < loops; ++i)
+    {
         const Uint32 LOOP_TYPE_FORWARD = 0;
         Uint32 loop_type = SDL_SwapLE32(chunk->loops[i].type);
         if (loop_type == LOOP_TYPE_FORWARD) {
@@ -488,7 +490,7 @@ static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
 
     loaded = SDL_TRUE;
 
-//done:
+/* done: */
     SDL_free(data);
     return loaded;
 }

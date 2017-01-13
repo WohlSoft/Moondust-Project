@@ -1,3 +1,23 @@
+/*
+  SDL_mixer:  An audio mixer library based on the SDL library
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+*/
 
 #ifdef USE_ADL_MIDI
 
@@ -13,78 +33,78 @@
 /* Count of four-operator channnels per bank */
 static const int tableOf_num4opChans[] =
 {
-    0,//0
-    0,//1
-    0,//2
-    0,//3
-    0,//4
-    0,//5
-    0,//6
-    0,//7
-    0,//8
-    0,//9
-    0,//10
-    0,//11
-    0,//12
-    0,//13
-    0,//14
-    0,//15
-    0,//16
-    0,//17
-    0,//18
-    0,//19
-    24,//20
-    0,//21
-    0,//22
-    0,//23
-    0,//24
-    0,//25
-    0,//26
-    0,//27
-    0,//28
-    0,//29
-    0,//30
-    24,//31
-    0,//32
-    0,//33
-    0,//34
-    0,//35
-    24,//36
-    0,//37
-    24,//38
-    24,//39
-    0,//40
-    0,//41
-    0,//42
-    0,//43
-    18,//44
-    18,//45
-    0,//46
-    18,//47
-    18,//48
-    0,//49
-    0,//50
-    0,//51
-    0,//52
-    24,//53
-    24,//54
-    0,//55
-    0,//56
-    0,//57
-    0,//58
-    24,//59
-    0,//60
-    0,//61
-    0,//62
-    0,//63
-    0,//64
-    0,//65
-    0,//66
-    0,//67
-    18,//68
-    0,//69
-    0,//70
-    0,//71
+    0,/* 0 */
+    0,/* 1 */
+    0,/* 2 */
+    0,/* 3 */
+    0,/* 4 */
+    0,/* 5 */
+    0,/* 6 */
+    0,/* 7 */
+    0,/* 8 */
+    0,/* 9 */
+    0,/* 10 */
+    0,/* 11 */
+    0,/* 12 */
+    0,/* 13 */
+    0,/* 14 */
+    0,/* 15 */
+    0,/* 16 */
+    0,/* 17 */
+    0,/* 18 */
+    0,/* 19 */
+    24,/* 20 */
+    0,/* 21 */
+    0,/* 22 */
+    0,/* 23 */
+    0,/* 24 */
+    0,/* 25 */
+    0,/* 26 */
+    0,/* 27 */
+    0,/* 28 */
+    0,/* 29 */
+    0,/* 30 */
+    24,/* 31 */
+    0,/* 32 */
+    0,/* 33 */
+    0,/* 34 */
+    0,/* 35 */
+    24,/* 36 */
+    0,/* 37 */
+    24,/* 38 */
+    24,/* 39 */
+    0,/* 40 */
+    0,/* 41 */
+    0,/* 42 */
+    0,/* 43 */
+    18,/* 44 */
+    18,/* 45 */
+    0,/* 46 */
+    18,/* 47 */
+    18,/* 48 */
+    0,/* 49 */
+    0,/* 50 */
+    0,/* 51 */
+    0,/* 52 */
+    24,/* 53 */
+    24,/* 54 */
+    0,/* 55 */
+    0,/* 56 */
+    0,/* 57 */
+    0,/* 58 */
+    24,/* 59 */
+    0,/* 60 */
+    0,/* 61 */
+    0,/* 62 */
+    0,/* 63 */
+    0,/* 64 */
+    0,/* 65 */
+    0,/* 66 */
+    0,/* 67 */
+    18,/* 68 */
+    0,/* 69 */
+    0,/* 70 */
+    0,/* 71 */
 };
 
 
@@ -227,8 +247,13 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
     {
         void *bytes=0;
         long spcsize;
-
+        int err = 0;
         Sint64 length=0;
+        size_t bytes_l;
+        unsigned char byte[1];
+        struct ADL_MIDIPlayer* adl_midiplayer = NULL;
+        struct MUSIC_MIDIADL *adlMidi = NULL;
+
         length = SDL_RWseek(src, 0, RW_SEEK_END);
         if (length < 0)
         {
@@ -239,8 +264,6 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         SDL_RWseek(src, 0, RW_SEEK_SET);
         bytes = malloc((size_t)length);
 
-        size_t bytes_l;
-        unsigned char byte[1];
         spcsize=0;
         while( (bytes_l = SDL_RWread(src, &byte, sizeof(Uint8), 1)) != 0)
         {
@@ -254,7 +277,6 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
             return NULL;
         }
 
-        struct ADL_MIDIPlayer* adl_midiplayer=NULL;
         adl_midiplayer = adl_init( mixer.freq );
 
         adl_setHVibrato( adl_midiplayer, adlmidi_vibrato );
@@ -273,7 +295,7 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         adl_setVolumeRangeModel( adl_midiplayer, adlmidi_volumeModel );
         adl_setNumCards( adl_midiplayer, 4 );
 
-        int err = adl_openData( adl_midiplayer, bytes, spcsize );
+        err = adl_openData( adl_midiplayer, bytes, spcsize );
         free(bytes);
 
         if(err != 0)
@@ -282,7 +304,7 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
             return NULL;
         }
 
-        struct MUSIC_MIDIADL *adlMidi   = (struct MUSIC_MIDIADL*)malloc(sizeof(struct MUSIC_MIDIADL));
+        adlMidi = (struct MUSIC_MIDIADL*)malloc(sizeof(struct MUSIC_MIDIADL));
         adlMidi->adlmidi                = adl_midiplayer;
         adlMidi->playing                = 0;
         adlMidi->gme_t_sample_rate      = mixer.freq;
@@ -333,22 +355,30 @@ int ADLMIDI_playing(struct MUSIC_MIDIADL *music)
 /* Play some of a stream previously started with ADLMIDI_play() */
 int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
 {
-    if( music==NULL ) return 0;
-    if( music->adlmidi == NULL ) return 0;
-    if( music->playing == -1 ) return 0;
-    if( len < 0 ) return 0;
-    int srgArraySize = len * music->cvt.len_mult;
-    short* buf = (short*)SDL_malloc((size_t)srgArraySize);
-    int srcLen = (int)((double)(len/2.0)/music->cvt.len_ratio);
+    int srgArraySize, srcLen, gottenLen, dest_len;
+    short* buf;
 
-    int gottenLen = adl_play( music->adlmidi, srcLen, buf );
+    if( music == NULL )
+        return 0;
+    if( music->adlmidi == NULL )
+        return 0;
+    if( music->playing == -1 )
+        return 0;
+    if( len < 0 )
+        return 0;
+
+    srgArraySize = len * music->cvt.len_mult;
+    buf = (short*)SDL_malloc((size_t)srgArraySize);
+    srcLen = (int)((double)(len/2.0)/music->cvt.len_ratio);
+
+    gottenLen = adl_play( music->adlmidi, srcLen, buf );
     if( gottenLen <= 0 )
     {
         free(buf);
         return 0;
     }
 
-    int dest_len = gottenLen*2;
+    dest_len = gottenLen*2;
 
     if( music->cvt.needed )
     {
@@ -364,6 +394,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     } else {
         SDL_MixAudioFormat( stream, (Uint8*)buf, mixer.format, (Uint32)dest_len, music->volume );
     }
+
     free(buf);
     return len-dest_len;
 }
@@ -402,7 +433,7 @@ void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time)
     (void)time;
     if( music )
     {
-        //gme_seek(adl_midiplayer, (int)round(time*1000));
+        /* gme_seek(adl_midiplayer, (int)round(time*1000)); */
     }
 }
 

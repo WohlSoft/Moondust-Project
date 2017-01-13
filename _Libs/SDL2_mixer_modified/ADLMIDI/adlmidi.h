@@ -55,16 +55,16 @@ struct ADL_MIDIPlayer
     double delay;
     double carry;
 
-    // The lag between visual content and audio content equals
-    // the sum of these two buffers.
+    /* The lag between visual content and audio content equals */
+    /* the sum of these two buffers. */
     double mindelay;
     double maxdelay;
 
-    /*For internal usage*/
-    int     stored_samples; //num of collected samples
-    short   backup_samples[1024]; //Backup sample storage.
-    int     backup_samples_size; //Backup sample storage.
-    /*For internal usage*/
+    /* For internal usage */
+    int     stored_samples; /* num of collected samples */
+    short   backup_samples[1024]; /* Backup sample storage. */
+    int     backup_samples_size; /* Backup sample storage. */
+    /* For internal usage */
 
     void *adl_midiPlayer;
     unsigned long PCM_RATE;
@@ -132,4 +132,4 @@ extern int  adl_play(struct ADL_MIDIPlayer *device, int sampleCount, short out[]
 }
 #endif
 
-#endif // ADLMIDI_H
+#endif /* ADLMIDI_H */

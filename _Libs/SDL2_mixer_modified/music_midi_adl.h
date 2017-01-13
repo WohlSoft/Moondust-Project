@@ -3,7 +3,7 @@
 
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -90,4 +90,4 @@ extern void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time);
 
 #endif /* USE_ADL_MIDI */
 
-#endif // MUSIC_MIDI_ADL_H
+#endif /* MUSIC_MIDI_ADL_H */

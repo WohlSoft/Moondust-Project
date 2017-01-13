@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -37,14 +37,14 @@ typedef struct {
     unsigned bits_per_sample;
     FLAC__uint64 total_samples;
 
-    // the following are used to handle the callback nature of the writer
+    /* the following are used to handle the callback nature of the writer */
     int max_to_read;
-    char *data;             // pointer to beginning of data array
-    int data_len;           // size of data array
-    int data_read;          // amount of data array used
-    char *overflow;         // pointer to beginning of overflow array
-    int overflow_len;       // size of overflow array
-    int overflow_read;      // amount of overflow array used
+    char *data;             /* pointer to beginning of data array */
+    int data_len;           /* size of data array */
+    int data_read;          /* amount of data array used */
+    char *overflow;         /* pointer to beginning of overflow array */
+    int overflow_len;       /* size of overflow array */
+    int overflow_read;      /* amount of overflow array used */
 } FLAC_Data;
 
 typedef struct {

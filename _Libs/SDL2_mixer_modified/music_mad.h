@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -30,46 +30,48 @@
 #define MAD_INPUT_BUFFER_SIZE   (5*8192)
 #define MAD_OUTPUT_BUFFER_SIZE  8192
 
-enum {
-  MS_input_eof    = 0x0001,
-  MS_input_error  = 0x0001,
-  MS_decode_eof   = 0x0002,
-  MS_decode_error = 0x0004,
-  MS_error_flags  = 0x000f,
+enum
+{
+    MS_input_eof    = 0x0001,
+    MS_input_error  = 0x0001,
+    MS_decode_eof   = 0x0002,
+    MS_decode_error = 0x0004,
+    MS_error_flags  = 0x000f,
 
-  MS_playing      = 0x0100,
-  MS_cvt_decoded  = 0x0200,
+    MS_playing      = 0x0100,
+    MS_cvt_decoded  = 0x0200
 };
 
 struct SoxResampler;
 
-typedef struct {
-  SDL_RWops *src;
-  //! Begin position at begin of file, 0 by default, It exists here, because need to don't feed libMAD with ID3s which causes junk at begin!
-  int src_begin_pos;
-  int freesrc;
-  struct mad_stream stream;
-  struct mad_frame frame;
-  struct mad_synth synth;
-  int frames_read;
-  mad_timer_t next_frame_start;
-  int volume;
-  int status;
-  int output_begin, output_end;
-  SDL_AudioSpec mixer;
-  SDL_AudioCVT cvt;
+typedef struct
+{
+    SDL_RWops *src;
+    /*! Begin position at begin of file, 0 by default, It exists here, because need to don't feed libMAD with ID3s which causes junk at begin! */
+    int src_begin_pos;
+    int freesrc;
+    struct mad_stream stream;
+    struct mad_frame frame;
+    struct mad_synth synth;
+    int frames_read;
+    mad_timer_t next_frame_start;
+    int volume;
+    int status;
+    int output_begin, output_end;
+    SDL_AudioSpec mixer;
+    SDL_AudioCVT cvt;
 
-  unsigned char input_buffer[MAD_INPUT_BUFFER_SIZE + MAD_BUFFER_GUARD];
-  unsigned char output_buffer[MAD_OUTPUT_BUFFER_SIZE];
+    unsigned char input_buffer[MAD_INPUT_BUFFER_SIZE + MAD_BUFFER_GUARD];
+    unsigned char output_buffer[MAD_OUTPUT_BUFFER_SIZE];
 
-  char *mus_title;
-  char *mus_artist;
-  char *mus_album;
-  char *mus_copyright;
-  struct MyResampler resample;
+    char *mus_title;
+    char *mus_artist;
+    char *mus_album;
+    char *mus_copyright;
+    struct MyResampler resample;
 } mad_data;
 
-void mad_fetchID3Tags(mad_data *mp3_mad, char* filePath);
+void mad_fetchID3Tags(mad_data *mp3_mad, char *filePath);
 
 mad_data *mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc);
 void mad_closeFile(mad_data *mp3_mad);

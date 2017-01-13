@@ -1,6 +1,6 @@
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -93,7 +93,7 @@ int Mix_InitModPlug()
             Mix_SetError("Missing modplug.framework");
             return -1;
         }
-#endif // __MACOSX__
+#endif /* __MACOSX__ */
 
         modplug.ModPlug_Load = ModPlug_Load;
         modplug.ModPlug_Unload = ModPlug_Unload;
