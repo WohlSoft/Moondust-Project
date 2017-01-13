@@ -6,8 +6,9 @@
 #include <QPlainTextEdit>
 #include <initializer_list>
 
-namespace Ui {
-class DevConsole;
+namespace Ui
+{
+    class DevConsole;
 }
 
 class DevConsole : public QWidget
@@ -17,7 +18,7 @@ class DevConsole : public QWidget
 public:
     static void init();
     static void show();
-    static void log(const QString &logText, const QString &channel = QString("System"), bool raise=false);
+    static void log(const QString &logText, const QString &channel = QString("System"), bool raise = false);
     static bool isConsoleShown();
     static void closeIfPossible();
 
@@ -35,7 +36,7 @@ private slots:
     void on_edit_command_returnPressed();
 
 protected:
-    void closeEvent ( QCloseEvent * event);
+    void closeEvent(QCloseEvent *event);
     void focusInEvent(QFocusEvent *);
     void focusOutEvent(QFocusEvent *);
 
@@ -44,17 +45,23 @@ private:
     explicit DevConsole(QWidget *parent = 0);
     ~DevConsole();
     Ui::DevConsole *ui;
-    void logToConsole(const QString &logText, const QString &channel, bool raise=false);
-    QPlainTextEdit* getEditByIndex(const int &index);
-    QPlainTextEdit* getCurrentEdit();
+    void logToConsole(const QString &logText, const QString &channel, bool raise = false);
+    QPlainTextEdit *getEditByIndex(const int &index);
+    QPlainTextEdit *getCurrentEdit();
 
     //Command area
     typedef void (DevConsole::*command)(QStringList);
-    QMap<QString,QPair<command, QString> > commands;
+    QMap<QString, QPair<command, QString> > commands;
     void registerCommand(const QString commandName, command cmd, const QString helpText = QString());
     void registerCommand(const std::initializer_list<QString> commandNames, DevConsole::command cmd, const QString helpText);
     void doCommand();
 
+    #ifdef DEBUG_BUILD
+    // Debug only commands, must be disabled in releases! (or Static Analyzers will swear!)
+    void doFlood(QStringList args);
+    void doThrowUnhandledException(QStringList);
+    void doSegmentationViolation(QStringList);
+    #endif
     void doHelp(QStringList args);
     void doTest(QStringList args);
     void doPlayMusic(QStringList args);
@@ -62,10 +69,7 @@ private:
     void doQuit(QStringList);
     void doSavesettings(QStringList);
     void doMd5(QStringList args);
-    void doFlood(QStringList args);
     void doValidateStrArray(QStringList args);
-    void doThrowUnhandledException(QStringList);
-    void doSegmentationViolation(QStringList);
     void doPgeXTest(QStringList args);
     void doSendCheat(QStringList args);
     void doOutputPaths(QStringList args);

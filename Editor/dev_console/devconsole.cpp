@@ -268,9 +268,12 @@ void DevConsole::registerCommands()
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
     registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validating the PGE-X string array"));
-    registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
+    #ifdef DEBUG_BUILD
+    // Debug only commands, must be disabled in releases! (or Static Analyzers will swear!)
+    registerCommand("flood",    &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
-    registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
+    registerCommand("segserv",  &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
+    #endif
     registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
     registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send command or message into running engine"));
@@ -374,6 +377,7 @@ void DevConsole::doSavesettings(QStringList /*args*/)
     log("-> Application Settings was saved!", ui->tabWidget->tabText(0));
 }
 
+#ifdef DEBUG_BUILD
 void DevConsole::doFlood(QStringList args)
 {
     if(args.size() > 0)
@@ -398,9 +402,14 @@ void DevConsole::doThrowUnhandledException(QStringList /*args*/)
 
 void DevConsole::doSegmentationViolation(QStringList)
 {
+    #ifndef _MSC_VER //Unfortunately MSVC swearing with hard erros on detecting this
     int *my_nullptr = 0;
     *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
+    #else
+    log("-> This test isn't available in assembly built by MSVC! Please rebuild Editor in the another compiler (like MinGW or Intel C++ compiler)!", ui->tabWidget->tabText(0));
+    #endif
 }
+#endif //DEBUG_BUILD
 
 
 QString ______recourseBuildPGEX_Tree(QList<PGEFile::PGEX_Entry > &entry, int depth = 1)
