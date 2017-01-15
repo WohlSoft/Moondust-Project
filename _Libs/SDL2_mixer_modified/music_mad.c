@@ -128,6 +128,8 @@ mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
         mp3_mad->output_begin = 0;
         mp3_mad->output_end = 0;
         mp3_mad->mixer = *mixer;
+        mp3_mad->len_available = 0;
+        mp3_mad->snd_available = NULL;
         mp3_mad->mus_title = NULL;
         mp3_mad->mus_album = NULL;
         mp3_mad->mus_artist = NULL;
@@ -314,7 +316,7 @@ decode_frame(mad_data *mp3_mad)
                         AUDIO_S16);
 
         SDL_BuildAudioCVT(&mp3_mad->cvt, AUDIO_S16, pcm->channels,
-                          mp3_mad->mixer.freq/*mp3_mad->frame.header.samplerate*/,/*  <-- HACK: Avoid SDL's internal resamplers usage */
+                          mp3_mad->mixer.freq/*mp3_mad->frame.header.samplerate*/, /*  <-- HACK: Avoid SDL's internal resamplers usage */
                           mp3_mad->mixer.format,
                           mp3_mad->mixer.channels,
                           mp3_mad->mixer.freq);

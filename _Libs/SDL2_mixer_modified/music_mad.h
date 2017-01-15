@@ -42,8 +42,6 @@ enum
     MS_cvt_decoded  = 0x0200
 };
 
-struct SoxResampler;
-
 typedef struct
 {
     SDL_RWops *src;
@@ -60,6 +58,8 @@ typedef struct
     int output_begin, output_end;
     SDL_AudioSpec mixer;
     SDL_AudioCVT cvt;
+    int   len_available;
+    Uint8 *snd_available;
 
     unsigned char input_buffer[MAD_INPUT_BUFFER_SIZE + MAD_BUFFER_GUARD];
     unsigned char output_buffer[MAD_OUTPUT_BUFFER_SIZE];
