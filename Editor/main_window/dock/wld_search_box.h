@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014-2017 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #pragma once
 #ifndef WLD_SEARCH_BOX_H
 #define WLD_SEARCH_BOX_H
@@ -10,8 +28,9 @@ class MainWindow;
 class QMdiSubWindow;
 class WorldEdit;
 
-namespace Ui {
-class WldSearchBox;
+namespace Ui
+{
+    class WldSearchBox;
 }
 
 class WldSearchBox : public QDockWidget, public MWDock_Base
@@ -57,22 +76,31 @@ private slots:
     void on_Find_Button_ResetTile_clicked();
 
 private:
-    WorldTerrainTile curSearchTile;
-    WorldScenery curSearchScenery;
-    WorldPathTile curSearchPath;
-    WorldLevelTile curSearchLevel;
-    WorldMusicBox curSearchMusic;
+    template<class T>
+    struct SearchMeta
+    {
+        quint64         total = 0;
+        unsigned long   index = 0;
+        T               data;
+    };
+
+    SearchMeta<WorldTerrainTile>    curTerrain;
+    SearchMeta<WorldScenery>        curScenery;
+    SearchMeta<WorldPathTile>       curPath;
+    SearchMeta<WorldLevelTile>      curLevel;
+    SearchMeta<WorldMusicBox>       curMusicBox;
 
     bool doSearchTile(WorldEdit *edit);
     bool doSearchScenery(WorldEdit *edit);
     bool doSearchPath(WorldEdit *edit);
-    bool doSearchLevel(WorldEdit* edit);
+    bool doSearchLevel(WorldEdit *edit);
     bool doSearchMusic(WorldEdit *edit);
 
     Ui::WldSearchBox *ui;
     bool lockResetWorld;
 
-    enum currentSearch{
+    enum currentSearch
+    {
         SEARCH_BLOCK = 1 << 0,
         SEARCH_BGO = 1 << 1,
         SEARCH_NPC = 1 << 2,
