@@ -2,33 +2,44 @@
 include($$PWD/../_common/dest_dir.pri)
 
 TEMPLATE = subdirs
-CONFIG -= app_bundle
-SUBDIRS = SDL2MixerModded FreeImageLite OOLua
+CONFIG  -= app_bundle
 
-#PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
-SDL2MixerModded.file = SDL2_mixer_modified/SDL2_mixer.pro
+# ========== SDL Mixer X ==========
+SUBDIRS += SDL2MixerX
+SDL2MixerX.file = SDL_Mixer_X/SDL_Mixer_X.pro
+
+# ========== FreeImage (lite) ==========
+SUBDIRS += FreeImageLite
 FreeImageLite.file = FreeImage/FreeImageLite.pro
-OOLua.file = oolua/project/oolua.pro
+
+# ========== OO-Lua ==========
+# SUBDIRS += OOLua
+# OOLua.file = oolua/project/oolua.pro
+
+# ========== Server API library ==========
+# SUBDIRS += PGEServerAPI
+# PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
 
 !android:!macx:{
-DEFINES+=USE_LUA_JIT
-SUBDIRS+=LuaBind
-LuaBind.file = luabind/_project/luabind.pro
+    # ========== LuaBind (Lua-JIT) ==========
+    DEFINES += USE_LUA_JIT
+    SUBDIRS += LuaBind
+    LuaBind.file = luabind/_project/luabind.pro
 } else {
-SUBDIRS+=LuaBindnoJit
-LuaBindnoJit.file = luabind/_project/luabind_nojit.pro
+    # ========== LuaBind (PUC-Rio) ==========
+    DEFINES -= USE_LUA_JIT
+    SUBDIRS += LuaBindnoJit
+    LuaBindnoJit.file = luabind/_project/luabind_nojit.pro
 }
 
 deplibs.path = bin
-linux-g++: {
-deplibs.files += $$PWD/_builds/linux/lib/*.so
-}
-win32: {
-deplibs.files += $$PWD/_builds/win32/bin/*.dll
-deplibs.files += $$PWD/_builds/win32/lib/SDL2_mixer_ext.dll
+
+linux-g++:  deplibs.files += $$PWD/_builds/linux/lib/libSDL2-*.so $$PWD/_builds/linux/lib/libSDL2_mixer_ext.so
+
+win32:      deplibs.files += $$PWD/_builds/win32/bin/*.dll $$PWD/_builds/win32/lib/SDL2_mixer_ext.dll
+
+!macx:{
+    deplibs.path = $$DESTDIR
+    INSTALLS += deplibs
 }
 
-!macx: {
-deplibs.path = $$DESTDIR
-INSTALLS += deplibs
-}

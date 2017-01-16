@@ -11,10 +11,10 @@ Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
 
 Sources of modified library version is available in the PGE Project's sources:
 https://github.com/Wohlhabend-Networks/PGE-Project/
-    in the folder: _Libs/SDL2_mixer_modified/
+    in the folder: _Libs/SDL_Mixer_X/
 or:
 https://bitbucket.org/Wohlstand/pge-project
-    in the folder: _Libs/SDL2_mixer_modified/
+    in the folder: _Libs/SDL_Mixer_X/
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -66,20 +66,20 @@ Game Music Emulators: is a free chuptunes to WAV conversion library.
 
 Source code: https://bitbucket.org/mpyne/game-music-emu
 
-Copyright (C) 2003-2006 Shay Green. 
+Copyright (C) 2003-2006 Shay Green.
 
-This module is free software; you can redistribute it and/or modify 
+This module is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published
 by the Free Software Foundation; either version 2.1 of the License,
-or (at your option) any later version. 
+or (at your option) any later version.
 
 This module is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Lesser General Public License for more details. 
+GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public
-License along with this module; 
+License along with this module;
 If not, see <http://www.gnu.org/licenses/>.
 
 ------------------------------------------------------------------------
