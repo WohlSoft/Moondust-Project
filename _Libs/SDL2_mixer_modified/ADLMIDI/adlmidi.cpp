@@ -342,13 +342,15 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer *device, int sampleCount, short *out)
 
     sampleCount -= sampleCount % 2; //Avoid even sample requests
 
-    if(sampleCount < 0) return 0;
+    if(sampleCount < 0)
+        return 0;
 
-    if(device->QuitFlag) return 0;
+    if(device->QuitFlag)
+        return 0;
 
     ssize_t gotten_len = 0;
     ssize_t n_periodCountStereo = 512;
-    ssize_t n_periodCountPhys = n_periodCountStereo * 2;
+    //ssize_t n_periodCountPhys = n_periodCountStereo * 2;
     int left = sampleCount;
 
     while(left > 0)
@@ -369,9 +371,7 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer *device, int sampleCount, short *out)
 
             if(ate < device->backup_samples_size)
             {
-                for(int j = 0;
-                    j < ate;
-                    j++)
+                for(int j = 0; j < ate; j++)
                     device->backup_samples[(ate - 1) - j] = device->backup_samples[(device->backup_samples_size - 1) - j];
             }
 
@@ -383,7 +383,7 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer *device, int sampleCount, short *out)
             device->delay -= eat_delay;
             device->carry += device->PCM_RATE * eat_delay;
             n_periodCountStereo = static_cast<ssize_t>(device->carry);
-            n_periodCountPhys = n_periodCountStereo * 2;
+            //n_periodCountPhys = n_periodCountStereo * 2;
             device->carry -= n_periodCountStereo;
 
             if(device->SkipForward > 0)
@@ -391,13 +391,15 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer *device, int sampleCount, short *out)
             else
             {
                 #ifdef ADLMIDI_USE_DOSBOX_OPL
-                std::vector<int> out_buf; //int buf[n_samples * 2];
+                std::vector<int>     out_buf;
                 #else
                 std::vector<int16_t> out_buf;
                 #endif
                 out_buf.resize(1024 /*n_samples * 2*/);
+
                 ssize_t in_generatedStereo = (n_periodCountStereo > 512) ? 512 : n_periodCountStereo;
                 ssize_t in_generatedPhys = in_generatedStereo * 2;
+
                 //fill buffer with zeros
                 size_t in_countStereoU = static_cast<size_t>(in_generatedStereo * 2);
 
@@ -428,10 +430,8 @@ ADLMIDI_EXPORT int adl_play(ADL_MIDIPlayer *device, int sampleCount, short *out)
                         reinterpret_cast<MIDIplay *>(device->adl_midiPlayer)->opl.cards[card].GenerateArr(in_mixBuffer.data(), &in_generatedStereo);
                         in_generatedPhys = in_generatedStereo * 2;
                         size_t in_samplesCount = static_cast<size_t>(in_generatedPhys);
-
                         for(size_t a = 0; a < in_samplesCount; ++a)
                             out_buf[a] += in_mixBuffer[a];
-
                         #else
                         OPL3_GenerateStreamMix(&(reinterpret_cast<MIDIplay *>(device->adl_midiPlayer))->opl.cards[card], out_buf.data(), static_cast<Bit32u>(in_generatedStereo));
                         #endif
