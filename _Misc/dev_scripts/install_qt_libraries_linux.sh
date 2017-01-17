@@ -17,7 +17,7 @@ then
 	exit 1
 fi
 
-cp -a "$QT_PATH"'../lib/'*'.so'* /usr/lib/x86_64-linux-gnu/
+cp -n -a "$QT_PATH"'../lib/'*'.so'* /usr/lib/x86_64-linux-gnu/
 echo "DONE!"
 read -n 1
 
