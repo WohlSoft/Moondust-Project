@@ -114,7 +114,8 @@ BuildSDL()
 
     #--------------Apply some patches--------------
     #++++Fix build on MinGW where are missing tagWAVEINCAPS2W and tagWAVEOUTCAPS2W structures declarations
-    patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
+    #patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
+    # FIXED OFFICIALLY: https://hg.libsdl.org/SDL/rev/7e06b0e4dbe0
     #----------------------------------------------
 
     ###########SDL2###########
