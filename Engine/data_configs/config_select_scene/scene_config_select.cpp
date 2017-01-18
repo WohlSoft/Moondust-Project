@@ -161,6 +161,11 @@ ConfigSelectScene::~ConfigSelectScene()
         delete controller;
 }
 
+bool ConfigSelectScene::hasConfigPacks()
+{
+    return !m_availablePacks.empty();
+}
+
 QString ConfigSelectScene::isPreLoaded(QString openConfig)
 {
     QString configPath = openConfig;

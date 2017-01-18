@@ -35,6 +35,8 @@ public:
     QString currentConfig;
     QString currentConfigPath;
     QString themePack;
+
+    bool    hasConfigPacks();
     QString isPreLoaded(QString openConfig="");
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
@@ -45,7 +47,7 @@ public:
     void update();
     void render();
     void renderMouse();
-    int exec();
+    int  exec();
 
     void processMenu();
 

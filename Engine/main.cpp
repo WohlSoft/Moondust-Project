@@ -120,6 +120,19 @@ int main(int argc, char *argv[])
         app.createConfigsDir();
         // Initialize config selection screen
         ConfigSelectScene GOScene;
+
+        // Are any config packs exists?
+        if(!GOScene.hasConfigPacks())
+        {
+            pLogCritical("Config packs not found");
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+                                     "Config packs not found",
+                                     "Can't start game engine, because available\n"
+                                     "configuration packages are not found!",
+                                     PGE_Window::window);
+            return 2;
+        }
+
         QString configPath_manager = GOScene.isPreLoaded();
 
         if(!g_fileToOpen.empty())
