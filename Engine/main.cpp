@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
         if(!GOScene.hasConfigPacks())
         {
             pLogCritical("Config packs not found");
-            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
                                      "Config packs not found",
                                      "Can't start game engine, because available\n"
                                      "configuration packages are not found!",
