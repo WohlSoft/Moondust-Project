@@ -26,7 +26,7 @@ kfile .
 kfile ServerLib/ServerAPI
 kfile ServerLib/ServerApp
 kfile _Libs
-kfile _Libs/SDL2_mixer_modified
+kfile _Libs/SDL_Mixer_X
 kfile _Libs/FreeImage
 kfile _Libs/luabind/_project
 kfile _Libs/oolua/project

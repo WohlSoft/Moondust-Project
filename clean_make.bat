@@ -6,7 +6,7 @@ call :kfile %CD%
 call :kfile ServerLib\ServerAPI
 call :kfile ServerLib\ServerApp
 call :kfile _Libs
-call :kfile _Libs\SDL2_mixer_modified
+call :kfile _Libs\SDL_Mixer_X
 call :kfile _Libs\FreeImage
 call :kfile _Libs\luabind\_project
 call :kfile _Libs\oolua\project
