@@ -5,6 +5,7 @@ SET BuildArgs=
 SET MAKE_EXTRA_ARGS=-r -j 4
 
 :argsloop
+if "%1"=="clean"  goto cleanX
 if "%1"=="nopause"  SET NoPause=1
 if "%1"=="noeditor" SET BuildArgs=%BuildArgs% CONFIG+=noeditor
 if "%1"=="noengine" SET BuildArgs=%BuildArgs% CONFIG+=noengine
@@ -24,6 +25,33 @@ IF NOT EXIST _paths.bat goto error
 call _paths.bat
 set OldPATH=%PATH%
 PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;
+
+goto run
+:cleanX
+echo ======== Remove all cached object files and automatically generated Makefiles ========
+
+call ./clean_make.bat nopause
+
+IF EXIST .\bin-w32\_build_x32\NUL (
+                    echo removing bin-w32/_build_x32 ...
+                    rmdir /s /q bin-w32\_build_x32
+)
+
+IF EXIST .\bin-w32\_build_x64\NUL (
+                    echo removing bin-w32/_build_x64 ...
+                    rmdir /s /q bin-w32\_build_x64
+)
+
+IF EXIST .\_Libs\_sources\_build_cache\NUL (
+    echo 'removing Dependencies build cache ...'
+    rmdir /s /q _Libs\_sources\_build_cache
+)
+
+echo ==== Clear! ====
+exit /B 0
+goto quit;
+
+:run
 
 cd %CD%\Editor
 %QtDir%\lrelease.exe *.pro
