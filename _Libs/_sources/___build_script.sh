@@ -71,7 +71,7 @@ BuildSrc()
         errorofbuild
     fi
 
-    make
+    make --jobs=2
     if [ $? -eq 0 ]
     then
         printf "\n[Make completed]\n\n"
@@ -79,7 +79,8 @@ BuildSrc()
         errorofbuild
     fi
 
-    make install
+    echo "Installing..."
+    make -s install
     if [ $? -eq 0 ]
     then
         printf "\n[Install completed]\n\n"
@@ -114,8 +115,6 @@ BuildSDL()
     #--------------Apply some patches--------------
     #++++Fix build on MinGW where are missing tagWAVEINCAPS2W and tagWAVEOUTCAPS2W structures declarations
     patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
-    #++++Fixed VERY BAD resampling, which was being recently implemented
-    patch -t -N $LatestSDL/src/audio/SDL_audiocvt.c < ../patches/SDL_audiocvt.c.patch
     #----------------------------------------------
 
     ###########SDL2###########
@@ -205,25 +204,28 @@ BuildLUAJIT()
     ###########LuaJIT###########
     echo "==========LuaJIT============"
     cd LuaJIT
-    make PREFIX=$InstallTo BUILDMODE=static
+    echo "Building..."
+    make -s --jobs=2 PREFIX=$InstallTo BUILDMODE=static
     if [ $? -eq 0 ]
     then
-      echo "[good]"
+        echo "[good]"
     else
-      errorofbuild
+        errorofbuild
     fi
 
-        make install PREFIX=$InstallTo BUILDMODE=static
-        if [ $? -eq 0 ]
-        then
-          echo "[good]"
-        else
-          errorofbuild
-        fi
-        if [[ "$OurOS" == "macos" ]]; then
-            cp -a ./src/libluajit.a $InstallTo/lib/libluajit.a
-            cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
-        fi
+    echo "Installing..."
+    make -s install PREFIX=$InstallTo BUILDMODE=static
+    if [ $? -eq 0 ]
+    then
+        echo "[good]"
+    else
+        errorofbuild
+    fi
+
+    if [[ "$OurOS" == "macos" ]]; then
+        cp -a ./src/libluajit.a $InstallTo/lib/libluajit.a
+        cp -a ./src/libluajit.a $InstallTo/lib/libluajit-5.1.a
+    fi
     cd ..
 }
 
