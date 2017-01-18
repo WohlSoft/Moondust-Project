@@ -24,6 +24,32 @@ do
                     QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS CONFIG+=useccache"
                 fi
             ;;
+        clean)
+                echo "======== Remove all cached object files and automatically generated Makefiles ========"
+                if [[ "$OSTYPE" == "msys"* ]]; then
+                    ./clean_make.bat nopause
+                    BinDir=bin-w32
+                else
+                    ./clean_make.sh nopause
+                    BinDir=bin
+                fi
+
+                if [ -d ./$BinDir/_build_x32 ]; then
+                    echo "removing $BinDir/_build_x32 ..."
+                    rm -Rf ./$BinDir/_build_x32
+                fi
+
+                if [ -d ./$BinDir/_build_x64 ]; then
+                    echo "removing $BinDir/_build_x64 ..."
+                    rm -Rf ./$BinDir/_build_x64
+                fi
+
+                echo 'removing Dependencies build cache ...'
+
+                ./clear_deps.sh
+                echo "==== Clear! ===="
+                exit 0;
+            ;;
     esac
 done
 
@@ -87,7 +113,7 @@ echo ""
 show_time $TIME_PASSED
 printf "\n\n=========BUILT!!===========\n\n"
 cd $bak
-if $flag_pause_on_end ; then 
+if $flag_pause_on_end ; then
     read -n 1;
 fi
 exit 0
