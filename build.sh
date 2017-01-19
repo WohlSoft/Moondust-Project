@@ -2,8 +2,8 @@
 bak=~+
 
 if [[ "$OSTYPE" == "msys"* ]]; then
-   ./build.bat
-   exit 0
+    ./build.bat
+    exit 0
 fi
 
 #flags
@@ -56,9 +56,9 @@ done
 #=============Detect directory that contains script=====================
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
@@ -90,6 +90,7 @@ LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
 #cd ..
 #=======================================================================
 # build all components
+echo "Running $QMake..."
 if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
     $QMake CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb QMAKE_TARGET.arch=$(uname -m) $QMAKE_EXTRA_ARGS
 else
@@ -98,6 +99,7 @@ fi
 checkState
 
 #=======================================================================
+echo "Building..."
 TIME_STARTED=$(date +%s)
 make $MAKE_EXTRA_ARGS
 checkState
@@ -105,16 +107,16 @@ TIME_ENDED=$(date +%s)
 TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
 #=======================================================================
 # copy data and configs into the build directory
-make install
+echo "Installing..."
+make -s install
 checkState
 
 #=======================================================================
 echo ""
 show_time $TIME_PASSED
-printf "\n\n=========BUILT!!===========\n\n"
+printf "\n\n=========\E[37;42mBUILT!!\E[0m===========\n\n"
 cd $bak
 if $flag_pause_on_end ; then
     read -n 1;
 fi
 exit 0
-

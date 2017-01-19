@@ -23,19 +23,19 @@ function show_time()
 
 errorofbuild()
 {
-	printf "\n\n=========AN ERROR OCCURED!==========\n"
-	cd $bak
-	exit 1
+    printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+    cd $bak
+    exit 1
 }
 
 checkState()
 {
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuild
-	fi
+    if [ $? -eq 0 ]
+    then
+        echo -e "\E[37;42mOK!\E[0m"
+    else
+        errorofbuild
+    fi
 }
 
 osx_realpath() {
@@ -48,5 +48,3 @@ osx_realpath() {
     ;;
   esac
 }
-
-

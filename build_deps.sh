@@ -1,49 +1,20 @@
 #/bin/bash
 bak=~+
 
-errorofbuid()
-{
-	printf "\n\n=========ERROR!!===========\n\n"
-	cd $bak
-	exit 1
-}
-
-checkState()
-{
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-}
-
-osx_realpath() {
-  case "${1}" in
-    [./]*)
-    echo "$(cd ${1%/*}; pwd)/${1##*/}"
-    ;;
-    *)
-    echo "${PWD}/${1}"
-    ;;
-  esac
-}
+if [[ "$OSTYPE" == "msys"* ]]; then
+    ./build_deps.bat
+    exit 0
+fi
 
 OurOS="linux_defaut"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  OurOS="macos"
+    OurOS="macos"
 elif [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
-  OurOS="linux"
+    OurOS="linux"
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
-  OurOS="freebsd"
+    OurOS="freebsd"
 elif [[ "$OSTYPE" == "msys"* ]]; then
-  OurOS="win32"
-fi
-
-if [[ "$OurOS" == "win32" ]]; then
-   ./build_deps.bat
-   exit 0
-   checkState
+    OurOS="win32"
 fi
 
 echo $OurOS
@@ -52,6 +23,7 @@ echo $OurOS
 flag_pause_on_end=true
 flag_nolibs=false
 flag_libsonly=false
+flag_debug_script=false
 QMAKE_EXTRA_ARGS=""
 MAKE_EXTRA_ARGS="-r -j 4"
 
@@ -72,19 +44,27 @@ do
                 flag_nolibs=false
                 flag_libsonly=true
             ;;
+        debug-script)
+                flag_debug_script=true
+            ;;
     esac
 done
+
+# Hide command message while building
+if ! $flag_debug_script ; then
+    MAKE_EXTRA_ARGS="-s $MAKE_EXTRA_ARGS"
+fi
 
 #=============Detect directory that contains script=====================
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  if [[ "$OurOS" == "macos" ]]; then
-    SOURCE="$(osx_realpath "$SOURCE")"
-  else
-    SOURCE="$(readlink "$SOURCE")"
-  fi
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    if [[ "$OurOS" == "macos" ]]; then
+        SOURCE="$(osx_realpath "$SOURCE")"
+    else
+        SOURCE="$(readlink "$SOURCE")"
+    fi
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
@@ -140,10 +120,12 @@ fi
 
 cd "$PrjPath/_Libs"
 
+echo "Running $QMake..."
 $QMake CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT $QMAKE_EXTRA_ARGS
 checkState
 
 #=======================================================================
+echo "Building..."
 TIME_STARTED=$(date +%s)
 make $MAKE_EXTRA_ARGS
 checkState
@@ -151,7 +133,8 @@ TIME_ENDED=$(date +%s)
 TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
 #=======================================================================
 # copy data and configs into the build directory
-make install
+echo "Installing..."
+make -s install
 checkState
 
 cd ..
@@ -163,10 +146,9 @@ echo "QMake-based built libraries"
 show_time $TIME_PASSED
 echo "Total time of build"
 show_time $(($TIME_PASSED+$TIME_PASSED_LIBS))
-printf "\n\n=========DEPENDENCIES HAS BEEN BUILT!!===========\n\n"
+printf "\n\n=========\E[37;42mDEPENDENCIES HAS BEEN BUILT!!\E[0m===========\n\n"
 cd $bak
 if $flag_pause_on_end ; then
     read -n 1;
 fi
 exit 0
-
