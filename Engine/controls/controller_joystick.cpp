@@ -58,16 +58,24 @@ SDL_Joystick *JoystickController::getJoystickDevice() const
 void JoystickController::updateKey(bool &key, KM_Key &mkey)
 {
     Sint32 val = 0, dx = 0, dy = 0;
+    Sint16 val_initial = 0;
 
     switch(mkey.type)
     {
     case KeyMapJoyCtrls::JoyAxis:
+        //Note: SDL_JoystickGetAxisInitialState is a new API function added into dev version
+        //      and doesn't available in already released assemblies
+        if(SDL_JoystickGetAxisInitialState(m_joystickController, mkey.id, &val_initial) == SDL_FALSE)
+        {
+            key = false;
+            break;
+        }
         val = SDL_JoystickGetAxis(m_joystickController, mkey.id);
 
-        if(mkey.val > 0)
-            key = (val > 0);
-        else if(mkey.val < 0)
-            key = (val < 0);
+        if(mkey.val > val_initial)
+            key = (val > val_initial);
+        else if(mkey.val < val_initial)
+            key = (val < val_initial);
         else key = false;
 
         break;
@@ -95,12 +103,12 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
         break;
 
     case KeyMapJoyCtrls::JoyHat:
-        val = SDL_JoystickGetHat(m_joystickController, mkey.id);
+        val = (Sint32)SDL_JoystickGetHat(m_joystickController, mkey.id);
         key = (val == mkey.val);
         break;
 
     case KeyMapJoyCtrls::JoyButton:
-        key = SDL_JoystickGetButton(m_joystickController, mkey.id);
+        key = (Sint32)SDL_JoystickGetButton(m_joystickController, mkey.id);
         break;
 
     default:
@@ -133,6 +141,7 @@ void JoystickController::update()
 bool JoystickController::bindJoystickKey(SDL_Joystick *joy, KM_Key &k)
 {
     Sint32 val = 0;
+    Sint16 val_initial = 0;
     int dx = 0, dy = 0;
     //SDL_PumpEvents();
     SDL_JoystickUpdate();
@@ -194,9 +203,14 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, KM_Key &k)
     for(int i = 0; i < axes; i++)
     {
         val = 0;
+        //Note: SDL_JoystickGetAxisInitialState is a new API function added into dev version
+        //      and doesn't available in already released assemblies
+        if(SDL_JoystickGetAxisInitialState(joy, i, &val_initial) == SDL_FALSE)
+            break;
+
         val = SDL_JoystickGetAxis(joy, i);
 
-        if(val != 0)
+        if(val != (Sint32)val_initial)
         {
             k.val = val;
             k.id = i;
