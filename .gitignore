@@ -64,6 +64,8 @@ DerivedData
 .idea/
 # Pods - for those of you who use CocoaPods
 Pods
+# Don't deploy automatically generated pge_deps's qmake project!
+pge_deps.xcodeproj
 
 # Qt-es
 
