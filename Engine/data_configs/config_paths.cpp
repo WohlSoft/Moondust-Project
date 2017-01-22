@@ -19,107 +19,107 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 
-QString ConfigManager::bgoPath;
-QString ConfigManager::BGPath;
-QString ConfigManager::blockPath;
-QString ConfigManager::npcPath;
-QString ConfigManager::npcScriptPath;
-QString ConfigManager::effectPath;
-QString ConfigManager::playerLvlPath;
-QString ConfigManager::playerWldPath;
-QString ConfigManager::playerScriptPath;
+std::string ConfigManager::bgoPath;
+std::string ConfigManager::BGPath;
+std::string ConfigManager::blockPath;
+std::string ConfigManager::npcPath;
+std::string ConfigManager::npcScriptPath;
+std::string ConfigManager::effectPath;
+std::string ConfigManager::playerLvlPath;
+std::string ConfigManager::playerWldPath;
+std::string ConfigManager::playerScriptPath;
 
-QString ConfigManager::tilePath;
-QString ConfigManager::scenePath;
-QString ConfigManager::pathPath;
-QString ConfigManager::wlvlPath;
+std::string ConfigManager::tilePath;
+std::string ConfigManager::scenePath;
+std::string ConfigManager::pathPath;
+std::string ConfigManager::wlvlPath;
 
-QString ConfigManager::commonGPath;
-QString ConfigManager::scriptPath;
+std::string ConfigManager::commonGPath;
+std::string ConfigManager::scriptPath;
 
 
-QString ConfigManager::PathLevelBGO()
+std::string ConfigManager::PathLevelBGO()
 {
     return bgoPath;
 }
 
-QString ConfigManager::PathLevelBG()
+std::string ConfigManager::PathLevelBG()
 {
     return BGPath;
 }
 
-QString ConfigManager::PathLevelBlock()
+std::string ConfigManager::PathLevelBlock()
 {
     return blockPath;
 }
 
-QString ConfigManager::PathLevelNPC()
+std::string ConfigManager::PathLevelNPC()
 {
     return npcPath;
 }
 
-QString ConfigManager::PathLevelNPCScript()
+std::string ConfigManager::PathLevelNPCScript()
 {
     return npcScriptPath;
 }
 
-QString ConfigManager::PathLevelEffect()
+std::string ConfigManager::PathLevelEffect()
 {
     return effectPath;
 }
 
-QString ConfigManager::PathLevelPlayable()
+std::string ConfigManager::PathLevelPlayable()
 {
     return playerLvlPath;
 }
 
-QString ConfigManager::PathCommonGFX()
+std::string ConfigManager::PathCommonGFX()
 {
     return commonGPath;
 }
 
-QString ConfigManager::PathScript()
+std::string ConfigManager::PathScript()
 {
     return scriptPath;
 }
 
 
-QString ConfigManager::PathWorldTiles()
+std::string ConfigManager::PathWorldTiles()
 {
     return tilePath;
 }
 
-QString ConfigManager::PathWorldScenery()
+std::string ConfigManager::PathWorldScenery()
 {
     return scenePath;
 }
 
-QString ConfigManager::PathWorldPaths()
+std::string ConfigManager::PathWorldPaths()
 {
     return pathPath;
 }
 
-QString ConfigManager::PathWorldLevels()
+std::string ConfigManager::PathWorldLevels()
 {
     return wlvlPath;
 }
 
-QString ConfigManager::PathWorldPlayable()
+std::string ConfigManager::PathWorldPlayable()
 {
     return playerWldPath;
 }
 
-QString ConfigManager::PathLevelPlayerScript()
+std::string ConfigManager::PathLevelPlayerScript()
 {
     return playerScriptPath;
 }
 
-QString ConfigManager::PathMusic()
+std::string ConfigManager::PathMusic()
 {
     return dirs.music;
 }
 
-QString ConfigManager::PathSound()
+std::string ConfigManager::PathSound()
 {
     return dirs.sounds;
 }
@@ -131,8 +131,8 @@ void ConfigManager::refreshPaths()
     BGPath =    dirs.glevel +  "background2/";
     blockPath = dirs.glevel +  "block/";
     npcPath =   dirs.glevel +  "npc/";
-    npcScriptPath = config_dir +  "script/npcs/";
-    playerScriptPath = config_dir +  "script/player/";
+    npcScriptPath = config_dirSTD +  "script/npcs/";
+    playerScriptPath = config_dirSTD +  "script/player/";
     effectPath= dirs.glevel +  "effect/";
     playerLvlPath = dirs.gplayble;
     playerWldPath = dirs.gworld + "player/";
@@ -144,5 +144,5 @@ void ConfigManager::refreshPaths()
 
     commonGPath = dirs.gcommon + "/";
 
-    scriptPath = config_dir + "script/";
+    scriptPath = config_dirSTD + "script/";
 }

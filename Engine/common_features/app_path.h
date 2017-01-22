@@ -21,15 +21,18 @@
 
 #include <QString>
 
-extern QString ApplicationPath;
-extern QString ApplicationPath_x;
+extern QString      ApplicationPath;
+extern std::string  ApplicationPathSTD;
+extern QString      ApplicationPath_x;
 
 class AppPathManager
 {
     public:
-        static void initAppPath();
+        static void initAppPath(const char *argv0);
         static QString settingsFile();
         static QString userAppDir();
+        static std::string settingsFileSTD();
+        static std::string userAppDirSTD();
         static void install();
         static bool isPortable();
         static bool userDirIsAvailable();
@@ -40,8 +43,8 @@ private:
          */
         static void _initSettingsPath();
         //! Full path to settings INI file
-        static QString m_settingsPath;
-        static QString m_userPath;
+        static std::string m_settingsPath;
+        static std::string m_userPath;
 };
 
 #endif // APP_PATH_H

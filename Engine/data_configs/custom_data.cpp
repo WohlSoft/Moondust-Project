@@ -17,7 +17,7 @@
  */
 
 #include "custom_data.h"
-#include <QFile>
+#include <Utils/files.h>
 
 CustomDirManager::CustomDirManager()
 {}
@@ -27,48 +27,60 @@ CustomDirManager::CustomDirManager(QString path, QString name, QString stuffPath
     setCustomDirs(path, name, stuffPath);
 }
 
+CustomDirManager::CustomDirManager(std::string path, std::string name, std::string stuffPath)
+{
+    setCustomDirs(path, name, stuffPath);
+}
+
 QString CustomDirManager::getCustomFile(QString name, bool *isDefault)
 {
-    if(name.isEmpty()) return "";
-    QString srcName=name;
-    QString backupName;
+    return QString::fromStdString(getCustomFile(name.toStdString(), isDefault));
+}
+
+std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
+{
+    if(name.empty())
+        return "";
+    std::string srcName = name;
+    std::string backupName;
 
     //Try to look up for a backup images (if original not found, try to search images in second format)
-    if(name.endsWith(".gif", Qt::CaseInsensitive))
+    if(Files::hasSuffix(name, ".gif"))
     {
-       backupName=srcName;
-       backupName.replace(backupName.size()-3, 3, "png");
-       //find PNG's first!
-       QString tmp=backupName;
-       backupName=srcName;
-       srcName=tmp;
+        backupName = srcName;
+        Files::changeSuffix(backupName, ".png");
+        backupName.replace(backupName.size() - 3, 3, "png");
+        //find PNG's first!
+        std::string tmp = backupName;
+        backupName = srcName;
+        srcName = tmp;
     }
-    else
-    if(name.endsWith(".png", Qt::CaseInsensitive))
+    else if(Files::hasSuffix(name, ".png"))
     {
-        backupName=srcName;
-        backupName.replace(backupName.size()-3, 3, "gif");
+        backupName = srcName;
+        Files::changeSuffix(backupName, ".gif");
+        //backupName.replace(backupName.size()-3, 3, "gif");
     }
 
-    QString target="";
+    std::string target = "";
 tryBackup:
-    if( (QFile::exists(m_dirCustom) ) &&
-        (QFile::exists(m_dirCustom+"/" + srcName)) )
+    if((Files::fileExists(m_dirCustom)) &&
+       (Files::fileExists(m_dirCustom + "/" + srcName)))
     {
-        target = m_dirCustom+"/"+srcName;
-        if(isDefault) *isDefault = false;
+        target = m_dirCustom + "/" + srcName;
+        if(isDefault)
+            *isDefault = false;
     }
-    else
-    if(QFile::exists(m_dirEpisode + "/" + srcName) )
+    else if(Files::fileExists(m_dirEpisode + "/" + srcName))
     {
         target = m_dirEpisode + "/" + srcName;
         if(isDefault) *isDefault = false;
     }
     else
     {
-        if((!backupName.isEmpty()) && (backupName!=srcName))
+        if((!backupName.empty()) && (backupName != srcName))
         {
-            srcName=backupName;
+            srcName = backupName;
             goto tryBackup;
         }
         target = m_mainStuffFullPath + name;
@@ -80,8 +92,12 @@ tryBackup:
 
 void CustomDirManager::setCustomDirs(QString path, QString name, QString stuffPath)
 {
+    setCustomDirs(path.toStdString(), name.toStdString(), stuffPath.toStdString());
+}
+
+void CustomDirManager::setCustomDirs(std::string path, std::string name, std::string stuffPath)
+{
     m_dirCustom = path + "/" + name;
     m_dirEpisode = path;
     m_mainStuffFullPath = stuffPath;
 }
-

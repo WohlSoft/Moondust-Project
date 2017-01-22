@@ -2,6 +2,7 @@
 #define VERSIONCMP_H
 
 #include <QString>
+#include <string>
 
 class VersionCmp
 {
@@ -17,6 +18,9 @@ public:
 
     static int str2ver(QString verSuffix);
     static QString compare(QString ver1, QString ver2);
+
+    static int str2ver(std::string verSuffix);
+    static std::string compare(std::string ver1, std::string ver2);
 };
 
 #endif // VERSIONCMP_H

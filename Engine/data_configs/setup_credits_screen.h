@@ -19,14 +19,15 @@
 #ifndef SETUP_CREDITS_SCREEN_H
 #define SETUP_CREDITS_SCREEN_H
 
-#include <QString>
-#include <QColor>
-class QSettings;
-#include <QList>
+#include <string>
+#include <vector>
+#include <graphics/gl_color.h>
+
+class IniProcessing;
 
 struct CreditsScreenAdditionalImage
 {
-    QString imgFile;
+    std::string imgFile;
     bool animated;
     int frames;
     int x;
@@ -35,12 +36,12 @@ struct CreditsScreenAdditionalImage
 
 struct CreditsScreenSetup
 {
-    void init(QSettings &engine_ini);
-    QString backgroundImg;
-    QColor backgroundColor;
+    void init(IniProcessing& engine_ini);
+    std::string backgroundImg;
+    GlColor backgroundColor;
     int updateDelay;
-    QList<CreditsScreenAdditionalImage > AdditionalImages;
-    QString luaFile;
+    std::vector<CreditsScreenAdditionalImage > AdditionalImages;
+    std::string luaFile;
 };
 
 

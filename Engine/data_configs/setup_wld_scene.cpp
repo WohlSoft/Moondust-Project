@@ -6,10 +6,11 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 #include <fontman/font_manager.h>
+#include <fmt/fmt_format.h>
 
 WorldMapSetup ConfigManager::setup_WorldMap;
 
-void WorldMapSetup::init(QSettings &engine_ini)
+void WorldMapSetup::init(IniProcessing& engine_ini)
 {
     int LoadScreenImages = 0;
     engine_ini.beginGroup("world-map");
@@ -27,11 +28,11 @@ void WorldMapSetup::init(QSettings &engine_ini)
         title_fontID = 0;
         title_color = engine_ini.value("level-title-color", "#000000").toString();
         title_rgba.setRgba(title_color);
-        QString ttlAlign = engine_ini.value("level-title-align", "left").toString();
+        std::string ttlAlign = engine_ini.value("level-title-align", "left").toString();
 
-        if(ttlAlign == "center")
+        if(ttlAlign.compare("center") == 0)
             title_align = WorldMapSetup::align_center;
-        else if(ttlAlign == "right")
+        else if(ttlAlign.compare("right") == 0)
             title_align = WorldMapSetup::align_right;
         else
             title_align = WorldMapSetup::align_left;
@@ -85,7 +86,7 @@ void WorldMapSetup::init(QSettings &engine_ini)
 
     for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(QString("world-image-%1").arg(i));
+        engine_ini.beginGroup(fmt::format("world-image-{0}", i));
         {
             WorldAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();

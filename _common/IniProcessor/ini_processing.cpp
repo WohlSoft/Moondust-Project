@@ -572,6 +572,26 @@ bool IniProcessing::hasKey(const std::string &keyName)
     return (e != m_params.currentGroup->end());
 }
 
+std::vector<std::string> IniProcessing::allKeys()
+{
+    std::vector<std::string> keys;
+    if(!m_params.opened)
+        return keys;
+    if(!m_params.currentGroup)
+        return keys;
+
+    keys.reserve(m_params.currentGroup->size());
+
+    for(params::IniKeys::iterator it = m_params.currentGroup->begin();
+        it != m_params.currentGroup->end();
+        it++)
+    {
+        keys.push_back( it->first );
+    }
+
+    return keys;
+}
+
 void IniProcessing::endGroup()
 {
     m_params.currentGroup = nullptr;

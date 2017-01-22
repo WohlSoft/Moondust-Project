@@ -15,14 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include <QPixmap>
-#include <QImage>
-#include <QRgb>
-
-#include <QFileInfo>
-#include <QSysInfo>
-
+#include <Utils/files.h>
 #include <FileMapper/file_mapper.h>
 
 #include "graphics_funcs.h"
@@ -52,7 +45,7 @@ void GraphicsHelps::closeFreeImage()
     FreeImage_DeInitialise();
 }
 
-FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
+FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
 {
 #ifdef DEBUG_BUILD
     QElapsedTimer loadingTime;
@@ -64,7 +57,7 @@ FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
     FileMapper fileMap;
 
-    if(!fileMap.open_file(file.toUtf8().data()))
+    if(!fileMap.open_file(file.c_str()))
         return NULL;
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
@@ -117,10 +110,9 @@ FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     }
 
 #ifdef DEBUG_BUILD
-    std::string file_s = file.toStdString();
-    D_pLogDebug("File read of texture %s passed in %d milliseconds", file_s.c_str(), fReadTimeElapsed);
-    D_pLogDebug("Conv to 32-bit of %s passed in %d milliseconds", file_s.c_str(), imgConvertElapsed);
-    D_pLogDebug("Total Loading of image %s passed in %d milliseconds", file_s.c_str(), static_cast<long long>(loadingTime.elapsed()));
+    D_pLogDebug("File read of texture %s passed in %d milliseconds", file.c_str(), fReadTimeElapsed);
+    D_pLogDebug("Conv to 32-bit of %s passed in %d milliseconds", file.c_str(), imgConvertElapsed);
+    D_pLogDebug("Total Loading of image %s passed in %d milliseconds", file.c_str(), static_cast<long long>(loadingTime.elapsed()));
 #endif
     return img;
 }
@@ -172,12 +164,12 @@ SDL_Surface *GraphicsHelps::fi2sdl(FIBITMAP *img)
     return surf;
 }
 
-void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
+void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask)
 {
     if(!image)
         return;
 
-    if(!QFileInfo(pathToMask).exists())
+    if(!Files::fileExists(pathToMask))
         return; //Nothing to do
 
     FIBITMAP *mask = loadImage(pathToMask, true);
@@ -230,31 +222,37 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
     FreeImage_Unload(mask);
 }
 
-
 bool GraphicsHelps::getImageMetrics(QString imageFile, PGE_Size *imgSize)
 {
+    return getImageMetrics(imageFile.toStdString(), imgSize);
+}
+
+bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size* imgSize)
+{
+
     if(!imgSize)
         return false;
 
-    FIBITMAP *img = loadImage(imageFile);
-
-    if(!img)
+    int errorCode, w, h;
+    if(!PGE_ImageInfo::getImageSize(imageFile, &w, &h, &errorCode))
         return false;
-    else
-    {
-        int w = static_cast<int>(FreeImage_GetWidth(img));
-        int h = static_cast<int>(FreeImage_GetHeight(img));
-        imgSize->setSize(w, h);
-        GraphicsHelps::closeImage(img);
-    }
 
+    imgSize->setSize(w, h);
     return true;
 }
 
-
 void GraphicsHelps::getMaskedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size *imgSize)
 {
-    if(in_imgName.isEmpty())
+    std::string out_maskName_s = out_maskName.toStdString();
+    std::string out_errStr_s = out_errStr.toStdString();
+    getMaskedImageInfo(rootDir.toStdString(), in_imgName.toStdString(), out_maskName_s, out_errStr_s, imgSize);
+    out_maskName = QString::fromStdString(out_maskName_s);
+    out_errStr = QString::fromStdString(out_errStr_s);
+}
+
+void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string& out_maskName, std::string& out_errStr, PGE_Size* imgSize)
+{
+    if(in_imgName.empty())
     {
         out_errStr = "Image filename isn't defined";
         return;
@@ -290,160 +288,6 @@ void GraphicsHelps::getMaskedImageInfo(QString rootDir, QString in_imgName, QStr
         imgSize->setWidth(w);
         imgSize->setHeight(h);
     }
-}
-
-
-/*********************Code from Qt*********************/
-
-static inline QRgb qt_gl_convertToGLFormatHelper(QRgb src_pixel, GLenum texture_format)
-{
-    if(texture_format == GL_BGRA)
-    {
-        if(QSysInfo::ByteOrder == QSysInfo::BigEndian)
-        {
-            return ((src_pixel << 24) & 0xff000000)
-                   | ((src_pixel >> 24) & 0x000000ff)
-                   | ((src_pixel << 8) & 0x00ff0000)
-                   | ((src_pixel >> 8) & 0x0000ff00);
-        }
-        else
-            return src_pixel;
-    }
-    else      // GL_RGBA
-    {
-        if(QSysInfo::ByteOrder == QSysInfo::BigEndian)
-            return (src_pixel << 8) | ((src_pixel >> 24) & 0xff);
-        else
-        {
-            return ((src_pixel << 16) & 0xff0000)
-                   | ((src_pixel >> 16) & 0xff)
-                   | (src_pixel & 0xff00ff00);
-        }
-    }
-}
-
-static void convertToGLFormatHelper(QImage &dst, const QImage &img, GLenum texture_format)
-{
-    Q_ASSERT(dst.depth() == 32);
-    Q_ASSERT(img.depth() == 32);
-
-    if(dst.size() != img.size())
-    {
-        int target_width = dst.width();
-        int target_height = dst.height();
-        qreal sx = target_width / qreal(img.width());
-        qreal sy = target_height / qreal(img.height());
-        quint32 *dest = reinterpret_cast<quint32 *>(dst.scanLine(0)); // NB! avoid detach here
-        const uchar *srcPixels = img.constScanLine(img.height() - 1);
-        int sbpl = img.bytesPerLine();
-        int dbpl = dst.bytesPerLine();
-        int ix = int(0x00010000 / sx);
-        int iy = int(0x00010000 / sy);
-        quint32 basex = static_cast<quint32>(0.5 * static_cast<double>(ix));
-        quint32 srcy = static_cast<quint32>(0.5 * static_cast<double>(iy));
-
-        // scale, swizzle and mirror in one loop
-        while(target_height--)
-        {
-            const uint *src = reinterpret_cast<const quint32 *>(
-                                  srcPixels -
-                                  (srcy >> 16) * static_cast<unsigned int>(sbpl));
-            int srcx = static_cast<int>(basex);
-
-            for(int x = 0; x < target_width; ++x)
-            {
-                dest[x] = qt_gl_convertToGLFormatHelper(src[srcx >> 16], texture_format);
-                srcx += ix;
-            }
-
-            dest = reinterpret_cast<quint32 *>((reinterpret_cast<uchar *>(dest)) + dbpl);
-            srcy += static_cast<unsigned int>(iy);
-        }
-    }
-    else
-    {
-        const int width = img.width();
-        const int height = img.height();
-        const uint *p = reinterpret_cast<const uint *>(img.scanLine(img.height() - 1));
-        uint *q = reinterpret_cast<uint *>(dst.scanLine(0));
-
-        if(texture_format == GL_BGRA)
-        {
-            if(QSysInfo::ByteOrder == QSysInfo::BigEndian)
-            {
-                // mirror + swizzle
-                for(int i = 0; i < height; ++i)
-                {
-                    const uint *end = p + width;
-
-                    while(p < end)
-                    {
-                        *q = ((*p << 24) & 0xff000000)
-                             | ((*p >> 24) & 0x000000ff)
-                             | ((*p << 8) & 0x00ff0000)
-                             | ((*p >> 8) & 0x0000ff00);
-                        p++;
-                        q++;
-                    }
-
-                    p -= 2 * width;
-                }
-            }
-            else
-            {
-                const uint bytesPerLine = static_cast<const uint>(img.bytesPerLine());
-
-                for(int i = 0; i < height; ++i)
-                {
-                    memcpy(q, p, bytesPerLine);
-                    q += width;
-                    p -= width;
-                }
-            }
-        }
-        else
-        {
-            if(QSysInfo::ByteOrder == QSysInfo::BigEndian)
-            {
-                for(int i = 0; i < height; ++i)
-                {
-                    const uint *end = p + width;
-
-                    while(p < end)
-                    {
-                        *q = (*p << 8) | ((*p >> 24) & 0xff);
-                        p++;
-                        q++;
-                    }
-
-                    p -= 2 * width;
-                }
-            }
-            else
-            {
-                for(int i = 0; i < height; ++i)
-                {
-                    const uint *end = p + width;
-
-                    while(p < end)
-                    {
-                        *q = ((*p << 16) & 0xff0000) | ((*p >> 16) & 0xff) | (*p & 0xff00ff00);
-                        p++;
-                        q++;
-                    }
-
-                    p -= 2 * width;
-                }
-            }
-        }
-    }
-}
-
-QImage GraphicsHelps::convertToGLFormat(const QImage &img)
-{
-    QImage res(img.size(), QImage::Format_ARGB32);
-    convertToGLFormatHelper(res, img.convertToFormat(QImage::Format_ARGB32), GL_RGBA);
-    return res;
 }
 
 bool GraphicsHelps::setWindowIcon(SDL_Window *window, FIBITMAP *img, int iconSize)

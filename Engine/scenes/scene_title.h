@@ -22,6 +22,7 @@
 #include <QMap>
 #include <QPair>
 #include <QStack>
+#include <utility>
 #include <atomic>
 #include "scene.h"
 #include <gui/pge_menu.h>
@@ -119,8 +120,8 @@ class TitleScene : public Scene
         static int findEpisodes(void *);
         static int findLevels(void *);
         static SDL_Thread                      *filefind_thread;
-        static QString                          filefind_folder;
-        static QList<QPair<QString, QString > > filefind_found_files;
+        static std::string                      filefind_folder;
+        static std::vector<std::pair<std::string, std::string > > filefind_found_files;
         static std::atomic_bool                 filefind_finished;
         /**********************file_finder************************/
 

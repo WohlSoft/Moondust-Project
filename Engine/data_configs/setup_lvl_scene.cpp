@@ -16,17 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QString>
-#include <QSettings>
+#include <IniProcessor/ini_processing.h>
 
 #include "setup_lvl_scene.h"
 #include "config_manager.h"
 #include "config_manager_private.h"
 #include <fontman/font_manager.h>
+#include <fmt/fmt_format.h>
 
 LevelSetup ConfigManager::setup_Level;
 
-void LevelSetup::init(QSettings &engine_ini)
+void LevelSetup::init(IniProcessing &engine_ini)
 {
     int LoadScreenImages = 0;
     engine_ini.beginGroup("level");
@@ -76,7 +76,7 @@ void LevelSetup::init(QSettings &engine_ini)
 
     for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(QString("world-image-%1").arg(i));
+        engine_ini.beginGroup(fmt::format("world-image-{0}", i));
         {
             LevelAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();

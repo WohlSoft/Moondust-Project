@@ -20,6 +20,7 @@
 #define CUSTOM_DATA_H
 
 #include <QString>
+#include <string>
 
 /*!
  * \brief This is a capturer of custom files from level/world custom directories
@@ -38,12 +39,14 @@ public:
      * \param stuffPath Full path to default data folder
      */
     CustomDirManager(QString path, QString name, QString stuffPath);
+    CustomDirManager(std::string path, std::string name, std::string stuffPath);
     /*!
      * \brief Get custom file path if exist.
      * \param name Target file name which need to found
      * \return empty string if not exist
      */
     QString getCustomFile(QString name, bool *isDefault=0);
+    std::string getCustomFile(std::string name, bool *isDefault=0);
     /*!
      * \brief Sets paths where look for a requested files
      * \param path Full path to episode directory
@@ -51,14 +54,15 @@ public:
      * \param stuffPath Full path to default data folder
      */
     void setCustomDirs(QString path, QString name, QString stuffPath);
+    void setCustomDirs(std::string path, std::string name, std::string stuffPath);
 
 private:
     //! Full path to episode directory
-    QString m_dirEpisode;
+    std::string m_dirEpisode;
     //! Full path to file's custom stuff directory
-    QString m_dirCustom;
+    std::string m_dirCustom;
     //! Full path to default data folder
-    QString m_mainStuffFullPath;
+    std::string m_mainStuffFullPath;
 
 };
 

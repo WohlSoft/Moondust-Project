@@ -16,32 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QSettings>
-
 #include "setup_load_screen.h"
 #include "config_manager.h"
 #include "config_manager_private.h"
 
+#include <fmt/fmt_format.h>
+
 LoadingScreenSetup  ConfigManager::setup_LoadingScreen;
 
-void LoadingScreenSetup::init(QSettings &engine_ini)
+void LoadingScreenSetup::init(IniProcessing &engine_ini)
 {
-    int LoadScreenImages=0;
+    int LoadScreenImages = 0;
     engine_ini.beginGroup("loading-scene");
-        backgroundColor.setNamedColor(engine_ini.value("bg-color", "#000000").toString());
-        backgroundImg = engine_ini.value("background", "").toString();
-        ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
+    backgroundColor.setRgba(engine_ini.value("bg-color", "#000000").toString());
+    backgroundImg = engine_ini.value("background", "").toString();
+    ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
 
-        updateDelay = engine_ini.value("updating-time", 128).toInt();
-        luaFile = engine_ini.value("script", "main_loading.lua").toString();
-        LoadScreenImages = engine_ini.value("additional-images", 0).toInt();
+    updateDelay = engine_ini.value("updating-time", 128).toInt();
+    luaFile = engine_ini.value("script", "main_loading.lua").toString();
+    LoadScreenImages = engine_ini.value("additional-images", 0).toInt();
     engine_ini.endGroup();
 
 
     AdditionalImages.clear();
-    for(int i=1; i<=LoadScreenImages; i++)
+    for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(QString("loading-image-%1").arg(i));
+        engine_ini.beginGroup(fmt::format("loading-image-{0}", i));
+        {
             LoadingScreenAdditionalImage img;
 
             img.imgFile = engine_ini.value("image", "").toString();
@@ -52,12 +53,12 @@ void LoadingScreenSetup::init(QSettings &engine_ini)
                 img.frames = engine_ini.value("frames", 1).toInt();
             else
                 img.frames = 1;
-            if(img.frames<=0) img.frames = 1;
+            if(img.frames <= 0) img.frames = 1;
 
             img.x =  engine_ini.value("pos-x", 1).toInt();
             img.y =  engine_ini.value("pos-y", 1).toInt();
             AdditionalImages.push_back(img);
+        }
         engine_ini.endGroup();
     }
-
 }

@@ -68,29 +68,30 @@ LoadingScene::~LoadingScene()
 
 void LoadingScene::init()
 {
-    bgcolor.r = float(ConfigManager::setup_LoadingScreen.backgroundColor.red()) / 255.0f;
-    bgcolor.g = float(ConfigManager::setup_LoadingScreen.backgroundColor.green()) / 255.0f;
-    bgcolor.b = float(ConfigManager::setup_LoadingScreen.backgroundColor.blue()) / 255.0f;
+    bgcolor.r = ConfigManager::setup_LoadingScreen.backgroundColor.Red();
+    bgcolor.g = ConfigManager::setup_LoadingScreen.backgroundColor.Green();
+    bgcolor.b = ConfigManager::setup_LoadingScreen.backgroundColor.Blue();
 
-    if(!ConfigManager::setup_LoadingScreen.backgroundImg.isEmpty())
+    if(!ConfigManager::setup_LoadingScreen.backgroundImg.empty())
         GlRenderer::loadTextureP(background, ConfigManager::setup_LoadingScreen.backgroundImg);
     else
-        GlRenderer::loadTextureP(background, ":cat_splash.png");
+        GlRenderer::loadTextureP(background, std::string(":cat_splash.png"));
 
     imgs.clear();
 
-    for(int i = 0; i < ConfigManager::setup_LoadingScreen.AdditionalImages.size(); i++)
+    for(LoadingScreenAdditionalImage &simg : ConfigManager::setup_LoadingScreen.AdditionalImages)
     {
-        if(ConfigManager::setup_LoadingScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
+        if(simg.imgFile.empty())
+            continue;
 
         LoadingScene_misc_img img;
-        GlRenderer::loadTextureP(img.t, ConfigManager::setup_LoadingScreen.AdditionalImages[i].imgFile);
-        img.x = ConfigManager::setup_LoadingScreen.AdditionalImages[i].x;
-        img.y = ConfigManager::setup_LoadingScreen.AdditionalImages[i].y;
-        img.a.construct(ConfigManager::setup_LoadingScreen.AdditionalImages[i].animated,
-                        ConfigManager::setup_LoadingScreen.AdditionalImages[i].frames,
+        GlRenderer::loadTextureP(img.t, simg.imgFile);
+        img.x = simg.x;
+        img.y = simg.y;
+        img.a.construct(simg.animated,
+                        simg.frames,
                         ConfigManager::setup_LoadingScreen.updateDelay);
-        img.frmH = (img.t.h / ConfigManager::setup_LoadingScreen.AdditionalImages[i].frames);
+        img.frmH = (img.t.h / simg.frames);
         imgs.push_back(img);
     }
 }

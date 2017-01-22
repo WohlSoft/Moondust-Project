@@ -17,6 +17,8 @@
  */
 
 #include <QDir>
+#include <DirManager/dirman.h>
+#include <Utils/files.h>
 
 #include <common_features/logger.h>
 #include <audio/pge_audio.h>
@@ -553,12 +555,12 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //Build list of episodes
-        for(int i = 0; i < filefind_found_files.size(); i++)
+        for(size_t i = 0; i < filefind_found_files.size(); i++)
         {
-            QPair<QString, QString > &item = filefind_found_files[i];
+            std::pair<std::string, std::string > &item = filefind_found_files[i];
             bool enabled = true;
             if(i == 0) enabled = (item.first != "noworlds");
-            menu.addMenuItem(item.first, item.second, []()->void{}, enabled);
+            menu.addMenuItem(QString::fromStdString(item.first), QString::fromStdString(item.second), []()->void{}, enabled);
         }
         menu.sort();
     }
@@ -579,12 +581,12 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //Build list of levels
-        for(int i = 0; i < filefind_found_files.size(); i++)
+        for(size_t i = 0; i < filefind_found_files.size(); i++)
         {
-            QPair<QString, QString > &item = filefind_found_files[i];
+            std::pair<std::string, std::string > &item = filefind_found_files[i];
             bool enabled = true;
             if(i == 0) enabled = (item.first != "noworlds");
-            menu.addMenuItem(item.first, item.second, []()->void{}, enabled);
+            menu.addMenuItem(QString::fromStdString(item.first), QString::fromStdString(item.second), []()->void{}, enabled);
         }
         menu.sort();
     }
@@ -605,40 +607,40 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 int TitleScene::findEpisodes(void *)
 {
     filefind_found_files.clear();
-    QDir worlddir(filefind_folder);
-    QStringList filter;
-    filter << "*.wld" << "*.wldx";
-    QStringList files;
-    QStringList folders = worlddir.entryList(QDir::Dirs);
+    DirMan worlddir(filefind_folder);
+    std::vector<std::string> files;
+    std::vector<std::string> folders;
+    worlddir.getListOfFolders(folders);
 
-    for(QString &folder : folders)
+    for(std::string &folder : folders)
     {
-        QString path = filefind_folder + folder;
-        QDir episodedir(path);
-        QStringList worlds = episodedir.entryList(filter);
-        for(QString &world : worlds)
-            files << filefind_folder + folder + "/" + world;
+        std::string path = filefind_folder + folder;
+        DirMan episodedir(path);
+        std::vector<std::string> worlds;
+        episodedir.getListOfFiles(worlds, {".wld", ".wldx"});
+        for(std::string &world : worlds)
+            files.push_back(filefind_folder + folder + "/" + world);
     }
 
-    if(files.isEmpty())
+    if(files.empty())
     {
-        QPair<QString, QString > file;
+        std::pair<std::string, std::string > file;
         file.first = "noworlds";
         //% "<episodes not found>"
-        file.second = qtTrId("MSG_EPISODES_NOT_FOUND");
+        file.second = qtTrId("MSG_EPISODES_NOT_FOUND").toStdString();
         filefind_found_files.push_back(file);
     }
     else
     {
         WorldData world;
-        for(QString &filename : files)
+        for(std::string &filename : files)
         {
-            if(FileFormats::OpenWorldFileHeader(filename, world))
+            if(FileFormats::OpenWorldFileHeader(QString::fromStdString(filename), world))
             {
-                QString title = world.EpisodeTitle;
-                QPair<QString, QString > file;
+                std::string title = world.EpisodeTitle.toStdString();
+                std::pair<std::string, std::string > file;
                 file.first = filename;
-                file.second = (title.isEmpty() ? QFileInfo(filename).fileName() : title);
+                file.second = (title.empty() ? Files::basename(filename) : title);
                 filefind_found_files.push_back(file);
             }
         }
@@ -650,32 +652,32 @@ int TitleScene::findEpisodes(void *)
 int TitleScene::findLevels(void *)
 {
     //Build list of casual levels
-    QDir leveldir(filefind_folder);
-    QStringList filter;
-    filter << "*.lvl" << "*.lvlx";
-    QStringList files = leveldir.entryList(filter);
+    DirMan leveldir(filefind_folder);
+
+    std::vector<std::string> files;
+    leveldir.getListOfFiles(files, {".lvl", ".lvlx"});
 
     filefind_found_files.clear();//Clean up old stuff
 
-    if(files.isEmpty())
+    if(files.empty())
     {
-        QPair<QString, QString > file;
+        std::pair<std::string, std::string > file;
         file.first = "noworlds";
         //% "<levels not found>"
-        file.second = qtTrId("MSG_LEVELS_NOT_FOUND");
+        file.second = qtTrId("MSG_LEVELS_NOT_FOUND").toStdString();
         filefind_found_files.push_back(file);
     }
     else
     {
         LevelData level;
-        for(QString &file : files)
+        for(std::string &file : files)
         {
-            if(FileFormats::OpenLevelFileHeader(filefind_folder + file, level))
+            if(FileFormats::OpenLevelFileHeader(QString::fromStdString(filefind_folder + file), level))
             {
-                QString title = level.LevelName;
-                QPair<QString, QString > filex;
+                std::string title = level.LevelName.toStdString();
+                std::pair<std::string, std::string > filex;
                 filex.first = filefind_folder + file;
-                filex.second = (title.isEmpty() ? file : title);
+                filex.second = (title.empty() ? file : title);
                 filefind_found_files.push_back(filex);
             }
         }
