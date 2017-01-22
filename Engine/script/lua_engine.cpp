@@ -18,6 +18,8 @@
 
 #include "bindings/core/classes/luaclass_core_scene_effects.h"
 
+#include <Utils/files.h>
+
 #include <QFile>
 #include <sstream>
 #include <QFileInfo>
@@ -130,16 +132,15 @@ void LuaEngine::init()
     luabind::set_pcall_callback(&push_pcall_handler);
 
     //Complete the lua script path
-    QString fullPaths;
+    std::string fullPaths;
     for(int i=0; i<m_luaScriptPaths.size(); i++)
     {
-        QString luaPath = m_luaScriptPaths[i];
-        if(!luaPath.isEmpty())
-        if(!luaPath.endsWith("/"))
+        std::string luaPath = m_luaScriptPaths[i];
+        if(!luaPath.empty() && luaPath.back() != '/')
             luaPath += "/";
         fullPaths += luaPath + "?.lua";
         if(i < (m_luaScriptPaths.size()-1))
-            fullPaths.append(';');
+            fullPaths.push_back(';');
     }
 
     //Add config package path
@@ -149,7 +150,7 @@ void LuaEngine::init()
         luabind::object package = _G["package"];
         std::string allPaths = luabind::object_cast<std::string>(package["path"]);
         //allPaths += std::string(";") +  m_luaScriptPath.toStdString() + "?.lua";
-        allPaths += std::string(";") +  fullPaths.toStdString();
+        allPaths += std::string(";") +  fullPaths;
         package["path"] = allPaths;
     }
 
@@ -172,11 +173,12 @@ void LuaEngine::init()
 
     //Now read the core file. This file should manage incoming events
     //and process them to all other files.
-    QString coreFilePath = util::resolveRelativeOrAbsolute(m_coreFile, {m_luaScriptPath});
-    QString userFilePath = util::resolveRelativeOrAbsolute(m_userFile, {m_luaScriptPath});
+    std::string coreFilePath = util::resolveRelativeOrAbsolute(m_coreFile, {m_luaScriptPath});
+    std::string userFilePath = util::resolveRelativeOrAbsolute(m_userFile, {m_luaScriptPath});
 
     QFile luaCoreFile(coreFilePath);
-    if(!luaCoreFile.open(QIODevice::ReadOnly)){
+    if(!luaCoreFile.open(QIODevice::ReadOnly))
+    {
         qWarning() << "Failed to load up \"" << coreFilePath << "\"! Wrong path or insufficient access?";
         m_lateShutdown = true;
         shutdown();
@@ -187,7 +189,8 @@ void LuaEngine::init()
 
     // OPTIONAL: User code file
     QFile luaUserFile(userFilePath);
-    if(luaUserFile.open(QIODevice::ReadOnly)){
+    if(luaUserFile.open(QIODevice::ReadOnly))
+    {
         loadMultiRet(&luaUserFile);
         luaUserFile.close();
     }
@@ -240,9 +243,13 @@ luabind::object LuaEngine::loadClassAPI(const QString &path)
     QString luaCoreCode = QTextStream(&luaCoreFile).readAll();
 
     //Now load our code by lua and check for common compile errors
-    int errorCode = luautil_loadclass(L, luaCoreCode.toLocal8Bit().data(), luaCoreCode.length(), m_coreFile.section('/', -1).section('\\', -1).toLocal8Bit().data());
+    int errorCode = luautil_loadclass(L,
+                                      luaCoreCode.toLocal8Bit().data(),
+                                      luaCoreCode.length(),
+                                      Files::basename(m_coreFile).c_str());
     //If we get an error, then handle it
-    if(errorCode){
+    if(errorCode)
+    {
         qWarning() << "Got lua error, reporting...";
         m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
         m_lateShutdown = true;
@@ -264,14 +271,15 @@ void LuaEngine::loadClassAPI(const QString &nameInGlobal, const QString &path)
     luabind::globals(L)[nameInGlobal.toStdString()] = loadClassAPI(path);
 }
 
-QString LuaEngine::coreFile() const
+std::string LuaEngine::coreFile() const
 {
     return m_coreFile;
 }
 
-void LuaEngine::setCoreFile(const QString &coreFile)
+void LuaEngine::setCoreFile(const std::string &coreFile)
 {
-    if(isValid()){
+    if(isValid())
+    {
         qWarning() << "Trying to change core lua file while lua engine is already initialized!";
         return;
     }
@@ -345,12 +353,12 @@ void LuaEngine::error()
     qWarning() << "Runtime Lua Error, shutting down";
     shutdown();
 }
-QString LuaEngine::getUserFile() const
+std::string LuaEngine::getUserFile() const
 {
     return m_userFile;
 }
 
-void LuaEngine::setUserFile(const QString &userFile)
+void LuaEngine::setUserFile(const std::string &userFile)
 {
     m_userFile = userFile;
 }
@@ -394,12 +402,12 @@ void LuaEngine::runGarbageCollector()
     lua_gc(L, LUA_GCCOLLECT,0);
 }
 
-QString LuaEngine::getLuaScriptPath() const
+std::string LuaEngine::getLuaScriptPath() const
 {
     return m_luaScriptPath;
 }
 
-void LuaEngine::setLuaScriptPath(const QString &luaScriptPath)
+void LuaEngine::setLuaScriptPath(const std::string& luaScriptPath)
 {
     m_luaScriptPaths.clear();
     m_luaScriptPaths.append(luaScriptPath);

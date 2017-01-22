@@ -228,14 +228,16 @@ bool LevelScene::loadConfigs()
     }
 
     //Set paths
-    ConfigManager::Dir_Blocks.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelBlock());
-    ConfigManager::Dir_BGO.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelBGO());
-    ConfigManager::Dir_NPC.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelNPC());
-    ConfigManager::Dir_NPCScript.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelNPCScript());
-    ConfigManager::Dir_PlayerScript.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelPlayerScript());
-    ConfigManager::Dir_BG.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelBG());
-    ConfigManager::Dir_EFFECT.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelEffect());
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.meta.path, data.meta.filename, ConfigManager::PathLevelPlayable());
+    std::string metaPath  = data.meta.path.toStdString();
+    std::string metaFName = data.meta.filename.toStdString();
+    ConfigManager::Dir_Blocks.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBlock());
+    ConfigManager::Dir_BGO.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBGO());
+    ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC());
+    ConfigManager::Dir_NPCScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPCScript());
+    ConfigManager::Dir_PlayerScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerScript());
+    ConfigManager::Dir_BG.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBG());
+    ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect());
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable());
     //Load INI-files
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
 

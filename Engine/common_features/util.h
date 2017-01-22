@@ -39,7 +39,7 @@ namespace util
     QString filePath(QString s);
     bool strempty(const char *str);
 
-    QString resolveRelativeOrAbsolute(const QString &path, const QStringList &relativeLookup);
+    std::string resolveRelativeOrAbsolute(const std::string& path, const std::vector<std::string>& relativeLookup);
 
     void CSV2IntArr(QString source, QList<int> &dest);
     void CSV2IntArr(QString source, QVector<int> &dest);

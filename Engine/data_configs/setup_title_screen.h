@@ -4,12 +4,18 @@
 #include <QString>
 #include <QColor>
 #include <QList>
-class QSettings;
+
+#include <string>
+#include <vector>
+#include <graphics/gl_color.h>
+
+class IniProcessing;
 
 struct TitleScreenAdditionalImage
 {
-    enum align{
-        NO_ALIGN=0,
+    enum align
+    {
+        NO_ALIGN = 0,
         LEFT_ALIGN,
         TOP_ALIGN,
         RIGHT_ALIGN,
@@ -17,7 +23,7 @@ struct TitleScreenAdditionalImage
         CENTER_ALIGN
     };
 
-    QString imgFile;
+    std::string imgFile;
     bool animated;
     int frames;
     unsigned int framespeed;
@@ -30,12 +36,11 @@ struct TitleScreenAdditionalImage
 
 struct TitleScreenSetup
 {
-    void init(QSettings &engine_ini);
-    QString backgroundImg;
-    QColor backgroundColor;
-    QList<TitleScreenAdditionalImage > AdditionalImages;
-    QString luaFile;
+    void init(IniProcessing &engine_ini);
+    std::string backgroundImg;
+    GlColor backgroundColor;
+    std::vector<TitleScreenAdditionalImage > AdditionalImages;
+    std::string luaFile;
 };
 
 #endif // SETUP_TITLE_SCREEN_H
-

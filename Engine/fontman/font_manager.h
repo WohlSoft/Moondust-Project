@@ -21,6 +21,9 @@
 
 //#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_opengl.h>
+#include <string>
+#include <unordered_map>
+
 #include <QString>
 #include <QFont>
 #include <QSize>
@@ -37,12 +40,12 @@ public:
     RasterFont();
     RasterFont(const RasterFont &rf);
     ~RasterFont();
-    void  loadFont(QString font_ini);
-    void  loadFontMap(QString fontmap_ini);
+    void  loadFont(std::string font_ini);
+    void  loadFontMap(std::string fontmap_ini);
     PGE_Size textSize(QString &text, int max_line_lenght=0, bool cut=false);
     void printText(QString text, int x, int y, float Red=1.f, float Green=1.f, float Blue=1.f, float Alpha=1.f);
     bool isLoaded();
-    QString getFontName();
+    std::string getFontName();
 private:
     bool isReady;       //!<font is fine
     bool ttf_borders;   //!<Enable borders on backup ttf font render [all unknown characters will be rendered as TTF]
@@ -54,7 +57,7 @@ private:
 
     int matrix_width;   //!< Width of font matrix
     int matrix_height;  //!< Width of font matrix
-    QString fontName;   //!< Handalable name of the font
+    std::string fontName;   //!< Handalable name of the font
 
     struct RasChar
     {
@@ -88,6 +91,7 @@ public:
 
     static PGE_Size textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false, int ttfFontPixelSize = -1);
     static int getFontID(QString fontName);
+    static int getFontID(std::string fontName);
 
     static void getChar1(QChar _x, int px_size, PGE_Texture &tex);
     static void getChar2(QChar _x, int px_size, PGE_Texture &tex);
@@ -132,7 +136,8 @@ private:
     friend uint qHash(const TTFCharType &struc);
     static QHash<TTFCharType, PGE_Texture> fontTable_1;
     static QHash<TTFCharType, PGE_Texture> fontTable_2;
-    static QHash<QString, int> fonts;
+    typedef std::unordered_map<std::string, int> FontsHash;
+    static FontsHash fonts;
     static int fontID;
     static bool double_pixled;
 

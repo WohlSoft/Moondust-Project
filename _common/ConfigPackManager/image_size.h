@@ -41,6 +41,7 @@ public:
      * @return true if successfully finished, false if error occouped
      */
     static bool getImageSize(QString imagePath, int*w, int *h, int *errCode=nullptr);
+    static bool getImageSize(std::string imagePath, int*w, int *h, int *errCode=nullptr);
 
     /**
      * @brief Returns filename of masked image
@@ -48,6 +49,7 @@ public:
      * @return masked image filename
      */
     static QString getMaskName(QString imageFileName);
+    static std::string getMaskName(std::string imageFileName);
 };
 
 #endif // IMAGESIZE_H

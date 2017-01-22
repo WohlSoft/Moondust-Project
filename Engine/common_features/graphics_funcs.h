@@ -16,14 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QPixmap>
-#include <QPainter>
-#include <QImage>
-
 #include "size.h"
-
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
+
+#include <string>
+#include <QString>
 
 #ifndef GRAPHICS_FUNCS_H
 #define GRAPHICS_FUNCS_H
@@ -57,7 +55,7 @@ class GraphicsHelps
          * \param convertTo32bit need to convert image into 32bit RGBA
          * \return FreeImage descriptor to loaded image
          */
-        static FIBITMAP *loadImage(QString file, bool convertTo32bit = true);
+        static FIBITMAP *loadImage(std::string file, bool convertTo32bit = true);
         /*!
          * \brief Loads image from application resources
          * \param file in-resource path to the file
@@ -87,15 +85,18 @@ class GraphicsHelps
          * \param image
          * \param pathToMask
          */
-        static void mergeWithMask(FIBITMAP *image, QString pathToMask);
+        static void mergeWithMask(FIBITMAP *image, std::string pathToMask);
         /*!
          * \brief Gets metric from image file
          * \param [__in] imageFile Path to image file
          * \param [__out] imgSize Pointer to PGE_Size value
          */
         static bool getImageMetrics(QString imageFile, PGE_Size *imgSize);
+        static bool getImageMetrics(std::string imageFile, PGE_Size *imgSize);
+
         static void getMaskedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size *imgSize = 0);
-        static QImage convertToGLFormat(const QImage &img);//Taken from QGLWidget
+        static void getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string &out_maskName, std::string &out_errStr, PGE_Size *imgSize = 0);
+
         static bool setWindowIcon(SDL_Window *window, FIBITMAP *img, int iconSize);
 };
 

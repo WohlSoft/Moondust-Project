@@ -92,3 +92,13 @@ QString VersionCmp::compare(QString ver1, QString ver2)
     else
         return ver1;
 }
+
+int VersionCmp::str2ver(std::string verSuffix)
+{
+    return str2ver(QString::fromStdString(verSuffix));
+}
+
+std::string VersionCmp::compare(std::string ver1, std::string ver2)
+{
+    return compare(QString::fromStdString(ver1), QString::fromStdString(ver2)).toStdString();
+}

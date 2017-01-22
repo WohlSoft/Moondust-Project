@@ -171,6 +171,12 @@ public:
     bool hasKey(const std::string &keyName);
 
     /**
+     * @brief Get list of available keys in current groul
+     * @return Array of strings
+     */
+    std::vector<std::string> allKeys();
+
+    /**
      * @brief Release current section to choice another for process
      */
     void endGroup();

@@ -16,20 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QSettings>
-
 #include "setup_credits_screen.h"
 #include "config_manager.h"
 #include "config_manager_private.h"
 
+#include <IniProcessor/ini_processing.h>
+#include <fmt/fmt_format.h>
+
 CreditsScreenSetup ConfigManager::setup_CreditsScreen;
 
-void CreditsScreenSetup::init(QSettings &engine_ini)
+void CreditsScreenSetup::init(IniProcessing &engine_ini)
 {
     int LoadScreenImages = 0;
     engine_ini.beginGroup("credits-scene");
     {
-        backgroundColor.setNamedColor(engine_ini.value("bg-color", "#000000").toString());
+        backgroundColor.setRgba(engine_ini.value("bg-color", "#000000").toString());
         backgroundImg = engine_ini.value("background", "").toString();
         ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
         updateDelay = engine_ini.value("updating-time", 128).toInt();
@@ -41,7 +42,7 @@ void CreditsScreenSetup::init(QSettings &engine_ini)
 
     for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(QString("credits-image-%1").arg(i));
+        engine_ini.beginGroup(fmt::format("credits-image-{0}", i));
         {
             CreditsScreenAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();

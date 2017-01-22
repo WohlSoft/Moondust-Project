@@ -11,10 +11,12 @@ public:
     GlColor(const GlColor &clr);
     GlColor(GLuint rgba);
     GlColor(QString rgba);
+    GlColor(std::string rgba);
     ~GlColor();
     void setRgb(GLuint rgb);
     void setRgba(GLuint rgba);
     void setRgba(QString rgba);
+    void setRgba(std::string rgba);
     void setRgba(double _r, double _g, double _b, double _a);
     void setHsv(double _h, double _s, double _v);
     void setHsva(double _h, double _s, double _v, double _a);
@@ -64,6 +66,7 @@ public:
     float Blue();
     float Alpha();
     void getHsv(double &h, double &s, double &v);
+
 private:
     double m_r;
     double m_g;

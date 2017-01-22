@@ -226,3 +226,18 @@ bool Files::hasSuffix(const std::string &path, const std::string &suffix)
     return (f.compare(suffix) == 0);
 }
 
+
+bool Files::isAbsolute(const std::string& path)
+{
+    bool firstCharIsSlash = (path.size() > 0) ? path[0] == '/' : false;
+    #ifdef _WIN32
+    bool containsWinChars = (path.size() > 2) ? (path[1] == ':') && ((path[2] == '\\') || (path[2] == '/')) : false;
+    if(firstCharIsSlash || containsWinChars)
+    {
+        return true;
+    }
+    return false;
+    #else
+    return firstCharIsSlash;
+    #endif
+}

@@ -26,30 +26,31 @@
 namespace ConfigManager
 {
     void   checkForImage(QString &imgPath, QString root);
+    void   checkForImage(std::string &imgPath, std::string root);
 
     //special paths
-    extern QString imgFile, imgFileM;
-    extern QString tmpstr;
+    extern std::string imgFile, imgFileM;
+    extern std::string tmpstr;
     extern QStringList tmp;
 
-    extern QString bgoPath;
-    extern QString BGPath;
-    extern QString blockPath;
-    extern QString npcPath;
-    extern QString npcScriptPath;
-    extern QString effectPath;
-    extern QString playerLvlPath;
-    extern QString playerWldPath;
-    extern QString playerScriptPath;
+    extern std::string bgoPath;
+    extern std::string BGPath;
+    extern std::string blockPath;
+    extern std::string npcPath;
+    extern std::string npcScriptPath;
+    extern std::string effectPath;
+    extern std::string playerLvlPath;
+    extern std::string playerWldPath;
+    extern std::string playerScriptPath;
 
-    extern QString tilePath;
-    extern QString scenePath;
-    extern QString pathPath;
-    extern QString wlvlPath;
+    extern std::string tilePath;
+    extern std::string scenePath;
+    extern std::string pathPath;
+    extern std::string wlvlPath;
 
-    extern QString commonGPath;
+    extern std::string commonGPath;
 
-    extern QString scriptPath;
+    extern std::string scriptPath;
 
     void    refreshPaths();
     bool    loadEngineSettings(); //!< Load engine.ini file

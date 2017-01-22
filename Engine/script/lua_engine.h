@@ -7,6 +7,7 @@
 #include <QHash>
 #include <QFile>
 
+#include <vector>
 #include <functional>
 
 #include <luabind/luabind.hpp>
@@ -62,16 +63,16 @@ public:
 
     // ///////  LOADING FUCS END ///////////// //
 
-    QString coreFile() const; //!< The core lua filename
-    void setCoreFile(const QString &coreFile); //!< The core lua filename
+    std::string coreFile() const; //!< The core lua filename
+    void setCoreFile(const std::string& coreFile); //!< The core lua filename
 
     void dispatchEvent(LuaEvent& toDispatchEvent); //!< Dispatches a lua event
     void setErrorReporterFunc(const std::function<void (const QString &, const QString&)> &func); //!< The error reporter function
 
     Scene *getBaseScene() const; //!< The base-scene for the lua engine (may need for interacting with current scene)
 
-    QString getLuaScriptPath() const;
-    void setLuaScriptPath(const QString &luaScriptPath);
+    std::string getLuaScriptPath() const;
+    void setLuaScriptPath(const std::string &luaScriptPath);
     void appendLuaScriptPath(const QString &luaScriptPath);
 
     /*!
@@ -87,8 +88,8 @@ public:
 
     void runGarbageCollector();
 
-    QString getUserFile() const;
-    void setUserFile(const QString &userFile);
+    std::string getUserFile() const;
+    void setUserFile(const std::string& userFile);
 
 protected:
     virtual void onBindAll() {}
@@ -102,13 +103,13 @@ private:
     QHash<QString, luabind::object > loadedFiles;
 
     bool m_lateShutdown; //!< If true, then the lua engine will shutdown as soon as possible
-    QString m_luaScriptPath;
-    QStringList m_luaScriptPaths;
+    std::string m_luaScriptPath;
+    std::vector<std::string> m_luaScriptPaths;
     std::function<void (const QString & /*error message*/, const QString& /*stack trace*/)> m_errorReporterFunc;
     Scene* m_baseScene;
     lua_State* L;
-    QString m_coreFile;
-    QString m_userFile;
+    std::string m_coreFile;
+    std::string m_userFile;
 };
 
 extern void push_pcall_handler(lua_State* L);

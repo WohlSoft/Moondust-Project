@@ -92,7 +92,9 @@ public:
     static void setViewportSize(int w, int h);
     static void setWindowSize(int w, int h);
 
+    static PGE_Texture loadTexture(std::string path, std::string maskPath="");
     static PGE_Texture loadTexture(QString path, QString maskPath="");
+    static void loadTextureP(PGE_Texture &target, std::string path, std::string maskPath="");
     static void loadTextureP(PGE_Texture &target, QString path, QString maskPath="");
     static GLuint QImage2Texture(QImage *img, PGE_Texture &tex);
     static void deleteTexture(PGE_Texture &tx);

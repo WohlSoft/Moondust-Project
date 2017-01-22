@@ -18,70 +18,72 @@
 
 #include "config_manager.h"
 #include "config_manager_private.h"
-#include <QFileInfo>
+
 #include <gui/pge_msgbox.h>
+#include <IniProcessor/ini_processing.h>
+#include <Utils/files.h>
 
 bool ConfigManager::loadEngineSettings()
 {
-    QString engine_ini = config_dir + "engine.ini";
+    std::string engine_ini = config_dirSTD + "engine.ini";
 
-    if(!QFileInfo(engine_ini).exists())
+    if(!Files::fileExists(engine_ini))
     {
         PGE_MsgBox::error(QString("Config error!\nCan't open the 'engine.ini' config file!"));
         return false;
     }
 
-    QSettings engineset(engine_ini, QSettings::IniFormat);
-    engineset.setIniCodec("UTF-8");
+    IniProcessing engineset(engine_ini);
+
     engineset.beginGroup("window");
     {
-        config_name = engineset.value("title", QString::fromStdString(config_name)).toString().toStdString();
+        engineset.read("title", config_name, config_name);
     }
     engineset.endGroup();
+
     engineset.beginGroup("fonts");
     {
-        setup_fonts.fontname = engineset.value("font-file", "").toString();
-        setup_fonts.double_pixled = engineset.value("double-pixled", false).toBool();
-        setup_fonts.rasterFontsFile = engineset.value("raster-fonts", "").toString();
+        engineset.read("font-file", setup_fonts.fontname, "");
+        engineset.read("double-pixled", setup_fonts.double_pixled, false);
+        engineset.read("raster-fonts", setup_fonts.rasterFontsFile, "");
     }
     engineset.endGroup();
     engineset.beginGroup("common");
     {
-        screen_width    = engineset.value("screen-width",  800).toUInt();
-        screen_height   = engineset.value("screen-height", 600).toUInt();
-        QString scrType = engineset.value("screen-type", "static").toString();
-
+        engineset.read("screen-width", screen_width, 800);
+        engineset.read("screen-height", screen_height, 600);
+        std::string scrType;
+        engineset.read("screen-type", scrType, "static");
         if(scrType == "dynamic")
             screen_type = SCR_Dynamic;
         else
             screen_type = SCR_Static;
-
-        setup_cursors.normal = engineset.value("cursor-image-normal", "").toString();
+        engineset.read("cursor-image-normal", setup_cursors.normal, "");
         checkForImage(setup_cursors.normal, dirs.gcommon);
-        setup_cursors.rubber = engineset.value("cursor-image-rubber", "").toString();
+        engineset.read("cursor-image-rubber", setup_cursors.rubber, "");
         checkForImage(setup_cursors.rubber, dirs.gcommon);
     }
     engineset.endGroup();
     engineset.beginGroup("message-box");
     {
-        setup_message_box.sprite = engineset.value("image", "").toString();
+        engineset.read("image", setup_message_box.sprite, "");
         checkForImage(setup_message_box.sprite, dirs.gcommon);
         setup_message_box.box_padding = static_cast<double>(engineset.value("box-padding", 20).toUInt());
         setup_message_box.borderWidth = static_cast<int>(engineset.value("border-width", 32).toUInt());
-        setup_message_box.font_name = engineset.value("font", "font2").toString();
-        setup_message_box.font_color = engineset.value("font-color", "#FFFFFF").toString();
+        engineset.read("font", setup_message_box.font_name, "font2");
+        engineset.read("font-color", setup_message_box.font_color, "#FFFFFF");
         setup_message_box.font_rgba.setRgba(setup_message_box.font_color);
         setup_message_box.font_id = 0;
     }
     engineset.endGroup();
     engineset.beginGroup("menu-box");
     {
-        setup_menu_box.sprite = engineset.value("image", "").toString();
+        engineset.read("image", setup_menu_box.sprite, "");
         checkForImage(setup_menu_box.sprite, dirs.gcommon);
         setup_menu_box.box_padding = static_cast<double>(engineset.value("box-padding", 20).toULongLong());
         setup_menu_box.borderWidth = static_cast<int>(engineset.value("border-width", 32).toUInt());
-        setup_menu_box.title_font_name = engineset.value("title-font", "font2").toString();
-        setup_menu_box.title_font_color = engineset.value("title-font-color", "#FF0000").toString();
+        engineset.read("title-font", setup_menu_box.title_font_name, "font2");
+        engineset.read("title-font-color", setup_menu_box.title_font_color, "#FF0000");
         setup_menu_box.title_font_rgba.setRgba(setup_menu_box.title_font_color);
         setup_menu_box.title_font_id = 0;
     }

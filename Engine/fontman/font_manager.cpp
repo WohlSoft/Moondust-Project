@@ -25,6 +25,13 @@
 #include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
 
+#include <Utils/files.h>
+#include <DirManager/dirman.h>
+#include <IniProcessor/ini_processing.h>
+#include <fmt/fmt_format.h>
+
+#include <vector>
+
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
@@ -59,7 +66,7 @@ RasterFont::RasterFont() : first_line_only("\n.*")
     matrix_height   = 0;
     isReady         = false;
     ttf_borders     = false;
-    fontName = QString("font%1").arg(rand());
+    fontName        = fmt::format("font{0}", rand());
 }
 
 RasterFont::RasterFont(const RasterFont &rf) : first_line_only("\n.*")
@@ -86,64 +93,63 @@ RasterFont::~RasterFont()
     textures.clear();
 }
 
-void RasterFont::loadFont(QString font_ini)
+void RasterFont::loadFont(std::string font_ini)
 {
-    QFileInfo fm_ini(font_ini);
-
-    if(!fm_ini.exists())
+    if(!Files::fileExists(font_ini))
     {
-        pLogWarning("Can't load font %s: file not exist", font_ini.toStdString().c_str());
+        pLogWarning("Can't load font %s: file not exist", font_ini.c_str());
         return;
     }
 
-    QString root = fm_ini.absoluteDir().absolutePath() + "/";
-    QSettings font(font_ini, QSettings::IniFormat);
-    font.setIniCodec("UTF-8");
+    std::string root = DirMan(Files::dirname(font_ini)).absolutePath() + "/";
+    IniProcessing font(font_ini);
+
     int tables = 0;
     font.beginGroup("font");
-    tables              = font.value("tables", 0).toInt();
-    fontName            = font.value("name", fontName).toString();
-    ttf_borders         = font.value("ttf-borders", false).toBool();
-    space_width         = font.value("space-width", 0).toInt();
-    interletter_space   = font.value("interletter-space", 0).toInt();
-    newline_offset      = font.value("newline-offset", 0).toInt();
+    font.read("tables", tables, 0);
+    font.read("name", fontName, fontName);
+    font.read("ttf-borders", ttf_borders, false);
+    font.read("space-width", space_width, 0);
+    font.read("interletter-space", interletter_space, 0);
+    font.read("newline-offset", newline_offset, 0);
     font.endGroup();
-    QStringList tables_list;
+    std::vector<std::string> tables_list;
+    tables_list.reserve(tables);
+
     font.beginGroup("tables");
 
     for(int i = 1; i <= tables; i++)
     {
-        QString table = font.value(QString("table%1").arg(i), "").toString();
+        std::string table;
+        font.read(fmt::format("table{0}", i).c_str(), table, "");
 
-        if(!table.isEmpty())
-            tables_list.append(table);
+        if(!table.empty())
+            tables_list.push_back(table);
     }
 
     font.endGroup();
 
-    for(QString &tbl : tables_list)
+    for(std::string &tbl : tables_list)
         loadFontMap(root + tbl);
 }
 
-void RasterFont::loadFontMap(QString fontmap_ini)
+void RasterFont::loadFontMap(std::string fontmap_ini)
 {
-    QFileInfo fm_ini(fontmap_ini);
-    QString root = fm_ini.absoluteDir().absolutePath() + "/";
+    std::string root = DirMan(Files::dirname(fontmap_ini)).absolutePath() + "/";
 
-    if(!fm_ini.exists())
+    if(!Files::fileExists(fontmap_ini))
     {
-        pLogWarning("Can't load font map %s: file not exist", fontmap_ini.toStdString().c_str());
+        pLogWarning("Can't load font map %s: file not exist", fontmap_ini.c_str());
         return;
     }
 
-    QSettings font(fontmap_ini, QSettings::IniFormat);
-    font.setIniCodec("UTF-8");
-    QString texFile;
+    IniProcessing font(fontmap_ini);
+    std::string texFile;
     int w = letter_width, h = letter_height;
     font.beginGroup("font-map");
-    texFile = font.value("texture", "").toString();
-    w       = font.value("width", 0).toInt();
-    h       = font.value("height", 0).toInt();
+    font.read("texture", texFile, "");
+    font.read("width", w, 0);
+    font.read("height", h, 0);
     matrix_width = w;
     matrix_height = h;
 
@@ -153,10 +159,10 @@ void RasterFont::loadFontMap(QString fontmap_ini)
         return;
     }
 
-    if(!QFileInfo(root + texFile).exists())
+    if(!Files::fileExists(root + texFile))
     {
         pLogWarning("Failed to load font texture! file not exists: %s",
-                    (root + texFile).toStdString().c_str());
+                    (root + texFile).c_str());
         return;
     }
 
@@ -183,63 +189,71 @@ void RasterFont::loadFontMap(QString fontmap_ini)
 
     font.endGroup();
     font.beginGroup("entries");
-    QStringList entries = font.allKeys();
+    std::vector<std::string> entries = font.allKeys();
 
     //qDebug()<<entries;
 
-    for(QString &x : entries)
+    for(std::string &x : entries)
     {
-        bool okX = false;
-        bool okY = false;
-        x = x.trimmed();
-        QString charPosX = "0", charPosY = "0";
-        QStringList tmp = x.split('-');
+        std::string charPosX = "0", charPosY = "0";
 
-        if(tmp.isEmpty()) continue;
+        std::string::size_type begPos = 0;
+        std::string::size_type endPos = x.find('-', begPos);
 
-        charPosX = tmp[0];
-        charPosX.toInt(&okX);
+        //QStringList tmp = x.split('-');
+        if(endPos == std::string::npos)
+            endPos = x.size();//Use entire string
 
-        if(!okX)
+        charPosX = x.substr(begPos, endPos);
+
+        if(charPosX.empty())
         {
-            pLogDebug("=invalid-X=%d=", x.toStdString().c_str());
+            pLogDebug("=invalid-X=%d=", x.c_str());
             continue;
         }
 
         if(matrix_width > 1)
         {
-            if(tmp.size() < 2) continue;
-
-            charPosY = tmp[1];
-            charPosY.toInt(&okY);
-
-            if(!okY)
+            if(endPos == x.size())
             {
-                pLogDebug("=invalid-Y=%d=", x.toStdString().c_str());
+                pLogDebug("=invalid-Y=%d=", x.c_str());
+                continue;
+            }
+            begPos = endPos;
+            endPos = x.find('-', begPos);
+            if(endPos == std::string::npos)
+                endPos = x.size();//Use entire string
+            charPosY = x.substr(begPos, endPos);
+            if(charPosY.empty())
+            {
+                pLogDebug("=invalid-Y=%d=", x.c_str());
                 continue;
             }
         }
 
-        QString charX = font.value(x, "").toString();
+        std::string charX;
+        font.read(x.c_str(), charX, "");
 
         /*Format of entry: X23
          * X - UTF-8 Symbol
          * 2 - padding left [for non-mono fonts]
          * 3 - padding right [for non-mono fonts]
         */
-        if(charX.isEmpty()) continue;
+        if(charX.empty())
+            continue;
 
-        QChar ch = charX[0];
+        QString ucharX = QString::fromStdString(charX);
+        QChar ch = ucharX[0];
         //qDebug()<<"=char=" << ch << "=id="<<charPosX.toInt()<<charPosY.toInt()<<"=";
         RasChar rch;
         rch.valid = true;
         rch.tx              =  loadedTexture;
-        rch.l               =  charPosY.toFloat(&okY) / matrix_width;
-        rch.r               = (charPosY.toFloat(&okY) + 1.0f) / matrix_width;
-        rch.padding_left    = (charX.size() > 1) ? char2int(charX[1]) : 0;
-        rch.padding_right   = (charX.size() > 2) ? char2int(charX[2]) : 0;
-        rch.t               =  charPosX.toFloat(&okX) / matrix_height;
-        rch.b               = (charPosX.toFloat(&okX) + 1.0f) / matrix_height;
+        rch.l               =  std::stof(charPosY.c_str()) / matrix_width;
+        rch.r               = (std::stof(charPosY.c_str()) + 1.0f) / matrix_width;
+        rch.padding_left    = (ucharX.size() > 1) ? char2int(ucharX[1]) : 0;
+        rch.padding_right   = (ucharX.size() > 2) ? char2int(ucharX[2]) : 0;
+        rch.t               =  std::stof(charPosX.c_str()) / matrix_height;
+        rch.b               = (std::stof(charPosX.c_str()) + 1.0f) / matrix_height;
         fontMap[ch] = rch;
     }
 
@@ -409,7 +423,7 @@ bool RasterFont::isLoaded()
     return isReady;
 }
 
-QString RasterFont::getFontName()
+std::string RasterFont::getFontName()
 {
     return fontName;
 }
@@ -428,7 +442,7 @@ bool FontManager::isInit = false;
 QHash<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_1;
 QHash<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_2;
 
-QHash<QString, int> FontManager::fonts;
+FontManager::FontsHash FontManager::fonts;
 
 int     FontManager::fontID;
 QFont  *FontManager::defaultFont = nullptr;
@@ -462,21 +476,21 @@ void FontManager::initBasic()
 
 void FontManager::initFull()
 {
-    if(ConfigManager::setup_fonts.fontname.isEmpty())
+    if(ConfigManager::setup_fonts.fontname.empty())
         fontID = QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
     else
         fontID = QFontDatabase::addApplicationFont(
-                     ConfigManager::data_dir + "/" +
-                     ConfigManager::setup_fonts.fontname);
+                     QString::fromStdString(ConfigManager::data_dirSTD + "/" +
+                     ConfigManager::setup_fonts.fontname));
 
     double_pixled = ConfigManager::setup_fonts.double_pixled;
     /***************Load raster font support****************/
-    QDir fontsDir(ConfigManager::config_dir + "/fonts");
-    QStringList filter;
-    filter << "*.font.ini";
-    fontsDir.setNameFilters(filter);
+    DirMan fontsDir(ConfigManager::config_dirSTD + "/fonts");
+    std::vector<std::string> files;
+    //filter << "*.font.ini";
+    fontsDir.getListOfFiles(files, {".font.ini"});
 
-    for(QString &fonFile : fontsDir.entryList(QDir::Files))
+    for(std::string &fonFile : files)
     {
         RasterFont rfont;
         rasterFonts.push_back(rfont);
@@ -485,7 +499,7 @@ void FontManager::initFull()
         if(!rasterFonts.last().isLoaded())   //Pop broken font from array
             rasterFonts.pop_back();
         else   //Register font name in a table
-            fonts[rasterFonts.last().getFontName()] = rasterFonts.size() - 1;
+            fonts.insert({rasterFonts.last().getFontName(), rasterFonts.size() - 1});
     }
 
     if(!rasterFonts.isEmpty())
@@ -704,10 +718,16 @@ void FontManager::printTextTTF(QString text, int x, int y, int pointSize, QRgb c
 
 int FontManager::getFontID(QString fontName)
 {
-    if(fonts.contains(fontName))
-        return fonts[fontName];
-    else
+    return getFontID(fontName.toStdString());
+}
+
+int FontManager::getFontID(std::string fontName)
+{
+    FontsHash::iterator i = fonts.find(fontName);
+    if(i == fonts.end())
         return DefaultRaster;
+    else
+        return i->second;
 }
 
 void FontManager::getChar1(QChar _x, int px_size, PGE_Texture &tex)

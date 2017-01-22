@@ -48,6 +48,9 @@
 #include "render/render_opengl31.h"
 #include "render/render_swsdl.h"
 
+#include <DirManager/dirman.h>
+#include <Utils/files.h>
+
 #include <QDir>
 #include <QImage>
 #include <QDateTime>
@@ -775,6 +778,12 @@ bool GlRenderer::uninit()
     return g_renderer->uninit();
 }
 
+
+PGE_Texture GlRenderer::loadTexture(std::string path, std::string maskPath)
+{
+    return loadTexture(QString::fromStdString(path), QString::fromStdString(maskPath));
+}
+
 PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
 {
     PGE_Texture target;
@@ -784,24 +793,29 @@ PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
 
 void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPath)
 {
+    loadTextureP(target, path.toStdString(), maskPath.toStdString());
+}
+
+void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string maskPath)
+{
     //SDL_Surface * sourceImage;
     FIBITMAP *sourceImage;
 
-    if(path.isEmpty())
+    if(path.empty())
         return;
 
     // Load the OpenGL texture
     //sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
-    if(path[0] == QChar(':'))
+    if(path[0] == ':')
     {
-        path.remove(0, 1);
-        sourceImage = GraphicsHelps::loadImageRC(path.toUtf8().data());
+        path.erase(0, 1);
+        sourceImage = GraphicsHelps::loadImageRC(path.c_str());
     }
     else
         sourceImage = GraphicsHelps::loadImage(path);
 
     //Don't load mask if PNG image is used
-    if(path.endsWith(".png", Qt::CaseInsensitive))
+    if(Files::hasSuffix(path, ".png"))
         maskPath.clear();
 
     if(!sourceImage)
@@ -809,8 +823,8 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         pLogWarning("Error loading of image file:\n"
                     "%s\n"
                     "Reason: %s.",
-                    path.toStdString().c_str(),
-                    (QFileInfo(path).exists() ? "wrong image format" : "file not exist"));
+                    path.c_str(),
+                    (Files::fileExists(path) ? "wrong image format" : "file not exist"));
         target = g_renderer->getDummyTexture();
         return;
     }
@@ -827,7 +841,7 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     #endif
 
     //Apply Alpha mask
-    if(!maskPath.isEmpty() && QFileInfo(maskPath).exists())
+    if(!maskPath.empty() && Files::fileExists(maskPath))
     {
         #ifdef DEBUG_BUILD
         maskMergingTime.start();
@@ -847,7 +861,7 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
         pLogWarning("Error loading of image file:\n"
                     "%s\n"
                     "Reason: %s.",
-                    path.toStdString().c_str(),
+                    path.c_str(),
                     "Zero image size!");
         target = g_renderer->getDummyTexture();
         return;
@@ -898,12 +912,14 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     unloadElapsed = unloadTime.elapsed();
     #endif
     #ifdef DEBUG_BUILD
-    LogDebug(QString("Mask merging of %1 passed in %2 milliseconds").arg(path).arg(maskElapsed));
-    LogDebug(QString("Binding time of %1 passed in %2 milliseconds").arg(path).arg(bindElapsed));
-    LogDebug(QString("Unload time of %1 passed in %2 milliseconds").arg(path).arg(unloadElapsed));
-    LogDebug(QString("Total Loading of texture %1 passed in %2 milliseconds (%3x%4)")
-             .arg(path).arg(totalTime.elapsed())
-             .arg(w).arg(h));
+    pLogDebug("Mask merging of %s passed in %ul milliseconds", path.c_str(), static_cast<unsigned long>(maskElapsed));
+    pLogDebug("Binding time of %s passed in %ul milliseconds", path.c_str(), static_cast<unsigned long>(bindElapsed));
+    pLogDebug("Unload time of %s passed in %ul milliseconds", path.c_str(), static_cast<unsigned long>(unloadElapsed));
+    pLogDebug("Total Loading of texture %s passed in %ul milliseconds (%ulx%ul)",
+              path.c_str(),
+              static_cast<unsigned long>(totalTime.elapsed()),
+              static_cast<unsigned long>(w),
+              static_cast<unsigned long>(h));
     #endif
     return;
 }

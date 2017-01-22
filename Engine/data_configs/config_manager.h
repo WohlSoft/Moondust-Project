@@ -52,18 +52,18 @@
 
 struct DataFolders
 {
-    QString worlds;
+    std::string worlds;
 
-    QString music;
-    QString sounds;
+    std::string music;
+    std::string sounds;
 
-    QString glevel;
-    QString gworld;
-    QString gplayble;
+    std::string glevel;
+    std::string gworld;
+    std::string gplayble;
 
-    QString gcommon;
+    std::string gcommon;
 
-    QString gcustom;
+    std::string gcustom;
 };
 
 /*****************Fonts********************/
@@ -73,8 +73,8 @@ struct FontsSetup
         double_pixled(false)
     {}
     bool double_pixled;
-    QString fontname;
-    QString rasterFontsFile;
+    std::string fontname;
+    std::string rasterFontsFile;
 };
 /******************************************/
 
@@ -82,8 +82,8 @@ struct FontsSetup
 /**************Cursors*********************/
 struct MainCursors
 {
-    QString normal;
-    QString rubber;
+    std::string normal;
+    std::string rubber;
 };
 /******************************************/
 
@@ -94,13 +94,13 @@ struct MessageBoxSetup
         box_padding(10),
         font_id(-1)
     {}
-    QString sprite;
-    int borderWidth;
-    double  box_padding;
-    QString font_name;
-    int     font_id;
-    QString font_color;
-    GlColor font_rgba;
+    std::string sprite;
+    int         borderWidth;
+    double      box_padding;
+    std::string font_name;
+    int         font_id;
+    std::string font_color;
+    GlColor     font_rgba;
 };
 
 struct MenuBoxSetup
@@ -110,13 +110,13 @@ struct MenuBoxSetup
         box_padding(10),
         title_font_id(-1)
     {}
-    QString sprite;
-    int     borderWidth;
-    double  box_padding;
-    QString title_font_name;
-    int     title_font_id;
-    QString title_font_color;
-    GlColor title_font_rgba;
+    std::string sprite;
+    int         borderWidth;
+    double      box_padding;
+    std::string title_font_name;
+    int         title_font_id;
+    std::string title_font_color;
+    GlColor     title_font_rgba;
 };
 
 struct MenuSetup
@@ -129,25 +129,25 @@ struct MenuSetup
         font_offset(4),
         font_id(-1)
     {}
-    QString selector;
-    QString scrollerUp;
-    QString scrollerDown;
-    int     item_height;
-    int     font_offset;
-    QString font_name;
-    int     font_id;
+    std::string selector;
+    std::string scrollerUp;
+    std::string scrollerDown;
+    int         item_height;
+    int         font_offset;
+    std::string font_name;
+    int         font_id;
 };
 
 struct ScriptsSetup
 {
     //Script in the level custom folder
-    QString lvl_local;
+    std::string lvl_local;
     //Script in the same folder as level
-    QString lvl_common;
+    std::string lvl_common;
     //Script in the world map custom folder
-    QString wld_local;
+    std::string wld_local;
     //Script in the same folder as world map
-    QString wld_common;
+    std::string wld_common;
 };
 
 template<class obj_T>
@@ -180,9 +180,12 @@ namespace ConfigManager
 {
     extern DataFolders dirs;
     extern QString      config_id;
+    extern std::string  config_idSTD;
     extern std::string  config_name;
     extern QString      config_dir;
+    extern std::string  config_dirSTD;
     extern QString      data_dir;
+    extern std::string  data_dirSTD;
     extern unsigned int default_grid;
 
     //Scripts setup
@@ -406,27 +409,27 @@ namespace ConfigManager
 
     extern QStringList errorsList;
 
-    QString PathLevelBGO();
-    QString PathLevelBG();
-    QString PathLevelBlock();
-    QString PathLevelNPC();
-    QString PathLevelNPCScript();
-    QString PathLevelEffect();
-    QString PathLevelPlayable();
-    QString PathLevelPlayerScript();
+    std::string PathLevelBGO();
+    std::string PathLevelBG();
+    std::string PathLevelBlock();
+    std::string PathLevelNPC();
+    std::string PathLevelNPCScript();
+    std::string PathLevelEffect();
+    std::string PathLevelPlayable();
+    std::string PathLevelPlayerScript();
 
-    QString PathCommonGFX();
+    std::string PathCommonGFX();
 
-    QString PathScript();
+    std::string PathScript();
 
-    QString PathWorldTiles();
-    QString PathWorldScenery();
-    QString PathWorldPaths();
-    QString PathWorldLevels();
-    QString PathWorldPlayable();
+    std::string PathWorldTiles();
+    std::string PathWorldScenery();
+    std::string PathWorldPaths();
+    std::string PathWorldLevels();
+    std::string PathWorldPlayable();
 
-    QString PathMusic();
-    QString PathSound();
+    std::string PathMusic();
+    std::string PathSound();
 
     QString clearMusTrack(QString path);
 };

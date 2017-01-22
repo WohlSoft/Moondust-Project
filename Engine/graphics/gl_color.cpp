@@ -2,6 +2,39 @@
 
 #include <QColor>
 #include <cmath>
+#include <unordered_map>
+#include <algorithm>
+#include <common_features/logger.h>
+
+struct gl_RGBA
+{
+    double R;
+    double G;
+    double B;
+    double A;
+};
+typedef std::unordered_map<std::string, gl_RGBA> ColorNamesHash;
+static const ColorNamesHash s_ColorNames =
+{
+    {"transparent", {0.0, 0.0, 0.0, 1.0}},
+    {"white",       {1.0, 1.0, 1.0, 1.0}},
+    {"black",       {0.0, 0.0, 0.0, 1.0}},
+    {"red",         {1.0, 0.0, 0.0, 1.0}},
+    {"darkred",     {0.5, 0.0, 0.0, 1.0}},
+    {"green",       {0.0, 1.0, 0.0, 1.0}},
+    {"darkgreen",   {0.0, 0.5, 0.0, 1.0}},
+    {"blue",        {0.0, 0.0, 1.0, 1.0}},
+    {"darkblue",    {0.0, 0.0, 0.5, 1.0}},
+    {"cyan",        {0.0, 1.0, 1.0, 1.0}},
+    {"darkcyan",    {0.0, 0.5, 0.5, 1.0}},
+    {"magenta",     {1.0, 0.0, 1.0, 1.0}},
+    {"darkmagenta", {0.5, 0.0, 0.5, 1.0}},
+    {"yellow",      {1.0, 1.0, 0.0, 1.0}},
+    {"darkyellow",  {0.5, 0.5, 0.0, 1.0}},
+    {"gray",        {0.625, 0.625, 0.625, 1.0}},
+    {"darkgray",    {0.5, 0.5, 0.5, 1.0}},
+    {"lightgray",   {0.75, 0.75, 0.75, 1.0}}
+};
 
 GlColor::GlColor()
 {
@@ -26,6 +59,11 @@ GlColor::GlColor(GLuint rgba)
 
 GlColor::GlColor(QString rgba)
 {
+    setRgba(rgba.toStdString());
+}
+
+GlColor::GlColor(std::string rgba)
+{
     setRgba(rgba);
 }
 
@@ -37,6 +75,7 @@ void GlColor::setRgb(GLuint rgb)
     m_r = static_cast<double>((rgb & 0xFF0000) >> 16) / 255.0;
     m_g = static_cast<double>((rgb & 0x00FF00) >> 8) / 255.0;
     m_b = static_cast<double>((rgb & 0x0000FF) >> 0) / 255.0;
+    m_a = 1.0;
 }
 
 void GlColor::setRgba(GLuint rgba)
@@ -49,12 +88,74 @@ void GlColor::setRgba(GLuint rgba)
 
 void GlColor::setRgba(QString rgba)
 {
-    QColor color;
-    color.setNamedColor(rgba);
-    m_r = color.redF();
-    m_g = color.greenF();
-    m_b = color.blueF();
-    m_a = color.alphaF();
+    setRgba(rgba.toStdString());
+}
+
+void GlColor::setRgba(std::string rgba)
+{
+    if(rgba.empty())
+    {
+        setRgba(0.0, 0.0, 0.0, 1.0);
+        return;
+    }
+
+    std::transform(rgba.begin(), rgba.end(), rgba.begin(), ::tolower);
+
+    try
+    {
+        if(rgba[0] == '#')
+        {
+            m_a = 1.0;
+            switch(rgba.size())
+            {
+            case 4:
+                // 0 123
+                m_r = std::strtol( rgba.substr(1, 1).c_str(), NULL, 16);
+                m_g = std::strtol( rgba.substr(2, 1).c_str(), NULL, 16);
+                m_b = std::strtol( rgba.substr(3, 1).c_str(), NULL, 16);
+                return;
+            case 9:
+                // 0 12 34 56 78
+                m_a = std::strtol( rgba.substr(7, 2).c_str(), NULL, 16);
+            case 7:
+                // 0 12 34 56
+                m_r = std::strtol( rgba.substr(1, 2).c_str(), NULL, 16);
+                m_g = std::strtol( rgba.substr(3, 2).c_str(), NULL, 16);
+                m_b = std::strtol( rgba.substr(5, 2).c_str(), NULL, 16);
+                return;
+            default:
+                setRgba(0.0, 0.0, 0.0, 1.0);
+                return;
+            }
+        }
+        else
+        {
+            ColorNamesHash::const_iterator color = s_ColorNames.find(rgba);
+            if(color == s_ColorNames.end())
+            {
+                pLogWarning("Unknown color name \"%s\"", rgba.c_str());
+                setRgba(0.0, 0.0, 0.0, 1.0);
+                return;
+            }
+            else
+            {
+                const gl_RGBA& c = color->second;
+                m_r = c.R;
+                m_g = c.G;
+                m_b = c.B;
+                m_a = c.A;
+                return;
+            }
+        }
+    }
+    catch(std::exception& e)
+    {
+        pLogWarning("Invalid color code \"%s\" because of %s", rgba.c_str(), e.what());
+    }
+    catch(...)
+    {
+        pLogWarning("Invalid color code \"%s\"", rgba.c_str());
+    }
 }
 
 void GlColor::setRgba(double _r, double _g, double _b, double _a)

@@ -25,6 +25,11 @@
 #include <gui/pge_msgbox.h>
 #include "../version.h"
 
+#include <DirManager/dirman.h>
+#include <Utils/files.h>
+#include <fmt/fmt_format.h>
+#include <algorithm>
+
 #include <QDir>
 #include <QFileInfo>
 
@@ -36,8 +41,11 @@
 DataFolders      ConfigManager::dirs;
 std::string      ConfigManager::config_name;
 QString          ConfigManager::config_dir;
+std::string      ConfigManager::config_dirSTD;
 QString          ConfigManager::config_id = "dummy";
+std::string      ConfigManager::config_idSTD = "dummy";
 QString          ConfigManager::data_dir;
+std::string      ConfigManager::data_dirSTD;
 unsigned int     ConfigManager::default_grid = 32u;
 
 ScriptsSetup ConfigManager::setup_Scripts;
@@ -71,8 +79,8 @@ QList<PGE_Texture >   ConfigManager::level_textures; //Texture bank
 QList<PGE_Texture > ConfigManager::world_textures;
 
 
-QString ConfigManager::imgFile, ConfigManager::imgFileM;
-QString ConfigManager::tmpstr;
+std::string ConfigManager::imgFile, ConfigManager::imgFileM;
+std::string ConfigManager::tmpstr;
 QStringList ConfigManager::tmp;
 
 
@@ -83,7 +91,9 @@ void ConfigManager::setConfigPath(QString p)
     config_dir = p;
     if(!config_dir.endsWith('/'))
         config_dir.append('/');
-    config_id = QDir(p).dirName();
+    config_dirSTD = config_dir.toStdString();
+    config_idSTD = Files::dirname(DirMan(config_dirSTD).absolutePath());
+    config_id = QString::fromStdString(config_idSTD);
 }
 
 static void msgBox(QString title, QString text)
@@ -97,13 +107,14 @@ static void msgBox(QString title, QString text)
 
 bool ConfigManager::loadBasics()
 {
-    QString gui_ini = config_dir + "main.ini";
-    QSettings guiset(gui_ini, QSettings::IniFormat);
-    guiset.setIniCodec("UTF-8");
+    std::string gui_ini = config_dirSTD + "main.ini";
+    IniProcessing guiset(gui_ini);
+
     guiset.beginGroup("main");
     {
         data_dir = (guiset.value("application-dir", "0").toBool() ?
                     ApplicationPath + "/" : config_dir + "data/");
+        data_dirSTD = data_dir.toStdString();
     }
     guiset.endGroup();
     errorsList.clear();
@@ -116,75 +127,77 @@ bool ConfigManager::loadBasics()
         return false;
     }
 
-    QString main_ini = config_dir + "main.ini";
+    std::string main_ini = config_dirSTD + "main.ini";
 
-    if(!QFileInfo(main_ini).exists())
+    if(!Files::fileExists(main_ini))
     {
         msgBox("Config error",
                QString("Can't open the 'main.ini' config file!"));
         return false;
     }
 
-    QSettings mainset(main_ini, QSettings::IniFormat);
-    mainset.setIniCodec("UTF-8");
-    QString customAppPath = ApplicationPath;
+    IniProcessing mainset(main_ini);
+
+    std::string customAppPath = ApplicationPathSTD;
     mainset.beginGroup("main");
     {
-        config_name = mainset.value("config_name").toString().toStdString();
-        customAppPath = mainset.value("application-path", ApplicationPath).toString();
-        customAppPath.replace('\\', '/');
+        config_name = mainset.value("config_name").toString();
+        customAppPath = mainset.value("application-path", ApplicationPathSTD).toString();
+        std::replace(customAppPath.begin(), customAppPath.end(), '\\', '/');
         bool appDir = mainset.value("application-dir", false).toBool();
-        data_dir = (appDir ? customAppPath + "/" : config_dir + "data/");
+        data_dirSTD = (appDir ? customAppPath + "/" : config_dirSTD + "data/");
 
-        if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
-            data_dir = ApplicationPath + "/" + data_dir;
-        else if(!QDir(data_dir).exists()) //Check as absolute
+        if(DirMan::exists(ApplicationPathSTD + "/" + data_dirSTD)) //Check as relative
+            data_dirSTD = ApplicationPathSTD + "/" + data_dirSTD;
+        else if(!DirMan::exists(data_dirSTD)) //Check as absolute
         {
             msgBox("Config error",
                    QString("Config data path not exists: %1").arg(data_dir));
             return false;
         }
 
-        data_dir = QDir(data_dir).absolutePath() + "/";
-        QString url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
-        QString version = mainset.value("pge-engine-version", "0.0").toString();
+        data_dirSTD = DirMan(data_dirSTD).absolutePath() + "/";
+        data_dir = QString::fromStdString(data_dirSTD);
+
+        std::string url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
+        std::string version = mainset.value("pge-engine-version", "0.0").toString();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
 
-        if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
+        if(ver_notify && (version != VersionCmp::compare(_LATEST_STABLE, version)))
         {
             std::string title = "Legacy configuration package";
-            std::string msg = QString("You have a legacy configuration package.\n"
-                                      "Game will be started, but you may have a some problems with gameplay.\n\n"
-                                      "Please download and install latest version of a configuration package:\n\n"
-                                      "Download: %1\n"
-                                      "Note: most of config packs are updates togeter with PGE,\n"
-                                      "therefore you can use same link to get updated version")
-                              /*.arg("<a href=\"%1\">%1</a>")*/.arg(url).toStdString();
+            std::string msg = fmt::format("You have a legacy configuration package.\n"
+                                          "Game will be started, but you may have a some problems with gameplay.\n\n"
+                                          "Please download and install latest version of a configuration package:\n\n"
+                                          "Download: {0}\n"
+                                          "Note: most of config packs are updates togeter with PGE,\n"
+                                          "therefore you can use same link to get updated version", url);
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                      title.c_str(), msg.c_str(),
                                      PGE_Window::window);
-            QDesktopServices::openUrl(QUrl(url));
+            // FIXME: Implement the own crossplatform URL opener module
+            QDesktopServices::openUrl(QUrl(QString::fromStdString(url)));
         }
 
         if(appDir)
             dirs.worlds = customAppPath + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
         else
-            dirs.worlds = AppPathManager::userAppDir() + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
+            dirs.worlds = AppPathManager::userAppDirSTD() + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
 
-        if(!QDir(dirs.worlds).exists())
-            QDir().mkpath(dirs.worlds);
+        if(!DirMan::exists(dirs.worlds))
+            DirMan::mkAbsPath(dirs.worlds);
 
-        dirs.music = data_dir + mainset.value("music", "data/music").toString() + "/";
-        dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
-        dirs.glevel = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
-        dirs.gworld = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-        dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
-        dirs.gcommon = config_dir + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
+        dirs.music = data_dirSTD + mainset.value("music", "data/music").toString() + "/";
+        dirs.sounds = data_dirSTD + mainset.value("sound", "data/sound").toString() + "/";
+        dirs.glevel = data_dirSTD + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
+        dirs.gworld = data_dirSTD + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble = data_dirSTD + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+        dirs.gcommon = config_dirSTD + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
         setup_Scripts.lvl_local  = mainset.value("local-script-name-lvl", "level.lua").toString();
         setup_Scripts.lvl_common = mainset.value("common-script-name-lvl", "level.lua").toString();
         setup_Scripts.wld_local  = mainset.value("local-script-name-wld", "world.lua").toString();
         setup_Scripts.wld_common = mainset.value("common-script-name-wld", "world.lua").toString();
-        dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
+        dirs.gcustom = data_dirSTD + mainset.value("custom-data", "data-custom").toString() + "/";
     }
     mainset.endGroup();
     mainset.beginGroup("graphics");
@@ -193,10 +206,10 @@ bool ConfigManager::loadBasics()
     }
     mainset.endGroup();
 
-    if(mainset.status() != QSettings::NoError)
+    if(mainset.lastError() != IniProcessing::ERR_OK)
     {
         msgBox("Config error",
-               QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
+               QString("ERROR LOADING main.ini N:%1").arg(mainset.lineWithError()));
         return false;
     }
 
@@ -291,6 +304,17 @@ void ConfigManager::checkForImage(QString &imgPath, QString root)
     if(!imgPath.isEmpty())
     {
         if(QFile(root + imgPath).exists())
+            imgPath = root + imgPath;
+        else
+            imgPath = "";
+    }
+}
+
+void ConfigManager::checkForImage(std::string &imgPath, std::string root)
+{
+    if(!imgPath.empty())
+    {
+        if(Files::fileExists(root + imgPath))
             imgPath = root + imgPath;
         else
             imgPath = "";

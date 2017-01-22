@@ -3,17 +3,29 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 
-#include <QSettings>
+#include <IniProcessor/ini_processing.h>
+#include <fmt/fmt_format.h>
+#include <unordered_map>
+
+typedef std::unordered_map<std::string, TitleScreenAdditionalImage::align> TssAlignHash;
+TssAlignHash TSS_AlignHash =
+{
+    {"left",    TitleScreenAdditionalImage::LEFT_ALIGN},
+    {"top",     TitleScreenAdditionalImage::TOP_ALIGN},
+    {"right",   TitleScreenAdditionalImage::RIGHT_ALIGN},
+    {"bottom",  TitleScreenAdditionalImage::BOTTOM_ALIGN},
+    {"center",  TitleScreenAdditionalImage::CENTER_ALIGN},
+};
 
 TitleScreenSetup ConfigManager::setup_TitleScreen;
 
-void TitleScreenSetup::init(QSettings &engine_ini)
+void TitleScreenSetup::init(IniProcessing &engine_ini)
 {
     int TitleScreenImages = 0;
     engine_ini.beginGroup("title-screen");
     {
         backgroundImg = engine_ini.value("background", "").toString();
-        backgroundColor.setNamedColor(engine_ini.value("bg-color", "#000000").toString());
+        backgroundColor.setRgba(engine_ini.value("bg-color", "#000000").toString());
         ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
         luaFile = engine_ini.value("script", "main_title.lua").toString();
         TitleScreenImages = engine_ini.value("additional-images", 0).toInt();
@@ -23,7 +35,7 @@ void TitleScreenSetup::init(QSettings &engine_ini)
 
     for(int i = 1; i <= TitleScreenImages; i++)
     {
-        engine_ini.beginGroup(QString("title-image-%1").arg(i));
+        engine_ini.beginGroup(fmt::format("title-image-{0}", i));
         {
             TitleScreenAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();
@@ -47,20 +59,14 @@ void TitleScreenSetup::init(QSettings &engine_ini)
             img.y =  engine_ini.value("pos-y", 0).toInt();
             img.center_x =  engine_ini.value("center-x", false).toBool();
             img.center_y =  engine_ini.value("center-y", false).toBool();
-            QString align =   engine_ini.value("align", "none").toString();
-
-            if(align == "left")
-                img.align_to = TitleScreenAdditionalImage::LEFT_ALIGN;
-            else if(align == "top")
-                img.align_to = TitleScreenAdditionalImage::TOP_ALIGN;
-            else if(align == "right")
-                img.align_to = TitleScreenAdditionalImage::RIGHT_ALIGN;
-            else if(align == "bottom")
-                img.align_to = TitleScreenAdditionalImage::BOTTOM_ALIGN;
-            else if(align == "center")
-                img.align_to = TitleScreenAdditionalImage::CENTER_ALIGN;
-            else
-                img.align_to = TitleScreenAdditionalImage::NO_ALIGN;
+            std::string align =   engine_ini.value("align", "none").toString();
+            {
+                TssAlignHash::iterator i = TSS_AlignHash.find(align);
+                if(i == TSS_AlignHash.end())
+                    img.align_to = TitleScreenAdditionalImage::NO_ALIGN;
+                else
+                    img.align_to = i->second;
+            }
 
             AdditionalImages.push_back(img);
         }

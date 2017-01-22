@@ -3,7 +3,7 @@
 
 std::string Binding_Core_GlobalFuncs_Paths::path_commongfx()
 {
-    return ConfigManager::PathCommonGFX().toStdString();
+    return ConfigManager::PathCommonGFX();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_level_block()

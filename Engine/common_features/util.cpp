@@ -18,6 +18,7 @@
 
 
 #include "util.h"
+#include <Utils/files.h>
 #include <QFileInfo>
 
 #ifdef _WIN32
@@ -61,20 +62,19 @@ bool util::strempty(const char *str)
     return false;
 }
 
-QString util::resolveRelativeOrAbsolute(const QString &path, const QStringList &relativeLookup)
+std::string util::resolveRelativeOrAbsolute(const std::string &path, const std::vector<std::string> &relativeLookup)
 {
-    if(QFileInfo(path).isAbsolute())
+    if(Files::isAbsolute(path))
     {
-        if(QFileInfo(path).exists())
+        if(Files::fileExists(path))
             return path;
     }
     else
     {
-        for(const QString &nextpath : relativeLookup)
+        for(const std::string &nextpath : relativeLookup)
         {
-            QString newCompletePath = nextpath + "/" + path;
-
-            if(QFileInfo(newCompletePath).exists())
+            std::string newCompletePath = nextpath + "/" + path;
+            if(Files::fileExists(newCompletePath))
                 return newCompletePath;
         }
     }

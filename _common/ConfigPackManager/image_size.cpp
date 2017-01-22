@@ -17,16 +17,17 @@
  */
 
 #include "image_size.h"
-#include <QFile>
+#include <SDL2/SDL_rwops.h>
+#include <Utils/files.h>
 
-static bool tryGIF(QFile &file, int *w, int *h)
+static bool tryGIF(SDL_RWops* file, int *w, int *h)
 {
-    file.seek(0);
+    SDL_RWseek(file, 0, RW_SEEK_SET);
     const char *GIF1 = "GIF87a";
     const char *GIF2 = "GIF89a";
     char magic[6];
 
-    if(file.read(magic, 6) != 6)
+    if(SDL_RWread(file, magic, 1, 6) != 6)
         return false;
 
     bool found = false;
@@ -42,7 +43,7 @@ static bool tryGIF(QFile &file, int *w, int *h)
 
     unsigned char size[4];
 
-    if(file.read(reinterpret_cast<char *>(size), 4) != 4)
+    if(SDL_RWread(file, reinterpret_cast<char *>(size), 1, 4) != 4)
         return false;
 
 #define UINT(d) static_cast<unsigned int>(d)
@@ -59,13 +60,13 @@ static bool tryGIF(QFile &file, int *w, int *h)
     return true;
 }
 
-static bool tryBMP(QFile &file, int *w, int *h)
+static bool tryBMP(SDL_RWops* file, int *w, int *h)
 {
-    file.seek(0);
+    SDL_RWseek(file, 0, RW_SEEK_SET);
     const char *BMP = "BM";
     char magic[2];
 
-    if(file.read(magic, 2) != 2)
+    if(SDL_RWread(file, magic, 1, 2) != 2)
         return false;
 
     if(strncmp(magic, BMP, 2) != 0)
@@ -73,10 +74,10 @@ static bool tryBMP(QFile &file, int *w, int *h)
 
     unsigned char size[8];
 
-    if(!file.seek(18))
+    if(SDL_RWseek(file, 18, RW_SEEK_SET) < 0)
         return false;
 
-    if(file.read(reinterpret_cast<char *>(size), 8) != 8)
+    if(SDL_RWread(file, reinterpret_cast<char *>(size), 1, 8) != 8)
         return false;
 
 #define UINT(d) static_cast<unsigned int>(d)
@@ -93,20 +94,20 @@ static bool tryBMP(QFile &file, int *w, int *h)
     return true;
 }
 
-static bool tryPNG(QFile &file, int *w, int *h)
+static bool tryPNG(SDL_RWops* file, int *w, int *h)
 {
-    file.seek(0);
+    SDL_RWseek(file, 0, RW_SEEK_SET);
     const char *PNG  = "\211PNG\r\n\032\n";
     const char *IHDR = "IHDR";
     char magic[8];
 
-    if(file.read(magic, 8) != 8)
+    if(SDL_RWread(file, magic, 1, 8) != 8)
         return false;
 
     if(strncmp(magic, PNG, 8) != 0)
         return false;
 
-    if(file.read(magic, 8) != 8)
+    if(SDL_RWread(file, magic, 1, 8) != 8)
         return false;
 
     if(strncmp(magic + 4, IHDR, 4) != 0)
@@ -114,7 +115,7 @@ static bool tryPNG(QFile &file, int *w, int *h)
 
     unsigned char size[8];
 
-    if(file.read(reinterpret_cast<char *>(size), 8) != 8)
+    if(SDL_RWread(file, reinterpret_cast<char *>(size), 1, 8) != 8)
         return false;
 
 #define UINT(d) static_cast<unsigned int>(d)
@@ -133,12 +134,16 @@ static bool tryPNG(QFile &file, int *w, int *h)
 
 bool PGE_ImageInfo::getImageSize(QString imagePath, int *w, int *h, int *errCode)
 {
-    QFile image(imagePath);
+    return getImageSize(imagePath.toStdString(), w, h, errCode);
+}
 
+bool PGE_ImageInfo::getImageSize(std::string imagePath, int *w, int *h, int *errCode)
+{
+    bool ret = false;
     if(errCode)
         *errCode = ERR_OK;
 
-    if(!image.exists())
+    if(!Files::fileExists(imagePath))
     {
         if(errCode)
             *errCode = ERR_NOT_EXISTS;
@@ -146,7 +151,9 @@ bool PGE_ImageInfo::getImageSize(QString imagePath, int *w, int *h, int *errCode
         return false;
     }
 
-    if(!image.open(QIODevice::ReadOnly))
+    SDL_RWops* image = SDL_RWFromFile(imagePath.c_str(), "rb");
+
+    if(!image)
     {
         if(errCode)
             *errCode = ERR_CANT_OPEN;
@@ -155,36 +162,38 @@ bool PGE_ImageInfo::getImageSize(QString imagePath, int *w, int *h, int *errCode
     }
 
     if(tryGIF(image, w, h))
-        return true;
-
+        ret = true;
+    else
     if(tryPNG(image, w, h))
-        return true;
-
+        ret = true;
+    else
     if(tryBMP(image, w, h))
-        return true;
+        ret = true;
 
-    if(errCode)
-        *errCode = ERR_UNSUPPORTED_FILETYPE;
+    SDL_RWclose(image);
 
-    return false;
+    if(!ret)
+    {
+        if(errCode)
+            *errCode = ERR_UNSUPPORTED_FILETYPE;
+    }
+
+    return ret;
 }
 
 QString PGE_ImageInfo::getMaskName(QString imageFileName)
 {
-    QString out_maskName = imageFileName;
-    int i = out_maskName.size() - 1;
+    return QString::fromStdString(getMaskName(imageFileName.toStdString()));
+}
 
-    for(; i > 0; i--)
-    {
-        if(out_maskName[i] == '.')
-        {
-            out_maskName.insert(i, 'm');
-            break;
-        }
-    }
-
-    if(i == 0)
-        out_maskName = "";
-
-    return out_maskName;
+std::string PGE_ImageInfo::getMaskName(std::string imageFileName)
+{
+    std::string mask = imageFileName;
+    //Make mask filename
+    size_t dotPos = mask.find_last_of('.');
+    if(dotPos == std::string::npos)
+        mask.push_back('m');
+    else
+        mask.insert(mask.begin() + dotPos, 'm');
+    return mask;
 }

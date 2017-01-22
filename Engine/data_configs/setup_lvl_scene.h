@@ -1,13 +1,14 @@
 #ifndef SETUP_LVL_SCENE_H
 #define SETUP_LVL_SCENE_H
 
-#include <QString>
+#include <vector>
+#include <string>
 #include <graphics/gl_color.h>
-class QSettings;
+class IniProcessing;
 
 struct LevelAdditionalImage
 {
-    QString imgFile;
+    std::string imgFile;
     bool animated;
     int frames;
     int framedelay;
@@ -18,54 +19,54 @@ struct LevelAdditionalImage
 
 struct LevelSetup
 {
-    void init(QSettings &engine_ini);
+    void init(IniProcessing& engine_ini);
     void initFonts();
 
-    bool    points_en;
-    int     points_x;
-    int     points_y;
-    QString points_font_name;
-    int     points_fontID;
-    QString points_color;
-    GlColor points_rgba;
-    bool    points_from_center;
+    bool        points_en;
+    int         points_x;
+    int         points_y;
+    std::string points_font_name;
+    int         points_fontID;
+    std::string points_color;
+    GlColor     points_rgba;
+    bool        points_from_center;
 
-    bool    health_en;
-    int     health_x;
-    int     health_y;
-    QString health_font_name;
-    int     health_fontID;
-    QString health_color;
-    GlColor health_rgba;
-    bool    health_from_center;
+    bool        health_en;
+    int         health_x;
+    int         health_y;
+    std::string health_font_name;
+    int         health_fontID;
+    std::string health_color;
+    GlColor     health_rgba;
+    bool        health_from_center;
 
-    bool    star_en;
-    int     star_x;
-    int     star_y;
-    QString star_font_name;
-    int     star_fontID;
-    QString star_color;
-    GlColor star_rgba;
-    bool    star_from_center;
+    bool        star_en;
+    int         star_x;
+    int         star_y;
+    std::string star_font_name;
+    int         star_fontID;
+    std::string star_color;
+    GlColor     star_rgba;
+    bool        star_from_center;
 
-    bool    coin_en;
-    int     coin_x;
-    int     coin_y;
-    QString coin_font_name;
-    int     coin_fontID;
-    QString coin_color;
-    GlColor coin_rgba;
-    bool    coin_from_center;
+    bool        coin_en;
+    int         coin_x;
+    int         coin_y;
+    std::string coin_font_name;
+    int         coin_fontID;
+    std::string coin_color;
+    GlColor     coin_rgba;
+    bool        coin_from_center;
 
-    bool    itemslot_en;
-    int     itemslot_x;
-    int     itemslot_y;
-    int     itemslot_w;
-    int     itemslot_h;
-    bool    itemslot_to_center;
-    QList<LevelAdditionalImage > AdditionalImages;
+    bool        itemslot_en;
+    int         itemslot_x;
+    int         itemslot_y;
+    int         itemslot_w;
+    int         itemslot_h;
+    bool        itemslot_to_center;
+    std::vector<LevelAdditionalImage > AdditionalImages;
 
-    QString luaFile;
+    std::string luaFile;
 };
 
 
