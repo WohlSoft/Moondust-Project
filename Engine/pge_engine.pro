@@ -118,7 +118,7 @@ include($$PWD/../_common/DirManager/dirman.pri)
 include($$PWD/../_common/FileMapper/FileMapper.pri)
 DEFINES += INI_PROCESSING_ALLOW_QT_TYPES
 include($$PWD/../_common/IniProcessor/IniProcessor.pri)
-include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
+include($$PWD/../_common/PGE_File_Formats/File_FormatsSTL.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
 
@@ -297,7 +297,9 @@ SOURCES += \
     common_features/pge_qt_application.cpp \
     engine.cpp \
     audio/play_music.cpp \
-    audio/play_sfx.cpp
+    audio/play_sfx.cpp \
+    common_features/QTranslatorX/qm_translator.cpp \
+    common_features/QTranslatorX/ConvertUTF.c
 
 HEADERS  += \
     _resources/resource.h \
@@ -452,7 +454,10 @@ HEADERS  += \
     common_features/pge_qt_application.h \
     engine.hpp \
     audio/play_music.h \
-    audio/play_sfx.h
+    audio/play_sfx.h \
+    common_features/QTranslatorX/ConvertUTF.h \
+    common_features/QTranslatorX/qm_translator.h \
+    common_features/tr.h
 
 
 RESOURCES += \

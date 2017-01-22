@@ -18,7 +18,7 @@
 PGE_DataArray<obj_sound > ConfigManager::main_sound;
 PGE_DataArray<long > ConfigManager::main_sound_table;
 
-QVector<obj_sound_index > ConfigManager::main_sfx_index;
+std::vector<obj_sound_index > ConfigManager::main_sfx_index;
 
 
 bool ConfigManager::soundIniChanged()
@@ -31,13 +31,13 @@ bool ConfigManager::soundIniChanged()
     return s;
 }
 
-QString ConfigManager::sound_lastIniFile;
+std::string ConfigManager::sound_lastIniFile;
 bool ConfigManager::sound_lastIniFile_changed = false;
 
 
 bool ConfigManager::loadDefaultSounds()
 {
-    return loadSound(dirs.sounds, config_dir + "sounds.ini", false);
+    return loadSound(dirs.sounds, config_dirSTD + "sounds.ini", false);
 }
 
 obj_sound::obj_sound()
@@ -73,7 +73,7 @@ void ConfigManager::buildSoundIndex()
 {
     int need_to_reserve = 0;
     int total_channels = 32;
-    bool newBuild = main_sfx_index.isEmpty();
+    bool newBuild = main_sfx_index.empty();
 #ifdef DEBUG_BUILD
     QElapsedTimer loadingTime;
     loadingTime.start();
@@ -192,7 +192,8 @@ void ConfigManager::clearSoundIndex()
 {
     Mix_ReserveChannels(0);
 
-    if(main_sfx_index.isEmpty()) return;
+    if(main_sfx_index.empty())
+        return;
 
     int size = main_sfx_index.size();
     obj_sound_index *d = main_sfx_index.data();
@@ -214,20 +215,21 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
     unsigned long sound_total = 0;
     int cur_channel = 0;
     bool reserveChannel = false;
-    QString sound_ini = iniFile;
+    std::string sound_ini = iniFile;
 
     if(!QFile::exists(sound_ini))
     {
         if(isCustom) return false;
 
-        addError(QString("ERROR LOADING sounds.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox::error(QString("ERROR LOADING sounds.ini: file does not exist"));
+        addError("ERROR LOADING sounds.ini: file does not exist", QtCriticalMsg);
+        PGE_MsgBox::error("ERROR LOADING sounds.ini: file does not exist");
         return false;
     }
 
     if(isCustom)
     {
-        if(sound_lastIniFile == iniFile) return false;
+        if(sound_lastIniFile == iniFile)
+            return false;
 
         sound_lastIniFile = iniFile;
         sound_lastIniFile_changed = true;

@@ -260,12 +260,12 @@ namespace ConfigManager
     extern PGE_DataArray<long > main_sound_table;
     void buildSoundIndex();
     void clearSoundIndex();
-    extern QVector<obj_sound_index > main_sfx_index;
+    extern std::vector<obj_sound_index > main_sfx_index;
 
     bool musicIniChanged();
     bool soundIniChanged();
-    extern QString music_lastIniFile;
-    extern QString sound_lastIniFile;
+    extern std::string music_lastIniFile;
+    extern std::string sound_lastIniFile;
     extern bool music_lastIniFile_changed;
     extern bool sound_lastIniFile_changed;
     /********Music and sounds*******/

@@ -19,6 +19,8 @@
 #include <SDL2/SDL_messagebox.h>
 #include <cstdlib>
 #include <signal.h>
+#include <common_features/tr.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <dbghelp.h>
@@ -136,10 +138,10 @@ static std::string getStacktrace()
 CrashHandler::CrashHandler()
 {}
 
-static void msgBox(QString title, QString text)
+static void msgBox(std::string title, std::string text)
 {
-    std::string ttl = title.toStdString();
-    std::string msg = text.toStdString();
+    std::string &ttl = title;
+    std::string &msg = text;
     SDL_MessageBoxData mbox;
     SDL_MessageBoxButtonData mboxButton;
     const SDL_MessageBoxColorScheme colorScheme =
@@ -211,9 +213,9 @@ void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByUnhandledException()
               stack.c_str(), g_messageToUser);
     msgBox(
         //% "Unhandled exception!"
-        qtTrId("CRASH_UNHEXC_TITLE"),
+        qsTrId("CRASH_UNHEXC_TITLE"),
         //% "Engine has crashed because accepted unhandled exception!"
-        qtTrId("CRASH_UNHEXC_MSG"));
+        qsTrId("CRASH_UNHEXC_MSG"));
     abortEngine(-1);
 }
 
@@ -225,9 +227,9 @@ void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByFlood()
               stack.c_str(), g_messageToUser);
     msgBox(
         //% "Out of memory!"
-        qtTrId("CRASH_OUT_OF_MEM_TITLE"),
+        qsTrId("CRASH_OUT_OF_MEM_TITLE"),
         //% "Engine has crashed because out of memory! Try to close other applications and restart game."
-        qtTrId("CRASH_OUT_OF_MEM_MSG"));
+        qsTrId("CRASH_OUT_OF_MEM_MSG"));
     abortEngine(-2);
 }
 
@@ -263,9 +265,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
         pLogFatal("<alarm() time out!>");
         msgBox(
             //% "Time out!"
-            qtTrId("CRASH_TIMEOUT_TITLE"),
+            qsTrId("CRASH_TIMEOUT_TITLE"),
             //% "Engine has abourted because alarm() time out!"
-            qtTrId("CRASH_TIMEOUT_MSG"));
+            qsTrId("CRASH_TIMEOUT_MSG"));
         abortEngine(signal);
     }
 
@@ -310,9 +312,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
         msgBox(
             //% "Physical memory address error!"
-            qtTrId("CRASH_BUS_TITLE"),
+            qsTrId("CRASH_BUS_TITLE"),
             //% "Engine has crashed because a physical memory address error"
-            qtTrId("CRASH_BUS_MSG"));
+            qsTrId("CRASH_BUS_MSG"));
         abortEngine(signal);
     }
 
@@ -329,9 +331,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
                   stack.c_str(), g_messageToUser);
         msgBox(
             //% "Wrong CPU Instruction!"
-            qtTrId("CRASH_ILL_TITLE"),
+            qsTrId("CRASH_ILL_TITLE"),
             //% "Engine has crashed because a wrong CPU instruction"
-            qtTrId("CRASH_ILL_MSG"));
+            qsTrId("CRASH_ILL_MSG"));
         abortEngine(signal);
     }
 
@@ -386,9 +388,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
         msgBox(
             //% "Wrong arithmetical operation"
-            qtTrId("CRASH_FPE_TITLE"),
+            qsTrId("CRASH_FPE_TITLE"),
             //% "Engine has crashed because of a wrong arithmetical operation!"
-            qtTrId("CRASH_FPE_MSG"));
+            qsTrId("CRASH_FPE_MSG"));
         abortEngine(signal);
     }
 
@@ -400,9 +402,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
                   stack.c_str(), g_messageToUser);
         msgBox(
             //% "Aborted"
-            qtTrId("CRASH_ABORT_TITLE"),
+            qsTrId("CRASH_ABORT_TITLE"),
             //% "Engine has been aborted because critical error was occouped."
-            qtTrId("CRASH_ABORT_TITLE."));
+            qsTrId("CRASH_ABORT_TITLE."));
         abortEngine(signal);
     }
 
@@ -447,11 +449,11 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
         msgBox(
             //% "Segmentation fault"
-            qtTrId("CRASH_SIGSEGV_TITLE"),
+            qsTrId("CRASH_SIGSEGV_TITLE"),
             /*% "Engine has crashed because of a Segmentation fault.\n"
                 "Run debugging with a built in debug mode application\n"
                 "and retry your recent actions to get more detailed information." */
-            qtTrId("CRASH_SIGSEGV_MSG."));
+            qsTrId("CRASH_SIGSEGV_MSG."));
         abortEngine(signal);
     }
 
@@ -460,9 +462,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
         pLogFatal("<Interrupted!>");
         msgBox(
             //% "Interrupt"
-            qtTrId("CRASH_INT_TITLE"),
+            qsTrId("CRASH_INT_TITLE"),
             //% "Engine has been interrupted"
-            qtTrId("CRASH_INT_MSG"));
+            qsTrId("CRASH_INT_MSG"));
         abortEngine(signal);
     }
 

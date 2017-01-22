@@ -18,6 +18,7 @@
 
 #include "scene_gameover.h"
 
+#include <common_features/tr.h>
 #include "../gui/pge_questionbox.h"
 #include <data_configs/config_manager.h>
 #include <gui/pge_menubox.h>
@@ -48,15 +49,15 @@ int GameOverScene::exec()
 {
     PGE_QuestionBox continueOrQuit(this,
                                    //% "Game Over!"
-                                   qtTrId("GAMEOVER_TITLE"),
+                                   qsTrId("GAMEOVER_TITLE"),
                                    PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                                    ConfigManager::setup_menu_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
-    QStringList items;
+    std::vector<std::string> items;
     //% "Continue"
-    items << qtTrId("GAMEOVER_CONTINUE");
+    items.push_back(qsTrId("GAMEOVER_CONTINUE"));
     //% "Quit"
-    items << qtTrId("GAMEOVER_EXIT");
+    items.push_back(qsTrId("GAMEOVER_EXIT"));
     continueOrQuit.addMenuItems(items);
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();

@@ -1,18 +1,19 @@
 #ifndef EPISODESTATE_H
 #define EPISODESTATE_H
 
+#include <string>
 #include <PGE_File_Formats/save_filedata.h>
 
 struct PlayLevelResult
 {
-    QString levelfile;
+    std::string levelfile;
 };
 
 struct PlayEpisodeResult
 {
-    QString worldfile;
-    QString savefile;
-    int     character;
+    std::string worldfile;
+    std::string savefile;
+    int         character;
 };
 
 class LvlExit
@@ -77,16 +78,16 @@ class EpisodeState
         PlayerState getPlayerState(int playerID);
         void setPlayerState(int playerID, PlayerState &state);
 
-        QString WorldFile;
-        QString WorldPath;
-        QString saveFileName;
+        std::string WorldFile;
+        std::string WorldPath;
+        std::string saveFileName;
         std::string _episodePath;
         int _recent_ExitCode_level;
         int _recent_ExitCode_world;
 
-        QString LevelFile;
-        QString LevelFile_hub;
-        QString LevelPath;
+        std::string LevelFile;
+        std::string LevelFile_hub;
+        std::string LevelPath;
         unsigned long LevelTargetWarp;
         int gameType;
         enum gameTypes

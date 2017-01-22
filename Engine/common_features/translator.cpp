@@ -17,15 +17,22 @@
  */
 
 #include <QLocale>
+
 #include "translator.h"
 #include "app_path.h"
 #include "logger.h"
+
+#include <fmt/fmt_format.h>
+
+static PGE_Translator *g_translator = NULL;
 
 PGE_Translator::PGE_Translator() :
     m_isInit(false),
     m_currLang("en"),
     m_langPath("./languages/")
-{}
+{
+    g_translator = this;
+}
 
 void PGE_Translator::init()
 {
@@ -35,46 +42,41 @@ void PGE_Translator::init()
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
 
-    m_langPath = ApplicationPath;
+    m_langPath = ApplicationPathSTD;
     m_langPath.append("/languages");
-    pLogDebug( "Initializing translator in the path: %s", m_langPath.toStdString().c_str() );
-    toggleLanguage(defaultLocale);
-    pLogDebug( "Locale detected: %s", m_currLang.toStdString().c_str() );
+    pLogDebug("Initializing translator in the path: %s", m_langPath.c_str());
+    toggleLanguage(defaultLocale.toStdString());
+    pLogDebug("Locale detected: %s", m_currLang.c_str());
 }
 
-void PGE_Translator::toggleLanguage(QString lang)
+void PGE_Translator::toggleLanguage(std::string lang)
 {
     if(!m_isInit || (m_currLang != lang))
     {
         if(m_isInit)
-        {
-            qApp->removeTranslator(&m_translator);
-            qApp->removeTranslator(&m_translatorQt);
-        }
+            m_translator.close();
 
         m_currLang = lang;
-        QLocale locale = QLocale(m_currLang);
-        QLocale::setDefault(locale);
 
-        bool ok = m_translator.load(m_langPath + QString("/engine_%1.qm").arg(m_currLang));
-
-        if(ok)
-           qApp->installTranslator(&m_translator);
-        else
+        bool ok = m_translator.loadFile((m_langPath + fmt::format("/engine_{0}.qm", m_currLang)).c_str(),
+                                        reinterpret_cast<unsigned char *>(&m_langPath[0]));
+        if(!ok)
         {
-            m_currLang="en"; //set to English if no other translations are found
-            QLocale locale = QLocale(m_currLang);
-            QLocale::setDefault(locale);
-            ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-            if(ok)
-               qApp->installTranslator(&m_translator);
+            m_currLang = "en"; //set to English if no other translations are found
+            ok = m_translator.loadFile((m_langPath + fmt::format("/engine_{0}.qm", m_currLang)).c_str(),
+                                       reinterpret_cast<unsigned char *>(&m_langPath[0]));
         }
-
-        ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-        if(ok)
-            qApp->installTranslator(&m_translatorQt);
-
         m_isInit = true;
     }
 }
 
+std::string qsTrId(const char* string)
+{
+    if(!g_translator)
+        return string;
+    std::string out = g_translator->m_translator.do_translate8(0, string, 0, -1);
+    if(out.empty())
+        return std::string(string);
+    else
+        return out;
+}

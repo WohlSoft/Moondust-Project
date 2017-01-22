@@ -18,8 +18,8 @@
 
 #include "pge_menubox.h"
 
-PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, QString _title, msgType _type,
-                       PGE_Point boxCenterPos, double _padding, QString texture)
+PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, std::string _title, msgType _type,
+                       PGE_Point boxCenterPos, double _padding, std::string texture)
     : PGE_MenuBoxBase(_parentScene,
                       PGE_Menu::menuAlignment::VERTICLE, 0,
                       _title, _type, boxCenterPos, _padding, texture)

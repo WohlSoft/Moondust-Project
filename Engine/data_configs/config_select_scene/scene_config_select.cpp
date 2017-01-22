@@ -27,6 +27,11 @@
 #include <fontman/font_manager.h>
 #include <settings/global_settings.h>
 
+#include <Utils/files.h>
+#include <DirManager/dirman.h>
+#include <IniProcessor/ini_processing.h>
+#include <fmt/fmt_format.h>
+
 #include <QDir>
 #include <QFileInfo>
 
@@ -36,6 +41,7 @@
 
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
+#include <common_features/tr.h>
 
 
 ConfigSelectScene::ConfigSelectScene():
@@ -46,7 +52,7 @@ ConfigSelectScene::ConfigSelectScene():
     bgcolor.g = 0.0f;
     bgcolor.b = 0.1f;
     //% "Choose a game:"
-    m_label = qtTrId("CONFIG_SELECT");
+    m_label = qsTrId("CONFIG_SELECT");
     m_waterMark = "WohlSoft team 2016 by Wohlstand (http://wohlsoft.ru)";
     m_waterMarkRect.setPos(200, PGE_Window::Height - 50);
     m_waterMarkFontSize = 20;
@@ -54,7 +60,7 @@ ConfigSelectScene::ConfigSelectScene():
     m_waterMarkRect.setSize(s.w(), s.h());
     m_waterMarkColor.setRgba(0.5, 0.5, 1.0, 1.0);
     mousePos.setPoint(-1000, -1000);
-    GlRenderer::loadTextureP(cursor, ":cursor.png");
+    GlRenderer::loadTextureP(cursor, std::string(":cursor.png"));
     controller = g_AppSettings.openController(1);
     currentConfig   = "";
     themePack       = "";
@@ -166,7 +172,7 @@ bool ConfigSelectScene::hasConfigPacks()
     return !m_availablePacks.empty();
 }
 
-QString ConfigSelectScene::isPreLoaded(QString openConfig)
+std::string ConfigSelectScene::isPreLoaded(std::string openConfig)
 {
     QString configPath = openConfig;
 
@@ -404,7 +410,7 @@ int ConfigSelectScene::exec()
     menu.setItemsNumber(10);
 
     for(int i = 0; i < m_availablePacks.size(); i++)
-        menu.addMenuItem(QString::number(i), m_availablePacks[i].fullname);
+        menu.addMenuItem(std::to_string(i), m_availablePacks[i].fullname);
 
     //continueOrQuit.exec();
     LoopTiming times;
@@ -481,7 +487,7 @@ void ConfigSelectScene::processEvents()
     Scene::processEvents();
 }
 
-void ConfigSelectScene::setLabel(QString label)
+void ConfigSelectScene::setLabel(std::string label)
 {
     m_label = label;
 }

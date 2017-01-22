@@ -21,7 +21,7 @@ bool ConfigManager::musicIniChanged()
     return s;
 }
 
-QString ConfigManager::music_lastIniFile;
+std::string ConfigManager::music_lastIniFile;
 bool ConfigManager::music_lastIniFile_changed = false;
 
 obj_music::obj_music()

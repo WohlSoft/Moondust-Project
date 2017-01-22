@@ -33,8 +33,8 @@
 
 #include <QFontMetrics>
 
-PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, QString _title, msgType _type,
-                                 PGE_Point boxCenterPos, double _padding, QString texture)
+PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, std::string _title, msgType _type,
+                                 PGE_Point boxCenterPos, double _padding, std::string texture)
     : PGE_BoxBase(_parentScene), _menu(alignment, gapSpace)
 {
     setParentScene(_parentScene);
@@ -65,10 +65,10 @@ PGE_MenuBoxBase::PGE_MenuBoxBase(const PGE_MenuBoxBase &mb)
 }
 
 
-void PGE_MenuBoxBase::construct(QString _title, PGE_MenuBoxBase::msgType _type,
-                                PGE_Point pos, double _padding, QString texture)
+void PGE_MenuBoxBase::construct(std::string _title, PGE_MenuBoxBase::msgType _type,
+                                PGE_Point pos, double _padding, std::string texture)
 {
-    if(!texture.isEmpty())
+    if(!texture.empty())
         loadTexture(texture);
 
     _ctrl1 = nullptr;
@@ -129,7 +129,7 @@ void PGE_MenuBoxBase::setType(PGE_MenuBoxBase::msgType _type)
     type = _type;
 }
 
-void PGE_MenuBoxBase::setTitleFont(QString fontName)
+void PGE_MenuBoxBase::setTitleFont(std::string fontName)
 {
     fontID   = FontManager::getFontID(fontName);
 }
@@ -139,7 +139,7 @@ void PGE_MenuBoxBase::setTitleFontColor(GlColor color)
     fontRgba = color;
 }
 
-void PGE_MenuBoxBase::setTitleText(QString text)
+void PGE_MenuBoxBase::setTitleText(std::string text)
 {
     title = text;
     FontManager::optimizeText(title, 27);
@@ -224,16 +224,16 @@ void PGE_MenuBoxBase::clearMenu()
     updateSize();
 }
 
-void PGE_MenuBoxBase::addMenuItem(QString &menuitem)
+void PGE_MenuBoxBase::addMenuItem(std::string& menuitem)
 {
-    _menu.addMenuItem(menuitem.simplified().replace(' ', '_'), menuitem);
+    _menu.addMenuItem(menuitem, menuitem);
     updateSize();
 }
 
-void PGE_MenuBoxBase::addMenuItems(QStringList &menuitems)
+void PGE_MenuBoxBase::addMenuItems(std::vector<std::string> &menuitems)
 {
-    for(QString &menuitem : menuitems)
-        _menu.addMenuItem(menuitem.simplified().replace(' ', '_'), menuitem);
+    for(std::string &menuitem : menuitems)
+        _menu.addMenuItem(menuitem, menuitem);
 
     updateSize();
 }

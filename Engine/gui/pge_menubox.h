@@ -24,8 +24,8 @@
 class PGE_MenuBox : public PGE_MenuBoxBase
 {
 public:
-    PGE_MenuBox(Scene * _parentScene=NULL, QString _title="Menu is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
+    PGE_MenuBox(Scene * _parentScene=NULL, std::string _title="Menu is works!",
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, std::string texture="");
     PGE_MenuBox(const PGE_MenuBox &mb);
 
     ~PGE_MenuBox();

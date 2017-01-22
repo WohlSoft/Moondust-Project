@@ -40,9 +40,9 @@ PGE_TextInputBox::PGE_TextInputBox()
     construct(message, type);
 }
 
-PGE_TextInputBox::PGE_TextInputBox(Scene *_parentScene, QString msg, msgType _type,
+PGE_TextInputBox::PGE_TextInputBox(Scene *_parentScene, std::string msg, msgType _type,
                                    PGE_Point boxCenterPos,
-                                   double _padding, QString texture)
+                                   double _padding, std::string texture)
     : PGE_BoxBase(_parentScene)
 {
     construct(msg, _type, boxCenterPos, _padding, texture);
@@ -68,7 +68,7 @@ PGE_TextInputBox::PGE_TextInputBox(const PGE_TextInputBox &mb)
 }
 
 
-void PGE_TextInputBox::construct(QString msg, PGE_TextInputBox::msgType _type, PGE_Point pos, double _padding, QString texture)
+void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _type, PGE_Point pos, double _padding, std::string texture)
 {
     loadTexture(texture);
     updateTickValue();
@@ -325,10 +325,11 @@ void PGE_TextInputBox::processBox(double tickTime)
                 if(_inputText.length() > 0)
                 {
                     //lop off character
-                    _inputText.remove(_inputText.size() - 1, 1);
+                    _inputText.erase(_inputText.size() - 1, 1);
                     _inputText_printable = _inputText;
 
-                    if(_inputText_printable.size() > 25) _inputText_printable.remove(0, _inputText_printable.size() - 26);
+                    if(_inputText_printable.size() > 25)
+                        _inputText_printable.erase(0, 25);
                 }
 
             default:
@@ -342,7 +343,8 @@ void PGE_TextInputBox::processBox(double tickTime)
             _inputText.append(event.text.text);
             _inputText_printable = _inputText;
 
-            if(_inputText_printable.size() > 25) _inputText_printable.remove(0, _inputText_printable.size() - 26);
+            if(_inputText_printable.size() > 25)
+                _inputText_printable.erase(0, 25);
         }
         break;
 
@@ -353,7 +355,8 @@ void PGE_TextInputBox::processBox(double tickTime)
             selection_len = event.edit.length;
             _inputText_printable = _inputText;
 
-            if(_inputText_printable.size() > 25) _inputText_printable.remove(0, _inputText_printable.size() - 26);
+            if(_inputText_printable.size() > 25)
+                _inputText_printable.erase(0, 25);
         }
         break;
 
@@ -394,16 +397,17 @@ void PGE_TextInputBox::processUnLoader(double ticks)
     if(m_faderOpacity <= 0.0f) _page++;
 }
 
-void PGE_TextInputBox::setInputText(QString text)
+void PGE_TextInputBox::setInputText(std::string text)
 {
     _inputText_src = text;
     _inputText = text;
     _inputText_printable = _inputText;
 
-    if(_inputText_printable.size() > 25) _inputText_printable.remove(0, _inputText_printable.size() - 26);
+    if(_inputText_printable.size() > 25)
+        _inputText_printable.erase(0, 25);
 }
 
-QString PGE_TextInputBox::inputText()
+std::string PGE_TextInputBox::inputText()
 {
     return _inputText_src;
 }

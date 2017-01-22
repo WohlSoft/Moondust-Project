@@ -20,6 +20,7 @@
 #include <data_configs/config_manager.h>
 #include <settings/global_settings.h>
 #include <common_features/logger.h>
+#include <common_features/tr.h>
 #include <Utils/maths.h>
 #include <gui/pge_msgbox.h>
 
@@ -289,8 +290,8 @@ bool LevelScene::loadConfigs()
             if(!ConfigManager::playable_characters.contains(st.characterID))
             {
                 //% "Invalid playable character ID"
-                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
-                               + QString::number(st.characterID);
+                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
+                               + std::to_string(st.characterID);
                 errorMsg = _errorString;
                 success = false;
                 break;
@@ -298,8 +299,8 @@ bool LevelScene::loadConfigs()
             else if(!ConfigManager::playable_characters[st.characterID].states.contains(st.stateID))
             {
                 //% "Invalid playable character state ID"
-                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
-                               + QString::number(st.stateID);
+                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
+                               + std::to_string(st.stateID);
                 errorMsg = _errorString;
                 success = false;
                 break;
@@ -422,7 +423,7 @@ bool LevelScene::init_items()
         {
             /*% "Fatal error: Impossible to find start section.\n"
                 "Did you placed player start point (or entrance warp point) too far off of the section(s)?" */
-            _errorString = qtTrId("LVL_ERROR_NOSECTIONS");
+            _errorString = qsTrId("LVL_ERROR_NOSECTIONS");
             errorMsg = _errorString;
             return false;
         }

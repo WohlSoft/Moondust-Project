@@ -12,7 +12,7 @@ public:
                         unsigned long stateID,
                         int posX,
                         int posY,
-                        QString ani,
+                        std::string ani,
                         int framedelay,
                         int dir);
     WorldScene_Portrait(const WorldScene_Portrait &pt) = default;

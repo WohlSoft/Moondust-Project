@@ -19,12 +19,12 @@
 #ifndef PLAY_MUSIC_H
 #define PLAY_MUSIC_H
 
-#include <QString>
+#include <string>
 
 class PGE_MusPlayer
 {
 public:
-    static QString getTitle();
+    static std::string getTitle();
 
     static void play();
     static void fadeIn(int ms);
@@ -33,7 +33,7 @@ public:
     static void fadeOut(int ms);
 
     static void setVolume(int vlm);
-    static void openFile(QString musFile);
+    static void openFile(std::string musFile);
 
     static bool isPlaying();
     static bool isPaused();

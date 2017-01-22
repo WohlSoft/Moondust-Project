@@ -20,15 +20,15 @@
 #define PLAY_SFX_H
 
 #include <unordered_map>
-#include <QString>
+#include <string>
 
 struct Mix_Chunk;
 class PGE_SfxPlayer
 {
 public:
-    static void playFile(QString sndFile);
+    static void playFile(std::string sndFile);
     static void clearSoundBuffer();
-    static Mix_Chunk *openSFX(QString sndFile);
+    static Mix_Chunk *openSFX(std::string sndFile);
 
 private:
     typedef std::unordered_map<std::string, Mix_Chunk* > sfxHash;

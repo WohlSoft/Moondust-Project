@@ -25,6 +25,7 @@
 #include "../scenes/scene_world.h"
 
 #include <common_features/app_path.h>
+#include <common_features/tr.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 
@@ -41,11 +42,11 @@ PGE_MsgBox::PGE_MsgBox()
 }
 
 PGE_MsgBox::PGE_MsgBox(Scene *_parentScene,
-                       QString msg,
+                       std::string msg,
                        msgType _type,
                        PGE_Point boxCenterPos,
                        double _padding,
-                       QString texture)
+                       std::string texture)
     : PGE_BoxBase(_parentScene)
 {
     construct(msg,_type, boxCenterPos, _padding, texture);
@@ -72,11 +73,11 @@ PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
 }
 
 
-void PGE_MsgBox::construct(QString msg,
+void PGE_MsgBox::construct(std::string msg,
                            PGE_MsgBox::msgType _type,
                            PGE_Point pos,
                            double _padding,
-                           QString texture)
+                           std::string texture)
 {
     loadTexture(texture);
 
@@ -356,7 +357,7 @@ void PGE_MsgBox::updateControllers()
 
 
 
-void PGE_MsgBox::info(QString msg)
+void PGE_MsgBox::info(std::string msg)
 {
     if(GlRenderer::ready())
     {
@@ -366,12 +367,12 @@ void PGE_MsgBox::info(QString msg)
     }
     else
     {
-                                       //% "Information"
-        PGE_Window::msgBoxInfo(qtTrId("MSGBOX_INFO"), msg);
+                                 //% "Information"
+        PGE_Window::msgBoxInfo(qsTrId("MSGBOX_INFO"), msg);
     }
 }
 
-void PGE_MsgBox::warn(QString msg)
+void PGE_MsgBox::warn(std::string msg)
 {
     if(GlRenderer::ready())
     {
@@ -382,11 +383,11 @@ void PGE_MsgBox::warn(QString msg)
     else
     {
                                    //% "Warning"
-        PGE_Window::msgBoxWarning(qtTrId("MSGBOX_WARN"), msg);
+        PGE_Window::msgBoxWarning(qsTrId("MSGBOX_WARN"), msg);
     }
 }
 
-void PGE_MsgBox::error(QString msg)
+void PGE_MsgBox::error(std::string msg)
 {
     if(GlRenderer::ready())
     {
@@ -397,11 +398,11 @@ void PGE_MsgBox::error(QString msg)
     else
     {
                                     //% "Error"
-        PGE_Window::msgBoxCritical(qtTrId("MSGBOX_ERROR"), msg);
+        PGE_Window::msgBoxCritical(qsTrId("MSGBOX_ERROR"), msg);
     }
 }
 
-void PGE_MsgBox::fatal(QString msg)
+void PGE_MsgBox::fatal(std::string msg)
 {
     if(GlRenderer::ready())
     {
@@ -412,7 +413,7 @@ void PGE_MsgBox::fatal(QString msg)
     else
     {
                                     //% "Fatal error"
-        PGE_Window::msgBoxCritical(qtTrId("MSGBOX_FATAL"), msg);
+        PGE_Window::msgBoxCritical(qsTrId("MSGBOX_FATAL"), msg);
     }
 }
 

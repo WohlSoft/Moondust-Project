@@ -307,7 +307,7 @@ class LevelScene : public Scene
         LevelData data;
 
         EpisodeState *gameState;
-        QString errorMsg;
+        std::string errorMsg;
 
         bool frameSkip;
 

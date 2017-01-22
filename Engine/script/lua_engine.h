@@ -73,7 +73,7 @@ public:
 
     std::string getLuaScriptPath() const;
     void setLuaScriptPath(const std::string &luaScriptPath);
-    void appendLuaScriptPath(const QString &luaScriptPath);
+    void appendLuaScriptPath(const std::string& luaScriptPath);
 
     /*!
      * \brief Set a path where look for a various files (images, sounds, etc.)

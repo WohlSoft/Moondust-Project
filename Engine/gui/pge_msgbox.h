@@ -39,12 +39,12 @@ class PGE_MsgBox : public PGE_BoxBase
 {
 public:
     PGE_MsgBox();
-    PGE_MsgBox(Scene * _parentScene=nullptr,
-               QString msg = "Message box is works!",
+    PGE_MsgBox(Scene *_parentScene = nullptr,
+               std::string msg = "Message box is works!",
                msgType _type = msg_info,
-               PGE_Point boxCenterPos = PGE_Point(-1,-1),
+               PGE_Point boxCenterPos = PGE_Point(-1, -1),
                double _padding = -1,
-               QString texture = QString());
+               std::string texture = std::string());
     PGE_MsgBox(const PGE_MsgBox &mb);
     ~PGE_MsgBox();
 
@@ -59,18 +59,19 @@ public:
     void processBox(double);
     void processUnLoader(double ticks);
 
-    static void info(QString msg);
+    static void info(std::string msg);
     //static void info(std::string msg);
-    static void warn(QString msg);
+    static void warn(std::string msg);
     //static void warn(std::string msg);
-    static void error(QString msg);
+    static void error(std::string msg);
     //static void error(std::string msg);
-    static void fatal(QString msg);
+    static void fatal(std::string msg);
     //static void fatal(std::string msg);
 
 private:
-    void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
+    void construct(std::string msg = "Message box is works!",
+                   msgType _type = msg_info, PGE_Point pos = PGE_Point(-1, -1),
+                   double _padding = -1, std::string texture = "");
     int     m_page;
     bool    m_running;
     int     fontID;
@@ -81,7 +82,7 @@ private:
 
     msgType m_type;
     PGE_Rect m_sizeRect;
-    QString m_message;
+    std::string m_message;
     double width;
     double height;
     double padding;

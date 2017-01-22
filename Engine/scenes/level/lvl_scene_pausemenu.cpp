@@ -19,6 +19,7 @@
 #include "../scene_level.h"
 
 #include <audio/pge_audio.h>
+#include <common_features/tr.h>
 
 void LevelScene::initPauseMenu1()
 {
@@ -29,21 +30,21 @@ void LevelScene::initPauseMenu1()
 
     m_pauseMenu.construct(
                 //% "Pause"
-                qtTrId("LVL_MENU_PAUSE_TTL"),
+                qsTrId("LVL_MENU_PAUSE_TTL"),
                 PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                 ConfigManager::setup_menu_box.box_padding,
                 ConfigManager::setup_menu_box.sprite);
     m_pauseMenu.clearMenu();
 
-    QStringList items;
+    std::vector<std::string> items;
     //% "Continue"
-    items << qtTrId("LVL_MENU_PAUSE_CONTINUE");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_CONTINUE"));
     //% "Save and continue"
-    items << qtTrId("LVL_MENU_PAUSE_CONTINUESAVE");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_CONTINUESAVE"));
     //% "Save and quit"
-    items << qtTrId("LVL_MENU_PAUSE_EXITSAVE");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_EXITSAVE"));
     //% "Exit without saving"
-    items << qtTrId("LVL_MENU_PAUSE_EXITNOSAVE");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_EXITNOSAVE"));
     m_pauseMenu.addMenuItems(items);
     m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     m_pauseMenu.setMaxMenuItems(4);
@@ -58,17 +59,17 @@ void LevelScene::initPauseMenu2()
     m_pauseMenu.setParentScene(this);
     m_pauseMenu.construct(
                 //% "Pause"
-                qtTrId("LVL_MENU_PAUSE_TTL"),
+                qsTrId("LVL_MENU_PAUSE_TTL"),
                 PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                 ConfigManager::setup_menu_box.box_padding,
                 ConfigManager::setup_menu_box.sprite);
     m_pauseMenu.clearMenu();
 
-    QStringList items;
+    std::vector<std::string> items;
     //% "Continue"
-    items << qtTrId("LVL_MENU_PAUSE_CONTINUE");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_CONTINUE"));
     //% "Quit"
-    items << qtTrId("LVL_MENU_PAUSE_EXIT");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_EXIT"));
 
     m_pauseMenu.addMenuItems(items);
     m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
@@ -84,19 +85,19 @@ void LevelScene::initPauseMenu3()
     m_pauseMenu.setParentScene(this);
     m_pauseMenu.construct(
                 //% "Pause"
-                qtTrId("LVL_MENU_PAUSE_TTL"),
+                qsTrId("LVL_MENU_PAUSE_TTL"),
                 PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                 ConfigManager::setup_menu_box.box_padding,
                 ConfigManager::setup_menu_box.sprite);
     m_pauseMenu.clearMenu();
 
-    QStringList items;
+    std::vector<std::string> items;
     //% "Continue"
-    items << qtTrId("LVL_MENU_PAUSE_CONTINUE");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_CONTINUE"));
     //% "Replay level"
-    items << qtTrId("LVL_MENU_PAUSE_REPLAY");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_REPLAY"));
     //% "Quit"
-    items << qtTrId("LVL_MENU_PAUSE_EXIT");
+    items.push_back(qsTrId("LVL_MENU_PAUSE_EXIT"));
 
     m_pauseMenu.addMenuItems(items);
     m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);

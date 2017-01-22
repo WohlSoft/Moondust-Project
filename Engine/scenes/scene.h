@@ -171,7 +171,7 @@ class Scene
         void processEffects(double ticks);
         /*  Effects engine   */
 
-        QString errorString();
+        std::string errorString();
 
         //! Queue of message boxes to show them after all code of one frame will be updated/processed
         MessageBoxQueue m_messages;
@@ -183,7 +183,7 @@ class Scene
         uint32_t    uTick;
         double      uTickf;
 
-        QString _errorString;
+        std::string _errorString;
     private:
         TypeOfScene sceneType;
 };
