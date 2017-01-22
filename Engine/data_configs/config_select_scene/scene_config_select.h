@@ -32,12 +32,12 @@ public:
     ConfigSelectScene();
     ~ConfigSelectScene();
 
-    QString currentConfig;
-    QString currentConfigPath;
-    QString themePack;
+    std::string currentConfig;
+    std::string currentConfigPath;
+    std::string themePack;
 
     bool    hasConfigPacks();
-    QString isPreLoaded(QString openConfig="");
+    std::string isPreLoaded(std::string openConfig="");
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
     void onMouseMoved(SDL_MouseMotionEvent &mmevent);
@@ -55,20 +55,20 @@ public:
 
     Controller* controller;
 
-    void setLabel(QString label);
+    void setLabel(std::string label);
 
 private:
     struct ConfigPackEntry
     {
         PGE_Texture image;
-        QString fullname;
-        QString description;
-        QString key;
-        QString path;
+        std::string fullname;
+        std::string description;
+        std::string key;
+        std::string path;
     };
     int ret;//!< Exit code
-    QString  m_label;
-    QString  m_waterMark;
+    std::string m_label;
+    std::string m_waterMark;
     PGE_Rect m_waterMarkRect;
     GlColor  m_waterMarkColor;
     int      m_waterMarkFontSize;

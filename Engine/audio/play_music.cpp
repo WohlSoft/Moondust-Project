@@ -20,13 +20,14 @@
 #include "play_music.h"
 
 #include <gui/pge_msgbox.h>
+#include <fmt/fmt_format.h>
 
 /***********************************PGE_MusPlayer********************************************/
 static Mix_Music * p_playingMus = NULL;
-static QString     p_curMusicPath = "";
+static std::string p_curMusicPath = "";
 static int         p_musVolume = 127;
 static bool        p_showMsgMus = true;
-static QString     p_showMsgMus_for = "";
+static std::string p_showMsgMus_for = "";
 /********************************************************************************************/
 
 void PGE_MusPlayer::play()
@@ -50,13 +51,13 @@ void PGE_MusPlayer::play()
     }
 }
 
-QString PGE_MusPlayer::getTitle()
+std::string PGE_MusPlayer::getTitle()
 {
     if(p_playingMus)
     {
         return Mix_GetMusicTitle(p_playingMus);
     }
-    return QString();
+    return std::string();
 }
 
 void  PGE_MusPlayer::fadeIn(int ms)
@@ -132,7 +133,7 @@ bool PGE_MusPlayer::IsFading()
     return (Mix_FadingMusic() == 1);
 }
 
-void PGE_MusPlayer::openFile(QString musFile)
+void PGE_MusPlayer::openFile(std::string musFile)
 {
     if(!PGE_Audio::isLoaded())
         return;
@@ -160,11 +161,10 @@ void PGE_MusPlayer::openFile(QString musFile)
         if(p_showMsgMus)
 		{
             PGE_MsgBox::warn(
-                              QString("Mix_LoadMUS: %1\n%2")
-                              .arg( musFile )
-                              .arg(Mix_GetError())
+                              fmt::format("Mix_LoadMUS: {0}\n{1}",
+                                          musFile, Mix_GetError())
                              );
-            p_showMsgMus_for = QString(musFile);
+            p_showMsgMus_for = std::string(musFile);
             p_showMsgMus = false;
 		}
     }

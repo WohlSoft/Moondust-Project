@@ -21,10 +21,13 @@
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
+#include <common_features/tr.h>
 
 #include <settings/global_settings.h>
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
+
+#include <fmt/fmt_format.h>
 
 Scene  *PGE_Window::m_currentScene      = nullptr;
 
@@ -65,11 +68,11 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 
     if(*error != '\0')
     {
-        PGE_MsgBox::warn(QString("SDL Error: %1\nFile: %2\nFunction: %3\nLine: %4")
-                         .arg(error)
-                         .arg(fn)
-                         .arg(func)
-                         .arg(line));
+        PGE_MsgBox::warn(fmt::format("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
+                         error,
+                         fn,
+                         func,
+                         line));
         SDL_ClearError();
         return true;
     }
@@ -77,42 +80,41 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
     return false;
 }
 
-void PGE_Window::printSDLWarn(QString info)
+void PGE_Window::printSDLWarn(std::string info)
 {
-    PGE_MsgBox::warn(QString("%1\nSDL Error: %2")
-                     .arg(info)
-                     .arg(SDL_GetError())
+    PGE_MsgBox::warn(fmt::format("{0}\nSDL Error: {1}",
+                     info,
+                     SDL_GetError())
                     );
 }
 
-void PGE_Window::printSDLError(QString info)
+void PGE_Window::printSDLError(std::string info)
 {
-    PGE_MsgBox::error(QString("%1\nSDL Error: %2")
-                      .arg(info)
-                      .arg(SDL_GetError())
-                     );
+    PGE_MsgBox::error(fmt::format("{0}\nSDL Error: {1}",
+                      info,
+                      SDL_GetError()));
 }
 
-int PGE_Window::msgBoxInfo(QString title, QString text)
+int PGE_Window::msgBoxInfo(std::string title, std::string text)
 {
-    std::string ttl = title.toStdString();
-    std::string msg = text.toStdString();
+    std::string &ttl = title;
+    std::string &msg = text;
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
                                     ttl.c_str(), msg.c_str(), window);
 }
 
-int PGE_Window::msgBoxWarning(QString title, QString text)
+int PGE_Window::msgBoxWarning(std::string title, std::string text)
 {
-    std::string ttl = title.toStdString();
-    std::string msg = text.toStdString();
+    std::string &ttl = title;
+    std::string &msg = text;
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                     ttl.c_str(), msg.c_str(), window);
 }
 
-int PGE_Window::msgBoxCritical(QString title, QString text)
+int PGE_Window::msgBoxCritical(std::string title, std::string text)
 {
-    std::string ttl = title.toStdString();
-    std::string msg = text.toStdString();
+    std::string &ttl = title;
+    std::string &msg = text;
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
                                     ttl.c_str(), msg.c_str(), window);
 }
@@ -130,7 +132,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(rtype == GlRenderer::RENDER_INVALID)
     {
         //% "Unable to find OpenGL support!\nSoftware renderer will be started.\n"
-        printSDLWarn(qtTrId("RENDERER_NO_OPENGL_ERROR"));
+        printSDLWarn(qsTrId("RENDERER_NO_OPENGL_ERROR"));
         SDL_ClearError();
         rtype = GlRenderer::RENDER_SW_SDL;
     }
@@ -152,7 +154,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     case GlRenderer::RENDER_AUTO:
     case GlRenderer::RENDER_INVALID:
         //% "Renderer is not selected!"
-        printSDLError(qtTrId("NO_RENDERER_ERROR"));
+        printSDLError(qsTrId("NO_RENDERER_ERROR"));
         return false;
     }
 
@@ -170,7 +172,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(window == NULL)
     {
         //% "Unable to create window!"
-        printSDLError(qtTrId("WINDOW_CREATE_ERROR"));
+        printSDLError(qsTrId("WINDOW_CREATE_ERROR"));
         SDL_ClearError();
         return false;
     }
@@ -178,7 +180,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(isSdlError())
     {
         //% "Unable to create window!"
-        printSDLError(qtTrId("WINDOW_CREATE_ERROR"));
+        printSDLError(qsTrId("WINDOW_CREATE_ERROR"));
         SDL_ClearError();
         return false;
     }
@@ -225,7 +227,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
         if(isSdlError())
         {
             //% "Unable to setup window icon!"
-            printSDLWarn(qtTrId("WINDOW_ICON_INIT_ERROR"));
+            printSDLWarn(qsTrId("WINDOW_ICON_INIT_ERROR"));
             SDL_ClearError();
         }
     }
@@ -238,7 +240,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(!GlRenderer::init())
     {
         //% "Unable to initialize renderer context!"
-        printSDLError(qtTrId("RENDERER_CONTEXT_INIT_ERROR"));
+        printSDLError(qsTrId("RENDERER_CONTEXT_INIT_ERROR"));
         SDL_ClearError();
         g_isRenderInit = false;
         return false;

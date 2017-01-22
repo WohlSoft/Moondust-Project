@@ -25,16 +25,15 @@ WorldScene_Portrait::WorldScene_Portrait():
     m_state_cur(ConfigManager::playable_characters[1].states[1])
 {}
 
-WorldScene_Portrait::WorldScene_Portrait(
-    unsigned long CharacterID,
+WorldScene_Portrait::WorldScene_Portrait(unsigned long CharacterID,
     unsigned long stateID,
     int posX,
     int posY,
-    QString ani,
+    std::string ani,
     int framedelay,
     int dir)
 {
-    init(CharacterID, stateID, posX, posY, ani.toStdString(), framedelay, dir);
+    init(CharacterID, stateID, posX, posY, ani, framedelay, dir);
 }
 
 WorldScene_Portrait::~WorldScene_Portrait()

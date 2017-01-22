@@ -25,6 +25,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
+#include <common_features/tr.h>
 #include <Utils/maths.h>
 #include <controls/controller_keyboard.h>
 #include <controls/controller_joystick.h>
@@ -32,6 +33,8 @@
 #include <data_configs/config_manager.h>
 #include <settings/global_settings.h>
 #include <settings/debugger.h>
+
+#include <Utils/files.h>
 
 #include <QHash>
 #include <QPair>
@@ -72,7 +75,7 @@ WorldScene::WorldScene()
     ConfigManager::setup_WorldMap.initFonts();
     common_setup = ConfigManager::setup_WorldMap;
 
-    if(common_setup.backgroundImg.isEmpty())
+    if(common_setup.backgroundImg.empty())
         backgroundTex.w = 0;
     else
         GlRenderer::loadTextureP(backgroundTex, common_setup.backgroundImg);
@@ -81,7 +84,8 @@ WorldScene::WorldScene()
 
     for(int i = 0; i < common_setup.AdditionalImages.size(); i++)
     {
-        if(common_setup.AdditionalImages[i].imgFile.isEmpty()) continue;
+        if(common_setup.AdditionalImages[i].imgFile.empty())
+            continue;
 
         WorldScene_misc_img img;
         GlRenderer::loadTextureP(img.t, common_setup.AdditionalImages[i].imgFile);
@@ -187,23 +191,23 @@ void WorldScene::setGameState(EpisodeState *_state)
         }
 
         //open Intro level
-        if(!data.IntroLevel_file.isEmpty())
+        if(!data.IntroLevel_file.empty())
         {
             //Fix file extension
-            if((!data.IntroLevel_file.endsWith(".lvlx", Qt::CaseInsensitive)) &&
-               (!data.IntroLevel_file.endsWith(".lvl", Qt::CaseInsensitive)))
+            if((!Files::hasSuffix(data.IntroLevel_file, ".lvlx")) &&
+               (!Files::hasSuffix(data.IntroLevel_file, ".lvl")))
                 data.IntroLevel_file.append(".lvl");
 
-            QString introLevelFile = gameState->WorldPath + "/" + data.IntroLevel_file;
-            LogDebug("Opening intro level: " + introLevelFile);
+            std::string introLevelFile = gameState->WorldPath + "/" + data.IntroLevel_file;
+            pLogDebug("Opening intro level: %s", introLevelFile.c_str());
 
-            if(QFileInfo(introLevelFile).exists())
+            if(Files::fileExists(introLevelFile))
             {
                 LevelData checking;
 
                 if(FileFormats::OpenLevelFile(introLevelFile, checking))
                 {
-                    LogDebug("File valid, do exit!");
+                    pLogDebug("File valid, do exit!");
                     gameState->LevelFile = introLevelFile;
                     gameState->LevelPath = checking.meta.path;
 
@@ -222,7 +226,7 @@ void WorldScene::setGameState(EpisodeState *_state)
                     return;
                 }
                 else
-                    LogDebug("File invalid");
+                    pLogDebug("File invalid");
             }
         }
 
@@ -412,8 +416,8 @@ bool WorldScene::init()
 bool WorldScene::loadConfigs()
 {
     bool success = true;
-    QString musIni = data.meta.path + "/music.ini";
-    QString sndIni = data.meta.path + "/sounds.ini";
+    std::string musIni = data.meta.path + "/music.ini";
+    std::string sndIni = data.meta.path + "/sounds.ini";
 
     if(ConfigManager::music_lastIniFile != musIni)
     {
@@ -494,8 +498,8 @@ bool WorldScene::loadConfigs()
             if(!ConfigManager::playable_characters.contains(st.characterID))
             {
                 //% "Invalid playable character ID"
-                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
-                               + QString::number(st.characterID);
+                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
+                               + std::to_string(st.characterID);
                 errorMsg = _errorString;
                 success = false;
                 break;
@@ -503,8 +507,8 @@ bool WorldScene::loadConfigs()
             else if(!ConfigManager::playable_characters[st.characterID].states.contains(st.stateID))
             {
                 //% "Invalid playable character state ID"
-                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
-                               + QString::number(st.stateID);
+                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
+                               + std::to_string(st.stateID);
                 errorMsg = _errorString;
                 success = false;
                 break;
@@ -554,20 +558,20 @@ void WorldScene::initPauseMenu1()
     _pauseMenu.setParentScene(this);
     _pauseMenu.construct(
         //% "Pause"
-        qtTrId("WLD_MENU_PAUSE_TTL"),
+        qsTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
-    QStringList items;
+    std::vector<std::string> items;
     //% "Continue"
-    items << qtTrId("WLD_MENU_PAUSE_CONTINUE");
+    items.push_back(qsTrId("WLD_MENU_PAUSE_CONTINUE"));
     //% "Save and continue"
-    items << qtTrId("WLD_MENU_PAUSE_CONTINUESAVE");
+    items.push_back(qsTrId("WLD_MENU_PAUSE_CONTINUESAVE"));
     //% "Save and quit"
-    items << qtTrId("WLD_MENU_PAUSE_EXITSAVE");
+    items.push_back(qsTrId("WLD_MENU_PAUSE_EXITSAVE"));
     //% "Exit without saving"
-    items << qtTrId("WLD_MENU_PAUSE_EXITNOSAVE");
+    items.push_back(qsTrId("WLD_MENU_PAUSE_EXITNOSAVE"));
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);
@@ -581,16 +585,16 @@ void WorldScene::initPauseMenu2()
     _pauseMenu.setParentScene(this);
     _pauseMenu.construct(
         //% "Pause"
-        qtTrId("WLD_MENU_PAUSE_TTL"),
+        qsTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
-    QStringList items;
+    std::vector<std::string> items;
     //% "Continue"
-    items << qtTrId("WLD_MENU_PAUSE_CONTINUE");
+    items.push_back(qsTrId("WLD_MENU_PAUSE_CONTINUE"));
     //% "Quit"
-    items << qtTrId("WLD_MENU_PAUSE_EXIT");
+    items.push_back(qsTrId("WLD_MENU_PAUSE_EXIT"));
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);
@@ -1478,11 +1482,11 @@ void WorldScene::setExiting(int delay, int reason)
     m_doExit = true;
 }
 
-bool WorldScene::loadFile(QString filePath)
+bool WorldScene::loadFile(std::string filePath)
 {
     data.meta.ReadFileValid = false;
 
-    if(!QFileInfo(filePath).exists())
+    if(!Files::fileExists(filePath))
     {
         errorMsg += "File not exist\n\n";
         errorMsg += filePath;
@@ -1495,7 +1499,7 @@ bool WorldScene::loadFile(QString filePath)
     return data.meta.ReadFileValid;
 }
 
-QString WorldScene::getLastError()
+std::string WorldScene::getLastError()
 {
     return errorMsg;
 }
@@ -1525,11 +1529,12 @@ void WorldScene::stopMusic(bool fade, int fadeLen)
         PGE_MusPlayer::stop();
 }
 
-void WorldScene::playMusic(unsigned long musicID, QString customMusicFile, bool fade, int fadeLen)
+void WorldScene::playMusic(unsigned long musicID, std::string customMusicFile, bool fade, int fadeLen)
 {
-    QString musPath = ConfigManager::getWldMusic(musicID, data.meta.path + "/" + customMusicFile);
+    std::string musPath = ConfigManager::getWldMusic(musicID, data.meta.path + "/" + customMusicFile);
 
-    if(musPath.isEmpty()) return;
+    if(musPath.empty())
+        return;
 
     PGE_MusPlayer::openFile(musPath);
 

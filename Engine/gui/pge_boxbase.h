@@ -47,7 +47,7 @@ public:
     void    fadeStep();
     /**************Fader**************/
 
-    void loadTexture(QString path);
+    void loadTexture(std::string path);
 
     void updateTickValue();
 

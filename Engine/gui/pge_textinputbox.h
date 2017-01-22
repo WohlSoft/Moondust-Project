@@ -39,8 +39,8 @@ class PGE_TextInputBox : public PGE_BoxBase
 {
 public:
     PGE_TextInputBox();
-    PGE_TextInputBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
+    PGE_TextInputBox(Scene * _parentScene=NULL, std::string msg="Message box is works!",
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, std::string texture="");
     PGE_TextInputBox(const PGE_TextInputBox &mb);
     ~PGE_TextInputBox();
 
@@ -55,20 +55,20 @@ public:
     void processBox(double tickTime);
     void processUnLoader(double ticks);
 
-    void setInputText(QString text);
-    QString inputText();
+    void setInputText(std::string text);
+    std::string inputText();
 
 private:
-    void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, QString texture="");
+    void construct(std::string msg="Message box is works!",
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, std::string texture="");
     int     _page;
     bool    running;
     int     fontID;
     GlColor fontRgba;
 
-    QString _inputText_src;
-    QString _inputText;
-    QString _inputText_printable;
+    std::string _inputText_src;
+    std::string _inputText;
+    std::string _inputText_printable;
     Sint32 cursor;
     Sint32 selection_len;
     int _text_input_h_offset;
@@ -80,7 +80,7 @@ private:
 
     msgType type;
     PGE_Rect _sizeRect;
-    QString message;
+    std::string message;
     double width;
     double height;
     double padding;

@@ -30,8 +30,8 @@
 
 #include <QFontMetrics>
 
-PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, QString _title, msgType _type,
-                       PGE_Point boxCenterPos, double _padding, QString texture)
+PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, std::string _title, msgType _type,
+                       PGE_Point boxCenterPos, double _padding, std::string texture)
     : PGE_MenuBoxBase(  _parentScene, PGE_Menu::menuAlignment::HORIZONTAL, 30,
                         _title, _type, boxCenterPos, _padding, texture)
 {

@@ -22,24 +22,24 @@
 #include <gui/pge_msgbox.h>
 #include <common_features/app_path.h>
 #include <FileMapper/file_mapper.h>
+#include <fmt/fmt_format.h>
 
 /***********************************PGE_Sounds********************************************/
 std::unordered_map<std::string, Mix_Chunk*> PGE_SfxPlayer::chunksBuffer;
 
-Mix_Chunk *PGE_SfxPlayer::openSFX(QString sndFile)
+Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
 {
     if(!PGE_Audio::isLoaded())
         return NULL;
 
-    std::string filePath = sndFile.toStdString();
     Mix_Chunk* tmpChunk = NULL;
 
-    sfxHash::iterator snd = chunksBuffer.find(filePath);
+    sfxHash::iterator snd = chunksBuffer.find(sndFile);
     if(snd == chunksBuffer.end())
     {
         #if  defined(__unix__) || defined(_WIN32)
         FileMapper fileMap;
-        if( fileMap.open_file(filePath) )
+        if( fileMap.open_file(sndFile) )
         {
             tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(), fileMap.size()), fileMap.size());
             fileMap.close_file();
@@ -49,9 +49,9 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(QString sndFile)
         #endif
         if(!tmpChunk)
         {
-            PGE_MsgBox::warn(QString("OpenSFX: Mix_LoadWAV: %1\n%2").arg(sndFile).arg(Mix_GetError()));
+            PGE_MsgBox::warn(fmt::format("OpenSFX: Mix_LoadWAV: {0}\n{1}", sndFile, Mix_GetError()));
         }
-        chunksBuffer.insert({filePath, tmpChunk});
+        chunksBuffer.insert({sndFile, tmpChunk});
     }
     else
     {
@@ -63,23 +63,22 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(QString sndFile)
     return tmpChunk;
 }
 
-void PGE_SfxPlayer::playFile(QString sndFile)
+void PGE_SfxPlayer::playFile(std::string sndFile)
 {
     if(!PGE_Audio::isLoaded())
         return;
 
     Mix_Chunk* sound;
-    std::string filePath = sndFile.toStdString();
-    sfxHash::iterator snd = chunksBuffer.find(filePath);
+    sfxHash::iterator snd = chunksBuffer.find(sndFile);
     if(snd == chunksBuffer.end())
     {
-        sound = Mix_LoadWAV( sndFile.toUtf8() );
+        sound = Mix_LoadWAV( sndFile.c_str() );
         if(!sound)
         {
-            PGE_MsgBox::warn(QString("PlaySND: Mix_LoadWAV: %1\n%2").arg(sndFile).arg(Mix_GetError()));
+            PGE_MsgBox::warn(fmt::format("PlaySND: Mix_LoadWAV: {0}\n{1}", sndFile, Mix_GetError()));
             return;
         }
-        chunksBuffer.insert({filePath, sound});
+        chunksBuffer.insert({sndFile, sound});
         if(Mix_PlayChannel( -1, sound, 0 )==-1)
         {
             const char* err = Mix_GetError();

@@ -19,7 +19,7 @@
 #ifndef _MENUITEM_H
 #define _MENUITEM_H
 
-#include <QString>
+#include <string>
 #include <functional>
 
 class PGE_Menu;
@@ -49,8 +49,8 @@ public:
 
     virtual void render(int x, int y);
 
-    QString title;
-    QString item_key;
+    std::string title;
+    std::string item_key;
     enum itemType{
         ITEM_Normal=0,
         ITEM_Bool,

@@ -23,6 +23,9 @@
 #include <QList>
 #include <QHash>
 #include <QPair>
+#include <string>
+#include <vector>
+#include <unordered_map>
 #include <common_features/pge_texture.h>
 #include <common_features/rect.h>
 #include <common_features/size.h>
@@ -48,22 +51,22 @@ public:
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
-    void addMenuItem(QString value, QString title="",
+    void addMenuItem(std::string value, std::string title="",
                      std::function<void()> _extAction=([]()->void{}), bool enabled=true);
-    void addBoolMenuItem(bool *flag, QString value, QString title="",
+    void addBoolMenuItem(bool *flag, std::string value, std::string title="",
                          std::function<void()> _extAction=([]()->void{}), bool enabled=true);
-    void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false,
+    void addIntMenuItem(int *intvalue, int min, int max, std::string value, std::string title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}), bool enabled=true );
-    void addNamedIntMenuItem(int *intvalue, QList<NamedIntItem > _items, QString value, QString title, bool rotate=false,
+    void addNamedIntMenuItem(int *intvalue, std::vector<NamedIntItem > _items, std::string value, std::string title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}), bool enabled=true );
-    void addKeyGrabMenuItem(KM_Key *key, QString item_key, QString title, SDL_Joystick *joystick_device=NULL, bool enabled=true);
+    void addKeyGrabMenuItem(KM_Key *key, std::string item_key, std::string title, SDL_Joystick *joystick_device=NULL, bool enabled=true);
 
     /*!
      * \brief Change enable state of element by value key
      * \param value Unique value key to identify menu item
      * \param enabled enabled state
      */
-    void setEnabled(QString menuitem_key, bool enabled);
+    void setEnabled(std::string menuitem_key, bool enabled);
 
     void setValueOffset(int offset);
     void setItemWidth(int width);
@@ -140,14 +143,15 @@ private:
     bool arrowDownViz;
     bool _EndSelection;
     bool _accept;
-    QList<PGE_BoolMenuItem > _items_bool;
-    QList<PGE_IntMenuItem > _items_int;
-    QList<PGE_NamedIntMenuItem > _items_named_int;
-    QList<PGE_Menuitem > _items_normal;
-    QList<PGE_KeyGrabMenuItem > _items_keygrabs;
+    std::vector<PGE_BoolMenuItem > _items_bool;
+    std::vector<PGE_IntMenuItem > _items_int;
+    std::vector<PGE_NamedIntMenuItem > _items_named_int;
+    std::vector<PGE_Menuitem > _items_normal;
+    std::vector<PGE_KeyGrabMenuItem > _items_keygrabs;
 
-    QList<PGE_Menuitem *> _items;
-    QHash<QString, PGE_Menuitem *> _items_index;
+    std::vector<PGE_Menuitem *> _items;
+    typedef std::unordered_map<std::string, PGE_Menuitem *> MenuIndex;
+    MenuIndex _items_index;
     bool namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     bool namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     void autoOffset();

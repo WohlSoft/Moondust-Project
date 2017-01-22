@@ -112,9 +112,10 @@ void PGE_BoxBase::fadeStep()
 /**************************Fader**end**************************/
 
 /********************************Texture************************************/
-void PGE_BoxBase::loadTexture(QString path)
+void PGE_BoxBase::loadTexture(std::string path)
 {
-    if(path.isEmpty()) return;
+    if(path.empty())
+        return;
 
     if(m_textureUsed)
     {

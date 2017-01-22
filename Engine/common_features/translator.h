@@ -21,19 +21,23 @@
 
 #include <QTranslator>
 #include "pge_qt_application.h"
+#include "QTranslatorX/qm_translator.h"
 
 class PGE_Translator
 {
 public:
     PGE_Translator();
     void init();
-    void toggleLanguage(QString lang);
+    void toggleLanguage(std::string lang);
 private:
+    friend std::string qsTrId(const char* string);
+
     bool            m_isInit;
-    QTranslator     m_translator;   /**< contains the translations for this application */
-    QTranslator     m_translatorQt; /**< contains the translations for qt */
-    QString         m_currLang;     /**< contains the currently loaded language */
-    QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+    //QTranslator     m_translator;   /**< contains the translations for this application */
+    //QTranslator     m_translatorQt; /**< contains the translations for qt */
+    QmTranslatorX   m_translator;   /**< contains the translations for this application */
+    std::string     m_currLang;     /**< contains the currently loaded language */
+    std::string     m_langPath;     /**< Path of language files. This is always fixed to /languages. */
 };
 
 #endif // PGE_TRANSLATOR_H

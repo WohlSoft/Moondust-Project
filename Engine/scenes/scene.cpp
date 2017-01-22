@@ -254,7 +254,7 @@ void Scene::setFade(int speed, float target, float step)
 }
 /**************************Fader**end**************************/
 
-QString Scene::errorString()
+std::string Scene::errorString()
 {
     return _errorString;
 }

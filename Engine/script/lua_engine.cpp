@@ -410,13 +410,13 @@ std::string LuaEngine::getLuaScriptPath() const
 void LuaEngine::setLuaScriptPath(const std::string& luaScriptPath)
 {
     m_luaScriptPaths.clear();
-    m_luaScriptPaths.append(luaScriptPath);
+    m_luaScriptPaths.push_back(luaScriptPath);
     m_luaScriptPath = luaScriptPath;
 }
 
-void LuaEngine::appendLuaScriptPath(const QString &luaScriptPath)
+void LuaEngine::appendLuaScriptPath(const std::string &luaScriptPath)
 {
-    m_luaScriptPaths.append(luaScriptPath);
+    m_luaScriptPaths.push_back(luaScriptPath);
 }
 
 void LuaEngine::setFileSearchPath(const QString &path)

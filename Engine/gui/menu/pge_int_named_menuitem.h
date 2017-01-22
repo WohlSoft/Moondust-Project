@@ -25,7 +25,7 @@ struct NamedIntItem
 {
     inline NamedIntItem() { value=0; }
     int value;
-    QString label;
+    std::string label;
 };
 
 class PGE_NamedIntMenuItem : public PGE_Menuitem
@@ -40,7 +40,7 @@ public:
 
 private:
     int *intvalue;
-    QList<NamedIntItem > items;
+    std::vector<NamedIntItem > items;
     int curItem;
     bool allowRotation;
     friend class PGE_Menu;

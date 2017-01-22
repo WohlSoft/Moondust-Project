@@ -43,26 +43,27 @@ class Controller;
 class PGE_MenuBoxBase : public PGE_BoxBase
 {
     public:
-        PGE_MenuBoxBase(Scene *_parentScene = NULL, PGE_Menu::menuAlignment alignment = PGE_Menu::menuAlignment::VERTICLE, int gapSpace = 0, QString _title = "Menu is works!",
-                        msgType _type = msg_info, PGE_Point boxCenterPos = PGE_Point(-1, -1), double _padding = -1, QString texture = "");
+        PGE_MenuBoxBase(Scene *_parentScene = NULL, PGE_Menu::menuAlignment alignment = PGE_Menu::menuAlignment::VERTICLE, int gapSpace = 0, std::string _title = "Menu is works!",
+                        msgType _type = msg_info, PGE_Point boxCenterPos = PGE_Point(-1, -1), double _padding = -1, std::string texture = "");
         PGE_MenuBoxBase(const PGE_MenuBoxBase &mb);
 
-        void construct(QString _title = "Menu is works!",
-                       msgType _type = msg_info, PGE_Point pos = PGE_Point(-1, -1), double _padding = -1, QString texture = "");
+        void construct(std::string _title = "Menu is works!",
+                       msgType _type = msg_info, PGE_Point pos = PGE_Point(-1, -1),
+                       double _padding = -1, std::string texture = "");
 
         ~PGE_MenuBoxBase();
 
         void setParentScene(Scene *_parentScene);
         void setType(msgType _type);
-        void setTitleFont(QString fontName);
+        void setTitleFont(std::string fontName);
         void setTitleFontColor(GlColor color);
-        void setTitleText(QString text);
+        void setTitleText(std::string text);
         void setPadding(int _padding);
         void setPadding(double _padding);
 
         void clearMenu();
-        void addMenuItem(QString &menuitem);
-        void addMenuItems(QStringList &menuitems);
+        void addMenuItem(std::string &menuitem);
+        void addMenuItems(std::vector<std::string>& menuitems);
 
         void setPos(double x, double y);
         void setMaxMenuItems(int items);
@@ -101,7 +102,7 @@ class PGE_MenuBoxBase : public PGE_BoxBase
         msgType type;
 
         PGE_Rect _sizeRect;
-        QString  title;
+        std::string  title;
         PGE_Size title_size;
 
         double width;

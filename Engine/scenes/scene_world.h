@@ -75,9 +75,9 @@ class WorldScene : public Scene
         bool isExit();
         void setExiting(int delay, int reason);
 
-        bool loadFile(QString filePath);
+        bool loadFile(std::string filePath);
 
-        QString getLastError();
+        std::string getLastError();
         void setGameState(EpisodeState *_state);
 
     private:
@@ -89,7 +89,7 @@ class WorldScene : public Scene
         bool frameSkip;
 
         EpisodeState   *gameState;
-        QString         errorMsg;
+        std::string     errorMsg;
 
         WorldMapSetup   common_setup;
         WorldData       data;
@@ -133,12 +133,12 @@ class WorldScene : public Scene
         void           mapwalker_refreshDirection();
 
 
-        void    playMusic(unsigned long musicID, QString customMusicFile, bool fade = false, int fadeLen = 300);
+        void    playMusic(unsigned long musicID, std::string customMusicFile, bool fade = false, int fadeLen = 300);
         void    stopMusic(bool fade = false, int fadeLen = 300);
         bool    _playStopSnd;
         bool    _playDenySnd;
 
-        QString currentMusicFile;
+        std::string currentMusicFile;
 
         void       jump();
         bool       jumpTo;
@@ -150,7 +150,7 @@ class WorldScene : public Scene
         long      stars;
         long      points;
         long      coins;
-        QString   levelTitle;
+        std::string levelTitle;
         /*******************************************/
         bool    allow_left;
         bool    allow_up;

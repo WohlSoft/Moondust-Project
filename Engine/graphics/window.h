@@ -92,12 +92,12 @@ int processEvents(SDL_Event &event);
 
 bool isSdlError();
 bool checkSDLError(const char *fn, int line, const char *func);
-void printSDLWarn(QString info);
-void printSDLError(QString info);
+void printSDLWarn(std::string info);
+void printSDLError(std::string info);
 
-int  msgBoxInfo(QString title, QString text);
-int  msgBoxWarning(QString title, QString text);
-int  msgBoxCritical(QString title, QString text);
+int  msgBoxInfo(std::string title, std::string text);
+int  msgBoxWarning(std::string title, std::string text);
+int  msgBoxCritical(std::string title, std::string text);
 }//namespace PGE_Window
 
 #endif // WINDOW_H
