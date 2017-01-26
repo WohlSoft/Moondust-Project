@@ -241,3 +241,14 @@ bool Files::isAbsolute(const std::string& path)
     return firstCharIsSlash;
     #endif
 }
+
+void Files::getGifMask(std::string& mask, const std::string& front)
+{
+    mask = front;
+    //Make mask filename
+    size_t dotPos = mask.find_last_of('.');
+    if(dotPos == std::string::npos)
+        mask.push_back('m');
+    else
+        mask.insert(mask.begin() + dotPos, 'm');
+}

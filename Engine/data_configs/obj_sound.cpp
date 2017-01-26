@@ -11,6 +11,10 @@
 #include <FileMapper/file_mapper.h>
 #include <QtDebug>
 
+#include <fmt/fmt_format.h>
+#include <IniProcessor/ini_processing.h>
+#include <Utils/files.h>
+
 #ifdef DEBUG_BUILD
 #include <QElapsedTimer>
 #endif
@@ -54,7 +58,7 @@ obj_sound_index::obj_sound_index()
     channel = -1;
 }
 
-void obj_sound_index::setPath(QString _path)
+void obj_sound_index::setPath(std::string _path)
 {
     need_reload = (path != _path);
     path = _path;
@@ -66,7 +70,7 @@ void obj_sound_index::play()
     if(chunk)
         Mix_PlayChannel(channel, chunk, 0);
     else
-        pLogDebug("obj_sound_index::play() Null chunk!, file path: %s", path.toStdString().c_str());
+        pLogDebug("obj_sound_index::play() Null chunk!, file path: %s", path.c_str());
 }
 
 void ConfigManager::buildSoundIndex()
@@ -94,7 +98,7 @@ void ConfigManager::buildSoundIndex()
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
                 FileMapper fileMap;
 
-                if(fileMap.open_file(snd.absPath.toUtf8().data()))
+                if(fileMap.open_file(snd.absPath.c_str()))
                 {
                     sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
                                                  static_cast<int>(fileMap.size())), 1);
@@ -132,7 +136,7 @@ void ConfigManager::buildSoundIndex()
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
                     FileMapper fileMap;
 
-                    if(fileMap.open_file(snd.absPath.toUtf8().data()))
+                    if(fileMap.open_file(snd.absPath.c_str()))
                     {
                         sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
                                                      static_cast<int>(fileMap.size())),
@@ -208,7 +212,7 @@ void ConfigManager::clearSoundIndex()
 }
 
 
-bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
+bool ConfigManager::loadSound(std::string rootPath, std::string iniFile, bool isCustom)
 {
     unsigned int i;
     obj_sound sound;
@@ -217,11 +221,11 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
     bool reserveChannel = false;
     std::string sound_ini = iniFile;
 
-    if(!QFile::exists(sound_ini))
+    if(!Files::fileExists(sound_ini))
     {
         if(isCustom) return false;
 
-        addError("ERROR LOADING sounds.ini: file does not exist", QtCriticalMsg);
+        addError("ERROR LOADING sounds.ini: file does not exist");
         PGE_MsgBox::error("ERROR LOADING sounds.ini: file does not exist");
         return false;
     }
@@ -235,8 +239,7 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
         sound_lastIniFile_changed = true;
     }
 
-    QSettings soundset(sound_ini, QSettings::IniFormat);
-    soundset.setIniCodec("UTF-8");
+    IniProcessing soundset(sound_ini);
 
     if(!isCustom) //Show errors if error caused with the internal stuff folder
     {
@@ -256,8 +259,8 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
     {
         if(isCustom) return false;
 
-        addError(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"), QtCriticalMsg);
-        PGE_MsgBox::error(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"));
+        addError("ERROR LOADING sounds.ini: number of items not define, or empty config");
+        PGE_MsgBox::error("ERROR LOADING sounds.ini: number of items not define, or empty config");
         return false;
     }
 
@@ -269,26 +272,26 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
     //Sound
     for(i = 1; i <= sound_total; i++)
     {
-        soundset.beginGroup(QString("sound-" + QString::number(i)));
+        soundset.beginGroup(fmt::format("sound-{0}", i));
         sound.name = soundset.value("name", "").toString();
 
-        if(sound.name.isEmpty())
+        if(sound.name.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(QString("Sound-%1 Item name isn't defined").arg(i));
+                addError(fmt::format("Sound-{0} Item name isn't defined", i));
                 goto skipSoundFile;
             }
             else
-                sound.name = "sound-" + QString::number(i);
+                sound.name = fmt::format("sound-{0}", i);
         }
 
         sound.file = soundset.value("file", "").toString();
 
-        if(sound.file.isEmpty())
+        if(sound.file.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("Sound-%1 Item file isn't defined").arg(i));
+                addError(fmt::format("Sound-{0} Item file isn't defined", i));
 
             goto skipSoundFile;
         }
@@ -296,10 +299,10 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
         sound.hidden = soundset.value("hidden", "0").toBool();
         sound.absPath = rootPath + sound.file;
 
-        if(!QFileInfo(sound.absPath).exists())
+        if(!Files::fileExists(sound.absPath))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("Sound-%1: file %2 not exist").arg(i).arg(sound.absPath));
+                addError(fmt::format("Sound-{0}: file {1} not exist", i, sound.absPath));
 
             goto skipSoundFile;
         }
@@ -318,7 +321,7 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
 skipSoundFile:
         soundset.endGroup();
 
-        if(soundset.status() != QSettings::NoError)
+        if(soundset.lastError() != IniProcessing::ERR_OK)
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
@@ -336,9 +339,9 @@ skipSoundFile:
 
 bool ConfigManager::loadSoundRolesTable()
 {
-    QString sound_ini = config_dir + "sound_roles.ini";
+    std::string sound_ini = config_dirSTD + "sound_roles.ini";
 
-    if(!QFile::exists(sound_ini))
+    if(!Files::fileExists(sound_ini))
     {
         addError(QString("ERROR LOADING sound_roles.ini: file does not exist"), QtCriticalMsg);
         PGE_MsgBox::error(QString("ERROR LOADING sound_roles.ini: file does not exist"));
@@ -347,8 +350,7 @@ bool ConfigManager::loadSoundRolesTable()
 
     main_sound_table.clear();
     main_sound_table.allocateSlots(57);
-    QSettings soundset(sound_ini, QSettings::IniFormat);
-    soundset.setIniCodec("UTF-8");
+    IniProcessing soundset(sound_ini);
     soundset.beginGroup("sound-roles");
     //main_sound_table[obj_sound_role::]
     main_sound_table[obj_sound_role::Greeting] = soundset.value("greeting", 0).toInt();
@@ -411,17 +413,17 @@ bool ConfigManager::loadSoundRolesTable()
     main_sound_table[obj_sound_role::BlockSwitch] = soundset.value("blockswitch", 0).toInt();
     soundset.endGroup();
 
-    if(soundset.status() != QSettings::NoError)
+    if(soundset.lastError() != IniProcessing::ERR_OK)
     {
-        addError(QString("ERROR LOADING sound_roles.ini N:%1").arg(soundset.status()), QtCriticalMsg);
-        PGE_MsgBox::error(QString("ERROR LOADING sound_roles.ini N:%1").arg(soundset.status()));
+        addError(fmt::format("ERROR LOADING sound_roles.ini N:{0}", soundset.lineWithError()));
+        PGE_MsgBox::error(fmt::format("ERROR LOADING sound_roles.ini N:{0}", soundset.lineWithError()));
         return false;
     }
 
     return true;
 }
 
-QString ConfigManager::getSound(unsigned long sndID)
+std::string ConfigManager::getSound(unsigned long sndID)
 {
     if(main_sound.contains(sndID))
         return main_sound[sndID].absPath;

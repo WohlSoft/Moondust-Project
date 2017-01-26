@@ -18,6 +18,7 @@
 
 #include <common_features/pge_texture.h>
 #include <common_features/version_cmp.h>
+#include <common_features/logger.h>
 #include "config_manager.h"
 #include "config_manager_private.h"
 #include <graphics/gl_renderer.h>
@@ -50,7 +51,7 @@ unsigned int     ConfigManager::default_grid = 32u;
 
 ScriptsSetup ConfigManager::setup_Scripts;
 
-QStringList ConfigManager::errorsList;
+Strings::List ConfigManager::errorsList;
 
 //Common Data
 unsigned int ConfigManager::screen_width = 800;
@@ -72,23 +73,20 @@ MenuSetup ConfigManager::setup_menus;
 QList<PGE_Texture > ConfigManager::common_textures;
 
 
-//Level config Data
-QList<PGE_Texture >   ConfigManager::level_textures; //Texture bank
-
-
+/* *** Texture banks *** */
+QList<PGE_Texture > ConfigManager::level_textures;
 QList<PGE_Texture > ConfigManager::world_textures;
-
 
 std::string ConfigManager::imgFile, ConfigManager::imgFileM;
 std::string ConfigManager::tmpstr;
-QStringList ConfigManager::tmp;
+Strings::List ConfigManager::tmp;
 
 
 
 
-void ConfigManager::setConfigPath(QString p)
+void ConfigManager::setConfigPath(std::string p)
 {
-    config_dir = p;
+    config_dir = QString::fromStdString(p);
     if(!config_dir.endsWith('/'))
         config_dir.append('/');
     config_dirSTD = config_dir.toStdString();
@@ -236,11 +234,10 @@ bool ConfigManager::loadBasics()
     return true;
 }
 
-void ConfigManager::addError(QString bug, QtMsgType level)
+void ConfigManager::addError(std::string bug)
 {
-    Q_UNUSED(level);
-    qWarning() << bug;
-    errorsList << bug;
+    pLogWarning("%s", bug.c_str());
+    errorsList.push_back(bug);
 }
 
 
@@ -295,19 +292,6 @@ void ConfigManager::unluadAll()
     unloadWorldConfigs();
     clearSoundIndex();
     playable_characters.clear();
-}
-
-
-
-void ConfigManager::checkForImage(QString &imgPath, QString root)
-{
-    if(!imgPath.isEmpty())
-    {
-        if(QFile(root + imgPath).exists())
-            imgPath = root + imgPath;
-        else
-            imgPath = "";
-    }
 }
 
 void ConfigManager::checkForImage(std::string &imgPath, std::string root)

@@ -1,15 +1,15 @@
 #ifndef OBJ_MUSIC_H
 #define OBJ_MUSIC_H
 
-#include <QString>
+#include <string>
 
 struct obj_music
 {
     obj_music();
     unsigned long id;
-    QString name;
-    QString file;
-    QString absPath;
+    std::string name;
+    std::string file;
+    std::string absPath;
 };
 
 #endif // OBJ_MUSIC_H

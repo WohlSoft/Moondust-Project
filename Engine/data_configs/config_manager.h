@@ -43,6 +43,8 @@
 #include "obj_sound.h"
 #include "obj_music.h"
 
+#include <Utils/strings.h>
+
 #include <QMap>
 #include <QSettings>
 #include <QFile>
@@ -238,11 +240,11 @@ namespace ConfigManager
 
 
     /********Music and sounds*******/
-    bool loadMusic(QString rootPath, QString iniFile, bool isCustom = false);
+    bool loadMusic(std::string rootPath, std::string iniFile, bool isCustom = false);
     bool loadDefaultMusics();
-    QString getWldMusic(unsigned long musicID, QString customMusic = "");
-    QString getLvlMusic(unsigned long musicID, QString customMusic = "");
-    QString getSpecialMusic(unsigned long musicID);
+    std::string getWldMusic(unsigned long musicID, std::string customMusic = "");
+    std::string getLvlMusic(unsigned long musicID, std::string customMusic = "");
+    std::string getSpecialMusic(unsigned long musicID);
 
     extern unsigned long music_custom_id;
     extern unsigned long music_w_custom_id;
@@ -251,8 +253,8 @@ namespace ConfigManager
     extern PGE_DataArray<obj_music> main_music_spc;
 
     bool loadDefaultSounds();
-    bool loadSound(QString rootPath, QString iniFile, bool isCustom = false);
-    QString getSound(unsigned long sndID);
+    bool loadSound(std::string rootPath, std::string iniFile, bool isCustom = false);
+    std::string getSound(unsigned long sndID);
     long getSoundByRole(obj_sound_role::roles role);
     bool loadSoundRolesTable();
 
@@ -271,7 +273,7 @@ namespace ConfigManager
     /********Music and sounds*******/
 
 
-    void setConfigPath(QString p);
+    void setConfigPath(std::string p);
     //Load settings
     bool loadBasics();
     bool unloadLevelConfigs();
@@ -405,9 +407,9 @@ namespace ConfigManager
     extern QList<PGE_Texture > world_textures;
     /***********Texture banks*************/
 
-    void addError(QString bug, QtMsgType level = QtWarningMsg);
+    void addError(std::string bug);
 
-    extern QStringList errorsList;
+    extern Strings::List errorsList;
 
     std::string PathLevelBGO();
     std::string PathLevelBG();
@@ -431,7 +433,7 @@ namespace ConfigManager
     std::string PathMusic();
     std::string PathSound();
 
-    QString clearMusTrack(QString path);
+    std::string clearMusTrack(std::string path);
 };
 
 

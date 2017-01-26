@@ -5,6 +5,10 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 
+#include <Utils/files.h>
+#include <IniProcessor/ini_processing.h>
+#include <fmt/fmt_format.h>
+
 #include <QSettings>
 #include <QFileInfo>
 
@@ -31,25 +35,19 @@ obj_music::obj_music()
 
 bool ConfigManager::loadDefaultMusics()
 {
-    return loadMusic(dirs.music, config_dir + "music.ini", false);
+    return loadMusic(dirs.music, config_dirSTD + "music.ini", false);
 }
 
-QString ConfigManager::clearMusTrack(QString path)
+std::string ConfigManager::clearMusTrack(std::string path)
 {
-    if(path.contains('|'))
-    {
-        QStringList x = path.split('|');
-
-        if(x.size() > 1)
-            return x[0];
-        else
-            return path;
-    }
+    std::string::size_type argDim = path.rfind('|');
+    if(argDim != std::string::npos)
+        return path.substr(0, argDim);
     else
         return path;
 }
 
-bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
+bool ConfigManager::loadMusic(std::string rootPath, std::string iniFile, bool isCustom)
 {
     unsigned int i;
     obj_music smusic_lvl;
@@ -58,13 +56,14 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     unsigned long music_lvl_total = 0;
     unsigned long music_wld_total = 0;
     unsigned long music_spc_total = 0;
-    QString music_ini = iniFile;
+    std::string music_ini = iniFile;
 
-    if(!QFile::exists(music_ini))
+    if(!Files::fileExists(music_ini))
     {
-        if(isCustom) return false;
+        if(isCustom)
+            return false;
 
-        addError(QString("ERROR LOADING music.ini: file does not exist"), QtCriticalMsg);
+        addError("ERROR LOADING music.ini: file does not exist");
         return false;
     }
 
@@ -76,8 +75,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
         music_lastIniFile_changed = true;
     }
 
-    QSettings musicset(music_ini, QSettings::IniFormat);
-    musicset.setIniCodec("UTF-8");
+    IniProcessing musicset(music_ini);
 
     if(!isCustom)
     {
@@ -129,27 +127,27 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     //World music
     for(i = 1; i <= music_wld_total; i++)
     {
-        musicset.beginGroup(QString("world-music-" + QString::number(i)));
+        musicset.beginGroup(fmt::format("world-music-{0}", i));
         smusic_wld.id = i;
         smusic_wld.name = musicset.value("name", "").toString();
 
-        if(smusic_wld.name.isEmpty())
+        if(smusic_wld.name.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(QString("WLD-Music-%1 Item name isn't defined").arg(i));
+                addError(fmt::format("WLD-Music-{0} Item name isn't defined", i));
                 goto skipWldMusic;
             }
             else
-                smusic_wld.name = "world-music-" + QString::number(i);
+                smusic_wld.name = fmt::format("world-music-{0}", i);
         }
 
         smusic_wld.file = musicset.value("file", "").toString();
 
-        if(smusic_wld.file.isEmpty() && (i != music_w_custom_id))
+        if(smusic_wld.file.empty() && (i != music_w_custom_id))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("WLD-Music-%1 Item file isn't defined").arg(i));
+                addError(fmt::format("WLD-Music-{0} Item file isn't defined", i));
 
             goto skipWldMusic;
         }
@@ -158,11 +156,11 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
 
         if(
             (smusic_wld.id != music_w_custom_id) &&
-            (!QFileInfo(clearMusTrack(smusic_wld.absPath)).exists())
+            (!Files::fileExists(clearMusTrack(smusic_wld.absPath)))
         )
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("WLD-Music-%1: file %2 not exist").arg(i).arg(smusic_wld.absPath));
+                addError(fmt::format("WLD-Music-{0}: file {1} not exist", i, smusic_wld.absPath));
 
             goto skipWldMusic;
         }
@@ -171,11 +169,10 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
 skipWldMusic:
         musicset.endGroup();
 
-        if(musicset.status() != QSettings::NoError)
+        if(musicset.lastError() != IniProcessing::ERR_OK)
         {
             if(!isCustom)
-                addError(QString("ERROR LOADING music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i), QtCriticalMsg);
-
+                addError(fmt::format("ERROR LOADING music.ini N:{0} (world music {1})", musicset.lineWithError(), i));
             break;
         }
     }
@@ -183,37 +180,37 @@ skipWldMusic:
     //Special music
     for(i = 1; i <= music_spc_total; i++)
     {
-        musicset.beginGroup(QString("special-music-" + QString::number(i)));
+        musicset.beginGroup(fmt::format("special-music-{0}", i));
         smusic_spc.id = i;
         smusic_spc.name = musicset.value("name", "").toString();
 
-        if(smusic_spc.name.isEmpty())
+        if(smusic_spc.name.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(QString("SPC-Music-%1 Item name isn't defined").arg(i));
+                addError(fmt::format("SPC-Music-{0} Item name isn't defined", i));
                 goto skipSpcMusic;
             }
             else
-                smusic_spc.name = "special-music-" + QString::number(i);
+                smusic_spc.name = fmt::format("special-music-{0}", i);
         }
 
         smusic_spc.file = musicset.value("file", "").toString();
 
-        if(smusic_spc.file.isEmpty())
+        if(smusic_spc.file.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("SPC-Music-%1 Item file isn't defined").arg(i));
+                addError(fmt::format("SPC-Music-{0} Item file isn't defined", i));
 
             goto skipSpcMusic;
         }
 
         smusic_spc.absPath = rootPath + smusic_spc.file;
 
-        if(!QFileInfo(clearMusTrack(smusic_spc.absPath)).exists())
+        if(!Files::fileExists(clearMusTrack(smusic_spc.absPath)))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("Special-Music-%1: file %2 not exist").arg(i).arg(smusic_spc.absPath));
+                addError(fmt::format("Special-Music-{0}: file {1} not exist", i, smusic_spc.absPath));
 
             goto skipSpcMusic;
         }
@@ -222,10 +219,10 @@ skipWldMusic:
 skipSpcMusic:
         musicset.endGroup();
 
-        if(musicset.status() != QSettings::NoError)
+        if(musicset.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString(QString("ERROR LOADING music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i)), QtCriticalMsg);
-            PGE_MsgBox::error(QString(QString("ERROR LOADING music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i)));
+            addError(fmt::format("ERROR LOADING music.ini N:{0} (special music {1})", musicset.lineWithError(), i));
+            PGE_MsgBox::error(fmt::format("ERROR LOADING music.ini N:%1 (special music %2)", musicset.lineWithError(), i));
             break;
         }
     }
@@ -233,27 +230,27 @@ skipSpcMusic:
     //Level music
     for(i = 1; i <= music_lvl_total; i++)
     {
-        musicset.beginGroup(QString("level-music-" + QString::number(i)));
+        musicset.beginGroup(fmt::format("level-music-{0}", i));
         smusic_lvl.id = i;
         smusic_lvl.name = musicset.value("name", "").toString();
 
-        if(smusic_lvl.name.isEmpty())
+        if(smusic_lvl.name.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(QString("LVL-Music-%1 Item name isn't defined").arg(i));
+                addError(fmt::format("LVL-Music-{0} Item name isn't defined", i));
                 goto skipLvlMusic;
             }
             else
-                smusic_lvl.name = "level-music-" + QString::number(i);
+                smusic_lvl.name = fmt::format("level-music-{0}", i);
         }
 
         smusic_lvl.file = musicset.value("file", "").toString();
 
-        if(smusic_lvl.file.isEmpty() && (i != music_custom_id))
+        if(smusic_lvl.file.empty() && (i != music_custom_id))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("LVL-Music-%1 Item file isn't defined").arg(i));
+                addError(fmt::format("LVL-Music-{0} Item file isn't defined", i));
 
             goto skipLvlMusic;
         }
@@ -262,11 +259,11 @@ skipSpcMusic:
 
         if(
             (smusic_lvl.id != music_custom_id) &&
-            (!QFileInfo(clearMusTrack(smusic_lvl.absPath)).exists())
+            (!Files::fileExists(clearMusTrack(smusic_lvl.absPath)))
         )
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(QString("LVL-Music-%1: file %2 not exist").arg(i).arg(smusic_lvl.absPath));
+                addError(fmt::format("LVL-Music-{0}: file {1} not exist", i, smusic_lvl.absPath));
 
             goto skipLvlMusic;
         }
@@ -275,14 +272,13 @@ skipSpcMusic:
 skipLvlMusic:
         musicset.endGroup();
 
-        if(musicset.status() != QSettings::NoError)
+        if(musicset.lastError() != IniProcessing::ERR_OK)
         {
             if(!isCustom)
             {
-                addError(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i), QtCriticalMsg);
-                PGE_MsgBox::error(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i));
+                addError(fmt::format("ERROR LOADING music.ini N:{0} (level-music {1})", musicset.lineWithError(), i));
+                PGE_MsgBox::error(fmt::format("ERROR LOADING music.ini N:{0} (level-music {1})", musicset.lineWithError(), i));
             }
-
             break;
         }
     }
@@ -290,7 +286,7 @@ skipLvlMusic:
     return true;
 }
 
-QString ConfigManager::getWldMusic(unsigned long musicID, QString customMusic)
+std::string ConfigManager::getWldMusic(unsigned long musicID, std::string customMusic)
 {
     if(musicID == 0)
         return "";
@@ -302,7 +298,7 @@ QString ConfigManager::getWldMusic(unsigned long musicID, QString customMusic)
         return "";
 }
 
-QString ConfigManager::getLvlMusic(unsigned long musicID, QString customMusic)
+std::string ConfigManager::getLvlMusic(unsigned long musicID, std::string customMusic)
 {
     if(musicID == 0)
         return "";
@@ -314,7 +310,7 @@ QString ConfigManager::getLvlMusic(unsigned long musicID, QString customMusic)
         return "";
 }
 
-QString ConfigManager::getSpecialMusic(unsigned long musicID)
+std::string ConfigManager::getSpecialMusic(unsigned long musicID)
 {
     if(musicID == 0)
         return "";

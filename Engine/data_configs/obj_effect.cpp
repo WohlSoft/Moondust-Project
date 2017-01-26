@@ -20,6 +20,10 @@
 #include "config_manager_private.h"
 #include "../gui/pge_msgbox.h"
 
+#include <fmt/fmt_format.h>
+#include <Utils/files.h>
+#include <IniProcessor/ini_processing.h>
+
 /*****Level Effects************/
 PGE_DataArray<obj_effect>   ConfigManager::lvl_effects_indexes;
 CustomDirManager            ConfigManager::Dir_EFFECT;
@@ -31,19 +35,18 @@ bool ConfigManager::loadLevelEffects()
     unsigned long i;
     obj_effect seffect;
     unsigned long effects_total = 0;
-    QString effects_ini = config_dir + "lvl_effects.ini";
+    std::string effects_ini = config_dirSTD + "lvl_effects.ini";
 
-    if(!QFile::exists(effects_ini))
+    if(!Files::fileExists(effects_ini))
     {
-        addError(QString("ERROR LOADING lvl_effects.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_bgo.ini: file does not exist"),
+        addError("ERROR LOADING lvl_effects.ini: file does not exist");
+        PGE_MsgBox msgBox(NULL, "ERROR LOADING lvl_bgo.ini: file does not exist",
                           PGE_MsgBox::msg_fatal);
         msgBox.exec();
         return false;
     }
 
-    QSettings effectset(effects_ini, QSettings::IniFormat);
-    effectset.setIniCodec("UTF-8");
+    IniProcessing effectset(effects_ini);
     lvl_effects_indexes.clear();   //Clear old
     effectset.beginGroup("effects-main");
     effects_total = effectset.value("total", 0).toULongLong();
@@ -65,32 +68,25 @@ bool ConfigManager::loadLevelEffects()
         seffect.isInit = false;
         seffect.image = NULL;
         seffect.textureArrayId = 0;
-        effectset.beginGroup(QString("effect-" + QString::number(i)));
+        effectset.beginGroup(fmt::format("effect-{0}", i));
         seffect.name = effectset.value("name", "").toString();
 
         if(seffect.name == "")
         {
-            addError(QString("EFFECT-%1 Item name isn't defined").arg(i));
+            addError(fmt::format("EFFECT-{0} Item name isn't defined", i));
             goto skipEffect;
         }
 
         imgFile = effectset.value("image", "").toString();
         seffect.image_n = imgFile;
 
-        if((imgFile != ""))
+        if(!imgFile.empty())
         {
-            tmp = imgFile.split(".", QString::SkipEmptyParts);
-
-            if(tmp.size() == 2)
-                imgFileM = tmp[0] + "m." + tmp[1];
-            else
-                imgFileM = "";
-
-            seffect.mask_n = imgFileM;
+            Files::getGifMask(seffect.mask_n, imgFile);
         }
         else
         {
-            addError(QString("EFFECT-%1 Image filename isn't defined").arg(i));
+            addError(fmt::format("EFFECT-{0} Image filename isn't defined", i));
             goto skipEffect;
         }
 
@@ -104,14 +100,14 @@ bool ConfigManager::loadLevelEffects()
 skipEffect:
         effectset.endGroup();
 
-        if(effectset.status() != QSettings::NoError)
-            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(effectset.status()).arg(i), QtCriticalMsg);
+        if(effectset.lastError() != IniProcessing::ERR_OK)
+            addError(fmt::format("ERROR LOADING lvl_bgo.ini N:{0} (bgo-{1})", effectset.lineWithError(), i));
     }
 
     if(lvl_effects_indexes.stored() < effects_total)
     {
-        addError(QString("Not all Effects loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.stored()));
-        PGE_MsgBox msgBox(NULL, QString("Not all Effectss loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.stored()),
+        addError(fmt::format("Not all Effects loaded! Total: {0}, Loaded: {1}", effects_total, lvl_effects_indexes.stored()));
+        PGE_MsgBox msgBox(NULL, fmt::format("Not all Effectss loaded! Total: {0}, Loaded: {1}", effects_total, lvl_effects_indexes.stored()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     }

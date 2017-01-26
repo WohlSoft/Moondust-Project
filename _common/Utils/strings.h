@@ -1,6 +1,5 @@
 /*
- * A small crossplatform set of file manipulation functions.
- * All input/output strings are UTF-8 encoded, even on Windows!
+ * A small set of extra string processing functions
  *
  * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -22,24 +21,22 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef FILES_H
-#define FILES_H
+#ifndef STRINGS_H
+#define STRINGS_H
 
 #include <string>
+#include <vector>
 
-namespace Files
+namespace Strings
 {
-    bool fileExists(const std::string &path);
-    bool deleteFile(const std::string &path);
-    bool copyFile(const std::string &to, const std::string &from, bool override = false);
-    bool moveFile(const std::string &to, const std::string &from, bool override = false);
-    bool isAbsolute(const std::string &path);
-    std::string basename(std::string path);
-    std::string dirname(std::string path);
-    std::string changeSuffix(std::string path, const std::string& suffix);
-    bool hasSuffix(const std::string &path, const std::string &suffix);
-    //Appends "m" into basename of the file name before last dot
-    void getGifMask(std::string &mask, const std::string &front);
+    typedef std::vector<std::string> List;
+    bool endsWith(const std::string &str, char what);
+    bool endsWith(const std::string &str, const std::string &what);
+    std::string trim(std::string str);
+    void doTrim(std::string &str);
+    void split(List &out, const std::string &str, char delimiter);
+    void split(List &out, const std::string &str, const std::string &delimiter);
+    List split(const std::string &str, char delimiter);
+    List split(const std::string &str, const std::string &delimiter);
 }
-
-#endif // FILES_H
+#endif // STRINGS_H

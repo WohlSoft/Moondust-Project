@@ -19,19 +19,17 @@
 #ifndef CONFIG_MANAGER_PRIVATE_H
 #define CONFIG_MANAGER_PRIVATE_H
 
-#include <QString>
-#include <QStringList>
+#include <Utils/strings.h>
 #include <IniProcessor/ini_processing.h>
 
 namespace ConfigManager
 {
-    void   checkForImage(QString &imgPath, QString root);
     void   checkForImage(std::string &imgPath, std::string root);
 
     //special paths
     extern std::string imgFile, imgFileM;
     extern std::string tmpstr;
-    extern QStringList tmp;
+    extern Strings::List tmp;
 
     extern std::string bgoPath;
     extern std::string BGPath;

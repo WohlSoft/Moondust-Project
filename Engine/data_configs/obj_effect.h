@@ -22,14 +22,13 @@
 #include "../graphics/graphics.h"
 #include "spawn_effect_def.h"
 
-#include <QString>
-#include <QPixmap>
+#include <string>
 
 struct obj_effect
 {
     unsigned long id;
-    QString image_n;
-    QString mask_n;
+    std::string image_n;
+    std::string mask_n;
     //QPixmap image;
     //QPixmap mask;
 
@@ -40,7 +39,7 @@ struct obj_effect
     int textureArrayId;
     /*   OpenGL    */
 
-    QString name;
+    std::string name;
 
     unsigned int frames;
     int framespeed;
