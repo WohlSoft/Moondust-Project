@@ -6,7 +6,8 @@ CONFIG += static
 
 DEFINES += VER_MAJOR=3 VER_MINOR=17.0
 
-QMAKE_CFLAGS += -std=c99 -O3 -fPIC -fexceptions -fvisibility=hidden
+!win32: QMAKE_CFLAGS += -fPIC
+QMAKE_CFLAGS += -std=c99 -O3 -fexceptions -fvisibility=hidden
 
 QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable \
                 -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign \

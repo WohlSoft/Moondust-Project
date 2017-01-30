@@ -585,8 +585,8 @@ Mix_Chunk * SDLCALLCC Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
 {
     Uint32 magic;
     Uint8  extramagic[25];
-    Mix_Chunk *chunk;
-    SDL_AudioSpec wavespec, *loaded;
+    Mix_Chunk *chunk = NULL;
+    SDL_AudioSpec wavespec, *loaded = NULL;
     SDL_AudioCVT wavecvt;
     int samplesize;
     Sint64 start = 0;
@@ -1558,4 +1558,3 @@ void Mix_UnlockAudio()
 }
 
 /* end of mixer.c ... */
-

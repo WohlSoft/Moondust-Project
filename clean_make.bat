@@ -6,6 +6,11 @@ call :kfile %CD%
 call :kfile ServerLib\ServerAPI
 call :kfile ServerLib\ServerApp
 call :kfile _Libs
+call :kfile _Libs\AudioCodecs
+call :kfile _Libs\AudioCodecs\libmad
+call :kfile _Libs\AudioCodecs\libogg
+call :kfile _Libs\AudioCodecs\libvorbis
+call :kfile _Libs\AudioCodecs\libFLAC
 call :kfile _Libs\SDL_Mixer_X
 call :kfile _Libs\FreeImage
 call :kfile _Libs\luabind\_project

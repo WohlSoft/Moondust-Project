@@ -26,6 +26,11 @@ kfile .
 kfile ServerLib/ServerAPI
 kfile ServerLib/ServerApp
 kfile _Libs
+kfile _Libs/AudioCodecs
+kfile _Libs/AudioCodecs/libmad
+kfile _Libs/AudioCodecs/libogg
+kfile _Libs/AudioCodecs/libvorbis
+kfile _Libs/AudioCodecs/libFLAC
 kfile _Libs/SDL_Mixer_X
 kfile _Libs/FreeImage
 kfile _Libs/luabind/_project
@@ -46,4 +51,3 @@ fi
 
 cd $bak
 if [[ "$1" != "nopause" ]]; then read -n 1; fi
-

@@ -4,9 +4,13 @@ include($$PWD/../_common/dest_dir.pri)
 TEMPLATE = subdirs
 CONFIG  -= app_bundle
 
+# ========= Audio Codecs ==========
+SUBDIRS += AudioCodecs
+
 # ========== SDL Mixer X ==========
 SUBDIRS += SDL2MixerX
 SDL2MixerX.file = SDL_Mixer_X/SDL_Mixer_X.pro
+SDL2MixerX.depends = AudioCodecs
 
 # ========== FreeImage (lite) ==========
 SUBDIRS += FreeImageLite
