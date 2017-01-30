@@ -12,7 +12,4 @@ release: DEFINES += NDEBUG
 !win32:{
     QMAKE_CFLAGS += -fPIC
     QMAKE_CXXFLAGS += -fPIC
-} else {
-    QMAKE_CFLAGS -= -fPIC
-    QMAKE_CXXFLAGS -= -fPIC
 }
