@@ -101,7 +101,7 @@ checkState
 #=======================================================================
 echo "Building..."
 TIME_STARTED=$(date +%s)
-make $MAKE_EXTRA_ARGS
+make $MAKE_EXTRA_ARGS release
 checkState
 TIME_ENDED=$(date +%s)
 TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))

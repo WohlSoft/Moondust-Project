@@ -63,7 +63,7 @@ rem build all components
 %QtDir%\qmake.exe CONFIG+=release CONFIG-=debug %BuildArgs%
 if ERRORLEVEL 1 goto error
 
-%MinGW%\mingw32-make %MAKE_EXTRA_ARGS%
+%MinGW%\mingw32-make %MAKE_EXTRA_ARGS% release
 if ERRORLEVEL 1 goto error
 
 rem copy data and configs into the build directory
