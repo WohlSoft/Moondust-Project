@@ -1,5 +1,10 @@
+#
+#  Project file for the Qt Creator IDE
+#
+
 TEMPLATE = lib
-CONFIG = staticlib
+CONFIG  -= qt
+CONFIG  += staticlib
 
 TARGET = FLAC
 INSTALLINCLUDES = $$PWD/include/FLAC/*
@@ -7,6 +12,8 @@ INSTALLINCLUDESTO = FLAC
 include($$PWD/../audio_codec_common.pri)
 
 DEFINES     += HAVE_CONFIG_H
+win32:DEFINES += HAVE_FSEEKO
+
 INCLUDEPATH += $$PWD $$PWD/include $$PWD/include_p $$PWD/src/
 
 INCLUDEPATH += $$PWD/../libogg/include

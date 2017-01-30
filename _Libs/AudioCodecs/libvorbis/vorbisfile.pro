@@ -1,5 +1,10 @@
+#
+#  Project file for the Qt Creator IDE
+#
+
 TEMPLATE = lib
-CONFIG = staticlib
+CONFIG  -= qt
+CONFIG  += staticlib
 
 TARGET = vorbisfile
 INSTALLINCLUDES = $$PWD/include/vorbis/vorbisfile.h
