@@ -29,6 +29,12 @@ _Libs/_builds/win32/lib/libmad.a
 _Libs/_builds/win32/lib/libogg.a
 _Libs/_builds/win32/lib/libvorbis*.a
 
+# GLEW
+_Libs/_builds/win32/lib/libglew*.a
+_Libs/_builds/win32/include/GL/*
+_Libs/_builds/win32/bin/glew32.dll
+_Libs/_builds/win32/lib/pkgconfig/glew.pc
+
 # Exclude SDL Mixer X, FreeImage and some other libraries on Windows
 _Libs/_builds/sdl2_mixer_mod/*
 _Libs/_builds/win32/lib/SDL2_mixer.dll
