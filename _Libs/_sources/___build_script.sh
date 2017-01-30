@@ -91,19 +91,6 @@ BuildSrc()
     cd ..
 }
 
-BuildSrc2()
-{
-# $1 - archive name
-    cd $1
-    ./build.sh $InstallTo
-    if [ ! $? -eq 0 ];
-    then
-        errorofbuild
-    fi
-    cd ..
-}
-
-
 #############################Build libraries#####################
 
 BuildSDL()
@@ -156,34 +143,6 @@ BuildSDL()
 
         cd ..
     fi
-}
-
-BuildOGG()
-{
-    CURRENT_TARBALL="OGG"
-    printf "=========\E[37;42mOGG\E[0m===========\n"
-    BuildSrc2 'libogg'
-}
-
-BuildVORBIS()
-{
-    CURRENT_TARBALL="Vorbis"
-    printf "=========\E[37;42mVorbis\E[0m===========\n"
-    BuildSrc2 'libvorbis'
-}
-
-BuildFLAC()
-{
-    CURRENT_TARBALL="FLAC"
-    printf "=========\E[37;42mFLAC\E[0m===========\n"
-    BuildSrc2 'libFLAC'
-}
-
-BuildMAD()
-{
-    CURRENT_TARBALL="MAD (MPEG Audio Decoder)"
-    printf "=========\E[37;42mLibMAD\E[0m===========\n"
-    BuildSrc2 'libmad'
 }
 
 BuildFluidSynth()
@@ -256,12 +215,6 @@ BuildGLEW()
 }
 
 ########################Build & Install libraries##################################
-# in-folder
-
-#BuildOGG
-#BuildVORBIS
-#BuildFLAC
-#BuildMAD
 
 # in-archives
 if [ ! -d $CACHE_DIR ]
