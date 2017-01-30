@@ -97,4 +97,5 @@ SOURCES += \
     src/stream_encoder_intrin_ssse3.c \
     src/window.c
 
-win32: SOURCES += src/win_utf8_io.c
+win32: include($$PWD/win_utf8_io.pri)
+

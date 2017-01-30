@@ -9,5 +9,8 @@ INSTALLS += LibIncludes
 # ====================================================
 
 release: DEFINES += NDEBUG
-!win32: QMAKE_CFLAGS += -fPIC
-
+!win32:{
+    QMAKE_CFLAGS += -fPIC
+} else {
+    QMAKE_CFLAGS -= -fPIC
+}

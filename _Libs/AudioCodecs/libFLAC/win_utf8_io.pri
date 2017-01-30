@@ -1,0 +1,2 @@
+DEFINES += UNICODE _UNICODE
+SOURCES += $$PWD/src/win_utf8_io.c
