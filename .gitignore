@@ -18,7 +18,18 @@
 _Libs/_builds/linux/*
 _Libs/_builds/macos/*
 _Libs/_builds/android/*
-#!_Libs/_builds/macos/*
+
+# Exclude audio codecs on Windows
+_Libs/_builds/win32/include/FLAC/*
+_Libs/_builds/win32/include/ogg/*
+_Libs/_builds/win32/include/mad.h
+_Libs/_builds/win32/include/vorbis/*
+_Libs/_builds/win32/lib/libFLAC.a
+_Libs/_builds/win32/lib/libmad.a
+_Libs/_builds/win32/lib/libogg.a
+_Libs/_builds/win32/lib/libvorbis*.a
+
+# Exclude SDL Mixer X, FreeImage and some other libraries on Windows
 _Libs/_builds/sdl2_mixer_mod/*
 _Libs/_builds/win32/lib/SDL2_mixer.dll
 _Libs/_builds/win32/bin/SDL2_mixer.dll

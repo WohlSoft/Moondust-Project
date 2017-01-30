@@ -257,10 +257,11 @@ BuildGLEW()
 
 ########################Build & Install libraries##################################
 # in-folder
-BuildOGG
-BuildVORBIS
-BuildFLAC
-BuildMAD
+
+#BuildOGG
+#BuildVORBIS
+#BuildFLAC
+#BuildMAD
 
 # in-archives
 if [ ! -d $CACHE_DIR ]
