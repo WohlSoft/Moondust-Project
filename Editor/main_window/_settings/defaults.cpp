@@ -88,9 +88,8 @@ void MainWindow::setUiDefults()
     QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
 
     //Init default geometry of main window
-    setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-                                       QSize(dg.width()-100,
-                                             dg.height()-100), dg));
+    int margin = 100;
+    setGeometry(margin, margin, dg.width() - margin*2, dg.height() - margin*2);
 
     dock_LvlItemBox      = new LevelItemBox(this);
     dock_WldItemBox      = new WorldItemBox(this);

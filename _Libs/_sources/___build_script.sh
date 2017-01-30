@@ -31,7 +31,7 @@ fi
 #=======================================================================
 errorofbuild()
 {
-	printf "\n\n=========ERROR!!===========\n\n"
+    printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
     printf "Build failed in the $CURRENT_TARBALL component\n\n"
 	exit 1
 }
@@ -119,7 +119,7 @@ BuildSDL()
     #----------------------------------------------
 
     ###########SDL2###########
-    echo "=======SDL2========="
+    printf "=========\E[37;42mSDL2\E[0m===========\n"
     #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
     $Sed -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL/Makefile.in
     $Sed -i 's/libSDL2-2\.0\.so\.0/libSDL2\.so/g' $LatestSDL/SDL2.spec.in
@@ -161,28 +161,28 @@ BuildSDL()
 BuildOGG()
 {
     CURRENT_TARBALL="OGG"
-    echo "=========OGG==========="
+    printf "=========\E[37;42mOGG\E[0m===========\n"
     BuildSrc2 'libogg'
 }
 
 BuildVORBIS()
 {
     CURRENT_TARBALL="Vorbis"
-    echo "=========Vorbis==========="
+    printf "=========\E[37;42mVorbis\E[0m===========\n"
     BuildSrc2 'libvorbis'
 }
 
 BuildFLAC()
 {
     CURRENT_TARBALL="FLAC"
-    echo "=========FLAC==========="
+    printf "=========\E[37;42mFLAC\E[0m===========\n"
     BuildSrc2 'libFLAC'
 }
 
 BuildMAD()
 {
     CURRENT_TARBALL="MAD (MPEG Audio Decoder)"
-    echo "==========LibMAD============"
+    printf "=========\E[37;42mLibMAD\E[0m===========\n"
     BuildSrc2 'libmad'
 }
 
@@ -191,7 +191,7 @@ BuildFluidSynth()
     CURRENT_TARBALL="FluidSynth"
     UnArch 'fluidsynth-1.1.6'
     ###########MODPLUG###########
-    echo "==========FLUIDSYNTH=========="
+    printf "=========\E[37;42mFLUIDSYNTH\E[0m===========\n"
     #Build minimalistic FluidSynth version to just generate raw audio output to handle in the SDL Mixer X
     #./configure CFLAGS=-fPIC --prefix=/home/vitaly/_git_repos/PGE-Project/_Libs/_builds/linux/ --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --enable-static=yes --enable-shared=no
     BuildSrc 'fluidsynth-1.1.6' '--prefix='$InstallTo' --includedir='$InstallTo'/include --libdir='$InstallTo'/lib CFLAGS=-fPIC CXXFLAGS=-fPIC --disable-dbus-support --disable-pulse-support --disable-alsa-support --disable-portaudio-support --disable-oss-support --disable-jack-support --disable-midishare --disable-coreaudio --disable-coremidi --disable-dart --disable-lash --disable-ladcca --without-readline --enable-static=yes --enable-shared=no'
@@ -203,7 +203,7 @@ BuildLUAJIT()
     UnArch 'luajit'
 
     ###########LuaJIT###########
-    echo "==========LuaJIT============"
+    printf "=========\E[37;42mLuaJIT\E[0m===========\n"
     cd LuaJIT
     echo "Building..."
     make -s --jobs=2 PREFIX=$InstallTo BUILDMODE=static
@@ -236,7 +236,7 @@ BuildGLEW()
     UnArch 'glew-1.13.0'
 
     ###########GLEW###########
-    echo "==========GLEW============"
+    printf "=========\E[37;42mGLEW\E[0m===========\n"
     cd glew-1.13.0
     make GLEW_PREFIX=$InstallTo GLEW_DEST=$InstallTo CFLAGS.EXTRA="-DGLEW_STATIC -fPIC" GLEW_NO_GLU="-DGLEW_NO_GLU"
     if [ $? -eq 0 ]

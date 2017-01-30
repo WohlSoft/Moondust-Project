@@ -38,8 +38,6 @@ public:
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr);
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr);
 
-    static QImage  fromBMP(QString& file);
-    static QImage  fromGIF(QString& file);
     static QPixmap loadPixmap(QString file);
     static QImage  loadQImage(QString file);
 
@@ -58,8 +56,6 @@ public:
      * \return Image with drawn number value
      */
     static QPixmap drawDegitFont(int number);
-
-    static bool toGif(QImage& img, QString& path);
 };
 
 #endif // GRAPHICS_FUNCS_H

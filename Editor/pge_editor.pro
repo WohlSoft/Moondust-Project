@@ -120,12 +120,9 @@ else
     QT -= multimedia
 }
 
-# Dependent libraries
-include($$PWD/../_Libs/EasyBMP/EasyBMP.pri)
-include($$PWD/../_Libs/giflib/giflib.pri)
-
 # Common code
 include($$PWD/../_common/FileMapper/FileMapper.pri)
+include($$PWD/../_common/DirManager/dirman.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
