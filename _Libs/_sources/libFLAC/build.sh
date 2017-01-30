@@ -4,7 +4,7 @@
 
 PREFIX=$1
 TARGET=libFLAC.a
-X_CFLAGS="-O3 -DNDEBUG -DHAVE_CONFIG_H -I$PWD/include -I$PWD/src/ -I$PWD/../libogg/include"
+X_CFLAGS="-O2 -DNDEBUG -DHAVE_CONFIG_H -I$PWD/include -I$PWD/src/ -I$PWD/../libogg/include"
 FILES=(bitmath.c bitreader.c bitwriter.c cpu.c crc.c fixed.c fixed_intrin_sse2.c fixed_intrin_ssse3.c float.c format.c lpc.c lpc_intrin_avx2.c lpc_intrin_sse.c lpc_intrin_sse2.c lpc_intrin_sse41.c md5.c memory.c metadata_iterators.c metadata_object.c ogg_decoder_aspect.c ogg_encoder_aspect.c ogg_helper.c ogg_mapping.c stream_decoder.c stream_encoder.c stream_encoder_framing.c stream_encoder_intrin_avx2.c stream_encoder_intrin_sse2.c stream_encoder_intrin_ssse3.c window.c)
 INCLUDE_TO_COPY="-a include/FLAC"
 

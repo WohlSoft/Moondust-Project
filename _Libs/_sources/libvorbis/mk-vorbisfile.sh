@@ -4,7 +4,7 @@
 
 PREFIX=$1
 TARGET=libvorbisfile.a
-X_CFLAGS="-O3 -DNDEBUG -DHAVE_CONFIG_H -I$PWD/include -I$PWD/lib/ -I$LIBOGG/include"
+X_CFLAGS="-O2 -DNDEBUG -DHAVE_CONFIG_H -I$PWD/include -I$PWD/lib/ -I$LIBOGG/include"
 FILES=(vorbisfile.c)
 INCLUDE_TO_COPY="-a include/vorbis"
 

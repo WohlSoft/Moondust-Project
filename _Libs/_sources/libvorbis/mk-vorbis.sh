@@ -4,7 +4,7 @@
 
 PREFIX=$1
 TARGET=libvorbis.a
-X_CFLAGS="-O3 -DNDEBUG -DHAVE_CONFIG_H -I$PWD/include -I$PWD/lib/ -I$LIBOGG/include"
+X_CFLAGS="-O2 -DNDEBUG -DHAVE_CONFIG_H -I$PWD/include -I$PWD/lib/ -I$LIBOGG/include"
 FILES=(analysis.c bitrate.c block.c codebook.c envelope.c floor0.c floor1.c info.c lookup.c lpc.c lsp.c mapping0.c mdct.c psy.c registry.c res0.c sharedbook.c smallft.c synthesis.c window.c)
 INCLUDE_TO_COPY="-a include/vorbis"
 

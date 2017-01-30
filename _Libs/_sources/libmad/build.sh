@@ -16,7 +16,7 @@ else
 fi
 
 LD="ar -cqs"
-X_CFLAGS="-O3 -DNDEBUG -DFPM_DEFAULT -DHAVE_CONFIG_H"
+X_CFLAGS="-O2 -DNDEBUG -DFPM_DEFAULT -DHAVE_CONFIG_H"
 
 if [[ "$OSTYPE" != "msys" ]]; then
     X_CFLAGS="$X_CFLAGS -fPIC"

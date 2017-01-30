@@ -4,7 +4,7 @@
 
 PREFIX=$1
 TARGET=libogg.a
-X_CFLAGS="-O3 -DNDEBUG -I$PWD/include"
+X_CFLAGS="-O2 -DNDEBUG -I$PWD/include"
 FILES=(framing.c bitwise.c)
 INCLUDE_TO_COPY="-a include/ogg"
 
