@@ -243,10 +243,14 @@ BuildGLEW()
     GLEW_ARGS="${GLEW_ARGS} LIBDIR=\"${InstallTo}/lib\""
     GLEW_ARGS="${GLEW_ARGS} GLEW_DEST=\"${InstallTo}\""
     GLEW_ARGS="${GLEW_ARGS} GLEW_NO_GLU=\"-DGLEW_NO_GLU\""
+    if [[ "$OSTYPE" != "msys"* ]]; then
+        GLEW_ARGS="${GLEW_ARGS} CFLAGS.EXTRA=-fPIC"
+    fi
     echo ------------------------------------------------------------
-    echo make ${GLEW_ARGS} CFLAGS.EXTRA="-fPIC"
+    echo make ${GLEW_ARGS} glew.lib
     echo ------------------------------------------------------------
-    make ${GLEW_ARGS} CFLAGS.EXTRA="-fPIC"
+    make ${GLEW_ARGS} glew.lib
+
     if [ $? -eq 0 ]
     then
         echo "[good]"
