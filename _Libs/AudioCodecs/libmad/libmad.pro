@@ -19,9 +19,6 @@ debug {
     QMAKE_CFLAGS += -O3
 }
 
-QMAKE_CFLAGS    += -fPIC
-QMAKE_CXXFLAGS  += -fPIC
-
 HEADERS +=\
     include/mad.h
 

@@ -16,5 +16,3 @@ HEADERS += \
 SOURCES += \
     src/bitwise.c \
     src/framing.c
-
-
