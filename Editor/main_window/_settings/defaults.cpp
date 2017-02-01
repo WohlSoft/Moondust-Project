@@ -90,6 +90,8 @@ void MainWindow::setUiDefults()
     //Init default geometry of main window
     int margin = 100;
     setGeometry(margin, margin, dg.width() - margin*2, dg.height() - margin*2);
+    //Set Maximized state by default
+    setWindowState( windowState() | Qt::WindowMaximized);
 
     dock_LvlItemBox      = new LevelItemBox(this);
     dock_WldItemBox      = new WorldItemBox(this);
