@@ -70,9 +70,9 @@ void MainWindow::setDefaults()
 
     LastActiveSubWindow = nullptr;
 
-#ifdef Q_OS_WIN
+    #ifdef Q_OS_WIN
     pge_thumbbar        = nullptr;
-#endif
+    #endif
 }
 
 void MainWindow::setUiDefults()
@@ -89,9 +89,9 @@ void MainWindow::setUiDefults()
 
     //Init default geometry of main window
     int margin = 100;
-    setGeometry(margin, margin, dg.width() - margin*2, dg.height() - margin*2);
+    setGeometry(margin, margin, dg.width() - margin * 2, dg.height() - margin * 2);
     //Set Maximized state by default
-    setWindowState( windowState() | Qt::WindowMaximized);
+    setWindowState(windowState() | Qt::WindowMaximized);
 
     dock_LvlItemBox      = new LevelItemBox(this);
     dock_WldItemBox      = new WorldItemBox(this);
@@ -114,47 +114,47 @@ void MainWindow::setUiDefults()
 
     tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
 
-//    #ifndef Q_OS_WIN
-//    tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
-//    tabifyDockWidget(dock_LvlSectionProps, dock_LvlItemProps);
-//    tabifyDockWidget(dock_LvlItemProps, dock_LvlSearchBox);
-//    tabifyDockWidget(dock_LvlSearchBox, dock_LvlLayers);
-//    tabifyDockWidget(dock_LvlLayers, dock_LvlEvents);
-//    tabifyDockWidget(dock_LvlEvents, dock_WldItemProps);
-//    tabifyDockWidget(dock_WldItemProps, dock_WldSearchBox);
-//    tabifyDockWidget(dock_WldSearchBox, dock_WldSettingsBox);
-//    tabifyDockWidget(dock_WldSettingsBox, dock_DebuggerBox);
+    //#ifndef Q_OS_WIN
+    //tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
+    //tabifyDockWidget(dock_LvlSectionProps, dock_LvlItemProps);
+    //tabifyDockWidget(dock_LvlItemProps, dock_LvlSearchBox);
+    //tabifyDockWidget(dock_LvlSearchBox, dock_LvlLayers);
+    //tabifyDockWidget(dock_LvlLayers, dock_LvlEvents);
+    //tabifyDockWidget(dock_LvlEvents, dock_WldItemProps);
+    //tabifyDockWidget(dock_WldItemProps, dock_WldSearchBox);
+    //tabifyDockWidget(dock_WldSearchBox, dock_WldSettingsBox);
+    //tabifyDockWidget(dock_WldSettingsBox, dock_DebuggerBox);
 
-    #define DisableFloatFeature(dock) dock->setFeatures(dock->features()&(~QDockWidget::DockWidgetFloatable));
-//    DisableFloatFeature(dock_LvlItemBox);
-//    DisableFloatFeature(dock_WldItemBox);
+#define DisableFloatFeature(dock) dock->setFeatures(dock->features()&(~QDockWidget::DockWidgetFloatable));
+    //DisableFloatFeature(dock_LvlItemBox);
+    //DisableFloatFeature(dock_WldItemBox);
 
-//    DisableFloatFeature(dock_LvlWarpProps);
-//    DisableFloatFeature(dock_LvlSectionProps);
-//    DisableFloatFeature(dock_LvlItemProps);
-//    DisableFloatFeature(dock_LvlSearchBox);
-//    DisableFloatFeature(dock_LvlLayers);
-//    DisableFloatFeature(dock_LvlWarpProps);
-//    DisableFloatFeature(dock_WldItemProps);
-//    DisableFloatFeature(dock_WldSearchBox);
-//    DisableFloatFeature(dock_WldSettingsBox);
-//    DisableFloatFeature(dock_DebuggerBox);
+    //DisableFloatFeature(dock_LvlWarpProps);
+    //DisableFloatFeature(dock_LvlSectionProps);
+    //DisableFloatFeature(dock_LvlItemProps);
+    //DisableFloatFeature(dock_LvlSearchBox);
+    //DisableFloatFeature(dock_LvlLayers);
+    //DisableFloatFeature(dock_LvlWarpProps);
+    //DisableFloatFeature(dock_WldItemProps);
+    //DisableFloatFeature(dock_WldSearchBox);
+    //DisableFloatFeature(dock_WldSettingsBox);
+    //DisableFloatFeature(dock_DebuggerBox);
     #ifdef Q_OS_ANDROID
     DisableFloatFeature(dock_TilesetBox);
     DisableFloatFeature(dock_BookmarksBox);
     #endif
-//    #endif
+    //#endif
 
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus(QMdiSubWindow*)));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow *)), this, SLOT(updateMenus(QMdiSubWindow *)));
     //connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
-    connect(&engine_proc, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(testingFinished()));
+    connect(&engine_proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(testingFinished()));
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptEpisode, &QAction::setDisabled);
 
     windowMapper = new QSignalMapper(this);
 
-    connect(windowMapper, SIGNAL(mapped(QWidget*)),
-        this, SLOT(setActiveSubWindow(QWidget*)));
+    connect(windowMapper, SIGNAL(mapped(QWidget *)),
+            this, SLOT(setActiveSubWindow(QWidget *)));
 
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
     ui->centralWidget->cascadeSubWindows();
@@ -162,21 +162,21 @@ void MainWindow::setUiDefults()
     ui->ResizingToolbar->setVisible(false);
 
     ui->PlacingToolbar->setVisible(false);
-        ui->actionOverwriteMode->setVisible(false);
-        ui->actionRectFill->setVisible(false);
-        ui->actionCircleFill->setVisible(false);
-        ui->actionLine->setVisible(false);
-        ui->actionFill->setVisible(false);
-        ui->actionFloodSectionOnly->setVisible(false);
-        ui->actionFloodSectionOnly->setEnabled(false);
+    ui->actionOverwriteMode->setVisible(false);
+    ui->actionRectFill->setVisible(false);
+    ui->actionCircleFill->setVisible(false);
+    ui->actionLine->setVisible(false);
+    ui->actionFill->setVisible(false);
+    ui->actionFloodSectionOnly->setVisible(false);
+    ui->actionFloodSectionOnly->setEnabled(false);
 
-#ifndef Q_OS_WIN
-     addToolBar(Qt::LeftToolBarArea, ui->LevelObjectToolbar);
-     addToolBar(Qt::LeftToolBarArea, ui->WorldObjectToolbar);
-#endif
+    #ifndef Q_OS_WIN
+    addToolBar(Qt::LeftToolBarArea, ui->LevelObjectToolbar);
+    addToolBar(Qt::LeftToolBarArea, ui->WorldObjectToolbar);
+    #endif
 
     {
-        QAction* action = ui->menuSetGridSize->addAction(tr("Default by item"));
+        QAction *action = ui->menuSetGridSize->addAction(tr("Default by item"));
         action->setData(0);
         connect(action, &QAction::triggered, this, &MainWindow::customGrid);
         ui->menuSetGridSize->addSeparator();
@@ -202,109 +202,113 @@ void MainWindow::setUiDefults()
         connect(action, &QAction::triggered, this, &MainWindow::customGrid);
     }
 
-    {//Vanilla editor's toolbar
-         m_toolbarVanilla = new QToolBar("Vanilla toolbar", this);
-         m_toolbarVanilla->setObjectName("m_toolbarVanilla");
+    {
+        //Vanilla editor's toolbar
+        m_toolbarVanilla = new QToolBar("Vanilla toolbar", this);
+        m_toolbarVanilla->setObjectName("m_toolbarVanilla");
 
-         QPushButton* select = new QPushButton(m_toolbarVanilla);
-         select->setText(tr("Select", "Vanilla-like toolbar"));
-         select->setCheckable(true);
-         select->setChecked(ui->actionSelect->isChecked());
-         connect(ui->actionSelect, &QAction::toggled, select, &QPushButton::setChecked);
-         connect(select, &QPushButton::clicked, ui->actionSelect, &QAction::trigger);
-         m_toolbarVanilla->insertWidget(nullptr, select);
-         QAction* selectA = m_toolbarVanilla->insertWidget(nullptr, select);
-         connect(this, &MainWindow::windowActiveLevelWorld, selectA, &QAction::setVisible);
+        QPushButton *select = new QPushButton(m_toolbarVanilla);
+        select->setText(tr("Select", "Vanilla-like toolbar"));
+        select->setCheckable(true);
+        select->setChecked(ui->actionSelect->isChecked());
+        connect(ui->actionSelect, &QAction::toggled, select, &QPushButton::setChecked);
+        connect(select, &QPushButton::clicked, ui->actionSelect, &QAction::trigger);
+        m_toolbarVanilla->insertWidget(nullptr, select);
+        QAction *selectA = m_toolbarVanilla->insertWidget(nullptr, select);
+        connect(this, &MainWindow::windowActiveLevelWorld, selectA, &QAction::setVisible);
 
-         QPushButton* erase  = new QPushButton(m_toolbarVanilla);
-         erase->setText(tr("Erase", "Vanilla-like toolbar"));
-         erase->setCheckable(true);
-         erase->setChecked(ui->actionEriser->isChecked());
-         connect(ui->actionEriser, &QAction::toggled, erase, &QPushButton::setChecked);
-         connect(erase, &QPushButton::clicked, ui->actionEriser, &QAction::trigger);
-         m_toolbarVanilla->insertWidget(nullptr, erase);
-         QAction* eraseA = m_toolbarVanilla->insertWidget(nullptr, erase);
-         connect(this, &MainWindow::windowActiveLevelWorld, eraseA, &QAction::setVisible);
+        QPushButton *erase  = new QPushButton(m_toolbarVanilla);
+        erase->setText(tr("Erase", "Vanilla-like toolbar"));
+        erase->setCheckable(true);
+        erase->setChecked(ui->actionEriser->isChecked());
+        connect(ui->actionEriser, &QAction::toggled, erase, &QPushButton::setChecked);
+        connect(erase, &QPushButton::clicked, ui->actionEriser, &QAction::trigger);
+        m_toolbarVanilla->insertWidget(nullptr, erase);
+        QAction *eraseA = m_toolbarVanilla->insertWidget(nullptr, erase);
+        connect(this, &MainWindow::windowActiveLevelWorld, eraseA, &QAction::setVisible);
 
-         QPushButton* items  = new QPushButton(m_toolbarVanilla);
-         items->setText(tr("Items", "Vanilla-like toolbar"));
-         items->setCheckable(true);
-         items->setChecked(ui->actionTilesetBox->isChecked());
-         connect(ui->actionTilesetBox, &QAction::toggled, items , &QPushButton::setChecked);
-         connect(items , &QPushButton::clicked, ui->actionTilesetBox, &QAction::trigger);
-         m_toolbarVanilla->insertWidget(nullptr, items);
-         QAction* itemsA = m_toolbarVanilla->insertWidget(nullptr, items);
-         connect(this, &MainWindow::windowActiveLevelWorld, itemsA, &QAction::setVisible);
+        QPushButton *items  = new QPushButton(m_toolbarVanilla);
+        items->setText(tr("Items", "Vanilla-like toolbar"));
+        items->setCheckable(true);
+        items->setChecked(ui->actionTilesetBox->isChecked());
+        connect(ui->actionTilesetBox, &QAction::toggled, items , &QPushButton::setChecked);
+        connect(items , &QPushButton::clicked, ui->actionTilesetBox, &QAction::trigger);
+        m_toolbarVanilla->insertWidget(nullptr, items);
+        QAction *itemsA = m_toolbarVanilla->insertWidget(nullptr, items);
+        connect(this, &MainWindow::windowActiveLevelWorld, itemsA, &QAction::setVisible);
 
-         QPushButton* player  = new QPushButton(m_toolbarVanilla);
-         player->setText(tr("Player", "Vanilla-like toolbar"));
-         connect(player, &QPushButton::clicked, [=](bool) {
-             QMenu menu;
-             menu.insertAction(nullptr, ui->actionSetFirstPlayer);
-             menu.insertAction(nullptr, ui->actionSetSecondPlayer);
-             menu.exec(QCursor::pos());
-         });
-         m_toolbarVanilla->insertWidget(nullptr, player);
-         QAction* playerA = m_toolbarVanilla->insertWidget(nullptr, player);
-         connect(this, &MainWindow::windowActiveLevel, playerA, &QAction::setVisible);
+        QPushButton *player  = new QPushButton(m_toolbarVanilla);
+        player->setText(tr("Player", "Vanilla-like toolbar"));
+        connect(player, &QPushButton::clicked, [ = ](bool)
+        {
+            QMenu menu;
+            menu.insertAction(nullptr, ui->actionSetFirstPlayer);
+            menu.insertAction(nullptr, ui->actionSetSecondPlayer);
+            menu.exec(QCursor::pos());
+        });
+        m_toolbarVanilla->insertWidget(nullptr, player);
+        QAction *playerA = m_toolbarVanilla->insertWidget(nullptr, player);
+        connect(this, &MainWindow::windowActiveLevel, playerA, &QAction::setVisible);
 
-         QPushButton* section  = new QPushButton(m_toolbarVanilla);
-         section->setText(tr("Section", "Vanilla-like toolbar"));
-         section->setCheckable(true);
-         section->setChecked(ui->actionSection_Settings->isChecked());
-         connect(ui->actionSection_Settings, &QAction::toggled, section , &QPushButton::setChecked);
-         connect(section , &QPushButton::clicked, ui->actionSection_Settings, &QAction::trigger);
-         QAction* sectionA = m_toolbarVanilla->insertWidget(nullptr, section);
-         connect(this, &MainWindow::windowActiveLevel, sectionA, &QAction::setVisible);
+        QPushButton *section  = new QPushButton(m_toolbarVanilla);
+        section->setText(tr("Section", "Vanilla-like toolbar"));
+        section->setCheckable(true);
+        section->setChecked(ui->actionSection_Settings->isChecked());
+        connect(ui->actionSection_Settings, &QAction::toggled, section , &QPushButton::setChecked);
+        connect(section , &QPushButton::clicked, ui->actionSection_Settings, &QAction::trigger);
+        QAction *sectionA = m_toolbarVanilla->insertWidget(nullptr, section);
+        connect(this, &MainWindow::windowActiveLevel, sectionA, &QAction::setVisible);
 
-         QPushButton* wldProps  = new QPushButton(m_toolbarVanilla);
-         wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
-         wldProps->setCheckable(true);
-         wldProps->setChecked(ui->actionWorld_settings->isChecked());
-         connect(ui->actionWorld_settings, &QAction::toggled, wldProps , &QPushButton::setChecked);
-         connect(wldProps, &QPushButton::clicked, ui->actionWorld_settings, &QAction::trigger);
-         QAction* wldPropsAction = m_toolbarVanilla->insertWidget(nullptr, wldProps);
-         connect(this, &MainWindow::windowActiveWorld, wldPropsAction, &QAction::setVisible);
+        QPushButton *wldProps  = new QPushButton(m_toolbarVanilla);
+        wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
+        wldProps->setCheckable(true);
+        wldProps->setChecked(ui->actionWorld_settings->isChecked());
+        connect(ui->actionWorld_settings, &QAction::toggled, wldProps , &QPushButton::setChecked);
+        connect(wldProps, &QPushButton::clicked, ui->actionWorld_settings, &QAction::trigger);
+        QAction *wldPropsAction = m_toolbarVanilla->insertWidget(nullptr, wldProps);
+        connect(this, &MainWindow::windowActiveWorld, wldPropsAction, &QAction::setVisible);
 
-         QPushButton* doors  = new QPushButton(m_toolbarVanilla);
-         doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
-         doors->setCheckable(true);
-         doors->setChecked(ui->actionWarpsAndDoors->isChecked());
-         connect(ui->actionWarpsAndDoors, &QAction::toggled, doors , &QPushButton::setChecked);
-         connect(doors, &QPushButton::clicked, ui->actionWarpsAndDoors, &QAction::trigger);
-         QAction* doorsA = m_toolbarVanilla->insertWidget(nullptr, doors);
-         connect(this, &MainWindow::windowActiveLevel, doorsA, &QAction::setVisible);
+        QPushButton *doors  = new QPushButton(m_toolbarVanilla);
+        doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
+        doors->setCheckable(true);
+        doors->setChecked(ui->actionWarpsAndDoors->isChecked());
+        connect(ui->actionWarpsAndDoors, &QAction::toggled, doors , &QPushButton::setChecked);
+        connect(doors, &QPushButton::clicked, ui->actionWarpsAndDoors, &QAction::trigger);
+        QAction *doorsA = m_toolbarVanilla->insertWidget(nullptr, doors);
+        connect(this, &MainWindow::windowActiveLevel, doorsA, &QAction::setVisible);
 
-         QPushButton* water  = new QPushButton(m_toolbarVanilla);
-         water->setText(tr("Water", "Vanilla-like toolbar"));
-         connect(water, &QPushButton::clicked, [=](bool) {
-             QMenu menu;
-             menu.insertAction(nullptr, ui->actionDrawWater);
-             menu.insertAction(nullptr, ui->actionDrawSand);
-             menu.exec(QCursor::pos());
-         });
-         m_toolbarVanilla->insertWidget(nullptr, water);
-         QAction* waterA = m_toolbarVanilla->insertWidget(nullptr, water);
-         connect(this, &MainWindow::windowActiveLevel, waterA, &QAction::setVisible);
+        QPushButton *water  = new QPushButton(m_toolbarVanilla);
+        water->setText(tr("Water", "Vanilla-like toolbar"));
+        connect(water, &QPushButton::clicked, [ = ](bool)
+        {
+            QMenu menu;
+            menu.insertAction(nullptr, ui->actionDrawWater);
+            menu.insertAction(nullptr, ui->actionDrawSand);
+            menu.exec(QCursor::pos());
+        });
+        m_toolbarVanilla->insertWidget(nullptr, water);
+        QAction *waterA = m_toolbarVanilla->insertWidget(nullptr, water);
+        connect(this, &MainWindow::windowActiveLevel, waterA, &QAction::setVisible);
 
-         QLabel *options = new QLabel(m_toolbarVanilla);
-         options->setText(QString("<a href=\"x\">%1</a>").arg(tr("Options")));
-         options->setTextFormat(Qt::RichText);
-         connect(options, &QLabel::linkActivated, [=](const QString&) {
-             QMenu menu;
-             menu.insertAction(nullptr, ui->actionGridEn);
-             menu.insertAction(nullptr, ui->actionShowGrid);
-             menu.addMenu(ui->menuSetGridSize);
-             menu.addSeparator();
-             menu.insertAction(nullptr, ui->actionAnimation);
-             menu.insertAction(nullptr, ui->actionCollisions);
-             menu.insertAction(nullptr, ui->actionSemi_transparent_paths);
-             menu.exec(QCursor::pos());
-         });
-         m_toolbarVanilla->insertWidget(nullptr, options);
-         addToolBar(Qt::BottomToolBarArea, m_toolbarVanilla);
+        QLabel *options = new QLabel(m_toolbarVanilla);
+        options->setText(QString("<a href=\"x\">%1</a>").arg(tr("Options")));
+        options->setTextFormat(Qt::RichText);
+        connect(options, &QLabel::linkActivated, [ = ](const QString &)
+        {
+            QMenu menu;
+            menu.insertAction(nullptr, ui->actionGridEn);
+            menu.insertAction(nullptr, ui->actionShowGrid);
+            menu.addMenu(ui->menuSetGridSize);
+            menu.addSeparator();
+            menu.insertAction(nullptr, ui->actionAnimation);
+            menu.insertAction(nullptr, ui->actionCollisions);
+            menu.insertAction(nullptr, ui->actionSemi_transparent_paths);
+            menu.exec(QCursor::pos());
+        });
+        m_toolbarVanilla->insertWidget(nullptr, options);
+        addToolBar(Qt::BottomToolBarArea, m_toolbarVanilla);
 
-         m_toolbarVanilla->setVisible(false);
+        m_toolbarVanilla->setVisible(false);
     }
 
     ui->menuWindow->menuAction()->setEnabled(true);
@@ -344,7 +348,7 @@ void MainWindow::setUiDefults()
     m_ui_musicVolume->setMinimumWidth(70);
     m_ui_musicVolume->setMinimum(0);
     #ifndef MIX_MAX_VOLUME
-    #define MIX_MAX_VOLUME 128
+#define MIX_MAX_VOLUME 128
     #endif
     m_ui_musicVolume->setMaximum(MIX_MAX_VOLUME);
     m_ui_musicVolume->setValue(GlobalSettings::musicVolume);
@@ -367,7 +371,7 @@ void MainWindow::setUiDefults()
     #endif
     zoom->setEnabled(false);
 
-    ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
+    ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset, zoom);
     connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
     /*********************Zoom field*************************/
 
