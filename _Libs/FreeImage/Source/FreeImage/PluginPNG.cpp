@@ -501,16 +501,16 @@ ConfigureDecoder(png_structp png_ptr, png_infop info_ptr, int flags, FREE_IMAGE_
 }
 
 static FIBITMAP * DLL_CALLCONV
-Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data) {
-	png_structp png_ptr = NULL;
-	png_infop info_ptr = NULL;
-	png_uint_32 width, height;
-	int color_type;
-	int bit_depth;
-	int pixel_depth = 0;	// pixel_depth = bit_depth * channels
+Load(FreeImageIO *io, fi_handle handle, int /*page*/, int flags, void * /*data*/) {
+    png_structp png_ptr = NULL;
+    png_infop info_ptr = NULL;
+    png_uint_32 width, height;
+    int color_type;
+    int bit_depth;
+    int pixel_depth = 0;	// pixel_depth = bit_depth * channels
 
-	FIBITMAP *dib = NULL;
-	png_bytepp row_pointers = NULL;
+    FIBITMAP *dib = NULL;
+    png_bytepp row_pointers = NULL;
 
     fi_ioStructure fio;
     fio.s_handle = handle;
@@ -804,11 +804,11 @@ Load(FreeImageIO *io, fi_handle handle, int page, int flags, void *data) {
 static BOOL DLL_CALLCONV
 Save(FreeImageIO *io, FIBITMAP *dib, fi_handle handle, int /*page*/, int flags, void * /*data*/)
 {
-	png_structp png_ptr;
-	png_infop info_ptr;
-	png_colorp palette = NULL;
-	png_uint_32 width, height;
-	BOOL has_alpha_channel = FALSE;
+    png_structp png_ptr = NULL;
+    png_infop info_ptr = NULL;
+    png_colorp palette = NULL;
+    BOOL has_alpha_channel = FALSE;
+    png_uint_32 width = 0, height = 0;
 
 	RGBQUAD *pal;					// pointer to dib palette
 	int bit_depth, pixel_depth;		// pixel_depth = bit_depth * channels

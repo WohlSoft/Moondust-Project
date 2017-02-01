@@ -26,6 +26,16 @@ patch 1
 - Attempt to fix scaling on the HighDPI screens
 - Fixed a bug caused duplicated ArrayID value by physical environment zones (after copy-pasting)
 - Fixed support of tilesets with the same title name
+patch 2
+- More friendly testing menu for LunaTester users
+- Fixed accidentally broken search engine
+- Fixed initial window size on OS X
+- Initial state of editor's window will be maximized
+- Fixed too tall result message box after SoX audio converter working
+- Added ability to disable OpenGL in the LunaTester
+- Fixed some crashes
+- Updated built-in fixer of the lazyliy-made masks to be compare with new algorithm
+- Updated console tools API to support updated API of GIFs2PNG, PNG2GIFs and LazyFixTool (which now are using "tclap" as arguments parser)
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

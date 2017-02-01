@@ -1,4 +1,5 @@
 # ========= library Intsalling properties ============
+include($$PWD/../../_common/strip_garbage.pri)
 include($$PWD/../../_common/lib_destdir.pri)
 include($$PWD/../../_common/build_props.pri)
 DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
