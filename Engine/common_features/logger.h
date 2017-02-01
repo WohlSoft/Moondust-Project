@@ -19,7 +19,7 @@
 #pragma once
 #ifndef LOGGER_H
 #define LOGGER_H
-#include <QString>
+#include <string>
 
 enum class PGE_LogLevel
 {
@@ -39,7 +39,7 @@ extern void pLogCritical(const char *format, ...);
 extern void pLogFatal(const char *format, ...);
 extern void pLogInfo(const char *format, ...);
 
-extern void WriteToLog(PGE_LogLevel type, QString msg);
+extern void WriteToLog(PGE_LogLevel type, std::string msg);
 
 #ifdef DEBUG_BUILD
 #define D_pLogDebug(fmt, ...) pLogDebug(fmt, ##__VA_ARGS__)

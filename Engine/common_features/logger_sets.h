@@ -23,6 +23,9 @@
 #include <QtMsgHandler>
 #include <QFile>
 #include <QTextStream>
+
+#include <SDL2/SDL_rwops.h>
+#include <string>
 #include <memory>
 
 #include "logger.h"
@@ -30,21 +33,17 @@
 class LogWriter
 {
 public:
-    static QString m_logFilePath;
+    static std::string  m_logFilePath;
     static PGE_LogLevel m_logLevel;
     //! Is logging system is enabmed
     static bool  m_enabled;
     //! Is log file is opened
     static bool  m_logIsOpened;
     //! Output file
-    static FILE*                        m_logout;
-    //! Output text stream
-    static std::shared_ptr<QTextStream> m_out_stream;
+    static SDL_RWops*                   m_logout;
 
-    static void WriteToLog(PGE_LogLevel type, QString msg);
+    static void WriteToLog(PGE_LogLevel type, const std::string &msg);
     static void LoadLogSettings();
-
-    static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 };
 
 #endif // LOGGER_SETS_H
