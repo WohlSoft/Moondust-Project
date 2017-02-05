@@ -47,19 +47,24 @@
 #endif
 
 #if defined _MSC_VER || defined __BORLANDC__ || defined __MINGW32__
-#include <sys/types.h> /* for off_t */
-#define FLAC__off_t __int64 /* use this instead of off_t to fix the 2 GB limit */
-#if !defined __MINGW32__
-#define fseeko _fseeki64
-#define ftello _ftelli64
-#else /* MinGW */
-#if !defined(HAVE_FSEEKO)
-#define fseeko fseeko64
-#define ftello ftello64
-#endif
-#endif
+    #include <sys/types.h> /* for off_t */
+    #define FLAC__off_t __int64 /* use this instead of off_t to fix the 2 GB limit */
+    #if !defined __MINGW32__
+        #define flac_fseeko _fseeki64
+        #define flac_ftello _ftelli64
+    #else /* MinGW */
+        #if !defined(HAVE_FSEEKO)
+            #define flac_fseeko fseeko64
+            #define flac_ftello ftello64
+        #else
+            #define flac_fseeko fseeko
+            #define flac_ftello ftello
+        #endif
+    #endif
 #else
-#define FLAC__off_t off_t
+    #define FLAC__off_t off_t
+    #define flac_fseeko fseeko
+    #define flac_ftello ftello
 #endif
 
 #if HAVE_INTTYPES_H
