@@ -1,3 +1,6 @@
+#ifndef FLAC_CONFIG_H
+#define FLAC_CONFIG_H
+
 /* define to align allocated memory on 32-byte boundaries */
 #define FLAC__ALIGN_MALLOC_DATA 1
 
@@ -89,3 +92,5 @@
 
 /* Define to __typeof__ if your compiler spells it that way. */
 /* #undef typeof */
+
+#endif //FLAC_CONFIG_H

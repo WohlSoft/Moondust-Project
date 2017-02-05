@@ -53,7 +53,7 @@ static OSStatus
 GetSequenceLength(MusicSequence sequence, MusicTimeStamp *_sequenceLength)
 {
     /*
-    http:/* lists.apple.com/archives/Coreaudio-api/2003/Jul/msg00370.html */
+    http://lists.apple.com/archives/Coreaudio-api/2003/Jul/msg00370.html
     figure out sequence length
     */
     UInt32 ntracks, i;

@@ -12,7 +12,7 @@ INSTALLINCLUDESTO = FLAC
 include($$PWD/../audio_codec_common.pri)
 
 DEFINES     += HAVE_CONFIG_H
-win32:DEFINES += HAVE_FSEEKO
+#win32:DEFINES += HAVE_FSEEKO
 
 INCLUDEPATH += $$PWD $$PWD/include $$PWD/include_p $$PWD/src/
 
