@@ -359,9 +359,9 @@ int main()
     #endif //ENABLE_SMBX64_DEEPTEST
 
     #ifdef ENABLE_SMBX38A_DEEPTEST
-    /**********************DEEP TEST OF SMBX38A files*********************/
+    /**********************DEEP TEST OF SMBX38A level files*********************/
     {
-        cout << "==================DEEP TEST OF SMBX38A==================\n";
+        cout << "==================DEEP TEST OF SMBX38A Levels==================\n";
         std::string path = "../PGEFileLib_test_files/smbx38a/";
         string opath = "../PGEFileLib_test_files/smbx38a_lvlx_diffs/";
         string wpath = "../PGEFileLib_test_files/smbx38a_out/";
@@ -460,7 +460,7 @@ int main()
                 continue;
             if(raw_original != raw_new)
             {
-                cout << "FILES ARE DIFFERENT\n";
+                //cout << "FILES ARE DIFFERENT\n";
                 diout << path + file << "\r\n";
                 diout.flush();
                 FileFormats::WriteExtendedLvlFileF(opath + file + ".old.lvlx", FileDataNew);
@@ -477,7 +477,55 @@ int main()
         oiout.close();
         niout.close();
         diout.close();
-        cout << "==================DEEP TEST OF SMBX38A=END==============\n";
+        cout << "==================DEEP TEST OF SMBX38A Levels=END==============\n";
+        cout.flush();
+    }
+
+
+    /**********************DEEP TEST OF SMBX38A Worlds files*********************/
+    {
+        cout << "==================DEEP TEST OF SMBX38A Worlds==================\n";
+        std::string path = "../PGEFileLib_test_files/smbx38a_wld/";
+        string wpath = "../PGEFileLib_test_files/smbx38a_wld_out/";
+        TheDir testDir(path);
+        testDir.mkdir("../smbx38a_out");
+        vector<string> files = testDir.entryList();
+
+        std::ofstream niout;
+        niout.open("invalid_wld38a.log", std::ios::out);
+
+        std::ofstream timesout;
+        timesout.open("times_wld38a.log", std::ios::out);
+
+        ElapsedTimer meter;
+        meter.start();
+
+        for(const string &file : files)
+        {
+            WorldData FileData;
+            meter.restart();
+            if(FileFormats::ReadSMBX38AWldFileF(path + file, FileData))
+            {
+                int64_t got = meter.elapsed();
+                timesout << flString(file, 30) << " READ -> " <<  flString(std::to_string(got), 20);
+                meter.restart();
+                //FileFormats::WriteSMBX38AWldFileRaw(FileDataNew, raw_new);
+                FileFormats::WriteSMBX38AWldFileF(wpath + file, FileData);
+                got = meter.elapsed();
+                timesout << " WRITE -> " << flString(std::to_string(got), 20);
+            }
+            else
+            {
+                cout << "WORLD MAP PARSER FAILED: Invalid file" << FileData.meta.ERROR_info << "\n";
+                niout << path + file << "\r\nInfo: "
+                      << FileData.meta.ERROR_info << "\r\nlinedata" << FileData.meta.ERROR_linedata
+                      << "\r\nline:" << FileData.meta.ERROR_linenum << "\r\n\r\n";
+                niout.flush();
+            }
+            cout.flush();
+        }
+        niout.close();
+        cout << "==================DEEP TEST OF SMBX38A Worlds=END==============\n";
         cout.flush();
     }
     /*********************************************************************/
