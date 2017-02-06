@@ -108,8 +108,8 @@ if $flag_sharedQt ; then
 
     for soPlugin in platforms/libqxcb platforms/libqvnc platforms/libqoffscreen platforms/libqlinuxfb platforms/libqeglfs imageformats/libqgif imageformats/libqico platformthemes/libqgtk3
     do
-        echo cp -a "${QT_LIB_PATH}/../plugins/${soPlugin}.so"* "${DeployDir}/${PgePrjSD}/plugins/${soPlugin}"
-        cp -a "${QT_LIB_PATH}/../plugins/${soPlugin}.so"* "${DeployDir}/${PgePrjSD}/plugins/${soPlugin}"
+        echo cp -a "${QT_LIB_PATH}/../plugins/${soPlugin}.so"* "${DeployDir}/${PgePrjSD}/plugins/${soPlugin}.so"
+        cp -a "${QT_LIB_PATH}/../plugins/${soPlugin}.so"* "${DeployDir}/${PgePrjSD}/plugins/${soPlugin}.so"
     done
     # Just little debug pause
     #echo "Press any key..."
