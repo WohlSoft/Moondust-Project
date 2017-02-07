@@ -23,6 +23,15 @@
 #pragma warning (disable : 4786) // identifier was truncated to 'number' characters
 #endif 
 
+#ifdef _WIN32
+#ifdef __MINGW32__
+#include "FreeImage_misc.h"
+#else
+#include <windows.h>
+#include <io.h>
+#endif
+#endif // _WIN32
+
 #include "FreeImage.h"
 #include "Utilities.h"
 #include "FreeImageIO.h"
@@ -62,7 +71,13 @@ FreeImage_GetFileType(const char *filename, int size) {
 	FreeImageIO io;
 	SetDefaultIO(&io);
 	
-	FILE *handle = fopen(filename, "rb");
+    #ifndef _WIN32
+    FILE *handle = fopen(filename, "rb");
+    #else
+    std::wstring fileNameW;
+    FreeImage_utf8_to_utf16(fileNameW, filename);
+    FILE *handle = _wfopen(fileNameW.c_str(), L"rb");
+    #endif
 
 	if (handle != NULL) {
 		FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromHandle(&io, (fi_handle)handle, size);
