@@ -21,19 +21,18 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include <EasyBMP.h>
-#include <giflib.hpp>
-
-#include <QFile>
 #include <QImage>
+#include <QPixmap>
 
 class Graphics
 {
 public:
-    static QImage setAlphaMask(QImage image, QImage mask);
-    static bool toGif(QImage& img, QString& path);
-    static QImage fromBMP(QString &file);
-    static QImage loadQImage(QString file);
+    static void     init();
+    static void     quit();
+    static void     getGifMask(QString &mask, const QString &front);
+    static void     loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr);
+    static bool     toMaskedGif(QImage& img, QString& path);
+
 };
 
 #endif // GRAPHICS_H

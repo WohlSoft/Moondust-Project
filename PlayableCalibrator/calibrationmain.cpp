@@ -42,7 +42,6 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     ui(new Ui::CalibrationMain)
 {
     MW::p = this;
-
     buffer.W=100;
     buffer.H=100;
     buffer.offsetX=0;
@@ -59,6 +58,8 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     currentFile = "";
 
     ui->setupUi(this);
+
+    Graphics::init();
 
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
@@ -148,7 +149,10 @@ void CalibrationMain::closeEvent(QCloseEvent *event)
 
 
 CalibrationMain::~CalibrationMain()
-{    delete ui;   }
+{
+    delete ui;
+    Graphics::quit();
+}
 
 
 void CalibrationMain::on_FrameX_valueChanged(int)

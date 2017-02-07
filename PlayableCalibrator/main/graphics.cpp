@@ -19,183 +19,336 @@
 
 #include "graphics.h"
 
-QImage Graphics::setAlphaMask(QImage image, QImage mask)
+#ifdef _WIN32
+#define FREEIMAGE_LIB 1
+#endif
+#include <FreeImageLite.h>
+#include <QFile>
+
+static FIBITMAP *loadImage(QString file, bool convertTo32bit)
 {
-    if(mask.isNull())
-        return image;
+#if  0//defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+    FileMapper fileMap;
 
-    if(image.isNull())
-        return image;
+    if(!fileMap.open_file(file.toUtf8().data()))
+        return nullptr;
 
-    QImage target = image;
-    QImage newmask = mask;
+    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
+                                            static_cast<unsigned int>(fileMap.size()));
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
-    if(target.size() != newmask.size())
-        newmask = newmask.copy(0, 0, target.width(), target.height());
+    if(formato  == FIF_UNKNOWN)
+        return nullptr;
 
-    newmask.invertPixels();
-    target.setAlphaChannel(newmask);
-    return target;
+    FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+    FreeImage_CloseMemory(imgMEM);
+    fileMap.close_file();
+
+    if(!img)
+        return nullptr;
+
+#else
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
+
+    if(formato  == FIF_UNKNOWN)
+        return nullptr;
+
+    FIBITMAP *img = FreeImage_Load(formato, file.toUtf8().data());
+
+    if(!img)
+        return nullptr;
+
+#endif
+
+    if(convertTo32bit)
+    {
+        FIBITMAP *temp;
+        temp = FreeImage_ConvertTo32Bits(img);
+
+        if(!temp)
+            return nullptr;
+
+        FreeImage_Unload(img);
+        img = temp;
+    }
+
+    return img;
+}
+
+static void mergeWithMask(FIBITMAP *image, QString pathToMask)
+{
+    if(!image) return;
+
+    if(!QFile::exists(pathToMask))
+        return; //Nothing to do
+
+    FIBITMAP *mask = loadImage(pathToMask, true);
+
+    if(!mask) return;//Nothing to do
+
+    unsigned int img_w = FreeImage_GetWidth(image);
+    unsigned int img_h = FreeImage_GetHeight(image);
+    unsigned int mask_w = FreeImage_GetWidth(mask);
+    unsigned int mask_h = FreeImage_GetHeight(mask);
+    BYTE *img_bits  = FreeImage_GetBits(image);
+    BYTE *mask_bits = FreeImage_GetBits(mask);
+    BYTE *FPixP = img_bits;
+    BYTE *SPixP = mask_bits;
+    RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   //Destination pixel color
+    unsigned short newAlpha = 255; //Calculated destination alpha-value
+
+    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
+    {
+        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
+        {
+            Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
+            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & 0x7F) | FPixP[FI_RGBA_GREEN]);
+            Npix.rgbRed = ((SPixP[FI_RGBA_RED] & 0x7F) | FPixP[FI_RGBA_RED]);
+            newAlpha = 255 - ((static_cast<unsigned short>(SPixP[FI_RGBA_RED]) +
+                               static_cast<unsigned short>(SPixP[FI_RGBA_GREEN]) +
+                               static_cast<unsigned short>(SPixP[FI_RGBA_BLUE])) / 3);
+
+            if((SPixP[FI_RGBA_RED] > 240u) //is almost White
+               && (SPixP[FI_RGBA_GREEN] > 240u)
+               && (SPixP[FI_RGBA_BLUE] > 240u))
+                newAlpha = 0;
+
+            newAlpha += ((short(FPixP[FI_RGBA_RED]) +
+                          short(FPixP[FI_RGBA_GREEN]) +
+                          short(FPixP[FI_RGBA_BLUE])) / 3);
+
+            if(newAlpha > 255)
+                newAlpha = 255;
+
+            FPixP[FI_RGBA_BLUE]  = Npix.rgbBlue;
+            FPixP[FI_RGBA_GREEN] = Npix.rgbGreen;
+            FPixP[FI_RGBA_RED]   = Npix.rgbRed;
+            FPixP[FI_RGBA_ALPHA] = static_cast<BYTE>(newAlpha);
+            FPixP += 4;
+            SPixP += 4;
+        }
+    }
+
+    FreeImage_Unload(mask);
+}
+
+static inline uint8_t subtractAlpha(const uint8_t channel, const uint8_t alpha)
+{
+    int16_t ch = static_cast<int16_t>(channel) - static_cast<int16_t>(alpha);
+    if(ch < 0)
+        ch = 0;
+    return static_cast<uint8_t>(ch);
+}
+
+static void splitRGBAtoBitBlt(FIBITMAP *&image, FIBITMAP *&mask)
+{
+    unsigned int img_w   = FreeImage_GetWidth(image);
+    unsigned int img_h   = FreeImage_GetHeight(image);
+
+    mask = FreeImage_AllocateT(FIT_BITMAP,
+                               img_w, img_h,
+                               FreeImage_GetBPP(image),
+                               FreeImage_GetRedMask(image),
+                               FreeImage_GetGreenMask(image),
+                               FreeImage_GetBlueMask(image));
+
+    RGBQUAD Fpix;
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
+
+    for(unsigned int y = 0; (y < img_h); y++)
+    {
+        for(unsigned int x = 0; (x < img_w); x++)
+        {
+            FreeImage_GetPixelColor(image, x, y, &Fpix);
+
+            uint8_t grey = (255 - Fpix.rgbReserved);
+            Npix.rgbRed  = grey;
+            Npix.rgbGreen = grey;
+            Npix.rgbBlue = grey;
+            Npix.rgbReserved = 255;
+
+            Fpix.rgbRed  = subtractAlpha(Fpix.rgbRed, grey);
+            Fpix.rgbGreen = subtractAlpha(Fpix.rgbGreen, grey);
+            Fpix.rgbBlue = subtractAlpha(Fpix.rgbBlue, grey);
+            Fpix.rgbReserved = 255;
+
+            FreeImage_SetPixelColor(image, x, y, &Fpix);
+            FreeImage_SetPixelColor(mask,  x, y, &Npix);
+        }
+    }
+}
+
+static void loadQImage(QImage &target, QString file, QString maskPath = "")
+{
+    if(file.startsWith(':'))
+    {
+        //Load from resources!
+        target = QImage(file);
+        return;
+    }
+    else    //Load via FreeImage
+    {
+        FIBITMAP *img = loadImage(file, true);
+
+        if(img)
+        {
+            mergeWithMask(img, maskPath);
+            BYTE *bits = FreeImage_GetBits(img);
+            int width  = int(FreeImage_GetWidth(img));
+            int height = int(FreeImage_GetHeight(img));
+            target = QImage(width, height, QImage::Format_ARGB32);
+
+            for(int y = height - 1; y >= 0; y--)
+            {
+                for(int x = 0; x < width; x++)
+                {
+                    target.setPixel(x, y, qRgba(bits[FI_RGBA_RED],
+                                                bits[FI_RGBA_GREEN],
+                                                bits[FI_RGBA_BLUE],
+                                                bits[FI_RGBA_ALPHA]));
+                    bits += 4;
+                }
+            }
+
+            FreeImage_Unload(img);
+            return;
+        }
+        else
+            return;
+    }
 }
 
 
-bool Graphics::toGif(QImage &img, QString &path)
-{
-    int errcode;
 
-    if(QFile(path).exists()) // Remove old file
+void Graphics::init()
+{
+    FreeImage_Initialise();
+}
+
+void Graphics::quit()
+{
+    FreeImage_DeInitialise();
+}
+
+void Graphics::getGifMask(QString &mask, const QString &front)
+{
+    mask = front;
+    //Make mask filename
+    int dotPos = mask.lastIndexOf('.');
+    if(dotPos < 0)
+        mask.push_back('m');
+    else
+        mask.insert(dotPos, 'm');
+}
+
+
+void Graphics::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr)
+{
+    if(in_imgName.isEmpty())
+    {
+        out_errStr = "Image filename isn't defined";
+        return;
+    }
+
+    if(!QFile::exists(rootDir + in_imgName))
+    {
+        out_errStr = "image file is not exist: " + rootDir + in_imgName;
+        return;
+    }
+
+    out_maskName = in_imgName;
+    getGifMask(out_maskName, in_imgName);
+
+    QImage target;
+
+    loadQImage(target, rootDir + in_imgName, rootDir + out_maskName);
+
+    if(target.isNull())
+    {
+        out_errStr = "Broken image file " + rootDir + in_imgName;
+        return;
+    }
+
+    //GraphicsHelps::mergeToRGBA(out_Img, out_Mask, rootDir+in_imgName, rootDir + out_maskName);
+    out_Img = QPixmap::fromImage(target);
+
+    if(out_Img.isNull())
+    {
+        out_errStr = "Broken image file " + rootDir + in_imgName;
+        return;
+    }
+
+    out_errStr = "";
+}
+
+bool Graphics::toMaskedGif(QImage &img, QString &path)
+{
+    FIBITMAP* fimg = FreeImage_AllocateT(FIT_BITMAP,
+                                        img.width(), img.height(), 32,
+                                        FI_RGBA_RED_MASK,
+                                        FI_RGBA_GREEN_MASK,
+                                        FI_RGBA_BLUE_MASK);
+    FIBITMAP* fmsk = NULL;
+
+    if(!fimg)
+        return false;
+
+    int imgW = img.width();
+    int imgH = img.height();
+    for(int y = 0, yr = imgH - 1; y < imgH; y++, yr--)
+        for(int x = 0; x < imgW; x++)
+        {
+            QRgb c = img.pixel(x, y);
+            RGBQUAD Npix = {(BYTE)qBlue(c), (BYTE)qGreen(c), (BYTE)qRed(c), (BYTE)qAlpha(c)};
+            FreeImage_SetPixelColor(fimg, x, yr, &Npix);
+        }
+
+    splitRGBAtoBitBlt(fimg, fmsk);
+
+    QString pathMask;
+    getGifMask(pathMask, path);
+
+    if(QFile::exists(path)) // Remove old file
         QFile::remove(path);
 
-    GifFileType *t = EGifOpenFileName(path.toStdString().c_str(), true, &errcode);
+    if(QFile::exists(pathMask)) // Remove old file
+        QFile::remove(pathMask);
 
-    if(!t)
+    bool isFail = false;
+
+    if(fimg)
     {
-        EGifCloseFile(t, &errcode);
-        std::cout << "Can't open\n";
-        return false;
-    }
-
-    EGifSetGifVersion(t, true);
-    std::vector<GifColorType>colorArr;
-    colorArr.resize(256);
-    ColorMapObject *cmo = GifMakeMapObject(256, colorArr.data());
-    bool unfinished = false;
-    QImage tarQImg(img.width(), img.height(), QImage::Format_Indexed8);
-    QVector<QRgb> table;
-
-    for(int y = 0; y < img.height(); y++)
-    {
-        for(int x = 0; x < img.width(); x++)
+        FIBITMAP *image8 = FreeImage_ColorQuantize(fimg, FIQ_WUQUANT);
+        if(image8)
         {
-            if(table.size() >= 256)
+            int ret = FreeImage_Save(FIF_GIF, image8, path.toUtf8().data());
+            if(!ret)
             {
-                unfinished = true;
-                break;
+                isFail = true;
             }
+            FreeImage_Unload(image8);
+        }
+        else
+            isFail = true;
+        FreeImage_Unload(fimg);
+    }
 
-            QRgb pix;
-
-            if(!table.contains(pix = img.pixel(x, y)))
+    if(fmsk)
+    {
+        FIBITMAP *mask8  = FreeImage_ColorQuantize(fmsk, FIQ_WUQUANT);
+        if(mask8)
+        {
+            int ret = FreeImage_Save(FIF_GIF, mask8, pathMask.toUtf8().data());
+            if(!ret)
             {
-                table.push_back(pix);
-                tarQImg.setColor(tarQImg.colorCount(), pix);
+                isFail = true;
             }
-
-            tarQImg.setPixel(x, y, static_cast<uint>(table.indexOf(pix)));
+            FreeImage_Unload(mask8);
         }
-
-        if(table.size() >= 256)
-        {
-            unfinished = true;
-            break;
-        }
+        else
+            isFail = true;
+        FreeImage_Unload(fmsk);
     }
 
-    if(unfinished)
-    {
-        GifFreeMapObject(cmo);
-        EGifCloseFile(t, &errcode);
-        std::cout << "Unfinished\n";
-        return false;
-    }
-
-    for(int l = tarQImg.colorCount(); l < 256; l++)
-        tarQImg.setColor(l, 0);
-
-    if(tarQImg.colorTable().size() != 256)
-    {
-        GifFreeMapObject(cmo);
-        EGifCloseFile(t, &errcode);
-        std::cout << "A lot of colors\n";
-        return false;
-    }
-
-    std::vector<QRgb> clTab = tarQImg.colorTable().toStdVector();
-
-    for(size_t i = 0; i < 255; i++)
-    {
-        QRgb rgb = clTab[i];
-        colorArr[i].Red     = static_cast<unsigned char>(qRed(rgb));
-        colorArr[i].Green   = static_cast<unsigned char>(qGreen(rgb));
-        colorArr[i].Blue    = static_cast<unsigned char>(qBlue(rgb));
-    }
-
-    cmo->Colors = colorArr.data();
-    errcode = EGifPutScreenDesc(t, img.width(), img.height(), 256, 0, cmo);
-
-    if(errcode != GIF_OK)
-    {
-        GifFreeMapObject(cmo);
-        EGifCloseFile(t, &errcode);
-        std::cout << "EGifPutScreenDesc error 1\n";
-        return false;
-    }
-
-    errcode = EGifPutImageDesc(t, 0, 0, img.width(), img.height(), false, 0);
-
-    if(errcode != GIF_OK)
-    {
-        GifFreeMapObject(cmo);
-        EGifCloseFile(t, &errcode);
-        std::cout << "EGifPutImageDesc error 2\n";
-        return false;
-    }
-
-    //gen byte array
-    GifByteType *byteArr = tarQImg.bits();
-
-    for(int h = 0; h < tarQImg.height(); h++)
-    {
-        errcode = EGifPutLine(t, byteArr, tarQImg.width());
-
-        if(errcode != GIF_OK)
-        {
-            GifFreeMapObject(cmo);
-            EGifCloseFile(t, &errcode);
-            std::cout << "EGifPutLine error 3\n";
-            return false;
-        }
-
-        byteArr += tarQImg.width();
-        byteArr += ((tarQImg.width() % 4) != 0 ? 4 - (tarQImg.width() % 4) : 0);
-    }
-
-    GifFreeMapObject(cmo);
-    EGifCloseFile(t, &errcode);
-    return true;
-}
-
-QImage Graphics::fromBMP(QString &file)
-{
-    QImage errImg;
-    BMP tarBMP;
-
-    if(!tarBMP.ReadFromFile(file.toStdString().c_str()))
-    {
-        //WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
-        return errImg; //Check if empty with errImg.isNull();
-    }
-
-    QImage bmpImg(tarBMP.TellWidth(), tarBMP.TellHeight(), QImage::Format_RGB666);
-
-    for(int x = 0; x < tarBMP.TellWidth(); x++)
-    {
-        for(int y = 0; y < tarBMP.TellHeight(); y++)
-        {
-            RGBApixel pixAt = tarBMP.GetPixel(x, y);
-            bmpImg.setPixel(x, y, qRgb(pixAt.Red, pixAt.Green, pixAt.Blue));
-        }
-    }
-
-    return bmpImg;
-}
-
-QImage Graphics::loadQImage(QString file)
-{
-    QImage image = QImage(file);
-
-    if(image.isNull())
-        image = fromBMP(file);
-
-    return image;
+    return !isFail;
 }
