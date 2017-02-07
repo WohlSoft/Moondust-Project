@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=PGE Editor
+Version=1.0
+Exec=/opt/pge-project/bin/pge_editor
+Comment=Editor of levels and world maps for PGE Project
+Icon=/opt/pge-project/icons/cat_builder_48.png
+Type=Application
+Terminal=false
+StartupNotify=false
+Encoding=UTF-8
+Categories=Game;Development;

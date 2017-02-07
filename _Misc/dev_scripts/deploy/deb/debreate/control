@@ -1,0 +1,9 @@
+Package: pge-project
+Version: 0.4.0-3
+Maintainer: Vitaliy Novichkov "Wohlstand" <admin@wohlnet.ru>
+Section: games
+Homepage: http://wohlsoft.ru/PGE/
+Architecture: amd64
+Priority: optional
+Description: Platformer Game Engine project
+ A game engine and toolkit to create games of side-scrolling platform genre
