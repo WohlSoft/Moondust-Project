@@ -27,7 +27,7 @@ class PlayListModel : public QAbstractListModel
     Q_OBJECT
 
     QList<PlayListEntry>    m_list;
-    int                     m_current;
+    int                     m_current = 0;
     QSet<int>               m_playedTracks;
 public:
     explicit PlayListModel(QObject *parent = 0);
