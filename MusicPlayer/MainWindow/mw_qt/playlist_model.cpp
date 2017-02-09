@@ -4,7 +4,7 @@
 PlayListModel::PlayListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    std::srand(std::time(NULL));
+    srand(std::time(NULL));
 }
 
 PlayListEntry &PlayListModel::nextEntry()
