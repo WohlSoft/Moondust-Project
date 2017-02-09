@@ -199,7 +199,11 @@ void ADLMIDI_setVolumeModel(int vm)
         adlmidi_volumeModel = 0;
 }
 
-
+void ADLMIDI_setInfiniteLoop(struct MUSIC_MIDIADL *music, int loop)
+{
+    if(music)
+        adl_setLoopEnabled(music->adlmidi, loop);
+}
 
 void ADLMIDI_setDefaults()
 {
@@ -340,7 +344,7 @@ struct MUSIC_MIDIADL *ADLMIDI_new_RW(struct SDL_RWops *src, int freesrc)
 void ADLMIDI_play(struct MUSIC_MIDIADL *music)
 {
     if(music)
-        music->playing=1;
+        music->playing = 1;
 }
 
 /* Return non-zero if a stream is currently playing */
@@ -349,7 +353,7 @@ int ADLMIDI_playing(struct MUSIC_MIDIADL *music)
     if(music)
         return music->playing;
     else
-        return -1;
+        return 0;
 }
 
 /* Play some of a stream previously started with ADLMIDI_play() */
@@ -362,7 +366,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
         return 0;
     if( music->adlmidi == NULL )
         return 0;
-    if( music->playing == -1 )
+    if( music->playing <= 0 )
         return 0;
     if( len < 0 )
         return 0;
@@ -375,10 +379,11 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     if( gottenLen <= 0 )
     {
         free(buf);
-        return 0;
+        music->playing = 0;
+        return len - 1;
     }
 
-    dest_len = gottenLen*2;
+    dest_len = gottenLen * 2;
 
     if( music->cvt.needed )
     {
@@ -396,7 +401,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     }
 
     free(buf);
-    return len-dest_len;
+    return len - dest_len;
 }
 
 /* Stop playback of a stream previously started with ADLMIDI_play() */
@@ -404,7 +409,7 @@ void ADLMIDI_stop(struct MUSIC_MIDIADL *music)
 {
     if(music)
     {
-        music->playing=-1;
+        music->playing = 0;
         adl_reset(music->adlmidi);
     }
 }
@@ -418,7 +423,7 @@ void ADLMIDI_delete(struct MUSIC_MIDIADL *music)
         {
             SDL_free(music->mus_title);
         }
-        music->playing=-1;
+        music->playing = 0;
         if(music->adlmidi)
             adl_close( music->adlmidi );
         music->adlmidi = NULL;
@@ -436,6 +441,6 @@ void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time)
         /* gme_seek(adl_midiplayer, (int)round(time*1000)); */
     }
 }
-
 #endif
+
 
