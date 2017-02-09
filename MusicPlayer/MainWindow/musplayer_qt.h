@@ -2,6 +2,7 @@
 #define MUSPLAYER_QT_H
 
 #include "musplayer_base.h"
+#include "mw_qt/playlist_model.h"
 
 #include <QMainWindow>
 
@@ -42,6 +43,14 @@ public slots:
 
     void openMusicByArg(QString musPath);
 
+    void setPlayListMode(bool plMode);
+
+    void playList_pushCurrent(bool x = false);
+    void playList_popCurrent(bool x = false);
+    void playListNext();
+
+    void switchMidiDevice(int index);
+
 private slots:
     void on_open_clicked();
     void on_stop_clicked();
@@ -56,6 +65,8 @@ private slots:
     void _blink_red();
 
 private:
+    bool playListMode = false;
+    PlayListModel playList;
     //! Controlls blinking of the wav-recording label
     QTimer m_blinker;
     //! UI form class pointer

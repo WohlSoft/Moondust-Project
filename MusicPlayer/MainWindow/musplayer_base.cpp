@@ -36,7 +36,7 @@ void MusPlayerBase::on_fmbank_currentIndexChanged(int index)
     {
         if(PGE_MusicPlayer::type == MUS_MID)
         {
-            Mix_HaltMusic();
+            PGE_MusicPlayer::MUS_stopMusic();
             on_play_clicked();
         }
     }

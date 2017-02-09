@@ -2,6 +2,7 @@
 
 #ifndef MUSPLAY_USE_WINAPI
 #include <QMessageBox>
+#include "../MainWindow/musplayer_qt.h"
 #endif
 
 #include "../wave_writer.h"
@@ -15,24 +16,35 @@ namespace PGE_MusicPlayer
     Mix_MusicType type  = MUS_NONE;
     bool reverbEnabled = false;
 
-    const char* musicTypeC()
+    bool g_playlistMode = false;
+    bool g_skipPlayList = false;
+
+    #ifndef MUSPLAY_USE_WINAPI
+    MusPlayer_Qt* mw = NULL;
+    void setMainWindow(void *mwp)
+    {
+        mw = reinterpret_cast<MusPlayer_Qt*>(mwp);
+    }
+    #endif
+
+    const char *musicTypeC()
     {
         return (
-        type == MUS_NONE?"No Music":
-        type == MUS_CMD?"CMD":
-        type == MUS_WAV?"PCM Wave":
-        type == MUS_MOD?"MidMod":
-        type == MUS_MODPLUG?"ModPlug":
-        type == MUS_MID?"MIDI/IMF":
-        type == MUS_OGG?"OGG":
-        type == MUS_MP3?"MP3 (SMPEG)":
-        type == MUS_MP3_MAD?"MP3 (LibMAD)":
-        type == MUS_FLAC?"FLAC":
-        type == MUS_SPC?"Game Music Emulator": "<Unknown>" );
+                   type == MUS_NONE ? "No Music" :
+                   type == MUS_CMD ? "CMD" :
+                   type == MUS_WAV ? "PCM Wave" :
+                   type == MUS_MOD ? "MidMod" :
+                   type == MUS_MODPLUG ? "ModPlug" :
+                   type == MUS_MID ? "MIDI/IMF" :
+                   type == MUS_OGG ? "OGG" :
+                   type == MUS_MP3 ? "MP3 (SMPEG)" :
+                   type == MUS_MP3_MAD ? "MP3 (LibMAD)" :
+                   type == MUS_FLAC ? "FLAC" :
+                   type == MUS_SPC ? "Game Music Emulator" : "<Unknown>");
     }
     QString musicType()
     {
-        return QString( musicTypeC() );
+        return QString(musicTypeC());
     }
 
     /*!
@@ -44,7 +56,7 @@ namespace PGE_MusicPlayer
         #ifndef MUSPLAY_USE_WINAPI
         QMessageBox::warning(nullptr, "SDL2 Mixer ext error", msg, QMessageBox::Ok);
         #else
-        MessageBoxA(NULL, msg.c_str(), "SDL2 Mixer ext error", MB_OK|MB_ICONWARNING);
+        MessageBoxA(NULL, msg.c_str(), "SDL2 Mixer ext error", MB_OK | MB_ICONWARNING);
         #endif
     }
 
@@ -53,7 +65,9 @@ namespace PGE_MusicPlayer
      */
     void MUS_stopMusic()
     {
+        g_skipPlayList = true;
         Mix_HaltMusic();
+        g_skipPlayList = false;
     }
 
     #ifndef MUSPLAY_USE_WINAPI
@@ -109,7 +123,7 @@ namespace PGE_MusicPlayer
      * \brief Get music title of current track
      * \return music title of current music file
      */
-    const char* MUS_getMusTitle()
+    const char *MUS_getMusTitle()
     {
         if(play_mus)
             return Mix_GetMusicTitle(play_mus);
@@ -121,7 +135,7 @@ namespace PGE_MusicPlayer
      * \brief Get music artist tag text of current music track
      * \return music artist tag text of current music track
      */
-    const char* MUS_getMusArtist()
+    const char *MUS_getMusArtist()
     {
         if(play_mus)
             return Mix_GetMusicArtistTag(play_mus);
@@ -133,7 +147,7 @@ namespace PGE_MusicPlayer
      * \brief Get music album tag text of current music track
      * \return music ablum tag text of current music track
      */
-    const char* MUS_getMusAlbum()
+    const char *MUS_getMusAlbum()
     {
         if(play_mus)
             return Mix_GetMusicAlbumTag(play_mus);
@@ -145,7 +159,7 @@ namespace PGE_MusicPlayer
      * \brief Get music copyright tag text of current music track
      * \return music copyright tag text of current music track
      */
-    const char* MUS_getMusCopy()
+    const char *MUS_getMusCopy()
     {
         if(play_mus)
             return Mix_GetMusicCopyrightTag(play_mus);
@@ -154,6 +168,25 @@ namespace PGE_MusicPlayer
     }
     #endif
 
+    void playListProcess()
+    {
+        if(g_skipPlayList)
+            return;
+        #ifndef MUSPLAY_USE_WINAPI
+        if(mw)
+            QMetaObject::invokeMethod(mw, "playListNext", Qt::QueuedConnection);
+        #endif
+    }
+
+    void setPlayListMode(bool playList)
+    {
+        g_playlistMode = playList;
+        if(playList)
+            Mix_HookMusicFinished(&playListProcess);
+        else
+            Mix_HookMusicFinished(NULL);
+    }
+
     /*!
      * \brief Start playing of currently opened music track
      */
@@ -161,7 +194,7 @@ namespace PGE_MusicPlayer
     {
         if(play_mus)
         {
-            if(Mix_PlayMusic(play_mus, -1)==-1)
+            if(Mix_PlayMusic(play_mus, g_playlistMode ? 0 : -1) == -1)
             {
                 error(QString("Mix_PlayMusic: ") + Mix_GetError());
                 // well, there's no music, but most games don't break without music...
@@ -169,9 +202,7 @@ namespace PGE_MusicPlayer
             //QString("Music is %1\n").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
         }
         else
-        {
             error(QString("Play nothing: Mix_PlayMusic: ") + Mix_GetError());
-        }
         //qDebug() << QString("Check Error of SDL: %1\n").arg(Mix_GetError());
     }
 
@@ -193,28 +224,33 @@ namespace PGE_MusicPlayer
     bool MUS_openFile(QString musFile)
     {
         type = MUS_NONE;
-        if(play_mus != NULL) { Mix_FreeMusic(play_mus); play_mus=NULL; }
+        if(play_mus != NULL)
+        {
+            Mix_FreeMusic(play_mus);
+            play_mus = NULL;
+        }
         #ifndef MUSPLAY_USE_WINAPI
-        play_mus = Mix_LoadMUS( musFile.toUtf8().data() );
+        play_mus = Mix_LoadMUS(musFile.toUtf8().data());
         #else
-        play_mus = Mix_LoadMUS( musFile.c_str() );
+        play_mus = Mix_LoadMUS(musFile.c_str());
         #endif
-        if(!play_mus) {
+        if(!play_mus)
+        {
             error(QString("Mix_LoadMUS(\"" + QString(musFile) + "\"): ") + Mix_GetError());
             return false;
         }
-        type = Mix_GetMusicType( play_mus );
-        DebugLog(QString("Music type: %1").arg( musicType() ));
+        type = Mix_GetMusicType(play_mus);
+        DebugLog(QString("Music type: %1").arg(musicType()));
         return true;
     }
 
-    static bool wavOpened=false;
+    static bool wavOpened = false;
 
     // make a music play function
     // it expects udata to be a pointer to an int
     static void myMusicPlayer(void */*udata*/, Uint8 *stream, int len)
     {
-        wave_write( (short*)stream, len/2 );
+        wave_write((short *)stream, len / 2);
     }
 
     void startWavRecording(QString target)
@@ -224,13 +260,13 @@ namespace PGE_MusicPlayer
 
         /* Record 20 seconds to wave file */
         #ifndef MUSPLAY_USE_WINAPI
-        wave_open( 44100, target.toLocal8Bit().data() );
+        wave_open(44100, target.toLocal8Bit().data());
         #else
-        wave_open( 44100, target.c_str() );
+        wave_open(44100, target.c_str());
         #endif
         wave_enable_stereo();
         Mix_SetPostMix(myMusicPlayer, NULL);
-        wavOpened=true;
+        wavOpened = true;
     }
 
     void stopWavRecording()
@@ -238,6 +274,6 @@ namespace PGE_MusicPlayer
         if(!wavOpened) return;
         wave_close();
         Mix_SetPostMix(NULL, NULL);
-        wavOpened=false;
+        wavOpened = false;
     }
 }

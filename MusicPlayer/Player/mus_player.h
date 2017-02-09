@@ -20,6 +20,7 @@ namespace PGE_MusicPlayer
     extern Mix_Music *play_mus;
     extern Mix_MusicType type;
     extern bool reverbEnabled;
+    extern void setMainWindow(void *mwp);
     extern const char* musicTypeC();
     extern QString musicType();
     extern void MUS_stopMusic();
@@ -34,6 +35,7 @@ namespace PGE_MusicPlayer
     extern const char* MUS_getMusAlbum();
     extern const char* MUS_getMusCopy();
     #endif
+    extern void setPlayListMode(bool playList);
     extern void MUS_playMusic();
     extern void MUS_changeVolume(int volume);
     extern bool MUS_openFile(QString musFile);
