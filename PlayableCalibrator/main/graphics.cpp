@@ -242,18 +242,20 @@ void Graphics::getGifMask(QString &mask, const QString &front)
 }
 
 
-void Graphics::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr)
+bool Graphics::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString *out_errStr)
 {
     if(in_imgName.isEmpty())
     {
-        out_errStr = "Image filename isn't defined";
-        return;
+        if(out_errStr)
+            *out_errStr = "Image filename isn't defined";
+        return false;
     }
 
     if(!QFile::exists(rootDir + in_imgName))
     {
-        out_errStr = "image file is not exist: " + rootDir + in_imgName;
-        return;
+        if(out_errStr)
+            *out_errStr = "image file is not exist: " + rootDir + in_imgName;
+        return false;
     }
 
     out_maskName = in_imgName;
@@ -265,8 +267,9 @@ void Graphics::loadMaskedImage(QString rootDir, QString in_imgName, QString &out
 
     if(target.isNull())
     {
-        out_errStr = "Broken image file " + rootDir + in_imgName;
-        return;
+        if(out_errStr)
+            *out_errStr = "Broken image file " + rootDir + in_imgName;
+        return false;
     }
 
     //GraphicsHelps::mergeToRGBA(out_Img, out_Mask, rootDir+in_imgName, rootDir + out_maskName);
@@ -274,11 +277,14 @@ void Graphics::loadMaskedImage(QString rootDir, QString in_imgName, QString &out
 
     if(out_Img.isNull())
     {
-        out_errStr = "Broken image file " + rootDir + in_imgName;
-        return;
+        if(out_errStr)
+            *out_errStr = "Broken image file " + rootDir + in_imgName;
+        return false;
     }
 
-    out_errStr = "";
+    if(out_errStr)
+        out_errStr->clear();
+    return true;
 }
 
 bool Graphics::toMaskedGif(QImage &img, QString &path)

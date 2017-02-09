@@ -30,7 +30,7 @@ public:
     static void     init();
     static void     quit();
     static void     getGifMask(QString &mask, const QString &front);
-    static void     loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr);
+    static bool     loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString *out_errStr = NULL);
     static bool     toMaskedGif(QImage& img, QString& path);
 
 };

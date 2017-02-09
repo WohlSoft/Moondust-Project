@@ -32,8 +32,7 @@ void CalibrationMain::OpenFile(QString fileName)
     LastOpenDir = ourFile.absoluteDir().path() + "/";
 
     QString errString;
-    Graphics::loadMaskedImage(LastOpenDir, ourFile.fileName(), imgFileM, x_imageSprite, errString);
-    if(!errString.isEmpty())
+    if(!Graphics::loadMaskedImage(LastOpenDir, ourFile.fileName(), imgFileM, x_imageSprite, &errString))
     {
         x_imageSprite = QPixmap();
         QMessageBox::warning(this, "Image Loading error",

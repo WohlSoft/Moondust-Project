@@ -40,25 +40,18 @@ bool ImageCalibrator::init(QString imgPath)
     }
     QString dirPath = ourFile.absoluteDir().path() + "/";
 
-    //mask = ;
     imgOrig = dirPath + imgBaseName + "_orig.png";
     bool createOrig = false;
 
     if(!QFile::exists(imgOrig))
         createOrig = true;
 
-    //Scene->mSpriteImage = QPixmap(fileName);
     if(createOrig)
     {
-        QString errString;
-        Graphics::loadMaskedImage(dirPath, ourFile.fileName(),
-                                  imgFileM, m_sprite, errString);
-
-        if(!errString.isEmpty())
+        if(!Graphics::loadMaskedImage(dirPath, ourFile.fileName(), imgFileM, m_sprite))
             return false;
-
+        // Generate a backup image
         m_sprite.save(imgOrig, "PNG");
-        // Generate backup image
     }
     else
         m_sprite = QPixmap(imgOrig); // load original sprite instead current
