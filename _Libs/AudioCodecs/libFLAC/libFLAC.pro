@@ -13,6 +13,7 @@ include($$PWD/../audio_codec_common.pri)
 
 DEFINES     += HAVE_CONFIG_H
 #win32:DEFINES += HAVE_FSEEKO
+macx: QMAKE_CFLAGS_WARN_ON = -Wall -Wno-unused-variable
 
 INCLUDEPATH += $$PWD $$PWD/include $$PWD/include_p $$PWD/src/
 
@@ -79,15 +80,8 @@ SOURCES += \
     src/cpu.c \
     src/crc.c \
     src/fixed.c \
-    src/fixed_intrin_sse2.c \
-    src/fixed_intrin_ssse3.c \
-    src/float.c \
     src/format.c \
     src/lpc.c \
-    src/lpc_intrin_avx2.c \
-    src/lpc_intrin_sse.c \
-    src/lpc_intrin_sse2.c \
-    src/lpc_intrin_sse41.c \
     src/md5.c \
     src/memory.c \
     src/metadata_iterators.c \
@@ -99,10 +93,23 @@ SOURCES += \
     src/stream_decoder.c \
     src/stream_encoder.c \
     src/stream_encoder_framing.c \
-    src/stream_encoder_intrin_avx2.c \
-    src/stream_encoder_intrin_sse2.c \
-    src/stream_encoder_intrin_ssse3.c \
     src/window.c
+
+# Include this if you want use integer-only version
+#SOURCES += \
+#    src/float.c
+
+# Uncoment this if you want use ASM optimizations
+#SOURCES += \
+#    src/lpc_intrin_avx2.c \
+#    src/lpc_intrin_sse.c \
+#    src/lpc_intrin_sse2.c \
+#    src/lpc_intrin_sse41.c \
+#    src/fixed_intrin_sse2.c \
+#    src/fixed_intrin_ssse3.c \
+#    src/stream_encoder_intrin_avx2.c \
+#    src/stream_encoder_intrin_sse2.c \
+#    src/stream_encoder_intrin_ssse3.c
 
 win32: include($$PWD/win_utf8_io.pri)
 

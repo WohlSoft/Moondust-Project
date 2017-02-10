@@ -9,25 +9,27 @@ DEFINES += VER_MAJOR=3 VER_MINOR=17.0 FREEIMAGE_LITE
 
 QMAKE_CFLAGS += -std=c11
 
-QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
+QMAKE_CFLAGS_WARN_ON = -Wall \
+                -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign \
                 -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-parentheses -Wno-switch -Wno-unused-result -Wno-format -Wno-sign-compare -Wno-unused-value \
-                -Wno-type-limits -Wno-old-style-declaration
+                -Wno-type-limits
 
-QMAKE_CXXFLAGS += \
+
+QMAKE_CXXFLAGS_WARN_ON = -Wall \
                 -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function \
                 -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter  \
                 -Wno-parentheses -Wno-switch -Wno-unused-result -Wno-format -Wno-unused-value \
-                -Wno-type-limits -Wno-reorder -Wno-clobbered
+                -Wno-type-limits -Wno-reorder
 
 macx:{
-    QMAKE_CFLAGS    += -Wno-unused-const-variable -Wno-uninitialized
-    QMAKE_CXXFLAGS  += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
+    QMAKE_CFLAGS_WARN_ON    += -Wno-unused-const-variable -Wno-uninitialized
+    QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
 } else {
-    QMAKE_CFLAGS    += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
-    QMAKE_CXXFLAGS  += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
+    QMAKE_CFLAGS_WARN_ON    += -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-old-style-declaration
+    QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-clobbered -Wno-old-style-declaration
     QMAKE_LFLAGS    += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
@@ -243,8 +245,7 @@ SOURCES += \
     Source/ZLib/inftrees.c \
     Source/ZLib/trees.c \
     Source/ZLib/uncompr.c \
-    Source/ZLib/zutil.c \
-    Source/FreeImage/freeimage_misc.cpp
+    Source/ZLib/zutil.c
 
-
+win32: include($$PWD/Source/FreeImage/freeimage_misc.pro)
 
