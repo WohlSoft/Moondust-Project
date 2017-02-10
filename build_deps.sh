@@ -100,7 +100,7 @@ then
 else
 	echo ""
 	echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
-	errorofbuid
+	exit 1
 fi
 
 PATH=$QT_PATH:$PATH
