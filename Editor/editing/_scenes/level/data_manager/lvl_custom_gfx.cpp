@@ -123,7 +123,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else
-                uBG.image = std::move(QPixmap::fromImage(tempImg));
+                uBG.image = QPixmap::fromImage(tempImg);
             uBG.id = bgD->id;
             loaded1 = true;
         }
@@ -147,7 +147,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 if(tempImg.isNull())
                     WrongImagesDetected = true;
                 else
-                    uBG.second_image = std::move(QPixmap::fromImage(tempImg));
+                    uBG.second_image = QPixmap::fromImage(tempImg);
                 uBG.id = bgD->id;
                 loaded2 = true;
             }

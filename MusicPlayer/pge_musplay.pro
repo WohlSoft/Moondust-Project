@@ -28,10 +28,10 @@ TEMPLATE = app
 include($$PWD/../_common/dest_dir.pri)
 include($$PWD/../_common/lib_destdir.pri)
 
-!macx: TARGET = pge_musplay
-macx:  TARGET = "PGE Music Player"
+TARGET = pge_musplay
 
 include($$PWD/../_common/build_props.pri)
+macx:  TARGET = "PGE Music Player"
 
 CONFIG += c++11
 CONFIG += thread
