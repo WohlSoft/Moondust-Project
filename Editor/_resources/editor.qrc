@@ -131,6 +131,7 @@
         <file>lunalua/templates/lunaworld.lua</file>
         <file>pge_newui.png</file>
         <file>pge_oldui.png</file>
+        <file>lunalua/lunalua_16.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>
