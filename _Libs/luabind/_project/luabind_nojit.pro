@@ -4,6 +4,8 @@ INCLUDEPATH += $$PWD/../ $$PWD/../lua/
 
 include($$PWD/luabind_common.pri)
 
+win32: include($$PWD/wfopen.pri)
+
 SOURCES +=  \
     ../lua/lapi.c \
     ../lua/lauxlib.c \
@@ -34,8 +36,7 @@ SOURCES +=  \
     ../lua/lundump.c \
     ../lua/lvm.c \
     ../lua/lzio.c \
-    ../lua/print.c \
-    ../lua/file_open.c
+    ../lua/print.c
 
 HEADERS += ../lua/lapi.h \
     ../lua/lauxlib.h \
