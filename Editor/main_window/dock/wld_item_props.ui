@@ -6,15 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>279</width>
-    <height>527</height>
+    <width>295</width>
+    <height>471</height>
    </rect>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>320</width>
-    <height>524287</height>
-   </size>
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
@@ -48,7 +42,7 @@
       <property name="title">
        <string>Level</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_16" columnstretch="0,0,0">
+      <layout class="QGridLayout" name="gridLayout_16" columnstretch="0,100,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -61,95 +55,20 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <property name="spacing">
+       <property name="verticalSpacing">
         <number>0</number>
        </property>
-       <item row="3" column="0" colspan="2">
-        <widget class="QCheckBox" name="WLD_PROPS_BigPathBG">
-         <property name="text">
-          <string>Big path background</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="WLD_PROPS_lvlPos">
-         <property name="text">
-          <string notr="true">Pos: [x. y]</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QCheckBox" name="WLD_PROPS_PathBG">
-         <property name="text">
-          <string>Path background</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QCheckBox" name="WLD_PROPS_GameStart">
-         <property name="text">
-          <string>Game start point</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QLabel" name="WLD_PROPS_lvlID">
-         <property name="text">
-          <string notr="true">LevelID: [z]</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QCheckBox" name="WLD_PROPS_AlwaysVis">
-         <property name="text">
-          <string>Always visible</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Level file:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_52">
-         <property name="text">
-          <string>Level title</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="label_56">
-         <property name="text">
-          <string>Enter to door ID:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QLineEdit" name="WLD_PROPS_LVLFile"/>
-       </item>
-       <item row="7" column="2">
-        <widget class="QPushButton" name="WLD_PROPS_LVLBrowse">
-         <property name="maximumSize">
-          <size>
-           <width>49</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Browse</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="3">
-        <widget class="QLineEdit" name="WLD_PROPS_LVLTitle"/>
-       </item>
        <item row="11" column="1" colspan="2">
         <widget class="QSpinBox" name="WLD_PROPS_EnterTo">
          <property name="maximum">
           <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QLabel" name="WLD_PROPS_lvlPos">
+         <property name="text">
+          <string notr="true">Pos: [x. y]</string>
          </property>
         </widget>
        </item>
@@ -203,19 +122,6 @@
          </layout>
         </widget>
        </item>
-       <item row="14" column="0" colspan="3">
-        <spacer name="verticalSpacer_17">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="12" column="0" colspan="3">
         <widget class="QGroupBox" name="groupBox_6">
          <property name="minimumSize">
@@ -237,71 +143,179 @@
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
-          <item row="3" column="0">
-           <widget class="QComboBox" name="WLD_PROPS_ExitLeft">
-            <property name="toolTip">
-             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Western (left) path by exit type</string>
+          <item row="0" column="0" rowspan="2" colspan="3">
+           <widget class="QFrame" name="frame">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
             </property>
-            <property name="maxVisibleItems">
-             <number>50</number>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::InsertAtBottom</enum>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
             </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContents</enum>
+            <property name="lineWidth">
+             <number>0</number>
             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>72</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QComboBox" name="WLD_PROPS_ExitTop">
+               <property name="toolTip">
+                <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Northern (upper) path by exit type</string>
+               </property>
+               <property name="maxVisibleItems">
+                <number>50</number>
+               </property>
+               <property name="insertPolicy">
+                <enum>QComboBox::InsertAtBottom</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QComboBox::AdjustToContents</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>72</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QComboBox" name="WLD_PROPS_ExitRight">
-            <property name="toolTip">
-             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Eastern (right) path by exit type</string>
+          <item row="5" column="0" colspan="3">
+           <widget class="QFrame" name="frame_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
             </property>
-            <property name="maxVisibleItems">
-             <number>50</number>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::InsertAtBottom</enum>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
             </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContents</enum>
+            <property name="lineWidth">
+             <number>0</number>
             </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="WLD_PROPS_ExitBottom">
-            <property name="toolTip">
-             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Southern (lower) path by exit type</string>
-            </property>
-            <property name="maxVisibleItems">
-             <number>50</number>
-            </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::InsertAtBottom</enum>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContents</enum>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>72</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QComboBox" name="WLD_PROPS_ExitBottom">
+               <property name="toolTip">
+                <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Southern (lower) path by exit type</string>
+               </property>
+               <property name="maxVisibleItems">
+                <number>50</number>
+               </property>
+               <property name="insertPolicy">
+                <enum>QComboBox::InsertAtBottom</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QComboBox::AdjustToContents</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>72</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+            <zorder>label_55</zorder>
+            <zorder>WLD_PROPS_ExitBottom</zorder>
+            <zorder>horizontalSpacer_3</zorder>
+            <zorder>horizontalSpacer_4</zorder>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QComboBox" name="WLD_PROPS_ExitTop">
-            <property name="toolTip">
-             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Northern (upper) path by exit type</string>
-            </property>
-            <property name="maxVisibleItems">
-             <number>50</number>
-            </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::InsertAtBottom</enum>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContents</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
            <widget class="QLabel" name="label_55">
             <property name="minimumSize">
              <size>
@@ -320,8 +334,134 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QComboBox" name="WLD_PROPS_ExitLeft">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Western (left) path by exit type</string>
+            </property>
+            <property name="maxVisibleItems">
+             <number>50</number>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAtBottom</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToContents</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="WLD_PROPS_ExitRight">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Eastern (right) path by exit type</string>
+            </property>
+            <property name="maxVisibleItems">
+             <number>50</number>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAtBottom</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToContents</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Level file:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="3">
+        <widget class="QCheckBox" name="WLD_PROPS_PathBG">
+         <property name="text">
+          <string>Path background</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" colspan="3">
+        <widget class="QLabel" name="label_52">
+         <property name="text">
+          <string>Level title</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="3">
+        <widget class="QCheckBox" name="WLD_PROPS_BigPathBG">
+         <property name="text">
+          <string>Big path background</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QLineEdit" name="WLD_PROPS_LVLFile"/>
+       </item>
+       <item row="10" column="0" colspan="3">
+        <widget class="QLineEdit" name="WLD_PROPS_LVLTitle"/>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_56">
+         <property name="text">
+          <string>Enter to door ID:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="3">
+        <widget class="QCheckBox" name="WLD_PROPS_AlwaysVis">
+         <property name="text">
+          <string>Always visible</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QLabel" name="WLD_PROPS_lvlID">
+         <property name="text">
+          <string notr="true">LevelID: [z]</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="3">
+        <widget class="QCheckBox" name="WLD_PROPS_GameStart">
+         <property name="text">
+          <string>Game start point</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QPushButton" name="WLD_PROPS_LVLBrowse">
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0" colspan="3">
+        <spacer name="verticalSpacer_17">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

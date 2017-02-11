@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>279</width>
-    <height>393</height>
+    <width>264</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -57,7 +57,7 @@
       <property name="title">
        <string>Music</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_2" columnstretch="90,1,1">
+      <layout class="QGridLayout" name="gridLayout_2" columnstretch="400,0,0">
        <property name="leftMargin">
         <number>2</number>
        </property>
@@ -81,12 +81,6 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>24</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
            <height>24</height>
           </size>
          </property>
@@ -135,34 +129,21 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QLineEdit" name="LVLPropsMusicCustom">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="2">
         <widget class="QPushButton" name="LVLPropsMusicCustomBrowse">
-         <property name="maximumSize">
-          <size>
-           <width>23</width>
-           <height>20</height>
-          </size>
+         <property name="toolTip">
+          <string>Browse...</string>
          </property>
          <property name="text">
           <string notr="true">...</string>
          </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
         </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLineEdit" name="LVLPropsMusicCustom"/>
        </item>
       </layout>
      </widget>
@@ -234,82 +215,6 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QFrame" name="frame">
-      <property name="minimumSize">
-       <size>
-        <width>142</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <widget class="QPushButton" name="cancelResize">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>10</y>
-         <width>61</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="ResizeSection">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>121</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Resize section</string>
-       </property>
-       <property name="checkable">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="applyResize">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>61</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Apply</string>
-       </property>
-      </widget>
-      <zorder>ResizeSection</zorder>
-      <zorder>cancelResize</zorder>
-      <zorder>applyResize</zorder>
-     </widget>
-    </item>
     <item row="3" column="0" colspan="2">
      <widget class="QGroupBox" name="LVLPropStyleGr">
       <property name="sizePolicy">
@@ -324,8 +229,14 @@
         <height>70</height>
        </size>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="title">
        <string>Style</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <property name="leftMargin">
@@ -401,12 +312,6 @@
         <height>95</height>
        </size>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>95</height>
-       </size>
-      </property>
       <property name="title">
        <string>Section Settings</string>
       </property>
@@ -427,7 +332,7 @@
         <number>2</number>
        </property>
        <property name="verticalSpacing">
-        <number>1</number>
+        <number>5</number>
        </property>
        <item row="3" column="0">
         <widget class="QCheckBox" name="LVLPropsNoTBack">
@@ -513,6 +418,66 @@
        </size>
       </property>
      </spacer>
+    </item>
+    <item row="0" column="1">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5" columnstretch="50,50">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetNoConstraint</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="0" column="0" colspan="2">
+        <widget class="QPushButton" name="ResizeSection">
+         <property name="text">
+          <string>Resize section</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="applyResize">
+         <property name="minimumSize">
+          <size>
+           <width>62</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="cancelResize">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>

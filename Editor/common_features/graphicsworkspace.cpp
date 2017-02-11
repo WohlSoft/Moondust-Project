@@ -508,6 +508,7 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
         else
             cachedItemsUnderMouse = scene()->items(target, Qt::IntersectsItemBoundingRect);
     }
+
     // Find the topmost item under the mouse with a cursor.
     for(QGraphicsItem *item : cachedItemsUnderMouse)
     {
