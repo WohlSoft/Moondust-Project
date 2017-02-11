@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>593</width>
-    <height>453</height>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,11 +49,6 @@
    </item>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="notifyLabel">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
      <property name="text">
       <string>Ouch, PGE Editor has crashed :(&lt;br&gt;Detailed crash information data:</string>
      </property>
@@ -79,7 +74,7 @@
    <item row="3" column="0" colspan="3">
     <widget class="QPushButton" name="pgeForumButton">
      <property name="text">
-      <string>PGE Forum (http://engine.wohlnet.ru/forum/)</string>
+      <string>PGE Forum (http://wohlsoft.ru/forum/)</string>
      </property>
     </widget>
    </item>

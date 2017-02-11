@@ -161,7 +161,7 @@ bool dataconfigs::loadBasics()
     data_dir = (guiset.value("application-dir", "0").toBool() ?
                 ApplicationPath + "/" : config_dir + "data/");
 
-    QString url     = guiset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
+    QString url     = guiset.value("home-page", "http://wohlsoft.ru/config_packs/").toString();
     QString version = guiset.value("pge-editor-version", "0.0").toString();
     bool ver_notify = guiset.value("enable-version-notify", true).toBool();
     if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_FILE_VERSION), version)))
