@@ -29,6 +29,7 @@ elif [ $TRAVIS_OS_NAME == osx ];
 then
 
     $QT_VER=5.8.0
+    export QT_VER;
     source _common/travis-ci/_osx_env.sh
 
     QtCacheFolder=qtcache580
@@ -47,10 +48,8 @@ then
 # ==============================================================================
         wget http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
     fi
-    Bak=~+;
-    cd /Users/StaticQt/;
     printf "Unpacking $QtTarballName..."
-    tar -xf $QtCacheFolder/$QtTarballName;
+    tar -xf $QtCacheFolder/$QtTarballName -C /Users/StaticQt;
     if [ $? -eq 0 ]
     then
         printf " \E[37;42mOK!\E[0m\n"
@@ -59,7 +58,6 @@ then
         echo "Can't extract ${QtCacheFolder}/${QtTarballName}!"
         exit 1
     fi
-    cd $Bak;
 
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
