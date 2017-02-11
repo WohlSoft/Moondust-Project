@@ -40,7 +40,7 @@ cache:
   bundler: true
   directories:
     - /home/runner/Qt/qtcache560
-    - /Users/StaticQt/qtcache570
+    - /Users/StaticQt/qtcache580
 
 matrix:
   include:
@@ -58,7 +58,7 @@ matrix:
           build_command:   "bash ./build.sh no-pause use-ccache;"
           branch_pattern: master
     - os: osx
-      osx_image: xcode7.3
+      osx_image: xcode8.2
       compiler: clang++
 
 before_script:
@@ -76,5 +76,3 @@ script:
 after_success:
   - bash _common/travis-ci/deploy.sh
   - bash _common/travis-ci/upload.sh
-
-

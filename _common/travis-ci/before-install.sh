@@ -29,16 +29,17 @@ elif [ $TRAVIS_OS_NAME == osx ];
 then
     source _common/travis-ci/_osx_env.sh
 
-    QtCacheFolder=qtcache570
-    QtTarballName=qt-5.7.0-static-osx-10.10.5.tar.gz
+    QtCacheFolder=qtcache580
+    QtTarballName=qt-5.8.0-static-osx-10.12.3.tar.gz
 
 # Try out the caching thing (if caching is works, downloading must not be happen)
     if [ ! -d /Users/StaticQt/$QtCacheFolder ]
     then
         sudo mkdir -p /Users/StaticQt/$QtCacheFolder;
         sudo chown -R travis /Users/StaticQt/;
+        brew install wget
 # ==============================================================================
-# Downloading and unpacking of pre-built static Qt 5.7.0 on OS X 10.10.5
+# Downloading and unpacking of pre-built static Qt 5.8.0 on OS X 10.12.3
 # ------------------------------------------------------------------------------
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
@@ -73,4 +74,3 @@ then
     chmod u+x _paths.sh;
 
 fi
-
