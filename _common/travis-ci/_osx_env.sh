@@ -1,1 +1,1 @@
-export PATH=/Users/StaticQt/5.7.0/bin:/Users/StaticQt/5.7.0/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export PATH=/Users/StaticQt/$QT_VER/bin:/Users/StaticQt/$QT_VER/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
