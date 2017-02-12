@@ -74,8 +74,10 @@ then
 # ==============================================================================
 # Making "_paths.sh" config file
 # ==============================================================================
-    echo "QT_PATH=\"/Users/StaticQt/${QT_VER}/bin/\"" > _paths.sh;
-    echo "QT_LIB_PATH=\"/Users/StaticQt/${QT_VER}/bin/\"" > _paths.sh;
+    echo "== QT Path is /Users/StaticQt/$QT_VER/bin/ =="
+
+    echo "QT_PATH=\"/Users/StaticQt/$QT_VER/bin/\"" > _paths.sh;
+    echo "QT_LIB_PATH=\"/Users/StaticQt/$QT_VER/bin/\"" > _paths.sh;
     echo "QMake=\"qmake\"" > _paths.sh;
     echo "LRelease=\"lrelease\"" >> _paths.sh;
     echo "" >> _paths.sh;
