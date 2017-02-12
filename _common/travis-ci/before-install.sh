@@ -49,7 +49,7 @@ then
         wget http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
     fi
     printf "Unpacking $QtTarballName..."
-    tar -xf $QtCacheFolder/$QtTarballName -C /Users/StaticQt;
+    tar -xf /Users/StaticQt/$QtCacheFolder/$QtTarballName -C /Users/StaticQt;
     if [ $? -eq 0 ]
     then
         printf " \E[37;42mOK!\E[0m\n"
