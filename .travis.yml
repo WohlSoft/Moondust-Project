@@ -52,14 +52,12 @@ matrix:
           build_command:   "bash ./build.sh no-pause use-ccache;"
           branch_pattern: master
       cache:
-        bundler: true
         directories:
           - /home/runner/Qt/qtcache560
     - os: osx
       osx_image: xcode8.2
       compiler: clang++
       cache:
-        bundler: true
         directories:
           - /Users/StaticQt/qtcache580
           - $HOME/Library/Caches/Homebrew
