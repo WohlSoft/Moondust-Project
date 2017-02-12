@@ -36,12 +36,6 @@ branches:
 
 language: cpp
 
-cache:
-  bundler: true
-  directories:
-    - /home/runner/Qt/qtcache560
-    - /Users/StaticQt/qtcache580
-
 matrix:
   include:
     - os: linux
@@ -57,9 +51,18 @@ matrix:
           build_command_prepend: "./clean_make.sh nopause"
           build_command:   "bash ./build.sh no-pause use-ccache;"
           branch_pattern: master
+      cache:
+        bundler: true
+        directories:
+          - /home/runner/Qt/qtcache560
     - os: osx
       osx_image: xcode8.2
       compiler: clang++
+      cache:
+        bundler: true
+        directories:
+          - /Users/StaticQt/qtcache580
+          - $HOME/Library/Caches/Homebrew
 
 before_script:
   - bash _common/travis-ci/before-script.sh
