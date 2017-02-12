@@ -29,9 +29,8 @@ elif [ $TRAVIS_OS_NAME == osx ];
 then
 
     $QT_VER=5.8.0
-    export QT_VER;
-    source _common/travis-ci/_osx_env.sh
-
+    export PATH=/Users/StaticQt/$QT_VER/bin:/Users/StaticQt/$QT_VER/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    #source _common/travis-ci/_osx_env.sh
     QtCacheFolder=qtcache580
     QtTarballName=qt-5.8.0-static-osx-10.12.3.tar.gz
 
