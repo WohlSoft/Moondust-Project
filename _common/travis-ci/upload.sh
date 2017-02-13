@@ -14,7 +14,7 @@ then
 
         if [ -d /home/runner/PGE-Project/bin/_packed ];
         then
-            lftp -e "put -O ./ubuntu-14-04/ /home/runner/PGE-Project/bin/_packed/pge-project-dev-linux-mint.tar.gz; put -O ./_common/ /home/runner/PGE-Project/bin/_packed/SMBX-Config-Patch.zip; exit" -u $FTP_USER,$FTP_PASSWORD $FTP_SERVER
+            lftp -e "put -O ./ubuntu-14-04/ /home/runner/PGE-Project/bin/_packed/pge-project-dev-linux-ubuntu-14.04.tar.bz2; put -O ./_common/ /home/runner/PGE-Project/bin/_packed/SMBX-Config-Patch.zip; exit" -u $FTP_USER,$FTP_PASSWORD $FTP_SERVER
             lftp -e "put -O ./_versions/ /home/runner/build_date_dev_linux.txt; put -O ./_versions/ /home/runner/PGE-Project/bin/versions/editor.txt; put -O ./_versions/ /home/runner/PGE-Project/bin/versions/editor_stable.txt; put -O ./_versions/ /home/runner/PGE-Project/bin/versions/engine.txt; put -O ./_versions/ /home/runner/PGE-Project/bin/versions/engine_stable.txt; exit" -u $FTP_USER,$FTP_PASSWORD $FTP_SERVER
         fi
     fi

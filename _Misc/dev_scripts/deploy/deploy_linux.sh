@@ -27,7 +27,7 @@ do
                 flag_cleanDest=true
             ;;
         nopause)
-            flag_Pause=false
+                flag_Pause=false
             ;;
     esac
 done
@@ -54,7 +54,9 @@ cd $SOURCEDIR/bin
 
 DeployDir="$SOURCEDIR/bin/_linux_deploy"
 PgePrjSD="PGE_Project"
-TarGzArName="pge-project-dev-linux-mint.tar.gz"
+TarFlags=-jcvf
+TarGzArName="pge-project-dev-linux-ubuntu-14.04.tar.bz2"
+# TarGzArName="pge-project-dev-linux-mint.tar.bz2"
 
 if [ ! -d "$DeployDir" ]; then
 	mkdir "$DeployDir"
@@ -67,15 +69,15 @@ else
     fi
 fi
 
-$CurDir/upx-linux-x64 -9 pge_editor
-$CurDir/upx-linux-x64 -9 PNG2GIFs
-$CurDir/upx-linux-x64 -9 GIFs2PNG
-$CurDir/upx-linux-x64 -9 LazyFixTool
-$CurDir/upx-linux-x64 -9 pge_calibrator
-$CurDir/upx-linux-x64 -9 pge_engine
-$CurDir/upx-linux-x64 -9 pge_manager
-$CurDir/upx-linux-x64 -9 pge_maintainer
-$CurDir/upx-linux-x64 -9 pge_musplay
+# $CurDir/upx-linux-x64 -9 pge_editor
+# $CurDir/upx-linux-x64 -9 PNG2GIFs
+# $CurDir/upx-linux-x64 -9 GIFs2PNG
+# $CurDir/upx-linux-x64 -9 LazyFixTool
+# $CurDir/upx-linux-x64 -9 pge_calibrator
+# $CurDir/upx-linux-x64 -9 pge_engine
+# $CurDir/upx-linux-x64 -9 pge_manager
+# $CurDir/upx-linux-x64 -9 pge_maintainer
+# $CurDir/upx-linux-x64 -9 pge_musplay
 cp pge_editor "$DeployDir/$PgePrjSD"
 cp GIFs2PNG "$DeployDir/$PgePrjSD"
 cp PNG2GIFs "$DeployDir/$PgePrjSD"
@@ -133,7 +135,9 @@ rm $DeployDir/$PgePrjSD/themes/pge_default/*.zip
 
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
-tar -zcvf ./$TarGzArName $PgePrjSD
+# ========= Pack stuff =========
+tar $TarFlags ./$TarGzArName $PgePrjSD
+# ==============================
 
 if [ ! -d "$SOURCEDIR/bin/_packed" ]; then
 	mkdir "$SOURCEDIR/bin/_packed";

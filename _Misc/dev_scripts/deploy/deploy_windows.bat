@@ -54,37 +54,37 @@ if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\tr
 rem Remove possible temporary files of UPX
 if exist %SOURCEDIR%\bin-w32\*.upx del /Q "%SOURCEDIR%\bin-w32\*.upx"
 
-rem %COMPRESS_DLL% D3Dcompiler_*.dll
-%COMPRESS_DLL% libEGL.dll
-%COMPRESS_DLL% libGLESV2.dll
-rem %COMPRESS_DLL% opengl32sw.dll
-%COMPRESS_DLL% Qt5Concurrent.dll
-%COMPRESS_DLL% Qt5Core.dll
-%COMPRESS_DLL% Qt5Gui.dll
-%COMPRESS_DLL% Qt5Qml.dll
-%COMPRESS_DLL% Qt5Network.dll
-%COMPRESS_DLL% Qt5Svg.dll
-%COMPRESS_DLL% Qt5Widgets.dll
-%COMPRESS_DLL% Qt5WinExtras.dll
-%COMPRESS_DLL% Qt5Xml.dll
-:noDynamicQt1
-
-%COMPRESS_DLL% SDL2.dll
-%COMPRESS_DLL% SDL2_mixer_ext.dll
-
-%COMPRESS_DLL% libgcc_s_dw2-1.dll
-%COMPRESS_DLL% libstdc++-6.dll
-%COMPRESS_DLL% libwinpthread-1.dll
-
-%COMPRESS_EXE% pge_editor.exe
-%COMPRESS_EXE% PNG2GIFs.exe
-%COMPRESS_EXE% GIFs2PNG.exe
-%COMPRESS_EXE% LazyFixTool.exe
-%COMPRESS_EXE% pge_calibrator.exe
-%COMPRESS_EXE% pge_engine.exe
-%COMPRESS_EXE% pge_manager.exe
-%COMPRESS_EXE% pge_maintainer.exe
-%COMPRESS_EXE% pge_musplay.exe
+REM rem %COMPRESS_DLL% D3Dcompiler_*.dll
+REM %COMPRESS_DLL% libEGL.dll
+REM %COMPRESS_DLL% libGLESV2.dll
+REM rem %COMPRESS_DLL% opengl32sw.dll
+REM %COMPRESS_DLL% Qt5Concurrent.dll
+REM %COMPRESS_DLL% Qt5Core.dll
+REM %COMPRESS_DLL% Qt5Gui.dll
+REM %COMPRESS_DLL% Qt5Qml.dll
+REM %COMPRESS_DLL% Qt5Network.dll
+REM %COMPRESS_DLL% Qt5Svg.dll
+REM %COMPRESS_DLL% Qt5Widgets.dll
+REM %COMPRESS_DLL% Qt5WinExtras.dll
+REM %COMPRESS_DLL% Qt5Xml.dll
+REM :noDynamicQt1
+REM
+REM %COMPRESS_DLL% SDL2.dll
+REM %COMPRESS_DLL% SDL2_mixer_ext.dll
+REM
+REM %COMPRESS_DLL% libgcc_s_dw2-1.dll
+REM %COMPRESS_DLL% libstdc++-6.dll
+REM %COMPRESS_DLL% libwinpthread-1.dll
+REM
+REM %COMPRESS_EXE% pge_editor.exe
+REM %COMPRESS_EXE% PNG2GIFs.exe
+REM %COMPRESS_EXE% GIFs2PNG.exe
+REM %COMPRESS_EXE% LazyFixTool.exe
+REM %COMPRESS_EXE% pge_calibrator.exe
+REM %COMPRESS_EXE% pge_engine.exe
+REM %COMPRESS_EXE% pge_manager.exe
+REM %COMPRESS_EXE% pge_maintainer.exe
+REM %COMPRESS_EXE% pge_musplay.exe
 
 copy pge_editor.exe "%DeployDir%\%PgePrjSD%"
 copy GIFs2PNG.exe "%DeployDir%\%PgePrjSD%"
@@ -209,12 +209,12 @@ SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\calibrator"
 
 echo Packing of Online-Install packages data
-"%SEVENZIP%\7z" a -tzip "install-pge-common-dev-win32.zip" %PGECommon%
-"%SEVENZIP%\7z" a -tzip "install-pge-editor-dev-win32.zip" %PGEEditor%
-"%SEVENZIP%\7z" a -tzip "install-pge-engine-dev-win32.zip" %PGEEngine%
-"%SEVENZIP%\7z" a -tzip "install-pge-tools-dev-win32.zip" %PGETools%
-"%SEVENZIP%\7z" a -tzip "pge-musplay-dev-win32.zip" %PGEMusPlay%
-"%SEVENZIP%\7z" a -tzip "pge-maintainer-dev-win32.zip" %PGEMaintainer%
+"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-common-dev-win32.zip" %PGECommon%
+"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-editor-dev-win32.zip" %PGEEditor%
+"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-engine-dev-win32.zip" %PGEEngine%
+"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-tools-dev-win32.zip" %PGETools%
+"%SEVENZIP%\7z" a -tzip -mzip -x9 "pge-musplay-dev-win32.zip" %PGEMusPlay%
+"%SEVENZIP%\7z" a -tzip -mzip -x9 "pge-maintainer-dev-win32.zip" %PGEMaintainer%
 move ".\*.zip" "%SOURCEDIR%\bin-w32\_packed"
 
 PATH=%OldPATH%
@@ -230,4 +230,3 @@ echo ERROR: 7zip not found: %SEVENZIP%
 echo.
 :exitFrom
 if not "%1"=="nopause" pause
-
