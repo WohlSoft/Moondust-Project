@@ -140,10 +140,12 @@ if exist ".\%TarGzArName%" del ".\%TarGzArName%"
 if not exist "%SOURCEDIR%\bin-w32\_packed" md "%SOURCEDIR%\bin-w32\_packed"
 if exist "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%" del "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
 
+# =========== Packing full archive ==========
 echo Packing complete archive...
-"%SEVENZIP%\7z" a -tzip "%TarGzArName%" "%PgePrjSD%"
+"%SEVENZIP%\7z" a -tzip -mx9 "%TarGzArName%" "%PgePrjSD%"
 move ".\%TarGzArName%" "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
 
+# ======== Packing thematic archives ========
 SET PGEMaintainer=
 SET PGEMusPlay=
 SET PGECommon=
@@ -209,12 +211,12 @@ SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\calibrator"
 
 echo Packing of Online-Install packages data
-"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-common-dev-win32.zip" %PGECommon%
-"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-editor-dev-win32.zip" %PGEEditor%
-"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-engine-dev-win32.zip" %PGEEngine%
-"%SEVENZIP%\7z" a -tzip -mzip -x9 "install-pge-tools-dev-win32.zip" %PGETools%
-"%SEVENZIP%\7z" a -tzip -mzip -x9 "pge-musplay-dev-win32.zip" %PGEMusPlay%
-"%SEVENZIP%\7z" a -tzip -mzip -x9 "pge-maintainer-dev-win32.zip" %PGEMaintainer%
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-common-dev-win32.zip" %PGECommon%
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-editor-dev-win32.zip" %PGEEditor%
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-engine-dev-win32.zip" %PGEEngine%
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-tools-dev-win32.zip" %PGETools%
+"%SEVENZIP%\7z" a -tzip -mx9 "pge-musplay-dev-win32.zip" %PGEMusPlay%
+"%SEVENZIP%\7z" a -tzip -mx9 "pge-maintainer-dev-win32.zip" %PGEMaintainer%
 move ".\*.zip" "%SOURCEDIR%\bin-w32\_packed"
 
 PATH=%OldPATH%
