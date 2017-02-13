@@ -29,7 +29,7 @@ macx:{
     QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
 } else {
     QMAKE_CFLAGS_WARN_ON    += -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-old-style-declaration
-    QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-clobbered -Wno-old-style-declaration
+    QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-clobbered
     QMAKE_LFLAGS    += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
