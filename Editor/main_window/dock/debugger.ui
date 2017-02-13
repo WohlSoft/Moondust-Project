@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>280</width>
-    <height>416</height>
+    <height>525</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -34,6 +34,18 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents_6">
    <layout class="QGridLayout" name="gridLayout_29" rowstretch="0,0,0,80,0">
+    <property name="leftMargin">
+     <number>2</number>
+    </property>
+    <property name="topMargin">
+     <number>2</number>
+    </property>
+    <property name="rightMargin">
+     <number>2</number>
+    </property>
+    <property name="bottomMargin">
+     <number>2</number>
+    </property>
     <item row="0" column="0">
      <widget class="QGroupBox" name="DEBUG_MousePoint">
       <property name="minimumSize">
@@ -169,6 +181,18 @@
        <string>Contents</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_30">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="DEBUG_Items">
          <property name="font">
@@ -231,6 +255,21 @@
        <string>Custom counters</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_34">
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <property name="spacing">
+        <number>2</number>
+       </property>
        <item row="0" column="0">
         <widget class="QPushButton" name="DEBUG_AddCustomCounter">
          <property name="text">
@@ -242,12 +281,6 @@
         <spacer name="horizontalSpacer_8">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>81</width>
-           <height>20</height>
-          </size>
          </property>
         </spacer>
        </item>

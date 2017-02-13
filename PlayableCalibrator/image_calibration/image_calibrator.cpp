@@ -30,50 +30,41 @@ ImageCalibrator::~ImageCalibrator()
 
 bool ImageCalibrator::init(QString imgPath)
 {
-    QList<QString > tmp;
     QString imgFileM;
     QString imgOrig;
     QFileInfo ourFile(imgPath);
-    tmp = ourFile.fileName().split(".", QString::SkipEmptyParts);
+    QString imgBaseName = ourFile.fileName();
+    {
+        int i = imgBaseName.lastIndexOf('.');
+        imgBaseName.remove(i, imgBaseName.size() - i);
+    }
+    QString dirPath = ourFile.absoluteDir().path() + "/";
 
-    if(tmp.size() == 2)
-        imgFileM = tmp[0] + "m." + tmp[1];
-    else
-        imgFileM = "";
-
-    //mask = ;
-    imgOrig = ourFile.absoluteDir().path() + "/" + tmp[0] + "_orig.png";
+    imgOrig = dirPath + imgBaseName + "_orig.png";
     bool createOrig = false;
 
     if(!QFile::exists(imgOrig))
         createOrig = true;
 
-    //Scene->mSpriteImage = QPixmap(fileName);
     if(createOrig)
     {
-        m_sprite = QPixmap::fromImage(
-                       Graphics::setAlphaMask(
-                           Graphics::loadQImage(imgPath)
-                           , Graphics::loadQImage(ourFile.absoluteDir().path() + "/" + imgFileM))
-                   );
-
-        if(m_sprite.isNull()) return false;
-
+        if(!Graphics::loadMaskedImage(dirPath, ourFile.fileName(), imgFileM, m_sprite))
+            return false;
+        // Generate a backup image
         m_sprite.save(imgOrig, "PNG");
-        // Generate backup image
     }
     else
-        m_sprite = QPixmap::fromImage(
-                       Graphics::loadQImage(imgOrig)
-                   ); // load original sprite instead current
+        m_sprite = QPixmap(imgOrig); // load original sprite instead current
 
-    if(m_sprite.isNull()) return false;
+    if(m_sprite.isNull())
+        return false;
 
     m_targetPath = imgPath;
-    m_pngPath = ourFile.absoluteDir().path() + "/" + tmp[0] + ".png";
-    m_gifPath = ourFile.absoluteDir().path() + "/" + tmp[0] + ".gif";
-    m_gifPathM = ourFile.absoluteDir().path() + "/" + tmp[0] + "m.gif";
-    m_iniPath =  ourFile.absoluteDir().path() + "/" + tmp[0] + "_orig_calibrates.ini";
+    m_pngPath =     dirPath + imgBaseName + ".png";
+    m_gifPath =     dirPath + imgBaseName + ".gif";
+    m_gifPathM =    dirPath + imgBaseName + "m.gif";
+    m_iniPath =     dirPath + imgBaseName + "_orig_calibrates.ini";
+
     //generate scene
     ui->PreviewGraph->setScene(new QGraphicsScene(ui->PreviewGraph));
     QGraphicsScene *sc = ui->PreviewGraph->scene();
@@ -202,11 +193,9 @@ void ImageCalibrator::on_WritePNG_GIF_clicked()
 {
     QPixmap target = generateTarget();
     target.save(m_pngPath, "PNG");
+
     QImage targetGif = target.toImage();
-    QImage mask = targetGif.alphaChannel();
-    mask.invertPixels();
-    Graphics::toGif(targetGif, m_gifPath);
-    Graphics::toGif(mask, m_gifPathM);
+    Graphics::toMaskedGif(targetGif, m_gifPath);
     saveCalibrates();
     QMessageBox::information(this,
                              "Image was overwritten",
@@ -226,10 +215,7 @@ void ImageCalibrator::on_WritePNG_clicked()
 void ImageCalibrator::on_WriteGIF_clicked()
 {
     QImage target = generateTarget().toImage();
-    QImage mask = target.alphaChannel();
-    mask.invertPixels();
-    Graphics::toGif(target, m_gifPath);
-    Graphics::toGif(mask, m_gifPathM);
+    Graphics::toMaskedGif(target, m_gifPath);
     saveCalibrates();
     QMessageBox::information(this,
                              "Image was overwritten",

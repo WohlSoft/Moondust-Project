@@ -13,9 +13,29 @@ cd $CurDir/..
 CurDir=$CurDir/../
 source ./_paths.sh
 
+flag_sharedQt=false
+flag_cleanDest=false
+flag_Pause=true
+
+for var in "$@"
+do
+    case "$var" in
+        shared-qt)
+                flag_sharedQt=true
+            ;;
+        clean)
+                flag_cleanDest=true
+            ;;
+        nopause)
+                flag_Pause=false
+            ;;
+    esac
+done
 
 cd $SOURCEDIR/Editor
 source $SOURCEDIR/_paths.sh
+
+PATH=$QT_PATH:$PATH
 
 $LRelease pge_editor.pro
 cp languages/*.qm $SOURCEDIR/bin/languages
@@ -34,23 +54,30 @@ cd $SOURCEDIR/bin
 
 DeployDir="$SOURCEDIR/bin/_linux_deploy"
 PgePrjSD="PGE_Project"
-TarGzArName="pge-project-dev-linux-mint.tar.gz"
-
+TarFlags=-jcvf
+TarGzArName="pge-project-dev-linux-ubuntu-14.04.tar.bz2"
+# TarGzArName="pge-project-dev-linux-mint.tar.bz2"
 
 if [ ! -d "$DeployDir" ]; then
 	mkdir "$DeployDir"
 	mkdir "$DeployDir/$PgePrjSD"
+else
+    if $flag_cleanDest ; then
+        echo "Deleting old directory $DeployDir/$PgePrjSD..."
+        rm -RIf "$DeployDir/$PgePrjSD"
+        mkdir "$DeployDir/$PgePrjSD"
+    fi
 fi
 
-$CurDir/upx-linux-x64 -9 pge_editor
-$CurDir/upx-linux-x64 -9 PNG2GIFs
-$CurDir/upx-linux-x64 -9 GIFs2PNG
-$CurDir/upx-linux-x64 -9 LazyFixTool
-$CurDir/upx-linux-x64 -9 pge_calibrator
-$CurDir/upx-linux-x64 -9 pge_engine
-$CurDir/upx-linux-x64 -9 pge_manager
-$CurDir/upx-linux-x64 -9 pge_maintainer
-$CurDir/upx-linux-x64 -9 pge_musplay
+# $CurDir/upx-linux-x64 -9 pge_editor
+# $CurDir/upx-linux-x64 -9 PNG2GIFs
+# $CurDir/upx-linux-x64 -9 GIFs2PNG
+# $CurDir/upx-linux-x64 -9 LazyFixTool
+# $CurDir/upx-linux-x64 -9 pge_calibrator
+# $CurDir/upx-linux-x64 -9 pge_engine
+# $CurDir/upx-linux-x64 -9 pge_manager
+# $CurDir/upx-linux-x64 -9 pge_maintainer
+# $CurDir/upx-linux-x64 -9 pge_musplay
 cp pge_editor "$DeployDir/$PgePrjSD"
 cp GIFs2PNG "$DeployDir/$PgePrjSD"
 cp PNG2GIFs "$DeployDir/$PgePrjSD"
@@ -59,6 +86,37 @@ cp pge_calibrator "$DeployDir/$PgePrjSD"
 cp pge_engine "$DeployDir/$PgePrjSD"
 cp pge_maintainer "$DeployDir/$PgePrjSD"
 cp pge_musplay "$DeployDir/$PgePrjSD"
+
+if $flag_sharedQt ; then
+    echo SHARD QT!
+    for soFile in libQt5Concurrent libQt5Core libQt5Gui libQt5Widgets libQt5Network libQt5Qml libicudata libicui18n libicuuc
+    do
+
+        echo cp -a "${QT_LIB_PATH}/${soFile}.so"* "${DeployDir}/${PgePrjSD}"
+        cp -a "${QT_LIB_PATH}/${soFile}.so"* "${DeployDir}/${PgePrjSD}"
+        # UPX can't work via symbolic link, so, find out it's target!
+        # It's sad, but UPX can't compress *.SO :(
+        #target=$(readlink -f "${DeployDir}/${PgePrjSD}/${soFile}.so")
+        #if [[ $target == "" ]]; then
+        #    target=${soFile}.so
+        #fi
+        #$CurDir/upx-linux-x64 -9 "${DeployDir}${PgePrjSD}/${target}"
+    done
+
+    mkdir "${DeployDir}/${PgePrjSD}/plugins"
+    mkdir "${DeployDir}/${PgePrjSD}/plugins/platforms"
+    mkdir "${DeployDir}/${PgePrjSD}/plugins/platformthemes"
+    mkdir "${DeployDir}/${PgePrjSD}/plugins/imageformats"
+
+    for soPlugin in platforms/libqxcb platforms/libqvnc platforms/libqoffscreen platforms/libqlinuxfb platforms/libqeglfs imageformats/libqgif imageformats/libqico platformthemes/libqgtk3
+    do
+        echo cp -a "${QT_LIB_PATH}/../plugins/${soPlugin}.so"* "${DeployDir}/${PgePrjSD}/plugins/${soPlugin}.so"
+        cp -a "${QT_LIB_PATH}/../plugins/${soPlugin}.so"* "${DeployDir}/${PgePrjSD}/plugins/${soPlugin}.so"
+    done
+    # Just little debug pause
+    #echo "Press any key..."
+    #read -n 1
+fi
 
 cp -a *.so* "$DeployDir/$PgePrjSD"
 cp -r ./languages "$DeployDir/$PgePrjSD"
@@ -77,7 +135,9 @@ rm $DeployDir/$PgePrjSD/themes/pge_default/*.zip
 
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
-tar -zcvf ./$TarGzArName $PgePrjSD
+# ========= Pack stuff =========
+tar $TarFlags ./$TarGzArName $PgePrjSD
+# ==============================
 
 if [ ! -d "$SOURCEDIR/bin/_packed" ]; then
 	mkdir "$SOURCEDIR/bin/_packed";
@@ -93,5 +153,6 @@ echo ""
 echo "All done!"
 echo ""
 cd $InitDir
-if [[ $1 != "nopause" ]]; then read -n 1; fi
-
+if $flag_Pause ; then
+    read -n 1
+fi

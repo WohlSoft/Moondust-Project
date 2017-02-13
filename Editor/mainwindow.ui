@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1675</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -376,7 +376,7 @@
      </property>
      <property name="icon">
       <iconset resource="_resources/editor.qrc">
-       <normaloff>:/lunalua.ico</normaloff>:/lunalua.ico</iconset>
+       <normaloff>:/lunalua/lunalua_16.png</normaloff>:/lunalua/lunalua_16.png</iconset>
      </property>
      <addaction name="actionLunaLUA_lvl"/>
      <addaction name="actionLunaLUA_eps"/>
@@ -2839,8 +2839,8 @@
   </action>
   <action name="action_Start_Engine">
    <property name="icon">
-    <iconset resource="../Engine/_resources/engine.qrc">
-     <normaloff>:/icon/cat_16.png</normaloff>:/icon/cat_16.png</iconset>
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/cat/cat_16.png</normaloff>:/images/cat/cat_16.png</iconset>
    </property>
    <property name="text">
     <string>Start Engine</string>
@@ -3022,7 +3022,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="_resources/editor.qrc"/>
-  <include location="../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

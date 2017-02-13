@@ -1,0 +1,149 @@
+[DEBREATE-0.7.13]
+<<CTRL>>
+Package: pge-project
+Version: 0.4.0-3
+Maintainer: Vitaliy Novichkov "Wohlstand" <admin@wohlnet.ru>
+Section: games
+Homepage: http://wohlsoft.ru/PGE/
+Architecture: amd64
+Priority: optional
+Description: Platformer Game Engine project
+ A game engine and toolkit to create games of side-scrolling platform genre
+
+<</CTRL>>
+<<FILES>>
+1
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/GIFs2PNG* -> GIFs2PNG -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/LazyFixTool* -> LazyFixTool -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/PNG2GIFs* -> PNG2GIFs -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Concurrent.so* -> libQt5Concurrent.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Concurrent.so.5* -> libQt5Concurrent.so.5 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Concurrent.so.5.8* -> libQt5Concurrent.so.5.8 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Concurrent.so.5.8.0* -> libQt5Concurrent.so.5.8.0 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Core.so* -> libQt5Core.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Core.so.5* -> libQt5Core.so.5 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Core.so.5.8* -> libQt5Core.so.5.8 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Core.so.5.8.0* -> libQt5Core.so.5.8.0 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Gui.so* -> libQt5Gui.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Gui.so.5* -> libQt5Gui.so.5 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Gui.so.5.8* -> libQt5Gui.so.5.8 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Gui.so.5.8.0* -> libQt5Gui.so.5.8.0 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Network.so* -> libQt5Network.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Network.so.5* -> libQt5Network.so.5 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Network.so.5.8* -> libQt5Network.so.5.8 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Network.so.5.8.0* -> libQt5Network.so.5.8.0 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Qml.so* -> libQt5Qml.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Qml.so.5* -> libQt5Qml.so.5 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Qml.so.5.8* -> libQt5Qml.so.5.8 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Qml.so.5.8.0* -> libQt5Qml.so.5.8.0 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Widgets.so* -> libQt5Widgets.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Widgets.so.5* -> libQt5Widgets.so.5 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Widgets.so.5.8* -> libQt5Widgets.so.5.8 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libQt5Widgets.so.5.8.0* -> libQt5Widgets.so.5.8.0 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libSDL2-2.0.so* -> libSDL2-2.0.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libSDL2_mixer_ext.so* -> libSDL2_mixer_ext.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libasound.so.2 -> libasound.so.2 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libbsd.so.0 -> libbsd.so.0 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicudata.so* -> libicudata.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicudata.so.56* -> libicudata.so.56 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicudata.so.56.1* -> libicudata.so.56.1 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicui18n.so* -> libicui18n.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicui18n.so.56* -> libicui18n.so.56 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicui18n.so.56.1* -> libicui18n.so.56.1 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicuuc.so* -> libicuuc.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicuuc.so.56* -> libicuuc.so.56 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libicuuc.so.56.1* -> libicuuc.so.56.1 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libm.so.6 -> libm.so.6 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libsndio.so -> libsndio.so -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libsndio.so.6.1 -> libsndio.so.6.1 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/libstdc++.so.6 -> libstdc++.so.6 -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/pge_calibrator* -> pge_calibrator -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/pge_editor* -> pge_editor -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/pge_engine* -> pge_engine -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/pge_maintainer* -> pge_maintainer -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/pge_manager* -> pge_manager -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/pge_musplay* -> pge_musplay -> /usr/share/games/bin
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/Engine.Readme.txt -> Engine.Readme.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/GIFs2PNG_Readme.txt -> GIFs2PNG_Readme.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/GPLv2.txt -> GPLv2.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/GPLv3.txt -> GPLv3.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/LICENSE.FLAC.txt -> LICENSE.FLAC.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/LICENSE.ogg-vorbis.txt -> LICENSE.ogg-vorbis.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/LazyFixTool_Readme.txt -> LazyFixTool_Readme.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/PNG2GIFs_Readme.txt -> PNG2GIFs_Readme.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/SDL2_mixer_ext.License.txt -> SDL2_mixer_ext.License.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/changelog.editor.txt -> changelog.editor.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/changelog.engine.txt -> changelog.engine.txt -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/plugins -> plugins -> /usr/share/games/bin/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/languages -> languages -> /usr/share/games/bin/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/help -> help -> /usr/share/games/bin/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/configs -> configs -> /usr/share/games/bin/
+/home/wohlstand/_git_repos/PGE-Project/bin/_linux_deploy/PGE_Project/calibrator -> calibrator -> /usr/share/games/bin/
+/home/wohlstand/_git_repos/PGE-Project/Content/help -> help -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/Content/examples -> examples -> /usr/share/games/
+/home/wohlstand/_git_repos/PGE-Project/Editor/_resources/images/cat_builder/cat_builder_128.png -> cat_builder_128.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Editor/_resources/images/cat_builder/cat_builder_16.png -> cat_builder_16.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Editor/_resources/images/cat_builder/cat_builder_256.png -> cat_builder_256.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Editor/_resources/images/cat_builder/cat_builder_32.png -> cat_builder_32.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Editor/_resources/images/cat_builder/cat_builder_48.png -> cat_builder_48.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Engine/_resources/icon/cat_128.png -> cat_128.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Engine/_resources/icon/cat_16.png -> cat_16.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Engine/_resources/icon/cat_256.png -> cat_256.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Engine/_resources/icon/cat_32.png -> cat_32.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/Engine/_resources/icon/cat_48.png -> cat_48.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/PlayableCalibrator/_resourses/icon/calibrator_16.png -> calibrator_16.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/PlayableCalibrator/_resourses/icon/calibrator_24.png -> calibrator_24.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/PlayableCalibrator/_resourses/icon/calibrator_256.png -> calibrator_256.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/PlayableCalibrator/_resourses/icon/calibrator_32.png -> calibrator_32.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/PlayableCalibrator/_resourses/icon/calibrator_48.png -> calibrator_48.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/MusicPlayer/_resources/cat_musplay/cat_musplay_16x16.png -> cat_musplay_16x16.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/MusicPlayer/_resources/cat_musplay/cat_musplay_256x256.png -> cat_musplay_256x256.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/MusicPlayer/_resources/cat_musplay/cat_musplay_32x32.png -> cat_musplay_32x32.png -> /usr/share/games/icons
+/home/wohlstand/_git_repos/PGE-Project/MusicPlayer/_resources/cat_musplay/cat_musplay_48x48.png -> cat_musplay_48x48.png -> /usr/share/games/icons
+<</FILES>>
+<<SCRIPTS>>
+<<PREINST>>
+0
+<</PREINST>>
+<<POSTINST>>
+1
+/usr/share/games/bin/pge_editor --install
+/usr/share/games/bin/pge_engine --install
+/usr/share/games/bin/pge_calibrator --install
+
+<</POSTINST>>
+<<PRERM>>
+0
+<</PRERM>>
+<<POSTRM>>
+0
+<</POSTRM>>
+<</SCRIPTS>>
+<<CHANGELOG>>
+<<DEST>>DEFAULT<</DEST>>
+
+<</CHANGELOG>>
+<<COPYRIGHT>>
+Copyright © 2017 Vitaliy Novichkov [admin@wohlnet.ru]
+
+/usr/share/common-licenses/GPL-3
+<</COPYRIGHT>>
+<<MENU>>
+1
+Name=PGE Editor
+Version=1.0
+Exec=/usr/share/games/bin/pge_editor
+Comment=Editor of levels and world maps for PGE Project
+Icon=/usr/share/games/icons/cat_builder_48.png
+Type=Application
+Terminal=false
+StartupNotify=false
+Encoding=UTF-8
+Categories=Game;Development;
+<</MENU>>
+<<BUILD>>
+1
+1
+1
+strip
+<</BUILD>>

@@ -90,7 +90,8 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
 {
     if(!image) return;
 
-    if(!QFileInfo(pathToMask).exists()) return; //Nothing to do
+    if(!QFile::exists(pathToMask))
+        return; //Nothing to do
 
     FIBITMAP *mask = loadImage(pathToMask, true);
 
@@ -411,7 +412,7 @@ void GraphicsHelps::squareImageR(QPixmap &imageInOut, QSize targetSize)
     else
         source = imageInOut;
 
-    imageInOut = std::move(QPixmap(targetSize));
+    imageInOut = QPixmap(targetSize);
     imageInOut.fill(Qt::transparent);
     QPainter p(&imageInOut);
     int targetX = qRound(((qreal(imageInOut.width()) - qreal(source.width())) / 2));

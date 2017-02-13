@@ -1682,6 +1682,7 @@ static int music_internal_play(Mix_Music *music, double position)
         case MIDI_ADLMIDI:
             if(adl_midi_ok)
             {
+                ADLMIDI_setInfiniteLoop(music_playing->data.midi_adl, music_loops < 0 ? 1 : 0);
                 ADLMIDI_play(music->data.midi_adl);
                 music_internal_initialize_volume();
                 goto skip;

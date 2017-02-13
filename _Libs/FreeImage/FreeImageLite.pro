@@ -2,35 +2,38 @@ TEMPLATE = lib
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG -= dll
-CONFIG += static
+CONFIG += staticlib
 CONFIG += c++11
 
 DEFINES += VER_MAJOR=3 VER_MINOR=17.0 FREEIMAGE_LITE
 
 QMAKE_CFLAGS += -std=c11
 
-QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
+QMAKE_CFLAGS_WARN_ON = -Wall \
+                -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign \
                 -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-parentheses -Wno-switch -Wno-unused-result -Wno-format -Wno-sign-compare -Wno-unused-value \
-                -Wno-type-limits -Wno-old-style-declaration
-QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
+                -Wno-type-limits
+
+
+QMAKE_CXXFLAGS_WARN_ON = -Wall \
+                -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter \
                 -Wno-sign-compare -Wno-unused-function \
                 -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter  \
                 -Wno-parentheses -Wno-switch -Wno-unused-result -Wno-format -Wno-unused-value \
                 -Wno-type-limits -Wno-reorder
 
 macx:{
-    QMAKE_CFLAGS+= -Wno-unused-const-variable -Wno-uninitialized
-    QMAKE_CXXFLAGS += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
+    QMAKE_CFLAGS_WARN_ON    += -Wno-unused-const-variable -Wno-uninitialized
+    QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-const-variable -Wno-uninitialized -Wno-header-guard
+} else {
+    QMAKE_CFLAGS_WARN_ON    += -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-old-style-declaration
+    QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-clobbered
+    QMAKE_LFLAGS    += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-!macx:{
-    QMAKE_CFLAGS+= -Wno-unused-but-set-variable -Wno-maybe-uninitialized
-    QMAKE_CXXFLAGS += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
-    QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
-}
-
+include($$PWD/../../_common/strip_garbage.pri)
 include($$PWD/../../_common/lib_destdir.pri)
 TARGET = freeimagelite
 include($$PWD/../../_common/build_props.pri)
@@ -45,25 +48,15 @@ INCLUDEPATH += $$PWD/Source
 TRANSLATIONS = ""
 
 win32:{
-    LIBS += -L$$PWD/../_builds/win32/lib #-lws2_32
+    LIBS        += -L$$PWD/../_builds/win32/lib #-lws2_32
     INCLUDEPATH += $$PWD/../_builds/win32/include
-    #DEFINES += WINVER=0x0500
-    #DEFINES += FREEIMAGE_LIB DISABLE_PERF_MEASUREMENT
-    DEFINES += OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB #__ANSI__ DISABLE_PERF_MEASUREMENT
-    #QMAKE_CXXFLAGS += -include stdexcept
-    #QMAKE_LFLAGS += -Wl,--subsystem,windows:5.0,--major-os-version,5
-    #QMAKE_CFLAGS += -g2 -fexceptions
-    #QMAKE_CXXFLAGS += -g2 -fexceptions -Wno-ctor-dtor-privacy
+    DEFINES     += OPJ_STATIC LIBRAW_NODLL FREEIMAGE_LIB=1 #__ANSI__ DISABLE_PERF_MEASUREMENT
 }
 linux-g++||unix:!macx:!android:{
-    LIBS += -L$$PWD/../_builds/linux/lib
+    LIBS        += -L$$PWD/../_builds/linux/lib
     INCLUDEPATH += $$PWD/../_builds/linux/include
-    CONFIG += unversioned_libname
-    #-O3 -fPIC -fexceptions -fvisibility=hidden
-    #QMAKE_CFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden
-    #QMAKE_CXXFLAGS += -O3 -fPIC -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy
-    DEFINES += FREEIMAGE_LIB
-    #DEFINES += OPJ_STATIC NO_LCMS NO_JASPER DISABLE_PERF_MEASUREMENT __ANSI__
+    CONFIG      += unversioned_libname
+    DEFINES     += FREEIMAGE_LIB=1
 }
 android:{
     LIBS += -L$$PWD/../_builds/android/lib
@@ -73,8 +66,10 @@ android:{
 macx:{
     LIBS += -L$$PWD/../_builds/macos/lib
     INCLUDEPATH += $$PWD/../_builds/macos/include
-    QMAKE_CFLAGS += -Os -fexceptions -fvisibility=hidden
-    QMAKE_CXXFLAGS += -Os -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -stdlib=libc++ -Wc++11-narrowing
+    QMAKE_CFLAGS    += -fexceptions -fvisibility=hidden
+    QMAKE_CXXFLAGS  += -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -stdlib=libc++ -Wc++11-narrowing
+    QMAKE_CFLAGS_RELEASE    += -Os
+    QMAKE_CXXFLAGS_RELEASE  += -Os
     DEFINES += NO_LCMS __ANSI__ DISABLE_PERF_MEASUREMENT
 }
 
@@ -250,8 +245,7 @@ SOURCES += \
     Source/ZLib/inftrees.c \
     Source/ZLib/trees.c \
     Source/ZLib/uncompr.c \
-    Source/ZLib/zutil.c \
-    Source/FreeImage/freeimage_misc.cpp
+    Source/ZLib/zutil.c
 
-
+win32: include($$PWD/Source/FreeImage/freeimage_misc.pro)
 

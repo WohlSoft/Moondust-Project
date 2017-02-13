@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
-    <height>703</height>
+    <width>294</width>
+    <height>683</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -53,8 +53,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>277</width>
-      <height>684</height>
+      <width>294</width>
+      <height>661</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_6">
@@ -94,9 +94,6 @@
         <number>0</number>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,25,25">
-        <property name="spacing">
-         <number>2</number>
-        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -111,12 +108,6 @@
         </property>
         <item>
          <widget class="QComboBox" name="WarpList">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>22</height>
-           </size>
-          </property>
           <property name="toolTip">
            <string>Choise a warp entry to edit</string>
           </property>
@@ -138,8 +129,8 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>24</width>
-            <height>22</height>
+            <width>20</width>
+            <height>20</height>
            </size>
           </property>
           <property name="toolTip">
@@ -161,8 +152,8 @@ Every warp points pair requires a warp entry</string>
           </property>
           <property name="maximumSize">
            <size>
-            <width>24</width>
-            <height>22</height>
+            <width>20</width>
+            <height>20</height>
            </size>
           </property>
           <property name="toolTip">
@@ -878,11 +869,8 @@ when you exited from a level through this warp</string>
         <property name="bottomMargin">
          <number>2</number>
         </property>
-        <property name="horizontalSpacing">
-         <number>2</number>
-        </property>
         <property name="verticalSpacing">
-         <number>1</number>
+         <number>0</number>
         </property>
         <item row="3" column="0" rowspan="2" colspan="2">
          <spacer name="verticalSpacer_6">

@@ -21,6 +21,10 @@ static-sdlmixer:{
     }
 }
 
+# Dependent audio codecs
+include($$PWD/../AudioCodecs/audio_codec_includes.pri)
+
+# Build properties
 include($$PWD/../../_common/build_props.pri)
 DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
 COPY=cp

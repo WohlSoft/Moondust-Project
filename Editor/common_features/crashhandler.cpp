@@ -132,7 +132,7 @@ void CrashHandler::crashByFlood()
 
 void CrashHandler::crashByUnhandledException()
 {
-    doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: Unhandled Exception\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum"));
+    doCrashScreenAndCleanup(QObject::tr("We're sorry, but PGE Editor has crashed. \nReason: Unhandled Exception\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: wohlsoft.ru/forum"));
 }
 
 void CrashHandler::crashBySIGNAL(int signalid)
@@ -365,7 +365,9 @@ void CrashHandler::checkCrashsaves()
 
 void CrashHandler::initCrashHandlers()
 {
+    #if !defined(DEBUG_BUILD) && !defined(__APPLE__)
     std::set_terminate(&crashByUnhandledException);
+    #endif
     #ifndef DEBUG_BUILD
     std::set_new_handler(&crashByFlood);
     #ifndef _WIN32 //Unsupported signals by Windows

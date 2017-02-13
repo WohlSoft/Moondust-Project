@@ -754,7 +754,7 @@ void NpcEdit::loadImageFile()
             if(defaultNPC.cur_image)
                 npcImage = *defaultNPC.cur_image;
         } else {
-            npcImage=std::move(QPixmap::fromImage(tempImg));
+            npcImage = QPixmap::fromImage(tempImg);
             defaultNPC.cur_image = &npcImage;
         }
     }

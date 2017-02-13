@@ -17,42 +17,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "../calibrationmain.h"
 #include "ui_calibrationmain.h"
 #include "globals.h"
 #include "graphics.h"
 #include "app_path.h"
 
-
 void CalibrationMain::OpenFile(QString fileName)
 {
-    QList<QString > tmp;
     QString imgFileM;
     QFileInfo ourFile(fileName);
     currentFile = fileName;
 
-    LastOpenDir = ourFile.absoluteDir().path();
+    LastOpenDir = ourFile.absoluteDir().path() + "/";
 
-    tmp = ourFile.fileName().split(".", QString::SkipEmptyParts);
-    if(tmp.size()==2)
-        imgFileM = tmp[0] + "m." + tmp[1];
-    else
-        imgFileM = "";
-    //mask = ;
-
-    QImage maskImg;
-
-    if(QFile::exists(ourFile.absoluteDir().path() + "/" + imgFileM))
-        maskImg = Graphics::loadQImage( ourFile.absoluteDir().path() + "/" + imgFileM );
-    else
-        maskImg = QImage();
-
-    x_imageSprite = QPixmap::fromImage(
-                Graphics::setAlphaMask(
-                    Graphics::loadQImage( fileName )
-                    , maskImg )
-                );
+    QString errString;
+    if(!Graphics::loadMaskedImage(LastOpenDir, ourFile.fileName(), imgFileM, x_imageSprite, &errString))
+    {
+        x_imageSprite = QPixmap();
+        QMessageBox::warning(this, "Image Loading error",
+                             QString("Failed to load image file %1!\nError string: %2")
+                             .arg(fileName)
+                             .arg(errString),
+                             QMessageBox::Ok);
+        currentFile = "";
+        return;
+    }
 
     loadConfig(fileName);
 

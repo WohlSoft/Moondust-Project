@@ -1,6 +1,5 @@
-
-if(linux-g++*|win32*): release: {
-QMAKE_CFLAGS += -Os -s -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
-QMAKE_CXXFLAGS += -Os -s -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
-QMAKE_LFLAGS += -Wl,--gc-sections -Wl,-s
+if(linux-*|win32*):{
+QMAKE_CFLAGS_RELEASE    += -Os -s -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_CXXFLAGS_RELEASE  += -Os -s -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s
+QMAKE_LFLAGS_RELEASE    += -Wl,--gc-sections -Wl,-s
 }

@@ -52,8 +52,10 @@ QMAKE_CFLAGS += -Wno-sign-compare
 include($$PWD/../_common/strip_garbage.pri)
 
 # Dependent libraries
-include($$PWD/../_Libs/EasyBMP/EasyBMP.pri)
-include($$PWD/../_Libs/giflib/giflib.pri)
+include ($$PWD/../_common/lib_destdir.pri)
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+LIBS += -lfreeimagelite
 
 SOURCES += \
     main.cpp\

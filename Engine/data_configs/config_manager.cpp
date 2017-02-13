@@ -157,7 +157,7 @@ bool ConfigManager::loadBasics()
         data_dirSTD = DirMan(data_dirSTD).absolutePath() + "/";
         data_dir = QString::fromStdString(data_dirSTD);
 
-        std::string url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
+        std::string url     = mainset.value("home-page", "http://wohlsoft.ru/config_packs/").toString();
         std::string version = mainset.value("pge-engine-version", "0.0").toString();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
 

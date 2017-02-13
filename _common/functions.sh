@@ -32,7 +32,7 @@ checkState()
 {
     if [ $? -eq 0 ]
     then
-        echo -e "\E[37;42mOK!\E[0m"
+        printf "\E[37;42mOK!\E[0m\n"
     else
         errorofbuild
     fi

@@ -27,10 +27,12 @@ then
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then
-    source _common/travis-ci/_osx_env.sh
 
-    QtCacheFolder=qtcache570
-    QtTarballName=qt-5.7.0-static-osx-10.10.5.tar.gz
+    QT_VER=5.8.0
+    export PATH=/Users/StaticQt/$QT_VER/bin:/Users/StaticQt/$QT_VER/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    #source _common/travis-ci/_osx_env.sh
+    QtCacheFolder=qtcache580
+    QtTarballName=qt-5.8.0-static-osx-10.12.3.tar.gz
 
 # Try out the caching thing (if caching is works, downloading must not be happen)
     if [ ! -d /Users/StaticQt/$QtCacheFolder ]
@@ -38,17 +40,23 @@ then
         sudo mkdir -p /Users/StaticQt/$QtCacheFolder;
         sudo chown -R travis /Users/StaticQt/;
 # ==============================================================================
-# Downloading and unpacking of pre-built static Qt 5.7.0 on OS X 10.10.5
+# Downloading and unpacking of pre-built static Qt 5.8.0 on OS X 10.12.3
 # ------------------------------------------------------------------------------
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
 # ==============================================================================
         wget http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
     fi
-    Bak=~+;
-    cd /Users/StaticQt/;
-    tar -xf $QtCacheFolder/$QtTarballName;
-    cd $Bak;
+    printf "Unpacking $QtTarballName..."
+    tar -xf /Users/StaticQt/$QtCacheFolder/$QtTarballName -C /Users/StaticQt;
+    if [ $? -eq 0 ]
+    then
+        printf " \E[37;42mOK!\E[0m\n"
+    else
+        printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+        echo "Can't extract ${QtCacheFolder}/${QtTarballName}!"
+        exit 1
+    fi
 
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
@@ -57,20 +65,26 @@ then
     # Thanks to St. StackOverflow if this will work http://stackoverflow.com/questions/39633159/homebrew-cant-find-lftp-formula-on-macos-sierra
     brew install homebrew/boneyard/lftp
 
-# Workaround for ElCapitan
-    if [ ! -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ];
-    then
-        ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
-    fi
+    # Workaround for ElCapitan (Fixed on Qt 5.8 on macOS Sierra!)
+    #if [ ! -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk ];
+    #then
+    #    ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+    #fi
 
 # ==============================================================================
 # Making "_paths.sh" config file
 # ==============================================================================
-    echo "QT_PATH=\"/Users/StaticQt/5.7.0/bin/\"" > _paths.sh;
-    echo "QMake=\"qmake\"" > _paths.sh;
+    echo "== QT Path is /Users/StaticQt/$QT_VER/bin/ =="
+
+    echo "# ==============Qt paths================" > _paths.sh;
+    echo "QT_PATH=\"/Users/StaticQt/${QT_VER}/bin/\"" >> _paths.sh;
+    echo "QT_LIB_PATH=\"/Users/StaticQt/${QT_VER}/lib/\"" >> _paths.sh;
+    echo "QMake=\"qmake\"" >> _paths.sh;
     echo "LRelease=\"lrelease\"" >> _paths.sh;
     echo "" >> _paths.sh;
     chmod u+x _paths.sh;
+    echo "============== _paths.sh ================="
+    cat _paths.sh
+    echo "=========================================="
 
 fi
-

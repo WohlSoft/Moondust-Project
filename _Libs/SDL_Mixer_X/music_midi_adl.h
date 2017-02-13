@@ -59,6 +59,8 @@ extern void ADLMIDI_setVolumeModel(int vm);
 /* Reset all properties to default values */
 extern void ADLMIDI_setDefaults();
 
+extern void ADLMIDI_setInfiniteLoop(struct MUSIC_MIDIADL *music, int loop);
+
 extern int ADLMIDI_init(SDL_AudioSpec *mixer);
 
 /* Uninitialize the music players */

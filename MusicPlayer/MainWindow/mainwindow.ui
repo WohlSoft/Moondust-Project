@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>552</height>
+    <width>671</width>
+    <height>593</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -75,7 +75,69 @@ QLabel
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="9" column="0" colspan="2">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Press &quot;Open&quot; or drag&amp;drop music file into this window</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLabel" name="musTitle">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QLabel" name="musCopyright">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QLabel" name="musArtist">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="2">
+     <widget class="QCheckBox" name="recordWav">
+      <property name="text">
+       <string>Record WAV</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0" rowspan="2" colspan="2">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -268,6 +330,20 @@ QLabel
       </layout>
      </widget>
     </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QLabel" name="musAlbum">
+      <property name="styleSheet">
+       <string notr="true">border-width: 1px;
+border-style: solid;
+border-color: rgba(0, 0, 0, 0);
+border-bottom-color: rgb(0, 120, 0);
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
     <item row="7" column="0" colspan="2">
      <widget class="QFrame" name="frame_2">
       <property name="minimumSize">
@@ -376,79 +452,28 @@ QLabel
       </layout>
      </widget>
     </item>
-    <item row="8" column="0" colspan="2">
-     <widget class="QCheckBox" name="recordWav">
+    <item row="10" column="2">
+     <widget class="QPushButton" name="playListPush">
       <property name="text">
-       <string>Record WAV</string>
+       <string>Insert</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QLabel" name="musArtist">
+    <item row="10" column="3">
+     <widget class="QPushButton" name="playListPop">
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" rowspan="10" colspan="2">
+     <widget class="QListView" name="playList">
       <property name="styleSheet">
-       <string notr="true">border-width: 1px;
-border-style: solid;
-border-color: rgba(0, 0, 0, 0);
-border-bottom-color: rgb(0, 120, 0);
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QLabel" name="musAlbum">
-      <property name="styleSheet">
-       <string notr="true">border-width: 1px;
-border-style: solid;
-border-color: rgba(0, 0, 0, 0);
-border-bottom-color: rgb(0, 120, 0);
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="2">
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Press &quot;Open&quot; or drag&amp;drop music file into this window</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QLabel" name="musTitle">
-      <property name="styleSheet">
-       <string notr="true">border-width: 1px;
-border-style: solid;
-border-color: rgba(0, 0, 0, 0);
-border-bottom-color: rgb(0, 120, 0);
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="QLabel" name="musCopyright">
-      <property name="styleSheet">
-       <string notr="true">border-width: 1px;
-border-style: solid;
-border-color: rgba(0, 0, 0, 0);
-border-bottom-color: rgb(0, 120, 0);
-</string>
-      </property>
-      <property name="text">
-       <string/>
+       <string notr="true">border-color: rgb(115, 210, 22);
+border-width: 2px;
+background-color: rgb(85, 87, 83);
+border-radius: 5px;
+padding: 2px;</string>
       </property>
      </widget>
     </item>

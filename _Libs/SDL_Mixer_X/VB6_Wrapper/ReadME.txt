@@ -1,13 +1,13 @@
 =================================================================
      Wrapper of SDL Mixer Ext API for Visual Basic 6
-=====        21 January 2016 by Vitaliy Novichkov           =====
+=====        21 January 2017 by Vitaliy Novichkov           =====
 =================================================================
 = You are allowed to use and modify this wrapper without limits =
 = Everything is presented as-is, and I don't take resonse for   = 
 = any damages caused by usage of this wrapper.                  =
 =================================================================
 
-1) SDL2_mixer_ext_vb6.dll in the "dlls" directory is required
+1) SDL2MixerVB.dll in the "dlls" directory is required
 2) Working pre-built example in the "build" folder
 3) It's going as non-COM!
 4) To have your project working, you should include modSDL2_mixer_ext_vb6.bas
