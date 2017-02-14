@@ -27,17 +27,18 @@ struct EditingSettings
 {
     EditingSettings();
     //Common
-    bool animationEnabled;
-    bool collisionsEnabled;
-    bool grid_snap;
-    bool grid_override;
+    bool animationEnabled = true;
+    bool collisionsEnabled = true;
+    bool grid_snap = true;
+    bool grid_override = false;
     QSize customGrid;
-    bool grid_show;
+    bool grid_show = false;
     //World map only
-    bool semiTransparentPaths;
+    bool semiTransparentPaths = false;
 };
 
-struct SETTINGS_ItemDefaults {
+struct SETTINGS_ItemDefaults
+{
     int npc_direction;
     int npc_generator_type;
     int npc_generator_delay;
@@ -51,33 +52,41 @@ struct SETTINGS_ItemDefaults {
     bool classicevents_tabs_trigger;
 };
 
-struct SETTINGS_TestSettings {
-    bool xtra_god;
-    bool xtra_flyup;
-    bool xtra_chuck;
-    bool xtra_debug;
-    bool xtra_showFPS;
-    bool xtra_physdebug;
-    bool xtra_worldfreedom;
-    int  numOfPlayers;
-    int  p1_char;
-    int  p1_state;
-    int  p1_vehicleID;
-    int  p1_vehicleType;
-    int  p2_char;
-    int  p2_state;
-    int  p2_vehicleID;
-    int  p2_vehicleType;
+struct SETTINGS_TestSettings
+{
+    bool xtra_god = false;
+    bool xtra_flyup = false;
+    bool xtra_chuck = false;
+    bool xtra_debug = false;
+    bool xtra_showFPS = false;
+    bool xtra_physdebug = false;
+    bool xtra_worldfreedom = false;
+    int  numOfPlayers = 1;
+    int  p1_char = 1;
+    int  p1_state = 1;
+    int  p1_vehicleID = 0;
+    int  p1_vehicleType = 0;
+    int  p2_char = 2;
+    int  p2_state = 1;
+    int  p2_vehicleID = 0;
+    int  p2_vehicleType = 0;
 };
 
-struct SETTINGS_ScreenGrabSettings {
-    enum GrabSize{
+struct SETTINGS_ScreenGrabSettings
+{
+    enum GrabSize
+    {
         GRAB_Fit,
         GRAB_Custom
     };
-    int sizeType;
-    int width;
-    int height;
+    int sizeType = GRAB_Fit;
+    int width   = 800;
+    int height  = 600;
+};
+
+struct SETTINGS_Extra
+{
+    bool attr_hdpi = true;
 };
 
 class GlobalSettings
@@ -88,7 +97,10 @@ public:
 
     //! Testing settings
     static SETTINGS_TestSettings testing;
+    //! Screen capture settings
     static SETTINGS_ScreenGrabSettings screenGrab;
+    //! Extra settings
+    static SETTINGS_Extra extra;
 
     //! Current language
     static QString locale;
@@ -143,7 +155,7 @@ public:
 
 class ConfStatus
 {
-//Configuration status
+    //Configuration status
 public:
     static long total_characters;
     static long total_blocks;

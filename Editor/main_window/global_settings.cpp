@@ -40,8 +40,11 @@ QString GlobalSettings::tools_sox_bin_path  = "/tools/sox/";
 
 EditingSettings  GlobalSettings::LvlOpts;
 SETTINGS_ItemDefaults GlobalSettings::LvlItemDefaults;
+
 SETTINGS_TestSettings GlobalSettings::testing; //Testing settings
 SETTINGS_ScreenGrabSettings GlobalSettings::screenGrab;
+
+SETTINGS_Extra GlobalSettings::extra;
 
 bool GlobalSettings::autoPlayMusic  = false;
 int  GlobalSettings::musicVolume    = 128;
