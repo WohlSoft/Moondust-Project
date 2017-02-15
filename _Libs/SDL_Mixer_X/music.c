@@ -671,8 +671,8 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 
     /* WAVE files have the magic four bytes "RIFF"
        AIFF files have the magic 12 bytes "FORM" XXXX "AIFF" */
-    if(((strncmp((char *)magic, "RIFF", 4) == 0) && (strncmp((char *)(moremagic + 4), "WAVE", 4) == 0))
-       || (strncmp((char *)magic, "FORM", 4) == 0))
+    if( ((strncmp((char *)magic, "RIFF", 4) == 0) && (strncmp((char *)(moremagic + 4), "WAVE", 4) == 0))
+        || ((strncmp((char *)magic, "FORM", 4) == 0) && (strncmp(moremagic + 4, "XDIR", 4) != 0)) ) /*Don't parse XMIDI as AIFF file*/
         return MUS_WAV;
 
     /* Ogg Vorbis files have the magic four bytes "OggS" */
@@ -688,6 +688,9 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_MID;
     #ifdef USE_ADL_MIDI
     if(strncmp((char *)magic, "MUS\x1A", 4) == 0)
+        return MUS_ADLMIDI;
+    if( (memcmp(extramagic, "FORM", 4) == 0) &&
+        (memcmp(extramagic + 8, "XDIR", 4) == 0) )
         return MUS_ADLMIDI;
     if(strncmp((char *)magic, "GMF\x1", 4) == 0)
         return MUS_ADLMIDI;
