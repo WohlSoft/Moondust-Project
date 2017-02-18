@@ -126,6 +126,7 @@ include($$PWD/../_common/DirManager/dirman.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
+include($$PWD/../_common/Utf8Main/utf8main.pri)
 
 SOURCES += main.cpp\
     mainwindow.cpp \

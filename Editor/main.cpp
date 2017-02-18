@@ -42,6 +42,8 @@
 #include <SingleApplication/singleapplication.h>
 #include <SingleApplication/editor_application.h>
 
+#include <Utf8Main/utf8main.h>
+
 #include <data_configs/selection_dialog/config_manager.h>
 
 #include <networking/engine_intproc.h>
