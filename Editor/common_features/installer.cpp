@@ -191,22 +191,28 @@ bool Installer::associateFiles()
 
     QFile tmp;
     Q_UNUSED(tmp);
-#define XcopyFile(src, target) tmp.setFileName(target); if(tmp.exists()) tmp.remove();\
-    QFile::copy(src, target);
+
+    #define XcopyFile(src, target) \
+    { \
+        tmp.setFileName(target); \
+        if(tmp.exists())\
+            tmp.remove();\
+        QFile::copy(src, target); \
+    }
 
     XcopyFile(":/_files/_files/pge-project-mimeinfo.xml", QDir::home().absolutePath() + "/.local/share/mime/packages/pge-project-mimeinfo.xml");
 
-#define IconSize(Size) \
+    #define IconSize(Size) \
     XcopyFile(":/_files/_files/file_lvl/file_lvl_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/smbx64-level-" Size ".png");\
     XcopyFile(":/_files/_files/file_lvlx/file_lvlx_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/pgex-level-" Size ".png");\
     XcopyFile(":/_files/_files/file_wld/file_wld_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/smbx64-world-" Size ".png");\
     XcopyFile(":/_files/_files/file_wldx/file_wldx_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/pgex-world-" Size ".png");\
     XcopyFile(":/images/cat_builder/cat_builder_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/PgeEditor-" Size ".png");\
-    if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-level-" Size ".png x-application-smbx64-level").toLocal8Bit().constData())==0;\
-    if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-world-" Size ".png x-application-smbx64-world").toLocal8Bit().constData())==0;\
-    if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-level-" Size ".png x-application-pgex-level").toLocal8Bit().constData())==0;\
-    if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-world-" Size ".png x-application-pgex-world").toLocal8Bit().constData())==0;\
-    if (success) success = system( QString("xdg-icon-resource install --context apps --novendor --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/PgeEditor-" Size ".png PgeEditor").toLocal8Bit().constData())==0;
+    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-level-" Size ".png x-application-smbx64-level").toLocal8Bit().constData()) == 0;\
+    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-world-" Size ".png x-application-smbx64-world").toLocal8Bit().constData()) == 0;\
+    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-level-" Size ".png x-application-pgex-level").toLocal8Bit().constData()) == 0;\
+    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-world-" Size ".png x-application-pgex-world").toLocal8Bit().constData()) == 0;\
+    if(success) success = system( QString("xdg-icon-resource install --context apps --novendor --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/PgeEditor-" Size ".png PgeEditor").toLocal8Bit().constData()) == 0;
 
     IconSize("16");
     IconSize("32");
