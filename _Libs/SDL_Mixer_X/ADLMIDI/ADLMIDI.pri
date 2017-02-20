@@ -4,7 +4,9 @@ HEADERS += \
     $$PWD/dbopl.h \
     $$PWD/fraction.h \
     $$PWD/nukedopl3.h \
-    $$PWD/adlmidi_private.hpp
+    $$PWD/adlmidi_private.hpp \
+    $$PWD/adlmidi_mus2mid.h \
+    $$PWD/adlmidi_xmi2mid.h
 
 SOURCES += \
     $$PWD/adlmidi.cpp \
@@ -14,5 +16,6 @@ SOURCES += \
     $$PWD/adlmidi_private.cpp \
     $$PWD/adlmidi_opl3.cpp \
     $$PWD/adlmidi_midiplay.cpp \
-    $$PWD/adlmidi_load.cpp
-
+    $$PWD/adlmidi_load.cpp \
+    $$PWD/adlmidi_mus2mid.c \
+    $$PWD/adlmidi_xmi2mid.c

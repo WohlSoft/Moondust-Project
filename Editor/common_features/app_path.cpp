@@ -20,6 +20,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
+#include <QFileInfo>
 
 #include "dir_copy.h"
 #include "app_path.h"
@@ -37,14 +38,18 @@ QString AppPathManager::m_userPath;
 #define UserDirName "/.PGE_Project"
 #endif
 
-void AppPathManager::initAppPath()
+void AppPathManager::initAppPath(const char* argv0)
 {
+    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).dir().path();
+    ApplicationPath_x = ApplicationPath;
+
+    QApplication::addLibraryPath(".");
+    QApplication::addLibraryPath(ApplicationPath);
+    QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv0)).dir().path());
+
     QApplication::setOrganizationName(_COMPANY);
     QApplication::setOrganizationDomain(_PGE_URL);
     QApplication::setApplicationName("PGE Editor");
-
-    ApplicationPath = QApplication::applicationDirPath();
-    ApplicationPath_x = QApplication::applicationDirPath();
 
     #ifdef __APPLE__
     //Application path relative bundle folder of application
@@ -147,11 +152,10 @@ void AppPathManager::install()
     #endif
     if(!path.isEmpty())
     {
-        QDir appDir(path+UserDirName);
+        QDir appDir(path + UserDirName);
         if(!appDir.exists())
-            if(!appDir.mkpath(path+UserDirName))
+            if(!appDir.mkpath(path + UserDirName))
                 return;
-
         QSettings setup;
         setup.setValue("EnableUserDir", true);
     }

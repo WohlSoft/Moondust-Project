@@ -23,6 +23,7 @@
 #endif
 #include <QFileInfo>
 #include <QDir>
+#include <QSettings>
 
 #ifdef Q_OS_LINUX
 #include <QStyleFactory>
@@ -40,6 +41,8 @@
 #include <common_features/main_window_ptr.h>
 #include <SingleApplication/singleapplication.h>
 #include <SingleApplication/editor_application.h>
+
+#include <Utf8Main/utf8main.h>
 
 #include <data_configs/selection_dialog/config_manager.h>
 
@@ -134,14 +137,24 @@ int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
 
-    QApplication::addLibraryPath(".");
-    QApplication::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
-    QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
-    QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, false);
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-#endif
+    //Init system paths
+    AppPathManager::initAppPath(argv[0]);
+
+    {
+        //Initialize the HighDPI settings
+        QSettings advSetup(AppPathManager::settingsFile(), QSettings::IniFormat);
+        advSetup.beginGroup("extra");
+        bool atr_hdpi   = advSetup.value("high-dpi-scaling", true).toBool();
+        advSetup.endGroup();
+        #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+        QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, !atr_hdpi);
+        QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, atr_hdpi);
+        QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, atr_hdpi);
+        #else
+        Q_UNUSED(atr_hdpi);
+        #endif
+    }
+
 
     app     = new PGE_Application(argc, argv);
     args    = app->arguments();
@@ -177,15 +190,12 @@ int main(int argc, char *argv[])
     fnt.setPointSize(PGEDefaultFontSize);
     app->setFont(fnt);
 
-    //Init system paths
-    AppPathManager::initAppPath();
-
-    foreach(QString arg, args)
+    for(QString &arg : args)
     {
         if(arg == "--install")
         {
             AppPathManager::install();
-            AppPathManager::initAppPath();
+            AppPathManager::initAppPath(argv[0]);
 
             Installer::moveFromAppToUser();
             Installer::associateFiles();

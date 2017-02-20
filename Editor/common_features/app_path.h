@@ -36,7 +36,7 @@ class AppPathManager
         /**
          * @brief Initialize path manager
          */
-        static void initAppPath();
+        static void initAppPath(const char* argv0);
         /**
          * @brief Returns application settings file
          * @return path to settings INI file

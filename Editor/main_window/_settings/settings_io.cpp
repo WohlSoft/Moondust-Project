@@ -38,24 +38,24 @@
 
 static void loadToolboxProps(QSettings &s,
                              QString keyprefix,
-                             MWDock_Base* widget,
+                             MWDock_Base *widget,
                              bool defViz,
                              bool defFloat)
 {
-    QDockWidget*dw = dynamic_cast<QDockWidget*>(widget);
-    widget->m_lastVisibilityState = s.value( keyprefix + QStringLiteral("-visible"), defViz).toBool();
-    dw->setFloating( s.value( keyprefix + QStringLiteral("-float"), defFloat).toBool() );
-    dw->restoreGeometry( s.value( keyprefix + QStringLiteral("-geometry"), dw->saveGeometry() ).toByteArray() );
+    QDockWidget *dw = dynamic_cast<QDockWidget *>(widget);
+    widget->m_lastVisibilityState = s.value(keyprefix + QStringLiteral("-visible"), defViz).toBool();
+    dw->setFloating(s.value(keyprefix + QStringLiteral("-float"), defFloat).toBool());
+    dw->restoreGeometry(s.value(keyprefix + QStringLiteral("-geometry"), dw->saveGeometry()).toByteArray());
 }
 
 static void saveToolboxProps(QSettings &s,
                              QString keyprefix,
-                             MWDock_Base* widget)
+                             MWDock_Base *widget)
 {
-    QDockWidget*dw = dynamic_cast<QDockWidget*>(widget);
-    s.setValue( keyprefix + QStringLiteral("-visible"),  widget->m_lastVisibilityState );
-    s.setValue( keyprefix + QStringLiteral("-float"),    dw->isFloating() );
-    s.setValue( keyprefix + QStringLiteral("-geometry"), dw->saveGeometry() );
+    QDockWidget *dw = dynamic_cast<QDockWidget *>(widget);
+    s.setValue(keyprefix + QStringLiteral("-visible"),  widget->m_lastVisibilityState);
+    s.setValue(keyprefix + QStringLiteral("-float"),    dw->isFloating());
+    s.setValue(keyprefix + QStringLiteral("-geometry"), dw->saveGeometry());
 }
 
 
@@ -65,13 +65,13 @@ void MainWindow::loadSettings()
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
-#ifdef Q_OS_WIN
+    #ifdef Q_OS_WIN
 #define FloatDocks true
 #define FloatDocks_inv false
-#else
+    #else
 #define FloatDocks false
 #define FloatDocks_inv true
-#endif
+    #endif
 
     settings.beginGroup("Main");
     {
@@ -80,13 +80,13 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
         GlobalSettings::LvlOpts.grid_show = settings.value("grid-show", false).toBool();
 
-        GlobalSettings::LvlItemDefaults.npc_direction=settings.value("defaults-npc-directuin", -1).toInt();
-        GlobalSettings::LvlItemDefaults.npc_generator_type=settings.value("defaults-npc-gen-type", 1).toInt();
-        GlobalSettings::LvlItemDefaults.npc_generator_delay=settings.value("defaults-npc-gen-delay", 20).toInt();
-            LvlPlacingItems::npcSet.direct=GlobalSettings::LvlItemDefaults.npc_direction;
-            LvlPlacingItems::npcSet.generator_type=GlobalSettings::LvlItemDefaults.npc_generator_type;
-            LvlPlacingItems::npcSet.generator_period=GlobalSettings::LvlItemDefaults.npc_generator_delay;
-        GlobalSettings::LvlItemDefaults.warp_type=settings.value("defaults-warp-type", 2).toInt();
+        GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-directuin", -1).toInt();
+        GlobalSettings::LvlItemDefaults.npc_generator_type = settings.value("defaults-npc-gen-type", 1).toInt();
+        GlobalSettings::LvlItemDefaults.npc_generator_delay = settings.value("defaults-npc-gen-delay", 20).toInt();
+        LvlPlacingItems::npcSet.direct = GlobalSettings::LvlItemDefaults.npc_direction;
+        LvlPlacingItems::npcSet.generator_type = GlobalSettings::LvlItemDefaults.npc_generator_type;
+        LvlPlacingItems::npcSet.generator_period = GlobalSettings::LvlItemDefaults.npc_generator_delay;
+        GlobalSettings::LvlItemDefaults.warp_type = settings.value("defaults-warp-type", 2).toInt();
         GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz     = settings.value("defaults-classicevents-tabs-layerviz", 0).toBool();
         GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov     = settings.value("defaults-classicevents-tabs-layermov", 0).toBool();
         GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll = settings.value("defaults-classicevents-tabs-autoscroll", 0).toBool();
@@ -95,11 +95,11 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons    = settings.value("defaults-classicevents-tabs-buttons", 0).toBool();
         GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger    = settings.value("defaults-classicevents-tabs-trigger", 0).toBool();
 
-        restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
-        restoreState(settings.value("windowState", saveState() ).toByteArray());
+        restoreGeometry(settings.value("geometry", saveGeometry()).toByteArray());
+        restoreState(settings.value("windowState", saveState()).toByteArray());
 
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
-        GlobalSettings::musicVolume = settings.value("music-volume",128).toInt();
+        GlobalSettings::musicVolume = settings.value("music-volume", 128).toInt();
 
         GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", true).toBool();
         GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", true).toBool();
@@ -128,7 +128,7 @@ void MainWindow::loadSettings()
 
         //                         toolbox parameter prefix             pointer to toolbox      saved visibility state flag   defaults: vis.    flaoting
         loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        true,   false);
-        loadToolboxProps(settings, QStringLiteral("level-itemprops-box"),dock_LvlItemProps,     false,  true);
+        loadToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps,     false,  true);
         loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   true,   true);
         loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      false,  true);
         loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         true,   true);
@@ -136,8 +136,8 @@ void MainWindow::loadSettings()
         loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      false,  true);
 
         loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        true,   false);
-        loadToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox,    false,  true);
-        loadToolboxProps(settings, QStringLiteral("world-itemprops-box"),dock_WldItemProps,     false,  false);
+        loadToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox,    false,  true);
+        loadToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps,     false,  false);
         loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      false,  true);
 
         loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        false,  true);
@@ -152,14 +152,15 @@ void MainWindow::loadSettings()
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
         if(!m_isAppInited)
-        { //Hide all unitialized dock widgets
-           QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
-           foreach(QDockWidget* dw, dockWidgets)
-               dw->hide();
+        {
+            //Hide all unitialized dock widgets
+            QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
+            foreach(QDockWidget *dw, dockWidgets)
+                dw->hide();
 
-           //Refresh state of menubars
-           updateWindowMenu();
-           updateMenus(NULL, true);
+            //Refresh state of menubars
+            updateWindowMenu();
+            updateMenus(NULL, true);
         }
     }
     settings.endGroup();
@@ -180,12 +181,12 @@ void MainWindow::loadSettings()
         GlobalSettings::testing.xtra_showFPS = settings.value("ex-show-fps", false).toBool();
         GlobalSettings::testing.xtra_physdebug = settings.value("ex-physdebug", false).toBool();
         GlobalSettings::testing.numOfPlayers = settings.value("num-players", 1).toInt();
-        GlobalSettings::testing.p1_char= settings.value("p1-char", 1).toInt();
-        GlobalSettings::testing.p1_state= settings.value("p1-state", 1).toInt();
+        GlobalSettings::testing.p1_char = settings.value("p1-char", 1).toInt();
+        GlobalSettings::testing.p1_state = settings.value("p1-state", 1).toInt();
         GlobalSettings::testing.p1_vehicleID    = settings.value("p1-vehicle-id", 0).toInt();
         GlobalSettings::testing.p1_vehicleType  = settings.value("p1-vehicle-type", 0).toInt();
-        GlobalSettings::testing.p2_char= settings.value("p2-char", 1).toInt();
-        GlobalSettings::testing.p2_state= settings.value("p2-state", 1).toInt();
+        GlobalSettings::testing.p2_char = settings.value("p2-char", 1).toInt();
+        GlobalSettings::testing.p2_state = settings.value("p2-state", 1).toInt();
         GlobalSettings::testing.p2_vehicleID    = settings.value("p2-vehicle-id", 0).toInt();
         GlobalSettings::testing.p2_vehicleType  = settings.value("p2-vehicle-type", 0).toInt();
     }
@@ -201,20 +202,25 @@ void MainWindow::loadSettings()
 
     settings.beginGroup("Recent");
     {
-        for(int i = 1; i<=10;i++){
-            recentOpen.push_back(settings.value("recent"+QString::number(i),"<empty>").toString());
-        }
+        for(int i = 1; i <= 10; i++)
+            recentOpen.push_back(settings.value("recent" + QString::number(i), "<empty>").toString());
         SyncRecentFiles();
     }
     settings.endGroup();
 
-#ifdef _WIN32
+    settings.beginGroup("extra");
+    {
+        GlobalSettings::extra.attr_hdpi = settings.value("high-dpi-scaling", GlobalSettings::extra.attr_hdpi).toBool();
+    }
+    settings.endGroup();
+
+    #ifdef _WIN32
     settings.beginGroup("LunaTester");
     {
         m_luna->m_noGL = settings.value("nogl", false).toBool();
     }
     settings.endGroup();
-#endif
+    #endif
 }
 
 
@@ -230,6 +236,7 @@ void MainWindow::saveSettings()
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
+    {
         settings.setValue("pos", pos());
         settings.setValue("lastpath", GlobalSettings::openPath);
         settings.setValue("lastsavepath", GlobalSettings::savePath);
@@ -244,7 +251,7 @@ void MainWindow::saveSettings()
         saveToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox);
 
         saveToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox);
-        saveToolboxProps(settings, QStringLiteral("world-settings-box"),dock_WldSettingsBox);
+        saveToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox);
         saveToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps);
         saveToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox);
 
@@ -267,7 +274,7 @@ void MainWindow::saveSettings()
 
         settings.setValue("history-limit", GlobalSettings::historyLimit);
 
-        settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
+        settings.setValue("tab-view", (GlobalSettings::MainWindowView == QMdiArea::TabbedView));
         settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
         settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
         settings.setValue("tileset-toolbox-pos", static_cast<int>(GlobalSettings::TSTToolboxPos));
@@ -295,13 +302,17 @@ void MainWindow::saveSettings()
         settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 
         settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
+    }
     settings.endGroup();
 
     settings.beginGroup("ext-tools");
+    {
         settings.setValue("sox-bin-path", GlobalSettings::tools_sox_bin_path);
+    }
     settings.endGroup();
 
     settings.beginGroup("testing");
+    {
         settings.setValue("ex-god", GlobalSettings::testing.xtra_god);
         settings.setValue("ex-flyup", GlobalSettings::testing.xtra_flyup);
         settings.setValue("ex-chuck", GlobalSettings::testing.xtra_chuck);
@@ -318,36 +329,50 @@ void MainWindow::saveSettings()
         settings.setValue("p2-state", GlobalSettings::testing.p2_state);
         settings.setValue("p2-vehicle-id", GlobalSettings::testing.p2_vehicleID);
         settings.setValue("p2-vehicle-type", GlobalSettings::testing.p2_vehicleType);
-    settings.endGroup();
-
-    settings.beginGroup("screen-grab");
-        settings.setValue("grab-size", GlobalSettings::screenGrab.sizeType);
-        settings.setValue("grab-w", GlobalSettings::screenGrab.width);
-        settings.setValue("grab-h", GlobalSettings::screenGrab.height);
-    settings.endGroup();
-
-    settings.beginGroup("Recent");
-    for(int i = 1; i<=10;i++){
-        settings.setValue("recent"+QString::number(i),recentOpen[i-1]);
     }
     settings.endGroup();
 
-#ifdef _WIN32
+    settings.beginGroup("screen-grab");
+    {
+        settings.setValue("grab-size", GlobalSettings::screenGrab.sizeType);
+        settings.setValue("grab-w", GlobalSettings::screenGrab.width);
+        settings.setValue("grab-h", GlobalSettings::screenGrab.height);
+    }
+    settings.endGroup();
+
+    settings.beginGroup("extra");
+    {
+        settings.setValue("high-dpi-scaling", GlobalSettings::extra.attr_hdpi);
+    }
+    settings.endGroup();
+
+    settings.beginGroup("Recent");
+    {
+        for(int i = 1; i <= 10; i++)
+            settings.setValue("recent" + QString::number(i), recentOpen[i - 1]);
+    }
+    settings.endGroup();
+
+    #ifdef _WIN32
     settings.beginGroup("LunaTester");
     {
         settings.setValue("nogl", m_luna->m_noGL);
     }
     settings.endGroup();
-#endif
+    #endif
 
     settings.beginGroup("logging");
+    {
         settings.setValue("log-path",  LogWriter::DebugLogFile);
         settings.setValue("log-level", int(LogWriter::logLevel));
+    }
     settings.endGroup();
 
     //Output-only
     settings.beginGroup("message-boxes");
+    {
         settings.setValue("uidesign-editor-greeting", false);
+    }
     settings.endGroup();
 
     //Save settings of custom counters in the debugger
@@ -360,15 +385,15 @@ void MainWindow::on_actionApplication_settings_triggered()
 {
     if(!m_isAppInited) return;
 
-    g_AppSettings * appSettings = new g_AppSettings(this);
+    g_AppSettings *appSettings = new g_AppSettings(this);
     util::DialogToCenter(appSettings, true);
     //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
 
-    if(appSettings->exec()==QDialog::Accepted)
+    if(appSettings->exec() == QDialog::Accepted)
     {
         ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
-        on_actionAnimation_triggered( GlobalSettings::LvlOpts.animationEnabled );
+        on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
 
         ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
         on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
@@ -378,9 +403,9 @@ void MainWindow::on_actionApplication_settings_triggered()
         dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
-        applyTheme( GlobalSettings::currentTheme.isEmpty() ?
-                    ( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() )
-                    : GlobalSettings::currentTheme );
+        applyTheme(GlobalSettings::currentTheme.isEmpty() ?
+                   (Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme())
+                   : GlobalSettings::currentTheme);
 
         saveSettings();
     }
@@ -388,4 +413,3 @@ void MainWindow::on_actionApplication_settings_triggered()
     delete appSettings;
 
 }
-

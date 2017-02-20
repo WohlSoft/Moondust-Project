@@ -177,6 +177,9 @@ void g_AppSettings::loadSettings()
     ui->defaults_eventtab_common->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_common);
     ui->defaults_eventtab_holdbuttons->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons);
     ui->defaults_eventtab_trigger->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger);
+
+    /**************************** Extra **********************************/
+    ui->extra_hdpiScale->setChecked(GlobalSettings::extra.attr_hdpi);
 }
 
 void g_AppSettings::on_setLogFile_clicked()
@@ -257,6 +260,9 @@ void g_AppSettings::on_buttonBox_accepted()
     GlobalSettings::LvlItemDefaults.classicevents_tabs_common=ui->defaults_eventtab_common->isChecked();
     GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons=ui->defaults_eventtab_holdbuttons->isChecked();
     GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger=ui->defaults_eventtab_trigger->isChecked();
+
+    /**************************** Extra **********************************/
+    GlobalSettings::extra.attr_hdpi = ui->extra_hdpiScale->isChecked();
 
     accept();
 }
