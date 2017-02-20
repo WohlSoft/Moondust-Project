@@ -77,7 +77,13 @@ bool WldGenericSetup::parse(QSettings *setup, QString imgPath, unsigned int defa
     NumberLimiter::apply(framespeed, 1u);
     frame_h = uint(animated ? qRound(qreal(h) / qreal(frames)) : h);
     NumberLimiter::apply(frame_h, 0u);
+
     display_frame =   setup->value("display-frame", merge_with ? merge_with->display_frame : 0).toUInt();
+
+    map3d_vertical =  setup->value("map3d-vertical", merge_with ? merge_with->map3d_vertical : false).toBool();
+    //Uncommend when add the IniProcessing which a replacement of QSettings for INI reading
+    //map3d_stackables= setup->value("map3d-stackables", merge_with ? merge_with->map3d_stackables).toIntArray();
+
     //Rows and cols for table-like element sets
     row =             setup->value("row", merge_with ? merge_with->row : 0).toUInt();
     col =             setup->value("col", merge_with ? merge_with->col : 0).toUInt();

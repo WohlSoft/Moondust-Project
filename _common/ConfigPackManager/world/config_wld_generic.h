@@ -26,33 +26,31 @@ class QSettings;
 
 struct WldGenericSetup
 {
-    WldGenericSetup()
-    {
-        id = 0;
-        grid = 0;
-        animated = false;
-        frames = 0;
-        display_frame = 0;
-        frame_h = 0;
-    }
-    bool parse(QSettings* setup, QString imgPath, unsigned int defaultGrid, WldGenericSetup* merge_with = nullptr, QString *error=nullptr);
+    bool parse(QSettings* setup,
+               QString imgPath,
+               unsigned int defaultGrid,
+               WldGenericSetup* merge_with = nullptr,
+               QString *error = nullptr);
 
-    unsigned long id;
+    unsigned long id = 0;
         QString image_n;
         QString mask_n;
 
-    unsigned int grid;
+    unsigned int grid = 0;
     QString group;
     QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int display_frame;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
+    bool animated = false;
+    unsigned int frames = 0;
+    unsigned int framespeed = 0; // Default 128 ms
+    unsigned int display_frame = 0;
+    unsigned int frame_h = 0; //Hegth of the frame. Calculating automatically
+
+    bool                map3d_vertical = false;
+    QList<unsigned int> map3d_stackables;
 
     /**Used only by terrain and path tiles **/
-    unsigned int row;
-    unsigned int col;
+    unsigned int row = 0;
+    unsigned int col = 0;
     /****************************************/
 };
 
