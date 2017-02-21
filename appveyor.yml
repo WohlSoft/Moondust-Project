@@ -21,7 +21,7 @@
 #                             created 2015-11-25
 #--------------------------------------------------------------------------------
 
-version: 0.3.3.5.{build}
+version: 0.4.0.3.{build}
 
 # you can use {branch} name in version format too
 # version: 1.0.{build}-{branch}
@@ -48,7 +48,7 @@ clone_depth:  3  # clone entire repository history if not defined
 install:
   - cmd: git submodule init
   - cmd: git submodule update
-  - cmd: echo set QtDir=C:\Qt\5.7\mingw53_32\bin>> _paths.bat
+  - cmd: echo set QtDir=C:\Qt\5.8\mingw53_32\bin>> _paths.bat
   - cmd: echo set MinGW=C:\Qt\Tools\mingw530_32\bin>> _paths.bat
   - cmd: echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
   - cmd: echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
