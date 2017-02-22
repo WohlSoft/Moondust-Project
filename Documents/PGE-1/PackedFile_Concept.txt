@@ -29,7 +29,7 @@ TITLE_LENGHT    TITLE           Title of the Game/Episode
 =============================================
     Length          Name            Description
 ---------------------------------------------
-Repeat TOTAL_FILES times 
+Repeat TOTAL_FILES times
 {
     4               PATH_LENGHT     (32-bit BE unsigned integer) Lenght of the file path
     PATH_LENGHT     PATH            Internal path
