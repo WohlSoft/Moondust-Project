@@ -62,7 +62,7 @@ void AppPathManager::initAppPath()
         CFRelease(appUrlRef);
     }
     #else
-    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).dir().path();
+    ApplicationPath = QApplication::applicationDirPath();
     #endif
     ApplicationPath_x = ApplicationPath;
 
