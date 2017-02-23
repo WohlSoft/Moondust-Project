@@ -20,6 +20,10 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#include <QUrl>
+#endif
 
 #include "app_path.h"
 #include "../version.h"
@@ -41,12 +45,28 @@ void AppPathManager::initAppPath()
     PGE_Application::setOrganizationName(_COMPANY);
     PGE_Application::setOrganizationDomain(_PGE_URL);
     PGE_Application::setApplicationName("PGE Engine");
-    ApplicationPath =   PGE_Application::applicationDirPath();
-    ApplicationPath_x = PGE_Application::applicationDirPath();
-#ifdef __APPLE__
-    //Application path relative bundle folder of application
-    ApplicationPath = QFileInfo(ApplicationPath_x + "../../..").absoluteDir().absolutePath();
-#elif defined(__ANDROID__)
+
+    #ifdef __APPLE__
+    {
+        CFURLRef appUrlRef;
+        appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+        CFStringRef filePathRef = CFURLGetString(appUrlRef);
+        //const char* filePath = CFStringGetCStringPtr(filePathRef, kCFStringEncodingUTF8);
+        ApplicationPath = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+        {
+            int i = ApplicationPath.lastIndexOf(".app");
+            i = ApplicationPath.lastIndexOf('/', i);
+            ApplicationPath.remove(i, ApplicationPath.size() - i);
+        }
+        //CFRelease(filePathRef);
+        CFRelease(appUrlRef);
+    }
+    #else
+    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).dir().path();
+    #endif
+    ApplicationPath_x = ApplicationPath;
+
+#if defined(__ANDROID__)
     ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
     QDir appPath(ApplicationPath);
 
@@ -58,11 +78,11 @@ void AppPathManager::initAppPath()
     if(isPortable())
         return;
 
-    QSettings setup;
     bool userDir;
 #if defined(__ANDROID__) || defined(__APPLE__)
     userDir = true;
 #else
+    QSettings setup;
     userDir = setup.value("EnableUserDir", false).toBool();
 #endif
     //openUserDir:
