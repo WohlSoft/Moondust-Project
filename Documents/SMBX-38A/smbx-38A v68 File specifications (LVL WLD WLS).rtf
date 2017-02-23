@@ -1,0 +1,524 @@
+{\rtf1\ansi\ansicpg936\deff0\nouicompat\deflang1033\deflangfe2052{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset134 \'cb\'ce\'cc\'e5;}}
+{\colortbl ;\red255\green0\blue0;}
+{\*\generator Riched20 6.3.9600}\viewkind4\uc1 
+\pard\sl240\slmult1\cf1\f0\fs22\lang2052 Version=68\cf0\par
+\par
+LVL file description\par
+line 1:\par
+\tab SMBXFile??\par
+\tab ??=Version number\par
+next line: level settings\par
+\tab A|param1|param2|param3|param4|\cf1 s1,s2,s3,s4\cf0\par
+\tab []=optional\par
+\tab param1=the number of stars on this level\par
+\tab param2=level title\par
+\tab param3=a filename, when player died, the player will be sent to this level.\par
+\tab param4=normal entrance / to warp [0-WARPMAX]\par
+\cf1\tab s1=P-Switch Music Filename[***urlencode!***]\par
+\tab s2=Stopwatch Music Filename[***urlencode!***]\par
+\tab s3=Starman Music Filename[***urlencode!***]\par
+\tab s4=MegaMushroom Music Filename[***urlencode!***]\par
+\cf0 next line: player start points\par
+\tab P1|x1|y1\par
+\tab P2|x2|y2\par
+\tab x1=first player position x\par
+\tab y1=first player position y\par
+\tab x2=second player position x\par
+\tab y2=second player position y\par
+next line: section properties\par
+\tab M|id|x|y|w|h|b1|b2|b3|b4|b5|b6|music|background|musicfile\par
+\tab id=[1-SectionMAX]\par
+\tab x=Left size[-left/+right]\par
+\tab y=Top size[-down/+up]\par
+\tab w=width of the section[if (w < 800) w = 800]\par
+\tab h=height of the section[if (h < 600) h = 600]\par
+\tab b1=under water?[0=false !0=true]\par
+\tab b2=is x-level wrap[0=false !0=true]\par
+\tab b3=enable off screen exit[0=false !0=true]\par
+\tab b4=no turn back(x)[0=no x-scrolllock 1=scrolllock left 2=scrolllock right]\par
+\tab b5=no turn back(y)[0=no y-scrolllock 1=scrolllock up 2=scrolllock down]\par
+\tab b6=is y-level wrap[0=false !0=true]\par
+\tab music=music number[same as smbx1.3]\par
+\tab background=background number[same as the filename in 'background2' folder]\par
+\tab musicfile=custom music file[***urlencode!***]\par
+next line: blocks\par
+\tab B|layer[,name]|id[,dx,dy]|x|y|contain|b11\cf1 [,b12]\cf0 |b2|\cf1 [e1,e2,e3,e4]\cf0 |w|h\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+\tab only if name != ""\par
+\tab name=block's name[***urlencode!***]\par
+\tab id=block id\par
+\tab only if dx > 0 or dy > 0\par
+\tab dx=graphics extend x\par
+\tab dy=graphics extend y\par
+\tab x=block position x\par
+\tab y=block position y\par
+\tab contain=containing npc number\par
+\tab\tab [1001-1000+NPCMAX] npc-id\par
+\tab\tab [1-999] coin number\par
+\tab\tab [0] nothing\par
+\tab b11=slippery[0=false !0=true]\par
+\tab\cf1 b12=wing type\cf0\par
+\tab b2=invisible[0=false !0=true]\par
+\tab\cf1 []=optional\cf0\par
+\tab e1=block destory event name[***urlencode!***]\par
+\tab e2=block hit event name[***urlencode!***]\par
+\tab e3=no more object in layer event name[***urlencode!***]\par
+\tab\cf1 e4=block onscreen event name[***urlencode!***]\cf0\par
+\tab w=width, if w < 0 then block's autoscale = true\par
+\tab h=height\par
+next line: backgrounds\par
+\tab T|layer|id[,dx,dy]|x|y\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+\tab id=background id\par
+\tab only if dx > 0 or dy > 0\par
+\tab dx=graphics extend x\par
+\tab dy=graphics extend y\par
+\tab x=background position x\par
+\tab y=background position y\par
+next line: npcs\par
+\tab N|layer[,name]|id[,dx,dy]|x|y|b1,b2,b3,b4|sp|\cf1 [e1,e2,e3,e4,e5,e6,e7]\cf0 |a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+\tab only if name != ""\par
+\tab name=npc's name\par
+\tab id=npc id\par
+\tab only if dx > 0 or dy > 0\par
+\tab dx=graphics extend x\par
+\tab dy=graphics extend y\par
+\tab x=npc position x\par
+\tab y=npc position y\tab\par
+\tab b1=[-1]left [0]random [1]right\par
+\tab b2=friendly npc\par
+\tab b3=don't move npc\par
+\tab b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]\cf1 [101~107=wing type]\cf0\par
+\tab sp=special option\par
+\tab\tab\cf1 []=optional\cf0\par
+\tab\tab [***urlencode!***]\par
+\tab\tab e1=death event\par
+\tab\tab e2=talk event\par
+\tab\tab e3=activate event\par
+\tab\tab e4=no more object in layer event\par
+\tab\tab e5=grabed event\par
+\tab\tab e6=next frame event\par
+\tab\tab e7=touch event\par
+\tab\tab a1=layer name to attach\par
+\tab\tab a2=variable name to send\par
+\tab c1=generator enable\par
+\tab\tab [if c1!=0]\par
+\tab\tab c2=generator period[1 frame]\par
+\tab\tab c3=generator effect\par
+\tab\tab\tab c3-1[1=warp][0=projective][4=no effect]\par
+\tab\tab\tab c3-2[0=center][1=up][2=left][3=down][4=right][9=up+left][10=left+down][11=down+right][12=right+up]\par
+\tab\tab\tab\tab if (c3-2)!=0\par
+\tab\tab\tab\tab c3=4*(c3-1)+(c3-2)\par
+\tab\tab\tab\tab else\par
+\tab\tab\tab\tab c3=0\par
+\tab\tab c4=generator direction[angle][when c3=0]\par
+\tab\tab c5=batch[when c3=0][MAX=32]\par
+\tab\tab c6=angle range[when c3=0]\par
+\tab\tab c7=speed[when c3=0][float]\par
+\tab msg=message by this npc talkative[***urlencode!***]\par
+next line: waters\par
+\tab Q|layer|x|y|w|h|b1,b2,b3,b4,b5|event\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+\tab x=position x\par
+\tab y=position y\par
+\tab w=width\par
+\tab h=height\par
+\tab b1=liquid type\par
+\tab\tab 01-Water[friction=0.5]\par
+\tab\tab 02-Quicksand[friction=0.1]\par
+\tab\tab 03-Custom Water\par
+\tab\tab 04-Gravitational Field\par
+\tab\tab 05-Event Once(Player)\par
+\tab\tab 06-Event Always(Player)\par
+\tab\tab 07-Event Once(NPC/Player)\par
+\tab\tab 08-Event Always(NPC/Player)\par
+\tab\tab 09-Click Event\par
+\tab\tab 10-Collision Script\par
+\tab\tab 11-Click Script\par
+\tab\tab 12-Collision Event\par
+\tab\tab 13-Air\par
+\cf1\tab\tab 14-Event Once(NPC)\par
+\tab\tab 15-Event Always(NPC)\par
+\tab\tab 16-NPC Hurting Field\par
+\cf0\tab b2=friction\par
+\tab b3=Acceleration Direction\par
+\tab b4=Acceleration\par
+\tab b5=Maximum Velocity\par
+\tab event=touch event[***urlencode!***]\par
+next line: warps\par
+\tab W|layer|x|y|ex|ey|\cf1 type\cf0 |enterd|exitd|sn,msg,hide|locked,noyoshi,canpick,bomb,hidef,anpc,mini,size,ts,cannon|lik|liid|noexit|wx|wy|le|we\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+\tab x=entrance position x\par
+\tab y=entrance postion y\par
+\tab ex=exit position x\par
+\tab ey=exit position y\par
+\tab\cf1 type%100=[0=instant][1=pipe][2=door]\par
+\tab type/100=[0=none][1=Scroll][2=Fade]\par
+\cf0\tab enterd=entrance direction[1=up 2=left 3=down 4=right]\par
+\tab exitd=exit direction[1=up 2=left 3=down 4=right]\par
+\tab sn=need stars for enter\par
+\tab msg=a message when you have not enough stars\par
+\tab hide=hide the star number in this warp\par
+\tab locked=locked\par
+\tab noyoshi=no yoshi\par
+\tab canpick=allow npc\par
+\tab bomb=need a bomb\par
+\tab hide=hide the entry scene\par
+\tab anpc=allow npc interlevel\par
+\tab mini=Mini-Only\par
+\tab size=Warp Size(pixel)\par
+\tab ts=two-way\par
+\tab cannon=Pipe Cannon Force\par
+\tab lik=warp to level[***urlencode!***]\tab\par
+\tab liid=normal enterance / to warp[0-WARPMAX]\par
+\tab noexit=level entrance\par
+\tab wx=warp to x on world map\par
+\tab wy=warp to y on world map\par
+\tab le=level exit\par
+\tab we=warp event[***urlencode!***]\par
+next line: layers\par
+\tab L|name|status\par
+\tab name=layer name[***urlencode!***]\par
+\tab status=is hidden layer\par
+next line: events\par
+\tab E|name|msg|ea|el|elm|epy|eps|eef|ecn|evc|ene\par
+\tab name=event name[***urlencode!***]\par
+\tab msg=show message after start event[***urlencode!***]\par
+\tab ea=val,syntax\par
+\tab\tab val=[0=not auto start][1=auto start when level start][2=auto start when match all condition][3=start when called and match all condidtion]\par
+\tab\tab syntax=condidtion expression[***urlencode!***]\par
+\tab el=b/s1,s2...sn/h1,h2...hn/t1,t2...tn\par
+\tab\tab b=no smoke[0=false !0=true]\par
+\tab\tab [***urlencode!***]\par
+\tab\tab s(n)=show layer\par
+\tab\tab l(n)=hide layer\par
+\tab\tab t(n)=toggle layer\par
+\tab elm=elm1/elm2...elmn\par
+\tab\tab elm(n)=layername,horizontal syntax,vertical syntax,way\par
+\tab\tab layername=layer name for movement[***urlencode!***]\par
+\tab\tab horizontal syntax,vertical syntax[***urlencode!***][syntax]\par
+\tab\tab way=[0=by speed][1=by Coordinate]\par
+\tab epy=b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12\par
+\tab\tab b1=enable player controls\par
+\tab\tab b2=drop\par
+\tab\tab b3=alt run\par
+\tab\tab b4=run\par
+\tab\tab b5=jump\par
+\tab\tab b6=alt jump\par
+\tab\tab b7=up\par
+\tab\tab b8=down\par
+\tab\tab b9=left\par
+\tab\tab b10=right\par
+\tab\tab b11=start\par
+\tab\tab b12=lock keyboard\par
+\tab eps=esection/ebackground/emusic\par
+\tab\tab esection=es1:es2...esn\par
+\tab\tab ebackground=eb1:eb2...ebn\par
+\tab\tab emusic=em1:em2...emn\par
+\tab\tab\tab es=id,x,y,w,h,auto,sx,sy\par
+\tab\tab\tab\tab id=section id\par
+\tab\tab\tab\tab x=left x coordinates for section [id][***urlencode!***][syntax]\par
+\tab\tab\tab\tab y=top y coordinates for section [id][***urlencode!***][syntax]\par
+\tab\tab\tab\tab w=width for section [id][***urlencode!***][syntax]\par
+\tab\tab\tab\tab h=height for section [id][***urlencode!***][syntax]\par
+\tab\tab\tab\tab auto=enable autoscroll controls[0=false !0=true]\par
+\tab\tab\tab\tab sx=move screen horizontal syntax[***urlencode!***][syntax]\par
+\tab\tab\tab\tab sy=move screen vertical syntax[***urlencode!***][syntax]\par
+\tab\tab\tab eb=id,btype,backgroundid\par
+\tab\tab\tab\tab id=section id\par
+\tab\tab\tab\tab btype=[0=don't change][1=default][2=custom]\par
+\tab\tab\tab\tab backgroundid=[when btype=2]custom background id\par
+\tab\tab\tab em=id,mtype,musicid,customfile\par
+\tab\tab\tab\tab id=section id\par
+\tab\tab\tab\tab mtype=[0=don't change][1=default][2=custom]\par
+\tab\tab\tab\tab musicid=[when mtype=2]custom music id\tab\par
+\tab\tab\tab\tab customfile=[when mtype=3]custom music file name[***urlencode!***]\par
+\tab eef=sound/endgame/ce1/ce2...cen\par
+\tab\tab sound=play sound number\par
+\tab\tab endgame=[0=none][1=bowser defeat]\par
+\tab\tab ce(n)=id,x,y,sx,sy,grv,fsp,life\par
+\tab\tab\tab id=effect id\par
+\tab\tab\tab x=effect position x[***urlencode!***][syntax]\par
+\tab\tab\tab y=effect position y[***urlencode!***][syntax]\par
+\tab\tab\tab sx=effect horizontal speed[***urlencode!***][syntax]\par
+\tab\tab\tab sy=effect vertical speed[***urlencode!***][syntax]\par
+\tab\tab\tab grv=to decide whether the effects are affected by gravity[0=false !0=true]\par
+\tab\tab\tab fsp=frame speed of effect generated\par
+\tab\tab\tab life=effect existed over this time will be destroyed.\par
+\tab ecn=cn1/cn2...cnn\par
+\tab\tab cn(n)=id,x,y,sx,sy,sp\par
+\tab\tab\tab id=npc id\par
+\tab\tab\tab x=npc position x[***urlencode!***][syntax]\par
+\tab\tab\tab y=npc position y[***urlencode!***][syntax]\par
+\tab\tab\tab sx=npc horizontal speed[***urlencode!***][syntax]\par
+\tab\tab\tab sy=npc vertical speed[***urlencode!***][syntax]\tab\tab\tab\par
+\tab\tab\tab sp=advanced settings of generated npc\par
+\tab evc=vc1/vc2...vcn\par
+\tab\tab vc(n)=name,newvalue\par
+\tab\tab\tab name=variable name[***urlencode!***]\par
+\tab\tab\tab newvalue=new value[***urlencode!***][syntax]\par
+\tab ene=nextevent/timer/apievent/scriptname\par
+\tab\tab nextevent=name,delay\par
+\tab\tab\tab name=trigger event name[***urlencode!***]\par
+\tab\tab\tab delay=trigger delay[1 frame]\par
+\tab\tab timer=enable,count,interval,type,show\par
+\tab\tab\tab enable=enable the game timer controlling[0=false !0=true]\par
+\tab\tab\tab count=set the time left of the game timer\par
+\tab\tab\tab interval=set the time count interval of the game timer\par
+\tab\tab\tab type=to choose the way timer counts[0=counting down][1=counting up]\par
+\tab\tab\tab show=to choose whether the game timer is showed in hud[0=false !0=true]\par
+\tab\tab apievent=the id of apievent\par
+\tab\tab scriptname=script name[***urlencode!***]\par
+next line: variables\par
+\tab V|name|value\par
+\tab name=variable name[***urlencode!***]\par
+\tab value=initial value of the variable\par
+next line: scripts\par
+\tab S|name|script\par
+\tab Su|name|scriptu\par
+\tab name=name of script[***urlencode!***]\par
+\tab script=script[***base64encode!***][utf-8]\par
+\tab scriptu=script[***base64encode!***][ASCII]\par
+custom object data:\par
+\tab CB|id|data\tab :custom block\par
+\tab CT|id|data\tab :custom background\par
+\tab CE|id|data\tab :custom effect\par
+\tab\cf1 CW|cdata1|cdata2|...|cdatan\tab :custom sound:\tab same as wls file format\cf0\par
+\tab id = object id\par
+\tab data=[HEX]value|[HEX]value...\par
+\tab for background:\par
+\tab\tab [HEX]=0001\tab :gfxwidth\par
+\tab\tab [HEX]=0002\tab :gfxheight\par
+\tab\tab [HEX]=0003\tab :frames\par
+\tab\tab [HEX]=0004\tab :framespeed\par
+\tab for effect:\par
+\tab\tab [HEX]=0001\tab :gfxwidth\par
+\tab\tab [HEX]=0002\tab :gfxheight\par
+\tab\tab [HEX]=0003\tab :frames\par
+\tab\tab [HEX]=0004\tab :gfxsplitwidth\par
+\tab\tab [HEX]=0005\tab :gfxsplitheight\par
+\tab for block:\par
+\tab\tab [HEX]=0001\tab :gfxwidth\par
+\tab\tab [HEX]=0002\tab :gfxheight\par
+\tab\tab [HEX]=0003\tab :frames\par
+\tab\tab [HEX]=0004\tab :framespeed\par
+\tab\tab [HEX]=0005\tab :JumpHit\par
+\tab\tab [HEX]=0006\tab :DrawnAsPlatform\par
+\tab\tab [HEX]=0007\tab :Hurt Settings(8bit/8bool)\par
+\tab\tab [HEX]=0008\tab :Physics Settings(8bit/8bool)\par
+\tab\tab [HEX]=0009\tab :Destory Settings(8bit/8bool)\par
+\tab\tab [HEX]=000A\tab :Collision Detection(Player)\par
+\tab\tab [HEX]=000B\tab :Collision Detection(NPC)\par
+\tab\tab [HEX]=000C\tab :SmeltByFireball\par
+\tab\tab [HEX]=000D\tab :Acceleration\par
+\par
+\par
+WLD file description\par
+line 1:\par
+\tab SMBXFile??\par
+\tab ??=Version number\par
+next line: world settings\par
+\tab ws1|wn|bp1,bp2,bp3,bp4,bp5|asn|dtp,nwm,rsd,dcp,sc,sm,asg,smb3\cf1 ,dss\cf0 |sn,mis|acm|sc\par
+\tab ws2|credits\par
+\tab ws3|list\par
+\tab ws4|se|msg\par
+\tab wn=episode name[***urlencode!***]\par
+\tab bp(n)=don't use player(n) as player's character\par
+\tab asn=auto start level file name[***urlencode!***]\par
+\tab dtp=disable two player[0=false !0=true]\par
+\tab nwm=no world map[0=false !0=true]\par
+\tab rsd=restart last level on player's character death[0=false !0=true]\par
+\tab dcp=disable change player[0=false !0=true]\par
+\tab sc=save machine code to sav file[0=false !0=true]\par
+\tab sm=save mode\par
+\tab\tab -1=Restart at auto start level\par
+\tab\tab 0=Restart at the world map where we saved last time\par
+\tab\tab 1=Restart at the level where we saved last time\par
+\tab asg=auto save game[0=false !0=true]\par
+\tab smb3=smb3 style world map[0=false !0=true]\par
+\cf1\tab dss=No Entry Scene\cf0\par
+\tab sn=star number\par
+\tab mis=max item number in world inventory\par
+\tab acm=anti cheat mode[0=don't allow in list !0=allow in list]\par
+\tab sc=enable save locker[0=false !0=true]\par
+\tab credits=[1]\par
+\tab\tab #DEFT#xxxxxx[***base64encode!***]\par
+\tab\tab xxxxxx=name1 /n name2 /n ...\par
+\tab\tab [2]\par
+\tab\tab #CUST#xxxxxx[***base64encode!***]\par
+\tab\tab xxxxxx=any string\par
+\tab list=xxxxxx[***base64encode!***]\par
+\tab\tab xxxxxx=string1,string2...stringn\par
+\tab se=save locker syntax[***urlencode!***][syntax]\par
+\tab msg=message when save was locked[***urlencode!***]\par
+next line: tiles\par
+\tab T|id[,dx,dy]|x|y|layer\par
+\tab id=tile id\par
+\tab only if dx > 0 or dy > 0\par
+\tab dx=graphics extend x\par
+\tab dy=graphics extend y\par
+\tab x=tile position x\par
+\tab y=tile position y\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+next line: scenerys\par
+\tab S|id[,dx,dy]|x|y|layer\par
+\tab id=scenery id\par
+\tab only if dx > 0 or dy > 0\par
+\tab dx=graphics extend x\par
+\tab dy=graphics extend y\par
+\tab x=scenery position x\par
+\tab y=scenery position y\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+next line: paths\par
+\tab P|id[,dx,dy]|x|y|layer\par
+\tab id=path id\par
+\tab only if dx > 0 or dy > 0\par
+\tab dx=graphics extend x\par
+\tab dy=graphics extend y\par
+\tab x=path position x\par
+\tab y=path position y\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\tab\par
+next line: Areas\par
+\tab M|id|x|y|name|layer|w|h|flag|te,eflag|ie1,ie2,ie3\par
+\tab id=music id\par
+\tab x=Area position x\par
+\tab y=Area position y\par
+\tab name=custom music name[***urlencode!***]\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\par
+\tab w=width\par
+\tab h=height\par
+\tab flag=area settings[***Bitwise operation***]\par
+\tab\tab 0=False !0=True\par
+\tab\tab b1=(flag & 1) World Music\par
+\tab\tab b2=(flag & 2) Set Viewport\par
+\tab\tab b3=(flag & 4) Ship Route\par
+\tab\tab b4=(flag & 8) Forced Walking\par
+\tab\tab b5=(flag & 16) Item-triggered events\par
+\tab te:Touch Event[***urlencode!***]\par
+\tab\tab eflag:0=Triggered every time entering\par
+\tab\tab       1=Triggered on entrance and level completion\par
+                   2=Triggered only once\par
+\tab ie1=Hammer Event[***urlencode!***]\par
+\tab ie2=Warp Whistle Event[***urlencode!***]\par
+\tab ie3=Anchor Event[***urlencode!***]\par
+next line: levels\par
+\tab L|id[,dx,dy]|x|y|fn|n|eu\\el\\ed\\er|wx|wy|wlz|bg,pb,av,ls,f,nsc,otl,li,lcm|s|Layer|Lmt\par
+\tab id=level id\par
+\tab only if dx > 0 or dy > 0\par
+\tab dx=graphics extend x\par
+\tab dy=graphics extend y\par
+\tab x=level position x\par
+\tab y=level position y\par
+\tab fn=level file name[***urlencode!***]\par
+\tab n=level name[***urlencode!***]\par
+\tab eu,el,ed,er=e[up,left,down,right]\par
+\tab\tab e=c1,c2,c3,c4\par
+\tab\tab c1,c2,c3=level exit type\par
+\tab\tab c4=condidtion expression[***urlencode!***][syntax]\par
+\tab\tab exit = (c1 || c2 || c3) && c4\par
+\tab wx=go to world map position x\par
+\tab wy=go to world map position y\par
+\tab wlz=nunber of doors to warp\par
+\tab bg=big background\par
+\tab pb=path background\par
+\tab av=always visible\par
+\tab ls=is game start point\par
+\tab f=forced\par
+\tab nsc=no star coin count\par
+\tab otl=destory after clear\par
+\tab li=level ID\par
+\tab lcm=Affected by Music Box\par
+\tab s=entrance syntax\par
+\tab\tab s=ds1/ds2...dsn\par
+\tab\tab ds=ds1,ds2[***urlencode!***][syntax]\par
+\tab\tab ds1=condidtion expression\par
+\tab\tab ds2=index\par
+\tab layer=layer name["" == "Default"][***urlencode!***]\par
+\tab Lmt=Level Movement Command\par
+\tab\tab lmt=NodeInfo\\PathInfo\par
+\tab\tab\tab NodeInfo=Node1:Node2:...:NodeN\par
+\tab\tab\tab\tab Node=x,y,chance\par
+\tab\tab\tab PathInfo=Path1:Path2:...:PathN\par
+\tab\tab\tab\tab Path=NodeID1,NodeID2\par
+next line: layers\par
+\tab WL|name|status\par
+\tab name=layer name[***urlencode!***]\par
+\tab status=is hidden layer\par
+next line: events\par
+\tab WE|name|layer|layerm|world|other\par
+\tab name=event name[***urlencode!***]\par
+\tab layer=way/hidelist/showlist/togglelist\par
+\tab\tab list=name1,name2,name3...namen\par
+\tab\tab\tab name[***urlencode!***]\par
+\tab\tab if (way % 10 == 1) nosmoke = true;\par
+\tab\tab if (way > 10) object_state = true; else layer_state = true;\par
+\tab layerm=movementcommand1\\movementcommand2\\...\\movementcommandn\par
+\tab\tab movementcommand=way,layer,hp,vp,ap\par
+\tab\tab\tab way:0=speed,1=coordinate,2=moveto,4=spin\par
+\tab\tab\tab layer=layer name[***urlencode!***]\par
+\tab\tab\tab hp=Horizontal Parameter[***urlencode!***]\par
+\tab\tab\tab vp=Vertical Parameter[***urlencode!***]\par
+\tab\tab\tab ap=Additional Parameter[***urlencode!***]\par
+\tab world=aw/cs,le,inpc,msgc,syntax,msg\par
+\tab\tab aw=AutoStart Settings\par
+\tab\tab\tab 0=Not Auto Start\par
+\tab\tab\tab 1=Triggered on loading the world the first time.\par
+\tab\tab\tab 2=Triggered every time loading the world.\par
+\tab\tab\tab 3=Triggered on level exit.\par
+\tab\tab cs=Start when match all condition[0=false !0=true]\par
+\tab\tab le:0=This is a Normal Event.\par
+\tab\tab    1=This is a Level Enter/Exit Event.\par
+\tab\tab inpc=Interrupt the process if 'false' returned\par
+\tab\tab msgc=Show a message if 'false' returned\par
+\tab\tab syntax=Condition expression[***urlencode!***]\par
+\tab\tab msg=message[***urlencode!***]\par
+\tab other=sd/ld/event,delay/script/msg/wwx,wwy,lockl\par
+\tab\tab sd=play sound number\par
+\tab\tab ld=lock keyboard (frames)\par
+\tab\tab event=trigger event name[***urlencode!***]\par
+\tab\tab delay=trigger delay[1 frame]\par
+\tab\tab script=script name[***urlencode!***]\par
+\tab\tab msg=show message after start event[***urlencode!***]\par
+\tab\tab wwx=Warp Whistle: Map Warp Location x\par
+\tab\tab wwy=Warp Whistle: Map Warp Location y\par
+\tab\tab\tab if (wwx == -1 && wwy == -1) [means not moving]\par
+\tab\tab lockl=[Level ID]Affected by Anchor \par
+custom object data:\par
+\tab WCT|id|data\tab :custom tile\par
+\tab WCS|id|data\tab :custom scene\par
+\tab WCL|id|data\tab :custom level\par
+\tab id=object id\par
+\tab data=[HEX]value|[HEX]value...\par
+\tab [HEX]=0001\tab :gfxwidth\par
+\tab [HEX]=0002\tab :gfxheight\par
+\tab [HEX]=0003\tab :frames\par
+\par
+WLS file description(world settings)\par
+line 1:\par
+\tab SMBXFile??\par
+\tab ??=Version number\par
+next line: global variables\par
+\tab G|name|value\par
+\tab name=variable name[***urlencode!***]\par
+\tab value=initial value of the variable\par
+next line: global scripts\par
+\tab GS|name|script\par
+\tab GSu|name|scriptu\par
+\tab name=name of script[***urlencode!***]\par
+\tab script=script[***base64encode!***][utf-8]\par
+\tab scriptu=script[***base64encode!***][ASCII]\par
+next line: custom sounds\par
+\tab CW|cdata1|cdata2|...|cdatan\par
+\tab\tab cdata=sound-id,sound-filename\par
+\tab\tab\tab sound-filename:[***urlencode!***]\par
+\cf1\tab CB|id|data\tab :custom block\par
+\tab CT|id|data\tab :custom background\par
+\tab CE|id|data\tab :custom effect\par
+\tab same as lvl file format\cf0\par
+\f1\par
+
+\pard\sa200\sl276\slmult1\par
+\tab\tab\par
+}
+ 
