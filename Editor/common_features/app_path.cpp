@@ -21,6 +21,10 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QFileInfo>
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#include <QUrl>
+#endif
 
 #include "dir_copy.h"
 #include "app_path.h"
@@ -40,7 +44,25 @@ QString AppPathManager::m_userPath;
 
 void AppPathManager::initAppPath(const char* argv0)
 {
+    #ifdef __APPLE__
+    Q_UNUSED(argv0);
+    {
+        CFURLRef appUrlRef;
+        appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+        CFStringRef filePathRef = CFURLGetString(appUrlRef);
+        //const char* filePath = CFStringGetCStringPtr(filePathRef, kCFStringEncodingUTF8);
+        ApplicationPath = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+        {
+            int i = ApplicationPath.lastIndexOf(".app");
+            i = ApplicationPath.lastIndexOf('/', i);
+            ApplicationPath.remove(i, ApplicationPath.size() - i);
+        }
+        //CFRelease(filePathRef);
+        CFRelease(appUrlRef);
+    }
+    #else
     ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).dir().path();
+    #endif
     ApplicationPath_x = ApplicationPath;
 
     QApplication::addLibraryPath(".");
@@ -51,10 +73,7 @@ void AppPathManager::initAppPath(const char* argv0)
     QApplication::setOrganizationDomain(_PGE_URL);
     QApplication::setApplicationName("PGE Editor");
 
-    #ifdef __APPLE__
-    //Application path relative bundle folder of application
-    ApplicationPath = QFileInfo(ApplicationPath_x+"../../..").absoluteDir().absolutePath();
-    #elif __ANDROID__
+    #ifdef __ANDROID__
     ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)+"/PGE Project Data";
     QDir appPath(ApplicationPath);
     if(!appPath.exists())
@@ -74,15 +93,6 @@ void AppPathManager::initAppPath(const char* argv0)
         DirCopy::copy("assets:/themes", themesFolder.absolutePath());
     }
     #endif
-
-    /*
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    QString test="/home/vasya/pge/"+osX_bundle;
-    qDebug() << test << " <- before";
-    if(test.endsWith(osX_bundle, Qt::CaseInsensitive))
-        test.remove(test.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    qDebug() << test << " <- after";
-    */
 
     if(isPortable())
         return;

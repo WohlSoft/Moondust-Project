@@ -20,6 +20,10 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#include <QUrl>
+#endif
 
 #include "app_path.h"
 #include "../version.h"
@@ -42,15 +46,27 @@ void AppPathManager::initAppPath()
     QApplication::setOrganizationDomain(_PGE_URL);
     QApplication::setApplicationName("PGE Content Manager");
 
-    ApplicationPath = QApplication::applicationDirPath();
-    ApplicationPath_x = QApplication::applicationDirPath();
-
     #ifdef __APPLE__
-    //Application path relative bundle folder of application
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
-        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    #elif __ANDROID__
+    {
+        CFURLRef appUrlRef;
+        appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+        CFStringRef filePathRef = CFURLGetString(appUrlRef);
+        //const char* filePath = CFStringGetCStringPtr(filePathRef, kCFStringEncodingUTF8);
+        ApplicationPath = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+        {
+            int i = ApplicationPath.lastIndexOf(".app");
+            i = ApplicationPath.lastIndexOf('/', i);
+            ApplicationPath.remove(i, ApplicationPath.size() - i);
+        }
+        //CFRelease(filePathRef);
+        CFRelease(appUrlRef);
+    }
+    #else
+    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).dir().path();
+    #endif
+    ApplicationPath_x = ApplicationPath;
+
+    #ifdef __ANDROID__
     ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)+"/PGE Project Data";
     QDir appPath(ApplicationPath);
     if(!appPath.exists())
