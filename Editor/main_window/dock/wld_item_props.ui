@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>295</width>
-    <height>471</height>
+    <width>293</width>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -123,7 +123,7 @@
         </widget>
        </item>
        <item row="12" column="0" colspan="3">
-        <widget class="QGroupBox" name="groupBox_6">
+        <widget class="QGroupBox" name="group_pathOpens">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -177,7 +177,7 @@
               <number>0</number>
              </property>
              <item>
-              <spacer name="horizontalSpacer">
+              <spacer name="space_top_left">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -209,7 +209,7 @@
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_2">
+              <spacer name="space_top_right">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -225,112 +225,24 @@
               </spacer>
              </item>
             </layout>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="3">
-           <widget class="QFrame" name="frame_2">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>0</number>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Expanding</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>72</width>
-                 <height>10</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QComboBox" name="WLD_PROPS_ExitBottom">
-               <property name="toolTip">
-                <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Southern (lower) path by exit type</string>
-               </property>
-               <property name="maxVisibleItems">
-                <number>50</number>
-               </property>
-               <property name="insertPolicy">
-                <enum>QComboBox::InsertAtBottom</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QComboBox::AdjustToContents</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Expanding</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>72</width>
-                 <height>10</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-            <zorder>label_55</zorder>
-            <zorder>WLD_PROPS_ExitBottom</zorder>
-            <zorder>horizontalSpacer_3</zorder>
-            <zorder>horizontalSpacer_4</zorder>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLabel" name="label_55">
+           <widget class="QLabel" name="icon_exit_directions">
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>34</height>
              </size>
             </property>
+            <property name="toolTip">
+             <string>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</string>
+            </property>
             <property name="pixmap">
              <pixmap resource="../../_resources/editor.qrc">:/images/warp_exit.png</pixmap>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-            <property name="indent">
-             <number>0</number>
             </property>
            </widget>
           </item>
@@ -376,6 +288,90 @@
             <property name="sizeAdjustPolicy">
              <enum>QComboBox::AdjustToContents</enum>
             </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QFrame" name="frame_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>0</number>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="space_bottom_left">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>72</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QComboBox" name="WLD_PROPS_ExitBottom">
+               <property name="toolTip">
+                <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Southern (lower) path by exit type</string>
+               </property>
+               <property name="maxVisibleItems">
+                <number>50</number>
+               </property>
+               <property name="insertPolicy">
+                <enum>QComboBox::InsertAtBottom</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QComboBox::AdjustToContents</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="space_bottom_right">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>72</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
