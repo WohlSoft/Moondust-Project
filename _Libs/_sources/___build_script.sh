@@ -128,13 +128,13 @@ BuildSDL()
 
     ###########SDL2###########
     printf "=========\E[37;42mSDL2\E[0m===========\n"
-    #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
-    $Sed -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL/Makefile.in
-    $Sed -i 's/libSDL2-2\.0\.so\.0/libSDL2\.so/g' $LatestSDL/SDL2.spec.in
-    #cd $LatestSDL
-    #autoreconf -vfi
-    #cd ..
     if [[ "$OurOS" != "macos" ]]; then
+        #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
+        $Sed -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL/Makefile.in
+        $Sed -i 's/libSDL2-2\.0\.so\.0/libSDL2\.so/g' $LatestSDL/SDL2.spec.in
+        #cd $LatestSDL
+        #autoreconf -vfi
+        #cd ..
         #on any other OS'es build via autotools
         export CFLAGS="-I${InstallTo}/include"
         export LDFLAGS="-L${InstallTo}/lib"
@@ -145,28 +145,28 @@ BuildSDL()
     else
         #on Mac OS X build via X-Code
         cd $LatestSDL
-            UNIVERSAL_OUTPUTFOLDER=$InstallTo/frameworks
+            UNIVERSAL_OUTPUTFOLDER=$InstallTo/lib
             if [ -d $UNIVERSAL_OUTPUTFOLDER ]; then
                 #Deletion of old builds
                 rm -Rf $UNIVERSAL_OUTPUTFOLDER
             fi
             mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
 
-            xcodebuild -target Framework -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/frameworks"
+            xcodebuild -target "Static Library" -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/lib"
 
             if [ ! $? -eq 0 ]
             then
                 errorofbuild
             fi
 
-            #move out built framework from "Release" folder
-            mv -f $InstallTo/frameworks/Release/SDL2.framework $InstallTo/frameworks/
-            rm -Rf $InstallTo/frameworks/Release
-
-            #make RIGHT headers organization in the SDL Framework
-            mkdir -p -- ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
-            mv ${InstallTo}/frameworks/SDL2.framework/Headers/*.h ${InstallTo}/frameworks/SDL2.framework/Headers/SDL2
-
+            #move out built library from "Release" folder
+            mv -f "${InstallTo}/lib/Release/libSDL2.a" "${InstallTo}/lib/"
+            if [ ! -d "${InstallTo}/include/SDL2" ];
+            then
+                mkdir "${InstallTo}/include/SDL2"
+            fi
+            mv -f "${InstallTo}/lib/Release/usr/local/include/"* "${InstallTo}/include/SDL2"
+            rm -Rf $InstallTo/lib/Release
         cd ..
     fi
 }

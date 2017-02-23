@@ -56,17 +56,17 @@ if [ ! -d "$DeployDir/$PgePrjSD" ]; then
         mkdir -p "$DeployDir/$PgePrjSD"
 fi
 
-#$CurDir/upx-osx-intel64 -9 "PGE Editor.app/Contents/MacOS/PGE Editor"
-#$CurDir/upx-osx-intel64 -9 "PGE Engine.app/Contents/MacOS/PGE Engine"
-#$CurDir/upx-osx-intel64 -9 "Character Calibrator.app/Contents/MacOS/Character Calibrator"
-#$CurDir/upx-osx-intel64 -9 "PGE Music Player.app/Contents/MacOS/PGE Music Player"
-#$CurDir/upx-osx-intel64 -9 "pge_manager.app/Contents/MacOS/pge_manager"
-#$CurDir/upx-osx-intel64 -9 "pge_maintainer.app/Contents/MacOS/pge_maintainer"
-#$CurDir/upx-osx-intel64 -9 PNG2GIFs
-#$CurDir/upx-osx-intel64 -9 GIFs2PNG
-#$CurDir/upx-osx-intel64 -9 LazyFixTool
+# $CurDir/upx-osx-intel64 -9 "PGE Editor.app/Contents/MacOS/PGE Editor"
+# $CurDir/upx-osx-intel64 -9 "PGE Engine.app/Contents/MacOS/PGE Engine"
+# $CurDir/upx-osx-intel64 -9 "Character Calibrator.app/Contents/MacOS/Character Calibrator"
+# $CurDir/upx-osx-intel64 -9 "PGE Music Player.app/Contents/MacOS/PGE Music Player"
+# $CurDir/upx-osx-intel64 -9 "pge_manager.app/Contents/MacOS/pge_manager"
+# $CurDir/upx-osx-intel64 -9 "pge_maintainer.app/Contents/MacOS/pge_maintainer"
+# $CurDir/upx-osx-intel64 -9 PNG2GIFs
+# $CurDir/upx-osx-intel64 -9 GIFs2PNG
+# $CurDir/upx-osx-intel64 -9 LazyFixTool
 
-#cp -a pge_editor.app "$DeployDir/$PgePrjSD/PGE Editor.app"
+# cp -a pge_editor.app "$DeployDir/$PgePrjSD/PGE Editor.app"
 cp -a "PGE Editor.app"              "$DeployDir/$PgePrjSD/PGE Editor.app"
 cp -a "PGE Engine.app"              "$DeployDir/$PgePrjSD/PGE Engine.app"
 cp -a "Character Calibrator.app"    "$DeployDir/$PgePrjSD/Character Calibrator.app"
@@ -76,10 +76,10 @@ cp GIFs2PNG                         "$DeployDir/$PgePrjSD"
 cp PNG2GIFs                         "$DeployDir/$PgePrjSD"
 cp LazyFixTool                      "$DeployDir/$PgePrjSD"
 
-if [ -d "$DeployDir/$PgePrjSD/_Libs" ]; then
-    rm -Rf "$DeployDir/$PgePrjSD/_Libs"
-fi
-cp -ra _Libs "$DeployDir/$PgePrjSD"
+# if [ -d "$DeployDir/$PgePrjSD/_Libs" ]; then
+#    rm -Rf "$DeployDir/$PgePrjSD/_Libs"
+# fi
+# cp -ra _Libs "$DeployDir/$PgePrjSD"
 
 cp -r ./languages "$DeployDir/$PgePrjSD"
 cp -r ./themes "$DeployDir/$PgePrjSD"
@@ -100,7 +100,7 @@ fi
 if [ -f "$DeployDir/$PgePrjSD/Data directory" ]; then
     rm "$DeployDir/$PgePrjSD/Data directory"
 fi
-#ln -s ~/Library/Application\ Support/PGE\ Project "$DeployDir/$PgePrjSD/Data directory"
+# ln -s ~/Library/Application\ Support/PGE\ Project "$DeployDir/$PgePrjSD/Data directory"
 
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi

@@ -104,10 +104,12 @@ android: {
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer_ext
 }
 macx: {
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
-    #QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh \"$$PWD\"
-    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
+    contains(DEFINES, USE_SDL_MIXER): {
+        LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
+                -framework IOKit -framework CoreFoundation -framework Carbon \
+                -framework ForceFeedback -framework AudioToolbox
+        LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
+    }
 }
 
 LIBS += -lfreeimagelite
