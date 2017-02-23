@@ -19,34 +19,31 @@
 #ifndef CONFIG_BLOCK_H
 #define CONFIG_BLOCK_H
 
-#include <QString>
-#include <QList>
+#include <PGEString.h>
+#include <stdint.h>
 
-class QSettings;
+class IniProcessing;
 
 struct BlockSetup
 {
-    BlockSetup()
-    {
-        id = 0;
-        grid = 32;
-    }
+    bool parse(IniProcessing *setup,
+               PGEString blockImgPath,
+               uint32_t defaultGrid,
+               BlockSetup *merge_with = nullptr,
+               PGEString *error = nullptr);
 
-    bool parse(QSettings *setup, QString blockImgPath, unsigned int defaultGrid, BlockSetup *merge_with = nullptr, QString *error = nullptr);
-
-    unsigned long   id;
+    uint64_t        id = 0;
     QString         image_n;
     QString         mask_n;
     QString         name;
     //    grid=32               ; 32 | 16 Default="32"
-    unsigned int    grid;
-    QString         group;
-    QString         category;
-    bool            sizable;
-    int             danger;
-    int             collision;
-    bool            slopeslide;
-    int             phys_shape;
+    unsigned int    grid = 32;
+    QString         group = "_NoGroup";
+    QString         category = "_Other";
+    bool            sizable = false;
+    int             danger = 0;
+    int             collision = 0;
+    bool            slopeslide = false;
     enum shapes
     {
         SHAPE_rect = 0,
@@ -87,12 +84,12 @@ struct BlockSetup
         SHAPE_polygonal = 3,
         SHAPE_cyrcle = 4
     };
-    bool            lava;
-    bool            destroyable;
-    bool            destroyable_by_bomb;
-    bool            destroyable_by_fireball;
-    bool            spawn; //split string by "-" in != "0"
-    int             spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
+    int             phys_shape = SHAPE_rect;
+    bool            lava = false;
+    bool            destroyable = false;
+    bool            destroyable_by_bomb = false;
+    bool            destroyable_by_fireball = false;
+    bool            spawn = false; //split string by "-" in != "0"
     enum spawnes
     {
         SPAWN_Nothing = 0,
@@ -100,56 +97,59 @@ struct BlockSetup
         SPAWN_Block = 2,
         SPAWN_BGO = 3
     };
-    unsigned long   spawn_obj_id;
-    unsigned int    effect;
-    bool            bounce;
-    bool            hitable;
-    unsigned int    transfororm_on_hit_into;
+    int32_t         spawn_obj = SPAWN_Nothing;
+    uint64_t        spawn_obj_id = 0;
+    uint32_t        effect = 0;
+    bool            bounce = false;
+    bool            hitable = false;
+    uint32_t        transfororm_on_hit_into = 0;
 
     //Toggable Switch blocks
-    bool            switch_Button;
-    bool            switch_Block;
-    unsigned int    switch_ID;
-    unsigned int    switch_transform;
+    bool            switch_Button = false;
+    bool            switch_Block = false;
+    uint32_t        switch_ID = 0;
+    uint32_t        switch_transform = 0;
+
+    typedef PGEList<int32_t> IntArray;
 
     //Playable character Switch/Filter blocks
-    bool            plSwitch_Button;
-    unsigned int    plSwitch_Button_id; //Target Character ID
-    QList<int>      plSwitch_frames_true;
-    QList<int>      plSwitch_frames_false;
+    bool            plSwitch_Button  = false;
+    uint32_t        plSwitch_Button_id = 0; //Target Character ID
+    IntArray        plSwitch_frames_true;
+    IntArray        plSwitch_frames_false;
 
-    bool            plFilter_Block;   //Target Character ID
-    unsigned int    plFilter_Block_id;//Target Character ID
-    QList<int>      plFilter_frames_true;
-    QList<int>      plFilter_frames_false;
+    bool            plFilter_Block = false;   //Target Character ID
+    uint32_t        plFilter_Block_id = 0;//Target Character ID
+    IntArray        plFilter_frames_true;
+    IntArray        plFilter_frames_false;
 
-    unsigned int    view;
-    bool            animated;
-    bool            animation_rev; //Reverse animation
-    bool            animation_bid; //Bidirectional animation
-    unsigned int    frames;
-    int             framespeed;
+    uint32_t        view = 0;
+    bool            animated = false;
+    bool            animation_rev = false; //Reverse animation
+    bool            animation_bid = false; //Bidirectional animation
+    uint32_t        frames = 0;
+    uint32_t        framespeed = 0;
 
     //! Play custom sound on hit
-    int             hit_sound_id;
+    uint32_t        hit_sound_id = 0;
     //! Play custom sound on destroy
-    int             destroy_sound_id;
+    uint32_t        destroy_sound_id = 0;
 
-    unsigned int    frame_h; //Hegth of the frame. Calculating automatically
+    uint32_t        frame_h = 0; //Hegth of the frame. Calculating automatically
 
-    QList<int>      frame_sequence;//Custom editor specific frame sequence
+    IntArray        frame_sequence;//Custom editor specific frame sequence
 
-    unsigned int    display_frame;
+    uint32_t        display_frame = 0;
 
     //Editor defaults
-    bool default_slippery; //Slippery flag
-    bool default_slippery_value;
+    bool    default_slippery = false; //Slippery flag
+    bool    default_slippery_value = false;
 
-    bool default_invisible; //Invisible flag
-    bool default_invisible_value;
+    bool    default_invisible = false; //Invisible flag
+    bool    default_invisible_value = false;
 
-    bool default_content; //Content value
-    long default_content_value;
+    bool    default_content = false; //Content value
+    int64_t default_content_value = 0;
 };
 
 

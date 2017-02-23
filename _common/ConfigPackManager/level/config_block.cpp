@@ -18,12 +18,16 @@
 
 #include "config_block.h"
 
-#include <QSettings>
+#include <IniProcessor/ini_processing.h>
 #include "../image_size.h"
 #include "../../number_limiter.h"
 #include "../../csv_2_number_array.h"
 
-bool BlockSetup::parse(QSettings *setup, QString blockImgPath, unsigned int defaultGrid, BlockSetup *merge_with, QString *error)
+bool BlockSetup::parse(IniProcessing *setup,
+                       PGEString blockImgPath,
+                       uint32_t defaultGrid,
+                       BlockSetup *merge_with,
+                       PGEString *error)
 {
     int errCode = PGE_ImageInfo::ERR_OK;
     QString section;
@@ -41,21 +45,20 @@ bool BlockSetup::parse(QSettings *setup, QString blockImgPath, unsigned int defa
         return false;
     }
 
-    section = setup->group();
-    name =       setup->value("name", (merge_with ? merge_with->name : section)).toString();
+    section = StdToPGEString(setup->group());
+    setup->read("name", name, (merge_with ? merge_with->name : section));
 
-    if(name.isEmpty())
+    if(name.size() == 0)
     {
         if(error)
-            *error = QString("%1 Item name isn't defined").arg(section.toUpper());
-
+            *error = section + ": Item name isn't defined";
         return false;
     }
 
-    group =      setup->value("group", (merge_with ? merge_with->group : "_NoGroup")).toString();
-    category =   setup->value("category", (merge_with ? merge_with->category : "_Other")).toString();
-    grid =       setup->value("grid", (merge_with ? merge_with->grid : defaultGrid)).toUInt();
-    image_n =           setup->value("image", (merge_with ? merge_with->image_n : "")).toString();
+    setup->read("group", group, (merge_with ? merge_with->group : group));
+    setup->read("category", category, (merge_with ? merge_with->category : category));
+    setup->read("grid", grid, (merge_with ? merge_with->grid : defaultGrid));
+    setup->read("image", image_n, (merge_with ? merge_with->image_n : ""));
 
     if(!PGE_ImageInfo::getImageSize(blockImgPath + image_n, &w, &h, &errCode) && !merge_with)
     {
@@ -82,147 +85,139 @@ bool BlockSetup::parse(QSettings *setup, QString blockImgPath, unsigned int defa
 
     Q_ASSERT(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
-    sizable =                setup->value("sizable", (merge_with ? merge_with->sizable : false)).toBool();
-    danger =                 setup->value("danger", (merge_with ? merge_with->danger : 0)).toInt();
-    collision =              setup->value("collision", (merge_with ? merge_with->collision : 1)).toInt();
-    slopeslide =             setup->value("slope-slide", (merge_with ? merge_with->slopeslide : 0)).toBool();
-    phys_shape =             setup->value("shape-type", (merge_with ? merge_with->phys_shape : 0)).toInt();
-    lava =                   setup->value("lava", (merge_with ? merge_with->lava : false)).toBool();
-    destroyable =            setup->value("destroyable", (merge_with ? merge_with->destroyable : false)).toBool();
-    destroyable_by_bomb =    setup->value("destroyable-by-bomb", (merge_with ? merge_with->destroyable_by_bomb : false)).toBool();
-    destroyable_by_fireball = setup->value("destroyable-by-fireball", (merge_with ? merge_with->destroyable_by_fireball : false)).toBool();
-    tmpStr = setup->value("spawn-on-destroy", "0").toString();
+    setup->read("sizable", sizable, (merge_with ? merge_with->sizable : false));
+    setup->read("danger", danger, (merge_with ? merge_with->danger : 0));
+    setup->read("collision", collision, (merge_with ? merge_with->collision : 1));
+    setup->read("slope-slide", slopeslide, (merge_with ? merge_with->slopeslide : 0));
+    setup->read("shape-type", phys_shape, (merge_with ? merge_with->phys_shape : 0));
+    setup->read("lava", lava, (merge_with ? merge_with->lava : false));
+    setup->read("destroyable", destroyable, (merge_with ? merge_with->destroyable : false));
+    setup->read("destroyable-by-bomb", destroyable_by_bomb, (merge_with ? merge_with->destroyable_by_bomb : false));
+    setup->read("destroyable-by-fireball", destroyable_by_fireball, (merge_with ? merge_with->destroyable_by_fireball : false));
 
-    if(tmpStr != "0")
     {
-        QStringList tmpStrL =  tmpStr.split("-", QString::SkipEmptyParts);
-
-        if(tmpStrL.size() == 2)
-        {
-            if(tmpStrL[0] == "npc")
-                spawn_obj = 1;
-            else if(tmpStrL[0] == "block")
-                spawn_obj = 2;
-            else if(tmpStrL[0] == "bgo")
-                spawn_obj = 3;
-
-            // 1 - NPC, 2 - block, 3 - BGO
-            spawn_obj_id = tmpStrL[1].toUInt();
-        }
-        else // if syntax error in config
+        std::string spawnMe;
+        setup->read("spawn-on-destroy", spawnMe, "");
+        if(!spawnMe.empty())
         {
             spawn = false;
             spawn_obj = 0;
             spawn_obj_id = 0;
+            bool r = false;
+            std::string left;
+            std::string right;
+            for(char &c : spawnMe)
+            {
+                if(r)
+                {
+                    right.push_back(c);
+                }
+                else
+                {
+                    if(c == '-')
+                    {
+                        r = true;
+                        continue;
+                    }
+                    left.push_back(c);
+                }
+            }
+            IniProcessing::StrEnumMap map =
+            {
+                {"npc", SPAWN_NPC},
+                {"block", SPAWN_Block},
+                {"bgo", SPAWN_BGO}
+            };
+            if(map.find(left) != map.end())
+            {
+                spawn = true;
+                spawn_obj = map[left];
+                spawn_obj_id = strtoul(right.c_str(), NULL, 10);
+            }
+        } else {
+            spawn = (merge_with ? merge_with->spawn : 0);
+            spawn_obj = (merge_with ? merge_with->spawn_obj : 0);
+            spawn_obj_id = (merge_with ? merge_with->spawn_obj_id : 0);
         }
     }
-    else
-    {
-        spawn = (merge_with ? merge_with->spawn : 0);
-        spawn_obj = (merge_with ? merge_with->spawn_obj : 0);
-        spawn_obj_id = (merge_with ? merge_with->spawn_obj_id : 0);
-    }
 
-    effect  =                setup->value("destroy-effect", (merge_with ? merge_with->effect : 1u)).toUInt();
-    bounce  =                setup->value("bounce", merge_with ? merge_with->bounce : false).toBool();
-    hitable =                setup->value("hitable", merge_with ? merge_with->hitable : false).toBool();
-    transfororm_on_hit_into = setup->value("transform-onhit-into", merge_with ? merge_with->transfororm_on_hit_into : 2u).toUInt();
+    setup->read("destroy-effect", effect, (merge_with ? merge_with->effect : 1u));
+    setup->read("bounce", bounce, merge_with ? merge_with->bounce : false);
+    setup->read("hitable", hitable, merge_with ? merge_with->hitable : false);
+    setup->read("transform-onhit-into", transfororm_on_hit_into, merge_with ? merge_with->transfororm_on_hit_into : 2u);
+
     static unsigned int switchID = 0;
-    switch_Button    = setup->value("switch-button", merge_with ? merge_with->switch_Button : false).toBool();
-    switch_Block     = setup->value("switch-block", merge_with ? merge_with->switch_Block : false).toBool();
-    switch_ID        = setup->value("switch-id", merge_with ? merge_with->switch_ID : switchID++).toUInt();
-    switch_transform = setup->value("switch-transform", merge_with ? merge_with->switch_transform : 1).toUInt();
-    plSwitch_Button = setup->value("player-switch-button", merge_with ? merge_with->plSwitch_Button : false).toBool();
-    plSwitch_Button_id = setup->value("player-switch-button-id", merge_with ? merge_with->plSwitch_Button_id : 0).toUInt();
+    setup->read("switch-button", switch_Button, merge_with ? merge_with->switch_Button : false);
+    setup->read("switch-block", switch_Block, merge_with ? merge_with->switch_Block : false);
+    setup->read("switch-id", switch_ID, merge_with ? merge_with->switch_ID : switchID++);
+    setup->read("switch-transform", switch_transform, merge_with ? merge_with->switch_transform : 1);
+
+    setup->read("player-switch-button", plSwitch_Button, merge_with ? merge_with->plSwitch_Button : false);
+    setup->read("player-switch-button-id", plSwitch_Button_id, merge_with ? merge_with->plSwitch_Button_id : 0);
     plSwitch_frames_true.clear();
     plSwitch_frames_false.clear();
     frame_sequence.clear();
 
     if(plSwitch_Button)
     {
-        QString framesTrue = setup->value("player-switch-frames-true", "").toString();
-        QString framesFalse = setup->value("player-switch-frames-false", "").toString();
-
-        if(!framesTrue.isEmpty())
-            CSV2NumArray(framesTrue, plSwitch_frames_true, 0);
-        else if(merge_with)
-            plSwitch_frames_true = merge_with->plSwitch_frames_true;
-
-        if(!framesFalse.isEmpty())
-            CSV2NumArray(framesFalse, plSwitch_frames_false, 0);
-        else if(merge_with)
-            plSwitch_frames_false = merge_with->plSwitch_frames_false;
+        setup->read("player-switch-frames-true", plSwitch_frames_true,
+                    merge_with ? merge_with->plSwitch_frames_true : plSwitch_frames_true);
+        setup->read("player-switch-frames-false", plSwitch_frames_false,
+                    merge_with ? merge_with->plSwitch_frames_false : plSwitch_frames_false);
 
         frame_sequence = plSwitch_frames_false;
     }
 
-    plFilter_Block = setup->value("player-filter-block", merge_with ? merge_with->plSwitch_Button : false).toBool();
-    plFilter_Block_id = setup->value("player-filter-block-id", merge_with ? merge_with->plFilter_Block_id : 0u).toUInt();
+    setup->read("player-filter-block", plFilter_Block, merge_with ? merge_with->plSwitch_Button : false);
+    setup->read("player-filter-block-id", plFilter_Block_id, merge_with ? merge_with->plFilter_Block_id : 0u);
     plFilter_frames_true.clear();
     plFilter_frames_false.clear();
 
     if(plFilter_Block)
     {
-        QString framesTrue = setup->value("player-filter-frames-true", "").toString();
-        QString framesFalse = setup->value("player-filter-frames-false", "").toString();
-
-        if(!framesTrue.isEmpty())
-            CSV2NumArray(framesTrue, plFilter_frames_true, 0);
-        else if(merge_with)
-            plFilter_frames_true = merge_with->plFilter_frames_true;
-
-        if(!framesFalse.isEmpty())
-            CSV2NumArray(framesFalse,  plFilter_frames_false, 0);
-        else if(merge_with)
-            plFilter_frames_false = merge_with->plFilter_frames_false;
+        setup->read("player-filter-frames-true", plFilter_frames_true,
+                    merge_with ? merge_with->plFilter_frames_true : plFilter_frames_true);
+        setup->read("player-filter-frames-false", plFilter_frames_false,
+                    merge_with ? merge_with->plFilter_frames_false : plFilter_frames_false);
 
         frame_sequence = plFilter_frames_false;
     }
 
-    if(setup->contains("view"))
-    {
-        tmpStr = setup->value("view", "").toString();
-        view = 0;//0 by default
+    setup->readEnum("view", view, merge_with ? merge_with->view : 0,
+                    {
+                        {"background", 0},
+                        {"foreground", 1}
+                    });
 
-        if(tmpStr == "background")
-            view = 0;
-        else if(tmpStr == "foreground")
-            view = 1;
-    }
-    else
-        view = merge_with ? merge_with->view : 0;
-
-    animated =               setup->value("animated", (merge_with ? merge_with->animated : false)).toBool();
-    animation_rev =          setup->value("animation-reverse", (merge_with ? merge_with->animation_rev : false)).toBool(); //Reverse animation
-    animation_bid =          setup->value("animation-bidirectional", (merge_with ? merge_with->animation_bid : false)).toBool(); //Bidirectional animation
-    frames =                 setup->value("frames", (merge_with ? merge_with->frames : 1)).toUInt();
+    setup->read("animated", animated, (merge_with ? merge_with->animated : false));
+    setup->read("animation-reverse", animation_rev, (merge_with ? merge_with->animation_rev : false)); //Reverse animation
+    setup->read("animation-bidirectional", animation_bid, (merge_with ? merge_with->animation_bid : false)); //Bidirectional animation
+    setup->read("frames", frames, (merge_with ? merge_with->frames : 1));
     NumberLimiter::apply(frames, 1u);
-    framespeed =             setup->value("framespeed", (merge_with ? merge_with->framespeed : 125)).toInt();
-    NumberLimiter::apply(framespeed, 1);
-    hit_sound_id = setup->value("hit-sound-id", merge_with ? merge_with->hit_sound_id : 0).toInt();
-    NumberLimiter::apply(hit_sound_id, 0);
-    destroy_sound_id = setup->value("destroy-sound-id", merge_with ? merge_with->destroy_sound_id : 0).toInt();
-    NumberLimiter::apply(destroy_sound_id, 0);
+    setup->read("framespeed", framespeed, (merge_with ? merge_with->framespeed : 125));
+    NumberLimiter::apply(framespeed, 1u);
+    setup->read("hit-sound-id", hit_sound_id, merge_with ? merge_with->hit_sound_id : 0);
+    NumberLimiter::apply(hit_sound_id, 0u);
+    setup->read("destroy-sound-id", destroy_sound_id, merge_with ? merge_with->destroy_sound_id : 0);
+    NumberLimiter::apply(destroy_sound_id, 0u);
     frame_h = (animated ? (uint(h) / frames) : uint(h));
 
     //Retreiving frame sequence from playable character switch/filter blocks
     if(!plSwitch_Button && !plFilter_Block)
     {
-        if(setup->contains("frame-sequence"))
-            CSV2NumArray(setup->value("frame-sequence", "0").toString(), frame_sequence, 0);
-        else if(merge_with)
-            frame_sequence = merge_with->frame_sequence;
+        setup->read("frame-sequence", frame_sequence,
+                    merge_with ? merge_with->frame_sequence : frame_sequence);
     }
 
-    display_frame =          setup->value("display-frame", 0).toUInt();
+    setup->read("display-frame", display_frame, 0);
     long iTmp;
-    iTmp =  setup->value("default-invisible", (merge_with ? merge_with->default_invisible : -1)).toInt();
+    setup->read("default-invisible", iTmp, (merge_with ? merge_with->default_invisible : -1));
     default_invisible = (iTmp >= 0);
     default_invisible_value = (iTmp >= 0) ? bool(iTmp) : false;
-    iTmp = setup->value("default-slippery", (merge_with ? merge_with->default_slippery : -1)).toInt();
+    setup->read("default-slippery", iTmp, (merge_with ? merge_with->default_slippery : -1));
     default_slippery = (iTmp >= 0);
     default_slippery_value  = (iTmp >= 0) ? bool(iTmp) : false;
-    iTmp = setup->value("default-npc-content", (merge_with ? merge_with->default_content : -1)).toInt();
+    setup->read("default-npc-content", iTmp, (merge_with ? merge_with->default_content : -1));
     default_content = (iTmp >= 0);
     default_content_value   = (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
     return true;

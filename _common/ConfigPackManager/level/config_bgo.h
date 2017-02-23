@@ -19,26 +19,24 @@
 #ifndef CONFIG_BGO_H
 #define CONFIG_BGO_H
 
-#include <QString>
-#include <QList>
+#include <PGEString.h>
+#include <stdint.h>
 
-class QSettings;
+class IniProcessing;
 
 struct BgoSetup
 {
-    BgoSetup()
-    {
-        id = 0;
-        grid = 32;
-    }
+    bool parse(IniProcessing* setup,
+               PGEString bgoImgPath,
+               uint32_t defaultGrid,
+               BgoSetup* merge_with = nullptr,
+               PGEString *error = nullptr);
 
-    bool parse(QSettings* setup, QString bgoImgPath, unsigned int defaultGrid, BgoSetup* merge_with = nullptr, QString *error=nullptr);
-
-    unsigned long id;
+    uint64_t id = 0;
     QString name;
-    QString group;
-    QString category;
-    unsigned int grid;
+    QString group = "_NoGroup";
+    QString category = "_Other";
+    uint32_t grid = 32;
 
     enum ZLayerEnum
     {
@@ -47,22 +45,22 @@ struct BgoSetup
         z_foreground_1 = 1,//Default
         z_foreground_2 = 2
     };
-    int zLayer; //-1, 0, 1, 2
-    int offsetX;
-    int offsetY;
-    long double zOffset;
+    int32_t zLayer = 0; //-1, 0, 1, 2
+    int32_t offsetX = 0;
+    int32_t offsetY = 0;
+    long double zOffset = 0.0l;
 
-    QString image_n;
-    QString mask_n;
+    PGEString image_n;
+    PGEString mask_n;
 
-    unsigned int frame_h;
+    uint32_t frame_h = 0;
 
-    bool climbing;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed;
+    bool climbing = false;
+    bool animated = false;
+    uint32_t frames = 1;
+    uint32_t framespeed = 128;
 
-    unsigned int display_frame;
+    uint32_t display_frame = 0;
 };
 
 #endif // CONFIG_BGO_H

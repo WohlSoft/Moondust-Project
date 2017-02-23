@@ -17,7 +17,7 @@
  */
 
 #include "config_npc.h"
-#include <QSettings>
+#include <IniProcessor/ini_processing.h>
 #include <cmath>
 #include <PGE_File_Formats/npc_filedata.h>
 
@@ -25,7 +25,11 @@
 #include "../../number_limiter.h"
 #include "../../csv_2_number_array.h"
 
-bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultGrid, NpcSetup *merge_with, QString *error)
+bool NpcSetup::parse(IniProcessing *setup,
+                     PGEString npcImgPath,
+                     uint32_t defaultGrid,
+                     NpcSetup *merge_with,
+                     PGEString *error)
 {
     int errCode = PGE_ImageInfo::ERR_OK;
     QString section;
@@ -233,7 +237,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
     special_2_spin_max = setup->value("special-2-spin-max", 1).toInt();
     special_2_spin_value_offset = setup->value("special-2-spin-value-offset", 0).toInt();
     /*************Build special value combobox***end*****/
-    score =        setup->value("score", merge_with ? merge_with->score : 0).toInt();
+    setup->value("score", score, merge_with ? merge_with->score : 0);
     speed =        setup->value("speed", merge_with ? merge_with->speed : 2.0).toDouble();
     coins =        setup->value("coins", merge_with ? merge_with->coins : 0).toInt();
     movement =     setup->value("moving", merge_with ? merge_with->movement : 1).toBool();
@@ -246,31 +250,35 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
     //! LEGACY! Update all config packs and remove this!
     can_be_eaten = setup->value("yoshicaneat", can_be_eaten).toBool();
     takable =      setup->value("takable", merge_with ? merge_with->takable : 0).toBool();
-    takable_snd =  setup->value("takable-sound-id", merge_with ? merge_with->takable_snd : 0).toInt();
+    setup->read("takable-sound-id", takable_snd, merge_with ? merge_with->takable_snd : 0);
     grab_side =    setup->value("grab-side", merge_with ? merge_with->grab_side : 0).toBool();
     grab_top =     setup->value("grab-top", merge_with ? merge_with->grab_top : 0).toBool();
     grab_any =     setup->value("grab-any", merge_with ? merge_with->grab_any : 0).toBool();
-    health =       setup->value("default-health", merge_with ? merge_with->health : 0).toInt();
+    setup->read("default-health", health, merge_with ? merge_with->health : 0);
     hurt_player =  setup->value("hurtplayer", merge_with ? merge_with->hurt_player : 0).toBool();
     hurt_player_on_stomp =  setup->value("hurtplayer-on-stomp", merge_with ? merge_with->hurt_player_on_stomp : 0).toBool();
     hurt_player_on_spinstomp =  setup->value("hurtplayer-on-spinstomp", merge_with ? merge_with->hurt_player_on_spinstomp : 0).toBool();
     hurt_npc =     setup->value("hurtnpc", merge_with ? merge_with->hurt_npc : 0).toBool();
+
     //Damage level on attacks types
     damage_stomp = setup->value("damage-sensitive-stomp", merge_with ? merge_with->damage_stomp : 0).toInt();
     damage_spinstomp = setup->value("damage-sensitive-spinstomp", merge_with ? merge_with->damage_spinstomp : 0).toInt();
     damage_itemkick = setup->value("damage-sensitive-itemkick", merge_with ? merge_with->damage_itemkick : 0).toInt();
+
     //Sound effects
-    hit_sound_id = setup->value("hit-sound-id", merge_with ? merge_with->hit_sound_id : 0).toInt();
-    death_sound_id = setup->value("death-sound-id", merge_with ? merge_with->death_sound_id : 0).toInt();
+    setup->read("hit-sound-id", hit_sound_id, merge_with ? merge_with->hit_sound_id : 0);
+    setup->read("death-sound-id", death_sound_id, merge_with ? merge_with->death_sound_id : 0);
+
     //Editor features
-    direct_alt_title =      setup->value("direction-alt-title", "").toString();
-    direct_alt_left =       setup->value("direction-alt-left-field", "").toString();
-    direct_alt_right =      setup->value("direction-alt-right-field", "").toString();
+    setup->read("direction-alt-title", direct_alt_title, "");
+    setup->read("direction-alt-left-field", direct_alt_left, "");
+    setup->read("direction-alt-right-field", direct_alt_right, "");
     direct_disable_random = setup->value("direction-no-rand-field", merge_with ? merge_with->direct_disable_random : false).toBool();
+
     //Events
     deactivation =         setup->value("deactivate", merge_with ? merge_with->deactivation : 0).toBool();
-    deactivationDelay =    setup->value("deactivate-delay", merge_with ? merge_with->deactivationDelay : 4000).toInt();
-    NumberLimiter::applyD(deactivationDelay, 4000, 0);
+    setup->read("deactivate-delay", deactivationDelay, merge_with ? merge_with->deactivationDelay : 4000);
+    NumberLimiter::applyD(deactivationDelay, 4000u, 0u);
     deactivate_off_room =  setup->value("deactivate-off-room", merge_with ? merge_with->deactivate_off_room : false).toBool();
     bump_on_stomp =        setup->value("bump-on-stomp", merge_with ? merge_with->bump_on_stomp : true).toBool();
     kill_slide_slope =     setup->value("kill-slside", merge_with ? merge_with->kill_slide_slope : 0).toBool();
@@ -315,6 +323,7 @@ bool NpcSetup::parse(QSettings *setup, QString npcImgPath, unsigned int defaultG
 
 void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, const QSize &captured)
 {
+
     //*this = global;
     name = (local->en_name) ? local->name : global.name;
     image_n = (local->en_image) ? local->image : global.image_n;
@@ -325,8 +334,8 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, c
     width = (local->en_width) ? local->width : global.width;
     height = (local->en_height) ? local->height : global.height;
     foreground = (local->en_foreground) ? local->foreground : global.foreground;
-    framespeed = (local->en_framespeed) ? static_cast<unsigned int>(qRound(static_cast<qreal>(global.framespeed) / (8.0 / static_cast<qreal>(local->framespeed)))) : global.framespeed;
-    framestyle = (local->en_framestyle) ? static_cast<int>(local->framestyle) : global.framestyle;
+    framespeed = (local->en_framespeed) ? static_cast<uint32_t>(qRound(static_cast<double>(global.framespeed) / (8.0 / static_cast<double>(local->framespeed)))) : global.framespeed;
+    framestyle = (local->en_framestyle) ? static_cast<uint32_t>(local->framestyle) : global.framestyle;
 
     //Copy physical size to GFX size
     if((local->en_width) && (custom_physics_to_gfx))
@@ -354,11 +363,11 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, c
     grid = (local->en_grid) ? local->grid : global.grid;
 
     if(width >= grid)
-        grid_offset_x = -1 * qRound(static_cast<qreal>((width % grid) / 2));
+        grid_offset_x = -1 * qRound(static_cast<double>((width % grid) / 2));
     else
-        grid_offset_x = qRound(static_cast<qreal>(static_cast<int>(grid) - static_cast<int>(width)) / 2);
+        grid_offset_x = qRound(static_cast<double>(static_cast<int32_t>(grid) - static_cast<int32_t>(width)) / 2.0);
 
-    grid_attach_style = (local->en_grid_align) ? static_cast<int>(local->grid_align) : global.grid_attach_style;
+    grid_attach_style = (local->en_grid_align) ? static_cast<uint32_t>(local->grid_align) : global.grid_attach_style;
 
     if(grid_attach_style == 1) grid_offset_x += (grid / 2);
 
@@ -368,7 +377,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, c
 
     if((framestyle == 0) && ((local->en_gfxheight) || (local->en_height)) && (!local->en_frames))
     {
-        frames = static_cast<unsigned int>(qRound(static_cast<qreal>(captured.height()) / static_cast<qreal>(gfx_h)));
+        frames = static_cast<uint32_t>(qRound(static_cast<double>(captured.height()) / static_cast<double>(gfx_h)));
         //merged.custom_animate = false;
     }
     else
@@ -395,8 +404,8 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, c
         ani_directed_direct = false;
     }
 
-    score = (local->en_score) ? static_cast<int>(local->score) : global.score;
-    health = (local->en_health) ? static_cast<int>(local->health) : global.health;
+    score = (local->en_score) ? static_cast<uint32_t>(local->score) : global.score;
+    health = (local->en_health) ? static_cast<uint32_t>(local->health) : global.health;
     block_player = (local->en_playerblock) ? local->playerblock : global.block_player;
     block_player_top = (local->en_playerblocktop) ? local->playerblocktop : global.block_player_top;
     block_npc = (local->en_npcblock) ? local->npcblock : global.block_npc;
