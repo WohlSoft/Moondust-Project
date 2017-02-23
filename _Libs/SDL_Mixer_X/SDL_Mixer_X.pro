@@ -45,10 +45,10 @@ win32:{
 linux-g++||unix:!macx:!android:{
     LIBS += -L$$PWD/../_builds/linux/lib
     INCLUDEPATH += $$PWD/../_builds/linux/include
+    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
     CONFIG += plugin
     CONFIG += unversioned_libname
     CONFIG += skip_target_version_ext
-    DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 android:{
     LIBS += -L$$PWD/../_builds/android/lib
@@ -58,13 +58,14 @@ android:{
 macx:{
     LIBS += -L$$PWD/../_builds/macos/lib
     INCLUDEPATH += $$PWD/../_builds/macos/include
-    INCLUDEPATH += $$PWD/../_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2
-    CONFIG += plugin
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
-} else {
-    !win32: LIBS += -lSDL2
+    # Build as static library
+    CONFIG -= dll
+    CONFIG += static
+    CONFIG += staticlib
 }
+
+!win32: LIBS += -lSDL2
 
 win32:{
     LIBS += -lwinmm -lm -lwinmm
@@ -141,7 +142,7 @@ win32: {
     SDL2MixerH.path =  $$PWD/../_builds/win32/include/SDL2
 }
 macx: {
-    SDL2MixerH.path =  $$PWD/../_builds/macos/frameworks/SDL2.framework/Headers/SDL2
+    SDL2MixerH.path =  $$PWD/../_builds/macos/include/SDL2
 }
 
 SDL2MixerH.files += SDL_mixer_ext.h
@@ -163,6 +164,7 @@ contains(DEFINES, MOD_MUSIC):           include($$PWD/play_mikmod.pri)
 contains(DEFINES, MODPLUG_MUSIC):       include($$PWD/play_modplug.pri)
 contains(DEFINES, MP3_MAD_MUSIC):       include($$PWD/play_mp3.pri)
 contains(DEFINES, GME_MUSIC):           include($$PWD/play_gme.pri)
+contains(DEFINES, CMD_MUSIC):           include($$PWD/play_cmdmusic.pri)
 
 HEADERS += \
     SDL_mixer_ext.h \
@@ -171,7 +173,6 @@ HEADERS += \
     effects_internal.h \
     load_aiff.h \
     load_voc.h \
-    music_cmd.h \
     wavestream.h \
     resample/my_resample.h \
     mixer.h \
@@ -184,6 +185,5 @@ SOURCES += \
     load_voc.c \
     mixer.c \
     music.c \
-    music_cmd.c \
     wavestream.c \
     resample/my_resample.c

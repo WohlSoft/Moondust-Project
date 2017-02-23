@@ -89,10 +89,11 @@ macx: {
             $$PWD/../Editor/_resources/file_wldx.icns
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
-
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext -lfreeimagelite
-    QMAKE_POST_LINK = \"$$PWD/../_Libs/macos_install_libs.sh\" \"$$TARGET\"
+    LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
+            -framework IOKit -framework CoreFoundation -framework Carbon \
+            -framework ForceFeedback -framework AudioToolbox
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
+    LIBS += -lfreeimagelite
 }
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64

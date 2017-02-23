@@ -22,7 +22,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/compat.c \
     $$PWD/crc.c \
-    $$PWD/debug.c \
     $$PWD/field.c \
     $$PWD/file.c \
     $$PWD/frame.c \
@@ -38,3 +37,4 @@ SOURCES += \
     $$PWD/util.c \
     $$PWD/version.c
 
+contains(DEFINES, DEBUG): SOURCES += $$PWD/debug.c
