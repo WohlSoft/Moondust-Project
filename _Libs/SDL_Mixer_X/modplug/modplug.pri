@@ -22,7 +22,7 @@ SOURCES += \
     $$PWD/load_dsm.cpp \
     $$PWD/load_far.cpp \
     $$PWD/load_it.cpp \
-    $$PWD/load_j2b.cpp \
+    # $$PWD/load_j2b.cpp \
     $$PWD/load_mdl.cpp \
     $$PWD/load_med.cpp \
     $$PWD/load_mid.cpp \

@@ -12,7 +12,7 @@ SOURCES += \
     $$PWD/adlmidi.cpp \
     $$PWD/adldata.cpp \
     $$PWD/nukedopl3.c \
-    $$PWD/dbopl.cpp \
+    # $$PWD/dbopl.cpp \
     $$PWD/adlmidi_private.cpp \
     $$PWD/adlmidi_opl3.cpp \
     $$PWD/adlmidi_midiplay.cpp \
