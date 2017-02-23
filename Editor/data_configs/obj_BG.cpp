@@ -25,91 +25,77 @@
 
 #include "data_configs.h"
 
-obj_BG::obj_BG()
-{
-    isValid = false;
-    animator_id = 0;
-    cur_image = nullptr;
-    cur_image_second = nullptr;
-}
-
 void obj_BG::copyTo(obj_BG &bg)
 {
     /* for internal usage */
     bg.isValid         = isValid;
     bg.animator_id     = animator_id;
     bg.cur_image       = cur_image;
-    if(cur_image==nullptr)
+    if(cur_image == nullptr)
         bg.cur_image   = &image;
-    if(cur_image_second==nullptr)
-        bg.cur_image_second   = &image;
+    if(cur_image_second == nullptr)
+        bg.cur_image_second = &image;
     bg.frame_h         = frame_h;
     /* for internal usage */
 }
 
-bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with, QString iniFile, QSettings *setup)
+bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid=true;
-    bool internal=!setup;
+    bool internal = !setup;
     QString errStr, tmpstr, imgFile;
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
-    if(!openSection(setup, section))
+    if(!openSection(setup, section.toStdString()))
         return false;
 
-        sbg.name = setup->value("name", (merge_with? merge_with->name : "") ).toString();
+        setup->read("name", sbg.name, (merge_with? merge_with->name : PGEString()) );
         if(sbg.name.isEmpty())
         {
             addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
             valid=false;
             goto abort;
         }
-        tmpstr = setup->value("type", "-1").toString();
-            if(tmpstr=="single-row")
-               sbg.type = 0;
-            else if(tmpstr=="double-row")
-               sbg.type = 1;
-            else if(tmpstr=="tiled")
-               sbg.type = 2;
-            else if(tmpstr=="-1")
-               sbg.type = (merge_with ? merge_with->type : 0);
-            else sbg.type = 0;
 
+        setup->readEnum("type", sbg.type,
+                        (merge_with ? merge_with->type : 0),
+                        {
+                            {"single-row", 0},
+                            {"double-row", 1},
+                            {"tiled", 2}
+                        });
 
-        sbg.repeat_h = float(qFabs(setup->value("repeat-h", (merge_with ? merge_with->repeat_h : 2.0f)).toFloat()));
+        sbg.repeat_h =(qFabs(setup->value("repeat-h", (merge_with ? merge_with->repeat_h : 2.0)).toDouble()));
 
-        tmpstr = setup->value("repeat-v", "-1").toString();
-            if(tmpstr=="NR")
-                sbg.repead_v = 0;
-            else if(tmpstr=="ZR")
-                sbg.repead_v = 1;
-            else if(tmpstr=="RP")
-                sbg.repead_v = 2;
-            else if(tmpstr=="RZ")
-                sbg.repead_v = 3;
-            else if(tmpstr=="-1")
-                sbg.repead_v = (merge_with ? merge_with->repead_v : 0);
-            else sbg.repead_v = 0;
+        setup->readEnum("repeat-v", sbg.repead_v,
+                        (merge_with ? merge_with->repead_v : 0),
+                        {
+                            {"NR", 0},
+                            {"ZR", 1},
+                            {"RP", 2},
+                            {"RZ", 3}
+                        });
 
-        sbg.image_n = setup->value("image", (merge_with ? merge_with->image_n : "") ).toString();
+        setup->read("image", sbg.image_n, (merge_with ? merge_with->image_n : sbg.image_n) );
         if(!merge_with)
         {
-            if( (sbg.image_n !="") )
+            if( (sbg.image_n.isEmpty()) )
             {
                 GraphicsHelps::loadMaskedImage(BGPath,
                     sbg.image_n, imgFile,
                     sbg.image,
                     errStr);
+
                 if(!errStr.isEmpty())
                 {
                     addError(QString("%1 %2").arg(section).arg(errStr));
                     valid=false;
                     //goto abort;
                 }
+
             } else {
                 addError(QString("%1 Image filename isn't defined").arg(section));
                 valid=false;
@@ -118,14 +104,14 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
         }
 
         sbg.attached =     uint(setup->value("attached",
-                                             (merge_with?(merge_with->attached==1?"top":"bottom"):"bottom") ).toString()=="top");
+                                             (merge_with?(merge_with->attached==1?"top":"bottom") : "bottom") ).toString() == "top");
 
-        sbg.editing_tiled =    setup->value("tiled-in-editor", merge_with?merge_with->editing_tiled:false ).toBool();
+        setup->read("tiled-in-editor", sbg.editing_tiled, merge_with?merge_with->editing_tiled : false);
 
-        sbg.magic =             setup->value("magic", (merge_with?merge_with->magic:false)).toBool();
+        setup->read("magic", sbg.magic, (merge_with?merge_with->magic : false));
         sbg.magic_strips =      setup->value("magic-strips", (merge_with? merge_with->magic_strips: 1 )).toUInt();
-        sbg.magic_splits =      setup->value("magic-splits", (merge_with? merge_with->magic_splits:"0")).toString();
-        sbg.magic_speeds =      setup->value("magic-speeds", (merge_with? merge_with->magic_speeds:"0")).toString();
+        setup->read("magic-splits", sbg.magic_splits, (merge_with? merge_with->magic_splits : PGEStringLit("0")));
+        setup->read("magic-speeds", sbg.magic_speeds, (merge_with? merge_with->magic_speeds : PGEStringLit("0")));
 
         sbg.animated =          setup->value("animated", (merge_with?merge_with->animated:false)).toBool();//animated
         sbg.frames =            setup->value("frames", (merge_with?merge_with->frames:1)).toUInt();
@@ -135,10 +121,10 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
 
         if(sbg.type==1)
         {
-            sbg.second_image_n = setup->value("second-image", (merge_with ? merge_with->second_image_n : "")).toString();
+            setup->read("second-image", sbg.second_image_n, (merge_with ? merge_with->second_image_n : sbg.second_image_n));
             if(!merge_with)
             {
-                if( (sbg.second_image_n !="") )
+                if(!sbg.second_image_n.isEmpty())
                 {
                     GraphicsHelps::loadMaskedImage(BGPath,
                        sbg.second_image_n, imgFile,
@@ -149,31 +135,26 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                 }
             }
 
-            sbg.second_repeat_h = float(qFabs(setup->value("second-repeat-h", (merge_with ? merge_with->second_repeat_h : 2.0f)).toFloat()));
+            sbg.second_repeat_h = (qFabs(setup->value("second-repeat-h", (merge_with ? merge_with->second_repeat_h : 2.0)).toDouble()));
 
-            tmpstr = setup->value("second-repeat-v", "-1").toString();
-                if(tmpstr=="NR")
-                    sbg.second_repeat_v = 0;
-                else if(tmpstr=="ZR")
-                    sbg.second_repeat_v = 1;
-                else if(tmpstr=="RP")
-                    sbg.second_repeat_v = 2;
-                else if(tmpstr=="RZ")
-                    sbg.second_repeat_v = 3;
-                else if(tmpstr=="-1")
-                    sbg.second_repeat_v = (merge_with ? merge_with->second_repeat_v : 0);
-                else sbg.second_repeat_v = 0;
+            setup->readEnum("second-repeat-v",
+                            sbg.second_repeat_v,
+                            (merge_with ? merge_with->second_repeat_v : 0u),
+                            {
+                                {"NR", 0},
+                                {"ZR", 1},
+                                {"RP", 2},
+                                {"RZ", 3}
+                            });
 
-            tmpstr = setup->value("second-attached", "-1").toString();
-                if(tmpstr=="overfirst")
-                    sbg.second_attached = 0;
-                else if(tmpstr=="bottom")
-                    sbg.second_attached = 1;
-                else if(tmpstr=="top")
-                    sbg.second_attached = 2;
-                else if(tmpstr=="-1")
-                    sbg.second_attached = (merge_with ? merge_with->second_attached : 0);
-                else sbg.second_repeat_v = 0;
+            setup->readEnum("second-attached",
+                            sbg.second_attached,
+                            (merge_with ? merge_with->second_attached : 0),
+                            {
+                                {"overfirst", 0},
+                                {"bottom", 1},
+                                {"top", 2}
+                            });
         }
 
         if(sbg.animated)
@@ -204,20 +185,22 @@ void dataconfigs::loadLevelBackgrounds()
 
     QString nestDir = "";
 
-    QSettings setup(bg_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(bg_ini);
 
     main_bg.clear();   //Clear old
 
-    if(!openSection(&setup, "background2-main")) return;
-        bg_total = setup.value("total", 0).toUInt();
+    if(!openSection(&setup, "background2-main"))
+        return;
+    {
+        setup.read("total", bg_total, 0);
         total_data += bg_total;
-        nestDir = setup.value("config-dir", "").toString();
+        setup.read("config-dir", nestDir, nestDir);
         if(!nestDir.isEmpty())
         {
             nestDir = config_dir + nestDir;
             useDirectory = true;
         }
+    }
     closeSection(&setup);
 
     emit progressPartNumber(0);
@@ -228,13 +211,13 @@ void dataconfigs::loadLevelBackgrounds()
     ConfStatus::total_bg = long(bg_total);
     main_bg.allocateSlots(int(bg_total));
 
-    if(ConfStatus::total_bg==0)
+    if(ConfStatus::total_bg == 0)
     {
         addError(QString("ERROR LOADING lvl_bkgrd.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
-    for(i=1; i<=bg_total; i++)
+    for(i=1; i <= bg_total; i++)
     {
         emit progressValue(int(i));
 
@@ -251,9 +234,9 @@ void dataconfigs::loadLevelBackgrounds()
         sbg.id = i;
         main_bg.storeElement(int(i), sbg, valid);
 
-        if( setup.status() != QSettings::NoError )
+        if( setup.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 }

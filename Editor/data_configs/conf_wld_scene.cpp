@@ -23,7 +23,7 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with, QString iniFile, QSettings *setup)
+bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid=true;
     bool internal=!setup;

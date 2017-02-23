@@ -23,15 +23,14 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with, QString iniFile, QSettings *setup)
+bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid=true;
     bool internal=!setup;
     QString errStr;
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
     if(!openSection(setup, section))

@@ -18,14 +18,18 @@
 
 #include "config_wld_generic.h"
 
-#include <QSettings>
+#include <IniProcessor/ini_processing.h>
 #include "../image_size.h"
 #include "../../number_limiter.h"
 
-bool WldGenericSetup::parse(QSettings *setup, QString imgPath, unsigned int defaultGrid, WldGenericSetup *merge_with, QString *error)
+bool WldGenericSetup::parse(IniProcessing *setup,
+                            PGEString imgPath,
+                            uint32_t defaultGrid,
+                            WldGenericSetup *merge_with,
+                            PGEString *error)
 {
     int errCode = PGE_ImageInfo::ERR_OK;
-    QString section;
+    PGEString section;
     /*************Buffers*********************/
     int w = -1,
         h = -1;
@@ -39,10 +43,10 @@ bool WldGenericSetup::parse(QSettings *setup, QString imgPath, unsigned int defa
         return false;
     }
 
-    section     = setup->group();
-    group       = setup->value("group", merge_with ? merge_with->group : "_NoGroup").toString();
-    category    = setup->value("category", merge_with ? merge_with->category : "_Other").toString();
-    image_n     = setup->value("image", (merge_with ? merge_with->image_n : "")).toString();
+    section     = StdToPGEString(setup->group());
+    setup->read("group", group, merge_with ? merge_with->group : PGEStringLit("_NoGroup"));
+    setup->read("category", category, merge_with ? merge_with->category : PGEStringLit("_Other"));
+    setup->read("image", image_n, (merge_with ? merge_with->image_n : PGEString()));
 
     if(!merge_with && !PGE_ImageInfo::getImageSize(imgPath + image_n, &w, &h, &errCode))
     {
@@ -68,24 +72,23 @@ bool WldGenericSetup::parse(QSettings *setup, QString imgPath, unsigned int defa
     }
 
     Q_ASSERT(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
-    mask_n = PGE_ImageInfo::getMaskName(image_n);
-    grid =            setup->value("grid", merge_with ? merge_with->grid : defaultGrid).toUInt();
-    animated =        setup->value("animated", merge_with ? merge_with->animated : 0).toBool();
-    frames =          setup->value("frames", merge_with ? merge_with->frames : 1).toUInt();
-    NumberLimiter::apply(frames, 1u);
-    framespeed =      setup->value("frame-speed", merge_with ? merge_with->framespeed : 175).toUInt();
-    NumberLimiter::apply(framespeed, 1u);
+    mask_n  =    PGE_ImageInfo::getMaskName(image_n);
+    setup->read("grid", grid, merge_with ? merge_with->grid : defaultGrid);
+    setup->read("animated", animated, merge_with ? merge_with->animated : 0);
+    setup->read("frames", frames, merge_with ? merge_with->frames : 1);
+    NumberLimiter::apply(frames, uint32_t(1u));
+    setup->read("frame-speed", framespeed, merge_with ? merge_with->framespeed : 175);
+    NumberLimiter::apply(framespeed, uint32_t(1u));
     frame_h = uint(animated ? qRound(qreal(h) / qreal(frames)) : h);
-    NumberLimiter::apply(frame_h, 0u);
+    NumberLimiter::apply(frame_h, uint32_t(0u));
 
-    display_frame =   setup->value("display-frame", merge_with ? merge_with->display_frame : 0).toUInt();
-
-    map3d_vertical =  setup->value("map3d-vertical", merge_with ? merge_with->map3d_vertical : false).toBool();
-    //Uncommend when add the IniProcessing which a replacement of QSettings for INI reading
-    //map3d_stackables= setup->value("map3d-stackables", merge_with ? merge_with->map3d_stackables).toIntArray();
+    setup->read("display-frame", display_frame, merge_with ? merge_with->display_frame : 0);
+    setup->read("map3d-vertical", map3d_vertical, merge_with ? merge_with->map3d_vertical : false);
+    setup->read("map3d-stackables", map3d_stackables, merge_with ? merge_with->map3d_stackables : map3d_stackables);
 
     //Rows and cols for table-like element sets
-    row =             setup->value("row", merge_with ? merge_with->row : 0).toUInt();
-    col =             setup->value("col", merge_with ? merge_with->col : 0).toUInt();
+    setup->read("row", row, merge_with ? merge_with->row : 0);
+    setup->read("col", col, merge_with ? merge_with->col : 0);
+
     return true;
 }

@@ -453,6 +453,14 @@ IniProcessing::IniProcessing(const std::string &iniFileName, int) :
     open(iniFileName);
 }
 
+#ifdef INI_PROCESSING_ALLOW_QT_TYPES
+IniProcessing::IniProcessing(const QString &iniFileName, int) :
+    m_params{iniFileName.toStdString(), false, -1, ERR_OK, false, params::IniSections(), nullptr, ""}
+{
+    open(m_params.filePath);
+}
+#endif
+
 IniProcessing::IniProcessing(char *memory, size_t size):
     m_params{"", false, -1, ERR_OK, false, params::IniSections(), nullptr, ""}
 {
@@ -553,6 +561,11 @@ bool IniProcessing::contains(const std::string &groupName)
 
     params::IniSections::iterator e = m_params.iniData.find(groupName);
     return (e != m_params.iniData.end());
+}
+
+std::string IniProcessing::fileName()
+{
+    return m_params.filePath;
 }
 
 std::string IniProcessing::group()
@@ -1054,7 +1067,6 @@ void IniProcessing::read(const char *key, QVector<double> &dest, const QVector<d
     readNumArrHelper<QVector<double>, double>(this, key, dest, defVal);
 }
 #endif
-
 
 IniProcessingVariant IniProcessing::value(const char *key, const IniProcessingVariant &defVal)
 {

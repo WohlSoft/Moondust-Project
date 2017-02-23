@@ -19,38 +19,38 @@
 #ifndef CONFIG_WLD_GENERIC_H
 #define CONFIG_WLD_GENERIC_H
 
-#include <QString>
-#include <QList>
+#include <PGEString.h>
+#include <stdint.h>
 
-class QSettings;
+class IniProcessing;
 
 struct WldGenericSetup
 {
-    bool parse(QSettings* setup,
-               QString imgPath,
-               unsigned int defaultGrid,
+    bool parse(IniProcessing* setup,
+               PGEString imgPath,
+               uint32_t defaultGrid,
                WldGenericSetup* merge_with = nullptr,
-               QString *error = nullptr);
+               PGEString *error = nullptr);
 
-    unsigned long id = 0;
-        QString image_n;
-        QString mask_n;
+    uint64_t    id = 0;
+    PGEString   image_n;
+    PGEString   mask_n;
 
-    unsigned int grid = 0;
-    QString group;
-    QString category;
-    bool animated = false;
-    unsigned int frames = 0;
-    unsigned int framespeed = 0; // Default 128 ms
-    unsigned int display_frame = 0;
-    unsigned int frame_h = 0; //Hegth of the frame. Calculating automatically
+    uint32_t    grid = 0;
+    PGEString   group    = "_NoGroup";
+    PGEString   category = "_Other";
+    bool        animated = false;
+    uint32_t    frames = 0;
+    uint32_t    framespeed = 0; // Default 128 ms
+    uint32_t    display_frame = 0;
+    uint32_t    frame_h = 0; //Hegth of the frame. Calculating automatically
 
     bool                map3d_vertical = false;
-    QList<unsigned int> map3d_stackables;
+    PGEList<uint32_t>   map3d_stackables;
 
     /**Used only by terrain and path tiles **/
-    unsigned int row = 0;
-    unsigned int col = 0;
+    uint32_t row = 0;
+    uint32_t col = 0;
     /****************************************/
 };
 

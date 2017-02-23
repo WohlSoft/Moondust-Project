@@ -22,14 +22,14 @@
 
 #include <QString>
 #include <QPixmap>
+#include <stdint.h>
 
-struct obj_BG{
-    obj_BG();
-
-    bool isValid;
-    unsigned long animator_id;
-    QPixmap * cur_image;
-    QPixmap * cur_image_second;
+struct obj_BG
+{
+    bool isValid = false;
+    uint64_t  animator_id = 0;
+    QPixmap * cur_image = nullptr;
+    QPixmap * cur_image_second = nullptr;
 
     /*!
      * \brief Quickly copies all properties except images
@@ -37,36 +37,35 @@ struct obj_BG{
      */
     void copyTo(obj_BG &bg);
 
-    unsigned long id;
+    uint64_t id = 0;
     QString name;
 
     QString image_n;
 
     QPixmap image;
-    unsigned int type;//convert from string
-    float repeat_h;
-    unsigned int repead_v;
-    unsigned int attached;
-    bool editing_tiled;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
+    uint32_t type = 0;//convert from string
+    double  repeat_h = 0.0;
+    uint32_t repead_v = 0;
+    uint32_t attached = 0;
+    bool editing_tiled = false;
+    bool animated = false;
+    uint32_t frames = 1;
+    uint32_t framespeed = 128;
+    uint32_t frame_h = 0; //Hegth of the frame. Calculating automatically
 
-    unsigned int display_frame;
+    uint32_t display_frame = 0;
 
-    bool magic;
-    unsigned int magic_strips;
+    bool magic = false;
+    uint32_t magic_strips = 1;
     QString magic_splits;
     QString magic_speeds;
 
     QString second_image_n;
     QPixmap second_image;
 
-    float second_repeat_h;
-    unsigned int second_repeat_v;
-    unsigned int second_attached;
-
+    double second_repeat_h = 0.0;
+    uint32_t second_repeat_v = 0;
+    uint32_t second_attached = 0;
 };
 
 #endif // OBJ_BG_H

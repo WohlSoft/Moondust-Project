@@ -129,6 +129,8 @@ include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
 include($$PWD/../_common/Utf8Main/utf8main.pri)
+DEFINES += INI_PROCESSING_ALLOW_QT_TYPES
+include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 
 SOURCES += main.cpp\
     mainwindow.cpp \

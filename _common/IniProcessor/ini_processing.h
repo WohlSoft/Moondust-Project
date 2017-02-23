@@ -103,6 +103,9 @@ private:
 public:
     IniProcessing();
     IniProcessing(const std::string &iniFileName, int dummy = 0);
+#ifdef INI_PROCESSING_ALLOW_QT_TYPES
+    IniProcessing(const QString &iniFileName, int dummy = 0);
+#endif
     IniProcessing(char *memory, size_t size);
     IniProcessing(const IniProcessing &ip);
 
@@ -156,6 +159,12 @@ public:
      * @return true if section is exists
      */
     bool contains(const std::string &groupName);
+
+    /**
+     * @brief Currently opened file name
+     * @return path to currently opened file
+     */
+    std::string fileName();
 
     /**
      * @brief Currently processing section
@@ -517,7 +526,7 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      * @param [_IN] enumMap
      */
-    void readEnum(const char *key, T &dest, T defVal, IniProcessing::StrEnumMap &enumMap)
+    void readEnum(const char *key, T &dest, T defVal, IniProcessing::StrEnumMap enumMap)
     {
         bool ok = false;
         params::IniKeys::iterator e = readHelper(key, ok);

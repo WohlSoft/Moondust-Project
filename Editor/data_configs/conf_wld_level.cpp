@@ -23,7 +23,7 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with, QString iniFile, QSettings *setup)
+bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid=true;
     bool internal=!setup;

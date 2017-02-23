@@ -23,7 +23,7 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with, QString iniFile, QSettings *setup)
+bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid=true;
     bool internal=!setup;

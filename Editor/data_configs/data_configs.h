@@ -27,7 +27,8 @@
 #include <QPixmap>
 #include <QBitmap>
 #include <QSettings>
-#include <QDebug>
+#include <PGEString.h>
+#include <IniProcessor/ini_processing.h>
 
 #include <common_features/logger.h>
 #include <common_features/data_array.h>
@@ -43,16 +44,16 @@
 
 struct DataFolders
 {
-    QString worlds;
+    PGEString worlds;
 
-    QString music;
-    QString sounds;
+    PGEString music;
+    PGEString sounds;
 
-    QString glevel;
-    QString gworld;
-    QString gplayble;
+    PGEString glevel;
+    PGEString gworld;
+    PGEString gplayble;
 
-    QString gcustom;
+    PGEString gcustom;
 };
 
 struct EngineSetup
@@ -65,7 +66,7 @@ struct EngineSetup
 
 struct obj_splash_ani
 {
-    QPixmap img;
+    QPixmap      img;
     unsigned int frames;
     unsigned int speed;
     unsigned int x;
@@ -89,7 +90,8 @@ struct obj_sound
     bool hidden;
 };
 
-struct obj_gridSizes {
+struct obj_gridSizes
+{
     unsigned int general;
     unsigned int block;
     unsigned int bgo;
@@ -107,6 +109,7 @@ class dataconfigs : public QObject
 public:
     dataconfigs();
     virtual ~dataconfigs();
+
     bool loadconfigs();
     DataFolders dirs;
     QString config_dir;
@@ -174,15 +177,15 @@ public:
     void setConfigPath(QString p);
     bool loadBasics();
 
-    bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
-    bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
-    bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
-    bool loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
+    bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
+    bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
+    bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
+    bool loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
 
-    bool loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
-    bool loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
-    bool loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
-    bool loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with=nullptr, QString iniFile="", QSettings *setup=nullptr);
+    bool loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
+    bool loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
+    bool loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
+    bool loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
 
     inline QString getBgoPath()  {return bgoPath;}
     inline QString getBGPath()   {return BGPath;}
@@ -239,14 +242,12 @@ private:
     void loadRotationTable();
 
     //! Recently loaded INI-file
-    QString     m_recentIniFile;
-    //! Cache of available INI sections in the current file
-    QStringList m_sectionsCache;
+    std::string m_recentIniFile;
 
     QString     getFullIniPath(QString iniFileName);
-    bool        openSection(QSettings *config, QString section);
-    inline void closeSection(QSettings* file) { file->endGroup(); }
-    void        addError(QString bug, PGE_LogLevel level=PGE_LogLevel::Warning);
+    bool        openSection(IniProcessing *config, const std::string &section);
+    inline void closeSection(IniProcessing* file) { file->endGroup(); }
+    void        addError(QString bug, PGE_LogLevel level = PGE_LogLevel::Warning);
 };
 
 

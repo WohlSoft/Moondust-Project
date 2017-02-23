@@ -86,24 +86,23 @@ QString dataconfigs::getFullIniPath(QString iniFileName)
     return path_ini;
 }
 
-bool dataconfigs::openSection(QSettings *config, QString section)
+bool dataconfigs::openSection(IniProcessing *config, const std::string &section)
 {
     //Cache name of recent INI-file and it's sections
     if(m_recentIniFile != config->fileName())
     {
         m_recentIniFile = config->fileName();
-        m_sectionsCache = config->childGroups();
     }
 
     //Check for availability of the INI section
-    if(!m_sectionsCache.contains(section))
+    if(!config->beginGroup(section))
     {
         addError(QString("ERROR LOADING %1: [%2] section is missed!")
-                 .arg(config->fileName())
-                 .arg(section), PGE_LogLevel::Critical);
+                 .arg(StdToPGEString(config->fileName()))
+                 .arg(StdToPGEString(section)), PGE_LogLevel::Critical);
         return false;
     }
-    config->beginGroup(section);
+
     return true;
 }
 
@@ -215,7 +214,6 @@ skip:
     }
 
     m_recentIniFile.clear();
-    m_sectionsCache.clear();
 
     return true;
 }
@@ -231,7 +229,6 @@ bool dataconfigs::loadconfigs()
     errorsList.clear();
 
     m_recentIniFile.clear();
-    m_sectionsCache.clear();
 
     LogDebug("=== Starting of global configuration loading ===");
 
@@ -428,7 +425,6 @@ bool dataconfigs::loadconfigs()
     LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
 
     m_recentIniFile.clear();
-    m_sectionsCache.clear();
     LogDebug(QString("-------------------------"));
 
     m_isValid = check();
