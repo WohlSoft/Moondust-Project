@@ -1,9 +1,9 @@
 #!/bin/sh
 
-prefix=/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32
+prefix=/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32
 exec_prefix=${prefix}
 exec_prefix_set=no
-libdir=/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib
+libdir=/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib
 
 #usage="\
 #Usage: $0 [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--cflags] [--libs]"
@@ -42,14 +42,14 @@ while test $# -gt 0; do
       echo 2.0.5
       ;;
     --cflags)
-      echo -I/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/include/SDL2  -Dmain=SDL_main
+      echo -I/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32/include/SDL2  -Dmain=SDL_main
       ;;
     --libs)
-      echo -L/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib  -lmingw32 -lSDL2main -lSDL2  -mwindows
+      echo -L/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib  -lmingw32 -lSDL2main -lSDL2  -mwindows
       ;;
     --static-libs)
 #    --libs|--static-libs)
-      echo -L/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib  -lmingw32 -lSDL2main -lSDL2  -mwindows  -Wl,--no-undefined -lm -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc
+      echo -L/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib  -lmingw32 -lSDL2main -lSDL2  -mwindows  -Wl,--no-undefined -lm -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc
       ;;
     *)
       echo "${usage}" 1>&2

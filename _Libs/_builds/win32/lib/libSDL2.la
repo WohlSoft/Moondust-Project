@@ -17,7 +17,7 @@ old_library='libSDL2.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid'
+dependency_libs=' -L/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib'
+libdir='/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32/lib'

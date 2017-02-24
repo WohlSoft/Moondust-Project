@@ -121,9 +121,8 @@ BuildSDL()
     UnArch $LatestSDL
 
     #--------------Apply some patches--------------
-    #++++Fix build on MinGW where are missing tagWAVEINCAPS2W and tagWAVEOUTCAPS2W structures declarations
-    #patch -t -N $LatestSDL/src/audio/winmm/SDL_winmm.c < ../patches/SDL_winmm.c.patch
-    # FIXED OFFICIALLY: https://hg.libsdl.org/SDL/rev/7e06b0e4dbe0
+	# Fixes build, because of undefined REFIID type, function itself is not using because of disabld Direct X component
+	patch -t -N $LatestSDL/src/core/windows/SDL_windows.h < ../patches/SDL_window.h.patch
     #----------------------------------------------
 
     ###########SDL2###########
@@ -136,7 +135,10 @@ BuildSDL()
         #autoreconf -vfi
         #cd ..
         #on any other OS'es build via autotools
-        export CFLAGS="-I${InstallTo}/include"
+		if [[ "$OSTYPE" == "msys"* ]]; then
+			CFLAGS_EXRA="-DUNICDE -D_UNICODE"
+		fi
+        export CFLAGS="-I${InstallTo}/include ${CFLAGS_EXRA}"
         export LDFLAGS="-L${InstallTo}/lib"
         SDL_ARGS="${SDL_ARGS} --prefix=${InstallTo}"
         SDL_ARGS="${SDL_ARGS} --includedir=${InstallTo}/include"
