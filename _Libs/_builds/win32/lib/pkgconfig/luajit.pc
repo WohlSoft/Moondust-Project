@@ -5,7 +5,7 @@ relver=0
 version=${majver}.${minver}.${relver}-beta2
 abiver=5.1
 
-prefix=/c/_Repos/PGE-Project/_Libs/_sources/../_builds/win32
+prefix=/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32
 multilib=lib
 exec_prefix=${prefix}
 libdir=${exec_prefix}/${multilib}

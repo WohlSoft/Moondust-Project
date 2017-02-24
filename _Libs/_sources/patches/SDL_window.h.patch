@@ -1,0 +1,12 @@
+--- SDL_window_old.h
++++ SDL_window.h
+@@ -64,7 +64,9 @@
+ 
+ /* Checks to see if two GUID are the same. */
+ extern BOOL WIN_IsEqualGUID(const GUID * a, const GUID * b);
++#ifndef __MINGW32__
+ extern BOOL WIN_IsEqualIID(REFIID a, REFIID b);
++#endif
+ 
+ #endif /* _INCLUDED_WINDOWS_H */
+ 
