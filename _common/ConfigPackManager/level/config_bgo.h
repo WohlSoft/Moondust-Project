@@ -32,11 +32,11 @@ struct BgoSetup
                BgoSetup* merge_with = nullptr,
                PGEString *error = nullptr);
 
-    uint64_t id = 0;
-    QString name;
-    QString group = "_NoGroup";
-    QString category = "_Other";
-    uint32_t grid = 32;
+    uint64_t    id = 0;
+    PGEString   name;
+    PGEString   group = "_NoGroup";
+    PGEString   category = "_Other";
+    uint32_t    grid = 32;
 
     enum ZLayerEnum
     {
@@ -45,22 +45,22 @@ struct BgoSetup
         z_foreground_1 = 1,//Default
         z_foreground_2 = 2
     };
-    int32_t zLayer = 0; //-1, 0, 1, 2
-    int32_t offsetX = 0;
-    int32_t offsetY = 0;
+    int32_t     zLayer = 0; //-1, 0, 1, 2
+    int32_t     offsetX = 0;
+    int32_t     offsetY = 0;
     long double zOffset = 0.0l;
 
-    PGEString image_n;
-    PGEString mask_n;
+    PGEString   image_n;
+    PGEString   mask_n;
 
-    uint32_t frame_h = 0;
+    uint32_t    frame_h = 0;
 
-    bool climbing = false;
-    bool animated = false;
-    uint32_t frames = 1;
-    uint32_t framespeed = 128;
+    bool        climbing = false;
+    bool        animated = false;
+    uint32_t    frames = 1;
+    uint32_t    framespeed = 128;
 
-    uint32_t display_frame = 0;
+    uint32_t    display_frame = 0;
 };
 
 #endif // CONFIG_BGO_H

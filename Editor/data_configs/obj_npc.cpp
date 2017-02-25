@@ -55,11 +55,10 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
 
     if(internal)
     {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
-    if(!openSection(setup, section))
+    if(!openSection(setup, section.toStdString()))
         return false;
 
     if(snpc.setup.parse(setup, npcPath, defaultGrid.npc, merge_with ? &merge_with->setup : nullptr, &errStr))
@@ -92,23 +91,25 @@ void dataconfigs::loadLevelNPC()
         return;
 
     QString nestDir = "";
-    QSettings setup(npc_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(npc_ini);
+
     main_npc.clear();   //Clear old
 
-    if(!openSection(&setup, "npc-main")) return;
-
-    npc_total =                 setup.value("total", 0).toULongLong();
-    defaultGrid.npc = setup.value("grid", defaultGrid.npc).toUInt();
-    total_data += npc_total;
-    nestDir =   setup.value("config-dir", "").toString();
-
-    if(!nestDir.isEmpty())
+    if(!openSection(&setup, "npc-main"))
+        return;
     {
-        nestDir = config_dir + nestDir;
-        useDirectory = true;
+        setup.read("total", npc_total, 0);
+        setup.read("grid", defaultGrid.npc, defaultGrid.npc);
+        total_data += npc_total;
+
+        setup.read("config-dir", nestDir, "");
+        if(!nestDir.isEmpty())
+        {
+            nestDir = config_dir + nestDir;
+            useDirectory = true;
+        }
+        setup.read("coin-in-block", marker_npc.coin_in_block, 10);
     }
-    marker_npc.coin_in_block =  setup.value("coin-in-block", 10).toULongLong();
     closeSection(&setup);
     emit progressPartNumber(3);
     emit progressMax(static_cast<int>(npc_total));
@@ -153,9 +154,9 @@ void dataconfigs::loadLevelNPC()
         snpc.setup.id = i;
         main_npc.storeElement(static_cast<int>(i), snpc, valid);
 
-        if(setup.status() != QSettings::NoError)
+        if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }

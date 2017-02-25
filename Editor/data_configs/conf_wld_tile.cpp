@@ -30,11 +30,10 @@ bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_til
     QString errStr;
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
-    if(!openSection(setup, section))
+    if(!openSection(setup, section.toStdString()))
         return false;
 
     if(stile.setup.parse(setup, tilePath, defaultGrid.terrain, merge_with ? &merge_with->setup : nullptr, &errStr))
@@ -67,21 +66,23 @@ void dataconfigs::loadWorldTiles()
 
     QString nestDir = "";
 
-    QSettings setup(tile_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(tile_ini);
 
     main_wtiles.clear();   //Clear old
 
-    if(!openSection(&setup, "tiles-main")) return;
-        tiles_total = setup.value("total", 0).toUInt();
-        defaultGrid.terrain = setup.value("grid", defaultGrid.terrain).toUInt();
-        total_data +=tiles_total;
-        nestDir =   setup.value("config-dir", "").toString();
+    if(!openSection(&setup, "tiles-main"))
+        return;
+    {
+        setup.read("total", tiles_total, 0);
+        setup.read("grid", defaultGrid.terrain, defaultGrid.terrain);
+        total_data += tiles_total;
+        setup.read("config-dir", nestDir, "");
         if(!nestDir.isEmpty())
         {
             nestDir = config_dir + nestDir;
             useDirectory = true;
         }
+    }
     closeSection(&setup);
 
     emit progressPartNumber(4);
@@ -129,9 +130,9 @@ void dataconfigs::loadWorldTiles()
         stile.setup.id = i;
         main_wtiles.storeElement(int(i), stile, valid);
 
-        if( setup.status() != QSettings::NoError )
+        if( setup.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 
@@ -141,4 +142,3 @@ void dataconfigs::loadWorldTiles()
     }
 
 }
-

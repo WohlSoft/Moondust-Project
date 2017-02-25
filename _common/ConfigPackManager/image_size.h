@@ -40,8 +40,8 @@ public:
      * @param [out] errCode Error code
      * @return true if successfully finished, false if error occouped
      */
-    static bool getImageSize(QString imagePath, int*w, int *h, int *errCode=nullptr);
-    static bool getImageSize(std::string imagePath, int*w, int *h, int *errCode=nullptr);
+    static bool getImageSize(QString imagePath, uint32_t*w, uint32_t *h, int *errCode=nullptr);
+    static bool getImageSize(std::string imagePath, uint32_t *w, uint32_t *h, int *errCode=nullptr);
 
     /**
      * @brief Returns filename of masked image

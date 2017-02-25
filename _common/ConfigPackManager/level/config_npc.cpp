@@ -31,10 +31,13 @@ bool NpcSetup::parse(IniProcessing *setup,
                      NpcSetup *merge_with,
                      PGEString *error)
 {
+    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
+    #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+
     int errCode = PGE_ImageInfo::ERR_OK;
-    QString section;
+    PGEString section;
     /*************Buffers*********************/
-    int defGFX_h = 0;
+    uint32_t defGFX_h = 0;
     int combobox_size = 0;
 
     /*************Buffers*********************/
@@ -42,24 +45,22 @@ bool NpcSetup::parse(IniProcessing *setup,
     {
         if(error)
             *error = "setup QSettings is null!";
-
         return false;
     }
 
-    section = setup->group();
-    name =         setup->value("name", merge_with ? merge_with->name : section).toString();
+    section = StdToPGEString(setup->group());
+    setup->read("name", name, pMerge(name, section));
 
-    if(name.isEmpty())
+    if(name.size() == 0)
     {
         if(error)
-            *error = QString("%1 Item name isn't defined").arg(section.toUpper());
-
+            *error = section + " Item name isn't defined";
         return false;
     }
 
-    group =        setup->value("group", merge_with ? merge_with->group : "_NoGroup").toString();
-    category =     setup->value("category", merge_with ? merge_with->category : "_Other").toString();
-    image_n =      setup->value("image", merge_with ? merge_with->image_n : "").toString();
+    setup->read("group", group, pMergeMe(group));
+    setup->read("category", category, pMergeMe(category));
+    setup->read("image", image_n, pMergeMe(image_n));
 
     if(!merge_with && !PGE_ImageInfo::getImageSize(npcImgPath + image_n, &gfx_w, &gfx_h, &errCode))
     {
@@ -86,77 +87,80 @@ bool NpcSetup::parse(IniProcessing *setup,
 
     Q_ASSERT(merge_with || ((gfx_w > 0) && (gfx_h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
-    algorithm_script = setup->value("algorithm", merge_with ? merge_with->algorithm_script : QString("%1.lua").arg(section)).toString();
-    effect_1 =         setup->value("default-effect", merge_with ? merge_with->effect_1 : 10u).toUInt();
-    effect_2 =         setup->value("shell-effect", merge_with ? merge_with->effect_2 : 10u).toUInt();
+    setup->read("algorithm",        algorithm_script,   pMerge(algorithm_script, (section + ".lua")));
+    setup->read("default-effect",   effect_1,           pMerge(effect_1, 10u));
+    setup->read("shell-effect",     effect_2,           pMerge(effect_2, 10u));
+
     //Physics
-    height =               setup->value("physical-height", merge_with ? merge_with->height : 0).toUInt();
+    setup->read("physical-height",  height, pMerge(height, 0));
     NumberLimiter::apply(height, 1u);
-    width =                setup->value("physical-width", merge_with ? merge_with->width : 0).toUInt();
+    setup->read("physical-width",   width, pMerge(width, 0));
     NumberLimiter::apply(width, 1u);
-    block_npc =            setup->value("block-npc", merge_with ? merge_with->block_npc : false).toBool();
-    block_npc_top =        setup->value("block-npc-top", merge_with ? merge_with->block_npc_top : false).toBool();
-    block_player =         setup->value("block-player", merge_with ? merge_with->block_player : false).toBool();
-    block_player_top =     setup->value("block-player-top", merge_with ? merge_with->block_player_top : false).toBool();
-    collision_with_blocks = setup->value("collision-blocks", merge_with ? merge_with->collision_with_blocks : false).toBool();
-    gravity =              setup->value("gravity", merge_with ? merge_with->gravity : false).toBool();
-    adhesion =             setup->value("adhesion", merge_with ? merge_with->adhesion : false).toBool();
-    contact_padding =      setup->value("contact-padding", merge_with ? merge_with->contact_padding : 0.0).toDouble();
-    container =            setup->value("container", merge_with ? merge_with->container : false).toBool();
-    contents_id =                setup->value("contents-id", merge_with ? merge_with->contents_id : 0).toUInt();
-    container_elastic =          setup->value("container-elastic", merge_with ? merge_with->container_elastic : false).toBool();
-    container_elastic_border_w = setup->value("container-elastic-border-w", merge_with ? merge_with->container_elastic_border_w : 4).toInt();
-    NumberLimiter::apply(container_elastic_border_w, 0);
-    container_show_contents    = setup->value("container-show-contents", merge_with ? merge_with->container_show_contents : false).toBool();
-    container_content_z_offset = setup->value("container-content-z-offset", merge_with ? merge_with->container_content_z_offset : -0.00001f).toFloat();
-    container_crop_contents    = setup->value("container-crop-contents", merge_with ? merge_with->container_crop_contents : false).toBool();
-    container_align_contents   = setup->value("container-align-contents", merge_with ? merge_with->container_align_contents : 0).toInt();
-    no_npc_collisions =      setup->value("no-npc-collisions", merge_with ? merge_with->no_npc_collisions : false).toBool();
+    setup->read("block-npc",        block_npc, pMerge(block_npc, false));
+    setup->read("block-npc-top",    block_npc_top, pMerge(block_npc_top, false));
+    setup->read("block-player",     block_player, pMerge(block_player, false));
+
+    setup->read("block-player-top", block_player_top, pMerge(block_player_top, false));
+    setup->read("collision-blocks", collision_with_blocks, pMerge(collision_with_blocks, false));
+    setup->read("gravity",          gravity, pMerge(gravity, false));
+    setup->read("adhesion",         adhesion,   pMerge(adhesion, false));
+    setup->read("contact-padding",  contact_padding, pMerge(contact_padding, 0.0));
+    setup->read("container",        container, pMerge(container, false));
+    setup->read("contents-id",      contents_id, pMerge(contents_id, 0));
+
+    setup->read("container-elastic",            container_elastic, pMerge(container_elastic, false));
+    setup->read("container-elastic-border-w",   container_elastic_border_w, pMerge(container_elastic_border_w, 4));
+    NumberLimiter::apply(container_elastic_border_w, 0u);
+    setup->read("container-show-contents",      container_show_contents, pMerge(container_show_contents, false));
+    setup->read("container-content-z-offset",   container_content_z_offset, pMerge(container_content_z_offset, -0.00001));
+    setup->read("container-crop-contents",      container_crop_contents, pMerge(container_crop_contents, false));
+    setup->read("container-align-contents",     container_align_contents, pMerge(container_align_contents, 0));
+    setup->read("no-npc-collisions",            no_npc_collisions, pMerge(no_npc_collisions, false));
+
     //Graphics
-    gfx_offset_x = setup->value("gfx-offset-x", merge_with ? merge_with->gfx_offset_x : 0).toInt();
-    gfx_offset_y = setup->value("gfx-offset-y", merge_with ? merge_with->gfx_offset_y : 0).toInt();
-    framestyle = setup->value("frame-style", merge_with ? merge_with->framestyle : 0).toInt();
-    NumberLimiter::apply(framestyle, 0, 4);
-    frames = setup->value("frames", merge_with ? merge_with->frames : 1).toUInt();
+    setup->read("gfx-offset-x",     gfx_offset_x,   pMerge(gfx_offset_x, 0));
+    setup->read("gfx-offset-y",     gfx_offset_y,   pMerge(gfx_offset_y, 0));
+    setup->read("frame-style",      framestyle,     pMerge(framestyle, 0));
+    NumberLimiter::apply(framestyle, 0u, 4u);
+    setup->read("frames",       frames,         pMerge(frames, 1));
     NumberLimiter::apply(frames, 1u);
     /****************Calculating of default frame height******************/
-    defGFX_h = gfx_h / static_cast<int>(frames * static_cast<unsigned int>(std::pow(2.0, static_cast<double>(framestyle))));
+    defGFX_h = gfx_h / (frames * static_cast<unsigned int>(std::pow(2.0, static_cast<double>(framestyle))));
     /****************Calculating of default frame height**end*************/
-    custom_physics_to_gfx = setup->value("physics-to-gfx", merge_with ? merge_with->custom_physics_to_gfx : true).toBool();
-    gfx_h =                setup->value("gfx-height", merge_with ? merge_with->gfx_h : defGFX_h).toInt();
-    NumberLimiter::apply(gfx_h, 1);
-    gfx_w =                setup->value("gfx-width", merge_with ? merge_with->gfx_w : gfx_w).toInt();
-    NumberLimiter::apply(gfx_w, 1);
-    framespeed =           setup->value("frame-speed", merge_with ? merge_with->framespeed : 128).toUInt();
-    display_frame =        setup->value("display-frame", merge_with ? merge_with->display_frame : false).toUInt();
-    foreground =           setup->value("foreground", merge_with ? merge_with->foreground : false).toBool();
-    background =           setup->value("background", merge_with ? merge_with->background : false).toBool();
-    z_offset =             setup->value("z-offset", merge_with ? merge_with->z_offset : 0.0).toDouble();
-    ani_directed_direct =  setup->value("animation-directed-direction", merge_with ? merge_with->ani_directed_direct : false).toBool();
-    ani_direct =           setup->value("animation-direction", merge_with ? merge_with->ani_direct : false).toBool();
-    ani_bidir =            setup->value("animation-bidirectional", merge_with ? merge_with->ani_bidir : false).toBool();
-    custom_animate =   setup->value("custom-animation", merge_with ? merge_with->custom_animate : 0).toBool();
-    custom_ani_alg =   setup->value("custom-animation-alg", merge_with ? merge_with->custom_ani_alg : 0).toInt();
-    custom_ani_fl =    setup->value("custom-animation-fl", merge_with ? merge_with->custom_ani_fl : 0).toInt();
-    custom_ani_el =    setup->value("custom-animation-el", merge_with ? merge_with->custom_ani_el : -1).toInt();
-    custom_ani_fr =    setup->value("custom-animation-fr", merge_with ? merge_with->custom_ani_fr : 0).toInt();
-    custom_ani_er =    setup->value("custom-animation-er", merge_with ? merge_with->custom_ani_er : -1).toInt();
+    setup->read("physics-to-gfx",   custom_physics_to_gfx, pMerge(custom_physics_to_gfx, true));
+    setup->read("gfx-height",       gfx_h, pMerge(gfx_h, defGFX_h));
+    NumberLimiter::apply(gfx_h, 1u);
+    setup->read("gfx-width",        gfx_w, pMerge(gfx_w, gfx_w));
+    NumberLimiter::apply(gfx_w, 1u);
+
+    setup->read("frame-speed",              framespeed,     pMerge(framespeed, 128));
+    setup->read("display-frame",            display_frame,  pMerge(display_frame, false));
+    setup->read("foreground",               foreground,     pMerge(foreground, false));
+    setup->read("background",               background,     pMerge(background, false));
+    setup->read("z-offset",                 z_offset,       pMerge(z_offset, 0.0));
+    setup->read("animation-directed-direction", ani_directed_direct, pMerge(ani_directed_direct, false));
+    setup->read("animation-direction",      ani_direct,     pMerge(ani_direct, false));
+    setup->read("animation-bidirectional",  ani_bidir,      pMerge(ani_bidir, false));
+    setup->read("custom-animation",         custom_animate, pMerge(custom_animate, 0));
+    setup->read("custom-animation-alg",     custom_ani_alg, pMerge(custom_ani_alg, 0));
+    setup->read("custom-animation-fl",      custom_ani_fl,  pMerge(custom_ani_fl, 0));
+    setup->read("custom-animation-el",      custom_ani_el,  pMerge(custom_ani_el, -1));
+    setup->read("custom-animation-fr",      custom_ani_fr,  pMerge(custom_ani_fr, 0));
+    setup->read("custom-animation-er",      custom_ani_er,  pMerge(custom_ani_er, -1));
+
     /*************Build custom animation settings***************/
     frames_left.clear();
     frames_right.clear();
-
     if(custom_ani_alg == 2)
     {
-        QString common = setup->value("ani-frames-cmn", 0).toString(); // Common frames list
-        QString tmp;
-        tmp = setup->value("ani-frames-left", common).toString().remove(' '); //left direction
-        CSV2NumArray(tmp, frames_left,  0);
-        tmp = setup->value("ani-frames-right", common).toString().remove(' '); //right direction
-        CSV2NumArray(tmp, frames_right, 0);
-        if(!common.isEmpty())
+        IntArray common;
+        setup->read("ani-frames-cmn", common, common); // Common frames list
+        setup->read("ani-frames-left", frames_left, common); //left direction
+        setup->read("ani-frames-right", frames_right, common); //right direction
+        if(!common.empty())
         {
-            int framesOffset = ((framestyle > 0)? 1 : 0) *frames;
-            for(int i=0; i < frames_right.size(); i++)
+            uint32_t framesOffset = ((framestyle > 0)? 1 : 0) * frames;
+            for(pge_size_t i = 0; i < frames_right.size(); i++)
                 frames_right[i] += framesOffset;
         }
         custom_ani_fl = frames_left.front();
@@ -164,13 +168,13 @@ bool NpcSetup::parse(IniProcessing *setup,
         custom_ani_fr = frames_right.front();
         custom_ani_er = frames_right.back();
     }
-
     /*************Build custom animation settings**end**********/
+
     /***************GRID And snap*********************************/
-    grid = setup->value("grid", merge_with ? merge_with->grid : defaultGrid).toUInt();
+    setup->read("grid", grid, merge_with ? merge_with->grid : defaultGrid);
     NumberLimiter::apply(grid, 1u);
-    grid_attach_style = setup->value("grid-attachement-style", 0).toInt();
-    NumberLimiter::apply(grid_attach_style, 0);
+    setup->read("grid-attachement-style", grid_attach_style, 0);
+    NumberLimiter::apply(grid_attach_style, 0u);
 
     /***************Calculate the grid offset********************/
     if(width >= grid)
@@ -183,16 +187,18 @@ bool NpcSetup::parse(IniProcessing *setup,
 
     grid_offset_y = -static_cast<int>(height) % static_cast<int>(grid);
     /***************Calculate the grid offset********************/
-    /*************Manual redefinition of the grid offset if not set******************/
-    grid_offset_x = setup->value("grid-offset-x", merge_with ? merge_with->grid_offset_x : grid_offset_x).toInt();
-    grid_offset_y = setup->value("grid-offset-y", merge_with ? merge_with->grid_offset_y : grid_offset_y).toInt();
-    /*************Manual redefinition of the grid offset if not set******************/
-    /***************GRID And snap***end***************************/
-    special_option =   setup->value("have-special", merge_with ? merge_with->special_option : false).toBool();
-    special_name =     setup->value("special-name", merge_with ? merge_with->special_name : "Special option value").toString();
-    special_type =     setup->value("special-type", merge_with ? merge_with->special_type : 1).toInt();
-    combobox_size =    setup->value("special-combobox-size", 0).toInt();
 
+    /*************Manual redefinition of the grid offset if not set******************/
+    setup->read("grid-offset-x", grid_offset_x, pMergeMe(grid_offset_x));
+    setup->read("grid-offset-y", grid_offset_y, pMergeMe(grid_offset_y));
+    /*************Manual redefinition of the grid offset if not set******************/
+
+    /***************GRID And snap***end***************************/
+    setup->read("have-special", special_option, pMerge(special_option, false));
+    setup->read("special-name", special_name,   pMerge(special_name, "Special option value"));
+    setup->read("special-type", special_type,   pMerge(special_type, 1));
+
+    setup->read("special-combobox-size", combobox_size, 0);
     if((combobox_size <= 0) && merge_with)
         special_combobox_opts = merge_with->special_combobox_opts;
     else
@@ -202,68 +208,71 @@ bool NpcSetup::parse(IniProcessing *setup,
 
         for(int j = 0; j < combobox_size; j++)
         {
-            special_combobox_opts.push_back(
-                setup->value(QString("special-option-%1").arg(j), 0).toString()
-            );
+            std::string key = "special-option-" + std::to_string(j);
+            std::string value;
+            setup->read(key.c_str(), value, "");
+            special_combobox_opts.push_back(StdToPGEString(value));
         }
     }
 
-    special_spin_min = setup->value("special-spin-min", merge_with ? merge_with->special_spin_min : 0).toInt();
-    special_spin_max = setup->value("special-spin-max", merge_with ? merge_with->special_spin_max : 1).toInt();
-    special_spin_value_offset = setup->value("special-spin-value-offset", merge_with ? merge_with->special_spin_value_offset : 0).toInt();
-    /**LEGACY, REMOVE THIS LAYER!!!***/
-    special_option_2 = setup->value("have-special-2", merge_with ? merge_with->special_option_2 : 0).toBool();
-    special_2_name = setup->value("special-2-name", merge_with ? merge_with->special_2_name : "Special option value").toString();
+    setup->read("special-spin-min", special_spin_min, pMerge(special_spin_min, 0));
+    setup->read("special-spin-max", special_spin_max, pMerge(special_spin_max, 1));
+    setup->read("special-spin-value-offset", special_spin_value_offset, pMerge(special_spin_value_offset, 0));
+
+    /**LEGACY, REMOVE THIS LATER!!!***/
+    setup->read("have-special-2", special_option_2, pMerge(special_option_2, 0));
+    setup->read("special-2-name", special_2_name, pMerge(special_2_name, "Special option value"));
 
     if(special_option_2)
     {
-        QString tmp1 = setup->value("special-2-npc-spin-required", "").toString().remove(' ');
-        CSV2NumArray(tmp1, special_2_npc_spin_required, 0l);
-        QString tmp2 = setup->value("special-2-npc-box-required", "").toString().remove(' ');
-        CSV2NumArray(tmp2, special_2_npc_box_required, 0l);
+        setup->read("special-2-npc-spin-required",
+                    special_2_npc_spin_required,
+                    pMerge(special_2_npc_spin_required, special_2_npc_spin_required));
+        setup->read("special-2-npc-box-required",
+                    special_2_npc_box_required,
+                    pMerge(special_2_npc_box_required, special_2_npc_box_required));
     }
 
-    special_2_type = setup->value("special-2-type", 1).toInt();
-    combobox_size  = setup->value("special-2-combobox-size", 0).toInt();
-
+    setup->read("special-2-type", special_2_type, 1);
+    setup->read("special-2-combobox-size", combobox_size, 0);
     for(int j = 0; j < combobox_size; j++)
     {
-        special_2_combobox_opts.push_back(
-            setup->value(QString("special-2-option-%1").arg(j), 0).toString()
-        );
+        PGEString value;
+        setup->read(("special-2-option-" + std::to_string(j)).c_str(), value, "0");
+        special_2_combobox_opts.push_back(value);
     }
 
-    special_2_spin_min = setup->value("special-2-spin-min", 0).toInt();
-    special_2_spin_max = setup->value("special-2-spin-max", 1).toInt();
-    special_2_spin_value_offset = setup->value("special-2-spin-value-offset", 0).toInt();
+    setup->read("special-2-spin-min", special_2_spin_min, 0);
+    setup->read("special-2-spin-max", special_2_spin_max, 1);
+    setup->read("special-2-spin-value-offset", special_2_spin_value_offset, 0);
+
     /*************Build special value combobox***end*****/
-    setup->value("score", score, merge_with ? merge_with->score : 0);
-    speed =        setup->value("speed", merge_with ? merge_with->speed : 2.0).toDouble();
-    coins =        setup->value("coins", merge_with ? merge_with->coins : 0).toInt();
-    movement =     setup->value("moving", merge_with ? merge_with->movement : 1).toBool();
-    activity =     setup->value("activity", merge_with ? merge_with->activity : 1).toBool();
-    scenery =      setup->value("scenery", merge_with ? merge_with->scenery : 0).toBool();
-    keep_position = setup->value("keep-position", merge_with ? merge_with->keep_position : 0).toBool();
-    shared_ani =   setup->value("shared-animation", merge_with ? merge_with->shared_ani : 0).toBool();
-    immortal =     setup->value("immortal", merge_with ? merge_with->immortal : 0).toBool();
-    can_be_eaten = setup->value("can-be-eaten", merge_with ? merge_with->can_be_eaten : 0).toBool();
-    //! LEGACY! Update all config packs and remove this!
-    can_be_eaten = setup->value("yoshicaneat", can_be_eaten).toBool();
-    takable =      setup->value("takable", merge_with ? merge_with->takable : 0).toBool();
-    setup->read("takable-sound-id", takable_snd, merge_with ? merge_with->takable_snd : 0);
-    grab_side =    setup->value("grab-side", merge_with ? merge_with->grab_side : 0).toBool();
-    grab_top =     setup->value("grab-top", merge_with ? merge_with->grab_top : 0).toBool();
-    grab_any =     setup->value("grab-any", merge_with ? merge_with->grab_any : 0).toBool();
-    setup->read("default-health", health, merge_with ? merge_with->health : 0);
-    hurt_player =  setup->value("hurtplayer", merge_with ? merge_with->hurt_player : 0).toBool();
-    hurt_player_on_stomp =  setup->value("hurtplayer-on-stomp", merge_with ? merge_with->hurt_player_on_stomp : 0).toBool();
-    hurt_player_on_spinstomp =  setup->value("hurtplayer-on-spinstomp", merge_with ? merge_with->hurt_player_on_spinstomp : 0).toBool();
-    hurt_npc =     setup->value("hurtnpc", merge_with ? merge_with->hurt_npc : 0).toBool();
+    setup->read("score",                score,                  pMerge(score, 0));
+    setup->read("speed",                speed,                  pMerge(speed, 2.0));
+    setup->read("coins",                coins,                  pMerge(coins, 0));
+    setup->read("moving",               movement,               pMerge(movement, 1));
+    setup->read("activity",             activity,               pMerge(activity, 1));
+    setup->read("scenery",              scenery,                pMerge(scenery, 0));
+    setup->read("keep-position",        keep_position,          pMerge(keep_position, 0));
+    setup->read("shared-animation",     shared_ani,             pMerge(shared_ani, 0));
+    setup->read("immortal",             immortal,               pMerge(immortal, 0));
+    setup->read("can-be-eaten",         can_be_eaten,           pMerge(can_be_eaten, 0));
+    setup->read("yoshicaneat",          can_be_eaten,           can_be_eaten);//<-- LEGACY! Update all config packs and remove this!
+    setup->read("takable",              takable,                pMerge(takable, 0));
+    setup->read("takable-sound-id",     takable_snd,            pMerge(takable_snd, 0));
+    setup->read("grab-side",            grab_side,              pMerge(grab_side, 0));
+    setup->read("grab-top",             grab_top,               pMerge(grab_top, 0));
+    setup->read("grab-any",             grab_any,               pMerge(grab_any, 0));
+    setup->read("default-health",       health,                 pMerge(health, 0));
+    setup->read("hurtplayer",           hurt_player,            pMerge(hurt_player, 0));
+    setup->read("hurtplayer-on-stomp",  hurt_player_on_stomp,   pMerge(hurt_player_on_stomp, 0));
+    setup->read("hurtplayer-on-spinstomp", hurt_player_on_spinstomp, pMerge(hurt_player_on_spinstomp, 0));
+    setup->read("hurtnpc",              hurt_npc,               pMerge(hurt_npc, 0));
 
     //Damage level on attacks types
-    damage_stomp = setup->value("damage-sensitive-stomp", merge_with ? merge_with->damage_stomp : 0).toInt();
-    damage_spinstomp = setup->value("damage-sensitive-spinstomp", merge_with ? merge_with->damage_spinstomp : 0).toInt();
-    damage_itemkick = setup->value("damage-sensitive-itemkick", merge_with ? merge_with->damage_itemkick : 0).toInt();
+    setup->read("damage-sensitive-stomp", damage_stomp, merge_with ? merge_with->damage_stomp : 0);
+    setup->read("damage-sensitive-spinstomp", damage_spinstomp, merge_with ? merge_with->damage_spinstomp : 0);
+    setup->read("damage-sensitive-itemkick", damage_itemkick, merge_with ? merge_with->damage_itemkick : 0);
 
     //Sound effects
     setup->read("hit-sound-id", hit_sound_id, merge_with ? merge_with->hit_sound_id : 0);
@@ -273,94 +282,106 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("direction-alt-title", direct_alt_title, "");
     setup->read("direction-alt-left-field", direct_alt_left, "");
     setup->read("direction-alt-right-field", direct_alt_right, "");
-    direct_disable_random = setup->value("direction-no-rand-field", merge_with ? merge_with->direct_disable_random : false).toBool();
+    setup->read("direction-no-rand-field", direct_disable_random, pMerge(direct_disable_random, false));
 
     //Events
-    deactivation =         setup->value("deactivate", merge_with ? merge_with->deactivation : 0).toBool();
-    setup->read("deactivate-delay", deactivationDelay, merge_with ? merge_with->deactivationDelay : 4000);
+    setup->read("deactivate", deactivation, pMerge(deactivation, 0));
+    setup->read("deactivate-delay", deactivationDelay, pMerge(deactivationDelay, 4000));
     NumberLimiter::applyD(deactivationDelay, 4000u, 0u);
-    deactivate_off_room =  setup->value("deactivate-off-room", merge_with ? merge_with->deactivate_off_room : false).toBool();
-    bump_on_stomp =        setup->value("bump-on-stomp", merge_with ? merge_with->bump_on_stomp : true).toBool();
-    kill_slide_slope =     setup->value("kill-slside", merge_with ? merge_with->kill_slide_slope : 0).toBool();
-    kill_on_jump =         setup->value("kill-onjump", merge_with ? merge_with->kill_by_npc : 0).toBool();
-    kill_by_npc =          setup->value("kill-bynpc", merge_with ? merge_with->kill_on_pit_fall : 0).toBool();
-    kill_on_pit_fall =     setup->value("kill-on-pit-fall", merge_with ? merge_with->kill_by_fireball : false).toBool();
-    kill_by_fireball =     setup->value("kill-fireball", merge_with ? merge_with->kill_by_fireball : 0).toBool();
-    freeze_by_iceball =    setup->value("kill-iceball", merge_with ? merge_with->freeze_by_iceball : 0).toBool();
-    kill_hammer =          setup->value("kill-hammer", merge_with ? merge_with->kill_hammer : 0).toBool();
-    kill_tail =            setup->value("kill-tail", merge_with ? merge_with->kill_tail : 0).toBool();
-    kill_by_spinjump =     setup->value("kill-spin", merge_with ? merge_with->kill_by_spinjump : 0).toBool();
-    kill_by_statue =       setup->value("kill-statue", merge_with ? merge_with->kill_by_statue : 0).toBool();
-    kill_by_mounted_item = setup->value("kill-with-mounted", merge_with ? merge_with->kill_by_mounted_item : 0).toBool();
-    kill_on_eat =          setup->value("kill-on-eat", merge_with ? merge_with->kill_on_eat : 0).toBool();
-    turn_on_cliff_detect = setup->value("cliffturn", merge_with ? merge_with->turn_on_cliff_detect : 0).toBool();
-    lava_protect =         setup->value("lava-protection", merge_with ? merge_with->lava_protect : false).toBool();
-    is_star =              setup->value("is-star", merge_with ? merge_with->is_star : 0).toBool();
-    exit_is =              setup->value("is-exit", merge_with ? merge_with->exit_is : false).toBool();
-    exit_walk_direction =  setup->value("exit-direction", merge_with ? merge_with->exit_walk_direction : 0).toInt();
-    exit_code       =      setup->value("exit-code", merge_with ? merge_with->exit_code : 0).toInt();
-    exit_delay      =      setup->value("exit-delay", merge_with ? merge_with->exit_delay : 0).toInt();
-    exit_snd        =      setup->value("exit-sound-id", merge_with ? merge_with->exit_snd : 0).toInt();
-    climbable       =      setup->value("is-climbable", merge_with ? merge_with->climbable : 0).toBool();
+    setup->read("deactivate-off-room",  deactivate_off_room,    pMerge(deactivate_off_room, false));
+    setup->read("bump-on-stomp",        bump_on_stomp,          pMerge(bump_on_stomp, true));
+    setup->read("kill-slside",          kill_slide_slope,       pMerge(kill_slide_slope, 0));
+    setup->read("kill-onjump",          kill_on_jump,           pMerge(kill_by_npc, 0));
+    setup->read("kill-bynpc",           kill_by_npc,            pMerge(kill_on_pit_fall, 0));
+    setup->read("kill-on-pit-fall",     kill_on_pit_fall,       pMerge(kill_by_fireball, false));
+    setup->read("kill-fireball",        kill_by_fireball,       pMerge(kill_by_fireball, 0));
+    setup->read("kill-iceball",         freeze_by_iceball,      pMerge(freeze_by_iceball, 0));
+    setup->read("kill-hammer",          kill_hammer,            pMerge(kill_hammer, 0));
+    setup->read("kill-tail",            kill_tail,              pMerge(kill_tail, 0));
+    setup->read("kill-spin",            kill_by_spinjump,       pMerge(kill_by_spinjump, 0));
+    setup->read("kill-statue",          kill_by_statue,         pMerge(kill_by_statue, 0));
+    setup->read("kill-with-mounted",    kill_by_mounted_item,   pMerge(kill_by_mounted_item, 0));
+    setup->read("kill-on-eat",          kill_on_eat,            pMerge(kill_on_eat, 0));
+    setup->read("cliffturn",            turn_on_cliff_detect,   pMerge(turn_on_cliff_detect, 0));
+    setup->read("lava-protection",      lava_protect,           pMerge(lava_protect, false));
+    setup->read("is-star",              is_star,                pMerge(is_star, 0));
+    setup->read("is-exit",              exit_is,                pMerge(exit_is, false));
+    setup->read("exit-direction",       exit_walk_direction,    pMerge(exit_walk_direction, 0));
+    setup->read("exit-code",            exit_code,              pMerge(exit_code, 0));
+    setup->read("exit-delay",           exit_delay,             pMerge(exit_delay, 0));
+    setup->read("exit-sound-id",        exit_snd,               pMerge(exit_snd, 0));
+    setup->read("is-climbable",         climbable,              pMerge(climbable, 0));
+
     //Editor specific flags
-    long iTmp;
-    iTmp =      setup->value("default-friendly", -1).toInt();
+    int64_t iTmp;
+    setup->read("default-friendly", iTmp, -1);
     default_friendly = (iTmp >= 0);
-    default_friendly_value = (iTmp >= 0) ? static_cast<bool>(iTmp) : (merge_with ? merge_with->default_friendly_value : false);
-    iTmp =      setup->value("default-no-movable", -1).toInt();
+    default_friendly_value = (iTmp >= 0) ? static_cast<bool>(iTmp) : pMerge(default_friendly_value, false);
+
+    setup->read("default-no-movable", iTmp, -1);
     default_nomovable = (iTmp >= 0);
-    default_nomovable_value = (iTmp >= 0) ? static_cast<bool>(iTmp) : (merge_with ? merge_with->default_nomovable_value : false);
-    iTmp =      setup->value("default-is-boss", -1).toInt();
+    default_nomovable_value = (iTmp >= 0) ? static_cast<bool>(iTmp) : pMerge(default_nomovable_value, false);
+
+    setup->read("default-is-boss", iTmp, -1);
     default_boss = (iTmp >= 0);
-    default_boss_value = (iTmp >= 0) ? static_cast<bool>(iTmp) : (merge_with ? merge_with->default_boss_value : false);
-    iTmp =      setup->value("default-special-value", -1).toInt();
+    default_boss_value = (iTmp >= 0) ? static_cast<bool>(iTmp) : pMerge(default_boss_value, false);
+
+    setup->read("default-special-value", iTmp, -1);
     default_special = (iTmp >= 0);
-    default_special_value = (iTmp >= 0) ? iTmp : (merge_with ? merge_with->default_special_value : false);
+    default_special_value = (iTmp >= 0) ? iTmp : pMerge(default_special_value, false);
+
+    #undef pMerge
+    #undef pMergeMe
     return true;
 }
 
 
 
-void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, const QSize &captured)
+void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, uint32_t captured_w, uint32_t captured_h)
 {
-
     //*this = global;
     name = (local->en_name) ? local->name : global.name;
+
     image_n = (local->en_image) ? local->image : global.image_n;
     mask_n = PGE_ImageInfo::getMaskName(image_n);
-    algorithm_script = (local->en_script) ? local->script : global.algorithm_script;
-    gfx_offset_x = (local->en_gfxoffsetx) ? local->gfxoffsetx : global.gfx_offset_x;
-    gfx_offset_y = (local->en_gfxoffsety) ? local->gfxoffsety : global.gfx_offset_y;
-    width = (local->en_width) ? local->width : global.width;
-    height = (local->en_height) ? local->height : global.height;
-    foreground = (local->en_foreground) ? local->foreground : global.foreground;
-    framespeed = (local->en_framespeed) ? static_cast<uint32_t>(qRound(static_cast<double>(global.framespeed) / (8.0 / static_cast<double>(local->framespeed)))) : global.framespeed;
-    framestyle = (local->en_framestyle) ? static_cast<uint32_t>(local->framestyle) : global.framestyle;
+
+    algorithm_script =  (local->en_script) ? local->script : global.algorithm_script;
+    gfx_offset_x =      (local->en_gfxoffsetx) ? local->gfxoffsetx : global.gfx_offset_x;
+    gfx_offset_y =      (local->en_gfxoffsety) ? local->gfxoffsety : global.gfx_offset_y;
+    width =             (local->en_width) ? local->width : global.width;
+    height =            (local->en_height) ? local->height : global.height;
+    foreground =        (local->en_foreground) ? local->foreground : global.foreground;
+    framespeed =        (local->en_framespeed) ?
+                static_cast<uint32_t>(
+                    qRound(static_cast<double>(global.framespeed)
+                           / (8.0 / static_cast<double>(local->framespeed))))
+                : global.framespeed;
+
+    framestyle =        (local->en_framestyle) ? static_cast<uint32_t>(local->framestyle) : global.framestyle;
 
     //Copy physical size to GFX size
     if((local->en_width) && (custom_physics_to_gfx))
-        gfx_w = static_cast<int>(width);
+        gfx_w = width;
     else
     {
-        if((!local->en_gfxwidth) && (captured.width() != 0) && (global.gfx_w != captured.width()))
-            width = static_cast<unsigned int>(captured.width());
-
-        gfx_w = ((captured.width() != 0) ? captured.width() : global.gfx_w);
+        if((!local->en_gfxwidth) && (captured_w != 0) && (global.gfx_w != captured_w))
+            width = captured_w;
+        gfx_w = ((captured_w != 0) ? captured_w : global.gfx_w);
     }
 
     //Copy physical size to GFX size
     if((local->en_height) && (custom_physics_to_gfx))
-        gfx_h = static_cast<int>(height);
+        gfx_h = height;
     else
         gfx_h = global.gfx_h;
 
-    if((!local->en_gfxwidth) && (captured.width() != 0) && (global.gfx_w != captured.width()))
-        gfx_w = captured.width();
+    if((!local->en_gfxwidth) && (captured_w != 0) && (global.gfx_w != captured_w))
+        gfx_w = captured_w;
     else
-        gfx_w = (local->en_gfxwidth) ? (local->gfxwidth > 0 ? static_cast<int>(local->gfxwidth) : 1) : gfx_w;
+        gfx_w = (local->en_gfxwidth) ? (local->gfxwidth > 0 ? (local->gfxwidth) : 1) : gfx_w;
 
-    gfx_h = (local->en_gfxheight) ? (local->gfxheight > 0 ? static_cast<int>(local->gfxheight) : 1) : gfx_h;
-    grid = (local->en_grid) ? local->grid : global.grid;
+    gfx_h =     (local->en_gfxheight) ? (local->gfxheight > 0 ? (local->gfxheight) : 1) : gfx_h;
+    grid =      (local->en_grid) ? local->grid : global.grid;
 
     if(width >= grid)
         grid_offset_x = -1 * qRound(static_cast<double>((width % grid) / 2));
@@ -377,7 +398,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, c
 
     if((framestyle == 0) && ((local->en_gfxheight) || (local->en_height)) && (!local->en_frames))
     {
-        frames = static_cast<uint32_t>(qRound(static_cast<double>(captured.height()) / static_cast<double>(gfx_h)));
+        frames = static_cast<uint32_t>(qRound(static_cast<double>(captured_h) / static_cast<double>(gfx_h)));
         //merged.custom_animate = false;
     }
     else
@@ -386,12 +407,12 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, c
     if((local->en_frames) || (local->en_framestyle))
     {
         ani_bidir = false; //Disable bidirectional animation
-
-        if((local->en_frames)) custom_animate = false; //Disable custom animation
+        if(local->en_frames)
+            custom_animate = false; //Disable custom animation
     }
 
     // Convert out of range frames by framestyle into animation with controlable diraction
-    if((framestyle > 0) && (static_cast<unsigned int>(gfx_h) * frames >= static_cast<unsigned int>(captured.height())))
+    if((framestyle > 0) && (static_cast<unsigned int>(gfx_h) * frames >= captured_h))
     {
         framestyle = 0;
         ani_direct = false;
@@ -404,23 +425,23 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, c
         ani_directed_direct = false;
     }
 
-    score = (local->en_score) ? static_cast<uint32_t>(local->score) : global.score;
-    health = (local->en_health) ? static_cast<uint32_t>(local->health) : global.health;
-    block_player = (local->en_playerblock) ? local->playerblock : global.block_player;
-    block_player_top = (local->en_playerblocktop) ? local->playerblocktop : global.block_player_top;
-    block_npc = (local->en_npcblock) ? local->npcblock : global.block_npc;
-    block_npc_top = (local->en_npcblocktop) ? local->npcblocktop : global.block_npc_top;
-    grab_side = (local->en_grabside) ? local->grabside : global.grab_side;
-    grab_top = (local->en_grabtop) ? local->grabtop : global.grab_top;
-    kill_on_jump = (local->en_jumphurt) ? (!local->jumphurt) : global.kill_on_jump ;
-    hurt_player = (local->en_nohurt) ? !local->nohurt : global.hurt_player;
+    score =                 (local->en_score) ? static_cast<uint32_t>(local->score) : global.score;
+    health =                (local->en_health) ? static_cast<uint32_t>(local->health) : global.health;
+    block_player =          (local->en_playerblock) ? local->playerblock : global.block_player;
+    block_player_top =      (local->en_playerblocktop) ? local->playerblocktop : global.block_player_top;
+    block_npc =             (local->en_npcblock) ? local->npcblock : global.block_npc;
+    block_npc_top =         (local->en_npcblocktop) ? local->npcblocktop : global.block_npc_top;
+    grab_side =             (local->en_grabside) ? local->grabside : global.grab_side;
+    grab_top =              (local->en_grabtop) ? local->grabtop : global.grab_top;
+    kill_on_jump =          (local->en_jumphurt) ? (!local->jumphurt) : global.kill_on_jump ;
+    hurt_player =           (local->en_nohurt) ? !local->nohurt : global.hurt_player;
     collision_with_blocks = (local->en_noblockcollision) ? (!local->noblockcollision) : global.collision_with_blocks;
-    turn_on_cliff_detect = (local->en_cliffturn) ? local->cliffturn : global.turn_on_cliff_detect;
-    can_be_eaten = (local->en_noyoshi) ? (!local->noyoshi) : global.can_be_eaten;
-    speed = (local->en_speed) ? global.speed * local->speed : global.speed;
-    kill_by_fireball = (local->en_nofireball) ? (!local->nofireball) : global.kill_by_fireball;
-    gravity = (local->en_nogravity) ? (!local->nogravity) : global.gravity;
-    freeze_by_iceball = (local->en_noiceball) ? (!local->noiceball) : global.freeze_by_iceball;
-    kill_hammer = (local->en_nohammer) ? (!local->nohammer) : global.kill_hammer;
-    kill_by_npc = (local->en_noshell) ? (!local->noshell) : global.kill_by_npc;
+    turn_on_cliff_detect =  (local->en_cliffturn) ? local->cliffturn : global.turn_on_cliff_detect;
+    can_be_eaten =          (local->en_noyoshi) ? (!local->noyoshi) : global.can_be_eaten;
+    speed =                 (local->en_speed) ? global.speed * local->speed : global.speed;
+    kill_by_fireball =      (local->en_nofireball) ? (!local->nofireball) : global.kill_by_fireball;
+    gravity =               (local->en_nogravity) ? (!local->nogravity) : global.gravity;
+    freeze_by_iceball =     (local->en_noiceball) ? (!local->noiceball) : global.freeze_by_iceball;
+    kill_hammer =           (local->en_nohammer) ? (!local->nohammer) : global.kill_hammer;
+    kill_by_npc =           (local->en_noshell) ? (!local->noshell) : global.kill_by_npc;
 }

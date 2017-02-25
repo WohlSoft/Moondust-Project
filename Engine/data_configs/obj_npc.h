@@ -67,33 +67,33 @@ struct obj_npc
 struct NPC_GlobalSetup
 {
     //    ;Defines for SMBX64
-    unsigned long bubble;   //    bubble=283    ; NPC-Container for packed in bubble
-    unsigned long egg;      //    egg=96        ; NPC-Container for packed in egg
-    unsigned long lakitu;   //    lakitu=284    ; NPC-Container for spawn by lakitu
-    unsigned long buried;   //    burred=91 ; NPC-Container for packed in herb
+    uint64_t    bubble;   //    bubble=283    ; NPC-Container for packed in bubble
+    uint64_t    egg;      //    egg=96        ; NPC-Container for packed in egg
+    uint64_t    lakitu;   //    lakitu=284    ; NPC-Container for spawn by lakitu
+    uint64_t    buried;   //    burred=91 ; NPC-Container for packed in herb
 
-    unsigned long ice_cube; //    icecube=263   ; NPC-Container for frozen NPCs
+    uint64_t    ice_cube; //    icecube=263   ; NPC-Container for frozen NPCs
 
     //    ;markers
-    unsigned long iceball;  //    iceball=265
-    unsigned long fireball; //    fireball=13
-    unsigned long hammer;   //    hammer=171
-    unsigned long boomerang;//    boomerang=292
-    unsigned long coin_in_block; //    coin-in-block=10
+    uint64_t    iceball;  //    iceball=265
+    uint64_t    fireball; //    fireball=13
+    uint64_t    hammer;   //    hammer=171
+    uint64_t    boomerang;//    boomerang=292
+    uint64_t    coin_in_block; //    coin-in-block=10
 
     // some physics settings
-    double phs_gravity_accel;
-    double phs_max_fall_speed;
+    double      phs_gravity_accel;
+    double      phs_max_fall_speed;
     //effects
-    unsigned long eff_lava_burn; //Lava burn effect [Effect to spawn on contact with lava]
+    uint64_t    eff_lava_burn; //Lava burn effect [Effect to spawn on contact with lava]
 
     //projectile properties
     SpawnEffectDef projectile_effect;
-    long    projectile_sound_id;
-    double  projectile_speed;
+    uint64_t    projectile_sound_id;
+    double      projectile_speed;
 
     //Talking NPC's properties
-    QString talking_sign_img;
+    std::string talking_sign_img;
 };
 
 #endif // OBJ_NPC_H

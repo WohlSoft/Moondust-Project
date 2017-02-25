@@ -304,7 +304,11 @@ namespace ConfigManager
 
     /*****Level NPC************/
     bool loadLevelNPC();
-    bool loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadLevelNPC(obj_npc &snpc,
+                      std::string section,
+                      obj_npc *merge_with = 0,
+                      std::string iniFile = "",
+                      IniProcessing *setup = nullptr);
     void loadNpcTxtConfig(unsigned long npcID);
     int  getNpcTexture(unsigned long npcID);
     /*****************************/

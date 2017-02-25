@@ -39,9 +39,8 @@ void obj_block::copyTo(obj_block &block)
     block.isValid         = isValid;
     block.animator_id     = animator_id;
     block.cur_image       = cur_image;
-    if(cur_image==nullptr)
+    if(cur_image == nullptr)
         block.cur_image   = &image;
-
     block.setup = setup;
 }
 
@@ -61,11 +60,10 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
     QString errStr;
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
-    if(!openSection( setup, section ))
+    if(!openSection( setup, section.toStdString()))
         return false;
 
     if(sblock.setup.parse(setup, blockPath, defaultGrid.block, merge_with ? &merge_with->setup : nullptr, &errStr))
@@ -97,22 +95,24 @@ void dataconfigs::loadLevelBlocks()
 
     QString nestDir = "";
 
-    QSettings setup(block_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(block_ini);
 
     main_block.clear();   //Clear old
     //index_blocks.clear();
 
-    if(!openSection(&setup, "blocks-main")) return;
-        block_total = setup.value("total", 0).toUInt();
-        defaultGrid.block = setup.value("grid", defaultGrid.block).toUInt();
+    if(!openSection(&setup, "blocks-main"))
+        return;
+    {
+        setup.read("total", block_total, 0);
+        setup.read("grid", defaultGrid.block, defaultGrid.block);
         total_data += block_total;
-        nestDir =   setup.value("config-dir", "").toString();
+        setup.read("config-dir", nestDir, "");
         if(!nestDir.isEmpty())
         {
             nestDir = config_dir + nestDir;
             useDirectory = true;
         }
+    }
     closeSection(&setup);
 
     emit progressPartNumber(2);
@@ -163,9 +163,9 @@ void dataconfigs::loadLevelBlocks()
         sblock.setup.id = i;
         main_block.storeElement(int(i), sblock, valid);
 
-        if( setup.status()!=QSettings::NoError)
+        if( setup.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }

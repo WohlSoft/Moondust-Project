@@ -173,6 +173,12 @@ public:
     std::string group();
 
     /**
+     * @brief Get list of available groups
+     * @return Array of strings
+     */
+    std::vector<std::string> childGroups();
+
+    /**
      * @brief Is current section contains specific key name
      * @param keyName name of key
      * @return true if key is presented in this section
@@ -287,6 +293,13 @@ public:
      * @param [_OUT] dest Reference to destination variable to store retrieved value
      * @param [_IN] defVal Default value for case of non-existing key
      */
+    void read(const char *key, long double &dest, long double defVal);
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
     void read(const char *key, std::string &dest, const std::string &defVal);
 
     #ifdef INI_PROCESSING_ALLOW_QT_TYPES
@@ -369,6 +382,13 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      */
     void read(const char *key, std::vector<double> &dest, const std::vector<double> &defVal = std::vector<double>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, std::vector<long double> &dest, const std::vector<long double> &defVal = std::vector<long double>());
 
     #ifdef INI_PROCESSING_ALLOW_QT_TYPES
     /**
@@ -441,6 +461,13 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      */
     void read(const char *key, QList<double> &dest, const QList<double> &defVal = QList<double>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<long double> &dest, const QList<long double> &defVal = QList<long double>());
 
     /**
      * @brief Retreive value by specific key and pass it via reference
@@ -512,6 +539,13 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      */
     void read(const char *key, QVector<double> &dest, const QVector<double> &defVal = QVector<double>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<long double> &dest, const QVector<long double> &defVal = QVector<long double>());
     #endif
 
     //! Hash-table for the fast string to enum conversion

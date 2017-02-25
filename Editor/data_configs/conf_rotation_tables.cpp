@@ -17,14 +17,11 @@
  */
 
 #include <common_features/items.h>
-
 #include "data_configs.h"
-
 
 void dataconfigs::loadRotationTable()
 {
-    unsigned int i;
-
+    size_t i = 0;
     obj_rotation_table rTable;
 
     QString rtables_ini = config_dir + "rotation_table.ini";
@@ -35,12 +32,10 @@ void dataconfigs::loadRotationTable()
         return;
     }
 
-    QSettings rtable_set(rtables_ini, QSettings::IniFormat);
-    rtable_set.setIniCodec("UTF-8");
-
+    IniProcessing rtable_set(rtables_ini);
     main_rotation_table.clear();
 
-    QStringList groups = rtable_set.childGroups();
+    std::vector<std::string> groups = rtable_set.childGroups();
 
     if(groups.size()==0)
     {
@@ -49,32 +44,35 @@ void dataconfigs::loadRotationTable()
     }
 
     emit progressPartNumber(12);
-    emit progressMax(groups.size());
+    emit progressMax(static_cast<int>(groups.size()));
     emit progressValue(0);
     emit progressTitle(QObject::tr("Loading rotation rules table..."));
 
-    for(i=0; i<(unsigned)groups.size(); i++)
+    for(i = 0; i < groups.size(); i++)
     {
-        emit progressValue(i);
+        emit progressValue(static_cast<int>(i));
+
         if(groups[i]=="main")
             continue;
 
         rtable_set.beginGroup( groups[i] );
-            rTable.type=Items::getItemType(rtable_set.value("type", "-1").toString());
-            rTable.id=rtable_set.value("id", "0").toInt();
-            rTable.rotate_left=rtable_set.value("rotate-left", "0").toInt();
-            rTable.rotate_right=rtable_set.value("rotate-right", "0").toInt();
-            rTable.flip_h=rtable_set.value("flip-h", "0").toInt();
-            rTable.flip_v=rtable_set.value("flip-v", "0").toInt();
+        {
+            rTable.type =           Items::getItemType(rtable_set.value("type", "-1").toQString());
+            rTable.id   =           rtable_set.value("id", "0").toInt();
+            rTable.rotate_left =    rtable_set.value("rotate-left", "0").toInt();
+            rTable.rotate_right =   rtable_set.value("rotate-right", "0").toInt();
+            rTable.flip_h =         rtable_set.value("flip-h", "0").toInt();
+            rTable.flip_v =         rtable_set.value("flip-v", "0").toInt();
+        }
         rtable_set.endGroup();
 
         if(rTable.type<0) continue;
 
         main_rotation_table.push_back(rTable);
 
-        if( rtable_set.status() != QSettings::NoError )
+        if(rtable_set.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(rtable_set.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(rtable_set.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 }

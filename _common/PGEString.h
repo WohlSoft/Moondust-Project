@@ -8,6 +8,7 @@ typedef QStringList PGEStringList;
 #define StdToPGEString(str)     QString::fromStdString(str)
 #define PGEStringToStd(str)     (str).toStdString()
 #define PGEStringLit(str)       QStringLiteral(str)
+typedef int pge_size_t;
 #else
 #include <string>
 #include <vector>
@@ -17,4 +18,5 @@ typedef std::vector<std::string>    PGEStringList;
 #define StdToPGEString(str)         (str)
 #define PGEStringToStd(str)         (str)
 #define PGEStringLit(str)
+typedef size_t pge_size_t;
 #endif

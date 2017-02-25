@@ -30,11 +30,10 @@ bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_s
     QString errStr;
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
-    if(!openSection(setup, section))
+    if(!openSection(setup, section.toStdString()))
         return false;
 
     if(sScene.setup.parse(setup, scenePath, defaultGrid.scenery, merge_with ? &merge_with->setup : nullptr, &errStr))
@@ -68,21 +67,23 @@ void dataconfigs::loadWorldScene()
 
     QString nestDir = "";
 
-    QSettings setup(scene_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(scene_ini);
 
     main_wscene.clear();   //Clear old
 
-    if(!openSection(&setup, "scenery-main")) return;
-        scenery_total = setup.value("total", 0).toUInt();
-        defaultGrid.scenery = setup.value("grid", defaultGrid.scenery).toUInt();
+    if(!openSection(&setup, "scenery-main"))
+        return;
+    {
+        setup.read("total", scenery_total, 0);
+        setup.read("grid", defaultGrid.scenery, defaultGrid.scenery);
         total_data +=scenery_total;
-        nestDir =   setup.value("config-dir", "").toString();
+        setup.read("config-dir", nestDir, "");
         if(!nestDir.isEmpty())
         {
             nestDir = config_dir + nestDir;
             useDirectory = true;
         }
+    }
     closeSection(&setup);
 
     emit progressPartNumber(5);
@@ -130,9 +131,9 @@ void dataconfigs::loadWorldScene()
         sScene.setup.id = i;
         main_wscene.storeElement(int(i), sScene, valid);
 
-        if( setup.status() != QSettings::NoError )
+        if( setup.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_scenery.ini N:%1 (scene-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

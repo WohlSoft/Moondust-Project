@@ -573,6 +573,19 @@ std::string IniProcessing::group()
     return m_params.currentGroupName;
 }
 
+std::vector<std::string> IniProcessing::childGroups()
+{
+    std::vector<std::string> groups;
+    groups.reserve(m_params.iniData.size());
+    for(params::IniSections::iterator e = m_params.iniData.begin();
+        e != m_params.iniData.end();
+        e++)
+    {
+        groups.push_back(e->first);
+    }
+    return groups;
+}
+
 bool IniProcessing::hasKey(const std::string &keyName)
 {
     if(!m_params.opened)
@@ -833,13 +846,11 @@ void IniProcessing::read(const char *key, float &dest, float defVal)
 {
     bool ok = false;
     params::IniKeys::iterator e = readHelper(key, ok);
-
     if(!ok)
     {
         dest = defVal;
         return;
     }
-
     dest = std::strtof(e->second.c_str(), nullptr);
 }
 
@@ -853,8 +864,19 @@ void IniProcessing::read(const char *key, double &dest, double defVal)
         dest = defVal;
         return;
     }
-
     dest = std::strtod(e->second.c_str(), nullptr);
+}
+
+void IniProcessing::read(const char *key, long double &dest, long double defVal)
+{
+    bool ok = false;
+    params::IniKeys::iterator e = readHelper(key, ok);
+    if(!ok)
+    {
+        dest = defVal;
+        return;
+    }
+    dest = std::strtold(e->second.c_str(), nullptr);
 }
 
 void IniProcessing::read(const char *key, std::string &dest, const std::string &defVal)
@@ -982,6 +1004,11 @@ void IniProcessing::read(const char *key, std::vector<double> &dest, const std::
     readNumArrHelper<std::vector<double>, double>(this, key, dest, defVal);
 }
 
+void IniProcessing::read(const char *key, std::vector<long double> &dest, const std::vector<long double> &defVal)
+{
+    readNumArrHelper<std::vector<long double>, long double>(this, key, dest, defVal);
+}
+
 #ifdef INI_PROCESSING_ALLOW_QT_TYPES
 void IniProcessing::read(const char *key, QList<short> &dest, const QList<short> &defVal)
 {
@@ -1026,6 +1053,11 @@ void IniProcessing::read(const char *key, QList<double> &dest, const QList<doubl
     readNumArrHelper<QList<double>, double>(this, key, dest, defVal);
 }
 
+void IniProcessing::read(const char *key, QList<long double> &dest, const QList<long double> &defVal)
+{
+    readNumArrHelper<QList<long double>, long double>(this, key, dest, defVal);
+}
+
 void IniProcessing::read(const char *key, QVector<short> &dest, const QVector<short> &defVal)
 {
     readNumArrHelper<QVector<short>, short>(this, key, dest, defVal);
@@ -1065,6 +1097,11 @@ void IniProcessing::read(const char *key, QVector<float> &dest, const QVector<fl
 void IniProcessing::read(const char *key, QVector<double> &dest, const QVector<double> &defVal)
 {
     readNumArrHelper<QVector<double>, double>(this, key, dest, defVal);
+}
+
+void IniProcessing::read(const char *key, QVector<long double> &dest, const QVector<long double> &defVal)
+{
+    readNumArrHelper<QVector<long double>, long double>(this, key, dest, defVal);
 }
 #endif
 

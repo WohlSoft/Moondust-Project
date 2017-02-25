@@ -33,7 +33,7 @@ bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *
         setup = new IniProcessing(iniFile);
     }
 
-    if(!openSection(setup, section))
+    if(!openSection(setup, section.toStdString()))
         return false;
 
     if(spath.setup.parse(setup, pathPath, defaultGrid.paths, merge_with ? &merge_with->setup : nullptr, &errStr))
@@ -66,21 +66,23 @@ void dataconfigs::loadWorldPaths()
 
     QString nestDir = "";
 
-    QSettings setup(scene_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(scene_ini);
 
     main_wpaths.clear();   //Clear old
 
-    if(!openSection(&setup, "path-main")) return;
+    if(!openSection(&setup, "path-main"))
+        return;
+    {
         path_total = setup.value("total", 0).toUInt();
         defaultGrid.paths = setup.value("grid", defaultGrid.paths).toUInt();
-        total_data +=path_total;
-        nestDir =   setup.value("config-dir", "").toString();
+        total_data += path_total;
+        setup.read("config-dir", nestDir, "");
         if(!nestDir.isEmpty())
         {
             nestDir = config_dir + nestDir;
             useDirectory = true;
         }
+    }
     closeSection(&setup);
 
     emit progressPartNumber(6);
@@ -128,9 +130,9 @@ void dataconfigs::loadWorldPaths()
         sPath.setup.id = i;
         main_wpaths.storeElement(int(i), sPath, valid);
 
-        if( setup.status() != QSettings::NoError )
+        if( setup.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_paths.ini N:%1 (path-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

@@ -27,14 +27,13 @@ bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_lev
 {
     bool valid=true;
     bool internal=!setup;
-    QString errStr;
+    PGEString errStr;
     if(internal)
     {
-        setup=new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup=new IniProcessing(iniFile);
     }
 
-    if(!openSection(setup, section))
+    if(!openSection(setup, section.toStdString()))
         return false;
 
     if(slevel.setup.parse(setup, wlvlPath, defaultGrid.levels, merge_with ? &merge_with->setup : nullptr, &errStr))
@@ -67,23 +66,25 @@ void dataconfigs::loadWorldLevels()
 
     QString nestDir = "";
 
-    QSettings setup(level_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(level_ini);
 
     main_wlevels.clear();   //Clear old
 
-    if(!openSection(&setup, "levels-main")) return;
+    if(!openSection(&setup, "levels-main"))
+        return;
+    {
         levels_total        = setup.value("total", 0).toUInt();
         defaultGrid.levels = setup.value("grid", defaultGrid.levels).toUInt();
         marker_wlvl.path    = setup.value("path", 0).toUInt();
         marker_wlvl.bigpath = setup.value("bigpath", 0).toUInt();
-        total_data +=levels_total;
-        nestDir =   setup.value("config-dir", "").toString();
+        total_data += levels_total;
+        setup.read("config-dir", nestDir, "");
         if(!nestDir.isEmpty())
         {
             nestDir = config_dir + nestDir;
             useDirectory = true;
         }
+    }
     closeSection(&setup);
 
     emit progressPartNumber(7);
@@ -132,9 +133,9 @@ void dataconfigs::loadWorldLevels()
         slevel.setup.id = i;
         main_wlevels.storeElement(int(i), slevel, valid);
 
-        if( setup.status() != QSettings::NoError )
+        if( setup.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

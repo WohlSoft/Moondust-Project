@@ -39,11 +39,16 @@ void obj_BG::copyTo(obj_BG &bg)
     /* for internal usage */
 }
 
-bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with, QString iniFile, IniProcessing *setup)
+bool dataconfigs::loadLevelBackground(obj_BG &sbg,
+                                      QString section,
+                                      obj_BG *merge_with,
+                                      QString iniFile,
+                                      IniProcessing *setup)
 {
+    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
     bool valid=true;
     bool internal = !setup;
-    QString errStr, tmpstr, imgFile;
+    QString errStr, imgFile;
     if(internal)
     {
         setup = new IniProcessing(iniFile);
@@ -52,7 +57,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
     if(!openSection(setup, section.toStdString()))
         return false;
 
-        setup->read("name", sbg.name, (merge_with? merge_with->name : PGEString()) );
+        setup->read("name", sbg.name, pMerge(name, PGEString()));
         if(sbg.name.isEmpty())
         {
             addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
@@ -68,7 +73,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                             {"tiled", 2}
                         });
 
-        sbg.repeat_h =(qFabs(setup->value("repeat-h", (merge_with ? merge_with->repeat_h : 2.0)).toDouble()));
+        sbg.repeat_h =(qFabs(setup->value("repeat-h", pMerge(repeat_h, 2.0)).toDouble()));
 
         setup->readEnum("repeat-v", sbg.repead_v,
                         (merge_with ? merge_with->repead_v : 0),
@@ -79,10 +84,10 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                             {"RZ", 3}
                         });
 
-        setup->read("image", sbg.image_n, (merge_with ? merge_with->image_n : sbg.image_n) );
+        setup->read("image", sbg.image_n, pMerge(image_n, sbg.image_n));
         if(!merge_with)
         {
-            if( (sbg.image_n.isEmpty()) )
+            if(!sbg.image_n.isEmpty())
             {
                 GraphicsHelps::loadMaskedImage(BGPath,
                     sbg.image_n, imgFile,
@@ -97,31 +102,35 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                 }
 
             } else {
-                addError(QString("%1 Image filename isn't defined").arg(section));
+                addError(QString("%1 (%2) Image filename isn't defined").arg(section).arg(iniFile));
                 valid=false;
                 //goto abort;
             }
         }
 
-        sbg.attached =     uint(setup->value("attached",
-                                             (merge_with?(merge_with->attached==1?"top":"bottom") : "bottom") ).toString() == "top");
+        setup->readEnum("attached", sbg.attached,
+                                    pMerge(attached, 0),
+                        {
+                            {"bottom", 0},
+                            {"top", 1}
+                        });
 
-        setup->read("tiled-in-editor", sbg.editing_tiled, merge_with?merge_with->editing_tiled : false);
+        setup->read("tiled-in-editor", sbg.editing_tiled, pMerge(editing_tiled, false));
 
-        setup->read("magic", sbg.magic, (merge_with?merge_with->magic : false));
-        sbg.magic_strips =      setup->value("magic-strips", (merge_with? merge_with->magic_strips: 1 )).toUInt();
-        setup->read("magic-splits", sbg.magic_splits, (merge_with? merge_with->magic_splits : PGEStringLit("0")));
-        setup->read("magic-speeds", sbg.magic_speeds, (merge_with? merge_with->magic_speeds : PGEStringLit("0")));
+        setup->read("magic",    sbg.magic, pMerge(magic, false));
+        setup->read("magic-strips", sbg.magic_strips, pMerge(magic_strips, 1));
+        setup->read("magic-splits", sbg.magic_splits, pMerge(magic_splits, PGEStringLit("0")));
+        setup->read("magic-speeds", sbg.magic_speeds, pMerge(magic_speeds, PGEStringLit("0")));
 
-        sbg.animated =          setup->value("animated", (merge_with?merge_with->animated:false)).toBool();//animated
-        sbg.frames =            setup->value("frames", (merge_with?merge_with->frames:1)).toUInt();
-        sbg.framespeed =        setup->value("framespeed", (merge_with?merge_with->framespeed : 128)).toUInt();
-        sbg.display_frame =     setup->value("display-frame", (merge_with?merge_with->display_frame : 0)).toUInt();
+        setup->read("animated",      sbg.animated,         pMerge(animated, false));//animated
+        setup->read("frames",        sbg.frames,           pMerge(frames, 1));
+        setup->read("framespeed",    sbg.framespeed,       pMerge(framespeed, 128));
+        setup->read("display-frame", sbg.display_frame,    pMerge(display_frame, 0));
         //frames
 
         if(sbg.type==1)
         {
-            setup->read("second-image", sbg.second_image_n, (merge_with ? merge_with->second_image_n : sbg.second_image_n));
+            setup->read("second-image", sbg.second_image_n, pMerge(second_image_n, sbg.second_image_n));
             if(!merge_with)
             {
                 if(!sbg.second_image_n.isEmpty())
@@ -135,11 +144,11 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
                 }
             }
 
-            sbg.second_repeat_h = (qFabs(setup->value("second-repeat-h", (merge_with ? merge_with->second_repeat_h : 2.0)).toDouble()));
+            sbg.second_repeat_h = (qFabs(setup->value("second-repeat-h", pMerge(second_repeat_h, 2.0)).toDouble()));
 
             setup->readEnum("second-repeat-v",
                             sbg.second_repeat_v,
-                            (merge_with ? merge_with->second_repeat_v : 0u),
+                            pMerge(second_repeat_v, 0u),
                             {
                                 {"NR", 0},
                                 {"ZR", 1},
@@ -149,7 +158,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
 
             setup->readEnum("second-attached",
                             sbg.second_attached,
-                            (merge_with ? merge_with->second_attached : 0),
+                            pMerge(second_attached, 0),
                             {
                                 {"overfirst", 0},
                                 {"bottom", 1},
@@ -167,7 +176,11 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merg
 
     abort:
         closeSection(setup);
-        if(internal) delete setup;
+        if(internal)
+            delete setup;
+
+    #undef pMerge
+    #undef pMergeMe
     return valid;
 }
 

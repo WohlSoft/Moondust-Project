@@ -95,21 +95,23 @@ void dataconfigs::loadLevelBGO()
 
     QString nestDir = "";
 
-    QSettings setup(bgo_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(bgo_ini);
 
     main_bgo.clear();   //Clear old
 
-    if(!openSection( &setup, "background-main")) return;
-        bgo_total = setup.value("total", 0).toUInt();
-        defaultGrid.bgo = setup.value("grid", defaultGrid.bgo).toUInt();
-        total_data +=bgo_total;
-        nestDir =   setup.value("config-dir", "").toString();
+    if(!openSection( &setup, "background-main"))
+        return;
+    {
+        setup.read("total", bgo_total, 0);
+        setup.read("grid",  defaultGrid.bgo, defaultGrid.bgo);
+        total_data += bgo_total;
+        setup.read("config-dir", nestDir, "");
         if(!nestDir.isEmpty())
         {
             nestDir = config_dir + nestDir;
             useDirectory = true;
         }
+    }
     closeSection(&setup);
 
     emit progressPartNumber(1);
@@ -160,9 +162,9 @@ void dataconfigs::loadLevelBGO()
         sbgo.setup.id = i;
         main_bgo.storeElement(static_cast<int>(i), sbgo, valid);
 
-        if( setup.status() != QSettings::NoError )
+        if( setup.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(setup.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 

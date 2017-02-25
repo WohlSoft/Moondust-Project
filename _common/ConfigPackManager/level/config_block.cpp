@@ -29,12 +29,14 @@ bool BlockSetup::parse(IniProcessing *setup,
                        BlockSetup *merge_with,
                        PGEString *error)
 {
+    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
+    #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+
     int errCode = PGE_ImageInfo::ERR_OK;
-    QString section;
+    PGEString   section;
     /*************Buffers*********************/
-    QString tmpStr;
-    int w = -1,
-        h = -1;
+    uint32_t    w = 0,
+                h = 0;
 
     /*************Buffers*********************/
     if(!setup)
@@ -46,7 +48,7 @@ bool BlockSetup::parse(IniProcessing *setup,
     }
 
     section = StdToPGEString(setup->group());
-    setup->read("name", name, (merge_with ? merge_with->name : section));
+    setup->read("name", name, pMerge(name, section));
 
     if(name.size() == 0)
     {
@@ -55,10 +57,10 @@ bool BlockSetup::parse(IniProcessing *setup,
         return false;
     }
 
-    setup->read("group", group, (merge_with ? merge_with->group : group));
-    setup->read("category", category, (merge_with ? merge_with->category : category));
-    setup->read("grid", grid, (merge_with ? merge_with->grid : defaultGrid));
-    setup->read("image", image_n, (merge_with ? merge_with->image_n : ""));
+    setup->read("group",    group,      pMergeMe(group));
+    setup->read("category", category,   pMergeMe(category));
+    setup->read("grid",     grid,       pMerge(grid, defaultGrid));
+    setup->read("image",    image_n,    pMerge(image_n, ""));
 
     if(!PGE_ImageInfo::getImageSize(blockImgPath + image_n, &w, &h, &errCode) && !merge_with)
     {
@@ -85,15 +87,15 @@ bool BlockSetup::parse(IniProcessing *setup,
 
     Q_ASSERT(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
-    setup->read("sizable", sizable, (merge_with ? merge_with->sizable : false));
-    setup->read("danger", danger, (merge_with ? merge_with->danger : 0));
-    setup->read("collision", collision, (merge_with ? merge_with->collision : 1));
-    setup->read("slope-slide", slopeslide, (merge_with ? merge_with->slopeslide : 0));
-    setup->read("shape-type", phys_shape, (merge_with ? merge_with->phys_shape : 0));
-    setup->read("lava", lava, (merge_with ? merge_with->lava : false));
-    setup->read("destroyable", destroyable, (merge_with ? merge_with->destroyable : false));
-    setup->read("destroyable-by-bomb", destroyable_by_bomb, (merge_with ? merge_with->destroyable_by_bomb : false));
-    setup->read("destroyable-by-fireball", destroyable_by_fireball, (merge_with ? merge_with->destroyable_by_fireball : false));
+    setup->read("sizable",                  sizable,                pMerge(sizable, false));
+    setup->read("danger",                   danger,                 pMerge(danger, 0));
+    setup->read("collision",                collision,              pMerge(collision, 1));
+    setup->read("slope-slide",              slopeslide,             pMerge(slopeslide, 0));
+    setup->read("shape-type",               phys_shape,             pMerge(phys_shape, 0));
+    setup->read("lava",                     lava,                   pMerge(lava, false));
+    setup->read("destroyable",              destroyable,            pMerge(destroyable, false));
+    setup->read("destroyable-by-bomb",      destroyable_by_bomb,    pMerge(destroyable_by_bomb, false));
+    setup->read("destroyable-by-fireball",  destroyable_by_fireball,pMerge(destroyable_by_fireball, false));
 
     {
         std::string spawnMe;
@@ -135,25 +137,25 @@ bool BlockSetup::parse(IniProcessing *setup,
                 spawn_obj_id = strtoul(right.c_str(), NULL, 10);
             }
         } else {
-            spawn = (merge_with ? merge_with->spawn : 0);
-            spawn_obj = (merge_with ? merge_with->spawn_obj : 0);
-            spawn_obj_id = (merge_with ? merge_with->spawn_obj_id : 0);
+            spawn =         pMerge(spawn, 0);
+            spawn_obj =     pMerge(spawn_obj, 0);
+            spawn_obj_id =  pMerge(spawn_obj_id, 0);
         }
     }
 
-    setup->read("destroy-effect", effect, (merge_with ? merge_with->effect : 1u));
-    setup->read("bounce", bounce, merge_with ? merge_with->bounce : false);
-    setup->read("hitable", hitable, merge_with ? merge_with->hitable : false);
-    setup->read("transform-onhit-into", transfororm_on_hit_into, merge_with ? merge_with->transfororm_on_hit_into : 2u);
+    setup->read("destroy-effect",   effect,  pMerge(effect, 1u));
+    setup->read("bounce",           bounce,  pMerge(bounce, false));
+    setup->read("hitable",          hitable, pMerge(hitable, false));
+    setup->read("transform-onhit-into", transfororm_on_hit_into, pMerge(transfororm_on_hit_into, 2u));
 
     static unsigned int switchID = 0;
-    setup->read("switch-button", switch_Button, merge_with ? merge_with->switch_Button : false);
-    setup->read("switch-block", switch_Block, merge_with ? merge_with->switch_Block : false);
-    setup->read("switch-id", switch_ID, merge_with ? merge_with->switch_ID : switchID++);
-    setup->read("switch-transform", switch_transform, merge_with ? merge_with->switch_transform : 1);
+    setup->read("switch-button",    switch_Button,      pMerge(switch_Button, false));
+    setup->read("switch-block",     switch_Block,       pMerge(switch_Block, false));
+    setup->read("switch-id",        switch_ID,          pMerge(switch_ID, switchID++));
+    setup->read("switch-transform", switch_transform,   pMerge(switch_transform, 1));
 
-    setup->read("player-switch-button", plSwitch_Button, merge_with ? merge_with->plSwitch_Button : false);
-    setup->read("player-switch-button-id", plSwitch_Button_id, merge_with ? merge_with->plSwitch_Button_id : 0);
+    setup->read("player-switch-button",     plSwitch_Button,    pMerge(plSwitch_Button, false));
+    setup->read("player-switch-button-id",  plSwitch_Button_id, pMerge(plSwitch_Button_id, 0));
     plSwitch_frames_true.clear();
     plSwitch_frames_false.clear();
     frame_sequence.clear();
@@ -168,17 +170,17 @@ bool BlockSetup::parse(IniProcessing *setup,
         frame_sequence = plSwitch_frames_false;
     }
 
-    setup->read("player-filter-block", plFilter_Block, merge_with ? merge_with->plSwitch_Button : false);
-    setup->read("player-filter-block-id", plFilter_Block_id, merge_with ? merge_with->plFilter_Block_id : 0u);
+    setup->read("player-filter-block",      plFilter_Block,     pMerge(plSwitch_Button, false));
+    setup->read("player-filter-block-id",   plFilter_Block_id,  pMerge(plFilter_Block_id, 0u));
     plFilter_frames_true.clear();
     plFilter_frames_false.clear();
 
     if(plFilter_Block)
     {
         setup->read("player-filter-frames-true", plFilter_frames_true,
-                    merge_with ? merge_with->plFilter_frames_true : plFilter_frames_true);
+                    pMerge(plFilter_frames_true, plFilter_frames_true));
         setup->read("player-filter-frames-false", plFilter_frames_false,
-                    merge_with ? merge_with->plFilter_frames_false : plFilter_frames_false);
+                    pMerge(plFilter_frames_false, plFilter_frames_false));
 
         frame_sequence = plFilter_frames_false;
     }
@@ -189,18 +191,18 @@ bool BlockSetup::parse(IniProcessing *setup,
                         {"foreground", 1}
                     });
 
-    setup->read("animated", animated, (merge_with ? merge_with->animated : false));
-    setup->read("animation-reverse", animation_rev, (merge_with ? merge_with->animation_rev : false)); //Reverse animation
-    setup->read("animation-bidirectional", animation_bid, (merge_with ? merge_with->animation_bid : false)); //Bidirectional animation
-    setup->read("frames", frames, (merge_with ? merge_with->frames : 1));
+    setup->read("animated",                 animated,       pMerge(animated, false));
+    setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation
+    setup->read("animation-bidirectional",  animation_bid,  pMerge(animation_bid, false)); //Bidirectional animation
+    setup->read("frames",                   frames,         pMerge(frames, 1));
     NumberLimiter::apply(frames, 1u);
-    setup->read("framespeed", framespeed, (merge_with ? merge_with->framespeed : 125));
+    setup->read("framespeed",               framespeed,     pMerge(framespeed, 125));
     NumberLimiter::apply(framespeed, 1u);
-    setup->read("hit-sound-id", hit_sound_id, merge_with ? merge_with->hit_sound_id : 0);
+    setup->read("hit-sound-id",             hit_sound_id,   pMerge(hit_sound_id, 0));
     NumberLimiter::apply(hit_sound_id, 0u);
-    setup->read("destroy-sound-id", destroy_sound_id, merge_with ? merge_with->destroy_sound_id : 0);
+    setup->read("destroy-sound-id",         destroy_sound_id,pMerge(destroy_sound_id, 0));
     NumberLimiter::apply(destroy_sound_id, 0u);
-    frame_h = (animated ? (uint(h) / frames) : uint(h));
+    frame_h = (animated ? (h / frames) : h);
 
     //Retreiving frame sequence from playable character switch/filter blocks
     if(!plSwitch_Button && !plFilter_Block)
@@ -210,15 +212,21 @@ bool BlockSetup::parse(IniProcessing *setup,
     }
 
     setup->read("display-frame", display_frame, 0);
-    long iTmp;
-    setup->read("default-invisible", iTmp, (merge_with ? merge_with->default_invisible : -1));
+
+    int64_t iTmp;
+    setup->read("default-invisible", iTmp, pMerge(default_invisible, -1));
     default_invisible = (iTmp >= 0);
     default_invisible_value = (iTmp >= 0) ? bool(iTmp) : false;
-    setup->read("default-slippery", iTmp, (merge_with ? merge_with->default_slippery : -1));
+
+    setup->read("default-slippery", iTmp, pMerge(default_slippery, -1));
     default_slippery = (iTmp >= 0);
     default_slippery_value  = (iTmp >= 0) ? bool(iTmp) : false;
-    setup->read("default-npc-content", iTmp, (merge_with ? merge_with->default_content : -1));
-    default_content = (iTmp >= 0);
-    default_content_value   = (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
+
+    setup->read("default-npc-content", iTmp, pMerge(default_content, -1));
+    default_content =           (iTmp >= 0);
+    default_content_value   =   (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
+
+    #undef pMerge
+    #undef pMergeMe
     return true;
 }

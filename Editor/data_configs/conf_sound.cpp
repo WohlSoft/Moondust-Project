@@ -17,9 +17,7 @@
  */
 
 #include <QFile>
-
 #include <main_window/global_settings.h>
-
 #include "data_configs.h"
 
 long dataconfigs::getSndI(unsigned long itemID)
@@ -41,14 +39,15 @@ void dataconfigs::loadSound()
     if(sound_ini.isEmpty())
         return;
 
-    QSettings soundset(sound_ini, QSettings::IniFormat);
-    soundset.setIniCodec("UTF-8");
+    IniProcessing soundset(sound_ini);
 
     main_sound.clear();   //Clear old
 
     if(!openSection(&soundset, "sound-main")) return;
-        sound_total = soundset.value("total", 0).toUInt();
+    {
+        soundset.read("total", sound_total, 0);
         total_data +=sound_total;
+    }
     closeSection(&soundset);
 
     emit progressPartNumber(9);
@@ -74,32 +73,33 @@ void dataconfigs::loadSound()
         bool valid=true;
         emit progressValue(int(i));
 
-        if(!openSection(&soundset, QString("sound-%1").arg(i)) )
+        if(!openSection(&soundset, QString("sound-%1").arg(i).toStdString()) )
             break;
-
-            sound.name = soundset.value("name", "").toString();
+        {
+            soundset.read("name", sound.name, "");
             if(sound.name.isEmpty())
             {
                 valid = false;
                 addError(QString("Sound-%1 Item name isn't defined").arg(i));
             }
-            sound.file = soundset.value("file", "").toString();
+
+            soundset.read("file", sound.file, "");
             if(sound.file.isEmpty())
             {
                 valid = false;
                 addError(QString("Sound-%1 Item file isn't defined").arg(i));
             }
+
             sound.hidden = soundset.value("hidden", "0").toBool();
             sound.id = i;
             main_sound.storeElement(int(i), sound, valid);
+        }
         closeSection(&soundset);
 
-        if( soundset.status() != QSettings::NoError )
+        if( soundset.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.lastError()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }
-
 }
-

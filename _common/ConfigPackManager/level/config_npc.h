@@ -67,21 +67,21 @@ struct NpcSetup
      * @param local SMBX64-NPC.txt structure readen from a file
      * @param global Default NPC configuration for specific NPC-ID
      */
-    void applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, const QSize &captured = QSize(0,0));
+    void applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, uint32_t captured_w = 0, uint32_t captured_h = 0);
 
     uint64_t          id = 0;     //    [npc-1]
     PGEString         name;       //    name="Goomba"
-    PGEString         group;      //    group="Enemy" 		;The sort category
-    PGEString         category;   //    category="Enemy"		;The sort category
+    PGEString         group = "_NoGroup";      //    group="Enemy" 		;The sort category
+    PGEString         category = "_Other";   //    category="Enemy"		;The sort category
     PGEString         image_n;    //    image="npc-1.gif"		;NPC Image file
     PGEString         mask_n;
     PGEString         algorithm_script;   //    ; Filename of the lua algorithm
     //!Name of global level function to process NPC death effect
     PGEString         effect_function;
     //!LEGACY: effect on stomp death reason
-    uint32_t          effect_1;     //default-effect=2		;Spawn effect ID on jump-die
+    uint32_t          effect_1 = 0;     //default-effect=2		;Spawn effect ID on jump-die
     //!LEGACY: effect on other death reasons except lava burn
-    uint32_t          effect_2;     //shell-effect=4        ;effect on kick by shell or other NPC
+    uint32_t          effect_2 = 0;     //shell-effect=4        ;effect on kick by shell or other NPC
 
     //    ; graphics
     //! Offset X of sprite relative to center<->center position (dependent to direction, may be multipled to -1)
@@ -89,9 +89,9 @@ struct NpcSetup
     //! Offset Y of sprite relative to bottom<->bottom position of NPC
     int32_t           gfx_offset_y = 0;   //    gfx-offst-y=2
     //! Height of frame (if not defined, will be calculated from count of the frames)
-    int32_t           gfx_h = 0;          //    gfx-height-y=32
+    uint32_t          gfx_h = 0;          //    gfx-height-y=32
     //! Width of frame (if not defined, will be copied from actual sprite image width)
-    int32_t           gfx_w = 0;          //    gfx-width-y=32
+    uint32_t          gfx_w = 0;          //    gfx-width-y=32
     //! Allow automatic mapping of the customized hitbox metrics to frame size
     bool              custom_physics_to_gfx = false; //The GFX size defining by physics size in the custom configs
     //! Size of alignment grid while placing mode

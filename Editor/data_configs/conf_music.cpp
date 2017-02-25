@@ -17,9 +17,8 @@
  */
 
 #include <QFile>
-
+#include <QString>
 #include <main_window/global_settings.h>
-
 #include "data_configs.h"
 
 long dataconfigs::getMusLvlI(unsigned long itemID)
@@ -60,23 +59,24 @@ void dataconfigs::loadMusic()
     if(music_ini.isEmpty())
         return;
 
-    QSettings musicset(music_ini, QSettings::IniFormat);
-    musicset.setIniCodec("UTF-8");
+    IniProcessing musicset(music_ini);
 
     main_music_lvl.clear();   //Clear old
     main_music_wld.clear();   //Clear old
     main_music_spc.clear();   //Clear old
 
     if(!openSection(&musicset, "music-main")) return;
-        music_lvl_total = musicset.value("total-level", 0).toUInt();
-        music_wld_total = musicset.value("total-world", 0).toUInt();
-        music_spc_total = musicset.value("total-special", 0).toUInt();
+    {
+        musicset.read("total-level", music_lvl_total, 0);
+        musicset.read("total-world", music_wld_total, 0);
+        musicset.read("total-special", music_spc_total, 0);
 
-        music_custom_id     = musicset.value("level-custom-music-id", 24).toUInt();
-        music_w_custom_id   = musicset.value("world-custom-music-id", 17).toUInt();
+        musicset.read("level-custom-music-id", music_custom_id,     24);
+        musicset.read("world-custom-music-id", music_w_custom_id,   17);
         total_data += music_lvl_total;
         total_data += music_wld_total;
         total_data += music_spc_total;
+    }
     closeSection(&musicset);
 
     emit progressPartNumber(8);
@@ -111,27 +111,31 @@ void dataconfigs::loadMusic()
         bool valid=true;
         emit progressValue(int(i));
 
-        if(!openSection(&musicset, QString("world-music-%1").arg(i)) )
+        if(!openSection(&musicset, QString("world-music-%1").arg(i).toStdString()) )
             break;
-            smusic_wld.name = musicset.value("name", "").toString();
+        {
+            musicset.read("name", smusic_wld.name, "");
             if(smusic_wld.name.isEmpty())
             {
                 valid=false;
                 addError(QString("WLD-Music-%1 Item name isn't defined").arg(i));
             }
-            smusic_wld.file = musicset.value("file", "").toString();
+
+            musicset.read("file", smusic_wld.file, "");
             if(smusic_wld.file.isEmpty())
             {
                 valid=false;
                 addError(QString("WLD-Music-%1 Item file isn't defined").arg(i));
             }
+
             smusic_wld.id = i;
             main_music_wld.storeElement(int(i), smusic_wld, valid);
+        }
         closeSection(&musicset);
 
-        if( musicset.status() != QSettings::NoError )
+        if( musicset.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING music.ini N:%1 (world music %2)").arg(musicset.lastError()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }
@@ -143,29 +147,31 @@ void dataconfigs::loadMusic()
         bool valid=true;
         emit progressValue(int(i));
 
-        if(!openSection(&musicset, QString("special-music-%1").arg(i)) )
+        if(!openSection(&musicset, QString("special-music-%1").arg(i).toStdString()) )
             break;
-
-            smusic_spc.name = musicset.value("name", "").toString();
+        {
+            musicset.read("name", smusic_spc.name, "");
             if(smusic_spc.name.isEmpty())
             {
                 valid=false;
                 addError(QString("SPC-Music-%1 Item name isn't defined").arg(i));
             }
-            smusic_spc.file = musicset.value("file", "").toString();
+
+            musicset.read("file", smusic_spc.file, "");
             if(smusic_spc.file.isEmpty())
             {
                 valid=false;
                 addError(QString("SPC-Music-%1 Item file isn't defined").arg(i));
             }
+
             smusic_spc.id = i;
             main_music_spc.storeElement(int(i), smusic_spc, valid);
-
+        }
         closeSection(&musicset);
 
-        if( musicset.status() != QSettings::NoError )
+        if( musicset.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString(QString("ERROR LOADING music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i)), PGE_LogLevel::Critical);
+            addError(QString(QString("ERROR LOADING music.ini N:%1 (special music %2)").arg(musicset.lastError()).arg(i)), PGE_LogLevel::Critical);
             break;
         }
     }
@@ -178,14 +184,17 @@ void dataconfigs::loadMusic()
         bool valid=true;
         emit progressValue(int(i));
 
-        if(!openSection(&musicset, QString("level-music-%1").arg(i)) ) break;
-            smusic_lvl.name = musicset.value("name", "").toString();
+        if(!openSection(&musicset, QString("level-music-%1").arg(i).toStdString()) )
+            break;
+        {
+            musicset.read("name", smusic_lvl.name, "");
             if(smusic_lvl.name.isEmpty())
             {
                 addError(QString("LVL-Music-%1 Item name isn't defined").arg(i));
                 valid=false;
             }
-            smusic_lvl.file = musicset.value("file", "").toString();
+
+            musicset.read("file", smusic_lvl.file, "");
             if(smusic_lvl.file.isEmpty()&&(i != music_custom_id))
             {
                 addError(QString("LVL-Music-%1 Item file isn't defined").arg(i));
@@ -193,11 +202,12 @@ void dataconfigs::loadMusic()
             }
             smusic_lvl.id = i;
             main_music_lvl.storeElement(int(i), smusic_lvl, valid);
+        }
         closeSection(&musicset);
 
-        if( musicset.status() != QSettings::NoError )
+        if( musicset.lastError() != IniProcessing::ERR_OK )
         {
-            addError(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.lastError()).arg(i), PGE_LogLevel::Critical);
             break;
         }
     }

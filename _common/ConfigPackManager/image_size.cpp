@@ -20,7 +20,7 @@
 #include <SDL2/SDL_rwops.h>
 #include <Utils/files.h>
 
-static bool tryGIF(SDL_RWops* file, int *w, int *h)
+static bool tryGIF(SDL_RWops* file, uint32_t *w, uint32_t *h)
 {
     SDL_RWseek(file, 0, RW_SEEK_SET);
     const char *GIF1 = "GIF87a";
@@ -47,20 +47,14 @@ static bool tryGIF(SDL_RWops* file, int *w, int *h)
         return false;
 
 #define UINT(d) static_cast<unsigned int>(d)
-    *w = static_cast<int>((UINT(size[0]) & 0x00FF) | ((UINT(size[1]) << 8) & 0xFF00));
-    *h = static_cast<int>((UINT(size[2]) & 0x00FF) | ((UINT(size[3]) << 8) & 0xFF00));
+    *w = ((UINT(size[0]) & 0x00FF) | ((UINT(size[1]) << 8) & 0xFF00));
+    *h = ((UINT(size[2]) & 0x00FF) | ((UINT(size[3]) << 8) & 0xFF00));
 #undef UINT
-
-    if(*w < 0)
-        return false;
-
-    if(*h < 0)
-        return false;
 
     return true;
 }
 
-static bool tryBMP(SDL_RWops* file, int *w, int *h)
+static bool tryBMP(SDL_RWops* file, uint32_t *w, uint32_t *h)
 {
     SDL_RWseek(file, 0, RW_SEEK_SET);
     const char *BMP = "BM";
@@ -81,20 +75,14 @@ static bool tryBMP(SDL_RWops* file, int *w, int *h)
         return false;
 
 #define UINT(d) static_cast<unsigned int>(d)
-    *w = static_cast<int>((UINT(size[3]) & 0xFF) | ((UINT(size[2]) << 8) & 0xFF00) | ((UINT(size[1]) << 16) & 0xFF0000) | ((UINT(size[0]) << 24) & 0xFF000000));
-    *h = static_cast<int>((UINT(size[7]) & 0xFF) | ((UINT(size[6]) << 8) & 0xFF00) | ((UINT(size[5]) << 16) & 0xFF0000) | ((UINT(size[4]) << 24) & 0xFF000000));
+    *w = ((UINT(size[3]) & 0xFF) | ((UINT(size[2]) << 8) & 0xFF00) | ((UINT(size[1]) << 16) & 0xFF0000) | ((UINT(size[0]) << 24) & 0xFF000000));
+    *h = ((UINT(size[7]) & 0xFF) | ((UINT(size[6]) << 8) & 0xFF00) | ((UINT(size[5]) << 16) & 0xFF0000) | ((UINT(size[4]) << 24) & 0xFF000000));
 #undef UINT
-
-    if(*w < 0)
-        return false;
-
-    if(*h < 0)
-        return false;
 
     return true;
 }
 
-static bool tryPNG(SDL_RWops* file, int *w, int *h)
+static bool tryPNG(SDL_RWops* file, uint32_t *w, uint32_t *h)
 {
     SDL_RWseek(file, 0, RW_SEEK_SET);
     const char *PNG  = "\211PNG\r\n\032\n";
@@ -119,25 +107,19 @@ static bool tryPNG(SDL_RWops* file, int *w, int *h)
         return false;
 
 #define UINT(d) static_cast<unsigned int>(d)
-    *w = static_cast<int>((UINT(size[3]) & 0xFF) | ((UINT(size[2]) << 8) & 0xFF00) | ((UINT(size[1]) << 16) & 0xFF0000) | ((UINT(size[0]) << 24) & 0xFF000000));
-    *h = static_cast<int>((UINT(size[7]) & 0xFF) | ((UINT(size[6]) << 8) & 0xFF00) | ((UINT(size[5]) << 16) & 0xFF0000) | ((UINT(size[4]) << 24) & 0xFF000000));
+    *w = ((UINT(size[3]) & 0xFF) | ((UINT(size[2]) << 8) & 0xFF00) | ((UINT(size[1]) << 16) & 0xFF0000) | ((UINT(size[0]) << 24) & 0xFF000000));
+    *h = ((UINT(size[7]) & 0xFF) | ((UINT(size[6]) << 8) & 0xFF00) | ((UINT(size[5]) << 16) & 0xFF0000) | ((UINT(size[4]) << 24) & 0xFF000000));
 #undef UINT
-
-    if(*w < 0)
-        return false;
-
-    if(*h < 0)
-        return false;
 
     return true;
 }
 
-bool PGE_ImageInfo::getImageSize(QString imagePath, int *w, int *h, int *errCode)
+bool PGE_ImageInfo::getImageSize(QString imagePath, uint32_t *w, uint32_t *h, int *errCode)
 {
     return getImageSize(imagePath.toStdString(), w, h, errCode);
 }
 
-bool PGE_ImageInfo::getImageSize(std::string imagePath, int *w, int *h, int *errCode)
+bool PGE_ImageInfo::getImageSize(std::string imagePath, uint32_t *w, uint32_t *h, int *errCode)
 {
     bool ret = false;
     if(errCode)

@@ -658,7 +658,9 @@ void NpcEdit::loadPreview()
     }
 
     obj_npc targetNPC = defaultNPC;
-    targetNPC.setup.applyNPCtxt(&NpcData, targetNPC.setup, npcImage.size());
+    uint32_t npcImgW = static_cast<uint32_t>(npcImage.size().width());
+    uint32_t npcImgH = static_cast<uint32_t>(npcImage.size().height());
+    targetNPC.setup.applyNPCtxt(&NpcData, targetNPC.setup, npcImgW, npcImgH);
 
     LevelNPC npcData = FileFormats::CreateLvlNpc();
     npcData.id = npc_id;
@@ -707,7 +709,9 @@ void NpcEdit::updatePreview()
         return;
 
     obj_npc merged = defaultNPC;
-    merged.setup.applyNPCtxt(&NpcData, merged.setup, npcImage.size());
+    uint32_t npcImgW = static_cast<uint32_t>(npcImage.size().width());
+    uint32_t npcImgH = static_cast<uint32_t>(npcImage.size().height());
+    merged.setup.applyNPCtxt(&NpcData, merged.setup, npcImgW, npcImgH);
 
     LevelNPC npcData = FileFormats::CreateLvlNpc();
     npcData.id = npc_id;

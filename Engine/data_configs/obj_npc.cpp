@@ -23,6 +23,8 @@
 #include <common_features/number_limiter.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
+#include <fmt/fmt_format.h>
+#include <Utils/files.h>
 
 #include <QFileInfo>
 #include <QDir>
@@ -35,16 +37,19 @@ CustomDirManager            ConfigManager::Dir_NPCScript;
 QList<AdvNpcAnimator >      ConfigManager::Animator_NPC;
 /*****Level NPC************/
 
-bool ConfigManager::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadLevelNPC(obj_npc &snpc,
+                                 std::string section,
+                                 obj_npc *merge_with,
+                                 std::string iniFile,
+                                 IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
-    QString errStr;
+    std::string errStr;
 
     if(internal)
     {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
     snpc.isInit = false;
@@ -79,44 +84,44 @@ bool ConfigManager::loadLevelNPC()
     obj_npc snpc;
     unsigned long npc_total = 0;
     bool useDirectory = false;
-    PGESTRING npc_ini = config_dir + "lvl_npc.ini";
-    QString nestDir = "";
+    PGESTRING npc_ini = config_dirSTD + "lvl_npc.ini";
+    PGESTRING nestDir = "";
 
-    if(!QFile::exists(npc_ini))
+    if(!Files::fileExists(npc_ini))
     {
-        addError(PGESTRING("ERROR LOADING lvl_npc.ini: file does not exist"), QtCriticalMsg);
+        addError("ERROR LOADING lvl_npc.ini: file does not exist");
         PGE_MsgBox msgBox(NULL, PGESTRING("ERROR LOADING lvl_npc.ini: file does not exist"),
                           PGE_MsgBox::msg_fatal);
         msgBox.exec();
         return false;
     }
 
-    QSettings npcset(npc_ini, QSettings::IniFormat);
-    npcset.setIniCodec("UTF-8");
+    IniProcessing npcset(npc_ini);
+
     lvl_npc_indexes.clear();   //Clear old
     npcset.beginGroup("npc-main");
     npc_total =                  npcset.value("total", 0).toULongLong();
     nestDir =                    npcset.value("config-dir", "").toString();
 
-    if(!nestDir.isEmpty())
+    if(!nestDir.empty())
     {
-        nestDir = config_dir + nestDir;
+        nestDir = config_dirSTD + nestDir;
         useDirectory = true;
     }
 
-    g_setup_npc.coin_in_block =  npcset.value("coin-in-block", 10).toULongLong();
-    g_setup_npc.phs_gravity_accel = npcset.value("physics-gravity-acceleration", 16.25).toDouble();
-    g_setup_npc.phs_max_fall_speed = npcset.value("physics-max-fall-speed", 8).toDouble();
-    g_setup_npc.eff_lava_burn =  npcset.value("effect-lava-burn", 13).toULongLong();
-    g_setup_npc.projectile_sound_id = npcset.value("projectile-sound-id", 0).toInt();
+    npcset.read("coin-in-block", g_setup_npc.coin_in_block, 10);
+    npcset.read("physics-gravity-acceleration", g_setup_npc.phs_gravity_accel, 16.25);
+    npcset.read("physics-max-fall-speed", g_setup_npc.phs_max_fall_speed, 8.0);
+    npcset.read("effect-lava-burn", g_setup_npc.eff_lava_burn, 13);
+    npcset.read("projectile-sound-id", g_setup_npc.projectile_sound_id, 0);
     g_setup_npc.projectile_effect.fill("projectile", &npcset);
-    g_setup_npc.projectile_speed = npcset.value("projectile-speed", 10.0f).toDouble();
-    g_setup_npc.talking_sign_img = npcset.value("talking-sign-image", "").toString();
+    npcset.read("projectile-speed", g_setup_npc.projectile_speed, 10.0);
+    npcset.read("talking-sign-image", g_setup_npc.talking_sign_img, "");
     npcset.endGroup();
 
     if(npc_total == 0)
     {
-        PGE_MsgBox::error(PGESTRING("ERROR LOADING lvl_npc.ini: number of items not define, or empty config"));
+        PGE_MsgBox::error("ERROR LOADING lvl_npc.ini: number of items not define, or empty config");
         return false;
     }
 
@@ -126,12 +131,12 @@ bool ConfigManager::loadLevelNPC()
     {
         if(useDirectory)
         {
-            if(!loadLevelNPC(snpc, "npc", nullptr, QString("%1/npc-%2.ini").arg(nestDir).arg(i)))
+            if(!loadLevelNPC(snpc, "npc", nullptr, fmt::format("{0}/npc-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadLevelNPC(snpc, QString("npc-%1").arg(i), nullptr, "", &npcset))
+            if(!loadLevelNPC(snpc, fmt::format("npc-{0}", i), nullptr, "", &npcset))
                 return false;
         }
 
@@ -140,15 +145,15 @@ bool ConfigManager::loadLevelNPC()
         //Process NPC.txt if possible
         loadNpcTxtConfig(i);
 
-        if(npcset.status() != QSettings::NoError)
+        if(npcset.lastError() != IniProcessing::ERR_OK)
         {
-            PGE_MsgBox::fatal(PGESTRING("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i));
+            PGE_MsgBox::fatal(fmt::format("ERROR LOADING lvl_npc.ini N:{0} (npc-{1})", npcset.lastError(), i));
             return false;
         }
     }
 
     if(lvl_npc_indexes.stored() < npc_total)
-        PGE_MsgBox::warn(PGESTRING("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(lvl_npc_indexes.stored()));
+        PGE_MsgBox::warn(fmt::format("Not all NPCs loaded! Total: {0}, Loaded: {1})", npc_total, lvl_npc_indexes.stored()));
 
     return true;
 }
@@ -162,9 +167,9 @@ void ConfigManager::loadNpcTxtConfig(unsigned long npcID)
         return;
 
     obj_npc *npcSetup = &lvl_npc_indexes[npcID];
-    PGESTRING file = Dir_NPC.getCustomFile(PGESTRING("npc-%1.txt").arg(npcID));
+    PGESTRING file = Dir_NPC.getCustomFile(fmt::format("npc-{0}.txt", npcID));
 
-    if(file.isEmpty())
+    if(file.empty())
         return;
 
     if(!FileFormats::ReadNpcTXTFileF(file, npcTxt, true))
@@ -173,7 +178,7 @@ void ConfigManager::loadNpcTxtConfig(unsigned long npcID)
     PGESTRING image = npcSetup->setup.image_n;
 
     //Take updated image info
-    if(npcTxt.en_image && (!npcTxt.image.isEmpty()) && (npcTxt.image != npcSetup->setup.image_n))
+    if(npcTxt.en_image && (!npcTxt.image.empty()) && (npcTxt.image != npcSetup->setup.image_n))
     {
         image = Dir_NPC.getCustomFile(npcTxt.image);
         GraphicsHelps::getImageMetrics(image, &npcSetup->image_size);
@@ -184,5 +189,8 @@ void ConfigManager::loadNpcTxtConfig(unsigned long npcID)
         GraphicsHelps::getImageMetrics(image, &npcSetup->image_size);
     }
 
-    npcSetup->setup.applyNPCtxt(&npcTxt, npcSetup->setup, QSize(npcSetup->image_size.w(), npcSetup->image_size.h()));
+    npcSetup->setup.applyNPCtxt(&npcTxt,
+                                npcSetup->setup,
+                                static_cast<uint32_t>(npcSetup->image_size.w()),
+                                static_cast<uint32_t>(npcSetup->image_size.h()));
 }

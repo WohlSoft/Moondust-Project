@@ -404,15 +404,19 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         if(npctxt)
         {
             //Merge global and user's settings from NPC.txt file
-            t_npc.setup.applyNPCtxt(&sets, t_npc.setup, capturedS);
+            uint32_t npcImgW = static_cast<uint32_t>(capturedS.width());
+            uint32_t npcImgH = static_cast<uint32_t>(capturedS.height());
+            t_npc.setup.applyNPCtxt(&sets, t_npc.setup, npcImgW, npcImgH);
         }
         else
         {
             if(cimage)
             {
                 NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXT();
-                autoConf.gfxwidth = capturedS.width();
-                t_npc.setup.applyNPCtxt(&autoConf, t_npc.setup, capturedS);
+                uint32_t npcImgW = static_cast<uint32_t>(capturedS.width());
+                uint32_t npcImgH = static_cast<uint32_t>(capturedS.height());
+                autoConf.gfxwidth = npcImgW;
+                t_npc.setup.applyNPCtxt(&autoConf, t_npc.setup, npcImgW, npcImgH);
             }
         }
 
@@ -432,7 +436,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
              *t_npc.cur_image),
             t_npc);
 
-        t_npc.animator_id = m_animatorsNPC.size();
+        t_npc.animator_id = uint64_t(m_animatorsNPC.size());
         m_animatorsNPC.push_back(aniNPC);
 
         m_localConfigNPCs.storeElement(i, t_npc);

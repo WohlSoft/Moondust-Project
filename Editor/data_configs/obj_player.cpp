@@ -24,18 +24,20 @@ void dataconfigs::loadPlayers()
 {
     main_characters.clear();
 
-    unsigned long i;
-    unsigned long players_total=0;
+    uint64_t i;
+    uint64_t players_total = 0;
 
     QString player_ini = getFullIniPath("lvl_characters.ini");
     if(player_ini.isEmpty())
         return;
 
-    QSettings setup(player_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(player_ini);
 
-    if(!openSection(&setup, "main-characters")) return;
-        players_total = static_cast<unsigned long>(setup.value("total", 0u).toUInt());
+    if(!openSection(&setup, "main-characters"))
+        return;
+    {
+        setup.read("total", players_total, 0u);
+    }
     closeSection(&setup);
 
     ConfStatus::total_characters = static_cast<long>(players_total);
@@ -46,7 +48,7 @@ void dataconfigs::loadPlayers()
     }
 
     main_characters.reserve(static_cast<int>(players_total));
-    for(i=1; i<=players_total; i++)
+    for(i = 1; i <= players_total; i++)
     {
         obj_player splayer;
         splayer.wld_offset_y = 0;
@@ -56,35 +58,39 @@ void dataconfigs::loadPlayers()
         splayer.frame_height = 100;
         splayer.statesCount  = 0;
 
-        if(!openSection(&setup, QString("character-%1").arg(i)))
+        if(!openSection(&setup, QString("character-%1").arg(i).toStdString()))
             return;
+        {
             splayer.id = i;
-            splayer.name = setup.value("name", QString("player %1").arg(i) ).toString();
+            setup.read("name", splayer.name, QString("player %1").arg(i));
             if(splayer.name.isEmpty())
             {
                 addError(QString("Player-%1 Item name isn't defined").arg(i));
                 closeSection(&setup);
                 continue;
             }
-            splayer.sprite_folder = setup.value("sprite-folder", QString("player-%1").arg(i) ).toString();
-            splayer.state_type =  setup.value("sprite-folder", 0 ).toInt();
-            splayer.matrix_width = setup.value("matrix-width", 10 ).toInt();
-            splayer.matrix_height = setup.value("matrix-height", 10 ).toInt();
-            splayer.script =  setup.value("script-file", "" ).toString();
-            splayer.statesCount = setup.value("states-number", 0 ).toInt();
+            setup.read("sprite-folder", splayer.sprite_folder, QString("player-%1").arg(i));
+            setup.read("sprite-folder", splayer.state_type, 0);
+            setup.read("matrix-width",  splayer.matrix_width, 10);
+            setup.read("matrix-height", splayer.matrix_height, 10);
+            setup.read("script-file",   splayer.script, "");
+            setup.read("states-number", splayer.statesCount, 0);
             if(splayer.statesCount == 0)
             {
                 addError(QString("player-%1 has no states!").arg(i));
                 closeSection(&setup);
                 continue;
             }
+        }
         closeSection(&setup);
 
         for(int j=1; j<=splayer.statesCount; j++)
         {
             obj_player_state pstate;
-            openSection(&setup, QString("character-%1-state-%2").arg(i).arg(j) );
-                pstate.name = setup.value("name", QString("State %1").arg(j) ).toString();
+            openSection(&setup, QString("character-%1-state-%2").arg(i).arg(j).toStdString() );
+            {
+                setup.read("name", pstate.name, QString("State %1").arg(j));
+            }
             closeSection(&setup);
 
             splayer.states.push_back(pstate);
