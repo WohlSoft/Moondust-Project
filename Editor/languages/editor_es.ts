@@ -3873,54 +3873,56 @@ De otra manera será muy limitado.</translation>
         <location filename="../main_window/testing/luna_tester.cpp" line="193"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Probar nivel</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="195"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Comienza las pruebas en el motor clásico.
+Para que funcione, LunaLUA debe estar actualizado.
+De otra manera, estará limitado.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="206"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitar OpenGL</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="207"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitar OpenGL y usar GDI. Útil si su placa gráfica no soporta OpenGL o LunaLua colapsa al usarlo.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="213"/>
         <source>Termitate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="unfinished">Terminar proceso congelado</translation>
+        <translation>Terminar proceso congelado</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="219"/>
         <source>Start Legacy Engine</source>
         <comment>Launch legacy engine in game mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lanzar motor clásico</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="221"/>
         <source>Launch legacy engine in game mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanzar el motor clásico en modo de juego.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="262"/>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede usar LunaTester en mapa porque el motor clásico no permite probar mapas. En su lugar, puede usar el motor PGE (&quot;Prueba&quot; -&gt; &quot;Probar archivo guardado&quot;) para probar el mapa sin el episodio entero.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="309"/>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="unfinished">El proceso no se está ejecutando.</translation>
+        <translation>El proceso no se está ejecutando.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="916"/>
@@ -4086,18 +4088,19 @@ Será creado un archivo temporal. ¿Desea continuar?</translation>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1513"/>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
+        <translation>El directorio en Motor clásico no se configuró correctamente</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1514"/>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡%1 no hallado!
+¡Para usar LunaTester debería tener un paquete de configuración de Integración correcto!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1593"/>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposible lanzar el motor clásico, porque %1</translation>
     </message>
     <message>
         <source>SMBX Level test</source>
@@ -10940,7 +10943,7 @@ Foro: engine.wohlnet.ru/forum</translation>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="159"/>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
-        <translation type="unfinished"></translation>
+        <translation>¡El editor abortó por un error de memoria física! [SIGBUS]</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="169"/>
@@ -13278,12 +13281,12 @@ Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="111"/>
         <source>Make custom folder</source>
-        <translation type="unfinished">Hacer carpeta personalizada</translation>
+        <translation>Hacer carpeta personalizada</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="112"/>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nota: ¡las carpetas personalizadas no están soportadas por el motor SMBX!</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="156"/>
