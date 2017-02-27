@@ -45,12 +45,12 @@
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="314"/>
         <source>Physical memory address error!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Error de memoria física!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="316"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation type="unfinished"></translation>
+        <translation>El motor colapsó debido a un error de dirección de memoria física</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="333"/>
