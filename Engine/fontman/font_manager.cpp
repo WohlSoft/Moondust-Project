@@ -25,6 +25,8 @@
 #include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
 
+#include <PGE_File_Formats/ConvertUTF.h>
+
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
 #include <IniProcessor/ini_processing.h>
@@ -43,9 +45,9 @@
 
 #include <common_features/graphics_funcs.h>
 
-static int char2int(const QChar &ch)
+static int char2int(const char32_t &ch)
 {
-    return ch.toLatin1() - '0';
+    return static_cast<int>(ch - U'0');
 }
 
 /* //Currently unused, uncommend when it needed
@@ -55,7 +57,70 @@ static int char2int(const char& ch)
 }
 */
 
-RasterFont::RasterFont() : first_line_only("\n.*")
+/*
+ * Index into the table below with the first byte of a UTF-8 sequence to
+ * get the number of trailing bytes that are supposed to follow it.
+ * Note that *legal* UTF-8 values can't have 4 or 5-bytes. The table is
+ * left as-is for anyone who may want to do such conversion, which was
+ * allowed in earlier algorithms.
+ */
+static const char trailingBytesForUTF8[256] =
+{
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5
+};
+
+/*
+ * Magic values subtracted from a buffer value during UTF8 conversion.
+ * This table contains as many values as there might be trailing bytes
+ * in a UTF-8 sequence.
+ */
+static const UTF32 offsetsFromUTF8[6] = { 0x00000000UL, 0x00003080UL, 0x000E2080UL,
+             0x03C82080UL, 0xFA082080UL, 0x82082080UL };
+
+/**
+ * @brief Get single UTF32 character from firs character of UTF8 string
+ * @param str pointer to position on UTF8 string where need to find a character
+ * @return UTF32 character
+ */
+static inline char32_t get_utf8_char(const char*str)
+{
+    const UTF8 *source = reinterpret_cast<const UTF8*>(str);
+    UTF32 ch = 0;
+    uint16_t extraBytesToRead = static_cast<uint16_t>(trailingBytesForUTF8[*source]);
+
+    switch (extraBytesToRead)
+    {
+        case 5: ch += *source++; ch <<= 6; /* remember, illegal UTF-8 */
+        case 4: ch += *source++; ch <<= 6; /* remember, illegal UTF-8 */
+        case 3: ch += *source++; ch <<= 6;
+        case 2: ch += *source++; ch <<= 6;
+        case 1: ch += *source++; ch <<= 6;
+        case 0: ch += *source++;
+    }
+    ch -= offsetsFromUTF8[extraBytesToRead];
+    return static_cast<char32_t>(ch);
+}
+
+std::u32string std_to_utf32(const std::string &src)
+{
+    std::u32string dst_tmp;
+    dst_tmp.resize(src.size());
+    const UTF8* src_begin = reinterpret_cast<const UTF8*>(src.c_str());
+    const UTF8* src_end   = src_begin + src.size();
+    UTF32*      dst_begin = reinterpret_cast<UTF32*>(&dst_tmp[0]);
+    UTF32*      dst_end   = dst_begin + dst_tmp.size();
+    PGEFF_ConvertUTF8toUTF32(&src_begin, src_end, &dst_begin, dst_end, strictConversion);
+    return std::u32string(reinterpret_cast<char32_t*>(dst_begin));
+}
+
+RasterFont::RasterFont()
 {
     letter_width    = 0;
     letter_height   = 0;
@@ -69,7 +134,7 @@ RasterFont::RasterFont() : first_line_only("\n.*")
     fontName        = fmt::format("font{0}", rand());
 }
 
-RasterFont::RasterFont(const RasterFont &rf) : first_line_only("\n.*")
+RasterFont::RasterFont(const RasterFont &rf)
 {
     letter_width      = rf.letter_width;
     letter_height     = rf.letter_height;
@@ -104,7 +169,7 @@ void RasterFont::loadFont(std::string font_ini)
     std::string root = DirMan(Files::dirname(font_ini)).absolutePath() + "/";
     IniProcessing font(font_ini);
 
-    int tables = 0;
+    size_t tables = 0;
     font.beginGroup("font");
     font.read("tables", tables, 0);
     font.read("name", fontName, fontName);
@@ -118,7 +183,7 @@ void RasterFont::loadFont(std::string font_ini)
 
     font.beginGroup("tables");
 
-    for(int i = 1; i <= tables; i++)
+    for(size_t i = 1; i <= tables; i++)
     {
         std::string table;
         font.read(fmt::format("table{0}", i).c_str(), table, "");
@@ -173,7 +238,7 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
         pLogWarning("Failed to load font texture! Invalid image!");
 
     textures.push_back(fontTexture);
-    PGE_Texture *loadedTexture = &textures.last();
+    PGE_Texture *loadedTexture = &textures.back();
 
     if((letter_width == 0) || (letter_height == 0))
     {
@@ -242,8 +307,8 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
         if(charX.empty())
             continue;
 
-        QString ucharX = QString::fromStdString(charX);
-        QChar ch = ucharX[0];
+        std::u32string ucharX = std_to_utf32(charX);
+        char32_t ch = ucharX[0];
         //qDebug()<<"=char=" << ch << "=id="<<charPosX.toInt()<<charPosY.toInt()<<"=";
         RasChar rch;
         rch.valid = true;
@@ -259,60 +324,59 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
 
     font.endGroup();
 
-    if(!fontMap.isEmpty())
+    if(!fontMap.empty())
         isReady = true;
 }
 
-PGE_Size RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
+PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
 {
-    if(text.isEmpty())
+    if(text.empty())
         return PGE_Size(0, 0);
 
-    int lastspace = 0; //!< index of last found space character
-    int count = 1;  //!< Count of lines
+    size_t lastspace = 0; //!< index of last found space character
+    size_t count = 1;  //!< Count of lines
     int maxWidth = 0; //!< detected maximal width of message
     int widthSumm = 0;
     int widthSummMax = 0;
 
+    //unsigned short extraBytesToRead = trailingBytesForUTF8[*source];
+
     if(cut)
     {
-        for(int i = 0; i < text.size(); i++)
+        for(size_t i = 0; i < text.size(); i++)
         {
-            if(text[i] == QChar(QChar::LineFeed))
+            if(text[i] == '\n')
             {
-                text.remove(i, text.size() - i);
+                text.erase(i, text.size() - i);
                 break;
             }
         }
     }
 
     /****************Word wrap*********************/
-    for(int x = 0, i = 0; i < text.size(); i++, x++)
+    int x = 0;
+    for(size_t i = 0; i < text.size(); i++, x++)
     {
-        switch(text[i].toLatin1())
+        switch(text[i])
         {
         case '\t':
         case ' ':
             lastspace = i;
             widthSumm += space_width + interletter_space / 2;
-
-            if(widthSumm > widthSummMax) widthSummMax = widthSumm;
-
+            if(widthSumm > widthSummMax)
+                widthSummMax = widthSumm;
             break;
 
         case '\n':
             lastspace = 0;
-
             if((maxWidth < x) && (maxWidth < max_line_lenght)) maxWidth = x;
-
             x = 0;
             widthSumm = 0;
             count++;
             break;
 
         default:
-            RasChar rch = fontMap[text[i]];
-
+            RasChar rch = fontMap[get_utf8_char(&text[i])];
             if(rch.valid)
             {
                 widthSumm += (letter_width - rch.padding_left - rch.padding_right + interletter_space);
@@ -341,34 +405,37 @@ PGE_Size RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
             }
             else
             {
-                text.insert(i, QChar('\n'));
+                text.insert(i, 1, '\n');
                 x = 0;
                 count++;
             }
         }
+        i += static_cast<size_t>(trailingBytesForUTF8[static_cast<int>(text[i])]);
     }
 
     if(count == 1)
-        maxWidth = text.length();
+        maxWidth = static_cast<int>(text.length());
 
     /****************Word wrap*end*****************/
-    return PGE_Size(widthSummMax, newline_offset * count);
+    return PGE_Size(widthSummMax, newline_offset * static_cast<int>(count));
 }
 
-void RasterFont::printText(QString text, int x, int y, float Red, float Green, float Blue, float Alpha)
+void RasterFont::printText(const std::string &text, int x, int y, float Red, float Green, float Blue, float Alpha)
 {
-    if(fontMap.isEmpty()) return;
+    if(fontMap.empty())
+        return;
 
-    if(text.isEmpty()) return;
+    if(text.empty())
+        return;
 
     int offsetX = 0;
     int offsetY = 0;
     GLint w = letter_width;
     GLint h = letter_height;
 
-    for(QChar &cx : text)
+    for(const char &cx : text)
     {
-        switch(cx.toLatin1())
+        switch(cx)
         {
         case '\n':
             offsetX = 0;
@@ -384,8 +451,7 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
             continue;
         }
 
-        RasChar rch = fontMap[cx];
-
+        RasChar rch = fontMap[get_utf8_char(&cx)];
         if(rch.valid)
         {
             GlRenderer::BindTexture(rch.tx);
@@ -402,16 +468,18 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
         }
         else
         {
+            #ifdef PGE_TTF
             PGE_Texture c;
-
             if(ttf_borders)
                 FontManager::getChar2(cx, letter_width, c);
             else
                 FontManager::getChar1(cx, letter_width, c);
-
             GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
             GlRenderer::renderTexture(&c, x + offsetX, y + offsetY);
             offsetX += c.w + interletter_space;
+            #else
+            offsetX += interletter_space;
+            #endif
         }
     }
 
@@ -435,27 +503,35 @@ std::string RasterFont::getFontName()
 
 
 
-RasterFont         *FontManager::rFont = nullptr;
-QList<RasterFont>   FontManager::rasterFonts;
+RasterFont                 *FontManager::rFont = nullptr;
+std::vector<RasterFont>     FontManager::rasterFonts;
 
 bool FontManager::isInit = false;
+#ifdef PGE_TTF
 QHash<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_1;
 QHash<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_2;
+#endif
 
 FontManager::FontsHash FontManager::fonts;
 
 int     FontManager::fontID;
+#ifdef PGE_TTF
 QFont  *FontManager::defaultFont = nullptr;
+#endif
 bool    FontManager::double_pixled = false;
 
 void FontManager::initBasic()
 {
+    #ifdef PGE_TTF
     if(!defaultFont)
         defaultFont = new QFont();
 
     fontID = QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
     fontID = QFontDatabase::addApplicationFont(":/JosefinSans-Regular.ttf");
+    #endif
     double_pixled = false;
+
+    #ifdef PGE_TTF
     //Josefin Sans
     QString family("Monospace");
 
@@ -471,6 +547,8 @@ void FontManager::initBasic()
     defaultFont->setStyleStrategy(QFont::PreferBitmap);
     defaultFont->setLetterSpacing(QFont::AbsoluteSpacing, 1);
     //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
+    #endif
+
     isInit = true;
 }
 
@@ -494,22 +572,26 @@ void FontManager::initFull()
     {
         RasterFont rfont;
         rasterFonts.push_back(rfont);
-        rasterFonts.last().loadFont(fontsDir.absolutePath() + "/" + fonFile);
+        {
+            RasterFont& rf = rasterFonts.back();
+            rf.loadFont(fontsDir.absolutePath() + "/" + fonFile);
 
-        if(!rasterFonts.last().isLoaded())   //Pop broken font from array
-            rasterFonts.pop_back();
-        else   //Register font name in a table
-            fonts.insert({rasterFonts.last().getFontName(), rasterFonts.size() - 1});
+            if(!rf.isLoaded())   //Pop broken font from array
+                rasterFonts.pop_back();
+            else   //Register font name in a table
+                fonts.insert({rf.getFontName(), rasterFonts.size() - 1});
+        }
     }
 
-    if(!rasterFonts.isEmpty())
-        rFont = &rasterFonts.first();
+    if(!rasterFonts.empty())
+        rFont = &rasterFonts.front();
 }
 
 void FontManager::quit()
 {
     //Clean font cache
     //glDisable(GL_TEXTURE_2D);
+    #ifdef PGE_TTF
     QHash<TTFCharType, PGE_Texture>::iterator i;
 
     for(i = fontTable_1.begin(); i != fontTable_1.end(); ++i)
@@ -520,41 +602,50 @@ void FontManager::quit()
 
     fontTable_1.clear();
     fontTable_2.clear();
+    #endif
+
     fonts.clear();
     rasterFonts.clear();
 
+    #ifdef PGE_TTF
     if(defaultFont)
         delete defaultFont;
+    #endif
 }
 
-PGE_Size FontManager::textSize(QString &text, int fontID, int max_line_lenght, bool cut, int ttfFontPixelSize)
+PGE_Size FontManager::textSize(std::string &text, int fontID, int max_line_lenght, bool cut, int ttfFontPixelSize)
 {
-    if(!isInit) return PGE_Size(text.length() * 20, text.split(QChar(QChar::LineFeed)).size() * 20);
+    assert(isInit && "Font manager is not initialized!");
 
-    if(text.isEmpty()) return PGE_Size(0, 0);
+    if(!isInit)
+        return PGE_Size(27 * 20, (std::count(text.begin(), text.end(), '\n') + 1) * 20);
+
+    if(text.empty())
+        return PGE_Size(0, 0);
 
     if(max_line_lenght <= 0)
         max_line_lenght = 1000;
 
     if(cut)
     {
-        for(int i = 0; i < text.size(); i++)
+        for(size_t i = 0; i < text.size(); i++)
         {
-            if(text[i] == QChar(QChar::LineFeed))
+            if(text[i] == '\n')
             {
-                text.remove(i, text.size() - i);
+                text.erase(i, text.size() - i);
                 break;
             }
         }
     }
 
     //Use Raster font
-    if((fontID >= 0) && (fontID < rasterFonts.size()))
+    if((fontID >= 0) && (static_cast<size_t>(fontID) < rasterFonts.size()))
     {
         if(rasterFonts[fontID].isLoaded())
             return rasterFonts[fontID].textSize(text, max_line_lenght);
     }
 
+    #ifdef PGE_TTF
     //Use TTF font
     QFont fnt = font();
 
@@ -562,21 +653,27 @@ PGE_Size FontManager::textSize(QString &text, int fontID, int max_line_lenght, b
         fnt.setPixelSize(ttfFontPixelSize);
 
     QFontMetrics meter(fnt);
-    optimizeText(text, max_line_lenght);
-    QSize meterSize = meter.boundingRect(text).size();
+    QString qtext = QString::fromStdString(text);
+    optimizeText(qtext, max_line_lenght);
+    QSize meterSize = meter.boundingRect(qtext).size();
     return PGE_Size(meterSize.width(), meterSize.height());
+    #else
+    assert(false && "TTF FONTS SUPPORT IS DISABLED!");
+    (void)ttfFontPixelSize;
+    return PGE_Size(27 * 20, (std::count(text.begin(), text.end(), '\n') + 1) * 20);
+    #endif
 }
 
-void FontManager::optimizeText(QString &text, int max_line_lenght, int *numLines, int *numCols)
+void FontManager::optimizeText(std::string &text, size_t max_line_lenght, int *numLines, int *numCols)
 {
     /****************Word wrap*********************/
-    int lastspace = 0;
+    size_t lastspace = 0;
     int count = 1;
-    int maxWidth = 0;
+    size_t maxWidth = 0;
 
-    for(int x = 0, i = 0; i < text.size(); i++, x++)
+    for(size_t x = 0, i = 0; i < text.size(); i++, x++)
     {
-        switch(text[i].toLatin1())
+        switch(text[i])
         {
         case '\t':
         case ' ':
@@ -585,9 +682,8 @@ void FontManager::optimizeText(QString &text, int max_line_lenght, int *numLines
 
         case '\n':
             lastspace = 0;
-
-            if((maxWidth < x) && (maxWidth < max_line_lenght)) maxWidth = x;
-
+            if((maxWidth < x) && (maxWidth < max_line_lenght))
+                maxWidth = x;
             x = 0;
             count++;
             break;
@@ -605,11 +701,13 @@ void FontManager::optimizeText(QString &text, int max_line_lenght, int *numLines
             }
             else
             {
-                text.insert(i, QChar('\n'));
+                text.insert(i, 1, '\n');
                 x = 0;
                 count++;
             }
         }
+
+        i += static_cast<size_t>(trailingBytesForUTF8[static_cast<int>(text[i])]);
     }
 
     if(count == 1)
@@ -624,16 +722,16 @@ void FontManager::optimizeText(QString &text, int max_line_lenght, int *numLines
         *numCols = maxWidth;
 }
 
-QString FontManager::cropText(QString text, int max_symbols)
+std::string FontManager::cropText(std::string text, size_t max_symbols)
 {
     if(max_symbols <= 0)
         return text;
 
-    if(text.length() <= max_symbols)
+    if(text.size() <= max_symbols)
         return text;
 
     int i = max_symbols - 1;
-    text.remove(i, text.size() - i);
+    text.erase(i, text.size() - i);
     text.append("...");
     return text;
 }
@@ -644,13 +742,14 @@ QString FontManager::cropText(QString text, int max_symbols)
 
 
 
-void FontManager::printText(QString text, int x, int y, int font, float Red, float Green, float Blue, float Alpha, int ttf_FontSize)
+void FontManager::printText(std::string text, int x, int y, int font, float Red, float Green, float Blue, float Alpha, int ttf_FontSize)
 {
     if(!isInit) return;
 
-    if(text.isEmpty()) return;
+    if(text.empty())
+        return;
 
-    if((font >= 0) && (font < rasterFonts.size()))
+    if((font >= 0) && (static_cast<size_t>(font) < rasterFonts.size()))
     {
         if(rasterFonts[font].isLoaded())
         {
@@ -658,7 +757,9 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
             return;
         }
     }
-    else if(font == DefaultTTF_Font)
+    #ifdef PGE_TTF
+    else
+    if(font == DefaultTTF_Font)
     {
         int offsetX = 0;
         int offsetY = 0;
@@ -666,9 +767,9 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
         int width = 32;
         GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
 
-        for(QChar &cx : text)
+        for(char &cx : text)
         {
-            switch(cx.toLatin1())
+            switch(cx)
             {
             case '\n':
                 offsetX = 0;
@@ -696,12 +797,22 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
                            static_cast<int>(Green * 255.0f),
                            static_cast<int>(Blue * 255.0f),
                            static_cast<int>(Alpha * 255.0f)));
+    #else
+    else
+    {
+        (void)ttf_FontSize;
+        assert(false && "TTF FONTS SUPPORT IS DISABLED!");
+    }
+    #endif
 }
 
-void FontManager::printTextTTF(QString text, int x, int y, int pointSize, QRgb color)
+#ifdef PGE_TTF
+void FontManager::printTextTTF(std::string text, int x, int y, int pointSize, QRgb color)
 {
-    if(!isInit) return;
-
+    assert(isInit);
+    if(!isInit)
+        return;
+    #ifdef PGE_TTF
     QString(family);
 
     if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
@@ -710,11 +821,14 @@ void FontManager::printTextTTF(QString text, int x, int y, int pointSize, QRgb c
     QFont font(family);//font.setWeight(14);
     font.setPixelSize(pointSize);
     PGE_Texture tex;
-    SDL_string_texture_create(font, color, text, &tex);
+    SDL_string_texture_create(font, color, QString::fromStdString(text), &tex);
     GlRenderer::renderTexture(&tex, x, y);
     GlRenderer::deleteTexture(tex);
+    #else
+    assert(false && "TTF SUPPORT IS DISABLED!");
+    #endif
 }
-
+#endif
 
 int FontManager::getFontID(QString fontName)
 {
@@ -729,6 +843,8 @@ int FontManager::getFontID(std::string fontName)
     else
         return i->second;
 }
+
+#ifdef PGE_TTF
 
 void FontManager::getChar1(QChar _x, int px_size, PGE_Texture &tex)
 {
@@ -819,17 +935,6 @@ QFont FontManager::font()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &text, PGE_Texture *texture, bool borders)
 {
     if(!isInit) return;
@@ -902,3 +1007,5 @@ void FontManager::SDL_string_texture_create(QFont &font, PGE_Rect limitRect, int
 
     GlRenderer::QImage2Texture(&text_image, *texture);
 }
+
+#endif

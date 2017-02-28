@@ -19,17 +19,19 @@
 #ifndef FONT_MANAGER_H
 #define FONT_MANAGER_H
 
+//#define PGE_TTF
+
 //#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_opengl.h>
 #include <string>
 #include <unordered_map>
 
 #include <QString>
-#include <QFont>
-#include <QSize>
-#include <QMap>
+//#include <QFont>
+//#include <QSize>
+//#include <QMap>
 #include <QRgb>
-#include <QRegExp>
+//#include <QRegExp>
 
 
 #include <common_features/pge_texture.h>
@@ -42,8 +44,8 @@ public:
     ~RasterFont();
     void  loadFont(std::string font_ini);
     void  loadFontMap(std::string fontmap_ini);
-    PGE_Size textSize(QString &text, int max_line_lenght=0, bool cut=false);
-    void printText(QString text, int x, int y, float Red=1.f, float Green=1.f, float Blue=1.f, float Alpha=1.f);
+    PGE_Size textSize(std::string &text, int max_line_lenght=0, bool cut=false);
+    void printText(const std::string &text, int x, int y, float Red=1.f, float Green=1.f, float Blue=1.f, float Alpha=1.f);
     bool isLoaded();
     std::string getFontName();
 private:
@@ -61,21 +63,20 @@ private:
 
     struct RasChar
     {
-        RasChar() {valid=false;}
-        bool valid;
-        PGE_Texture* tx;
-        int padding_left;  //!< Crop left
-        int padding_right; //!< Crop right
-        float l;//!< left
-        float t;//!< top
-        float b;//!< bottom
-        float r;//!< right
+        bool valid = false;
+        PGE_Texture* tx = NULL;
+        int padding_left = 0;  //!< Crop left
+        int padding_right = 0; //!< Crop right
+        float l = 1.0f;//!< left
+        float t = 1.0f;//!< top
+        float b = 1.0f;//!< bottom
+        float r = 1.0f;//!< right
     };
-    QHash<QChar, RasChar > fontMap; //!< Table of available characters
-    QRegExp first_line_only;        //!< This regular expression will remove evervything starts from first linefeed
+
+    std::unordered_map<char32_t, RasChar > fontMap; //!< Table of available characters
 
     //Font textures cache
-    QList<PGE_Texture > textures;   //!< Bank of loaded textures
+    std::vector<PGE_Texture > textures;   //!< Bank of loaded textures
 };
 
 
@@ -89,32 +90,38 @@ public:
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
 
-    static PGE_Size textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false, int ttfFontPixelSize = -1);
+    static PGE_Size textSize(std::string &text, int fontID, int max_line_lenght=0, bool cut=false, int ttfFontPixelSize = -1);
     static int getFontID(QString fontName);
     static int getFontID(std::string fontName);
 
+    #ifdef PGE_TTF
     static void getChar1(QChar _x, int px_size, PGE_Texture &tex);
     static void getChar2(QChar _x, int px_size, PGE_Texture &tex);
 
     static QFont font();
+    #endif
+
     enum DefaultFont
     {
         TTF_Font = -2,
         DefaultTTF_Font=-1,
         DefaultRaster=0
     };
-    static void printText(QString text, int x, int y, int font=DefaultRaster,
+    static void printText(std::string text, int x, int y, int font=DefaultRaster,
                           float Red=1.0, float Green=1.0, float Blue=1.0, float Alpha=1.0, int ttf_FontSize=14);
-    static void printTextTTF(QString text, int x, int y, int pointSize, QRgb color=qRgba(255,255,255,255));
+    #ifdef PGE_TTF
+    static void printTextTTF(std::string text, int x, int y, int pointSize, QRgb color=qRgba(255,255,255,255));
+    #endif
 
 
-    static QList<RasterFont> rasterFonts;//!< Complete array of raster fonts
+    static std::vector<RasterFont> rasterFonts;//!< Complete array of raster fonts
     static RasterFont *rFont;//!< Default raster font
 
-    static void optimizeText(QString &text, int max_line_lenght, int *numLines=0, int *numCols=0);
-    static QString cropText(QString text, int max_symbols);
+    static void optimizeText(std::string &text, size_t max_line_lenght, int *numLines = 0, int *numCols = 0);
+    static std::string cropText(std::string text, size_t max_symbols);
 
     /****Deprecated functions*******/
+    #ifdef PGE_TTF
     static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, PGE_Texture *texture, bool borders=false);
     static void SDL_string_texture_create(QFont &font, PGE_Rect limitRect, int fontFlags, QRgb color,
                                           QString &text, PGE_Texture *texture, bool borders=false);
@@ -122,36 +129,43 @@ public:
     struct TTFCharType
     {
         QChar c;
-        int px_size;
+        int px_size = 0;
         bool operator==(const TTFCharType cht) const
         {
             return ((c == cht.c) && (px_size == cht.px_size));
         }
     };
+    #endif
 
 private:
     static bool isInit;
     //static TTF_Font * defaultFont;
     //static PGE_Texture textTexture;
+    #ifdef PGE_TTF
     friend uint qHash(const TTFCharType &struc);
     static QHash<TTFCharType, PGE_Texture> fontTable_1;
     static QHash<TTFCharType, PGE_Texture> fontTable_2;
+    #endif
     typedef std::unordered_map<std::string, int> FontsHash;
     static FontsHash fonts;
     static int fontID;
     static bool double_pixled;
 
+    #ifdef PGE_TTF
     static QFont *defaultFont;
+    #endif
 };
 
+#ifdef PGE_TTF
 inline uint qHash(const FontManager::TTFCharType &struc)
 {
     uint result = struc.c.unicode();
 
     result <<=(sizeof(quint8)*8);
-    result = result|struc.px_size;
+    result = result | struc.px_size;
 
     return result;
 }
+#endif
 
 #endif // FONT_MANAGER_H
