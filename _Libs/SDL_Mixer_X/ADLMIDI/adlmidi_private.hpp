@@ -177,14 +177,14 @@ class MIDIplay
         struct TrackInfo
         {
             size_t ptr;
-            long   delay;
+            uint64_t delay;
             int    status;
             char padding2[4];
             TrackInfo(): ptr(0), delay(0), status(0) {}
         };
         std::vector<TrackInfo> track;
 
-        Position(): began(false), wait(0.0), track() { }
+        Position(): began(false), wait(0.0l), track() { }
     } CurrentPosition, LoopBeginPosition, trackBeginPosition;
 
     std::map<std::string, uint64_t> devices;
@@ -287,7 +287,7 @@ public:
 
     ADL_MIDIPlayer *config;
     std::string musTitle;
-    fraction<long> InvDeltaTicks, Tempo;
+    fraction<uint64_t> InvDeltaTicks, Tempo;
     bool    trackStart,
             loopStart,
             loopEnd,

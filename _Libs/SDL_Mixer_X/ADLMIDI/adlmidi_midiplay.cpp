@@ -165,17 +165,17 @@ double MIDIplay::Tick(double s, double granularity)
 
     int AntiFreezeCounter = 10000;//Limit 10000 loops to avoid freezing
 
-    while((CurrentPosition.wait <= granularity * 0.5) && (AntiFreezeCounter > 0))
+    while((CurrentPosition.wait <= granularity * 0.5l) && (AntiFreezeCounter > 0))
     {
         //std::fprintf(stderr, "wait = %g...\n", CurrentPosition.wait);
         ProcessEvents();
 
-        if(CurrentPosition.wait <= 0.0)
+        if(CurrentPosition.wait <= 0.0l)
             AntiFreezeCounter--;
     }
 
     if(AntiFreezeCounter <= 0)
-        CurrentPosition.wait += 1.0;/* Add extra 1 second when over 10000 events
+        CurrentPosition.wait += 1.0l;/* Add extra 1 second when over 10000 events
 
                                            with zero delay are been detected */
 
@@ -405,13 +405,15 @@ void MIDIplay::ProcessEvents()
     }
 
     // Find shortest delay from all track
-    long shortest = -1;
+    uint64_t shortest = 0;
+    bool     shortest_no = true;
 
     for(size_t tk = 0; tk < TrackCount; ++tk)
-        if(CurrentPosition.track[tk].status >= 0
-           && (shortest == -1
-               || CurrentPosition.track[tk].delay < shortest))
+        if((CurrentPosition.track[tk].status >= 0) && (shortest_no || CurrentPosition.track[tk].delay < shortest))
+        {
             shortest = CurrentPosition.track[tk].delay;
+            shortest_no = false;
+        }
 
     //if(shortest > 0) UI.PrintLn("shortest: %ld", shortest);
 
@@ -419,7 +421,7 @@ void MIDIplay::ProcessEvents()
     for(size_t tk = 0; tk < TrackCount; ++tk)
         CurrentPosition.track[tk].delay -= shortest;
 
-    fraction<long> t = shortest * Tempo;
+    fraction<uint64_t> t = shortest * Tempo;
 
     if(CurrentPosition.began)
         CurrentPosition.wait += t.valuel();
@@ -453,7 +455,7 @@ void MIDIplay::ProcessEvents()
         loopStart_hit = true;
     }
 
-    if(shortest < 0 || loopEnd)
+    if(shortest_no || loopEnd)
     {
         // Loop if song end reached
         loopEnd         = false;
@@ -496,7 +498,7 @@ void MIDIplay::HandleEvent(size_t tk)
 
         if(evtype == 0x51)
         {
-            Tempo = InvDeltaTicks * fraction<long>((long) ReadBEint(data.data(), data.size()));
+            Tempo = InvDeltaTicks * fraction<uint64_t>(ReadBEint(data.data(), data.size()));
             return;
         }
 
