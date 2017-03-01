@@ -37,8 +37,7 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, QString section, obj_block
 
     if(internal)
     {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
     sblock.isInit = false;

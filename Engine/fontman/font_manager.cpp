@@ -34,14 +34,14 @@
 
 #include <vector>
 
-#include <QFile>
-#include <QFileInfo>
-#include <QDir>
+//#include <QFile>
+//#include <QFileInfo>
+//#include <QDir>
 
-#include <QImage>
-#include <QPainter>
-#include <QFontMetrics>
-#include <QFontDatabase>
+//#include <QImage>
+//#include <QPainter>
+//#include <QFontMetrics>
+//#include <QFontDatabase>
 
 #include <common_features/graphics_funcs.h>
 
@@ -828,12 +828,12 @@ void FontManager::printTextTTF(std::string text, int x, int y, int pointSize, QR
     assert(false && "TTF SUPPORT IS DISABLED!");
     #endif
 }
-#endif
 
 int FontManager::getFontID(QString fontName)
 {
     return getFontID(fontName.toStdString());
 }
+#endif
 
 int FontManager::getFontID(std::string fontName)
 {

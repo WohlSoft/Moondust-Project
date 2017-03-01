@@ -20,11 +20,12 @@
 #define GLOBALSETTINGS_H
 
 #include <controls/controller_key_map.h>
-#include <QList>
+#include <vector>
+#include <string>
 
 #include <SDL2/SDL_joystick.h>
 
-class QSettings;
+class IniProcessing;
 class Controller;
 
 /*!
@@ -103,25 +104,25 @@ class GlobalSettings
         //! Keyboard controlls map for a first player
         KeyMap player1_keyboard;
         //! Control maps per each joystick ID for a first player
-        QList<KeyMap>         player1_joysticks;
+        std::vector<KeyMap>         player1_joysticks;
         //! Joystick control ID maps per each joystick ID for a first player
-        QList<KeyMapJoyCtrls> player1_joysticks_ctrls_ids;
+        std::vector<KeyMapJoyCtrls> player1_joysticks_ctrls_ids;
         //! Joystick control types (button, axis, hat, ball) maps per each joystick ID for a first player
-        QList<KeyMapJoyCtrls> player1_joysticks_ctrls_types;
+        std::vector<KeyMapJoyCtrls> player1_joysticks_ctrls_types;
 
         //! Type of controller used by second player (-1 keyboard, >=0 joystick ID)
         int player2_controller;
         //! Keyboard controlls map for a second player
         KeyMap player2_keyboard;
         //! Control maps per each joystick ID for a second player
-        QList<KeyMap>         player2_joysticks;
+        std::vector<KeyMap>         player2_joysticks;
         //! Joystick control ID maps per each joystick ID for a second player
-        QList<KeyMapJoyCtrls> player2_joysticks_ctrls_ids;
+        std::vector<KeyMapJoyCtrls> player2_joysticks_ctrls_ids;
         //! Joystick control types (button, axis, hat, ball) maps per each joystick ID for a second player
-        QList<KeyMapJoyCtrls> player2_joysticks_ctrls_types;
+        std::vector<KeyMapJoyCtrls> player2_joysticks_ctrls_types;
 
         //! List of all available joysticks
-        QList<SDL_Joystick *> joysticks;
+        std::vector<SDL_Joystick *> joysticks;
 
         //! Code of the renderer device (OpenGL 3, OpenGL 2, Software render)
         int renderer_device;
@@ -132,7 +133,7 @@ class GlobalSettings
          * \param set Opened engine configuration file
          * \param grp INI-group which contains saved control keys map
          */
-        void loadKeyMap(KeyMap &map, QSettings &set, QString grp);
+        void loadKeyMap(KeyMap &map, IniProcessing &set, std::string grp);
 
         /*!
          * \brief Save settings from specific control keys map into opened config file into specified INI-group
@@ -140,7 +141,7 @@ class GlobalSettings
          * \param set Opened engine configuration file
          * \param grp INI-group which contains saved control keys map
          */
-        void saveKeyMap(KeyMap &map, QSettings &set, QString grp);
+        void saveKeyMap(KeyMap &map, IniProcessing &set, std::string grp);
 
         /*!
          * \brief Load settings to specific joysticks control map through opened config file inside specified INI-group
@@ -148,7 +149,7 @@ class GlobalSettings
          * \param set Opened engine configuration file
          * \param grp INI-group which contains saved control keys map
          */
-        void loadJoyCtrlMapID(KeyMap &map, QSettings &set, QString grp);
+        void loadJoyCtrlMapID(KeyMap &map, IniProcessing &set, std::string grp);
 
         /*!
          * \brief Save settings from specific joysticks control map into opened config file inside specified INI-group
@@ -156,7 +157,7 @@ class GlobalSettings
          * \param set Opened engine configuration file
          * \param grp INI-group which contains saved control keys map
          */
-        void saveJoyCtrlMapID(KeyMap &map, QSettings &set, QString grp);
+        void saveJoyCtrlMapID(KeyMap &map, IniProcessing &set, std::string grp);
 
         /*!
          * \brief Load settings to specific joysticks control types map through opened config file inside specified INI-group
@@ -164,7 +165,7 @@ class GlobalSettings
          * \param set Opened engine configuration file
          * \param grp INI-group which contains saved control keys map
          */
-        void loadJoyCtrlMapType(KeyMap &map, QSettings &set, QString grp);
+        void loadJoyCtrlMapType(KeyMap &map, IniProcessing &set, std::string grp);
 
         /*!
          * \brief Save settings from specific joysticks control types map into opened config file inside specified INI-group
@@ -172,7 +173,7 @@ class GlobalSettings
          * \param set Opened engine configuration file
          * \param grp INI-group which contains saved control keys map
          */
-        void saveJoyCtrlMapType(KeyMap &map, QSettings &set, QString grp);
+        void saveJoyCtrlMapType(KeyMap &map, IniProcessing &set, std::string grp);
 
         /*!
          * \brief Constructs controller class for specific player and return a pointer to it

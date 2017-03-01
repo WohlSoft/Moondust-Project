@@ -30,7 +30,7 @@
 //#include <QFont>
 //#include <QSize>
 //#include <QMap>
-#include <QRgb>
+//#include <QRgb>
 //#include <QRegExp>
 
 
@@ -91,7 +91,9 @@ public:
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
 
     static PGE_Size textSize(std::string &text, int fontID, int max_line_lenght=0, bool cut=false, int ttfFontPixelSize = -1);
+    #ifdef PGE_TTF
     static int getFontID(QString fontName);
+    #endif
     static int getFontID(std::string fontName);
 
     #ifdef PGE_TTF
@@ -103,9 +105,9 @@ public:
 
     enum DefaultFont
     {
-        TTF_Font = -2,
-        DefaultTTF_Font=-1,
-        DefaultRaster=0
+        TTF_Font        = -2,
+        DefaultTTF_Font = -1,
+        DefaultRaster   = 0
     };
     static void printText(std::string text, int x, int y, int font=DefaultRaster,
                           float Red=1.0, float Green=1.0, float Blue=1.0, float Alpha=1.0, int ttf_FontSize=14);

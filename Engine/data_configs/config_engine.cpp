@@ -29,7 +29,7 @@ bool ConfigManager::loadEngineSettings()
 
     if(!Files::fileExists(engine_ini))
     {
-        PGE_MsgBox::error(QString("Config error!\nCan't open the 'engine.ini' config file!"));
+        PGE_MsgBox::error("Config error!\nCan't open the 'engine.ini' config file!");
         return false;
     }
 
