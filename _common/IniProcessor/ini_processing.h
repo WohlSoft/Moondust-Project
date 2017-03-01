@@ -100,8 +100,11 @@ private:
         return e;
     }
 
+    void writeIniParam(const char *key, const std::string &value);
+
 public:
     IniProcessing();
+    IniProcessing(const char *iniFileName, int dummy = 0);
     IniProcessing(const std::string &iniFileName, int dummy = 0);
 #ifdef INI_PROCESSING_ALLOW_QT_TYPES
     IniProcessing(const QString &iniFileName, int dummy = 0);
@@ -589,6 +592,65 @@ public:
      * @return variant which contains a value
      */
     IniProcessingVariant value(const char *key, const IniProcessingVariant &defVal = IniProcessingVariant());
+
+
+    void setValue(const char *key, unsigned short value);
+    void setValue(const char *key, short value);
+    void setValue(const char *key, unsigned int value);
+    void setValue(const char *key, int value);
+    void setValue(const char *key, unsigned long value);
+    void setValue(const char *key, long value);
+    void setValue(const char *key, unsigned long long value);
+    void setValue(const char *key, long long value);
+    void setValue(const char *key, float value);
+    void setValue(const char *key, double value);
+    void setValue(const char *key, long double value);
+    void setValue(const char *key, const std::vector<unsigned short> &value);
+    void setValue(const char *key, const std::vector<short> &value);
+    void setValue(const char *key, const std::vector<unsigned int> &value);
+    void setValue(const char *key, const std::vector<int> &value);
+    void setValue(const char *key, const std::vector<unsigned long> &value);
+    void setValue(const char *key, const std::vector<long> &value);
+    void setValue(const char *key, const std::vector<unsigned long long> &value);
+    void setValue(const char *key, const std::vector<long long> &value);
+    void setValue(const char *key, const std::vector<float> &value);
+    void setValue(const char *key, const std::vector<double> &value);
+    void setValue(const char *key, const std::vector<long double> &value);
+    void setValue(const char *key, const char *value);
+    void setValue(const char *key, const std::string &value);
+
+    #ifdef INI_PROCESSING_ALLOW_QT_TYPES
+    void setValue(const char *key, const QString &value);
+    void setValue(const char *key, const QList<unsigned short> &value);
+    void setValue(const char *key, const QList<short> &value);
+    void setValue(const char *key, const QList<unsigned int> &value);
+    void setValue(const char *key, const QList<int> &value);
+    void setValue(const char *key, const QList<unsigned long> &value);
+    void setValue(const char *key, const QList<long> &value);
+    void setValue(const char *key, const QList<unsigned long long> &value);
+    void setValue(const char *key, const QList<long long> &value);
+    void setValue(const char *key, const QList<float> &value);
+    void setValue(const char *key, const QList<double> &value);
+    void setValue(const char *key, const QList<long double> &value);
+    void setValue(const char *key, const QVector<unsigned short> &value);
+    void setValue(const char *key, const QVector<short> &value);
+    void setValue(const char *key, const QVector<unsigned int> &value);
+    void setValue(const char *key, const QVector<int> &value);
+    void setValue(const char *key, const QVector<unsigned long> &value);
+    void setValue(const char *key, const QVector<long> &value);
+    void setValue(const char *key, const QVector<unsigned long long> &value);
+    void setValue(const char *key, const QVector<long long> &value);
+    void setValue(const char *key, const QVector<float> &value);
+    void setValue(const char *key, const QVector<double> &value);
+    void setValue(const char *key, const QVector<long double> &value);
+    #endif
+
+
+    /**
+     * @brief Write INI file by the recently given file path
+     * @return true if INI file was successfully written
+     */
+    bool writeIniFile();
 };
 
 #endif // INIPROCESSING_H
