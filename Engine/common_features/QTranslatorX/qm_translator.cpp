@@ -726,9 +726,9 @@ bool QmTranslatorX::loadData(unsigned char *data, int len, unsigned char* direct
             {
                 unsigned char* begin = data;
                 while(*data != '\0') { data++; }
-                int gotLen = (data-begin);
+                std::string::size_type gotLen = (data - begin);
                 dep = std::string((char*)begin, gotLen);
-                if(dep.size()>0)
+                if(dep.size() > 0)
                 {
                     //List of dependent files
                     dependencies.push_back(dep);
@@ -740,15 +740,6 @@ bool QmTranslatorX::loadData(unsigned char *data, int len, unsigned char* direct
             #ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Had deps!\n");
             #endif
-            /*
-
-            QDataStream stream(QByteArray::fromRawData((const char*)data, blockLen));
-            QString dep;
-            while (!stream.atEnd()) {
-                stream >> dep;
-                dependencies.append(dep);
-            }*/
-
         }
         data += blockLen;
     }
