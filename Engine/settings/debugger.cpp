@@ -22,15 +22,16 @@
 #include <gui/pge_textinputbox.h>
 #include <gui/pge_msgbox.h>
 #include <audio/pge_audio.h>
+#include <algorithm>
+#include <vector>
 
 #include <scenes/scene_level.h>
-
-#include <QStringList>
 #include <common_features/md5.h>
 
-static inline QString md5hash(QString word)
+static inline std::string strToLow(std::string data)
 {
-    return QString::fromStdString(md5(word.toStdString()));
+    std::transform(data.begin(), data.end(), data.begin(), ::tolower);
+    return data;
 }
 
 bool PGE_Debugger::cheat_debugkeys = false;
@@ -43,10 +44,9 @@ bool PGE_Debugger::cheat_worldfreedom = false;
 
 static inline void showMsg(Scene *parent, const char *msg)
 {
-    PGE_MsgBox msgBox(parent, msg,
-                      PGE_MsgBox::msg_warn);
+    PGE_MsgBox msgBox(parent, msg, PGE_MsgBox::msg_warn);
 
-    if(!ConfigManager::setup_message_box.sprite.isEmpty())
+    if(!ConfigManager::setup_message_box.sprite.empty())
         msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
 
     msgBox.exec();
@@ -71,9 +71,9 @@ void PGE_Debugger::executeCommand(Scene *parent)
         ///////////////////////////////////////////////
         ////////////////Common commands////////////////
         ///////////////////////////////////////////////
-        QString input = inputBox.inputText().toLower();
-        QString hash  = md5hash(input);
-        D_pLogDebug("%s -> %s", input.toStdString().c_str(), hash.toStdString().c_str());
+        std::string input = strToLow(inputBox.inputText());
+        std::string hash  = md5(input);
+        D_pLogDebug("%s -> %s", input.c_str(), hash.c_str());
 
         if(input == "redigitiscool")
         {
@@ -89,7 +89,7 @@ void PGE_Debugger::executeCommand(Scene *parent)
             showMsg(parent, "Oh, man! Thanks a lot!");
         else if(input == "joeyiscool")
             showMsg(parent, "Don't try to guess code, or I'll ban you on SMBX Forums!");
-        else if(hash.toLower() == "0f89f93d5e6338d384c5d6bddb69e715")
+        else if(strToLow(hash) == "0f89f93d5e6338d384c5d6bddb69e715")
         {
             pLogCritical("What the heck you typed this silly command?!   Joke! You found an... EASTER EGG!");
             showMsg(parent, "Congratulation!\nYou found a secret code!");
@@ -128,26 +128,22 @@ void PGE_Debugger::executeCommand(Scene *parent)
                 en = cheat_superman;
                 cheatfound = true;
             }
-            else if(input.startsWith("iwishexitas"))
+            else if(input.compare(0, 11, "iwishexitas"))
             {
-                QStringList args = input.split(' ');
-
-                if(args.size() == 2)
+                std::string::size_type dim = input.find(' ');
+                if(dim != std::string::npos)
                 {
-                    bool ok = false;
-                    int exitcode = args[1].toInt(&ok);
-
-                    if(ok)
+                    try
                     {
+                        int exitcode = toInt(input.substr(dim + 1, input.size() - (dim + 1)));
                         LevelScene *s = static_cast<LevelScene *>(parent);
-
                         if(s)
                         {
                             s->setExiting(1500, exitcode);
                             en = true;
                             cheatfound = true;
                         }
-                    }
+                    } catch (...) {}
                 }
             }
         }

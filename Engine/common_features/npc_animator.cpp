@@ -222,14 +222,14 @@ AdvNpcAnimator::~AdvNpcAnimator()
 
 AniPos AdvNpcAnimator::image(int dir, int frame)
 {
-    if(frames.isEmpty())
+    if(frames.empty())
     {
         //If animator haven't frames, return red sqare
         AniPos tmp(0, 1);
         return tmp;
     }
 
-    if((frame < 0) || (frame >= frames.size()))
+    if((frame < 0) || (frame >= static_cast<int>(frames.size())))
     {
         if(dir < 0)
             return frames[m_curFrameL_real];
@@ -246,9 +246,10 @@ AniPos AdvNpcAnimator::wholeImage()
     return AniPos(0, 1);
 }
 
-void AdvNpcAnimator::setSequenceL(QList<int> _frames)
+void AdvNpcAnimator::setSequenceL(std::vector<int> _frames)
 {
-    if(_frames.isEmpty()) return;
+    if(_frames.empty())
+        return;
 
     m_customAniAlg = ANI_CustomSequence;
     m_frameSequance = true;
@@ -258,14 +259,16 @@ void AdvNpcAnimator::setSequenceL(QList<int> _frames)
     m_onceMode = false;
     m_animationFinished = false;
 
-    if(m_curFrameL_timer > s_framesL.size() - 1) m_curFrameL_timer = m_frameFirstL;
+    if(m_curFrameL_timer > static_cast<int>(s_framesL.size()) - 1)
+        m_curFrameL_timer = m_frameFirstL;
 
     setFrameL(m_frameSequance ? s_framesL[m_curFrameL_timer] : m_curFrameL_timer);
 }
 
-void AdvNpcAnimator::setSequenceR(QList<int> _frames)
+void AdvNpcAnimator::setSequenceR(std::vector<int> _frames)
 {
-    if(_frames.isEmpty()) return;
+    if(_frames.empty())
+        return;
 
     m_customAniAlg = ANI_CustomSequence;
     m_frameSequance = true;
@@ -275,14 +278,16 @@ void AdvNpcAnimator::setSequenceR(QList<int> _frames)
     m_onceMode = false;
     m_animationFinished = false;
 
-    if(m_curFrameR_timer > s_framesR.size() - 1) m_curFrameR_timer = m_frameFirstR;
+    if(m_curFrameR_timer > static_cast<int>(s_framesR.size()) - 1)
+        m_curFrameR_timer = m_frameFirstR;
 
     setFrameR(m_frameSequance ? s_framesR[m_curFrameR_timer] : m_curFrameR_timer);
 }
 
-void AdvNpcAnimator::setSequence(QList<int> _frames)
+void AdvNpcAnimator::setSequence(std::vector<int> _frames)
 {
-    if(_frames.isEmpty()) return;
+    if(_frames.empty())
+        return;
 
     m_customAniAlg = ANI_CustomSequence;
     m_frameSequance = true;
@@ -296,7 +301,7 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
         m_frameLastL = _frames.size() - 1;
         s_framesR.clear();
 
-        for(int i = 0; i < _frames.size(); i++)
+        for(size_t i = 0; i < _frames.size(); i++)
             s_framesR.push_back(_frames[i] + static_cast<int>(m_setup.setup.frames));
 
         m_frameFirstR = 0;
@@ -317,10 +322,10 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
     m_onceMode = false;
     m_animationFinished = false;
 
-    if(m_curFrameL_timer > s_framesL.size() - 1)
+    if(m_curFrameL_timer > static_cast<int>(s_framesL.size()) - 1)
         m_curFrameL_timer = m_frameFirstL;
 
-    if(m_curFrameR_timer > s_framesR.size() - 1)
+    if(m_curFrameR_timer > static_cast<int>(s_framesR.size()) - 1)
         m_curFrameR_timer = m_frameFirstR;
 
     setFrameL(m_frameSequance ? s_framesL[m_curFrameL_timer] : m_curFrameL_timer);
@@ -329,30 +334,30 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
 
 void AdvNpcAnimator::setFrameL(int y)
 {
-    if(frames.isEmpty())
+    if(frames.empty())
         return;
 
     //Out of range protection
     if(y < m_frameFirstL)
-        y = (m_frameLastL < 0) ? frames.size() - 1 : m_frameLastL;
+        y = (m_frameLastL < 0) ? static_cast<int>(frames.size()) - 1 : m_frameLastL;
 
-    if(y >= frames.size())
-        y = (m_frameFirstL < frames.size()) ? m_frameFirstL : 0;
+    if(y >= static_cast<int>(frames.size()))
+        y = (m_frameFirstL < static_cast<int>(frames.size())) ? m_frameFirstL : 0;
 
     m_curFrameL_real = y;
 }
 
 void AdvNpcAnimator::setFrameR(int y)
 {
-    if(frames.isEmpty())
+    if(frames.empty())
         return;
 
     //Out of range protection
     if(y < m_frameFirstR)
-        y = (m_frameLastR < 0) ? frames.size() - 1 : m_frameLastR;
+        y = (m_frameLastR < 0) ? static_cast<int>(frames.size()) - 1 : m_frameLastR;
 
-    if(y >= frames.size())
-        y = (m_frameFirstR < frames.size()) ? m_frameFirstR : 0;
+    if(y >= static_cast<int>(frames.size()))
+        y = (m_frameFirstR < static_cast<int>(frames.size())) ? m_frameFirstR : 0;
 
     m_curFrameR_real = y;
 }
@@ -468,7 +473,7 @@ void AdvNpcAnimator::nextFrame()
     {
         m_curFrameL_timer += m_frameStep;
 
-        if(((m_curFrameL_timer >= frames.size() - (m_frameStep - 1)) && (m_frameLastL <= -1)) ||
+        if(((m_curFrameL_timer >= static_cast<int>(frames.size()) - (m_frameStep - 1)) && (m_frameLastL <= -1)) ||
            ((m_curFrameL_timer > m_frameLastL) && (m_frameLastL >= 0)))
         {
             if(!m_aniBiDirect)
@@ -502,7 +507,7 @@ void AdvNpcAnimator::nextFrame()
             else
             {
                 if(!m_aniBiDirect)
-                    m_curFrameL_timer = ((m_frameLastL == -1) ? frames.size() - 1 : m_frameLastL);
+                    m_curFrameL_timer = ((m_frameLastL == -1) ? static_cast<int>(frames.size()) - 1 : m_frameLastL);
                 else
                 {
                     m_curFrameL_timer += m_frameStep * 2;
@@ -519,7 +524,7 @@ void AdvNpcAnimator::nextFrame()
     {
         m_curFrameR_timer += m_frameStep;
 
-        if(((m_curFrameR_timer >= frames.size() - (m_frameStep - 1)) && (m_frameLastR <= -1)) ||
+        if(((m_curFrameR_timer >= static_cast<int>(frames.size()) - (m_frameStep - 1)) && (m_frameLastR <= -1)) ||
            ((m_curFrameR_timer > m_frameLastR) && (m_frameLastR >= 0)))
         {
             if(!m_aniBiDirect)
@@ -553,7 +558,7 @@ void AdvNpcAnimator::nextFrame()
             else
             {
                 if(!m_aniBiDirect)
-                    m_curFrameR_timer = ((m_frameLastR == -1) ? frames.size() - 1 : m_frameLastR);
+                    m_curFrameR_timer = ((m_frameLastR == -1) ? static_cast<int>(frames.size()) - 1 : m_frameLastR);
                 else
                 {
                     m_curFrameR_timer += m_frameStep * 2;
@@ -569,7 +574,6 @@ void AdvNpcAnimator::nextFrame()
 void AdvNpcAnimator::createAnimationFrames()
 {
     frames.clear();
-
     for(int i = 0; (m_frameHeight * i < m_spriteHeight); i++)
         frames.push_back(AniPos((m_frameHeight * i) / m_spriteHeight, (m_frameHeight * i + m_frameHeight) / m_spriteHeight));
 }

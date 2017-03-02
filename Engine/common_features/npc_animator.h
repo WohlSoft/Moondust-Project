@@ -19,8 +19,8 @@
 #ifndef NPC_ANIMATOR_H
 #define NPC_ANIMATOR_H
 
-#include <QList>
-#include <QString>
+#include <vector>
+#include <string>
 
 #include <SDL2/SDL_timer.h>
 #include <utility>
@@ -48,9 +48,9 @@ class AdvNpcAnimator
             ANI_CustomSequence = 2
         };
 
-        void setSequenceL(QList<int> _frames);
-        void setSequenceR(QList<int> _frames);
-        void setSequence(QList<int> _frames);
+        void setSequenceL(std::vector<int> _frames);
+        void setSequenceR(std::vector<int> _frames);
+        void setSequence(std::vector<int> _frames);
 
         void setFrameL(int y);
         void setFrameR(int y);
@@ -75,7 +75,7 @@ class AdvNpcAnimator
 
         PGE_Texture m_mainImage;
 
-        QList<AniPos> frames;
+        std::vector<AniPos> frames;
 
         double m_ticks;
         bool m_onceMode;
@@ -102,8 +102,8 @@ class AdvNpcAnimator
 
         bool m_frameSequance;
 
-        QList<int> s_framesL;     //Current frame srquence
-        QList<int> s_framesR;     //Current frame srquence
+        std::vector<int> s_framesL;     //Current frame srquence
+        std::vector<int> s_framesR;     //Current frame srquence
 
         int m_framesCount;
         double m_frameHeight; // size of one frame
@@ -125,7 +125,6 @@ class AdvNpcAnimator
 
         int m_frameFirstR;
         int m_frameLastR;
-
 };
 
 #endif // NPC_ANIMATOR_H
