@@ -100,9 +100,15 @@ private:
         return e;
     }
 
+    void writeIniParam(const char *key, const std::string &value);
+
 public:
     IniProcessing();
+    IniProcessing(const char *iniFileName, int dummy = 0);
     IniProcessing(const std::string &iniFileName, int dummy = 0);
+#ifdef INI_PROCESSING_ALLOW_QT_TYPES
+    IniProcessing(const QString &iniFileName, int dummy = 0);
+#endif
     IniProcessing(char *memory, size_t size);
     IniProcessing(const IniProcessing &ip);
 
@@ -158,10 +164,22 @@ public:
     bool contains(const std::string &groupName);
 
     /**
+     * @brief Currently opened file name
+     * @return path to currently opened file
+     */
+    std::string fileName();
+
+    /**
      * @brief Currently processing section
      * @return name of current section
      */
     std::string group();
+
+    /**
+     * @brief Get list of available groups
+     * @return Array of strings
+     */
+    std::vector<std::string> childGroups();
 
     /**
      * @brief Is current section contains specific key name
@@ -169,6 +187,12 @@ public:
      * @return true if key is presented in this section
      */
     bool hasKey(const std::string &keyName);
+
+    /**
+     * @brief Get list of available keys in current groul
+     * @return Array of strings
+     */
+    std::vector<std::string> allKeys();
 
     /**
      * @brief Release current section to choice another for process
@@ -272,6 +296,13 @@ public:
      * @param [_OUT] dest Reference to destination variable to store retrieved value
      * @param [_IN] defVal Default value for case of non-existing key
      */
+    void read(const char *key, long double &dest, long double defVal);
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
     void read(const char *key, std::string &dest, const std::string &defVal);
 
     #ifdef INI_PROCESSING_ALLOW_QT_TYPES
@@ -354,6 +385,13 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      */
     void read(const char *key, std::vector<double> &dest, const std::vector<double> &defVal = std::vector<double>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, std::vector<long double> &dest, const std::vector<long double> &defVal = std::vector<long double>());
 
     #ifdef INI_PROCESSING_ALLOW_QT_TYPES
     /**
@@ -426,6 +464,13 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      */
     void read(const char *key, QList<double> &dest, const QList<double> &defVal = QList<double>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QList<long double> &dest, const QList<long double> &defVal = QList<long double>());
 
     /**
      * @brief Retreive value by specific key and pass it via reference
@@ -497,6 +542,13 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      */
     void read(const char *key, QVector<double> &dest, const QVector<double> &defVal = QVector<double>());
+    /**
+     * @brief Retreive value by specific key and pass it via reference
+     * @param [_IN] key name of key with value to retrieved
+     * @param [_OUT] dest Reference to destination variable to store retrieved value
+     * @param [_IN] defVal Default value for case of non-existing key
+     */
+    void read(const char *key, QVector<long double> &dest, const QVector<long double> &defVal = QVector<long double>());
     #endif
 
     //! Hash-table for the fast string to enum conversion
@@ -511,7 +563,7 @@ public:
      * @param [_IN] defVal Default value for case of non-existing key
      * @param [_IN] enumMap
      */
-    void readEnum(const char *key, T &dest, T defVal, IniProcessing::StrEnumMap &enumMap)
+    void readEnum(const char *key, T &dest, T defVal, IniProcessing::StrEnumMap enumMap)
     {
         bool ok = false;
         params::IniKeys::iterator e = readHelper(key, ok);
@@ -540,6 +592,80 @@ public:
      * @return variant which contains a value
      */
     IniProcessingVariant value(const char *key, const IniProcessingVariant &defVal = IniProcessingVariant());
+
+    void setValue(const char *key, unsigned short value);
+    void setValue(const char *key, short value);
+    void setValue(const char *key, unsigned int value);
+    void setValue(const char *key, int value);
+    void setValue(const char *key, unsigned long value);
+    void setValue(const char *key, long value);
+    void setValue(const char *key, unsigned long long value);
+    void setValue(const char *key, long long value);
+    void setValue(const char *key, float value);
+    void setValue(const char *key, double value);
+    void setValue(const char *key, long double value);
+
+    template <typename T>
+    static inline std::string to_string_with_precision(const T a_value)
+    {
+        char buf[35];
+        memset(buf, 0, 35);
+        snprintf(buf, 34, "%.15g", static_cast<double>(a_value));
+        return buf;
+    }
+
+    template<class TList>
+    static inline std::string fromVector(const TList &value)
+    {
+        typedef typename TList::value_type T;
+        std::string out;
+        for(const T &f: value)
+        {
+            if(!out.empty())
+                out.push_back(',');
+            if(std::is_same<T, float>::value ||
+               std::is_same<T, double>::value ||
+               std::is_same<T, long double>::value)
+                out.append(to_string_with_precision(f));
+            else
+                out.append(std::to_string(f));
+        }
+        return out;
+    }
+
+    template<typename T>
+    void setValue(const char *key, const std::vector<T> &value)
+    {
+        static_assert(std::is_arithmetic<T>::value, "Not arithmetic (integral or floating point required!)");
+        writeIniParam(key, fromVector(value));
+    }
+
+    void setValue(const char *key, const char *value);
+    void setValue(const char *key, const std::string &value);
+
+    #ifdef INI_PROCESSING_ALLOW_QT_TYPES
+    void setValue(const char *key, const QString &value);
+
+    template<typename T>
+    void setValue(const char *key, const QList<T> &value)
+    {
+        static_assert(std::is_arithmetic<T>::value, "Not arithmetic (integral or floating point required!)");
+        writeIniParam(key, fromVector(value));
+    }
+
+    template<typename T>
+    void setValue(const char *key, const QVector<T> &value)
+    {
+        static_assert(std::is_arithmetic<T>::value, "Not arithmetic (integral or floating point required!)");
+        writeIniParam(key, fromVector(value));
+    }
+    #endif
+
+    /**
+     * @brief Write INI file by the recently given file path
+     * @return true if INI file was successfully written
+     */
+    bool writeIniFile();
 };
 
 #endif // INIPROCESSING_H
