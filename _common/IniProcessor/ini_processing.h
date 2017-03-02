@@ -593,7 +593,6 @@ public:
      */
     IniProcessingVariant value(const char *key, const IniProcessingVariant &defVal = IniProcessingVariant());
 
-
     void setValue(const char *key, unsigned short value);
     void setValue(const char *key, short value);
     void setValue(const char *key, unsigned int value);
@@ -605,46 +604,62 @@ public:
     void setValue(const char *key, float value);
     void setValue(const char *key, double value);
     void setValue(const char *key, long double value);
-    void setValue(const char *key, const std::vector<unsigned short> &value);
-    void setValue(const char *key, const std::vector<short> &value);
-    void setValue(const char *key, const std::vector<unsigned int> &value);
-    void setValue(const char *key, const std::vector<int> &value);
-    void setValue(const char *key, const std::vector<unsigned long> &value);
-    void setValue(const char *key, const std::vector<long> &value);
-    void setValue(const char *key, const std::vector<unsigned long long> &value);
-    void setValue(const char *key, const std::vector<long long> &value);
-    void setValue(const char *key, const std::vector<float> &value);
-    void setValue(const char *key, const std::vector<double> &value);
-    void setValue(const char *key, const std::vector<long double> &value);
+
+    template <typename T>
+    static inline std::string to_string_with_precision(const T a_value)
+    {
+        char buf[35];
+        memset(buf, 0, 35);
+        snprintf(buf, 34, "%.15g", static_cast<double>(a_value));
+        return buf;
+    }
+
+    template<class TList>
+    static inline std::string fromVector(const TList &value)
+    {
+        typedef typename TList::value_type T;
+        std::string out;
+        for(const T &f: value)
+        {
+            if(!out.empty())
+                out.push_back(',');
+            if(std::is_same<T, float>::value ||
+               std::is_same<T, double>::value ||
+               std::is_same<T, long double>::value)
+                out.append(to_string_with_precision(f));
+            else
+                out.append(std::to_string(f));
+        }
+        return out;
+    }
+
+    template<typename T>
+    void setValue(const char *key, const std::vector<T> &value)
+    {
+        static_assert(std::is_arithmetic<T>::value, "Not arithmetic (integral or floating point required!)");
+        writeIniParam(key, fromVector(value));
+    }
+
     void setValue(const char *key, const char *value);
     void setValue(const char *key, const std::string &value);
 
     #ifdef INI_PROCESSING_ALLOW_QT_TYPES
     void setValue(const char *key, const QString &value);
-    void setValue(const char *key, const QList<unsigned short> &value);
-    void setValue(const char *key, const QList<short> &value);
-    void setValue(const char *key, const QList<unsigned int> &value);
-    void setValue(const char *key, const QList<int> &value);
-    void setValue(const char *key, const QList<unsigned long> &value);
-    void setValue(const char *key, const QList<long> &value);
-    void setValue(const char *key, const QList<unsigned long long> &value);
-    void setValue(const char *key, const QList<long long> &value);
-    void setValue(const char *key, const QList<float> &value);
-    void setValue(const char *key, const QList<double> &value);
-    void setValue(const char *key, const QList<long double> &value);
-    void setValue(const char *key, const QVector<unsigned short> &value);
-    void setValue(const char *key, const QVector<short> &value);
-    void setValue(const char *key, const QVector<unsigned int> &value);
-    void setValue(const char *key, const QVector<int> &value);
-    void setValue(const char *key, const QVector<unsigned long> &value);
-    void setValue(const char *key, const QVector<long> &value);
-    void setValue(const char *key, const QVector<unsigned long long> &value);
-    void setValue(const char *key, const QVector<long long> &value);
-    void setValue(const char *key, const QVector<float> &value);
-    void setValue(const char *key, const QVector<double> &value);
-    void setValue(const char *key, const QVector<long double> &value);
-    #endif
 
+    template<typename T>
+    void setValue(const char *key, const QList<T> &value)
+    {
+        static_assert(std::is_arithmetic<T>::value, "Not arithmetic (integral or floating point required!)");
+        writeIniParam(key, fromVector(value));
+    }
+
+    template<typename T>
+    void setValue(const char *key, const QVector<T> &value)
+    {
+        static_assert(std::is_arithmetic<T>::value, "Not arithmetic (integral or floating point required!)");
+        writeIniParam(key, fromVector(value));
+    }
+    #endif
 
     /**
      * @brief Write INI file by the recently given file path

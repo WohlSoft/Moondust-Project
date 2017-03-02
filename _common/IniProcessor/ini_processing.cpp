@@ -164,6 +164,35 @@ inline char *removeQuotes(char *begin, char *end)
     return begin;
 }
 
+inline char *unescapeString(char* str)
+{
+    char *src, *dst;
+    src = str;
+    dst = str;
+    while(*src)
+    {
+        if(*src == '\\')
+        {
+            src++;
+            switch(*src)
+            {
+            case 'n': *dst = '\n'; break;
+            case 'r': *dst = '\r'; break;
+            case 't': *dst = '\t'; break;
+            default:  *dst = *src; break;
+            }
+        }
+        else
+        if(src != dst)
+        {
+            *dst = *src;
+        }
+        src++; dst++;
+    }
+    *dst = '\0';
+    return str;
+}
+
 //Remove comment line from a tail of value
 inline void skipcomment(char *value)
 {
@@ -312,7 +341,7 @@ bool IniProcessing::parseHelper(char *data, size_t size)
                     #ifdef INIDEBUG
                     printf("-> [%s]; %s = %s\n", section, name, v);
                     #endif
-                    (*recentKeys)[name] = removeQuotes(v, v + strlen(v));
+                    (*recentKeys)[name] = unescapeString( removeQuotes(v, v + strlen(v)) );
                 }
             }
             else if(!error)
@@ -668,13 +697,19 @@ void IniProcessing::read(const char *key, bool &dest, bool defVal)
             return;
         }
 
-        try
+        bool isNum = true;
+        isNum &= std::isdigit(buff[i]) || (buff[i] == '-') || (buff[i] == '+');
+
+        for(size_t i = 1; i < ss; i++)
+            isNum &= std::isdigit(buff[i]);
+
+        if(isNum)
         {
             long num = std::strtol(buff, 0, 0);
             dest = num != 0l;
             return;
         }
-        catch(...)
+        else
         {
             dest = (std::memcmp(buff, "yes", 3) == 0) ||
                    (std::memcmp(buff, "on", 2) == 0);
@@ -1150,15 +1185,6 @@ void IniProcessing::writeIniParam(const char *key, const std::string &value)
     }
 }
 
-template <typename T>
-std::string to_string_with_precision(const T a_value)
-{
-    char buf[35];
-    memset(buf, 0, 35);
-    snprintf(buf, 34, "%.15g", static_cast<double>(a_value));
-    return buf;
-}
-
 void IniProcessing::setValue(const char *key, unsigned short value)
 {
     writeIniParam(key, std::to_string(value));
@@ -1201,86 +1227,17 @@ void IniProcessing::setValue(const char *key, long long value)
 
 void IniProcessing::setValue(const char *key, float value)
 {
-    writeIniParam(key, to_string_with_precision(value));
+    writeIniParam(key, IniProcessing::to_string_with_precision(value));
 }
 
 void IniProcessing::setValue(const char *key, double value)
 {
-    writeIniParam(key, to_string_with_precision(value));
+    writeIniParam(key, IniProcessing::to_string_with_precision(value));
 }
 
 void IniProcessing::setValue(const char *key, long double value)
 {
-    writeIniParam(key, to_string_with_precision(value));
-}
-
-template<class TList>
-std::string fromVector(const TList &value)
-{
-    typedef typename TList::value_type T;
-    std::string out;
-    for(const T &f: value)
-    {
-        if(!out.empty())
-            out.push_back(',');
-        out.append(std::to_string(f));
-    }
-    return out;
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<unsigned short> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<short> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<unsigned int> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<int> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<unsigned long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<unsigned long long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<long long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<float> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<double> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const std::vector<long double> &value)
-{
-    writeIniParam(key, fromVector(value));
+    writeIniParam(key, IniProcessing::to_string_with_precision(value));
 }
 
 void IniProcessing::setValue(const char *key, const char *value)
@@ -1294,121 +1251,11 @@ void IniProcessing::setValue(const char *key, const std::string &value)
 }
 
 #ifdef INI_PROCESSING_ALLOW_QT_TYPES
-
 void IniProcessing::setValue(const char *key, const QString &value)
 {
     writeIniParam(key, value.toStdString());
 }
-
-void IniProcessing::setValue(const char *key, const QList<unsigned short> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<short> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<unsigned int> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<int> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<unsigned long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<unsigned long long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<long long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<float> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<double> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QList<long double> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<unsigned short> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<short> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<unsigned int> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<int> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<unsigned long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<unsigned long long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<long long> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<float> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<double> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
-
-void IniProcessing::setValue(const char *key, const QVector<long double> &value)
-{
-    writeIniParam(key, fromVector(value));
-}
+#endif
 
 static inline bool isFloatValue(const std::string &str)
 {
@@ -1503,14 +1350,20 @@ bool IniProcessing::writeIniFile()
             {
                 //Set escape quotes and put the string with a quotes
                 std::string &s = key->second;
-                std::size_t n = s.length();
                 std::string escaped;
-                escaped.reserve(n * 2);
-                for(std::size_t i = 0; i < n; ++i)
+                escaped.reserve(s.length() * 2);
+                for(char &c : s)
                 {
-                    if(s[i] == '\\' || s[i] == '"')
-                        escaped += '\\';
-                    escaped += s[i];
+                    switch(c)
+                    {
+                    case '\n': escaped += "\\n"; break;
+                    case '\r': escaped += "\\r"; break;
+                    case '\t': escaped += "\\t"; break;
+                    default:
+                        if((c == '\\') || (c == '"'))
+                            escaped.push_back('\\');
+                        escaped.push_back(c);
+                    }
                 }
                 fprintf(cFile, "%s = \"%s\"\n", key->first.c_str(), escaped.c_str());
             }
@@ -1522,4 +1375,3 @@ bool IniProcessing::writeIniFile()
     return true;
 }
 
-#endif
