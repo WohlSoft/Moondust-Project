@@ -34,18 +34,25 @@ public:
     {expression}\
     int64_t done = clock.elapsed();\
     printf("=== [%lli] nanoseconds == %s \n", static_cast<long long>(done), (taskName));\
-    \
+    fflush(stdout);\
 }
 
 
-int main(int , char **)
+int main(int argc, char **argv)
 {
     DirMan dm("dummy");
-    if(!dm.exists())
-        dm.mkAbsDir(dm.absolutePath());
+    if(dm.exists())
+        dm.rmpath(dm.absolutePath());
+    dm.mkAbsDir(dm.absolutePath());
 
+    printf("== Preparing... ==\n");
+    fflush(stdout);
+
+    int existingFiles = 10000;
+    if(argc > 1)
+        existingFiles = atoi(argv[1]);
     {
-        for(int i = 0; i < 3000; i++)
+        for(int i = 0; i < existingFiles; i++)
         {
             std::string myfile = dm.absolutePath() + "/xxx-" + std::to_string(i) + ".gif";
             FILE *junk = fopen(myfile.c_str(), "w");
@@ -53,6 +60,9 @@ int main(int , char **)
             fclose(junk);
         }
     }
+
+    printf("== Testing %d existing files... ==\n", existingFiles);
+    fflush(stdout);
 
     BENCHMARK("Test existing of every",
         for(int i = 0; i < 40000; i++)
@@ -83,6 +93,14 @@ int main(int , char **)
             }
         }
     );
+
+    printf("== Clean-up... ==\n");
+    fflush(stdout);
+
+    dm.rmpath(dm.absolutePath());
+
+    printf("== Benchmark completed! ==\n");
+    fflush(stdout);
 
     return 0;
 }

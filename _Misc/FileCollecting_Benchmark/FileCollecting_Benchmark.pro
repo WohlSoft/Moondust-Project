@@ -11,6 +11,10 @@ TEMPLATE = app
 
 DESTDIR = $$PWD/bin
 
+linux-g++||win32: {
+LIBS += -static-libgcc -static-libstdc++ -static -lpthread
+}
+
 include($$PWD/../../_common/DirManager/dirman.pri)
 
 SOURCES += main.cpp
