@@ -22,19 +22,9 @@
 CustomDirManager::CustomDirManager()
 {}
 
-CustomDirManager::CustomDirManager(QString path, QString name, QString stuffPath)
-{
-    setCustomDirs(path, name, stuffPath);
-}
-
 CustomDirManager::CustomDirManager(std::string path, std::string name, std::string stuffPath)
 {
     setCustomDirs(path, name, stuffPath);
-}
-
-QString CustomDirManager::getCustomFile(QString name, bool *isDefault)
-{
-    return QString::fromStdString(getCustomFile(name.toStdString(), isDefault));
 }
 
 std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
@@ -88,11 +78,6 @@ tryBackup:
     }
 
     return target;
-}
-
-void CustomDirManager::setCustomDirs(QString path, QString name, QString stuffPath)
-{
-    setCustomDirs(path.toStdString(), name.toStdString(), stuffPath.toStdString());
 }
 
 void CustomDirManager::setCustomDirs(std::string path, std::string name, std::string stuffPath)

@@ -2,7 +2,7 @@
 #define GLCOLOR_H
 
 #include <SDL2/SDL_opengl.h>
-#include <QString>
+#include <string>
 
 class GlColor
 {
@@ -12,12 +12,10 @@ public:
     GlColor(GLuint rgba);
     GlColor(double _r, double _g, double _b);
     GlColor(double _r, double _g, double _b, double _a);
-    GlColor(QString rgba);
     GlColor(std::string rgba);
     ~GlColor();
     void setRgb(GLuint rgb);
     void setRgba(GLuint rgba);
-    void setRgba(QString rgba);
     void setRgba(std::string rgba);
     void setRgba(double _r, double _g, double _b, double _a);
     void setHsv(double _h, double _s, double _v);

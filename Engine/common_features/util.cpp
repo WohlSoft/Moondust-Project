@@ -19,7 +19,9 @@
 
 #include "util.h"
 #include <Utils/files.h>
-#include <QFileInfo>
+#include <Utils/strings.h>
+#include <algorithm>
+#include <cstdlib>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -36,18 +38,18 @@ static inline bool is_base64(unsigned char c)
     return (isalnum(c) || (c == '+') || (c == '/'));
 }
 
-QString util::filePath(QString s)
+std::__cxx11::string util::filePath(std::string s)
 {
-    QString t = s;
-    t.replace('\\', '_');
-    t.replace('/', '_');
-    t.replace(':', '_');
-    t.replace('*', '_');
-    t.replace('?', '_');
-    t.replace('\"', '_');
-    t.replace('<', '_');
-    t.replace('>', '_');
-    t.replace('|', '_');
+    std::string t = s;
+    std::replace(t.begin(), t.end(), '\\', '_');
+    std::replace(t.begin(), t.end(), '/', '_');
+    std::replace(t.begin(), t.end(), ':', '_');
+    std::replace(t.begin(), t.end(), '*', '_');
+    std::replace(t.begin(), t.end(), '?', '_');
+    std::replace(t.begin(), t.end(), '\"', '_');
+    std::replace(t.begin(), t.end(), '<', '_');
+    std::replace(t.begin(), t.end(), '>', '_');
+    std::replace(t.begin(), t.end(), '|', '_');
     return t;
 }
 
@@ -83,47 +85,43 @@ std::string util::resolveRelativeOrAbsolute(const std::string &path, const std::
 }
 
 template<class TList>
-inline void CSV2IntArr_CODE(const QString &source, TList &dest, const typename TList::value_type &def)
+inline void CSV2IntArr_CODE(const std::string &source, TList &dest, const typename TList::value_type &def)
 {
     typedef typename TList::value_type T;
 
-    if(!source.isEmpty())
+    if(!source.empty())
     {
-        bool ok;
-        QStringList tmlL = source.split(',', QString::SkipEmptyParts);
+        Strings::List tmlL;
+        Strings::split(tmlL, source, ',');
 
-        for(QString &fr : tmlL)
+        for(std::string &fr : tmlL)
         {
-            if(std::is_same<T, int>::value)
-                dest.push_back(fr.toInt(&ok));
-            else
-                dest.push_back(fr.toDouble(&ok));
-
-            if(!ok) dest.pop_back();
+            try
+            {
+                if(std::is_same<T, int>::value)
+                    dest.push_back(std::atoi(fr.c_str()));
+                else
+                    dest.push_back(std::strtod(fr.c_str(), nullptr));
+            }
+            catch(...)
+            {
+                continue;
+            }
+            dest.pop_back();
         }
 
-        if(dest.isEmpty()) dest.push_back(def);
+        if(dest.empty()) dest.push_back(def);
     }
     else
         dest.push_back(def);
 }
 
-void util::CSV2IntArr(QString source, QList<int> &dest)
+void util::CSV2IntArr(std::string source, std::vector<int> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0);
 }
 
-void util::CSV2IntArr(QString source, QVector<int> &dest)
-{
-    CSV2IntArr_CODE(source, dest, 0);
-}
-
-void util::CSV2DoubleArr(QString source, QList<double> &dest)
-{
-    CSV2IntArr_CODE(source, dest, 0.0);
-}
-
-void util::CSV2DoubleArr(QString source, QVector<double> &dest)
+void util::CSV2DoubleArr(std::string source, std::vector<double> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0.0);
 }

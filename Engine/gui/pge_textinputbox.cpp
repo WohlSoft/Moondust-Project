@@ -28,9 +28,6 @@
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 
-#include <QFontMetrics>
-#include <QFileInfo>
-
 PGE_TextInputBox::PGE_TextInputBox()
     : PGE_BoxBase(0)
 {
@@ -79,7 +76,7 @@ void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _typ
     cursor = 0;
     selection_len = 0;
     blink_shown = true;
-    blink_timeout = 250.0f;
+    blink_timeout = 250.0;
     keys = Controller::noKeys();
     fontID   = FontManager::getFontID(ConfigManager::setup_message_box.font_name);
     fontRgba = ConfigManager::setup_message_box.font_rgba;
@@ -90,27 +87,22 @@ void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _typ
     switch(type)
     {
     case msg_info:
-        bg_color =       QColor(qRgb(0, 0, 0));
+        bg_color =       GlColor(0, 0, 0);
         break;
-
     case msg_info_light:
-        bg_color = QColor(qRgb(0, 0, 125));
+        bg_color =      GlColor(0, 0, 0.490196078);
         break;
-
     case msg_warn:
-        bg_color =       QColor(qRgb(255, 201, 14));
+        bg_color =       GlColor(1.0, 0.788235294, 0.054901961);
         break;
-
     case msg_error:
-        bg_color =      QColor(qRgb(125, 0, 0));
+        bg_color =      GlColor(0.490196078, 0, 0);
         break;
-
     case msg_fatal:
-        bg_color =      QColor(qRgb(255, 0, 0));
+        bg_color =      GlColor(1.0, 0, 0);
         break;
-
     default:
-        bg_color =            QColor(qRgb(0, 0, 0));
+        bg_color =      GlColor(0, 0, 0);
         break;
     }
 
@@ -118,7 +110,7 @@ void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _typ
     FontManager::optimizeText(message, 27);
     /****************Word wrap*end*****************/
     PGE_Size boxSize = FontManager::textSize(message, fontID, 27);
-    QString w27 = "XXXXXXXXXXXXXXXXXXXXXXXXXXX";
+    std::string w27 = "XXXXXXXXXXXXXXXXXXXXXXXXXXX";
     PGE_Size textinputSize = FontManager::textSize(w27, fontID, 27);
     _text_input_h_offset = boxSize.h();
     boxSize.setWidth(textinputSize.w());
@@ -159,7 +151,7 @@ void PGE_TextInputBox::update(double ticktime)
     switch(_page)
     {
     case 0:
-        setFade(10, 1.0f, 0.05f);
+        setFade(10, 1.0, 0.05);
         _page++;
         break;
 
@@ -192,7 +184,7 @@ void PGE_TextInputBox::render()
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
                                    _sizeRect.width(), _sizeRect.height(),
-                                   bg_color.red() / 255.0f, bg_color.green() / 255.0f, bg_color.blue() / 255.0f, m_faderOpacity);
+                                   bg_color.Red(), bg_color.Green(), bg_color.Blue(), m_faderOpacity);
         }
 
         FontManager::printText(message, _sizeRect.left() + padding, _sizeRect.top() + padding, fontID,
@@ -216,7 +208,7 @@ void PGE_TextInputBox::render()
                                      _sizeRect.center().y() - (height + padding)*m_faderOpacity,
                                      _sizeRect.center().x() + (width + padding)*m_faderOpacity,
                                      _sizeRect.center().y() + (height + padding)*m_faderOpacity,
-                                     bg_color.red() / 255.0f, bg_color.green() / 255.0f, bg_color.blue() / 255.0f, m_faderOpacity);
+                                     bg_color.Red(), bg_color.Green(), bg_color.Blue(), m_faderOpacity);
         }
     }
 }
@@ -271,7 +263,8 @@ void PGE_TextInputBox::processLoader(double ticks)
     updateControllers();
     tickFader(ticks);
 
-    if(m_faderOpacity >= 1.0f) _page++;
+    if(m_faderOpacity >= 1.0)
+        _page++;
 }
 
 void PGE_TextInputBox::processBox(double tickTime)
@@ -282,11 +275,10 @@ void PGE_TextInputBox::processBox(double tickTime)
     //    #endif
     updateControllers();
     blink_timeout -= tickTime;
-
-    if(blink_timeout < 0.0f)
+    if(blink_timeout < 0.0)
     {
         blink_shown = !blink_shown;
-        blink_timeout += (tickTime < 250.0f) ? 250.0f : tickTime + 250.0f;
+        blink_timeout += (tickTime < 250.0) ? 250.0 : tickTime + 250.0;
     }
 
     SDL_StartTextInput();
@@ -300,7 +292,7 @@ void PGE_TextInputBox::processBox(double tickTime)
         {
         case SDL_QUIT:
             _page++;
-            setFade(10, 0.0f, 0.05f);
+            setFade(10, 0.0, 0.05);
             SDL_StopTextInput();
             break;
 
@@ -316,7 +308,7 @@ void PGE_TextInputBox::processBox(double tickTime)
                     _inputText_src = _inputText;
 
                 _page++;
-                setFade(10, 0.0f, 0.05f);
+                setFade(10, 0.0, 0.05);
                 SDL_StopTextInput();
             }
             break;
@@ -394,7 +386,8 @@ void PGE_TextInputBox::processUnLoader(double ticks)
     updateControllers();
     tickFader(ticks);
 
-    if(m_faderOpacity <= 0.0f) _page++;
+    if(m_faderOpacity <= 0.0)
+        _page++;
 }
 
 void PGE_TextInputBox::setInputText(std::string text)

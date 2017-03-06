@@ -235,7 +235,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 #endif//IF _WIN32 #else
     g_isRenderInit = true;
     //Init OpenGL (to work with textures, OpenGL should be load)
-    LogDebug("Init OpenGL settings...");
+    pLogDebug("Init OpenGL settings...");
 
     if(!GlRenderer::init())
     {
@@ -246,10 +246,10 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
         return false;
     }
 
-    LogDebug("Toggle vsync...");
+    pLogDebug("Toggle vsync...");
     vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
     toggleVSync(vsync);
-    LogDebug(QString("V-Sync supported: %1").arg(vsyncIsSupported));
+    pLogDebug(fmt::format("V-Sync supported: {0}", vsyncIsSupported).c_str());
     return true;
 }
 

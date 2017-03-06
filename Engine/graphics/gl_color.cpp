@@ -1,6 +1,5 @@
 #include "gl_color.h"
 
-#include <QColor>
 #include <cmath>
 #include <unordered_map>
 #include <algorithm>
@@ -73,11 +72,6 @@ GlColor::GlColor(double _r, double _g, double _b, double _a)
     m_a = _a;
 }
 
-GlColor::GlColor(QString rgba)
-{
-    setRgba(rgba.toStdString());
-}
-
 GlColor::GlColor(std::string rgba)
 {
     setRgba(rgba);
@@ -100,11 +94,6 @@ void GlColor::setRgba(GLuint rgba)
     m_g = static_cast<double>((rgba & 0x00FF0000) >> 16) / 255.0;
     m_b = static_cast<double>((rgba & 0x0000FF00) >> 8) / 255.0;
     m_a = static_cast<double>((rgba & 0x000000FF)) / 255.0;
-}
-
-void GlColor::setRgba(QString rgba)
-{
-    setRgba(rgba.toStdString());
 }
 
 void GlColor::setRgba(std::string rgba)

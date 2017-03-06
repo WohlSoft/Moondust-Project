@@ -32,8 +32,7 @@
 
 #include <controls/control_keys.h>
 
-#include <QColor>
-#include <QString>
+#include <string>
 
 class PGE_TextInputBox : public PGE_BoxBase
 {
@@ -84,7 +83,7 @@ private:
     double width;
     double height;
     double padding;
-    QColor bg_color;
+    GlColor bg_color;
     void updateControllers();
 };
 

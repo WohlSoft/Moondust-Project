@@ -21,10 +21,11 @@
 #include <graphics/graphics.h>
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
+#include <fmt/fmt_format.h>
+#include <common_features/logger.h>
 
 #include "lvl_backgrnd.h"
 
-#include <QtDebug>
 
 LVL_Background::LVL_Background()
 {
@@ -70,12 +71,10 @@ void LVL_Background::setBg(obj_BG &bg)
 {
     if((!bg.isInit) && (!bg.second_isInit))
     {
-        QString CustomTxt = ConfigManager::Dir_BG.getCustomFile("background2-" + QString::number(bg.id) + ".ini");
-
-        if(CustomTxt.isEmpty())
-            CustomTxt = ConfigManager::Dir_BG.getCustomFile("background2-" + QString::number(bg.id) + ".txt");
-
-        if(!CustomTxt.isEmpty())
+        std::string CustomTxt = ConfigManager::Dir_BG.getCustomFile(fmt::format("background2-{0}.ini", bg.id));
+        if(CustomTxt.empty())
+            CustomTxt = ConfigManager::Dir_BG.getCustomFile(fmt::format("background2-{0}.txt", bg.id));
+        if(!CustomTxt.empty())
             ConfigManager::loadLevelBackground(bg, "background2", &bg, CustomTxt);
     }
 

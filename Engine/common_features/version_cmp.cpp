@@ -1,104 +1,105 @@
-#include <QStringList>
+#include <algorithm>
+#include <unordered_map>
+#include <Utils/strings.h>
 #include "version_cmp.h"
+#include <cstdlib>
 
-int VersionCmp::str2ver(QString verSuffix)
+int VersionCmp::str2ver(std::string verSuffix)
 {
-    if(verSuffix.toLower()=="alpha")
+    static const std::unordered_map<std::string, VersionSuffix> ver =
     {
-        return ALPHA;
-    }
-    else
-    if(verSuffix.toLower()=="dev")
-    {
-        return DEV;
-    }
-    else
-    if(verSuffix.toLower()=="beta")
-    {
-        return BETA;
-    }
-    else
-    if(verSuffix.toLower()=="rc")
-    {
-        return RC;
-    }
-    else
-    if(verSuffix.toLower()=="")
-    {
-        return RELEASE;
-    }
-    else
+        {"alpha", ALPHA},
+        {"dev", DEV},
+        {"beta", BETA},
+        {"rc", RC},
+        {"", RELEASE}
+    };
+
+    std::transform(verSuffix.begin(), verSuffix.end(), verSuffix.begin(), ::tolower);
+    std::unordered_map<std::string, VersionSuffix>::const_iterator i = ver.find(verSuffix);
+    if(i == ver.end())
         return 0;
+    else
+        return i->second;
 }
 
-QString VersionCmp::compare(QString ver1, QString ver2)
+std::string VersionCmp::compare(std::string ver1, std::string ver2)
 {
+// FIXME: Rework this algorithm to be more accurate!
+
     long vers1[5] = {0,0,0,0,0};
     long vers2[5] = {0,0,0,0,0};
+    std::string v1 = ver1, v2 = ver2;
+    Strings::List ver1s, ver2s, v1s, v2s;
+    std::replace(v1.begin(), v1.end(), '-', '.');
+    std::replace(v2.begin(), v2.end(), '-', '.');
+    Strings::split(ver1s, ver1, '.');
+    Strings::split(ver2s, ver2, '.');
 
-    QStringList ver1s = QString(ver1).replace('-', '.').split('.');
-    QStringList ver2s = QString(ver2).replace('-', '.').split('.');
-    bool ok=true;
+    if(ver1s.empty())
+        return ver1;
+    if(ver2s.empty())
+        return ver1;
 
-    if(ver1s.isEmpty()) return ver1;
-    if(ver2s.isEmpty()) return ver1;
-
-    if(ver1.split('-').size()>1)
+    Strings::split(v1s, ver1, '-');
+    if(v1.size() > 1)
     {
-        vers1[4] = str2ver(ver1s.last());
+        vers1[4] = str2ver(ver1s.back());
         ver1s.pop_back();
     }
     else
         vers1[4]=RELEASE;
 
-    if(ver2.split('-').size()>1)
+    Strings::split(v2s, ver2, '-');
+    if(v2s.size() > 1)
     {
-        vers2[4] = str2ver(ver2s.last());
+        vers2[4] = str2ver(ver2s.back());
         ver2s.pop_back();
     }
     else
-        vers2[4]=RELEASE;
+        vers2[4] = RELEASE;
 
     int c=0;
-    while((!ver1s.isEmpty())&&(c<5))
+    while( (!ver1s.empty()) && (c<5) )
     {
-        vers1[c]=ver1s.first().toLong(&ok);
-        if(!ok) return ver1;
-        ver1s.pop_front();
+        try {
+            vers1[c] = std::atol(ver1s.front().c_str());
+        }
+        catch (...)
+        {
+            return ver1;
+        }
+        ver1s.erase(ver2s.begin());
         c++;
     }
-    c=0;
-    while((!ver2s.isEmpty())&&(c<5))
+    c = 0;
+    while((!ver2s.empty()) && (c<5))
     {
-        vers2[c]=ver2s.first().toLong(&ok);
-        if(!ok) return ver1;
-        ver2s.pop_front();
+        try {
+            vers2[c] = std::atol(ver2s.front().c_str());
+        }
+        catch (...)
+        {
+            return ver1;
+        }
+        ver2s.erase(ver2s.begin());
         c++;
     }
 
-    qreal mult=0.000001;
-    qreal ver1i=0.0;
-    qreal ver2i=0.0;
+    double mult  = 0.000001;
+    double ver1i = 0.0;
+    double ver2i = 0.0;
 
-    for(int i=4; i>=0;i--)
+    for(int i = 4; i >= 0; i--)
     {
-        ver1i += vers1[i]*mult;
-        ver2i += vers2[i]*mult;
-        mult*=1000.0;
+        ver1i += vers1[i] * mult;
+        ver2i += vers2[i] * mult;
+        mult *= 1000.0;
     }
 
-    if(ver1i<ver2i)
+    if(ver1i < ver2i)
         return ver2;
     else
         return ver1;
 }
 
-int VersionCmp::str2ver(std::string verSuffix)
-{
-    return str2ver(QString::fromStdString(verSuffix));
-}
-
-std::string VersionCmp::compare(std::string ver1, std::string ver2)
-{
-    return compare(QString::fromStdString(ver1), QString::fromStdString(ver2)).toStdString();
-}

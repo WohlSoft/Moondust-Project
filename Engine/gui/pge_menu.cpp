@@ -25,9 +25,6 @@
 #include <audio/pge_audio.h>
 #include <controls/controller_key_map.h>
 
-#include <stack>
-#include <QStack>
-
 PGE_Menu::PGE_Menu(menuAlignment align, int itemGap)
 {
     alignment = align;
@@ -134,7 +131,7 @@ void PGE_Menu::addMenuItem(std::string item_key, std::string title,
     else
     {
         //Capture limited lenght, but don't crop
-        QString temp = FontManager::cropText(item.title, _text_len_limit);
+        std::string temp = FontManager::cropText(item.title, _text_len_limit);
         item._width = FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction = _extAction;
@@ -164,7 +161,7 @@ void PGE_Menu::addBoolMenuItem(bool *flag,
     else
     {
         //Capture limited lenght, but don't crop
-        QString temp = FontManager::cropText(item.title, _text_len_limit);
+        std::string temp = FontManager::cropText(item.title, _text_len_limit);
         item._width = FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction = _extAction;
@@ -197,7 +194,7 @@ void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max,
     else
     {
         //Capture limited lenght, but don't crop
-        QString temp = FontManager::cropText(item.title, _text_len_limit);
+        std::string temp = FontManager::cropText(item.title, _text_len_limit);
         item._width = FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction = _extAction;
@@ -217,7 +214,7 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, std::vector<NamedIntItem> _ite
     item.item_key = item_key;
     item.items = _items;
     if(intvalue)
-        for(int i = 0; i < _items.size(); i++)
+        for(size_t i = 0; i < _items.size(); i++)
         {
             if(*intvalue == _items[i].value)
             {
@@ -238,7 +235,7 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, std::vector<NamedIntItem> _ite
     else
     {
         //Capture limited lenght, but don't crop
-        QString temp = FontManager::cropText(item.title, _text_len_limit);
+        std::string temp = FontManager::cropText(item.title, _text_len_limit);
         item._width = FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction = _extAction;
@@ -344,7 +341,7 @@ void PGE_Menu::selectUp()
     {
         _currentItem = _items.size() - 1;
         _line = _itemsOnScreen - 1;
-        _offset = (_items.size() > _itemsOnScreen) ? _items.size() - _itemsOnScreen : 0;
+        _offset = (int(_items.size()) > _itemsOnScreen) ? _items.size() - _itemsOnScreen : 0;
     }
 }
 
@@ -360,7 +357,7 @@ void PGE_Menu::selectDown()
         _line = _itemsOnScreen - 1;
     }
 
-    if(_currentItem >= _items.size())
+    if(_currentItem >= int(_items.size()))
     {
         _currentItem = 0;
         _line = 0;
@@ -370,7 +367,8 @@ void PGE_Menu::selectDown()
 
 void PGE_Menu::scrollUp()
 {
-    if(_items.size() <= _itemsOnScreen) return;
+    if(int(_items.size()) <= _itemsOnScreen)
+        return;
     if(_offset > 0)
     {
         _offset--;
@@ -380,9 +378,9 @@ void PGE_Menu::scrollUp()
 
 void PGE_Menu::scrollDown()
 {
-    if(_items.size() <= _itemsOnScreen) return;
+    if(int(_items.size()) <= _itemsOnScreen) return;
 
-    if(_offset < (_items.size() - _itemsOnScreen))
+    if(_offset < (int(_items.size()) - _itemsOnScreen))
     {
         _offset++;
         _currentItem++;
@@ -399,7 +397,8 @@ void PGE_Menu::selectLeft()
 
 void PGE_Menu::selectRight()
 {
-    if(_items.size() <= 0) return;
+    if(_items.size() <= 0)
+        return;
     PGE_Menuitem *selected = _items[_currentItem];
     if(!selected->m_enabled) return;
     selected->right();
@@ -407,7 +406,8 @@ void PGE_Menu::selectRight()
 
 void PGE_Menu::acceptItem()
 {
-    if(_items.size() <= 0) return;
+    if(_items.size() <= 0)
+        return;
 
     PGE_Menuitem *selected = _items[_currentItem];
     if(!selected->m_enabled)
@@ -433,7 +433,7 @@ void PGE_Menu::acceptItem()
         PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
         _EndSelection = true;
         _accept = true;
-        if((_currentItem < _items.size()) && (_currentItem >= 0))
+        if((_currentItem < int(_items.size())) && (_currentItem >= 0))
             selected->extAction();
     }
 }
@@ -467,7 +467,8 @@ void PGE_Menu::sort()
     beg.reserve(_items.size());
     end.reserve(_items.size());
     PGE_Menuitem *piv;
-    int i = 0, L, R, swapv;
+    int i = 0;
+    size_t L, R, swapv;
     beg.push_back(0);
     end.push_back(_items.size());
     while(i >= 0)
@@ -512,12 +513,12 @@ void PGE_Menu::sort()
 
 bool PGE_Menu::namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2)
 {
-    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive) <= 0); // sort by title
+    return (d1->title.compare(d2->title) <= 0); // sort by title
 }
 
 bool PGE_Menu::namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2)
 {
-    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive) >= 0); // sort by title
+    return (d1->title.compare(d2->title) >= 0); // sort by title
 }
 
 bool PGE_Menu::isSelected()
@@ -591,7 +592,7 @@ int PGE_Menu::findItem(int x, int y)
     if(y > menuRect.bottom()) return -1;
 
     int pos = menuRect.y();
-    for(int i = 0; (i < _itemsOnScreen) && (i < _items.size()); i++)
+    for(int i = 0; (i < _itemsOnScreen) && (i < int(_items.size())); i++)
     {
         if((y > pos) && (y < (pos + _item_height)))
             return _offset + i;
@@ -627,7 +628,7 @@ int PGE_Menu::currentItemI()
 void PGE_Menu::setCurrentItem(int i)
 {
     //If no out of range
-    if((i >= 0) && (i < _items.size()))
+    if((i >= 0) && (i < int(_items.size())))
     {
         _currentItem = i;
         autoOffset();
@@ -654,7 +655,7 @@ int PGE_Menu::offset()
 
 void PGE_Menu::setOffset(int of)
 {
-    if((of >= 0) && (of < (_items.size() - _itemsOnScreen)))
+    if((of >= 0) && (of < (int(_items.size()) - _itemsOnScreen)))
     {
         _offset = of;
         _line = _currentItem - of;
@@ -672,7 +673,7 @@ void PGE_Menu::setOffset(int of)
 /// Automatically sets offset and line number values
 void PGE_Menu::autoOffset()
 {
-    if(_items.size() <= _itemsOnScreen)
+    if(int(_items.size()) <= _itemsOnScreen)
     {
         _offset = 0;
         _line = _currentItem;
@@ -743,15 +744,15 @@ void PGE_Menu::refreshRect()
         menuRect.setHeight(_item_height);
 
         int menuWidth = 0;
-        if(_items.size() < _itemsOnScreen)
+        if(int(_items.size()) < _itemsOnScreen)
         {
-            for(int temp = 0; temp < _items.size(); temp++)
+            for(size_t temp = 0; temp < _items.size(); temp++)
                 menuWidth += _items[temp]->_width + menuItemGap;
         }
         else
         {
             int maxWidth = 0;
-            for(int temp = 0; temp < _items.size(); temp++)
+            for(size_t temp = 0; temp < _items.size(); temp++)
             {
                 if(_items[temp]->_width > maxWidth) maxWidth = _items[temp]->_width;
             }
@@ -762,13 +763,13 @@ void PGE_Menu::refreshRect()
     }
     else if(alignment == menuAlignment::VERTICLE)
     {
-        if(_items.size() < _itemsOnScreen)
+        if(int(_items.size()) < _itemsOnScreen)
             menuRect.setHeight(_items.size() * (_item_height + menuItemGap));
         else
             menuRect.setHeight(_itemsOnScreen * (_item_height + menuItemGap));
 
         menuRect.setWidth(0);
-        for(int i = 0; i < _items.size(); i++)
+        for(size_t i = 0; i < _items.size(); i++)
         {
             if(menuRect.width() < _items[i]->_width)
                 menuRect.setWidth(_items[i]->_width);
@@ -798,7 +799,7 @@ PGE_Rect PGE_Menu::rectFull()
     PGE_Rect tRect = menuRect;
     tRect.setWidth(menuRect.width() + (_selector.w != 0 ? _selector.w : 20) + 10);
 
-    if(_items.size() > _itemsOnScreen)
+    if(int(_items.size()) > _itemsOnScreen)
     {
         if(alignment == menuAlignment::VERTICLE)
         {
@@ -821,7 +822,7 @@ PGE_Rect PGE_Menu::rectFull()
 
 int PGE_Menu::topOffset()
 {
-    if(_items.size() > _itemsOnScreen)
+    if(int(_items.size()) > _itemsOnScreen)
         return (_scroll_up.w != 0 ? _scroll_up.h : 10) + 10 + _font_offset;
     return _font_offset;
 }
@@ -829,7 +830,7 @@ int PGE_Menu::topOffset()
 void PGE_Menu::render()
 {
     //Show scrollers
-    if(_items.size() > _itemsOnScreen)
+    if(int(_items.size()) > _itemsOnScreen)
     {
         if(_offset > 0)
         {
@@ -873,7 +874,7 @@ void PGE_Menu::render()
             }
         }
 
-        if(_offset < (_items.size() - _itemsOnScreen))
+        if(_offset < (int(_items.size()) - _itemsOnScreen))
         {
             int w = 10;
             int h = 10;
@@ -909,7 +910,7 @@ void PGE_Menu::render()
                 posX += (menuRect.width() / 2) - (h / 2);
                 posY += (_item_height + menuItemGap) * _itemsOnScreen + 4;
 
-                if(_items.size() > 1)
+                if(int(_items.size()) > 1)
                     posY -= menuItemGap;
 
                 if(_scroll_down.w == 0)
@@ -923,7 +924,7 @@ void PGE_Menu::render()
         }
     }
 
-    for(int i = _offset, j = 0; i < _offset + _itemsOnScreen && i < _items.size(); i++, j++)
+    for(int i = _offset, j = 0; i < _offset + _itemsOnScreen && i < int(_items.size()); i++, j++)
     {
         int xPos = menuRect.x();
         int yPos = menuRect.y();

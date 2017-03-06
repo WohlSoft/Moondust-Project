@@ -36,8 +36,8 @@ int  ConfigManager::getBlockTexture(unsigned long blockID)
     }
     else
     {
-        QString imgFile = Dir_Blocks.getCustomFile(blkSetup->setup.image_n);
-        QString maskFile = Dir_Blocks.getCustomFile(blkSetup->setup.mask_n);
+        std::string imgFile = Dir_Blocks.getCustomFile(blkSetup->setup.image_n);
+        std::string maskFile = Dir_Blocks.getCustomFile(blkSetup->setup.mask_n);
         int id = level_textures.size();
         blkSetup->textureArrayId = id;
         PGE_Texture texture;
@@ -110,8 +110,8 @@ int  ConfigManager::getBgoTexture(unsigned long bgoID)
     }
     else
     {
-        QString imgFile = Dir_BGO.getCustomFile(bgoSetup->setup.image_n);
-        QString maskFile = Dir_BGO.getCustomFile(bgoSetup->setup.mask_n);
+        std::string imgFile = Dir_BGO.getCustomFile(bgoSetup->setup.image_n);
+        std::string maskFile = Dir_BGO.getCustomFile(bgoSetup->setup.mask_n);
         int id = level_textures.size();
         PGE_Texture texture;
         bgoSetup->textureArrayId = id;
@@ -169,8 +169,8 @@ int  ConfigManager::getNpcTexture(unsigned long npcID)
     }
     else
     {
-        QString imgFile  = Dir_NPC.getCustomFile(npcSetup->setup.image_n);
-        QString maskFile = Dir_NPC.getCustomFile(npcSetup->setup.mask_n);
+        std::string imgFile  = Dir_NPC.getCustomFile(npcSetup->setup.image_n);
+        std::string maskFile = Dir_NPC.getCustomFile(npcSetup->setup.mask_n);
         int id = level_textures.size();
         npcSetup->textureArrayId = id;
         PGE_Texture texture;
@@ -188,7 +188,7 @@ int  ConfigManager::getNpcTexture(unsigned long npcID)
         {
             AdvNpcAnimator animator(*(npcSetup->image), *npcSetup);
             Animator_NPC.push_back(animator);
-            Animator_NPC.last().start();
+            Animator_NPC.back().start();
             npcSetup->animator_ID = Animator_NPC.size() - 1;
         }
 
@@ -215,8 +215,8 @@ int ConfigManager::getEffectTexture(unsigned long effectID)
     }
     else
     {
-        QString imgFile = Dir_EFFECT.getCustomFile(effSetup->image_n);
-        QString maskFile = Dir_EFFECT.getCustomFile(effSetup->mask_n);
+        std::string imgFile = Dir_EFFECT.getCustomFile(effSetup->image_n);
+        std::string maskFile = Dir_EFFECT.getCustomFile(effSetup->mask_n);
         int id = level_textures.size();
         effSetup->textureArrayId = id;
         PGE_Texture texture;
@@ -283,15 +283,15 @@ int  ConfigManager::getLvlPlayerTexture(unsigned long playerID, unsigned long st
     else
     {
         bool isDefault = false;
-        QString imgFile = Dir_PlayerLvl.getCustomFile(state.image_n, &isDefault);
+        std::string imgFile = Dir_PlayerLvl.getCustomFile(state.image_n, &isDefault);
 
         if(isDefault)
-            imgFile = playerLvlPath + QString::fromStdString(plr.sprite_folder) + "/" + state.image_n;
+            imgFile = playerLvlPath + plr.sprite_folder + "/" + state.image_n;
 
-        QString maskFile = Dir_PlayerLvl.getCustomFile(state.mask_n, &isDefault);
+        std::string maskFile = Dir_PlayerLvl.getCustomFile(state.mask_n, &isDefault);
 
         if(isDefault)
-            maskFile  = playerLvlPath + QString::fromStdString(plr.sprite_folder) + "/" + state.mask_n;
+            maskFile  = playerLvlPath + plr.sprite_folder + "/" + state.mask_n;
 
         int id = level_textures.size();
         state.textureArrayId = id;
@@ -332,12 +332,12 @@ int  ConfigManager::getWldPlayerTexture(unsigned long playerID, unsigned long st
     else
     {
         bool isDefault = false;
-        QString imgFile = Dir_PlayerWld.getCustomFile(plr.image_wld_n, &isDefault);
+        std::string imgFile = Dir_PlayerWld.getCustomFile(plr.image_wld_n, &isDefault);
 
         if(isDefault)
             imgFile = playerWldPath + plr.image_wld_n;
 
-        QString maskFile = Dir_PlayerWld.getCustomFile(plr.mask_wld_n, &isDefault);
+        std::string maskFile = Dir_PlayerWld.getCustomFile(plr.mask_wld_n, &isDefault);
 
         if(isDefault)
             maskFile  = playerWldPath + plr.mask_wld_n;
@@ -386,7 +386,7 @@ int  ConfigManager::getBGTexture(unsigned long bgID, bool isSecond)
     }
     else
     {
-        QString imgFile = "";
+        std::string imgFile = "";
 
         if(isSecond)
             imgFile = Dir_BG.getCustomFile(bgSetup->second_image_n);
@@ -482,8 +482,8 @@ int  ConfigManager::getTileTexture(unsigned long tileID)
     }
     else
     {
-        QString imgFile = Dir_Tiles.getCustomFile(tileSetup->setup.image_n);
-        QString maskFile = Dir_Tiles.getCustomFile(tileSetup->setup.mask_n);
+        std::string imgFile = Dir_Tiles.getCustomFile(tileSetup->setup.image_n);
+        std::string maskFile = Dir_Tiles.getCustomFile(tileSetup->setup.mask_n);
         int id = world_textures.size();
         tileSetup->textureArrayId = id;
         PGE_Texture texture;
@@ -492,9 +492,9 @@ int  ConfigManager::getTileTexture(unsigned long tileID)
                                  imgFile,
                                  maskFile
                                 );
-        tileSetup->image = &(world_textures[id]);
-        tileSetup->textureID = world_textures[id].texture;
-        tileSetup->isInit = true;
+        tileSetup->image        = &(world_textures[id]);
+        tileSetup->textureID    = world_textures[id].texture;
+        tileSetup->isInit       = true;
 
         //Also, load and init animator
         if(tileSetup->setup.animated)
@@ -541,8 +541,8 @@ int  ConfigManager::getSceneryTexture(unsigned long sceneryID)
     }
     else
     {
-        QString imgFile = Dir_Scenery.getCustomFile(scenerySetup->setup.image_n);
-        QString maskFile = Dir_Scenery.getCustomFile(scenerySetup->setup.mask_n);
+        std::string imgFile = Dir_Scenery.getCustomFile(scenerySetup->setup.image_n);
+        std::string maskFile = Dir_Scenery.getCustomFile(scenerySetup->setup.mask_n);
         int id = world_textures.size();
         scenerySetup->textureArrayId = id;
         PGE_Texture texture;
@@ -600,8 +600,8 @@ int  ConfigManager::getWldPathTexture(unsigned long pathID)
     }
     else
     {
-        QString imgFile = Dir_WldPaths.getCustomFile(pathSetup->setup.image_n);
-        QString maskFile = Dir_WldPaths.getCustomFile(pathSetup->setup.mask_n);
+        std::string imgFile     = Dir_WldPaths.getCustomFile(pathSetup->setup.image_n);
+        std::string maskFile    = Dir_WldPaths.getCustomFile(pathSetup->setup.mask_n);
         int id = world_textures.size();
         pathSetup->textureArrayId = id;
         PGE_Texture texture;
@@ -660,8 +660,8 @@ int  ConfigManager::getWldLevelTexture(unsigned long levelID)
     }
     else
     {
-        QString imgFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.image_n);
-        QString maskFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.mask_n);
+        std::string imgFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.image_n);
+        std::string maskFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.mask_n);
         int id = world_textures.size();
         lvlSetup->textureArrayId = id;
         PGE_Texture texture;

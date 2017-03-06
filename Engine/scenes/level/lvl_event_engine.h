@@ -25,10 +25,6 @@
 #include <vector>
 #include <unordered_map>
 
-#include <QHash>
-#include <QList>
-#include <QString>
-
 class LVL_EventAction
 {
 public:

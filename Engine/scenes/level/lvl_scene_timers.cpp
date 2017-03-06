@@ -24,7 +24,6 @@
 #include <networking/intproc.h>
 #include <graphics/gl_renderer.h>
 
-
 /**************************LoadAnimation*******************************/
 namespace lvl_scene_loader
 {
@@ -58,8 +57,7 @@ void LevelScene::drawLoader()
                               static_cast<float>(x.second));
 
     if(IntProc::isEnabled())
-        FontManager::printText(QString("%1")
-                               .arg(IntProc::getState()), 10, 10);
+        FontManager::printText(IntProc::getState(), 10, 10);
 }
 
 

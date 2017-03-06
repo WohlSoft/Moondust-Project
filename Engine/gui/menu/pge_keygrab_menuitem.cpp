@@ -22,6 +22,7 @@
 #include <audio/pge_audio.h>
 #include "pge_keygrab_menuitem.h"
 #include <controls/controller_joystick.h>
+#include <fmt/fmt_format.h>
 
 #include "../pge_menu.h"
 
@@ -119,27 +120,26 @@ void PGE_KeyGrabMenuItem::render(int x, int y)
     PGE_Menuitem::render(x, y);
     float colorLevel = m_enabled ? 1.0 : 0.5;
     if(chosing)
-        FontManager::printText(QString("..."), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+        FontManager::printText("...", x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
     else
     if(targetKey)
     {
         if(joystick_mode)
         {
             if(targetKey->type !=-1 )
-                FontManager::printText(QString("Key=%1 ID=%2 Type=%3")
-                                       .arg(targetKey->val)
-                                       .arg(targetKey->id)
-                                       .arg(targetKey->type)
-                                       , x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+                FontManager::printText(fmt::format("Key={0} ID={1} Type={2}",
+                                       targetKey->val,
+                                       targetKey->id,
+                                       targetKey->type), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
             else
-                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+                FontManager::printText("<none>", x + valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
         }
         else
         {
-            if(targetKey->val!=-1)
-                FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)targetKey->val)), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+            if(targetKey->val != -1)
+                FontManager::printText(SDL_GetScancodeName((SDL_Scancode)targetKey->val), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
             else
-                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+                FontManager::printText("<none>", x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
         }
     }
 }

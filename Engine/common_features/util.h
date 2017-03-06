@@ -20,10 +20,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <QString>
-#include <QVector>
-#include <QList>
 #include <string>
+#include <vector>
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -36,15 +34,13 @@
 
 namespace util
 {
-    QString filePath(QString s);
+    std::string filePath(std::string s);
     bool strempty(const char *str);
 
     std::string resolveRelativeOrAbsolute(const std::string& path, const std::vector<std::string>& relativeLookup);
 
-    void CSV2IntArr(QString source, QList<int> &dest);
-    void CSV2IntArr(QString source, QVector<int> &dest);
-    void CSV2DoubleArr(QString source, QList<double> &dest);
-    void CSV2DoubleArr(QString source, QVector<double> &dest);
+    void CSV2IntArr(std::string source, std::vector<int> &dest);
+    void CSV2DoubleArr(std::string source, std::vector<double> &dest);
     void base64_encode(std::string &ret, const unsigned char *bytes_to_encode, size_t in_len);
     void base64_decode(std::string &ret, std::string const &encoded_string);
 
@@ -70,19 +66,17 @@ namespace varadic_util
 namespace luabind_utils
 {
     template<typename T>
-    static inline gcc_force_inline QList<T> convArrayTo(luabind::object &obj)
+    static inline gcc_force_inline std::vector<T> convArrayTo(luabind::object &obj)
     {
-        QList<T> container;
-
+        std::vector<T> container;
         for(luabind::iterator it(obj), end; it != end; ++it)
         {
             try
             {
-                container << luabind::object_cast<T>(*it);
+                container.push_back(luabind::object_cast<T>(*it));
             }
             catch(luabind::cast_failed & /*e*/) { }
         }
-
         return container;
     }
 }

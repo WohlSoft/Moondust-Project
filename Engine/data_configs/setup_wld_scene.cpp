@@ -1,11 +1,8 @@
-
-#include <QString>
-#include <QSettings>
-
 #include "setup_wld_scene.h"
 #include "config_manager.h"
 #include "config_manager_private.h"
 #include <fontman/font_manager.h>
+#include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
 
 WorldMapSetup ConfigManager::setup_WorldMap;
@@ -79,7 +76,7 @@ void WorldMapSetup::init(IniProcessing& engine_ini)
         portrait_animation = engine_ini.value("portrait-animation", "Run").toString();
         portrait_direction = engine_ini.value("portrait-direction", -1).toInt();
         luaFile = engine_ini.value("script", "main_world.lua").toString();
-        LoadScreenImages = engine_ini.value("additional-images", 0).toInt();
+        engine_ini.read("additional-images", LoadScreenImages, 0);
     }
     engine_ini.endGroup();
     AdditionalImages.clear();

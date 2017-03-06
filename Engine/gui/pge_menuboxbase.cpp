@@ -103,26 +103,25 @@ void PGE_MenuBoxBase::setParentScene(Scene *_parentScene)
 
 void PGE_MenuBoxBase::setType(PGE_MenuBoxBase::msgType _type)
 {
-    switch(_type)
+    switch(type)
     {
     case msg_info:
-        bg_color =       QColor(qRgb(0, 0, 0));
+        bg_color =       GlColor(0, 0, 0);
         break;
-
     case msg_info_light:
-        bg_color = QColor(qRgb(0, 0, 125));
+        bg_color =      GlColor(0, 0, 0.490196078);
         break;
-
     case msg_warn:
-        bg_color =       QColor(qRgb(255, 201, 14));
+        bg_color =       GlColor(1.0, 0.788235294, 0.054901961);
         break;
-
     case msg_error:
-        bg_color =      QColor(qRgb(125, 0, 0));
+        bg_color =      GlColor(0.490196078, 0, 0);
         break;
-
     case msg_fatal:
-        bg_color =      QColor(qRgb(255, 0, 0));
+        bg_color =      GlColor(1.0, 0, 0);
+        break;
+    default:
+        bg_color =      GlColor(0, 0, 0);
         break;
     }
 
@@ -277,9 +276,10 @@ void PGE_MenuBoxBase::render()
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
                                    _sizeRect.width(), _sizeRect.height(),
-                                   static_cast<float>(bg_color.red()) / 255.0f,
-                                   static_cast<float>(bg_color.green()) / 255.0f,
-                                   static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(m_faderOpacity));
+                                   bg_color.Red(),
+                                   bg_color.Green(),
+                                   bg_color.Blue(),
+                                   static_cast<float>(m_faderOpacity));
         }
 
         FontManager::printText(title,
@@ -308,9 +308,9 @@ void PGE_MenuBoxBase::render()
                                      _sizeRect.center().y() - static_cast<int>((height + padding)*m_faderOpacity),
                                      _sizeRect.center().x() + static_cast<int>((width + padding)*m_faderOpacity),
                                      _sizeRect.center().y() + static_cast<int>((height + padding)*m_faderOpacity),
-                                     static_cast<float>(bg_color.red()) / 255.0f,
-                                     static_cast<float>(bg_color.green()) / 255.0f,
-                                     static_cast<float>(bg_color.blue()) / 255.0f, static_cast<float>(m_faderOpacity));
+                                     bg_color.Red(),
+                                     bg_color.Green(),
+                                     bg_color.Blue(), static_cast<float>(m_faderOpacity));
         }
     }
 }

@@ -30,10 +30,8 @@
 #include <common_features/pointf.h>
 #include <common_features/size.h>
 #include <common_features/sizef.h>
-
-#include <QColor>
-#include <QString>
-#include <QStringList>
+#include <string>
+#include <vector>
 
 #include "pge_menu.h"
 #include "pge_msgbox.h"
@@ -108,7 +106,7 @@ class PGE_MenuBoxBase : public PGE_BoxBase
         double width;
         double height;
         double padding;
-        QColor bg_color;
+        GlColor bg_color;
         void initControllers();
         void updateControllers();
 

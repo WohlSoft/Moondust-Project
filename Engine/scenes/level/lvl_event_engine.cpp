@@ -114,7 +114,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     {
                         m_scene->sections[i].resetBG();
 
-                        for(int j = 0; j < m_scene->cameras.size(); j++)
+                        for(size_t j = 0; j < m_scene->cameras.size(); j++)
                         {
                             if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
                                 m_scene->sections[i].initBG();
@@ -156,7 +156,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     {
                         m_scene->sections[i].resetMusic();
 
-                        for(int j = 0; j < m_scene->cameras.size(); j++)
+                        for(size_t j = 0; j < m_scene->cameras.size(); j++)
                         {
                             if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
                                 m_scene->sections[i].playMusic();
@@ -173,7 +173,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     {
                         m_scene->sections[i].setMusic(musID);
 
-                        for(int j = 0; j < m_scene->cameras.size(); j++)
+                        for(size_t j = 0; j < m_scene->cameras.size(); j++)
                         {
                             if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
                                 m_scene->sections[i].playMusic();
@@ -221,17 +221,20 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         }
     }
 
-    if((evt.scroll_section < m_scene->sections.size()) && ((evt.move_camera_x != 0.0) || (evt.move_camera_y != 0.0)))
+    if(
+        (evt.scroll_section < static_cast<long>(m_scene->sections.size()))
+        && ((evt.move_camera_x != 0.0) || (evt.move_camera_y != 0.0))
+    )
     {
         EventQueueEntry<LVL_EventAction> installAutoscroll;
         installAutoscroll.makeCaller([this, evt]()->void
         {
-            LVL_Section &section = m_scene->sections[static_cast<int>(evt.scroll_section)];
+            LVL_Section &section = m_scene->sections[static_cast<size_t>(evt.scroll_section)];
             section.isAutoscroll = true;
             section._autoscrollVelocityX = evt.move_camera_x;
             section._autoscrollVelocityY = evt.move_camera_y;
 
-            for(int j = 0; j < m_scene->cameras.size(); j++)
+            for(size_t j = 0; j < m_scene->cameras.size(); j++)
             {
                 if(m_scene->cameras[j].cur_section == &section)
                 {

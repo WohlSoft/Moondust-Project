@@ -1,5 +1,5 @@
 #include "spawn_effect_def.h"
-#include <QStringList>
+#include <vector>
 
 #include <script/lua_engine.h>
 
@@ -48,84 +48,31 @@ SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
     decelerate_y = c.decelerate_y;
 }
 
-void SpawnEffectDef::fill(QString prefix, QSettings *setup)
-{
-    if(!setup) return;
-
-    lua_function = setup->value(prefix + "-effect-function", "").toString();
-    id = setup->value(prefix + "-effect-id", 0).toULongLong();
-    start_delay = setup->value(prefix + "-effect-start-delay", 0).toUInt();
-    startX = setup->value(prefix + "-effect-start-x", 0.0).toDouble();
-    startY = setup->value(prefix + "-effect-start-y", 0.0).toDouble();
-    animationLoops = setup->value(prefix + "-effect-animation-loops", 1).toInt();
-    delay = setup->value(prefix + "-effect-delay", 0).toInt();
-    framespeed = setup->value(prefix + "-effect-framespeed", 0).toInt();
-    velocityX = setup->value(prefix + "-effect-velocity-x", 0.0).toDouble();
-    velocityY = setup->value(prefix + "-effect-velocity-y", 0.0).toDouble();
-    zIndex  = static_cast<long double>(setup->value(prefix + "-effect-z-index", -5.0).toDouble());
-    gravity = setup->value(prefix + "-effect-gravity", 0.0).toDouble();
-    direction = setup->value(prefix + "-effect-direction", 1).toInt();
-    min_vel_x = setup->value(prefix + "-effect-min-vel-x", 0.0).toDouble();
-    min_vel_y = setup->value(prefix + "-effect-min-vel-y", 0.0).toDouble();
-    max_vel_x = setup->value(prefix + "-effect-max-vel-x", 0.0).toDouble();
-    max_vel_y = setup->value(prefix + "-effect-max-vel-y", 0.0).toDouble();
-    decelerate_x = setup->value(prefix + "-effect-decelerate-x", 0.0).toDouble();
-    decelerate_y = setup->value(prefix + "-effect-decelerate-y", 0.0).toDouble();
-
-    frame_sequence.clear();
-    QString frame_sequence_str = setup->value(prefix + "-effect-frame-sequence", "").toString();
-    if(!frame_sequence_str.isEmpty())
-    {
-        bool ok;
-        QStringList fr = frame_sequence_str.remove(" ").split(",", QString::SkipEmptyParts);
-
-        for(QString &f : fr)
-        {
-            frame_sequence.push_back(f.toInt(&ok));
-            if(!ok)
-                frame_sequence.pop_back();
-        }
-    }
-}
-
 void SpawnEffectDef::fill(const std::string &prefix, IniProcessing *setup)
 {
-    if(!setup) return;
+    if(!setup)
+        return;
 
-    lua_function = setup->value((prefix + "-effect-function").c_str(), "").toQString();
-    id = setup->value((prefix + "-effect-id").c_str(), 0).toULong();
-    start_delay = setup->value((prefix + "-effect-start-delay").c_str(), 0).toUInt();
-    startX = setup->value((prefix + "-effect-start-x").c_str(), 0.0).toDouble();
-    startY = setup->value((prefix + "-effect-start-y").c_str(), 0.0).toDouble();
-    animationLoops = setup->value((prefix + "-effect-animation-loops").c_str(), 1).toInt();
-    delay = setup->value((prefix + "-effect-delay").c_str(), 0).toInt();
-    framespeed = setup->value((prefix + "-effect-framespeed").c_str(), 0).toInt();
-    velocityX = setup->value((prefix + "-effect-velocity-x").c_str(), 0.0).toDouble();
-    velocityY = setup->value((prefix + "-effect-velocity-y").c_str(), 0.0).toDouble();
-    zIndex  = static_cast<long double>(setup->value((prefix + "-effect-z-index").c_str(), -5.0).toDouble());
-    gravity = setup->value((prefix + "-effect-gravity").c_str(), 0.0).toDouble();
-    direction = setup->value((prefix + "-effect-direction").c_str(), 1).toInt();
-    min_vel_x = setup->value((prefix + "-effect-min-vel-x").c_str(), 0.0).toDouble();
-    min_vel_y = setup->value((prefix + "-effect-min-vel-y").c_str(), 0.0).toDouble();
-    max_vel_x = setup->value((prefix + "-effect-max-vel-x").c_str(), 0.0).toDouble();
-    max_vel_y = setup->value((prefix + "-effect-max-vel-y").c_str(), 0.0).toDouble();
-    decelerate_x = setup->value((prefix + "-effect-decelerate-x").c_str(), 0.0).toDouble();
-    decelerate_y = setup->value((prefix + "-effect-decelerate-y").c_str(), 0.0).toDouble();
-
-    frame_sequence.clear();
-    QString frame_sequence_str = setup->value((prefix + "-effect-frame-sequence").c_str(), "").toQString();
-    if(!frame_sequence_str.isEmpty())
-    {
-        bool ok;
-        QStringList fr = frame_sequence_str.remove(" ").split(",", QString::SkipEmptyParts);
-
-        for(QString &f : fr)
-        {
-            frame_sequence.push_back(f.toInt(&ok));
-            if(!ok)
-                frame_sequence.pop_back();
-        }
-    }
+    setup->read((prefix + "-effect-function").c_str(), lua_function, "");
+    setup->read((prefix + "-effect-id").c_str(), id, 0);
+    setup->read((prefix + "-effect-start-delay").c_str(), start_delay, 0);
+    setup->read((prefix + "-effect-start-x").c_str(), startX, 0.0);
+    setup->read((prefix + "-effect-start-y").c_str(), startY, 0.0);
+    setup->read((prefix + "-effect-animation-loops").c_str(), animationLoops, 1);
+    setup->read((prefix + "-effect-delay").c_str(), delay, 0);
+    setup->read((prefix + "-effect-framespeed").c_str(), framespeed , 0);
+    setup->read((prefix + "-effect-velocity-x").c_str(), velocityX, 0.0);
+    setup->read((prefix + "-effect-velocity-y").c_str(), velocityY, 0.0);
+    setup->read((prefix + "-effect-z-index").c_str(), zIndex, -5.0l);
+    setup->read((prefix + "-effect-gravity").c_str(), gravity, 0.0);
+    setup->read((prefix + "-effect-direction").c_str(), direction, 1);
+    setup->read((prefix + "-effect-min-vel-x").c_str(), min_vel_x, 0.0);
+    setup->read((prefix + "-effect-min-vel-y").c_str(), min_vel_y, 0.0);
+    setup->read((prefix + "-effect-max-vel-x").c_str(), max_vel_x, 0.0);
+    setup->read((prefix + "-effect-max-vel-y").c_str(), max_vel_y, 0.0);
+    setup->read((prefix + "-effect-decelerate-x").c_str(), decelerate_x, 0.0);
+    setup->read((prefix + "-effect-decelerate-y").c_str(), decelerate_y, 0.0);
+    setup->read((prefix + "-effect-frame-sequence").c_str(), frame_sequence, std::vector<int>());
 }
 
 void SpawnEffectDef::lua_setSequence(luabind::adl::object frames)

@@ -25,80 +25,107 @@
 #include "spawn_effect_def.h"
 
 #include <string>
-#include <QString>
-#include <QPixmap>
-#include <QMap>
-#include <QList>
+#include <vector>
 
 /****************Definition of playable character state*******************/
 struct obj_player_physics
 {
-    obj_player_physics();
-    inline void make() {} //!< Dummy function
-    double walk_force; //!< Move force
-    double run_force;  //!< Running force
+    /**
+     * @brief Dummy function used to poke hash table initialize entry
+     */
+    inline void make() {}
+    //! Move force
+    double walk_force = 6.5;
+    //! Running force
+    double run_force  = 3.25;
 
-    double decelerate_stop; //!< Deceleration while stopping
-    double decelerate_run;  //!< Deceleration running while speed higher than walking
-    double decelerate_turn; //!< Deceleration while turning
-    double decelerate_air;  //!< Decelerate in air
+    //! Deceleration while stopping
+    double decelerate_stop = 4.55;
+    //! Deceleration running while speed higher than walking
+    double decelerate_run  = 10.88;
+    //! Deceleration while turning
+    double decelerate_turn = 18.2;
+    //! Decelerate in air
+    double decelerate_air  = 0.0;
 
-    double ground_c_max; //!< On-Ground max speed     coefficient
-    double ground_c;     //!< On-Ground accelerations coefficient
-    double slippery_c;   //!< Slippery accelerations coefficien
+    //! On-Ground max speed     coefficient
+    double ground_c_max = 1.0;
+    //! On-Ground accelerations coefficient
+    double ground_c     = 1.0;
+    //! Slippery accelerations coefficien
+    double slippery_c   = 4.0;
 
-    double gravity_accel; //!< Gravity acceleration
-    double gravity_scale; //!< Gravity scale
-    double velocity_jump; //!< Jump velocity
-    double velocity_jump_bounce; //!< Boubce velocity
-    double velocity_jump_spring; //!< Jump velocity on spring
-    double velocity_jump_c; //!< Jump coefficient which provides increzed jump height dependent to speed
-    int   jump_time;     //!< Time to jump
-    int   jump_time_bounce;//!< Time to bounce
-    int   jump_time_spring;     //!< Time to jump
+    //! Gravity acceleration
+    double gravity_accel = 26.0;
+    //! Gravity scale
+    double gravity_scale = 1.0;
+    //! Jump velocity
+    double velocity_jump = 5.2;
+    //! Boubce velocity
+    double velocity_jump_bounce = 5.3;
+    //! Jump velocity on spring
+    double velocity_jump_spring = 9.3;
+    //! Jump coefficient which provides increzed jump height dependent to speed
+    double velocity_jump_c = 5.8;
+    //! Time to jump
+    int   jump_time = 260;
+    //! Time to bounce
+    int   jump_time_bounce = 370;
+    //! Time to jump
+    int   jump_time_spring = 530;
 
-    double velocity_climb_x; //!< Climbing velocity
-    double velocity_climb_y_up; //!< Climbing velocity
-    double velocity_climb_y_down; //!< Climbing velocity
+    //! Climbing velocity
+    double velocity_climb_x      = 1.5;
+    //! Climbing velocity
+    double velocity_climb_y_up   = 2.0;
+    //! Climbing velocity
+    double velocity_climb_y_down = 3.0;
 
-    double MaxSpeed_walk; //!< Max walk speed
-    double MaxSpeed_run;  //!< Max run speed
+    //! Max walk speed
+    double MaxSpeed_walk     = 3.0;
+    //! Max run speed
+    double MaxSpeed_run      = 6.0;
 
-    double MaxSpeed_up;   //!< Fly UP Max fall speed
-    double MaxSpeed_down; //!< Max fall down speed
+    //! Fly UP Max fall speed
+    double MaxSpeed_up       = 74.0;
+    //! Max fall down speed
+    double MaxSpeed_down     = 12.0;
 
-    bool  strict_max_speed_on_ground;//!< reduce speed to max if faster than allowed on ground
+    //! reduce speed to max if faster than allowed on ground
+    bool  strict_max_speed_on_ground = false;
 
-    bool    zero_speed_y_on_enter;
-    double   slow_up_speed_y_coeff; //!< Coefficient to slow speed if it going up
-    bool    slow_speed_x_on_enter;
-    double   slow_speed_x_coeff; //!< Coefficient to slow speed
+    bool    zero_speed_y_on_enter = false;
+    //! Coefficient to slow speed if it going up
+    double   slow_up_speed_y_coeff = 0.325;
+    bool    slow_speed_x_on_enter = false;
+    //! Coefficient to slow speed
+    double   slow_speed_x_coeff = 0.125;
 };
 
 struct obj_player_state
 {
     std::string name;
-    int     width;
-    int     height;
-    bool    duck_allow;
-    int     duck_height;
-    bool    allow_floating;
-    int     floating_max_time;
-    double  floating_amplitude;
+    int     width = 32;
+    int     height = 60;
+    bool    duck_allow = true;
+    int     duck_height = 30;
+    bool    allow_floating = false;
+    int     floating_max_time = 0;
+    double  floating_amplitude = 0.0;
 
     PGE_DataArray<obj_player_physics > phys;
     std::string event_script;   //!< LUA-Script with events
 
     obj_player_calibration  sprite_setup;
 
-    QString image_n;
-    QString mask_n;
+    std::string image_n;
+    std::string mask_n;
     /*   OpenGL    */
-    bool            isInit;
-    PGE_Texture    *image;
-    GLuint          textureID;
-    int             textureArrayId;
-    int             animator_ID;
+    bool            isInit = false;
+    PGE_Texture    *image = nullptr;
+    GLuint          textureID = 0;
+    int             textureArrayId = 0;
+    int             animator_ID = 0;
     /*   OpenGL    */
 };
 
@@ -106,55 +133,56 @@ struct obj_player_state
 /******************Definition of playable character*********************/
 struct obj_player
 {
-    unsigned long id;
-    QString image_wld_n;
-    QString mask_wld_n;
+    unsigned long id = 0;
+    std::string image_wld_n;
+    std::string mask_wld_n;
 
-    int matrix_width;
-    int matrix_height;
+    int matrix_width    = 10;
+    int matrix_height   = 10;
 
     //Size of one frame (will be calculated automatically!)
-    int frame_width;
-    int frame_height;
+    int frame_width     = 100;
+    int frame_height    = 100;
 
     SpawnEffectDef fail_effect;
     SpawnEffectDef slide_effect;
 
     /*   OpenGL    */
     //for world map
-    bool isInit_wld;
-    PGE_Texture *image_wld;
-    GLuint textureID_wld;
-    int textureArrayId_wld;
-    int animator_ID_wld;
+    bool            isInit_wld = false;
+    PGE_Texture     *image_wld = nullptr;
+    GLuint          textureID_wld = 0;
+    int             textureArrayId_wld = 0;
+    int             animator_ID_wld = 0;
     /*   OpenGL    */
 
     //! LUA-Script of playable character
-    QString script;
+    std::string     script;
 
-    std::string name;
-    std::string sprite_folder;
+    std::string     name;
+    std::string     sprite_folder;
+
     enum StateTypes
     {
         powerup = 0,
         suites
     };
-    int state_type;
+    int             state_type = 0;
 
     /* World map */
-    int wld_framespeed;
-    int wld_frames;
-    int wld_offset_y;
-    QList<int > wld_frames_up;
-    QList<int > wld_frames_right;
-    QList<int > wld_frames_down;
-    QList<int > wld_frames_left;
+    int     wld_framespeed = 128;
+    int     wld_frames = 1;
+    int     wld_offset_y = 0;
+    std::vector<int> wld_frames_up;
+    std::vector<int> wld_frames_right;
+    std::vector<int> wld_frames_down;
+    std::vector<int> wld_frames_left;
     /* World map */
 
-    PGE_DataArray<obj_player_state > states;
-    PGE_DataArray<obj_player_physics > phys_default;
+    PGE_DataArray<obj_player_state >    states;
+    PGE_DataArray<obj_player_physics >  phys_default;
 
-    bool allowFloating;
+    bool allowFloating = false;
 };
 
 #endif // OBJ_PLAYER_H

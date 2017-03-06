@@ -20,122 +20,109 @@
 #include "config_manager_private.h"
 #include <common_features/number_limiter.h>
 #include <common_features/util.h>
+#include <fmt/fmt_format.h>
+#include <Utils/files.h>
 
 /*****Level BG************/
 PGE_DataArray<obj_BG>   ConfigManager::lvl_bg_indexes;
 CustomDirManager ConfigManager::Dir_BG;
-QList<SimpleAnimator > ConfigManager::Animator_BG;
+std::vector<SimpleAnimator > ConfigManager::Animator_BG;
 /*****Level BG************/
 
-bool ConfigManager::loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG *merge_with, std::string iniFile, IniProcessing *setup)
 {
+    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
     bool valid = true;
     bool internal = !setup;
-    QString tmpstr, imgFile;
-
     if(internal)
-    {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
-    }
+        setup = new IniProcessing(iniFile);
 
     setup->beginGroup(section);
-    sbg.name = setup->value("name", (merge_with ? merge_with->name : "")).toString();
-
-    if(sbg.name.isEmpty())
     {
-        addError(QString("%1 Item name isn't defined").arg(section));
-        return false;
+        setup->read("name", sbg.name, pMerge(name, ""));
+        if(sbg.name.empty())
+        {
+            addError(fmt::format("{0} Item name isn't defined", section));
+            return false;
+        }
     }
 
-    tmpstr = setup->value("type", "-1").toString();
+    setup->readEnum("type", sbg.type,
+                            pMerge(type, 0),
+                            {
+                                {"single-row", 0},
+                                {"double-row", 1},
+                                {"tiled", 2}
+    });
 
-    if(tmpstr == "single-row")
-        sbg.type = 0;
-    else if(tmpstr == "double-row")
-        sbg.type = 1;
-    else if(tmpstr == "tiled")
-        sbg.type = 2;
-    else if(tmpstr == "-1")
-        sbg.type = (merge_with ? merge_with->type : 0);
-    else sbg.type = 0;
-
-    //                WriteToLog(QtDebugMsg, QString("Init BG image %1 with type %2 %3")
-    //                           .arg(i).arg(tmpstr).arg(sbg.type));
     sbg.repeat_h = setup->value("repeat-h", (merge_with ? merge_with->repeat_h : 2.0)).toDouble();
     NumberLimiter::applyD(sbg.repeat_h, 1.0, 0.0);
-    tmpstr = setup->value("repeat-v", "-1").toString();
 
-    if(tmpstr == "NR")
-        sbg.repead_v = 0;
-    else if(tmpstr == "ZR")
-        sbg.repead_v = 1;
-    else if(tmpstr == "RP")
-        sbg.repead_v = 2;
-    else if(tmpstr == "RZ")
-        sbg.repead_v = 3;
-    else if(tmpstr == "-1")
-        sbg.repead_v = (merge_with ? merge_with->repead_v : 0);
-    else sbg.repead_v = 0;
+    setup->readEnum("repeat-v", sbg.repead_v,
+                            pMerge(repead_v, 0),
+                            {
+                                {"NR", 0},
+                                {"ZR", 1},
+                                {"RP", 2},
+                                {"RZ", 3}
+    });
 
-    imgFile = setup->value("image", (merge_with ? merge_with->image_n : "")).toString();
-    sbg.image_n = imgFile;
-    sbg.attached = static_cast<unsigned int>(setup->value("attached",
-                   (merge_with ? (merge_with->attached == 1 ? "top" : "bottom") : "bottom")).toString() == "top");
-    sbg.editing_tiled =    setup->value("tiled-in-editor", merge_with ? merge_with->editing_tiled : false).toBool();
-    sbg.magic =             setup->value("magic", (merge_with ? merge_with->magic : false)).toBool();
-    sbg.magic_strips =      setup->value("magic-strips", (merge_with ? merge_with->magic_strips : 1)).toUInt();
+    setup->read("image", sbg.image_n, pMerge(image_n, ""));
+    setup->readEnum("attached", sbg.attached,
+                                        pMerge(attached, 0),
+                            {
+                                {"bottom", 0},
+                                {"top", 1}
+    });
+    setup->read("tiled-in-editor", sbg.editing_tiled, pMerge(editing_tiled, false));
+    setup->read("magic", sbg.magic, pMerge(magic, false));
+
+    setup->read("magic-strips", sbg.magic_strips, pMerge(magic_strips, 1));
     NumberLimiter::applyD(sbg.magic_strips, 1u, 1u);
-    sbg.magic_splits =      setup->value("magic-splits", (merge_with ? merge_with->magic_splits : "0")).toString();
-    sbg.magic_splits_i.clear();
-    util::CSV2IntArr(sbg.magic_splits, sbg.magic_splits_i);
-    sbg.magic_speeds =      setup->value("magic-speeds", (merge_with ? merge_with->magic_speeds : "0")).toString();
-    sbg.magic_speeds_i.clear();
-    util::CSV2DoubleArr(sbg.magic_speeds, sbg.magic_speeds_i);
-    sbg.animated =          setup->value("animated", (merge_with ? merge_with->animated : false)).toBool(); //animated
-    sbg.frames =            setup->value("frames", (merge_with ? merge_with->frames : 1)).toUInt();
-    NumberLimiter::apply(sbg.frames, 1u);
-    sbg.framespeed =        setup->value("framespeed", (merge_with ? merge_with->framespeed : 128)).toUInt();
-    NumberLimiter::apply(sbg.framespeed, 1u);
-    sbg.display_frame =     setup->value("display-frame", (merge_with ? merge_with->display_frame : 0)).toUInt();
-    NumberLimiter::apply(sbg.display_frame, 0u);
-    //frames
+    setup->read("magic-splits", sbg.magic_splits_i, pMerge(magic_splits_i, std::vector<int>()));
+    setup->read("magic-speeds", sbg.magic_speeds_i, pMerge(magic_speeds_i, std::vector<double>()));
 
+    setup->read("animated", sbg.animated, pMerge(animated, false)); //animated
+
+    setup->read("frames", sbg.frames, pMerge(frames, 1));
+    NumberLimiter::apply(sbg.frames, 1u);
+
+    setup->read("framespeed", sbg.framespeed, pMerge(framespeed, 128));
+    NumberLimiter::apply(sbg.framespeed, 1u);
+
+    setup->read("display-frame", sbg.display_frame, pMerge(display_frame, 0));
+    NumberLimiter::apply(sbg.display_frame, 0u);
+
+    //frames
     if(sbg.type == 1)
     {
-        imgFile = setup->value("second-image", (merge_with ? merge_with->second_image_n : "")).toString();
-        sbg.second_image_n = imgFile;
-        sbg.second_repeat_h = setup->value("second-repeat-h", (merge_with ? merge_with->second_repeat_h : 2.0)).toDouble();
+        setup->read("second-image", sbg.second_image_n, pMerge(second_image_n, ""));
+        setup->read("second-repeat-h", sbg.second_repeat_h, pMerge(second_repeat_h, 2.0));
         NumberLimiter::applyD(sbg.second_repeat_h, 1.0, 0.0);
-        tmpstr = setup->value("second-repeat-v", "-1").toString();
 
-        if(tmpstr == "NR")
-            sbg.second_repeat_v = 0;
-        else if(tmpstr == "ZR")
-            sbg.second_repeat_v = 1;
-        else if(tmpstr == "RP")
-            sbg.second_repeat_v = 2;
-        else if(tmpstr == "RZ")
-            sbg.second_repeat_v = 3;
-        else if(tmpstr == "-1")
-            sbg.second_repeat_v = (merge_with ? merge_with->second_repeat_v : 0);
-        else sbg.second_repeat_v = 0;
+        setup->readEnum("second-repeat-v",
+                                    sbg.second_repeat_v,
+                                    pMerge(second_repeat_v, 0u),
+                                    {
+                                        {"NR", 0},
+                                        {"ZR", 1},
+                                        {"RP", 2},
+                                        {"RZ", 3}
+        });
 
-        tmpstr = setup->value("second-attached", "-1").toString();
-
-        if(tmpstr == "overfirst")
-            sbg.second_attached = 0;
-        else if(tmpstr == "bottom")
-            sbg.second_attached = 1;
-        else if(tmpstr == "top")
-            sbg.second_attached = 2;
-        else if(tmpstr == "-1")
-            sbg.second_attached = (merge_with ? merge_with->second_attached : 0);
-        else sbg.second_repeat_v = 0;
+        setup->readEnum("second-attached",
+                                    sbg.second_attached,
+                                    pMerge(second_attached, 0),
+                                    {
+                                        {"overfirst", 0},
+                                        {"bottom", 1},
+                                        {"top", 2}
+        });
     }
 
     setup->endGroup();
     return valid;
+    #undef pMerge
 }
 
 bool ConfigManager::loadLevelBackG()
@@ -144,25 +131,24 @@ bool ConfigManager::loadLevelBackG()
     obj_BG sbg;
     unsigned long bg_total = 0;
     bool useDirectory = false;
-    QString bg_ini = config_dir + "lvl_bkgrd.ini";
-    QString nestDir = "";
+    std::string bg_ini = config_dirSTD + "lvl_bkgrd.ini";
+    std::string nestDir = "";
 
-    if(!QFile::exists(bg_ini))
+    if(!Files::fileExists(bg_ini))
     {
-        addError(QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"), QtCriticalMsg);
+        addError("ERROR LOADING lvl_bkgrd.ini: file does not exist");
         return false;
     }
 
-    QSettings bgset(bg_ini, QSettings::IniFormat);
-    bgset.setIniCodec("UTF-8");
+    IniProcessing bgset(bg_ini);
     lvl_bg_indexes.clear();//Clear old
     bgset.beginGroup("background2-main");
     bg_total =  bgset.value("total", 0).toULongLong();
     nestDir =   bgset.value("config-dir", "").toString();
 
-    if(!nestDir.isEmpty())
+    if(!nestDir.empty())
     {
-        nestDir = config_dir + nestDir;
+        nestDir = config_dirSTD + nestDir;
         useDirectory = true;
     }
 
@@ -182,9 +168,9 @@ bool ConfigManager::loadLevelBackG()
         bool valid = false;
 
         if(useDirectory)
-            valid = loadLevelBackground(sbg, "background2", nullptr, QString("%1/background2-%2.ini").arg(nestDir).arg(i));
+            valid = loadLevelBackground(sbg, "background2", nullptr, fmt::format("{0}/background2-{1}.ini", nestDir, i));
         else
-            valid = loadLevelBackground(sbg, QString("background2-%1").arg(i), 0, "", &bgset);
+            valid = loadLevelBackground(sbg, std::string("background2-{0}", i), 0, "", &bgset);
 
         if(valid)
         {
@@ -194,8 +180,8 @@ bool ConfigManager::loadLevelBackG()
             loadCustomConfig<obj_BG>(lvl_bg_indexes, i, Dir_BG, "background2", "background2", &loadLevelBackground);
         }
 
-        if(bgset.status() != QSettings::NoError)
-            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i), QtCriticalMsg);
+        if(bgset.lastError() != IniProcessing::ERR_OK)
+            addError(fmt::format("ERROR LOADING lvl_bgrnd.ini N:{0} (background2-{1})", bgset.lastError(), i));
     }
 
     return true;

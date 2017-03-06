@@ -2,7 +2,7 @@
 #define PGE_BOXBASE_H
 
 #include "../scenes/scene.h"
-#include <QString>
+#include <string>
 
 #include <common_features/rect.h>
 #include <common_features/rectf.h>

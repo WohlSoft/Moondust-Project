@@ -1,10 +1,6 @@
 #ifndef SETUP_TITLE_SCREEN_H
 #define SETUP_TITLE_SCREEN_H
 
-#include <QString>
-#include <QColor>
-#include <QList>
-
 #include <string>
 #include <vector>
 #include <graphics/gl_color.h>

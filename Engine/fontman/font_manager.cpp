@@ -34,15 +34,6 @@
 
 #include <vector>
 
-//#include <QFile>
-//#include <QFileInfo>
-//#include <QDir>
-
-//#include <QImage>
-//#include <QPainter>
-//#include <QFontMetrics>
-//#include <QFontDatabase>
-
 #include <common_features/graphics_funcs.h>
 
 static int char2int(const char32_t &ch)
@@ -554,12 +545,14 @@ void FontManager::initBasic()
 
 void FontManager::initFull()
 {
+    #ifdef PGE_TTF
     if(ConfigManager::setup_fonts.fontname.empty())
         fontID = QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
     else
         fontID = QFontDatabase::addApplicationFont(
                      QString::fromStdString(ConfigManager::data_dirSTD + "/" +
                      ConfigManager::setup_fonts.fontname));
+    #endif
 
     double_pixled = ConfigManager::setup_fonts.double_pixled;
     /***************Load raster font support****************/

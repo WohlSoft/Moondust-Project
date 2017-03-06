@@ -20,7 +20,6 @@
 #include <audio/pge_audio.h>
 #include "pge_int_menuitem.h"
 
-
 PGE_IntMenuItem::PGE_IntMenuItem() : PGE_Menuitem()
 {
     intvalue=NULL;
@@ -68,5 +67,5 @@ void PGE_IntMenuItem::render(int x, int y)
     PGE_Menuitem::render(x, y);
     float colorLevel = m_enabled ? 1.0 : 0.5;
     if(intvalue)
-        FontManager::printText(QString::number(*intvalue), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+        FontManager::printText(std::to_string(*intvalue), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
 }

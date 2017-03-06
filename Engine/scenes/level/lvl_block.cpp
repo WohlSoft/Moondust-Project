@@ -128,7 +128,6 @@ void LVL_Block::transformTo(unsigned long id, int type)
 void LVL_Block::transformTo_x(unsigned long id)
 {
     obj_block *newSetup = nullptr;
-
     if(_isInited)
     {
         if(data.id == id)
@@ -143,10 +142,12 @@ void LVL_Block::transformTo_x(unsigned long id)
         if(setup->setup.switch_Block &&
            (((setup->setup.switch_ID != newSetup->setup.switch_ID) && (newSetup->setup.switch_Block)) || (!newSetup->setup.switch_Block)))
         {
-            if(m_scene->switch_blocks.contains(setup->setup.switch_ID))
-                m_scene->switch_blocks[setup->setup.switch_ID].removeAll(this);
+            LevelScene::SwitchBlocksMap::iterator i = m_scene->switch_blocks.find(setup->setup.switch_ID);
+            if(i != m_scene->switch_blocks.end())
+            {
+                std::remove(i->second.begin(), i->second.end(), this);
+            }
         }
-
         transformedFromBlockID = data.id;//Remember transform source
     }
     else
@@ -178,12 +179,11 @@ void LVL_Block::transformTo_x(unsigned long id)
     bool do_init_player_switch = ((setup->animator_ID <= 0) && (setup->setup.plSwitch_Button));
     bool do_init_player_filter = ((setup->animator_ID <= 0) && (setup->setup.plFilter_Block));
     int tID = ConfigManager::getBlockTexture(data.id);
-
     if(tID >= 0)
     {
-        texId = ConfigManager::level_textures[tID].texture;
-        texture = ConfigManager::level_textures[tID];
-        animated = setup->setup.animated;
+        texId       = ConfigManager::level_textures[tID].texture;
+        texture     = ConfigManager::level_textures[tID];
+        animated    = setup->setup.animated;
         animator_ID = setup->animator_ID;
     }
 
@@ -281,10 +281,14 @@ void LVL_Block::transformTo_x(unsigned long id)
     // Register switch block
     if(setup->setup.switch_Block)
     {
-        if(!m_scene->switch_blocks.contains(setup->setup.switch_ID))
-            m_scene->switch_blocks[setup->setup.switch_ID].clear();
-
-        m_scene->switch_blocks[static_cast<unsigned int>(setup->setup.switch_ID)].push_back(this);
+        LevelScene::SwitchBlocksMap::iterator i = m_scene->switch_blocks.find(setup->setup.switch_ID);
+        if(i == m_scene->switch_blocks.end())
+        {
+            m_scene->switch_blocks.insert({setup->setup.switch_ID, LevelScene::BlocksList()});
+            i = m_scene->switch_blocks.find(setup->setup.switch_ID);
+            SDL_assert(i != m_scene->switch_blocks.end());
+        }
+        i->second.push_back(this);
 
         //Fill switch states until it will be fited to defined SwitchID
         while(static_cast<unsigned int>(m_scene->switch_states.size()) <= setup->setup.switch_ID)
@@ -316,7 +320,7 @@ void LVL_Block::render(double camX, double camY)
     AniPos x(0, 1);
 
     if(animated) //Get current animated frame
-        x = ConfigManager::Animator_Blocks[int(animator_ID)].image();
+        x = ConfigManager::Animator_Blocks[size_t(animator_ID)].image();
 
     GlRenderer::BindTexture(&texture);
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -588,7 +592,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
                 transformTo(static_cast<unsigned long>(setup->setup.transfororm_on_hit_into), 2);
         }
 
-        if(!m_scene->player_states.isEmpty())
+        if(!m_scene->player_states.empty())
             m_scene->player_states[0].appendCoins(1);
 
         //! TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
@@ -711,7 +715,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         m_scene->layers.registerItem(DESTROYED_LAYER_NAME, this);
     }
 
-    if(triggerEvent && (!data.event_hit.isEmpty()))
+    if(triggerEvent && (!data.event_hit.empty()))
         m_scene->events.triggerEvent(data.event_hit);
 
     if(doFade)
@@ -756,15 +760,15 @@ void LVL_Block::destroy(bool playEffect)
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
     m_destroyed = true;
-    QString oldLayer = data.layer;
+    std::string oldLayer = data.layer;
     m_scene->layers.removeRegItem(data.layer, this);
     data.layer = DESTROYED_LAYER_NAME;
     m_scene->layers.registerItem(data.layer, this);
 
-    if(!data.event_destroy.isEmpty())
+    if(!data.event_destroy.empty())
         m_scene->events.triggerEvent(data.event_destroy);
 
-    if(!data.event_emptylayer.isEmpty())
+    if(!data.event_emptylayer.empty())
     {
         if(m_scene->layers.isEmpty(oldLayer))
             m_scene->events.triggerEvent(data.event_emptylayer);

@@ -24,9 +24,12 @@
 //#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_opengl.h>
 #include <string>
+#include <vector>
 #include <unordered_map>
 
+#ifdef PGE_TTF
 #include <QString>
+#endif
 //#include <QFont>
 //#include <QSize>
 //#include <QMap>

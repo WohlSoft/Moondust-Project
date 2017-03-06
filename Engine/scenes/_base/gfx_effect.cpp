@@ -21,6 +21,7 @@
 #include <common_features/logger.h>
 #include <graphics/gl_renderer.h>
 #include <gui/pge_msgbox.h>
+#include <fmt/fmt_format.h>
 
 void Scene::launchEffect(unsigned long effectID,
                          double   startX,
@@ -90,7 +91,7 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
         _effect.m_setup = &ConfigManager::lvl_effects_indexes[effect_def.id];
     else
     {
-        PGE_MsgBox oops(this, QString("Can't launch effect %1").arg(effect_def.id), PGE_MsgBox::msg_error);
+        PGE_MsgBox oops(this, fmt::format("Can't launch effect {0}", effect_def.id), PGE_MsgBox::msg_error);
         oops.exec();
         return;
     }
@@ -98,10 +99,10 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
     long tID = ConfigManager::getEffectTexture(effect_def.id);
 
     if(tID >= 0)
-        _effect.m_texture = ConfigManager::level_textures[int(tID)];
+        _effect.m_texture = ConfigManager::level_textures[size_t(tID)];
     else
     {
-        PGE_MsgBox oops(this, QString("Can't load texture for effect-%1").arg(effect_def.id), PGE_MsgBox::msg_error);
+        PGE_MsgBox oops(this, fmt::format("Can't load texture for effect-{0}", effect_def.id), PGE_MsgBox::msg_error);
         oops.exec();
         return;
     }
@@ -152,11 +153,10 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
         break;
     }
 
-    LogDebug(QString("Effect-%1 FST%2, FRM-%3  (%4..%5)").arg(effect_def.id).arg(_effect.m_frameStyle).arg(frms)
-             .arg(frame1).arg(frameE));
+    pLogDebug(fmt::format("Effect-{0} FST{1}, FRM-{2}  ({3}..{4})", effect_def.id, _effect.m_frameStyle, frms, frame1, frameE).c_str());
 
-    if(frms <= 0) frms = 1;
-
+    if(frms <= 0)
+        frms = 1;
     _effect.m_animator.construct(true, frms, _effect.m_setup->framespeed, frame1, frameE);
     _effect.m_posRect.setSize(_effect.m_texture.w, _effect.m_texture.h / frms);
 

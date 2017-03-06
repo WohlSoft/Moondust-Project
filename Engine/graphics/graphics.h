@@ -19,8 +19,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include <QString>
-
+#include <string>
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
 

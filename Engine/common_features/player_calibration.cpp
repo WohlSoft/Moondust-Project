@@ -16,12 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QFileInfo>
-#include <QDir>
-
 #include <fmt/fmt_format.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
+#include <DirManager/dirman.h>
 #include <common_features/logger.h>
 #include "player_calibration.h"
 
@@ -39,9 +37,8 @@ bool obj_player_calibration::load(std::string fileName)
 {
     try
     {
-        QFileInfo ourFile(QString::fromStdString(fileName));
-        std::string folderPath  = ourFile.absoluteDir().path().toStdString();
-        std::string baseName    = ourFile.baseName().toStdString();
+        std::string folderPath  = DirMan(fileName).absolutePath();
+        std::string baseName    = Files::basename(fileName);
 
         std::string ini_sprite  = folderPath + "/" + baseName + ".ini";
         std::string group;
@@ -180,7 +177,7 @@ void obj_player_calibration::getSpriteAniData(IniProcessing &set, const char *na
 {
     AniFrameSet frameSet;
     AniFrame frameXY;
-    int frameTotal, i;
+    size_t frameTotal, i;
     std::string group[2];
     std::vector<AniFrame > *frameSets[2] = {&frameSet.L, &frameSet.R};
 

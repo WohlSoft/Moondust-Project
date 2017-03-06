@@ -44,6 +44,7 @@
 #include "obj_music.h"
 
 #include <Utils/strings.h>
+#include <fmt/fmt_format.h>
 
 #include <QMap>
 #include <QSettings>
@@ -156,18 +157,18 @@ template<class obj_T>
 void loadCustomConfig(PGE_DataArray<obj_T> &container,
                       unsigned long ID,
                       CustomDirManager &dir,
-                      QString fileName = "file",
-                      QString section = "item",
-                      bool (*loaderFunk)(obj_T &, QString, obj_T *, QString, QSettings *) = nullptr
+                      std::string fileName = "file",
+                      std::string section = "item",
+                      bool (*loaderFunk)(obj_T &, std::string, obj_T *, std::string, IniProcessing *) = nullptr
                      )
 {
     bool isDefault = false;
-    QString file = dir.getCustomFile(QString(fileName + "-%1.ini").arg(ID), &isDefault);
+    std::string file = dir.getCustomFile(fmt::format("{1}-{0}.ini", ID, fileName), &isDefault);
 
-    if(file.isEmpty())
-        file = dir.getCustomFile(QString(fileName + "-%1.txt").arg(ID), &isDefault);
+    if(file.empty())
+        file = dir.getCustomFile(fmt::format("{1}-{0}.txt", ID, fileName), &isDefault);
 
-    if(!file.isEmpty() && !isDefault)
+    if(!file.empty() && !isDefault)
     {
         obj_T &sceneSetup = container[ID];
 
@@ -322,7 +323,7 @@ namespace ConfigManager
 
     /*****Level Backgrounds************/
     bool loadLevelBackG();
-    bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadLevelBackground(obj_BG &sbg, std::string section, obj_BG *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getBGTexture(unsigned long bgID, bool isSecond = false);
     /*****************************/
     extern PGE_DataArray<obj_BG>   lvl_bg_indexes;
@@ -334,7 +335,7 @@ namespace ConfigManager
     /*================================World config Data===========================*/
     /*****World Tiles************/
     bool loadWorldTiles();
-    bool loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadWorldTile(obj_w_tile &tile, std::string section, obj_w_tile *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getTileTexture(unsigned long tileID);
     /*****************************/
     extern PGE_DataArray<obj_w_tile>    wld_tiles;
@@ -344,7 +345,7 @@ namespace ConfigManager
 
     /*****World Scenery************/
     bool loadWorldScenery();
-    bool loadWorldScenery(obj_w_scenery &scene, QString section, obj_w_scenery *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadWorldScenery(obj_w_scenery &scene, std::string section, obj_w_scenery *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getSceneryTexture(unsigned long sceneryID);
     /*****************************/
     extern PGE_DataArray<obj_w_scenery>     wld_scenery;
@@ -354,7 +355,7 @@ namespace ConfigManager
 
     /*****World Paths************/
     bool loadWorldPaths();
-    bool loadWorldPath(obj_w_path &path, QString section, obj_w_path *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadWorldPath(obj_w_path &path, std::string section, obj_w_path *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getWldPathTexture(unsigned long pathID);
     /*****************************/
     extern PGE_DataArray<obj_w_path>   wld_paths;
@@ -364,7 +365,7 @@ namespace ConfigManager
 
     /*****World Levels************/
     bool loadWorldLevels();
-    bool loadWorldLevel(obj_w_level &level, QString section, obj_w_level *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadWorldLevel(obj_w_level &level, std::string section, obj_w_level *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getWldLevelTexture(unsigned long levelID);
     /*****************************/
     extern PGE_DataArray<obj_w_level>   wld_levels;

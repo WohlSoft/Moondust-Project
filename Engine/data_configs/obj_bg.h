@@ -19,24 +19,23 @@
 #ifndef OBJ_BG_H
 #define OBJ_BG_H
 
-#include <QString>
-#include <QList>
+#include <string>
+#include <vector>
 #include "../graphics/graphics.h"
 
 struct obj_BG
 {
+    unsigned long id = 0;
+    std::string name;
 
-    unsigned long id;
-    QString name;
-
-    QString image_n;
+    std::string image_n;
 
     /*   OpenGL    */
-    bool isInit;
-    PGE_Texture *image;
-    GLuint textureID;
-    int textureArrayId;
-    int animator_ID;
+    bool isInit = false;
+    PGE_Texture *image = nullptr;
+    GLuint textureID = 0;
+    int textureArrayId = 0;
+    int animator_ID = 0;
     PGEColor Color_upper;
     PGEColor Color_lower;
     /*   OpenGL    */
@@ -55,12 +54,12 @@ struct obj_BG
 
     bool magic;
     unsigned int magic_strips;
-    QString magic_splits;
-    QList<int> magic_splits_i;
-    QString magic_speeds;
-    QList<double> magic_speeds_i;
+    std::string magic_splits;
+    std::vector<int> magic_splits_i;
+    std::string magic_speeds;
+    std::vector<double> magic_speeds_i;
 
-    QString second_image_n;
+    std::string second_image_n;
     //QPixmap second_image;
 
     /*   OpenGL    */

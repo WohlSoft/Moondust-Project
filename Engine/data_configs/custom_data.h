@@ -19,7 +19,6 @@
 #ifndef CUSTOM_DATA_H
 #define CUSTOM_DATA_H
 
-#include <QString>
 #include <string>
 
 /*!
@@ -38,14 +37,12 @@ public:
      * \param name Base file name of current file
      * \param stuffPath Full path to default data folder
      */
-    CustomDirManager(QString path, QString name, QString stuffPath);
     CustomDirManager(std::string path, std::string name, std::string stuffPath);
     /*!
      * \brief Get custom file path if exist.
      * \param name Target file name which need to found
      * \return empty string if not exist
      */
-    QString getCustomFile(QString name, bool *isDefault=0);
     std::string getCustomFile(std::string name, bool *isDefault=0);
     /*!
      * \brief Sets paths where look for a requested files
@@ -53,7 +50,6 @@ public:
      * \param name Base file name of current file
      * \param stuffPath Full path to default data folder
      */
-    void setCustomDirs(QString path, QString name, QString stuffPath);
     void setCustomDirs(std::string path, std::string name, std::string stuffPath);
 
 private:

@@ -1,10 +1,9 @@
 #ifndef SETUP_WLD_SCENE_H
 #define SETUP_WLD_SCENE_H
 
-#include <QString>
 #include <vector>
 #include <graphics/gl_color.h>
-class QSettings;
+
 class IniProcessing;
 
 struct WorldAdditionalImage

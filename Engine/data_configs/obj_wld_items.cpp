@@ -21,43 +21,42 @@
 #include "config_manager_private.h"
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
+#include <Utils/files.h>
+#include <fmt/fmt_format.h>
 
 /*****World Tiles************/
 PGE_DataArray<obj_w_tile>   ConfigManager::wld_tiles;
 CustomDirManager         ConfigManager::Dir_Tiles;
-QList<SimpleAnimator >   ConfigManager::Animator_Tiles;
+std::vector<SimpleAnimator >   ConfigManager::Animator_Tiles;
 /*****World Tiles************/
 
 /*****World Scenery************/
 PGE_DataArray<obj_w_scenery>   ConfigManager::wld_scenery;
 CustomDirManager         ConfigManager::Dir_Scenery;
-QList<SimpleAnimator >   ConfigManager::Animator_Scenery;
+std::vector<SimpleAnimator >   ConfigManager::Animator_Scenery;
 /*****World Scenery************/
 
 /*****World Paths************/
 PGE_DataArray<obj_w_path>   ConfigManager::wld_paths;
 CustomDirManager         ConfigManager::Dir_WldPaths;
-QList<SimpleAnimator >   ConfigManager::Animator_WldPaths;
+std::vector<SimpleAnimator >   ConfigManager::Animator_WldPaths;
 /*****World Paths************/
 
 /*****World Levels************/
 PGE_DataArray<obj_w_level>  ConfigManager::wld_levels;
 CustomDirManager         ConfigManager::Dir_WldLevel;
-QList<SimpleAnimator >   ConfigManager::Animator_WldLevel;
+std::vector<SimpleAnimator >   ConfigManager::Animator_WldLevel;
 wld_levels_Markers       ConfigManager::marker_wlvl;
 /*****World Levels************/
 
-bool ConfigManager::loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadWorldTile(obj_w_tile &tile, std::string section, obj_w_tile *merge_with, std::string iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
-    QString errStr;
+    std::string errStr;
 
     if(internal)
-    {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
-    }
+        setup = new IniProcessing(iniFile);
 
     tile.isInit = false;
     tile.image = NULL;
@@ -80,17 +79,14 @@ bool ConfigManager::loadWorldTile(obj_w_tile &tile, QString section, obj_w_tile 
     return valid;
 }
 
-bool ConfigManager::loadWorldPath(obj_w_path &path, QString section, obj_w_path *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadWorldPath(obj_w_path &path, std::string section, obj_w_path *merge_with, std::string iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
-    QString errStr;
+    std::string errStr;
 
     if(internal)
-    {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
-    }
+        setup = new IniProcessing(iniFile);
 
     path.isInit = false;
     path.image = NULL;
@@ -113,17 +109,14 @@ bool ConfigManager::loadWorldPath(obj_w_path &path, QString section, obj_w_path 
     return valid;
 }
 
-bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, QString section, obj_w_scenery *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, std::string section, obj_w_scenery *merge_with, std::string iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
-    QString errStr;
+    std::string errStr;
 
     if(internal)
-    {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
-    }
+        setup = new IniProcessing(iniFile);
 
     scene.isInit = false;
     scene.image = NULL;
@@ -146,17 +139,14 @@ bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, QString section, obj_
     return valid;
 }
 
-bool ConfigManager::loadWorldLevel(obj_w_level &level, QString section, obj_w_level *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadWorldLevel(obj_w_level &level, std::string section, obj_w_level *merge_with, std::string iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
-    QString errStr;
+    std::string errStr;
 
     if(internal)
-    {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
-    }
+        setup = new IniProcessing(iniFile);
 
     level.isInit = false;
     level.image = NULL;
@@ -188,26 +178,26 @@ bool ConfigManager::loadWorldTiles()
     obj_w_tile stile;
     unsigned long tiles_total = 0;
     bool useDirectory = false;
-    QString tile_ini = config_dir + "wld_tiles.ini";
-    QString nestDir = "";
+    std::string tile_ini = config_dirSTD + "wld_tiles.ini";
+    std::string nestDir = "";
 
-    if(!QFile::exists(tile_ini))
+    if(!Files::fileExists(tile_ini))
     {
-        addError(QString("ERROR LOADING wld_tiles.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox::fatal("ERROR LOADING wld_tiles.ini: file does not exist");
+        std::string msg = "ERROR LOADING wld_tiles.ini: file does not exist";
+        addError(msg);
+        PGE_MsgBox::fatal(msg);
         return false;
     }
 
-    QSettings setup(tile_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(tile_ini);
     wld_tiles.clear();   //Clear old
     setup.beginGroup("tiles-main");
-    tiles_total = setup.value("total", 0).toULongLong();
-    nestDir =     setup.value("config-dir", "").toString();
+    setup.read("total", tiles_total, 0);
+    setup.read("config-dir", nestDir, "");
 
-    if(!nestDir.isEmpty())
+    if(!nestDir.empty())
     {
-        nestDir = config_dir + nestDir;
+        nestDir = config_dirSTD + nestDir;
         useDirectory = true;
     }
 
@@ -220,8 +210,9 @@ bool ConfigManager::loadWorldTiles()
 
     if(tiles_total == 0)
     {
-        addError(QString("ERROR LOADING wld_tiles.ini: number of items not define, or empty config"), QtCriticalMsg);
-        PGE_MsgBox::fatal("ERROR LOADING wld_tiles.ini: number of items not define, or empty config");
+        std::string msg = "ERROR LOADING wld_tiles.ini: number of items not define, or empty config";
+        addError(msg);
+        PGE_MsgBox::fatal(msg);
         return false;
     }
 
@@ -234,12 +225,12 @@ bool ConfigManager::loadWorldTiles()
     {
         if(useDirectory)
         {
-            if(!loadWorldTile(stile, "tile", nullptr, QString("%1/tile-%2.ini").arg(nestDir).arg(i)))
+            if(!loadWorldTile(stile, "tile", nullptr, fmt::format("{0}/tile-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadWorldTile(stile, QString("tile-%1").arg(i), nullptr, "", &setup))
+            if(!loadWorldTile(stile, fmt::format("tile-{0}", i), nullptr, "", &setup))
                 return false;
         }
 
@@ -249,18 +240,20 @@ bool ConfigManager::loadWorldTiles()
         //Load custom config if possible
         loadCustomConfig<obj_w_tile>(wld_tiles, i, Dir_Tiles, "tile", "tile", &loadWorldTile);
 
-        if(setup.status() != QSettings::NoError)
+        if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
-            PGE_MsgBox::error(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.status()).arg(i));
+            std::string msg = fmt::format("ERROR LOADING wld_tiles.ini N:{0} (tile-{2})", setup.lastError(), i);
+            addError(msg);
+            PGE_MsgBox::error(msg);
             return false;
         }
     }
 
     if(wld_tiles.stored() < tiles_total)
     {
-        addError(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(wld_tiles.size()));
-        PGE_MsgBox::warn(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(wld_tiles.size()));
+        std::string msg = fmt::format("Not all Tiles loaded! Total: {0}, Loaded: {1}", tiles_total, wld_tiles.size());
+        addError(msg);
+        PGE_MsgBox::warn(msg);
     }
 
     return true;

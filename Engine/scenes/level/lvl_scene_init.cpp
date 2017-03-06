@@ -24,8 +24,7 @@
 #include <Utils/maths.h>
 #include <gui/pge_msgbox.h>
 
-#include <QDebug>
-#include <QFileInfo>
+#include <Utils/files.h>
 #include <functional>
 #include <algorithm>
 
@@ -132,7 +131,7 @@ bool LevelScene::setEntrance(unsigned long entr)
 PlayerPoint LevelScene::getStartLocation(int playerID)
 {
     //If no placed player star points
-    if(data.players.isEmpty())
+    if(data.players.empty())
     {
         PlayerPoint point;
 
@@ -144,7 +143,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
             point.w = 20;
             point.h = 60;
         }
-        else if(!data.sections.isEmpty())
+        else if(!data.sections.empty())
         {
             //Construct point based on first section boundary coordinates
             point.x = data.sections[0].size_left + 20;
@@ -200,7 +199,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
     }
 
     //Return first presented point entry even if null
-    return data.players.first();
+    return data.players.front();
 }
 
 
@@ -210,8 +209,8 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
 bool LevelScene::loadConfigs()
 {
     bool success = true;
-    QString musIni = data.meta.path + "/music.ini";
-    QString sndIni = data.meta.path + "/sounds.ini";
+    std::string musIni = data.meta.path + "/music.ini";
+    std::string sndIni = data.meta.path + "/sounds.ini";
 
     if(ConfigManager::music_lastIniFile != musIni)
     {
@@ -229,8 +228,8 @@ bool LevelScene::loadConfigs()
     }
 
     //Set paths
-    std::string metaPath  = data.meta.path.toStdString();
-    std::string metaFName = data.meta.filename.toStdString();
+    std::string metaPath  = data.meta.path;
+    std::string metaFName = data.meta.filename;
     ConfigManager::Dir_Blocks.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBlock());
     ConfigManager::Dir_BGO.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBGO());
     ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC());
@@ -239,6 +238,7 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_BG.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBG());
     ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect());
     ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable());
+
     //Load INI-files
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
 
@@ -249,7 +249,6 @@ bool LevelScene::loadConfigs()
     }
 
     success = ConfigManager::loadLevelBGO();    //!< BGO
-
     if(!success)
     {
         exitLevelCode = LvlExit::EXIT_Error;
@@ -257,7 +256,6 @@ bool LevelScene::loadConfigs()
     }
 
     success = ConfigManager::loadLevelNPC();  //!< NPC
-
     if(!success)
     {
         exitLevelCode = LvlExit::EXIT_Error;
@@ -265,7 +263,6 @@ bool LevelScene::loadConfigs()
     }
 
     success = ConfigManager::loadLevelBackG();  //!< Backgrounds
-
     if(!success)
     {
         exitLevelCode = LvlExit::EXIT_Error;
@@ -273,7 +270,6 @@ bool LevelScene::loadConfigs()
     }
 
     success = ConfigManager::loadLevelEffects();  //!< Effects
-
     if(!success)
     {
         exitLevelCode = LvlExit::EXIT_Error;
@@ -327,12 +323,12 @@ bool LevelScene::init_items()
     luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
     luaEngine.setPlayerBaseClassPath(":/script/player/maincore_player.lua");
-    luaEngine.setErrorReporterFunc([this](const QString & errorMessage, const QString & stacktrace)->void
+    luaEngine.setErrorReporterFunc([this](const std::string &errorMessage, const std::string &stacktrace)->void
     {
         pLogWarning("Lua-Error: ");
-        pLogWarning("Error Message: %s", errorMessage.toUtf8().data());
-        pLogWarning("Stacktrace: \n%s", stacktrace.toUtf8().data());
-        _errorString = QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!";
+        pLogWarning("Error Message: %s", errorMessage.data());
+        pLogWarning("Stacktrace: \n%s", stacktrace.data());
+        _errorString = std::string("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!";
         //return false;
     });
     luaEngine.init();
@@ -343,18 +339,18 @@ bool LevelScene::init_items()
     for(unsigned long i = 1; i < ConfigManager::lvl_npc_indexes.size(); i++)
     {
         obj_npc &npc = ConfigManager::lvl_npc_indexes[i];
-        QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(npc.setup.algorithm_script);
+        std::string scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(npc.setup.algorithm_script);
 
-        if((!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()))
+        if((!scriptPath.empty()) && (Files::fileExists(scriptPath)))
             luaEngine.loadNPCClass(npc.setup.id, scriptPath);
     }
 
     for(unsigned long i = 1; i < ConfigManager::playable_characters.size(); i++)
     {
         obj_player &player = ConfigManager::playable_characters[i];
-        QString scriptPath = ConfigManager::Dir_PlayerScript.getCustomFile(player.script);
+        std::string scriptPath = ConfigManager::Dir_PlayerScript.getCustomFile(player.script);
 
-        if((!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()))
+        if((!scriptPath.isEmpty()) && (Files::fileExists(scriptPath)))
             luaEngine.loadPlayerClass(player.id, scriptPath);
     }
 

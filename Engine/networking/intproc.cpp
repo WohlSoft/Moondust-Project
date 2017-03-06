@@ -133,10 +133,8 @@ std::string IntProc::getCMD()
 {
     cmdEntry tmp = cmd_queue.front();
     cmd_queue.pop_front();
-
     if(!cmd_queue.empty())
         cmd_recentType = cmd_queue.front().type;
-
     return tmp.cmd;
 }
 

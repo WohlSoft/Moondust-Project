@@ -22,6 +22,7 @@
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
+#include <fmt/fmt_format.h>
 #include <Utils/maths.h>
 #include <cmath>
 
@@ -104,8 +105,8 @@ void Render_SW_SDL::initDummyTexture()
 
     if(!image)
     {
-        std::string msg = QString("Can't initialize dummy texture!\n"
-                                  "In file: %1:%2").arg(__FILE__).arg(__LINE__).toStdString();
+        std::string msg = fmt::format("Can't initialize dummy texture!\n"
+                                      "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), NULL);
         abort();

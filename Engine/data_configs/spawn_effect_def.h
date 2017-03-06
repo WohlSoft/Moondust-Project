@@ -1,10 +1,9 @@
 #ifndef SPAWNEFFECTDEF_H
 #define SPAWNEFFECTDEF_H
 
-#include <QString>
-#include <QSettings>
 #include <IniProcessor/ini_processing.h>
-#include <QList>
+#include <string>
+#include <vector>
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -14,11 +13,10 @@ class SpawnEffectDef
 public:
     SpawnEffectDef();
     SpawnEffectDef(const SpawnEffectDef &c);
-    void fill(QString prefix, QSettings *setup);
     void fill(const std::string &prefix, IniProcessing *setup);
 
     //Call lua-function instead of spawning this effect
-    QString lua_function;
+    std::string lua_function;
 
     void lua_setSequence(luabind::object frames);
 
@@ -30,7 +28,7 @@ public:
     int animationLoops;
     int delay;
     int framespeed;
-    QList<int> frame_sequence;
+    std::vector<int> frame_sequence;
     double velocityX;
     double velocityY;
     long double zIndex;

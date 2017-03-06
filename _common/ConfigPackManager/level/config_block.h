@@ -33,13 +33,13 @@ struct BlockSetup
                PGEString *error = nullptr);
 
     uint64_t        id = 0;
-    QString         image_n;
-    QString         mask_n;
-    QString         name;
+    PGEString       image_n;
+    PGEString       mask_n;
+    PGEString       name;
     //    grid=32               ; 32 | 16 Default="32"
     unsigned int    grid = 32;
-    QString         group = "_NoGroup";
-    QString         category = "_Other";
+    PGEString       group = "_NoGroup";
+    PGEString       category = "_Other";
     bool            sizable = false;
     int             danger = 0;
     int             collision = 0;

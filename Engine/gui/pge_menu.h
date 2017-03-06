@@ -19,17 +19,14 @@
 #ifndef PGE_MENU_H
 #define PGE_MENU_H
 
-#include <QString>
-#include <QList>
-#include <QHash>
-#include <QPair>
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include <common_features/pge_texture.h>
 #include <common_features/rect.h>
 #include <common_features/size.h>
 #include <common_features/point.h>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <utility>
 #include <functional>
 
 #include "menu/_pge_menuitem.h"
@@ -47,7 +44,7 @@ friend class PGE_KeyGrabMenuItem;
 public:
     enum menuAlignment { HORIZONTAL, VERTICLE };
 
-    PGE_Menu(menuAlignment align=VERTICLE, int itemGap=0);
+    PGE_Menu(menuAlignment align=VERTICLE, int itemGap = 0);
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 

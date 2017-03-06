@@ -19,7 +19,7 @@
 #ifndef RENDER_BASE_H
 #define RENDER_BASE_H
 
-#include <QString>
+#include <string>
 #include <common_features/pge_texture.h>
 #include <common_features/point.h>
 #include <common_features/pointf.h>
@@ -182,7 +182,7 @@ public:
     virtual void setWindowSize(int,int) {}
     virtual void flush() {}
     virtual void repaint() {}
-    virtual void setClearColor(float,float,float,float) {}
+    virtual void setClearColor(float, float, float, float) {}
     virtual void clearScreen() {}
 
     virtual void renderRect(float,float,float,float,GLfloat,GLfloat,GLfloat,GLfloat, bool) {}

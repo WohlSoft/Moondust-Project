@@ -46,8 +46,8 @@ void LevelScene::process_InterprocessCommands()
 
         case IntProc::PlaceItem:
         {
-            QString raw = IntProc::getCMD();
-            LogDebug(raw);
+            std::string raw = IntProc::getCMD();
+            pLogDebug(raw.c_str());
             LevelData got;
             PGE_FileFormats_misc::RawTextInput raw_file(&raw);
             FileFormats::ReadExtendedLvlFile(raw_file, got);
@@ -63,15 +63,14 @@ void LevelScene::process_InterprocessCommands()
                                           PGE_Window::Height + placingMode_drawSize.y() + 16);
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrab2);
 
-            if(raw.startsWith("BLOCK_PLACE", Qt::CaseInsensitive))
+            if(raw.compare(0, 11, "BLOCK_PLACE"))
             {
-                if(got.blocks.isEmpty()) break;
-
+                if(got.blocks.empty())
+                    break;
                 placingMode = true;
                 placingMode_item_type = 0;
                 placingMode_block = got.blocks[0];
                 int tID = ConfigManager::getBlockTexture(placingMode_block.id);
-
                 if(tID  >= 0)
                 {
                     placingMode_texture = ConfigManager::level_textures[tID];
@@ -82,15 +81,14 @@ void LevelScene::process_InterprocessCommands()
                     placingMode_drawSize.setY(placingMode_texture.h / static_cast<int>(bl.setup.frames));
                 }
             }
-            else if(raw.startsWith("BGO_PLACE", Qt::CaseInsensitive))
+            else if(raw.compare(0, 9, "BGO_PLACE"))
             {
-                if(got.bgo.isEmpty()) break;
-
+                if(got.bgo.empty())
+                    break;
                 placingMode = true;
                 placingMode_item_type = 1;
                 placingMode_bgo = got.bgo[0];
                 int tID = ConfigManager::getBgoTexture(placingMode_bgo.id);
-
                 if(tID  >= 0)
                 {
                     placingMode_texture = ConfigManager::level_textures[tID];
@@ -101,15 +99,14 @@ void LevelScene::process_InterprocessCommands()
                     placingMode_drawSize.setY(placingMode_texture.h);
                 }
             }
-            else if(raw.startsWith("NPC_PLACE", Qt::CaseInsensitive))
+            else if(raw.compare(0, 9, "NPC_PLACE"))
             {
-                if(got.npc.isEmpty()) break;
-
+                if(got.npc.empty())
+                    break;
                 placingMode = true;
                 placingMode_item_type = 2;
                 placingMode_npc = got.npc[0];
                 int tID = ConfigManager::getNpcTexture(placingMode_npc.id);
-
                 if(tID >= 0)
                 {
                     placingMode_texture = ConfigManager::level_textures[tID];
@@ -122,7 +119,7 @@ void LevelScene::process_InterprocessCommands()
                         {
                             AdvNpcAnimator animator(placingMode_texture, np);
                             ConfigManager::Animator_NPC.push_back(animator);
-                            ConfigManager::Animator_NPC.last().start();
+                            ConfigManager::Animator_NPC.back().start();
                             np.animator_ID = ConfigManager::Animator_NPC.size() - 1;
                         }
                         else
@@ -239,13 +236,13 @@ void LevelScene::onMouseReleased(SDL_MouseButtonEvent &)
 
 void LevelScene::placeItemByMouse(int x, int y)
 {
-    if(!placingMode) return;
+    if(!placingMode)
+        return;
 
-    for(int i = 0; i < cameras.size(); i++)
+    for(size_t i = 0; i < cameras.size(); i++)
     {
         PGE_Rect camRect;
-        camRect.setRect(0, cameras[i].h()*i, cameras[i].w(), cameras[i].h());
-
+        camRect.setRect(0, cameras[i].h() * i, cameras[i].w(), cameras[i].h());
         if(camRect.collidePoint(x, y))
         {
             x += cameras[i].posX();

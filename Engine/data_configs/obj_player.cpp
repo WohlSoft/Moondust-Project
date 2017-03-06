@@ -122,42 +122,6 @@ static void loadPlayerPhysicsSettings(IniProcessing &set, obj_player_physics &t,
     set.endGroup();
 }
 
-obj_player_physics::obj_player_physics()
-{
-    walk_force = 6.5; //!< Move force
-    run_force  = 3.25;  //!< Running force
-    decelerate_stop = 4.55; //!< Deceleration while stopping
-    decelerate_run  = 10.88;  //!< Deceleration running while speed higher than walking
-    decelerate_turn = 18.2 ; //!< Deceleration while turning
-    decelerate_air  = 0.0;  //!< Decelerate in air
-    ground_c_max    = 1.0; //!< On-Ground max speed     coefficient
-    ground_c        = 1.0; //!< On-Ground accelerations coefficient
-    slippery_c      = 4.0; //!< Slippery coefficien
-    gravity_accel   = 26.0;//!< Gravity acceleration
-    gravity_scale   = 1.0; //!< Gravity scale
-    velocity_jump   = 5.2; //!< Jump velocity
-    velocity_jump_bounce = 5.3;
-    velocity_jump_spring = 9.3;
-    velocity_jump_c = 5.8; //!< Jump coefficient which provides increzed jump height dependent to speed
-    jump_time       = 260;  //!< Time to jump
-    jump_time_bounce = 370; //!< Time to jump from bouncing surface
-    jump_time_spring = 530; //!< Time to jump from a spring
-    velocity_climb_x     = 1.5; //!< Climbing velocity
-    velocity_climb_y_up  = 2.0; //!< Climbing velocity
-    velocity_climb_y_down = 3.0; //!< Climbing velocity
-    MaxSpeed_walk       = 3.0; //!< Max walk speed
-    MaxSpeed_run        = 6.0;  //!< Max run speed
-    MaxSpeed_up         = 74.0;   //!< Fly UP Max fall speed
-    MaxSpeed_down       = 12.0; //!< Max fall down speed
-    zero_speed_y_on_enter = false;
-    slow_up_speed_y_coeff = 0.325;
-    slow_speed_x_on_enter = false;
-    slow_speed_x_coeff = 0.125;
-}
-
-
-
-
 bool ConfigManager::loadPlayableCharacters()
 {
     try
@@ -166,12 +130,10 @@ bool ConfigManager::loadPlayableCharacters()
         unsigned int i;
         unsigned long players_total = 0;
         std::string plr_ini = config_dir.toStdString() + "lvl_characters.ini";
-
         if(!Files::fileExists(plr_ini))
         {
-            addError(QString("ERROR LOADING lvl_characters.ini: file does not exist"), QtCriticalMsg);
-            PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_characters.ini: file does not exist"),
-                              PGE_MsgBox::msg_fatal);
+            addError("ERROR LOADING lvl_characters.ini: file does not exist");
+            PGE_MsgBox msgBox(NULL, "ERROR LOADING lvl_characters.ini: file does not exist", PGE_MsgBox::msg_fatal);
             msgBox.exec();
             return false;
         }
@@ -179,20 +141,20 @@ bool ConfigManager::loadPlayableCharacters()
         IniProcessing setup(plr_ini);
         playable_characters.clear();   //Clear old
         setup.beginGroup("main-characters");
-        players_total = setup.value("total", 0).toULongLong();
+        {
+            players_total = setup.value("total", 0).toULongLong();
+        }
         setup.endGroup();
 
         if(players_total == 0)
         {
-            addError(QString("ERROR LOADING lvl_characters.ini: number of items not define, or empty config"), QtCriticalMsg);
-            PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_characters.ini: number of items not define, or empty config"),
-                              PGE_MsgBox::msg_fatal);
+            addError("ERROR LOADING lvl_characters.ini: number of items not define, or empty config");
+            PGE_MsgBox msgBox(NULL, "ERROR LOADING lvl_characters.ini: number of items not define, or empty config", PGE_MsgBox::msg_fatal);
             msgBox.exec();
             return false;
         }
 
         playable_characters.allocateSlots(players_total);
-
         for(i = 1; i <= players_total; i++)
         {
             obj_player splayer;
@@ -211,7 +173,7 @@ bool ConfigManager::loadPlayableCharacters()
 
             if(splayer.name.empty())
             {
-                addError(QString("Player-%1 Item name isn't defined").arg(i));
+                addError(fmt::format("Player-{0} Item name isn't defined", i));
                 goto skipPLAYER;
             }
 
@@ -224,7 +186,7 @@ bool ConfigManager::loadPlayableCharacters()
 
             if(total_states == 0)
             {
-                addError(QString("player-%1 has no states!").arg(i));
+                addError(fmt::format("player-{0} has no states!", i));
                 goto skipPLAYER;
             }
 
@@ -257,15 +219,14 @@ bool ConfigManager::loadPlayableCharacters()
                 loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], fmt::format("character-{0}-env-common-quicksand", i));
 
                 setup.beginGroup(fmt::format("character-{0}-world", i));
-                imgFile = setup.value("sprite-name", "").toQString();
+                setup.read("sprite-name", imgFile, "");
                 splayer.image_wld_n = imgFile;
                 {
-                    QString err;
+                    std::string err;
                     GraphicsHelps::getMaskedImageInfo(playerWldPath, splayer.image_wld_n, splayer.mask_wld_n, err);
-
-                    if(imgFile == "")
+                    if(imgFile.empty())
                     {
-                        addError(QString("Character-%1 Wld Image filename isn't defined").arg(i));
+                        addError(fmt::format("Character-{0} Wld Image filename isn't defined", i));
                         goto skipPLAYER;
                     }
                 }
@@ -299,12 +260,11 @@ bool ConfigManager::loadPlayableCharacters()
                         setup.read("sprite-name", imgFile, "");
                         pstate.image_n = imgFile;
                         {
-                            QString err;
-                            GraphicsHelps::getMaskedImageInfo(playerLvlPath + QString::fromStdString(splayer.sprite_folder) + "/", imgFile, pstate.mask_n, err);
-
-                            if(imgFile == "")
+                            std::string err;
+                            GraphicsHelps::getMaskedImageInfo(playerLvlPath + splayer.sprite_folder + "/", imgFile, pstate.mask_n, err);
+                            if(imgFile.empty())
                             {
-                                addError(QString("Character-%1 state-%2 Image filename isn't defined").arg(i).arg(j));
+                                addError(fmt::format("Character-{0} state-{1} Image filename isn't defined", i, j));
                                 goto skipPLAYER;
                             }
                         }
@@ -346,16 +306,11 @@ bool ConfigManager::loadPlayableCharacters()
 
             if(setup.lastError() != IniProcessing::ERR_OK)
             {
-                addError(QString("ERROR LOADING lvl_characters.ini:%1 N:%2 (character-%3)")
-                         .arg(setup.lineWithError())
-                         .arg(setup.lastError())
-                         .arg(i), QtCriticalMsg);
-                PGE_MsgBox msgBox(NULL,
-                                  QString("ERROR LOADING lvl_characters.ini:%1 N:%2 (character-%3)")
-                                  .arg(setup.lineWithError())
-                                  .arg(setup.lastError())
-                                  .arg(i),
-                                  PGE_MsgBox::msg_error);
+                std::string msg = fmt::format("ERROR LOADING lvl_characters.ini:{0} N:{1} (character-{2})",
+                                              setup.lineWithError(),
+                                              setup.lastError(), i);
+                addError(msg);
+                PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
                 msgBox.exec();
                 break;
             }
@@ -363,11 +318,11 @@ bool ConfigManager::loadPlayableCharacters()
 
         if(playable_characters.stored() < players_total)
         {
-            addError(QString("Not all characters are loaded! Total: %1, Loaded: %2)")
-                     .arg(players_total)
-                     .arg(playable_characters.stored()), QtWarningMsg);
-            PGE_MsgBox msgBox(NULL, QString("Not all characters are loaded! Total: %1, Loaded: %2).\n\nGame can't be started!").arg(players_total).arg(playable_characters.stored()),
-                              PGE_MsgBox::msg_error);
+            std::string msg = fmt::format("Not all characters are loaded! Total: {0}, Loaded: {1})",
+                                          players_total,
+                                          playable_characters.stored());
+            addError(msg);
+            PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
             msgBox.exec();
         }
     }

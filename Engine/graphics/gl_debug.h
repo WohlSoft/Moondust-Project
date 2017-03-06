@@ -66,12 +66,13 @@ static inline void _GLErrorCheck(const char* fn, int line, const char* func)
  * \param line Line number of file where this check was executed
  * \param func Function name where this function was executed
  */
-static inline void _GLShowError(QString msg, const char* fn, int line, const char* func)
+static inline void _GLShowError(const std::string &msg, const char* fn, int line, const char* func)
 {
     GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
+    if (error != GL_NO_ERROR)
+    {
         std::ostringstream errMsg;
-        errMsg << msg.toStdString();
+        errMsg << msg;
         errMsg << "\nOpenGL Error in " << func << " (at " << fn << ":" << line << ")\r\n";
         errMsg << "\r\n";
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
