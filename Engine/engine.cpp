@@ -54,7 +54,7 @@ PGEEngineCmdArgs    g_flags;
 
 Level_returnTo      g_jumpOnLevelEndTo = RETURN_TO_EXIT;
 
-QString             g_configPackPath  = "";
+std::string         g_configPackPath  = "";
 std::string         g_fileToOpen  = "";
 EpisodeState        g_GameState;
 PlayEpisodeResult   g_Episode;
@@ -484,7 +484,7 @@ static void findEqual(char *&s, size_t &len)
     }
 }
 
-static QString takeStrFromArg(std::string &arg, bool &ok)
+static std::string takeStrFromArg(std::string &arg, bool &ok)
 {
     std::string target = arg;
     size_t      len = arg.size();
@@ -494,7 +494,7 @@ static QString takeStrFromArg(std::string &arg, bool &ok)
     removeQuotes(s, len);
     ok = (len > 0);
 
-    return QString::fromUtf8(s, (int)len);
+    return std::string(s, len);
 }
 
 static int takeIntFromArg(std::string &arg, bool &ok)
@@ -566,11 +566,11 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
 
         if(param_s.compare(0, 9, "--config=") == 0)
         {
-            QString tmp;
+            std::string tmp;
             bool ok = false;
             tmp = takeStrFromArg(param_s, ok);
-
-            if(ok) g_configPackPath = tmp;
+            if(ok)
+                g_configPackPath = tmp;
         }
         else if(param_s.compare(0, 14, "--num-players=") == 0)
         {

@@ -21,7 +21,7 @@
 
 #include <mutex>
 #include <deque>
-#include <QObject>
+#include <string>
 #include "editor_pipe.h"
 
 namespace IntProc
@@ -31,8 +31,8 @@ namespace IntProc
     bool isEnabled();
     bool isWorking();
 
-    QString      getState();
-    void         setState(QString instate);
+    std::string getState();
+    void        setState(std::string instate);
 
     enum ExternalCommands
     {
@@ -43,20 +43,20 @@ namespace IntProc
 
     struct cmdEntry
     {
-        QString cmd;
+        std::string cmd;
         ExternalCommands type;
     };
 
     bool sendMessage(const char *command);
     bool sendMessageS(std::string command);
-    bool sendMessage(QString command);
+    bool sendMessage(std::string command);
 
     void             storeCommand(const char *cmd, size_t length, ExternalCommands type);
     void             cmdLock();
     void             cmdUnLock();
     bool             hasCommand();
     ExternalCommands commandType();
-    QString          getCMD();
+    std::string getCMD();
 
     extern EditorPipe *editor;
 };

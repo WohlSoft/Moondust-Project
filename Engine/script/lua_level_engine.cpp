@@ -82,7 +82,7 @@ void LuaLevelEngine::destoryLuaPlayer(LVL_Player *plr)
     }
 }
 
-void LuaLevelEngine::loadNPCClass(unsigned long id, const QString &path)
+void LuaLevelEngine::loadNPCClass(unsigned long id, const std::string &path)
 {
     if(shouldShutdown())
         return;
@@ -98,7 +98,7 @@ void LuaLevelEngine::loadNPCClass(unsigned long id, const QString &path)
     _G["npc_class_table"][id] = loadClassAPI(path);
 }
 
-void LuaLevelEngine::loadPlayerClass(unsigned long id, const QString &path)
+void LuaLevelEngine::loadPlayerClass(unsigned long id, const std::string &path)
 {
     if(shouldShutdown())
         return;
@@ -118,22 +118,22 @@ LevelScene *LuaLevelEngine::getScene()
 {
     return dynamic_cast<LevelScene *>(getBaseScene());
 }
-QString LuaLevelEngine::getNpcBaseClassPath() const
+std::string LuaLevelEngine::getNpcBaseClassPath() const
 {
     return m_npcBaseClassPath;
 }
 
-void LuaLevelEngine::setNpcBaseClassPath(const QString &npcBaseClassPath)
+void LuaLevelEngine::setNpcBaseClassPath(const std::string &npcBaseClassPath)
 {
     m_npcBaseClassPath = npcBaseClassPath;
 }
 
-QString LuaLevelEngine::getPlayerBaseClassPath() const
+std::string LuaLevelEngine::getPlayerBaseClassPath() const
 {
     return m_playerBaseClassPath;
 }
 
-void LuaLevelEngine::setPlayerBaseClassPath(const QString &playerBaseClassPath)
+void LuaLevelEngine::setPlayerBaseClassPath(const std::string &playerBaseClassPath)
 {
     m_playerBaseClassPath = playerBaseClassPath;
 }

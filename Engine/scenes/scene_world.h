@@ -19,8 +19,6 @@
 #ifndef SCENE_WORLD_H
 #define SCENE_WORLD_H
 
-#include <QString>
-#include <QList>
 #include "scene.h"
 #include <controls/controller.h>
 #include <PGE_File_Formats/wld_filedata.h>
@@ -102,11 +100,11 @@ class WorldScene : public Scene
         int     exitWorldDelay;
         int     exitWorldCode;
 
-        int                 numOfPlayers;
-        QList<PlayerState > players;
+        int                         numOfPlayers;
+        std::vector<PlayerState >   players;
 
-        PGE_Texture         backgroundTex;
-        QList<PGE_Texture > textures_bank;
+        PGE_Texture                 backgroundTex;
+        std::vector<PGE_Texture >   textures_bank;
 
         enum WalkDirections
         {
@@ -158,26 +156,26 @@ class WorldScene : public Scene
         bool    allow_down;
         void    updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
         void    updateCenter();
-        static void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, long cx, long cy);
+        static void fetchSideNodes(bool &side, std::vector<WorldNode *> &nodes, long cx, long cy);
         void    initElementsVisibility();
         void    saveElementsVisibility();
 
         bool    pathOpeningInProcess;
         WldPathOpener pathOpener;
 
-        QVector<WorldScene_misc_img > imgs;
-        QVector<WorldScene_Portrait > portraits;
+        std::vector<WorldScene_misc_img > imgs;
+        std::vector<WorldScene_Portrait > portraits;
 
         TileBox m_indexTable;
-        QList<WldTileItem >     wld_tiles;
-        QList<WldSceneryItem >  wld_sceneries;
-        QList<WldPathItem >     wld_paths;
-        QList<WldLevelItem >    wld_levels;
-        QList<WldMusicBoxItem > wld_musicboxes;
-        EventQueue<WorldScene > wld_events;
+        std::vector<WldTileItem >       wld_tiles;
+        std::vector<WldSceneryItem >    wld_sceneries;
+        std::vector<WldPathItem >       wld_paths;
+        std::vector<WldLevelItem >      wld_levels;
+        std::vector<WldMusicBoxItem >   wld_musicboxes;
+        EventQueue<WorldScene >         wld_events;
 
-        QList<WorldNode >       wldItems;
-        QVector<WorldNode * >   _itemsToRender;
+        std::vector<WorldNode >         wldItems;
+        std::vector<WorldNode * >       _itemsToRender;
 
 
         /*****************Pause Menu*******************/

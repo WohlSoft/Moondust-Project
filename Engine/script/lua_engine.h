@@ -1,20 +1,16 @@
 #ifndef LUAENGINE_H
 #define LUAENGINE_H
 
-#include <QObject>
-#include <QString>
-#include <QtDebug>
-#include <QHash>
-#include <QFile>
-
 #include <vector>
 #include <functional>
+#include <unordered_map>
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
 class Scene;
 class LuaEvent;
+class SdlFile;
 #include "../common_features/util.h"
 
 ///
@@ -29,7 +25,8 @@ class LuaEngine
 {
     friend class LuaEvent;
 private:
-    Q_DISABLE_COPY(LuaEngine)
+    LuaEngine(const LuaEngine&) = delete;
+    LuaEngine operator=(const LuaEngine&) = delete;
 
 public:
     LuaEngine();
@@ -58,8 +55,8 @@ public:
     inline bool isValid() { return L != nullptr; }
 
     // ///////  LOADING FUCS ///////////// //
-    luabind::object loadClassAPI(const QString& path); //!< Reads a lua class and returns the object
-    void loadClassAPI(const QString& nameInGlobal, const QString& path); //!< Reads a lua class and puts it in a global object
+    luabind::object loadClassAPI(const std::string &path); //!< Reads a lua class and returns the object
+    void loadClassAPI(const std::string& nameInGlobal, const std::string& path); //!< Reads a lua class and puts it in a global object
 
     // ///////  LOADING FUCS END ///////////// //
 
@@ -67,7 +64,7 @@ public:
     void setCoreFile(const std::string& coreFile); //!< The core lua filename
 
     void dispatchEvent(LuaEvent& toDispatchEvent); //!< Dispatches a lua event
-    void setErrorReporterFunc(const std::function<void (const QString &, const QString&)> &func); //!< The error reporter function
+    void setErrorReporterFunc(const std::function<void (const std::string &, const std::string&)> &func); //!< The error reporter function
 
     Scene *getBaseScene() const; //!< The base-scene for the lua engine (may need for interacting with current scene)
 
@@ -79,7 +76,7 @@ public:
      * \brief Set a path where look for a various files (images, sounds, etc.)
      * \param path Root path where look various files
      */
-    void setFileSearchPath(const QString &path);
+    void setFileSearchPath(const std::string &path);
 
     bool shouldShutdown() const;
     void setLateShutdown(bool value);
@@ -93,19 +90,21 @@ public:
 
 protected:
     virtual void onBindAll() {}
-    void loadMultiRet(QFile *file);
+    void loadMultiRet(SdlFile *file, const std::string &name = "unknown");
 
     lua_State* getNativeState() {return L; }
 
 private:
     void bindCore();
     void error();
-    QHash<QString, luabind::object > loadedFiles;
+
+    typedef std::unordered_map<std::string, luabind::object > ScriptsHash;
+    ScriptsHash loadedFiles;
 
     bool m_lateShutdown; //!< If true, then the lua engine will shutdown as soon as possible
     std::string m_luaScriptPath;
     std::vector<std::string> m_luaScriptPaths;
-    std::function<void (const QString & /*error message*/, const QString& /*stack trace*/)> m_errorReporterFunc;
+    std::function<void (const std::string & /*error message*/, const std::string& /*stack trace*/)> m_errorReporterFunc;
     Scene* m_baseScene;
     lua_State* L;
     std::string m_coreFile;

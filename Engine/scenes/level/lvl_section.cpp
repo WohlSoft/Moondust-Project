@@ -21,6 +21,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/play_music.h>
 #include <data_configs/config_manager.h>
+#include <algorithm>
 
 #include "lvl_physenv.h"
 
@@ -31,8 +32,8 @@ LVL_Section::LVL_Section()
     curMus = 0;
     curBgID = 0;
     isAutoscroll = false;
-    _autoscrollVelocityX = 0.0f;
-    _autoscrollVelocityY = 0.0f;
+    _autoscrollVelocityX = 0.0;
+    _autoscrollVelocityY = 0.0;
 }
 
 LVL_Section::LVL_Section(const LVL_Section &_sct)
@@ -83,19 +84,23 @@ void LVL_Section::resetLimits()
     limitBox = sectionBox;
 }
 
-void LVL_Section::setMusicRoot(QString _path)
+void LVL_Section::setMusicRoot(std::string _path)
 {
     music_root = _path;
-
-    if(!music_root.endsWith('/'))
-        music_root.append('/');
+    if(!music_root.empty())
+    {
+        if(music_root.back() != '/')
+            music_root.push_back('/');
+    }
 }
 
 void LVL_Section::playMusic()
 {
-    QString musFile = ConfigManager::getLvlMusic(curMus, music_root + curCustomMus.replace('\\', '/'));
+    std::string musFile = curCustomMus;
+    std::replace(musFile.begin(), musFile.end(), '\\', '/');
+    musFile = ConfigManager::getLvlMusic(curMus, music_root + musFile);
 
-    if(!musFile.isEmpty())
+    if(!musFile.empty())
     {
         PGE_MusPlayer::openFile(musFile);
         PGE_MusPlayer::play();
@@ -110,12 +115,12 @@ void LVL_Section::resetMusic()
     curCustomMus = data.music_file;
 }
 
-void LVL_Section::setMusic(int musID)
+void LVL_Section::setMusic(unsigned int musID)
 {
     curMus = musID;
 }
 
-void LVL_Section::setMusic(QString musFile)
+void LVL_Section::setMusic(std::string musFile)
 {
     curCustomMus = musFile;
 }

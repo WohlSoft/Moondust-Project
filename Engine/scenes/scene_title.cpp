@@ -23,6 +23,7 @@
 #include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
+#include <fmt/fmt_format.h>
 
 #include <fontman/font_manager.h>
 #include <controls/controller_joystick.h>
@@ -30,11 +31,10 @@
 #include <script/bindings/core/events/luaevents_core_engine.h>
 
 #include "scene_title.h"
-#include <QtDebug>
 
 SDL_Thread                      *TitleScene::filefind_thread = NULL;
-QString                          TitleScene::filefind_folder = "";
-QList<QPair<QString, QString > > TitleScene::filefind_found_files;
+std::string                      TitleScene::filefind_folder = "";
+std::vector<std::pair<std::string, std::string> > TitleScene::filefind_found_files;
 std::atomic_bool                 TitleScene::filefind_finished(false);
 
 TitleScene::TitleScene() : Scene(Title), luaEngine(this)
@@ -46,11 +46,11 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
     ret = 0;
     numOfPlayers = 1;
     controller = nullptr;
-    bgcolor.r = static_cast<float>(ConfigManager::setup_TitleScreen.backgroundColor.red()) / 255.0f;
-    bgcolor.g = static_cast<float>(ConfigManager::setup_TitleScreen.backgroundColor.green()) / 255.0f;
-    bgcolor.b = static_cast<float>(ConfigManager::setup_TitleScreen.backgroundColor.blue()) / 255.0f;
+    bgcolor.r = ConfigManager::setup_TitleScreen.backgroundColor.Red();
+    bgcolor.g = ConfigManager::setup_TitleScreen.backgroundColor.Green();
+    bgcolor.b = ConfigManager::setup_TitleScreen.backgroundColor.Blue();
 
-    if(ConfigManager::setup_cursors.normal.isEmpty())
+    if(ConfigManager::setup_cursors.normal.empty())
         _cursorIsLoaded = false;
     else
     {
@@ -58,7 +58,7 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
         _cursorIsLoaded = true;
     }
 
-    if(!ConfigManager::setup_TitleScreen.backgroundImg.isEmpty())
+    if(!ConfigManager::setup_TitleScreen.backgroundImg.empty())
     {
         GlRenderer::loadTextureP(background, ConfigManager::setup_TitleScreen.backgroundImg);
         _bgIsLoaded = true;
@@ -68,9 +68,10 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 
     imgs.clear();
 
-    for(int i = 0; i < ConfigManager::setup_TitleScreen.AdditionalImages.size(); i++)
+    for(size_t i = 0; i < ConfigManager::setup_TitleScreen.AdditionalImages.size(); i++)
     {
-        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
+        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile.empty())
+            continue;
 
         TitleScene_misc_img img;
         GlRenderer::loadTextureP(img.t, ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile);
@@ -151,13 +152,13 @@ bool TitleScene::init()
 {
     controller = g_AppSettings.openController(1);
 
-    if(!ConfigManager::music_lastIniFile.isEmpty())
+    if(!ConfigManager::music_lastIniFile.empty())
     {
         ConfigManager::music_lastIniFile.clear();
         ConfigManager::loadDefaultMusics();
     }
 
-    if(!ConfigManager::sound_lastIniFile.isEmpty())
+    if(!ConfigManager::sound_lastIniFile.empty())
     {
         ConfigManager::sound_lastIniFile.clear();
         ConfigManager::loadDefaultSounds();
@@ -167,12 +168,12 @@ bool TitleScene::init()
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     luaEngine.setCoreFile(":/script/maincore_title.lua");
     luaEngine.setUserFile(ConfigManager::setup_TitleScreen.luaFile);
-    luaEngine.setErrorReporterFunc([this](const QString & errorMessage, const QString & stacktrace)
+    luaEngine.setErrorReporterFunc([this](const std::string & errorMessage, const std::string & stacktrace)
     {
-        qWarning() << "Lua-Error: ";
-        qWarning() << "Error Message: " << errorMessage;
-        qWarning() << "Stacktrace: \n" << stacktrace;
-        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        pLogWarning("Lua-Error: ");
+        pLogWarning("Error Message: %s", errorMessage.c_str());
+        pLogWarning("Stacktrace: %s\n", stacktrace.c_str());
+        PGE_MsgBox msgBox(this, std::string("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
         msgBox.exec();
     });
     D_pLogDebug("Attempt to init...");
@@ -307,8 +308,8 @@ void TitleScene::processEvents()
         if(g_AppSettings.joysticks.size() > 0)
         {
             KM_Key jkey;
-            JoystickController::bindJoystickKey(g_AppSettings.joysticks.first(), jkey);
-            debug_joy_keyval    = jkey.val,
+            JoystickController::bindJoystickKey(g_AppSettings.joysticks.front(), jkey);
+            debug_joy_keyval    = jkey.val;
             debug_joy_keyid     = jkey.id;
             debug_joy_keytype   = jkey.type;
         }
@@ -370,17 +371,17 @@ void TitleScene::render()
 
     if(g_AppSettings.showDebugInfo)
     {
-        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3\n"
-                                       "fader ratio %4 N%5 F%6 TKS-%7\n"
-                                       "TICK: %8, Graphical engine: %9")
-                               .arg(debug_joy_keyval)
-                               .arg(debug_joy_keyid)
-                               .arg(debug_joy_keytype)
-                               .arg(m_fader.fadeRatio())
-                               .arg(m_fader.isNull())
-                               .arg(m_fader.isFull())
-                               .arg(m_fader.ticksLeft())
-                               .arg(uTickf).arg(GlRenderer::engineName())
+        FontManager::printText(fmt::format("Joystick key: val={0}, id={1}, type={2}\n"
+                                       "fader ratio {3} N{4} F{5} TKS-{6}\n"
+                                       "TICK: {7}, Graphical engine: {8}",
+                                        debug_joy_keyval,
+                                        debug_joy_keyid,
+                                        debug_joy_keytype,
+                                        m_fader.fadeRatio(),
+                                        m_fader.isNull(),
+                                        m_fader.isFull(),
+                                        m_fader.ticksLeft(),
+                                        uTickf, GlRenderer::engineName())
                                , 10, 10, FontManager::DefaultRaster, 1.0, 1.0, 1.0, 0.5);
         //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
         //                               "abcdefghijklmnopqrstuvwxyz\n"

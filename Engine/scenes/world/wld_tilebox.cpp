@@ -18,7 +18,7 @@
 
 #include "wld_tilebox.h"
 
-#include <QStack>
+#include <stack>
 
 WorldNode::WorldNode()
 {
@@ -468,7 +468,7 @@ static bool _TreeSearchCallback(WorldNode *item, void *arg)
 
 static bool _TreeSearchCallback_with_vizibility(WorldNode *item, void *arg)
 {
-    QVector<WorldNode *> *list = static_cast<QVector<WorldNode *>* >(arg);
+    std::vector<WorldNode *> *list = static_cast<std::vector<WorldNode *>* >(arg);
 
     if(list)
     {
@@ -479,7 +479,7 @@ static bool _TreeSearchCallback_with_vizibility(WorldNode *item, void *arg)
     return true;
 }
 
-void TileBox::query(long X, long Y, QVector<WorldNode *> &list)
+void TileBox::query(long X, long Y, std::vector<WorldNode *> &list)
 {
     //PGE_Point t = applyGrid(X,Y);
     long margin = gridSize_h - 1l;
@@ -488,7 +488,7 @@ void TileBox::query(long X, long Y, QVector<WorldNode *> &list)
     tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(&list));
 }
 
-void TileBox::query(long Left, long Top, long Right, long Bottom, QVector<WorldNode *> &list, bool z_sort)
+void TileBox::query(long Left, long Top, long Right, long Bottom, std::vector<WorldNode *> &list, bool z_sort)
 {
     RPoint lt = {Left - gridSize_h, Top - gridSize_h};
     RPoint rb = {Right + gridSize_h, Bottom + gridSize_h};
@@ -498,21 +498,25 @@ void TileBox::query(long Left, long Top, long Right, long Bottom, QVector<WorldN
         sortElements(list);
 }
 
-void TileBox::sortElements(QVector<WorldNode *> &list)
+void TileBox::sortElements(std::vector<WorldNode *> &list)
 {
     if(list.size() <= 1) return; //Nothing to sort!
 
-    QStack<int> beg;
-    QStack<int> end;
+    std::vector<size_t> beg;
+    std::vector<size_t> end;
+    beg.reserve(list.size());
+    end.reserve(list.size());
+
     WorldNode *piv;
-    int i = 0, L, R, swapv;
+    ssize_t i = 0;
+    size_t L, R, swapv;
     beg.push_back(0);
     end.push_back(list.size());
 
     while(i >= 0)
     {
-        L = beg[i];
-        R = end[i] - 1;
+        L = beg[static_cast<size_t>(i)];
+        R = end[static_cast<size_t>(i)] - 1;
 
         if(L < R)
         {

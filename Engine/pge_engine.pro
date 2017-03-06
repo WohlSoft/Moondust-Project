@@ -122,6 +122,7 @@ include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsSTL.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
+include($$PWD/../_common/Utils/UtilsSDL.pri)
 
 SOURCES += \
     _resources/resource.cpp \

@@ -16,7 +16,7 @@ bool Binding_Level_CommonFuncs::Lua_getSwitchState(lua_State *L, int switchID)
 void Binding_Level_CommonFuncs::Lua_triggerEvent(lua_State *L, std::string eventName)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    scene->events.triggerEvent( QString::fromStdString(eventName) );
+    scene->events.triggerEvent( eventName );
 }
 
 void Binding_Level_CommonFuncs::Lua_ShakeScreen(lua_State *L, double forceX, double forceY, double decX, double decY)

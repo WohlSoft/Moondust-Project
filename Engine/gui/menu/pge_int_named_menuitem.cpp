@@ -22,10 +22,10 @@
 
 PGE_NamedIntMenuItem::PGE_NamedIntMenuItem() : PGE_Menuitem()
 {
-    intvalue=NULL;
-    type=ITEM_NamedInt;
-    curItem=0;
-    allowRotation=false;
+    intvalue = NULL;
+    type = ITEM_NamedInt;
+    curItem = 0;
+    allowRotation = false;
 }
 
 PGE_NamedIntMenuItem::PGE_NamedIntMenuItem(const PGE_NamedIntMenuItem &it) : PGE_Menuitem(it)
@@ -41,28 +41,30 @@ PGE_NamedIntMenuItem::~PGE_NamedIntMenuItem()
 
 void PGE_NamedIntMenuItem::left()
 {
-    if(!intvalue) return;
-    if(items.isEmpty()) return;
+    if(!intvalue)
+        return;
+    if(items.empty())
+        return;
 
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     curItem--;
-    if(curItem<0)
-        curItem = allowRotation?(items.size()-1):0;
-    *intvalue=items[curItem].value;
+    if(curItem < 0)
+        curItem = allowRotation ? (items.size() - 1) : 0;
+    *intvalue = items[curItem].value;
     extAction();
 }
 
 void PGE_NamedIntMenuItem::right()
 {
-    if(!intvalue) return;
-    if(items.isEmpty()) return;
+    if(!intvalue)
+        return;
+    if(items.empty())
+        return;
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     curItem++;
-    if(curItem>=items.size())
-        curItem = allowRotation?  0  : (items.size()-1);
-
-    *intvalue=items[curItem].value;
-
+    if(curItem >= static_cast<int>(items.size()))
+        curItem = allowRotation ?  0  : (items.size() - 1);
+    *intvalue = items[curItem].value;
     extAction();
 }
 
@@ -70,7 +72,6 @@ void PGE_NamedIntMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
     float colorLevel = m_enabled ? 1.0 : 0.5;
-    if(!items.isEmpty())
-        FontManager::printText(items[curItem].label, x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+    if(!items.empty())
+        FontManager::printText(items[curItem].label, x + valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
 }
-

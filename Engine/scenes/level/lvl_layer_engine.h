@@ -34,12 +34,12 @@ class LVL_LayerEngine
 public:
     LVL_LayerEngine(LevelScene *_parent=NULL);
     void spawnSmokeAt(double x, double y);
-    void hide(QString layer, bool smoke=true);
-    void show(QString layer, bool smoke=true);
-    void toggle(QString layer, bool smoke=true);
-    void registerItem(QString layer, PGE_Phys_Object* item);
-    void removeRegItem(QString layer, PGE_Phys_Object* item);
-    bool isEmpty(QString layer);
+    void hide(std::string layer, bool smoke=true);
+    void show(std::string layer, bool smoke=true);
+    void toggle(std::string layer, bool smoke=true);
+    void registerItem(std::string layer, PGE_Phys_Object* item);
+    void removeRegItem(std::string layer, PGE_Phys_Object* item);
+    bool isEmpty(std::string layer);
     void clear();
     struct Layer
     {
@@ -64,9 +64,11 @@ public:
         double m_speedY;
         Layer::Members *m_members;
     };
-    void installLayerMotion(QString layer, double speedX, double speedY);
-    QHash<QString, Layer> m_layers;
-    QHash<QString, MovingLayer> m_movingLayers;
+    void installLayerMotion(std::string layer, double speedX, double speedY);
+    typedef std::unordered_map<std::string, Layer> LayersTable;
+    LayersTable         m_layers;
+    typedef std::unordered_map<std::string, MovingLayer> MovingLayersTable;
+    MovingLayersTable   m_movingLayers;
     void processMoving(double tickTime);
 };
 

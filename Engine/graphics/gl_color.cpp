@@ -57,6 +57,22 @@ GlColor::GlColor(GLuint rgba)
     setRgba(rgba);
 }
 
+GlColor::GlColor(double _r, double _g, double _b)
+{
+    m_r = _r;
+    m_g = _g;
+    m_b = _b;
+    m_a = 1.0;
+}
+
+GlColor::GlColor(double _r, double _g, double _b, double _a)
+{
+    m_r = _r;
+    m_g = _g;
+    m_b = _b;
+    m_a = _a;
+}
+
 GlColor::GlColor(QString rgba)
 {
     setRgba(rgba.toStdString());

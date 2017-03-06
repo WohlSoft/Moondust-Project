@@ -1,10 +1,6 @@
 #ifndef LUAEVENT_H
 #define LUAEVENT_H
 
-
-#include <QString>
-#include <QVariantList>
-
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
@@ -28,7 +24,8 @@ public:
     void setEventName(const std::string &eventName);
 
     template<typename T>
-    void addParameter(T par){
+    void addParameter(T par)
+    {
         objList.emplace_back(getNativeState(), par);
     }
     void cleanupAllParams();
@@ -36,9 +33,6 @@ public:
     static luabind::scope bindToLua();
 
 };
-
-
-
 
 #endif // LUAEVENT_H
 

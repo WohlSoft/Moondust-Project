@@ -45,7 +45,7 @@ void LVL_LayerEngine::spawnSmokeAt(double x, double y)
     m_scene->launchEffect(smoke, true);
 }
 
-void LVL_LayerEngine::hide(QString layer, bool smoke)
+void LVL_LayerEngine::hide(std::string layer, bool smoke)
 {
     Layer &lyr = m_layers[layer];
 
@@ -65,7 +65,7 @@ void LVL_LayerEngine::hide(QString layer, bool smoke)
         lyr.m_vizible = false;
 }
 
-void LVL_LayerEngine::show(QString layer, bool smoke)
+void LVL_LayerEngine::show(std::string layer, bool smoke)
 {
     Layer &lyr = m_layers[layer];
 
@@ -109,7 +109,7 @@ void LVL_LayerEngine::show(QString layer, bool smoke)
         lyr.m_vizible = true;
 }
 
-void LVL_LayerEngine::toggle(QString layer, bool smoke)
+void LVL_LayerEngine::toggle(std::string layer, bool smoke)
 {
     Layer &lyr = m_layers[layer];
     bool viz = !lyr.m_vizible;
@@ -138,7 +138,7 @@ void LVL_LayerEngine::toggle(QString layer, bool smoke)
         lyr.m_vizible = viz;
 }
 
-void LVL_LayerEngine::registerItem(QString layer, PGE_Phys_Object *item)
+void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item)
 {
     //Register item in the layer
     Layer &lyr = m_layers[layer];
@@ -147,18 +147,19 @@ void LVL_LayerEngine::registerItem(QString layer, PGE_Phys_Object *item)
         item->setVisible(lyr.m_vizible);
 }
 
-void LVL_LayerEngine::removeRegItem(QString layer, PGE_Phys_Object *item)
+void LVL_LayerEngine::removeRegItem(std::string layer, PGE_Phys_Object *item)
 {
     //Remove item from the layer
     Layer &lyr = m_layers[layer];
     lyr.m_members.erase(reinterpret_cast<intptr_t>(item));
 }
 
-void LVL_LayerEngine::installLayerMotion(QString layer, double speedX, double speedY)
+void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, double speedY)
 {
-    if(m_movingLayers.contains(layer))
+    MovingLayersTable::iterator mv = m_movingLayers.find(layer);
+    if(mv != m_movingLayers.end())
     {
-        MovingLayer &l = m_movingLayers[layer];
+        MovingLayer &l = mv->second;
         l.m_speedX=speedX;
         l.m_speedY=speedY;
     }
@@ -166,27 +167,29 @@ void LVL_LayerEngine::installLayerMotion(QString layer, double speedX, double sp
     {
         if((speedX == 0.0) && (speedY == 0.0))
             return;//Don't store zero-speed layers!
-        if(!m_layers.contains(layer))
+        LayersTable::iterator li = m_layers.find(layer);
+        if(li == m_layers.end())
             return;
-        Layer &lyr = m_layers[layer];
+        Layer &lyr = li->second;
         MovingLayer l;
         l.m_speedX=speedX;
         l.m_speedY=speedY;
         l.m_members = &lyr.m_members;
-        m_movingLayers[layer]=l;
+        m_movingLayers.insert({layer, l});
     }
 }
 
 void LVL_LayerEngine::processMoving(double tickTime)
 {
-    if(m_movingLayers.isEmpty())
+    if(m_movingLayers.empty())
         return;
-    QVector<QString> remove_list;
-    for(QHash<QString, MovingLayer>::iterator layerIt = m_movingLayers.begin();
+
+    std::vector<std::string> remove_list;
+    for(MovingLayersTable::iterator layerIt = m_movingLayers.begin();
         layerIt != m_movingLayers.end();
         layerIt++)
     {
-        MovingLayer &l = (*layerIt);
+        MovingLayer &l = layerIt->second;
         for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++ )
         {
             PGE_Phys_Object* obj = it->second;
@@ -199,7 +202,7 @@ void LVL_LayerEngine::processMoving(double tickTime)
             //Don't iterate activated NPC's!
             if(obj->type == PGE_Phys_Object::LVLNPC)
             {
-                LVL_Npc*npc = (LVL_Npc*)obj;
+                LVL_Npc *npc = dynamic_cast<LVL_Npc*>(obj);
                 if( npc->isActivated /* &&
                    !npc->isGenerator &&
                    !npc->is_scenery*/ )
@@ -218,17 +221,18 @@ void LVL_LayerEngine::processMoving(double tickTime)
         }
         if( (l.m_speedX==0.0) && (l.m_speedY==0.0) )
         {
-            remove_list.push_back(layerIt.key());
+            remove_list.push_back(layerIt->first);
         }
     }
     //Remove zero-speed layers
-    for(int i=0;i<remove_list.size(); i++)
-        m_movingLayers.remove(remove_list[i]);
+    for(size_t i=0; i < remove_list.size(); i++)
+        m_movingLayers.erase(remove_list[i]);
 }
 
-bool LVL_LayerEngine::isEmpty(QString layer)
+bool LVL_LayerEngine::isEmpty(std::string layer)
 {
-    return !m_layers.contains(layer) || m_layers[layer].m_members.empty();
+    LayersTable::iterator i = m_layers.find(layer);
+    return (i == m_layers.end()) || i->second.m_members.empty();
 }
 
 void LVL_LayerEngine::clear()

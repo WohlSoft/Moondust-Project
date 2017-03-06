@@ -20,11 +20,11 @@
 #define PGE_INT_NAMED_MENUITEM_H
 
 #include "_pge_menuitem.h"
+#include <vector>
 
 struct NamedIntItem
 {
-    inline NamedIntItem() { value=0; }
-    int value;
+    int         value = 0;
     std::string label;
 };
 

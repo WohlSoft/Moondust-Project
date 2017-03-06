@@ -1,8 +1,8 @@
-#include <QFileInfo>
 #include "luaclass_core_graphics.h"
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
 #include <scenes/scene.h>
+#include <Utils/files.h>
 
 //#include <luabind/adopt_policy.hpp>
 //#include <luabind/out_value_policy.hpp>
@@ -32,10 +32,10 @@ static inline bool calculateSides(
     x = xPos; y = yPos;
     w = width; h = height;
 
-    if(w <= 0.0)
+    if(w <= 0.0f)
         return false;
 
-    if(h <= 0.0)
+    if(h <= 0.0f)
         return false;
 
     if(sX < 0.0f)
@@ -77,36 +77,39 @@ static inline bool calculateSides(
 
 
 //! Cached textures
-QHash<QString, PGE_Texture> Binding_Core_Graphics::textureCache;
+Binding_Core_Graphics::TexturesHash Binding_Core_Graphics::textureCache;
 
 //! Current path to level/world custom directory (where look for image files by default)
-QString Binding_Core_Graphics::rootPath;
+std::string Binding_Core_Graphics::rootPath;
 
-void Binding_Core_Graphics::setRootPath(QString path)
+void Binding_Core_Graphics::setRootPath(std::string path)
 {
     rootPath = path;
-    if(!rootPath.endsWith('/'))
-        rootPath.append('/');
+    if(!rootPath.empty())
+    {
+        if(rootPath.back() != '/')
+            rootPath.push_back('/');
+    }
 }
 
 PGE_Texture *Binding_Core_Graphics::loadImage(std::string filePath)
 {
     PGE_Texture texture;
-    QString fPath = QString::fromStdString(filePath);
-
-    if(!QFileInfo(fPath).isAbsolute())
+    if(!Files::isAbsolute(filePath))
     {
-        fPath = rootPath + fPath;
+        filePath = rootPath + filePath;
     }
 
-    if(textureCache.contains(fPath))
+    TexturesHash::iterator tc = textureCache.find(filePath);
+    if(tc != textureCache.end())
     {
         //Don't load same texture!
-        return &textureCache[fPath];
+        return &tc->second;
     }
-    GlRenderer::loadTextureP(texture, fPath);
-    textureCache[fPath] = texture;
-    return &textureCache[fPath];
+
+    GlRenderer::loadTextureP(texture, filePath);
+    textureCache.insert({filePath, texture});
+    return &textureCache[filePath];
 }
 
 luabind::adl::object Binding_Core_Graphics::getPixelData(const PGE_Texture *img, int &width, int &height, lua_State *L)
@@ -163,11 +166,12 @@ void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, 
 
 void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, float yPos, float opacity, long double zlayer, lua_State *L)
 {
-    if(!texture) return;
+    if(!texture)
+        return;
     LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double /*CameraX*/, double /*CameraY*/)
     {
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
-        GlRenderer::renderTexture((PGE_Texture*)texture, xPos, yPos);
+        GlRenderer::renderTexture(const_cast<PGE_Texture*>(texture), xPos, yPos);
     }, zlayer);
 }
 
@@ -192,7 +196,7 @@ void Binding_Core_Graphics::drawImageWP(const PGE_Texture *texture, float xPos, 
                            left, top, right, bottom) )
             return;
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
-        GlRenderer::renderTexture((PGE_Texture*)texture, x, y, w, h, top, bottom, left, right);
+        GlRenderer::renderTexture(const_cast<PGE_Texture*>(texture), x, y, w, h, top, bottom, left, right);
     }, zlayer);
 }
 
@@ -226,11 +230,12 @@ void Binding_Core_Graphics::drawImageToSceneWP(const PGE_Texture *texture, doubl
 
 void Binding_Core_Graphics::drawImageToSceneWP(const PGE_Texture *texture, double xPos, double yPos, float opacity, long double zlayer, lua_State *L)
 {
-    if(!texture) return;
+    if(!texture)
+        return;
     LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double cameraX, double cameraY)
     {
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
-        GlRenderer::renderTexture((PGE_Texture*)texture, float(xPos-cameraX), float(yPos-cameraY));
+        GlRenderer::renderTexture(const_cast<PGE_Texture*>(texture), float(xPos-cameraX), float(yPos-cameraY));
     }, zlayer);
 }
 
@@ -254,15 +259,15 @@ void Binding_Core_Graphics::drawImageToSceneWP(const PGE_Texture *texture, doubl
                            left, top, right, bottom) )
             return;
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
-        GlRenderer::renderTexture((PGE_Texture*)texture, x, y, w, h, top, bottom, left, right);
+        GlRenderer::renderTexture(const_cast<PGE_Texture*>(texture), x, y, w, h, top, bottom, left, right);
     }, zlayer);
 }
 
 void Binding_Core_Graphics::clearCache()
 {
-    for(QHash<QString, PGE_Texture>::iterator it = textureCache.begin(); it != textureCache.end(); it++)
+    for(TexturesHash::iterator it = textureCache.begin(); it != textureCache.end(); it++)
     {
-        PGE_Texture &texture = *it;
+        PGE_Texture &texture = it->second;
         GlRenderer::deleteTexture(texture);
     }
     textureCache.clear();
@@ -270,7 +275,7 @@ void Binding_Core_Graphics::clearCache()
 
 double Binding_Core_Graphics::alignToCenter(double x, double width)
 {
-    return (double)GlRenderer::alignToCenter((int)x, (int)width);
+    return static_cast<double>(GlRenderer::alignToCenter(static_cast<int>(x), static_cast<int>(width)));
 }
 
 luabind::scope Binding_Core_Graphics::PGETexture_bindToLua()

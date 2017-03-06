@@ -2,15 +2,14 @@
 #include <common_features/logger.h>
 #include <common_features/util.h>
 
-#include <QFile>
-#include <QStringList>
-#include <QtDebug>
-#include <QElapsedTimer>
+#include <Utils/files.h>
+#include <Utils/elapsed_timer.h>
 
 #include <iostream>
 #include <cstdio>
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>
+#include <fmt/fmt_format.h>
 
 /**************************************************************************************************************/
 
@@ -46,15 +45,6 @@ void EditorPipe::stop()
     m_thread_isAlive = false;
     //int status = 0;
     //SDL_WaitThread(m_thread, &status);
-}
-
-void EditorPipe::sendMessage(const QString &msg)
-{
-    std::string in = msg.toStdString();
-    std::string outO;
-    util::base64_encode(outO, reinterpret_cast<const unsigned char *>(in.c_str()), in.size());
-    std::fprintf(stdout, "%s\n", outO.c_str());
-    std::fflush(stdout);
 }
 
 void EditorPipe::sendMessage(const std::string &in)
@@ -122,7 +112,7 @@ bool EditorPipe::levelIsLoad()
 
 void EditorPipe::icomingData(std::string &in)
 {
-    if(("PARSE_LVLX" == in) || ("OPEN_TEMP_LVLX" == in))
+    if(in.compare(0, 10, "PARSE_LVLX") == 0)
     {
         m_doAcceptLevelData = false;
         pLogDebug("LVLX accepting is done!");
@@ -143,7 +133,7 @@ void EditorPipe::icomingData(std::string &in)
                      in.substr(0, 30).c_str() :
                      in.c_str())
                    );
-        m_accepted_lvl_path   = QString::fromUtf8(in.c_str() + 11, static_cast<int>(in.size() - 11));//skip "SEND_LVLX: "
+        m_accepted_lvl_path   = std::string(in.c_str() + 11, (in.size() - 11));//skip "SEND_LVLX: "
         m_doAcceptLevelData  = true;
         IntProc::setState("Accepted SEND_LVLX");
         sendMessage("READY\n\n");
@@ -153,48 +143,20 @@ void EditorPipe::icomingData(std::string &in)
         pLogDebug("do Parse LVLX: PARSE_LVLX");
         m_doParseLevelData = true;
         FileFormats::ReadExtendedLvlFileRaw(m_acceptedRawData, m_accepted_lvl_path, m_acceptedLevel);
-        IntProc::setState(QString("LVLX is valid: %1").arg(m_acceptedLevel.meta.ReadFileValid));
+        IntProc::setState(fmt::format("LVLX is valid: {0}", m_acceptedLevel.meta.ReadFileValid));
         pLogDebug("Level data parsed, Valid: %d", m_acceptedLevel.meta.ReadFileValid);
 
         if(!m_acceptedLevel.meta.ReadFileValid)
         {
-            pLogDebug("Error reason:  %s", m_acceptedLevel.meta.ERROR_info.toStdString().c_str());
+            pLogDebug("Error reason:  %s", m_acceptedLevel.meta.ERROR_info.c_str());
             pLogDebug("line number:   %d", m_acceptedLevel.meta.ERROR_linenum);
-            pLogDebug("line contents: %s", m_acceptedLevel.meta.ERROR_linedata.toStdString().c_str());
+            pLogDebug("line contents: %s", m_acceptedLevel.meta.ERROR_linedata.c_str());
             D_pLogDebug("Invalid File data BEGIN >>>>>>>>>>>\n"
                         "%s"
                         "\n<<<<<<<<<<<<INVALID File data END",
-                        m_acceptedRawData.toStdString().c_str());
+                        m_acceptedRawData.c_str());
         }
 
-        m_levelAccepted_lock.lock();
-        m_levelAccepted = true;
-        m_levelAccepted_lock.unlock();
-    }
-    else if(in.compare("OPEN_TEMP_LVLX") == 0)
-    {
-        pLogDebug("do Parse LVLX: >> OPEN_TEMP_LVLX");
-        m_doParseLevelData = true;
-        QFile temp(m_acceptedRawData.remove("\n"));
-
-        //if( FileFormats::ReadExtendedLvlFileF(accepted_lvl_raw.remove("\n"), accepted_lvl) )
-        if(temp.open(QFile::ReadOnly | QFile::Text))
-        {
-            QTextStream x(&temp);
-            QString raw = x.readAll();
-            FileFormats::ReadExtendedLvlFileRaw(raw, m_accepted_lvl_path, m_acceptedLevel);
-            IntProc::setState(QString("LVLX is valid: %1").arg(m_acceptedLevel.meta.ReadFileValid));
-            pLogDebug("Level data parsed, Valid: %d", m_acceptedLevel.meta.ReadFileValid);
-        }
-        else
-        {
-            IntProc::setState(QString("LVLX is valid: %1").arg(m_acceptedLevel.meta.ReadFileValid));
-            pLogDebug("Level data parsed, Valid: %d", m_acceptedLevel.meta.ReadFileValid);
-            pLogDebug("ERROR: Can't open temp file");
-            m_acceptedLevel.meta.ReadFileValid = false;
-        }
-
-        temp.remove();
         m_levelAccepted_lock.lock();
         m_levelAccepted = true;
         m_levelAccepted_lock.unlock();

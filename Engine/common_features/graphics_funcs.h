@@ -21,7 +21,6 @@
 #include <SDL2/SDL_opengl.h>
 
 #include <string>
-#include <QString>
 
 #ifndef GRAPHICS_FUNCS_H
 #define GRAPHICS_FUNCS_H
@@ -91,10 +90,7 @@ class GraphicsHelps
          * \param [__in] imageFile Path to image file
          * \param [__out] imgSize Pointer to PGE_Size value
          */
-        static bool getImageMetrics(QString imageFile, PGE_Size *imgSize);
         static bool getImageMetrics(std::string imageFile, PGE_Size *imgSize);
-
-        static void getMaskedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size *imgSize = 0);
         static void getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string &out_maskName, std::string &out_errStr, PGE_Size *imgSize = 0);
 
         static bool setWindowIcon(SDL_Window *window, FIBITMAP *img, int iconSize);

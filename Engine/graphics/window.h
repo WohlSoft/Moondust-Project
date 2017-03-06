@@ -22,7 +22,7 @@
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
 
-#include <QString>
+#include <string>
 
 #define SDLCHECKERROR() PGE_Window::checkSDLError(__FILE__, __LINE__, __FUNCTION__)
 

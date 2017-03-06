@@ -35,6 +35,7 @@
 #include <settings/debugger.h>
 
 #include <Utils/files.h>
+#include <fmt/fmt_format.h>
 
 #include <QHash>
 #include <QPair>
@@ -82,7 +83,7 @@ WorldScene::WorldScene()
 
     imgs.clear();
 
-    for(int i = 0; i < common_setup.AdditionalImages.size(); i++)
+    for(size_t i = 0; i < common_setup.AdditionalImages.size(); i++)
     {
         if(common_setup.AdditionalImages[i].imgFile.empty())
             continue;
@@ -140,10 +141,10 @@ WorldScene::~WorldScene()
     //destroy textures
     D_pLogDebug("clear world textures");
 
-    for(int i = 0; i < textures_bank.size(); i++)
+    for(size_t i = 0; i < textures_bank.size(); i++)
         GlRenderer::deleteTexture(textures_bank[i]);
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
         GlRenderer::deleteTexture(imgs[i].t);
 
     ConfigManager::unloadLevelConfigs();
@@ -160,7 +161,7 @@ void WorldScene::setGameState(EpisodeState *_state)
     points = gameState->game_state.points;
     coins  = gameState->game_state.coins;
     stars  = gameState->game_state.gottenStars.size();
-    lives = gameState->game_state.lives;
+    lives  = gameState->game_state.lives;
     PlayerState x = gameState->getPlayerState(1);
     health = x._chsetup.health;
     gameState->replay_on_fail = data.restartlevel;
@@ -244,15 +245,16 @@ bool WorldScene::init()
     luaEngine.appendLuaScriptPath(data.meta.path + "/" + data.meta.filename);
     luaEngine.setCoreFile(":/script/maincore_world.lua");
     luaEngine.setUserFile(ConfigManager::setup_WorldMap.luaFile);
-    luaEngine.setErrorReporterFunc([this](const QString & errorMessage, const QString & stacktrace)
+    luaEngine.setErrorReporterFunc([this](const std::string & errorMessage, const std::string & stacktrace)
     {
         pLogWarning("Lua-Error: ");
-        pLogWarning("Error Message: %s", errorMessage.toUtf8().data());
-        pLogWarning("Stacktrace: \n%s", stacktrace.toUtf8().data());
+        pLogWarning("Error Message: %s", errorMessage.data());
+        pLogWarning("Stacktrace: \n%s", stacktrace.data());
         PGE_MsgBox msgBox(this,
-                          QString("A lua error has been thrown: \n")
-                          + errorMessage + "\n\n"
-                          "More details in the log!",
+                          fmt::format("A lua error has been thrown: \n{0}"
+                                      "\n\n"
+                                      "More details in the log!",
+                                        errorMessage),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     });
@@ -334,69 +336,69 @@ bool WorldScene::init()
     if(tID < 0)
         return false;
 
-    mapwalker_texture = ConfigManager::world_textures[static_cast<int>(tID)];
+    mapwalker_texture = ConfigManager::world_textures[static_cast<size_t>(tID)];
     mapwalker_img_h = mapwalker_texture.h / mapwalker_setup.wld_frames;
     mapwalker_ani.construct(true, mapwalker_setup.wld_frames, mapwalker_setup.wld_framespeed);
     mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down);
     mapwalker_offset_x = (static_cast<int>(ConfigManager::default_grid) / 2) - (mapwalker_texture.w / 2);
     mapwalker_offset_y = static_cast<int>(ConfigManager::default_grid) - static_cast<int>(mapwalker_img_h) + mapwalker_setup.wld_offset_y;
 
-    for(int i = 0; i < data.tiles.size(); i++)
+    for(size_t i = 0; i < data.tiles.size(); i++)
     {
         WldTileItem tile(data.tiles[i]);
 
         if(!tile.init())
             continue;
 
-        wld_tiles << tile;
-        m_indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &(wld_tiles.last()));
+        wld_tiles.push_back(tile);
+        m_indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &(wld_tiles.back()));
     }
 
-    for(int i = 0; i < data.scenery.size(); i++)
+    for(size_t i = 0; i < data.scenery.size(); i++)
     {
         WldSceneryItem scenery(data.scenery[i]);
 
         if(!scenery.init())
             continue;
 
-        wld_sceneries << scenery;
-        m_indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &(wld_sceneries.last()));
+        wld_sceneries.push_back(scenery);
+        m_indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &(wld_sceneries.back()));
     }
 
-    for(int i = 0; i < data.paths.size(); i++)
+    for(size_t i = 0; i < data.paths.size(); i++)
     {
         WldPathItem path(data.paths[i]);
 
         if(!path.init())
             continue;
 
-        wld_paths << path;
-        m_indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
+        wld_paths.push_back(path);
+        m_indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_paths.back()));
     }
 
-    for(int i = 0; i < data.levels.size(); i++)
+    for(size_t i = 0; i < data.levels.size(); i++)
     {
         WldLevelItem levelp(data.levels[i]);
 
         if(!levelp.init())
             continue;
 
-        wld_levels << levelp;
+        wld_levels.push_back(levelp);
         m_indexTable.addNode(levelp.x + static_cast<long>(levelp.offset_x),
                             levelp.y + static_cast<long>(levelp.offset_y),
                             levelp.texture.w,
                             levelp.texture.h,
-                            &(wld_levels.last()));
+                            &(wld_levels.back()));
     }
 
-    for(int i = 0; i < data.music.size(); i++)
+    for(size_t i = 0; i < data.music.size(); i++)
     {
         WldMusicBoxItem musicbox(data.music[i]);
         musicbox.r = 0.5f;
         musicbox.g = 0.5f;
         musicbox.b = 1.f;
-        wld_musicboxes << musicbox;
-        m_indexTable.addNode(musicbox.x, musicbox.y, musicbox.w, musicbox.h, &(wld_musicboxes.last()));
+        wld_musicboxes.push_back(musicbox);
+        m_indexTable.addNode(musicbox.x, musicbox.y, musicbox.w, musicbox.h, &(wld_musicboxes.back()));
     }
 
     //Apply vizibility settings to elements
@@ -840,9 +842,9 @@ void WorldScene::update()
     {
         if((!m_doExit) && (!lock_controls) && (!isPauseMenu) && (gameState))
         {
-            if(!gameState->LevelFile.isEmpty())
+            if(!gameState->LevelFile.empty())
             {
-                LogDebug(QString("Entering level %1...").arg(gameState->LevelFile));
+                pLogDebug("Entering level %s...", gameState->LevelFile.c_str());
                 gameState->game_state.worldPosX = Maths::lRound(posX);
                 gameState->game_state.worldPosY = Maths::lRound(posY);
                 saveElementsVisibility();
@@ -853,7 +855,7 @@ void WorldScene::update()
             }
             else if(jumpTo)
             {
-                LogDebug(QString("Trying to jump to X=%1, Y=%2...").arg(jumpToXY.x()).arg(jumpToXY.y()));
+                pLogDebug("Trying to jump to X=%f, Y=%f...", jumpToXY.x(), jumpToXY.y());
                 //Don't inheret exit code when going through warps!
                 gameState->_recent_ExitCode_level = LvlExit::EXIT_Warp;
                 //Create events
@@ -887,13 +889,13 @@ void WorldScene::update()
 }
 
 
-void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode * > &nodes, long cx, long cy)
+void WorldScene::fetchSideNodes(bool &side, std::vector<WorldNode * > &nodes, long cx, long cy)
 {
     side = false;
-    int size = nodes.size();
+    size_t size = nodes.size();
     WorldNode **nodedata = nodes.data();
 
-    for(int i = 0; i < size; i++)
+    for(size_t i = 0; i < size; i++)
     {
         WorldNode *&x = nodedata[i];
 
@@ -931,31 +933,36 @@ void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode * > &nodes, long c
 
 void WorldScene::updateAvailablePaths()
 {
-    QVector<WorldNode * > nodes;
+    std::vector<WorldNode * > nodes;
     long x, y;
+
     //left
     x = Maths::lRound(posX + m_indexTable.grid_half() - m_indexTable.grid());
     y = Maths::lRound(posY + m_indexTable.grid_half());
     m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_left, nodes, x, y);
     nodes.clear();
+
     //Right
     x = Maths::lRound(posX + m_indexTable.grid_half() + m_indexTable.grid());
     y = Maths::lRound(posY + m_indexTable.grid_half());
     m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_right, nodes, x, y);
     nodes.clear();
+
     //Top
     x = Maths::lRound(posX + m_indexTable.grid_half());
     y = Maths::lRound(posY + m_indexTable.grid_half() - m_indexTable.grid());
     m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_up, nodes, x, y);
     nodes.clear();
+
     //Bottom
     x = Maths::lRound(posX + m_indexTable.grid_half());
     y = Maths::lRound(posY + m_indexTable.grid_half() + m_indexTable.grid());
     m_indexTable.query(x, y, nodes);
     fetchSideNodes(allow_down, nodes, x, y);
+
     nodes.clear();
 }
 
@@ -969,7 +976,7 @@ void WorldScene::updateCenter()
 
     levelTitle.clear();
     jumpTo = false;
-    QVector<WorldNode * > nodes;
+    std::vector<WorldNode * > nodes;
     long px = Maths::lRound(posX + m_indexTable.grid_half());
     long py = Maths::lRound(posY + m_indexTable.grid_half());
     m_indexTable.query(px, py, nodes);
@@ -1006,21 +1013,21 @@ void WorldScene::updateCenter()
             {
                 levelTitle = y->data.title;
 
-                if(!y->data.lvlfile.isEmpty())
+                if(!y->data.lvlfile.empty())
                 {
-                    QString lvlPath = data.meta.path + "/" + y->data.lvlfile;
-                    LogDebug(QString("Trying to check level path %1...").arg(lvlPath));
+                    std::string lvlPath = data.meta.path + "/" + y->data.lvlfile;
+                    pLogDebug("Trying to check level path %s...", lvlPath.c_str());
                     LevelData head;
 
                     if(FileFormats::OpenLevelFileHeader(lvlPath, head))
                     {
-                        LogDebug(QString("FOUND!"));
+                        pLogDebug("FOUND!");
 
-                        if(!y->data.title.isEmpty())
+                        if(!y->data.title.empty())
                             levelTitle = y->data.title;
-                        else if(!head.LevelName.isEmpty())
+                        else if(!head.LevelName.empty())
                             levelTitle = head.LevelName;
-                        else if(!y->data.lvlfile.isEmpty())
+                        else if(!y->data.lvlfile.empty())
                             levelTitle = y->data.lvlfile;
 
                         if(gameState)
@@ -1031,15 +1038,15 @@ void WorldScene::updateCenter()
                     }
                     else
                     {
-                        LogDebug(QString("FAILED: %1, line %2, data %3")
-                                 .arg(head.meta.ERROR_info)
-                                 .arg(head.meta.ERROR_linenum)
-                                 .arg(head.meta.ERROR_linedata));
+                        pLogDebug("FAILED: %s, line %ld, data %s",
+                                 head.meta.ERROR_info.c_str(),
+                                 head.meta.ERROR_linenum,
+                                 head.meta.ERROR_linedata.c_str());
                     }
                 }
                 else
                 {
-                    LogDebug(QString("Checking for a warp coordinates..."));
+                    pLogDebug("Checking for a warp coordinates...");
 
                     if((y->data.gotox != -1) && (y->data.gotoy != -1))
                     {
@@ -1059,43 +1066,43 @@ void WorldScene::initElementsVisibility()
 {
     if(gameState)
     {
-        for(int i = 0; i < wld_sceneries.size(); i++)
+        for(size_t i = 0; i < wld_sceneries.size(); i++)
         {
             if(i < gameState->game_state.visibleScenery.size())
                 wld_sceneries[i].vizible = gameState->game_state.visibleScenery[i].second;
             else
             {
                 wld_sceneries[i].vizible = true;
-                QPair<int, bool > viz;
-                viz.first = static_cast<int>(wld_sceneries[i].data.meta.array_id);
+                visibleItem viz;
+                viz.first = static_cast<unsigned int>(wld_sceneries[i].data.meta.array_id);
                 viz.second = true;
                 gameState->game_state.visibleScenery.push_back(viz);
             }
         }
 
-        for(int i = 0; i < wld_paths.size(); i++)
+        for(size_t i = 0; i < wld_paths.size(); i++)
         {
             if(i < gameState->game_state.visiblePaths.size())
                 wld_paths[i].vizible = gameState->game_state.visiblePaths[i].second;
             else
             {
                 wld_paths[i].vizible = false;
-                QPair<int, bool > viz;
-                viz.first = static_cast<int>(wld_paths[i].data.meta.array_id);
+                visibleItem viz;
+                viz.first = static_cast<unsigned int>(wld_paths[i].data.meta.array_id);
                 viz.second = false;
                 gameState->game_state.visiblePaths.push_back(viz);
             }
         }
 
-        for(int i = 0; i < wld_levels.size(); i++)
+        for(size_t i = 0; i < wld_levels.size(); i++)
         {
             if(i < gameState->game_state.visibleLevels.size())
                 wld_levels[i].vizible = gameState->game_state.visibleLevels[i].second;
             else
             {
                 wld_levels[i].vizible = (wld_levels[i].data.alwaysVisible || wld_levels[i].data.gamestart);
-                QPair<int, bool > viz;
-                viz.first = static_cast<int>(wld_levels[i].data.meta.array_id);
+                visibleItem viz;
+                viz.first = static_cast<unsigned int>(wld_levels[i].data.meta.array_id);
                 viz.second = wld_levels[i].vizible;
                 gameState->game_state.visibleLevels.push_back(viz);
             }
@@ -1107,7 +1114,7 @@ void WorldScene::saveElementsVisibility()
 {
     if(gameState)
     {
-        for(int i = 0; i < wld_sceneries.size(); i++)
+        for(size_t i = 0; i < wld_sceneries.size(); i++)
         {
             if(i < gameState->game_state.visibleScenery.size())
             {
@@ -1116,14 +1123,14 @@ void WorldScene::saveElementsVisibility()
             }
             else
             {
-                QPair<int, bool > viz;
-                viz.first = static_cast<int>(wld_sceneries[i].data.meta.array_id);
+                visibleItem viz;
+                viz.first = static_cast<unsigned int>(wld_sceneries[i].data.meta.array_id);
                 viz.second = wld_sceneries[i].vizible;
                 gameState->game_state.visibleScenery.push_back(viz);
             }
         }
 
-        for(int i = 0; i < wld_paths.size(); i++)
+        for(size_t i = 0; i < wld_paths.size(); i++)
         {
             if(i < gameState->game_state.visiblePaths.size())
             {
@@ -1132,14 +1139,14 @@ void WorldScene::saveElementsVisibility()
             }
             else
             {
-                QPair<int, bool > viz;
-                viz.first = static_cast<int>(wld_paths[i].data.meta.array_id);
+                visibleItem viz;
+                viz.first = static_cast<unsigned int>(wld_paths[i].data.meta.array_id);
                 viz.second = wld_paths[i].vizible;
                 gameState->game_state.visiblePaths.push_back(viz);
             }
         }
 
-        for(int i = 0; i < wld_levels.size(); i++)
+        for(size_t i = 0; i < wld_levels.size(); i++)
         {
             if(i < gameState->game_state.visibleLevels.size())
             {
@@ -1148,8 +1155,8 @@ void WorldScene::saveElementsVisibility()
             }
             else
             {
-                QPair<int, bool > viz;
-                viz.first = static_cast<int>(wld_levels[i].data.meta.array_id);
+                visibleItem viz;
+                viz.first = static_cast<unsigned int>(wld_levels[i].data.meta.array_id);
                 viz.second = wld_levels[i].vizible;
                 gameState->game_state.visibleLevels.push_back(viz);
             }
@@ -1170,7 +1177,7 @@ void WorldScene::render()
     if(backgroundTex.w > 0)
         GlRenderer::renderTexture(&backgroundTex, PGE_Window::Width / 2 - backgroundTex.w / 2, PGE_Window::Height / 2 - backgroundTex.h / 2);
 
-    for(QVector<WorldScene_misc_img>::iterator it = imgs.begin(); it != imgs.end(); it++)
+    for(std::vector<WorldScene_misc_img>::iterator it = imgs.begin(); it != imgs.end(); it++)
     {
         AniPos x(0, 1);
         x = it->a.image();
@@ -1183,7 +1190,7 @@ void WorldScene::render()
                                   static_cast<float>(x.second));
     }
 
-    for(QVector<WorldScene_Portrait>::iterator it = portraits.begin(); it != portraits.end(); it++)
+    for(std::vector<WorldScene_Portrait>::iterator it = portraits.begin(); it != portraits.end(); it++)
         it->render();
 
     //Viewport zone black background
@@ -1195,10 +1202,10 @@ void WorldScene::render()
         double renderY = posY + 16 - (viewportRect.height() / 2);
         //Render items
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
-        const int render_sz = _itemsToRender.size();
+        const size_t render_sz = _itemsToRender.size();
         WorldNode **render_obj = _itemsToRender.data();
 
-        for(int i = 0; i < render_sz; i++)
+        for(size_t i = 0; i < render_sz; i++)
             render_obj[i]->render(render_obj[i]->x - renderX,
                                   render_obj[i]->y - renderY);
 
@@ -1225,8 +1232,7 @@ void WorldScene::render()
 
     if(common_setup.points_en)
     {
-        FontManager::printText(QString("%1")
-                               .arg(points),
+        FontManager::printText(fmt::format("{0}",points),
                                common_setup.points_x,
                                common_setup.points_y,
                                common_setup.points_fontID,
@@ -1238,8 +1244,7 @@ void WorldScene::render()
 
     if(common_setup.health_en)
     {
-        FontManager::printText(QString("%1")
-                               .arg(health),
+        FontManager::printText(fmt::format("{0}", health),
                                common_setup.health_x,
                                common_setup.health_y,
                                common_setup.health_fontID,
@@ -1251,8 +1256,7 @@ void WorldScene::render()
 
     if(common_setup.lives_en)
     {
-        FontManager::printText(QString("%1")
-                               .arg(lives),
+        FontManager::printText(fmt::format("{0}", lives),
                                common_setup.lives_x,
                                common_setup.lives_y,
                                common_setup.lives_fontID,
@@ -1264,8 +1268,7 @@ void WorldScene::render()
 
     if(common_setup.coin_en)
     {
-        FontManager::printText(QString("%1")
-                               .arg(coins),
+        FontManager::printText(fmt::format("{0}", coins),
                                common_setup.coin_x,
                                common_setup.coin_y,
                                common_setup.coin_fontID,
@@ -1277,8 +1280,7 @@ void WorldScene::render()
 
     if(common_setup.star_en)
     {
-        FontManager::printText(QString("%1")
-                               .arg(stars),
+        FontManager::printText(fmt::format("{0}", stars),
                                common_setup.star_x,
                                common_setup.star_y,
                                common_setup.star_fontID,
@@ -1288,8 +1290,7 @@ void WorldScene::render()
                                common_setup.star_rgba.Alpha());
     }
 
-    FontManager::printText(QString("%1")
-                           .arg(levelTitle),
+    FontManager::printText(fmt::format("{0}", levelTitle),
                            common_setup.title_x,
                            common_setup.title_y,
                            common_setup.title_fontID,
@@ -1301,28 +1302,22 @@ void WorldScene::render()
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(QString("X=%1 Y=%2")
-                               .arg(posX)
-                               .arg(posY), 300, 10);
+        FontManager::printText(fmt::format("X={0} Y={1}", posX, posY), 300, 10);
         {
             PGE_Point grid = m_indexTable.applyGrid(Maths::lRound(posX), Maths::lRound(posY));
-            FontManager::printText(QString("TILE X=%1 Y=%2")
-                                   .arg(grid.x())
-                                   .arg(grid.y()), 300, 45);
+            FontManager::printText(fmt::format("TILE X={0} Y={1}", grid.x(), grid.y()), 300, 45);
         }
-        FontManager::printText(QString("TICK-SUB: %1, Vizible items=%2;")
-                               .arg(uTickf)
-                               .arg(_itemsToRender.size()), 10, 100);
-        FontManager::printText(QString("Delays E=%1 R=%2 P=%3 {%4}")
-                               .arg(debug_event_delay, 3, 10, QChar('0'))
-                               .arg(debug_render_delay, 3, 10, QChar('0'))
-                               .arg(debug_phys_delay, 3, 10, QChar('0'))
-                               .arg(debug_total_delay, 3, 10, QChar('0')), 10, 120);
+        FontManager::printText(fmt::format("TICK-SUB: {0}, Vizible items={1};", uTickf, _itemsToRender.size()), 10, 100);
+        FontManager::printText(fmt::format("Delays E=%03i R=%03i P=%03i {%03i}",
+                                            debug_event_delay,
+                                            debug_render_delay,
+                                            debug_phys_delay,
+                                            debug_total_delay), 10, 120);
 
         if(m_doExit)
-            FontManager::printText(QString("Exit delay %1, %2")
-                                   .arg(exitWorldDelay)
-                                   .arg(uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
+            FontManager::printText(fmt::format("Exit delay {0}, {1}",
+                                                exitWorldDelay,
+                                                uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
     }
 
 renderBlack:
@@ -1451,22 +1446,22 @@ int WorldScene::exec()
 void WorldScene::tickAnimations(double ticks)
 {
     //tick animation
-    for(QList<SimpleAnimator>::iterator it = ConfigManager::Animator_Tiles.begin(); it != ConfigManager::Animator_Tiles.end(); it++)
+    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_Tiles.begin(); it != ConfigManager::Animator_Tiles.end(); it++)
         it->manualTick(ticks);
 
-    for(QList<SimpleAnimator>::iterator it = ConfigManager::Animator_Scenery.begin(); it != ConfigManager::Animator_Scenery.end(); it++)
+    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_Scenery.begin(); it != ConfigManager::Animator_Scenery.end(); it++)
         it->manualTick(ticks);
 
-    for(QList<SimpleAnimator>::iterator it = ConfigManager::Animator_WldPaths.begin(); it != ConfigManager::Animator_WldPaths.end(); it++)
+    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_WldPaths.begin(); it != ConfigManager::Animator_WldPaths.end(); it++)
         it->manualTick(ticks);
 
-    for(QList<SimpleAnimator>::iterator it = ConfigManager::Animator_WldLevel.begin(); it != ConfigManager::Animator_WldLevel.end(); it++)
+    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_WldLevel.begin(); it != ConfigManager::Animator_WldLevel.end(); it++)
         it->manualTick(ticks);
 
-    for(QVector<WorldScene_misc_img>::iterator it = imgs.begin(); it != imgs.end(); it++)
+    for(std::vector<WorldScene_misc_img>::iterator it = imgs.begin(); it != imgs.end(); it++)
         it->a.manualTick(ticks);
 
-    for(QVector<WorldScene_Portrait>::iterator it = portraits.begin(); it != portraits.end(); it++)
+    for(std::vector<WorldScene_Portrait>::iterator it = portraits.begin(); it != portraits.end(); it++)
         it->update(ticks);
 }
 

@@ -19,7 +19,8 @@
 #ifndef WLDPATHOPENER_H
 #define WLDPATHOPENER_H
 
-#include <QStack>
+#include <deque>
+#include <vector>
 #include <common_features/pointf.h>
 
 class WorldNode;
@@ -45,15 +46,15 @@ class WldPathOpener
         bool isAllowedSide(int SideCode, int ExitCode);
 
     private:
-        void fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, double cx, double cy);
+        void fetchSideNodes(bool &side, std::vector<WorldNode *> &nodes, double cx, double cy);
         void doFetch();
         void findAndHideSceneries(WorldNode *relativeTo);
 
         PGE_PointF _start_at;
         PGE_PointF _current_pos;
         PGE_PointF _search_pos;
-        QStack<PGE_PointF> need_to_walk;
-        QStack<WorldNode *> next;
+        std::deque<PGE_PointF>  need_to_walk;
+        std::deque<WorldNode *> next;
 
         double interval;
         double _time;

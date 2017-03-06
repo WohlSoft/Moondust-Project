@@ -23,11 +23,6 @@
 
 void MessageBoxQueue::showMsg(const std::string &message)
 {
-    messages.push_back(QString::fromStdString(message));
-}
-
-void MessageBoxQueue::showMsg(const QString &message)
-{
     messages.push_back(message);
 }
 
@@ -35,7 +30,7 @@ void MessageBoxQueue::process()
 {
     while(!messages.empty())
     {
-        QString msg = messages.front();
+        std::string msg = messages.front();
         PGE_MsgBox box(m_scene, msg,
                        PGE_MsgBox::msg_info, PGE_Point(-1, -1),
                        ConfigManager::setup_message_box.box_padding,

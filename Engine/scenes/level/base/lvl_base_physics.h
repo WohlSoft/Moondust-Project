@@ -3,11 +3,12 @@
 
 #include <cmath>
 #include <QHash>
+#include <unordered_map>
 #include <common_features/rectf.h>
 
 
 class PGE_Phys_Object;
-typedef QVector<PGE_Phys_Object *> PGE_RenderList;
+typedef std::vector<PGE_Phys_Object *> PGE_RenderList;
 
 #define BLOCK_FILTER_COUNT 3
 

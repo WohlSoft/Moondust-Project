@@ -87,7 +87,7 @@ public:
     PGE_LevelCamera *camera; //!< Connected camera
 
     void teleport(double x, double y);
-    void exitFromLevel(QString levelFile, unsigned long targetWarp, long wX = -1, long wY = -1);
+    void exitFromLevel(std::string levelFile, unsigned long targetWarp, long wX = -1, long wY = -1);
 
     PGE_DataArray<obj_player_state > states;
     unsigned long   characterID;

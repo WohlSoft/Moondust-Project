@@ -17,7 +17,6 @@
  */
 
 #include "scene.h"
-#include <QString>
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 #include <Utils/maths.h>

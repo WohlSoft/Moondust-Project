@@ -22,6 +22,8 @@
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
+#include <unordered_set>
+
 LVL_EventAction::LVL_EventAction():
     m_timeDelayLeft(0.0)
 {}
@@ -51,11 +53,11 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     if(!evt.layers_hide.empty())
     {
         EventQueueEntry<LVL_EventAction> hideLayers;
-        QStringList layers = evt.layers_hide;
-        bool        smoke  = !evt.nosmoke;
+        PGEStringList layers = evt.layers_hide;
+        bool          smoke  = !evt.nosmoke;
         hideLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
         {
-            for(const QString &ly : layers)
+            for(const std::string &ly : layers)
                 m_scene->layers.hide(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(hideLayers);
@@ -64,11 +66,11 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     if(!evt.layers_show.empty())
     {
         EventQueueEntry<LVL_EventAction> showLayers;
-        QStringList layers = evt.layers_show;
+        PGEStringList layers = evt.layers_show;
         bool        smoke  = !evt.nosmoke;
         showLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
         {
-            for(const QString &ly : layers)
+            for(const std::string &ly : layers)
                 m_scene->layers.show(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(showLayers);
@@ -77,11 +79,11 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     if(!evt.layers_toggle.empty())
     {
         EventQueueEntry<LVL_EventAction> toggleLayers;
-        QStringList layers = evt.layers_toggle;
-        bool        smoke  = !evt.nosmoke;
+        PGESTRINGList   layers = evt.layers_toggle;
+        bool            smoke  = !evt.nosmoke;
         toggleLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
         {
-            for(const QString &ly : layers)
+            for(const std::string &ly : layers)
                 m_scene->layers.toggle(ly, smoke);
         }, 0);
         evntAct.m_action.events.push_back(toggleLayers);
@@ -98,7 +100,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         evntAct.m_action.events.push_back(playsnd);
     }
 
-    for(int i = 0; i < evt.sets.size(); i++)
+    for(size_t i = 0; i < evt.sets.size(); i++)
     {
         if(evt.sets[i].background_id != -1)
         {
@@ -130,7 +132,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     {
                         m_scene->sections[i].setBG(bgID);
 
-                        for(int j = 0; j < m_scene->cameras.size(); j++)
+                        for(size_t j = 0; j < m_scene->cameras.size(); j++)
                         {
                             if(m_scene->cameras[j].cur_section == &m_scene->sections[i])
                                 m_scene->sections[i].initBG();
@@ -241,13 +243,13 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         evntAct.m_action.events.push_back(installAutoscroll);
     }
 
-    if(!evt.msg.isEmpty())
+    if(!evt.msg.empty())
     {
         EventQueueEntry<LVL_EventAction> message;
         message.makeCaller([this, evt]()->void
         {
             EventQueueEntry<LevelScene > msgBox;
-            QString message = evt.msg;
+            std::string message = evt.msg;
             msgBox.makeCaller(
             [this, message]()->void{
                 m_scene->m_messages.showMsg(message);
@@ -261,7 +263,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         evntAct.m_action.events.push_back(message);
     }
 
-    if(!evt.movelayer.isEmpty())
+    if(!evt.movelayer.empty())
     {
         EventQueueEntry<LVL_EventAction> movelayer;
         movelayer.makeCaller([this, evt]()->void
@@ -274,12 +276,12 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
     events[evt.name].push_back(evntAct);
 
-    if(!evt.trigger.isEmpty())
+    if(!evt.trigger.empty())
     {
         LVL_EventAction trigger;
         trigger.m_eventName = evt.name;
         EventQueueEntry<LVL_EventAction> triggerEvent;
-        QString trgr = evt.trigger;
+        std::string trgr = evt.trigger;
         triggerEvent.makeCaller([this, trgr]()->void
         {
             m_scene->events.triggerEvent(trgr);
@@ -298,50 +300,52 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
 void LVL_EventEngine::processTimers(double tickTime)
 {
-    QHash<QString, bool > triggered;
+    std::unordered_set<std::string> triggered;
 
     //static double smbxTimeUnit = 65.0 / 1000.0;
-    for(int i = 0; i < workingEvents.size(); i++)
+    for(size_t i = 0; i < workingEvents.size(); i++)
     {
-        if(workingEvents[i].isEmpty())
+        EventActList *ea = &workingEvents[i];
+        if(ea->empty())
         {
-            workingEvents.removeAt(i);
+            workingEvents.erase(workingEvents.begin() + i);
             i--;
             continue;
         }
 
-        for(int j = 0; j < workingEvents[i].size(); j++)
+        for(size_t j = 0; j < ea->size(); j++)
         {
-            if(workingEvents[i][j].m_timeDelayLeft <= 0.0)
+            LVL_EventAction *ee = &(*ea)[j];
+            if(ee->m_timeDelayLeft <= 0.0)
             {
-                workingEvents[i][j].m_action.processEvents(tickTime /* *smbxTimeUnit*/);
+                ee->m_action.processEvents(tickTime /* *smbxTimeUnit*/);
 
-                if(workingEvents[i][j].m_action.events.isEmpty())
+                if(ee->m_action.events.empty())
                 {
-                    if(triggered.contains(workingEvents[i][j].m_eventName))
+                    if(triggered.find(ee->m_eventName) != triggered.end())
                     {
-                        workingEvents[i].removeAt(j);
+                        ea->erase(ea->begin() + j);
                         j--;
                         break;
                     }
-
-                    triggered[workingEvents[i][j].m_eventName] = true;
-                    workingEvents[i].removeAt(j);
+                    triggered.insert(ee->m_eventName);
+                    ea->erase(ea->begin() + j);
                     j--;
                     continue;
                 }
             }
             else
-                workingEvents[i][j].m_timeDelayLeft -= tickTime;
+                ee->m_timeDelayLeft -= tickTime;
         }
     }
 }
 
-void LVL_EventEngine::triggerEvent(QString event)
+void LVL_EventEngine::triggerEvent(std::string event)
 {
-    if(event.isEmpty())
+    if(event.empty())
         return;
 
-    if(events.contains(event))
-        workingEvents.push_back(events[event]);
+    EventsTable::iterator e = events.find(event);
+    if(e != events.end())
+        workingEvents.push_back(e->second);
 }

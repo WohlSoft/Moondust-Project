@@ -19,7 +19,7 @@
 #ifndef SCENE_CREDITS_H
 #define SCENE_CREDITS_H
 
-#include <QVector>
+#include <vector>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
 
@@ -62,7 +62,7 @@ private:
 
     PGE_Texture background;
     PGEColor    bgcolor;
-    QVector<CreditsScene_misc_img > imgs;
+    std::vector<CreditsScene_misc_img > imgs;
 
     LuaCreditsEngine luaEngine;
 };

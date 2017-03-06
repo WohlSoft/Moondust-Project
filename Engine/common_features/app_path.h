@@ -19,18 +19,14 @@
 #ifndef APP_PATH_H
 #define APP_PATH_H
 
-#include <QString>
+#include <string>
 
-extern QString      ApplicationPath;
 extern std::string  ApplicationPathSTD;
-extern QString      ApplicationPath_x;
 
 class AppPathManager
 {
     public:
         static void initAppPath(const char *argv0);
-        static QString settingsFile();
-        static QString userAppDir();
         static std::string settingsFileSTD();
         static std::string userAppDirSTD();
         static void install();

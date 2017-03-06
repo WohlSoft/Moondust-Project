@@ -19,16 +19,15 @@
 #ifndef MSGBOXQUEUE_H
 #define MSGBOXQUEUE_H
 
-#include <QString>
+#include <string>
 #include <deque>
 
 class Scene;
 struct MessageBoxQueue
 {
     Scene* m_scene;
-    std::deque<QString> messages;
+    std::deque<std::string> messages;
     void showMsg(const std::string &message);
-    void showMsg(const QString &message);
     void process();
 };
 

@@ -19,6 +19,7 @@
 #include "pge_qt_application.h"
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <IniProcessor/ini_processing.h>
 #define FMT_NOEXCEPT
 #include <fmt/fmt_format.h>
 
@@ -35,9 +36,7 @@
 
 #include <SDL2/SDL.h>
 
-QString ApplicationPath;
 std::string  ApplicationPathSTD;
-QString ApplicationPath_x;
 
 std::string AppPathManager::m_settingsPath;
 std::string AppPathManager::m_userPath;
@@ -77,9 +76,7 @@ void AppPathManager::initAppPath(const char* argv0)
     }
     #else
     ApplicationPathSTD = DirMan(Files::dirname(argv0)).absolutePath();
-    ApplicationPath =   QString::fromStdString(ApplicationPathSTD);
     #endif
-    ApplicationPath_x = ApplicationPath;
 
 #if defined(__ANDROID__)
     ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
@@ -138,19 +135,9 @@ defaultSettingsPath:
     _initSettingsPath();
 }
 
-QString AppPathManager::settingsFile()
-{
-    return QString::fromStdString(m_settingsPath + "/pge_engine.ini");
-}
-
 std::string AppPathManager::settingsFileSTD()
 {
     return m_settingsPath + "/pge_engine.ini";
-}
-
-QString AppPathManager::userAppDir()
-{
-    return QString::fromStdString(m_userPath);
 }
 
 std::string AppPathManager::userAppDirSTD()
@@ -194,7 +181,7 @@ bool AppPathManager::isPortable()
 
     bool forcePortable = false;
 
-    QSettings checkForPort(settingsFile(), QSettings::IniFormat);
+    IniProcessing checkForPort(settingsFileSTD());
     checkForPort.beginGroup("Main");
     forcePortable = checkForPort.value("force-portable", false).toBool();
     checkForPort.endGroup();

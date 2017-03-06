@@ -65,7 +65,7 @@ extern PGEEngineCmdArgs     g_flags;
 //! Target scene after exiting from the level scene
 extern Level_returnTo       g_jumpOnLevelEndTo;
 //! Path to config pack configured from the command line
-extern QString              g_configPackPath;
+extern std::string          g_configPackPath;
 //! Path to the file to open (requested from a command line)
 extern std::string          g_fileToOpen;
 //! Global game state

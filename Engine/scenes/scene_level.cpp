@@ -44,6 +44,8 @@
 
 #include <script/lua_event.h>
 #include <script/bindings/core/events/luaevents_core_engine.h>
+#include <fmt/fmt_format.h>
+#include <Utils/files.h>
 
 #include <QElapsedTimer>
 
@@ -131,7 +133,7 @@ void LevelScene::processPhysics(double ticks)
     }
 
     //Iterate activated NPCs
-    for(int i = 0; i < active_npcs.size(); i++)
+    for(size_t i = 0; i < active_npcs.size(); i++)
         active_npcs[i]->iterateStep(ticks);
 }
 
@@ -153,7 +155,7 @@ void LevelScene::processAllCollisions()
     }
 
     //Process collision check and resolving for activated NPC's
-    for(int i = 0; i < active_npcs.size(); i++)
+    for(size_t i = 0; i < active_npcs.size(); i++)
     {
         active_npcs[i]->resetEvents();
         toCheck.push_back(active_npcs[i]);
@@ -177,7 +179,7 @@ LevelScene::~LevelScene()
     layers.clear();
     switch_blocks.clear();
     //destroy textures
-    int i = 0;
+    size_t i = 0;
     D_pLogDebug("clear level textures");
 
     for(i = 0; i < textures_bank.size(); i++)
@@ -196,12 +198,11 @@ LevelScene::~LevelScene()
 
         if(tmp)
         {
-            if(player1Controller) player1Controller->removeFromControl(tmp);
-
-            if(player2Controller) player2Controller->removeFromControl(tmp);
-
+            if(player1Controller)
+                player1Controller->removeFromControl(tmp);
+            if(player2Controller)
+                player2Controller->removeFromControl(tmp);
             tmp->unregisterFromTree();
-
             if(!tmp->isLuaPlayer)
                 delete tmp;
         }
@@ -385,9 +386,9 @@ void LevelScene::update()
             processPhysics(uTickf);
         }
 
-        while(!block_transforms.isEmpty())
+        while(!block_transforms.empty())
         {
-            transformTask_block x = block_transforms.first();
+            transformTask_block x = block_transforms.front();
             x.block->transformTo_x(x.id);
             block_transforms.pop_front();
         }
@@ -409,23 +410,23 @@ void LevelScene::update()
             }
         }
 
-        for(int i = 0; i < fading_blocks.size(); i++)
+        for(size_t i = 0; i < fading_blocks.size(); i++)
         {
             if(fading_blocks[i]->tickFader(uTickf))
             {
-                fading_blocks.removeAt(i);
+                fading_blocks.erase(fading_blocks.begin() + i);
                 i--;
             }
         }
 
         //Process activated NPCs
-        for(int i = 0; i < active_npcs.size(); i++)
+        for(size_t i = 0; i < active_npcs.size(); i++)
         {
             active_npcs[i]->update(uTickf);
 
             if(active_npcs[i]->isKilled())
             {
-                active_npcs.removeAt(i);
+                active_npcs.erase(active_npcs.begin() + i);
                 i--;
             }
             else if(active_npcs[i]->activationTimeout <= 0)
@@ -438,7 +439,7 @@ void LevelScene::update()
                     if(!isVizibleOnScreen(active_npcs[i]->m_momentum) || !active_npcs[i]->isVisible() || !active_npcs[i]->is_activity)
                     {
                         active_npcs[i]->wasDeactivated = false;
-                        active_npcs.removeAt(i);
+                        active_npcs.erase(active_npcs.begin() + i);
                         i--;
                     }
                 }
@@ -452,10 +453,10 @@ void LevelScene::update()
         }
 
         /***************Collect garbage****************/
-        if(!dead_npcs.isEmpty())
+        if(!dead_npcs.empty())
             collectGarbageNPCs();
 
-        if(!dead_players.isEmpty())
+        if(!dead_players.empty())
             collectGarbagePlayers();
 
         /**********************************************/
@@ -512,9 +513,10 @@ void LevelScene::processEvents()
 void LevelScene::render()
 {
     GlRenderer::clearScreen();
-    int c = 0;
+    size_t c = 0;
 
-    if(!isInit) goto renderBlack;
+    if(!isInit)
+        goto renderBlack;
 
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -616,51 +618,49 @@ void LevelScene::render()
 
     //Draw camera separators
     for(c = 1; c < cameras.size(); c++)
-        GlRenderer::renderRect(0, cameras[c].h()*c - 1, cameras[c].w(), 2, 0.f, 0.f, 0.f, 1.f);
+        GlRenderer::renderRect(0, cameras[c].h() * c - 1, cameras[c].w(), 2, 0.f, 0.f, 0.f, 1.f);
 
     if(PGE_Window::showDebugInfo)
     {
-        //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
+        //FontManager::printText(fmt::format("Camera X={0} Y={1}", cam_x, cam_y), 200,10);
         int dpos = 60;
-        FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4\n"
-                                       "NPC's: %5, Active %6; BLOCKS: %7")
-                               .arg(debug_player_jumping)
-                               .arg(debug_player_onground)
-                               .arg(debug_player_foots)
-                               .arg(uTickf)
-                               .arg(npcs.size())
-                               .arg(active_npcs.size())
-                               .arg(blocks.size()), 10, dpos);
+        FontManager::printText(fmt::format("Player J={0} G={1} F={2}; TICK-SUB: {3}\n"
+                                       "NPC's: {4}, Active {5}; BLOCKS: {6}",
+                                        debug_player_jumping,
+                                        debug_player_onground,
+                                        debug_player_foots,
+                                        uTickf,
+                                        npcs.size(),
+                                        active_npcs.size(),
+                                        blocks.size()), 10, dpos);
         dpos += 35;
-        FontManager::printText(QString("Vizible objects: %1")
-                               .arg(!cameras.isEmpty() ? cameras[0].renderObjects_count() : 0), 10, dpos);
+        FontManager::printText(fmt::format("Vizible objects: {0}", !cameras.empty() ? cameras[0].renderObjects_count() : 0), 10, dpos);
         dpos += 35;
-        FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
-                               .arg(debug_event_delay, 3, 10, QChar('0'))
-                               .arg(debug_render_delay, 3, 10, QChar('0'))
-                               .arg(debug_phys_delay, 3, 10, QChar('0')), 10, dpos);
+        FontManager::printText(fmt::format("Delays E=%03d R=%03d P=%03d",
+                                            debug_event_delay,
+                                            debug_render_delay,
+                                            debug_phys_delay), 10, dpos);
         dpos += 35;
-        FontManager::printText(QString("Time Real:%1\nTime Loop:%2")
-                               .arg(debug_TimeReal.elapsed(), 10, 10, QChar('0'))
-                               .arg(debug_TimeCounted, 10, 10, QChar('0')), 10, dpos);
+        FontManager::printText(fmt::format("Time Real:%010d\nTime Loop:%010d",
+                                            debug_TimeReal.elapsed(),
+                                            debug_TimeCounted), 10, dpos);
         dpos += 35;
 
         if(!isLevelContinues)
         {
-            FontManager::printText(QString("Exit delay %1, %2")
-                                   .arg(exitLevelDelay)
-                                   .arg(uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
+            FontManager::printText(fmt::format("Exit delay {0}, {1}",
+                                                exitLevelDelay,
+                                                uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
             dpos += 35;
         }
 
         if(placingMode)
-            FontManager::printText(QString("Placing! %1 X=%2 Y=%3")
-                                   .arg(placingMode_item_type)
-                                   .arg(placingMode_renderAt.x())
-                                   .arg(placingMode_renderAt.y()), 10, 10, 0);
+            FontManager::printText(fmt::format("Placing! {0} X={1} Y={2}",
+                                                placingMode_item_type,
+                                                placingMode_renderAt.x(),
+                                                placingMode_renderAt.y()), 10, 10, 0);
         else
-            FontManager::printText(QString("%1")
-                                   .arg(PGE_MusPlayer::getTitle()), 10, 10, 0);
+            FontManager::printText(fmt::format("{0}", PGE_MusPlayer::getTitle()), 10, 10, 0);
     }
 
 renderBlack:
@@ -720,30 +720,31 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
             {
             case SDLK_1:
             {
-                if(!players.isEmpty())
-                    launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 0, 0, 0);
+                if(!players.empty())
+                    launchEffect(1, players.front()->posX(), players.front()->posY(), 0, 2000, 0, 0, 0);
             }
             break;
 
             case SDLK_2:
             {
-                if(!players.isEmpty())
-                    launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 3, -6, 12);
+                if(!players.empty())
+                    launchEffect(1, players.front()->posX(), players.front()->posY(), 0, 2000, 3, -6, 12);
 
                 break;
             }
 
             case SDLK_3:
             {
-                if(!players.isEmpty())
+                if(!players.empty())
                 {
                     Scene_Effect_Phys p;
                     p.decelerate_x = 0.02;
                     p.max_vel_y = 12;
-                    launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, 0, p);
-                    launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, 0, p);
-                    launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, 0, p);
-                    launchEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, 0, p);
+                    LVL_Player *pl = players.front();
+                    launchEffect(1, pl->posX(), pl->posY(), 0, 5000, -3, -6, 5, 0, p);
+                    launchEffect(1, pl->posX(), pl->posY(), 0, 5000, -4, -7, 5, 0, p);
+                    launchEffect(1, pl->posX(), pl->posY(), 0, 5000, 3, -6, 5, 0, p);
+                    launchEffect(1, pl->posX(), pl->posY(), 0, 5000, 4, -7, 5, 0, p);
                 }
 
                 break;
@@ -751,11 +752,12 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
             case SDLK_4:
             {
-                if(!players.isEmpty())
+                if(!players.empty())
                 {
                     Scene_Effect_Phys p;
                     p.max_vel_y = 12;
-                    launchEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -3, 12, 0, p);
+                    LVL_Player *pl = players.front();
+                    launchEffect(11, pl->posX(), pl->posY(), 0, 5000, 0, -3, 12, 0, p);
                 }
 
                 break;
@@ -763,9 +765,8 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
             case SDLK_5:
             {
-                if(!players.isEmpty())
-                    launchEffect(10, players.first()->posX(), players.first()->posY(), 1, 0, 0, 0, 0);
-
+                if(!players.empty())
+                    launchEffect(10, players.front()->posX(), players.front()->posY(), 1, 0, 0, 0, 0);
                 break;
             }
 
@@ -862,11 +863,11 @@ int LevelScene::exec()
 
     /****************Initial update***********************/
     //Apply musics and backgrounds
-    for(int i = 0; i < cameras.size(); i++)
+    for(size_t i = 0; i < cameras.size(); i++)
     {
         //Play music from first camera only
-        if(i == 0) cameras[i].cur_section->playMusic();
-
+        if(i == 0)
+            cameras[i].cur_section->playMusic();
         cameras[i].cur_section->initBG();
     }
 
@@ -954,7 +955,7 @@ int LevelScene::exec()
 
 
 
-QString LevelScene::getLastError()
+std::string LevelScene::getLastError()
 {
     return errorMsg;
 }
@@ -973,13 +974,12 @@ void LevelScene::setExiting(int delay, int reason)
     isLevelContinues = false;
 }
 
-QString LevelScene::toAnotherLevel()
+std::string LevelScene::toAnotherLevel()
 {
-    if(!warpToLevelFile.isEmpty())
-        if(!warpToLevelFile.endsWith(".lvl", Qt::CaseInsensitive) &&
-           !warpToLevelFile.endsWith(".lvlx", Qt::CaseInsensitive))
+    if(!warpToLevelFile.empty())
+        if(!Files::hasSuffix(warpToLevelFile, ".lvl") &&
+           !Files::hasSuffix(warpToLevelFile, ".lvlx"))
             warpToLevelFile.append(".lvl");
-
     return warpToLevelFile;
 }
 

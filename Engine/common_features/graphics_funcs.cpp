@@ -22,7 +22,7 @@
 #include "logger.h"
 
 #ifdef DEBUG_BUILD
-#include <QElapsedTimer>
+#include <Utils/elapsed_timer.h>
 #endif
 
 #include <ConfigPackManager/image_size.h>
@@ -48,9 +48,9 @@ void GraphicsHelps::closeFreeImage()
 FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
 {
 #ifdef DEBUG_BUILD
-    QElapsedTimer loadingTime;
-    QElapsedTimer fReadTime;
-    QElapsedTimer imgConvTime;
+    ElapsedTimer loadingTime;
+    ElapsedTimer fReadTime;
+    ElapsedTimer imgConvTime;
     loadingTime.start();
     fReadTime.start();
 #endif
@@ -222,32 +222,20 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask)
     FreeImage_Unload(mask);
 }
 
-bool GraphicsHelps::getImageMetrics(QString imageFile, PGE_Size *imgSize)
-{
-    return getImageMetrics(imageFile.toStdString(), imgSize);
-}
-
 bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size* imgSize)
 {
 
     if(!imgSize)
         return false;
 
-    int errorCode, w, h;
+    int errorCode;
+    uint32_t w, h;
+
     if(!PGE_ImageInfo::getImageSize(imageFile, &w, &h, &errorCode))
         return false;
 
     imgSize->setSize(w, h);
     return true;
-}
-
-void GraphicsHelps::getMaskedImageInfo(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size *imgSize)
-{
-    std::string out_maskName_s = out_maskName.toStdString();
-    std::string out_errStr_s = out_errStr.toStdString();
-    getMaskedImageInfo(rootDir.toStdString(), in_imgName.toStdString(), out_maskName_s, out_errStr_s, imgSize);
-    out_maskName = QString::fromStdString(out_maskName_s);
-    out_errStr = QString::fromStdString(out_errStr_s);
 }
 
 void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string& out_maskName, std::string& out_errStr, PGE_Size* imgSize)
@@ -258,7 +246,8 @@ void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgNa
         return;
     }
 
-    int errorCode, w, h;
+    int errorCode;
+    uint32_t w, h;
 
     if(!PGE_ImageInfo::getImageSize(rootDir + in_imgName, &w, &h, &errorCode))
     {

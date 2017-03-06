@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDir>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 
@@ -37,7 +36,8 @@
 
 void TitleScene::processMenu()
 {
-    if(m_doExit) return;
+    if(m_doExit)
+        return;
 
     //Waiter in process
     switch(_currentMenu)
@@ -466,9 +466,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 setMenu(menu_controls_plr1);
             };
             mct_p = &g_AppSettings.player1_controller;
-            if((*mct_p >= 0) && (*mct_p < g_AppSettings.player1_joysticks.size()))
+            if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player1_joysticks.size())))
             {
-                if(*mct_p < g_AppSettings.joysticks.size())
+                if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
                     jdev        = g_AppSettings.joysticks[*mct_p];
                 mp_p         = &g_AppSettings.player1_joysticks[*mct_p];
             }
@@ -482,9 +482,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 setMenu(menu_controls_plr2);
             };
             mct_p  = &g_AppSettings.player2_controller;
-            if((*mct_p >= 0) && (*mct_p < g_AppSettings.player2_joysticks.size()))
+            if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player2_joysticks.size())))
             {
-                if(*mct_p < g_AppSettings.joysticks.size())
+                if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
                     jdev        = g_AppSettings.joysticks[*mct_p];
                 mp_p = &g_AppSettings.player2_joysticks[*mct_p];
             }
@@ -500,7 +500,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         //% "Keyboard"
         controller.label =   qsTrId("PLAYER_CONTROLS_SETUP_KEYBOARD");
         ctrls.push_back(controller);
-        for(int i = 0; i < g_AppSettings.joysticks.size(); i++)
+        for(size_t i = 0; i < g_AppSettings.joysticks.size(); i++)
         {
             controller.value = i;
             //FIXME: missing in-string arguments support
@@ -589,9 +589,10 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     default:
         break;
     }
+
     PGE_Rect menuBox = menu.rect();
     menu.setPos(PGE_Window::Width / 2 - menuBox.width() / 2, menuBox.y());
-    LogDebug(QString("Menuitem ID: %1, scrolling offset: %2").arg(menustates[_menu].first).arg(menustates[_menu].second));
+    pLogDebug("Menuitem ID: %d, scrolling offset: %d", menustates[_menu].first, menustates[_menu].second);
     menu.setCurrentItem(menustates[_menu].first);
     menu.setOffset(menustates[_menu].second);
 }

@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
             return 2;
         }
 
-        QString configPath_manager = GOScene.isPreLoaded();
+        std::string configPath_manager = GOScene.isPreLoaded();
 
         if(!g_fileToOpen.empty())
         {
@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
         }
 
         //If application runned first time or target configuration is not exist
-        if(configPath_manager.isEmpty() && g_configPackPath.isEmpty())
+        if(configPath_manager.empty() && g_configPackPath.empty())
         {
             //Ask for configuration
             if(GOScene.exec() == 1)
@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
             else
                 return 2;
         }
-        else if(!configPath_manager.isEmpty() && g_configPackPath.isEmpty())
+        else if(!configPath_manager.empty() && g_configPackPath.empty())
             g_configPackPath = GOScene.currentConfigPath;
 
         pLogDebug("Opening of the configuration package...");
@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
 
         if(Files::hasSuffix(g_fileToOpen, ".lvl") || Files::hasSuffix(g_fileToOpen, ".lvlx"))
         {
-            g_GameState.LevelFile = QString::fromStdString(g_fileToOpen);
+            g_GameState.LevelFile = g_fileToOpen;
             g_GameState.isEpisode = false;
             g_GameState.isTestingModeL = true;
             g_GameState.isTestingModeW = false;
@@ -204,11 +204,11 @@ int main(int argc, char *argv[])
         {
             g_Episode.character = 1;
             g_Episode.savefile = "save1.savx";
-            g_Episode.worldfile = QString::fromStdString(g_fileToOpen);
+            g_Episode.worldfile = g_fileToOpen;
             g_GameState._episodePath = DirMan(Files::dirname(g_fileToOpen)).absolutePath() + "/";
             g_GameState.saveFileName = g_Episode.savefile;
             g_GameState.isEpisode = true;
-            g_GameState.WorldFile = QString::fromStdString(g_fileToOpen);
+            g_GameState.WorldFile = g_fileToOpen;
             g_GameState.isTestingModeL = false;
             g_GameState.isTestingModeW = true;
             g_flags.testLevel = false;
@@ -334,7 +334,7 @@ MainMenu:
             g_GameState.setPlayerState(2, plr);
             g_GameState.isEpisode = true;
             g_Episode = res_episode;
-            g_GameState._episodePath = DirMan(Files::dirname(g_Episode.worldfile.toStdString())).absolutePath() + "/";
+            g_GameState._episodePath = DirMan(Files::dirname(g_Episode.worldfile)).absolutePath() + "/";
             g_GameState.saveFileName = g_Episode.savefile;
             g_GameState.load();
             goto PlayWorldMap;
@@ -480,7 +480,7 @@ PlayLevel:
             lScene->setGameState(&g_GameState);
             bool sceneResult = true;
 
-            if(g_GameState.LevelFile.isEmpty())
+            if(g_GameState.LevelFile.empty())
             {
                 if(g_AppSettings.interprocessing && IntProc::isEnabled())
                 {
@@ -511,9 +511,9 @@ PlayLevel:
                 if(!sceneResult)
                 {
                     SDL_Delay(50);
-                    PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n"
-                                                    "%1")
-                                      .arg(lScene->getLastError()),
+                    PGE_MsgBox msgBox(NULL,
+                                      fmt::format("ERROR:\nFail to start level\n\n"
+                                                  "{0}", lScene->getLastError()),
                                       PGE_MsgBox::msg_error);
                     msgBox.exec();
                 }

@@ -20,56 +20,35 @@
 
 #include <audio/pge_audio.h>
 #include <audio/play_music.h>
+#include <algorithm>
 
 void LevelScene::collectGarbageNPCs()
 {
-    QVector<LVL_Npc *> stillVizible;//Avoid camera crash (which uses a cached render list)
-    while(!dead_npcs.isEmpty())
+    std::vector<LVL_Npc *> stillVizible;//Avoid camera crash (which uses a cached render list)
+    while(!dead_npcs.empty())
     {
-        LVL_Npc *corpse = dead_npcs.last();
+        LVL_Npc *corpse = dead_npcs.back();
         dead_npcs.pop_back();
         if(corpse->isInRenderList())
         {
             stillVizible.push_back(corpse);//Avoid camera crash (which uses a cached render list)
             continue;
         }
-        #if (QT_VERSION >= 0x050400)
-        active_npcs.removeAll(corpse);
-        npcs.removeAll(corpse);
-        layers.removeRegItem(corpse->data.layer, corpse);
-        #else
-        //He-he, it's a great workaround for a Qt less than 5.4 which has QVector without removeAll() function
-        while(1)
-        {
-            const QVector<LVL_Npc *>::const_iterator ce = active_npcs.cend(), cit = std::find(active_npcs.cbegin(), ce, corpse);
-            if (cit == ce)
-                break;
-            const QVector<LVL_Npc *>::iterator e = active_npcs.end(), it = std::remove(active_npcs.begin() + (cit - active_npcs.cbegin()), e, corpse);
-            active_npcs.erase(it, e);
-            break;
-        }
 
-        while(1)
-        {
-            const QVector<LVL_Npc *>::const_iterator ce = npcs.cend(), cit = std::find(npcs.cbegin(), ce, corpse);
-            if (cit == ce)
-                break;
-            const QVector<LVL_Npc *>::iterator e = npcs.end(), it = std::remove(npcs.begin() + (cit - npcs.cbegin()), e, corpse);
-            npcs.erase(it, e);
-            break;
-        }
-        #endif
+        std::remove(active_npcs.begin(), active_npcs.end(), corpse);
+        std::remove(npcs.begin(), npcs.end(), corpse);
+        layers.removeRegItem(corpse->data.layer, corpse);
         luaEngine.destoryLuaNpc(corpse);
     }
-    dead_npcs.append(stillVizible);
+    dead_npcs.insert(dead_npcs.end(), stillVizible.begin(), stillVizible.end());
 }
 
 void LevelScene::collectGarbagePlayers()
 {
-    QVector<LVL_Player *> stillVizible;//Avoid camera crash (which uses a cached render list)
-    while(!dead_players.isEmpty())
+    std::vector<LVL_Player *> stillVizible;//Avoid camera crash (which uses a cached render list)
+    while(!dead_players.empty())
     {
-        LVL_Player *corpse = dead_players.last();
+        LVL_Player *corpse = dead_players.back();
         dead_players.pop_back();
         if(corpse->isInRenderList())
         {
@@ -77,21 +56,7 @@ void LevelScene::collectGarbagePlayers()
             continue;
         }
         LVL_Player::deathReason reason = corpse->kill_reason;
-
-        #if (QT_VERSION >= 0x050400)
-        players.removeAll(corpse);
-        #else
-        //He-he, it's a great workaround for a Qt less than 5.4 which has QVector without removeAll() function
-        while(1)
-        {
-            const QVector<LVL_Player *>::const_iterator ce = players.cend(), cit = std::find(players.cbegin(), ce, corpse);
-            if (cit == ce)
-                break;
-            const QVector<LVL_Player *>::iterator e = players.end(), it = std::remove(players.begin() + (cit - players.cbegin()), e, corpse);
-            players.erase(it, e);
-            break;
-        }
-        #endif
+        std::remove(players.begin(), players.end(), corpse);
         luaEngine.destoryLuaPlayer(corpse);
 
         switch(reason)
@@ -108,16 +73,14 @@ void LevelScene::collectGarbagePlayers()
             }
             break;
         }
-        if(reason==LVL_Player::deathReason::DEAD_burn)
+        if(reason == LVL_Player::deathReason::DEAD_burn)
             PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
     }
-    dead_players.append(stillVizible);
 
-    if(players.isEmpty())
+    dead_players.insert(dead_players.end(), stillVizible.begin(), stillVizible.end());
+    if(players.empty())
     {
         PGE_MusPlayer::stop();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
 }
-
-

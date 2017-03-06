@@ -32,7 +32,7 @@ class Render_Base
 {
 public:
     Render_Base();
-    Render_Base(QString renderer_name);
+    Render_Base(std::string renderer_name);
     virtual ~Render_Base();
 
     /*!
@@ -152,9 +152,9 @@ public:
      * \brief Get name of renrering device
      * \return name of rendering device
      */
-    const QString &name();
+    const std::string &name();
 private:
-    QString m_renderer_name;
+    std::string m_renderer_name;
 };
 
 

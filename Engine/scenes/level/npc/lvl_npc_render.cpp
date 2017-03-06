@@ -22,6 +22,7 @@
 #include <data_configs/config_manager.h>
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
+#include <fmt/fmt_format.h>
 
 void LVL_Npc::render(double camX, double camY)
 {
@@ -153,7 +154,7 @@ void LVL_Npc::render(double camX, double camY)
 
     if(PGE_Window::showDebugInfo)
     {
-        QString warpingInfo;
+        std::string warpingInfo;
         if(isWarping)
         {
             switch(warpDirectO)
@@ -164,18 +165,19 @@ void LVL_Npc::render(double camX, double camY)
             case WARP_BOTTOM:   warpingInfo="BOTTOM"; break;
             }
         }
-        FontManager::printText(QString(" %1 \n%2%3%4\n %5  %6 %7")
-                               .arg(l_contactT.size())
-                               .arg(l_contactL.size())
-                               .arg(l_contactAny.size())
-                               .arg(l_contactR.size())
-                               .arg(l_contactB.size())
+        FontManager::printText(fmt::format(  " {0} \n"
+                                           "{1}{2}{3}\n"
+                                             " {4}  {5} {6}",
+                                        l_contactT.size(),
+                                        l_contactL.size(),
+                                        l_contactAny.size(),
+                                        l_contactR.size(),
+                                        l_contactB.size(),
                                //.arg(collision_speed_add.size())
-                               .arg(warpingInfo)
-                               .arg(
-                                    QString(m_cliff ? "CLIFF":"")+
-                                    QString(m_blockedAtLeft?"|<":"")+
-                                    QString(m_blockedAtRight?">|":"")
+                                        warpingInfo,
+                                    std::string(m_cliff ? "CLIFF" : "")+
+                                    std::string(m_blockedAtLeft?"|<" : "")+
+                                    std::string(m_blockedAtRight?">|" : "")
                                     )
                                //.arg(LEGACY_m_speedAddingTopElements.size())
                                //.arg(LEGACY_m_speedAddingBottomElements.size())

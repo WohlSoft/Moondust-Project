@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _MENUITEM_H
-#define _MENUITEM_H
+#ifndef MENUITEM_H_
+#define MENUITEM_H_
 
 #include <string>
 #include <functional>
@@ -75,5 +75,5 @@ private:
 };
 
 
-#endif // _MENUITEM_H
+#endif // MENUITEM_H_
 

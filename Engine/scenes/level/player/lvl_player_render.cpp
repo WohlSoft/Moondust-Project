@@ -20,6 +20,7 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
+#include <fmt/fmt_format.h>
 
 void LVL_Player::render(double camX, double camY)
 {
@@ -109,13 +110,12 @@ void LVL_Player::render(double camX, double camY)
 
     if(PGE_Window::showDebugInfo)
     {
-        //FontManager::printText(QString("%1-%2").arg(characterID).arg(stateID), round(posX()-camX), round(posY()-camY));
-        FontManager::printText(QString(" %1 \n%2%3%4\n %5 %6")
-                               .arg(l_contactT.size())
-                               .arg(l_contactL.size())
-                               .arg(l_contactAny.size())
-                               .arg(l_contactR.size())
-                               .arg(l_contactB.size()).arg(m_slopeFloor.has ? "slope!" : "" )
+        FontManager::printText(fmt::format(  " {0} \n"
+                                           "{1}{2}{3}\n"
+                                             " {4} {5}",
+                                           l_contactT.size(),
+                        l_contactL.size(), l_contactAny.size(), l_contactR.size(),
+                                           l_contactB.size(), (m_slopeFloor.has ? "slope!" : "") )
                                //.arg(m_speedAddingTopElements.size())
                                //.arg(m_speedAddingBottomElements.size())
                                , int(round(20+posX()-camX)), -50+int(round(posY()-camY)), 3);

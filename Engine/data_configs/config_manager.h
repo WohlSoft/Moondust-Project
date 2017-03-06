@@ -181,12 +181,10 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
 namespace ConfigManager
 {
     extern DataFolders dirs;
-    extern QString      config_id;
     extern std::string  config_idSTD;
     extern std::string  config_name;
     extern QString      config_dir;
     extern std::string  config_dirSTD;
-    extern QString      data_dir;
     extern std::string  data_dirSTD;
     extern unsigned int default_grid;
 
@@ -194,7 +192,7 @@ namespace ConfigManager
     extern ScriptsSetup setup_Scripts;
 
     //Common Data
-    extern QList<PGE_Texture > common_textures;
+    extern std::vector<PGE_Texture > common_textures;
 
     extern unsigned int screen_width;
     extern unsigned int screen_height;
@@ -289,7 +287,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_block>   lvl_block_indexes;
     extern CustomDirManager Dir_Blocks;
-    extern QList<SimpleAnimator > Animator_Blocks;
+    extern std::vector<SimpleAnimator > Animator_Blocks;
     /*****Level blocks************/
 
     /*****Level BGO************/
@@ -299,7 +297,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_bgo>   lvl_bgo_indexes;
     extern CustomDirManager Dir_BGO;
-    extern QList<SimpleAnimator > Animator_BGO;
+    extern std::vector<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
 
     /*****Level NPC************/
@@ -316,7 +314,7 @@ namespace ConfigManager
     extern NPC_GlobalSetup          g_setup_npc;
     extern CustomDirManager Dir_NPC;
     extern CustomDirManager Dir_NPCScript;
-    extern QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
+    extern std::vector<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
     /*****Level NPC************/
 
 
@@ -329,7 +327,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_BG>   lvl_bg_indexes;
     extern CustomDirManager Dir_BG;
-    extern QList<SimpleAnimator > Animator_BG;
+    extern std::vector<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
     /*================================Level config Data===end=====================*/
 
@@ -341,7 +339,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_tile>    wld_tiles;
     extern CustomDirManager         Dir_Tiles;
-    extern QList<SimpleAnimator >   Animator_Tiles;
+    extern std::vector<SimpleAnimator >   Animator_Tiles;
     /*****World Tiles************/
 
     /*****World Scenery************/
@@ -351,7 +349,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_scenery>     wld_scenery;
     extern CustomDirManager         Dir_Scenery;
-    extern QList<SimpleAnimator >   Animator_Scenery;
+    extern std::vector<SimpleAnimator >   Animator_Scenery;
     /*****World Scenery************/
 
     /*****World Paths************/
@@ -361,7 +359,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_path>   wld_paths;
     extern CustomDirManager         Dir_WldPaths;
-    extern QList<SimpleAnimator >   Animator_WldPaths;
+    extern std::vector<SimpleAnimator >   Animator_WldPaths;
     /*****World Paths************/
 
     /*****World Levels************/
@@ -371,7 +369,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_level>   wld_levels;
     extern CustomDirManager         Dir_WldLevel;
-    extern QList<SimpleAnimator >   Animator_WldLevel;
+    extern std::vector<SimpleAnimator >   Animator_WldLevel;
     extern wld_levels_Markers        marker_wlvl;
     /*****World Levels************/
 
@@ -407,8 +405,8 @@ namespace ConfigManager
     /*================================Common config Data===end=====================*/
 
     /***********Texture banks*************/
-    extern QList<PGE_Texture > level_textures;
-    extern QList<PGE_Texture > world_textures;
+    extern std::vector<PGE_Texture > level_textures;
+    extern std::vector<PGE_Texture > world_textures;
     /***********Texture banks*************/
 
     void addError(std::string bug);

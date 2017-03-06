@@ -20,20 +20,20 @@ class LuaLevelEngine : public LuaEngine
         void destoryLuaNpc(LVL_Npc *npc);
         void destoryLuaPlayer(LVL_Player *plr);
 
-        void loadNPCClass(unsigned long id, const QString &path);
-        void loadPlayerClass(unsigned long id, const QString &path);
+        void loadNPCClass(unsigned long id, const std::string &path);
+        void loadPlayerClass(unsigned long id, const std::string &path);
 
         LevelScene *getScene();
 
-        QString getNpcBaseClassPath() const;
-        void setNpcBaseClassPath(const QString &npcBaseClassPath);
+        std::string getNpcBaseClassPath() const;
+        void setNpcBaseClassPath(const std::string &npcBaseClassPath);
 
-        QString getPlayerBaseClassPath() const;
-        void setPlayerBaseClassPath(const QString &playerBaseClassPath);
+        std::string getPlayerBaseClassPath() const;
+        void setPlayerBaseClassPath(const std::string &playerBaseClassPath);
 
     protected:
-        QString m_npcBaseClassPath;
-        QString m_playerBaseClassPath;
+        std::string m_npcBaseClassPath;
+        std::string m_playerBaseClassPath;
 
         void onBindAll();
 };

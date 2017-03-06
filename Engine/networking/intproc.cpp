@@ -19,11 +19,11 @@
 #include "intproc.h"
 #include <common_features/logger.h>
 
-EditorPipe            *IntProc::editor = nullptr;
-static bool            ipc_enabled = false;
+EditorPipe              *IntProc::editor = nullptr;
+static bool             ipc_enabled = false;
 
-static QString         state;
-static std::mutex      state_lock;
+static std::string      state;
+static std::mutex       state_lock;
 
 static IntProc::ExternalCommands        cmd_recentType = IntProc::MsgBox;
 
@@ -62,15 +62,15 @@ bool IntProc::isWorking()
     return (editor != nullptr);
 }
 
-QString IntProc::getState()
+std::string IntProc::getState()
 {
     state_lock.lock();
-    QString tmp = state;
+    std::string tmp = state;
     state_lock.unlock();
     return tmp;
 }
 
-void IntProc::setState(QString instate)
+void IntProc::setState(std::string instate)
 {
     state_lock.lock();
     state = instate;
@@ -104,7 +104,7 @@ void IntProc::storeCommand(const char *cmd, size_t length, IntProc::ExternalComm
             in.push_back(c);
     }
 
-    cmd_queue.push_back({QString::fromStdString(in), type});
+    cmd_queue.push_back({in, type});
     cmd_recentType = type;
     cmd_mutex.unlock();
 }
@@ -129,7 +129,7 @@ IntProc::ExternalCommands IntProc::commandType()
     return cmd_recentType;
 }
 
-QString IntProc::getCMD()
+std::string IntProc::getCMD()
 {
     cmdEntry tmp = cmd_queue.front();
     cmd_queue.pop_front();
@@ -140,7 +140,7 @@ QString IntProc::getCMD()
     return tmp.cmd;
 }
 
-bool IntProc::sendMessage(QString command)
+bool IntProc::sendMessage(std::string command)
 {
     if(!editor)
         return false;

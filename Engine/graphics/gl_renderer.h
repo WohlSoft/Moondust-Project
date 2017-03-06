@@ -19,7 +19,7 @@
 #ifndef GL_RENDERER_H
 #define GL_RENDERER_H
 
-#include <QString>
+#include <string>
 #include <common_features/rectf.h>
 #include <common_features/point.h>
 #include <common_features/pge_texture.h>
@@ -43,14 +43,14 @@ public:
     static void setup_OpenGL31();
     static void setup_SW_SDL();
 
-    static QString  engineName();
+    static std::string engineName();
 
     static unsigned int SDL_InitFlags();
 
     static bool init();
     static bool uninit();
 
-    static QString ScreenshotPath;
+    static std::string ScreenshotPath;
     static void makeShot();
     static int  makeShot_action(void *_pixels);
 
@@ -93,10 +93,7 @@ public:
     static void setWindowSize(int w, int h);
 
     static PGE_Texture loadTexture(std::string path, std::string maskPath="");
-    static PGE_Texture loadTexture(QString path, QString maskPath="");
     static void loadTextureP(PGE_Texture &target, std::string path, std::string maskPath="");
-    static void loadTextureP(PGE_Texture &target, QString path, QString maskPath="");
-    static GLuint QImage2Texture(QImage *img, PGE_Texture &tex);
     static void deleteTexture(PGE_Texture &tx);
 
     static bool isTopDown();

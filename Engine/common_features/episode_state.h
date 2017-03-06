@@ -2,6 +2,7 @@
 #define EPISODESTATE_H
 
 #include <string>
+#include <stdint.h>
 #include <PGE_File_Formats/save_filedata.h>
 
 struct PlayLevelResult
@@ -53,9 +54,8 @@ class WldExit
 
 struct PlayerState
 {
-    PlayerState() : characterID(1), stateID(1) {}
-    unsigned long characterID;
-    unsigned long stateID;
+    uint32_t characterID = 1;
+    uint32_t stateID = 1;
     saveCharState _chsetup;
 };
 

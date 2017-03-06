@@ -22,11 +22,9 @@
 #include <graphics/window.h>
 #include <settings/global_settings.h>
 #include <common_features/graphics_funcs.h>
+#include <common_features/logger.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
-
-#include <QtDebug>
-
 
 CreditsScene_misc_img::CreditsScene_misc_img()
 {
@@ -59,7 +57,7 @@ CreditsScene::~CreditsScene()
     GlRenderer::clearScreen();
     GlRenderer::deleteTexture(background);
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
         GlRenderer::deleteTexture(imgs[i].t);
 
     imgs.clear();
@@ -68,20 +66,21 @@ CreditsScene::~CreditsScene()
 void CreditsScene::init()
 {
     /*****************************Load built-in stuff*******************************/
-    bgcolor.r = float(ConfigManager::setup_CreditsScreen.backgroundColor.red()) / 255.0f;
-    bgcolor.g = float(ConfigManager::setup_CreditsScreen.backgroundColor.green()) / 255.0f;
-    bgcolor.b = float(ConfigManager::setup_CreditsScreen.backgroundColor.blue()) / 255.0f;
+    bgcolor.r = ConfigManager::setup_CreditsScreen.backgroundColor.Red();
+    bgcolor.g = ConfigManager::setup_CreditsScreen.backgroundColor.Green();
+    bgcolor.b = ConfigManager::setup_CreditsScreen.backgroundColor.Blue();
 
-    if(!ConfigManager::setup_CreditsScreen.backgroundImg.isEmpty())
+    if(!ConfigManager::setup_CreditsScreen.backgroundImg.empty())
         GlRenderer::loadTextureP(background, ConfigManager::setup_CreditsScreen.backgroundImg);
     else
         GlRenderer::loadTextureP(background, ":cat_splash.png");
 
     imgs.clear();
 
-    for(int i = 0; i < ConfigManager::setup_CreditsScreen.AdditionalImages.size(); i++)
+    for(size_t i = 0; i < ConfigManager::setup_CreditsScreen.AdditionalImages.size(); i++)
     {
-        if(ConfigManager::setup_CreditsScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
+        if(ConfigManager::setup_CreditsScreen.AdditionalImages[i].imgFile.empty())
+            continue;
 
         CreditsScene_misc_img img;
         GlRenderer::loadTextureP(img.t, ConfigManager::setup_CreditsScreen.AdditionalImages[i].imgFile);
@@ -100,11 +99,11 @@ void CreditsScene::init()
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     luaEngine.setCoreFile(":/script/maincore_credits.lua");
     luaEngine.setUserFile(ConfigManager::setup_CreditsScreen.luaFile);
-    luaEngine.setErrorReporterFunc([this](const QString & errorMessage, const QString & stacktrace)
+    luaEngine.setErrorReporterFunc([this](const std::string & errorMessage, const std::string  &stacktrace)
     {
-        qWarning() << "Lua-Error: ";
-        qWarning() << "Error Message: " << errorMessage;
-        qWarning() << "Stacktrace: \n" << stacktrace;
+        pLogWarning("Lua-Error: ");
+        pLogWarning("Error Message: %s", errorMessage.c_str());
+        pLogWarning("Stacktrace:\n%s", stacktrace.c_str());
         // Do not show error message box in credits
     });
     luaEngine.init();
@@ -122,7 +121,7 @@ void CreditsScene::setWaitTime(int time)
 void CreditsScene::exitFromScene()
 {
     m_doExit = true;
-    m_fader.setFade(10, 1.0f, 0.01f);
+    m_fader.setFade(10, 1.0, 0.01);
 }
 
 void CreditsScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
@@ -160,7 +159,7 @@ void CreditsScene::update()
     Scene::update();
     updateLua();
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
 
     /******************Update built-in faders and animators*********************/
@@ -189,7 +188,7 @@ void CreditsScene::render()
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
     GlRenderer::renderTexture(&background, PGE_Window::Width / 2 - background.w / 2, PGE_Window::Height / 2 - background.h / 2);
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
     {
         AniPos x(0, 1);
         x = imgs[i].a.image();

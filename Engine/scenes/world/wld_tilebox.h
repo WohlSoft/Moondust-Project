@@ -19,7 +19,7 @@
 #ifndef WLD_TILEBOX_H
 #define WLD_TILEBOX_H
 
-#include <QVector>
+#include <vector>
 #include <unordered_map>
 #include <common_features/point.h>
 #include <PGE_File_Formats/wld_filedata.h>
@@ -137,8 +137,8 @@ class TileBox
         TileBox(unsigned long size);
         ~TileBox();
         void addNode(long X, long Y, long W, long H, WorldNode *item);
-        void query(long X, long Y, QVector<WorldNode * > &list);
-        void query(long Left, long Top, long Right, long Bottom, QVector<WorldNode * > &list, bool z_sort = false);
+        void query(long X, long Y, std::vector<WorldNode *> &list);
+        void query(long Left, long Top, long Right, long Bottom, std::vector<WorldNode *> &list, bool z_sort = false);
         PGE_Point applyGrid(long x, long y);
         void clean();
 
@@ -150,7 +150,7 @@ class TileBox
         void unregisterElement(WorldNode *item);
         typedef long RPoint[2];
     private:
-        void sortElements(QVector<WorldNode * > &list);
+        void sortElements(std::vector<WorldNode *> &list);
         typedef RTree<WorldNode *, long, 2, long > IndexTree;
         IndexTree tree;
         long gridSize;

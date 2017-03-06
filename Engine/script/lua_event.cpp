@@ -6,7 +6,6 @@ lua_State *LuaEvent::getNativeState()
     return m_engine->getNativeState();
 }
 
-
 LuaEvent::LuaEvent(LuaEngine *engine)
 {
     m_engine = engine;

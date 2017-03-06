@@ -18,19 +18,17 @@
 
 #include "../scene_level.h"
 #include <common_features/logger.h>
-
-#include <QFile>
-#include <QDir>
-#include <QFileInfo>
-#include <QElapsedTimer>
+#include <Utils/files.h>
+#include <Utils/elapsed_timer.h>
+#include <DirManager/dirman.h>
 
 #include "../../networking/intproc.h"
 
-bool LevelScene::loadFile(QString filePath)
+bool LevelScene::loadFile(std::string filePath)
 {
     data.meta.ReadFileValid = false;
 
-    if(!QFileInfo(filePath).exists())
+    if(!Files::fileExists(filePath))
     {
         errorMsg += "File not exist\n\n";
         errorMsg += filePath;
@@ -50,14 +48,14 @@ bool LevelScene::loadFileIP()
 
     FileFormats::CreateLevelData(data);
     data.meta.ReadFileValid = false;
-    LogDebug("ICP: Requesting editor for a file....");
+    pLogDebug("ICP: Requesting editor for a file....");
     IntProc::sendMessage("CMD:CONNECT_TO_ENGINE");
-    QElapsedTimer time;
+    ElapsedTimer time;
     time.start();
     //wait for accepting of level data
     bool timeOut = false;
     int attempts = 0;
-    LogDebug("ICP: Waiting reply....");
+    pLogDebug("ICP: Waiting reply....");
 
     while(!IntProc::editor->levelIsLoad())
     {
@@ -69,7 +67,7 @@ bool LevelScene::loadFileIP()
 
         if(time.elapsed() > 1500)
         {
-            LogDebug(QString("ICP: Waiting #%1....").arg(attempts));
+            pLogDebug("ICP: Waiting #%d....", attempts);
             time.restart();
             attempts += 1;
         }
@@ -89,7 +87,7 @@ bool LevelScene::loadFileIP()
     if(!timeOut && !data.meta.ReadFileValid)
         errorMsg += "Bad file format\n";
 
-    LogDebug("ICP: Done, starting a game....");
+    pLogDebug("ICP: Done, starting a game....");
     IntProc::setState("Done. Starting game...");
     return data.meta.ReadFileValid;
 }

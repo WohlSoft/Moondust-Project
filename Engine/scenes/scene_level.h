@@ -58,9 +58,9 @@
 #include <script/bindings/level/classes/luaclass_level_playerstate.h>
 
 #include <PGE_File_Formats/file_formats.h>
-#include <QString>
-#include <QList>
-#include <QVector>
+#include <vector>
+#include <deque>
+#include <unordered_map>
 
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_timer.h>
@@ -94,7 +94,7 @@ class LevelScene : public Scene
     public:
 
         //Init 1
-        bool        loadFile(QString filePath);
+        bool        loadFile(std::string filePath);
         bool        loadFileIP(); //!< Load data via interprocessing
 
         //Init 2
@@ -111,7 +111,8 @@ class LevelScene : public Scene
     public:
         PlayerPoint getStartLocation(int playerID);
 
-        QHash<unsigned int, LVL_PlayerDef > player_defs;
+        typedef std::unordered_map<uint32_t, LVL_PlayerDef > PlayerDefMap;
+        PlayerDefMap player_defs;
 
         bool loadConfigs();
 
@@ -129,8 +130,7 @@ class LevelScene : public Scene
 
         void tickAnimations(double ticks);
 
-        QString getLastError();
-
+        std::string getLastError();
 
         int findNearestSection(long x, long y);
 
@@ -149,8 +149,8 @@ class LevelScene : public Scene
 
         void setExiting(int delay, int reason);
 
-        QString     toAnotherLevel();
-        QString     warpToLevelFile;
+        std::string     toAnotherLevel();
+        std::string     warpToLevelFile;
         unsigned long lastWarpID;
 
         unsigned long toAnotherEntrance();
@@ -200,11 +200,14 @@ class LevelScene : public Scene
         LevelData *levelData();
 
         //! Queue of blocks which are requires transformation
-        QQueue<transformTask_block > block_transforms;
+        std::deque<transformTask_block > block_transforms;
 
         /**********************Switch blocks*************************/
+        typedef std::vector<LVL_Block *>                    BlocksList;
+        typedef std::unordered_map<uint32_t, BlocksList >   SwitchBlocksMap;
+
         //! Table of registered switchable blocks per SwitchID
-        QHash<unsigned int, QList<LVL_Block * > > switch_blocks;
+        SwitchBlocksMap switch_blocks;
 
         /*!
          * \brief Toggles switch by SwitchID
@@ -219,20 +222,20 @@ class LevelScene : public Scene
         bool lua_switchState(int switch_id);
 
         //! States of the SwitchID's, Has no effect on switchable blocks, used only to tell Lua scripts which current state of the switches now is
-        QList<bool> switch_states;
+        std::vector<bool> switch_states;
         /**********************Switch blocks*************************/
         /*************************Character switchers*************************/
         CharacterSwitcherEngine character_switchers;
         /*************************Character switchers*************************/
 
         /**********************NPC Management*********************/
-        QVector<LVL_Npc * > active_npcs;
-        QVector<LVL_Npc * > dead_npcs;
+        std::vector<LVL_Npc * > active_npcs;
+        std::vector<LVL_Npc * > dead_npcs;
         /**********************NPC Management*********************/
 
-        QVector<LVL_Player * > dead_players;
+        std::vector<LVL_Player * > dead_players;
 
-        QVector<LVL_Block * > fading_blocks;
+        std::vector<LVL_Block * > fading_blocks;
 
         /*********************Item placing**********************/
         /*********************Initial*placing*******************/
@@ -311,21 +314,21 @@ class LevelScene : public Scene
 
         bool frameSkip;
 
-        typedef QList<PGE_LevelCamera> LVL_CameraList;
-        typedef QList<LVL_Section> LVL_SectionsList;
+        typedef std::vector<PGE_LevelCamera> LVL_CameraList;
+        typedef std::vector<LVL_Section> LVL_SectionsList;
 
         LVL_CameraList      cameras;
         LVL_SectionsList    sections;
 
     public:
-        QList<lua_LevelPlayerState>    player_states;
+        std::vector<lua_LevelPlayerState>   player_states;
 
-        typedef QVector<LVL_Player * >  LVL_PlayersArray;
-        typedef QVector<LVL_Block * >   LVL_BlocksArray;
-        typedef QVector<LVL_Bgo * >     LVL_BgosArray;
-        typedef QVector<LVL_Npc * >     LVL_NpcsArray;
-        typedef QVector<LVL_Warp * >    LVL_WarpsArray;
-        typedef QVector<LVL_PhysEnv * > LVL_PhysEnvsArray;
+        typedef std::vector<LVL_Player * >  LVL_PlayersArray;
+        typedef std::vector<LVL_Block * >   LVL_BlocksArray;
+        typedef std::vector<LVL_Bgo * >     LVL_BgosArray;
+        typedef std::vector<LVL_Npc * >     LVL_NpcsArray;
+        typedef std::vector<LVL_Warp * >    LVL_WarpsArray;
+        typedef std::vector<LVL_PhysEnv * > LVL_PhysEnvsArray;
 
         LVL_LayerEngine     layers;
         LVL_EventEngine     events;
@@ -387,8 +390,8 @@ class LevelScene : public Scene
         void registerElement(PhysObjPtr item);
         void unregisterElement(PhysObjPtr item);
         typedef double RPoint[2];
-        void queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object * > *resultList);
-        void queryItems(double x, double y, QVector<PGE_Phys_Object * > *resultList);
+        void queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object * > *resultList);
+        void queryItems(double x, double y, std::vector<PGE_Phys_Object *> *resultList);
 
         LVL_PlayersArray &getPlayers();
         LVL_NpcsArray &getNpcs();
@@ -399,8 +402,7 @@ class LevelScene : public Scene
 
     private:
         IndexTree tree;
-
-        QList<PGE_Texture > textures_bank;
+        std::vector<PGE_Texture > textures_bank;
 
         LuaLevelEngine luaEngine;
 };

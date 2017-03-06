@@ -47,14 +47,14 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
     return true;
 }
 
-void LevelScene::queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object *> *resultList)
+void LevelScene::queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object *> *resultList)
 {
     RPoint lt = { zone.left(),  zone.top() };
     RPoint rb = { zone.right(), zone.bottom() };
     tree.Search(lt, rb, _TreeSearchCallback, (void*)resultList);
 }
 
-void LevelScene::queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList)
+void LevelScene::queryItems(double x, double y, std::vector<PGE_Phys_Object* > *resultList)
 {
     PGE_RectF zone = PGE_RectF(x, y, 1, 1);
     queryItems(zone, resultList);

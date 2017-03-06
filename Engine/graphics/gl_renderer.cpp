@@ -50,13 +50,12 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <fmt/fmt_format.h>
 
-#include <QDir>
-#include <QImage>
-#include <QDateTime>
+#include <chrono>
 
 #ifdef DEBUG_BUILD
-#include <QElapsedTimer>
+#include <Utils/elapsed_timer.h>
 #endif
 
 static Render_dummy     g_dummy;//Empty renderer
@@ -751,7 +750,7 @@ void GlRenderer::setup_SW_SDL()
     g_renderer->set_SDL_settings();
 }
 
-QString GlRenderer::engineName()
+std::string GlRenderer::engineName()
 {
     return g_renderer->name();
 }
@@ -761,7 +760,7 @@ bool GlRenderer::init()
     if(!PGE_Window::isReady())
         return false;
 
-    ScreenshotPath = AppPathManager::userAppDir() + "/screenshots/";
+    ScreenshotPath = AppPathManager::userAppDirSTD() + "/screenshots/";
     m_isReady = g_renderer->init();
 
     if(m_isReady)
@@ -778,22 +777,11 @@ bool GlRenderer::uninit()
     return g_renderer->uninit();
 }
 
-
 PGE_Texture GlRenderer::loadTexture(std::string path, std::string maskPath)
-{
-    return loadTexture(QString::fromStdString(path), QString::fromStdString(maskPath));
-}
-
-PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
 {
     PGE_Texture target;
     loadTextureP(target, path, maskPath);
     return target;
-}
-
-void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPath)
-{
-    loadTextureP(target, path.toStdString(), maskPath.toStdString());
 }
 
 void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string maskPath)
@@ -830,10 +818,10 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
     }
 
     #ifdef DEBUG_BUILD
-    QElapsedTimer totalTime;
-    QElapsedTimer maskMergingTime;
-    QElapsedTimer bindingTime;
-    QElapsedTimer unloadTime;
+    ElapsedTimer totalTime;
+    ElapsedTimer maskMergingTime;
+    ElapsedTimer bindingTime;
+    ElapsedTimer unloadTime;
     totalTime.start();
     qint64 maskElapsed = 0;
     qint64 bindElapsed = 0;
@@ -924,34 +912,6 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
     return;
 }
 
-GLuint GlRenderer::QImage2Texture(QImage *img, PGE_Texture &tex)
-{
-    if(!img)
-        return 0;
-
-    QImage &text_image = (*img);
-
-    if(tex.inited)
-        deleteTexture(tex);
-
-    QRgb upperColor = text_image.pixel(0, 0);
-    QRgb lowerColor = text_image.pixel(0, text_image.height() - 1);
-    tex.ColorUpper.r = float(qRed(upperColor)) / 255.0f;
-    tex.ColorUpper.b = float(qBlue(upperColor)) / 255.0f;
-    tex.ColorUpper.g = float(qGreen(upperColor)) / 255.0f;
-    tex.ColorLower.r = float(qRed(lowerColor)) / 255.0f;
-    tex.ColorLower.b = float(qBlue(lowerColor)) / 255.0f;
-    tex.ColorLower.g = float(qGreen(lowerColor)) / 255.0f;
-    tex.nOfColors = GL_RGBA;
-    tex.format = GL_BGRA;
-    tex.w = text_image.width();
-    tex.h = text_image.height();
-    tex.frame_w = tex.w;
-    tex.frame_h = tex.h;
-    g_renderer->loadTexture(tex, tex.w, tex.h, text_image.bits());
-    return tex.texture;
-}
-
 void GlRenderer::deleteTexture(PGE_Texture &tx)
 {
     if((tx.inited) && (tx.texture != g_renderer->getDummyTexture().texture))
@@ -992,7 +952,7 @@ void GlRenderer::getPixelData(const PGE_Texture *tx, unsigned char *pixelData)
     g_renderer->getPixelData(tx, pixelData);
 }
 
-QString GlRenderer::ScreenshotPath = "";
+std::string GlRenderer::ScreenshotPath = "";
 
 struct PGE_GL_shoot
 {
@@ -1078,19 +1038,32 @@ int GlRenderer::makeShot_action(void *_pixels)
         shotImg = temp;
     }
 
-    if(!QDir(ScreenshotPath).exists()) QDir().mkpath(ScreenshotPath);
+    if(!DirMan::exists(ScreenshotPath))
+        DirMan::mkAbsDir(ScreenshotPath);
 
-    QDate date = QDate::currentDate();
-    QTime time = QTime::currentTime();
-    QString saveTo = QString("%1Scr_%2_%3_%4_%5_%6_%7_%8.png").arg(ScreenshotPath)
-                     .arg(date.year()).arg(date.month()).arg(date.day())
-                     .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
-    pLogDebug("%s %d %d", saveTo.toStdString().c_str(), shoot->w, shoot->h);
+
+    auto now = std::chrono::system_clock::now();
+    std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
+    tm *t = std::localtime(&in_time_t);
+    static int prevSec = 0;
+    static int prevSecCounter = 0;
+    if(prevSec != t->tm_sec)
+    {
+        prevSec = t->tm_sec;
+        prevSecCounter = 0;
+    }
+    else
+        prevSecCounter++;
+
+    std::string saveTo = fmt::format("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}_{7}.png", ScreenshotPath,
+                                    t->tm_year, t->tm_mon, t->tm_mday,
+                                    t->tm_hour, t->tm_min, t->tm_sec, prevSecCounter);
+    pLogDebug("%s %d %d", saveTo.c_str(), shoot->w, shoot->h);
 
     if(FreeImage_HasPixels(shotImg) == FALSE)
         pLogWarning("Can't save screenshot: no pixel data!");
     else
-        FreeImage_Save(FIF_PNG, shotImg, saveTo.toUtf8().data(), PNG_Z_BEST_COMPRESSION);
+        FreeImage_Save(FIF_PNG, shotImg, saveTo.data(), PNG_Z_BEST_COMPRESSION);
 
     FreeImage_Unload(shotImg);
     delete []shoot->pixels;
@@ -1118,14 +1091,17 @@ void GlRenderer::toggleRecorder()
 {
     if(!g_gif.enabled)
     {
-        QDate date = QDate::currentDate();
-        QTime time = QTime::currentTime();
-        QString saveTo = QString("%1Scr_%2_%3_%4_%5_%6_%7_%8.gif").arg(ScreenshotPath)
-                         .arg(date.year()).arg(date.month()).arg(date.day())
-                         .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
+        auto now = std::chrono::system_clock::now();
+        std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
+        tm *t = std::localtime(&in_time_t);
+
+        std::string saveTo = fmt::format("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}.gif",
+                                         ScreenshotPath,
+                                         t->tm_year, t->tm_mon, t->tm_mday,
+                                         t->tm_hour, t->tm_min, t->tm_sec);
 
         if(GifBegin(&g_gif.writer,
-                    saveTo.toUtf8().data(),
+                    saveTo.data(),
                     static_cast<uint32_t>(m_viewport_w),
                     static_cast<uint32_t>(m_viewport_h), 3, 8, false))
         {

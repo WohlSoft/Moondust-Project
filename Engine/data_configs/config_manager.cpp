@@ -43,9 +43,7 @@ DataFolders      ConfigManager::dirs;
 std::string      ConfigManager::config_name;
 QString          ConfigManager::config_dir;
 std::string      ConfigManager::config_dirSTD;
-QString          ConfigManager::config_id = "dummy";
 std::string      ConfigManager::config_idSTD = "dummy";
-QString          ConfigManager::data_dir;
 std::string      ConfigManager::data_dirSTD;
 unsigned int     ConfigManager::default_grid = 32u;
 
@@ -70,12 +68,12 @@ MenuBoxSetup ConfigManager::setup_menu_box;
 //Menu setup
 MenuSetup ConfigManager::setup_menus;
 
-QList<PGE_Texture > ConfigManager::common_textures;
+std::vector<PGE_Texture > ConfigManager::common_textures;
 
 
 /* *** Texture banks *** */
-QList<PGE_Texture > ConfigManager::level_textures;
-QList<PGE_Texture > ConfigManager::world_textures;
+std::vector<PGE_Texture > ConfigManager::level_textures;
+std::vector<PGE_Texture > ConfigManager::world_textures;
 
 std::string ConfigManager::imgFile, ConfigManager::imgFileM;
 std::string ConfigManager::tmpstr;
@@ -86,20 +84,19 @@ Strings::List ConfigManager::tmp;
 
 void ConfigManager::setConfigPath(std::string p)
 {
-    config_dir = QString::fromStdString(p);
-    if(!config_dir.endsWith('/'))
-        config_dir.append('/');
-    config_dirSTD = config_dir.toStdString();
+    config_dirSTD = p;
+    if(!config_dirSTD.empty())
+    {
+        if(config_dirSTD.back() != '/')
+            config_dirSTD.push_back('/');
+    }
     config_idSTD = Files::dirname(DirMan(config_dirSTD).absolutePath());
-    config_id = QString::fromStdString(config_idSTD);
 }
 
-static void msgBox(QString title, QString text)
+static void msgBox(std::string title, std::string text)
 {
-    std::string ttl = title.toStdString();
-    std::string msg = text.toStdString();
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                             ttl.c_str(), msg.c_str(),
+                             title.c_str(), text.c_str(),
                              PGE_Window::window);
 }
 
@@ -110,18 +107,17 @@ bool ConfigManager::loadBasics()
 
     guiset.beginGroup("main");
     {
-        data_dir = (guiset.value("application-dir", "0").toBool() ?
-                    ApplicationPath + "/" : config_dir + "data/");
-        data_dirSTD = data_dir.toStdString();
+        data_dirSTD = (guiset.value("application-dir", "0").toBool() ?
+                    ApplicationPathSTD + "/" : config_dirSTD + "data/");
     }
     guiset.endGroup();
     errorsList.clear();
 
     //dirs
-    if((!QDir(config_dir).exists()) || (QFileInfo(config_dir).isFile()))
+    if((!DirMan::exists(config_dirSTD)) || (Files::fileExists(config_dirSTD)))
     {
         msgBox("Config error",
-               QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
+               fmt::format("CONFIG DIR NOT FOUND AT: {0}", config_dirSTD));
         return false;
     }
 
@@ -130,7 +126,7 @@ bool ConfigManager::loadBasics()
     if(!Files::fileExists(main_ini))
     {
         msgBox("Config error",
-               QString("Can't open the 'main.ini' config file!"));
+               "Can't open the 'main.ini' config file!");
         return false;
     }
 
@@ -150,12 +146,11 @@ bool ConfigManager::loadBasics()
         else if(!DirMan::exists(data_dirSTD)) //Check as absolute
         {
             msgBox("Config error",
-                   QString("Config data path not exists: %1").arg(data_dir));
+                   fmt::format("Config data path not exists: {0}", data_dirSTD));
             return false;
         }
 
         data_dirSTD = DirMan(data_dirSTD).absolutePath() + "/";
-        data_dir = QString::fromStdString(data_dirSTD);
 
         std::string url     = mainset.value("home-page", "http://wohlsoft.ru/config_packs/").toString();
         std::string version = mainset.value("pge-engine-version", "0.0").toString();
@@ -178,9 +173,9 @@ bool ConfigManager::loadBasics()
         }
 
         if(appDir)
-            dirs.worlds = customAppPath + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
+            dirs.worlds = customAppPath + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
         else
-            dirs.worlds = AppPathManager::userAppDirSTD() + "/" + mainset.value("worlds", config_id + "_worlds").toString() + "/";
+            dirs.worlds = AppPathManager::userAppDirSTD() + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
 
         if(!DirMan::exists(dirs.worlds))
             DirMan::mkAbsPath(dirs.worlds);
@@ -200,14 +195,14 @@ bool ConfigManager::loadBasics()
     mainset.endGroup();
     mainset.beginGroup("graphics");
     {
-        default_grid = mainset.value("default-grid", 32).toUInt();
+        mainset.read("default-grid", default_grid, 32);
     }
     mainset.endGroup();
 
     if(mainset.lastError() != IniProcessing::ERR_OK)
     {
         msgBox("Config error",
-               QString("ERROR LOADING main.ini N:%1").arg(mainset.lineWithError()));
+               fmt::format("ERROR LOADING main.ini N:{0}", mainset.lineWithError()));
         return false;
     }
 
@@ -245,7 +240,7 @@ void ConfigManager::addError(std::string bug)
 bool ConfigManager::unloadLevelConfigs()
 {
     ///Clear texture bank
-    for(int i = 0; i < level_textures.size(); i++)
+    for(size_t i = 0; i < level_textures.size(); i++)
         GlRenderer::deleteTexture(level_textures[i]);
 
     level_textures.clear();
@@ -267,7 +262,7 @@ bool ConfigManager::unloadLevelConfigs()
 bool ConfigManager::unloadWorldConfigs()
 {
     ///Clear texture bank
-    for(int i = 0; i < world_textures.size(); i++)
+    for(size_t i = 0; i < world_textures.size(); i++)
         GlRenderer::deleteTexture(world_textures[i]);
 
     world_textures.clear();

@@ -1,7 +1,7 @@
 #ifndef BINDING_CORE_GRAPHICS_H
 #define BINDING_CORE_GRAPHICS_H
 
-#include <QHash>
+#include <unordered_map>
 #include <graphics/gl_renderer.h>
 #include <script/lua_global.h>
 
@@ -11,7 +11,7 @@
 class Binding_Core_Graphics
 {
 public:
-    static void setRootPath(QString path);
+    static void setRootPath(std::string path);
 
     /*!
      * \brief Load image file and store a texture
@@ -51,11 +51,12 @@ public:
      */
     static void clearCache();
 
+    typedef std::unordered_map<std::string, PGE_Texture> TexturesHash;
     //! Cached textures
-    static QHash<QString, PGE_Texture> textureCache;
+    static TexturesHash textureCache;
 
     //! Current path to level/world custom directory (where look for image files by default)
-    static QString rootPath;
+    static std::string rootPath;
 
     static luabind::scope PGETexture_bindToLua();
     static luabind::scope bindToLua();

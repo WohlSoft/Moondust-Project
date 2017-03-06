@@ -4,6 +4,8 @@
 #include "lua_utils.h"
 #include "lua_global.h"
 
+#include <SDL2/SDL_rwops.h>
+
 //Core libraries:
 #include "bindings/core/globalfuncs/luafuncs_core_audio.h"
 #include "bindings/core/globalfuncs/luafuncs_core_effect.h"
@@ -19,10 +21,10 @@
 #include "bindings/core/classes/luaclass_core_scene_effects.h"
 
 #include <Utils/files.h>
+#include <Utils/sdl_file.h>
+#include <common_features/logger.h>
 
-#include <QFile>
 #include <sstream>
-#include <QFileInfo>
 
 #ifdef ANDROID
 #include <string>
@@ -60,11 +62,28 @@ LuaEngine::~LuaEngine()
         shutdown();
 }
 
+static void splitErrorMsg(const std::string &inMsg, std::string &msg1, std::string &msg2)
+{
+    std::string::size_type lp = inMsg.find('\n');
+    if(lp != std::string::npos)
+    {
+        msg1 = inMsg.substr(0, lp);
+        std::string::size_type lp2 = inMsg.find('\n', lp);
+        if(lp2 != std::string::npos)
+            msg2 = inMsg.substr(lp + 1, lp2);
+        else
+            msg2 = inMsg.substr(lp + 1);
+    }
+    else
+        msg1 = inMsg;
+}
+
 void LuaEngine::init()
 {
     //First check if lua engine is already active
-    if(isValid()){
-        qWarning() << "LuaEngine: Called init(), while engine is already initialized!";
+    if(isValid())
+    {
+        pLogWarning("LuaEngine: Called init(), while engine is already initialized!");
         return;
     }
 
@@ -77,31 +96,31 @@ void LuaEngine::init()
     //Open up "safe" standard lua libraries
     // FIXME: Add more accurate sandbox
     lua_pushcfunction(L, luaopen_base);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_math);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_string);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_table);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_debug);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_os);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_package);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     #ifdef USE_LUA_JIT
     lua_pushcfunction(L, luaopen_bit);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_ffi);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     lua_pushcfunction(L, luaopen_jit);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
     #endif
 
     //SOCKET TESTING STUFF
     lua_pushcfunction(L, luaopen_io);
-    lua_call(L,0,0);
+    lua_call(L, 0, 0);
 
     lua_getfield(L, LUA_GLOBALSINDEX, "package");
     lua_getfield(L, -1, "preload");
@@ -133,13 +152,13 @@ void LuaEngine::init()
 
     //Complete the lua script path
     std::string fullPaths;
-    for(int i=0; i<m_luaScriptPaths.size(); i++)
+    for(size_t i = 0; i < m_luaScriptPaths.size(); i++)
     {
         std::string luaPath = m_luaScriptPaths[i];
         if(!luaPath.empty() && luaPath.back() != '/')
             luaPath += "/";
         fullPaths += luaPath + "?.lua";
-        if(i < (m_luaScriptPaths.size()-1))
+        if(i < (m_luaScriptPaths.size() - 1))
             fullPaths.push_back(';');
     }
 
@@ -157,11 +176,11 @@ void LuaEngine::init()
     //Add error reporter
     if(!m_errorReporterFunc)
     {
-        m_errorReporterFunc = [this](const QString& errMsg, const QString& stacktrace)
+        m_errorReporterFunc = [this](const std::string & errMsg, const std::string & stacktrace)
         {
-            qWarning() << "Lua-Error: ";
-            qWarning() << "Error Message: " << errMsg;
-            qWarning() << "Stacktrace: \n" << stacktrace;
+            pLogWarning("Lua-Error: ");
+            pLogWarning("Error Message: %s", errMsg.c_str());
+            pLogWarning("Stacktrace: \n%s", stacktrace.c_str());
         };
     }
 
@@ -176,20 +195,21 @@ void LuaEngine::init()
     std::string coreFilePath = util::resolveRelativeOrAbsolute(m_coreFile, {m_luaScriptPath});
     std::string userFilePath = util::resolveRelativeOrAbsolute(m_userFile, {m_luaScriptPath});
 
-    QFile luaCoreFile(coreFilePath);
-    if(!luaCoreFile.open(QIODevice::ReadOnly))
+    SdlFile luaCoreFile(coreFilePath);
+    if(!luaCoreFile.open(SdlFile::Read))
     {
-        qWarning() << "Failed to load up \"" << coreFilePath << "\"! Wrong path or insufficient access?";
+        pLogWarning("Failed to load up \"%s\"! Wrong path or insufficient access?", coreFilePath.c_str());
         m_lateShutdown = true;
         shutdown();
         return;
     }
+
     loadMultiRet(&luaCoreFile);
     luaCoreFile.close();
 
     // OPTIONAL: User code file
-    QFile luaUserFile(userFilePath);
-    if(luaUserFile.open(QIODevice::ReadOnly))
+    SdlFile luaUserFile(userFilePath);
+    if(luaUserFile.open(SdlFile::Read))
     {
         loadMultiRet(&luaUserFile);
         luaUserFile.close();
@@ -201,8 +221,9 @@ void LuaEngine::init()
 
 void LuaEngine::shutdown()
 {
-    if(!isValid()){
-        qWarning() << "LuaEngine: Trying to shutdown invalid lua";
+    if(!isValid())
+    {
+        pLogWarning("LuaEngine: Trying to shutdown invalid lua");
         return;
     }
 
@@ -215,8 +236,9 @@ void LuaEngine::shutdown()
 
 void LuaEngine::forceShutdown()
 {
-    if(!isValid()){
-        qWarning() << "LuaEngine: Trying to force shutdown invalid lua";
+    if(!isValid())
+    {
+        pLogWarning("LuaEngine: Trying to force shutdown invalid lua");
         return;
     }
 
@@ -225,50 +247,51 @@ void LuaEngine::forceShutdown()
     L = nullptr;
 }
 
-luabind::object LuaEngine::loadClassAPI(const QString &path)
+luabind::object LuaEngine::loadClassAPI(const std::string &path)
 {
-    if(loadedFiles.contains(path))
-    {
-        return loadedFiles[path];
-    }
+    ScriptsHash::iterator existFile = loadedFiles.find(path);
+    if(existFile != loadedFiles.end())
+        return existFile->second;
 
-    QFile luaCoreFile(path);
-    if(!luaCoreFile.open(QIODevice::ReadOnly)){
-        qWarning() << "Failed to load up \"" << path << "\"! Wrong path or insufficient access?";
+    SdlFile luaCoreFile(path);
+    if(!luaCoreFile.open(SdlFile::Read))
+    {
+        pLogWarning("Failed to load up \"%s\"! Wrong path or insufficient access?", path.c_str());
         shutdown();
         return luabind::object();
     }
 
     //Now read our code.
-    QString luaCoreCode = QTextStream(&luaCoreFile).readAll();
+    std::string luaCoreCode = luaCoreFile.readAll();
 
     //Now load our code by lua and check for common compile errors
     int errorCode = luautil_loadclass(L,
-                                      luaCoreCode.toLocal8Bit().data(),
+                                      luaCoreCode.data(),
                                       luaCoreCode.length(),
                                       Files::basename(m_coreFile).c_str());
     //If we get an error, then handle it
     if(errorCode)
     {
-        qWarning() << "Got lua error, reporting...";
-        m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
+        pLogWarning("Got lua error, reporting...");
+        m_errorReporterFunc(std::string(lua_tostring(L, -1)), std::string(""));
         m_lateShutdown = true;
         return luabind::object();
     }
 
     luabind::object tReturn(luabind::from_stack(L, -1));
-    if(luabind::type(tReturn) != LUA_TUSERDATA){
-        qWarning() << "Invalid return type of loading class";
+    if(luabind::type(tReturn) != LUA_TUSERDATA)
+    {
+        pLogWarning("Invalid return type of loading class");
         return luabind::object();
     }
 
-    loadedFiles[path]=tReturn;
+    loadedFiles.insert({path, tReturn});
     return tReturn;
 }
 
-void LuaEngine::loadClassAPI(const QString &nameInGlobal, const QString &path)
+void LuaEngine::loadClassAPI(const std::string &nameInGlobal, const std::string &path)
 {
-    luabind::globals(L)[nameInGlobal.toStdString()] = loadClassAPI(path);
+    luabind::globals(L)[nameInGlobal] = loadClassAPI(path);
 }
 
 std::string LuaEngine::coreFile() const
@@ -280,7 +303,7 @@ void LuaEngine::setCoreFile(const std::string &coreFile)
 {
     if(isValid())
     {
-        qWarning() << "Trying to change core lua file while lua engine is already initialized!";
+        pLogWarning("Trying to change core lua file while lua engine is already initialized!");
         return;
     }
     m_coreFile = coreFile;
@@ -291,33 +314,38 @@ void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
     if(m_lateShutdown)
         return;
 
-    if(!isValid()){
-        qWarning() << "Dispatching events while engine is invalid!";
+    if(!isValid())
+    {
+        pLogWarning("Dispatching events while engine is invalid!");
         return;
     }
 
     lua_getglobal(L, "__native_event");
-    if(!lua_isfunction(L,-1))
+    if(!lua_isfunction(L, -1))
     {
-        qWarning() << "Did not find __native_event function in core!";
-        lua_pop(L,1);
+        pLogWarning("Did not find __native_event function in core!");
+        lua_pop(L, 1);
         return;
     }
 
     luabind::object(L, toDispatchEvent).push(L);
 
     int argsNum = 0;
-    for(luabind::object& obj : toDispatchEvent.objList){
+    for(luabind::object &obj : toDispatchEvent.objList)
+    {
         argsNum++;
         obj.push(L);
     }
 
-    if (luabind::detail::pcall(L, argsNum + 1, 0) != 0) {
+    if(luabind::detail::pcall(L, argsNum + 1, 0) != 0)
+    {
         //Be sure to cleanup all objects
         toDispatchEvent.cleanupAllParams();
 
-        QString runtimeErrorMsg = QString(lua_tostring(L, -1));
-        m_errorReporterFunc(runtimeErrorMsg.section('\n', 0, 0), runtimeErrorMsg.section('\n', 1));
+        std::string runtimeErrorMsg = lua_tostring(L, -1);
+        std::string msg1, msg2;
+        splitErrorMsg(runtimeErrorMsg, msg1, msg2);
+        m_errorReporterFunc(msg1, msg2);
         m_lateShutdown = true;
     }
 }
@@ -334,7 +362,8 @@ void LuaEngine::bindCore()
         Binding_Core_Class_SimpleEvent::bindToLua(),
         Binding_Core_Scene_Effects::bindToLua()
     ];
-    if(m_baseScene){
+    if(m_baseScene)
+    {
         luabind::module(L)[
             Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer(),
             Binding_Core_GlobalFuncs_Renderer::bindToLuaText(),
@@ -350,7 +379,7 @@ void LuaEngine::bindCore()
 
 void LuaEngine::error()
 {
-    qWarning() << "Runtime Lua Error, shutting down";
+    pLogWarning("Runtime Lua Error, shutting down");
     shutdown();
 }
 std::string LuaEngine::getUserFile() const
@@ -363,17 +392,22 @@ void LuaEngine::setUserFile(const std::string &userFile)
     m_userFile = userFile;
 }
 
-void LuaEngine::loadMultiRet(QFile *file)
+void LuaEngine::loadMultiRet(SdlFile *file, const std::string &name)
 {
+    SDL_assert(file);
     //Now read our code.
-    QString luaCode = QTextStream(file).readAll();
+    std::string luaCode = file->readAll();
 
     //Now load our code by lua and check for common compile errors
-    int errorCode = luautil_loadlua(L, luaCode.toLocal8Bit().data(), luaCode.length(), luaCode.section('/', -1).section('\\', -1).toLocal8Bit().data());
+    int errorCode = luautil_loadlua(L,
+                                    luaCode.data(),
+                                    luaCode.length(),
+                                    name.data());
     //If we get an error, then handle it
-    if(errorCode){
-        qWarning() << "Got lua error, reporting... [loadMultiRet] " << file->fileName();
-        m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
+    if(errorCode)
+    {
+        pLogWarning("Got lua error, reporting... [loadMultiRet] %s", file->fileName().c_str());
+        m_errorReporterFunc(std::string(lua_tostring(L, -1)), std::string(""));
         m_lateShutdown = true;
         shutdown();
         return;
@@ -392,14 +426,16 @@ void LuaEngine::setLateShutdown(bool value)
 
 void LuaEngine::postLateShutdownError(luabind::error &error)
 {
-    QString runtimeErrorMsg = error.what();
-    m_errorReporterFunc(runtimeErrorMsg.section('\n', 0, 0), runtimeErrorMsg.section('\n', 1));
+    std::string runtimeErrorMsg = error.what();
+    std::string msg1, msg2;
+    splitErrorMsg(runtimeErrorMsg, msg1, msg2);
+    m_errorReporterFunc(msg1, msg2);
     m_lateShutdown = true;
 }
 
 void LuaEngine::runGarbageCollector()
 {
-    lua_gc(L, LUA_GCCOLLECT,0);
+    lua_gc(L, LUA_GCCOLLECT, 0);
 }
 
 std::string LuaEngine::getLuaScriptPath() const
@@ -407,7 +443,7 @@ std::string LuaEngine::getLuaScriptPath() const
     return m_luaScriptPath;
 }
 
-void LuaEngine::setLuaScriptPath(const std::string& luaScriptPath)
+void LuaEngine::setLuaScriptPath(const std::string &luaScriptPath)
 {
     m_luaScriptPaths.clear();
     m_luaScriptPaths.push_back(luaScriptPath);
@@ -419,7 +455,7 @@ void LuaEngine::appendLuaScriptPath(const std::string &luaScriptPath)
     m_luaScriptPaths.push_back(luaScriptPath);
 }
 
-void LuaEngine::setFileSearchPath(const QString &path)
+void LuaEngine::setFileSearchPath(const std::string &path)
 {
     Binding_Core_Graphics::setRootPath(path);
 }
@@ -429,7 +465,7 @@ Scene *LuaEngine::getBaseScene() const
     return m_baseScene;
 }
 
-void LuaEngine::setErrorReporterFunc(const std::function<void (const QString &, const QString &)> &value)
+void LuaEngine::setErrorReporterFunc(const std::function<void (const std::string &, const std::string &)> &value)
 {
     m_errorReporterFunc = value;
 }
@@ -441,36 +477,36 @@ int pcall_handler(lua_State *L)
     int level = 1;
     lua_Debug d;
     bool gotInfoStacktrace = false;
-    while(lua_getstack(L, level, &d)){
+    while(lua_getstack(L, level, &d))
+    {
         gotInfoStacktrace = true;
         lua_getinfo(L, "Sln", &d);
-        if(level == 1){
+        if(level == 1)
+        {
             std::string err = lua_tostring(L, -1);
             lua_pop(L, 1);
             msg += err + "\n";
-        }else{
+        }
+        else
+        {
             std::string nextEntry = "\tat ";
 
-            if(util::strempty(d.short_src)){
+            if(util::strempty(d.short_src))
                 nextEntry += std::string(d.short_src) + " ";
-            }else{
+            else
                 nextEntry += "[unknown codefile] ";
-            }
-            if(util::strempty(d.what)){
+            if(util::strempty(d.what))
                 nextEntry += std::string(d.what) + " ";
-            }else{
+            else
                 nextEntry += "[unknown source] ";
-            }
-            if(util::strempty(d.namewhat)){
+            if(util::strempty(d.namewhat))
                 nextEntry += std::string(d.namewhat) + " ";
-            }else{
+            else
                 nextEntry += "[unknown type] ";
-            }
-            if(util::strempty(d.name)){
+            if(util::strempty(d.name))
                 nextEntry += std::string(d.name) + " ";
-            }else{
+            else
                 nextEntry += "[unknown name] ";
-            }
             nextEntry += std::string("at line ") + NUM2STR(d.currentline) + std::string("\n");
 
             msg += nextEntry;
@@ -480,9 +516,10 @@ int pcall_handler(lua_State *L)
     }
 
     if(msg.size() > 0)
-        msg.erase(msg.end()-1, msg.end());
+        msg.erase(msg.end() - 1, msg.end());
 
-    if(!gotInfoStacktrace){
+    if(!gotInfoStacktrace)
+    {
         if(lua_gettop(L) > 0)
             if(lua_type(L, -1) == LUA_TSTRING)
                 msg = lua_tostring(L, -1);

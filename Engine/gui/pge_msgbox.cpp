@@ -97,12 +97,12 @@ void PGE_MsgBox::construct(std::string msg,
 
     switch(m_type)
     {
-        case msg_info: bg_color =       QColor(qRgb(0,0,0)); break;
-        case msg_info_light: bg_color = QColor(qRgb(0,0,125)); break;
-        case msg_warn: bg_color =       QColor(qRgb(255,201,14)); break;
-        case msg_error: bg_color =      QColor(qRgb(125,0,0)); break;
-        case msg_fatal: bg_color =      QColor(qRgb(255,0,0)); break;
-        default:  bg_color =            QColor(qRgb(0,0,0)); break;
+        case msg_info: bg_color =       GlColor(0, 0, 0); break;
+        case msg_info_light: bg_color = GlColor(0, 0, 0.490196078); break;
+        case msg_warn: bg_color =       GlColor(1.0, 0.788235294, 0.054901961); break;
+        case msg_error: bg_color =      GlColor(0.490196078, 0, 0); break;
+        case msg_fatal: bg_color =      GlColor(1.0, 0, 0); break;
+        default:  bg_color =            GlColor(0, 0, 0); break;
     }
 
     /****************Word wrap*********************/
@@ -113,10 +113,10 @@ void PGE_MsgBox::construct(std::string msg,
 
     if((pos.x() == -1) && (pos.y() == -1))
     {
-        m_sizeRect.setLeft(PGE_Window::Width/2-width-padding);
-        m_sizeRect.setTop(PGE_Window::Height/3-height-padding);
+        m_sizeRect.setLeft(PGE_Window::Width/2 - width-padding);
+        m_sizeRect.setTop(PGE_Window::Height/3 - height-padding);
         m_sizeRect.setRight(PGE_Window::Width/2 + width + padding);
-        m_sizeRect.setBottom(PGE_Window::Height/3+height + padding);
+        m_sizeRect.setBottom(PGE_Window::Height/3 + height + padding);
 
         if(m_sizeRect.top() < padding)
             m_sizeRect.setY(padding);
@@ -165,7 +165,7 @@ void PGE_MsgBox::render()
         {
             GlRenderer::renderRect(m_sizeRect.left(), m_sizeRect.top(),
                                    m_sizeRect.width(), m_sizeRect.height(),
-                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, m_faderOpacity);
+                                   bg_color.Red(), bg_color.Green(), bg_color.Blue(), m_faderOpacity);
         }
         FontManager::printText(m_message, m_sizeRect.left()+padding, m_sizeRect.top()+padding, fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
@@ -187,13 +187,13 @@ void PGE_MsgBox::render()
         else
         {
             GlRenderer::renderRectBR(m_sizeRect.center().x() - (width+padding)*m_faderOpacity ,
-                                   m_sizeRect.center().y() - (height+padding)*m_faderOpacity,
+                                     m_sizeRect.center().y() - (height+padding)*m_faderOpacity,
                                      m_sizeRect.center().x() + (width+padding)*m_faderOpacity,
-                                   m_sizeRect.center().y() + (height+padding)*m_faderOpacity,
-                                   bg_color.red()/255.0f,
-                                   bg_color.green()/255.0f,
-                                   bg_color.blue()/255.0f,
-                                   m_faderOpacity);
+                                     m_sizeRect.center().y() + (height+padding)*m_faderOpacity,
+                                    bg_color.Red(),
+                                    bg_color.Green(),
+                                    bg_color.Blue(),
+                                    m_faderOpacity);
         }
     }
 }
@@ -201,8 +201,8 @@ void PGE_MsgBox::render()
 void PGE_MsgBox::restart()
 {
     PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
-    m_running=true;
-    m_page=0;
+    m_running = true;
+    m_page = 0;
 }
 
 bool PGE_MsgBox::isRunning()
@@ -225,7 +225,7 @@ void PGE_MsgBox::exec()
         GlRenderer::repaint();
 
         if((!PGE_Window::vsync) && (m_uTick > (signed)(SDL_GetTicks() - start_render)))
-                SDL_Delay(m_uTick - (SDL_GetTicks()-start_render) );
+            SDL_Delay(m_uTick - (SDL_GetTicks() - start_render) );
     }
 }
 
@@ -268,7 +268,7 @@ void PGE_MsgBox::processBox(double)
         switch(event.type)
         {
             case SDL_QUIT:
-                m_page++; setFade(10, 0.0f, 0.05f);
+                m_page++; setFade(10, 0.0, 0.05);
             break;
             case SDL_KEYDOWN: // If pressed key
                 switch(event.key.keysym.sym)
@@ -278,7 +278,7 @@ void PGE_MsgBox::processBox(double)
                 case SDLK_KP_ENTER:
                 {
                     m_page++;
-                    setFade(10, 0.0f, 0.05f);
+                    setFade(10, 0.0, 0.05);
                 }
                 break;
 
@@ -292,7 +292,7 @@ void PGE_MsgBox::processBox(double)
                     case SDL_BUTTON_LEFT:
                     {
                         m_page++;
-                        setFade(10, 0.0f, 0.05f);
+                        setFade(10, 0.0, 0.05);
                     }
                     break;
                 }

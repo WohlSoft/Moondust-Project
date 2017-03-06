@@ -641,11 +641,11 @@ void LVL_Player::teleport(double x, double y)
 
 
 
-void LVL_Player::exitFromLevel(QString levelFile, unsigned long targetWarp, long wX, long wY)
+void LVL_Player::exitFromLevel(std::string levelFile, unsigned long targetWarp, long wX, long wY)
 {
     isAlive = false;
 
-    if(!levelFile.isEmpty())
+    if(!levelFile.empty())
     {
         m_scene->warpToLevelFile =
             m_scene->levelData()->meta.path + "/" + levelFile;

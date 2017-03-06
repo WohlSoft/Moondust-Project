@@ -31,9 +31,7 @@
 #include <common_features/sizef.h>
 
 #include <controls/control_keys.h>
-
-#include <QColor>
-#include <QString>
+#include <string>
 
 class PGE_MsgBox : public PGE_BoxBase
 {
@@ -83,10 +81,10 @@ private:
     msgType m_type;
     PGE_Rect m_sizeRect;
     std::string m_message;
-    double width;
-    double height;
-    double padding;
-    QColor bg_color;
+    double  width;
+    double  height;
+    double  padding;
+    GlColor bg_color;
     void updateControllers();
 };
 

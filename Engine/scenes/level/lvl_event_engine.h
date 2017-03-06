@@ -21,6 +21,10 @@
 
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <common_features/event_queue.h>
+#include <string>
+#include <vector>
+#include <unordered_map>
+
 #include <QHash>
 #include <QList>
 #include <QString>
@@ -32,7 +36,7 @@ public:
     LVL_EventAction(const LVL_EventAction &ea) = default;
     virtual ~LVL_EventAction();
 
-    QString m_eventName;
+    std::string m_eventName;
     EventQueue<LVL_EventAction > m_action;
     double m_timeDelayLeft;
 };
@@ -47,10 +51,12 @@ public:
     virtual ~LVL_EventEngine();
     void addSMBX64Event(LevelSMBX64Event &evt);
     void processTimers(double tickTime);
-    void triggerEvent(QString event);
-
-    QList<QList<LVL_EventAction > > workingEvents;
-    QHash<QString, QList<LVL_EventAction >> events;
+    void triggerEvent(std::string event);
+    typedef std::vector<LVL_EventAction > EventActList;
+    typedef std::vector<EventActList > WorkingEvents;
+    WorkingEvents   workingEvents;
+    typedef std::unordered_map<std::string, EventActList > EventsTable;
+    EventsTable events;
 };
 
 #endif // LVL_EVENTENGINE_H

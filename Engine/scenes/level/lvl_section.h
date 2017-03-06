@@ -25,8 +25,7 @@
 
 #include "lvl_backgrnd.h"
 
-
-typedef QVector<PGE_Phys_Object * > R_itemList;
+typedef std::vector<PGE_Phys_Object * > R_itemList;
 
 class PGE_Phys_Object;
 class PGE_LevelCamera;
@@ -51,13 +50,13 @@ class LVL_Section
         void resetLimits();
 
         void initBG();
-        void setMusicRoot(QString _path);
+        void setMusicRoot(std::string _path);
         unsigned long getBgId();
 
         void playMusic();
         void resetMusic();
-        void setMusic(int musID);
-        void setMusic(QString musFile);
+        void setMusic(unsigned int musID);
+        void setMusic(std::string musFile);
 
         void renderBG(double x, double y, double w, double h);
 
@@ -84,11 +83,11 @@ class LVL_Section
         typedef RTree<PGE_Phys_Object *, double, 2, double > IndexTree;
         IndexTree tree;
 
-        QString        music_root;
-        int            curMus;
-        QString        curCustomMus;
-        unsigned long  curBgID;
-        LVL_Background _background;
+        std::string     music_root;
+        unsigned int    curMus;
+        std::string     curCustomMus;
+        unsigned long   curBgID;
+        LVL_Background  _background;
 
         bool isInit;
 

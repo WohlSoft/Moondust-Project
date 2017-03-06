@@ -22,13 +22,13 @@ Render_Base::Render_Base() :
     m_renderer_name("Unknown")
 {}
 
-Render_Base::Render_Base(QString renderer_name) :
+Render_Base::Render_Base(std::string renderer_name) :
     m_renderer_name(renderer_name)
 {}
 
 Render_Base::~Render_Base() {}
 
-const QString &Render_Base::name()
+const std::string &Render_Base::name()
 {
     return m_renderer_name;
 }
