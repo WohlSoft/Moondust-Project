@@ -22,7 +22,7 @@ void Binding_Level_CommonFuncs::Lua_triggerEvent(lua_State *L, std::string event
 void Binding_Level_CommonFuncs::Lua_ShakeScreen(lua_State *L, double forceX, double forceY, double decX, double decY)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    for(QList<PGE_LevelCamera>::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
+    for(std::vector<PGE_LevelCamera>::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
     {
         PGE_LevelCamera* cam=&(*it);
         cam->shakeScreen(forceX, forceY, decX, decY);
@@ -32,7 +32,7 @@ void Binding_Level_CommonFuncs::Lua_ShakeScreen(lua_State *L, double forceX, dou
 void Binding_Level_CommonFuncs::Lua_ShakeScreenX(lua_State *L, double forceX, double decX)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    for(QList<PGE_LevelCamera>::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
+    for(std::vector<PGE_LevelCamera>::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
     {
         PGE_LevelCamera* cam=&(*it);
         cam->shakeScreenX(forceX, decX);
@@ -42,7 +42,7 @@ void Binding_Level_CommonFuncs::Lua_ShakeScreenX(lua_State *L, double forceX, do
 void Binding_Level_CommonFuncs::Lua_ShakeScreenY(lua_State *L, double forceY, double decY)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    for(QList<PGE_LevelCamera>::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
+    for(std::vector<PGE_LevelCamera>::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
     {
         PGE_LevelCamera* cam=&(*it);
         cam->shakeScreenY(forceY, decY);

@@ -36,14 +36,14 @@ PGE_Menuitem::~PGE_Menuitem()
 
 PGE_Menuitem::PGE_Menuitem(const PGE_Menuitem &_it)
 {
-    this->title = _it.title;
-    this->item_key = _it.item_key;
-    this->type = _it.type;
-    this->extAction = _it.extAction;
-    this->valueOffset = _it.valueOffset;
-    this->m_enabled = _it.m_enabled;
-    this->_font_id = _it._font_id;
-    this->_width=_it._width;
+    this->title         = _it.title;
+    this->item_key      = _it.item_key;
+    this->type          = _it.type;
+    this->extAction     = _it.extAction;
+    this->valueOffset   = _it.valueOffset;
+    this->m_enabled     = _it.m_enabled;
+    this->_font_id      = _it._font_id;
+    this->_width        = _it._width;
 }
 
 void PGE_Menuitem::left() {}

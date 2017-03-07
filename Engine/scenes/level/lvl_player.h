@@ -31,9 +31,7 @@
 #include <common_features/point_mover.h>
 #include <common_features/event_queue.h>
 #include <common_features/data_array.h>
-
-#include <QHash>
-#include <QVector>
+#include <vector>
 
 class LVL_Player_harm_event
 {
@@ -76,7 +74,7 @@ public:
     double _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
     /*****************NPC's and blocks******************/
-    typedef QHash<int, PGE_Phys_Object *> PlayerColliders;
+    typedef std::unordered_map<int, PGE_Phys_Object *> PlayerColliders;
     LVL_Npc   *collided_talkable_npc;
     bool _stucked;
     /***************************************************/
@@ -109,7 +107,7 @@ public:
 
     /*******************Environmept*********************/
     PGE_DataArray<obj_player_physics > physics;
-    QHash<int, int> environments_map;
+    std::unordered_map<int, int> environments_map;
 
     obj_player_physics physics_cur;
     int     environment;
@@ -152,8 +150,8 @@ public:
     /********************Jumps***************************/
     bool    JumpPressed;
     bool    onGround();
-    QHash<intptr_t, PGE_Phys_Object * > foot_contacts_map;  //!< staying on ground surfaces
-    QHash<intptr_t, PGE_Phys_Object * > foot_sl_contacts_map; //!< Slipery surfaces
+    std::unordered_map<intptr_t, PGE_Phys_Object * > foot_contacts_map;  //!< staying on ground surfaces
+    std::unordered_map<intptr_t, PGE_Phys_Object * > foot_sl_contacts_map; //!< Slipery surfaces
     double  jumpTime;
     double  jumpVelocity;
     /********************Jumps***************************/
@@ -172,7 +170,7 @@ public:
     /********************Bump***************************/
 
     /********************Climbing***************************/
-    QHash<intptr_t, PGE_Phys_Object * > climbable_map;
+    std::unordered_map<intptr_t, PGE_Phys_Object * > climbable_map;
     bool        climbing;
     double      climbableHeight;
     /********************Climbing***************************/

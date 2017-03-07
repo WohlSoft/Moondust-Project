@@ -24,9 +24,6 @@
 #include <fcntl.h>
 #endif
 
-#include <QDir>
-#include <QFileInfo>
-
 #include "engine.hpp"
 
 #include <version.h>
@@ -35,6 +32,7 @@
 #include <audio/pge_audio.h>
 
 #include <Utils/files.h>
+#include <DirManager/dirman.h>
 
 #include <common_features/crash_handler.h>
 #include <common_features/logger.h>
@@ -184,8 +182,8 @@ void PGEEngineApp::unloadAll()
 PGE_Application *PGEEngineApp::loadQApp(int &argc, char **argv)
 {
     PGE_Application::addLibraryPath(".");
-    PGE_Application::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
-    PGE_Application::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
+    //PGE_Application::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
+    //PGE_Application::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
     #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
     QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
@@ -204,7 +202,7 @@ PGE_Application *PGEEngineApp::loadQApp(int &argc, char **argv)
     argc   = m_args.size();
     //Generating application path
     //Init system paths
-    AppPathManager::initAppPath();
+    AppPathManager::initAppPath(argv[0]);
     enable(QAPP);
     return m_qApp;
 }
@@ -438,7 +436,7 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
             PGEEngineApp  lib;
             lib.loadQApp(argc, argv);
             AppPathManager::install();
-            AppPathManager::initAppPath();
+            AppPathManager::initAppPath(argv[0]);
             return true;
         }
         else if(strcmp(arg, "--help") == 0)
@@ -633,12 +631,12 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
         }
         else if(param_s.compare(0, 7, "--lang=") == 0)
         {
-            QString tmp;
+            std::string tmp;
             bool ok = false;
             tmp = takeStrFromArg(param_s, ok);
             ok &= (tmp.size() == 2);
-
-            if(ok) m_tr->toggleLanguage(tmp);
+            if(ok)
+                m_tr->toggleLanguage(tmp);
         }
         else if(param_s.compare("--render-auto") == 0)
             g_flags.rendererType = GlRenderer::RENDER_AUTO;
@@ -692,9 +690,8 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
 
 void PGEEngineApp::createConfigsDir()
 {
-    QString configPath = AppPathManager::userAppDir() + "/" +  "configs";
-    QDir configDir(configPath);
-
+    std::string configPath = AppPathManager::userAppDirSTD() + "/" +  "configs";
+    DirMan configDir(configPath);
     //Create empty config directory if not exists
     if(!configDir.exists())
         configDir.mkdir(configPath);

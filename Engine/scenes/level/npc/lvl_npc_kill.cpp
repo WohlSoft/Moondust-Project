@@ -76,10 +76,10 @@ void LVL_Npc::harm(int damage, int damageReason)
 
 void LVL_Npc::talkWith()
 {
-    if(data.msg.isEmpty())
+    if(data.msg.empty())
         return;
     m_scene->m_messages.showMsg( data.msg );
-    if(!data.event_talk.isEmpty())
+    if(!data.event_talk.empty())
     {
         m_scene->events.triggerEvent(data.event_talk);
     }
@@ -101,7 +101,7 @@ void LVL_Npc::kill(int damageReason)
     }
 
     //Pre-unregistring event
-    if(!data.event_die.isEmpty())
+    if(!data.event_die.empty())
         m_scene->events.triggerEvent(data.event_die);
 
     unregister();
@@ -157,7 +157,7 @@ void LVL_Npc::kill(int damageReason)
                 m_scene->launchStaticEffectC(setup->setup.effect_2,
                                             posCenterX(),
                                             posCenterY(),
-                                            0, 5000, -3.0f*_direction, -6.0f, 18.0f,
+                                            0, 5000, -3.0*_direction, -6.0, 18.0,
                                             _direction);
             }
         break;
@@ -187,7 +187,7 @@ void LVL_Npc::kill(int damageReason)
     }
 
     //Post-unregistring event
-    if(!data.event_emptylayer.isEmpty())
+    if(!data.event_emptylayer.empty())
     {
         if(m_scene->layers.isEmpty(data.layer))
             m_scene->events.triggerEvent(data.event_emptylayer);

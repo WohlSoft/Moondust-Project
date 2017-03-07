@@ -76,7 +76,7 @@ void LVL_Npc::lua_setFrameDelay(int ms)
 
 int LVL_Npc::lua_activate_neighbours()
 {
-    QVector<PGE_Phys_Object *> bodies;
+    std::vector<PGE_Phys_Object *> bodies;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
     m_scene->queryItems(posRectC, &bodies);
 
@@ -122,22 +122,23 @@ LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawna
 
 PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
 {
-    if(!detectors.contains(&detector_player_pos))
-        detectors.push_back(&detector_player_pos);
+    std::set<BasicDetector * >::iterator i = detectors.find(&detector_player_pos);
+    if(i == detectors.end())
+        detectors.insert(&detector_player_pos);
     return &detector_player_pos;
 }
 
 InAreaDetector *LVL_Npc::lua_installInAreaDetector(double left, double top, double right, double bottom, luabind::object filters)
 {
     int ltype = luabind::type(filters);
-    QList<int> _filters;
+    std::vector<int> _filters;
     if(ltype == LUA_TNIL)
     {
-        _filters = QList<int>({InAreaDetector::F_BLOCK,
-                               InAreaDetector::F_BGO,
-                               InAreaDetector::F_NPC,
-                               InAreaDetector::F_PLAYER
-                              });
+        _filters = std::vector<int>({InAreaDetector::F_BLOCK,
+                                     InAreaDetector::F_BGO,
+                                     InAreaDetector::F_NPC,
+                                     InAreaDetector::F_PLAYER
+                                    });
     }
     else
     {
@@ -176,13 +177,13 @@ InAreaDetector *LVL_Npc::lua_installInAreaDetector(double left, double top, doub
     r.setBottom(bottom);
 
     detectors_inarea.push_back(InAreaDetector(this, r, tfilters));
-    detectors.push_back(&detectors_inarea.last());
-    return &detectors_inarea.last();
+    detectors.insert(&detectors_inarea.back());
+    return &detectors_inarea.back();
 }
 
 ContactDetector *LVL_Npc::lua_installContactDetector()
 {
     detectors_contact.push_back(ContactDetector(this));
-    detectors.push_back(&detectors_contact.last());
-    return &detectors_contact.last();
+    detectors.insert(&detectors_contact.back());
+    return &detectors_contact.back();
 }

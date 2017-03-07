@@ -25,8 +25,7 @@
 
 #include "base/lvl_base_physics.h"
 
-#include <QHash>
-#include <QVector>
+#include <vector>
 #ifdef __APPLE__
 #include <tgmath.h>
 #endif
@@ -187,7 +186,7 @@ class PGE_Phys_Object: public PGE_physBody
         virtual void postCollision() {}
         virtual void collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
         {
-            Q_UNUSED(blocksHit);
+            (void)(blocksHit);
         }
         /**
          * @brief Function called before collision resolving process. Allows filter some collisions
@@ -196,7 +195,7 @@ class PGE_Phys_Object: public PGE_physBody
          */
         virtual bool preCollisionCheck(PGE_Phys_Object *body)
         {
-            Q_UNUSED(body);
+            (void)(body);
             return false;
         }
 
@@ -265,8 +264,8 @@ class PGE_Phys_Object: public PGE_physBody
         virtual void update(double ticks);
         virtual void render(double x, double y)
         {
-            Q_UNUSED(x);
-            Q_UNUSED(y);
+            (void)(x);
+            (void)(y);
         }
 
         inline bool isPaused()

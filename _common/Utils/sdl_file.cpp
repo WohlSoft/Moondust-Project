@@ -57,6 +57,11 @@ std::string SdlFile::errorString()
     return p->m_errorString;
 }
 
+std::string SdlFile::fileName()
+{
+    return p->m_fileName;
+}
+
 void SdlFile::setFileName(const std::string &fileName)
 {
     SDL_assert(p);

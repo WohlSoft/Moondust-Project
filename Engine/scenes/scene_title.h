@@ -19,9 +19,7 @@
 #ifndef SCENE_TITLE_H
 #define SCENE_TITLE_H
 
-#include <QMap>
-#include <QPair>
-#include <QStack>
+#include <map>
 #include <utility>
 #include <atomic>
 #include "scene.h"
@@ -130,13 +128,13 @@ class TitleScene : public Scene
         PGE_Point mousePos;
         CurrentMenu _currentMenu;
         void setMenu(CurrentMenu _menu);
-        QMap<CurrentMenu, menustate> menustates;
-        QStack<int > menuChain;
+        std::map<CurrentMenu, menustate> menustates;
+        std::vector<int > menuChain;
 
         PGE_Texture background;
         bool        _bgIsLoaded;
         PGEColor    bgcolor;
-        QVector<TitleScene_misc_img > imgs;
+        std::vector<TitleScene_misc_img > imgs;
 
         PGE_Texture cursor;
         bool _cursorIsLoaded;

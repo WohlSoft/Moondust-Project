@@ -8,52 +8,52 @@ std::string Binding_Core_GlobalFuncs_Paths::path_commongfx()
 
 std::string Binding_Core_GlobalFuncs_Paths::path_level_block()
 {
-    return ConfigManager::PathLevelBlock().toStdString();
+    return ConfigManager::PathLevelBlock();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_level_bgo()
 {
-    return ConfigManager::PathLevelBGO().toStdString();
+    return ConfigManager::PathLevelBGO();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_level_npc()
 {
-    return ConfigManager::PathLevelNPC().toStdString();
+    return ConfigManager::PathLevelNPC();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_effect()
 {
-    return ConfigManager::PathLevelEffect().toStdString();
+    return ConfigManager::PathLevelEffect();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_world_tile()
 {
-    return ConfigManager::PathWorldTiles().toStdString();
+    return ConfigManager::PathWorldTiles();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_world_scene()
 {
-    return ConfigManager::PathWorldScenery().toStdString();
+    return ConfigManager::PathWorldScenery();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_world_path()
 {
-    return ConfigManager::PathWorldPaths().toStdString();
+    return ConfigManager::PathWorldPaths();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_world_level()
 {
-    return ConfigManager::PathWorldLevels().toStdString();
+    return ConfigManager::PathWorldLevels();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_music()
 {
-    return ConfigManager::PathMusic().toStdString();
+    return ConfigManager::PathMusic();
 }
 
 std::string Binding_Core_GlobalFuncs_Paths::path_sound()
 {
-    return ConfigManager::PathSound().toStdString();
+    return ConfigManager::PathSound();
 }
 
 luabind::scope Binding_Core_GlobalFuncs_Paths::bindToLua()

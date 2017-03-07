@@ -129,7 +129,7 @@ bool ConfigManager::loadPlayableCharacters()
         pLogDebug("Loading playable characters...");
         unsigned int i;
         unsigned long players_total = 0;
-        std::string plr_ini = config_dir.toStdString() + "lvl_characters.ini";
+        std::string plr_ini = config_dirSTD + "lvl_characters.ini";
         if(!Files::fileExists(plr_ini))
         {
             addError("ERROR LOADING lvl_characters.ini: file does not exist");
@@ -280,7 +280,7 @@ bool ConfigManager::loadPlayableCharacters()
                         std::string sprite_settings;
                         setup.read("sprite-settings", sprite_settings, fmt::format("{1}-{0}.ini", i, splayer.sprite_folder));
 
-                        if(pstate.sprite_setup.load(config_dir.toStdString() + "characters/" + sprite_settings))
+                        if(pstate.sprite_setup.load(config_dirSTD + "characters/" + sprite_settings))
                         {
                             pstate.width = pstate.sprite_setup.frameWidth;
                             pstate.height = pstate.sprite_setup.frameHeight;

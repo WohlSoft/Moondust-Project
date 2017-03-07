@@ -31,32 +31,33 @@
 void LVL_Npc::buildBuddieGroup()
 {
     buddies_leader=this;
-    QList<LVL_Npc *> needtochec;
+    std::vector<LVL_Npc *> needtochec;
     buildLeaf(needtochec, buddies_list, this);
     do
     {
-        for(int i=0; i<needtochec.size();i++)
+        for(size_t i = 0; i < needtochec.size(); i++)
         {
             buildLeaf(needtochec, buddies_list, this);
         }
     }
-    while(!needtochec.isEmpty());
+    while(!needtochec.empty());
 }
 
-void LVL_Npc::updateBuddies(float tickTime)
+void LVL_Npc::updateBuddies(double tickTime)
 {
-    if(buddies_updated) return;
-    for(int i=0;i<buddies_list->size();i++)
+    if(buddies_updated)
+        return;
+    for(size_t i = 0; i < buddies_list->size(); i++)
     {
         (*buddies_list)[i]->update(tickTime);
         (*buddies_list)[i]->buddies_updated=true;
     }
 }
 
-void LVL_Npc::buildLeaf(QList<LVL_Npc *> &needtochec, QList<LVL_Npc *> *&list, LVL_Npc *leader)
+void LVL_Npc::buildLeaf(std::vector<LVL_Npc *> &needtochec, std::vector<LVL_Npc *> *&list, LVL_Npc *leader)
 {
     Q_UNUSED(leader);
-    QVector<PGE_Phys_Object*> bodies;
+    std::vector<PGE_Phys_Object*> bodies;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
     m_scene->queryItems(posRectC, &bodies);
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
@@ -72,6 +73,7 @@ void LVL_Npc::buildLeaf(QList<LVL_Npc *> &needtochec, QList<LVL_Npc *> *&list, L
             body->buddies_list=list;
             needtochec.push_back(body);
         }
-        else needtochec.removeAll(body);
+        else
+            std::remove(needtochec.begin(), needtochec.end(), body);
     }
 }

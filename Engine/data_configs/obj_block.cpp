@@ -22,18 +22,20 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
 #include <common_features/util.h>
+#include <fmt/fmt_format.h>
+#include <Utils/files.h>
 
 /*****Level blocks************/
-PGE_DataArray<obj_block>   ConfigManager::lvl_block_indexes;
-CustomDirManager        ConfigManager::Dir_Blocks;
-QList<SimpleAnimator >  ConfigManager::Animator_Blocks;
+PGE_DataArray<obj_block>        ConfigManager::lvl_block_indexes;
+CustomDirManager                ConfigManager::Dir_Blocks;
+std::vector<SimpleAnimator >    ConfigManager::Animator_Blocks;
 /*****Level blocks************/
 
-bool ConfigManager::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadLevelBlock(obj_block &sblock, std::string section, obj_block *merge_with, std::string iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
-    QString errStr;
+    std::string errStr;
 
     if(internal)
     {
@@ -67,35 +69,36 @@ bool ConfigManager::loadLevelBlocks()
     obj_block sblock;
     unsigned long block_total = 0;
     bool useDirectory = false;
-    QString block_ini = config_dir + "lvl_blocks.ini";
-    QString nestDir = "";
+    std::string block_ini = config_dirSTD + "lvl_blocks.ini";
+    std::string nestDir = "";
 
-    if(!QFile::exists(block_ini))
+    if(!Files::fileExists(block_ini))
     {
-        addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox::fatal(QString("ERROR LOADING lvl_blocks.ini: file does not exist"));
+        const char *msg = "ERROR LOADING lvl_blocks.ini: file does not exist";
+        addError(msg);
+        PGE_MsgBox::fatal(msg);
         return false;
     }
 
-    QSettings setup(block_ini, QSettings::IniFormat);
-    setup.setIniCodec("UTF-8");
+    IniProcessing setup(block_ini);
     lvl_block_indexes.clear();//Clear old
     setup.beginGroup("blocks-main");
-    block_total = setup.value("total", 0).toULongLong();
-    nestDir =     setup.value("config-dir", "").toString();
-
-    if(!nestDir.isEmpty())
     {
-        nestDir = config_dir + nestDir;
-        useDirectory = true;
+        setup.read("total",      block_total,   0);
+        setup.read("config-dir", nestDir,       "");
+        if(!nestDir.empty())
+        {
+            nestDir = config_dirSTD + nestDir;
+            useDirectory = true;
+        }
     }
-
     setup.endGroup();
 
     if(block_total == 0)
     {
-        addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
-        PGE_MsgBox::fatal(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"));
+        const char *msg = "ERROR LOADING lvl_blocks.ini: number of items not define, or empty config";
+        addError(msg);
+        PGE_MsgBox::fatal(msg);
         return false;
     }
 
@@ -105,12 +108,12 @@ bool ConfigManager::loadLevelBlocks()
     {
         if(useDirectory)
         {
-            if(!loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(nestDir).arg(i)))
+            if(!loadLevelBlock(sblock, "block", nullptr, fmt::format("{0}/block-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadLevelBlock(sblock, QString("block-%1").arg(i), nullptr, "", &setup))
+            if(!loadLevelBlock(sblock, fmt::format("block-{0}", i), nullptr, "", &setup))
                 return false;
         }
 
@@ -120,16 +123,17 @@ bool ConfigManager::loadLevelBlocks()
         //Load custom config if possible
         loadCustomConfig<obj_block>(lvl_block_indexes, i, Dir_Blocks, "block", "block", &loadLevelBlock);
 
-        if(setup.status() != QSettings::NoError)
+        if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i), QtCriticalMsg);
-            PGE_MsgBox::error(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.status()).arg(i));
+            std::string msg = fmt::format("ERROR LOADING lvl_blocks.ini N:{0} (block-{1})", setup.lastError(), i);
+            addError(msg);
+            PGE_MsgBox::error(msg);
             break;
         }
     }
 
     if(uint(lvl_block_indexes.stored()) < block_total)
-        addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_block_indexes.stored()), QtWarningMsg);
+        addError(fmt::format("Not all blocks loaded! Total: {0}, Loaded: {1})", block_total, lvl_block_indexes.stored()));
 
     return true;
 }

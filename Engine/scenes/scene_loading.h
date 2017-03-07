@@ -19,7 +19,7 @@
 #ifndef SCENE_LOADING_H
 #define SCENE_LOADING_H
 
-#include <QVector>
+#include <vector>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
 
@@ -60,7 +60,7 @@ class LoadingScene : public Scene
 
         PGE_Texture background;
         PGEColor    bgcolor;
-        QVector<LoadingScene_misc_img > imgs;
+        std::vector<LoadingScene_misc_img > imgs;
 };
 
 #endif // SCENE_LOADING_H

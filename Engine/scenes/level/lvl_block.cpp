@@ -608,10 +608,10 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.delay = 710;
             effect.animationLoops = 0;
             effect.frame_sequence.clear();
-            effect.frame_sequence.append(0);
-            effect.frame_sequence.append(1);
-            effect.frame_sequence.append(2);
-            effect.frame_sequence.append(3);
+            effect.frame_sequence.push_back(0);
+            effect.frame_sequence.push_back(1);
+            effect.frame_sequence.push_back(2);
+            effect.frame_sequence.push_back(3);
             effect.framespeed = 32;
             m_scene->launchEffect(effect, true);
             effect.id = 11;
@@ -623,9 +623,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.velocityY = 0.0;
             effect.animationLoops = 1;
             effect.frame_sequence.clear();
-            effect.frame_sequence.append(4);
-            effect.frame_sequence.append(5);
-            effect.frame_sequence.append(6);
+            effect.frame_sequence.push_back(4);
+            effect.frame_sequence.push_back(5);
+            effect.frame_sequence.push_back(6);
             effect.framespeed = 125;
             effect.delay = 0;
             m_scene->launchEffect(effect, true);
@@ -639,7 +639,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.velocityY = -1.8;
             effect.animationLoops = 0;
             effect.frame_sequence.clear();
-            effect.frame_sequence.append(0);
+            effect.frame_sequence.push_back(0);
             effect.framespeed = 125;
             effect.delay = 1000;
             m_scene->launchEffect(effect, true);

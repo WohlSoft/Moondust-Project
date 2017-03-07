@@ -29,104 +29,105 @@ void LVL_Npc::processContacts()
 {
     /* *********************** Check all collided sides ***************************** */
     bool doHurt = false;
-    int  hurtDamage=0;
+    int  hurtDamage = 0;
     bool doKill = false;
     int  killReason = DAMAGE_NOREASON;
 
-    for(ObjectCollidersIt it=l_contactAny.begin(); it!=l_contactAny.end(); it++)
+    for(ObjectCollidersIt it = l_contactAny.begin(); it != l_contactAny.end(); it++)
     {
-        PGE_Phys_Object* cEL = it.value();
+        PGE_Phys_Object *cEL = it->second;
         switch(cEL->type)
         {
         case PGE_Phys_Object::LVLBGO:
-            {
-                LVL_Bgo *bgo= static_cast<LVL_Bgo*>(cEL);
-                assert(bgo);
-                l_pushBgo(bgo);
-                break;
-            }
+        {
+            LVL_Bgo *bgo = static_cast<LVL_Bgo *>(cEL);
+            assert(bgo);
+            l_pushBgo(bgo);
+            break;
+        }
         case PGE_Phys_Object::LVLPhysEnv:
-            {
-                LVL_PhysEnv *env = static_cast<LVL_PhysEnv*>(cEL);
-                assert(env);
-                environments_map[intptr_t(env)] = env->env_type;
-                break;
-            }
+        {
+            LVL_PhysEnv *env = static_cast<LVL_PhysEnv *>(cEL);
+            assert(env);
+            environments_map[intptr_t(env)] = env->env_type;
+            break;
+        }
         case PGE_Phys_Object::LVLBlock:
+        {
+            LVL_Block *blk = static_cast<LVL_Block *>(cEL);
+            assert(blk);
+            if(blk->m_isHidden)
+                break;
+
+            l_pushBlk(blk);
+
+            if(blk->setup->setup.lava)
             {
-                LVL_Block *blk= static_cast<LVL_Block*>(cEL);
-                assert(blk);
-                if( blk->m_isHidden )
+                doKill = true;
+                killReason = DAMAGE_LAVABURN;
+            }
+
+            if(m_onSlopeFloorTopAlign && !m_slopeFloor.has && m_stand &&
+               (blk->m_momentum.velY <= m_momentum.velY))
+            {
+                switch(blk->m_shape)
+                {
+                case PGE_physBody::SL_LeftBottom:
+                {
+                    if((m_momentum.left() <= blk->m_momentum.left()) &&
+                       (m_momentum.left() + m_momentum.velX > m_momentum.left()))
+                    {
+                        double k = blk->m_momentum.h / blk->m_momentum.w;
+                        double newx = m_momentum.x + m_momentum.velX;
+                        double newy = blk->m_momentum.y + ((newx - blk->m_momentum.x) * k) - m_momentum.h;
+                        m_momentum.velY = fabs(m_momentum.y - newy);
+                        m_slopeFloor.has = true;
+                        m_slopeFloor.shape = blk->m_shape;
+                        m_slopeFloor.rect  = blk->m_momentum.rect();
+                        m_onSlopeYAdd = 0.0;
+                    }
                     break;
-
-                l_pushBlk(blk);
-
-                if(blk->setup->setup.lava)
-                {
-                    doKill = true;
-                    killReason = DAMAGE_LAVABURN;
                 }
-
-                if(m_onSlopeFloorTopAlign && !m_slopeFloor.has && m_stand &&
-                  (blk->m_momentum.velY <= m_momentum.velY) )
+                case PGE_physBody::SL_RightBottom:
                 {
-                    switch(blk->m_shape)
+                    if((m_momentum.right() >= blk->m_momentum.right()) &&
+                       (m_momentum.right() + m_momentum.velX < m_momentum.right()))
                     {
-                    case PGE_physBody::SL_LeftBottom:
-                    {
-                        if( (m_momentum.left() <= blk->m_momentum.left()) &&
-                            (m_momentum.left() + m_momentum.velX > m_momentum.left()) )
-                        {
-                            double k = blk->m_momentum.h / blk->m_momentum.w;
-                            double newx = m_momentum.x + m_momentum.velX;
-                            double newy = blk->m_momentum.y + ( (newx - blk->m_momentum.x) * k ) - m_momentum.h;
-                            m_momentum.velY = fabs(m_momentum.y - newy);
-                            m_slopeFloor.has = true;
-                            m_slopeFloor.shape = blk->m_shape;
-                            m_slopeFloor.rect  = blk->m_momentum.rect();
-                            m_onSlopeYAdd = 0.0;
-                        }
-                        break;
+                        double k = blk->m_momentum.h / blk->m_momentum.w;
+                        double newx = m_momentum.x + m_momentum.velX;
+                        double newy = blk->m_momentum.y + ((blk->m_momentum.right() - newx - m_momentum.w) * k) - m_momentum.h;
+                        m_momentum.velY = fabs(m_momentum.y - newy);
+                        m_slopeFloor.has = true;
+                        m_slopeFloor.shape = blk->m_shape;
+                        m_slopeFloor.rect  = blk->m_momentum.rect();
+                        m_onSlopeYAdd = 0.0;
                     }
-                    case PGE_physBody::SL_RightBottom:
-                    {
-                        if( (m_momentum.right() >= blk->m_momentum.right()) &&
-                            (m_momentum.right() + m_momentum.velX < m_momentum.right()) )
-                        {
-                            double k = blk->m_momentum.h / blk->m_momentum.w;
-                            double newx = m_momentum.x + m_momentum.velX;
-                            double newy = blk->m_momentum.y + ( (blk->m_momentum.right() - newx - m_momentum.w) * k) - m_momentum.h;
-                            m_momentum.velY = fabs(m_momentum.y - newy);
-                            m_slopeFloor.has = true;
-                            m_slopeFloor.shape = blk->m_shape;
-                            m_slopeFloor.rect  = blk->m_momentum.rect();
-                            m_onSlopeYAdd = 0.0;
-                        }
-                        break;
-                    }
-                    default:;
-                    }
+                    break;
                 }
-                break;
+                default:
+                    ;
+                }
             }
+            break;
+        }
         case PGE_Phys_Object::LVLPlayer:
-            {
-                LVL_Player*plr = static_cast<LVL_Player*>(cEL);
-                assert(plr);
-                l_pushPlr(plr);
-                break;
-            }
+        {
+            LVL_Player *plr = static_cast<LVL_Player *>(cEL);
+            assert(plr);
+            l_pushPlr(plr);
+            break;
+        }
         case PGE_Phys_Object::LVLNPC:
-            {
-                LVL_Npc *npc= static_cast<LVL_Npc*>(cEL);
-                assert(npc);
-                if(npc->killed) break;
-                if(npc->data.friendly) break;
-                if(npc->m_isGenerator) break;
-                if(!npc->isActivated) break;
-                l_pushNpc(npc);
-                break;
-            }
+        {
+            LVL_Npc *npc = static_cast<LVL_Npc *>(cEL);
+            assert(npc);
+            if(npc->killed) break;
+            if(npc->data.friendly) break;
+            if(npc->m_isGenerator) break;
+            if(!npc->isActivated) break;
+            l_pushNpc(npc);
+            break;
+        }
         }
     }
 
@@ -148,9 +149,7 @@ void LVL_Npc::preCollision()
 void LVL_Npc::postCollision()
 {
     if(m_crushedHard)
-    {
         kill(DAMAGE_BY_KICK);
-    }
 }
 
 void LVL_Npc::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
@@ -163,21 +162,22 @@ bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
     Q_ASSERT(body);
     switch(body->type)
     {
-        case LVLBlock:
-        {
-            if(this->m_disableBlockCollision)
-                return true;
-            LVL_Block* blk = static_cast<LVL_Block*>(body);
-            if(blk->m_destroyed)
-                return true;
-        }
-        break;
-        case LVLNPC:
-        {
-            if(this->m_disableBlockCollision)
-                return true;
-        }
-        default:;
+    case LVLBlock:
+    {
+        if(this->m_disableBlockCollision)
+            return true;
+        LVL_Block *blk = static_cast<LVL_Block *>(body);
+        if(blk->m_destroyed)
+            return true;
+    }
+    break;
+    case LVLNPC:
+    {
+        if(this->m_disableBlockCollision)
+            return true;
+    }
+    default:
+        ;
     }
     return false;
 }

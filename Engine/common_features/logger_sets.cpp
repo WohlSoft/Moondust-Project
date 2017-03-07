@@ -18,12 +18,7 @@
 
 #include <stdarg.h>
 #include <mutex>
-#include <QFile>
-#include <QDir>
-#include <QTextStream>
-#include <QSettings>
-#include <QDateTime>
-#include <QtDebug>
+#include <chrono>
 
 #include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
@@ -67,13 +62,14 @@ void LogWriter::LoadLogSettings()
 {
     MutexLocker mutex(&g_lockLocker);
     Q_UNUSED(mutex);
-    std::string logFileName = QString("PGE_Engine_log_%1-%2-%3_%4-%5-%6.txt")
-                                  .arg(QDate().currentDate().year())
-                                  .arg(QDate().currentDate().month())
-                                  .arg(QDate().currentDate().day())
-                                  .arg(QTime().currentTime().hour())
-                                  .arg(QTime().currentTime().minute())
-                                  .arg(QTime().currentTime().second()).toStdString();
+
+    auto now = std::chrono::system_clock::now();
+    std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
+    tm *t = std::localtime(&in_time_t);
+    std::string logFileName = fmt::format("PGE_Engine_log_{0}_{1}_{2}_{3}_{4}_{5}.txt",
+                                          t->tm_year, t->tm_mon, t->tm_mday,
+                                          t->tm_hour, t->tm_min, t->tm_sec);
+
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();
     IniProcessing logSettings(mainIniFile);
@@ -93,7 +89,7 @@ void LogWriter::LoadLogSettings()
     m_enabled   = (m_logLevel != PGE_LogLevel::NoLog);
     logSettings.endGroup();
 
-    fmt::printf("LogLevel {0}, log file {1}", static_cast<int>(m_logLevel), m_logFilePath);
+    fmt::print("LogLevel {0}, log file {1}\n\n", static_cast<int>(m_logLevel), m_logFilePath);
 
     if(m_enabled)
     {
@@ -104,7 +100,7 @@ void LogWriter::LoadLogSettings()
         }
         else
         {
-            fmt::fprintf(stderr, "Impossible to open {0} for write, all logs are will be printed through QtDebug...\n", m_logFilePath);
+            fmt::fprintf(stderr, "Impossible to open %s for write, all logs are will be printed through QtDebug...\n", m_logFilePath);
             fflush(stderr);
         }
     }
@@ -223,8 +219,6 @@ void WriteToLog(PGE_LogLevel type, std::string msg)
 
 void LogWriter::WriteToLog(PGE_LogLevel type, const std::string &msg)
 {
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
     if(!m_enabled)
         return; //if logging disabled
 

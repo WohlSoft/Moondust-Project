@@ -7,8 +7,8 @@ class CreditsScene;
 
 class LuaCreditsEngine : public LuaEngine
 {
-private:
-    Q_DISABLE_COPY(LuaCreditsEngine)
+//private:
+//    Q_DISABLE_COPY(LuaCreditsEngine)
 public:
     LuaCreditsEngine(CreditsScene *scene);
     ~LuaCreditsEngine();

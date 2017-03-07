@@ -90,9 +90,9 @@ void LVL_Player::update(double tickTime)
         }
     }
 
-    //_onGround = !foot_contacts_map.isEmpty();
-    //on_slippery_surface = !foot_sl_contacts_map.isEmpty();
-    bool climbableUp  = !climbable_map.isEmpty();
+    //_onGround = !foot_contacts_map.empty();
+    //on_slippery_surface = !foot_sl_contacts_map.empty();
+    bool climbableUp  = !climbable_map.empty();
     bool climbableDown = climbableUp && !m_stand;
     climbing = (climbableUp && climbing && !m_stand && (m_momentum.centerY() >= (climbableHeight - physics_cur.velocity_climb_y_up)));
 
@@ -116,8 +116,7 @@ void LVL_Player::update(double tickTime)
 
     if(climbing)
     {
-        PGE_Phys_Object *climbableItem = *(climbable_map.begin());
-
+        PGE_Phys_Object *climbableItem = (climbable_map.begin())->second;
         if(climbableItem)
         {
             m_momentum.velX = climbableItem->speedX();
@@ -149,7 +148,7 @@ void LVL_Player::update(double tickTime)
     if(climbing)
         setSpeed(0, 0);
 
-    if(environments_map.isEmpty())
+    if(environments_map.empty())
     {
         if(last_environment != section->getPhysicalEnvironment())
             environment = section->getPhysicalEnvironment();
@@ -158,8 +157,8 @@ void LVL_Player::update(double tickTime)
     {
         int newEnv = section->getPhysicalEnvironment();
 
-        for(int &x : environments_map)
-            newEnv = x;
+        for(const std::pair<int, int> &x : environments_map)
+            newEnv = x.second;
 
         if((newEnv != LVL_PhysEnv::Env_SameAsAround) && (last_environment != newEnv))
         {

@@ -46,10 +46,6 @@
 #include <Utils/strings.h>
 #include <fmt/fmt_format.h>
 
-#include <QMap>
-#include <QSettings>
-#include <QFile>
-
 #include "custom_data.h"
 
 
@@ -184,7 +180,6 @@ namespace ConfigManager
     extern DataFolders dirs;
     extern std::string  config_idSTD;
     extern std::string  config_name;
-    extern QString      config_dir;
     extern std::string  config_dirSTD;
     extern std::string  data_dirSTD;
     extern unsigned int default_grid;
@@ -283,7 +278,7 @@ namespace ConfigManager
 
     /*****Level blocks************/
     bool loadLevelBlocks();
-    bool loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadLevelBlock(obj_block &sblock, std::string section, obj_block *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getBlockTexture(unsigned long blockID);
     /*****************************/
     extern PGE_DataArray<obj_block>   lvl_block_indexes;
@@ -293,7 +288,7 @@ namespace ConfigManager
 
     /*****Level BGO************/
     bool loadLevelBGO();
-    bool loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with = 0, QString iniFile = "", QSettings *setup = nullptr);
+    bool loadLevelBGO(obj_bgo &sbgo, std::string section, obj_bgo *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getBgoTexture(unsigned long bgoID);
     /*****************************/
     extern PGE_DataArray<obj_bgo>   lvl_bgo_indexes;

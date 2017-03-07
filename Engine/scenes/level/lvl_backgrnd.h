@@ -72,7 +72,7 @@ class LVL_Background
         long animator_ID;
 
         bool isMagic;
-        QList<LVL_Background_strip > strips;
+        std::vector<LVL_Background_strip > strips;
 
         PGEColor color;
 

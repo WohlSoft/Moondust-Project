@@ -33,8 +33,7 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
         unsigned long target_id = (nearest->setup->setup.plSwitch_Button_id - 1);
-        QVector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
-
+        std::vector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
         if(target_id >= static_cast<unsigned long>(states.size()))
         {
             PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
@@ -43,8 +42,7 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
             x._chsetup.state = 1;
             player->m_scene->getGameState()->setPlayerState(player->playerID, x);
         }
-
-        saveCharState &st = states[static_cast<int>(target_id)];
+        saveCharState &st = states[static_cast<size_t>(target_id)];
         player->setCharacterSafe(nearest->setup->setup.plSwitch_Button_id, st.state);
     }
 }
@@ -92,12 +90,12 @@ void LVL_Player::processContacts()
     int  hurtDamage = 0;
     bool doKill = false;
     deathReason killReason = DEAD_killed;
-    QVector<LVL_Block *> blocks_to_bounce_bottom;
-    QVector<LVL_Npc *> npcs_to_stomp;
+    std::vector<LVL_Block *> blocks_to_bounce_bottom;
+    std::vector<LVL_Npc *> npcs_to_stomp;
 
     for(ObjectCollidersIt it = l_contactAny.begin(); it != l_contactAny.end(); it++)
     {
-        PGE_Phys_Object *cEL = it.value();
+        PGE_Phys_Object *cEL = it->second;
 
         switch(cEL->type)
         {
@@ -116,7 +114,7 @@ void LVL_Player::processContacts()
 
             if(bgo->setup->setup.climbing)
             {
-                bool hasClimbables = climbable_map.isEmpty();
+                bool hasClimbables = climbable_map.empty();
                 climbable_map[intptr_t(cEL)] = cEL;
 
                 if(hasClimbables)
@@ -160,7 +158,7 @@ void LVL_Player::processContacts()
 
             if(npc->killed) break; //Don't deal with a corpses!
 
-            if(!npc->data.msg.isEmpty())
+            if(!npc->data.msg.empty())
                 collided_talkable_npc = npc;
 
             if(!npc->enablePlayerCollision) break;
@@ -171,7 +169,7 @@ void LVL_Player::processContacts()
 
             if(npc->setup->setup.climbable)
             {
-                bool set = climbable_map.isEmpty();
+                bool set = climbable_map.empty();
                 climbable_map[intptr_t(cEL)] = cEL;
 
                 if(set)
@@ -228,7 +226,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactB.begin(); it != l_contactB.end(); it++)
     {
-        PGE_Phys_Object *cEL = it.value();
+        PGE_Phys_Object *cEL = it->second;
 
         switch(cEL->type)
         {
@@ -313,7 +311,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactT.begin(); it != l_contactT.end(); it++)
     {
-        PGE_Phys_Object *cEL = it.value();
+        PGE_Phys_Object *cEL = it->second;
 
         switch(cEL->type)
         {
@@ -338,7 +336,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactL.begin(); it != l_contactL.end(); it++)
     {
-        PGE_Phys_Object *cEL = it.value();
+        PGE_Phys_Object *cEL = it->second;
 
         switch(cEL->type)
         {
@@ -363,7 +361,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactR.begin(); it != l_contactR.end(); it++)
     {
-        PGE_Phys_Object *cEL = it.value();
+        PGE_Phys_Object *cEL = it->second;
 
         switch(cEL->type)
         {
@@ -391,11 +389,11 @@ void LVL_Player::processContacts()
     else if(doHurt)
         harm(hurtDamage);
 
-    if(!blocks_to_bounce_bottom.isEmpty())
+    if(!blocks_to_bounce_bottom.empty())
     {
         LVL_Block *candidate = nullptr;
 
-        for(/*unsigned*/ int bumpI = 0; bumpI < blocks_to_bounce_bottom.size(); bumpI++)
+        for(size_t bumpI = 0; bumpI < blocks_to_bounce_bottom.size(); bumpI++)
         {
             LVL_Block *x = blocks_to_bounce_bottom[bumpI];
             assert(x);
@@ -434,9 +432,9 @@ void LVL_Player::processContacts()
     }
 
     //Stomp all detected NPC's
-    while(!npcs_to_stomp.isEmpty())
+    while(!npcs_to_stomp.empty())
     {
-        LVL_Npc *npc = npcs_to_stomp.last();
+        LVL_Npc *npc = npcs_to_stomp.back();
         npcs_to_stomp.pop_back();
 
         //Avoid workarround "don't hurt while flying up"

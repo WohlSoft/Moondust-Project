@@ -19,11 +19,6 @@
 #ifndef LOGGER_SETS_H
 #define LOGGER_SETS_H
 
-#include <QString>
-#include <QtMsgHandler>
-#include <QFile>
-#include <QTextStream>
-
 #include <SDL2/SDL_rwops.h>
 #include <string>
 #include <memory>

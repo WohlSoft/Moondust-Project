@@ -79,14 +79,14 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     setFrame(m_frameFirst);
 }
 
-void SimpleAnimator::setFrameSequance(QList<int> sequance)
+void SimpleAnimator::setFrameSequance(std::vector<int> sequance)
 {
     m_frameSequance = sequance;
     m_frameSequanceEnabled = true;
     m_frameSequanceCur = 0;
     m_animationFinished = false;
 
-    if(!m_frameSequance.isEmpty())
+    if(!m_frameSequance.empty())
     {
         m_currentFrame = m_frameSequance[m_frameSequanceCur];
         m_pos1 = m_currentFrame / m_framesCount;
@@ -174,7 +174,7 @@ void SimpleAnimator::nextFrame()
             }
         }
 
-        if(!m_frameSequance.isEmpty())
+        if(!m_frameSequance.empty())
             m_currentFrame = m_frameSequance[m_frameSequanceCur];
 
         goto makeFrame;
@@ -317,7 +317,7 @@ void SimpleAnimator::stop()
 
 unsigned int SimpleAnimator::TickAnimation(unsigned int x, void *p)
 {
-    Q_UNUSED(x);
+    (void)(x);
     SimpleAnimator *self = reinterpret_cast<SimpleAnimator *>(p);
     self->nextFrame();
     return 0;

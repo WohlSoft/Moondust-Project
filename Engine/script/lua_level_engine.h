@@ -9,8 +9,8 @@ class LVL_Npc;
 
 class LuaLevelEngine : public LuaEngine
 {
-    private:
-        Q_DISABLE_COPY(LuaLevelEngine)
+//    private:
+//        Q_DISABLE_COPY(LuaLevelEngine)
     public:
         LuaLevelEngine(LevelScene *scene);
         ~LuaLevelEngine();

@@ -49,10 +49,9 @@ std::string AppPathManager::m_userPath;
 
 void AppPathManager::initAppPath(const char* argv0)
 {
-    PGE_Application::setOrganizationName(_COMPANY);
-    PGE_Application::setOrganizationDomain(_PGE_URL);
-    PGE_Application::setApplicationName("PGE Engine");
-
+    //PGE_Application::setOrganizationName(_COMPANY);
+    //PGE_Application::setOrganizationDomain(_PGE_URL);
+    //PGE_Application::setApplicationName("PGE Engine");
     /*
     ApplicationPathSTD = DirMan(Files::dirname(argv0)).absolutePath();
     ApplicationPath =   QString::fromStdString(ApplicationPathSTD);

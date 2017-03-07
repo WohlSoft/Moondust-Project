@@ -22,11 +22,10 @@ ContactDetector::~ContactDetector()
 
 void ContactDetector::processDetector()
 {
-    _detected = !( _parentNPC->contacted_blocks.isEmpty()&&
-        _parentNPC->contacted_bgos.isEmpty()&&
-        _parentNPC->contacted_npc.isEmpty()&&
-        _parentNPC->contacted_players.isEmpty()
-        );
+    _detected = !(  _parentNPC->contacted_blocks.empty()&&
+                    _parentNPC->contacted_bgos.empty()&&
+                    _parentNPC->contacted_npc.empty()&&
+                    _parentNPC->contacted_players.empty() );
 }
 
 bool ContactDetector::detected()
@@ -38,13 +37,15 @@ luabind::adl::object ContactDetector::getBlocks(lua_State *L)
 {
     luabind::object tableOfBlocks = luabind::newtable(L);
     int i = 1;
-    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_blocks.begin(); it!=_parentNPC->contacted_blocks.end();it++)
+    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_blocks.begin();
+        it!=_parentNPC->contacted_blocks.end();
+        it++)
     {
-        if((*it)->type!=PGE_Phys_Object::LVLBlock) continue;
-        LVL_Block* block=static_cast<LVL_Block*>(*it);
-        if( block ){
+        if(it->second->type != PGE_Phys_Object::LVLBlock)
+            continue;
+        LVL_Block* block = static_cast<LVL_Block*>(it->second);
+        if(block)
             tableOfBlocks[i++] = block;
-        }
     }
     return tableOfBlocks;
 }
@@ -53,13 +54,15 @@ luabind::adl::object ContactDetector::getBGOs(lua_State *L)
 {
     luabind::object tableOfBGOs = luabind::newtable(L);
     int i = 1;
-    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_bgos.begin(); it!=_parentNPC->contacted_bgos.end();it++)
+    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_bgos.begin();
+        it!=_parentNPC->contacted_bgos.end();
+        it++)
     {
-        if((*it)->type!=PGE_Phys_Object::LVLBGO) continue;
-        LVL_Bgo* bgo=static_cast<LVL_Bgo*>(*it);
-        if( bgo ){
+        if(it->second->type != PGE_Phys_Object::LVLBGO)
+            continue;
+        LVL_Bgo* bgo = static_cast<LVL_Bgo*>(it->second);
+        if(bgo)
             tableOfBGOs[i++] = bgo;
-        }
     }
     return tableOfBGOs;
 }
@@ -68,16 +71,18 @@ luabind::adl::object ContactDetector::getNPCs(lua_State *L)
 {
     luabind::object tableOfNPCs = luabind::newtable(L);
     int i = 1;
-    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_npc.begin(); it!=_parentNPC->contacted_npc.end();it++)
+    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_npc.begin();
+        it!=_parentNPC->contacted_npc.end();
+        it++)
     {
-        if((*it)->type!=PGE_Phys_Object::LVLNPC) continue;
-        LVL_Npc* npc=static_cast<LVL_Npc*>(*it);
+        if(it->second->type != PGE_Phys_Object::LVLNPC)
+            continue;
+        LVL_Npc* npc = static_cast<LVL_Npc*>(it->second);
         Binding_Level_ClassWrapper_LVL_NPC* possibleLuaNPC = dynamic_cast<Binding_Level_ClassWrapper_LVL_NPC*>(npc);
-        if(possibleLuaNPC ){
+        if(possibleLuaNPC )
             tableOfNPCs[i++] = possibleLuaNPC;
-        }else{
+        else
             tableOfNPCs[i++] = npc;
-        }
     }
     return tableOfNPCs;
 }
@@ -86,16 +91,18 @@ luabind::adl::object ContactDetector::getPlayers(lua_State *L)
 {
     luabind::object tableOfPlayers = luabind::newtable(L);
     int i = 1;
-    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_players.begin(); it!=_parentNPC->contacted_players.end();it++)
+    for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_players.begin();
+        it!=_parentNPC->contacted_players.end();
+        it++)
     {
-        if((*it)->type!=PGE_Phys_Object::LVLPlayer) continue;
-        LVL_Player* player = static_cast<LVL_Player*>(*it);
+        if(it->second->type != PGE_Phys_Object::LVLPlayer)
+            continue;
+        LVL_Player* player = static_cast<LVL_Player*>(it->second);
         Binding_Level_ClassWrapper_LVL_Player* possibleLuaPlayer = dynamic_cast<Binding_Level_ClassWrapper_LVL_Player*>(player);
-        if(possibleLuaPlayer){
+        if(possibleLuaPlayer)
             tableOfPlayers[i++] = possibleLuaPlayer;
-        }else{
+        else
             tableOfPlayers[i++] = player;
-        }
     }
     return tableOfPlayers;
 }

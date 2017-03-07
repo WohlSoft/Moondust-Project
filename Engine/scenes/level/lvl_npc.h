@@ -14,8 +14,7 @@
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
-
-#include <QHash>
+#include <set>
 
 class LVL_Player;
 class LVL_Npc : public PGE_Phys_Object
@@ -105,14 +104,14 @@ public:
     /*****************NPC's and blocks******************/
     bool onGround();
     bool  _onGround;
-    QHash<intptr_t, intptr_t > foot_contacts_map;   //!< staying on ground surfaces
-    QHash<intptr_t, intptr_t > foot_sl_contacts_map;//!< Slipery surfaces
+    std::unordered_map<intptr_t, intptr_t > foot_contacts_map;   //!< staying on ground surfaces
+    std::unordered_map<intptr_t, intptr_t > foot_sl_contacts_map;//!< Slipery surfaces
 
-    typedef QHash<intptr_t, PGE_Phys_Object *> CollisionTable;
-    QHash<intptr_t, PGE_Phys_Object *> contacted_blocks;
-    QHash<intptr_t, PGE_Phys_Object *> contacted_bgos;
-    QHash<intptr_t, PGE_Phys_Object *> contacted_npc;
-    QHash<intptr_t, PGE_Phys_Object *> contacted_players;
+    typedef std::unordered_map<intptr_t, PGE_Phys_Object *> CollisionTable;
+    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_blocks;
+    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_bgos;
+    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_npc;
+    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_players;
     inline void l_pushBlk(PGE_Phys_Object *ob)
     {
         contacted_blocks[intptr_t(ob)] = ob;
@@ -139,9 +138,7 @@ public:
     bool    bumpUp;
     /***************************************************/
     /*******************Environmept*********************/
-    //QHash<int, obj_player_physics > physics;
-    QHash<intptr_t, intptr_t> environments_map;
-    //obj_player_physics physics_cur;
+    std::unordered_map<intptr_t, intptr_t> environments_map;
     int     environment;
     int     last_environment;
     /*******************Environmept*********************/
@@ -157,22 +154,22 @@ public:
 
     /********************Detectors**********************/
     //!< dummy detectors made directly from a base class, for a some tests
-    QList<BasicDetector >           detectors_dummy;
+    std::vector<BasicDetector >         detectors_dummy;
     //! Player position detectors (should have alone copy!)
-    PlayerPosDetector               detector_player_pos;
+    PlayerPosDetector                   detector_player_pos;
     //! Detects position and direction of nearest player
     PlayerPosDetector *lua_installPlayerPosDetector();
     //! Is player touches selected relative area;
-    QList<InAreaDetector >          detectors_inarea;
+    std::vector<InAreaDetector >        detectors_inarea;
     //! Detects is player(s) are enters into specific area relative to NPC's center
     InAreaDetector     *lua_installInAreaDetector(double left, double top, double right, double bottom, luabind::adl::object filters);
     //! Entire list of all detectors
-    QList<ContactDetector >         detectors_contact;
+    std::vector<ContactDetector >       detectors_contact;
     //! Detects contacted elements
     ContactDetector    *lua_installContactDetector();
 
     //! Entire list of all detectors
-    QVector<BasicDetector * >        detectors;
+    std::set<BasicDetector *>           detectors;
 
     /***************************************************/
 
@@ -230,9 +227,9 @@ public:
     /*******************Buddies********************/
     //Allows communication between neighour NPC's of same type.
     void             buildBuddieGroup();
-    void             updateBuddies(float tickTime);
-    void             buildLeaf(QList<LVL_Npc *> &needtochec, QList<LVL_Npc *> *&list, LVL_Npc *leader);
-    QList<LVL_Npc *> *buddies_list; //Destroys when was killed last NPC in this group
+    void             updateBuddies(double tickTime);
+    void             buildLeaf(std::vector<LVL_Npc *> &needtochec, std::vector<LVL_Npc *> *&list, LVL_Npc *leader);
+    std::vector<LVL_Npc *> *buddies_list; //Destroys when was killed last NPC in this group
     bool             buddies_updated;
     LVL_Npc         *buddies_leader;
     /**********************************************/

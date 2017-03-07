@@ -31,9 +31,8 @@
 #include <data_configs/spawn_effect_def.h>
 
 #include <queue>
-
+#include <vector>
 #include <functional>
-#include <QList>
 
 struct LoopTiming
 {
@@ -134,7 +133,7 @@ class Scene
         /**************Fader**************/
 
         /*  Effects engine   */
-        typedef QList<Scene_Effect>    SceneEffectsArray;
+        typedef std::vector<Scene_Effect>    SceneEffectsArray;
         SceneEffectsArray  WorkingEffects;
         ///
         /// \brief launchStaticEffect

@@ -85,23 +85,23 @@ void TitleScene::processMenu()
             if(value == "game1p")
             {
                 numOfPlayers = 1;
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_playepisode_wait);
             }
             else if(value == "game2p")
             {
                 numOfPlayers = 2;
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_playepisode_wait);
             }
             else if(value == "playlevel")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_playlevel_wait);
             }
             else if(value == "Options")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_options);
             }
             else if(value == "Exit")
@@ -137,7 +137,7 @@ void TitleScene::processMenu()
                     ret = ANSWER_PLAYEPISODE_2P;
                 else
                     ret = ANSWER_PLAYEPISODE;
-                m_fader.setFade(10, 1.0f, 0.06f);
+                m_fader.setFade(10, 1.0, 0.06);
                 m_doExit = true;
                 menu.resetState();
             }
@@ -153,7 +153,7 @@ void TitleScene::processMenu()
             {
                 result_level.levelfile = value;
                 ret = ANSWER_PLAYLEVEL;
-                m_fader.setFade(10, 1.0f, 0.06f);
+                m_fader.setFade(10, 1.0, 0.06);
                 m_doExit = true;
                 menu.resetState();
             }
@@ -168,22 +168,22 @@ void TitleScene::processMenu()
         case menu_options:
             if(value == "tests")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_tests);
             }
             else if(value == "testboxes")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_testboxes);
             }
             else if(value == "controls")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_controls);
             }
             else if(value == "videosetup")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_videosettings);
             }
             else
@@ -196,12 +196,12 @@ void TitleScene::processMenu()
         case menu_controls:
             if(value == "control_plr1")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_controls_plr1);
             }
             else if(value == "control_plr2")
             {
-                menuChain.push(_currentMenu);
+                menuChain.push_back(_currentMenu);
                 setMenu(menu_controls_plr2);
             }
             break;
@@ -331,7 +331,8 @@ void TitleScene::processMenu()
             else if(menuChain.size() > 0)
             {
                 menu.reset();
-                setMenu((CurrentMenu)menuChain.pop());
+                setMenu((CurrentMenu)menuChain.back());
+                menuChain.pop_back();
             }
             break;
         }

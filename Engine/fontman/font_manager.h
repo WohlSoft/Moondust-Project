@@ -30,12 +30,6 @@
 #ifdef PGE_TTF
 #include <QString>
 #endif
-//#include <QFont>
-//#include <QSize>
-//#include <QMap>
-//#include <QRgb>
-//#include <QRegExp>
-
 
 #include <common_features/pge_texture.h>
 #include <common_features/rect.h>
@@ -147,9 +141,9 @@ private:
     //static TTF_Font * defaultFont;
     //static PGE_Texture textTexture;
     #ifdef PGE_TTF
-    friend uint qHash(const TTFCharType &struc);
-    static QHash<TTFCharType, PGE_Texture> fontTable_1;
-    static QHash<TTFCharType, PGE_Texture> fontTable_2;
+    friend uint std::unordered_map(const TTFCharType &struc);
+    static std::unordered_map<TTFCharType, PGE_Texture> fontTable_1;
+    static std::unordered_map<TTFCharType, PGE_Texture> fontTable_2;
     #endif
     typedef std::unordered_map<std::string, int> FontsHash;
     static FontsHash fonts;
@@ -162,7 +156,7 @@ private:
 };
 
 #ifdef PGE_TTF
-inline uint qHash(const FontManager::TTFCharType &struc)
+inline uint std::unordered_map(const FontManager::TTFCharType &struc)
 {
     uint result = struc.c.unicode();
 

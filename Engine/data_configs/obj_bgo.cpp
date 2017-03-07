@@ -21,23 +21,24 @@
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
+#include <Utils/files.h>
+#include <fmt/fmt_format.h>
 
 /*****Level BGO************/
-PGE_DataArray<obj_bgo>   ConfigManager::lvl_bgo_indexes;
-CustomDirManager ConfigManager::Dir_BGO;
-QList<SimpleAnimator > ConfigManager::Animator_BGO;
+PGE_DataArray<obj_bgo>          ConfigManager::lvl_bgo_indexes;
+CustomDirManager                ConfigManager::Dir_BGO;
+std::vector<SimpleAnimator >    ConfigManager::Animator_BGO;
 /*****Level BGO************/
 
-bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, QSettings *setup)
+bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, std::string section, obj_bgo *merge_with, std::string iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
-    QString errStr;
+    std::string errStr;
 
     if(internal)
     {
-        setup = new QSettings(iniFile, QSettings::IniFormat);
-        setup->setIniCodec("UTF-8");
+        setup = new IniProcessing(iniFile);
     }
 
     sbgo.isInit = merge_with ? merge_with->isInit : false;
@@ -56,7 +57,8 @@ bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_
 
     setup->endGroup();
 
-    if(internal) delete setup;
+    if(internal)
+        delete setup;
 
     return valid;
 }
@@ -68,28 +70,27 @@ bool ConfigManager::loadLevelBGO()
     obj_bgo sbgo;
     unsigned long bgo_total = 0;
     bool useDirectory = false;
-    QString bgo_ini = config_dir + "lvl_bgo.ini";
-    QString nestDir = "";
+    std::string bgo_ini = config_dirSTD + "lvl_bgo.ini";
+    std::string nestDir = "";
 
-    if(!QFile::exists(bgo_ini))
+    if(!Files::fileExists(bgo_ini))
     {
-        addError(QString("ERROR LOADING lvl_bgo.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_bgo.ini: file does not exist"),
-                          PGE_MsgBox::msg_fatal);
+        const char* msg = "ERROR LOADING lvl_bgo.ini: file does not exist";
+        addError(msg);
+        PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_fatal);
         msgBox.exec();
         return false;
     }
 
-    QSettings bgoset(bgo_ini, QSettings::IniFormat);
-    bgoset.setIniCodec("UTF-8");
+    IniProcessing bgoset(bgo_ini);
     lvl_bgo_indexes.clear();//Clear old
     bgoset.beginGroup("background-main");
     bgo_total = bgoset.value("total", 0).toULongLong();
     nestDir =   bgoset.value("config-dir", "").toString();
 
-    if(!nestDir.isEmpty())
+    if(!nestDir.empty())
     {
-        nestDir = config_dir + nestDir;
+        nestDir = config_dirSTD + nestDir;
         useDirectory = true;
     }
 
@@ -100,12 +101,12 @@ bool ConfigManager::loadLevelBGO()
     {
         if(useDirectory)
         {
-            if(!loadLevelBGO(sbgo, "background", nullptr, QString("%1/background-%2.ini").arg(nestDir).arg(i)))
+            if(!loadLevelBGO(sbgo, "background", nullptr, fmt::format("{0}/background-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadLevelBGO(sbgo, QString("background-%1").arg(i), nullptr, "", &bgoset))
+            if(!loadLevelBGO(sbgo, fmt::format("background-{0}", i), nullptr, "", &bgoset))
                 return false;
         }
 
@@ -115,15 +116,15 @@ bool ConfigManager::loadLevelBGO()
         //Load custom config if possible
         loadCustomConfig<obj_bgo>(lvl_bgo_indexes, i, Dir_BGO, "background", "background", &loadLevelBGO);
 
-        if(bgoset.status() != QSettings::NoError)
-            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i), QtCriticalMsg);
+        if(bgoset.lastError() != IniProcessing::ERR_OK)
+            addError(fmt::format("ERROR LOADING lvl_bgo.ini N:{0} (bgo-{1})", bgoset.lastError(), i));
     }
 
     if(lvl_bgo_indexes.stored() < bgo_total)
     {
-        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.stored()));
-        PGE_MsgBox msgBox(NULL, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.stored()),
-                          PGE_MsgBox::msg_error);
+        std::string msg = fmt::format("Not all BGOs loaded! Total: {0}, Loaded: {1}", bgo_total, lvl_bgo_indexes.stored());
+        addError(msg);
+        PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
         msgBox.exec();
     }
 

@@ -27,7 +27,7 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
-#include <QList>
+#include <vector>
 #include <PGE_File_Formats/file_formats.h>
 #include <queue>
 

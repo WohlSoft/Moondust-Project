@@ -7,8 +7,8 @@ class WorldScene;
 
 class LuaWorldEngine : public LuaEngine
 {
-private:
-    Q_DISABLE_COPY(LuaWorldEngine)
+//private:
+//    Q_DISABLE_COPY(LuaWorldEngine)
 public:
     LuaWorldEngine(WorldScene* scene);
     ~LuaWorldEngine();

@@ -80,7 +80,7 @@ void LVL_Background::setBg(obj_BG &bg)
 
     setup = bg;
     bgType = static_cast<type>(setup.type);
-    qDebug() << "BG Type" << bgType;
+    pLogDebug("BG Type %d", bgType);
     //Reset magic background parameters
     isMagic = false;
     strips.clear();
@@ -191,7 +191,7 @@ void LVL_Background::setBg(obj_BG &bg)
                 color = bg.second_Color_upper;
         }
 
-        qDebug() << "DoubleRow";
+        pLogDebug("DoubleRow");
     }
     break;
 

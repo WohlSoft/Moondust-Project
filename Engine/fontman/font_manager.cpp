@@ -499,8 +499,8 @@ std::vector<RasterFont>     FontManager::rasterFonts;
 
 bool FontManager::isInit = false;
 #ifdef PGE_TTF
-QHash<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_1;
-QHash<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_2;
+std::unordered_map<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_1;
+std::unordered_map<FontManager::TTFCharType, PGE_Texture> FontManager::fontTable_2;
 #endif
 
 FontManager::FontsHash FontManager::fonts;
@@ -526,7 +526,7 @@ void FontManager::initBasic()
     //Josefin Sans
     QString family("Monospace");
 
-    if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
+    if(!QFontDatabase::applicationFontFamilies(fontID).empty())
         family = QFontDatabase::applicationFontFamilies(fontID).at(0);
 
     defaultFont->setFamily(family);//font.setWeight(14);
@@ -585,7 +585,7 @@ void FontManager::quit()
     //Clean font cache
     //glDisable(GL_TEXTURE_2D);
     #ifdef PGE_TTF
-    QHash<TTFCharType, PGE_Texture>::iterator i;
+    std::unordered_map<TTFCharType, PGE_Texture>::iterator i;
 
     for(i = fontTable_1.begin(); i != fontTable_1.end(); ++i)
         GlRenderer::deleteTexture(i.value());
@@ -651,7 +651,7 @@ PGE_Size FontManager::textSize(std::string &text, int fontID, int max_line_lengh
     QSize meterSize = meter.boundingRect(qtext).size();
     return PGE_Size(meterSize.width(), meterSize.height());
     #else
-    assert(false && "TTF FONTS SUPPORT IS DISABLED!");
+    //assert(false && "TTF FONTS SUPPORT IS DISABLED!");
     (void)ttfFontPixelSize;
     return PGE_Size(27 * 20, (std::count(text.begin(), text.end(), '\n') + 1) * 20);
     #endif
@@ -794,7 +794,7 @@ void FontManager::printText(std::string text, int x, int y, int font, float Red,
     else
     {
         (void)ttf_FontSize;
-        assert(false && "TTF FONTS SUPPORT IS DISABLED!");
+        //assert(false && "TTF FONTS SUPPORT IS DISABLED!");
     }
     #endif
 }
@@ -808,7 +808,7 @@ void FontManager::printTextTTF(std::string text, int x, int y, int pointSize, QR
     #ifdef PGE_TTF
     QString(family);
 
-    if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
+    if(!QFontDatabase::applicationFontFamilies(fontID).empty())
         family = QFontDatabase::applicationFontFamilies(fontID).at(0);
 
     QFont font(family);//font.setWeight(14);

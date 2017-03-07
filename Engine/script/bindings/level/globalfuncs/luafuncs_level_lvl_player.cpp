@@ -8,7 +8,7 @@ int Binding_Level_GlobalFuncs_Player::count(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
     LevelScene::LVL_PlayersArray &allPlayers = scene->getPlayers();
-    return allPlayers.count();
+    return allPlayers.size();
 }
 
 luabind::adl::object Binding_Level_GlobalFuncs_Player::get(lua_State* L)

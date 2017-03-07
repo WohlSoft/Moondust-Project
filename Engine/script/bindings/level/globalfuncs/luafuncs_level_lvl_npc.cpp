@@ -7,7 +7,7 @@ int Binding_Level_GlobalFuncs_NPC::count(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
     LevelScene::LVL_NpcsArray &allNPCs = scene->getNpcs();
-    return allNPCs.count();
+    return allNPCs.size();
 }
 
 luabind::adl::object Binding_Level_GlobalFuncs_NPC::get(lua_State *L)

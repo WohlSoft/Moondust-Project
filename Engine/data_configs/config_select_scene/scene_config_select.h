@@ -24,7 +24,7 @@
 #include <gui/pge_menu.h>
 #include <graphics/gl_color.h>
 
-#include <QList>
+#include <vector>
 
 class ConfigSelectScene : public Scene
 {
@@ -73,7 +73,7 @@ private:
     GlColor  m_waterMarkColor;
     int      m_waterMarkFontSize;
     PGE_Point mousePos;
-    QList<ConfigPackEntry> m_availablePacks;
+    std::vector<ConfigPackEntry> m_availablePacks;
     PGE_Menu menu;
     PGE_Texture cursor;
     PGEColor    bgcolor;

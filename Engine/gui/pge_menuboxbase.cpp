@@ -73,7 +73,7 @@ void PGE_MenuBoxBase::construct(std::string _title, PGE_MenuBoxBase::msgType _ty
 
     _ctrl1 = nullptr;
     _ctrl2 = nullptr;
-    fontRgba.setRgba(qRgba(255, 255, 255, 255));
+    fontRgba.setRgba(1.0, 1.0, 1.0, 1.0);
     updateTickValue();
     _page = 0;
     running = false;

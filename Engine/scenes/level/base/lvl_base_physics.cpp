@@ -33,8 +33,7 @@
 #include <Utils/maths.h>
 
 #include <audio/pge_audio.h>
-
-#include <QVector>
+#include <vector>
 
 PGE_physBody::PGE_physBody() :
     /*****Physical engine locals*******/
@@ -96,9 +95,8 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
     //Do transformation if needed
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
-        int target_id = static_cast<int>(nearest->setup->setup.plSwitch_Button_id - 1);
-        QVector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
-
+        size_t target_id = static_cast<size_t>(nearest->setup->setup.plSwitch_Button_id - 1);
+        std::vector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
         if(target_id >= states.size())
         {
             PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
@@ -371,7 +369,7 @@ template <class TArray> void findHorizontalBoundaries(TArray &array, double &lef
 template <class TArray> void findVerticalBoundaries(TArray &array, double &higher, double &lower,
         PhysObject **highest = nullptr, PhysObject **lowerest = nullptr)
 {
-    if(array.isEmpty())
+    if(array.empty())
         return;
 
     for(int i = 0; i < array.size(); i++)
@@ -650,9 +648,10 @@ inline bool findMinimalHeight(int idF, PhysObject::objRect sF, double vF,
 
 void PGE_Phys_Object::updateCollisions()
 {
-    if(m_paused) return;
+    if(m_paused)
+        return;
 
-    QVector<PGE_Phys_Object *> objs;
+    std::vector<PGE_Phys_Object *> objs;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(m_momentum.w / 2.0);
 
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
@@ -1714,7 +1713,7 @@ skipTriangleResolving:
 
         while(it != l_contactL.end())
         {
-            PhysObject *cEL = it.value();
+            PhysObject *cEL = it->second;
 
             if(!cEL->m_momentum.betweenV(m_momentum.top() + 1.0, m_momentum.bottom() - 1.0))
                 it = l_contactL.erase(it);
@@ -1727,7 +1726,7 @@ skipTriangleResolving:
 
         while(it != l_contactR.end())
         {
-            PhysObject *cEL = it.value();
+            PhysObject *cEL = it->second;
 
             if(!cEL->m_momentum.betweenV(m_momentum.top() + 1.0, m_momentum.bottom() - 1.0))
                 it = l_contactR.erase(it);
@@ -1740,7 +1739,7 @@ skipTriangleResolving:
 
         while(it != l_contactT.end())
         {
-            PhysObject *cEL = it.value();
+            PhysObject *cEL = it->second;
 
             if(!cEL->m_momentum.betweenH(m_momentum.left() + 1.0, m_momentum.right() - 1.0))
                 it = l_contactT.erase(it);
@@ -1753,7 +1752,7 @@ skipTriangleResolving:
 
         while(it != l_contactB.end())
         {
-            PhysObject *cEL = it.value();
+            PhysObject *cEL = it->second;
 
             if(!cEL->m_momentum.betweenH(m_momentum.left() + 1.0, m_momentum.right() - 1.0))
                 it = l_contactB.erase(it);

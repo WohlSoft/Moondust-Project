@@ -151,7 +151,7 @@ void PGE_MusPlayer::openFile(std::string musFile)
         p_playingMus = NULL;
     }
 
-    p_playingMus = Mix_LoadMUS( musFile.toUtf8().data() );
+    p_playingMus = Mix_LoadMUS( musFile.data() );
 
     if(!p_playingMus)
 	{

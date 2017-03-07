@@ -24,9 +24,8 @@ void LVL_Npc::update(double tickTime)
 {
     if(killed) return;
 
-    if(wasDeactivated) return;
-
-    //_onGround = !collided_bottom.isEmpty();
+    if(wasDeactivated)
+        return;
 
     if(m_isGenerator)
     {
@@ -108,8 +107,8 @@ void LVL_Npc::update(double tickTime)
     else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom() + m_height_registered))
         kill(DAMAGE_PITFALL);
 
-    for(int i = 0; i < detectors.size(); i++)
-        detectors[i]->processDetector();
+    for(auto i = detectors.begin(); i != detectors.end(); i++)
+        (*i)->processDetector();
 
     try
     {

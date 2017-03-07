@@ -149,7 +149,7 @@ unsigned int Render_OpenGL21::SDL_InitFlags()
 
 bool Render_OpenGL21::init()
 {
-    LogDebug("Create OpenGL context...");
+    pLogDebug("Create OpenGL context...");
     //Creating of the OpenGL Context
     PGE_Window::glcontext = SDL_GL_CreateContext(PGE_Window::window);
 

@@ -473,7 +473,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
         wait200ms.makeTimer(250);
         event_queue.events.push_back(wait200ms);
 
-        if((warp.lvl_o) || (!warp.lname.isEmpty()))
+        if((warp.lvl_o) || (!warp.lname.empty()))
         {
             EventQueueEntry<LVL_Player >event2;
             event2.makeCaller([this, warp]()->void
@@ -579,7 +579,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
         event2.makeTimer(200);
         event_queue.events.push_back(event2);
 
-        if((warp.lvl_o) || (!warp.lname.isEmpty()))
+        if((warp.lvl_o) || (!warp.lname.empty()))
         {
             EventQueueEntry<LVL_Player >event2;
             event2.makeCaller([this, warp]()->void

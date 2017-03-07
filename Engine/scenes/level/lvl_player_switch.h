@@ -19,7 +19,7 @@
 #ifndef CHARACTERSWITCHERENGINE_H
 #define CHARACTERSWITCHERENGINE_H
 
-#include <QList>
+#include <vector>
 #include <common_features/simple_animator.h>
 #include <data_configs/obj_block.h>
 
@@ -29,8 +29,8 @@ struct CharacterSwitchState
 {
     CharacterSwitchState();
     unsigned int CharacterID;
-    QList<int> sequence_on;
-    QList<int> sequence_off;
+    std::vector<int> sequence_on;
+    std::vector<int> sequence_off;
     SimpleAnimator *animator_p;
 };
 
@@ -38,8 +38,8 @@ struct CharacterBlockState
 {
     CharacterBlockState();
     unsigned int CharacterID;
-    QList<int> sequence_on;
-    QList<int> sequence_off;
+    std::vector<int> sequence_on;
+    std::vector<int> sequence_off;
     SimpleAnimator *animator_p;
 };
 
@@ -52,8 +52,8 @@ class CharacterSwitcherEngine
         void buildSwitch(obj_block &blk);
         void buildBrick(obj_block &blk);
         void refreshState();
-        QList<CharacterSwitchState> m_switches;
-        QList<CharacterBlockState> m_blocks;
+        std::vector<CharacterSwitchState>   m_switches;
+        std::vector<CharacterBlockState>    m_blocks;
         LevelScene *m_scene;
 };
 

@@ -64,7 +64,7 @@ void GlobalSettings::closeJoysticks()
 
 void GlobalSettings::load()
 {
-    IniProcessing setup(AppPathManager::settingsFile());
+    IniProcessing setup(AppPathManager::settingsFileSTD());
     setup.beginGroup("Main");
     {
         //TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
@@ -107,7 +107,7 @@ void GlobalSettings::loadJoystickSettings()
 
     if((player2_controller < -1) || (player2_controller > SDL_NumJoysticks() - 1)) player2_controller = -1;
 
-    IniProcessing setup(AppPathManager::settingsFile());
+    IniProcessing setup(AppPathManager::settingsFileSTD());
 
     for(int i = 0; i < SDL_NumJoysticks(); i++)
     {
@@ -126,7 +126,7 @@ void GlobalSettings::loadJoystickSettings()
 
 void GlobalSettings::save()
 {
-    IniProcessing setup(AppPathManager::settingsFile());
+    IniProcessing setup(AppPathManager::settingsFileSTD());
     setup.beginGroup("Main");
     {
         setup.setValue("phys-step", TicksPerSecond);

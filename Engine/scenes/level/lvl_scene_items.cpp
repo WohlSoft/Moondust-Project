@@ -65,25 +65,9 @@ LVL_Block *LevelScene::spawnBlock(LevelBlock blockData)
 
 void LevelScene::destroyBlock(LVL_Block *&_block)
 {
-#if (QT_VERSION >= 0x050400)
-    blocks.removeAll(_block);
-#else
-
-    while(1)
-    {
-        const QVector<LVL_Block *>::const_iterator ce = blocks.cend(), cit = std::find(blocks.cbegin(), ce, _block);
-
-        if(cit == ce)
-            break;
-
-        const QVector<LVL_Block *>::iterator e = blocks.end(), it = std::remove(blocks.begin() + (cit - blocks.cbegin()), e, _block);
-        blocks.erase(it, e);
-        break;
-    }
-
-#endif
+    std::remove(blocks.begin(), blocks.end(), _block);
     delete _block;
-    _block = NULL;
+    _block = nullptr;
 }
 
 void LevelScene::placeBGO(LevelBGO& bgoData)
@@ -230,23 +214,24 @@ void LevelScene::toggleSwitch(unsigned int switch_id)
 {
     PGE_Audio::playSoundByRole(obj_sound_role::BlockSwitch);
 
-    if(switch_blocks.contains(switch_id))
+    SwitchBlocksMap::iterator i = switch_blocks.find(switch_id);
+    if(i != switch_blocks.end())
     {
-        QList<LVL_Block *> &list = switch_blocks[switch_id];
+        std::vector<LVL_Block *> &list = i->second;
 
-        for(int x = 0; x < list.size(); x++)
+        for(size_t x = 0; x < list.size(); x++)
         {
             if((list[x]->setup->setup.switch_Block) && (list[x]->setup->setup.switch_ID == switch_id))
                 list[x]->transformTo(list[x]->setup->setup.switch_transform, 2);
             else
             {
-                list.removeAt(x);
+                list.erase(list.begin() + x);
                 x--; //Remove blocks which are not fits into specific Switch-ID
             }
         }
 
         //Change state of the switch to allow lua script see this
-        switch_states[static_cast<int>(switch_id)] = !switch_states[static_cast<int>(switch_id)];
+        switch_states[static_cast<size_t>(switch_id)] = !switch_states[static_cast<size_t>(switch_id)];
     }
 }
 
@@ -280,9 +265,9 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     player->m_scene = this;
 
     if(players.size() == 0)
-        player->camera = &cameras.first();
+        player->camera = &cameras.front();
     else if(players.size() == 1)
-        player->camera = &cameras.last();
+        player->camera = &cameras.back();
 
     int sID = findNearestSection(playerData.x, playerData.y);
     LVL_Section *sct = getSection(sID);

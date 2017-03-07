@@ -160,7 +160,7 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
     _effect.m_animator.construct(true, frms, _effect.m_setup->framespeed, frame1, frameE);
     _effect.m_posRect.setSize(_effect.m_texture.w, _effect.m_texture.h / frms);
 
-    if(!effect_def.frame_sequence.isEmpty())
+    if(!effect_def.frame_sequence.empty())
     {
         frms = effect_def.frame_sequence.size();
         _effect.m_animator.setFrameSequance(effect_def.frame_sequence);
@@ -193,14 +193,14 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
 
 void Scene::processEffects(double ticks)
 {
-    for(int i = 0; i < WorkingEffects.size(); i++)
+    for(size_t i = 0; i < WorkingEffects.size(); i++)
     {
         Scene_Effect &e = WorkingEffects[i];
         e.update(ticks);
 
         if(e.finished() || (!e.m_limitLifeTime && !e.m_limitLoops && !isVizibleOnScreen(e.m_posRect)))
         {
-            WorkingEffects.removeAt(i);
+            WorkingEffects.erase(WorkingEffects.begin() + i);
             i--;
         }
     }

@@ -26,15 +26,12 @@
 #include <fmt/fmt_format.h>
 #include <Utils/files.h>
 
-#include <QFileInfo>
-#include <QDir>
-
 /*****Level NPC************/
 PGE_DataArray<obj_npc>      ConfigManager::lvl_npc_indexes;
 NPC_GlobalSetup             ConfigManager::g_setup_npc;
 CustomDirManager            ConfigManager::Dir_NPC;
 CustomDirManager            ConfigManager::Dir_NPCScript;
-QList<AdvNpcAnimator >      ConfigManager::Animator_NPC;
+std::vector<AdvNpcAnimator >      ConfigManager::Animator_NPC;
 /*****Level NPC************/
 
 bool ConfigManager::loadLevelNPC(obj_npc &snpc,

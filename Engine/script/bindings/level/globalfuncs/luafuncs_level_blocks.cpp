@@ -5,7 +5,7 @@ int Binding_Level_GlobalFuncs_BLOCKS::count(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
     LevelScene::LVL_BlocksArray &allBlocks = scene->getBlocks();
-    return allBlocks.count();
+    return allBlocks.size();
 }
 
 luabind::adl::object Binding_Level_GlobalFuncs_BLOCKS::get(lua_State *L)

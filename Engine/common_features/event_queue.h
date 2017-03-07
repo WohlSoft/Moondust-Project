@@ -313,7 +313,7 @@ class EventQueue
             left_time = 0.0;
 process_event:
 
-            if(events.isEmpty())
+            if(events.empty())
             {
                 left_time = 0.0;
                 return;

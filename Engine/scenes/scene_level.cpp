@@ -254,13 +254,6 @@ LevelScene::~LevelScene()
         }
     }
 
-    //npcs.clear();
-    //    while(!npcs.isEmpty())
-    //    {
-    //        LVL_Npc* tmp;
-    //        tmp = npcs.last();
-    //        npcs.pop_back();
-    //    }
     D_pLogDebug("Destroy Warps");
 
     for(i = 0; i < warps.size(); i++)
@@ -304,19 +297,19 @@ LevelScene::~LevelScene()
 void LevelScene::tickAnimations(double ticks)
 {
     //tick animation
-    for(QList<SimpleAnimator>::iterator it = ConfigManager::Animator_Blocks.begin();
+    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_Blocks.begin();
         it != ConfigManager::Animator_Blocks.end(); it++)
         it->manualTick(ticks);
 
-    for(QList<SimpleAnimator>::iterator it = ConfigManager::Animator_BGO.begin();
+    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_BGO.begin();
         it != ConfigManager::Animator_BGO.end(); it++)
         it->manualTick(ticks);
 
-    for(QList<SimpleAnimator>::iterator it = ConfigManager::Animator_BG.begin();
+    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_BG.begin();
         it != ConfigManager::Animator_BG.end(); it++)
         it->manualTick(ticks);
 
-    for(QList<AdvNpcAnimator>::iterator it = ConfigManager::Animator_NPC.begin();
+    for(std::vector<AdvNpcAnimator>::iterator it = ConfigManager::Animator_NPC.begin();
         it != ConfigManager::Animator_NPC.end(); it++)
         it->manualTick(ticks);
 }
@@ -520,7 +513,6 @@ void LevelScene::render()
 
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-    /*QList<PGE_LevelCamera>::iterator it=cameras.begin(); it!=cameras.end(); it++*/
     for(PGE_LevelCamera &cam : cameras)
     {
         if(numberOfPlayers > 1)
@@ -594,8 +586,7 @@ void LevelScene::render()
                 if(obj->type == PGE_Phys_Object::LVLNPC)
                 {
                     LVL_Npc *npc = static_cast<LVL_Npc *>(obj);
-
-                    for(int i = 0; i < npc->detectors_inarea.size(); i++)
+                    for(size_t i = 0; i < npc->detectors_inarea.size(); i++)
                     {
                         PGE_RectF trapZone = npc->detectors_inarea[i].trapZone();
                         GlRenderer::renderRect(static_cast<float>(trapZone.x() - camPosX),

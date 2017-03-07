@@ -29,11 +29,10 @@ void LVL_Npc::updateGenerator(double tickTime)
     if(generatorTimeLeft <= 0)
     {
         generatorTimeLeft += data.generator_period * 100;
-
-        if(!contacted_npc.isEmpty()) return;
-
-        if(!contacted_players.isEmpty()) return;
-
+        if(!contacted_npc.empty())
+            return;
+        if(!contacted_players.empty())
+            return;
         LevelNPC def = data;
         def.x = Maths::lRound(posX());
         def.y = Maths::lRound(posY());

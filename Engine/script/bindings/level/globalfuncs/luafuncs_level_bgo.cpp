@@ -5,7 +5,7 @@ int Binding_Level_GlobalFuncs_BGO::count(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
     LevelScene::LVL_BgosArray &allBGOs = scene->getBGOs();
-    return allBGOs .count();
+    return allBGOs.size();
 }
 
 luabind::adl::object Binding_Level_GlobalFuncs_BGO::get(lua_State *L)

@@ -31,17 +31,11 @@
 #include <fmt/fmt_format.h>
 #include <algorithm>
 
-#include <QDir>
-#include <QFileInfo>
-
 #include <QDesktopServices>
 #include <QUrl>
 
-#include <QtDebug>
-
 DataFolders      ConfigManager::dirs;
 std::string      ConfigManager::config_name;
-QString          ConfigManager::config_dir;
 std::string      ConfigManager::config_dirSTD;
 std::string      ConfigManager::config_idSTD = "dummy";
 std::string      ConfigManager::data_dirSTD;

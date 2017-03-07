@@ -37,10 +37,7 @@
 #include <Utils/files.h>
 #include <fmt/fmt_format.h>
 
-#include <QHash>
-#include <QPair>
-#include <QVector>
-#include <QFileInfo>
+#include <vector>
 #include <unordered_map>
 
 WorldScene::WorldScene()
@@ -179,7 +176,7 @@ void WorldScene::setGameState(EpisodeState *_state)
         gameState->WorldPath = data.meta.path;
 
         //Detect gamestart and set position on them
-        for(int i = 0; i < data.levels.size(); i++)
+        for(size_t i = 0; i < data.levels.size(); i++)
         {
             if(data.levels[i].gamestart)
             {

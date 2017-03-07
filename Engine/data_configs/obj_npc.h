@@ -19,8 +19,7 @@
 #ifndef OBJ_NPC_H
 #define OBJ_NPC_H
 
-#include <QString>
-#include <QStringList>
+#include <string>
 #include <common_features/size.h>
 #include <ConfigPackManager/level/config_npc.h>
 

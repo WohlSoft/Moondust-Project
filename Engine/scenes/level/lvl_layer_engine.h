@@ -19,7 +19,6 @@
 #ifndef LVL_LAYER_H
 #define LVL_LAYER_H
 
-#include <QHash>
 #include <unordered_map>
 #include "lvl_base_object.h"
 

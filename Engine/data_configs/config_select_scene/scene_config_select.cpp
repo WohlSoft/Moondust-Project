@@ -141,16 +141,6 @@ ConfigSelectScene::ConfigSelectScene():
         FontManager::optimizeText(description, 28);
         item.description = description;
         GlRenderer::loadTextureP(item.image, splash_logo);
-        //item = new QListWidgetItem( configName );
-        //QPixmap iconImg(200,114);
-        //iconImg.fill(QColor(Qt::white));
-        //iconImg = squareImage(QPixmap(splash_logo), QSize(200,114));
-        //item->setIcon( QIcon( iconImg ) );
-        //item->setData(Qt::ToolTipRole, description);
-        //item->setData(Qt::UserRole, c);
-        //item->setData(Qt::UserRole+4, config_dir);
-        //item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-        //ui->configList->addItem( item );
         m_availablePacks.push_back(item);
     }
 

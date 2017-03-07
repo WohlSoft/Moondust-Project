@@ -9,9 +9,6 @@
 #include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
 
-#include <QSettings>
-#include <QFileInfo>
-
 unsigned long ConfigManager::music_custom_id;
 unsigned long ConfigManager::music_w_custom_id;
 PGE_DataArray<obj_music> ConfigManager::main_music_lvl;

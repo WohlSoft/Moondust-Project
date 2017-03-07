@@ -20,7 +20,7 @@
 #define SIMPLE_ANIMATOR_H
 
 #include <SDL2/SDL_timer.h>
-#include <QList>
+#include <vector>
 #include <utility>
 
 typedef std::pair<double, double > AniPos;
@@ -41,7 +41,7 @@ class SimpleAnimator
         void construct(bool enables = false, int framesq = 1, int fspeed = 64, int First = 0, int Last = -1,
                        bool rev = false, bool bid = false);
 
-        void setFrameSequance(QList<int> sequance);
+        void setFrameSequance(std::vector<int> sequance);
 
         AniPos image(double frame = -1);
 
@@ -69,9 +69,9 @@ class SimpleAnimator
         int  m_onceMode_loops;
         bool m_animationFinished;
 
-        bool       m_frameSequanceEnabled;
-        QList<int> m_frameSequance;
-        int        m_frameSequanceCur;
+        bool                m_frameSequanceEnabled;
+        std::vector<int>    m_frameSequance;
+        int                 m_frameSequanceCur;
 
         int m_currentFrame;
 

@@ -21,9 +21,7 @@
 
 #include "../graphics/graphics.h"
 
-#include <QString>
-#include <QPixmap>
-#include <QList>
+#include <string>
 #include <ConfigPackManager/level/config_block.h>
 
 struct obj_block

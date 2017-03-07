@@ -3,8 +3,8 @@
 
 #include "lvl_base_detector.h"
 #include <common_features/rectf.h>
-#include <QHash>
-#include <QList>
+#include <unordered_map>
+#include <vector>
 
 #include <script/lua_global.h>
 
@@ -42,14 +42,14 @@ public:
     luabind::object getPlayers(lua_State *L);
 
 private:
-    QHash<int, int > detectedPLR;
-    QHash<int, int > detectedBLK;
-    QHash<int, int > detectedBGO;
-    QHash<int, int > detectedNPC;
-    QList<LVL_Block*>   detectedBlocks;
-    QList<LVL_Bgo*>     detectedBGOs;
-    QList<LVL_Npc*>     detectedNPCs;
-    QList<LVL_Player*>  detectedPlayers;
+    std::unordered_map<long, long> detectedPLR;
+    std::unordered_map<long, long> detectedBLK;
+    std::unordered_map<long, long> detectedBGO;
+    std::unordered_map<long, long> detectedNPC;
+    std::vector<LVL_Block*>     detectedBlocks;
+    std::vector<LVL_Bgo*>       detectedBGOs;
+    std::vector<LVL_Npc*>       detectedNPCs;
+    std::vector<LVL_Player*>    detectedPlayers;
     int _filters;
     int _contacts;
     PGE_RectF _srcTrapZone;

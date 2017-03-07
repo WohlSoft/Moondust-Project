@@ -2,21 +2,18 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 
-#include <QFileInfo>
-#include <QSettings>
 #include <gui/pge_msgbox.h>
 #include <SDL2/SDL_mixer_ext.h>
-#include <QVector>
+#include <vector>
 #include <common_features/logger.h>
 #include <FileMapper/file_mapper.h>
-#include <QtDebug>
 
 #include <fmt/fmt_format.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 
 #ifdef DEBUG_BUILD
-#include <QElapsedTimer>
+#include <Utils/elapsed_timer.h>
 #endif
 
 PGE_DataArray<obj_sound > ConfigManager::main_sound;
@@ -30,7 +27,7 @@ bool ConfigManager::soundIniChanged()
     bool s = sound_lastIniFile_changed;
     sound_lastIniFile_changed = false;
 #ifdef DEBUG_BUILD
-    LogDebug(QString("Last Sounds.INI was changed: %1").arg(s));
+    pLogDebug("Last Sounds.INI was changed: %d", s);
 #endif
     return s;
 }
@@ -42,20 +39,6 @@ bool ConfigManager::sound_lastIniFile_changed = false;
 bool ConfigManager::loadDefaultSounds()
 {
     return loadSound(dirs.sounds, config_dirSTD + "sounds.ini", false);
-}
-
-obj_sound::obj_sound()
-{
-    id = 0;
-    hidden = false;
-    channel = -1;
-}
-
-obj_sound_index::obj_sound_index()
-{
-    need_reload = false;
-    chunk = NULL;
-    channel = -1;
 }
 
 void obj_sound_index::setPath(std::string _path)
@@ -79,14 +62,14 @@ void ConfigManager::buildSoundIndex()
     int total_channels = 32;
     bool newBuild = main_sfx_index.empty();
 #ifdef DEBUG_BUILD
-    QElapsedTimer loadingTime;
+    ElapsedTimer loadingTime;
     loadingTime.start();
 #endif
 
     if(newBuild)
     {
         //build array table
-        main_sfx_index.resize(static_cast<int>(main_sound.size()) - 1);
+        main_sfx_index.resize(static_cast<size_t>(main_sound.size()) - 1);
 
         for(unsigned long i = 1; i < main_sound.size(); i++)
         {
@@ -118,7 +101,7 @@ void ConfigManager::buildSoundIndex()
                 sound.channel = snd.channel;
             }
 
-            main_sfx_index[static_cast<int>(i) - 1] = sound;
+            main_sfx_index[static_cast<size_t>(i) - 1] = sound;
         }
     }
     else
@@ -127,7 +110,7 @@ void ConfigManager::buildSoundIndex()
         {
             if(main_sound.contains(i))
             {
-                obj_sound_index &sound = main_sfx_index[static_cast<int>(i) - 1];
+                obj_sound_index &sound = main_sfx_index[static_cast<size_t>(i) - 1];
                 obj_sound &snd = main_sound[i];
                 sound.setPath(snd.absPath);
 
@@ -199,10 +182,10 @@ void ConfigManager::clearSoundIndex()
     if(main_sfx_index.empty())
         return;
 
-    int size = main_sfx_index.size();
+    size_t size = main_sfx_index.size();
     obj_sound_index *d = main_sfx_index.data();
 
-    for(int i = 0; i < size; i++)
+    for(size_t i = 0; i < size; i++)
     {
         if(d[i].chunk)
             Mix_FreeChunk(d[i].chunk);
@@ -325,8 +308,9 @@ skipSoundFile:
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i), QtCriticalMsg);
-                PGE_MsgBox::error(QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i));
+                std::string msg = fmt::format("ERROR LOADING sounds.ini N:{0} (sound {1})", soundset.lastError(),i);
+                addError(msg);
+                PGE_MsgBox::error(msg);
                 return false;
             }
 
@@ -343,8 +327,9 @@ bool ConfigManager::loadSoundRolesTable()
 
     if(!Files::fileExists(sound_ini))
     {
-        addError(QString("ERROR LOADING sound_roles.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox::error(QString("ERROR LOADING sound_roles.ini: file does not exist"));
+        const char* msg = "ERROR LOADING sound_roles.ini: file does not exist";
+        addError(msg);
+        PGE_MsgBox::error(msg);
         return false;
     }
 
@@ -352,65 +337,67 @@ bool ConfigManager::loadSoundRolesTable()
     main_sound_table.allocateSlots(57);
     IniProcessing soundset(sound_ini);
     soundset.beginGroup("sound-roles");
-    //main_sound_table[obj_sound_role::]
-    main_sound_table[obj_sound_role::Greeting] = soundset.value("greeting", 0).toInt();
-    main_sound_table[obj_sound_role::MenuDo] = soundset.value("menudo", 0).toInt();
-    main_sound_table[obj_sound_role::MenuScroll] = soundset.value("menuscroll", 0).toInt();
-    main_sound_table[obj_sound_role::MenuMessageBox] = soundset.value("menumessagebox", 0).toInt();
-    main_sound_table[obj_sound_role::MenuPause] = soundset.value("menupause", 0).toInt();
-    main_sound_table[obj_sound_role::CameraSwitch] = soundset.value("cameraswitch", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerJump] = soundset.value("playerjump", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerStomp] = soundset.value("playerstomp", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerKick] = soundset.value("playerkick", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerShrink] = soundset.value("playershrink", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerHarm] = soundset.value("playerharm", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerGrow] = soundset.value("playergrow", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerDied] = soundset.value("playerdied", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerDropItem] = soundset.value("playerdropitem", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerTakeItem] = soundset.value("playertakeitem", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerSlide] = soundset.value("playerslide", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerGrab1] = soundset.value("playergrab1", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerGrab2] = soundset.value("playergrab2", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerSpring] = soundset.value("playerspring", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerClimb] = soundset.value("playerclimb", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerTail] = soundset.value("playertail", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerMagic] = soundset.value("playermagic", 0).toInt();
-    main_sound_table[obj_sound_role::PlayerWaterSwim] = soundset.value("playerwaterswim", 0).toInt();
-    main_sound_table[obj_sound_role::BonusCoin] = soundset.value("bonuscoin", 0).toInt();
-    main_sound_table[obj_sound_role::Bonus1up] = soundset.value("bonus1up", 0).toInt();
-    main_sound_table[obj_sound_role::WeaponHammer] = soundset.value("weaponhammer", 0).toInt();
-    main_sound_table[obj_sound_role::WeaponFire] = soundset.value("weaponfire", 0).toInt();
-    main_sound_table[obj_sound_role::WeaponCannon] = soundset.value("weaponcannon", 0).toInt();
-    main_sound_table[obj_sound_role::WeaponExplosion] = soundset.value("weaponexplosion", 0).toInt();
-    main_sound_table[obj_sound_role::WeaponBigFire] = soundset.value("weaponbigfire", 0).toInt();
-    main_sound_table[obj_sound_role::NpcLavaBurn] = soundset.value("npclavaburn", 0).toInt();
-    main_sound_table[obj_sound_role::NpcStoneFall] = soundset.value("npcstonefall", 0).toInt();
-    main_sound_table[obj_sound_role::NpcHit] = soundset.value("npchit", 0).toInt();
-    main_sound_table[obj_sound_role::NpcDeath] = soundset.value("npcdeath", 0).toInt();
-    main_sound_table[obj_sound_role::WarpPipe] = soundset.value("warppipe", 0).toInt();
-    main_sound_table[obj_sound_role::WarpDoor] = soundset.value("warpdoor", 0).toInt();
-    main_sound_table[obj_sound_role::WarpTeleport] = soundset.value("warpteleport", 0).toInt();
-    main_sound_table[obj_sound_role::LevelFailed] = soundset.value("levelfailed", 0).toInt();
-    main_sound_table[obj_sound_role::LevelCheckPoint] = soundset.value("levelcheckpoint", 0).toInt();
-    main_sound_table[obj_sound_role::WorldMove] = soundset.value("worldmove", 0).toInt();
-    main_sound_table[obj_sound_role::WorldDeny] = soundset.value("worlddeny", 0).toInt();
-    main_sound_table[obj_sound_role::WorldOpenPath] = soundset.value("worldopenpath", 0).toInt();
-    main_sound_table[obj_sound_role::WorldEnterLevel] = soundset.value("worldenterlevel", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit01] = soundset.value("levelexit01", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit02] = soundset.value("levelexit02", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit03] = soundset.value("levelexit03", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit04] = soundset.value("levelexit04", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit05] = soundset.value("levelexit05", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit06] = soundset.value("levelexit06", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit07] = soundset.value("levelexit07", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit08] = soundset.value("levelexit08", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit09] = soundset.value("levelexit09", 0).toInt();
-    main_sound_table[obj_sound_role::LevelExit10] = soundset.value("levelexit10", 0).toInt();
-    main_sound_table[obj_sound_role::GameCompleted] = soundset.value("gamecompleted", 0).toInt();
-    main_sound_table[obj_sound_role::BlockHit] = soundset.value("blockhit", 0).toInt();
-    main_sound_table[obj_sound_role::BlockOpen] = soundset.value("blockopen", 0).toInt();
-    main_sound_table[obj_sound_role::BlockSmashed] = soundset.value("blocksmashed", 0).toInt();
-    main_sound_table[obj_sound_role::BlockSwitch] = soundset.value("blockswitch", 0).toInt();
+    {
+        //main_sound_table[obj_sound_role::]
+        main_sound_table[obj_sound_role::Greeting]          = soundset.value("greeting",        0).toInt();
+        main_sound_table[obj_sound_role::MenuDo]            = soundset.value("menudo",          0).toInt();
+        main_sound_table[obj_sound_role::MenuScroll]        = soundset.value("menuscroll",      0).toInt();
+        main_sound_table[obj_sound_role::MenuMessageBox]    = soundset.value("menumessagebox",  0).toInt();
+        main_sound_table[obj_sound_role::MenuPause]         = soundset.value("menupause",       0).toInt();
+        main_sound_table[obj_sound_role::CameraSwitch]      = soundset.value("cameraswitch",    0).toInt();
+        main_sound_table[obj_sound_role::PlayerJump]        = soundset.value("playerjump",      0).toInt();
+        main_sound_table[obj_sound_role::PlayerStomp]       = soundset.value("playerstomp",     0).toInt();
+        main_sound_table[obj_sound_role::PlayerKick]        = soundset.value("playerkick",      0).toInt();
+        main_sound_table[obj_sound_role::PlayerShrink]      = soundset.value("playershrink",    0).toInt();
+        main_sound_table[obj_sound_role::PlayerHarm]        = soundset.value("playerharm",      0).toInt();
+        main_sound_table[obj_sound_role::PlayerGrow]        = soundset.value("playergrow",      0).toInt();
+        main_sound_table[obj_sound_role::PlayerDied]        = soundset.value("playerdied",      0).toInt();
+        main_sound_table[obj_sound_role::PlayerDropItem]    = soundset.value("playerdropitem",  0).toInt();
+        main_sound_table[obj_sound_role::PlayerTakeItem]    = soundset.value("playertakeitem",  0).toInt();
+        main_sound_table[obj_sound_role::PlayerSlide]       = soundset.value("playerslide",     0).toInt();
+        main_sound_table[obj_sound_role::PlayerGrab1]       = soundset.value("playergrab1",     0).toInt();
+        main_sound_table[obj_sound_role::PlayerGrab2]       = soundset.value("playergrab2",     0).toInt();
+        main_sound_table[obj_sound_role::PlayerSpring]      = soundset.value("playerspring",    0).toInt();
+        main_sound_table[obj_sound_role::PlayerClimb]       = soundset.value("playerclimb",     0).toInt();
+        main_sound_table[obj_sound_role::PlayerTail]        = soundset.value("playertail",      0).toInt();
+        main_sound_table[obj_sound_role::PlayerMagic]       = soundset.value("playermagic",     0).toInt();
+        main_sound_table[obj_sound_role::PlayerWaterSwim]   = soundset.value("playerwaterswim", 0).toInt();
+        main_sound_table[obj_sound_role::BonusCoin]         = soundset.value("bonuscoin",       0).toInt();
+        main_sound_table[obj_sound_role::Bonus1up]          = soundset.value("bonus1up",        0).toInt();
+        main_sound_table[obj_sound_role::WeaponHammer]      = soundset.value("weaponhammer",    0).toInt();
+        main_sound_table[obj_sound_role::WeaponFire]        = soundset.value("weaponfire",      0).toInt();
+        main_sound_table[obj_sound_role::WeaponCannon]      = soundset.value("weaponcannon",    0).toInt();
+        main_sound_table[obj_sound_role::WeaponExplosion]   = soundset.value("weaponexplosion", 0).toInt();
+        main_sound_table[obj_sound_role::WeaponBigFire]     = soundset.value("weaponbigfire",   0).toInt();
+        main_sound_table[obj_sound_role::NpcLavaBurn]       = soundset.value("npclavaburn",     0).toInt();
+        main_sound_table[obj_sound_role::NpcStoneFall]      = soundset.value("npcstonefall",    0).toInt();
+        main_sound_table[obj_sound_role::NpcHit]            = soundset.value("npchit",          0).toInt();
+        main_sound_table[obj_sound_role::NpcDeath]          = soundset.value("npcdeath",        0).toInt();
+        main_sound_table[obj_sound_role::WarpPipe]          = soundset.value("warppipe",        0).toInt();
+        main_sound_table[obj_sound_role::WarpDoor]          = soundset.value("warpdoor",        0).toInt();
+        main_sound_table[obj_sound_role::WarpTeleport]      = soundset.value("warpteleport",    0).toInt();
+        main_sound_table[obj_sound_role::LevelFailed]       = soundset.value("levelfailed",     0).toInt();
+        main_sound_table[obj_sound_role::LevelCheckPoint]   = soundset.value("levelcheckpoint", 0).toInt();
+        main_sound_table[obj_sound_role::WorldMove]         = soundset.value("worldmove",       0).toInt();
+        main_sound_table[obj_sound_role::WorldDeny]         = soundset.value("worlddeny",       0).toInt();
+        main_sound_table[obj_sound_role::WorldOpenPath]     = soundset.value("worldopenpath",   0).toInt();
+        main_sound_table[obj_sound_role::WorldEnterLevel]   = soundset.value("worldenterlevel", 0).toInt();
+        main_sound_table[obj_sound_role::LevelExit01]       = soundset.value("levelexit01",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit02]       = soundset.value("levelexit02",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit03]       = soundset.value("levelexit03",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit04]       = soundset.value("levelexit04",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit05]       = soundset.value("levelexit05",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit06]       = soundset.value("levelexit06",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit07]       = soundset.value("levelexit07",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit08]       = soundset.value("levelexit08",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit09]       = soundset.value("levelexit09",     0).toInt();
+        main_sound_table[obj_sound_role::LevelExit10]       = soundset.value("levelexit10",     0).toInt();
+        main_sound_table[obj_sound_role::GameCompleted]     = soundset.value("gamecompleted",   0).toInt();
+        main_sound_table[obj_sound_role::BlockHit]          = soundset.value("blockhit",        0).toInt();
+        main_sound_table[obj_sound_role::BlockOpen]         = soundset.value("blockopen",       0).toInt();
+        main_sound_table[obj_sound_role::BlockSmashed]      = soundset.value("blocksmashed",    0).toInt();
+        main_sound_table[obj_sound_role::BlockSwitch]       = soundset.value("blockswitch",     0).toInt();
+    }
     soundset.endGroup();
 
     if(soundset.lastError() != IniProcessing::ERR_OK)

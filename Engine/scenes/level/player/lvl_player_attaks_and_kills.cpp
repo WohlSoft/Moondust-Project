@@ -53,12 +53,12 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     }
 
 
-    QVector<PGE_Phys_Object *> bodies;
+    std::vector<PGE_Phys_Object *> bodies;
     m_scene->queryItems(attackZone, &bodies);
     int contacts = 0;
 
-    QList<LVL_Block *> target_blocks;
-    QList<LVL_Npc *> target_npcs;
+    std::vector<LVL_Block *>    target_blocks;
+    std::vector<LVL_Npc *>      target_npcs;
     for(PGE_RenderList::iterator it = bodies.begin(); it != bodies.end(); it++)
     {
         PGE_Phys_Object *visibleBody = *it;

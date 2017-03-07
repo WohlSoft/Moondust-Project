@@ -39,7 +39,7 @@ bool LevelScene::setEntrance(unsigned long entr)
         def.setPlayerID(static_cast<int>(plr));
         def.setCharacterID(xxx);
 
-        for(int j = 0; j < gameState->game_state.characterStates.size(); j++)
+        for(size_t j = 0; j < gameState->game_state.characterStates.size(); j++)
         {
             if(gameState->game_state.characterStates[j].id == xxx)
             {
@@ -57,7 +57,7 @@ bool LevelScene::setEntrance(unsigned long entr)
         isWarpEntrance = false;
         bool found = false;
 
-        for(int i = 0, j = 0; (i < data.players.size()) && (j < numberOfPlayers); i++)
+        for(size_t i = 0, j = 0; (i < data.players.size()) && (j < numberOfPlayers); i++)
         {
             if(data.players[i].w == 0 && data.players[i].h == 0)
                 continue; //Skip empty points
@@ -350,19 +350,19 @@ bool LevelScene::init_items()
         obj_player &player = ConfigManager::playable_characters[i];
         std::string scriptPath = ConfigManager::Dir_PlayerScript.getCustomFile(player.script);
 
-        if((!scriptPath.isEmpty()) && (Files::fileExists(scriptPath)))
+        if((!scriptPath.empty()) && (Files::fileExists(scriptPath)))
             luaEngine.loadPlayerClass(player.id, scriptPath);
     }
 
     zCounter = 0.0L;
     D_pLogDebug("Build sections");
 
-    for(int i = 0; i < data.sections.size(); i++)
+    for(size_t i = 0; i < data.sections.size(); i++)
     {
         LVL_Section sct;
         sections.push_back(sct);
-        sections.last().setData(data.sections[i]);
-        sections.last().setMusicRoot(data.meta.path);
+        sections.back().setData(data.sections[i]);
+        sections.back().setMusicRoot(data.meta.path);
     }
 
     D_pLogDebug("Create cameras");
@@ -442,11 +442,10 @@ bool LevelScene::init_items()
 
     //Init data
     //blocks
-    for(int i = 0; i < data.blocks.size(); i++)
+    for(size_t i = 0; i < data.blocks.size(); i++)
     {
         if(!isLevelContinues)
             return false;//!< quit from game if window was closed
-
         placeBlock(data.blocks[i]);
     }
 
@@ -454,28 +453,29 @@ bool LevelScene::init_items()
     character_switchers.refreshState();
 
     //BGO
-    for(int i = 0; i < data.bgo.size(); i++)
+    for(size_t i = 0; i < data.bgo.size(); i++)
     {
-        if(!isLevelContinues) return false;//!< quit from game if window was closed
-
+        if(!isLevelContinues)
+            return false;//!< quit from game if window was closed
         placeBGO(data.bgo[i]);
     }
 
     //NPC
-    for(int i = 0; i < data.npc.size(); i++)
+    for(size_t i = 0; i < data.npc.size(); i++)
     {
-        if(!isLevelContinues) return false;//!< quit from game if window was closed
-
+        if(!isLevelContinues)
+            return false;//!< quit from game if window was closed
         placeNPC(data.npc[i]);
     }
 
     //BGO
-    for(int i = 0; i < data.doors.size(); i++)
+    for(size_t i = 0; i < data.doors.size(); i++)
     {
-        if(!isLevelContinues) return false;//!< quit from game if window was closed
-
+        if(!isLevelContinues)
+            return false;//!< quit from game if window was closed
         //Don't put contactable points for "level entrance" points
-        if(data.doors[i].lvl_i) continue;
+        if(data.doors[i].lvl_i)
+            continue;
 
         LVL_Warp *warpP;
         LevelDoor door = data.doors[i];
@@ -506,9 +506,10 @@ place_door_again:
     }
 
     //BGO
-    for(int i = 0; i < data.physez.size(); i++)
+    for(size_t i = 0; i < data.physez.size(); i++)
     {
-        if(!isLevelContinues) return false;//!< quit from game if window was closed
+        if(!isLevelContinues)
+            return false;//!< quit from game if window was closed
 
         LVL_PhysEnv *physesP;
         physesP = new LVL_PhysEnv(this);
@@ -545,7 +546,7 @@ place_door_again:
 
     D_pLogDebug("Apply layers");
 
-    for(int i = 0; i < data.layers.size(); i++)
+    for(size_t i = 0; i < data.layers.size(); i++)
     {
         if(data.layers[i].hidden)
             layers.hide(data.layers[i].name, false);
@@ -553,7 +554,7 @@ place_door_again:
 
     D_pLogDebug("Apply Events");
 
-    for(int i = 0; i < data.events.size(); i++)
+    for(size_t i = 0; i < data.events.size(); i++)
         events.addSMBX64Event(data.events[i]);
 
     isInit = true;

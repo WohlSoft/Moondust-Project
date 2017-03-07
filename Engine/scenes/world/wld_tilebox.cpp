@@ -450,8 +450,7 @@ void TileBox::addNode(long X, long Y, long W, long H, WorldNode *item)
 
 static bool _TreeSearchCallback(WorldNode *item, void *arg)
 {
-    QVector<WorldNode *> *list = static_cast<QVector<WorldNode *>* >(arg);
-
+    std::vector<WorldNode *> *list = static_cast<std::vector<WorldNode *>* >(arg);
     if(list)
     {
         if(item)

@@ -2,10 +2,9 @@
 #define LVL_BASE_PHYSICS_H
 
 #include <cmath>
-#include <QHash>
+#include <vector>
 #include <unordered_map>
 #include <common_features/rectf.h>
-
 
 class PGE_Phys_Object;
 typedef std::vector<PGE_Phys_Object *> PGE_RenderList;
@@ -166,8 +165,8 @@ public:
         objRect rect;
         int     shape;
     };
-    typedef QHash<intptr_t, PGE_Phys_Object*> ObjectColliders;
-    typedef QHash<intptr_t, PGE_Phys_Object*>::iterator ObjectCollidersIt;
+    typedef std::unordered_map<intptr_t, PGE_Phys_Object*> ObjectColliders;
+    typedef std::unordered_map<intptr_t, PGE_Phys_Object*>::iterator ObjectCollidersIt;
     ObjectColliders l_contactAny;
     ObjectColliders l_contactL;
     ObjectColliders l_contactR;
