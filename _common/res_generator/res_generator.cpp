@@ -88,7 +88,7 @@ int main(int argc, char**argv)
         FILE* ps = fopen(it.path.c_str(), "rb");
         if(!ps)
         {
-            printf("FAILED TO OPEN FILE %s", it.path.c_str());
+            printf("FAILED TO OPEN FILE %s\n", it.path.c_str());
             continue;
         }
         int c;
