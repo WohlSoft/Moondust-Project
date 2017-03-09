@@ -115,18 +115,18 @@ void GlColor::setRgba(std::string rgba)
             {
             case 4:
                 // 0 123
-                m_r = std::strtol( rgba.substr(1, 1).c_str(), NULL, 16);
-                m_g = std::strtol( rgba.substr(2, 1).c_str(), NULL, 16);
-                m_b = std::strtol( rgba.substr(3, 1).c_str(), NULL, 16);
+                m_r = static_cast<double>(std::strtol( rgba.substr(1, 1).c_str(), NULL, 16)) / 255.0;
+                m_g = static_cast<double>(std::strtol( rgba.substr(2, 1).c_str(), NULL, 16)) / 255.0;
+                m_b = static_cast<double>(std::strtol( rgba.substr(3, 1).c_str(), NULL, 16)) / 255.0;
                 return;
             case 9:
                 // 0 12 34 56 78
-                m_a = std::strtol( rgba.substr(7, 2).c_str(), NULL, 16);
+                m_a = static_cast<double>(std::strtol( rgba.substr(7, 2).c_str(), NULL, 16)) / 255.0;
             case 7:
                 // 0 12 34 56
-                m_r = std::strtol( rgba.substr(1, 2).c_str(), NULL, 16);
-                m_g = std::strtol( rgba.substr(3, 2).c_str(), NULL, 16);
-                m_b = std::strtol( rgba.substr(5, 2).c_str(), NULL, 16);
+                m_r = static_cast<double>(std::strtol( rgba.substr(1, 2).c_str(), NULL, 16)) / 255.0;
+                m_g = static_cast<double>(std::strtol( rgba.substr(3, 2).c_str(), NULL, 16)) / 255.0;
+                m_b = static_cast<double>(std::strtol( rgba.substr(5, 2).c_str(), NULL, 16)) / 255.0;
                 return;
             default:
                 setRgba(0.0, 0.0, 0.0, 1.0);
