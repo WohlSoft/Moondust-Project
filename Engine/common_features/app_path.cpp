@@ -59,7 +59,6 @@ void AppPathManager::initAppPath(const char* argv0)
     ApplicationPath =   QString::fromStdString(ApplicationPathSTD);
     ApplicationPath_x = ApplicationPath;
     */
-
     #ifdef __APPLE__
     {
         CFURLRef appUrlRef;
@@ -95,11 +94,19 @@ void AppPathManager::initAppPath(const char* argv0)
 #if defined(__ANDROID__) || defined(__APPLE__)
     userDir = true;
 #else
-    #ifdef ENABLE_JUNK_FOR_FUN
-    QSettings setup;
-    userDir = setup.value("EnableUserDir", false).toBool();
+    #if defined(__gnu_linux__)
+    {
+        passwd* pw = getpwuid(getuid());
+        std::string path(pw->pw_dir);
+        DirMan configDir(path + "/.config/Wohlhabend Networks/");
+        if(!configDir.exists())
+            configDir.mkpath(".");
+        IniProcessing setup(configDir.absolutePath() + "/PGE Engine.conf");
+        setup.beginGroup("General");
+        userDir = setup.value("EnableUserDir", false).toBool();
+        setup.endGroup();
+    }
     #else
-    // FIXME: Use Windows-registry and config files directly!
     userDir = false;
     #endif
 #endif

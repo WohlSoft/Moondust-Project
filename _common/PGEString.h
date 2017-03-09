@@ -1,3 +1,7 @@
+/*
+ * Used for compatibiltiy of common code with both QString and std::string
+ */
+
 #ifdef PGE_EDITOR
 #include <QString>
 #include <QStringList>

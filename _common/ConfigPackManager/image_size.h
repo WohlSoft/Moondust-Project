@@ -19,7 +19,7 @@
 #ifndef IMAGESIZE_H
 #define IMAGESIZE_H
 
-#include <string>
+#include "PGEString.h"
 
 class PGE_ImageInfo
 {
@@ -40,14 +40,14 @@ public:
      * @param [out] errCode Error code
      * @return true if successfully finished, false if error occouped
      */
-    static bool getImageSize(std::string imagePath, uint32_t *w, uint32_t *h, int *errCode=nullptr);
+    static bool getImageSize(PGEString imagePath, uint32_t *w, uint32_t *h, int *errCode=nullptr);
 
     /**
      * @brief Returns filename of masked image
      * @param imageFileName foreground image file-name
      * @return masked image filename
      */
-    static std::string getMaskName(std::string imageFileName);
+    static PGEString getMaskName(PGEString imageFileName);
 };
 
 #endif // IMAGESIZE_H

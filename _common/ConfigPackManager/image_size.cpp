@@ -114,13 +114,15 @@ static bool tryPNG(SDL_RWops* file, uint32_t *w, uint32_t *h)
     return true;
 }
 
-bool PGE_ImageInfo::getImageSize(std::string imagePath, uint32_t *w, uint32_t *h, int *errCode)
+bool PGE_ImageInfo::getImageSize(PGEString imagePath, uint32_t *w, uint32_t *h, int *errCode)
 {
     bool ret = false;
     if(errCode)
         *errCode = ERR_OK;
 
-    if(!Files::fileExists(imagePath))
+    std::string imgPath = std::move(PGEStringToStd(imagePath));
+
+    if(!Files::fileExists(imgPath))
     {
         if(errCode)
             *errCode = ERR_NOT_EXISTS;
@@ -128,7 +130,7 @@ bool PGE_ImageInfo::getImageSize(std::string imagePath, uint32_t *w, uint32_t *h
         return false;
     }
 
-    SDL_RWops* image = SDL_RWFromFile(imagePath.c_str(), "rb");
+    SDL_RWops* image = SDL_RWFromFile(imgPath.c_str(), "rb");
 
     if(!image)
     {
@@ -158,14 +160,14 @@ bool PGE_ImageInfo::getImageSize(std::string imagePath, uint32_t *w, uint32_t *h
     return ret;
 }
 
-std::string PGE_ImageInfo::getMaskName(std::string imageFileName)
+PGEString PGE_ImageInfo::getMaskName(PGEString imageFileName)
 {
-    std::string mask = imageFileName;
+    std::string mask = PGEStringToStd(imageFileName);
     //Make mask filename
     size_t dotPos = mask.find_last_of('.');
     if(dotPos == std::string::npos)
         mask.push_back('m');
     else
         mask.insert(mask.begin() + dotPos, 'm');
-    return mask;
+    return StdToPGEString(mask);
 }

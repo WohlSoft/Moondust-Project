@@ -19,13 +19,10 @@
 #include "wld_pathopener.h"
 #include "wld_tilebox.h"
 #include <audio/pge_audio.h>
+#include <common_features/logger.h>
 #include <Utils/maths.h>
 
 #include "../scene_world.h"
-
-#ifdef DEBUG_BUILD
-#include <common_features/logger.h>
-#endif
 
 void WldPathOpener::construct()
 {
