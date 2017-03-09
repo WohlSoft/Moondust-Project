@@ -244,8 +244,8 @@ public:
 
     ssize_t indexOf(const T &item) const
     {
-        size_t s = vecPTR::size();
-        const SHptr *d = vecPTR::data();
+        size_t s        = vecPTR::size();
+        const SHptr *d  = vecPTR::data();
         size_t i = 0;
         for(; i < s; i++)
         {
@@ -255,9 +255,27 @@ public:
         return -1;
     }
 
+    ssize_t lastIndexOf(const T &item) const
+    {
+        ssize_t     s   = vecPTR::size();
+        const SHptr *d  = vecPTR::data();
+        ssize_t     i   = s - 1;
+        for(; i >= 0; i--)
+        {
+            if(*d[i] == item)
+                return ssize_t(i);
+        }
+        return -1;
+    }
+
     iterator find(const T &item)
     {
-        iterator i = this->begin();
+        return this->find(item, this->begin());
+    }
+
+    iterator find(const T &item, iterator beg)
+    {
+        iterator i = beg;
         for(; i != end(); i++)
         {
             if(*i == item)
@@ -268,7 +286,12 @@ public:
 
     const_iterator find(const T &item) const
     {
-        const_iterator i = this->cbegin();
+        return this->find(item, this->cbegin());
+    }
+
+    const_iterator find(const T &item, const_iterator beg) const
+    {
+        const_iterator i = beg;
         for(; i != end(); i++)
         {
             if(*i == item)
@@ -279,7 +302,12 @@ public:
 
     iterator find_last_of(const T &item)
     {
-        reverse_iterator i = this->rbegin();
+        return this->find_last_of(item, this->rbegin());
+    }
+
+    iterator find_last_of(const T &item, reverse_iterator beg)
+    {
+        reverse_iterator i = beg;
         for(; i != end(); i++)
         {
             if(*i == item)
@@ -290,7 +318,12 @@ public:
 
     const_iterator find_last_of(const T &item) const
     {
-        const_reverse_iterator i = this->crbegin();
+        return this->find_last_of(item, this->crbegin());
+    }
+
+    const_iterator find_last_of(const T &item, const_reverse_iterator beg) const
+    {
+        const_reverse_iterator i = beg;
         for(; i != end(); i++)
         {
             if(*i == item)
