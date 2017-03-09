@@ -5,7 +5,8 @@ HEADERS += \
     $$PWD/maths.h \
     $$PWD/files.h \
     $$PWD/strings.h \
-    $$PWD/elapsed_timer.h
+    $$PWD/elapsed_timer.h \
+    $$PWD/vptrlist.h
 
 SOURCES += \
     $$PWD/maths.cpp \

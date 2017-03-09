@@ -4,6 +4,23 @@
 
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_assert.h>
+#ifdef PGE_ENGINE
+#define SDL_FILE_RESOURCES_SUPPORT
+#endif
+
+#ifdef SDL_FILE_RESOURCES_SUPPORT
+#include <_resources/resource.h>
+
+static bool res2mem(std::string path, unsigned char *&memory, size_t &fileSize)
+{
+    if(path.empty())
+        return false;
+    if(path.compare(0, 2, ":/"))
+        return false;
+    path.erase(path.begin() + 0, path.begin() + 2);
+    return RES_getMem(path.c_str(), memory, fileSize);
+}
+#endif
 
 struct SdlFile_private
 {
@@ -11,6 +28,11 @@ struct SdlFile_private
     std::string m_mode;
     std::string m_fileName;
     std::string m_errorString;
+    #ifdef SDL_FILE_RESOURCES_SUPPORT
+    bool            m_isMem = false;
+    unsigned char  *m_memory = nullptr;
+    size_t          m_memsize = 0;
+    #endif
 };
 
 SdlFile::SdlFile()
@@ -21,21 +43,34 @@ SdlFile::SdlFile()
 
 SdlFile::SdlFile(const std::string &fileName)
 {
-    SDL_assert(p);
     p = new SdlFile_private;
+    SDL_assert(p);
     p->m_fileName = fileName;
+    p->m_isMem    = res2mem(fileName, p->m_memory, p->m_memsize);
 }
 
 SdlFile::SdlFile(const SdlFile &f)
 {
     SDL_assert(f.p);
     p = new SdlFile_private;
+    SDL_assert(p);
     p->m_mode           = f.p->m_mode;
     p->m_fileName       = f.p->m_fileName;
     p->m_errorString    = f.p->m_errorString;
+    #ifdef SDL_FILE_RESOURCES_SUPPORT
+    p->m_isMem          = f.p->m_isMem;
+    p->m_memory         = f.p->m_memory;
+    p->m_memsize        = f.p->m_memsize;
+    #endif
     if(f.p->m_rw)
     {
-        p->m_rw = SDL_RWFromFile(p->m_fileName.c_str(), p->m_mode.c_str());
+        #ifdef SDL_FILE_RESOURCES_SUPPORT
+        if(p->m_isMem)
+            p->m_rw = SDL_RWFromMem(p->m_memory, p->m_memsize);
+        else
+        #endif
+            p->m_rw = SDL_RWFromFile(p->m_fileName.c_str(), p->m_mode.c_str());
+
         if(!p->m_rw)
             p->m_errorString = SDL_GetError();
     }
@@ -68,6 +103,7 @@ void SdlFile::setFileName(const std::string &fileName)
     if(p->m_rw)
         close();
     p->m_fileName = fileName;
+    p->m_isMem    = res2mem(fileName, p->m_memory, p->m_memsize);
 }
 
 bool SdlFile::open(int mode)
@@ -90,7 +126,13 @@ bool SdlFile::open(int mode)
     if((mode & Text) == 0)
         p->m_mode.push_back('b');
 
-    p->m_rw = SDL_RWFromFile(p->m_fileName.c_str(), p->m_mode.c_str());
+    #ifdef SDL_FILE_RESOURCES_SUPPORT
+    if(p->m_isMem)
+        p->m_rw = SDL_RWFromMem(p->m_memory, p->m_memsize);
+    else
+    #endif
+        p->m_rw = SDL_RWFromFile(p->m_fileName.c_str(), p->m_mode.c_str());
+
     if(!p->m_rw)
     {
         p->m_errorString = SDL_GetError();
