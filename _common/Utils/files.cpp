@@ -204,6 +204,19 @@ std::string Files::basename(std::string path)
     return path;
 }
 
+std::string Files::basenameNoSuffix(std::string path)
+{
+    char *p = strdup(path.c_str());
+    char *d = ::fi_basename(p);
+    path = d;
+    free(p);
+    std::string::size_type dot = path.find_last_of('.');
+    if(dot != std::string::npos)
+        path.resize(dot);
+    return path;
+}
+
+
 std::string Files::changeSuffix(std::string path, const std::string &suffix)
 {
     size_t pos = path.find_last_of('.');// Find dot

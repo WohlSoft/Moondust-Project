@@ -167,15 +167,14 @@ class WorldScene : public Scene
         std::vector<WorldScene_Portrait > portraits;
 
         TileBox m_indexTable;
-        std::vector<WldTileItem >       wld_tiles;
-        std::vector<WldSceneryItem >    wld_sceneries;
-        std::vector<WldPathItem >       wld_paths;
-        std::vector<WldLevelItem >      wld_levels;
-        std::vector<WldMusicBoxItem >   wld_musicboxes;
+        VPtrList<WldTileItem >          wld_tiles;
+        VPtrList<WldSceneryItem >       wld_sceneries;
+        VPtrList<WldPathItem >          wld_paths;
+        VPtrList<WldLevelItem >         wld_levels;
+        VPtrList<WldMusicBoxItem >      wld_musicboxes;
         EventQueue<WorldScene >         wld_events;
 
-        std::vector<WorldNode >         wldItems;
-        std::vector<WorldNode * >       _itemsToRender;
+        std::vector<WorldNode*>         _itemsToRender;
 
 
         /*****************Pause Menu*******************/

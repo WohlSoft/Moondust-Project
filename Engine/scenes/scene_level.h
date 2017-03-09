@@ -314,8 +314,8 @@ class LevelScene : public Scene
 
         bool frameSkip;
 
-        typedef std::vector<PGE_LevelCamera> LVL_CameraList;
-        typedef std::vector<LVL_Section> LVL_SectionsList;
+        typedef VPtrList<PGE_LevelCamera>   LVL_CameraList;
+        typedef VPtrList<LVL_Section>       LVL_SectionsList;
 
         LVL_CameraList      cameras;
         LVL_SectionsList    sections;

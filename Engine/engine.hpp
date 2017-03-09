@@ -21,7 +21,6 @@
 
 #include <graphics/gl_renderer.h>
 #include <common_features/episode_state.h>
-#include <common_features/pge_qt_application.h>
 
 #define INITIAL_WINDOW_TITLE "Platformer Game Engine - v" _FILE_VERSION _FILE_RELEASE  " build "  _BUILD_VER
 
@@ -102,8 +101,8 @@ private:
         FONT_MANAGER    = 0x020,
         //! Game window is created
         PGE_WINDOW      = 0x040,
-        //! Qt Application class is constructed
-        QAPP            = 0x080,
+        ////! Qt Application class is constructed
+        //QAPP            = 0x080,
         //! Logger is initalized
         LOGGER          = 0x100,
         //! Translation subsystem is initialized
@@ -113,10 +112,10 @@ private:
     } m_lib;
 
     /* Constructed instances */
-    //! Qt Application instance
-    PGE_Application    *m_qApp;
+    ////! Qt Application instance
+    //PGE_Application    *m_qApp;
     //! List of command line arguments
-    QStringList         m_args;
+    //QStringList         m_args;
     //! Translator instance
     PGE_Translator     *m_tr;
     //! Audio loading erro string
@@ -168,16 +167,16 @@ public:
      * @param argv Pointer to array of command line arguments
      * @return pointer to instance of Qt Application sub-system. Null if failed to initalize Qt Application
      */
-    PGE_Application *loadQApp(int &argc, char **argv);
+    //PGE_Application *loadQApp(int &argc, char **argv);
 
     /**
      * @brief Command line arguments
      * @return Reference to list of command line arguments
      */
-    QStringList &args()
-    {
-        return m_args;
-    }
+    //QStringList &args()
+    //{
+    //    return m_args;
+    //}
 
     /**
      * @brief Initialize translation sub-system

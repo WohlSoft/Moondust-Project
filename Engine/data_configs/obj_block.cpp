@@ -28,7 +28,7 @@
 /*****Level blocks************/
 PGE_DataArray<obj_block>        ConfigManager::lvl_block_indexes;
 CustomDirManager                ConfigManager::Dir_Blocks;
-std::vector<SimpleAnimator >    ConfigManager::Animator_Blocks;
+ConfigManager::AnimatorsArray   ConfigManager::Animator_Blocks;
 /*****Level blocks************/
 
 bool ConfigManager::loadLevelBlock(obj_block &sblock, std::string section, obj_block *merge_with, std::string iniFile, IniProcessing *setup)

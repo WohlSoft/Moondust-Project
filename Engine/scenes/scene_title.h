@@ -33,7 +33,7 @@
 
 #include <script/lua_titlescreen_engine.h>
 
-typedef QPair<int, int > menustate;
+typedef std::pair<int, int> menustate;
 
 struct TitleScene_misc_img
 {

@@ -31,9 +31,6 @@
 #include <fmt/fmt_format.h>
 #include <algorithm>
 
-#include <QDesktopServices>
-#include <QUrl>
-
 DataFolders      ConfigManager::dirs;
 std::string      ConfigManager::config_name;
 std::string      ConfigManager::config_dirSTD;
@@ -62,12 +59,12 @@ MenuBoxSetup ConfigManager::setup_menu_box;
 //Menu setup
 MenuSetup ConfigManager::setup_menus;
 
-std::vector<PGE_Texture > ConfigManager::common_textures;
+ConfigManager::TexturesBank ConfigManager::common_textures;
 
 
 /* *** Texture banks *** */
-std::vector<PGE_Texture > ConfigManager::level_textures;
-std::vector<PGE_Texture > ConfigManager::world_textures;
+ConfigManager::TexturesBank ConfigManager::level_textures;
+ConfigManager::TexturesBank ConfigManager::world_textures;
 
 std::string ConfigManager::imgFile, ConfigManager::imgFileM;
 std::string ConfigManager::tmpstr;
@@ -108,7 +105,7 @@ bool ConfigManager::loadBasics()
     errorsList.clear();
 
     //dirs
-    if((!DirMan::exists(config_dirSTD)) || (Files::fileExists(config_dirSTD)))
+    if(!DirMan::exists(config_dirSTD))
     {
         msgBox("Config error",
                fmt::format("CONFIG DIR NOT FOUND AT: {0}", config_dirSTD));
@@ -163,7 +160,7 @@ bool ConfigManager::loadBasics()
                                      title.c_str(), msg.c_str(),
                                      PGE_Window::window);
             // FIXME: Implement the own crossplatform URL opener module
-            QDesktopServices::openUrl(QUrl(QString::fromStdString(url)));
+            //QDesktopServices::openUrl(QUrl(QString::fromStdString(url)));
         }
 
         if(appDir)
@@ -236,7 +233,6 @@ bool ConfigManager::unloadLevelConfigs()
     ///Clear texture bank
     for(size_t i = 0; i < level_textures.size(); i++)
         GlRenderer::deleteTexture(level_textures[i]);
-
     level_textures.clear();
     resetPlayableTexuresState();
     /***************Clear animators*************/
@@ -258,7 +254,6 @@ bool ConfigManager::unloadWorldConfigs()
     ///Clear texture bank
     for(size_t i = 0; i < world_textures.size(); i++)
         GlRenderer::deleteTexture(world_textures[i]);
-
     world_textures.clear();
     resetPlayableTexuresState();
     resetPlayableTexuresStateWld();

@@ -76,12 +76,11 @@ void PGEEngineCmdArgs::applyTestSettings(EpisodeState &state)
     {
         if(test_Characters[i] == -1)
             continue;
-
         PlayerState st = state.getPlayerState(i + 1);
-        st.characterID = static_cast<unsigned long>(test_Characters[i]);
-        st.stateID = static_cast<unsigned long>(test_States[i]);
-        st._chsetup.id = static_cast<unsigned long>(test_Characters[i]);
-        st._chsetup.state = static_cast<unsigned long>(test_States[i]);
+        st.characterID      = static_cast<uint32_t>(test_Characters[i]);
+        st.stateID          = static_cast<uint32_t>(test_States[i]);
+        st._chsetup.id      = static_cast<unsigned long>(test_Characters[i]);
+        st._chsetup.state   = static_cast<unsigned long>(test_States[i]);
         state.setPlayerState(i + 1, st);
     }
 }
@@ -90,7 +89,6 @@ void PGEEngineCmdArgs::applyTestSettings(EpisodeState &state)
 
 PGEEngineApp::PGEEngineApp() :
     m_lib(NOTHING),
-    m_qApp(nullptr),
     m_tr(nullptr)
 {
     CrashHandler::initSigs();
@@ -163,14 +161,16 @@ void PGEEngineApp::unloadAll()
 
     pLogDebug("<Application closed>");
 
-    if(enabled(QAPP))
-    {
-        m_qApp->quit();
-        m_qApp->exit();
-        delete m_qApp;
-        m_qApp = nullptr;
-        disable(QAPP);
-    }
+    //if(enabled(QAPP))
+    //{
+    //    #ifdef PGE_ENGINE_QAPP
+    //    m_qApp->quit();
+    //    m_qApp->exit();
+    //    delete m_qApp;
+    //    m_qApp = nullptr;
+    //    #endif
+    //    disable(QAPP);
+    //}
 
     if(enabled(LOGGER))
     {
@@ -179,33 +179,33 @@ void PGEEngineApp::unloadAll()
     }
 }
 
-PGE_Application *PGEEngineApp::loadQApp(int &argc, char **argv)
-{
-    PGE_Application::addLibraryPath(".");
-    //PGE_Application::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
-    //PGE_Application::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
-    #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
-    QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
-    #endif
-    PGE_Application::setAttribute(Qt::AA_Use96Dpi);
-    m_qApp = new PGE_Application(argc, argv);
+//PGE_Application *PGEEngineApp::loadQApp(int &argc, char **argv)
+//{
+//    PGE_Application::addLibraryPath(".");
+//    //PGE_Application::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
+//    //PGE_Application::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv[0])).dir().path());
+//    #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+//    PGE_Application::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+//    PGE_Application::setAttribute(Qt::AA_DisableHighDpiScaling, true);
+//    #endif
+//    PGE_Application::setAttribute(Qt::AA_Use96Dpi);
+//    m_qApp = new PGE_Application(argc, argv);
 
-    if(!m_qApp)
-    {
-        pLogFatal("Can't construct application class!");
-        return nullptr;
-    }
+//    if(!m_qApp)
+//    {
+//        pLogFatal("Can't construct application class!");
+//        return nullptr;
+//    }
 
-    m_args = m_qApp->arguments();
-    //! Because Qt Application removes some flags from original argv, need to update the size value
-    argc   = m_args.size();
-    //Generating application path
-    //Init system paths
-    AppPathManager::initAppPath(argv[0]);
-    enable(QAPP);
-    return m_qApp;
-}
+//    m_args = m_qApp->arguments();
+//    //! Because Qt Application removes some flags from original argv, need to update the size value
+//    argc   = m_args.size();
+//    //Generating application path
+//    //Init system paths
+//    AppPathManager::initAppPath(argv[0]);
+//    enable(QAPP);
+//    return m_qApp;
+//}
 
 PGE_Translator &PGEEngineApp::loadTr()
 {
@@ -433,8 +433,9 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
         }
         else if(strcmp(arg, "--install") == 0)
         {
-            PGEEngineApp  lib;
-            lib.loadQApp(argc, argv);
+            //PGEEngineApp  lib;
+            //lib.loadQApp(argc, argv);
+            //FIXME: Implement installing on STL-only!
             AppPathManager::install();
             AppPathManager::initAppPath(argv[0]);
             return true;

@@ -25,28 +25,28 @@
 #include <fmt/fmt_format.h>
 
 /*****World Tiles************/
-PGE_DataArray<obj_w_tile>   ConfigManager::wld_tiles;
-CustomDirManager         ConfigManager::Dir_Tiles;
-std::vector<SimpleAnimator >   ConfigManager::Animator_Tiles;
+PGE_DataArray<obj_w_tile>       ConfigManager::wld_tiles;
+CustomDirManager                ConfigManager::Dir_Tiles;
+ConfigManager::AnimatorsArray   ConfigManager::Animator_Tiles;
 /*****World Tiles************/
 
 /*****World Scenery************/
-PGE_DataArray<obj_w_scenery>   ConfigManager::wld_scenery;
-CustomDirManager         ConfigManager::Dir_Scenery;
-std::vector<SimpleAnimator >   ConfigManager::Animator_Scenery;
+PGE_DataArray<obj_w_scenery>    ConfigManager::wld_scenery;
+CustomDirManager                ConfigManager::Dir_Scenery;
+ConfigManager::AnimatorsArray   ConfigManager::Animator_Scenery;
 /*****World Scenery************/
 
 /*****World Paths************/
-PGE_DataArray<obj_w_path>   ConfigManager::wld_paths;
-CustomDirManager         ConfigManager::Dir_WldPaths;
-std::vector<SimpleAnimator >   ConfigManager::Animator_WldPaths;
+PGE_DataArray<obj_w_path>       ConfigManager::wld_paths;
+CustomDirManager                ConfigManager::Dir_WldPaths;
+ConfigManager::AnimatorsArray   ConfigManager::Animator_WldPaths;
 /*****World Paths************/
 
 /*****World Levels************/
-PGE_DataArray<obj_w_level>  ConfigManager::wld_levels;
-CustomDirManager         ConfigManager::Dir_WldLevel;
-std::vector<SimpleAnimator >   ConfigManager::Animator_WldLevel;
-wld_levels_Markers       ConfigManager::marker_wlvl;
+PGE_DataArray<obj_w_level>      ConfigManager::wld_levels;
+CustomDirManager                ConfigManager::Dir_WldLevel;
+ConfigManager::AnimatorsArray   ConfigManager::Animator_WldLevel;
+wld_levels_Markers              ConfigManager::marker_wlvl;
 /*****World Levels************/
 
 bool ConfigManager::loadWorldTile(obj_w_tile &tile, std::string section, obj_w_tile *merge_with, std::string iniFile, IniProcessing *setup)

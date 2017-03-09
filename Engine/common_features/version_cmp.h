@@ -14,8 +14,6 @@ public:
         RC      =2,
         RELEASE =3
     };
-
-    static int str2ver(std::string verSuffix);
     static std::string compare(std::string ver1, std::string ver2);
 };
 

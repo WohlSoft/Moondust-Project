@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QLocale>
+#include <locale>
 
 #include "translator.h"
 #include "app_path.h"
@@ -39,13 +39,14 @@ void PGE_Translator::init()
     if(m_isInit)
         return;
 
-    QString defaultLocale = QLocale::system().name();
-    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
+    std::locale the_global_locale("");
+    std::string defaultLocale = the_global_locale.name();
+    defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
 
     m_langPath = ApplicationPathSTD;
     m_langPath.append("/languages");
     pLogDebug("Initializing translator in the path: %s", m_langPath.c_str());
-    toggleLanguage(defaultLocale.toStdString());
+    toggleLanguage(defaultLocale);
     pLogDebug("Locale detected: %s", m_currLang.c_str());
 }
 

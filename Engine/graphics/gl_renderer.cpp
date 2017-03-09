@@ -823,9 +823,9 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
     ElapsedTimer bindingTime;
     ElapsedTimer unloadTime;
     totalTime.start();
-    qint64 maskElapsed = 0;
-    qint64 bindElapsed = 0;
-    qint64 unloadElapsed = 0;
+    int64_t maskElapsed = 0;
+    int64_t bindElapsed = 0;
+    int64_t unloadElapsed = 0;
     #endif
 
     //Apply Alpha mask
@@ -956,7 +956,7 @@ std::string GlRenderer::ScreenshotPath = "";
 
 struct PGE_GL_shoot
 {
-    uchar *pixels;
+    uint8_t *pixels;
     GLsizei w, h;
 };
 
@@ -981,7 +981,7 @@ void GlRenderer::makeShot()
     hF = hF - m_offset_y * 2.0f;
     w = static_cast<int>(wF);
     h = static_cast<int>(hF);
-    uchar *pixels = new uchar[4 * w * h];
+    uint8_t *pixels = new uint8_t[4 * w * h];
     g_renderer->getScreenPixels(static_cast<int>(m_offset_x), static_cast<int>(m_offset_y), w, h, pixels);
     PGE_GL_shoot *shoot = new PGE_GL_shoot();
     shoot->pixels = pixels;
@@ -1138,7 +1138,7 @@ void GlRenderer::processRecorder(double /*ticktime*/)
 
         w = w - static_cast<int>(m_offset_x) * 2;
         h = h - static_cast<int>(m_offset_y) * 2;
-        uchar *pixels = new uchar[4 * w * h];
+        uint8_t *pixels = new uint8_t[4 * w * h];
         g_renderer->getScreenPixelsRGBA(static_cast<int>(m_offset_x), static_cast<int>(m_offset_y), w, h, pixels);
         FIBITMAP *shotImg = FreeImage_ConvertFromRawBitsEx(false, reinterpret_cast<BYTE *>(pixels), FIT_BITMAP, w, h,
                             4 * w, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, g_renderer->isTopDown());

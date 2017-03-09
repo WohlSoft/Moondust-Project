@@ -56,12 +56,10 @@ bool            LogWriter::m_enabled;
 bool  LogWriter::m_logIsOpened = false;
 SDL_RWops *LogWriter::m_logout = nullptr;
 
-//std::shared_ptr<QTextStream>    LogWriter::m_out_stream;
-
 void LogWriter::LoadLogSettings()
 {
     MutexLocker mutex(&g_lockLocker);
-    Q_UNUSED(mutex);
+    (void)(mutex);
 
     auto now = std::chrono::system_clock::now();
     std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -114,7 +112,7 @@ void LoadLogSettings()
 void CloseLog()
 {
     MutexLocker mutex(&g_lockLocker);
-    Q_UNUSED(mutex);
+    (void)(mutex);
     SDL_RWclose(LogWriter::m_logout);
     LogWriter::m_logout = nullptr;
     //LogWriter::m_out_stream.reset();

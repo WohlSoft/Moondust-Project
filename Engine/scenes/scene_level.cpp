@@ -38,19 +38,16 @@
 
 #include <algorithm>
 
-#include <QtDebug>
-
 #include <common_features/logger.h>
 
 #include <script/lua_event.h>
 #include <script/bindings/core/events/luaevents_core_engine.h>
 #include <fmt/fmt_format.h>
 #include <Utils/files.h>
+#include <Utils/elapsed_timer.h>
 
-#include <QElapsedTimer>
-
-static QElapsedTimer debug_TimeReal;
-static int           debug_TimeCounted = 0;
+static ElapsedTimer     debug_TimeReal;
+static int              debug_TimeCounted = 0;
 
 LevelScene::LevelScene()
     : Scene(Level),
@@ -188,8 +185,8 @@ LevelScene::~LevelScene()
     textures_bank.clear();
     D_pLogDebug("Destroy cameras");
     cameras.clear();
-    D_pLogDebug("Destroy players");
 
+    D_pLogDebug("Destroy players");
     for(i = 0; i < players.size(); i++)
     {
         LVL_Player *tmp;
@@ -209,7 +206,6 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebug("Destroy blocks");
-
     for(i = 0; i < blocks.size(); i++)
     {
         LVL_Block *tmp;
@@ -224,7 +220,6 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebug("Destroy BGO");
-
     for(i = 0; i < bgos.size(); i++)
     {
         LVL_Bgo *tmp;
@@ -239,7 +234,6 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebug("Destroy NPC");
-
     for(i = 0; i < npcs.size(); i++)
     {
         LVL_Npc *tmp;
@@ -255,7 +249,6 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebug("Destroy Warps");
-
     for(i = 0; i < warps.size(); i++)
     {
         LVL_Warp *tmp;
@@ -270,7 +263,6 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebug("Destroy Physical Environment zones");
-
     for(i = 0; i < physenvs.size(); i++)
     {
         LVL_PhysEnv *tmp;
@@ -297,19 +289,19 @@ LevelScene::~LevelScene()
 void LevelScene::tickAnimations(double ticks)
 {
     //tick animation
-    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_Blocks.begin();
+    for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_Blocks.begin();
         it != ConfigManager::Animator_Blocks.end(); it++)
         it->manualTick(ticks);
 
-    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_BGO.begin();
+    for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_BGO.begin();
         it != ConfigManager::Animator_BGO.end(); it++)
         it->manualTick(ticks);
 
-    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_BG.begin();
+    for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_BG.begin();
         it != ConfigManager::Animator_BG.end(); it++)
         it->manualTick(ticks);
 
-    for(std::vector<AdvNpcAnimator>::iterator it = ConfigManager::Animator_NPC.begin();
+    for(VPtrList<AdvNpcAnimator>::iterator it = ConfigManager::Animator_NPC.begin();
         it != ConfigManager::Animator_NPC.end(); it++)
         it->manualTick(ticks);
 }
@@ -397,9 +389,9 @@ void LevelScene::update()
 
             if(PGE_Window::showDebugInfo)
             {
-                debug_player_jumping = plr->JumpPressed;
-                debug_player_onground = plr->onGround();
-                debug_player_foots   = plr->l_contactB.size();
+                debug_player_jumping    = plr->JumpPressed;
+                debug_player_onground   = plr->onGround();
+                debug_player_foots      = plr->l_contactB.size();
             }
         }
 

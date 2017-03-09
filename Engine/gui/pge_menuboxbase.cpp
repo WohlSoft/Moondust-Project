@@ -30,9 +30,6 @@
 #include "../scenes/scene_world.h"
 #include "../scenes/scene_gameover.h"
 
-
-#include <QFontMetrics>
-
 PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, std::string _title, msgType _type,
                                  PGE_Point boxCenterPos, double _padding, std::string texture)
     : PGE_BoxBase(_parentScene), _menu(alignment, gapSpace)

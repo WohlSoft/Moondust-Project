@@ -235,7 +235,7 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
 
 void PGE_Phys_Object::iterateStepPostCollide(float ticks)
 {
-    Q_UNUSED(ticks);
+    (void)(ticks);
 #if 0
     bool updateSpeedAdding = true;
     float G = phys_setup.gravityScale * _scene->globalGravity;

@@ -114,11 +114,6 @@ static bool tryPNG(SDL_RWops* file, uint32_t *w, uint32_t *h)
     return true;
 }
 
-bool PGE_ImageInfo::getImageSize(QString imagePath, uint32_t *w, uint32_t *h, int *errCode)
-{
-    return getImageSize(imagePath.toStdString(), w, h, errCode);
-}
-
 bool PGE_ImageInfo::getImageSize(std::string imagePath, uint32_t *w, uint32_t *h, int *errCode)
 {
     bool ret = false;
@@ -161,11 +156,6 @@ bool PGE_ImageInfo::getImageSize(std::string imagePath, uint32_t *w, uint32_t *h
     }
 
     return ret;
-}
-
-QString PGE_ImageInfo::getMaskName(QString imageFileName)
-{
-    return QString::fromStdString(getMaskName(imageFileName.toStdString()));
 }
 
 std::string PGE_ImageInfo::getMaskName(std::string imageFileName)

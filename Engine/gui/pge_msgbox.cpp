@@ -29,9 +29,6 @@
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 
-#include <QFontMetrics>
-#include <QFileInfo>
-
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
 {

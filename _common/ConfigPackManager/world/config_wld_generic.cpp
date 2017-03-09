@@ -23,6 +23,8 @@
 #include "../image_size.h"
 #include "../../number_limiter.h"
 
+#include <assert.h>
+
 bool WldGenericSetup::parse(IniProcessing *setup,
                             PGEString imgPath,
                             uint32_t defaultGrid,
@@ -75,7 +77,7 @@ bool WldGenericSetup::parse(IniProcessing *setup,
         return false;
     }
 
-    Q_ASSERT(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
+    assert(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
     mask_n  =    PGE_ImageInfo::getMaskName(image_n);
     setup->read("grid",         grid,       pMerge(grid, defaultGrid));
     setup->read("animated",     animated,   pMerge(animated, 0));
@@ -83,7 +85,7 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     NumberLimiter::apply(frames, uint32_t(1u));
     setup->read("frame-speed",  framespeed, pMerge(framespeed, 175));
     NumberLimiter::apply(framespeed, uint32_t(1u));
-    frame_h = animated ? Maths::uRound(qreal(h) / qreal(frames)) : h;
+    frame_h = animated ? Maths::uRound(double(h) / double(frames)) : h;
     NumberLimiter::apply(frame_h, uint32_t(0u));
 
     setup->read("display-frame",    display_frame,      pMerge(display_frame, 0));

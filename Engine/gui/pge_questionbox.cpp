@@ -28,8 +28,6 @@
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
 
-#include <QFontMetrics>
-
 PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, std::string _title, msgType _type,
                        PGE_Point boxCenterPos, double _padding, std::string texture)
     : PGE_MenuBoxBase(  _parentScene, PGE_Menu::menuAlignment::HORIZONTAL, 30,

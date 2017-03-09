@@ -25,6 +25,7 @@
 #include "../common_features/npc_animator.h"
 #include "../common_features/matrix_animator.h"
 #include "../common_features/data_array.h"
+#include <Utils/vptrlist.h>
 
 #include "setup_load_screen.h"
 #include "setup_wld_scene.h"
@@ -184,11 +185,13 @@ namespace ConfigManager
     extern std::string  data_dirSTD;
     extern unsigned int default_grid;
 
+    typedef VPtrList<PGE_Texture> TexturesBank;
+
     //Scripts setup
     extern ScriptsSetup setup_Scripts;
 
     //Common Data
-    extern std::vector<PGE_Texture > common_textures;
+    extern TexturesBank common_textures;
 
     extern unsigned int screen_width;
     extern unsigned int screen_height;
@@ -276,6 +279,8 @@ namespace ConfigManager
 
     /*================================Level config Data===========================*/
 
+    typedef VPtrList<SimpleAnimator> AnimatorsArray;
+
     /*****Level blocks************/
     bool loadLevelBlocks();
     bool loadLevelBlock(obj_block &sblock, std::string section, obj_block *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
@@ -283,7 +288,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_block>   lvl_block_indexes;
     extern CustomDirManager Dir_Blocks;
-    extern std::vector<SimpleAnimator > Animator_Blocks;
+    extern AnimatorsArray Animator_Blocks;
     /*****Level blocks************/
 
     /*****Level BGO************/
@@ -293,7 +298,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_bgo>   lvl_bgo_indexes;
     extern CustomDirManager Dir_BGO;
-    extern std::vector<SimpleAnimator > Animator_BGO;
+    extern AnimatorsArray Animator_BGO;
     /*****Level BGO************/
 
     /*****Level NPC************/
@@ -310,7 +315,7 @@ namespace ConfigManager
     extern NPC_GlobalSetup          g_setup_npc;
     extern CustomDirManager Dir_NPC;
     extern CustomDirManager Dir_NPCScript;
-    extern std::vector<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
+    extern VPtrList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
     /*****Level NPC************/
 
 
@@ -323,7 +328,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_BG>   lvl_bg_indexes;
     extern CustomDirManager Dir_BG;
-    extern std::vector<SimpleAnimator > Animator_BG;
+    extern AnimatorsArray Animator_BG;
     /*****Level Backgrounds************/
     /*================================Level config Data===end=====================*/
 
@@ -335,7 +340,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_tile>    wld_tiles;
     extern CustomDirManager         Dir_Tiles;
-    extern std::vector<SimpleAnimator >   Animator_Tiles;
+    extern AnimatorsArray   Animator_Tiles;
     /*****World Tiles************/
 
     /*****World Scenery************/
@@ -345,7 +350,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_scenery>     wld_scenery;
     extern CustomDirManager         Dir_Scenery;
-    extern std::vector<SimpleAnimator >   Animator_Scenery;
+    extern AnimatorsArray   Animator_Scenery;
     /*****World Scenery************/
 
     /*****World Paths************/
@@ -355,7 +360,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_path>   wld_paths;
     extern CustomDirManager         Dir_WldPaths;
-    extern std::vector<SimpleAnimator >   Animator_WldPaths;
+    extern AnimatorsArray   Animator_WldPaths;
     /*****World Paths************/
 
     /*****World Levels************/
@@ -365,7 +370,7 @@ namespace ConfigManager
     /*****************************/
     extern PGE_DataArray<obj_w_level>   wld_levels;
     extern CustomDirManager         Dir_WldLevel;
-    extern std::vector<SimpleAnimator >   Animator_WldLevel;
+    extern AnimatorsArray   Animator_WldLevel;
     extern wld_levels_Markers        marker_wlvl;
     /*****World Levels************/
 
@@ -401,8 +406,8 @@ namespace ConfigManager
     /*================================Common config Data===end=====================*/
 
     /***********Texture banks*************/
-    extern std::vector<PGE_Texture > level_textures;
-    extern std::vector<PGE_Texture > world_textures;
+    extern TexturesBank level_textures;
+    extern TexturesBank world_textures;
     /***********Texture banks*************/
 
     void addError(std::string bug);

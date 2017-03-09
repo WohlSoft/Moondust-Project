@@ -19,7 +19,9 @@
 #include "config_npc.h"
 #include <IniProcessor/ini_processing.h>
 #include <cmath>
+#include <assert.h>
 #include <PGE_File_Formats/npc_filedata.h>
+#include <Utils/maths.h>
 
 #include "../image_size.h"
 #include "../../number_limiter.h"
@@ -85,7 +87,7 @@ bool NpcSetup::parse(IniProcessing *setup,
         return false;
     }
 
-    Q_ASSERT(merge_with || ((gfx_w > 0) && (gfx_h > 0) && "Width or height of image has zero or negative value!"));
+    assert(merge_with || ((gfx_w > 0) && (gfx_h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
     setup->read("algorithm",        algorithm_script,   pMerge(algorithm_script, (section + ".lua")));
     setup->read("default-effect",   effect_1,           pMerge(effect_1, 10u));
@@ -178,9 +180,9 @@ bool NpcSetup::parse(IniProcessing *setup,
 
     /***************Calculate the grid offset********************/
     if(width >= grid)
-        grid_offset_x = -1 * qRound(static_cast<qreal>(width % grid) / 2);
+        grid_offset_x = -1 * Maths::iRound(static_cast<double>(width % grid) / 2);
     else
-        grid_offset_x = qRound(static_cast<qreal>(static_cast<int>(grid) - static_cast<int>(width)) / 2.0);
+        grid_offset_x = Maths::iRound(static_cast<double>(static_cast<int>(grid) - static_cast<int>(width)) / 2.0);
 
     if(grid_attach_style == 1)
         grid_offset_x += (grid / 2);
@@ -353,7 +355,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     foreground =        (local->en_foreground) ? local->foreground : global.foreground;
     framespeed =        (local->en_framespeed) ?
                 static_cast<uint32_t>(
-                    qRound(static_cast<double>(global.framespeed)
+                    Maths::iRound(static_cast<double>(global.framespeed)
                            / (8.0 / static_cast<double>(local->framespeed))))
                 : global.framespeed;
 
@@ -384,9 +386,9 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     grid =      (local->en_grid) ? local->grid : global.grid;
 
     if(width >= grid)
-        grid_offset_x = -1 * qRound(static_cast<double>((width % grid) / 2));
+        grid_offset_x = -1 * Maths::iRound(static_cast<double>((width % grid) / 2));
     else
-        grid_offset_x = qRound(static_cast<double>(static_cast<int32_t>(grid) - static_cast<int32_t>(width)) / 2.0);
+        grid_offset_x = Maths::iRound(static_cast<double>(static_cast<int32_t>(grid) - static_cast<int32_t>(width)) / 2.0);
 
     grid_attach_style = (local->en_grid_align) ? static_cast<uint32_t>(local->grid_align) : global.grid_attach_style;
 
@@ -398,7 +400,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
 
     if((framestyle == 0) && ((local->en_gfxheight) || (local->en_height)) && (!local->en_frames))
     {
-        frames = static_cast<uint32_t>(qRound(static_cast<double>(captured_h) / static_cast<double>(gfx_h)));
+        frames = Maths::uRound(static_cast<double>(captured_h) / static_cast<double>(gfx_h));
         //merged.custom_animate = false;
     }
     else

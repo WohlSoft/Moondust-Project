@@ -11,6 +11,7 @@
 #include "npc_detectors/lvl_dtc_player_pos.h"
 #include "npc_detectors/lvl_dtc_contact.h"
 #include "npc_detectors/lvl_dtc_inarea.h"
+#include <Utils/vptrlist.h>
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -154,22 +155,22 @@ public:
 
     /********************Detectors**********************/
     //!< dummy detectors made directly from a base class, for a some tests
-    std::vector<BasicDetector >         detectors_dummy;
+    VPtrList<BasicDetector>         detectors_dummy;
     //! Player position detectors (should have alone copy!)
-    PlayerPosDetector                   detector_player_pos;
+    PlayerPosDetector               detector_player_pos;
     //! Detects position and direction of nearest player
     PlayerPosDetector *lua_installPlayerPosDetector();
     //! Is player touches selected relative area;
-    std::vector<InAreaDetector >        detectors_inarea;
+    VPtrList<InAreaDetector >       detectors_inarea;
     //! Detects is player(s) are enters into specific area relative to NPC's center
     InAreaDetector     *lua_installInAreaDetector(double left, double top, double right, double bottom, luabind::adl::object filters);
     //! Entire list of all detectors
-    std::vector<ContactDetector >       detectors_contact;
+    VPtrList<ContactDetector>       detectors_contact;
     //! Detects contacted elements
     ContactDetector    *lua_installContactDetector();
 
     //! Entire list of all detectors
-    std::set<BasicDetector *>           detectors;
+    std::set<BasicDetector*>        detectors;
 
     /***************************************************/
 

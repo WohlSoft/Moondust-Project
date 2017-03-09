@@ -110,7 +110,7 @@ void LevelScene::destroyLoaderTexture()
 
 unsigned int LevelScene::nextLoadAniFrame(unsigned int x, void *p)
 {
-    Q_UNUSED(x);
+    (void)(x);
     LevelScene *self = reinterpret_cast<LevelScene *>(p);
     self->loaderTick();
     return 0;

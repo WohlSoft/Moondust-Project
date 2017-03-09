@@ -21,6 +21,7 @@
 
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <common_features/event_queue.h>
+#include <Utils/vptrlist.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -48,8 +49,8 @@ public:
     void addSMBX64Event(LevelSMBX64Event &evt);
     void processTimers(double tickTime);
     void triggerEvent(std::string event);
-    typedef std::vector<LVL_EventAction > EventActList;
-    typedef std::vector<EventActList > WorkingEvents;
+    typedef VPtrList<LVL_EventAction >  EventActList;
+    typedef VPtrList<EventActList >     WorkingEvents;
     WorkingEvents   workingEvents;
     typedef std::unordered_map<std::string, EventActList > EventsTable;
     EventsTable events;

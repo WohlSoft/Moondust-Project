@@ -22,7 +22,6 @@
 
 #include <PGEString.h>
 #include <stdint.h>
-#include <QSize>
 
 class IniProcessing;
 struct NPCConfigFile;

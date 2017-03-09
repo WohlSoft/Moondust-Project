@@ -26,9 +26,6 @@
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
-#include <QtDebug>
-
-
 LoadingScene_misc_img::LoadingScene_misc_img()
 {
     x = 0;

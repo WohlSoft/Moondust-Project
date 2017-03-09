@@ -13225,7 +13225,7 @@ static unsigned char file_13[] =
      0x00
 };
 
-// maincore_world.lua
+// script/maincore_world.lua
 static unsigned char file_14[] =
 {
      0x0A, 0x6C, 0x6F, 0x63, 0x61, 0x6C, 0x20, 0x64, 0x65, 0x62,
@@ -23440,7 +23440,7 @@ static std::unordered_map<std::string, FileEntry> filesMap =
     {"script/maincore_credits.lua",	{file_11,     987}},
     {"script/maincore_level.lua",	{file_12,    1602}},
     {"script/maincore_title.lua",	{file_13,     470}},
-    {"maincore_world.lua",	{file_14,     470}},
+    {"script/maincore_world.lua",	{file_14,     470}},
     {"script/npcs/maincore_npc.lua",	{file_15,    2715}},
     {"script/player/maincore_player.lua",	{file_16,    3758}},
     {"JosefinSans-Regular.ttf",	{file_17,   94816}},

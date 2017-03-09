@@ -23,6 +23,8 @@
 #include "../image_size.h"
 #include "../../number_limiter.h"
 
+#include <assert.h>
+
 bool BgoSetup::parse(IniProcessing *setup,
                      PGEString bgoImgPath,
                      uint32_t defaultGrid,
@@ -87,7 +89,7 @@ bool BgoSetup::parse(IniProcessing *setup,
         return false;
     }
 
-    Q_ASSERT(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
+    assert(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
     {
         setup->readEnum("view", zLayer, (merge_with ? merge_with->zLayer : z_background_1),
@@ -108,7 +110,7 @@ bool BgoSetup::parse(IniProcessing *setup,
     NumberLimiter::apply(frames, 1u);
     setup->read("frame-speed", framespeed, pMerge(framespeed, 125));
     NumberLimiter::apply(frame_h, 0u);
-    frame_h =   animated ? Maths::uRound(qreal(h) / qreal(frames)) : h;
+    frame_h =   animated ? Maths::uRound(double(h) / double(frames)) : h;
     setup->read("display-frame", display_frame, pMerge(display_frame, 0));
     NumberLimiter::apply(display_frame, 0u);
 

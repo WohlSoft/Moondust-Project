@@ -16,19 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "pge_qt_application.h"
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 #include <IniProcessor/ini_processing.h>
 #define FMT_NOEXCEPT
 #include <fmt/fmt_format.h>
 
-#include <QSettings>
-#include <QStandardPaths>
-#include <QDir>
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
-#include <QUrl>
+#include <CoreServices/CoreServices.h>
+#endif
+
+#ifdef __gnu_linux__
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 #endif
 
 #include "app_path.h"
@@ -93,18 +95,48 @@ void AppPathManager::initAppPath(const char* argv0)
 #if defined(__ANDROID__) || defined(__APPLE__)
     userDir = true;
 #else
+    #ifdef ENABLE_JUNK_FOR_FUN
     QSettings setup;
     userDir = setup.value("EnableUserDir", false).toBool();
+    #else
+    // FIXME: Use Windows-registry and config files directly!
+    userDir = false;
+    #endif
 #endif
     //openUserDir:
 
     if(userDir)
     {
-#if defined(__ANDROID__) || defined(__APPLE__)
-        std::string path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation).toStdString();
-#else
-        std::string path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation).toStdString();
-#endif
+        std::string path = "";
+    #if defined(__ANDROID__) || defined(__APPLE__)
+        {
+            FSRef ref;
+            OSType folderType = kApplicationSupportFolderType;
+            char spath[PATH_MAX];
+            FSFindFolder( kUserDomain, folderType, kCreateFolder, &ref );
+            FSRefMakePath( &ref, (UInt8*)&spath, PATH_MAX );
+            path.append(spath);
+        }
+    #elif defined(_WIN32)
+        {
+            wchar_t pathW[MAX_PATH];
+            DWORD path_len = GetEnvironmentVariable(L"UserProfile", pathW, MAX_PATH);
+            assert(path_len);
+            path.resize(path_len * 2);
+            path_len = WideCharToMultiByte(CP_UTF8, 0,
+                                           pathW, path_len,
+                                           &path[0],
+                                           path.size(),
+                                           0,
+                                           FALSE);
+            path.resize(path_len);
+        }
+    #elif defined(__gnu_linux__)
+        {
+            passwd* pw = getpwuid(getuid());
+            path.append(pw->pw_dir);
+        }
+    #endif
 
         if(!path.empty())
         {
@@ -148,6 +180,8 @@ std::string AppPathManager::userAppDirSTD()
 
 void AppPathManager::install()
 {
+    // FIXME: Completely reimplement this!
+#ifdef ENABLE_JUNK_FOR_FUN
 #if defined(__ANDROID__) || defined(__APPLE__)
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
 #else
@@ -157,14 +191,14 @@ void AppPathManager::install()
     if(!path.isEmpty())
     {
         QDir appDir(path + UserDirName);
-
         if(!appDir.exists())
             if(!appDir.mkpath(path + UserDirName))
                 return;
-
+        // FIXME: use Windows registry or user config file directly
         QSettings setup;
         setup.setValue("EnableUserDir", true);
     }
+#endif
 }
 
 bool AppPathManager::isPortable()

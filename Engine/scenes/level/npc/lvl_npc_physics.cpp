@@ -154,12 +154,12 @@ void LVL_Npc::postCollision()
 
 void LVL_Npc::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
 {
-    Q_UNUSED(blocksHit);
+    (void)(blocksHit);
 }
 
 bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
 {
-    Q_ASSERT(body);
+    assert(body);
     switch(body->type)
     {
     case LVLBlock:

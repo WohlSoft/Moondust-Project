@@ -19,7 +19,7 @@
 #ifndef IMAGESIZE_H
 #define IMAGESIZE_H
 
-#include <QString>
+#include <string>
 
 class PGE_ImageInfo
 {
@@ -40,7 +40,6 @@ public:
      * @param [out] errCode Error code
      * @return true if successfully finished, false if error occouped
      */
-    static bool getImageSize(QString imagePath, uint32_t*w, uint32_t *h, int *errCode=nullptr);
     static bool getImageSize(std::string imagePath, uint32_t *w, uint32_t *h, int *errCode=nullptr);
 
     /**
@@ -48,7 +47,6 @@ public:
      * @param imageFileName foreground image file-name
      * @return masked image filename
      */
-    static QString getMaskName(QString imageFileName);
     static std::string getMaskName(std::string imageFileName);
 };
 

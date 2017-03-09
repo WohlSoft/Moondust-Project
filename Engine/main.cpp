@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     // RAII for loaded/initialized libraries and modules
     PGEEngineApp  app;
     //Initialize Qt's subsystem
-    app.loadQApp(argc, argv);
+    AppPathManager::initAppPath(argv[0]);
     //Load settings
     app.loadSettings();
     //Init log writer

@@ -22,6 +22,7 @@
 #include "../scene_level.h"
 #include <audio/pge_audio.h>
 #include <graphics/gl_renderer.h>
+#include <Utils/maths.h>
 
 void LVL_Block::construct()
 {
@@ -331,8 +332,8 @@ void LVL_Block::render(double camX, double camY)
         int h = int(round(m_height_registered));
         int x, y, x2, y2, i, j;
         int hc, wc;
-        x = qRound(qreal(texture.w) / 3); // Width of one piece
-        y = qRound(qreal(texture.h) / 3); // Height of one piece
+        x = Maths::iRound(double(texture.w) / 3); // Width of one piece
+        y = Maths::iRound(double(texture.h) / 3); // Height of one piece
         //Double size
         x2 = x << 1;
         y2 = y << 1;

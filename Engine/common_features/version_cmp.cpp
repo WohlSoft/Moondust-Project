@@ -3,88 +3,86 @@
 #include <Utils/strings.h>
 #include "version_cmp.h"
 #include <cstdlib>
+#include <sstream>
 
-int VersionCmp::str2ver(std::string verSuffix)
+static long str2ver(std::string verSuffix)
 {
-    static const std::unordered_map<std::string, VersionSuffix> ver =
+    static const std::unordered_map<std::string, VersionCmp::VersionSuffix> ver =
     {
-        {"alpha", ALPHA},
-        {"dev", DEV},
-        {"beta", BETA},
-        {"rc", RC},
-        {"", RELEASE}
+        {"alpha", VersionCmp::ALPHA},
+        {"dev", VersionCmp::DEV},
+        {"beta", VersionCmp::BETA},
+        {"rc", VersionCmp::RC},
+        {"", VersionCmp::RELEASE}
     };
 
     std::transform(verSuffix.begin(), verSuffix.end(), verSuffix.begin(), ::tolower);
-    std::unordered_map<std::string, VersionSuffix>::const_iterator i = ver.find(verSuffix);
+    std::unordered_map<std::string, VersionCmp::VersionSuffix>::const_iterator i = ver.find(verSuffix);
     if(i == ver.end())
         return 0;
     else
         return i->second;
 }
 
+static bool ver2arr(long *dest, std::string ver)
+{
+    std::string::size_type rev = ver.find('-');
+    if(rev != std::string::npos)
+    {
+        dest[4] = str2ver(ver.substr(rev + 1));
+        ver = ver.substr(0, rev);
+    }
+    std::string::size_type beg = 0;
+    std::string::size_type end = 0;
+    int iterator = 0;
+    bool quit = false;
+    do
+    {
+        if(iterator == 4)
+            return false;
+        beg = end;
+        end = ver.find('.', beg);
+        if(end == std::string::npos)
+        {
+            quit = true;
+            end = ver.size();
+        }
+
+        if((end - beg) == 0)
+        {
+            return (iterator > 0);
+        }
+
+        try
+        {
+            std::string cell = ver.substr(beg, (end - beg));
+            dest[iterator++] = std::atol(cell.c_str());
+            end++;//skip dot
+        }
+        catch (...)
+        {
+            return false;
+        }
+    }
+    while(!quit);
+
+    return true;
+}
+
 std::string VersionCmp::compare(std::string ver1, std::string ver2)
 {
-// FIXME: Rework this algorithm to be more accurate!
+    long vers1[5] = {0, 0, 0, 0, 0};
+    long vers2[5] = {0, 0, 0, 0, 0};
 
-    long vers1[5] = {0,0,0,0,0};
-    long vers2[5] = {0,0,0,0,0};
-    std::string v1 = ver1, v2 = ver2;
-    Strings::List ver1s, ver2s, v1s, v2s;
-    std::replace(v1.begin(), v1.end(), '-', '.');
-    std::replace(v2.begin(), v2.end(), '-', '.');
-    Strings::split(ver1s, ver1, '.');
-    Strings::split(ver2s, ver2, '.');
-
-    if(ver1s.empty())
-        return ver1;
-    if(ver2s.empty())
+    if(ver1.empty())
+        return ver2;
+    if(ver2.empty())
         return ver1;
 
-    Strings::split(v1s, ver1, '-');
-    if(v1.size() > 1)
-    {
-        vers1[4] = str2ver(ver1s.back());
-        ver1s.pop_back();
-    }
-    else
-        vers1[4]=RELEASE;
-
-    Strings::split(v2s, ver2, '-');
-    if(v2s.size() > 1)
-    {
-        vers2[4] = str2ver(ver2s.back());
-        ver2s.pop_back();
-    }
-    else
-        vers2[4] = RELEASE;
-
-    int c=0;
-    while( (!ver1s.empty()) && (c<5) )
-    {
-        try {
-            vers1[c] = std::atol(ver1s.front().c_str());
-        }
-        catch (...)
-        {
-            return ver1;
-        }
-        ver1s.erase(ver2s.begin());
-        c++;
-    }
-    c = 0;
-    while((!ver2s.empty()) && (c<5))
-    {
-        try {
-            vers2[c] = std::atol(ver2s.front().c_str());
-        }
-        catch (...)
-        {
-            return ver1;
-        }
-        ver2s.erase(ver2s.begin());
-        c++;
-    }
+    if(!ver2arr(vers1, ver1))
+        return ver2;
+    if(!ver2arr(vers2, ver2))
+        return ver1;
 
     double mult  = 0.000001;
     double ver1i = 0.0;
@@ -102,4 +100,3 @@ std::string VersionCmp::compare(std::string ver1, std::string ver2)
     else
         return ver1;
 }
-

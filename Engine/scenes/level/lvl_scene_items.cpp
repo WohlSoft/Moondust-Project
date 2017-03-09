@@ -23,8 +23,6 @@
 
 //static double zCounter = 0;
 #include <PGE_File_Formats/file_formats.h>
-#include <QFileInfo>
-
 
 void LevelScene::placeBlock(LevelBlock &blockData)
 {

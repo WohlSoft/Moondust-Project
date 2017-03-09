@@ -499,7 +499,8 @@ void TileBox::query(long Left, long Top, long Right, long Bottom, std::vector<Wo
 
 void TileBox::sortElements(std::vector<WorldNode *> &list)
 {
-    if(list.size() <= 1) return; //Nothing to sort!
+    if(list.size() <= 1)
+        return; //Nothing to sort!
 
     std::vector<size_t> beg;
     std::vector<size_t> end;
@@ -508,7 +509,7 @@ void TileBox::sortElements(std::vector<WorldNode *> &list)
 
     WorldNode *piv;
     ssize_t i = 0;
-    size_t L, R, swapv;
+    ssize_t L, R, swapv;
     beg.push_back(0);
     end.push_back(list.size());
 
@@ -520,16 +521,13 @@ void TileBox::sortElements(std::vector<WorldNode *> &list)
         if(L < R)
         {
             piv = list[L];
-
             while(L < R)
             {
                 while((list[R]->Z >= piv->Z) && (L < R)) R--;
-
-                if(L < R) list[L++] = list[R];
+                if(L < R) list[L++] = std::move(list[R]);
 
                 while((list[L]->Z <= piv->Z) && (L < R)) L++;
-
-                if(L < R) list[R--] = list[L];
+                if(L < R) list[R--] = std::move(list[L]);
             }
 
             list[L] = piv;

@@ -545,7 +545,7 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
 
 bool LVL_Player::preCollisionCheck(PGE_Phys_Object *body)
 {
-    Q_ASSERT(body);
+    assert(body);
 
     if(body->type == LVLBlock)
     {

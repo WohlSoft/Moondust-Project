@@ -16,12 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QFileOpenEvent>
 #include "pge_qt_application.h"
+#ifdef Q_OS_MACX
+#include <QFileOpenEvent>
+#endif
 #include <common_features/logger.h>
 
 PGE_OSXApplication::PGE_OSXApplication(int &argc, char **argv)
-    : QApplication(argc, argv)
+    : QCoreApplication(argc, argv)
 {
 #ifdef Q_OS_MACX
     m_connected = false;

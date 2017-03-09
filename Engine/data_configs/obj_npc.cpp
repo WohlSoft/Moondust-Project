@@ -31,7 +31,7 @@ PGE_DataArray<obj_npc>      ConfigManager::lvl_npc_indexes;
 NPC_GlobalSetup             ConfigManager::g_setup_npc;
 CustomDirManager            ConfigManager::Dir_NPC;
 CustomDirManager            ConfigManager::Dir_NPCScript;
-std::vector<AdvNpcAnimator >      ConfigManager::Animator_NPC;
+VPtrList<AdvNpcAnimator >   ConfigManager::Animator_NPC;
 /*****Level NPC************/
 
 bool ConfigManager::loadLevelNPC(obj_npc &snpc,

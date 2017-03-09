@@ -35,8 +35,8 @@ void LevelScene::collectGarbageNPCs()
             continue;
         }
 
-        std::remove(active_npcs.begin(), active_npcs.end(), corpse);
-        std::remove(npcs.begin(), npcs.end(), corpse);
+        active_npcs.erase(std::remove(active_npcs.begin(), active_npcs.end(), corpse), active_npcs.end());
+        npcs.erase(std::remove(npcs.begin(), npcs.end(), corpse), npcs.end());
         layers.removeRegItem(corpse->data.layer, corpse);
         luaEngine.destoryLuaNpc(corpse);
     }
@@ -56,7 +56,7 @@ void LevelScene::collectGarbagePlayers()
             continue;
         }
         LVL_Player::deathReason reason = corpse->kill_reason;
-        std::remove(players.begin(), players.end(), corpse);
+        players.erase(std::remove(players.begin(), players.end(), corpse), players.end());
         luaEngine.destoryLuaPlayer(corpse);
 
         switch(reason)

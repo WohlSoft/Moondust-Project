@@ -26,6 +26,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <Utils/vptrlist.h>
 
 #ifdef PGE_TTF
 #include <QString>
@@ -73,7 +74,7 @@ private:
     std::unordered_map<char32_t, RasChar > fontMap; //!< Table of available characters
 
     //Font textures cache
-    std::vector<PGE_Texture > textures;   //!< Bank of loaded textures
+    VPtrList<PGE_Texture > textures;   //!< Bank of loaded textures
 };
 
 
@@ -113,7 +114,7 @@ public:
     #endif
 
 
-    static std::vector<RasterFont> rasterFonts;//!< Complete array of raster fonts
+    static VPtrList<RasterFont> rasterFonts;//!< Complete array of raster fonts
     static RasterFont *rFont;//!< Default raster font
 
     static void optimizeText(std::string &text, size_t max_line_lenght, int *numLines = 0, int *numCols = 0);

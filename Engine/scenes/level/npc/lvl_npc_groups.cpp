@@ -56,7 +56,7 @@ void LVL_Npc::updateBuddies(double tickTime)
 
 void LVL_Npc::buildLeaf(std::vector<LVL_Npc *> &needtochec, std::vector<LVL_Npc *> *&list, LVL_Npc *leader)
 {
-    Q_UNUSED(leader);
+    (void)(leader);
     std::vector<PGE_Phys_Object*> bodies;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(2.0);
     m_scene->queryItems(posRectC, &bodies);

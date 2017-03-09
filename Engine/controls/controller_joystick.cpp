@@ -17,7 +17,6 @@
  */
 
 #include "controller_joystick.h"
-#include <QtDebug>
 
 
 JoystickController::JoystickController() :

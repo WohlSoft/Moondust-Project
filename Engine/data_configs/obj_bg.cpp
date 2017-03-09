@@ -24,9 +24,9 @@
 #include <Utils/files.h>
 
 /*****Level BG************/
-PGE_DataArray<obj_BG>   ConfigManager::lvl_bg_indexes;
-CustomDirManager ConfigManager::Dir_BG;
-std::vector<SimpleAnimator > ConfigManager::Animator_BG;
+PGE_DataArray<obj_BG>           ConfigManager::lvl_bg_indexes;
+CustomDirManager                ConfigManager::Dir_BG;
+ConfigManager::AnimatorsArray   ConfigManager::Animator_BG;
 /*****Level BG************/
 
 bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG *merge_with, std::string iniFile, IniProcessing *setup)

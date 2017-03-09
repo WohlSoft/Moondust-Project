@@ -37,8 +37,8 @@ bool obj_player_calibration::load(std::string fileName)
 {
     try
     {
-        std::string folderPath  = DirMan(fileName).absolutePath();
-        std::string baseName    = Files::basename(fileName);
+        std::string folderPath  = DirMan(Files::dirname(fileName)).absolutePath();
+        std::string baseName    = Files::basenameNoSuffix(fileName);
 
         std::string ini_sprite  = folderPath + "/" + baseName + ".ini";
         std::string group;

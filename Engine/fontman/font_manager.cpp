@@ -19,7 +19,6 @@
 #include "font_manager.h"
 
 #include <common_features/app_path.h>
-#include <common_features/pge_qt_application.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
 #include <data_configs/config_manager.h>
@@ -80,7 +79,7 @@ static const UTF32 offsetsFromUTF8[6] = { 0x00000000UL, 0x00003080UL, 0x000E2080
  * @param str pointer to position on UTF8 string where need to find a character
  * @return UTF32 character
  */
-static inline char32_t get_utf8_char(const char*str)
+static inline char32_t get_utf8_char(const char *str)
 {
     const UTF8 *source = reinterpret_cast<const UTF8*>(str);
     UTF32 ch = 0;
@@ -108,7 +107,7 @@ std::u32string std_to_utf32(const std::string &src)
     UTF32*      dst_begin = reinterpret_cast<UTF32*>(&dst_tmp[0]);
     UTF32*      dst_end   = dst_begin + dst_tmp.size();
     PGEFF_ConvertUTF8toUTF32(&src_begin, src_end, &dst_begin, dst_end, strictConversion);
-    return std::u32string(reinterpret_cast<char32_t*>(dst_begin));
+    return std::u32string(reinterpret_cast<char32_t*>(&dst_tmp[0]));
 }
 
 RasterFont::RasterFont()
@@ -272,17 +271,17 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
         {
             if(endPos == x.size())
             {
-                pLogDebug("=invalid-Y=%d=", x.c_str());
+                pLogWarning("=invalid-Y=%d= in the raster font map %s", x.c_str(), fontmap_ini.c_str());
                 continue;
             }
-            begPos = endPos;
+            begPos = endPos + 1;//+1 to skip '-' divider
             endPos = x.find('-', begPos);
             if(endPos == std::string::npos)
                 endPos = x.size();//Use entire string
             charPosY = x.substr(begPos, endPos);
             if(charPosY.empty())
             {
-                pLogDebug("=invalid-Y=%d=", x.c_str());
+                pLogWarning("=invalid-Y=%d= in the raster font map %s", x.c_str(), fontmap_ini.c_str());
                 continue;
             }
         }
@@ -302,14 +301,26 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
         char32_t ch = ucharX[0];
         //qDebug()<<"=char=" << ch << "=id="<<charPosX.toInt()<<charPosY.toInt()<<"=";
         RasChar rch;
-        rch.valid = true;
-        rch.tx              =  loadedTexture;
-        rch.l               =  std::stof(charPosY.c_str()) / matrix_width;
-        rch.r               = (std::stof(charPosY.c_str()) + 1.0f) / matrix_width;
-        rch.padding_left    = (ucharX.size() > 1) ? char2int(ucharX[1]) : 0;
-        rch.padding_right   = (ucharX.size() > 2) ? char2int(ucharX[2]) : 0;
-        rch.t               =  std::stof(charPosX.c_str()) / matrix_height;
-        rch.b               = (std::stof(charPosX.c_str()) + 1.0f) / matrix_height;
+        #ifndef DEBUG_BUILD
+        try
+        {
+        #endif
+            rch.tx              =  loadedTexture;
+            rch.l               =  std::stof(charPosY.c_str()) / matrix_width;
+            rch.r               = (std::stof(charPosY.c_str()) + 1.0f) / matrix_width;
+            rch.padding_left    = (ucharX.size() > 1) ? char2int(ucharX[1]) : 0;
+            rch.padding_right   = (ucharX.size() > 2) ? char2int(ucharX[2]) : 0;
+            rch.t               =  std::stof(charPosX.c_str()) / matrix_height;
+            rch.b               = (std::stof(charPosX.c_str()) + 1.0f) / matrix_height;
+            rch.valid = true;
+        #ifndef DEBUG_BUILD
+        }
+        catch(std::exception &e)
+        {
+            pLogWarning("Invalid entry of font map: entry: %s, reason: %s, file: %s", x.c_str(), e.what(), fontmap_ini.c_str());
+        }
+        #endif
+
         fontMap[ch] = rch;
     }
 
@@ -348,7 +359,9 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
     int x = 0;
     for(size_t i = 0; i < text.size(); i++, x++)
     {
-        switch(text[i])
+        char &cx = text[i];
+        UTF8 uch = static_cast<unsigned char>(cx);
+        switch(cx)
         {
         case '\t':
         case ' ':
@@ -367,18 +380,18 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
             break;
 
         default:
-            RasChar rch = fontMap[get_utf8_char(&text[i])];
+            RasChar rch = fontMap[get_utf8_char(&cx)];
             if(rch.valid)
             {
                 widthSumm += (letter_width - rch.padding_left - rch.padding_right + interletter_space);
-
-                if(widthSumm > widthSummMax) widthSummMax = widthSumm;
+                if(widthSumm > widthSummMax)
+                    widthSummMax = widthSumm;
             }
             else
             {
                 widthSumm += (letter_width + interletter_space);
-
-                if(widthSumm > widthSummMax) widthSummMax = widthSumm;
+                if(widthSumm > widthSummMax)
+                    widthSummMax = widthSumm;
             }
 
             break;
@@ -401,7 +414,7 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
                 count++;
             }
         }
-        i += static_cast<size_t>(trailingBytesForUTF8[static_cast<int>(text[i])]);
+        i += static_cast<size_t>(trailingBytesForUTF8[uch]);
     }
 
     if(count == 1)
@@ -424,8 +437,13 @@ void RasterFont::printText(const std::string &text, int x, int y, float Red, flo
     GLint w = letter_width;
     GLint h = letter_height;
 
-    for(const char &cx : text)
+    const char *strIt  = text.c_str();
+    const char *strEnd = strIt + text.size();
+    for(; strIt < strEnd; strIt++)
     {
+        const char &cx = *strIt;
+        UTF8 ucx = static_cast<unsigned char>(cx);
+
         switch(cx)
         {
         case '\n':
@@ -442,7 +460,7 @@ void RasterFont::printText(const std::string &text, int x, int y, float Red, flo
             continue;
         }
 
-        RasChar rch = fontMap[get_utf8_char(&cx)];
+        RasChar rch = fontMap[get_utf8_char(strIt)];
         if(rch.valid)
         {
             GlRenderer::BindTexture(rch.tx);
@@ -472,6 +490,7 @@ void RasterFont::printText(const std::string &text, int x, int y, float Red, flo
             offsetX += interletter_space;
             #endif
         }
+        strIt += static_cast<size_t>(trailingBytesForUTF8[ucx]);
     }
 
     GlRenderer::UnBindTexture();
@@ -491,11 +510,8 @@ std::string RasterFont::getFontName()
 
 
 
-
-
-
 RasterFont                 *FontManager::rFont = nullptr;
-std::vector<RasterFont>     FontManager::rasterFonts;
+VPtrList<RasterFont>        FontManager::rasterFonts;
 
 bool FontManager::isInit = false;
 #ifdef PGE_TTF
@@ -560,6 +576,7 @@ void FontManager::initFull()
     std::vector<std::string> files;
     //filter << "*.font.ini";
     fontsDir.getListOfFiles(files, {".font.ini"});
+    std::sort(files.begin(), files.end());
 
     for(std::string &fonFile : files)
     {
@@ -700,7 +717,8 @@ void FontManager::optimizeText(std::string &text, size_t max_line_lenght, int *n
             }
         }
 
-        i += static_cast<size_t>(trailingBytesForUTF8[static_cast<int>(text[i])]);
+        UTF8 uch = static_cast<unsigned char>(text[i]);
+        i += static_cast<size_t>(trailingBytesForUTF8[uch]);
     }
 
     if(count == 1)
@@ -720,12 +738,20 @@ std::string FontManager::cropText(std::string text, size_t max_symbols)
     if(max_symbols <= 0)
         return text;
 
-    if(text.size() <= max_symbols)
-        return text;
+    size_t utf8len = 0;
+    for(std::string::size_type i = 0; i < text.size(); i++)
+    {
+        if(utf8len >= max_symbols)
+        {
+            text.erase(i, text.size() - i);
+            text.append("...");
+            break;
+        }
+        UTF8 uch = static_cast<UTF8>(text[i]);
+        i += static_cast<size_t>(trailingBytesForUTF8[uch]);
+        utf8len++;
+    }
 
-    int i = max_symbols - 1;
-    text.erase(i, text.size() - i);
-    text.append("...");
     return text;
 }
 

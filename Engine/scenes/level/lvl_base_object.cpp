@@ -85,20 +85,21 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
 
 PGE_Phys_Object::~PGE_Phys_Object()
 {
-    if(_is_registered) m_scene->unregisterElement(this);
+    if(_is_registered)
+        m_scene->unregisterElement(this);
 }
 
 void PGE_Phys_Object::registerInTree()
 {
-    if(!_is_registered) m_scene->registerElement(this);
-
+    if(!_is_registered)
+        m_scene->registerElement(this);
     _is_registered = true;
 }
 
 void PGE_Phys_Object::unregisterFromTree()
 {
-    if(_is_registered) m_scene->unregisterElement(this);
-
+    if(_is_registered)
+        m_scene->unregisterElement(this);
     _is_registered = false;
 }
 

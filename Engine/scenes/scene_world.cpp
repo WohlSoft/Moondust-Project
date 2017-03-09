@@ -93,7 +93,7 @@ WorldScene::WorldScene()
                         common_setup.AdditionalImages[i].frames,
                         common_setup.AdditionalImages[i].framedelay);
         img.frmH = (img.t.h / common_setup.AdditionalImages[i].frames);
-        imgs.push_back(img);
+        imgs.push_back(std::move(img));
     }
 
     viewportRect.setX(common_setup.viewport_x);
@@ -127,7 +127,6 @@ WorldScene::~WorldScene()
     PGE_MusPlayer::stop();
     wld_events.abort();
     m_indexTable.clean();
-    wldItems.clear();
     _itemsToRender.clear();
     wld_tiles.clear();
     wld_sceneries.clear();
@@ -257,7 +256,6 @@ bool WorldScene::init()
     });
     luaEngine.init();
     m_indexTable.clean();
-    wldItems.clear();
     _itemsToRender.clear();
     wld_tiles.clear();
     wld_sceneries.clear();
@@ -310,7 +308,7 @@ bool WorldScene::init()
                                          common_setup.portrait_direction);
             if(portrait.isValid())
             {
-                portraits.push_back(portrait);
+                portraits.push_back(std::move(portrait));
                 player_portrait_x += player_portrait_step;
             }
             else
@@ -347,29 +345,25 @@ bool WorldScene::init()
         if(!tile.init())
             continue;
 
-        wld_tiles.push_back(tile);
+        wld_tiles.push_back(std::move(tile));
         m_indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &(wld_tiles.back()));
     }
 
     for(size_t i = 0; i < data.scenery.size(); i++)
     {
         WldSceneryItem scenery(data.scenery[i]);
-
         if(!scenery.init())
             continue;
-
-        wld_sceneries.push_back(scenery);
+        wld_sceneries.push_back(std::move(scenery));
         m_indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &(wld_sceneries.back()));
     }
 
     for(size_t i = 0; i < data.paths.size(); i++)
     {
         WldPathItem path(data.paths[i]);
-
         if(!path.init())
             continue;
-
-        wld_paths.push_back(path);
+        wld_paths.push_back(std::move(path));
         m_indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_paths.back()));
     }
 
@@ -379,8 +373,7 @@ bool WorldScene::init()
 
         if(!levelp.init())
             continue;
-
-        wld_levels.push_back(levelp);
+        wld_levels.push_back(std::move(levelp));
         m_indexTable.addNode(levelp.x + static_cast<long>(levelp.offset_x),
                             levelp.y + static_cast<long>(levelp.offset_y),
                             levelp.texture.w,
@@ -394,7 +387,7 @@ bool WorldScene::init()
         musicbox.r = 0.5f;
         musicbox.g = 0.5f;
         musicbox.b = 1.f;
-        wld_musicboxes.push_back(musicbox);
+        wld_musicboxes.push_back(std::move(musicbox));
         m_indexTable.addNode(musicbox.x, musicbox.y, musicbox.w, musicbox.h, &(wld_musicboxes.back()));
     }
 
@@ -452,7 +445,6 @@ bool WorldScene::loadConfigs()
     }
 
     success = ConfigManager::loadWorldScenery(); //!< Scenery
-
     if(!success)
     {
         _errorString = "Fail on sceneries config loading";
@@ -461,7 +453,6 @@ bool WorldScene::loadConfigs()
     }
 
     success = ConfigManager::loadWorldPaths();   //!< Paths
-
     if(!success)
     {
         _errorString = "Fail on paths config loading";
@@ -470,7 +461,6 @@ bool WorldScene::loadConfigs()
     }
 
     success = ConfigManager::loadWorldLevels();  //!< Levels
-
     if(!success)
     {
         _errorString = "Fail on level entrances config loading";
@@ -479,7 +469,6 @@ bool WorldScene::loadConfigs()
     }
 
     success = ConfigManager::loadLevelEffects();
-
     if(!success)
     {
         _errorString = "Fail on effects config loading";
@@ -1305,7 +1294,7 @@ void WorldScene::render()
             FontManager::printText(fmt::format("TILE X={0} Y={1}", grid.x(), grid.y()), 300, 45);
         }
         FontManager::printText(fmt::format("TICK-SUB: {0}, Vizible items={1};", uTickf, _itemsToRender.size()), 10, 100);
-        FontManager::printText(fmt::format("Delays E=%03i R=%03i P=%03i {%03i}",
+        FontManager::printText(fmt::format("Delays E={0} R={1} P={2} [{3}]",
                                             debug_event_delay,
                                             debug_render_delay,
                                             debug_phys_delay,
@@ -1443,16 +1432,16 @@ int WorldScene::exec()
 void WorldScene::tickAnimations(double ticks)
 {
     //tick animation
-    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_Tiles.begin(); it != ConfigManager::Animator_Tiles.end(); it++)
+    for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_Tiles.begin(); it != ConfigManager::Animator_Tiles.end(); it++)
         it->manualTick(ticks);
 
-    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_Scenery.begin(); it != ConfigManager::Animator_Scenery.end(); it++)
+    for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_Scenery.begin(); it != ConfigManager::Animator_Scenery.end(); it++)
         it->manualTick(ticks);
 
-    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_WldPaths.begin(); it != ConfigManager::Animator_WldPaths.end(); it++)
+    for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_WldPaths.begin(); it != ConfigManager::Animator_WldPaths.end(); it++)
         it->manualTick(ticks);
 
-    for(std::vector<SimpleAnimator>::iterator it = ConfigManager::Animator_WldLevel.begin(); it != ConfigManager::Animator_WldLevel.end(); it++)
+    for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_WldLevel.begin(); it != ConfigManager::Animator_WldLevel.end(); it++)
         it->manualTick(ticks);
 
     for(std::vector<WorldScene_misc_img>::iterator it = imgs.begin(); it != imgs.end(); it++)

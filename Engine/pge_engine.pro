@@ -21,8 +21,9 @@
 #
 #-------------------------------------------------
 
-QT += core gui network widgets
-QT -= dbus declarative svg testlib opengl winextras
+#QT += core
+#QT -= dbus declarative svg testlib opengl winextras gui network widgets
+CONFIG -= qt
 
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0
 !macx:!linux-ic*: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
@@ -117,7 +118,7 @@ include($$PWD/../_common/tclap/tclap.pri)
 include($$PWD/../_common/Utf8Main/utf8main.pri)
 include($$PWD/../_common/DirManager/dirman.pri)
 include($$PWD/../_common/FileMapper/FileMapper.pri)
-DEFINES += INI_PROCESSING_ALLOW_QT_TYPES
+# DEFINES += INI_PROCESSING_ALLOW_QT_TYPES
 include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsSTL.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
@@ -296,7 +297,6 @@ SOURCES += \
     data_configs/config_select_scene/scene_config_select.cpp \
     common_features/point_mover.cpp \
     common_features/logger_sets.cpp \
-    common_features/pge_qt_application.cpp \
     engine.cpp \
     audio/play_music.cpp \
     audio/play_sfx.cpp \
@@ -453,7 +453,6 @@ HEADERS  += \
     data_configs/config_select_scene/scene_config_select.h \
     common_features/point_mover.h \
     data_configs/config_manager_private.h \
-    common_features/pge_qt_application.h \
     engine.hpp \
     audio/play_music.h \
     audio/play_sfx.h \
@@ -462,8 +461,7 @@ HEADERS  += \
     common_features/tr.h
 
 
-RESOURCES += \
-    _resources/engine.qrc
+RESOURCES +=
 
 DISTFILES += \
     ../changelog.engine.txt \

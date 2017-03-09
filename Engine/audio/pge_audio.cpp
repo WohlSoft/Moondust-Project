@@ -38,8 +38,8 @@ static void postMixCallback(void *udata,
     if(!p_audioState.isLoaded)
         return;
 
-    Q_UNUSED(udata);
-    Q_UNUSED(stream);
+    (void)(udata);
+    (void)(stream);
     if(SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
     {
         // This post mix callback has a simple purpose: count audio samples.

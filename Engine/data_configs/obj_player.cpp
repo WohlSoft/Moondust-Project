@@ -68,6 +68,7 @@ static void loadPlayerPhysicsSettings(IniProcessing &set, obj_player_physics &t,
         NumberLimiter::applyD(t.gravity_accel, 26.0, 0.0);
 
         set.read("gravity_scale", t.gravity_scale, t.gravity_scale);
+
         set.read("velocity_jump", t.velocity_jump, t.velocity_jump);
         NumberLimiter::applyD(t.velocity_jump, 5.3, 0.0);
 

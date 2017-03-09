@@ -28,9 +28,6 @@
 
 #include "../scene_level.h"
 
-#include <QtDebug>
-#include <QStack>
-
 const double PGE_LevelCamera::_smbxTickTime = 15.285; //1000.0f/65.f;
 
 PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
@@ -343,8 +340,11 @@ void PGE_LevelCamera::sortElements()
 {
     if(_objects_to_render_stored <= 1) return;   //Nothing to sort!
 
-    QStack<int> beg;
-    QStack<int> end;
+    std::vector<int> beg;
+    std::vector<int> end;
+    beg.reserve(_objects_to_render_stored);
+    end.reserve(_objects_to_render_stored);
+
     PGE_Phys_Object *piv;
     int i = 0, L, R, swapv;
     beg.push_back(0);
@@ -362,11 +362,9 @@ void PGE_LevelCamera::sortElements()
             while(L < R)
             {
                 while((_objects_to_render[R]->zIndex() >= piv->zIndex())  && (L < R)) R--;
-
                 if(L < R) _objects_to_render[L++] = _objects_to_render[R];
 
                 while((_objects_to_render[L]->zIndex() <= piv->zIndex()) && (L < R)) L++;
-
                 if(L < R) _objects_to_render[R--] = _objects_to_render[L];
             }
 

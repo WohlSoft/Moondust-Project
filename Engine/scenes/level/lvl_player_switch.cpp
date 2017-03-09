@@ -77,7 +77,7 @@ void CharacterSwitcherEngine::refreshState()
 {
     if(m_scene)
     {
-        for(int i = 0; i < m_switches.size(); i++)
+        for(size_t i = 0; i < m_switches.size(); i++)
         {
             CharacterSwitchState &sw = m_switches[i];
             unsigned long needed = static_cast<unsigned long>(sw.CharacterID);
@@ -104,7 +104,7 @@ void CharacterSwitcherEngine::refreshState()
             }
         }
 
-        for(int i = 0; i < m_blocks.size(); i++)
+        for(size_t i = 0; i < m_blocks.size(); i++)
         {
             CharacterBlockState &blk = m_blocks[i];
             unsigned long needed = static_cast<unsigned long>(blk.CharacterID);

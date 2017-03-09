@@ -18,8 +18,5 @@
 
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
-#include <QtDebug>
 #include "graphics.h"
 #include "window.h"
-
-

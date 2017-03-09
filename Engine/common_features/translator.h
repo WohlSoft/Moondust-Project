@@ -19,8 +19,6 @@
 #ifndef PGE_TRANSLATOR_H
 #define PGE_TRANSLATOR_H
 
-#include <QTranslator>
-#include "pge_qt_application.h"
 #include "QTranslatorX/qm_translator.h"
 
 class PGE_Translator

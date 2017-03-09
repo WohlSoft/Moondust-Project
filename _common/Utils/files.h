@@ -35,6 +35,7 @@ namespace Files
     bool moveFile(const std::string &to, const std::string &from, bool override = false);
     bool isAbsolute(const std::string &path);
     std::string basename(std::string path);
+    std::string basenameNoSuffix(std::string path);
     std::string dirname(std::string path);
     std::string changeSuffix(std::string path, const std::string& suffix);
     bool hasSuffix(const std::string &path, const std::string &suffix);

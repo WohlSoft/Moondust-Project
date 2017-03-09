@@ -1,7 +1,7 @@
 #ifndef EVENTQUEUE_H
 #define EVENTQUEUE_H
 
-#include <QQueue>
+#include <deque>
 #include <functional>
 
 
@@ -319,7 +319,7 @@ process_event:
                 return;
             }
 
-            left_time = events.first().trigger(timeStep);
+            left_time = events.front().trigger(timeStep);
 
             if(left_time <= 0.0)
             {
@@ -342,7 +342,7 @@ process_event:
         }
 
         double left_time;
-        QQueue<EventQueueEntry<T > > events;
+        std::deque<EventQueueEntry<T > > events;
 };
 
 #endif // EVENTQUEUE_H

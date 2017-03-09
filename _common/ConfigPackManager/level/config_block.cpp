@@ -23,6 +23,8 @@
 #include "../../number_limiter.h"
 #include "../../csv_2_number_array.h"
 
+#include <assert.h>
+
 bool BlockSetup::parse(IniProcessing *setup,
                        PGEString blockImgPath,
                        uint32_t defaultGrid,
@@ -85,7 +87,7 @@ bool BlockSetup::parse(IniProcessing *setup,
         return false;
     }
 
-    Q_ASSERT(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
+    assert(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
     setup->read("sizable",                  sizable,                pMerge(sizable, false));
     setup->read("danger",                   danger,                 pMerge(danger, 0));

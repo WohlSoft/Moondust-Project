@@ -28,6 +28,7 @@
 #include <unordered_map>
 #include <utility>
 #include <functional>
+#include <Utils/vptrlist.h>
 
 #include "menu/_pge_menuitem.h"
 
@@ -140,11 +141,11 @@ private:
     bool arrowDownViz;
     bool _EndSelection;
     bool _accept;
-    std::vector<PGE_BoolMenuItem > _items_bool;
-    std::vector<PGE_IntMenuItem > _items_int;
-    std::vector<PGE_NamedIntMenuItem > _items_named_int;
-    std::vector<PGE_Menuitem > _items_normal;
-    std::vector<PGE_KeyGrabMenuItem > _items_keygrabs;
+    VPtrList<PGE_BoolMenuItem >     _items_bool;
+    VPtrList<PGE_IntMenuItem >      _items_int;
+    VPtrList<PGE_NamedIntMenuItem > _items_named_int;
+    VPtrList<PGE_Menuitem >         _items_normal;
+    VPtrList<PGE_KeyGrabMenuItem >  _items_keygrabs;
 
     std::vector<PGE_Menuitem *> _items;
     typedef std::unordered_map<std::string, PGE_Menuitem *> MenuIndex;

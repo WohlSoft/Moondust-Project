@@ -19,14 +19,18 @@
 #ifndef PGE_EDITORAPPLICATION_H
 #define PGE_EDITORAPPLICATION_H
 
-#include <QApplication>
+/*
+    FIXME: Re-Implement ability to open files on OS X with using of the native API instead of this
+*/
+
+#include <QCoreApplication>
 #include <QQueue>
 #include <QStringList>
 
 /**
  * @brief Inhereted application which provides open file event, usually needed for OS X
  */
-class PGE_OSXApplication : public QApplication
+class PGE_OSXApplication : public QCoreApplication
 {
     Q_OBJECT
 #ifdef Q_OS_MACX
@@ -68,7 +72,7 @@ signals:
 typedef PGE_OSXApplication PGE_Application;
 #else
 //! Allows processing file open and some other events on OS X. On non-Mac operating systems works as stub.
-typedef QApplication PGE_Application;
+typedef QCoreApplication PGE_Application;
 #endif //Q_OS_MACX
 
 

@@ -66,6 +66,11 @@ bool util::strempty(const char *str)
 
 std::string util::resolveRelativeOrAbsolute(const std::string &path, const std::vector<std::string> &relativeLookup)
 {
+    if(path.empty())
+        return "";
+    if(path[0] == ':')
+        return path;
+
     if(Files::isAbsolute(path))
     {
         if(Files::fileExists(path))

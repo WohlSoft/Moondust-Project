@@ -258,6 +258,9 @@ luabind::object LuaEngine::loadClassAPI(const std::string &path)
     {
         pLogWarning("Failed to load up \"%s\"! Wrong path or insufficient access?", path.c_str());
         shutdown();
+        #ifdef DEBUG_BUILD
+        abort();
+        #endif
         return luabind::object();
     }
 

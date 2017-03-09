@@ -27,7 +27,7 @@
 /*****Level BGO************/
 PGE_DataArray<obj_bgo>          ConfigManager::lvl_bgo_indexes;
 CustomDirManager                ConfigManager::Dir_BGO;
-std::vector<SimpleAnimator >    ConfigManager::Animator_BGO;
+ConfigManager::AnimatorsArray   ConfigManager::Animator_BGO;
 /*****Level BGO************/
 
 bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, std::string section, obj_bgo *merge_with, std::string iniFile, IniProcessing *setup)

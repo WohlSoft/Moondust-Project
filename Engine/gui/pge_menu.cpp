@@ -712,7 +712,7 @@ void PGE_Menu::setPos(PGE_Point p)
 
 void PGE_Menu::setSize(int w, int h)
 {
-    Q_UNUSED(w);
+    (void)(w);
     _item_height = h;
     refreshRect();
 }
