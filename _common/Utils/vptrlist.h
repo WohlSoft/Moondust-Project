@@ -30,12 +30,20 @@ DEALINGS IN THE SOFTWARE.
 #include <memory>
 #include <assert.h>
 
-template<class T>
-class VPtrList : public std::vector<std::unique_ptr<T>>
+#ifdef _MSC_VER
+#ifdef _WIN64
+typedef long long ssize_t;
+#else
+typedef int ssize_t;
+#endif
+#endif
+
+template<class T, typename _Alloc = std::allocator<T>>
+class VPtrList : private std::vector<std::unique_ptr<T>, _Alloc>
 {
 public:
     typedef std::unique_ptr<T> SHptr;
-    typedef std::vector<SHptr> vecPTR;
+    typedef std::vector<SHptr, _Alloc> vecPTR;
     typedef typename vecPTR::iterator       S_iterator;
     typedef typename vecPTR::const_iterator S_const_iterator;
     typedef typename vecPTR::reverse_iterator       SR_iterator;
@@ -50,73 +58,98 @@ public:
     typedef typename vecPTR::pointer        pointer;
 
     template<typename TT, class SIterator>
-    class VPtrIterator : public SIterator
+    class VPtrIterator
     {
+        friend class VPtrList<T, _Alloc>;
+        SIterator p;
     public:
-        VPtrIterator(const SIterator &o) : SIterator(o) {}
+        VPtrIterator(const VPtrIterator&o) : p(o.p) {}
+        VPtrIterator(const SIterator &o) : p(o) {}
         virtual ~VPtrIterator() {}
 
         TT &operator*()
         {
-            return *(SIterator::operator*());
+            return *(p.operator*());
         }
-
         TT *operator->()
         {
-            return (SIterator::operator*().get());
+            return (p.operator*().get());
         }
-
         TT &operator[](size_t index)
         {
-            return *(*this + index);
+            return *(*p + index);
         }
-
         friend VPtrIterator operator+(const VPtrIterator &it, int inc)
         {
-            S_iterator i = it;
+            S_iterator i = it.p;
             return iterator(i += inc);
         }
         friend VPtrIterator operator-(const VPtrIterator &it, int inc)
         {
-            S_iterator i = it;
+            S_iterator i = it.p;
             return iterator(i -= inc);
         }
         friend VPtrIterator operator+(const VPtrIterator &it1, const VPtrIterator &it2)
         {
-            return iterator(it1 + it2);
+            return iterator(it1.p + it2.p);
         }
         friend VPtrIterator operator-(const VPtrIterator &it1, const VPtrIterator &it2)
         {
-            return iterator(it1 - it2);
+            return iterator(it1.p - it2.p);
         }
+        friend bool operator==(const VPtrIterator &it1, const VPtrIterator &it2)
+        {
+            return it1.p == it2.p;
+        }
+        friend bool operator!=(const VPtrIterator &it1, const VPtrIterator &it2)
+        {
+            return it1.p != it2.p;
+        }
+        friend bool operator>(const VPtrIterator &it1, const VPtrIterator &it2)
+        {
+            return it1.p > it2.p;
+        }
+        friend bool operator<(const VPtrIterator &it1, const VPtrIterator &it2)
+        {
+            return it1.p < it2.p;
+        }
+        friend bool operator>=(const VPtrIterator &it1, const VPtrIterator &it2)
+        {
+            return it1.p >= it2.p;
+        }
+        friend bool operator<=(const VPtrIterator &it1, const VPtrIterator &it2)
+        {
+            return it1.p <= it2.p;
+        }
+
         VPtrIterator &operator++()
         {
-            SIterator::operator++();
+            p++;
             return *this;
         }
         VPtrIterator &operator++(int)
         {
-            SIterator::operator++();
+            p++;
             return *this;
         }
         VPtrIterator &operator+=(int inc)
         {
-            SIterator::operator+=(inc);
+            p+=(inc);
             return *this;
         }
         VPtrIterator &operator-=(int dec)
         {
-            SIterator::operator-=(dec);
+            p-=(dec);
             return *this;
         }
         VPtrIterator &operator+=(const VPtrIterator &inc)
         {
-            SIterator::operator+=(inc);
+            p+=(inc);
             return *this;
         }
         VPtrIterator &operator-=(const VPtrIterator &dec)
         {
-            SIterator::operator-=(dec);
+            p-=(dec);
             return *this;
         }
     };
@@ -126,59 +159,6 @@ public:
 
     typedef VPtrIterator<T, SR_iterator>                reverse_iterator;
     typedef VPtrIterator<const T, SR_const_iterator>    const_reverse_iterator;
-
-    VPtrList() : vecPTR()
-    {}
-
-    VPtrList(const VPtrList<T>& o) : vecPTR()
-    {
-        if(this != &o)
-        {
-            vecPTR::clear();
-            this->append(o);
-        }
-    }
-
-    VPtrList(std::initializer_list<T> il) : vecPTR()
-    {
-        this->assign(il);
-    }
-
-    VPtrList(size_t size) : vecPTR(size)
-    {}
-
-    VPtrList &operator=(const VPtrList &o)
-    {
-        if(this != &o)
-        {
-            vecPTR::clear();
-            this->append(o);
-        }
-        return *this;
-    }
-
-    template <class InputIterator>
-    void assign(InputIterator first, InputIterator last)
-    {
-        this->reserve(std::distance(first, last));
-        while(first < last)
-            vecPTR::push_back(SHptr(new T(*(first++))));
-    }
-
-    void assign(size_t n, const T& val)
-    {
-        this->reserve(n);
-        while((n--) > 0 )
-            vecPTR::push_back(SHptr(new T(val)));
-    }
-
-    void assign(std::initializer_list<T> il)
-    {
-        this->reserve(std::distance(il.begin(), il.end()));
-        auto i = il.begin();
-        while(i != il.end())
-            vecPTR::push_back(SHptr(new T(*(i++))));
-    }
 
     iterator begin()
     {
@@ -232,9 +212,109 @@ public:
         return vecPTR::crend();
     }
 
+
+    VPtrList() : vecPTR()
+    {}
+
+    VPtrList(const VPtrList<T>& o) : vecPTR()
+    {
+        if(this != &o)
+        {
+            vecPTR::clear();
+            this->append(o);
+        }
+    }
+
+    VPtrList(std::initializer_list<T> il) : vecPTR()
+    {
+        this->assign(il);
+    }
+
+    VPtrList(size_t size) : vecPTR(size)
+    {}
+
+
+    VPtrList &operator=(const VPtrList &o)
+    {
+        if(this != &o)
+        {
+            vecPTR::clear();
+            this->append(o);
+        }
+        return *this;
+    }
+
+    template <class InputIterator>
+    void assign(InputIterator first, InputIterator last)
+    {
+        this->reserve(std::distance(first, last));
+        while(first < last)
+            vecPTR::push_back(SHptr(new T(*(first++))));
+    }
+
+    void assign(size_t n, const T& val)
+    {
+        this->reserve(n);
+        while((n--) > 0 )
+            vecPTR::push_back(SHptr(new T(val)));
+    }
+
+    void assign(std::initializer_list<T> il)
+    {
+        this->reserve(std::distance(il.begin(), il.end()));
+        auto i = il.begin();
+        while(i != il.end())
+            vecPTR::push_back(SHptr(new T(*(i++))));
+    }
+
+    bool empty() const noexcept
+    {
+        return vecPTR::empty();
+    }
+
+    bool isEmpty() const noexcept
+    {
+        return vecPTR::empty();
+    }
+
+    size_t size() const
+    {
+        return vecPTR::size();
+    }
+
     size_t count() const
     {
         return vecPTR::size();
+    }
+
+    size_t max_size() const
+    {
+        return vecPTR::max_size();
+    }
+
+    size_t capacity() const
+    {
+        return vecPTR::capacity();
+    }
+
+    void reserve(size_t _n)
+    {
+        vecPTR::reserve(_n);
+    }
+
+    void resize(size_t _n)
+    {
+        vecPTR::resize(_n);
+    }
+
+    void shrink_to_fit()
+    {
+        vecPTR::shrink_to_fit();
+    }
+
+    SHptr* data()
+    {
+        return vecPTR::data();
     }
 
     bool contains(const T &item) const
@@ -332,12 +412,17 @@ public:
         return i;
     }
 
+    void clear()
+    {
+        vecPTR::clear();
+    }
+
     void removeOne(const T &item)
     {
-        iterator i = this->begin();
-        for(; i != end(); i++)
+        S_iterator i = vecPTR::begin();
+        for(; i != vecPTR::end();i++)
         {
-            if(*i == item)
+            if(**i == item)
             {
                 vecPTR::erase(i);
                 break;
@@ -347,11 +432,11 @@ public:
 
     void removeAll(const T &item)
     {
-        iterator i = this->begin();
-        for(; i != end();)
+        S_iterator i = vecPTR::begin();
+        for(; i != vecPTR::end();)
         {
-            if(*i == item)
-                i == vecPTR::erase(i);
+            if(**i == item)
+                i = vecPTR::erase(i);
             else
                 i++;
         }
@@ -359,33 +444,38 @@ public:
 
     iterator erase(iterator pos)
     {
-        assert(pos < end());
-        return iterator(vecPTR::erase(pos));
+        assert(pos < this->end());
+        return iterator(vecPTR::erase(pos.p));
     }
 
     iterator erase(iterator from, iterator to)
     {
-        assert(from < end());
-        assert(to < end());
+        assert(from < this->end());
+        assert(to < this->end());
         assert(from <= to);
         if(from == to)
             return from;
-        return iterator(vecPTR::erase(from, to));
+        return iterator(vecPTR::erase(from.p, to.p));
     }
 
     void removeAt(size_t at)
     {
-        vecPTR::erase(begin() + at);
+        vecPTR::erase(vecPTR::begin() + int(at));
     }
 
     void removeAt(size_t at, size_t num)
     {
-        vecPTR::erase(begin() + at, begin() + (at + num));
+        vecPTR::erase(vecPTR::begin() + int(at), vecPTR::begin() + int(at + num));
+    }
+
+    void pop_back()
+    {
+        vecPTR::pop_back();
     }
 
     void pop_front()
     {
-        vecPTR::erase(begin(), begin() + 1);
+        vecPTR::erase(vecPTR::begin(), vecPTR::begin() + 1);
     }
 
     void swap(size_t from, size_t to)
@@ -454,7 +544,7 @@ public:
     template<typename... _Args>
     iterator emplace(const_iterator pos, _Args&&... __args)
     {
-        return vecPTR::emplace(pos, std::move(SHptr(new T(std::forward<_Args>(__args)...))));
+        return vecPTR::emplace(pos.p, std::move(SHptr(new T(std::forward<_Args>(__args)...))));
     }
 
     void append(const T &item)
@@ -471,17 +561,17 @@ public:
 
     iterator insert(size_t at, const T &item)
     {
-        return iterator(vecPTR::insert(begin() + at, SHptr(new T(item))));
+        return iterator(vecPTR::insert(vecPTR::begin() + int(at), SHptr(new T(item))));
     }
 
     iterator insert(const_iterator pos, const T &item)
     {
-        iterator(vecPTR::insert(pos, SHptr(new T(item))));
+        iterator(vecPTR::insert(pos.p, SHptr(new T(item))));
     }
 
     iterator insert(const_iterator pos, T &&item)
     {
-        iterator(vecPTR::insert(pos, SHptr(new T(std::move(item)))));
+        iterator(vecPTR::insert(pos.p, SHptr(new T(std::move(item)))));
     }
 
     T &last()
@@ -671,6 +761,47 @@ public:
         assert(index < static_cast<long long>(vecPTR::size()));
         return *(vecPTR::at(index));
     }
+
+    allocator_type get_allocator() const noexcept
+    {
+        return vecPTR::get_allocator();
+    }
 };
+
+template <class T, class Alloc>
+inline bool operator== (const VPtrList<T,Alloc>& __x, const VPtrList<T, Alloc>& __y)
+{
+    return (__x.size() == __y.size()) && std::equal(__x.begin(), __x.end(), __y.begin());
+}
+
+template <class T, class Alloc>
+bool operator!= (const VPtrList<T,Alloc>& __x, const VPtrList<T,Alloc>& __y)
+{
+    return !(__x == __y);
+}
+
+template <class T, class Alloc>
+bool operator<  (const VPtrList<T,Alloc>& __x, const VPtrList<T,Alloc>& __y)
+{
+    return std::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end());
+}
+
+template <class T, class Alloc>
+bool operator<= (const VPtrList<T,Alloc>& __x, const VPtrList<T,Alloc>& __y)
+{
+    return !(__y < __x);
+}
+
+template <class T, class Alloc>
+bool operator>  (const VPtrList<T,Alloc>& __x, const VPtrList<T,Alloc>& __y)
+{
+    return __y < __x;
+}
+
+template <class T, class Alloc>
+bool operator>= (const VPtrList<T,Alloc>& __x, const VPtrList<T,Alloc>& __y)
+{
+    return !(__x < __y);
+}
 
 #endif // VPTRLIST_H
