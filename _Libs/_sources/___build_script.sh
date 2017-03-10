@@ -269,6 +269,17 @@ BuildGLEW()
     cd ..
 }
 
+BuildFreeType()
+{
+    CURRENT_TARBALL="FreeType"
+    UnArch 'freetype-2.7.1'
+    printf "=========\E[37;42mFreeType\E[0m===========\n"
+    FREETYPE_ARGS="${FREETYPE_ARGS} --prefix=${InstallTo}"
+    FREETYPE_ARGS="${FREETYPE_ARGS} CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    FREETYPE_ARGS="${FREETYPE_ARGS} --enable-static=yes --enable-shared=no"
+    BuildSrc 'freetype-2.7.1' "${FREETYPE_ARGS}"
+}
+
 ########################Build & Install libraries##################################
 
 # in-archives
@@ -281,6 +292,7 @@ cd $CACHE_DIR
 BuildLUAJIT
 #BuildSampleRate
 BuildSDL
+BuildFreeType
 #BuildFluidSynth
 #BuildGLEW
 
