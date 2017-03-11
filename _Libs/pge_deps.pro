@@ -14,7 +14,7 @@ SDL2MixerX.depends = AudioCodecs
 
 # ========== FreeImage (lite) ==========
 SUBDIRS += FreeImageLite
-FreeImageLite.file = FreeImage/FreeImageLite.pro
+FreeImageLite.file = libFreeImageLite.pro
 
 # ========== OO-Lua ==========
 # SUBDIRS += OOLua
