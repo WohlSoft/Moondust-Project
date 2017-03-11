@@ -49,6 +49,40 @@ std::string AppPathManager::m_userPath;
 #define UserDirName "/.PGE_Project"
 #endif
 
+static std::string getPgeUserDirectory()
+{
+    std::string path = "";
+#if defined(__ANDROID__) || defined(__APPLE__)
+    {
+        FSRef ref;
+        OSType folderType = kApplicationSupportFolderType;
+        char spath[PATH_MAX];
+        FSFindFolder(kUserDomain, folderType, kCreateFolder, &ref);
+        FSRefMakePath(&ref, (UInt8*)&spath, PATH_MAX);
+        path.append(spath);
+    }
+#elif defined(_WIN32)
+    {
+        wchar_t pathW[MAX_PATH];
+        DWORD path_len = GetEnvironmentVariable(L"UserProfile", pathW, MAX_PATH);
+        assert(path_len);
+        path.resize(path_len * 2);
+        path_len = WideCharToMultiByte(CP_UTF8, 0,
+                                       pathW,       path_len,
+                                       &path[0],    path.size(),
+                                       0, FALSE);
+        path.resize(path_len);
+    }
+#elif defined(__gnu_linux__)
+    {
+        passwd* pw = getpwuid(getuid());
+        path.append(pw->pw_dir);
+    }
+#endif
+    return path.empty() ? std::string() : (path += UserDirName);
+}
+
+
 void AppPathManager::initAppPath(const char* argv0)
 {
     //PGE_Application::setOrganizationName(_COMPANY);
@@ -110,54 +144,19 @@ void AppPathManager::initAppPath(const char* argv0)
     userDir = false;
     #endif
 #endif
-    //openUserDir:
 
     if(userDir)
     {
-        std::string path = "";
-    #if defined(__ANDROID__) || defined(__APPLE__)
-        {
-            FSRef ref;
-            OSType folderType = kApplicationSupportFolderType;
-            char spath[PATH_MAX];
-            FSFindFolder( kUserDomain, folderType, kCreateFolder, &ref );
-            FSRefMakePath( &ref, (UInt8*)&spath, PATH_MAX );
-            path.append(spath);
-        }
-    #elif defined(_WIN32)
-        {
-            wchar_t pathW[MAX_PATH];
-            DWORD path_len = GetEnvironmentVariable(L"UserProfile", pathW, MAX_PATH);
-            assert(path_len);
-            path.resize(path_len * 2);
-            path_len = WideCharToMultiByte(CP_UTF8, 0,
-                                           pathW, path_len,
-                                           &path[0],
-                                           path.size(),
-                                           0,
-                                           FALSE);
-            path.resize(path_len);
-        }
-    #elif defined(__gnu_linux__)
-        {
-            passwd* pw = getpwuid(getuid());
-            path.append(pw->pw_dir);
-        }
-    #endif
-
+        std::string path = getPgeUserDirectory();
         if(!path.empty())
         {
-            DirMan appDir(path + UserDirName);
-
-            if(!appDir.exists())
-                if(!appDir.mkpath(path + UserDirName))
-                    goto defaultSettingsPath;
-
+            DirMan appDir(path);
+            if(!appDir.exists() && !appDir.mkpath(path))
+                goto defaultSettingsPath;
 #ifdef __APPLE__
             if(!DirMan::exists(ApplicationPathSTD + "/Data directory"))
                 system(fmt::format("ln -s \"{0}\" \"{1}/Data directory\"", path + UserDirName, ApplicationPathSTD).c_str());
 #endif
-
             m_userPath = appDir.absolutePath();
             _initSettingsPath();
         }
@@ -183,29 +182,27 @@ std::string AppPathManager::userAppDirSTD()
     return m_userPath;
 }
 
-
-
 void AppPathManager::install()
 {
-    // FIXME: Completely reimplement this!
-#ifdef ENABLE_JUNK_FOR_FUN
-#if defined(__ANDROID__) || defined(__APPLE__)
-    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-#else
-    QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-#endif
+    std::string path = getPgeUserDirectory();
 
-    if(!path.isEmpty())
+    if(!path.empty())
     {
-        QDir appDir(path + UserDirName);
-        if(!appDir.exists())
-            if(!appDir.mkpath(path + UserDirName))
-                return;
-        // FIXME: use Windows registry or user config file directly
-        QSettings setup;
+        DirMan appDir(path);
+        if(!appDir.exists() && !appDir.mkpath(path))
+            return;
+
+        #ifdef __gnu_linux__
+        DirMan configDir(path + "/.config/Wohlhabend Networks/");
+        if(!configDir.exists())
+            configDir.mkpath(".");
+        IniProcessing setup(configDir.absolutePath() + "/PGE Engine.conf");
+        setup.beginGroup("General");
         setup.setValue("EnableUserDir", true);
+        setup.endGroup();
+        setup.writeIniFile();
+        #endif
     }
-#endif
 }
 
 bool AppPathManager::isPortable()
