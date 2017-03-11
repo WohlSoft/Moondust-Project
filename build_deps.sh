@@ -121,7 +121,7 @@ fi
 cd "$PrjPath/_Libs"
 
 echo "Running $QMake..."
-$QMake CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT $QMAKE_EXTRA_ARGS
+$QMake pge_deps.pro CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT $QMAKE_EXTRA_ARGS
 checkState
 
 #=======================================================================

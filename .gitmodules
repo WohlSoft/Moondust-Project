@@ -3,3 +3,8 @@
     url = https://github.com/WohlSoft/PGE-File-Library-STL.git
     branch = master
 
+[submodule "_Libs/FreeImage"]
+	path = _Libs/FreeImage
+	url = https://github.com/WohlSoft/libFreeImage.git
+    branch = master
+
