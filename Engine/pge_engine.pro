@@ -78,7 +78,8 @@ android: {
 }
 win32: {
     RC_FILE = _resources/engine.rc
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main -lversion -lopengl32 -lfreeimagelite -ldbghelp -ladvapi32 -lkernel32
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main -lfreeimagelite  -lfreetype
+    LIBS += -lversion -lopengl32 -ldbghelp -ladvapi32 -lkernel32
 }
 macx: {
     ICON = _resources/cat.icns
@@ -90,15 +91,16 @@ macx: {
             $$PWD/../Editor/_resources/file_wldx.icns
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
+    LIBS += -lfreeimagelite -lfreetype
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
-    LIBS += -lfreeimagelite
 }
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
-    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lSDL2 -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
+    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lfreetype -lSDL2
+    LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
 }
 
 contains(DEFINES, USE_LUA_JIT): {

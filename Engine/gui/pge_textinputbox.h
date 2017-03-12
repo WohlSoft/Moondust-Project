@@ -68,6 +68,7 @@ private:
     std::string _inputText_src;
     std::string _inputText;
     std::string _inputText_printable;
+    void updatePrintable();
     Sint32 cursor;
     Sint32 selection_len;
     int _text_input_h_offset;

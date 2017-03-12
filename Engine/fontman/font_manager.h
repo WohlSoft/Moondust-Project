@@ -87,6 +87,14 @@ public:
     static void quit();
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
+    static size_t utf8_strlen(const char *str);
+    static size_t utf8_strlen(const char *str, size_t len);
+    static size_t utf8_strlen(const std::string &str);
+    static size_t utf8_substrlen(const std::string &str, size_t utf8len);
+    static std::string utf8_substr(const std::string &str, size_t utf8_begin, size_t utf8_len);
+    static void   utf8_pop_back(std::string &str);
+    static void   utf8_erase_at(std::string &str, size_t begin);
+    static void   utf8_erase_before(std::string &str, size_t end);
 
     static PGE_Size textSize(std::string &text, int fontID, int max_line_lenght=0, bool cut=false, int ttfFontPixelSize = -1);
     #ifdef PGE_TTF
@@ -148,7 +156,7 @@ private:
     #endif
     typedef std::unordered_map<std::string, int> FontsHash;
     static FontsHash fonts;
-    static int fontID;
+    static int  fontID;
     static bool double_pixled;
 
     #ifdef PGE_TTF

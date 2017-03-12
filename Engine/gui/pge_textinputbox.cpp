@@ -25,6 +25,7 @@
 #include "../scenes/scene_world.h"
 
 #include <common_features/app_path.h>
+#include <common_features/logger.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 
@@ -134,6 +135,15 @@ void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _typ
         _sizeRect.setRight(pos.x() + width + padding);
         _sizeRect.setBottom(pos.y() + height + padding);
     }
+}
+
+void PGE_TextInputBox::updatePrintable()
+{
+    size_t len = FontManager::utf8_strlen(_inputText);
+    if(len > 25)
+        _inputText_printable = FontManager::utf8_substr(_inputText, len-25, 25);
+    else
+        _inputText_printable = _inputText;
 }
 
 PGE_TextInputBox::~PGE_TextInputBox()
@@ -297,6 +307,7 @@ void PGE_TextInputBox::processBox(double tickTime)
             break;
 
         case SDL_KEYDOWN: // If pressed key
+        {
             switch(event.key.keysym.sym)
             {
             // Check which
@@ -306,49 +317,62 @@ void PGE_TextInputBox::processBox(double tickTime)
             {
                 if(event.key.keysym.sym != SDLK_ESCAPE)
                     _inputText_src = _inputText;
-
                 _page++;
                 setFade(10, 0.0, 0.05);
                 SDL_StopTextInput();
+                break;
             }
-            break;
 
             case SDLK_BACKSPACE:
+            {
                 if(_inputText.length() > 0)
                 {
-                    //lop off character
-                    _inputText.erase(_inputText.size() - 1, 1);
-                    _inputText_printable = _inputText;
+                    FontManager::utf8_pop_back(_inputText);
+                    updatePrintable();
 
-                    if(_inputText_printable.size() > 25)
-                        _inputText_printable.erase(0, 25);
                 }
+                break;
+            }
 
             default:
                 break;
             }
 
+            switch(event.key.keysym.scancode)
+            {
+            case SDL_SCANCODE_V:
+            {
+                if(event.key.keysym.mod & KMOD_CTRL)
+                {
+                    _inputText.append(SDL_GetClipboardText());
+                    std::remove(_inputText.begin(), _inputText.end(), '\r');
+                    std::replace(_inputText.begin(), _inputText.end(), '\n', ' ');
+                    updatePrintable();
+                }
+                break;
+            }
+            default:
+                break;
+            }
+
             break;
+        }
 
         case SDL_TEXTINPUT:
         {
+            D_pLogDebug("TEXT INPUT EVENT %s", event.text.text);
             _inputText.append(event.text.text);
-            _inputText_printable = _inputText;
-
-            if(_inputText_printable.size() > 25)
-                _inputText_printable.erase(0, 25);
+            updatePrintable();
         }
         break;
 
         case SDL_TEXTEDITING:
         {
-            _inputText = event.edit.text;
-            cursor     = event.edit.start;
-            selection_len = event.edit.length;
-            _inputText_printable = _inputText;
-
-            if(_inputText_printable.size() > 25)
-                _inputText_printable.erase(0, 25);
+            D_pLogDebug("TEXT EDIT EVENT start %d, %s", event.edit.start, event.edit.text);
+            _inputText      = event.edit.text;
+            cursor          = event.edit.start;
+            selection_len   = event.edit.length;
+            updatePrintable();
         }
         break;
 
