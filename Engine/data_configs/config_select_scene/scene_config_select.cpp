@@ -400,7 +400,7 @@ int ConfigSelectScene::exec()
     menu.setPos(280, 140);
     menu.setItemsNumber(10);
 
-    for(int i = 0; i < m_availablePacks.size(); i++)
+    for(size_t i = 0; i < m_availablePacks.size(); i++)
         menu.addMenuItem(std::to_string(i), m_availablePacks[i].fullname);
 
     //continueOrQuit.exec();
