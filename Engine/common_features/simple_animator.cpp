@@ -161,7 +161,7 @@ void SimpleAnimator::nextFrame()
         if(m_frameSequanceCur < 0)
             m_frameSequanceCur = 0;
 
-        if(m_frameSequanceCur >= m_frameSequance.size())
+        if(m_frameSequanceCur >= int32_t(m_frameSequance.size()))
         {
             m_frameSequanceCur = 0;
 
@@ -259,7 +259,7 @@ void SimpleAnimator::setFrame(int y)
 {
     if(m_frameSequanceEnabled)
     {
-        if((y >= 0) && (y < m_frameSequance.size()))
+        if((y >= 0) && (y < int32_t(m_frameSequance.size())))
         {
             m_frameSequanceCur = y;
             m_currentFrame = m_frameSequance[m_frameSequanceCur];
@@ -271,7 +271,7 @@ void SimpleAnimator::setFrame(int y)
             y = m_frameFirst;
 
         if(y < m_frameFirst)
-            y = (m_frameLast < 0) ? static_cast<int>(m_framesCount) - 1 : m_frameLast;
+            y = (m_frameLast < 0) ? static_cast<int32_t>(m_framesCount) - 1 : m_frameLast;
 
         m_currentFrame = y;
     }

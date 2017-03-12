@@ -51,7 +51,7 @@ ConfigSelectScene::ConfigSelectScene():
     bgcolor.g = 0.0f;
     bgcolor.b = 0.1f;
     //% "Choose a game:"
-    m_label = qsTrId("CONFIG_SELECT");
+    m_label = qtTrId("CONFIG_SELECT");
     m_waterMark = "WohlSoft team 2016 by Wohlstand (http://wohlsoft.ru)";
     m_waterMarkRect.setPos(200, PGE_Window::Height - 50);
     m_waterMarkFontSize = 20;

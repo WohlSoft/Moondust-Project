@@ -10,7 +10,7 @@ class Binding_Level_CommonFuncs
 {
 public:
     static void Lua_ToggleSwitch(lua_State *L, int switchID);
-    static bool Lua_getSwitchState(lua_State *L, int switchID);
+    static bool Lua_getSwitchState(lua_State *L, uint32_t switchID);
     static void Lua_triggerEvent(lua_State *L, std::string eventName);
     static void Lua_ShakeScreen(lua_State *L, double forceX, double forceY, double decX, double decY);
     static void Lua_ShakeScreenX(lua_State *L, double forceX, double decX);

@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     if(app.initSDL())
     {
         //% "Unable to init SDL!"
-        PGE_Window::printSDLError(qsTrId("SDL_INIT_ERROR"));
+        PGE_Window::printSDLError(qtTrId("SDL_INIT_ERROR"));
         pLogDebug("<Application closed with failture>");
         return 1;
     }
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
         if(!g_fileToOpen.empty())
         {
             //% "Choose a game to test:"
-            GOScene.setLabel(qsTrId("CONFIG_SELECT_TEST"));
+            GOScene.setLabel(qtTrId("CONFIG_SELECT_TEST"));
         }
 
         //If application runned first time or target configuration is not exist
@@ -357,7 +357,7 @@ PlayWorldMap:
         {
             sceneResult = false;
             //% "No opened files"
-            PGE_MsgBox::warn(qsTrId("ERROR_NO_OPEN_FILES_MSG"));
+            PGE_MsgBox::warn(qtTrId("ERROR_NO_OPEN_FILES_MSG"));
 
             if(g_AppSettings.debugMode || g_flags.testWorld)
                 goto ExitFromApplication;
@@ -372,7 +372,7 @@ PlayWorldMap:
             if(!sceneResult)
             {
                 //% "ERROR:\nFail to start world map\n\n%1"
-                PGE_MsgBox::error(qsTrId("ERROR_FAIL_START_WLD") /*.arg(wScene->getLastError())*/ );
+                PGE_MsgBox::error(qtTrId("ERROR_FAIL_START_WLD") /*.arg(wScene->getLastError())*/ );
                 ExitCode = WldExit::EXIT_error;
             }
         }
@@ -390,7 +390,7 @@ PlayWorldMap:
         {
             ExitCode = WldExit::EXIT_error;
             //% "World map was closed with error.\n%1"
-            PGE_MsgBox::error( qsTrId("WLD_ERROR_LVLCLOSED") /*.arg(wScene->errorString())*/ );
+            PGE_MsgBox::error( qtTrId("WLD_ERROR_LVLCLOSED") /*.arg(wScene->errorString())*/ );
         }
 
         g_GameState._recent_ExitCode_world = ExitCode;
@@ -407,9 +407,9 @@ PlayWorldMap:
             {
                 std::string msg;
                 //% "Start level\n%1"
-                msg += qsTrId("MSG_START_LEVEL") /*.arg(g_GameState.LevelFile)*/ + "\n\n";
+                msg += qtTrId("MSG_START_LEVEL") /*.arg(g_GameState.LevelFile)*/ + "\n\n";
                 //% "Type an exit code (signed integer)"
-                msg += qsTrId("MSG_WLDTEST_EXIT_CODE");
+                msg += qtTrId("MSG_WLDTEST_EXIT_CODE");
                 PGE_TextInputBox text(nullptr, msg, PGE_BoxBase::msg_info_light,
                                       PGE_Point(-1, -1),
                                       ConfigManager::setup_message_box.box_padding,
@@ -501,7 +501,7 @@ PlayLevel:
                     sceneResult = false;
                     ExitCode = WldExit::EXIT_error;
                     //% "No opened files"
-                    PGE_MsgBox::warn(qsTrId("ERROR_NO_OPEN_FILES_MSG"));
+                    PGE_MsgBox::warn(qtTrId("ERROR_NO_OPEN_FILES_MSG"));
                 }
             }
             else
@@ -579,7 +579,7 @@ PlayLevel:
                     if(!target.empty())
                     {
                         //% "Warp exit\n\nExit into:\n%1\n\nEntrance point: %2"
-                        PGE_MsgBox::warn( qsTrId("LVL_EXIT_WARP_INFO") /*.arg(target) .arg(entranceID)*/ );
+                        PGE_MsgBox::warn( qtTrId("LVL_EXIT_WARP_INFO") /*.arg(target) .arg(entranceID)*/ );
                     }
 
                     playAgain = false;
@@ -638,7 +638,7 @@ PlayLevel:
                 g_jumpOnLevelEndTo = (g_GameState.isEpisode) ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 playAgain = false;
                 //% "Level was closed with error.\n%1"
-                PGE_MsgBox::error(qsTrId("LVL_ERROR_LVLCLOSED") /*.arg(lScene->errorString())*/ );
+                PGE_MsgBox::error(qtTrId("LVL_ERROR_LVLCLOSED") /*.arg(lScene->errorString())*/ );
             }
             break;
 

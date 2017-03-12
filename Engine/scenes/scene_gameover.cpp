@@ -49,15 +49,15 @@ int GameOverScene::exec()
 {
     PGE_QuestionBox continueOrQuit(this,
                                    //% "Game Over!"
-                                   qsTrId("GAMEOVER_TITLE"),
+                                   qtTrId("GAMEOVER_TITLE"),
                                    PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                                    ConfigManager::setup_menu_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
     std::vector<std::string> items;
     //% "Continue"
-    items.push_back(qsTrId("GAMEOVER_CONTINUE"));
+    items.push_back(qtTrId("GAMEOVER_CONTINUE"));
     //% "Quit"
-    items.push_back(qsTrId("GAMEOVER_EXIT"));
+    items.push_back(qtTrId("GAMEOVER_EXIT"));
     continueOrQuit.addMenuItems(items);
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();

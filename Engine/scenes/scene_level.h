@@ -219,7 +219,7 @@ class LevelScene : public Scene
          * \param switch_id SwitchID to check state
          * \return true or false state of the SwitchID
          */
-        bool lua_switchState(int switch_id);
+        bool lua_switchState(uint32_t switch_id);
 
         //! States of the SwitchID's, Has no effect on switchable blocks, used only to tell Lua scripts which current state of the switches now is
         std::vector<bool> switch_states;

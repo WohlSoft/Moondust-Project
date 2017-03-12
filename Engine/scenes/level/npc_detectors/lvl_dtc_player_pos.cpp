@@ -27,26 +27,27 @@ PlayerPosDetector::~PlayerPosDetector()
 
 void PlayerPosDetector::processDetector()
 {
-    if(!_parentNPC) return;
+    if(!_parentNPC)
+        return;
 
-    float d=0.0f;
-    for(int i=0; i<_scene->players.size(); i++)
+    double d = 0.0;
+    for(size_t i = 0; i < _scene->players.size(); i++)
     {
         LVL_Player *p = _scene->players[i];
-        float d1 = distance(p);
-        if((d1<d)||(i==0))
+        double d1 = distance(p);
+        if((d1 < d) || (i == 0))
         {
             d = d1;
             pos.setPoint(p->m_momentum.centerX(), p->m_momentum.centerY());
             _playersDirection=p->direction();
             if(_parentNPC->posCenterX() < pos.x())
-                _directedTo=1;
+                _directedTo = 1;
             else
             if(_parentNPC->posCenterX() > pos.x())
-                _directedTo=-1;
-            _plrptr=p;
-            _plr_id=p->characterID;
-            _plr_state=p->stateID;
+                _directedTo = -1;
+            _plrptr = p;
+            _plr_id = p->characterID;
+            _plr_state = p->stateID;
         }
     }
 
@@ -92,7 +93,7 @@ LVL_Player *PlayerPosDetector::playerPtr()
     return _plrptr;
 }
 
-float PlayerPosDetector::distance(LVL_Player *plr)
+double PlayerPosDetector::distance(LVL_Player *plr)
 {
     //distance between player and parent NPC
     return sqrt(pow(_parentNPC->posCenterX()-plr->posCenterX(), 2.0)+

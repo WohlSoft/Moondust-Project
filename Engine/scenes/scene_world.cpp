@@ -486,7 +486,7 @@ bool WorldScene::loadConfigs()
             if(!ConfigManager::playable_characters.contains(st.characterID))
             {
                 //% "Invalid playable character ID"
-                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
                                + std::to_string(st.characterID);
                 errorMsg = _errorString;
                 success = false;
@@ -495,7 +495,7 @@ bool WorldScene::loadConfigs()
             else if(!ConfigManager::playable_characters[st.characterID].states.contains(st.stateID))
             {
                 //% "Invalid playable character state ID"
-                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
                                + std::to_string(st.stateID);
                 errorMsg = _errorString;
                 success = false;
@@ -546,20 +546,20 @@ void WorldScene::initPauseMenu1()
     _pauseMenu.setParentScene(this);
     _pauseMenu.construct(
         //% "Pause"
-        qsTrId("WLD_MENU_PAUSE_TTL"),
+        qtTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
     std::vector<std::string> items;
     //% "Continue"
-    items.push_back(qsTrId("WLD_MENU_PAUSE_CONTINUE"));
+    items.push_back(qtTrId("WLD_MENU_PAUSE_CONTINUE"));
     //% "Save and continue"
-    items.push_back(qsTrId("WLD_MENU_PAUSE_CONTINUESAVE"));
+    items.push_back(qtTrId("WLD_MENU_PAUSE_CONTINUESAVE"));
     //% "Save and quit"
-    items.push_back(qsTrId("WLD_MENU_PAUSE_EXITSAVE"));
+    items.push_back(qtTrId("WLD_MENU_PAUSE_EXITSAVE"));
     //% "Exit without saving"
-    items.push_back(qsTrId("WLD_MENU_PAUSE_EXITNOSAVE"));
+    items.push_back(qtTrId("WLD_MENU_PAUSE_EXITNOSAVE"));
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);
@@ -573,16 +573,16 @@ void WorldScene::initPauseMenu2()
     _pauseMenu.setParentScene(this);
     _pauseMenu.construct(
         //% "Pause"
-        qsTrId("WLD_MENU_PAUSE_TTL"),
+        qtTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
     _pauseMenu.clearMenu();
     std::vector<std::string> items;
     //% "Continue"
-    items.push_back(qsTrId("WLD_MENU_PAUSE_CONTINUE"));
+    items.push_back(qtTrId("WLD_MENU_PAUSE_CONTINUE"));
     //% "Quit"
-    items.push_back(qsTrId("WLD_MENU_PAUSE_EXIT"));
+    items.push_back(qtTrId("WLD_MENU_PAUSE_EXIT"));
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);

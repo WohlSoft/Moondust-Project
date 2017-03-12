@@ -93,28 +93,28 @@ public:
      * @param dirPath Relative directory path
      * @return true if directory successfully creaetd
      */
-    bool mkdir(const std::string &dirPath);
+    bool mkdir(const std::string &dirPath = "");
 
     /**
      * @brief Remove directory (which must be empty) relative to current
      * @param dirPath Relative directory path
      * @return true if directory successfully removed
      */
-    bool rmdir(const std::string &dirPath);
+    bool rmdir(const std::string &dirPath = "");
 
     /**
      * @brief Make directory with relative to current path with making middle folders which are not exists
      * @param dirPath Relative directory path to the new directory
      * @return true if directories are successfully created
      */
-    bool mkpath(const std::string &dirPath);
+    bool mkpath(const std::string &dirPath = "");
 
     /**
      * @brief Recursively remove directory and all files inside it
      * @param dirPath Relative path to directory to delete
      * @return true if everything is success, false on any error of deletion (write protection or access denied)
      */
-    bool rmpath(const std::string &dirPath);
+    bool rmpath(const std::string &dirPath = "");
 
     /**
      * @brief Make directory with absolute path

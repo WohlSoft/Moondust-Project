@@ -54,9 +54,9 @@ static void postMixCallback(void *udata,
     }
 }
 
-int PGE_Audio::init(int sampleRate,
-                    int allocateChannels,
-                    int bufferSize)
+int PGE_Audio::init(Uint32 sampleRate,
+                    Uint32 allocateChannels,
+                    Uint32 bufferSize)
 {
     int ret = 0;
     p_audioState.sRate = sampleRate;
@@ -158,20 +158,19 @@ Uint64 PGE_Audio::sampleCountMus()
 
 
 
-void PGE_Audio::playSound(long soundID)
+void PGE_Audio::playSound(size_t soundID)
 {
-    if(soundID <= 0)
+    if(soundID == 0)
         return;
-
-    if(soundID > ConfigManager::main_sfx_index.size())
+    if((soundID > ConfigManager::main_sfx_index.size()))
         return;
-
     ConfigManager::main_sfx_index[soundID - 1].play();
 }
 
 void PGE_Audio::playSoundByRole(obj_sound_role::roles role)
 {
-    long id = ConfigManager::getSoundByRole(role);
-    playSound(id);
+    size_t id = ConfigManager::getSoundByRole(role);
+    if(id > 0)
+        playSound(id);
 }
 

@@ -106,28 +106,28 @@ void LVL_Background::setBg(obj_BG &bg)
 
             if(bg.magic)
             {
-                for(int i = 0; static_cast<unsigned int>(i) < bg.magic_strips; i++)
+                for(int32_t i = 0; static_cast<uint32_t>(i) < bg.magic_strips; i++)
                 {
                     LVL_Background_strip x;
 
-                    if(i - 1 <  bg.magic_splits_i.size())
+                    if(i - 1 <  int32_t(bg.magic_splits_i.size()))
                         x.top = (i == 0 ? 0.0 :
                                  (static_cast<double>(bg.magic_splits_i[i - 1])
                                   / static_cast<double>(txData1.frame_h)));
                     else
                         x.top = 0.0;
 
-                    if(i <  bg.magic_splits_i.size())
+                    if(i < int32_t(bg.magic_splits_i.size()))
                         x.bottom = static_cast<double>(bg.magic_splits_i[i]) / static_cast<double>(txData1.frame_h);
                     else
                         x.bottom = 1.0;
 
                     x.height = Maths::iRound(
-                                   ((i < bg.magic_splits_i.size()) ? bg.magic_splits_i[i] : txData1.frame_h)
+                                   ((i < int32_t(bg.magic_splits_i.size())) ? bg.magic_splits_i[i] : txData1.frame_h)
                                    - (i == 0 ? 0.0 : (bg.magic_splits_i[i - 1]))
                                );
 
-                    if(i <  bg.magic_speeds_i.size())
+                    if(i < int32_t(bg.magic_speeds_i.size()))
                         x.repeat_h = bg.magic_speeds_i[i];
                     else
                         x.repeat_h = bg.repeat_h;

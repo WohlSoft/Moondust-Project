@@ -52,6 +52,10 @@
 #include <assert.h>
 #include <stdint.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include "qm_translator.h"
 #include "ConvertUTF.h"
 
@@ -639,14 +643,14 @@ bool QmTranslatorX::loadFile(const char *filePath, unsigned char *directory)
     #ifndef _WIN32
     FILE* file = fopen(filePath, "rb");
     #else
-    wchar_t* filePathW[MAX_PATH];
+    wchar_t filePathW[MAX_PATH + 1];
     {
-        int utf8len = strlen(filePath);
+        int utf8len  = strlen(filePath);
         int utf16len = MAX_PATH;
-              UTF16 *pUtf16 = (const UTF16*)filePathW;
-        const UTF8  *pUtf8  = (UTF8*)filePath;
-        ConvertUTF8toUTF16( &pUtf8,  pUtf8 + utf8len,
-                            &pUtf16, pUtf16 + utf16len, lenientConversion );
+        utf16len = MultiByteToWideChar(CP_UTF8, 0,
+                                       filePath,  utf8len,
+                                       filePathW, MAX_PATH);
+        filePathW[utf16len] = L'\0';
     }
     FILE* file = _wfopen(filePathW, L"rb");
     #endif

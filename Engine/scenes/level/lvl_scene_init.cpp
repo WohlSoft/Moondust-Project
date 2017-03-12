@@ -57,7 +57,7 @@ bool LevelScene::setEntrance(unsigned long entr)
         isWarpEntrance = false;
         bool found = false;
 
-        for(size_t i = 0, j = 0; (i < data.players.size()) && (j < numberOfPlayers); i++)
+        for(size_t i = 0, j = 0; (i < data.players.size()) && (int32_t(j) < numberOfPlayers); i++)
         {
             if(data.players[i].w == 0 && data.players[i].h == 0)
                 continue; //Skip empty points
@@ -83,7 +83,7 @@ bool LevelScene::setEntrance(unsigned long entr)
     }
     else
     {
-        for(int i = 0; i < data.doors.size(); i++)
+        for(size_t i = 0; i < data.doors.size(); i++)
         {
             if(data.doors[i].meta.array_id == static_cast<unsigned int>(entr))
             {
@@ -176,7 +176,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
         }
     }
 
-    if(playerID <= data.players.size())
+    if(playerID <= int32_t(data.players.size()))
     {
         PlayerPoint p = data.players[playerID - 1];
 
@@ -286,7 +286,7 @@ bool LevelScene::loadConfigs()
             if(!ConfigManager::playable_characters.contains(st.characterID))
             {
                 //% "Invalid playable character ID"
-                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
                                + std::to_string(st.characterID);
                 errorMsg = _errorString;
                 success = false;
@@ -295,7 +295,7 @@ bool LevelScene::loadConfigs()
             else if(!ConfigManager::playable_characters[st.characterID].states.contains(st.stateID))
             {
                 //% "Invalid playable character state ID"
-                _errorString = qsTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
+                _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
                                + std::to_string(st.stateID);
                 errorMsg = _errorString;
                 success = false;
@@ -419,7 +419,7 @@ bool LevelScene::init_items()
         {
             /*% "Fatal error: Impossible to find start section.\n"
                 "Did you placed player start point (or entrance warp point) too far off of the section(s)?" */
-            _errorString = qsTrId("LVL_ERROR_NOSECTIONS");
+            _errorString = qtTrId("LVL_ERROR_NOSECTIONS");
             errorMsg = _errorString;
             return false;
         }

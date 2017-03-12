@@ -132,7 +132,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(rtype == GlRenderer::RENDER_INVALID)
     {
         //% "Unable to find OpenGL support!\nSoftware renderer will be started.\n"
-        printSDLWarn(qsTrId("RENDERER_NO_OPENGL_ERROR"));
+        printSDLWarn(qtTrId("RENDERER_NO_OPENGL_ERROR"));
         SDL_ClearError();
         rtype = GlRenderer::RENDER_SW_SDL;
     }
@@ -154,7 +154,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     case GlRenderer::RENDER_AUTO:
     case GlRenderer::RENDER_INVALID:
         //% "Renderer is not selected!"
-        printSDLError(qsTrId("NO_RENDERER_ERROR"));
+        printSDLError(qtTrId("NO_RENDERER_ERROR"));
         return false;
     }
 
@@ -172,7 +172,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(window == NULL)
     {
         //% "Unable to create window!"
-        printSDLError(qsTrId("WINDOW_CREATE_ERROR"));
+        printSDLError(qtTrId("WINDOW_CREATE_ERROR"));
         SDL_ClearError();
         return false;
     }
@@ -180,7 +180,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(isSdlError())
     {
         //% "Unable to create window!"
-        printSDLError(qsTrId("WINDOW_CREATE_ERROR"));
+        printSDLError(qtTrId("WINDOW_CREATE_ERROR"));
         SDL_ClearError();
         return false;
     }
@@ -227,7 +227,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
         if(isSdlError())
         {
             //% "Unable to setup window icon!"
-            printSDLWarn(qsTrId("WINDOW_ICON_INIT_ERROR"));
+            printSDLWarn(qtTrId("WINDOW_ICON_INIT_ERROR"));
             SDL_ClearError();
         }
     }
@@ -240,7 +240,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     if(!GlRenderer::init())
     {
         //% "Unable to initialize renderer context!"
-        printSDLError(qsTrId("RENDERER_CONTEXT_INIT_ERROR"));
+        printSDLError(qtTrId("RENDERER_CONTEXT_INIT_ERROR"));
         SDL_ClearError();
         g_isRenderInit = false;
         return false;

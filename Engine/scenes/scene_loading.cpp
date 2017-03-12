@@ -57,7 +57,7 @@ LoadingScene::~LoadingScene()
     GlRenderer::clearScreen();
     GlRenderer::deleteTexture(background);
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
         GlRenderer::deleteTexture(imgs[i].t);
 
     imgs.clear();
@@ -150,7 +150,7 @@ void LoadingScene::update()
 
     Scene::update();
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
 
     if(!m_doExit)
@@ -169,7 +169,7 @@ void LoadingScene::render()
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
     GlRenderer::renderTexture(&background, PGE_Window::Width / 2 - background.w / 2, PGE_Window::Height / 2 - background.h / 2);
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
     {
         AniPos x(0, 1);
         x = imgs[i].a.image();

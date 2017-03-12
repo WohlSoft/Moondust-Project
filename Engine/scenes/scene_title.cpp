@@ -139,7 +139,7 @@ TitleScene::~TitleScene()
 
     GlRenderer::deleteTexture(background);
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
         GlRenderer::deleteTexture(imgs[i].t);
 
     imgs.clear();
@@ -330,7 +330,7 @@ void TitleScene::update()
     Scene::update();
     updateLua();
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
 
     if(m_doExit)
@@ -355,7 +355,7 @@ void TitleScene::render()
                                   PGE_Window::Height / 2 - background.h / 2);
     }
 
-    for(int i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < imgs.size(); i++)
     {
         AniPos x(0, 1);
         x = imgs[i].a.image();

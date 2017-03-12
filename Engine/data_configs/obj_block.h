@@ -30,8 +30,8 @@ struct obj_block
     bool isInit;
     PGE_Texture *image;
     GLuint textureID;
-    int textureArrayId;
-    int animator_ID;
+    int32_t textureArrayId;
+    int32_t animator_ID;
     /*   OpenGL    */
 
     BlockSetup setup;

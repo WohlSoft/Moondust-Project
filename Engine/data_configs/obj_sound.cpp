@@ -410,7 +410,7 @@ bool ConfigManager::loadSoundRolesTable()
     return true;
 }
 
-std::string ConfigManager::getSound(unsigned long sndID)
+std::string ConfigManager::getSound(size_t sndID)
 {
     if(main_sound.contains(sndID))
         return main_sound[sndID].absPath;
@@ -418,7 +418,7 @@ std::string ConfigManager::getSound(unsigned long sndID)
         return "";
 }
 
-long ConfigManager::getSoundByRole(obj_sound_role::roles role)
+size_t ConfigManager::getSoundByRole(obj_sound_role::roles role)
 {
     if(main_sound_table.contains(role))
         return main_sound_table[role];

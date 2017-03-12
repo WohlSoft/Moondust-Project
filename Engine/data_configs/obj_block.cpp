@@ -65,9 +65,9 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, std::string section, obj_b
 
 bool ConfigManager::loadLevelBlocks()
 {
-    unsigned long i;
+    uint32_t i;
     obj_block sblock;
-    unsigned long block_total = 0;
+    uint32_t block_total = 0;
     bool useDirectory = false;
     std::string block_ini = config_dirSTD + "lvl_blocks.ini";
     std::string nestDir = "";
@@ -132,7 +132,7 @@ bool ConfigManager::loadLevelBlocks()
         }
     }
 
-    if(uint(lvl_block_indexes.stored()) < block_total)
+    if(uint32_t(lvl_block_indexes.stored()) < block_total)
         addError(fmt::format("Not all blocks loaded! Total: {0}, Loaded: {1})", block_total, lvl_block_indexes.stored()));
 
     return true;

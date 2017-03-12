@@ -213,9 +213,9 @@ void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByUnhandledException()
               stack.c_str(), g_messageToUser);
     msgBox(
         //% "Unhandled exception!"
-        qsTrId("CRASH_UNHEXC_TITLE"),
+        qtTrId("CRASH_UNHEXC_TITLE"),
         //% "Engine has crashed because accepted unhandled exception!"
-        qsTrId("CRASH_UNHEXC_MSG"));
+        qtTrId("CRASH_UNHEXC_MSG"));
     abortEngine(-1);
 }
 
@@ -227,9 +227,9 @@ void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByFlood()
               stack.c_str(), g_messageToUser);
     msgBox(
         //% "Out of memory!"
-        qsTrId("CRASH_OUT_OF_MEM_TITLE"),
+        qtTrId("CRASH_OUT_OF_MEM_TITLE"),
         //% "Engine has crashed because out of memory! Try to close other applications and restart game."
-        qsTrId("CRASH_OUT_OF_MEM_MSG"));
+        qtTrId("CRASH_OUT_OF_MEM_MSG"));
     abortEngine(-2);
 }
 
@@ -265,9 +265,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
         pLogFatal("<alarm() time out!>");
         msgBox(
             //% "Time out!"
-            qsTrId("CRASH_TIMEOUT_TITLE"),
+            qtTrId("CRASH_TIMEOUT_TITLE"),
             //% "Engine has abourted because alarm() time out!"
-            qsTrId("CRASH_TIMEOUT_MSG"));
+            qtTrId("CRASH_TIMEOUT_MSG"));
         abortEngine(signal);
     }
 
@@ -312,9 +312,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
         msgBox(
             //% "Physical memory address error!"
-            qsTrId("CRASH_BUS_TITLE"),
+            qtTrId("CRASH_BUS_TITLE"),
             //% "Engine has crashed because a physical memory address error"
-            qsTrId("CRASH_BUS_MSG"));
+            qtTrId("CRASH_BUS_MSG"));
         abortEngine(signal);
     }
 
@@ -331,9 +331,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
                   stack.c_str(), g_messageToUser);
         msgBox(
             //% "Wrong CPU Instruction!"
-            qsTrId("CRASH_ILL_TITLE"),
+            qtTrId("CRASH_ILL_TITLE"),
             //% "Engine has crashed because a wrong CPU instruction"
-            qsTrId("CRASH_ILL_MSG"));
+            qtTrId("CRASH_ILL_MSG"));
         abortEngine(signal);
     }
 
@@ -388,9 +388,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
         msgBox(
             //% "Wrong arithmetical operation"
-            qsTrId("CRASH_FPE_TITLE"),
+            qtTrId("CRASH_FPE_TITLE"),
             //% "Engine has crashed because of a wrong arithmetical operation!"
-            qsTrId("CRASH_FPE_MSG"));
+            qtTrId("CRASH_FPE_MSG"));
         abortEngine(signal);
     }
 
@@ -402,9 +402,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
                   stack.c_str(), g_messageToUser);
         msgBox(
             //% "Aborted"
-            qsTrId("CRASH_ABORT_TITLE"),
+            qtTrId("CRASH_ABORT_TITLE"),
             //% "Engine has been aborted because critical error was occouped."
-            qsTrId("CRASH_ABORT_TITLE."));
+            qtTrId("CRASH_ABORT_TITLE."));
         abortEngine(signal);
     }
 
@@ -449,11 +449,11 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
         msgBox(
             //% "Segmentation fault"
-            qsTrId("CRASH_SIGSEGV_TITLE"),
+            qtTrId("CRASH_SIGSEGV_TITLE"),
             /*% "Engine has crashed because of a Segmentation fault.\n"
                 "Run debugging with a built in debug mode application\n"
                 "and retry your recent actions to get more detailed information." */
-            qsTrId("CRASH_SIGSEGV_MSG."));
+            qtTrId("CRASH_SIGSEGV_MSG."));
         abortEngine(signal);
     }
 
@@ -462,9 +462,9 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
         pLogFatal("<Interrupted!>");
         msgBox(
             //% "Interrupt"
-            qsTrId("CRASH_INT_TITLE"),
+            qtTrId("CRASH_INT_TITLE"),
             //% "Engine has been interrupted"
-            qsTrId("CRASH_INT_MSG"));
+            qtTrId("CRASH_INT_MSG"));
         abortEngine(signal);
     }
 

@@ -365,7 +365,7 @@ void PGE_MsgBox::info(std::string msg)
     else
     {
                                  //% "Information"
-        PGE_Window::msgBoxInfo(qsTrId("MSGBOX_INFO"), msg);
+        PGE_Window::msgBoxInfo(qtTrId("MSGBOX_INFO"), msg);
     }
 }
 
@@ -380,7 +380,7 @@ void PGE_MsgBox::warn(std::string msg)
     else
     {
                                    //% "Warning"
-        PGE_Window::msgBoxWarning(qsTrId("MSGBOX_WARN"), msg);
+        PGE_Window::msgBoxWarning(qtTrId("MSGBOX_WARN"), msg);
     }
 }
 
@@ -395,7 +395,7 @@ void PGE_MsgBox::error(std::string msg)
     else
     {
                                     //% "Error"
-        PGE_Window::msgBoxCritical(qsTrId("MSGBOX_ERROR"), msg);
+        PGE_Window::msgBoxCritical(qtTrId("MSGBOX_ERROR"), msg);
     }
 }
 
@@ -410,7 +410,7 @@ void PGE_MsgBox::fatal(std::string msg)
     else
     {
                                     //% "Fatal error"
-        PGE_Window::msgBoxCritical(qsTrId("MSGBOX_FATAL"), msg);
+        PGE_Window::msgBoxCritical(qtTrId("MSGBOX_FATAL"), msg);
     }
 }
 

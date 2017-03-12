@@ -24,7 +24,7 @@ public:
     LVL_Player * playerPtr();//! returns pointer to detected platable character
 
 private:
-    float distance(LVL_Player* plr);
+    double distance(LVL_Player* plr);
     int _directedTo;
     int _playersDirection;
     PGE_PointF pos;

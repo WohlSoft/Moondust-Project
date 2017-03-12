@@ -33,6 +33,11 @@
 #include <pwd.h>
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+#include <winreg.h>
+#endif
+
 #include "app_path.h"
 #include "../version.h"
 
@@ -49,10 +54,14 @@ std::string AppPathManager::m_userPath;
 #define UserDirName "/.PGE_Project"
 #endif
 
+/**
+ * @brief Retreive User Home directory with appending of the PGE user data directory
+ * @return Absolute directory path
+ */
 static std::string getPgeUserDirectory()
 {
     std::string path = "";
-#if defined(__ANDROID__) || defined(__APPLE__)
+#if defined(__APPLE__)
     {
         FSRef ref;
         OSType folderType = kApplicationSupportFolderType;
@@ -73,14 +82,64 @@ static std::string getPgeUserDirectory()
                                        0, FALSE);
         path.resize(path_len);
     }
+#elif defined(__ANDROID__)
+    path = "/sdcard/";
 #elif defined(__gnu_linux__)
     {
         passwd* pw = getpwuid(getuid());
         path.append(pw->pw_dir);
     }
 #endif
-    return path.empty() ? std::string() : (path += UserDirName);
+    return path.empty() ? std::string() : (path + UserDirName);
 }
+
+
+#ifdef _WIN32
+
+#define PGE_ENGINE_KEY L"Software\\Wohlhabend Networks\\PGE Engine"
+
+/**
+ * @brief Retreive the state from Windows System Registry is PGE Engine set to use User Directory instead of application directory
+ * @return true if registry key exist and has "true" string value
+ */
+static bool winReg_isUserDir()
+{
+    HKEY    pge_key;
+    wchar_t enable_user_dir[1024];
+    std::wstring output;
+    DWORD   DRlen = sizeof(wchar_t) * 1024;
+
+    LONG res = RegOpenKeyExW(HKEY_CURRENT_USER, PGE_ENGINE_KEY, 0, KEY_READ, &pge_key);
+    if(res == ERROR_SUCCESS)
+    {
+        if(RegQueryValueExW(pge_key, L"EnableUserDir", 0, NULL, (LPBYTE)enable_user_dir, &DRlen) == ERROR_SUCCESS)
+            output.append(enable_user_dir);
+        RegCloseKey(pge_key);
+    }
+    return (output == L"true");
+}
+
+/**
+ * @brief Creates the key and sets the "true" value in the Windows System Registry
+ * @return true if operation was success
+ */
+static bool winReg_setUserDir()
+{
+    HKEY    pge_key;
+    bool ret = false;
+    DWORD   lpdwDisp;
+    LONG res = RegCreateKeyExW(HKEY_CURRENT_USER, PGE_ENGINE_KEY, 0,
+                               NULL, REG_OPTION_NON_VOLATILE,
+                               KEY_WRITE, NULL, &pge_key, &lpdwDisp);
+    if(res == ERROR_SUCCESS)
+    {
+        if(RegSetValueExW(pge_key, L"EnableUserDir", 0, REG_SZ, (LPBYTE)L"true", sizeof(wchar_t) * 5) == ERROR_SUCCESS)
+            ret = true;
+        RegCloseKey(pge_key);
+    }
+    return ret;
+}
+#endif
 
 
 void AppPathManager::initAppPath(const char* argv0)
@@ -140,6 +199,10 @@ void AppPathManager::initAppPath(const char* argv0)
         userDir = setup.value("EnableUserDir", false).toBool();
         setup.endGroup();
     }
+    #elif defined(_WIN32)
+    {
+        userDir = winReg_isUserDir();
+    }
     #else
     userDir = false;
     #endif
@@ -191,6 +254,10 @@ void AppPathManager::install()
         DirMan appDir(path);
         if(!appDir.exists() && !appDir.mkpath(path))
             return;
+
+        #ifdef _WIN32
+        winReg_setUserDir();
+        #endif
 
         #ifdef __gnu_linux__
         DirMan configDir(path + "/.config/Wohlhabend Networks/");

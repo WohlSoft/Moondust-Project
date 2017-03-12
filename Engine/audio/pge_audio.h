@@ -27,9 +27,9 @@
 
 namespace PGE_Audio
 {
-    int  init(int sampleRate = 44100,
-              int allocateChannels = 32,
-              int bufferSize = 4096);
+    int  init(Uint32 sampleRate = 44100,
+              Uint32 allocateChannels = 32,
+              Uint32 bufferSize = 4096);
     int  quit();
 
     const bool& isLoaded();
@@ -38,8 +38,8 @@ namespace PGE_Audio
     Uint64 sampleCount();
     Uint64 sampleCountMus();
 
-    void playSound(long soundID);
+    void playSound(size_t soundID);
     void playSoundByRole(obj_sound_role::roles role);
-};
+}
 
 #endif // PGE_AUDIO_H

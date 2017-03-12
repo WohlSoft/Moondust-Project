@@ -7,7 +7,7 @@ void Binding_Level_CommonFuncs::Lua_ToggleSwitch(lua_State *L, int switchID)
     scene->toggleSwitch(switchID);
 }
 
-bool Binding_Level_CommonFuncs::Lua_getSwitchState(lua_State *L, int switchID)
+bool Binding_Level_CommonFuncs::Lua_getSwitchState(lua_State *L, uint32_t switchID)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
     return scene->lua_switchState(switchID);

@@ -251,8 +251,8 @@ namespace ConfigManager
 
     bool loadDefaultSounds();
     bool loadSound(std::string rootPath, std::string iniFile, bool isCustom = false);
-    std::string getSound(unsigned long sndID);
-    long getSoundByRole(obj_sound_role::roles role);
+    std::string getSound(size_t sndID);
+    size_t getSoundByRole(obj_sound_role::roles role);
     bool loadSoundRolesTable();
 
     extern PGE_DataArray<obj_sound > main_sound;

@@ -29,7 +29,7 @@ int  ConfigManager::getBlockTexture(unsigned long blockID)
 
     if(blkSetup->isInit)
     {
-        if(blkSetup->textureArrayId < level_textures.size())
+        if(blkSetup->textureArrayId < int32_t(level_textures.size()))
             return blkSetup->textureArrayId;
         else
             return -1;
@@ -103,7 +103,7 @@ int  ConfigManager::getBgoTexture(unsigned long bgoID)
 
     if(bgoSetup->isInit)
     {
-        if(bgoSetup->textureArrayId < level_textures.size())
+        if(bgoSetup->textureArrayId < int32_t(level_textures.size()))
             return bgoSetup->textureArrayId;
         else
             return -1;
@@ -162,7 +162,7 @@ int  ConfigManager::getNpcTexture(unsigned long npcID)
 
     if(npcSetup->isInit)
     {
-        if(npcSetup->textureArrayId < level_textures.size())
+        if(npcSetup->textureArrayId < int32_t(level_textures.size()))
             return npcSetup->textureArrayId;
         else
             return -1;
@@ -208,7 +208,7 @@ int ConfigManager::getEffectTexture(unsigned long effectID)
 
     if(effSetup->isInit)
     {
-        if(effSetup->textureArrayId < level_textures.size())
+        if(effSetup->textureArrayId < int32_t(level_textures.size()))
             return effSetup->textureArrayId;
         else
             return -1;
@@ -275,7 +275,7 @@ int  ConfigManager::getLvlPlayerTexture(unsigned long playerID, unsigned long st
 
     if(state.isInit)
     {
-        if(state.textureArrayId < level_textures.size())
+        if(state.textureArrayId < int32_t(level_textures.size()))
             return state.textureArrayId;
         else
             return -1;
@@ -324,7 +324,7 @@ int  ConfigManager::getWldPlayerTexture(unsigned long playerID, unsigned long st
 
     if(plr.isInit_wld)
     {
-        if(plr.textureArrayId_wld < world_textures.size())
+        if(plr.textureArrayId_wld < int32_t(world_textures.size()))
             return plr.textureArrayId_wld;
         else
             return -1;
@@ -371,14 +371,14 @@ int  ConfigManager::getBGTexture(unsigned long bgID, bool isSecond)
     {
         if(isSecond)
         {
-            if(bgSetup->second_textureArrayId < level_textures.size())
+            if(bgSetup->second_textureArrayId < int32_t(level_textures.size()))
                 return bgSetup->second_textureArrayId;
             else
                 return -1;
         }
         else
         {
-            if(bgSetup->textureArrayId < level_textures.size())
+            if(bgSetup->textureArrayId < int32_t(level_textures.size()))
                 return bgSetup->textureArrayId;
             else
                 return -1;
@@ -475,7 +475,7 @@ int  ConfigManager::getTileTexture(unsigned long tileID)
 
     if(tileSetup->isInit)
     {
-        if(tileSetup->textureArrayId < world_textures.size())
+        if(tileSetup->textureArrayId < int32_t(world_textures.size()))
             return tileSetup->textureArrayId;
         else
             return -1;
@@ -534,7 +534,7 @@ int  ConfigManager::getSceneryTexture(unsigned long sceneryID)
 
     if(scenerySetup->isInit)
     {
-        if(scenerySetup->textureArrayId < world_textures.size())
+        if(scenerySetup->textureArrayId < int32_t(world_textures.size()))
             return scenerySetup->textureArrayId;
         else
             return -1;
@@ -593,7 +593,7 @@ int  ConfigManager::getWldPathTexture(unsigned long pathID)
 
     if(pathSetup->isInit)
     {
-        if(pathSetup->textureArrayId < world_textures.size())
+        if(pathSetup->textureArrayId < int32_t(world_textures.size()))
             return pathSetup->textureArrayId;
         else
             return -1;
@@ -653,7 +653,7 @@ int  ConfigManager::getWldLevelTexture(unsigned long levelID)
 
     if(lvlSetup->isInit)
     {
-        if(lvlSetup->textureArrayId < world_textures.size())
+        if(lvlSetup->textureArrayId < int32_t(world_textures.size()))
             return lvlSetup->textureArrayId;
         else
             return -1;

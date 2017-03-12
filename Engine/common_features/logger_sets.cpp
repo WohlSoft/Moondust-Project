@@ -71,11 +71,12 @@ void LogWriter::LoadLogSettings()
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();
     IniProcessing logSettings(mainIniFile);
-    DirMan defLogDir(AppPathManager::userAppDirSTD() + "/logs");
 
-    if(!defLogDir.exists())
-        if(!defLogDir.mkpath(AppPathManager::userAppDirSTD() + "/logs"))
-            defLogDir.setPath(AppPathManager::userAppDirSTD());
+    std::string logPath = AppPathManager::userAppDirSTD() + "/logs";
+    DirMan defLogDir(logPath);
+
+    if(!defLogDir.exists() && !defLogDir.mkpath())
+        defLogDir.setPath(AppPathManager::userAppDirSTD());
 
     logSettings.beginGroup("logging");
     m_logFilePath = logSettings.value("log-path", defLogDir.absolutePath() + "/" + logFileName).toString();
@@ -119,6 +120,14 @@ void CloseLog()
     LogWriter::m_logIsOpened = false;
 }
 
+#ifdef _WIN32
+#define OS_NEWLINE "\r\n"
+#define OS_NEWLINE_LEN 2
+#else
+#define OS_NEWLINE "\n"
+#define OS_NEWLINE_LEN 1
+#endif
+
 void pLogDebug(const char *format, ...)
 {
     va_list arg;
@@ -133,7 +142,7 @@ void pLogDebug(const char *format, ...)
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Debug: "), 1, 7);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("\n"), 1, 1);
+    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
 
@@ -151,7 +160,7 @@ void pLogWarning(const char *format, ...)
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Warning: "), 1, 9);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("\n"), 1, 1);
+    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
 
@@ -169,7 +178,7 @@ void pLogCritical(const char *format, ...)
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Critical: "), 1, 10);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("\n"), 1, 1);
+    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
 
@@ -187,7 +196,7 @@ void pLogFatal(const char *format, ...)
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Fatal: "), 1, 7);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("\n"), 1, 1);
+    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
 
@@ -205,7 +214,7 @@ void pLogInfo(const char *format, ...)
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Info: "), 1, 6);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("\n"), 1, 1);
+    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
 

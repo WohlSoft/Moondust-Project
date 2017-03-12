@@ -50,7 +50,7 @@ void CharacterSwitcherEngine::buildSwitch(obj_block &blk)
         swst.sequence_on  = blk.setup.plSwitch_frames_true;
         swst.sequence_off = blk.setup.plSwitch_frames_false;
 
-        if(blk.animator_ID < ConfigManager::Animator_Blocks.size())
+        if(blk.animator_ID < int32_t(ConfigManager::Animator_Blocks.size()))
             swst.animator_p = &ConfigManager::Animator_Blocks[blk.animator_ID];
 
         m_switches.push_back(swst);
@@ -66,7 +66,7 @@ void CharacterSwitcherEngine::buildBrick(obj_block &blk)
         swst.sequence_on  = blk.setup.plFilter_frames_true;
         swst.sequence_off = blk.setup.plFilter_frames_false;
 
-        if(blk.animator_ID < ConfigManager::Animator_Blocks.size())
+        if(blk.animator_ID < int32_t(ConfigManager::Animator_Blocks.size()))
             swst.animator_p = &ConfigManager::Animator_Blocks[blk.animator_ID];
 
         m_blocks.push_back(swst);

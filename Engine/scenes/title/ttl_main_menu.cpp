@@ -354,34 +354,34 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //% "1 Player Game"
-        menu.addMenuItem("game1p", qsTrId("MAINMENU_1_PLAYER_GAME"));
+        menu.addMenuItem("game1p", qtTrId("MAINMENU_1_PLAYER_GAME"));
         //% "2 Player Game"
-        menu.addMenuItem("game2p", qsTrId("MAINMENU_2_PLAYER_GAME"));
+        menu.addMenuItem("game2p", qtTrId("MAINMENU_2_PLAYER_GAME"));
         //% "Play level"
-        menu.addMenuItem("playlevel", qsTrId("MAINMENU_PLAY_SINGLE_LEVEL"));
+        menu.addMenuItem("playlevel", qtTrId("MAINMENU_PLAY_SINGLE_LEVEL"));
         //% "Options"
-        menu.addMenuItem("Options", qsTrId("MAINMENU_OPTIONS"));
+        menu.addMenuItem("Options", qtTrId("MAINMENU_OPTIONS"));
         //% "Exit"
-        menu.addMenuItem("Exit", qsTrId("MAINMENU_EXIT"));
+        menu.addMenuItem("Exit", qtTrId("MAINMENU_EXIT"));
         break;
     case menu_options:
         menu.setPos(260, 284);
         menu.setItemsNumber(9);
         //% "Test of screens"
-        menu.addMenuItem("tests", qsTrId("MAINMENU_OPTIONS_TEST_SCRS"));
+        menu.addMenuItem("tests", qtTrId("MAINMENU_OPTIONS_TEST_SCRS"));
         //% "Test of message boxes"
-        menu.addMenuItem("testboxes", qsTrId("MAINMENU_OPTIONS_TEST_MSGS"));
+        menu.addMenuItem("testboxes", qtTrId("MAINMENU_OPTIONS_TEST_MSGS"));
         //% "Player controlling"
-        menu.addMenuItem("controls", qsTrId("MAINMENU_OPTIONS_CONTROLLS"));
+        menu.addMenuItem("controls", qtTrId("MAINMENU_OPTIONS_CONTROLLS"));
         //% "Video settings"
-        menu.addMenuItem("videosetup", qsTrId("MAINMENU_OPTIONS_VIDEO"));
+        menu.addMenuItem("videosetup", qtTrId("MAINMENU_OPTIONS_VIDEO"));
         //% "Music volume"
-        menu.addIntMenuItem(&g_AppSettings.volume_music, 0, 128, "vlm_music", qsTrId("MAINMENU_OPTIONS_MUS_VOL"), false,
+        menu.addIntMenuItem(&g_AppSettings.volume_music, 0, 128, "vlm_music", qtTrId("MAINMENU_OPTIONS_MUS_VOL"), false,
                             []()->void{ PGE_MusPlayer::setVolume(g_AppSettings.volume_music); });
         //% "Sound volume"
-        menu.addIntMenuItem(&g_AppSettings.volume_sound, 0, 128, "vlm_sound", qsTrId("MAINMENU_OPTIONS_SND_VOL"), false);
+        menu.addIntMenuItem(&g_AppSettings.volume_sound, 0, 128, "vlm_sound", qtTrId("MAINMENU_OPTIONS_SND_VOL"), false);
         //% "Full Screen mode"
-        menu.addBoolMenuItem(&g_AppSettings.fullScreen, "full_screen", qsTrId("MAINMENU_OPTIONS_FULLSCR"),
+        menu.addBoolMenuItem(&g_AppSettings.fullScreen, "full_screen", qtTrId("MAINMENU_OPTIONS_FULLSCR"),
                              []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); }
                             );
         break;
@@ -389,33 +389,33 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //% "Credits"
-        menu.addMenuItem("credits",     qsTrId("TESTSCR_CREDITS"));
+        menu.addMenuItem("credits",     qtTrId("TESTSCR_CREDITS"));
         //% "Loading screen"
-        menu.addMenuItem("loading",     qsTrId("TESTSCR_LOADING_SCREEN"));
+        menu.addMenuItem("loading",     qtTrId("TESTSCR_LOADING_SCREEN"));
         //% "Game over screen"
-        menu.addMenuItem("gameover",    qsTrId("TESTSCR_GAMEOVER"));
+        menu.addMenuItem("gameover",    qtTrId("TESTSCR_GAMEOVER"));
         break;
     case menu_testboxes:
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //% "Message box"
-        menu.addMenuItem("messagebox",  qsTrId("TEST_MSGBOX"));
+        menu.addMenuItem("messagebox",  qtTrId("TEST_MSGBOX"));
         //% "Menu box"
-        menu.addMenuItem("menubox",     qsTrId("TEST_MENUBOX"));
+        menu.addMenuItem("menubox",     qtTrId("TEST_MENUBOX"));
         //% "Text Input box"
-        menu.addMenuItem("inputbox",    qsTrId("TEST_TEXTINPUTBOX"));
+        menu.addMenuItem("inputbox",    qtTrId("TEST_TEXTINPUTBOX"));
         //% "Question box"
-        menu.addMenuItem("questionbox", qsTrId("TEST_QUESTION_BOX"));
+        menu.addMenuItem("questionbox", qtTrId("TEST_QUESTION_BOX"));
         break;
     case menu_videosettings:
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //% "Show debug info"
-        menu.addBoolMenuItem(&g_AppSettings.showDebugInfo, "dbg_flag", qsTrId("VIDEO_SHOW_DEBUG"));
+        menu.addBoolMenuItem(&g_AppSettings.showDebugInfo, "dbg_flag", qtTrId("VIDEO_SHOW_DEBUG"));
         //% "Enable frame-skip"
-        menu.addBoolMenuItem(&g_AppSettings.frameSkip, "frame_skip", qsTrId("VIDEO_ENABLE_FRSKIP"));
+        menu.addBoolMenuItem(&g_AppSettings.frameSkip, "frame_skip", qtTrId("VIDEO_ENABLE_FRSKIP"));
         //% "Enable V-Sync"
-        menu.addBoolMenuItem(&g_AppSettings.vsync, "vsync", qsTrId("VIDEO_ENABLE_VSYNC"),
+        menu.addBoolMenuItem(&g_AppSettings.vsync, "vsync", qtTrId("VIDEO_ENABLE_VSYNC"),
                              [this]()->void
         {
             PGE_Window::vsync = g_AppSettings.vsync;
@@ -427,7 +427,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                             );
 
         //% "Frame time (ms.)"
-        menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 17, "phys_step", qsTrId("VIDEO_FRAME_TIME"), false,
+        menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 17, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
                             [this]()->void
         {
             if(!PGE_Window::vsync)
@@ -447,9 +447,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //% "Player 1 controls"
-        menu.addMenuItem("control_plr1", qsTrId("CONTROLLS_SETUP_PLAYER1"));
+        menu.addMenuItem("control_plr1", qtTrId("CONTROLLS_SETUP_PLAYER1"));
         //% "Player 2 controls"
-        menu.addMenuItem("control_plr2", qsTrId("CONTROLLS_SETUP_PLAYER2"));
+        menu.addMenuItem("control_plr2", qtTrId("CONTROLLS_SETUP_PLAYER2"));
         break;
     case menu_controls_plr1:
     case menu_controls_plr2:
@@ -499,18 +499,18 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         NamedIntItem controller;
         controller.value = -1;
         //% "Keyboard"
-        controller.label =   qsTrId("PLAYER_CONTROLS_SETUP_KEYBOARD");
+        controller.label =   qtTrId("PLAYER_CONTROLS_SETUP_KEYBOARD");
         ctrls.push_back(controller);
         for(size_t i = 0; i < g_AppSettings.joysticks.size(); i++)
         {
             controller.value = i;
             //FIXME: missing in-string arguments support
             //% "Joystick: %1"
-            controller.label = qsTrId("PLAYER_CONTROLS_SETUP_JOYSTICK") + SDL_JoystickName(g_AppSettings.joysticks[i]);
+            controller.label = qtTrId("PLAYER_CONTROLS_SETUP_JOYSTICK") + SDL_JoystickName(g_AppSettings.joysticks[i]);
             ctrls.push_back(controller);
         }
         //% "Input:"
-        menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", qsTrId("PLAYER_CONTROLS_SETUP_INPUT_TYPE"), true, ctrlSwitch);
+        menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", qtTrId("PLAYER_CONTROLS_SETUP_INPUT_TYPE"), true, ctrlSwitch);
         menu.setItemWidth(300);
         menu.setValueOffset(150);
         menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", jdev);
@@ -540,7 +540,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //% "Please wait..."
-        menu.addMenuItem("waitinginprocess", qsTrId("MSG_PLEASEWAIT"));
+        menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         filefind_finished = false;
         filefind_folder = ConfigManager::dirs.worlds;
         filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", NULL);
@@ -566,7 +566,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         menu.setPos(300, 350);
         menu.setItemsNumber(5);
         //% "Please wait..."
-        menu.addMenuItem("waitinginprocess", qsTrId("MSG_PLEASEWAIT"));
+        menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         filefind_finished = false;
         filefind_folder = ConfigManager::dirs.worlds;
         filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", NULL);
@@ -624,7 +624,7 @@ int TitleScene::findEpisodes(void *)
         std::pair<std::string, std::string > file;
         file.first = "noworlds";
         //% "<episodes not found>"
-        file.second = qsTrId("MSG_EPISODES_NOT_FOUND");
+        file.second = qtTrId("MSG_EPISODES_NOT_FOUND");
         filefind_found_files.push_back(file);
     }
     else
@@ -661,7 +661,7 @@ int TitleScene::findLevels(void *)
         std::pair<std::string, std::string > file;
         file.first = "noworlds";
         //% "<levels not found>"
-        file.second = qsTrId("MSG_LEVELS_NOT_FOUND");
+        file.second = qtTrId("MSG_LEVELS_NOT_FOUND");
         filefind_found_files.push_back(file);
     }
     else

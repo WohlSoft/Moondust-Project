@@ -21,6 +21,9 @@
 #include "translator.h"
 #include "app_path.h"
 #include "logger.h"
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include <fmt/fmt_format.h>
 
@@ -38,10 +41,22 @@ void PGE_Translator::init()
 {
     if(m_isInit)
         return;
-
+    std::string defaultLocale = "en";
+#ifdef _WIN32
+    LCID locale = GetSystemDefaultLCID();
+    char langStr[21];
+    memset(langStr, 0, 21);
+    GetLocaleInfoA(locale, LOCALE_SISO639LANGNAME, langStr, 20);
+    defaultLocale.clear();
+    defaultLocale.append(langStr);
+#else
     std::locale the_global_locale("");
-    std::string defaultLocale = the_global_locale.name();
-    defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
+    defaultLocale = the_global_locale.name();
+    if(defaultLocale.size() > 2)
+        defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
+    else if(defaultLocale == "C")
+        defaultLocale = "en";
+#endif
 
     m_langPath = ApplicationPathSTD;
     m_langPath.append("/languages");
@@ -59,19 +74,22 @@ void PGE_Translator::toggleLanguage(std::string lang)
 
         m_currLang = lang;
 
-        bool ok = m_translator.loadFile((m_langPath + fmt::format("/engine_{0}.qm", m_currLang)).c_str(),
+        std::string langFilePath = m_langPath + fmt::format("/engine_{0}.qm", m_currLang);
+
+        bool ok = m_translator.loadFile(langFilePath.c_str(),
                                         reinterpret_cast<unsigned char *>(&m_langPath[0]));
         if(!ok)
         {
             m_currLang = "en"; //set to English if no other translations are found
-            ok = m_translator.loadFile((m_langPath + fmt::format("/engine_{0}.qm", m_currLang)).c_str(),
+            langFilePath = m_langPath + fmt::format("/engine_{0}.qm", m_currLang);
+            ok = m_translator.loadFile(langFilePath.c_str(),
                                        reinterpret_cast<unsigned char *>(&m_langPath[0]));
         }
         m_isInit = true;
     }
 }
 
-std::string qsTrId(const char* string)
+std::string qtTrId(const char* string)
 {
     if(!g_translator)
         return string;

@@ -33,7 +33,7 @@
 
 class   PGE_Phys_Object;
 typedef std::vector<PGE_Phys_Object *>  PGE_RenderList;
-typedef int                             PGE_SizeT;
+typedef size_t                          PGE_SizeT;
 
 class LVL_Background;
 class LVL_Section;

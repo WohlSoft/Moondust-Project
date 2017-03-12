@@ -233,9 +233,9 @@ void LevelScene::toggleSwitch(unsigned int switch_id)
     }
 }
 
-bool LevelScene::lua_switchState(int switch_id)
+bool LevelScene::lua_switchState(uint32_t switch_id)
 {
-    if((switch_id > switch_states.size()) || (switch_id < 0))
+    if(switch_id >= switch_states.size())
         return false;
     else
         return switch_states[switch_id];
