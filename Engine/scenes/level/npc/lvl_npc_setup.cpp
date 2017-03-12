@@ -148,13 +148,8 @@ void LVL_Npc::transformTo_x(unsigned long id)
 {
     if(m_isInited)
     {
-        if(_npc_id == id) return;
-
-        if(id <= 0) return;
-
-        if(!ConfigManager::lvl_npc_indexes.contains(id))
+        if((_npc_id == id) || (id == 0) || !ConfigManager::lvl_npc_indexes.contains(id))
             return;
-
         setup = &ConfigManager::lvl_npc_indexes[id];
         transformedFromNpcID = _npc_id;
         _npc_id = id;
@@ -184,7 +179,6 @@ void LVL_Npc::transformTo_x(unsigned long id)
         m_scene->zCounter = 0.0L;
 
     int tID = ConfigManager::getNpcTexture(_npc_id);
-
     if(tID >= 0)
     {
         texId = ConfigManager::level_textures[tID].texture;

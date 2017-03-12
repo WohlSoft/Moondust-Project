@@ -569,13 +569,13 @@ void NpcEdit::on_En_GridOffsetX_clicked(bool checked)
 {
     ui->GridOffsetX->setEnabled(checked);
     ui->gridoffsetx_label->setEnabled(checked);
-    NpcData.en_grid_offset_x=checked;
+    NpcData.en_gridoffsetx=checked;
     documentNotModified();
 }
 void NpcEdit::on_GridOffsetX_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.grid_offset_x=arg1;
+    NpcData.gridoffsetx=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -584,13 +584,13 @@ void NpcEdit::on_En_GridOffsetY_clicked(bool checked)
 {
     ui->GridOffsetY->setEnabled(checked);
     ui->gridoffsety_label->setEnabled(checked);
-    NpcData.en_grid_offset_y=checked;
+    NpcData.en_gridoffsety=checked;
     documentNotModified();
 }
 void NpcEdit::on_GridOffsetY_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.grid_offset_y=arg1;
+    NpcData.gridoffsety=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -599,13 +599,13 @@ void NpcEdit::on_En_AlignAt_clicked(bool checked)
 {
     ui->AlignAt->setEnabled(checked);
     ui->alignat_label->setEnabled(checked);
-    NpcData.en_grid_align=checked;
+    NpcData.en_gridalign=checked;
     documentNotModified();
 }
 void NpcEdit::on_AlignAt_currentIndexChanged(int index)
 {
     documentWasModified();
-    NpcData.grid_align=index;
+    NpcData.gridalign=index;
 }
 
 ////////////////////////////////////////////////////////////////

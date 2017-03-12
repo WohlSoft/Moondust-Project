@@ -394,35 +394,35 @@ void NpcEdit::setDataBoxes()
     ui->GridOffsetY->setMinimum(offsetMin);
     ui->GridOffsetY->setMaximum(offsetMax);
 
-    ui->En_GridOffsetX->setChecked(StartNPCData.en_grid_offset_x);
-    ui->GridOffsetX->setEnabled(StartNPCData.en_grid_offset_x);
-    if(!StartNPCData.en_grid_offset_x)
+    ui->En_GridOffsetX->setChecked(StartNPCData.en_gridoffsetx);
+    ui->GridOffsetX->setEnabled(StartNPCData.en_gridoffsetx);
+    if(!StartNPCData.en_gridoffsetx)
     {
-        ui->GridOffsetX->setValue(DefaultNPCData.grid_offset_x);
-        NpcData.grid_offset_x=DefaultNPCData.grid_offset_x;
+        ui->GridOffsetX->setValue(DefaultNPCData.gridoffsetx);
+        NpcData.gridoffsetx=DefaultNPCData.gridoffsetx;
     }
     else
-        ui->GridOffsetX->setValue(StartNPCData.grid_offset_x);
+        ui->GridOffsetX->setValue(StartNPCData.gridoffsetx);
 
-    ui->En_GridOffsetY->setChecked(StartNPCData.en_grid_offset_y);
-    ui->GridOffsetY->setEnabled(StartNPCData.en_grid_offset_y);
-    if(!StartNPCData.en_grid_offset_y)
+    ui->En_GridOffsetY->setChecked(StartNPCData.en_gridoffsety);
+    ui->GridOffsetY->setEnabled(StartNPCData.en_gridoffsety);
+    if(!StartNPCData.en_gridoffsety)
     {
-        ui->GridOffsetY->setValue(DefaultNPCData.grid_offset_y);
-        NpcData.grid_offset_y=DefaultNPCData.grid_offset_y;
+        ui->GridOffsetY->setValue(DefaultNPCData.gridoffsety);
+        NpcData.gridoffsety=DefaultNPCData.gridoffsety;
     }
     else
-        ui->GridOffsetY->setValue(StartNPCData.grid_offset_y);
+        ui->GridOffsetY->setValue(StartNPCData.gridoffsety);
 
-    ui->En_AlignAt->setChecked(StartNPCData.en_grid_align);
-    ui->AlignAt->setEnabled(StartNPCData.en_grid_align);
-    if(!StartNPCData.en_grid_align)
+    ui->En_AlignAt->setChecked(StartNPCData.en_gridalign);
+    ui->AlignAt->setEnabled(StartNPCData.en_gridalign);
+    if(!StartNPCData.en_gridalign)
     {
-        ui->AlignAt->setCurrentIndex(DefaultNPCData.grid_align);
-        NpcData.grid_align=DefaultNPCData.grid_align;
+        ui->AlignAt->setCurrentIndex(DefaultNPCData.gridalign);
+        NpcData.gridalign=DefaultNPCData.gridalign;
     }
     else
-        ui->AlignAt->setCurrentIndex(StartNPCData.grid_align);
+        ui->AlignAt->setCurrentIndex(StartNPCData.gridalign);
 }
 
 void NpcEdit::setDefaultData(unsigned long npc_id)
@@ -464,9 +464,9 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.script="";
         DefaultNPCData.image="";
         DefaultNPCData.grid=32;
-        DefaultNPCData.grid_offset_x=0;
-        DefaultNPCData.grid_offset_y=0;
-        DefaultNPCData.grid_align=0;
+        DefaultNPCData.gridoffsetx=0;
+        DefaultNPCData.gridoffsety=0;
+        DefaultNPCData.gridalign=0;
     }
     else
     {
@@ -509,9 +509,9 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.script=t_npc.setup.algorithm_script;
         DefaultNPCData.image=t_npc.setup.image_n;
         DefaultNPCData.grid=t_npc.setup.grid;
-        DefaultNPCData.grid_offset_x=0;
-        DefaultNPCData.grid_offset_y=0;
-        DefaultNPCData.grid_align=t_npc.setup.grid_attach_style;
+        DefaultNPCData.gridoffsetx=0;
+        DefaultNPCData.gridoffsety=0;
+        DefaultNPCData.gridalign=t_npc.setup.grid_attach_style;
     }
 }
 

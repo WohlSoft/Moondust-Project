@@ -390,13 +390,13 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     else
         grid_offset_x = Maths::iRound(static_cast<double>(static_cast<int32_t>(grid) - static_cast<int32_t>(width)) / 2.0);
 
-    grid_attach_style = (local->en_grid_align) ? static_cast<uint32_t>(local->grid_align) : global.grid_attach_style;
+    grid_attach_style = (local->en_gridalign) ? static_cast<uint32_t>(local->gridalign) : global.grid_attach_style;
 
     if(grid_attach_style == 1) grid_offset_x += (grid / 2);
 
     grid_offset_y = -static_cast<int>(height) % static_cast<int>(grid);
-    grid_offset_x += (local->en_grid_offset_x) ? local->grid_offset_x : 0;
-    grid_offset_y += (local->en_grid_offset_y) ? local->grid_offset_y : 0;
+    grid_offset_x += (local->en_gridoffsetx) ? local->gridoffsetx : 0;
+    grid_offset_y += (local->en_gridoffsety) ? local->gridoffsety : 0;
 
     if((framestyle == 0) && ((local->en_gfxheight) || (local->en_height)) && (!local->en_frames))
     {
