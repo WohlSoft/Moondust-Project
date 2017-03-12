@@ -723,9 +723,9 @@ void PGE_Menu::setSize(PGE_Size s)
     refreshRect();
 }
 
-void PGE_Menu::setTextLenLimit(int maxlen, bool strict)
+void PGE_Menu::setTextLenLimit(uint32_t maxlen, bool strict)
 {
-    if(maxlen <= 0)
+    if(maxlen == 0)
         _text_len_limit = 0;
     else
         _text_len_limit = maxlen;

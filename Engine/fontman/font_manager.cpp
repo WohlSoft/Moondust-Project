@@ -17,6 +17,9 @@
  */
 
 #include "font_manager.h"
+#include "font_manager_private.h"
+#include "raster_font.h"
+#include "ttf_font.h"
 
 #include <common_features/app_path.h>
 #include <common_features/graphics_funcs.h>
@@ -29,56 +32,57 @@
 #include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
 
+#include <_resources/resource.h>
+
 #include <vector>
 
-#include <common_features/graphics_funcs.h>
+BaseFontEngine::~BaseFontEngine()
+{}
 
-#include "font_manager_private.h"
+//! Complete array of available raster fonts
+static VPtrList<RasterFont> g_rasterFonts;
+static VPtrList<TtfFont>    g_ttfFonts;
 
-RasterFont              *FontManager::rFont = nullptr;
-VPtrList<RasterFont>    FontManager::rasterFonts;
+//! Default raster font to render text
+static RasterFont      *g_defaultRasterFont = nullptr;
 
-bool                    FontManager::isInit = false;
-FontManager::FontsHash  FontManager::fonts;
+//! Default raster font to render text
+static TtfFont         *g_defaultTtfFont = nullptr;
 
-int     FontManager::fontID;
-bool    FontManager::double_pixled = false;
+//! Is font manager initialized
+static bool             g_fontManagerIsInit = false;
+
+typedef std::unordered_map<std::string, int> FontsHash;
+//! Database of available fonts
+static FontsHash        g_fontNameToId;
+
+static bool             g_double_pixled = false;
 
 void FontManager::initBasic()
 {
-    #ifdef PGE_TTF
-    if(!defaultFont)
-        defaultFont = new QFont();
+    if(!g_ft)
+        initializeFreeType();
 
-    fontID = QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
-    fontID = QFontDatabase::addApplicationFont(":/JosefinSans-Regular.ttf");
-    #endif
-    double_pixled = false;
+    unsigned char *memory = nullptr;
+    size_t  fileSize = 0;
+    SDL_assert(RES_getMem("fonts/UKIJTuzB.ttf", memory, fileSize));
 
-    #ifdef PGE_TTF
-    //Josefin Sans
-    QString family("Monospace");
+    g_ttfFonts.emplace_back();
+    TtfFont &mainFont = g_ttfFonts.back();
 
-    if(!QFontDatabase::applicationFontFamilies(fontID).empty())
-        family = QFontDatabase::applicationFontFamilies(fontID).at(0);
+    SDL_assert(mainFont.loadFont(reinterpret_cast<const char*>(memory), fileSize));
+    g_defaultTtfFont = &mainFont;
 
-    defaultFont->setFamily(family);//font.setWeight(14);
-    //#ifdef __APPLE__
-    //  defaultFont->setPixelSize(16);
-    //#else
-    defaultFont->setPixelSize(16);
-    //#endif
-    defaultFont->setStyleStrategy(QFont::PreferBitmap);
-    defaultFont->setLetterSpacing(QFont::AbsoluteSpacing, 1);
-    //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
-    #endif
-
-    isInit = true;
+    g_double_pixled = false;
+    g_fontManagerIsInit = true;
 }
 
 void FontManager::initFull()
 {
-    double_pixled = ConfigManager::setup_fonts.double_pixled;
+    if(!g_ft)
+        initializeFreeType();
+
+    g_double_pixled = ConfigManager::setup_fonts.double_pixled;
 
     /***************Load raster font support****************/
     DirMan fontsDir(ConfigManager::config_dirSTD + "/fonts");
@@ -88,165 +92,37 @@ void FontManager::initFull()
     std::sort(files.begin(), files.end());
     for(std::string &fonFile : files)
     {
-        RasterFont rfont;
-        rasterFonts.push_back(rfont);
-        {
-            RasterFont& rf = rasterFonts.back();
-            rf.loadFont(fontsDir.absolutePath() + "/" + fonFile);
+        g_rasterFonts.emplace_back();
+        RasterFont& rf = g_rasterFonts.back();
+        rf.loadFont(fontsDir.absolutePath() + "/" + fonFile);
 
-            if(!rf.isLoaded())   //Pop broken font from array
-                rasterFonts.pop_back();
-            else   //Register font name in a table
-                fonts.insert({rf.getFontName(), rasterFonts.size() - 1});
-        }
+        if(!rf.isLoaded())   //Pop broken font from array
+            g_rasterFonts.pop_back();
+        else   //Register font name in a table
+            g_fontNameToId.insert({rf.getFontName(), g_rasterFonts.size() - 1});
     }
 
-    if(!rasterFonts.empty())
-        rFont = &rasterFonts.front();
+    if(!g_rasterFonts.empty())
+        g_defaultRasterFont = &g_rasterFonts.front();
 }
 
 void FontManager::quit()
 {
-    fonts.clear();
-    rasterFonts.clear();
+    g_fontNameToId.clear();
+    g_ttfFonts.clear();
+    g_rasterFonts.clear();
+    closeFreeType();
 }
 
-size_t FontManager::utf8_strlen(const char *str)
-{
-    size_t size = 0;
-    while(str)
-    {
-        size_t  charLen = 1 + static_cast<size_t>(trailingBytesForUTF8[static_cast<UTF8>(*str)]);
-        size += charLen;
-        str  += charLen;
-    }
-    return size;
-}
 
-size_t FontManager::utf8_strlen(const char *str, size_t len)
+PGE_Size FontManager::textSize(std::string &text, int fontID,
+                               uint32_t max_line_lenght,
+                               bool cut,
+                               uint32_t ttfFontSize)
 {
-    size_t utf8_pos = 0;
-    while(str && len > 0)
-    {
-        size_t  charLen = 1 + static_cast<size_t>(trailingBytesForUTF8[static_cast<UTF8>(*str)]);
-        str  += charLen;
-        len  -= charLen;
-        utf8_pos++;
-    }
-    return utf8_pos;
-}
+    assert(g_fontManagerIsInit && "Font manager is not initialized!");
 
-size_t FontManager::utf8_strlen(const std::string &str)
-{
-    return utf8_strlen(str.c_str(), str.size());
-}
-
-size_t FontManager::utf8_substrlen(const std::string &str, size_t utf8len)
-{
-    size_t pos = 0;
-    size_t utf8_pos = 0;
-    const char *cstr = str.c_str();
-    size_t len = str.length();
-    while(cstr && len > 0)
-    {
-        size_t  charLen = 1 + static_cast<size_t>(trailingBytesForUTF8[static_cast<UTF8>(*cstr)]);
-        if(utf8_pos == utf8len)
-            return pos;
-        cstr += charLen;
-        pos  += charLen;
-        len  -= charLen;
-        utf8_pos++;
-    }
-    return pos;
-}
-
-std::string FontManager::utf8_substr(const std::string &str, size_t utf8_begin, size_t utf8_len)
-{
-    size_t utf8_pos = 0;
-    const char *cstr = str.c_str();
-    size_t len = str.length();
-    std::string out;
-    while(cstr && (len > 0) && (utf8_len > 0))
-    {
-        size_t  charLen = 1 + static_cast<size_t>(trailingBytesForUTF8[static_cast<UTF8>(*cstr)]);
-        if(utf8_pos >= utf8_begin)
-        {
-            out.append(cstr, charLen);
-            utf8_len--;
-        }
-        cstr += charLen;
-        len  -= charLen;
-        utf8_pos++;
-    }
-    return out;
-}
-
-void FontManager::utf8_pop_back(std::string &str)
-{
-    size_t pos = 0;
-    const char*cstr = str.c_str();
-    size_t len = str.length();
-    while(cstr && len > 0)
-    {
-        size_t  charLen = 1 + static_cast<size_t>(trailingBytesForUTF8[static_cast<UTF8>(*cstr)]);
-        len  -= charLen;
-        if(len == 0)
-        {
-            str.erase(str.begin() + static_cast<std::string::difference_type>(pos), str.end());
-            return;
-        }
-        cstr += charLen;
-        pos  += charLen;
-    }
-}
-
-void FontManager::utf8_erase_at(std::string &str, size_t begin)
-{
-    size_t pos = 0;
-    size_t utf8_pos = 0;
-    const char*cstr = str.c_str();
-    size_t len = str.length();
-    while(cstr && len > 0)
-    {
-        size_t  charLen = 1 + static_cast<size_t>(trailingBytesForUTF8[static_cast<UTF8>(*cstr)]);
-        if(utf8_pos == begin)
-        {
-            str.erase(str.begin() + static_cast<std::string::difference_type>(pos), str.end());
-            return;
-        }
-        cstr += charLen;
-        pos  += charLen;
-        len  -= charLen;
-        utf8_pos++;
-    }
-}
-
-void FontManager::utf8_erase_before(std::string &str, size_t end)
-{
-    size_t pos = 0;
-    size_t utf8_pos = 0;
-    const char*cstr = str.c_str();
-    size_t len = str.length();
-    while(cstr && len > 0)
-    {
-        size_t  charLen = 1 + static_cast<size_t>(trailingBytesForUTF8[static_cast<UTF8>(*cstr)]);
-        if(utf8_pos == end)
-        {
-            str.erase(str.begin(), str.begin() + static_cast<std::string::difference_type>(pos) + 1);
-            return;
-        }
-        cstr += charLen;
-        pos  += charLen;
-        len  -= charLen;
-        utf8_pos++;
-    }
-}
-
-PGE_Size FontManager::textSize(std::string &text, int fontID, int max_line_lenght, bool cut, int ttfFontPixelSize)
-{
-    assert(isInit && "Font manager is not initialized!");
-
-    if(!isInit)
+    if(!g_fontManagerIsInit)
         return PGE_Size(27 * 20, static_cast<int>(std::count(text.begin(), text.end(), '\n') + 1) * 20);
 
     if(text.empty())
@@ -263,30 +139,53 @@ PGE_Size FontManager::textSize(std::string &text, int fontID, int max_line_lengh
     }
 
     //Use Raster font
-    if((fontID >= 0) && (static_cast<size_t>(fontID) < rasterFonts.size()))
+    if((fontID >= 0) && (static_cast<size_t>(fontID) < g_rasterFonts.size()))
     {
-        if(rasterFonts[fontID].isLoaded())
-            return rasterFonts[fontID].textSize(text, max_line_lenght);
+        if(g_rasterFonts[fontID].isLoaded())
+            return g_rasterFonts[fontID].textSize(text, max_line_lenght);
     }
 
-    #ifdef PGE_TTF
-    //Use TTF font
-    QFont fnt = font();
+    if(g_defaultTtfFont->isLoaded())
+        return g_defaultTtfFont->textSize(text, max_line_lenght, false, ttfFontSize);
 
-    if(ttfFontPixelSize > 0)
-        fnt.setPixelSize(ttfFontPixelSize);
-
-    QFontMetrics meter(fnt);
-    QString qtext = QString::fromStdString(text);
-    optimizeText(qtext, max_line_lenght);
-    QSize meterSize = meter.boundingRect(qtext).size();
-    return PGE_Size(meterSize.width(), meterSize.height());
-    #else
-    //assert(false && "TTF FONTS SUPPORT IS DISABLED!");
-    (void)ttfFontPixelSize;
     return PGE_Size(27 * 20, static_cast<int>(std::count(text.begin(), text.end(), '\n') + 1) * 20);
-    #endif
 }
+
+int FontManager::getFontID(std::string fontName)
+{
+    FontsHash::iterator i = g_fontNameToId.find(fontName);
+    if(i == g_fontNameToId.end())
+        return DefaultRaster;
+    else
+        return i->second;
+}
+
+
+
+void FontManager::printText(std::string text,
+                            int x, int y, int font,
+                            float Red, float Green, float Blue, float Alpha,
+                            uint32_t ttf_FontSize)
+{
+    if(!g_fontManagerIsInit)
+        return;
+
+    if(text.empty())
+        return;
+
+    if((font >= 0) && (static_cast<size_t>(font) < g_rasterFonts.size()))
+    {
+        if(g_rasterFonts[font].isLoaded())
+        {
+            g_rasterFonts[font].printText(text, x, y, Red, Green, Blue, Alpha);
+            return;
+        }
+    }
+
+    if(g_defaultTtfFont->isLoaded())
+        g_defaultTtfFont->printText(text, x, y, Red, Green, Blue, Alpha, ttf_FontSize);
+}
+
 
 void FontManager::optimizeText(std::string &text, size_t max_line_lenght, int *numLines, int *numCols)
 {
@@ -359,80 +258,5 @@ std::string FontManager::cropText(std::string text, size_t max_symbols)
         text.append("...");
     }
     return text;
-}
-
-
-
-void FontManager::printText(std::string text, int x, int y, int font, float Red, float Green, float Blue, float Alpha, int ttf_FontSize)
-{
-    if(!isInit) return;
-
-    if(text.empty())
-        return;
-
-    if((font >= 0) && (static_cast<size_t>(font) < rasterFonts.size()))
-    {
-        if(rasterFonts[font].isLoaded())
-        {
-            rasterFonts[font].printText(text, x, y, Red, Green, Blue, Alpha);
-            return;
-        }
-    }
-    #ifdef PGE_TTF
-    else
-    if(font == DefaultTTF_Font)
-    {
-        int offsetX = 0;
-        int offsetY = 0;
-        int height = 32;
-        int width = 32;
-        GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
-
-        for(char &cx : text)
-        {
-            switch(cx)
-            {
-            case '\n':
-                offsetX = 0;
-                offsetY += height;
-                continue;
-
-            case '\t':
-                offsetX += offsetX + offsetX % width;
-                continue;
-            }
-
-            PGE_Texture c;
-            getChar2(cx, ttf_FontSize, c);
-            GlRenderer::renderTexture(&c, x + offsetX, y + offsetY);
-            width = c.w;
-            height = c.h;
-            offsetX += c.w;
-        }
-
-        return;
-    }
-    else
-        printTextTTF(text, x, y, ttf_FontSize,
-                     qRgba(static_cast<int>(Red * 255.0f),
-                           static_cast<int>(Green * 255.0f),
-                           static_cast<int>(Blue * 255.0f),
-                           static_cast<int>(Alpha * 255.0f)));
-    #else
-    else
-    {
-        (void)ttf_FontSize;
-        //assert(false && "TTF FONTS SUPPORT IS DISABLED!");
-    }
-    #endif
-}
-
-int FontManager::getFontID(std::string fontName)
-{
-    FontsHash::iterator i = fonts.find(fontName);
-    if(i == fonts.end())
-        return DefaultRaster;
-    else
-        return i->second;
 }
 

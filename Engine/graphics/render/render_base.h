@@ -68,7 +68,7 @@ public:
      * \param path source image file path
      * \param maskPath mask image file path
      */
-    virtual void loadTexture(PGE_Texture &target, int width, int height, unsigned char* RGBApixels) = 0;
+    virtual void loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t* RGBApixels) = 0;
     /*!
      * \brief Deletes target texture
      * \param tx texture to delete
@@ -170,7 +170,7 @@ public:
     virtual bool uninit() {return false;}
     virtual void initDummyTexture() {}
     virtual PGE_Texture getDummyTexture() {return PGE_Texture();}
-    virtual void loadTexture(PGE_Texture &, int, int, unsigned char*) {}
+    virtual void loadTexture(PGE_Texture &, uint32_t, uint32_t, uint8_t*) {}
     virtual void deleteTexture(PGE_Texture &) {}
     virtual bool isTopDown() {return false;}
     virtual void getScreenPixels(int,int,int,int,unsigned char *) {}

@@ -160,12 +160,12 @@ void Render_OpenGL31::initDummyTexture()
         abort();
     }
 
-    int w = static_cast<int>(FreeImage_GetWidth(image));
-    int h = static_cast<int>(FreeImage_GetHeight(image));
+    uint32_t w = static_cast<uint32_t>(FreeImage_GetWidth(image));
+    uint32_t h = static_cast<uint32_t>(FreeImage_GetHeight(image));
     _dummyTexture.nOfColors = GL_RGBA;
     _dummyTexture.format = GL_BGRA;
-    _dummyTexture.w = w;
-    _dummyTexture.h = h;
+    _dummyTexture.w = static_cast<int>(w);
+    _dummyTexture.h = static_cast<int>(h);
     GLubyte *textura = reinterpret_cast<GLubyte *>(FreeImage_GetBits(image));
     loadTexture(_dummyTexture, w, h, textura);
     GraphicsHelps::closeImage(image);
@@ -176,7 +176,7 @@ PGE_Texture Render_OpenGL31::getDummyTexture()
     return _dummyTexture;
 }
 
-void Render_OpenGL31::loadTexture(PGE_Texture &target, int width, int height, unsigned char *RGBApixels)
+void Render_OpenGL31::loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t *RGBApixels)
 {
     // Have OpenGL generate a texture object handle for us
     glGenTextures(1, &(target.texture));
@@ -184,7 +184,9 @@ void Render_OpenGL31::loadTexture(PGE_Texture &target, int width, int height, un
     // Bind the texture object
     glBindTexture(GL_TEXTURE_2D, target.texture);
     GLERRORCHECK();
-    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, width, height,
+    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors,
+                 static_cast<GLsizei>(width),
+                 static_cast<GLsizei>(height),
                  0, target.format, GL_UNSIGNED_BYTE, reinterpret_cast<GLubyte *>(RGBApixels));
     GLERRORCHECK();
     glBindTexture(GL_TEXTURE_2D, 0);

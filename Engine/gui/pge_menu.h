@@ -115,8 +115,8 @@ public:
     void setPos(PGE_Point p);     //!< Sets current position of menu box
     void setSize(int w, int h); //!< Sets size of menu box
     void setSize(PGE_Size s);      //!< Sets size of menu box
-    void setTextLenLimit(int maxlen, bool strict=false);
-    int getMenuItemGap();
+    void setTextLenLimit(uint32_t maxlen, bool strict=false);
+    int  getMenuItemGap();
 
     bool isKeygrabViaKey() const;
     void setKeygrabViaKey(bool value);
@@ -158,7 +158,7 @@ private:
     PGE_Texture _scroll_down;
     int _item_height;
     int _width_limit;
-    int _text_len_limit;
+    uint32_t _text_len_limit;
     bool _text_len_limit_strict;
     int menuItemGap;
 

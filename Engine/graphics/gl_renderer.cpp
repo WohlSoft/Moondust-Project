@@ -912,6 +912,13 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
     return;
 }
 
+void GlRenderer::loadRawTextureP(PGE_Texture &target, uint8_t *pixels, uint32_t width, uint32_t height)
+{
+    target.w = static_cast<int>(width);
+    target.h = static_cast<int>(width);
+    g_renderer->loadTexture(target, width, height, pixels);
+}
+
 void GlRenderer::deleteTexture(PGE_Texture &tx)
 {
     if((tx.inited) && (tx.texture != g_renderer->getDummyTexture().texture))

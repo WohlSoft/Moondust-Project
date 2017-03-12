@@ -45,7 +45,7 @@ static bool isNonPowOf2Supported()
     return (strstr(reinterpret_cast<const char *>(sExtensions), "ARB_texture_non_power_of_two") != NULL);
 }
 
-inline unsigned int pow2roundup(unsigned int x)
+inline uint32_t pow2roundup(uint32_t x)
 {
     if(x == 0)
         return 0;
@@ -59,7 +59,7 @@ inline unsigned int pow2roundup(unsigned int x)
     return x + 1;
 }
 
-inline int pow2roundup(int x)
+inline int32_t pow2roundup(int32_t x)
 {
     if(x < 0)
         return 0;
@@ -211,12 +211,12 @@ void Render_OpenGL21::initDummyTexture()
         abort();
     }
 
-    int w = static_cast<int>(FreeImage_GetWidth(image));
-    int h = static_cast<int>(FreeImage_GetHeight(image));
+    uint32_t w = static_cast<uint32_t>(FreeImage_GetWidth(image));
+    uint32_t h = static_cast<uint32_t>(FreeImage_GetHeight(image));
     _dummyTexture.nOfColors = GL_RGBA;
     _dummyTexture.format = GL_BGRA;
-    _dummyTexture.w = w;
-    _dummyTexture.h = h;
+    _dummyTexture.w = static_cast<int>(w);
+    _dummyTexture.h = static_cast<int>(h);
     GLubyte *textura = reinterpret_cast<GLubyte *>(FreeImage_GetBits(image));
     loadTexture(_dummyTexture, w, h, textura);
     GraphicsHelps::closeImage(image);
@@ -227,21 +227,21 @@ PGE_Texture Render_OpenGL21::getDummyTexture()
     return _dummyTexture;
 }
 
-void Render_OpenGL21::loadTexture(PGE_Texture &target, int width, int height, unsigned char *RGBApixels)
+void Render_OpenGL21::loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t *RGBApixels)
 {
     FIBITMAP *tempImage = NULL;
 
     if(!g_OpenGL2_convertToPowof2)
     {
-        int p2_w = pow2roundup(width);
-        int p2_h = pow2roundup(height);
+        uint32_t p2_w = pow2roundup(width);
+        uint32_t p2_h = pow2roundup(height);
 
         if((width != p2_w) || (height != p2_h))
         {
             tempImage = FreeImage_ConvertFromRawBits(RGBApixels,
-                        width,
-                        height,
-                        width * 4,
+                        static_cast<int>(width),
+                        static_cast<int>(height),
+                        static_cast<int>(width * 4),
                         32,
                         FI_RGBA_RED_MASK,
                         FI_RGBA_GREEN_MASK,
@@ -260,7 +260,9 @@ void Render_OpenGL21::loadTexture(PGE_Texture &target, int width, int height, un
     // Bind the texture object
     glBindTexture(GL_TEXTURE_2D, target.texture);
     GLERRORCHECK();
-    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, width, height,
+    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors,
+                 static_cast<GLsizei>(width),
+                 static_cast<GLsizei>(height),
                  0, target.format, GL_UNSIGNED_BYTE, reinterpret_cast<GLubyte *>(RGBApixels));
     GLERRORCHECK();
     glBindTexture(GL_TEXTURE_2D, 0);

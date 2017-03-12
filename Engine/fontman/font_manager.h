@@ -27,63 +27,101 @@
 #include <vector>
 #include <unordered_map>
 
+#include "font_engine_base.h"
 
-#include "raster_font.h"
-
-class FontManager
+namespace FontManager
 {
-public:
-    static void initBasic();
-    static void initFull();
-    static void quit();
+/*
+ * UTF-8 helpers
+ */
+size_t       utf8_strlen(const char *str);
+size_t       utf8_strlen(const char *str, size_t len);
+size_t       utf8_strlen(const std::string &str);
+/**
+ * @brief Get byte lenght from character lenght from begin to utf8len
+ * @param str input UTF-8 string
+ * @param utf8len Desireed character lenght
+ * @return Byte-lenght of desired character lenght
+ */
+size_t       utf8_substrlen(const std::string &str, size_t utf8len);
+std::string  utf8_substr(const std::string &str, size_t utf8_begin, size_t utf8_len);
+void         utf8_pop_back(std::string &str);
+void         utf8_erase_at(std::string &str, size_t begin);
+void         utf8_erase_before(std::string &str, size_t end);
 
-    static size_t       utf8_strlen(const char *str);
-    static size_t       utf8_strlen(const char *str, size_t len);
-    static size_t       utf8_strlen(const std::string &str);
-    static size_t       utf8_substrlen(const std::string &str, size_t utf8len);
-    static std::string  utf8_substr(const std::string &str, size_t utf8_begin, size_t utf8_len);
-    static void         utf8_pop_back(std::string &str);
-    static void         utf8_erase_at(std::string &str, size_t begin);
-    static void         utf8_erase_before(std::string &str, size_t end);
 
-    static PGE_Size textSize(std::string &text,
-                             int    fontID,
-                             int    max_line_lenght = 0,
-                             bool   cut = false,
-                             int    ttfFontPixelSize = -1);
+//! Initialize basic support for font rendering withouth config pack
+void initBasic();
+//! Full initialization of font renderith include external fonts
+void initFull();
+//! De-Initialize font manager and clear memory
+void quit();
 
-    static int getFontID(std::string fontName);
+enum DefaultFont
+{
+    TTF_Font        = -2,
+    DefaultTTF_Font = -1,
+    DefaultRaster   = 0
+};
 
-    enum DefaultFont
-    {
-        TTF_Font        = -2,
-        DefaultTTF_Font = -1,
-        DefaultRaster   = 0
-    };
+/**
+ * @brief Get pixel metrics of the text block
+ * @param text Text fragment to measure
+ * @param fontID Font-ID
+ * @param max_line_lenght max line width
+ * @param cut First line only, ignore all next lines
+ * @param ttfFontPixelSize Point size for the TTF fonts
+ * @return
+ */
+PGE_Size textSize(std::string &text, int    fontID,
+                 uint32_t max_line_lenght = 0,
+                 bool   cut = false,
+                 uint32_t ttfFontSize = 14);
 
-    static void printText(std::string text,
-                          int x, int y, int font = DefaultRaster,
-                          float Red=1.0, float Green=1.0, float Blue=1.0, float Alpha=1.0,
-                          int ttf_FontSize = 14);
+/**
+ * @brief Retreive Font-ID from the font name
+ * @param fontName Name of the font
+ * @return FontID key
+ */
+int      getFontID(std::string fontName);
 
-    static VPtrList<RasterFont> rasterFonts;//!< Complete array of raster fonts
-    static RasterFont *rFont;//!< Default raster font
+/**
+ * @brief Print the text fragment to the screen
+ * @param text Text fragment to print
+ * @param x X position on the screen
+ * @param y Y position on the screen
+ * @param font Font-ID
+ * @param Red Red color level from 0.0 to 1.0
+ * @param Green Green color level from 0.0 to 1.0
+ * @param Blue Blue color level from 0.0 to 1.0
+ * @param Alpha Alpha-channel level from 0.0 to 1.0
+ * @param ttf_FontSize Point size for the TTF fonts
+ */
+void printText(std::string text,
+                      int x, int y, int font = DefaultRaster,
+                      float Red=1.0, float Green=1.0, float Blue=1.0, float Alpha=1.0,
+                      uint32_t ttf_FontSize = 14);
 
-    static void optimizeText(std::string &text,
-                             size_t max_line_lenght,
-                             int *numLines = 0,
-                             int *numCols = 0);
+/**
+ * @brief Clean-Up text fragment to fit into the character width
+ * @param [_inout] text Text to optimize
+ * @param [_in]  max_line_lenght max line lenght in characters
+ * @param [_out] numLines Total line in the text fragment after optimization
+ * @param [_out] numCols Total columns in the text fragment after optimization
+ */
+void           optimizeText(std::string &text,
+                            size_t max_line_lenght,
+                            int *numLines = 0,
+                            int *numCols = 0);
 
-    static std::string cropText(std::string text, size_t max_symbols);
+/**
+ * @brief Strip text outing of max count of symbols
+ * @param text input text
+ * @param max_symbols Maximal character count limit
+ * @return Begin of string which is fit into desired lenght limit
+ */
+std::string     cropText(std::string text, size_t max_symbols);
 
-private:
-    static bool isInit;
-
-    typedef std::unordered_map<std::string, int> FontsHash;
-    static FontsHash fonts;
-
-    static int  fontID;
-    static bool double_pixled;
 };
 
 #endif // FONT_MANAGER_H

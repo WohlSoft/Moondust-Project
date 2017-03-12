@@ -275,7 +275,11 @@ BuildFreeType()
     UnArch 'freetype-2.7.1'
     printf "=========\E[37;42mFreeType\E[0m===========\n"
     FREETYPE_ARGS="${FREETYPE_ARGS} --prefix=${InstallTo}"
-    FREETYPE_ARGS="${FREETYPE_ARGS} CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    if [[ "$OSTYPE" != "msys"* ]]; then
+        FREETYPE_ARGS="${FREETYPE_ARGS} CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    fi
+    FREETYPE_ARGS="${FREETYPE_ARGS} --with-zlib=no --with-bzip2=no --with-png=false"
+    FREETYPE_ARGS="${FREETYPE_ARGS} --with-harfbuzz=false"
     FREETYPE_ARGS="${FREETYPE_ARGS} --enable-static=yes --enable-shared=no"
     BuildSrc 'freetype-2.7.1' "${FREETYPE_ARGS}"
 }

@@ -121,11 +121,12 @@ FIBITMAP *GraphicsHelps::loadImageRC(const char *file)
 {
     unsigned char *memory = nullptr;
     size_t fileSize = 0;
-    if(!RES_getMem(file, memory, fileSize))
-    {
-        pLogCritical("Resource file \"%s\" is not found!", file);
-        return nullptr;
-    }
+    SDL_assert_release(RES_getMem(file, memory, fileSize));
+    //{
+        //pLogCritical("Resource file \"%s\" is not found!", file);
+        //return nullptr;
+    //}
+
     FIMEMORY *imgMEM = FreeImage_OpenMemory(memory, static_cast<FI_DWORD>(fileSize));
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 

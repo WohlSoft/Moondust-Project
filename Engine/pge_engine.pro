@@ -60,6 +60,7 @@ android || macx: {
 }
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include/freetype2/
 contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include/luajit-2.0
 
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
@@ -306,6 +307,8 @@ SOURCES += \
     script/lua_world_engine.cpp \
     settings/debugger.cpp \
     settings/global_settings.cpp \
+    fontman/utf8_helpers.cpp \
+    fontman/ttf_font.cpp
 
 
 HEADERS  += \
@@ -466,6 +469,8 @@ HEADERS  += \
     settings/debugger.h \
     settings/global_settings.h \
     version.h \
+    fontman/font_engine_base.h \
+    fontman/ttf_font.h
 
 DISTFILES += \
     ../changelog.engine.txt \

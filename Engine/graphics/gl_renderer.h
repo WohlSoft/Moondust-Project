@@ -94,6 +94,7 @@ public:
 
     static PGE_Texture loadTexture(std::string path, std::string maskPath="");
     static void loadTextureP(PGE_Texture &target, std::string path, std::string maskPath="");
+    static void loadRawTextureP(PGE_Texture &target, uint8_t *pixels, uint32_t width, uint32_t height);
     static void deleteTexture(PGE_Texture &tx);
 
     static bool isTopDown();

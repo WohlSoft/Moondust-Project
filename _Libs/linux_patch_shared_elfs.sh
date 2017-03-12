@@ -29,7 +29,6 @@ patchBin()
 }
 
 patchBin pge_editor
-patchBin pge_engine
 patchBin pge_calibrator
 patchBin pge_manager
 patchBin pge_maintainer

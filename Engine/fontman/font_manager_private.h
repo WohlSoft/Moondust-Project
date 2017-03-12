@@ -23,9 +23,9 @@
 #include <stdint.h>
 #include <string>
 
-inline int char2int(const char32_t &ch)
+inline uint32_t char2int(const char32_t &ch)
 {
-    return static_cast<int>(ch - U'0');
+    return static_cast<uint32_t>(ch - U'0');
 }
 
 /* //Currently unused, uncommend when it needed

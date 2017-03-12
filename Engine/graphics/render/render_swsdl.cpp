@@ -112,12 +112,12 @@ void Render_SW_SDL::initDummyTexture()
         abort();
     }
 
-    int w = static_cast<int>(FreeImage_GetWidth(image));
-    int h = static_cast<int>(FreeImage_GetHeight(image));
+    uint32_t w = static_cast<uint32_t>(FreeImage_GetWidth(image));
+    uint32_t h = static_cast<uint32_t>(FreeImage_GetHeight(image));
     _dummyTexture.nOfColors = GL_RGBA;
     _dummyTexture.format = GL_BGRA;
-    _dummyTexture.w = w;
-    _dummyTexture.h = h;
+    _dummyTexture.w = static_cast<int>(w);
+    _dummyTexture.h = static_cast<int>(h);
     GLubyte *textura = reinterpret_cast<GLubyte *>(FreeImage_GetBits(image));
     loadTexture(_dummyTexture, w, h, textura);
     GraphicsHelps::closeImage(image);
@@ -128,11 +128,15 @@ PGE_Texture Render_SW_SDL::getDummyTexture()
     return _dummyTexture;
 }
 
-void Render_SW_SDL::loadTexture(PGE_Texture &target, int width, int height, unsigned char *RGBApixels)
+void Render_SW_SDL::loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t *RGBApixels)
 {
     SDL_Surface *surface;
     SDL_Texture *texture;
-    surface = SDL_CreateRGBSurfaceFrom(RGBApixels, width, height, 32, width * 4,
+    surface = SDL_CreateRGBSurfaceFrom(RGBApixels,
+                                       static_cast<int>(width),
+                                       static_cast<int>(height),
+                                       32,
+                                       static_cast<int>(width * 4),
                                        FI_RGBA_RED_MASK,
                                        FI_RGBA_GREEN_MASK,
                                        FI_RGBA_BLUE_MASK,

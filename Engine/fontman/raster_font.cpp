@@ -27,41 +27,41 @@
 
 #include "font_manager_private.h"
 
-RasterFont::RasterFont()
+RasterFont::RasterFont() : BaseFontEngine()
 {
-    letter_width    = 0;
-    letter_height   = 0;
-    space_width     = 0;
-    interletter_space = 0;
-    newline_offset  = 0;
-    matrix_width    = 0;
-    matrix_height   = 0;
-    isReady         = false;
-    ttf_borders     = false;
-    fontName        = fmt::format("font{0}", rand());
+    m_letterWidth    = 0;
+    m_letterHeight   = 0;
+    m_spaceWidth     = 0;
+    m_interLetterSpace = 0;
+    m_newlineOffset  = 0;
+    m_matrixWidth    = 0;
+    m_matrixHeight   = 0;
+    m_isReady        = false;
+    m_ttfBorders     = false;
+    m_fontName       = fmt::format("font{0}", rand());
 }
 
-RasterFont::RasterFont(const RasterFont &rf)
+RasterFont::RasterFont(const RasterFont &rf) : BaseFontEngine(rf)
 {
-    letter_width      = rf.letter_width;
-    letter_height     = rf.letter_height;
-    interletter_space = rf.interletter_space;
-    space_width       = rf.space_width;
-    newline_offset    = rf.newline_offset;
-    matrix_width      = rf.matrix_width;
-    matrix_height     = rf.matrix_height;
-    isReady           = rf.isReady;
-    ttf_borders       = rf.ttf_borders;
-    fontMap           = rf.fontMap;
-    textures          = rf.textures;
-    fontName          = rf.fontName;
+    m_letterWidth      = rf.m_letterWidth;
+    m_letterHeight     = rf.m_letterHeight;
+    m_interLetterSpace = rf.m_interLetterSpace;
+    m_spaceWidth       = rf.m_spaceWidth;
+    m_newlineOffset    = rf.m_newlineOffset;
+    m_matrixWidth      = rf.m_matrixWidth;
+    m_matrixHeight     = rf.m_matrixHeight;
+    m_isReady          = rf.m_isReady;
+    m_ttfBorders       = rf.m_ttfBorders;
+    m_charMap          = rf.m_charMap;
+    m_texturesBank     = rf.m_texturesBank;
+    m_fontName         = rf.m_fontName;
 }
 
 RasterFont::~RasterFont()
 {
-    for(PGE_Texture &t : textures)
+    for(PGE_Texture &t : m_texturesBank)
         GlRenderer::deleteTexture(t);
-    textures.clear();
+    m_texturesBank.clear();
 }
 
 void RasterFont::loadFont(std::string font_ini)
@@ -78,11 +78,11 @@ void RasterFont::loadFont(std::string font_ini)
     size_t tables = 0;
     font.beginGroup("font");
     font.read("tables", tables, 0);
-    font.read("name", fontName, fontName);
-    font.read("ttf-borders", ttf_borders, false);
-    font.read("space-width", space_width, 0);
-    font.read("interletter-space", interletter_space, 0);
-    font.read("newline-offset", newline_offset, 0);
+    font.read("name", m_fontName, m_fontName);
+    font.read("ttf-borders", m_ttfBorders, false);
+    font.read("space-width", m_spaceWidth, 0);
+    font.read("interletter-space", m_interLetterSpace, 0);
+    font.read("newline-offset", m_newlineOffset, 0);
     font.endGroup();
     std::vector<std::string> tables_list;
     tables_list.reserve(tables);
@@ -115,13 +115,13 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
 
     IniProcessing font(fontmap_ini);
     std::string texFile;
-    int w = letter_width, h = letter_height;
+    uint32_t w = m_letterWidth, h = m_letterHeight;
     font.beginGroup("font-map");
     font.read("texture", texFile, "");
     font.read("width", w, 0);
     font.read("height", h, 0);
-    matrix_width = w;
-    matrix_height = h;
+    m_matrixWidth = w;
+    m_matrixHeight = h;
 
     if((w <= 0) || (h <= 0))
     {
@@ -142,19 +142,19 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
     if(!fontTexture.inited)
         pLogWarning("Failed to load font texture! Invalid image!");
 
-    textures.push_back(fontTexture);
-    PGE_Texture *loadedTexture = &textures.back();
+    m_texturesBank.push_back(fontTexture);
+    PGE_Texture *loadedTexture = &m_texturesBank.back();
 
-    if((letter_width == 0) || (letter_height == 0))
+    if((m_letterWidth == 0) || (m_letterHeight == 0))
     {
-        letter_width    = fontTexture.w / w;
-        letter_height   = fontTexture.h / h;
+        m_letterWidth    = static_cast<uint32_t>(fontTexture.w) / w;
+        m_letterHeight   = static_cast<uint32_t>(fontTexture.h) / h;
 
-        if(space_width == 0)
-            space_width = letter_width;
+        if(m_spaceWidth == 0)
+            m_spaceWidth = m_letterWidth;
 
-        if(newline_offset == 0)
-            newline_offset = letter_height;
+        if(m_newlineOffset == 0)
+            m_newlineOffset = m_letterHeight;
     }
 
     font.endGroup();
@@ -180,7 +180,7 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
             continue;
         }
 
-        if(matrix_width > 1)
+        if(m_matrixWidth > 1)
         {
             if(endPos == x.size())
             {
@@ -219,12 +219,12 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
         {
         #endif
             rch.tx              =  loadedTexture;
-            rch.l               =  std::stof(charPosY.c_str()) / matrix_width;
-            rch.r               = (std::stof(charPosY.c_str()) + 1.0f) / matrix_width;
+            rch.l               =  std::stof(charPosY.c_str()) / m_matrixWidth;
+            rch.r               = (std::stof(charPosY.c_str()) + 1.0f) / m_matrixWidth;
             rch.padding_left    = (ucharX.size() > 1) ? char2int(ucharX[1]) : 0;
             rch.padding_right   = (ucharX.size() > 2) ? char2int(ucharX[2]) : 0;
-            rch.t               =  std::stof(charPosX.c_str()) / matrix_height;
-            rch.b               = (std::stof(charPosX.c_str()) + 1.0f) / matrix_height;
+            rch.t               =  std::stof(charPosX.c_str()) / m_matrixHeight;
+            rch.b               = (std::stof(charPosX.c_str()) + 1.0f) / m_matrixHeight;
             rch.valid = true;
         #ifndef DEBUG_BUILD
         }
@@ -234,27 +234,27 @@ void RasterFont::loadFontMap(std::string fontmap_ini)
         }
         #endif
 
-        fontMap[ch] = rch;
+        m_charMap[ch] = rch;
     }
 
     font.endGroup();
 
-    if(!fontMap.empty())
-        isReady = true;
+    if(!m_charMap.empty())
+        m_isReady = true;
 }
 
 
-PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
+PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool cut, uint32_t)
 {
     if(text.empty())
         return PGE_Size(0, 0);
 
     size_t lastspace = 0; //!< index of last found space character
     size_t count     = 1; //!< Count of lines
-    int maxWidth     = 0; //!< detected maximal width of message
+    uint32_t maxWidth     = 0; //!< detected maximal width of message
 
-    int widthSumm    = 0;
-    int widthSummMax = 0;
+    uint32_t widthSumm    = 0;
+    uint32_t widthSummMax = 0;
 
     if(cut)
     {
@@ -264,7 +264,7 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
     }
 
     /****************Word wrap*********************/
-    int x = 0;
+    uint32_t x = 0;
     for(size_t i = 0; i < text.size(); i++, x++)
     {
         char &cx = text[i];
@@ -278,9 +278,9 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
         case '\t':
         {
             lastspace = i;
-            size_t spaceSize = static_cast<size_t>(space_width + interletter_space / 2);
-            size_t tabMult = 4 - ((static_cast<size_t>(widthSumm) / spaceSize) % 4);
-            widthSumm += static_cast<size_t>(space_width + interletter_space / 2) * tabMult;
+            size_t spaceSize = m_spaceWidth + m_interLetterSpace / 2;
+            size_t tabMult = 4 - ((widthSumm / spaceSize) % 4);
+            widthSumm += static_cast<size_t>(m_spaceWidth + m_interLetterSpace / 2) * tabMult;
             if(widthSumm > widthSummMax)
                 widthSummMax = widthSumm;
             break;
@@ -289,7 +289,7 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
         case ' ':
         {
             lastspace = i;
-            widthSumm += space_width + interletter_space / 2;
+            widthSumm += m_spaceWidth + m_interLetterSpace / 2;
             if(widthSumm > widthSummMax)
                 widthSummMax = widthSumm;
             break;
@@ -298,7 +298,8 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
         case '\n':
         {
             lastspace = 0;
-            if((maxWidth < x) && (maxWidth < max_line_lenght)) maxWidth = x;
+            if((maxWidth < x) && (maxWidth < max_line_lenght))
+                maxWidth = x;
             x = 0;
             widthSumm = 0;
             count++;
@@ -307,17 +308,17 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
 
         default:
         {
-            CharMap::iterator rc = fontMap.find(get_utf8_char(&cx));
-            if(rc != fontMap.end())
+            CharMap::iterator rc = m_charMap.find(get_utf8_char(&cx));
+            if(rc != m_charMap.end())
             {
                 RasChar &rch = rc->second;
-                widthSumm += (letter_width - rch.padding_left - rch.padding_right + interletter_space);
+                widthSumm += (m_letterWidth - rch.padding_left - rch.padding_right + m_interLetterSpace);
                 if(widthSumm > widthSummMax)
                     widthSummMax = widthSumm;
             }
             else
             {
-                widthSumm += (letter_width + interletter_space);
+                widthSumm += (m_letterWidth + m_interLetterSpace);
                 if(widthSumm > widthSummMax)
                     widthSummMax = widthSumm;
             }
@@ -346,24 +347,25 @@ PGE_Size RasterFont::textSize(std::string &text, int max_line_lenght, bool cut)
     }
 
     if(count == 1)
-        maxWidth = static_cast<int>(text.length());
+        maxWidth = static_cast<uint32_t>(text.length());
 
     /****************Word wrap*end*****************/
-    return PGE_Size(widthSummMax, newline_offset * static_cast<int>(count));
+    return PGE_Size(static_cast<int32_t>(widthSummMax), static_cast<int32_t>(m_newlineOffset * count));
 }
 
 
 void RasterFont::printText(const std::string &text,
-                           int x, int y,
-                           float Red, float Green, float Blue, float Alpha)
+                           int32_t x, int32_t y,
+                           float Red, float Green, float Blue, float Alpha,
+                           uint32_t)
 {
-    if(fontMap.empty() || text.empty())
+    if(m_charMap.empty() || text.empty())
         return;
 
-    int offsetX = 0;
-    int offsetY = 0;
-    GLint w = letter_width;
-    GLint h = letter_height;
+    uint32_t offsetX = 0;
+    uint32_t offsetY = 0;
+    uint32_t w = m_letterWidth;
+    uint32_t h = m_letterHeight;
 
     const char *strIt  = text.c_str();
     const char *strEnd = strIt + text.size();
@@ -376,32 +378,33 @@ void RasterFont::printText(const std::string &text,
         {
         case '\n':
             offsetX = 0;
-            offsetY += newline_offset;
+            offsetY += m_newlineOffset;
             continue;
 
         case '\t':
+            //Fake tabulation
             offsetX += offsetX + offsetX % w;
             continue;
 
         case ' ':
-            offsetX += space_width + interletter_space / 2;
+            offsetX += m_spaceWidth + m_interLetterSpace / 2;
             continue;
         }
 
-        RasChar rch = fontMap[get_utf8_char(strIt)];
+        RasChar rch = m_charMap[get_utf8_char(strIt)];
         if(rch.valid)
         {
             GlRenderer::BindTexture(rch.tx);
             GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
-            GlRenderer::renderTextureCur(x + offsetX - rch.padding_left,
-                                         y + offsetY,
+            GlRenderer::renderTextureCur(x + static_cast<int32_t>(offsetX - rch.padding_left),
+                                         y + static_cast<int32_t>(offsetY),
                                          w,
                                          h,
                                          rch.t,
                                          rch.b,
                                          rch.l,
                                          rch.r);
-            offsetX += w - rch.padding_left - rch.padding_right + interletter_space;
+            offsetX += w - rch.padding_left - rch.padding_right + m_interLetterSpace;
         }
         else
         {
@@ -415,7 +418,7 @@ void RasterFont::printText(const std::string &text,
             GlRenderer::renderTexture(&c, x + offsetX, y + offsetY);
             offsetX += c.w + interletter_space;
             #else
-            offsetX += interletter_space;
+            offsetX += m_interLetterSpace;
             #endif
         }
         strIt += static_cast<size_t>(trailingBytesForUTF8[ucx]);
@@ -426,11 +429,11 @@ void RasterFont::printText(const std::string &text,
 
 bool RasterFont::isLoaded()
 {
-    return isReady;
+    return m_isReady;
 }
 
 std::string RasterFont::getFontName()
 {
-    return fontName;
+    return m_fontName;
 }
 
