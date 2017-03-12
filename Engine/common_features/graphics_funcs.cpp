@@ -110,9 +110,9 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     }
 
 #ifdef DEBUG_BUILD
-    D_pLogDebug("File read of texture %s passed in %d milliseconds", file.c_str(), fReadTimeElapsed);
-    D_pLogDebug("Conv to 32-bit of %s passed in %d milliseconds", file.c_str(), imgConvertElapsed);
-    D_pLogDebug("Total Loading of image %s passed in %d milliseconds", file.c_str(), static_cast<long long>(loadingTime.elapsed()));
+    D_pLogDebug("File read of texture %s passed in %d milliseconds", file.c_str(), static_cast<int>(fReadTimeElapsed));
+    D_pLogDebug("Conv to 32-bit of %s passed in %d milliseconds", file.c_str(), static_cast<int>(imgConvertElapsed));
+    D_pLogDebug("Total Loading of image %s passed in %d milliseconds", file.c_str(), static_cast<int>(loadingTime.elapsed()));
 #endif
     return img;
 }

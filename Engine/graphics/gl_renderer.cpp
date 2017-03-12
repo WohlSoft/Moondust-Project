@@ -836,7 +836,7 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
         #endif
         GraphicsHelps::mergeWithMask(sourceImage, maskPath);
         #ifdef DEBUG_BUILD
-        maskElapsed = maskMergingTime.elapsed();
+        maskElapsed = maskMergingTime.nanoelapsed();
         #endif
     }
 
@@ -891,23 +891,23 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
     //    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
     //    target.inited = true;
     #ifdef DEBUG_BUILD
-    bindElapsed = bindingTime.elapsed();
+    bindElapsed = bindingTime.nanoelapsed();
     unloadTime.start();
     #endif
     //SDL_FreeSurface(sourceImage);
     GraphicsHelps::closeImage(sourceImage);
     #ifdef DEBUG_BUILD
-    unloadElapsed = unloadTime.elapsed();
+    unloadElapsed = unloadTime.nanoelapsed();
     #endif
     #ifdef DEBUG_BUILD
-    pLogDebug("Mask merging of %s passed in %ul milliseconds", path.c_str(), static_cast<unsigned long>(maskElapsed));
-    pLogDebug("Binding time of %s passed in %ul milliseconds", path.c_str(), static_cast<unsigned long>(bindElapsed));
-    pLogDebug("Unload time of %s passed in %ul milliseconds", path.c_str(), static_cast<unsigned long>(unloadElapsed));
-    pLogDebug("Total Loading of texture %s passed in %ul milliseconds (%ulx%ul)",
+    pLogDebug("Mask merging of %s passed in %d nanoseconds", path.c_str(), static_cast<int>(maskElapsed));
+    pLogDebug("Binding time of %s passed in %d nanoseconds", path.c_str(), static_cast<int>(bindElapsed));
+    pLogDebug("Unload time of %s passed in %d nanoseconds", path.c_str(), static_cast<int>(unloadElapsed));
+    pLogDebug("Total Loading of texture %s passed in %d nanoseconds (%dx%d)",
               path.c_str(),
-              static_cast<unsigned long>(totalTime.elapsed()),
-              static_cast<unsigned long>(w),
-              static_cast<unsigned long>(h));
+              static_cast<int>(totalTime.nanoelapsed()),
+              static_cast<int>(w),
+              static_cast<int>(h));
     #endif
     return;
 }
