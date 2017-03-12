@@ -619,15 +619,8 @@ int TitleScene::findEpisodes(void *)
             files.push_back(filefind_folder + folder + "/" + world);
     }
 
-    if(files.empty())
-    {
-        std::pair<std::string, std::string > file;
-        file.first = "noworlds";
-        //% "<episodes not found>"
-        file.second = qtTrId("MSG_EPISODES_NOT_FOUND");
-        filefind_found_files.push_back(file);
-    }
-    else
+    bool has_files_added = false;
+    if(!files.empty())
     {
         WorldData world;
         for(std::string &filename : files)
@@ -639,9 +632,27 @@ int TitleScene::findEpisodes(void *)
                 file.first = filename;
                 file.second = (title.empty() ? Files::basename(filename) : title);
                 filefind_found_files.push_back(file);
+                has_files_added = true;
+            }
+            else
+            {
+                pLogWarning("Failed to parse world map header %s while listing available levels with error [%s] at line %d with line data [%s]",
+                            filename.c_str(),
+                            world.meta.ERROR_info.c_str(),
+                            world.meta.ERROR_linenum,
+                            world.meta.ERROR_linedata.c_str());
             }
         }
     }
+    if(!has_files_added)
+    {
+        std::pair<std::string, std::string > file;
+        file.first = "noworlds";
+        //% "<episodes not found>"
+        file.second = qtTrId("MSG_EPISODES_NOT_FOUND");
+        filefind_found_files.push_back(file);
+    }
+
     filefind_finished = true;
     return 0;
 }
@@ -656,16 +667,10 @@ int TitleScene::findLevels(void *)
 
     filefind_found_files.clear();//Clean up old stuff
 
-    if(files.empty())
+    bool has_files_added = false;
+    if(!files.empty())
     {
-        std::pair<std::string, std::string > file;
-        file.first = "noworlds";
-        //% "<levels not found>"
-        file.second = qtTrId("MSG_LEVELS_NOT_FOUND");
-        filefind_found_files.push_back(file);
-    }
-    else
-    {
+        filefind_folder.push_back('/');
         LevelData level;
         for(std::string &file : files)
         {
@@ -676,9 +681,29 @@ int TitleScene::findLevels(void *)
                 filex.first = filefind_folder + file;
                 filex.second = (title.empty() ? file : title);
                 filefind_found_files.push_back(filex);
+                has_files_added = true;
+            }
+            else
+            {
+                pLogWarning("Failed to parse level header %s%s while listing available levels with error [%s] at line %d with line data [%s]",
+                            filefind_folder.c_str(),
+                            file.c_str(),
+                            level.meta.ERROR_info.c_str(),
+                            level.meta.ERROR_linenum,
+                            level.meta.ERROR_linedata.c_str());
             }
         }
     }
+
+    if(!has_files_added)
+    {
+        std::pair<std::string, std::string > file;
+        file.first = "noworlds";
+        //% "<levels not found>"
+        file.second = qtTrId("MSG_LEVELS_NOT_FOUND");
+        filefind_found_files.push_back(file);
+    }
+
     filefind_finished = true;
 
     return 0;
