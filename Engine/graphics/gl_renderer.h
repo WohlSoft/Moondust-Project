@@ -77,7 +77,7 @@ public:
     static void renderTexture(PGE_Texture *texture, float x, float y); //!<Render texture as-is
     static void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top=0.0f, float ani_bottom=1.0f, float ani_left=0.0f, float ani_right=1.0f);//!<Render matrix animation fragment
     static void renderRect(float x, float y, float w, float h, GLfloat red=1.f, GLfloat green=1.f, GLfloat blue=1.f, GLfloat alpha=1.f, bool filled=true);
-    static void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+    static void renderRectBR(double _left, double _top, double _right, double _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
     static void renderTextureCur(float x, float y, float w, float h, float ani_top=0.0f, float ani_bottom=1.0f, float ani_left=0.0f, float ani_right=1.0f);//!< Draw currently binded texture
 
     static void BindTexture(PGE_Texture *texture);

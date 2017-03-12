@@ -255,7 +255,6 @@ void TitleScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 void TitleScene::onMouseMoved(SDL_MouseMotionEvent &mmevent)
 {
     mousePos = GlRenderer::MapToScr(mmevent.x, mmevent.y);
-
     if(!menu.isKeyGrabbing() && !m_doExit)
         menu.setMouseHoverPos(mousePos.x(), mousePos.y());
 }

@@ -339,8 +339,8 @@ void PGE_MenuBoxBase::exec()
         GlRenderer::flush();
         GlRenderer::repaint();
 
-        if((!PGE_Window::vsync) && (m_uTick > static_cast<int>(SDL_GetTicks() - start_render)))
-            SDL_Delay(static_cast<unsigned int>(m_uTick) - (SDL_GetTicks() - start_render));
+        if((!PGE_Window::vsync) && (m_uTick > static_cast<Sint32>(SDL_GetTicks() - start_render)))
+            SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render));
     }
 }
 

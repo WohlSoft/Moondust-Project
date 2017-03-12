@@ -189,12 +189,12 @@ void PGE_TextInputBox::render()
     if(_page == 2)
     {
         if(m_textureUsed)
-            drawTexture(_sizeRect, 32, m_faderOpacity);
+            drawTexture(_sizeRect, 32, static_cast<float>(m_faderOpacity));
         else
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
                                    _sizeRect.width(), _sizeRect.height(),
-                                   bg_color.Red(), bg_color.Green(), bg_color.Blue(), m_faderOpacity);
+                                   bg_color.Red(), bg_color.Green(), bg_color.Blue(), static_cast<float>(m_faderOpacity));
         }
 
         FontManager::printText(message, _sizeRect.left() + padding, _sizeRect.top() + padding, fontID,
@@ -210,7 +210,7 @@ void PGE_TextInputBox::render()
                         _sizeRect.center().y() - (height + padding)*m_faderOpacity,
                         _sizeRect.center().x() + (width + padding)*m_faderOpacity,
                         _sizeRect.center().y() + (height + padding)*m_faderOpacity,
-                        32, m_faderOpacity);
+                        32, static_cast<float>(m_faderOpacity));
         }
         else
         {
@@ -218,7 +218,7 @@ void PGE_TextInputBox::render()
                                      _sizeRect.center().y() - (height + padding)*m_faderOpacity,
                                      _sizeRect.center().x() + (width + padding)*m_faderOpacity,
                                      _sizeRect.center().y() + (height + padding)*m_faderOpacity,
-                                     bg_color.Red(), bg_color.Green(), bg_color.Blue(), m_faderOpacity);
+                                     bg_color.Red(), bg_color.Green(), bg_color.Blue(), static_cast<float>(m_faderOpacity));
         }
     }
 }
@@ -342,7 +342,7 @@ void PGE_TextInputBox::processBox(double tickTime)
             {
             case SDL_SCANCODE_V:
             {
-                if(event.key.keysym.mod & KMOD_CTRL)
+                if((event.key.keysym.mod & KMOD_CTRL) && (SDL_HasClipboardText() == SDL_TRUE))
                 {
                     _inputText.append(SDL_GetClipboardText());
                     std::remove(_inputText.begin(), _inputText.end(), '\r');

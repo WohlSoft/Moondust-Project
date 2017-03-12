@@ -165,6 +165,8 @@ SOURCES += \
     gui/pge_msgbox.cpp \
     gui/pge_boxbase.cpp \
     fontman/font_manager.cpp \
+    fontman/raster_font.cpp \
+    fontman/font_manager_private.cpp \
     networking/editor_pipe.cpp \
     networking/intproc.cpp \
     gui/pge_menu.cpp \
@@ -303,7 +305,7 @@ SOURCES += \
     audio/play_music.cpp \
     audio/play_sfx.cpp \
     common_features/QTranslatorX/qm_translator.cpp \
-    common_features/QTranslatorX/ConvertUTF.c
+    common_features/QTranslatorX/ConvertUTF.c \
 
 HEADERS  += \
     _resources/resource.h \
@@ -338,6 +340,8 @@ HEADERS  += \
     gui/pge_msgbox.h \
     gui/pge_boxbase.h \
     fontman/font_manager.h \
+    fontman/raster_font.h \
+    fontman/font_manager_private.h \
     networking/editor_pipe.h \
     networking/intproc.h \
     common_features/logger.h \
@@ -460,7 +464,7 @@ HEADERS  += \
     audio/play_sfx.h \
     common_features/QTranslatorX/ConvertUTF.h \
     common_features/QTranslatorX/qm_translator.h \
-    common_features/tr.h
+    common_features/tr.h \
 
 
 RESOURCES +=

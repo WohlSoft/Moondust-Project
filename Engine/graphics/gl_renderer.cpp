@@ -1242,9 +1242,12 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
     g_renderer->renderRect(x, y, w, h, red, green, blue, alpha, filled);
 }
 
-void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+void GlRenderer::renderRectBR(double _left, double _top, double _right, double _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-    g_renderer->renderRectBR(_left, _top, _right, _bottom,
+    g_renderer->renderRectBR(static_cast<float>(_left),
+                             static_cast<float>(_top),
+                             static_cast<float>(_right),
+                             static_cast<float>(_bottom),
                              red,  green, blue,  alpha);
 }
 

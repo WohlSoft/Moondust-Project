@@ -110,20 +110,20 @@ void PGE_MsgBox::construct(std::string msg,
 
     if((pos.x() == -1) && (pos.y() == -1))
     {
-        m_sizeRect.setLeft(PGE_Window::Width/2 - width-padding);
-        m_sizeRect.setTop(PGE_Window::Height/3 - height-padding);
-        m_sizeRect.setRight(PGE_Window::Width/2 + width + padding);
-        m_sizeRect.setBottom(PGE_Window::Height/3 + height + padding);
+        m_sizeRect.setLeft(static_cast<int>(PGE_Window::Width/2 - width-padding));
+        m_sizeRect.setTop(static_cast<int>(PGE_Window::Height/3 - height-padding));
+        m_sizeRect.setRight(static_cast<int>(PGE_Window::Width/2 + width + padding));
+        m_sizeRect.setBottom(static_cast<int>(PGE_Window::Height/3 + height + padding));
 
         if(m_sizeRect.top() < padding)
-            m_sizeRect.setY(padding);
+            m_sizeRect.setY(static_cast<int>(padding));
     }
     else
     {
-        m_sizeRect.setLeft( pos.x() - width-padding);
-        m_sizeRect.setTop(pos.y() - height-padding);
-        m_sizeRect.setRight(pos.x() + width + padding);
-        m_sizeRect.setBottom(pos.y() + height + padding);
+        m_sizeRect.setLeft(static_cast<int>(pos.x() - width-padding));
+        m_sizeRect.setTop(static_cast<int>(pos.y() - height-padding));
+        m_sizeRect.setRight(static_cast<int>(pos.x() + width + padding));
+        m_sizeRect.setBottom(static_cast<int>(pos.y() + height + padding));
     }
 }
 
@@ -156,15 +156,15 @@ void PGE_MsgBox::render()
     {
         if(m_textureUsed)
         {
-            drawTexture(m_sizeRect, 32, m_faderOpacity);
+            drawTexture(m_sizeRect, 32, static_cast<float>(m_faderOpacity));
         }
         else
         {
             GlRenderer::renderRect(m_sizeRect.left(), m_sizeRect.top(),
                                    m_sizeRect.width(), m_sizeRect.height(),
-                                   bg_color.Red(), bg_color.Green(), bg_color.Blue(), m_faderOpacity);
+                                   bg_color.Red(), bg_color.Green(), bg_color.Blue(), static_cast<float>(m_faderOpacity));
         }
-        FontManager::printText(m_message, m_sizeRect.left()+padding, m_sizeRect.top()+padding, fontID,
+        FontManager::printText(m_message, m_sizeRect.left() + padding, m_sizeRect.top()+padding, fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
 //        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
 //                                         _sizeRect.top()+padding,
@@ -179,7 +179,7 @@ void PGE_MsgBox::render()
                         m_sizeRect.center().x()+(width + padding)*m_faderOpacity,
                         m_sizeRect.center().y()+(height + padding)*m_faderOpacity,
                         32,
-                        m_faderOpacity);
+                        static_cast<float>(m_faderOpacity));
         }
         else
         {
@@ -190,7 +190,7 @@ void PGE_MsgBox::render()
                                     bg_color.Red(),
                                     bg_color.Green(),
                                     bg_color.Blue(),
-                                    m_faderOpacity);
+                                    static_cast<float>(m_faderOpacity));
         }
     }
 }
@@ -221,8 +221,8 @@ void PGE_MsgBox::exec()
         GlRenderer::flush();
         GlRenderer::repaint();
 
-        if((!PGE_Window::vsync) && (m_uTick > (signed)(SDL_GetTicks() - start_render)))
-            SDL_Delay(m_uTick - (SDL_GetTicks() - start_render) );
+        if((!PGE_Window::vsync) && (m_uTick > static_cast<Sint32>(SDL_GetTicks() - start_render)))
+            SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render) );
     }
 }
 
