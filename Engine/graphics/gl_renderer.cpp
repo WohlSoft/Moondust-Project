@@ -840,10 +840,10 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
         #endif
     }
 
-    int w = static_cast<int>(FreeImage_GetWidth(sourceImage));
-    int h = static_cast<int>(FreeImage_GetHeight(sourceImage));
+    uint32_t w = static_cast<uint32_t>(FreeImage_GetWidth(sourceImage));
+    uint32_t h = static_cast<uint32_t>(FreeImage_GetHeight(sourceImage));
 
-    if((w <= 0) || (h <= 0))
+    if((w == 0) || (h == 0))
     {
         FreeImage_Unload(sourceImage);
         pLogWarning("Error loading of image file:\n"
@@ -871,10 +871,10 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
     FreeImage_FlipVertical(sourceImage);
     target.nOfColors = GL_RGBA;
     target.format = GL_BGRA;
-    target.w = w;
-    target.h = h;
-    target.frame_w = w;
-    target.frame_h = h;
+    target.w = static_cast<int>(w);
+    target.h = static_cast<int>(h);
+    target.frame_w = static_cast<int>(w);
+    target.frame_h = static_cast<int>(h);
     //    #ifdef PGE_USE_OpenGL_2_1
     //    glEnable(GL_TEXTURE_2D);
     //    #endif
@@ -915,7 +915,9 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
 void GlRenderer::loadRawTextureP(PGE_Texture &target, uint8_t *pixels, uint32_t width, uint32_t height)
 {
     target.w = static_cast<int>(width);
-    target.h = static_cast<int>(width);
+    target.h = static_cast<int>(height);
+    target.frame_w = static_cast<int>(width);
+    target.frame_h = static_cast<int>(height);
     g_renderer->loadTexture(target, width, height, pixels);
 }
 
