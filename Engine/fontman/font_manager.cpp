@@ -65,12 +65,14 @@ void FontManager::initBasic()
 
     unsigned char *memory = nullptr;
     size_t  fileSize = 0;
-    SDL_assert(RES_getMem("fonts/UKIJTuzB.ttf", memory, fileSize));
+    bool ok = RES_getMem("fonts/UKIJTuzB.ttf", memory, fileSize);
+    SDL_assert_release(ok);
 
     g_ttfFonts.emplace_back();
     TtfFont &mainFont = g_ttfFonts.back();
 
-    SDL_assert(mainFont.loadFont(reinterpret_cast<const char*>(memory), fileSize));
+    ok = mainFont.loadFont(reinterpret_cast<const char*>(memory), fileSize);
+    SDL_assert_release(ok);
     g_defaultTtfFont = &mainFont;
 
     g_double_pixled = false;

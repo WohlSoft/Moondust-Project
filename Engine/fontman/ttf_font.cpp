@@ -29,7 +29,8 @@ FT_Library  g_ft = nullptr;
 
 bool initializeFreeType()
 {
-    SDL_assert(FT_Init_FreeType(&g_ft) == 0);
+    FT_Error error = FT_Init_FreeType(&g_ft);
+    SDL_assert_release(error == 0);
     return true;
 }
 
@@ -47,7 +48,7 @@ void closeFreeType()
 
 TtfFont::TtfFont() : BaseFontEngine()
 {
-    SDL_assert(g_ft);
+    SDL_assert_release(g_ft);
 }
 
 TtfFont::~TtfFont()
@@ -64,7 +65,7 @@ TtfFont::~TtfFont()
 
 bool TtfFont::loadFont(const std::string &path)
 {
-    SDL_assert(g_ft);
+    SDL_assert_release(g_ft);
     FT_Error error = FT_New_Face(g_ft, path.c_str(), 0, &m_face);
     SDL_assert(error == 0);
     if(error)
@@ -87,7 +88,7 @@ bool TtfFont::loadFont(const std::string &path)
 
 bool TtfFont::loadFont(const char *mem, size_t size)
 {
-    SDL_assert(g_ft);
+    SDL_assert_release(g_ft);
     FT_Error error = FT_New_Memory_Face(g_ft, reinterpret_cast<const FT_Byte *>(mem),
                                         static_cast<FT_Long>(size), 0, &m_face);
     SDL_assert(error == 0);
@@ -109,7 +110,7 @@ PGE_Size TtfFont::textSize(std::string &text,
                            uint32_t max_line_lenght,
                            bool cut, uint32_t fontSize)
 {
-    SDL_assert(g_ft);
+    SDL_assert_release(g_ft);
     if(text.empty())
         return PGE_Size(0, 0);
 
@@ -126,8 +127,6 @@ PGE_Size TtfFont::textSize(std::string &text,
         if(i != std::string::npos)
             text.erase(i, text.size() - i);
     }
-
-    TheGlyph *glypg_prev = nullptr;
 
     /****************Word wrap*********************/
     uint32_t x = 0;
@@ -165,21 +164,7 @@ PGE_Size TtfFont::textSize(std::string &text,
         default:
         {
             TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(&cx));
-            widthSumm += glyph.width;
-
-            if(glypg_prev)
-            {
-                FT_Vector kerning;
-                FT_Get_Kerning(m_face,
-                               glypg_prev->glyph_index,
-                               glyph.glyph_index,
-                               FT_KERNING_DEFAULT,
-                               &kerning);
-                widthSumm += kerning.x;
-            }
-
-            glypg_prev = &glyph;
-
+            widthSumm += (glyph.advance>>6);
             if(widthSumm > widthSummMax)
                 widthSummMax = widthSumm;
             break;
@@ -218,14 +203,12 @@ void TtfFont::printText(const std::string &text,
                         float Red, float Green, float Blue, float Alpha,
                         uint32_t fontSize)
 {
-    SDL_assert(g_ft);
+    SDL_assert_release(g_ft);
     if(text.empty())
         return;
 
     uint32_t offsetX = 0;
     uint32_t offsetY = 0;
-
-    //TheGlyph *glypg_prev = nullptr;
 
     const char *strIt  = text.c_str();
     const char *strEnd = strIt + text.size();
@@ -259,22 +242,9 @@ void TtfFont::printText(const std::string &text,
                                   static_cast<float>(glyph_y - glyph.top),
                                   glyph.width,
                                   glyph.height
-                                  /*(static_cast<int32_t>(glyph.height) - glyph.top))*/
                                   );
         offsetX += (glyph.advance>>6);
-//        if(glypg_prev)
-//        {
-//            FT_Vector kerning;
-//            FT_Get_Kerning(m_face,
-//                           glypg_prev->glyph_index,
-//                           glyph.glyph_index,
-//                           FT_KERNING_DEFAULT,
-//                           &kerning);
-//            offsetX += kerning.x;
-//        } else {
-//            offsetX += (glyph.advance >>6);
-//        }
-        //glypg_prev = &glyph;
+
         strIt += static_cast<size_t>(trailingBytesForUTF8[ucx]);
     }
 }
@@ -305,30 +275,23 @@ TtfFont::TheGlyph &TtfFont::getGlyph(uint32_t fontSize, char32_t character)
 
 TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
 {
-    FT_Error error = 0;
-    TheGlyph t_glyph;
-    //FT_UInt glyph_index;
-    FT_GlyphSlot glyph;
+    FT_Error     error = 0;
+    TheGlyph     t_glyph;
 
     if(m_pixelSize != fontSize)
     {
         error = FT_Set_Pixel_Sizes(m_face, 0, fontSize);
-        SDL_assert(error == 0);
+        SDL_assert_release(error == 0);
         m_pixelSize = fontSize;
     }
-//    glyph_index = FT_Get_Char_Index(m_face, character);
-//    SDL_assert(glyph_index != 0); //FIXME: return dummy glypg instead
 
-//    error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_RENDER);
-//    SDL_assert(error == 0); //FIXME: return dummy glypg instead
     error = FT_Load_Char(m_face, character, FT_LOAD_RENDER);
-    SDL_assert(error == 0); //FIXME: return dummy glypg instead
-    glyph = m_face->glyph;
-    //FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, 0, 1);
-    //FT_BitmapGlyph bitmap_glyph = reinterpret_cast<FT_BitmapGlyph>(m_face->glyph);
-    FT_Bitmap &bitmap = glyph->bitmap;
-    uint32_t width =  bitmap.width;
-    uint32_t height = bitmap.rows;
+    SDL_assert_release(error == 0); //FIXME: return dummy glypg instead
+
+    FT_GlyphSlot glyph  = m_face->glyph;
+    FT_Bitmap &bitmap   = glyph->bitmap;
+    uint32_t width      = bitmap.width;
+    uint32_t height     = bitmap.rows;
 
     uint8_t *image = new uint8_t[4 * width * height];
     if(bitmap.pitch >= 0)
@@ -373,7 +336,7 @@ TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
     t_glyph.top     = glyph->bitmap_top;
     t_glyph.advance = glyph->advance.x;
     t_glyph.glyph_width = glyph->advance.x;
-    //t_glyph.glyph_index = glyph_index;
+
     delete [] image;
 
     SizeCharMap::iterator fSize = m_charMap.find(fontSize);
@@ -381,12 +344,12 @@ TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
     {
         m_charMap.insert({fontSize, CharMap()});
         fSize = m_charMap.find(fontSize);
-        SDL_assert(fSize != m_charMap.end());
+        SDL_assert_release(fSize != m_charMap.end());
     }
 
     fSize->second.insert({character, t_glyph});
     CharMap::iterator rc = fSize->second.find(character);
-    SDL_assert(rc != fSize->second.end());
+    SDL_assert_release(rc != fSize->second.end());
 
     return rc->second;
 }

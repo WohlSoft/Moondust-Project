@@ -87,7 +87,6 @@ private:
         int32_t  top    = 0;
         int32_t  advance = 0;
         FT_Pos   glyph_width = 0;
-        FT_UInt  glyph_index = 0;
     };
 
     TheGlyph & getGlyph(uint32_t fontSize, char32_t character);
