@@ -131,27 +131,28 @@ bool dataconfigs::loadBasics()
 
     int Animations = 0;
     guiset.beginGroup("gui");
-    guiset.read("editor-splash", splash_logo, "");
-    #ifdef __linux__
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    QString envir = env.value("XDG_CURRENT_DESKTOP", "");
-    qApp->setStyle("GTK");
-    if(envir == "KDE" || envir == "XFCE")
+    {
+        guiset.read("editor-splash", splash_logo, "");
+        #ifdef __linux__
+        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+        QString envir = env.value("XDG_CURRENT_DESKTOP", "");
+        qApp->setStyle("GTK");
+        if(envir == "KDE" || envir == "XFCE")
+            ConfStatus::defaultTheme = "Breeze";
+        else
+            guiset.read("default-theme", ConfStatus::defaultTheme, "");
+        #elif __APPLE__
         ConfStatus::defaultTheme = "Breeze";
-    else
+        #elif _WIN32
+        if(QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
+            ConfStatus::defaultTheme = "Breeze";
+        else
+            guiset.read("default-theme", ConfStatus::defaultTheme, "");
+        #else
         guiset.read("default-theme", ConfStatus::defaultTheme, "");
-
-    #elif __APPLE__
-    ConfStatus::defaultTheme = "Breeze";
-    #elif _WIN32
-    if(QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
-        ConfStatus::defaultTheme = "Breeze";
-    else
-        ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
-    #else
-    ConfStatus::defaultTheme =  guiset.value("default-theme", "").toString();
-    #endif
-    Animations     =            guiset.value("animations", 0).toInt();
+        #endif
+        guiset.read("animations", Animations, 0);
+    }
     guiset.endGroup();
 
     if(!openSection(&guiset, "main"))
