@@ -19,6 +19,8 @@
 #pragma once
 #ifndef LOGGER_H
 #define LOGGER_H
+
+#ifdef __cplusplus
 #include <string>
 
 enum class PGE_LogLevel
@@ -32,14 +34,24 @@ enum class PGE_LogLevel
 
 extern void LoadLogSettings();
 extern void CloseLog();
+#endif//__cplusplus
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 extern void pLogDebug(const char *format, ...);
 extern void pLogWarning(const char *format, ...);
 extern void pLogCritical(const char *format, ...);
 extern void pLogFatal(const char *format, ...);
 extern void pLogInfo(const char *format, ...);
+#ifdef __cplusplus
+}
+#endif
 
+#ifdef __cplusplus
 extern void WriteToLog(PGE_LogLevel type, std::string msg);
+#endif
 
 #ifdef DEBUG_BUILD
 #define D_pLogDebug(fmt, ...) pLogDebug(fmt, ##__VA_ARGS__)
@@ -55,9 +67,11 @@ extern void WriteToLog(PGE_LogLevel type, std::string msg);
 #define D_pLogInfo(fmt, ...)
 #endif
 
+#ifdef __cplusplus
 #define LogDebug(msg) WriteToLog(PGE_LogLevel::Debug, msg)
 #define LogWarning(msg) WriteToLog(PGE_LogLevel::Warning, msg)
 #define LogCritical(msg) WriteToLog(PGE_LogLevel::Critical, msg)
 #define LogFatal(msg) WriteToLog(PGE_LogLevel::Fatal, msg)
+#endif//__cplusplus
 
 #endif // LOGGER_H
