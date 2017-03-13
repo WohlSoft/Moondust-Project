@@ -26,6 +26,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 #include <PGE_File_Formats/pge_file_lib_globs.h>
+#include "apple/app_path_macosx.h"
 #endif
 
 #ifdef __gnu_linux__
@@ -64,12 +65,12 @@ static std::string getPgeUserDirectory()
     std::string path = "";
 #if defined(__APPLE__)
     {
-        FSRef ref;
-        OSType folderType = kApplicationSupportFolderType;
-        char spath[PATH_MAX];
-        FSFindFolder(kUserDomain, folderType, kCreateFolder, &ref);
-        FSRefMakePath(&ref, (UInt8*)&spath, PATH_MAX);
-        path.append(spath);
+        char *base_path = getAppSupportDir();
+        if(base_path)
+        {
+            path.append(base_path);
+            SDL_free(base_path);
+        }
     }
 #elif defined(_WIN32)
     {

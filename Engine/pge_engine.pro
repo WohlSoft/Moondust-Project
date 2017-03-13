@@ -128,6 +128,9 @@ include($$PWD/../_common/PGE_File_Formats/File_FormatsSTL.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
 include($$PWD/../_common/Utils/UtilsSDL.pri)
+macx:{
+    include($$PWD/common_features/apple/apple_extras.pri)
+}
 
 SOURCES += \
     audio/pge_audio.cpp \
