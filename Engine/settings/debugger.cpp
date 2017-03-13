@@ -128,7 +128,7 @@ void PGE_Debugger::executeCommand(Scene *parent)
                 en = cheat_superman;
                 cheatfound = true;
             }
-            else if(input.compare(0, 11, "iwishexitas"))
+            else if(input.compare(0, 11, "iwishexitas") == 0)
             {
                 std::string::size_type dim = input.find(' ');
                 if(dim != std::string::npos)
