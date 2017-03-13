@@ -211,7 +211,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     GraphicsHelps::closeImage(img[1]);
 #else//IF _WIN32
     FIBITMAP *img;
-#ifdef Q_OS_MACX
+#ifdef __APPLE__
     img = GraphicsHelps::loadImageRC("cat_256.png");
 #else
     img = GraphicsHelps::loadImageRC("cat_32.png");
