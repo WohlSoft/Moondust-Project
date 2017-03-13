@@ -24,6 +24,7 @@
 #include <common_features/tr.h>
 
 #include <settings/global_settings.h>
+#include <settings/debugger.h>
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
@@ -69,10 +70,10 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
     if(*error != '\0')
     {
         PGE_MsgBox::warn(fmt::format("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
-                         error,
-                         fn,
-                         func,
-                         line));
+                                     error,
+                                     fn,
+                                     func,
+                                     line));
         SDL_ClearError();
         return true;
     }
@@ -83,49 +84,65 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 void PGE_Window::printSDLWarn(std::string info)
 {
     PGE_MsgBox::warn(fmt::format("{0}\nSDL Error: {1}",
-                     info,
-                     SDL_GetError())
+                                 info,
+                                 SDL_GetError())
                     );
 }
 
 void PGE_Window::printSDLError(std::string info)
 {
     PGE_MsgBox::error(fmt::format("{0}\nSDL Error: {1}",
-                      info,
-                      SDL_GetError()));
+                                  info,
+                                  SDL_GetError()));
 }
 
 int PGE_Window::msgBoxInfo(std::string title, std::string text)
 {
-    std::string &ttl = title;
-    std::string &msg = text;
+    #ifdef PGE_ENGINE_DEBUG
+    if(PGE_Debugger::isDebuggerPresent())
+    {
+        pLogDebug("MESSAGEBOX: %s: %s", title.c_str(), text.c_str());
+        return 0;
+    }
+    #endif
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
-                                    ttl.c_str(), msg.c_str(), window);
+                                    title.c_str(), text.c_str(), window);
+
 }
 
 int PGE_Window::msgBoxWarning(std::string title, std::string text)
 {
-    std::string &ttl = title;
-    std::string &msg = text;
+    #ifdef PGE_ENGINE_DEBUG
+    if(PGE_Debugger::isDebuggerPresent())
+    {
+        pLogWarning("MESSAGEBOX: %s: %s", title.c_str(), text.c_str());
+        return 0;
+    }
+    #endif
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
-                                    ttl.c_str(), msg.c_str(), window);
+                                    title.c_str(), text.c_str(), window);
 }
 
 int PGE_Window::msgBoxCritical(std::string title, std::string text)
 {
-    std::string &ttl = title;
-    std::string &msg = text;
+    #ifdef PGE_ENGINE_DEBUG
+    if(PGE_Debugger::isDebuggerPresent())
+    {
+        pLogCritical("MESSAGEBOX: %s: %s", title.c_str(), text.c_str());
+        return 0;
+    }
+    #endif
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                                    ttl.c_str(), msg.c_str(), window);
+                                    title.c_str(), text.c_str(), window);
 }
 
 bool PGE_Window::init(std::string WindowTitle, int renderType)
 {
-#if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
+    #if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
     GlRenderer::setup_SW_SDL();
     //GlRenderer::setup_OpenGL21();
     //GlRenderer::setup_OpenGL31();
-#else
+    #else
     //Detect renderer
     GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer(static_cast<GlRenderer::RenderEngineType>(renderType));
 
@@ -158,7 +175,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
         return false;
     }
 
-#endif
+    #endif
     GlRenderer::setViewportSize(Width, Height);
     window = SDL_CreateWindow(WindowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
@@ -188,7 +205,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     SDL_SetWindowMinimumSize(window, Width, Height);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
     GraphicsHelps::initFreeImage();
-#ifdef _WIN32
+    #ifdef _WIN32
     FIBITMAP *img[2];
     img[0] = GraphicsHelps::loadImageRC("cat_16.png");
     img[1] = GraphicsHelps::loadImageRC("cat_32.png");
@@ -209,13 +226,13 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     GraphicsHelps::closeImage(img[0]);
     GraphicsHelps::closeImage(img[1]);
-#else//IF _WIN32
+    #else//IF _WIN32
     FIBITMAP *img;
-#ifdef __APPLE__
+    #ifdef __APPLE__
     img = GraphicsHelps::loadImageRC("cat_256.png");
-#else
+    #else
     img = GraphicsHelps::loadImageRC("cat_32.png");
-#endif
+    #endif
 
     if(img)
     {
@@ -232,7 +249,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
         }
     }
 
-#endif//IF _WIN32 #else
+    #endif//IF _WIN32 #else
     g_isRenderInit = true;
     //Init OpenGL (to work with textures, OpenGL should be load)
     pLogDebug("Init OpenGL settings...");
@@ -459,7 +476,7 @@ int PGE_Window::processEvents(SDL_Event &event)
             }
 
             break;
-#ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
+            #ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
 
         //        from employer - add "DEFINES+=PANIC_KEY" into qmake args
         //        and then you can press NumPad + to instantly close game)
@@ -471,7 +488,7 @@ int PGE_Window::processEvents(SDL_Event &event)
             return 2;
         }
 
-#endif
+        #endif
 
         case SDLK_F2:
         {

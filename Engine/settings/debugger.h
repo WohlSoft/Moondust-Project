@@ -19,7 +19,11 @@
 #ifndef DEBUGGER_H
 #define DEBUGGER_H
 
-#include <scenes/scene.h>
+#if defined(DEBUG_BUILD) && (defined(__gnu_linux__) || defined(_WIN32))
+#define PGE_ENGINE_DEBUG
+#endif
+
+class Scene;
 
 /*!
  * \brief The PGE_Debugger class contains flags to enable/disable special debug features of engine
@@ -27,6 +31,10 @@
 class PGE_Debugger
 {
 public:
+    #ifdef PGE_ENGINE_DEBUG
+    static int isDebuggerPresent();
+    #endif
+
     /*!
      * \brief Spawn text input box where user can type a special command which will be executed
      * \param parent Pointer to scene where typed command will be executed

@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <signal.h>
 #include <common_features/tr.h>
+#include <settings/debugger.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -487,10 +488,13 @@ static void handle_signalWIN32(int signal)
 
 void CrashHandler::initSigs()
 {
-#ifndef DEBUG_BUILD
+#ifdef PGE_ENGINE_DEBUG
+    if(PGE_Debugger::isDebuggerPresent())
+        return;//Don't initialize crash handlers on attached debugger
+#endif
+
     std::set_new_handler(&crashByFlood);
     std::set_terminate(&crashByUnhandledException);
-#endif
 #ifndef _WIN32//Unsupported signals by Windows
     memset(&act, 0, sizeof(struct sigaction));
     sigemptyset(&act.sa_mask);

@@ -25,6 +25,22 @@
 #include <algorithm>
 #include <vector>
 
+#ifdef PGE_ENGINE_DEBUG
+
+#ifdef __gnu_linux__
+#include <sys/stat.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#endif
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+#endif//PGE_ENGINE_DEBUG
+
+#include <scenes/scene.h>
 #include <scenes/scene_level.h>
 #include <common_features/md5.h>
 
@@ -51,6 +67,39 @@ static inline void showMsg(Scene *parent, const char *msg)
 
     msgBox.exec();
 }
+
+#ifdef PGE_ENGINE_DEBUG
+int PGE_Debugger::isDebuggerPresent()
+{
+    #ifdef __gnu_linux__
+    char buf[1024];
+    int debugger_present = 0;
+
+    int status_fd = open("/proc/self/status", O_RDONLY);
+    if(status_fd == -1)
+        return 0;
+
+    ssize_t num_read = read(status_fd, buf, sizeof(buf));
+
+    if(num_read > 0)
+    {
+        static const char TracerPid[] = "TracerPid:";
+        char *tracer_pid;
+
+        buf[num_read] = 0;
+        tracer_pid    = strstr(buf, TracerPid);
+        if(tracer_pid)
+            debugger_present = !!atoi(tracer_pid + sizeof(TracerPid) - 1);
+    }
+    return debugger_present;
+    #endif
+
+
+    #ifdef _WIN32
+    return IsDebuggerPresent();
+    #endif
+}
+#endif
 
 void PGE_Debugger::executeCommand(Scene *parent)
 {
