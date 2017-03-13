@@ -70,7 +70,7 @@ bool TtfFont::loadFont(const std::string &path)
     SDL_assert(error == 0);
     if(error)
         return false;
-    error = FT_Set_Pixel_Sizes(m_face, 0, m_pixelSize);
+    error = FT_Set_Pixel_Sizes(m_face, 0, m_recentPixelSize);
     SDL_assert(error == 0);
     if(error)
         return false;
@@ -94,7 +94,7 @@ bool TtfFont::loadFont(const char *mem, size_t size)
     SDL_assert(error == 0);
     if(error)
         return false;
-    error = FT_Set_Pixel_Sizes(m_face, 0, m_pixelSize);
+    error = FT_Set_Pixel_Sizes(m_face, 0, m_recentPixelSize);
     SDL_assert(error == 0);
     if(error)
         return false;
@@ -278,11 +278,11 @@ TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
     FT_Error     error = 0;
     TheGlyph     t_glyph;
 
-    if(m_pixelSize != fontSize)
+    if(m_recentPixelSize != fontSize)
     {
         error = FT_Set_Pixel_Sizes(m_face, 0, fontSize);
         SDL_assert_release(error == 0);
-        m_pixelSize = fontSize;
+        m_recentPixelSize = fontSize;
     }
 
     error = FT_Load_Char(m_face, character, FT_LOAD_RENDER);

@@ -70,10 +70,8 @@ private:
     //! Handalable name of the font
     std::string m_fontName;
 
-    //! Pixel size of the font
-    uint32_t     m_pixelSize = 10;
-    //! Inter-letter space
-    uint32_t     m_kerning = 2;
+    //! Recently used pixel size of the font
+    uint32_t     m_recentPixelSize = 10;
 
     //! Загруженное лицо шрифта
     FT_Face      m_face = nullptr;
