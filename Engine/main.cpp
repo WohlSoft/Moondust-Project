@@ -48,6 +48,35 @@
 
 #include <networking/intproc.h>
 
+#ifdef __APPLE__
+/**
+ * @brief Receive an opened file from the Finder (Must be created at least one window!)
+ */
+static void macosReceiveOpenFile()
+{
+    if(g_fileToOpen.empty())
+    {
+        pLogDebug("Attempt to take Finder args...");
+        SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
+        SDL_Event event;
+        while(SDL_PollEvent(&event))
+        {
+            if(event.type == SDL_DROPFILE)
+            {
+                std::string file(event.drop.file);
+                if(Files::fileExists(file))
+                {
+                    g_fileToOpen = file;
+                    pLogDebug("Got file path: [%s]", file.c_str());
+                }
+                else
+                    pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.c_str());
+            }
+        }
+        SDL_EventState(SDL_DROPFILE, SDL_DISABLE);
+    }
+}
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -101,6 +130,10 @@ int main(int argc, char *argv[])
 
     if(g_AppSettings.fullScreen)
         pLogDebug("Toggle fullscreen...");
+
+    #ifdef __APPLE__
+    macosReceiveOpenFile();
+    #endif
 
     PGE_Window::setFullScreen(g_AppSettings.fullScreen);
     GlRenderer::resetViewport();

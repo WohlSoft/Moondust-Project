@@ -667,27 +667,6 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
                 pLogWarning("Invalid argument or file path: [%s]", str);
         }
     }
-
-    #ifdef __APPLE__
-    /* FIXME: Reimplement this on native Cocoa API
-    if(g_fileToOpen.empty())
-    {
-        m_qApp->processEvents(QEventLoop::QEventLoop::AllEvents);
-        pLogDebug("Attempt to take Finder args...");
-        QStringList openArgs = m_qApp->getOpenFileChain();
-
-        for(QString &file : openArgs)
-        {
-            if(QFile::exists(file))
-            {
-                g_fileToOpen = file.toStdString();
-                pLogDebug("Got file path: [%s]", file.toUtf8().data());
-            }
-            else
-                pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.toUtf8().data());
-        }
-    }*/
-    #endif
 }
 
 void PGEEngineApp::createConfigsDir()
