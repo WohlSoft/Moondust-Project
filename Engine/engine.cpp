@@ -669,6 +669,7 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
     }
 
     #ifdef __APPLE__
+    /* FIXME: Reimplement this on native Cocoa API
     if(g_fileToOpen.empty())
     {
         m_qApp->processEvents(QEventLoop::QEventLoop::AllEvents);
@@ -685,7 +686,7 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
             else
                 pLogWarning("Invalid file path, sent by Mac OS X Finder event: [%s]", file.toUtf8().data());
         }
-    }
+    }*/
     #endif
 }
 

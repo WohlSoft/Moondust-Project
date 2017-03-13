@@ -21,3 +21,15 @@ TRANSLATIONS += \
     $$PWD/languages/engine_pt.ts \
     $$PWD/languages/engine_ru.ts \
     $$PWD/languages/engine_sv.ts
+
+macx:{
+    APP_TRANSLATION_FILES.files = \
+        $$PWD/languages/engine_de.qm \
+        $$PWD/languages/engine_en.qm \
+        $$PWD/languages/engine_es.qm \
+        $$PWD/languages/engine_pl.qm \
+        $$PWD/languages/engine_pt.qm \
+        $$PWD/languages/engine_ru.qm
+    APP_TRANSLATION_FILES.path  = Contents/Resources/languages
+    QMAKE_BUNDLE_DATA += APP_TRANSLATION_FILES
+}

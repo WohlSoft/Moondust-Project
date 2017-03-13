@@ -25,6 +25,7 @@
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
+#include <PGE_File_Formats/pge_file_lib_globs.h>
 #endif
 
 #ifdef __gnu_linux__
@@ -154,15 +155,20 @@ void AppPathManager::initAppPath(const char* argv0)
     */
     #ifdef __APPLE__
     {
+        (void)argv0;
         CFURLRef appUrlRef;
         appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
         CFStringRef filePathRef = CFURLGetString(appUrlRef);
-        //const char* filePath = CFStringGetCStringPtr(filePathRef, kCFStringEncodingUTF8);
-        ApplicationPath = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+        char temporaryCString[PATH_MAX];
+        bzero(temporaryCString, PATH_MAX);
+        CFStringGetCString(filePathRef, temporaryCString, PATH_MAX, kCFStringEncodingUTF8);
+        ApplicationPathSTD = PGE_URLDEC(std::string(temporaryCString));
         {
-            int i = ApplicationPath.lastIndexOf(".app");
-            i = ApplicationPath.lastIndexOf('/', i);
-            ApplicationPath.remove(i, ApplicationPath.size() - i);
+            std::string::size_type i = ApplicationPathSTD.find_last_of(".app");
+            i = ApplicationPathSTD.find_last_of('/', i);
+            ApplicationPathSTD.erase(i, ApplicationPathSTD.size() - i);
+            if(ApplicationPathSTD.compare(0, 7, "file://") == 0)
+                ApplicationPathSTD.erase(0, 7);
         }
         //CFRelease(filePathRef);
         CFRelease(appUrlRef);
@@ -243,6 +249,24 @@ std::string AppPathManager::settingsFileSTD()
 std::string AppPathManager::userAppDirSTD()
 {
     return m_userPath;
+}
+
+std::string AppPathManager::languagesDir()
+{
+    #ifndef __APPLE__
+    return ApplicationPathSTD + "/languages";
+    #else
+    CFURLRef appUrlRef;
+    appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
+    CFStringRef filePathRef = CFURLGetString(appUrlRef);
+    char temporaryCString[PATH_MAX];
+    bzero(temporaryCString, PATH_MAX);
+    CFStringGetCString(filePathRef, temporaryCString, PATH_MAX, kCFStringEncodingUTF8);
+    std::string path = PGE_URLDEC(std::string(temporaryCString));
+    if(path.compare(0, 7, "file://") == 0)
+        path.erase(0, 7);
+    return path;
+    #endif
 }
 
 void AppPathManager::install()

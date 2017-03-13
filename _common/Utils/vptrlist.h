@@ -39,11 +39,11 @@ typedef int ssize_t;
 #endif
 
 template<class T, typename _Alloc = std::allocator<T>>
-class VPtrList : private std::vector<std::unique_ptr<T>, _Alloc>
+class VPtrList : private std::vector<std::unique_ptr<T>>
 {
 public:
     typedef std::unique_ptr<T> SHptr;
-    typedef std::vector<SHptr, _Alloc> vecPTR;
+    typedef std::vector<SHptr>              vecPTR;
     typedef typename vecPTR::iterator       S_iterator;
     typedef typename vecPTR::const_iterator S_const_iterator;
     typedef typename vecPTR::reverse_iterator       SR_iterator;

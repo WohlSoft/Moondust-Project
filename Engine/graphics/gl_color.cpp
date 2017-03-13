@@ -1,6 +1,7 @@
 #include "gl_color.h"
 
 #include <cmath>
+#include <cstdlib>
 #include <unordered_map>
 #include <algorithm>
 #include <common_features/logger.h>

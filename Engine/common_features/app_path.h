@@ -29,6 +29,7 @@ class AppPathManager
         static void initAppPath(const char *argv0);
         static std::string settingsFileSTD();
         static std::string userAppDirSTD();
+        static std::string languagesDir();
         static void install();
         static bool isPortable();
         static bool userDirIsAvailable();

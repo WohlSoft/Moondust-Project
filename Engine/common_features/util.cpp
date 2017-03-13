@@ -38,7 +38,7 @@ static inline bool is_base64(unsigned char c)
     return (isalnum(c) || (c == '+') || (c == '/'));
 }
 
-std::__cxx11::string util::filePath(std::string s)
+std::string util::filePath(std::string s)
 {
     std::string t = s;
     std::replace(t.begin(), t.end(), '\\', '_');

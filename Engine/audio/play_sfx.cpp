@@ -37,7 +37,7 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
     sfxHash::iterator snd = chunksBuffer.find(sndFile);
     if(snd == chunksBuffer.end())
     {
-        #if  defined(__unix__) || defined(_WIN32)
+        #if defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
         FileMapper fileMap;
         if( fileMap.open_file(sndFile) )
         {
@@ -45,7 +45,7 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
             fileMap.close_file();
         }
         #else
-        tmpChunk = Mix_LoadWAV( filePath.c_str() );
+        tmpChunk = Mix_LoadWAV( sndFile.c_str() );
         #endif
         if(!tmpChunk)
         {

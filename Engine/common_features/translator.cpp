@@ -24,6 +24,10 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
+#endif
 
 #include <fmt/fmt_format.h>
 
@@ -42,14 +46,31 @@ void PGE_Translator::init()
     if(m_isInit)
         return;
     std::string defaultLocale = "en";
-#ifdef _WIN32
+#if defined(_WIN32)
+    // Win32 way
     LCID locale = GetSystemDefaultLCID();
     char langStr[21];
     memset(langStr, 0, 21);
     GetLocaleInfoA(locale, LOCALE_SISO639LANGNAME, langStr, 20);
     defaultLocale.clear();
     defaultLocale.append(langStr);
+#elif defined(__APPLE__)
+    // Cocoa way
+    CFLocaleRef cflocale = CFLocaleCopyCurrent();
+    CFStringRef value = (CFStringRef)CFLocaleGetValue(cflocale, kCFLocaleLanguageCode);
+    CFIndex length  = CFStringGetLength(value);
+    CFIndex maxSize = CFStringGetMaximumSizeForEncoding(length, kCFStringEncodingUTF8) + 1;
+    char *buffer = (char *)malloc(maxSize);
+    if(CFStringGetCString(value, buffer, maxSize, kCFStringEncodingUTF8))
+    {
+        defaultLocale = std::string(buffer);
+    } else {
+        pLogWarning("COCOA: Failed to retreive language code");
+    }
+    free(buffer);
+    CFRelease(cflocale);
 #else
+    // Generic way
     std::locale the_global_locale("");
     defaultLocale = the_global_locale.name();
     if(defaultLocale.size() > 2)
@@ -58,8 +79,7 @@ void PGE_Translator::init()
         defaultLocale = "en";
 #endif
 
-    m_langPath = ApplicationPathSTD;
-    m_langPath.append("/languages");
+    m_langPath = AppPathManager::languagesDir();
     pLogDebug("Initializing translator in the path: %s", m_langPath.c_str());
     toggleLanguage(defaultLocale);
     pLogDebug("Locale detected: %s", m_currLang.c_str());
