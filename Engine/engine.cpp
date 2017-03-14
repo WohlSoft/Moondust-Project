@@ -244,6 +244,11 @@ bool PGEEngineApp::initSDL()
     if(!res)
         enable(LIBSDL);
 
+    const char *error = SDL_GetError();
+    if(*error != '\0')
+        pLogWarning("Error while SDL Initialization: %s", error);
+    SDL_ClearError();
+
     return res;
 }
 

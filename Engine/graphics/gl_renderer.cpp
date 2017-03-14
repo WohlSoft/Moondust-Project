@@ -99,6 +99,7 @@ static bool detectOpenGL2()
         0, 0, 0, 0,  0, 0, 0, 0,   0, 0, 0, 0,  0, 0, 0, 0,
         0, 0, 0, 0,  0, 0, 0, 0,   0, 0, 0, 0,  0, 0, 0, 0
     };
+    SDL_ClearError();
     SDL_GL_ResetAttributes();
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
@@ -322,6 +323,7 @@ static bool detectOpenGL2()
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(dummy);
     SDL_ClearError();
+    SDL_GL_ResetAttributes();
     return true;
 gl_error:
     pLogDebug("GL Error of the OpenGL 2 probe %s: %s", errorPlace, getGlErrorStr(glGetError()));
@@ -333,6 +335,7 @@ gl_error:
         SDL_DestroyWindow(dummy);
 
     SDL_ClearError();
+    SDL_GL_ResetAttributes();
     return false;
 sdl_error:
     pLogDebug("SDL Error of OpenGL 2 probe %s: %s", errorPlace, SDL_GetError());
@@ -344,6 +347,7 @@ sdl_error:
         SDL_DestroyWindow(dummy);
 
     SDL_ClearError();
+    SDL_GL_ResetAttributes();
     return false;
 }
 #endif
@@ -386,6 +390,8 @@ static bool detectOpenGL3()
     {
         0, 1, 3, 2
     };
+
+    SDL_ClearError();
     SDL_GL_ResetAttributes();
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
@@ -643,6 +649,7 @@ static bool detectOpenGL3()
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(dummy);
     SDL_ClearError();
+    SDL_GL_ResetAttributes();
     return true;
 gl_error:
     pLogDebug("GL Error of the OpenGL 3 probe %s: %s", errorPlace, getGlErrorStr(glGetError()));
@@ -654,6 +661,7 @@ gl_error:
         SDL_DestroyWindow(dummy);
 
     SDL_ClearError();
+    SDL_GL_ResetAttributes();
     return false;
 sdl_error:
     pLogDebug("SDL Error of OpenGL 3 probe %s: %s", errorPlace, SDL_GetError());
@@ -665,6 +673,7 @@ sdl_error:
         SDL_DestroyWindow(dummy);
 
     SDL_ClearError();
+    SDL_GL_ResetAttributes();
     return false;
 }
 #endif
