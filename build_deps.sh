@@ -129,6 +129,13 @@ echo "Building..."
 TIME_STARTED=$(date +%s)
 make $MAKE_EXTRA_ARGS
 checkState
+if [[ $OurOS == "linux" ]]; then
+    cd SDL_Mixer_X
+    echo "Linking static SDL Mixer X..."
+    make staticlib $MAKE_EXTRA_ARGS
+    checkState
+    cd ..
+fi
 TIME_ENDED=$(date +%s)
 TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
 #=======================================================================

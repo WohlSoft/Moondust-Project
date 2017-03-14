@@ -101,7 +101,9 @@ macx: {
 }
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
-    LIBS += -lSDL2_mixer_ext -lfreeimagelite -lfreetype -lSDL2
+    LIBS += -static-libgcc -static-libstdc++
+    LIBS += -lfreeimagelite -lfreetype -Wl,-Bstatic -lSDL2_mixer_ext -lSDL2 -Wl,-Bdynamic
+    LIBS += -lvorbisfile -lvorbis -lFLAC -logg -lmad
     LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
 }
 

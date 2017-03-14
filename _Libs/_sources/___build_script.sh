@@ -143,6 +143,9 @@ BuildSDL()
         SDL_ARGS="${SDL_ARGS} --prefix=${InstallTo}"
         SDL_ARGS="${SDL_ARGS} --includedir=${InstallTo}/include"
         SDL_ARGS="${SDL_ARGS} --libdir=${InstallTo}/lib"
+        if [[ "$OurOS" == "linux" ]]; then
+            SDL_ARGS="${SDL_ARGS} --disable-sndio"
+        fi
         BuildSrc $LatestSDL "${SDL_ARGS}"
     else
         #on Mac OS X build via X-Code

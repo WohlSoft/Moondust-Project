@@ -46,7 +46,9 @@ linux-g++||unix:!macx:!android:{
     LIBS += -L$$PWD/../_builds/linux/lib
     INCLUDEPATH += $$PWD/../_builds/linux/include
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
-    CONFIG += plugin
+    CONFIG -= dll
+    CONFIG -= static
+    CONFIG += static_and_shared
     CONFIG += unversioned_libname
     CONFIG += skip_target_version_ext
 }
