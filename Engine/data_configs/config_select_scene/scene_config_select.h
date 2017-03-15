@@ -46,7 +46,7 @@ public:
     void update();
     void render();
     void renderMouse();
-    int  exec();
+    int32_t  exec();
 
     void processMenu();
 
@@ -65,12 +65,12 @@ private:
         std::string key;
         std::string path;
     };
-    int ret;//!< Exit code
+    int32_t ret;//!< Exit code
     std::string m_label;
     std::string m_waterMark;
     PGE_Rect m_waterMarkRect;
     GlColor  m_waterMarkColor;
-    int      m_waterMarkFontSize;
+    uint32_t m_waterMarkFontSize;
     PGE_Point mousePos;
     VPtrList<ConfigPackEntry> m_availablePacks;
     PGE_Menu menu;

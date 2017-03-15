@@ -343,13 +343,11 @@ void ConfigSelectScene::render()
         currentConfigPath   = item.path;
         float w = float(item.image.w) * (150.0f / float(item.image.h));
         float h = 150;
-
         if(w > 200)
         {
             h = h * (200 / w);
             w = 200;
         }
-
         GlRenderer::renderTexture(&item.image, 30, 30, w, h);
         FontManager::printText(item.description, 30, 170, -2, 1.0, 1.0, 1.0, 1.0, 18);
     }
@@ -359,7 +357,8 @@ void ConfigSelectScene::render()
                            m_waterMarkColor.Red(),
                            m_waterMarkColor.Green(),
                            m_waterMarkColor.Blue(),
-                           m_waterMarkColor.Alpha(), m_waterMarkFontSize);
+                           m_waterMarkColor.Alpha(),
+                           m_waterMarkFontSize);
 
     if(PGE_Window::showPhysicsDebug)
     {
@@ -389,7 +388,7 @@ void ConfigSelectScene::renderMouse()
     GlRenderer::renderTexture(&cursor, posX, posY);
 }
 
-int ConfigSelectScene::exec()
+int32_t ConfigSelectScene::exec()
 {
     m_doExit = false;
     m_isRunning = true;
