@@ -16,16 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdarg.h>
-#include <mutex>
-#include <chrono>
-
 #include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
 #include <fmt/fmt_printf.h>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <stdarg.h>
 #include <cstdio>
+#include <mutex>
+#include <chrono>  // chrono::system_clock
+#include <ctime>   // localtime
+#include <iomanip> // put_time
+#include <sstream>
 
 #include "app_path.h"
 #include "logger_sets.h"
@@ -56,17 +58,22 @@ bool            LogWriter::m_enabled;
 bool  LogWriter::m_logIsOpened = false;
 SDL_RWops *LogWriter::m_logout = nullptr;
 
+static std::string return_current_time_and_date()
+{
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S");
+    return ss.str();
+}
+
 void LogWriter::LoadLogSettings()
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
 
-    auto now = std::chrono::system_clock::now();
-    std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
-    tm *t = std::localtime(&in_time_t);
-    std::string logFileName = fmt::format("PGE_Engine_log_{0}_{1}_{2}_{3}_{4}_{5}.txt",
-                                          t->tm_year, t->tm_mon, t->tm_mday,
-                                          t->tm_hour, t->tm_min, t->tm_sec);
+    std::string logFileName = fmt::format("PGE_Engine_log_{0}.txt", return_current_time_and_date());
 
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();
@@ -75,17 +82,20 @@ void LogWriter::LoadLogSettings()
     std::string logPath = AppPathManager::userAppDirSTD() + "/logs";
     DirMan defLogDir(logPath);
 
-    if(!defLogDir.exists() && !defLogDir.mkpath())
-        defLogDir.setPath(AppPathManager::userAppDirSTD());
+    if(!defLogDir.exists())
+    {
+        if(!defLogDir.mkpath())
+            defLogDir.setPath(AppPathManager::userAppDirSTD());
+    }
 
     logSettings.beginGroup("logging");
-    m_logFilePath = logSettings.value("log-path", defLogDir.absolutePath() + "/" + logFileName).toString();
-
-    if(!DirMan::exists(Files::dirname(m_logFilePath)))
-        m_logFilePath = defLogDir.absolutePath() + "/" + logFileName;
-
-    m_logLevel  = static_cast<PGE_LogLevel>(logSettings.value("log-level", static_cast<int>(PGE_LogLevel::Debug)).toInt());
-    m_enabled   = (m_logLevel != PGE_LogLevel::NoLog);
+    {
+        logSettings.read("log-path", m_logFilePath, defLogDir.absolutePath() + "/" + logFileName);
+        if(!DirMan::exists(Files::dirname(m_logFilePath)))
+            m_logFilePath = defLogDir.absolutePath() + "/" + logFileName;
+        m_logLevel  = static_cast<PGE_LogLevel>(logSettings.value("log-level", static_cast<int>(PGE_LogLevel::Debug)).toInt());
+        m_enabled   = (m_logLevel != PGE_LogLevel::NoLog);
+    }
     logSettings.endGroup();
 
     fmt::print("LogLevel {0}, log file {1}\n\n", static_cast<int>(m_logLevel), m_logFilePath);
