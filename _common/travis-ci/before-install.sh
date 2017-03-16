@@ -18,7 +18,7 @@ then
     bash _Misc/dev_scripts/generate_version_files.sh
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
     sudo apt-get update -qq
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade
+    # sudo DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade
     sudo apt-get install -qq "^libxcb.*" libx11-dev libx11-xcb-dev libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev libproxy-dev ccache
 
     if [ ! -d /home/runner/Qt/$QtCacheFolder ]; then
