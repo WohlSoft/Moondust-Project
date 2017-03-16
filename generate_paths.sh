@@ -93,13 +93,22 @@ do
                 OPEN_GEDIT=false
                 AUTODETECTED=false
             ;;
-        semaphore) #Change paths ti Semaphore-CI compatible
-                AUTODETECTED=true
-                QT_VERSION=5.6.0_static
-                QT_PATH=/home/runner/Qt/$QT_VERSION/bin/
-                QT_LIB_PATH=/home/runner/Qt/$QT_VERSION/lib/
-                QMAKE_PATH=/home/runner/Qt/$QT_VERSION/bin/qmake
-                LRELEASE_PATH=/home/runner/Qt/$QT_VERSION/bin/lrelease
+        static) #Change paths ti Semaphore-CI compatible
+                #QT_VERSION=5.8.0_static
+                #Automatically detect static build
+                for var in 5.6.0_static 5.6.1_static 5.6.1-1_static 5.7.0_static 5.7.1_static 5.7.2_static 5.8.0_static 5.8.1_static 5.8.2_static 5.8.3_static 5.9.0_static 5.9.1_static 5.9.2_static 5.9.3_static 5.10.0_static 5.10.1_static 5.10.2_static 5.10.3_static
+                do
+                    if [ -f /opt/Qt/$var/bin/qmake ]; then
+                        QT_VERSION=$var
+                        QT_PATH=~/Qt/$QT_VERSION/bin/
+                        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+                        AUTODETECTED=true
+                    fi
+                done
+                #QT_PATH=/home/runner/Qt/$QT_VERSION/bin/
+                #QT_LIB_PATH=/home/runner/Qt/$QT_VERSION/lib/
+                #QMAKE_PATH=/home/runner/Qt/$QT_VERSION/bin/qmake
+                #LRELEASE_PATH=/home/runner/Qt/$QT_VERSION/bin/lrelease
             ;;
     esac
 done

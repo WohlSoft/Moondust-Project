@@ -7,23 +7,29 @@ then
     if [ ! -d /home/runner ];
     then
         echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+        # Make sure we have same home directory as on Semaphore-CI
         sudo ln -s /home/travis /home/runner
     fi
 
-    QtCacheFolder=qtcache560
-    QtTarballName=qt-5-6-0-static-ubuntu-14-04-x64.tar.gz
+    QtCacheFolder=qtcache580
+    QtTarballName=qt-5-8-0-static-ubuntu-14-04-x64.tar.bz2
+    QtStaticVersion=5.8.0_static
 
     bash _Misc/dev_scripts/generate_version_files.sh
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
     sudo apt-get update -qq
-    sudo apt-get install -qq "^libxcb.*" libx11-dev libx11-xcb-dev libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev libdbus-1-dev libts-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev libproxy-dev ccache
-    mkdir -p /home/runner/Qt/$QtCacheFolder
+    sudo apt-get upgrade -qq
+    sudo apt-get install -qq "^libxcb.*" libx11-dev libx11-xcb-dev libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev libproxy-dev ccache
+
+    if [ ! -d /home/runner/Qt/$QtCacheFolder ]; then
+        mkdir -p /home/runner/Qt/$QtCacheFolder
+    fi
     wget http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /home/runner/Qt/$QtCacheFolder/$QtTarballName
     tar -xf /home/runner/Qt/$QtCacheFolder/$QtTarballName -C /home/runner/Qt
-    export PATH=/home/runner/Qt/5.6.0_static/bin:$PATH
-    /home/runner/Qt/5.6.0_static/bin/qmake --version
+    export PATH=/home/runner/Qt/$QtStaticVersion/bin:$PATH
+    /home/runner/Qt/$QtStaticVersion/bin/qmake --version
     chmod u+x generate_paths.sh
-    bash generate_paths.sh silent semaphore
+    bash generate_paths.sh silent static
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then
@@ -62,7 +68,7 @@ then
 # Installing of required for building process tools via homebrew toolset
 # ==============================================================================
     brew install coreutils binutils gnu-sed lftp
-    
+
     # # Thanks to St. StackOverflow if this will work http://stackoverflow.com/questions/39633159/homebrew-cant-find-lftp-formula-on-macos-sierra
     # [[recently FIXED, lftp successfully installs by old way!]]
     # brew install homebrew/boneyard/lftp
