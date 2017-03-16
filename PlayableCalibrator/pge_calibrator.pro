@@ -42,6 +42,10 @@ macx {
     ICON = _resourses/calibrator.icns
     QMAKE_INFO_PLIST = $$PWD/_resourses/calibrator.plist
 }
+!macx: {
+    QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+    QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
+}
 
 RC_FILE = _resourses/caltool.rc
 
@@ -103,3 +107,5 @@ OTHER_FILES += \
     caltool.rc \
     calibrator.ico \
     _resourses/caltool.rc
+
+

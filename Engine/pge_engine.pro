@@ -66,6 +66,10 @@ contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
 
+!macx: {
+    QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
+}
+
 android: {
     LIBS += -lSDL2 -lSDL2_mixer_ext -lfreeimagelite -lGLESv2 -lGLESv1_CM -ldl -landroid
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
@@ -101,7 +105,6 @@ macx: {
 }
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
-    LIBS += -static-libgcc -static-libstdc++
     LIBS += -lfreeimagelite -lfreetype -Wl,-Bstatic -lSDL2_mixer_ext -lSDL2 -Wl,-Bdynamic
     LIBS += -lvorbisfile -lvorbis -lFLAC -logg -lmad
     LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic

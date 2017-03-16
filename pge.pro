@@ -5,18 +5,18 @@ TEMPLATE = subdirs
 DEFINES += USE_LUA_JIT
 
 android: {
-DEFINES -= USE_LUA_JIT
+    DEFINES -= USE_LUA_JIT
 }
 
 macx:{
-DEFINES -= USE_LUA_JIT
+    DEFINES -= USE_LUA_JIT
 }
 
 useccache: {
-#To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
-QMAKE_CC = ccache gcc
-QMAKE_CXX = ccache g++
-message("CHACHE with GCC will be used")
+    #To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
+    QMAKE_CC = ccache gcc
+    QMAKE_CXX = ccache g++
+    message("CHACHE with GCC will be used")
 }
 #CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb
 
@@ -86,8 +86,9 @@ nomaintainer: {
 }
 
 android:{
-SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager Maintainer MusicPlayer
-INSTALLS -= configs helps themes calibrator_cnfs
+    error("Sorry, Android platform is not supported for entire project building, but a separated components are may support it");
+    #SUBDIRS  -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager Maintainer MusicPlayer
+    #INSTALLS -= configs helps themes calibrator_cnfs
 }
 
 DISTFILES += \

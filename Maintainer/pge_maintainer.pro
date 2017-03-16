@@ -35,6 +35,11 @@ TEMPLATE = app
 
 debug: DEFINES += DEBUG_BUILD
 
+!macx: {
+    QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+    QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
+}
+
 include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 
@@ -58,3 +63,4 @@ HEADERS  += main_window.h \
 FORMS    += main_window.ui \
     Music/audiocvt_sox_gui.ui \
     EpisodeCvt/episode_converter.ui
+

@@ -17,8 +17,9 @@ CONFIG += static
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: {
-QMAKE_CXXFLAGS += -static -static-libgcc -static-libstdc++ -lpthread
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+    QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+    LIBS += -lpthread
+    QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
 }
 
 include($$PWD/../_common/strip_garbage.pri)
