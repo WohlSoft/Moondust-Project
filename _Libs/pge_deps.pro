@@ -38,7 +38,11 @@ FreeImageLite.file = libFreeImageLite.pro
 
 deplibs.path = bin
 
-linux-g++:  deplibs.files += $$PWD/_builds/linux/lib/libSDL2-*.so $$PWD/_builds/linux/lib/libSDL2_mixer_ext.so
+linux-g++:
+{
+    deplibs.files += $$PWD/_builds/linux/lib/libSDL2-*.so $$PWD/_builds/linux/lib/libSDL2_mixer_ext.so
+    deplibs.extra = cp -a $$PWD/_builds/linux/lib/libSDL2_mixer_ext.so* $$DESTDIR
+}
 
 win32:      deplibs.files += $$PWD/_builds/win32/bin/*.dll $$PWD/_builds/win32/lib/SDL2_mixer_ext.dll
 
