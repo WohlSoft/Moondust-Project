@@ -639,6 +639,7 @@ std::u32string QmTranslatorX::do_translate32(const char *context, const char *so
 bool QmTranslatorX::loadFile(const char *filePath, unsigned char *directory)
 {
     unsigned char magicBuffer[MagicLength];
+    size_t        fileGotLen = 0;
 
     #ifndef _WIN32
     FILE* file = fopen(filePath, "rb");
@@ -674,10 +675,10 @@ bool QmTranslatorX::loadFile(const char *filePath, unsigned char *directory)
     fseek(file, 0L, SEEK_SET);
 
     FileData = (unsigned char*)malloc(FileLength);
-    fread(FileData, 1, FileLength, file);
+    fileGotLen = fread(FileData, 1, FileLength, file);
     fclose(file);
-    loadData(FileData, FileLength, directory);
-    return true;
+    FileLength = fileGotLen;
+    return loadData(FileData, FileLength, directory);
 }
 
 bool QmTranslatorX::loadData(unsigned char *data, int len, unsigned char* directory)
