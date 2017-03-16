@@ -26,7 +26,6 @@
 #include <mutex>
 #include <chrono>  // chrono::system_clock
 #include <ctime>   // localtime
-#include <iomanip> // put_time
 #include <sstream>
 
 #include "app_path.h"
@@ -62,17 +61,18 @@ static std::string return_current_time_and_date()
 {
     auto now = std::chrono::system_clock::now();
     auto in_time_t = std::chrono::system_clock::to_time_t(now);
-
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S");
-    return ss.str();
+    char out[24];
+    memset(out, 0, sizeof(out));
+    if(0 < strftime(out, sizeof(out), "%Y_%m_%d_%H_%M_%S", std::localtime(&in_time_t)))
+        return std::string(out);
+    else
+        return "0000_00_00_00_00_00";
 }
 
 void LogWriter::LoadLogSettings()
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
-
     std::string logFileName = fmt::format("PGE_Engine_log_{0}.txt", return_current_time_and_date());
 
     m_logLevel = PGE_LogLevel::Debug;
