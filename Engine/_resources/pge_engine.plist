@@ -82,7 +82,7 @@
 	<key>NSPrincipalClass</key>
 	<string>PGEEngineApplication</string>
 	<key>NSHighResolutionCapable</key>
-	<string>YES</string>
+	<true/>
 	<key>CFBundleGetInfoString</key>
 	<string>Platform Game Engine by Wohlstand</string>
 </dict>
