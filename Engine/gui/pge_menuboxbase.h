@@ -87,25 +87,25 @@ class PGE_MenuBoxBase : public PGE_BoxBase
 
     private:
         void updateSize();
-        int     _page;
-        bool    running;
-        int     fontID;
+        int     _page = 0;
+        bool    running = false;
+        int     fontID = 0;
         GlColor fontRgba;
-        int     _answer_id;
+        int     _answer_id = 0;
 
-        long    reject_snd;
+        long    reject_snd = 0;
         PGE_Point _pos;
-        Controller *_ctrl1;
-        Controller *_ctrl2;
-        msgType type;
+        Controller *_ctrl1 = nullptr;
+        Controller *_ctrl2 = nullptr;
+        msgType type = msg_info;
 
         PGE_Rect _sizeRect;
         std::string  title;
         PGE_Size title_size;
 
-        double width;
-        double height;
-        double padding;
+        double width = 32.0;
+        double height = 32.0;
+        double padding = 2.0;
         GlColor bg_color;
         void initControllers();
         void updateControllers();
