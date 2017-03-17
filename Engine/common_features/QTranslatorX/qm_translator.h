@@ -51,20 +51,20 @@
 
 class QmTranslatorX
 {
-    uint8_t*  FileData;
+    uint8_t  *FileData;
     size_t    FileLength;
 
     // Pointers and offsets into FileData[FileLength] array, or user
     // provided data array
-    uint8_t*  messageArray;
-    uint8_t*  offsetArray;
-    uint8_t*  contextArray;
-    uint8_t*  numerusRulesArray;
+    uint8_t  *messageArray;
+    uint8_t  *offsetArray;
+    uint8_t  *contextArray;
+    uint8_t  *numerusRulesArray;
     uint32_t  messageLength;
     uint32_t  offsetLength;
     uint32_t  contextLength;
     uint32_t  numerusRulesLength;
-    std::vector<QmTranslatorX*> subTranslators;
+    std::vector<QmTranslatorX *> subTranslators;
 
 public:
     QmTranslatorX();
@@ -82,8 +82,8 @@ public:
     std::u32string do_translate32(const char *context, const char *sourceText,
                                   const char *comment = NULL, int32_t n = -1);
 
-    bool loadFile(const char* filePath, uint8_t *directory = 0);
-    bool loadData(uint8_t* data, size_t FileLength, uint8_t *directory = 0);
+    bool loadFile(const char *filePath, uint8_t *directory = 0);
+    bool loadData(uint8_t *data, size_t FileLength, uint8_t *directory = 0);
     bool isEmpty();
     void close();
 };

@@ -83,10 +83,10 @@ static const uint8_t magic[MagicLength] =
 #define MACHINE_BYTEORDER  __BYTE_ORDER
 #else /* __linux__ */
 #if defined(__hppa__) || \
-    defined(__m68k__) || defined(mc68000) || defined(_M_M68K) || \
-    (defined(__MIPS__) && defined(__MISPEB__)) || \
-    defined(__ppc__) || defined(__POWERPC__) || defined(_M_PPC) || \
-    defined(__sparc__)
+defined(__m68k__) || defined(mc68000) || defined(_M_M68K) || \
+(defined(__MIPS__) && defined(__MISPEB__)) || \
+defined(__ppc__) || defined(__POWERPC__) || defined(_M_PPC) || \
+defined(__sparc__)
 #define MACHINE_BYTEORDER   MACHINE_BIG_ENDIAN
 #else
 #define MACHINE_BYTEORDER   MACHINE_LITTLE_ENDIAN
@@ -120,11 +120,28 @@ enum
 
 struct QTranslatorEntryTypes
 {
-    enum { Contexts = 0x2f, Hashes = 0x42, Messages = 0x69, NumerusRules = 0x88, Dependencies = 0x96 };
+    enum
+    {
+        Contexts     = 0x2f,
+        Hashes       = 0x42,
+        Messages     = 0x69,
+        NumerusRules = 0x88,
+        Dependencies = 0x96
+    };
 };
 
-enum Tag { Tag_End = 1, Tag_SourceText16, Tag_Translation, Tag_Context16, Tag_Obsolete1,
-           Tag_SourceText, Tag_Context, Tag_Comment, Tag_Obsolete2 };
+enum Tag
+{
+    Tag_End = 1,
+    Tag_SourceText16,
+    Tag_Translation,
+    Tag_Context16,
+    Tag_Obsolete1,
+    Tag_SourceText,
+    Tag_Context,
+    Tag_Comment,
+    Tag_Obsolete2
+};
 
 
 static uint8_t read8(const uint8_t *data)
@@ -134,16 +151,16 @@ static uint8_t read8(const uint8_t *data)
 
 static uint16_t read16be(const uint8_t *data)
 {
-    return  ( (uint16_t(data[0])<<8) & 0xFF00) |
-            ( (uint16_t(data[1])<<0) & 0x00FF);
+    return ((uint16_t(data[0]) << 8) & 0xFF00) |
+           ((uint16_t(data[1]) << 0) & 0x00FF);
 }
 
 static uint32_t read32be(const uint8_t *data)
 {
-    return   ( (uint32_t(data[0])<<24) & 0xFF000000) |
-             ( (uint32_t(data[1])<<16) & 0x00FF0000) |
-             ( (uint32_t(data[2])<<8)  & 0x0000FF00) |
-             ( (uint32_t(data[3])<<0)  & 0x000000FF);
+    return ((uint32_t(data[0]) << 24) & 0xFF000000) |
+           ((uint32_t(data[1]) << 16) & 0x00FF0000) |
+           ((uint32_t(data[2]) << 8)  & 0x0000FF00) |
+           ((uint32_t(data[3]) << 0)  & 0x000000FF);
 }
 
 
@@ -152,7 +169,7 @@ static void elfHash_continue(const char *name, uint32_t &h)
     const uchar *k;
     uint32_t g;
 
-    k = reinterpret_cast<const uchar*>(name);
+    k = reinterpret_cast<const uchar *>(name);
     while(*k)
     {
         h = (h << 4) + *k++;
@@ -181,7 +198,7 @@ static bool match(const uchar *found, uint32_t foundLen, const char *target, uin
 {
     // catch the case if \a found has a zero-terminating symbol and \a len includes it.
     // (normalize it to be without the zero-terminating symbol)
-    if (foundLen > 0 && found[foundLen-1] == '\0')
+    if(foundLen > 0 && found[foundLen - 1] == '\0')
         --foundLen;
     return ((targetLen == foundLen) && (memcmp(found, target, foundLen) == 0));
 }
@@ -198,7 +215,7 @@ static bool isValidNumerusRules(const uint8_t *rules, uint32_t rulesSize)
     // Disabled computation of maximum numerus return value
     // quint32 numerus = 0;
 
-    if (rulesSize == 0)
+    if(rulesSize == 0)
         return true;
 
     uint32_t offset = 0;
@@ -207,16 +224,16 @@ static bool isValidNumerusRules(const uint8_t *rules, uint32_t rulesSize)
         uint8_t opcode = rules[offset];
         uint8_t op = opcode & Q_OP_MASK;
 
-        if (opcode & 0x80)
+        if(opcode & 0x80)
             return false; // Bad op
 
-        if (++offset == rulesSize)
+        if(++offset == rulesSize)
             return false; // Missing operand
 
         // right operand
         ++offset;
 
-        switch (op)
+        switch(op)
         {
         case Q_EQ:
         case Q_LT:
@@ -224,7 +241,8 @@ static bool isValidNumerusRules(const uint8_t *rules, uint32_t rulesSize)
             break;
 
         case Q_BETWEEN:
-            if (offset != rulesSize) {
+            if(offset != rulesSize)
+            {
                 // third operand
                 ++offset;
                 break;
@@ -236,13 +254,14 @@ static bool isValidNumerusRules(const uint8_t *rules, uint32_t rulesSize)
         }
 
         // ++numerus;
-        if (offset == rulesSize)
+        if(offset == rulesSize)
             return true;
 
-    } while (((rules[offset] == Q_AND)
-                || (rules[offset] == Q_OR)
-                || (rules[offset] == Q_NEWRULE))
-            && ++offset != rulesSize);
+    }
+    while(((rules[offset] == Q_AND)
+           || (rules[offset] == Q_OR)
+           || (rules[offset] == Q_NEWRULE))
+          && ++offset != rulesSize);
 
     // Bad op
     return false;
@@ -268,36 +287,38 @@ static uint32_t numerusHelper(int32_t n, const uint8_t *rules, uint32_t rulesSiz
     uint32_t result = 0;
     uint32_t i = 0;
 
-    if (rulesSize == 0)
+    if(rulesSize == 0)
         return 0;
 
-    for (;;)
+    for(;;)
     {
         bool orExprTruthValue = false;
 
-        for (;;)
+        for(;;)
         {
             bool andExprTruthValue = true;
 
-            for (;;)
+            for(;;)
             {
                 bool truthValue = true;
                 int32_t opcode = rules[i++];
 
                 int32_t leftOperand = n;
-                if (opcode & Q_MOD_10) {
+                if(opcode & Q_MOD_10)
                     leftOperand %= 10;
-                } else if (opcode & Q_MOD_100) {
+                else if(opcode & Q_MOD_100)
                     leftOperand %= 100;
-                } else if (opcode & Q_LEAD_1000) {
-                    while (leftOperand >= 1000)
+                else if(opcode & Q_LEAD_1000)
+                {
+                    while(leftOperand >= 1000)
                         leftOperand /= 1000;
                 }
 
                 int32_t op = opcode & Q_OP_MASK;
                 int32_t rightOperand = rules[i++];
 
-                switch (op) {
+                switch(op)
+                {
                 case Q_EQ:
                     truthValue = (leftOperand == rightOperand);
                     break;
@@ -313,29 +334,29 @@ static uint32_t numerusHelper(int32_t n, const uint8_t *rules, uint32_t rulesSiz
                     truthValue = (leftOperand >= bottom && leftOperand <= top);
                 }
 
-                if (opcode & Q_NOT)
+                if(opcode & Q_NOT)
                     truthValue = !truthValue;
 
                 andExprTruthValue = andExprTruthValue && truthValue;
 
-                if (i == rulesSize || rules[i] != Q_AND)
+                if(i == rulesSize || rules[i] != Q_AND)
                     break;
                 ++i;
             }
 
             orExprTruthValue = orExprTruthValue || andExprTruthValue;
 
-            if (i == rulesSize || rules[i] != Q_OR)
+            if(i == rulesSize || rules[i] != Q_OR)
                 break;
             ++i;
         }
 
-        if (orExprTruthValue)
+        if(orExprTruthValue)
             return result;
 
         ++result;
 
-        if (i == rulesSize)
+        if(i == rulesSize)
             return result;
 
         i++; // Q_NEWRULE
@@ -347,11 +368,11 @@ static uint32_t numerusHelper(int32_t n, const uint8_t *rules, uint32_t rulesSiz
 }
 
 static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const char *context,
-                               const char *sourceText, const char *comment, uint32_t numerus)
+                                 const char *sourceText, const char *comment, uint32_t numerus)
 {
-#ifdef QMTRANSLATPR_DEEP_DEBUG
+    #ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("-----> Try take message...!\n");
-#endif
+    #endif
 
     const uchar *tn = 0;
     uint32_t tn_length = 0;
@@ -359,10 +380,10 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
     const uint32_t contextLen = uint32_t(strlen(context));
     const uint32_t commentLen = uint32_t(strlen(comment));
 
-    for (;;)
+    for(;;)
     {
         uint8_t tag = 0;
-        if (m < end)
+        if(m < end)
             tag = read8(m++);
         switch((Tag)tag)
         {
@@ -389,7 +410,7 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         {
             uint32_t len = read32be(m);
             m += 4;
-            if (!match(m, len, sourceText, sourceTextLen))
+            if(!match(m, len, sourceText, sourceTextLen))
             {
                 #ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("-----> Source text doesn't match!\n");
@@ -398,11 +419,12 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
             }
             m += len;
         }
-            break;
-        case Tag_Context: {
+        break;
+        case Tag_Context:
+        {
             uint32_t len = read32be(m);
             m += 4;
-            if (!match(m, len, context, contextLen))
+            if(!match(m, len, context, contextLen))
             {
                 #ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("-----> Tag gontext doesn't match!\n");
@@ -411,15 +433,16 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
             }
             m += len;
         }
-            break;
-        case Tag_Comment: {
+        break;
+        case Tag_Comment:
+        {
             uint32_t len = read32be(m);
             m += 4;
-            if (*m && !match(m, len, comment, commentLen))
+            if(*m && !match(m, len, comment, commentLen))
                 return std::u16string();
             m += len;
         }
-            break;
+        break;
         default:
             #ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("-----> Wrong tag!\n");
@@ -428,7 +451,7 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         }
     }
 end:
-    if (!tn)
+    if(!tn)
     {
         #ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("-----> Empty TN!\n");
@@ -439,18 +462,18 @@ end:
     printf("-----> Almost got...!\n");
     #endif
 
-    UTF16*   utf16str = (UTF16*)tn;
-    intptr_t utf16str_len = tn_length/2;
+    UTF16   *utf16str = (UTF16 *)tn;
+    intptr_t utf16str_len = tn_length / 2;
 
-#if MACHINE_BYTEORDER == MACHINE_LITTLE_ENDIAN
-    std::u16string outStr(reinterpret_cast<char16_t*>(utf16str), utf16str_len);
+    #if MACHINE_BYTEORDER == MACHINE_LITTLE_ENDIAN
+    std::u16string outStr(reinterpret_cast<char16_t *>(utf16str), utf16str_len);
     char16_t *ustr = &outStr[0];
     for(uint32_t i = 0; i < utf16str_len; i++)
-        ustr[i] = ((ustr[i]>>8) & 0x00FF) + ((ustr[i]<<8) & 0xFF00);
+        ustr[i] = ((ustr[i] >> 8) & 0x00FF) + ((ustr[i] << 8) & 0xFF00);
     return outStr;
-#else
-    return std::u16string((char16_t*)utf16str, utf16str_len);
-#endif
+    #else
+    return std::u16string((char16_t *)utf16str, utf16str_len);
+    #endif
 }
 
 
@@ -467,17 +490,17 @@ QmTranslatorX::~QmTranslatorX()
 
 std::u16string QmTranslatorX::do_translate(const char *context, const char *sourceText, const char *comment, int32_t n)
 {
-    if (context == 0)
+    if(context == 0)
         context = "";
-    if (sourceText == 0)
+    if(sourceText == 0)
         sourceText = "";
-    if (comment == 0)
+    if(comment == 0)
         comment = "";
 
     uint32_t numerus = 0;
     size_t numItems = 0;
 
-    if (!offsetLength)
+    if(!offsetLength)
     {
         #ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> ZERO OFFSETS LENGTH!");
@@ -489,7 +512,8 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
         Check if the context belongs to this QTranslator. If many
         translators are installed, this step is necessary.
     */
-    if (contextLength) {
+    if(contextLength)
+    {
         #ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> Finding contexts...!");
         #endif
@@ -508,7 +532,7 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
         c = contextArray + (2 + (hTableSize << 1) + (off << 1));
 
         const uint32_t contextLen = uint32_t(strlen(context));
-        for (;;)
+        for(;;)
         {
             uint8_t len = read8(c++);
             if(len == 0)
@@ -518,18 +542,20 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
                 #endif
                 return std::u16string();
             }
-            if (match(c, len, context, contextLen))
+            if(match(c, len, context, contextLen))
                 break;
             c += len;
         }
-    } else {
+    }
+    else
+    {
         #ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> Contexts are empty!\n");
         #endif
     }
 
     numItems = offsetLength / (2 * sizeof(unsigned));
-    if (!numItems)
+    if(!numItems)
     {
         #ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> NO ITEMS!\n");
@@ -537,39 +563,44 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
         goto searchDependencies;
     }
 
-    if (n >= 0)
+    if(n >= 0)
         numerus = numerusHelper(n, numerusRulesArray, numerusRulesLength);
 
-    for (;;) {
+    for(;;)
+    {
         uint32_t h = 0;
         elfHash_continue(sourceText, h);
         elfHash_continue(comment, h);
         elfHash_finish(h);
 
         const uint8_t *start = offsetArray;
-        const uint8_t *end = start + ((numItems-1) << 3);
-        while (start <= end) {
+        const uint8_t *end = start + ((numItems - 1) << 3);
+        while(start <= end)
+        {
             const uint8_t *middle = start + (((end - start) >> 4) << 3);
             uint32_t hash = read32be(middle);
-            if (h == hash) {
+            if(h == hash)
+            {
                 start = middle;
                 break;
-            } else if (hash < h) {
-                start = middle + 8;
-            } else {
-                end = middle - 8;
             }
+            else if(hash < h)
+                start = middle + 8;
+            else
+                end = middle - 8;
         }
 
-        if (start <= end) {
+        if(start <= end)
+        {
             // go back on equal key
-            while (start != offsetArray && read32be(start) == read32be(start-8))
+            while(start != offsetArray && read32be(start) == read32be(start - 8))
                 start -= 8;
 
-            while (start < offsetArray + offsetLength) {
+            while(start < offsetArray + offsetLength)
+            {
                 uint32_t rh = read32be(start);
                 start += 4;
-                if (rh != h)
+                if(rh != h)
                     break;
                 uint32_t ro = read32be(start);
                 start += 4;
@@ -579,7 +610,7 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
                     return tn;
             }
         }
-        if (!comment[0])
+        if(!comment[0])
             break;
         comment = "";
     }
@@ -589,9 +620,10 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
     #endif
 
 searchDependencies:
-    for (QmTranslatorX *translator : subTranslators) {
+    for(QmTranslatorX *translator : subTranslators)
+    {
         std::u16string tn = translator->do_translate(context, sourceText, comment, n);
-        if (!tn.empty())
+        if(!tn.empty())
             return tn;
     }
     return std::u16string();
@@ -602,14 +634,14 @@ std::string QmTranslatorX::do_translate8(const char *context, const char *source
     std::u16string str  = do_translate(context, sourceText, comment, n);
     size_t utf16len    = str.size();
     size_t utf8bytelen = str.size() * sizeof(char16_t) + 1;
-    char* utf8str = (char*)malloc(utf8bytelen);
+    char *utf8str = (char *)malloc(utf8bytelen);
     memset(utf8str, 0, utf8bytelen);
-    if(utf16len>0)
+    if(utf16len > 0)
     {
-        const UTF16 *pUtf16 = (const UTF16*)str.data();
-              UTF8  *pUtf8  = (UTF8*)utf8str;
-        ConvertUTF16toUTF8( &pUtf16, pUtf16+utf16len,
-                            &pUtf8,  pUtf8+utf8bytelen, lenientConversion );
+        const UTF16 *pUtf16 = (const UTF16 *)str.data();
+        UTF8  *pUtf8  = (UTF8 *)utf8str;
+        ConvertUTF16toUTF8(&pUtf16, pUtf16 + utf16len,
+                           &pUtf8,  pUtf8 + utf8bytelen, lenientConversion);
     }
     std::string outstr(utf8str);
     free(utf8str);
@@ -622,14 +654,14 @@ std::u32string QmTranslatorX::do_translate32(const char *context, const char *so
     size_t utf16len = str.size();
     size_t utf32len = str.size() + 1;
     size_t utf32bytelen = utf32len * sizeof(char32_t);
-    char32_t* utf32str = (char32_t*)malloc(utf32bytelen);
+    char32_t *utf32str = (char32_t *)malloc(utf32bytelen);
     memset(utf32str, 0, utf32bytelen);
     if(utf16len > 0)
     {
-        const UTF16 *pUtf16 =  reinterpret_cast<const UTF16*>(str.data());
-              UTF32 *pUtf32  = (UTF32*)utf32str;
-        ConvertUTF16toUTF32( &pUtf16, pUtf16 + utf16len,
-                             &pUtf32, pUtf32 + utf32len, lenientConversion );
+        const UTF16 *pUtf16 =  reinterpret_cast<const UTF16 *>(str.data());
+        UTF32 *pUtf32  = (UTF32 *)utf32str;
+        ConvertUTF16toUTF32(&pUtf16, pUtf16 + utf16len,
+                            &pUtf32, pUtf32 + utf32len, lenientConversion);
     }
     std::u32string outstr(utf32str);
     free(utf32str);
@@ -642,7 +674,7 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     size_t  fileGotLen = 0;
 
     #ifndef _WIN32
-    FILE* file = fopen(filePath, "rb");
+    FILE *file = fopen(filePath, "rb");
     #else
     wchar_t filePathW[MAX_PATH + 1];
     {
@@ -653,18 +685,18 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
                                        filePathW, MAX_PATH);
         filePathW[utf16len] = L'\0';
     }
-    FILE* file = _wfopen(filePathW, L"rb");
+    FILE *file = _wfopen(filePathW, L"rb");
     #endif
     if(!file)
         return false;//err("Can't open file!", 2);
 
-    if( fread(magicBuffer, 1, MagicLength, file) < MagicLength )
+    if(fread(magicBuffer, 1, MagicLength, file) < MagicLength)
     {
         fclose(file);
         return false;//err("ERROR READING MAGIC NUMBER!!!", 3);
     }
 
-    if( memcmp(magicBuffer, magic, MagicLength) )
+    if(memcmp(magicBuffer, magic, MagicLength))
     {
         fclose(file);
         return false;//err("MAGIC NUMBER DOESN'T CASE!", 4);
@@ -674,7 +706,7 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     FileLength = ftell(file);
     fseek(file, 0L, SEEK_SET);
 
-    FileData = (uint8_t*)malloc(FileLength);
+    FileData = (uint8_t *)malloc(FileLength);
     fileGotLen = fread(FileData, 1, FileLength, file);
     fclose(file);
     FileLength = fileGotLen;
@@ -688,12 +720,12 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
     const uint8_t *end = data + len;
 
     data += MagicLength;
-    while (data < end - 4)
+    while(data < end - 4)
     {
         uint8_t  tag = read8(data++);
         uint32_t blockLen = read32be(data);
         data += 4;
-        if (!tag || !blockLen)
+        if(!tag || !blockLen)
             break;
         if(uint32_t(end - data) < blockLen)
         {
@@ -701,39 +733,49 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
             break;
         }
 
-        if (tag == QTranslatorEntryTypes::Contexts) {
+        if(tag == QTranslatorEntryTypes::Contexts)
+        {
             contextArray = data;
             contextLength = blockLen;
             #ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has contexts array!\n");
             #endif
-        } else if (tag == QTranslatorEntryTypes::Hashes) {
+        }
+        else if(tag == QTranslatorEntryTypes::Hashes)
+        {
             offsetArray = data;
             offsetLength = blockLen;
             #ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has hashes! %i\n", offsetLength);
             #endif
-        } else if (tag == QTranslatorEntryTypes::Messages) {
+        }
+        else if(tag == QTranslatorEntryTypes::Messages)
+        {
             messageArray = data;
             messageLength = blockLen;
             #ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has messages! %i\n", messageLength);
             #endif
-        } else if (tag == QTranslatorEntryTypes::NumerusRules) {
+        }
+        else if(tag == QTranslatorEntryTypes::NumerusRules)
+        {
             numerusRulesArray = data;
             numerusRulesLength = blockLen;
             #ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has numerus rules! %i\n", numerusRulesLength);
             #endif
-        } else if (tag == QTranslatorEntryTypes::Dependencies) {
+        }
+        else if(tag == QTranslatorEntryTypes::Dependencies)
+        {
 
             std::string dep;
             while(blockLen != 0)
             {
                 uint8_t *begin = data;
-                while(*data != '\0') { data++; }
+                while(*data != '\0')
+                    data++;
                 std::string::size_type gotLen = (data - begin);
-                dep = std::string((char*)begin, gotLen);
+                dep = std::string((char *)begin, gotLen);
                 if(dep.size() > 0)
                 {
                     //List of dependent files
@@ -750,14 +792,14 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
         data += blockLen;
     }
 
-    if (dependencies.empty() && (!offsetArray || !messageArray))
+    if(dependencies.empty() && (!offsetArray || !messageArray))
         ok = false;
 
     #ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("Dependencies valid: %i\n", ok);
     #endif
 
-    if (ok && !isValidNumerusRules(numerusRulesArray, numerusRulesLength))
+    if(ok && !isValidNumerusRules(numerusRulesArray, numerusRulesLength))
         ok = false;
 
     #ifdef QMTRANSLATPR_DEEP_DEBUG
@@ -765,7 +807,7 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
     #endif
 
     //Process loading of sub-translators
-    if (ok)
+    if(ok)
     {
         const size_t dependenciesCount = dependencies.size();
         subTranslators.reserve(dependenciesCount);
@@ -781,13 +823,13 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
         // In case some dependencies fail to load, unload all the other ones too.
         if(!ok)
         {
-            for(QmTranslatorX* it : subTranslators)
+            for(QmTranslatorX *it : subTranslators)
                 delete it;
             subTranslators.clear();
         }
     }
 
-    if (!ok)
+    if(!ok)
     {
         messageArray    = 0;
         contextArray    = 0;
@@ -801,7 +843,9 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
         printf("LOADING FAILED!\n");
         #endif
         return false;
-    } else {
+    }
+    else
+    {
         #ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("LOADING PASSED!\n");
         #endif
@@ -832,7 +876,7 @@ void QmTranslatorX::close()
     FileData = 0;
     FileLength = 0;
 
-    for(QmTranslatorX* it : subTranslators)
+    for(QmTranslatorX *it : subTranslators)
         delete it;
     subTranslators.clear();
 }
