@@ -304,3 +304,6 @@ BuildFreeType
 #BuildGLEW
 
 echo Libraries installed into $InstallTo
+
+CURRENT_TARBALL="<One of QMake-built library>"
+
