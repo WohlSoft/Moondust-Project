@@ -15,3 +15,4 @@ FreeImageH.path      = $$PWD/_builds/$$TARGETOS/include
 FreeImageH.files    += $$PWD/FreeImage/Source/FreeImageLite.h
 
 INSTALLS = FreeImageH
+
