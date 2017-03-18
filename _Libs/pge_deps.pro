@@ -16,6 +16,10 @@ SDL2MixerX.depends = AudioCodecs
 SUBDIRS += FreeImageLite
 FreeImageLite.file = libFreeImageLite.pro
 
+# ========== SQLite3 ==========
+SUBDIRS += SQLite3
+SQLite3.file = libSQLite3.pro
+
 # ========== OO-Lua ==========
 # SUBDIRS += OOLua
 # OOLua.file = oolua/project/oolua.pro
