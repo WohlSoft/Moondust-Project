@@ -8,3 +8,6 @@
 	url = https://github.com/WohlSoft/libFreeImage.git
     branch = master
 
+[submodule "_Libs/sqlite3"]
+	path = _Libs/sqlite3
+	url = https://github.com/WohlSoft/SQLite3.git
