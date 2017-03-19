@@ -33,6 +33,13 @@ DEALINGS IN THE SOFTWARE.
 
 #include "dirman.h"
 #include "dirman_private.h"
+#include <mutex>
+
+static std::mutex g_dirManMutex;
+
+#define PUT_THREAD_GUARD() \
+    std::lock_guard<std::mutex> guard(g_dirManMutex);\
+    (void)guard;
 
 void DirMan::DirMan_private::setPath(const std::string &dirPath)
 {
@@ -74,7 +81,6 @@ bool DirMan::DirMan_private::getListOfFiles(std::vector<std::string> &list, cons
 bool DirMan::DirMan_private::getListOfFolders(std::vector<std::string>& list, const std::vector<std::string>& suffix_filters)
 {
     list.clear();
-
     dirent *dent = NULL;
     DIR *srcdir = opendir(m_dirPath.c_str());
     if(srcdir == NULL)
@@ -101,6 +107,7 @@ bool DirMan::DirMan_private::getListOfFolders(std::vector<std::string>& list, co
 
 bool DirMan::DirMan_private::fetchListFromWalker(std::string &curPath, std::vector<std::string> &list)
 {
+    PUT_THREAD_GUARD();
     if(m_walkerState.digStack.empty())
         return false;
 
@@ -139,6 +146,7 @@ bool DirMan::DirMan_private::fetchListFromWalker(std::string &curPath, std::vect
 
 bool DirMan::exists(const std::string &dirPath)
 {
+    PUT_THREAD_GUARD();
     DIR *dir = opendir(dirPath.c_str());
     if(dir)
     {
@@ -151,16 +159,19 @@ bool DirMan::exists(const std::string &dirPath)
 
 bool DirMan::mkAbsDir(const std::string &dirPath)
 {
+    PUT_THREAD_GUARD();
     return ::mkdir(dirPath.c_str(), S_IRWXU | S_IRWXG) == 0;
 }
 
 bool DirMan::rmAbsDir(const std::string &dirPath)
 {
+    PUT_THREAD_GUARD();
     return ::rmdir(dirPath.c_str()) == 0;
 }
 
 bool DirMan::mkAbsPath(const std::string &dirPath)
 {
+    PUT_THREAD_GUARD();
     char tmp[PATH_MAX];
     char *p = NULL;
     size_t len;
@@ -176,7 +187,8 @@ bool DirMan::mkAbsPath(const std::string &dirPath)
         if(*p == '/')
         {
             *p = 0;
-            if(::mkdir(tmp, S_IRWXU | S_IRWXG) != 0)
+            int err = ::mkdir(tmp, S_IRWXU | S_IRWXG);
+            if((err != 0) && (errno != EEXIST))
             {
                 *p = '/';
                 return false;
@@ -189,6 +201,7 @@ bool DirMan::mkAbsPath(const std::string &dirPath)
 
 bool DirMan::rmAbsPath(const std::string &dirPath)
 {
+    PUT_THREAD_GUARD();
     int ret = 0;
     struct DirStackEntry
     {
