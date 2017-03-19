@@ -79,7 +79,7 @@ void LogWriter::LoadLogSettings()
     std::string mainIniFile = AppPathManager::settingsFileSTD();
     IniProcessing logSettings(mainIniFile);
 
-    std::string logPath = AppPathManager::userAppDirSTD() + "/logs";
+    std::string logPath = AppPathManager::userAppDirSTD() + "logs";
     DirMan defLogDir(logPath);
 
     if(!defLogDir.exists())

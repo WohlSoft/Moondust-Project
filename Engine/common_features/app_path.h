@@ -26,7 +26,7 @@ extern std::string  ApplicationPathSTD;
 class AppPathManager
 {
     public:
-        static void initAppPath(const char *argv0);
+        static void initAppPath();
         static std::string settingsFileSTD();
         static std::string userAppDirSTD();
         static std::string languagesDir();

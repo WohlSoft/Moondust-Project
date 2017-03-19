@@ -38,6 +38,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <winreg.h>
+#include <algorithm> // std::replace from \\ into /
 #endif
 
 #include "app_path.h"
@@ -144,7 +145,7 @@ static bool winReg_setUserDir()
 #endif
 
 
-void AppPathManager::initAppPath(const char* argv0)
+void AppPathManager::initAppPath()
 {
     //PGE_Application::setOrganizationName(_COMPANY);
     //PGE_Application::setOrganizationDomain(_PGE_URL);
@@ -175,17 +176,22 @@ void AppPathManager::initAppPath(const char* argv0)
         CFRelease(appUrlRef);
     }
     #else
-    ApplicationPathSTD = DirMan(Files::dirname(argv0)).absolutePath();
+    char* path = SDL_GetBasePath();//DirMan(Files::dirname(argv0)).absolutePath();
+    ApplicationPathSTD = std::string(path);
+    #ifdef _WIN32
+    std::replace(ApplicationPathSTD.begin(), ApplicationPathSTD.end(), '\\', '/');
+    #endif
+    SDL_free(path);
     #endif
 
-#if defined(__ANDROID__)
-    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
-    QDir appPath(ApplicationPath);
+//#if defined(__ANDROID__)
+//    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
+//    QDir appPath(ApplicationPath);
 
-    if(!appPath.exists())
-        appPath.mkpath(ApplicationPath);
+//    if(!appPath.exists())
+//        appPath.mkpath(ApplicationPath);
 
-#endif
+//#endif
 
     if(isPortable())
         return;
@@ -228,6 +234,7 @@ void AppPathManager::initAppPath(const char* argv0)
                 system(fmt::format("ln -s \"{0}\" \"{1}/Data directory\"", path + UserDirName, ApplicationPathSTD).c_str());
 #endif
             m_userPath = appDir.absolutePath();
+            m_userPath.push_back('/');
             _initSettingsPath();
         }
         else
@@ -244,7 +251,7 @@ defaultSettingsPath:
 
 std::string AppPathManager::settingsFileSTD()
 {
-    return m_settingsPath + "/pge_engine.ini";
+    return m_settingsPath + "pge_engine.ini";
 }
 
 std::string AppPathManager::userAppDirSTD()
@@ -255,7 +262,7 @@ std::string AppPathManager::userAppDirSTD()
 std::string AppPathManager::languagesDir()
 {
     #ifndef __APPLE__
-    return ApplicationPathSTD + "/languages";
+    return ApplicationPathSTD + "languages";
     #else
     CFURLRef appUrlRef;
     appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
@@ -329,7 +336,7 @@ bool AppPathManager::userDirIsAvailable()
 
 void AppPathManager::_initSettingsPath()
 {
-    m_settingsPath = m_userPath + "/settings";
+    m_settingsPath = m_userPath + "settings/";
 
     if(Files::fileExists(m_settingsPath))
         Files::deleteFile(m_settingsPath);//Just in case, avoid mad jokes with making same-named file as settings folder

@@ -442,7 +442,7 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
             //lib.loadQApp(argc, argv);
             //FIXME: Implement installing on STL-only!
             AppPathManager::install();
-            AppPathManager::initAppPath(argv[0]);
+            AppPathManager::initAppPath();
             return true;
         }
         else if(strcmp(arg, "--help") == 0)
