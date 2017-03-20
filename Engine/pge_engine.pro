@@ -83,7 +83,8 @@ android: {
 }
 win32: {
     RC_FILE = _resources/engine.rc
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main -lfreeimagelite  -lfreetype
+    LIBS += -lfreeimagelite  -lfreetype -lsqlite3
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main
     LIBS += -lversion -lopengl32 -ldbghelp -ladvapi32 -lkernel32
 }
 macx: {
@@ -96,8 +97,8 @@ macx: {
             $$PWD/../Editor/_resources/file_wldx.icns
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
+    LIBS += -lfreeimagelite -lfreetype -lsqlite3
     LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
-    LIBS += -lfreeimagelite -lfreetype
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox \
@@ -105,7 +106,8 @@ macx: {
 }
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
-    LIBS += -lfreeimagelite -lfreetype -Wl,-Bstatic -lSDL2_mixer_ext -lSDL2 -Wl,-Bdynamic
+    LIBS += -lfreeimagelite -lfreetype -lsqlite3
+    LIBS += -Wl,-Bstatic -lSDL2_mixer_ext -lSDL2 -Wl,-Bdynamic
     LIBS += -lvorbisfile -lvorbis -lFLAC -logg -lmad
     LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
 }
@@ -130,6 +132,7 @@ include($$PWD/../_common/FileMapper/FileMapper.pri)
 # DEFINES += INI_PROCESSING_ALLOW_QT_TYPES
 include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsSTL.pri)
+include($$PWD/../_common/PgeGameSave/pge_gamesave.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
 include($$PWD/../_common/Utils/UtilsSDL.pri)

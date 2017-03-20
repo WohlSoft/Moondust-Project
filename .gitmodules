@@ -11,3 +11,6 @@
 [submodule "_Libs/sqlite3"]
 	path = _Libs/sqlite3
 	url = https://github.com/WohlSoft/SQLite3.git
+[submodule "_common/PgeGameSave/submodule"]
+	path = _common/PgeGameSave/submodule
+	url = https://github.com/WohlSoft/PgeGameSave.git
