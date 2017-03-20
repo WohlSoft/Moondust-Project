@@ -48,7 +48,8 @@ clone_depth:  3  # clone entire repository history if not defined
 install:
   - cmd: git submodule init
   - cmd: git submodule update
-  - cmd: echo set QtDir=C:\Qt\5.8\mingw53_32\bin>> _paths.bat
+# - cmd: echo set QtDir=C:\Qt\5.8\mingw53_32\bin>> _paths.bat # Qt since 5.8 no more supports Windows XP
+  - cmd: echo set QtDir=C:\Qt\5.7\mingw53_32\bin>> _paths.bat # Keep support for Windows XP yet
   - cmd: echo set MinGW=C:\Qt\Tools\mingw530_32\bin>> _paths.bat
   - cmd: echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
   - cmd: echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
