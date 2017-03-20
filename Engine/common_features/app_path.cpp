@@ -157,7 +157,6 @@ void AppPathManager::initAppPath()
     */
     #ifdef __APPLE__
     {
-        (void)argv0;
         CFURLRef appUrlRef;
         appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
         CFStringRef filePathRef = CFURLGetString(appUrlRef);
