@@ -25,21 +25,19 @@
 
 bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid=true;
-    bool internal=!setup;
+    bool valid = true;
+    bool internal = !setup;
     PGEString errStr;
     if(internal)
-    {
-        setup=new IniProcessing(iniFile);
-    }
+        setup = new IniProcessing(iniFile);
+
+    m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
     if(!openSection(setup, section.toStdString()))
         return false;
 
     if(slevel.setup.parse(setup, wlvlPath, defaultGrid.levels, merge_with ? &merge_with->setup : nullptr, &errStr))
-    {
         slevel.isValid = true;
-    }
     else
     {
         addError(errStr);
@@ -57,8 +55,8 @@ void dataconfigs::loadWorldLevels()
     unsigned int i;
 
     obj_w_level slevel;
-    unsigned long levels_total=0;
-    bool useDirectory=false;
+    unsigned long levels_total = 0;
+    bool useDirectory = false;
 
     QString level_ini = getFullIniPath("wld_levels.ini");
     if(level_ini.isEmpty())
@@ -102,27 +100,23 @@ void dataconfigs::loadWorldLevels()
         return;
     }
 
-    for(i=0; i<=levels_total; i++)
+    for(i = 0; i <= levels_total; i++)
     {
         emit progressValue(int(i));
         bool valid = false;
         if(useDirectory)
-        {
             valid = loadWorldLevel(slevel, "level", nullptr, QString("%1/level-%2.ini").arg(nestDir).arg(i));
-        }
         else
-        {
             valid = loadWorldLevel(slevel, QString("level-%1").arg(i), 0, "", &setup);
-        }
 
         /***************Load image*******************/
         if(valid)
         {
             QString errStr;
             GraphicsHelps::loadMaskedImage(wlvlPath,
-               slevel.setup.image_n, slevel.setup.mask_n,
-               slevel.image,
-               errStr);
+                                           slevel.setup.image_n, slevel.setup.mask_n,
+                                           slevel.image,
+                                           errStr);
             if(!errStr.isEmpty())
             {
                 valid = false;
@@ -133,15 +127,10 @@ void dataconfigs::loadWorldLevels()
         slevel.setup.id = i;
         main_wlevels.storeElement(int(i), slevel, valid);
 
-        if( setup.lastError() != IniProcessing::ERR_OK )
-        {
+        if(setup.lastError() != IniProcessing::ERR_OK)
             addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
-        }
     }
 
     if(uint(main_wlevels.stored()) < levels_total)
-    {
         addError(QString("Not all Level images loaded! Total: %1, Loaded: %2").arg(levels_total).arg(main_wlevels.stored()));
-    }
 }
-

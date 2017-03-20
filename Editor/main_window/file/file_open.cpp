@@ -226,7 +226,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
-
+            child->showCustomStuffWarnings();
         } else {
             LogDebug(">>File loading aborted");
             //child->show();
@@ -260,6 +260,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                 dock_WldSettingsBox->raise();
             }
             statusBar()->showMessage(tr("World map file loaded"), 2000);
+            child->showCustomStuffWarnings();
         } else {
             LogDebug(">>File loading aborted");
             child->close();

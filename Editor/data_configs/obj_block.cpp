@@ -55,21 +55,21 @@ void obj_block::copyTo(obj_block &block)
  */
 bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid=true;
-    bool internal=!setup;
+    bool valid = true;
+    bool internal = !setup;
     QString errStr;
     if(internal)
-    {
         setup = new IniProcessing(iniFile);
-    }
 
-    if(!openSection( setup, section.toStdString()))
+    m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
+
+    if(!openSection(setup, section.toStdString()))
         return false;
 
     if(sblock.setup.parse(setup, blockPath, defaultGrid.block, merge_with ? &merge_with->setup : nullptr, &errStr))
-    {
         sblock.isValid = true;
-    } else {
+    else
+    {
         addError(errStr);
         sblock.isValid = false;
     }
@@ -86,8 +86,8 @@ void dataconfigs::loadLevelBlocks()
     unsigned int i;
 
     obj_block sblock;
-    unsigned long block_total=0;
-    bool useDirectory=false;
+    unsigned long block_total = 0;
+    bool useDirectory = false;
 
     QString block_ini = getFullIniPath("lvl_blocks.ini");
     if(block_ini.isEmpty())
@@ -124,38 +124,34 @@ void dataconfigs::loadLevelBlocks()
 
     main_block.allocateSlots(int(block_total));
 
-    if(ConfStatus::total_blocks==0)
+    if(ConfStatus::total_blocks == 0)
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
-    for(i=1; i<=block_total; i++)
+    for(i = 1; i <= block_total; i++)
     {
         emit progressValue(int(i));
 
         bool valid = false;
         if(useDirectory)
-        {
             valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(nestDir).arg(i));
-        }
         else
-        {
             valid = loadLevelBlock(sblock, QString("block-%1").arg(i), 0, "", &setup);
-        }
 
         /***************Load image*******************/
         if(valid)
         {
             QString errStr;
             GraphicsHelps::loadMaskedImage(blockPath,
-               sblock.setup.image_n, sblock.setup.mask_n,
-               sblock.image,
-               errStr);
+                                           sblock.setup.image_n, sblock.setup.mask_n,
+                                           sblock.image,
+                                           errStr);
 
             if(!errStr.isEmpty())
             {
-                valid=false;
+                valid = false;
                 addError(QString("BLOCK-%1 %2").arg(i).arg(errStr));
             }
         }
@@ -163,7 +159,7 @@ void dataconfigs::loadLevelBlocks()
         sblock.setup.id = i;
         main_block.storeElement(int(i), sblock, valid);
 
-        if( setup.lastError() != IniProcessing::ERR_OK)
+        if(setup.lastError() != IniProcessing::ERR_OK)
         {
             addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
             break;
@@ -171,7 +167,5 @@ void dataconfigs::loadLevelBlocks()
     }
 
     if(unsigned(main_block.stored()) < block_total)
-    {
         addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), PGE_LogLevel::Warning);
-    }
 }

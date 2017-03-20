@@ -44,7 +44,7 @@ void MainWindow::on_actionReload_triggered()
     QRect wnGeom;
     int activeWindow = activeChildWindow(LastActiveSubWindow);
 
-    if(activeWindow == 1)
+    if(activeWindow == WND_Level)
     {
         LevelEdit *lvlEdit = activeLvlEditWin(LastActiveSubWindow);
         LevelData FileData;
@@ -141,6 +141,8 @@ void MainWindow::on_actionReload_triggered()
 
             if(GlobalSettings::autoPlayMusic)
                 ui->actionPlayMusic->setChecked(true);
+
+            child->showCustomStuffWarnings();
         }
         else
         {
@@ -152,7 +154,7 @@ void MainWindow::on_actionReload_triggered()
             LogDebug(">>Windows closed");
         }
     }
-    else if(activeWindow == 2)
+    else if(activeWindow == WND_NpcTxt)
     {
         NpcEdit *npcEdit = activeNpcEditWin(LastActiveSubWindow);
         filePath = npcEdit->curFile;
@@ -209,7 +211,7 @@ void MainWindow::on_actionReload_triggered()
             LastActiveSubWindow->close();
         }
     }
-    else if(activeWindow == 3)
+    else if(activeWindow == WND_World)
     {
         WorldEdit *wldEdit = activeWldEditWin(LastActiveSubWindow);
         WorldData FileData;
@@ -281,6 +283,7 @@ void MainWindow::on_actionReload_triggered()
             child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
             child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
             statusBar()->showMessage(tr("World map file loaded"), 2000);
+            child->showCustomStuffWarnings();
         }
         else
         {

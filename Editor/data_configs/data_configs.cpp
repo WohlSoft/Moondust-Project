@@ -108,8 +108,8 @@ bool dataconfigs::openSection(IniProcessing *config, const std::string &section)
 
 void dataconfigs::addError(QString bug, PGE_LogLevel level)
 {
-    WriteToLog(level, QString("LoadConfig -> ") + bug);
-    errorsList << bug;
+    WriteToLog(level, QString("LoadConfig -> %1").arg(bug));
+    errorsList[m_errOut] << bug;
 }
 
 void dataconfigs::setConfigPath(QString p)
@@ -121,7 +121,9 @@ void dataconfigs::setConfigPath(QString p)
 
 bool dataconfigs::loadBasics()
 {
-    errorsList.clear();
+    errorsList[ERR_GLOBAL].clear();
+    errorsList[ERR_CUSTOM].clear();
+    m_errOut = ERR_GLOBAL;
 
     QString gui_ini = getFullIniPath("main.ini");
     if(gui_ini.isEmpty())
@@ -230,7 +232,10 @@ bool dataconfigs::loadconfigs()
 
     total_data = 0;
     defaultGrid.general = 0;
-    errorsList.clear();
+
+    errorsList[ERR_GLOBAL].clear();
+    errorsList[ERR_CUSTOM].clear();
+    m_errOut = ERR_GLOBAL;
 
     m_recentIniFile.clear();
 
@@ -452,8 +457,13 @@ bool dataconfigs::check()
             (main_music_wld.stored() <= 0) ||
             (main_music_spc.stored() <= 0) ||
             (main_sound.stored() <= 0) ||
-            !errorsList.isEmpty()
-        ) && (!m_isValid);
+            !errorsList[ERR_GLOBAL].isEmpty()
+                ) && (!m_isValid);
+}
+
+bool dataconfigs::checkCustom()
+{
+    return !errorsList[ERR_CUSTOM].isEmpty();
 }
 
 long dataconfigs::getCharacterI(unsigned long itemID)

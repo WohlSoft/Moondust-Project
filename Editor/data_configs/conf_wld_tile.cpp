@@ -25,21 +25,19 @@
 
 bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid=true;
-    bool internal=!setup;
+    bool valid = true;
+    bool internal = !setup;
     QString errStr;
     if(internal)
-    {
         setup = new IniProcessing(iniFile);
-    }
+
+    m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
     if(!openSection(setup, section.toStdString()))
         return false;
 
     if(stile.setup.parse(setup, tilePath, defaultGrid.terrain, merge_with ? &merge_with->setup : nullptr, &errStr))
-    {
         stile.isValid = true;
-    }
     else
     {
         addError(errStr);
@@ -57,8 +55,8 @@ void dataconfigs::loadWorldTiles()
     unsigned int i;
 
     obj_w_tile stile;
-    unsigned long tiles_total=0;
-    bool useDirectory=false;
+    unsigned long tiles_total = 0;
+    bool useDirectory = false;
 
     QString tile_ini = getFullIniPath("wld_tiles.ini");
     if(tile_ini.isEmpty())
@@ -92,7 +90,7 @@ void dataconfigs::loadWorldTiles()
 
     ConfStatus::total_wtile = signed(tiles_total);
 
-    if(ConfStatus::total_wtile==0)
+    if(ConfStatus::total_wtile == 0)
     {
         addError(QString("ERROR LOADING wld_tiles.ini: number of items not define, or empty config"),  PGE_LogLevel::Critical);
         return;
@@ -100,26 +98,22 @@ void dataconfigs::loadWorldTiles()
 
     main_wtiles.allocateSlots(int(tiles_total));
 
-    for(i=1; i<=tiles_total; i++)
+    for(i = 1; i <= tiles_total; i++)
     {
         emit progressValue(int(i));
         bool valid = false;
         if(useDirectory)
-        {
             valid = loadWorldTerrain(stile, "tile", nullptr, QString("%1/tile-%2.ini").arg(nestDir).arg(i));
-        }
         else
-        {
             valid = loadWorldTerrain(stile, QString("tile-%1").arg(i), 0, "", &setup);
-        }
         /***************Load image*******************/
         if(valid)
         {
             QString errStr;
             GraphicsHelps::loadMaskedImage(tilePath,
-               stile.setup.image_n, stile.setup.mask_n,
-               stile.image,
-               errStr);
+                                           stile.setup.image_n, stile.setup.mask_n,
+                                           stile.image,
+                                           errStr);
             if(!errStr.isEmpty())
             {
                 valid = false;
@@ -130,15 +124,11 @@ void dataconfigs::loadWorldTiles()
         stile.setup.id = i;
         main_wtiles.storeElement(int(i), stile, valid);
 
-        if( setup.lastError() != IniProcessing::ERR_OK )
-        {
+        if(setup.lastError() != IniProcessing::ERR_OK)
             addError(QString("ERROR LOADING wld_tiles.ini N:%1 (tile-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
-        }
     }
 
     if(uint(main_wtiles.stored()) < tiles_total)
-    {
         addError(QString("Not all Tiles loaded! Total: %1, Loaded: %2").arg(tiles_total).arg(main_wtiles.stored()));
-    }
 
 }

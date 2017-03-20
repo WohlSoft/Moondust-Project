@@ -512,8 +512,28 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
     LvlData.meta.modified = modifystate;
     LvlData.meta.untitled = untitledstate;
     progress.deleteLater();
+
     return true;
 }
+
+void LevelEdit::showCustomStuffWarnings()
+{
+    if(m_mw->configs.checkCustom())
+    {
+        QString errorsList;
+        for(QString &e : m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM])
+            errorsList += " - " + e + "\n";
+        QMessageBox::warning(m_mw,
+                             tr("Incorrect custom configs"),
+                             tr("This level has some incorrect config files which are can't be loaded. "
+                                "To avoid this message box in next time, please fix next errors in "
+                                "your config files in the the current and in the custom folders:"
+                                "\n\n%1").arg(errorsList),
+                             QMessageBox::Ok);
+        m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM].clear();
+    }
+}
+
 
 
 void LevelEdit::documentWasModified()

@@ -36,7 +36,7 @@ void obj_bgo::copyTo(obj_bgo &bgo)
     bgo.isValid         = isValid;
     bgo.animator_id     = animator_id;
     bgo.cur_image       = cur_image;
-    if(cur_image==nullptr)
+    if(cur_image == nullptr)
         bgo.cur_image   = &image;
 
     bgo.setup = setup;
@@ -53,21 +53,19 @@ void obj_bgo::copyTo(obj_bgo &bgo)
  */
 bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, IniProcessing *setup)
 {
-    bool valid=true;
-    bool internal=!setup;
+    bool valid = true;
+    bool internal = !setup;
     QString errStr;
     if(internal)
-    {
         setup = new IniProcessing(iniFile);
-    }
+
+    m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
     if(!openSection(setup, section.toStdString()))
         return false;
 
     if(sbgo.setup.parse(setup, bgoPath, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
-    {
         sbgo.isValid = true;
-    }
     else
     {
         addError(errStr);
@@ -86,8 +84,8 @@ void dataconfigs::loadLevelBGO()
     unsigned long i;
 
     obj_bgo sbgo;
-    unsigned long bgo_total=0;
-    bool useDirectory=false;
+    unsigned long bgo_total = 0;
+    bool useDirectory = false;
 
     QString bgo_ini = getFullIniPath("lvl_bgo.ini");
     if(bgo_ini.isEmpty())
@@ -99,7 +97,7 @@ void dataconfigs::loadLevelBGO()
 
     main_bgo.clear();   //Clear old
 
-    if(!openSection( &setup, "background-main"))
+    if(!openSection(&setup, "background-main"))
         return;
     {
         setup.read("total", bgo_total, 0);
@@ -123,38 +121,34 @@ void dataconfigs::loadLevelBGO()
 
     main_bgo.allocateSlots(static_cast<int>(bgo_total));
 
-    if(ConfStatus::total_bgo==0)
+    if(ConfStatus::total_bgo == 0)
     {
         addError(QString("ERROR LOADING lvl_bgo.ini: number of items not define, or empty config"), PGE_LogLevel::Critical);
         return;
     }
 
-    for(i=1; i<=bgo_total; i++)
+    for(i = 1; i <= bgo_total; i++)
     {
         emit progressValue(static_cast<int>(i));
-        bool valid=false;
+        bool valid = false;
 
         if(useDirectory)
-        {
             valid = loadLevelBGO(sbgo, "background", nullptr, QString("%1/background-%2.ini").arg(nestDir).arg(i));
-        }
         else
-        {
             valid = loadLevelBGO(sbgo, QString("background-%1").arg(i), 0, "", &setup);
-        }
 
         /***************Load image*******************/
         if(valid)
         {
             QString errStr;
             GraphicsHelps::loadMaskedImage(bgoPath,
-               sbgo.setup.image_n, sbgo.setup.mask_n,
-               sbgo.image,
-               errStr);
+                                           sbgo.setup.image_n, sbgo.setup.mask_n,
+                                           sbgo.image,
+                                           errStr);
 
             if(!errStr.isEmpty())
             {
-                valid=false;
+                valid = false;
                 addError(QString("BGO-%1 %2").arg(i).arg(errStr));
             }
         }
@@ -162,14 +156,10 @@ void dataconfigs::loadLevelBGO()
         sbgo.setup.id = i;
         main_bgo.storeElement(static_cast<int>(i), sbgo, valid);
 
-        if( setup.lastError() != IniProcessing::ERR_OK )
-        {
+        if(setup.lastError() != IniProcessing::ERR_OK)
             addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);
-        }
     }
 
     if(static_cast<unsigned long>(main_bgo.stored()) < bgo_total)
-    {
         addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.stored()));
-    }
 }

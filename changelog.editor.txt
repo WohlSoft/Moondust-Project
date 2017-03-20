@@ -36,6 +36,9 @@ patch 2
 - Fixed some crashes
 - Updated built-in fixer of the lazyliy-made masks to be compare with new algorithm
 - Updated console tools API to support updated API of GIFs2PNG, PNG2GIFs and LazyFixTool (which now are using "tclap" as arguments parser)
+patch 3
+- Fixed false alert about config pack invalidity when real error has occouped in the custom configs which are in the level custom folder
+- Added message box which notifies about possible errors in the custom configs of the level or world map
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

@@ -157,12 +157,18 @@ public:
     QList<obj_rotation_table > main_rotation_table;
 
     bool check(); //Returns true, if something config entry is not initialized
+    bool checkCustom(); //Returns true, if some of custom config has failed
 
     //Graphics
     obj_gridSizes defaultGrid;
 
-    //Debug
-    QStringList errorsList;
+    enum ErrorListType
+    {
+        ERR_GLOBAL = 0,
+        ERR_CUSTOM = 1
+    };
+    //! Errors of config pack loading
+    QStringList errorsList[2];
 
     long getCharacterI(unsigned long itemID);
 
@@ -247,6 +253,10 @@ private:
     QString     getFullIniPath(QString iniFileName);
     bool        openSection(IniProcessing *config, const std::string &section);
     inline void closeSection(IniProcessing* file) { file->endGroup(); }
+
+    //! Write errors into custom errors config
+    ErrorListType m_errOut = ERR_GLOBAL;
+
     void        addError(QString bug, PGE_LogLevel level = PGE_LogLevel::Warning);
 };
 

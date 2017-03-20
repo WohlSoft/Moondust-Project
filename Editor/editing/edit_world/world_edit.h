@@ -60,6 +60,7 @@ public:
 
     bool newFile(dataconfigs &configs, EditingSettings options);
     bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options);
+    void showCustomStuffWarnings();
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true);

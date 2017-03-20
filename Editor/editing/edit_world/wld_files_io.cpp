@@ -392,7 +392,26 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     WldData.meta.modified = modifystate;
     WldData.meta.untitled = untitledstate;
     progress.deleteLater();
+
     return true;
+}
+
+void WorldEdit::showCustomStuffWarnings()
+{
+    if(m_mw->configs.checkCustom())
+    {
+        QString errorsList;
+        for(QString &e : m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM])
+            errorsList += " - " + e + "\n";
+        QMessageBox::warning(m_mw,
+                             tr("Incorrect custom configs"),
+                             tr("This world map has some incorrect config files which are can't be loaded. "
+                                "To avoid this message box in next time, please fix next errors in "
+                                "your config files in the current and in the custom folders:"
+                                "\n\n%1").arg(errorsList),
+                             QMessageBox::Ok);
+        m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM].clear();
+    }
 }
 
 

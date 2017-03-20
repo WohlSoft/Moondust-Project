@@ -144,7 +144,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     setDirEntry(ui->ItemsDirs, row++, tr("Custom data"),configs->dirs.gcustom);
 
     QTableWidgetItem * itemError;
-    if(configs->errorsList.isEmpty())
+    if(configs->errorsList[dataconfigs::ERR_GLOBAL].isEmpty())
     {
         QFont font;
         font.setItalic(true);
@@ -155,13 +155,13 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     }
     else
     {
-        for(long e=0;e<configs->errorsList.size();e++)
+        for(long e=0;e<configs->errorsList[dataconfigs::ERR_GLOBAL].size();e++)
         {
             ui->ItemsErrors->insertRow(int(e));
-                QString erroText = configs->errorsList[int(e)];
-                itemError = new QTableWidgetItem(erroText);
-                itemError->setToolTip(erroText);
-                ui->ItemsErrors->setItem(int(e), 0, itemError);
+            QString erroText = configs->errorsList[dataconfigs::ERR_GLOBAL][int(e)];
+            itemError = new QTableWidgetItem(erroText);
+            itemError->setToolTip(erroText);
+            ui->ItemsErrors->setItem(int(e), 0, itemError);
         }
 
     }

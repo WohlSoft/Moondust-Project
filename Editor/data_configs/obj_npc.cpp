@@ -54,9 +54,9 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
     QString errStr;
 
     if(internal)
-    {
         setup = new IniProcessing(iniFile);
-    }
+
+    m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
     if(!openSection(setup, section.toStdString()))
         return false;
