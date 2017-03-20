@@ -862,6 +862,8 @@ public:
         void on_actionSCT_RotateRight_triggered();
         void on_actionSCT_FlipHorizontal_triggered();
         void on_actionSCT_FlipVertical_triggered();
+    private:
+        void deleteLevelSection(LevelEdit *edit, int section, long margin);
 
 // ////////////////////////////////////////////////////////
 

@@ -31,33 +31,31 @@ void MainWindow::on_actionCloneSectionTo_triggered()
     while(1)
     {
         LvlCloneSection box(this);
-        box.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        box.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
 
 
         //Creating of level files list
         QList<LevelEdit *> openedLeves;
 
-        foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+        foreach(QMdiSubWindow *window, ui->centralWidget->subWindowList())
         {
-            if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
-            {
+            if(QString(window->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS)
                 openedLeves.push_back(qobject_cast<LevelEdit *>(window->widget()));
-            }
         }
 
-        LevelEdit* activeLvlWin=NULL;
-        if(activeChildWindow()==1)
+        LevelEdit *activeLvlWin = NULL;
+        if(activeChildWindow() == 1)
             activeLvlWin = activeLvlEditWin();
 
         if(!activeLvlWin) return;
         box.addLevelList(openedLeves, activeLvlWin);
-        if(box.exec()==QDialog::Accepted)
+        if(box.exec() == QDialog::Accepted)
         {
-            long x=0;
-            long y=0;
-            long w=0;
-            long h=0;
+            long x = 0;
+            long y = 0;
+            long w = 0;
+            long h = 0;
 
             QProgressDialog progress(tr("Clonning of section..."), tr("Abort"), 0, 5, this);
             progress.setWindowTitle(tr("Please wait..."));
@@ -68,9 +66,9 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             progress.setCancelButton(0);
             progress.setMinimumDuration(0);
 
-            LevelEdit * src = box.clone_source;
+            LevelEdit *src = box.clone_source;
             int s_id = box.clone_source_id;
-            LevelEdit * dst = box.clone_target;
+            LevelEdit *dst = box.clone_target;
             int d_id = box.clone_target_id;
 
             //Init target section
@@ -79,15 +77,15 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             x = dst->LvlData.sections[d_id].size_left;
             y = dst->LvlData.sections[d_id].size_top;
 
-            w = labs(src->LvlData.sections[s_id].size_left-
-                    src->LvlData.sections[s_id].size_right);
-            h = labs(src->LvlData.sections[s_id].size_top-
-                    src->LvlData.sections[s_id].size_bottom);
+            w = labs(src->LvlData.sections[s_id].size_left -
+                     src->LvlData.sections[s_id].size_right);
+            h = labs(src->LvlData.sections[s_id].size_top -
+                     src->LvlData.sections[s_id].size_bottom);
 
-            if(h!=600)
+            if(h != 600)
             {
                 QPoint aligned;
-                aligned = dst->scene->applyGrid(QPoint(x,y), configs.defaultGrid.general);
+                aligned = dst->scene->applyGrid(QPoint(x, y), configs.defaultGrid.general);
                 x = aligned.x();
                 y = aligned.y();
             }
@@ -98,39 +96,38 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             dst->LvlData.sections[d_id].size_left = x;
             dst->LvlData.sections[d_id].size_top = y;
-            dst->LvlData.sections[d_id].size_right = x+w;
-            dst->LvlData.sections[d_id].size_bottom = y+h;
+            dst->LvlData.sections[d_id].size_right = x + w;
+            dst->LvlData.sections[d_id].size_bottom = y + h;
 
-            dst->LvlData.sections[d_id].PositionX = x-10;
-            dst->LvlData.sections[d_id].PositionY = y-10;
+            dst->LvlData.sections[d_id].PositionX = x - 10;
+            dst->LvlData.sections[d_id].PositionY = y - 10;
 
             dst->scene->ChangeSectionBG(
-                        dst->LvlData.sections[d_id].background,
-                        d_id
-                    );
+                dst->LvlData.sections[d_id].background,
+                d_id
+            );
 
             if(!progress.wasCanceled()) progress.setValue(1);
             qApp->processEvents();
 
             //copy items
             QRectF zone;
-            zone.setLeft(src->LvlData.sections[s_id].size_left-box.clone_margin);
-            zone.setTop(src->LvlData.sections[s_id].size_top-box.clone_margin);
-            zone.setRight(src->LvlData.sections[s_id].size_right+box.clone_margin);
-            zone.setBottom(src->LvlData.sections[s_id].size_bottom+box.clone_margin);
+            zone.setLeft(src->LvlData.sections[s_id].size_left - box.clone_margin);
+            zone.setTop(src->LvlData.sections[s_id].size_top - box.clone_margin);
+            zone.setRight(src->LvlData.sections[s_id].size_right + box.clone_margin);
+            zone.setBottom(src->LvlData.sections[s_id].size_bottom + box.clone_margin);
 
             src->scene->clearSelection();
 
             foreach(QGraphicsItem *x, src->scene->items(zone))
             {
-                if(x->data(ITEM_TYPE)=="Block")
+                if(x->data(ITEM_TYPE) == "Block")
                     x->setSelected(true);
-                else
-                if(x->data(ITEM_TYPE)=="BGO")
+                else if(x->data(ITEM_TYPE) == "BGO")
                     x->setSelected(true);
-                if(x->data(ITEM_TYPE)=="NPC")
+                if(x->data(ITEM_TYPE) == "NPC")
                     x->setSelected(true);
-                if(x->data(ITEM_TYPE)=="Water")
+                if(x->data(ITEM_TYPE) == "Water")
                     x->setSelected(true);
             }
 
@@ -145,22 +142,31 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             if(!progress.wasCanceled()) progress.setValue(3);
             qApp->processEvents();
 
-            long baseX, baseY;
-            bool doCloneItems=true;
+            long baseX = 0, baseY = 0;
+            bool doCloneItems = true;
             //set first base
-            if(!buffer.blocks.isEmpty()){
+            if(!buffer.blocks.isEmpty())
+            {
                 baseX = buffer.blocks[0].x;
                 baseY = buffer.blocks[0].y;
-            }else if(!buffer.bgo.isEmpty()){
+            }
+            else if(!buffer.bgo.isEmpty())
+            {
                 baseX = buffer.bgo[0].x;
                 baseY = buffer.bgo[0].y;
-            }else if(!buffer.npc.isEmpty()){
+            }
+            else if(!buffer.npc.isEmpty())
+            {
                 baseX = buffer.npc[0].x;
                 baseY = buffer.npc[0].y;
-            }else if(!buffer.physez.isEmpty()){
+            }
+            else if(!buffer.physez.isEmpty())
+            {
                 baseX = buffer.physez[0].x;
                 baseY = buffer.physez[0].y;
-            }else{
+            }
+            else
+            {
                 //nothing to clone
                 doCloneItems = false;
             }
@@ -170,52 +176,47 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             if(doCloneItems)
             {
-                foreach (LevelBlock block, buffer.blocks)
+                foreach(LevelBlock block, buffer.blocks)
                 {
-                    if(block.x<baseX) {
+                    if(block.x < baseX)
                         baseX = block.x;
-                    }
-                    if(block.y<baseY) {
+                    if(block.y < baseY)
                         baseY = block.y;
-                    }
                 }
-                foreach (LevelBGO bgo, buffer.bgo){
-                    if(bgo.x<baseX){
+                foreach(LevelBGO bgo, buffer.bgo)
+                {
+                    if(bgo.x < baseX)
                         baseX = bgo.x;
-                    }
-                    if(bgo.y<baseY){
+                    if(bgo.y < baseY)
                         baseY = bgo.y;
-                    }
                 }
-                foreach (LevelNPC npc, buffer.npc){
-                    if(npc.x<baseX){
+                foreach(LevelNPC npc, buffer.npc)
+                {
+                    if(npc.x < baseX)
                         baseX = npc.x;
-                    }
-                    if(npc.y<baseY){
+                    if(npc.y < baseY)
                         baseY = npc.y;
-                    }
                 }
-                foreach (LevelPhysEnv water, buffer.physez){
-                    if(water.x<baseX){
+                foreach(LevelPhysEnv water, buffer.physez)
+                {
+                    if(water.x < baseX)
                         baseX = water.x;
-                    }
-                    if(water.y<baseY){
+                    if(water.y < baseY)
                         baseY = water.y;
-                    }
                 }
 
                 long targetX;// = baseX;
 
-                if(baseX<src->LvlData.sections[s_id].size_left)
-                    targetX = x-labs(baseX-src->LvlData.sections[s_id].size_left);
+                if(baseX < src->LvlData.sections[s_id].size_left)
+                    targetX = x - labs(baseX - src->LvlData.sections[s_id].size_left);
                 else
-                    targetX = x+labs(src->LvlData.sections[s_id].size_left-baseX);
+                    targetX = x + labs(src->LvlData.sections[s_id].size_left - baseX);
                 long targetY;// = baseY;
 
-                if(baseY<src->LvlData.sections[s_id].size_top)
-                    targetY = y-labs(baseY-src->LvlData.sections[s_id].size_top);
+                if(baseY < src->LvlData.sections[s_id].size_top)
+                    targetY = y - labs(baseY - src->LvlData.sections[s_id].size_top);
                 else
-                    targetY = y+labs(src->LvlData.sections[s_id].size_top-baseY);
+                    targetY = y + labs(src->LvlData.sections[s_id].size_top - baseY);
 
                 dst->scene->paste(buffer, QPoint(targetX, targetY));
             }
@@ -226,15 +227,15 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             progress.close();
 
             QMessageBox::StandardButton reply =  QMessageBox::information(this,
-                                     tr("Section has been clonned"),
-                                     tr("Section has been successfully clonned!\n"
-                                        "Do you want to clone another section?"),
-                                                QMessageBox::Yes|QMessageBox::No);
+                                                 tr("Section has been clonned"),
+                                                 tr("Section has been successfully clonned!\n"
+                                                    "Do you want to clone another section?"),
+                                                 QMessageBox::Yes | QMessageBox::No);
             if(reply != QMessageBox::Yes)
                 return;
-        } else {
-            return;
         }
+        else
+            return;
     }
 }
 
@@ -244,72 +245,35 @@ void MainWindow::on_actionSCT_Delete_triggered()
     qApp->setActiveWindow(this);
     if(activeChildWindow() == WND_Level)
     {
-        int id=0;
-
         if(QMessageBox::question(this, tr("Remove section"),
                                  tr("Do you want to remove all objects of this section?"),
-                                 QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
+                                 QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
         {
-            LevelEdit* edit = activeLvlEditWin();
-            QRectF zone;
-            bool ok=false;
+            bool ok = false;
             long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                           tr("Please select, how far items out of section should be removed too (in pixels)"),
-                           32, 0, 214948, 1, &ok);
+                                      tr("Please select, how far items out of section should be removed too (in pixels)"),
+                                      32, 0, 214948, 1, &ok);
 
-            if(!ok) return;
+            if(!ok)
+                return;
 
-            zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
-            zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
-            zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
-            zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
-
-            QList<QGraphicsItem *> itemsToRemove;
-            foreach(QGraphicsItem *x, edit->scene->items(zone))
-            {
-                if(!x->data(ITEM_IS_ITEM).isNull())
-                    itemsToRemove.push_back(x);
-//                else
-//                if(x->data(0)=="BGO")
-//                    itemsToRemove.push_back(x);
-//                if(x->data(0)=="NPC")
-//                    itemsToRemove.push_back(x);
-//                if(x->data(0)=="Water")
-//                    itemsToRemove.push_back(x);
-//                if(x->data(0)=="Door_enter")
-//                    itemsToRemove.push_back(x);
-//                if(x->data(0)=="Door_exit")
-//                    itemsToRemove.push_back(x);
-//                if(x->data(0)=="playerPoint")
-//                    itemsToRemove.push_back(x);
-            }
-
-            //remove all items in the section
-            edit->scene->removeLvlItems(itemsToRemove);
-
-            id = edit->LvlData.sections[edit->LvlData.CurSection].id;
-            edit->LvlData.sections[edit->LvlData.CurSection] = FileFormats::CreateLvlSection();
-            edit->LvlData.sections[edit->LvlData.CurSection].id = id;
-
-            edit->scene->ChangeSectionBG(0, edit->LvlData.CurSection);
-            edit->scene->drawSpace();
-            edit->LvlData.meta.modified=true;
-
+            LevelEdit *edit = activeLvlEditWin();
             int deletedSection = edit->LvlData.CurSection;
+            deleteLevelSection(edit, deletedSection, outOfSectionMargin);
 
-            bool switched=false;
-            //find nearly not empty section
-            for(int i=0;i<edit->LvlData.sections.size();i++)
+            bool switched = false;
+            // find  a nearest non empty section
+            for(int i = 0; i < edit->LvlData.sections.size(); i++)
             {
                 if(
-                     (edit->LvlData.sections[i].size_left !=0 )&&
-                     (edit->LvlData.sections[i].size_right !=0 )&&
-                     (edit->LvlData.sections[i].size_bottom !=0 )&&
-                     (edit->LvlData.sections[i].size_top !=0 )
-                  )
+                    (edit->LvlData.sections[i].size_left != 0) &&
+                    (edit->LvlData.sections[i].size_right != 0) &&
+                    (edit->LvlData.sections[i].size_bottom != 0) &&
+                    (edit->LvlData.sections[i].size_top != 0)
+                )
                 {
                     SetCurrentLevelSection(i);
-                    switched=true;
+                    switched = true;
                     break;
                 }
             }
@@ -318,37 +282,65 @@ void MainWindow::on_actionSCT_Delete_triggered()
                 SetCurrentLevelSection(0);
 
             //Pop last section entry if possible
-            if(deletedSection > 20 && edit->LvlData.sections.size()>21)
+            if(deletedSection > 20 && edit->LvlData.sections.size() > 21)
                 edit->LvlData.sections.pop_back();
-
             edit->scene->Debugger_updateItemList();
 
             QMessageBox::information(this, tr("Section has been removed"),
-                                 tr("Section %1 has been successfully deleted!").arg(id+1));
+                                     tr("Section %1 has been successfully deleted!").arg(deletedSection + 1));
         }
 
     }
 
 }
 
+void MainWindow::deleteLevelSection(LevelEdit *edit, int section, long margin)
+{
+    int id = 0;
+    QRectF zone;
+    zone.setLeft(edit->LvlData.sections[section].size_left - margin);
+    zone.setTop(edit->LvlData.sections[section].size_top - margin);
+    zone.setRight(edit->LvlData.sections[section].size_right + margin);
+    zone.setBottom(edit->LvlData.sections[section].size_bottom + margin);
+
+    QList<QGraphicsItem *> itemsToRemove;
+    foreach(QGraphicsItem *x, edit->scene->items(zone))
+    {
+        if(!x->data(ITEM_IS_ITEM).isNull())
+            itemsToRemove.push_back(x);
+    }
+
+    //remove all items in the section
+    edit->scene->removeLvlItems(itemsToRemove);
+
+    id = edit->LvlData.sections[section].id;
+    edit->LvlData.sections[section] = FileFormats::CreateLvlSection();
+    edit->LvlData.sections[section].id = id;
+
+    edit->scene->ChangeSectionBG(0, section);
+    edit->scene->drawSpace();
+    edit->LvlData.meta.modified = true;
+}
+
+
 
 void MainWindow::on_actionSCT_RotateLeft_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == 1)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         QRectF zone;
-        bool ok=false;
+        bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
-                       32, 0, 214948, 1, &ok);
+                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  32, 0, 214948, 1, &ok);
 
         if(!ok) return;
 
-        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
-        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
-        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
-        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left - outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
         QList<QGraphicsItem *> itemsToModify;
         foreach(QGraphicsItem *x, edit->scene->items(zone))
         {
@@ -362,21 +354,21 @@ void MainWindow::on_actionSCT_RotateLeft_triggered()
 
 void MainWindow::on_actionSCT_RotateRight_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == 1)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         QRectF zone;
-        bool ok=false;
+        bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
-                       32, 0, 214948, 1, &ok);
+                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  32, 0, 214948, 1, &ok);
 
         if(!ok) return;
 
-        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
-        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
-        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
-        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left - outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
         QList<QGraphicsItem *> itemsToModify;
         foreach(QGraphicsItem *x, edit->scene->items(zone))
         {
@@ -390,21 +382,21 @@ void MainWindow::on_actionSCT_RotateRight_triggered()
 
 void MainWindow::on_actionSCT_FlipHorizontal_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == 1)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         QRectF zone;
-        bool ok=false;
+        bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
-                       32, 0, 214948, 1, &ok);
+                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  32, 0, 214948, 1, &ok);
 
         if(!ok) return;
 
-        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
-        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
-        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
-        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left - outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
         QList<QGraphicsItem *> itemsToModify;
         foreach(QGraphicsItem *x, edit->scene->items(zone))
         {
@@ -418,21 +410,21 @@ void MainWindow::on_actionSCT_FlipHorizontal_triggered()
 
 void MainWindow::on_actionSCT_FlipVertical_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == 1)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         QRectF zone;
-        bool ok=false;
+        bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
-                       32, 0, 214948, 1, &ok);
+                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  32, 0, 214948, 1, &ok);
 
         if(!ok) return;
 
-        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
-        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
-        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
-        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left - outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
         QList<QGraphicsItem *> itemsToModify;
         foreach(QGraphicsItem *x, edit->scene->items(zone))
         {
@@ -443,4 +435,3 @@ void MainWindow::on_actionSCT_FlipVertical_triggered()
         edit->LvlData.meta.modified = true;
     }
 }
-
