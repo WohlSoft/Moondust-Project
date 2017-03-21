@@ -53,14 +53,15 @@ matrix:
           branch_pattern: master
       cache:
         directories:
-          - /home/runner/Qt/qtcache560
+          - bin/_build_x64
+          - _Libs/_builds/linux
     - os: osx
       osx_image: xcode8.2
       compiler: clang++
       cache:
         directories:
-          - /Users/StaticQt/qtcache580
           - $HOME/Library/Caches/Homebrew
+          - _Libs/_builds/macos
 
 before_script:
   - bash _common/travis-ci/before-script.sh
@@ -77,3 +78,5 @@ script:
 after_success:
   - bash _common/travis-ci/deploy.sh
   - bash _common/travis-ci/upload.sh
+
+
