@@ -31,7 +31,7 @@ http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
 
 
 ## CI Build status
-    Linux    |    Windows     |   Mac OS X
+Linux | Windows | Mac OS X
 ------------ | ------------- | -------------
 [![Build Status](https://semaphoreci.com/api/v1/projects/604cbe8f-44de-4754-99a5-28bc11764b39/471601/badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project)
 
