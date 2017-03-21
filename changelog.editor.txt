@@ -39,6 +39,7 @@ patch 2
 patch 3
 - Fixed false alert about config pack invalidity when real error has occouped in the custom configs which are in the level custom folder
 - Added message box which notifies about possible errors in the custom configs of the level or world map
+- Added ability to override busy section while cloning
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

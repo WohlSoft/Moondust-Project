@@ -44,12 +44,14 @@ void MainWindow::on_actionCloneSectionTo_triggered()
                 openedLeves.push_back(qobject_cast<LevelEdit *>(window->widget()));
         }
 
-        LevelEdit *activeLvlWin = NULL;
-        if(activeChildWindow() == 1)
-            activeLvlWin = activeLvlEditWin();
+        LevelEdit *activeLvlWin = nullptr;
+        if(activeChildWindow() != WND_Level)
+            return;
 
-        if(!activeLvlWin) return;
+        activeLvlWin = activeLvlEditWin();
+        Q_ASSERT(activeLvlWin);
         box.addLevelList(openedLeves, activeLvlWin);
+
         if(box.exec() == QDialog::Accepted)
         {
             long x = 0;
@@ -70,6 +72,12 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             int s_id = box.clone_source_id;
             LevelEdit *dst = box.clone_target;
             int d_id = box.clone_target_id;
+
+            if(box.override_destinition)
+            {
+                // Delete destinition section
+                deleteLevelSection(dst, d_id, box.clone_margin);
+            }
 
             //Init target section
             dst->scene->InitSection(d_id);
@@ -221,10 +229,17 @@ void MainWindow::on_actionCloneSectionTo_triggered()
                 dst->scene->paste(buffer, QPoint(targetX, targetY));
             }
 
-            if(!progress.wasCanceled()) progress.setValue(5);
+            if(!progress.wasCanceled())
+                progress.setValue(5);
             qApp->processEvents();
 
             progress.close();
+
+            // Toggle destinition section if destinition level is same as currently toggled
+            if(activeLvlWin == dst)
+                SetCurrentLevelSection(d_id);
+            else // Or just change current section of that level without refreshing of current view
+                dst->setCurrentSection(d_id);
 
             QMessageBox::StandardButton reply =  QMessageBox::information(this,
                                                  tr("Section has been clonned"),

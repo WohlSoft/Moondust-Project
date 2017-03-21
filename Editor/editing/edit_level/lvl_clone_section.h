@@ -37,11 +37,13 @@ public:
     ~LvlCloneSection();
     void addLevelList(QList<LevelEdit* > _levels, LevelEdit *active = NULL);
 
-    int clone_margin;
-    LevelEdit* clone_source;
-    int clone_source_id;
-    LevelEdit* clone_target;
-    int clone_target_id;
+    int         clone_margin = 32;
+    LevelEdit*  clone_source = nullptr;
+    int         clone_source_id = 0;
+    LevelEdit*  clone_target = nullptr;
+    int         clone_target_id = 0;
+
+    bool        override_destinition = false;
 
 private slots:
     void on_FileList_src_currentIndexChanged(int index);
