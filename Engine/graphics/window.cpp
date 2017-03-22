@@ -301,7 +301,8 @@ void PGE_Window::toggleVSync(bool vsync)
         {
             //Vertical syncronization is supported
             vsyncIsSupported = true;
-            TimeOfFrame     = static_cast<int>(ceil(1000.0 / static_cast<double>(mode.refresh_rate)));
+            if(mode.refresh_rate > 0)
+                TimeOfFrame = static_cast<int>(std::ceil(1000.0 / static_cast<double>(mode.refresh_rate)));
             TicksPerSecond  = 1000.0 / static_cast<double>(TimeOfFrame);
             g_AppSettings.timeOfFrame = TimeOfFrame;
             g_AppSettings.TicksPerSecond = TicksPerSecond;

@@ -34,8 +34,13 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
     #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
     bool valid = true;
     bool internal = !setup;
+
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
+    {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
+    }
 
     setup->beginGroup(section);
     {
@@ -119,8 +124,8 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
                                         {"top", 2}
         });
     }
-
     setup->endGroup();
+
     return valid;
     #undef pMerge
 }

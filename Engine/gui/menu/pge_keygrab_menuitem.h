@@ -38,13 +38,13 @@ public:
     void render(int x, int y);
 
 private:
-    bool chosing;
-    KM_Key *targetKey;
+    bool chosing = false;
+    KM_Key *targetKey = nullptr;
 
-    PGE_Menu* menu;
+    PGE_Menu* menu  = nullptr;
     friend class PGE_Menu;
-    bool          joystick_mode;
-    SDL_Joystick* joystick_device;
+    bool          joystick_mode     = false;
+    SDL_Joystick* joystick_device   = nullptr;
 };
 
 #endif // PGE_KEYGRAB_MENUITEM_H

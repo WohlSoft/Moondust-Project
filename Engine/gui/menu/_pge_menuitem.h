@@ -49,8 +49,8 @@ public:
 
     virtual void render(int x, int y);
 
-    std::string title;
-    std::string item_key;
+    std::string title = "";
+    std::string item_key = "";
     enum itemType{
         ITEM_Normal=0,
         ITEM_Bool,
@@ -60,15 +60,15 @@ public:
         ITEM_StrList
     };
 
-    itemType type;
+    itemType type = ITEM_Normal;
     //! X-offset where must be rendered value label
-    int valueOffset;
+    int valueOffset = 350;
     //! Is menuitem enabled
-    bool m_enabled;
+    bool m_enabled = true;
 protected:
     std::function<void()> extAction;
-    int _width;
-    int    _font_id;
+    int _width = 0;
+    int _font_id = 0;
 
 private:
     friend class PGE_Menu;

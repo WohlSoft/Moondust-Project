@@ -36,9 +36,11 @@ bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, std::string section, obj_bgo *me
     bool internal = !setup;
     std::string errStr;
 
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
     {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
     }
 
     sbgo.isInit = merge_with ? merge_with->isInit : false;
@@ -56,9 +58,6 @@ bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, std::string section, obj_bgo *me
     }
 
     setup->endGroup();
-
-    if(internal)
-        delete setup;
 
     return valid;
 }

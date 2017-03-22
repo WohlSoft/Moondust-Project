@@ -122,7 +122,7 @@ PGE_Size FontManager::textSize(std::string &text, int fontID,
                                bool cut,
                                uint32_t ttfFontSize)
 {
-    assert(g_fontManagerIsInit && "Font manager is not initialized!");
+    SDL_assert_release(g_fontManagerIsInit);// Font manager is not initialized!
 
     if(!g_fontManagerIsInit)
         return PGE_Size(27 * 20, static_cast<int>(std::count(text.begin(), text.end(), '\n') + 1) * 20);

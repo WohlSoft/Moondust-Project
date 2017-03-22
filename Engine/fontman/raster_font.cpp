@@ -29,6 +29,7 @@
 
 RasterFont::RasterFont() : BaseFontEngine()
 {
+    static uint64_t fontNumberCount = 0;//This number will be used as default font name
     m_letterWidth    = 0;
     m_letterHeight   = 0;
     m_spaceWidth     = 0;
@@ -38,7 +39,7 @@ RasterFont::RasterFont() : BaseFontEngine()
     m_matrixHeight   = 0;
     m_isReady        = false;
     m_ttfBorders     = false;
-    m_fontName       = fmt::format("font{0}", rand());
+    m_fontName       = fmt::format("font{0}", fontNumberCount++);
 }
 
 RasterFont::RasterFont(const RasterFont &rf) : BaseFontEngine(rf)

@@ -126,21 +126,21 @@ private:
     PGE_Rect menuRect;
 
     /*******Key grabbing********/
-    PGE_KeyGrabMenuItem *m_item;
-    bool is_keygrab;
+    PGE_KeyGrabMenuItem *m_item = nullptr;
+    bool is_keygrab = false;
     //This is needed, because the first inital keypress should not be prossesed.
-    bool is_keygrabViaKey;
+    bool is_keygrabViaKey = false;
     /*******Key grabbing********/
 
     menuAlignment alignment;
-    int _itemsOnScreen;
-    int _currentItem;
-    int _line;
-    int _offset;
-    bool arrowUpViz;
-    bool arrowDownViz;
-    bool _EndSelection;
-    bool _accept;
+    int _itemsOnScreen = 5;
+    int _currentItem = 0;
+    int _line = 0;
+    int _offset = 0;
+    bool arrowUpViz = false;
+    bool arrowDownViz = false;
+    bool _EndSelection = false;
+    bool _accept = false;
     VPtrList<PGE_BoolMenuItem >     _items_bool;
     VPtrList<PGE_IntMenuItem >      _items_int;
     VPtrList<PGE_NamedIntMenuItem > _items_named_int;

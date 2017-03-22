@@ -112,27 +112,32 @@ void GlColor::setRgba(std::string rgba)
         if(rgba[0] == '#')
         {
             m_a = 1.0;
-            switch(rgba.size())
+            if(rgba.size() == 4)
             {
-            case 4:
                 // 0 123
                 m_r = static_cast<double>(std::strtol( rgba.substr(1, 1).c_str(), NULL, 16)) / 255.0;
                 m_g = static_cast<double>(std::strtol( rgba.substr(2, 1).c_str(), NULL, 16)) / 255.0;
                 m_b = static_cast<double>(std::strtol( rgba.substr(3, 1).c_str(), NULL, 16)) / 255.0;
                 return;
-            case 9:
+            }
+
+            if(rgba.size() == 9)//case 9:
+            {
                 // 0 12 34 56 78
                 m_a = static_cast<double>(std::strtol( rgba.substr(7, 2).c_str(), NULL, 16)) / 255.0;
-            case 7:
+            }
+
+            if((rgba.size() == 7) || (rgba.size() == 9))
+            {
                 // 0 12 34 56
                 m_r = static_cast<double>(std::strtol( rgba.substr(1, 2).c_str(), NULL, 16)) / 255.0;
                 m_g = static_cast<double>(std::strtol( rgba.substr(3, 2).c_str(), NULL, 16)) / 255.0;
                 m_b = static_cast<double>(std::strtol( rgba.substr(5, 2).c_str(), NULL, 16)) / 255.0;
                 return;
-            default:
-                setRgba(0.0, 0.0, 0.0, 1.0);
-                return;
             }
+
+            setRgba(0.0, 0.0, 0.0, 1.0);
+            return;
         }
         else
         {

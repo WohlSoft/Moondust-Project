@@ -22,13 +22,7 @@
 
 PGE_Menuitem::PGE_Menuitem()
 {
-    this->title = "";
-    this->item_key = "";
     this->extAction = []()->void{};
-    this->valueOffset=350;
-    this->m_enabled=true;
-    this->_font_id=0;
-    this->_width=0;
 }
 
 PGE_Menuitem::~PGE_Menuitem()

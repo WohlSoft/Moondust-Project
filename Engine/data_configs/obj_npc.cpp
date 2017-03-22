@@ -44,9 +44,11 @@ bool ConfigManager::loadLevelNPC(obj_npc &snpc,
     bool internal = !setup;
     std::string errStr;
 
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
     {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
     }
 
     snpc.isInit = false;
@@ -69,8 +71,6 @@ bool ConfigManager::loadLevelNPC(obj_npc &snpc,
     snpc.block_spawn_speed = setup->value("block-spawn-speed", merge_with ? merge_with->block_spawn_speed : 3.0).toDouble();
     snpc.block_spawn_sound = setup->value("block-spawn-sound", merge_with ? merge_with->block_spawn_sound : true).toBool();
     setup->endGroup();
-
-    if(internal) delete setup;
 
     return valid;
 }

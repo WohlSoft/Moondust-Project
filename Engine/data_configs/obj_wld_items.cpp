@@ -55,8 +55,12 @@ bool ConfigManager::loadWorldTile(obj_w_tile &tile, std::string section, obj_w_t
     bool internal = !setup;
     std::string errStr;
 
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
+    {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
+    }
 
     tile.isInit = false;
     tile.image = NULL;
@@ -74,8 +78,6 @@ bool ConfigManager::loadWorldTile(obj_w_tile &tile, std::string section, obj_w_t
 
     setup->endGroup();
 
-    if(internal) delete setup;
-
     return valid;
 }
 
@@ -85,8 +87,12 @@ bool ConfigManager::loadWorldPath(obj_w_path &path, std::string section, obj_w_p
     bool internal = !setup;
     std::string errStr;
 
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
+    {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
+    }
 
     path.isInit = false;
     path.image = NULL;
@@ -104,8 +110,6 @@ bool ConfigManager::loadWorldPath(obj_w_path &path, std::string section, obj_w_p
 
     setup->endGroup();
 
-    if(internal) delete setup;
-
     return valid;
 }
 
@@ -115,8 +119,12 @@ bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, std::string section, 
     bool internal = !setup;
     std::string errStr;
 
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
+    {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
+    }
 
     scene.isInit = false;
     scene.image = NULL;
@@ -134,8 +142,6 @@ bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, std::string section, 
 
     setup->endGroup();
 
-    if(internal) delete setup;
-
     return valid;
 }
 
@@ -145,8 +151,12 @@ bool ConfigManager::loadWorldLevel(obj_w_level &level, std::string section, obj_
     bool internal = !setup;
     std::string errStr;
 
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
+    {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
+    }
 
     level.isInit = false;
     level.image = NULL;
@@ -163,8 +173,6 @@ bool ConfigManager::loadWorldLevel(obj_w_level &level, std::string section, obj_
     }
 
     setup->endGroup();
-
-    if(internal) delete setup;
 
     return valid;
 }

@@ -25,30 +25,28 @@
 /*!
  * This is a simple dynamic array implementation made especially for PGE Configuration definitions storing
  */
-template<class T>
+template<class T, typename size_type = unsigned long>
 class PGE_DataArray
 {
     public:
         /*!
          * \brief Constructor
          */
-        PGE_DataArray() : m_data(NULL), m_total_elements(0), m_size(0), m_stored(0) {}
+        PGE_DataArray() {}
 
         /*!
          * \brief Copy Constructor
          * \param other Other object of PGE_DataArray class
          */
         PGE_DataArray(const PGE_DataArray &other)
-            : m_data(NULL),
-              m_total_elements(other.m_total_elements),
+            : m_total_elements(other.m_total_elements),
               m_size(other.m_size),
               m_stored(other.m_stored)
         {
             if(m_size > 0)
             {
                 m_data = new T[m_size];
-
-                for(unsigned long i = 0; i < m_size; i++)
+                for(size_type i = 0; i < m_size; i++)
                     m_data[i] = other.m_data[i];
             }
         }
@@ -64,7 +62,7 @@ class PGE_DataArray
             {
                 m_data = new T[m_size];
 
-                for(unsigned long i = 0; i < m_size; i++)
+                for(size_type i = 0; i < m_size; i++)
                     m_data[i] = other.m_data[i];
             }
 
@@ -96,7 +94,7 @@ class PGE_DataArray
             m_total_elements = 0;
         }
 
-        bool allocateSlots(unsigned long number)
+        bool allocateSlots(size_type number)
         {
             if(number == 0) return false;
 
@@ -114,7 +112,7 @@ class PGE_DataArray
             return true;
         }
 
-        void storeElement(unsigned long ItemID, T &element)
+        void storeElement(size_type ItemID, T &element)
         {
             if((ItemID < 0) || (ItemID > m_total_elements))
                 return;//Avoid out of range
@@ -126,7 +124,7 @@ class PGE_DataArray
         /*
         T &operator[](const int &ElementID)
         {
-            if((ElementID < 0) || (static_cast<unsigned long>(ElementID) > m_total_elements))
+            if((ElementID < 0) || (static_cast<size_type>(ElementID) > m_total_elements))
                 return m_data[0]; //Avoid out of range
             else if(m_data)
                 return m_data[ElementID];
@@ -135,7 +133,7 @@ class PGE_DataArray
         }
         */
 
-        T &operator[](const unsigned long &ElementID)
+        T &operator[](const size_type &ElementID)
         {
             if(ElementID > m_total_elements)
                 return m_data[0]; //Avoid out of range
@@ -148,36 +146,36 @@ class PGE_DataArray
         /*
         bool contains(int ElementID)
         {
-            return ((ElementID >= 0) && (static_cast<unsigned long>(ElementID) <= m_total_elements));
+            return ((ElementID >= 0) && (static_cast<size_type>(ElementID) <= m_total_elements));
         }
         */
 
-        bool contains(unsigned long ElementID)
+        bool contains(size_type ElementID)
         {
             return (ElementID <= m_total_elements);
         }
 
-        unsigned long size()
+        size_type size()
         {
             return m_size;
         }
 
-        unsigned long stored()
+        size_type stored()
         {
             return m_stored;
         }
 
-        unsigned long total()
+        size_type total()
         {
             return m_total_elements;
         }
 
     private:
-        T  m_dummy_element;
-        T *m_data;
-        unsigned long m_total_elements;
-        unsigned long m_size;
-        unsigned long m_stored;
+        T  m_dummy_element = T();
+        T *m_data = nullptr;
+        size_type m_total_elements = 0;
+        size_type m_size = 0;
+        size_type m_stored = 0;
 };
 
 #endif // PGE_DATAARRAY_H

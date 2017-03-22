@@ -26,14 +26,10 @@
 
 #include "../pge_menu.h"
 
-PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem() : PGE_Menuitem()
+PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem() :
+    PGE_Menuitem()
 {
-    targetKey=NULL;
-    type=ITEM_KeyGrab;
-    menu=NULL;
-    chosing=false;
-    joystick_mode=false;
-    joystick_device     = NULL;
+    type = ITEM_KeyGrab;
 }
 
 PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it) : PGE_Menuitem(it)

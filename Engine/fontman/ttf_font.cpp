@@ -163,8 +163,10 @@ PGE_Size TtfFont::textSize(std::string &text,
 
         default:
         {
+            if(' ' == cx)
+                lastspace = x;
             TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(&cx));
-            widthSumm += (glyph.advance>>6);
+            widthSumm += uint32_t(glyph.advance>>6);
             if(widthSumm > widthSummMax)
                 widthSummMax = widthSumm;
             break;
@@ -243,7 +245,7 @@ void TtfFont::printText(const std::string &text,
                                   glyph.width,
                                   glyph.height
                                   );
-        offsetX += (glyph.advance>>6);
+        offsetX += uint32_t(glyph.advance>>6);
 
         strIt += static_cast<size_t>(trailingBytesForUTF8[ucx]);
     }

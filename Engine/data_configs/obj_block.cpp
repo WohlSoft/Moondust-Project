@@ -37,9 +37,11 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, std::string section, obj_b
     bool internal = !setup;
     std::string errStr;
 
+    std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
     {
         setup = new IniProcessing(iniFile);
+        ptr_guard.reset(setup);
     }
 
     sblock.isInit = false;
@@ -57,8 +59,6 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, std::string section, obj_b
     }
 
     setup->endGroup();
-
-    if(internal) delete setup;
 
     return valid;
 }
