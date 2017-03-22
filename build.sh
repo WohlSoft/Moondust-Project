@@ -10,6 +10,7 @@ fi
 flag_pause_on_end=true
 QMAKE_EXTRA_ARGS=""
 MAKE_EXTRA_ARGS="-r -j 4"
+flag_debugThisScript=false
 
 for var in "$@"
 do
@@ -50,6 +51,40 @@ do
                 echo "==== Clear! ===="
                 exit 0;
             ;;
+
+        # Enable debuggin of this script by showing states of inernal variables with pauses
+        debugscript)
+            flag_debugThisScript=true
+            ;;
+
+        # Disable building of some compnents
+        noeditor)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        noengine)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nocalibrator)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nogifs2png)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nopng2gifs)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nolazyfixtool)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nomanager)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nomaintainer)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nomaintainer)
+                QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
     esac
 done
 
@@ -78,6 +113,12 @@ fi
 
 PATH=$QT_PATH:$PATH
 LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
+
+if $flag_debugThisScript; then
+    echo "QMAKE_EXTRA_ARGS = ${QMAKE_EXTRA_ARGS}"
+    echo "MAKE_EXTRA_ARGS = ${MAKE_EXTRA_ARGS}"
+    pause
+fi
 
 #=======================================================================
 # build translations of the editor
@@ -117,6 +158,6 @@ show_time $TIME_PASSED
 printf "\n\n=========\E[37;42mBUILT!!\E[0m===========\n\n"
 cd $bak
 if $flag_pause_on_end ; then
-    read -n 1;
+    pause
 fi
 exit 0

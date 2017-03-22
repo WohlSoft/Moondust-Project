@@ -21,6 +21,12 @@ function show_time()
     echo "===Passed time===== "$hour"h "$min"m "$sec"s ============"
 }
 
+pause()
+{
+    echo "Press any key to continue..."
+    read -n 1
+}
+
 errorofbuild()
 {
     printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
