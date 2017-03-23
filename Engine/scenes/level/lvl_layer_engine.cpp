@@ -203,6 +203,7 @@ void LVL_LayerEngine::processMoving(double tickTime)
             if(obj->type == PGE_Phys_Object::LVLNPC)
             {
                 LVL_Npc *npc = dynamic_cast<LVL_Npc*>(obj);
+                SDL_assert(npc);
                 if( npc->isActivated /* &&
                    !npc->isGenerator &&
                    !npc->is_scenery*/ )

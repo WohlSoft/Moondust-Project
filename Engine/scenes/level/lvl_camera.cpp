@@ -25,6 +25,7 @@
 #include <data_configs/config_manager.h>
 #include <audio/play_music.h>
 #include <graphics/gl_renderer.h>
+#include <Utils/maths.h>
 
 #include "../scene_level.h"
 
@@ -47,7 +48,7 @@ PGE_LevelCamera::PGE_LevelCamera(LevelScene *_parent) : _scene(_parent)
     m_autoScrool.camera = this;
     _objects_to_render_max = 1000;
     _objects_to_render = reinterpret_cast<PGE_Phys_Object **>(malloc(sizeof(PGE_Phys_Object *) * static_cast<size_t>(_objects_to_render_max)));
-    assert(_objects_to_render && "Out of memory");
+    SDL_assert(_objects_to_render);//Out of memory?
     _objects_to_render_stored = 0;
     _objects_to_render_recent = 0;
     _disable_cache_mode = false;
@@ -260,7 +261,7 @@ void PGE_LevelCamera::updatePost(double ticks)
         int force_x = static_cast<int>(round(shake_force_x));
 
         if(force_x != 0)
-            offset_x = static_cast<double>(rand() % (force_x) * (rand() % 2 ? -1 : 1));
+            offset_x = static_cast<double>(Maths::rand32() % (force_x) * (Maths::rand32() % 2 ? -1 : 1));
         else
             offset_x = 0.0;
 
@@ -280,7 +281,7 @@ void PGE_LevelCamera::updatePost(double ticks)
         int force_y = static_cast<int>(round(shake_force_y));
 
         if(force_y != 0)
-            offset_y = static_cast<double>(rand() % (force_y) * (rand() % 2 ? -1 : 1));
+            offset_y = static_cast<double>(Maths::rand32() % (force_y) * (Maths::rand32() % 2 ? -1 : 1));
         else
             offset_y = 0.0;
 

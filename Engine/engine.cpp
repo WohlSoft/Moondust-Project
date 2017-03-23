@@ -97,7 +97,12 @@ PGEEngineApp::PGEEngineApp() :
 
 PGEEngineApp::~PGEEngineApp()
 {
-    unloadAll();
+    try
+    {
+        unloadAll();
+    }
+    catch(...)
+    {}
 }
 
 void PGEEngineApp::unloadAll()

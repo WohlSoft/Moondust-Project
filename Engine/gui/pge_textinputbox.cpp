@@ -63,6 +63,9 @@ PGE_TextInputBox::PGE_TextInputBox(const PGE_TextInputBox &mb)
     bg_color = mb.bg_color;
     blink_shown = mb.blink_shown;
     blink_timeout = mb.blink_timeout;
+    cursor = mb.cursor;
+    selection_len = mb.selection_len;
+    _text_input_h_offset = mb._text_input_h_offset;
 }
 
 
@@ -141,7 +144,7 @@ void PGE_TextInputBox::updatePrintable()
 {
     size_t len = FontManager::utf8_strlen(_inputText);
     if(len > 25)
-        _inputText_printable = FontManager::utf8_substr(_inputText, len-25, 25);
+        _inputText_printable = FontManager::utf8_substr(_inputText, len - 25, 25);
     else
         _inputText_printable = _inputText;
 }

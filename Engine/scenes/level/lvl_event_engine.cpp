@@ -47,15 +47,13 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     LVL_EventAction evntAct;
     evntAct.m_eventName = evt.name;
     evntAct.m_timeDelayLeft = 0.0;
-    char byte_padding7[7];
-    char byte_padding4[4];
 
     if(!evt.layers_hide.empty())
     {
         EventQueueEntry<LVL_EventAction> hideLayers;
         PGEStringList layers = evt.layers_hide;
         bool          smoke  = !evt.nosmoke;
-        hideLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
+        hideLayers.makeCaller([this, layers, smoke]()->void
         {
             for(const std::string &ly : layers)
                 m_scene->layers.hide(ly, smoke);
@@ -68,7 +66,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         EventQueueEntry<LVL_EventAction> showLayers;
         PGEStringList layers = evt.layers_show;
         bool        smoke  = !evt.nosmoke;
-        showLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
+        showLayers.makeCaller([this, layers, smoke]()->void
         {
             for(const std::string &ly : layers)
                 m_scene->layers.show(ly, smoke);
@@ -81,7 +79,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         EventQueueEntry<LVL_EventAction> toggleLayers;
         PGESTRINGList   layers = evt.layers_toggle;
         bool            smoke  = !evt.nosmoke;
-        toggleLayers.makeCaller([this, layers, smoke, byte_padding7]()->void
+        toggleLayers.makeCaller([this, layers, smoke]()->void
         {
             for(const std::string &ly : layers)
                 m_scene->layers.toggle(ly, smoke);
@@ -108,7 +106,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
             if(evt.sets[i].background_id < 0)
             {
-                bgToggle.makeCaller([this, i, byte_padding4]()->void
+                bgToggle.makeCaller([this, i]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -126,7 +124,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             else
             {
                 unsigned long bgID = static_cast<unsigned long>(evt.sets[i].background_id);
-                bgToggle.makeCaller([this, bgID, i, byte_padding4]()->void
+                bgToggle.makeCaller([this, bgID, i]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -150,7 +148,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
             if(evt.sets[i].music_id < 0)
             {
-                musToggle.makeCaller([this, i, byte_padding4]()->void
+                musToggle.makeCaller([this, i]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -171,7 +169,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                 {
                     if(i < m_scene->sections.size())
                     {
-                        m_scene->sections[i].setMusic(musID);
+                        m_scene->sections[i].setMusic(static_cast<unsigned int>(musID));
 
                         for(size_t j = 0; j < m_scene->cameras.size(); j++)
                         {
@@ -191,7 +189,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
             if(evt.sets[i].position_left == -2)
             {
-                bordersToggle.makeCaller([this, i, byte_padding4]()->void
+                bordersToggle.makeCaller([this, i]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -208,7 +206,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     evt.sets[i].position_right,
                     evt.sets[i].position_bottom
                 };
-                bordersToggle.makeCaller([this, box, i, byte_padding4]()->void
+                bordersToggle.makeCaller([this, box, i]()->void
                 {
                     if(i < m_scene->sections.size())
                     {
@@ -311,8 +309,7 @@ void LVL_EventEngine::processTimers(double tickTime)
         EventActList *ea = &workingEvents[i];
         if(ea->empty())
         {
-            workingEvents.erase(workingEvents.begin() + i);
-            i--;
+            workingEvents.erase(workingEvents.begin() + int(i--));
             continue;
         }
 

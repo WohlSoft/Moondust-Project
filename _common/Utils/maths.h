@@ -26,9 +26,19 @@
 #include <type_traits>
 #include <cmath>
 #include <cfloat>
+#include <cstdint>
 
 namespace Maths
 {
+    int8_t   rand();
+    uint8_t  urand8();
+    int16_t  rand16();
+    uint16_t urand16();
+    int32_t  rand32();
+    uint32_t urand32();
+    int64_t  rand64();
+    uint64_t urand64();
+
     long    roundTo(long src, long grid);
     double  roundTo(double src, double grid);
 

@@ -598,10 +598,11 @@ int LevelScene::init_thread(void *self)
 {
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
     LevelScene *_self = static_cast<LevelScene *>(self);
-
+    SDL_assert(_self);
     if(!_self)
-        _self->isInitFailed = true;
-    else if(!_self->loadConfigs())
+        return -1;
+//  _self->isInitFailed = true;
+    if(!_self->loadConfigs())
         _self->isInitFailed = true;
     else if(!_self->init_items())
         _self->isInitFailed = true;

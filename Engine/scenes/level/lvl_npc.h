@@ -44,19 +44,19 @@ public:
 
     void setDirection(int dir);
     int  direction();
-    int _direction;
-    double motionSpeed;
-    bool  is_scenery;
-    bool  is_activity;
-    bool  is_shared_animation;
-    bool  keep_position_on_despawn;
+    int _direction = 0;
+    double motionSpeed = 0.0;
+    bool  is_scenery = false;
+    bool  is_activity = false;
+    bool  is_shared_animation = false;
+    bool  keep_position_on_despawn = false;
 
-    bool animated;
-    long animator_ID;
+    bool animated = false;
+    long animator_ID = 0;
 
-    obj_npc *setup;//Global config
+    obj_npc *setup = nullptr;//Global config
     bool isKilled();
-    bool killed;
+    bool killed = false;
     enum DamageReason
     {
         DAMAGE_NOREASON = 0,
@@ -77,13 +77,13 @@ public:
     void kill(int damageReason);//! In-Game destroying of NPC with triggering of specific events
     void unregister();          //! Sielent destroying of NPC without triggering of the events
 
-    int taskToTransform;
-    int taskToTransform_t;
+    int taskToTransform = 0;
+    int taskToTransform_t = 0;
     void transformTo(unsigned long id, int type = 0);
     void transformTo_x(unsigned long id);
-    LVL_Block *transformedFromBlock;
-    unsigned long transformedFromBlockID;
-    unsigned long transformedFromNpcID;
+    LVL_Block *transformedFromBlock = nullptr;
+    unsigned long transformedFromBlockID = 0;
+    unsigned long transformedFromNpcID = 0;
 
     void update(double tickTime);
     void render(double camX, double camY);
@@ -97,14 +97,14 @@ public:
     void collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit);
     bool preCollisionCheck(PGE_Phys_Object *body);
 
-    bool forceCollideCenter;//!< collide with invizible blocks at center
-    float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
+    //! collide with invizible blocks at center
+    bool forceCollideCenter = false;
+    float _heightDelta = 0.0; //Delta of changing height. Need to protect going through block on character switching
     bool onCliff();
-    bool LEGACY_cliffDetected;
 
     /*****************NPC's and blocks******************/
     bool onGround();
-    bool  _onGround;
+    bool  _onGround = false;
     std::unordered_map<intptr_t, intptr_t > foot_contacts_map;   //!< staying on ground surfaces
     std::unordered_map<intptr_t, intptr_t > foot_sl_contacts_map;//!< Slipery surfaces
 
@@ -130,28 +130,28 @@ public:
         contacted_players[intptr_t(ob)] = ob;
     }
 
-    bool  m_disableBlockCollision;
-    bool  disableNpcCollision;
-    bool  enablePlayerCollision;
-    bool _stucked;
+    bool  m_disableBlockCollision = false;
+    bool  disableNpcCollision = false;
+    bool  enablePlayerCollision = false;
+    bool _stucked = false;
 
-    bool    bumpDown;
-    bool    bumpUp;
+    bool    bumpDown = false;
+    bool    bumpUp = false;
     /***************************************************/
     /*******************Environmept*********************/
     std::unordered_map<intptr_t, intptr_t> environments_map;
-    int     environment;
-    int     last_environment;
+    int     environment = 0;
+    int     last_environment = 0;
     /*******************Environmept*********************/
 
-    bool reSpawnable;
-    bool isActivated;
-    bool deActivatable;
-    bool wasDeactivated;
-    bool offSectionDeactivate;
-    int  activationTimeout;
-    int  m_spawnedGeneratorType;
-    int  m_spawnedGeneratorDirection;
+    bool reSpawnable = false;
+    bool isActivated = false;
+    bool deActivatable = false;
+    bool wasDeactivated = false;
+    bool offSectionDeactivate = false;
+    int  activationTimeout = 0;
+    int  m_spawnedGeneratorType = 0;
+    int  m_spawnedGeneratorDirection = 0;
 
     /********************Detectors**********************/
     //!< dummy detectors made directly from a base class, for a some tests
@@ -189,25 +189,25 @@ public:
     ///
     void setSpriteWarp(float depth, WarpingSide _direction = WARP_BOTTOM, bool resizedBody = false);
     void resetSpriteWarp();
-    bool    isWarping;
-    int     warpDirectO;
-    bool    warpResizedBody;
-    float   warpSpriteOffset;
-    float   warpFrameW;
-    float   warpFrameH;
+    bool    isWarping = false;
+    int     warpDirectO = 0.0;
+    bool    warpResizedBody = false;
+    float   warpSpriteOffset = 0.0f;
+    float   warpFrameW = 0.0f;
+    float   warpFrameH = 0.0f;
     /*********************/
 
     /***************************************************/
     void setWarpSpawn(WarpingSide side = WARP_TOP);
-    bool warpSpawing;
+    bool warpSpawing = false;
     EventQueue<LVL_Npc> event_queue;
     /***************************************************/
 
     /***********************Generator*******************/
-    bool  m_isGenerator;
-    float generatorTimeLeft;
-    int   generatorType;
-    int   generatorDirection;
+    bool  m_isGenerator = false;
+    float generatorTimeLeft = 0.0f;
+    int   generatorType = 0;
+    int   generatorDirection = 0;
     void  updateGenerator(double tickTime);
     /***************************************************/
 
@@ -219,10 +219,10 @@ public:
     LVL_Npc    *thrownedByNpcObj();
     long        thrownedByPlayer();
     LVL_Player *thrownedByPlayerObj();
-    long        throwned_by_npc;
-    LVL_Npc    *throwned_by_npc_obj;
-    long        throwned_by_player;
-    LVL_Player *throwned_by_player_obj;
+    long        throwned_by_npc = 0;
+    LVL_Npc    *throwned_by_npc_obj = nullptr;
+    long        throwned_by_player = 0;
+    LVL_Player *throwned_by_player_obj = nullptr;
     /***************************************************/
 
     /*******************Buddies********************/
@@ -231,8 +231,8 @@ public:
     void             updateBuddies(double tickTime);
     void             buildLeaf(std::vector<LVL_Npc *> &needtochec, std::vector<LVL_Npc *> *&list, LVL_Npc *leader);
     std::vector<LVL_Npc *> *buddies_list; //Destroys when was killed last NPC in this group
-    bool             buddies_updated;
-    LVL_Npc         *buddies_leader;
+    bool             buddies_updated = false;
+    LVL_Npc         *buddies_leader = nullptr;
     /**********************************************/
 
     class KillEvent
@@ -240,17 +240,17 @@ public:
     public:
         KillEvent();
         KillEvent(const KillEvent &ke);
-        bool cancel;
-        int  reason_code;
+        bool cancel = false;
+        int  reason_code = 0;
         enum killedBy
         {
             self = 0,
             player,
             otherNPC
         };
-        int         killed_by;
-        LVL_Player *killer_p;
-        LVL_Npc    *killer_n;
+        int         killed_by = self;
+        LVL_Player *killer_p = nullptr;
+        LVL_Npc    *killer_n = nullptr;
     };
 
     class HarmEvent
@@ -258,18 +258,18 @@ public:
     public:
         HarmEvent();
         HarmEvent(const HarmEvent &he);
-        bool cancel;
-        int  damage;
-        int  reason_code;
+        bool cancel = false;
+        int  damage = 0;
+        int  reason_code = 0;
         enum killedBy
         {
             self = 0,
             player,
             otherNPC
         };
-        int         killed_by;
-        LVL_Player *killer_p;
-        LVL_Npc    *killer_n;
+        int         killed_by = self;
+        LVL_Player *killer_p = nullptr;
+        LVL_Npc    *killer_n = nullptr;
     };
     //Additional lua enums
 
@@ -395,10 +395,10 @@ public:
     {
         return setup->setup.kill_by_mounted_item;
     }
-    bool isLuaNPC;
+    bool isLuaNPC = false;
     /********************Lua Stuff******************/
 
-    int health;
+    int health = 1;
 
     /**Layers***/
     void show();
@@ -407,7 +407,7 @@ public:
 
     bool isInited();
 private:
-    bool m_isInited;
+    bool m_isInited = false;
 
 };
 

@@ -71,7 +71,6 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     bumpUp = false;
     forceCollideCenter = false;
     _heightDelta = 0.0f;
-    LEGACY_cliffDetected = false;
     health = 1;
     m_isGenerator = false;
     generatorTimeLeft = 0;

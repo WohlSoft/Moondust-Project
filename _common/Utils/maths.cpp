@@ -23,6 +23,70 @@
 
 #include "maths.h"
 #include <cmath>
+#ifdef _WIN32
+#include <wincrypt.h>
+#else
+#include <stdio.h>
+#include <assert.h>
+#endif
+
+template<typename T>
+static T osRandom()
+{
+    T dst = 0;
+    #ifdef _WIN32
+    HCRYPTPROV hCryptProv = 0;
+    BOOL res =  CryptGenRandom(hCryptProv, sizeof(T), &dst);
+    assert(res != 0);
+    #else
+    FILE *d = fopen("/dev/urandom", "rb");
+    assert(d);
+    fread(&dst, 1, sizeof(T), d);
+    fclose(d);
+    #endif
+    return dst;
+}
+
+int8_t Maths::rand()
+{
+    return osRandom<int8_t>();
+}
+
+uint8_t Maths::urand8()
+{
+    return osRandom<uint8_t>();
+}
+
+int16_t Maths::rand16()
+{
+    return osRandom<int16_t>();
+}
+
+uint16_t Maths::urand16()
+{
+    return osRandom<uint16_t>();
+}
+
+int32_t Maths::rand32()
+{
+    return osRandom<int32_t>();
+}
+
+uint32_t Maths::urand32()
+{
+    return osRandom<uint32_t>();
+}
+
+int64_t Maths::rand64()
+{
+    return osRandom<int64_t>();
+}
+
+uint64_t Maths::urand64()
+{
+    return osRandom<uint64_t>();
+}
+
 
 long Maths::roundTo(long src, long gridSize)
 {

@@ -632,8 +632,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             m_scene->launchEffect(effect, true);
             //Points!
             effect.id = 79;
-            effect.startX = posCenterX() + static_cast<double>((rand() % 16) * (rand() % 2 ? 1 : -1));
-            effect.startY = top() - 16.0 + static_cast<double>((rand() % 16) * (rand() % 2 ? 1 : -1));
+            effect.startX = posCenterX() + static_cast<double>((Maths::rand32() % 16) * (Maths::rand32() % 2 ? 1 : -1));
+            effect.startY = top() - 16.0 + static_cast<double>((Maths::rand32() % 16) * (Maths::rand32() % 2 ? 1 : -1));
             effect.gravity = 1.8;
             effect.start_delay = 710.0f;
             effect.max_vel_y = 7.0;
@@ -750,7 +750,7 @@ void LVL_Block::destroy(bool playEffect)
         Scene_Effect_Phys p;
         p.decelerate_x = 1.5;
         p.max_vel_y    = 25.0;
-#define ROFFSET ((static_cast<double>(rand()%10))*0.1)
+#define ROFFSET ((static_cast<double>(Maths::rand32() % 10)) * 0.1)
         m_scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -3.0 + ROFFSET, -6.0 + ROFFSET, 18.0, 0, p);
         m_scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000, -4.0 + ROFFSET, -7.0 + ROFFSET, 18.0, 0, p);
         m_scene->launchStaticEffectC(1, posCenterX(), posCenterY(), 0, 5000,  3.0 + ROFFSET, -6.0 + ROFFSET, 18.0, 0, p);

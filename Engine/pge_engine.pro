@@ -155,7 +155,6 @@ SOURCES += \
     common_features/md5.cpp \
     common_features/npc_animator.cpp \
     common_features/number_limiter.cpp \
-    common_features/pge_texture.cpp \
     common_features/player_calibration.cpp \
     common_features/point.cpp \
     common_features/pointf.cpp \

@@ -191,7 +191,7 @@ public:
     EventQueue<LVL_Player > event_queue;
     void    processWarpChecking();
     void    WarpTo(double x, double y, int warpType, int warpDirection = 1, bool cannon = false, double cannon_speed = 10.0);
-    void    WarpTo(LevelDoor warp);
+    void    WarpTo(const LevelDoor &warp);
     /*******************Warps*********************/\
 
     /******************floating*******************/

@@ -22,6 +22,7 @@
 #include <graphics/gl_renderer.h>
 #include <gui/pge_msgbox.h>
 #include <fmt/fmt_format.h>
+#include <Utils/maths.h>
 
 void Scene::launchEffect(unsigned long effectID,
                          double   startX,
@@ -83,7 +84,7 @@ void Scene::launchStaticEffectC(unsigned long    effectID,
     launchEffect(effectDef, true);
 }
 
-void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
+void Scene::launchEffect(const SpawnEffectDef &effect_def, bool centered)
 {
     Scene_Effect _effect;
 
@@ -118,28 +119,28 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
     _effect.m_phys_setup.min_vel_y = effect_def.min_vel_y;
     _effect.m_gravity = effect_def.gravity;
 
-    if(effect_def.direction == 0)
-        effect_def.direction = (rand() % 2) ? -1 : 1;
-
     _effect.m_direction = effect_def.direction;
+    if(_effect.m_direction == 0)
+        _effect.m_direction = (Maths::rand32() % 2) ? -1 : 1;
+
     _effect.m_frameStyle = _effect.m_setup->framestyle;
-    int frame1 = 0;
-    int frameE = -1;
-    int frms = 0;
-    frms = int(_effect.m_setup->frames);
+    int32_t frame1 = 0;
+    int32_t frameE = -1;
+    int32_t frms = 0;
+    frms = int32_t(_effect.m_setup->frames);
 
     switch(_effect.m_frameStyle)
     {
     case 1:
-        frms  = int(_effect.m_setup->frames) * 2;
+        frms  = int32_t(_effect.m_setup->frames) * 2;
         frame1 = _effect.m_direction < 0 ? 0 : int(_effect.m_setup->frames);
         frameE = _effect.m_direction < 0 ? int(_effect.m_setup->frames) - 1 : -1;
         break;
 
     case 2:
-        frms  = int(_effect.m_setup->frames) * 4;
-        frame1 = int(_effect.m_direction) < 0 ? 0 : (frms - (int(_effect.m_setup->frames)) * 3);
-        frameE = int(_effect.m_direction) < 0 ? (frms - (int(_effect.m_setup->frames)) * 3) - 1 : (frms / 2) - 1;
+        frms  = int32_t(_effect.m_setup->frames) * 4;
+        frame1 = int32_t(_effect.m_direction) < 0 ? 0 : (frms - (int32_t(_effect.m_setup->frames)) * 3);
+        frameE = int32_t(_effect.m_direction) < 0 ? (frms - (int32_t(_effect.m_setup->frames)) * 3) - 1 : (frms / 2) - 1;
         break;
 
     case 3:
@@ -147,7 +148,7 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
 
     default:
     case 0:
-        frms = int(_effect.m_setup->frames);
+        frms = int32_t(_effect.m_setup->frames);
         frame1 = 0;
         frameE = -1;
         break;
@@ -162,7 +163,7 @@ void Scene::launchEffect(SpawnEffectDef effect_def, bool centered)
 
     if(!effect_def.frame_sequence.empty())
     {
-        frms = effect_def.frame_sequence.size();
+        frms = static_cast<int32_t>(effect_def.frame_sequence.size());
         _effect.m_animator.setFrameSequance(effect_def.frame_sequence);
     }
 
@@ -200,8 +201,7 @@ void Scene::processEffects(double ticks)
 
         if(e.finished() || (!e.m_limitLifeTime && !e.m_limitLoops && !isVizibleOnScreen(e.m_posRect)))
         {
-            WorkingEffects.erase(WorkingEffects.begin() + i);
-            i--;
+            WorkingEffects.erase(WorkingEffects.begin() + int(i--));
         }
     }
 }

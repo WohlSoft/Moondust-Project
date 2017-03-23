@@ -23,23 +23,22 @@
 
 struct PGEColor
 {
-    float r;
-    float g;
-    float b;
+    float r = 0.0f;
+    float g = 0.0f;
+    float b = 0.0f;
 };
 
 struct PGE_Texture
 {
-    PGE_Texture();
-    GLuint texture; // Texture object handle
-    int w; //Width of the texture.
-    int h; //Height of the texture.
-    int frame_w;//Width of animated frame
-    int frame_h;//Height of animated frame
-    bool inited; //Texture is valid and loaded
-    GLubyte *texture_layout;
-    GLenum format;
-    GLint  nOfColors;
+    GLuint texture = 0; // Texture object handle
+    int w = 0; //Width of the texture.
+    int h = 0; //Height of the texture.
+    int frame_w = 0;//Width of animated frame
+    int frame_h = 0;//Height of animated frame
+    bool inited = false; //Texture is valid and loaded
+    GLubyte *texture_layout = nullptr;
+    GLenum format = 0;
+    GLint  nOfColors = 0;
 
     PGEColor ColorUpper;
     PGEColor ColorLower;

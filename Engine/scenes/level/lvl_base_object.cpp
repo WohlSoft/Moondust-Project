@@ -411,19 +411,6 @@ bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
     return lhs.z_index < rhs.z_index;
 }
 
-PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
-{
-    min_vel_x = 0.0;
-    min_vel_y = 0.0;
-    max_vel_x = 0.0;
-    max_vel_y = 0.0;
-    grd_dec_x = 0.0;
-    decelerate_x = 0.0;
-    decelerate_y = 0.0;
-    gravityScale = 1.0;
-    gravityAccel = 26.0;
-}
-
 void PGE_Phys_Object::show()
 {
     m_is_visible = true;

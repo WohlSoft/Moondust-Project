@@ -392,10 +392,10 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         case Tag_Translation:
         {
             if((m + 4) > end)
-                return std::u16string();
+                return std::u16string(u"<qm-error 0>");
             int32_t len = static_cast<int32_t>(read32be(m));
             if(len % 2) //In the Qt here was a bug: byte lenght must be multiple two, but was %1
-                return std::u16string();
+                return std::u16string(u"<qm-error 1>");
             m += 4;
             if(!numerus--)
             {
@@ -411,9 +411,11 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         case Tag_SourceText:
         {
             if((m + 4) > end)
-                return std::u16string();
+                return std::u16string(u"<qm-error 2>");
             uint32_t len = read32be(m);
             m += 4;
+            if((m + len) > end)
+                return std::u16string(u"<qm-error 3>");
             if(!match(m, len, sourceText, sourceTextLen))
             {
                 #ifdef QMTRANSLATPR_DEEP_DEBUG
@@ -427,9 +429,11 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         case Tag_Context:
         {
             if((m + 4) > end)
-                return std::u16string();
+                return std::u16string(u"<qm-error 4>");
             uint32_t len = read32be(m);
             m += 4;
+            if((m + len) > end)
+                return std::u16string(u"<qm-error 5>");
             if(!match(m, len, context, contextLen))
             {
                 #ifdef QMTRANSLATPR_DEEP_DEBUG
@@ -443,9 +447,11 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         case Tag_Comment:
         {
             if((m + 4) > end)
-                return std::u16string();
+                return std::u16string(u"<qm-error 6>");
             uint32_t len = read32be(m);
             m += 4;
+            if((m + len) > end)
+                return std::u16string(u"<qm-error 7>");
             if(*m && !match(m, len, comment, commentLen))
                 return std::u16string();
             m += len;

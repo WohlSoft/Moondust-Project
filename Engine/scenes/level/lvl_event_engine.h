@@ -35,14 +35,14 @@ public:
 
     std::string m_eventName;
     EventQueue<LVL_EventAction > m_action;
-    double m_timeDelayLeft;
+    double m_timeDelayLeft = 0.0;
 };
 
 class LevelScene;
 class LVL_EventEngine
 {
     friend class LevelScene;
-    LevelScene *m_scene;
+    LevelScene *m_scene = nullptr;
 public:
     LVL_EventEngine();
     virtual ~LVL_EventEngine();

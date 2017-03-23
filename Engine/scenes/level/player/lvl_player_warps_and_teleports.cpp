@@ -376,7 +376,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
 }
 
 
-void LVL_Player::WarpTo(LevelDoor warp)
+void LVL_Player::WarpTo(const LevelDoor &warp)
 {
     warpFrameW = texture.w;
     warpFrameH = texture.h;
@@ -394,7 +394,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             setSpeed(0, 0); setPaused(true);
             setDuck(false);
             isWarping = true;
-            warpPipeOffset = 0.0f;
+            warpPipeOffset = 0.0;
             PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
         }, 0);
         event_queue.events.push_back(event1);

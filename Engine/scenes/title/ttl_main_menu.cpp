@@ -315,17 +315,20 @@ void TitleScene::processMenu()
     }
     else
     {
-        switch(_currentMenu)
+        if(_currentMenu == menu_main)
         {
-        case menu_main:
             menu.reset();
             menu.setCurrentItem(4);
-            break;
-        case menu_options:
-            g_AppSettings.apply();
-            g_AppSettings.save();
-            PGE_Audio::playSoundByRole(obj_sound_role::Bonus1up);
-        default:
+        }
+        else
+        {
+            if(_currentMenu == menu_options)
+            {
+                g_AppSettings.apply();
+                g_AppSettings.save();
+                PGE_Audio::playSoundByRole(obj_sound_role::Bonus1up);
+            }
+
             if(menu.isKeyGrabbing())
                 menu.reset();
             else if(menuChain.size() > 0)
@@ -334,7 +337,6 @@ void TitleScene::processMenu()
                 setMenu((CurrentMenu)menuChain.back());
                 menuChain.pop_back();
             }
-            break;
         }
     }
 }

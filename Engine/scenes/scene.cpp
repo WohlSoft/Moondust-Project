@@ -42,14 +42,11 @@ void Scene::updateTickValue()
 {
     uTickf = static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick  = Maths::uRound(uTickf);
-
     if(uTick == 0)
         uTick = 1;
-
     if(uTickf <= 0.0)
         uTickf = 1.0;
-
-    assert((uTick < 2000u) && "uTick Must be less than two seconds!!!");
+    SDL_assert(uTick < 2000u);//"uTick Must be less than two seconds!!!"
 }
 
 Scene::Scene()

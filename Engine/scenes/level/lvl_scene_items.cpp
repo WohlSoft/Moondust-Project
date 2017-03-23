@@ -42,7 +42,7 @@ void LevelScene::placeBlock(LevelBlock &blockData)
     blocks.push_back(block);
 }
 
-LVL_Block *LevelScene::spawnBlock(LevelBlock blockData)
+LVL_Block *LevelScene::spawnBlock(const LevelBlock &blockData)
 {
     if(blockData.id <= 0) return NULL;
 
@@ -50,12 +50,13 @@ LVL_Block *LevelScene::spawnBlock(LevelBlock blockData)
         return nullptr;
 
     LVL_Block *block;
-    blockData.meta.array_id = ++data.blocks_array_id;
     block = new LVL_Block(this);
-
-    if(!block) throw("Out of memory [new LVL_Block spawn]");
+    SDL_assert(block);
+    if(!block)
+        throw("Out of memory [new LVL_Block spawn]");
 
     block->data = blockData;
+    block->data.meta.array_id = ++data.blocks_array_id;
     block->init();
     blocks.push_back(block);
     return block;
@@ -85,20 +86,21 @@ void LevelScene::placeBGO(LevelBGO& bgoData)
     bgos.push_back(bgo);
 }
 
-LVL_Bgo *LevelScene::spawnBGO(LevelBGO bgoData)
+LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
 {
     if(bgoData.id <= 0) return NULL;
 
     if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
         return NULL;
 
-    bgoData.meta.array_id = ++data.blocks_array_id;
     LVL_Bgo *bgo;
     bgo = new LVL_Bgo(this);
-
-    if(!bgo) throw("Out of memory [new LVL_Bgo] spawn");
+    SDL_assert(bgo);
+    if(!bgo)
+        throw("Out of memory [new LVL_Bgo] spawn");
 
     bgo->data = bgoData;
+    bgo->data.meta.array_id = ++data.blocks_array_id;
     bgo->init();
     bgos.push_back(bgo);
     return bgo;
@@ -125,24 +127,28 @@ void LevelScene::placeNPC(LevelNPC& npcData)
     npcs.push_back(npc);
 }
 
-LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir, bool reSpawnable)
+LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
+                              NpcSpawnType sp_type,
+                              NpcSpawnDirection sp_dir,
+                              bool reSpawnable)
 {
-    if(npcData.id <= 0) return NULL;
+    if(npcData.id <= 0)
+        return nullptr;
 
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
-        return NULL;
+        return nullptr;
 
     obj_npc *curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
     LVL_Npc *npc = luaEngine.createLuaNpc(npcData.id);
 
     if(!npc)
-        return NULL;
+        return nullptr;
 
-    npcData.meta.array_id = ++data.npc_array_id;
     npc->setScenePointer(this);
     npc->setup = curNpcData;
     npc->reSpawnable = reSpawnable;
     npc->data = npcData;
+    npc->data.meta.array_id = ++data.npc_array_id;
     npc->init();
     npc->m_spawnedGeneratorType = sp_type;
     npc->m_spawnedGeneratorDirection = sp_dir;
@@ -155,22 +161,17 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
         case SPAWN_DOWN:
             npc->setWarpSpawn(LVL_Npc::WARP_TOP);
             break;
-
         case SPAWN_UP:
             npc->setWarpSpawn(LVL_Npc::WARP_BOTTOM);
             break;
-
         case SPAWN_LEFT:
             npc->setWarpSpawn(LVL_Npc::WARP_RIGHT);
             break;
-
         case SPAWN_RIGHT:
             npc->setWarpSpawn(LVL_Npc::WARP_LEFT);
             break;
         }
-
         break;
-
     case GENERATOR_PROJECTILE:
         switch(sp_dir)
         {
@@ -194,10 +195,8 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
             npc->setSpeedY(0.0);
             break;
         }
-
         PGE_Audio::playSound(ConfigManager::g_setup_npc.projectile_sound_id);
         break;
-
     default:
         break;
     }

@@ -66,8 +66,8 @@ LevelNPC LVL_Npc::getData()
 
 void LVL_Npc::setDirection(int dir)
 {
-    if(dir == 0) dir = (rand() % 2) ? -1 : 1;
-
+    if(dir == 0)
+        dir = (Maths::rand32() % 2) ? -1 : 1;
     _direction = Maths::sgn(dir);
     double gfxW = static_cast<double>(setup->setup.gfx_w);
     double gfxH = static_cast<double>(setup->setup.gfx_h);

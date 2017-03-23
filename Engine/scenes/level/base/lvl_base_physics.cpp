@@ -35,60 +35,63 @@
 #include <audio/pge_audio.h>
 #include <vector>
 
-PGE_physBody::PGE_physBody() :
+PGE_physBody::PGE_physBody()
+{}
     /*****Physical engine locals*******/
-    m_shape(SL_Rect),
-    m_momentum(0.0, 0.0),
-    m_touchLeftWall(false),
-    m_touchRightWall(false),
-    m_blockedAtLeft(false),
-    m_blockedAtRight(false),
-    m_stand(false),
-    m_standOnYMovable(false),
-    m_crushed(false),
-    m_crushedOld(false),
-    m_crushedHard(false),
-    m_crushedHardDelay(0),
-    m_cliff(false),
-    m_onSlippery(false),
-    m_contactPadding(0.0),
-    m_moveLeft(false),
-    m_moveRight(false),
-    m_onSlopeYAdd(0.0),
-    m_bodytype(Body_STATIC),
-    m_allowHoleRuning(false),
-    m_onSlopeFloorTopAlign(false),
-    m_blocked{Block_NONE, Block_ALL, Block_ALL},
-    m_danger{Block_NONE, Block_NONE, Block_NONE},
-    m_filterID(0)
+//    m_shape(SL_Rect),
+//    m_momentum(0.0, 0.0),
+//    m_touchLeftWall(false),
+//    m_touchRightWall(false),
+//    m_blockedAtLeft(false),
+//    m_blockedAtRight(false),
+//    m_stand(false),
+//    m_standOnYMovable(false),
+//    m_crushed(false),
+//    m_crushedOld(false),
+//    m_crushedHard(false),
+//    m_crushedHardDelay(0),
+//    m_cliff(false),
+//    m_onSlippery(false),
+//    m_contactPadding(0.0),
+//    m_moveLeft(false),
+//    m_moveRight(false),
+//    m_onSlopeYAdd(0.0),
+//    m_bodytype(Body_STATIC),
+//    m_allowHoleRuning(false),
+//    m_onSlopeFloorTopAlign(false),
+//    m_blocked{Block_NONE, Block_ALL, Block_ALL},
+//    m_danger{Block_NONE, Block_NONE, Block_NONE},
+//    m_filterID(0)
     /*****Physical engine locals*END***/
-{}
 
-PGE_physBody::PGE_physBody(const PGE_physBody &o) :
-    m_shape(o.m_shape),
-    m_momentum(o.m_momentum),
-    m_touchLeftWall(o.m_touchLeftWall),
-    m_touchRightWall(o.m_touchRightWall),
-    m_blockedAtLeft(o.m_blockedAtLeft),
-    m_blockedAtRight(o.m_blockedAtRight),
-    m_stand(o.m_stand),
-    m_standOnYMovable(o.m_standOnYMovable),
-    m_crushed(o.m_crushed),
-    m_crushedOld(o.m_crushedOld),
-    m_crushedHard(o.m_crushedHard),
-    m_crushedHardDelay(o.m_crushedHardDelay),
-    m_cliff(o.m_cliff),
-    m_contactPadding(o.m_contactPadding),
-    m_moveLeft(o.m_moveLeft),
-    m_moveRight(o.m_moveRight),
-    m_slopeFloor(o.m_slopeFloor),
-    m_slopeCeiling(o.m_slopeCeiling),
-    m_onSlopeYAdd(o.m_onSlopeYAdd),
-    m_allowHoleRuning(o.m_allowHoleRuning),
-    m_onSlopeFloorTopAlign(o.m_onSlopeFloorTopAlign),
-    m_blocked{o.m_blocked[0], o.m_blocked[1]},
-    m_filterID(o.m_filterID)
-{}
+
+//PGE_physBody::PGE_physBody(const PGE_physBody &o) :
+//    m_shape(o.m_shape),
+//    m_momentum(o.m_momentum),
+//    m_touchLeftWall(o.m_touchLeftWall),
+//    m_touchRightWall(o.m_touchRightWall),
+//    m_blockedAtLeft(o.m_blockedAtLeft),
+//    m_blockedAtRight(o.m_blockedAtRight),
+//    m_stand(o.m_stand),
+//    m_standOnYMovable(o.m_standOnYMovable),
+//    m_crushed(o.m_crushed),
+//    m_crushedOld(o.m_crushedOld),
+//    m_crushedHard(o.m_crushedHard),
+//    m_crushedHardDelay(o.m_crushedHardDelay),
+//    m_cliff(o.m_cliff),
+//    m_onSlippery(o.m_onSlippery),
+//    m_contactPadding(o.m_contactPadding),
+//    m_moveLeft(o.m_moveLeft),
+//    m_moveRight(o.m_moveRight),
+//    m_slopeFloor(o.m_slopeFloor),
+//    m_slopeCeiling(o.m_slopeCeiling),
+//    m_onSlopeYAdd(o.m_onSlopeYAdd),
+//    m_bodytype(o.m_bodytype),
+//    m_allowHoleRuning(o.m_allowHoleRuning),
+//    m_onSlopeFloorTopAlign(o.m_onSlopeFloorTopAlign),
+//    m_blocked{o.m_blocked[0], o.m_blocked[1]},
+//    m_filterID(o.m_filterID)
+//{}
 
 static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *nearest)
 {

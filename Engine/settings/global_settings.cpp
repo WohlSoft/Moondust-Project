@@ -329,8 +329,11 @@ Controller *GlobalSettings::openController(int player)
                 TargetController->setKeyMap(player2_joysticks[DeviceID]);
 
             if(DeviceID < joysticks.size())
-                dynamic_cast<JoystickController *>(TargetController)->
-                setJoystickDevice(joysticks[DeviceID]);
+            {
+                JoystickController*jc = dynamic_cast<JoystickController *>(TargetController);
+                if(jc)
+                    jc->setJoystickDevice(joysticks[DeviceID]);
+            }
         }
         else
         {

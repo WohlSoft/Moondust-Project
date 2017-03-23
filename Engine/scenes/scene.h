@@ -165,7 +165,7 @@ class Scene
         ///
         void launchStaticEffectC(unsigned long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction = 0, Scene_Effect_Phys phys = Scene_Effect_Phys());
 
-        void launchEffect(SpawnEffectDef effect_def, bool centered = false);
+        void launchEffect(const SpawnEffectDef &effect_def, bool centered = false);
 
         void processEffects(double ticks);
         /*  Effects engine   */

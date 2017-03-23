@@ -29,6 +29,8 @@
 
 static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *nearest)
 {
+    if(!nearest || !player)
+        return;
     //Do transformation if needed
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
@@ -37,7 +39,7 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
         if(target_id >= static_cast<unsigned long>(states.size()))
         {
             PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
-            x.characterID    = target_id + 1;
+            x.characterID    = uint32_t(target_id + 1);
             x.stateID        = 1;
             x._chsetup.state = 1;
             player->m_scene->getGameState()->setPlayerState(player->playerID, x);
@@ -410,13 +412,11 @@ void LVL_Player::processContacts()
             if(candidate == x)
                 continue;
 
-            if(!candidate)
-                candidate = x;
-
             if(x->m_momentum.betweenH(m_momentum.centerX()))
                 candidate = x;
         }
 
+        SDL_assert(candidate);//Must not be null!
         processCharacterSwitchBlock(this, candidate);//Do transformation if needed
         long npcid = candidate->data.npc_id;
         candidate->hit(LVL_Block::down);

@@ -259,9 +259,9 @@ class LevelScene : public Scene
             SPAWN_UP = 1,
             SPAWN_DOWN = 3,
         };
-        LVL_Block *spawnBlock(LevelBlock blockData);
-        LVL_Bgo   *spawnBGO(LevelBGO bgoData);
-        LVL_Npc   *spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir, bool reSpawnable = false);
+        LVL_Block *spawnBlock(const LevelBlock &blockData);
+        LVL_Bgo   *spawnBGO(const LevelBGO &bgoData);
+        LVL_Npc   *spawnNPC(const LevelNPC &npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir, bool reSpawnable = false);
         /*******************************************************/
 
         /********************Interprocess Stuff*****************/

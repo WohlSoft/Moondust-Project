@@ -131,7 +131,6 @@ private:
     //This is needed, because the first inital keypress should not be prossesed.
     bool is_keygrabViaKey = false;
     /*******Key grabbing********/
-
     menuAlignment alignment;
     int _itemsOnScreen = 5;
     int _currentItem = 0;
@@ -156,14 +155,14 @@ private:
     PGE_Texture _selector;
     PGE_Texture _scroll_up;
     PGE_Texture _scroll_down;
-    int _item_height;
-    int _width_limit;
+    int _item_height = 32;
+    int _width_limit = 100;
     uint32_t _text_len_limit;
-    bool _text_len_limit_strict;
-    int menuItemGap;
+    bool _text_len_limit_strict = false;
+    int menuItemGap = 0;
 
-    int _font_id;
-    int _font_offset;
+    int _font_id = 0;
+    int _font_offset = 0;
 };
 
 #endif // PGE_MENU_H
