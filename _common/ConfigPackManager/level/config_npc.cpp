@@ -344,6 +344,9 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     //*this = global;
     name = (local->en_name) ? local->name : global.name;
 
+    group =  (local->en_group) ? local->group : global.group;
+    category =  (local->en_category) ? local->category : global.category;
+
     image_n = (local->en_image) ? local->image : global.image_n;
     mask_n = PGE_ImageInfo::getMaskName(image_n);
 
