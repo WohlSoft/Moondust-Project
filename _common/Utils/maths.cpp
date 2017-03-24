@@ -23,12 +23,13 @@
 
 #include "maths.h"
 #include <cmath>
+#include <assert.h>
+
 #ifdef _WIN32
-#include <windows.h>
-#include <wincrypt.h>
+#include <windows.h>    //BOOL, LONG, etc.
+#include <wincrypt.h>   //CryptGenRandom
 #else
 #include <stdio.h>
-#include <assert.h>
 #endif
 
 template<typename T>
