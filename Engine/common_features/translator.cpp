@@ -102,8 +102,8 @@ void PGE_Translator::toggleLanguage(std::string lang)
         {
             m_currLang = "en"; //set to English if no other translations are found
             langFilePath = m_langPath + fmt::format("/engine_{0}.qm", m_currLang);
-            ok = m_translator.loadFile(langFilePath.c_str(),
-                                       reinterpret_cast<unsigned char *>(&m_langPath[0]));
+            m_translator.loadFile(langFilePath.c_str(),
+                                  reinterpret_cast<unsigned char *>(&m_langPath[0]));
         }
         m_isInit = true;
     }
