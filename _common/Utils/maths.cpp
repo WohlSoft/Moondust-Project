@@ -38,7 +38,7 @@ static T osRandom()
     T dst = 0;
     #ifdef _WIN32
     HCRYPTPROV hCryptProv = 0;
-    BOOL res =  CryptGenRandom(hCryptProv, sizeof(T), &dst);
+    BOOL res =  CryptGenRandom(hCryptProv, sizeof(T), reinterpret_cast<BYTE*>(&dst));
     assert(res != 0);
     #else
     FILE *d = fopen("/dev/urandom", "rb");
