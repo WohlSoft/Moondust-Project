@@ -24,6 +24,7 @@
 #include "maths.h"
 #include <cmath>
 #ifdef _WIN32
+#include <windows.h>
 #include <wincrypt.h>
 #else
 #include <stdio.h>
