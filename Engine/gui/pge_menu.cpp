@@ -433,7 +433,7 @@ void PGE_Menu::acceptItem()
         PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
         _EndSelection = true;
         _accept = true;
-        if((_currentItem < int(_items.size())) && (_currentItem >= 0))
+        if( (_currentItem >= 0) && (size_t(_currentItem) < _items.size()) )
             selected->extAction();
     }
 }

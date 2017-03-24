@@ -531,7 +531,9 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
 
     for(int pi = 1; pi < argc; pi++)
     {
-        std::string param_s(argv[pi]);
+        char* param_s_tmp = strdup(argv[pi]);
+        std::string param_s = std::string(param_s_tmp);
+        free(param_s_tmp);
         pLogDebug("Argument: [%s]", param_s.c_str());
         int  i = 0;
         char characterParam[8] = "\0";
