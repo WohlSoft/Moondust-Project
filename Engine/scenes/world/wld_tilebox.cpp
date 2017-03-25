@@ -93,7 +93,7 @@ bool WorldNode::collideWith(WorldNode *it)
 
 
 
-WldTileItem::WldTileItem(WorldTerrainTile _data): WorldNode()
+WldTileItem::WldTileItem(const WorldTerrainTile &_data): WorldNode()
 {
     data = _data;
     x = data.x;
@@ -157,7 +157,7 @@ void WldTileItem::render(double rx, double ry)
 
 
 
-WldSceneryItem::WldSceneryItem(WorldScenery _data): WorldNode()
+WldSceneryItem::WldSceneryItem(const WorldScenery &_data): WorldNode()
 {
     data = _data;
     x = data.x;
@@ -224,7 +224,7 @@ void WldSceneryItem::render(double rx, double ry)
 
 
 
-WldPathItem::WldPathItem(WorldPathTile _data): WorldNode()
+WldPathItem::WldPathItem(const WorldPathTile &_data): WorldNode()
 {
     data = _data;
     x = data.x;
@@ -292,7 +292,7 @@ void WldPathItem::render(double rx, double ry)
 
 
 
-WldLevelItem::WldLevelItem(WorldLevelTile _data): WorldNode()
+WldLevelItem::WldLevelItem(const WorldLevelTile &_data): WorldNode()
 {
     data = _data;
     x = data.x;

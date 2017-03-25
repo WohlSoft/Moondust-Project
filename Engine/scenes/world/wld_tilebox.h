@@ -64,7 +64,7 @@ class WorldNode
 class WldTileItem: public WorldNode
 {
     public:
-        WldTileItem(WorldTerrainTile _data);
+        WldTileItem(const WorldTerrainTile &_data);
         WldTileItem(const WldTileItem &x);
         ~WldTileItem();
         bool init();
@@ -76,7 +76,7 @@ class WldTileItem: public WorldNode
 class WldSceneryItem: public WorldNode
 {
     public:
-        WldSceneryItem(WorldScenery _data);
+        WldSceneryItem(const WorldScenery &_data);
         WldSceneryItem(const WldSceneryItem &x);
         ~WldSceneryItem();
         bool init();
@@ -88,7 +88,7 @@ class WldSceneryItem: public WorldNode
 class WldPathItem: public WorldNode
 {
     public:
-        WldPathItem(WorldPathTile _data);
+        WldPathItem(const WorldPathTile &_data);
         WldPathItem(const WldPathItem &x);
         ~WldPathItem();
         bool init();
@@ -100,7 +100,7 @@ class WldPathItem: public WorldNode
 class WldLevelItem: public WorldNode
 {
     public:
-        WldLevelItem(WorldLevelTile _data);
+        WldLevelItem(const WorldLevelTile &_data);
         WldLevelItem(const WldLevelItem &x);
         ~WldLevelItem();
         bool init();
@@ -128,8 +128,6 @@ class WldMusicBoxItem: public WorldNode
 };
 
 
-
-
 class TileBox
 {
     public:
@@ -149,6 +147,7 @@ class TileBox
         void registerElement(WorldNode *item, long X, long Y, long W, long H);
         void unregisterElement(WorldNode *item);
         typedef long RPoint[2];
+
     private:
         void sortElements(std::vector<WorldNode *> &list);
         typedef RTree<WorldNode *, long, 2, long > IndexTree;

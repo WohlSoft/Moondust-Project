@@ -104,7 +104,7 @@ void LVL_Player::processContacts()
         case LVLWarp:
         {
             contactedWarp = static_cast<LVL_Warp *>(cEL);
-            assert(contactedWarp);
+            SDL_assert(contactedWarp);
             contactedWithWarp = true;
             break;
         }
@@ -112,7 +112,7 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLBGO:
         {
             LVL_Bgo *bgo = static_cast<LVL_Bgo *>(cEL);
-            assert(bgo);
+            SDL_assert(bgo);
 
             if(bgo->setup->setup.climbing)
             {
@@ -124,14 +124,13 @@ void LVL_Player::processContacts()
                 else if(cEL->top() < climbableHeight)
                     climbableHeight = cEL->m_momentum.top();
             }
-
             break;
         }
 
         case PGE_Phys_Object::LVLPhysEnv:
         {
             LVL_PhysEnv *env = static_cast<LVL_PhysEnv *>(cEL);
-            assert(env);
+            SDL_assert(env);
             environments_map[intptr_t(env)] = env->env_type;
             break;
         }
@@ -139,7 +138,7 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLBlock:
         {
             LVL_Block *blk = static_cast<LVL_Block *>(cEL);
-            assert(blk);
+            SDL_assert(blk);
 
             if(blk->m_isHidden)
                 break;
@@ -156,7 +155,7 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLNPC:
         {
             LVL_Npc *npc = static_cast<LVL_Npc *>(cEL);
-            assert(npc);
+            SDL_assert(npc);
 
             if(npc->killed) break; //Don't deal with a corpses!
 
@@ -235,7 +234,7 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLBlock:
         {
             LVL_Block *blk = static_cast<LVL_Block *>(cEL);
-            assert(blk);// continue;
+            SDL_assert(blk);// continue;
             m_onSlippery |= blk->m_slippery_surface;
 
             if(blk->setup->setup.bounce)
@@ -298,7 +297,7 @@ void LVL_Player::processContacts()
         case PGE_Phys_Object::LVLNPC:
         {
             LVL_Npc *npc = static_cast<LVL_Npc *>(cEL);
-            assert(npc);// continue;
+            SDL_assert(npc);// continue;
             m_onSlippery |= npc->m_slippery_surface;
             //                if( ((npc->m_blocked[m_filterID]&Block_TOP) == 0) &&
             //                     (npc->setup->setup.kill_on_jump) )
@@ -321,7 +320,7 @@ void LVL_Player::processContacts()
         {
             LVL_Block *blk = static_cast<LVL_Block *>(cEL);
             //if(!blk) continue;
-            assert(blk);
+            SDL_assert(blk);
 
             if((blk->m_danger[m_filterID]&Block_BOTTOM) != 0)
             {
@@ -346,7 +345,7 @@ void LVL_Player::processContacts()
         {
             LVL_Block *blk = static_cast<LVL_Block *>(cEL);
             //if(!blk) continue;
-            assert(blk);
+            SDL_assert(blk);
 
             if((blk->m_danger[m_filterID]&Block_RIGHT) != 0)
             {
@@ -371,7 +370,7 @@ void LVL_Player::processContacts()
         {
             LVL_Block *blk = static_cast<LVL_Block *>(cEL);
             //if(!blk) continue;
-            assert(blk);
+            SDL_assert(blk);
 
             if((blk->m_danger[m_filterID]&Block_LEFT) != 0)
             {
@@ -398,7 +397,7 @@ void LVL_Player::processContacts()
         for(size_t bumpI = 0; bumpI < blocks_to_bounce_bottom.size(); bumpI++)
         {
             LVL_Block *x = blocks_to_bounce_bottom[bumpI];
-            assert(x);
+            SDL_assert(x);
 
             if((x->m_blocked[m_filterID]&Block_TOP) == 0)
                 continue;
@@ -416,18 +415,21 @@ void LVL_Player::processContacts()
                 candidate = x;
         }
 
-        SDL_assert(candidate);//Must not be null!
-        processCharacterSwitchBlock(this, candidate);//Do transformation if needed
-        long npcid = candidate->data.npc_id;
-        candidate->hit(LVL_Block::down);
-
-        if(candidate->setup->setup.hitable || (npcid != 0) ||
-           (candidate->m_destroyed) || candidate->setup->setup.bounce)
+        SDL_assert_release(candidate);//Must not be null!
+        if(candidate)
         {
-            if(m_momentum.bottom() >= candidate->m_momentum.top())
-                m_momentum.setYatBottom(candidate->m_momentum.top() - std::fabs(physics_cur.velocity_jump_bounce));
+            processCharacterSwitchBlock(this, candidate);//Do transformation if needed
+            long npcid = candidate->data.npc_id;
+            candidate->hit(LVL_Block::down);
 
-            bump(true, physics_cur.velocity_jump_bounce, physics_cur.jump_time_bounce);
+            if(candidate->setup->setup.hitable || (npcid != 0) ||
+               (candidate->m_destroyed) || candidate->setup->setup.bounce)
+            {
+                if(m_momentum.bottom() >= candidate->m_momentum.top())
+                    m_momentum.setYatBottom(candidate->m_momentum.top() - std::fabs(physics_cur.velocity_jump_bounce));
+
+                bump(true, physics_cur.velocity_jump_bounce, physics_cur.jump_time_bounce);
+            }
         }
     }
 
@@ -509,9 +511,6 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
         if(candidate == x)
             continue;
 
-        if(!candidate)
-            candidate = x;
-
         if(x->m_momentum.betweenH(m_momentum.centerX()))
             candidate = x;
     }
@@ -521,7 +520,7 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
         if(candidate->type == LVLBlock)
         {
             LVL_Block *nearest = static_cast<LVL_Block *>(candidate);
-            assert(nearest);
+            SDL_assert_release(nearest);
             processCharacterSwitchBlock(this, nearest);//Do transformation if needed
             long npcid = nearest->data.npc_id;
             nearest->hit(LVL_Block::up, this, 1);
@@ -545,31 +544,27 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
 
 bool LVL_Player::preCollisionCheck(PGE_Phys_Object *body)
 {
-    assert(body);
-
+    SDL_assert(body);
     if(body->type == LVLBlock)
     {
         LVL_Block *blk = static_cast<LVL_Block *>(body);
-        assert(blk);//if(!blk) return false;
-
+        SDL_assert_release(blk);//if(!blk) return false;
         if(blk->m_destroyed)
             return true;
-
         if(blk->setup->setup.plFilter_Block &&
            (characterID == blk->setup->setup.plFilter_Block_id))
             return true;
     }
-
     return false;
 }
 
 void LVL_Player::setDuck(bool duck)
 {
-    if(!duck_allow) return;
-
-    if(duck == ducking) return;
-
-    float b = m_momentum.bottom();
+    if(!duck_allow)
+        return;
+    if(duck == ducking)
+        return;
+    double b = m_momentum.bottom();
     setSize(state_cur.width, duck ? state_cur.duck_height : state_cur.height);
     setPos(posX(), b - m_height_registered);
     ducking = duck;
@@ -577,9 +572,8 @@ void LVL_Player::setDuck(bool duck)
     if(!duck && !isWarping)
     {
         _heightDelta = state_cur.duck_height - state_cur.height;
-
-        if(_heightDelta > 0.0f) _heightDelta = 0.0f;
-
+        if(_heightDelta > 0.0)
+            _heightDelta = 0.0;
         //_collideUnduck();
     }
 }

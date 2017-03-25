@@ -152,8 +152,7 @@ void MatrixAnimator::setDirection(int _direction, bool force)
 
         m_sequenceP = &(right->second);
     }
-
-    assert(m_sequenceP);
+    SDL_assert_release(m_sequenceP);
 }
 
 void MatrixAnimator::setSize(int width, int height)

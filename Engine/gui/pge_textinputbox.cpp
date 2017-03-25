@@ -255,7 +255,7 @@ void PGE_TextInputBox::exec()
         if((!PGE_Window::vsync) && (m_uTick > static_cast<signed>(SDL_GetTicks() - start_render)))
         {
             Uint32 delay = static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render);
-            assert(delay < 2000u);
+            SDL_assert(delay < 2000u);
             SDL_Delay(delay);
         }
     }

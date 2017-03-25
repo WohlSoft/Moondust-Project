@@ -23,8 +23,6 @@
 #include "../lvl_bgo.h"
 #include "../../scene_level.h"
 
-#include <cassert>
-
 void LVL_Npc::processContacts()
 {
     /* *********************** Check all collided sides ***************************** */
@@ -41,21 +39,21 @@ void LVL_Npc::processContacts()
         case PGE_Phys_Object::LVLBGO:
         {
             LVL_Bgo *bgo = static_cast<LVL_Bgo *>(cEL);
-            assert(bgo);
+            SDL_assert(bgo);
             l_pushBgo(bgo);
             break;
         }
         case PGE_Phys_Object::LVLPhysEnv:
         {
             LVL_PhysEnv *env = static_cast<LVL_PhysEnv *>(cEL);
-            assert(env);
+            SDL_assert(env);
             environments_map[intptr_t(env)] = env->env_type;
             break;
         }
         case PGE_Phys_Object::LVLBlock:
         {
             LVL_Block *blk = static_cast<LVL_Block *>(cEL);
-            assert(blk);
+            SDL_assert(blk);
             if(blk->m_isHidden)
                 break;
 
@@ -113,14 +111,14 @@ void LVL_Npc::processContacts()
         case PGE_Phys_Object::LVLPlayer:
         {
             LVL_Player *plr = static_cast<LVL_Player *>(cEL);
-            assert(plr);
+            SDL_assert(plr);
             l_pushPlr(plr);
             break;
         }
         case PGE_Phys_Object::LVLNPC:
         {
             LVL_Npc *npc = static_cast<LVL_Npc *>(cEL);
-            assert(npc);
+            SDL_assert(npc);
             if(npc->killed) break;
             if(npc->data.friendly) break;
             if(npc->m_isGenerator) break;
@@ -159,7 +157,7 @@ void LVL_Npc::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
 
 bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
 {
-    assert(body);
+    SDL_assert(body);
     switch(body->type)
     {
     case LVLBlock:

@@ -51,9 +51,9 @@ void LVL_LayerEngine::hide(std::string layer, bool smoke)
 
     for(Layer::Members::iterator it = lyr.m_members.begin();
         it != lyr.m_members.end();
-        it++ )
+        it++)
     {
-        PGE_Phys_Object*body = it->second;
+        PGE_Phys_Object *body = it->second;
         if(!body->isVisible())
             continue;
         body->hide();
@@ -74,9 +74,9 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
         //Restore all destroyed and modified blocks into their initial states
         for(Layer::Members::iterator it = lyr.m_members.begin();
             it != lyr.m_members.end();
-            it++ )
+            it++)
         {
-            LVL_Block* blk = dynamic_cast<LVL_Block*>(it->second);
+            LVL_Block *blk = dynamic_cast<LVL_Block *>(it->second);
             if(!blk)
                 continue;
             //lyr.m_members.remove(intptr_t(blk));
@@ -94,9 +94,9 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
     {
         for(Layer::Members::iterator it = lyr.m_members.begin();
             it != lyr.m_members.end();
-            it++ )
+            it++)
         {
-            PGE_Phys_Object*body = it->second;
+            PGE_Phys_Object *body = it->second;
             if(body->isVisible())
                 continue;
             body->show();
@@ -119,16 +119,15 @@ void LVL_LayerEngine::toggle(std::string layer, bool smoke)
         show(layer);
         return;
     }
-    else
-    if(!viz && (lyr.m_layerType == Layer::T_SPAWNED_NPCs))
+    else if(!viz && (lyr.m_layerType == Layer::T_SPAWNED_NPCs))
     {
         hide(layer);
         return;
     }
 
-    for(Layer::Members::iterator it = lyr.m_members.begin(); it != lyr.m_members.end(); it++ )
+    for(Layer::Members::iterator it = lyr.m_members.begin(); it != lyr.m_members.end(); it++)
     {
-        PGE_Phys_Object*body = it->second;
+        PGE_Phys_Object *body = it->second;
         body->setVisible(viz);
         if(smoke)
             spawnSmokeAt(body->posCenterX(), body->posCenterY());
@@ -160,8 +159,8 @@ void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, doubl
     if(mv != m_movingLayers.end())
     {
         MovingLayer &l = mv->second;
-        l.m_speedX=speedX;
-        l.m_speedY=speedY;
+        l.m_speedX = speedX;
+        l.m_speedY = speedY;
     }
     else
     {
@@ -172,8 +171,8 @@ void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, doubl
             return;
         Layer &lyr = li->second;
         MovingLayer l;
-        l.m_speedX=speedX;
-        l.m_speedY=speedY;
+        l.m_speedX = speedX;
+        l.m_speedY = speedY;
         l.m_members = &lyr.m_members;
         m_movingLayers.insert({layer, l});
     }
@@ -190,9 +189,9 @@ void LVL_LayerEngine::processMoving(double tickTime)
         layerIt++)
     {
         MovingLayer &l = layerIt->second;
-        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++ )
+        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++)
         {
-            PGE_Phys_Object* obj = it->second;
+            PGE_Phys_Object *obj = it->second;
             //Don't iterate playable characters
             if(obj->type == PGE_Phys_Object::LVLPlayer)
                 continue;
@@ -202,15 +201,20 @@ void LVL_LayerEngine::processMoving(double tickTime)
             //Don't iterate activated NPC's!
             if(obj->type == PGE_Phys_Object::LVLNPC)
             {
-                LVL_Npc *npc = dynamic_cast<LVL_Npc*>(obj);
-                SDL_assert(npc);
-                if( npc->isActivated /* &&
-                   !npc->isGenerator &&
-                   !npc->is_scenery*/ )
+                LVL_Npc *npc = dynamic_cast<LVL_Npc *>(obj);
+                SDL_assert_release(npc);
+                if(npc)
+                {
+                    if(npc->isActivated /* &&
+                       !npc->isGenerator &&
+                       !npc->is_scenery*/)
+                        continue;
+                }
+                else
                     continue;
             }
             obj->iterateStep(tickTime, true);
-            if( (l.m_speedX == 0.0) && (l.m_speedY == 0.0) )
+            if((l.m_speedX == 0.0) && (l.m_speedY == 0.0))
             {
                 if(obj->m_bodytype == PGE_physBody::Body_STATIC)
                 {
@@ -220,13 +224,11 @@ void LVL_LayerEngine::processMoving(double tickTime)
             }
             obj->_syncPosition();
         }
-        if( (l.m_speedX==0.0) && (l.m_speedY==0.0) )
-        {
+        if((l.m_speedX == 0.0) && (l.m_speedY == 0.0))
             remove_list.push_back(layerIt->first);
-        }
     }
     //Remove zero-speed layers
-    for(size_t i=0; i < remove_list.size(); i++)
+    for(size_t i = 0; i < remove_list.size(); i++)
         m_movingLayers.erase(remove_list[i]);
 }
 
@@ -241,4 +243,3 @@ void LVL_LayerEngine::clear()
     m_movingLayers.clear();
     m_layers.clear();
 }
-

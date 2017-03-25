@@ -1271,13 +1271,13 @@ void GlRenderer::renderRectBR(double _left, double _top, double _right, double _
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
 {
-    assert(texture);
+    SDL_assert_release(texture);
     g_renderer->renderTexture(texture, x, y);
 }
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
-    assert(texture);
+    SDL_assert_release(texture);
     g_renderer->renderTexture(texture, x, y, w, h, ani_top, ani_bottom, ani_left, ani_right);
 }
 

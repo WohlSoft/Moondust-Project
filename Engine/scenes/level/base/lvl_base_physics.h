@@ -375,7 +375,7 @@ public:
     bool    m_crushed = false;
     bool    m_crushedOld = false;
     bool    m_crushedHard = false;
-    int     m_crushedHardDelay;
+    int     m_crushedHardDelay = 0;
     bool    m_cliff = false;
     bool    m_onSlippery = false;
     /*************************************/
