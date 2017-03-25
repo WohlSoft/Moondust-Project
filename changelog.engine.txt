@@ -1,7 +1,9 @@
 0.3.0 [WIP]
 - Qt has been removed from dependencies for PGE Engine, for now, PGE Engine has: SDL2 only
 - Font Manager was been reworked for direct usage of FreeType library instead of QFont
-- Added an ability to skip the long path opening animation by hit of the pause key
+- Added an ability to skip the long path opening animation by hit of the pause key on the world map
+- Accuracy of the path opener has been improved and added support for debug rendering for it on the world map
+- Added a smooth camera following to opening path cells on the world map
 
 0.2.6
 - Improved testing of the renderers supports to avoid accidental running of the unsupported renderer

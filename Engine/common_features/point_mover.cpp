@@ -19,27 +19,44 @@
 #include "point_mover.h"
 #include <cmath>
 
-PointMover::PointMover():
-    m_moving(false),
-    m_speed(1.0),
-    m_posX(0.0),
-    m_posY(0.0),
-    m_speedX(0.0),
-    m_speedY(0.0),
-    m_targetX(0.0),
-    m_targetY(0.0)
+PointMover::PointMover()
 {}
 
-PointMover::PointMover(const PointMover &mp):
-    m_moving(mp.m_moving),
-    m_speed(mp.m_speed),
-    m_posX(mp.m_posX),
-    m_posY(mp.m_posY),
-    m_speedX(mp.m_speedX),
-    m_speedY(mp.m_speedY),
-    m_targetX(mp.m_targetX),
-    m_targetY(mp.m_targetY)
-{}
+void PointMover::setPos(double posX, double posY)
+{
+    m_posX = posX;
+    m_posY = posY;
+    m_targetX = posX;
+    m_targetY = posY;
+    m_moving = false;
+}
+
+void PointMover::setSpeed(double speed)
+{
+    m_speed = speed;
+    makeSpeed();
+}
+
+void PointMover::setTarget(double toPosX, double toPosY, double speed)
+{
+    if(speed <= 0.0)
+         speed = m_speed;
+    start(m_posX, m_posY, toPosX, toPosY, speed);
+}
+
+void PointMover::setTargetAuto(double toPosX, double toPosY, double timeMS)
+{
+    double speed;
+    if(timeMS < 0.0)
+        timeMS = 1.0;
+
+    double distance = std::sqrt(std::pow(toPosX - m_posX, 2) + std::pow(toPosY - m_posY, 2));
+    speed = distance / timeMS;
+    if(speed < 1.0)
+        speed = 1.0;
+
+    start(m_posX, m_posY, toPosX, toPosY, speed);
+}
 
 void PointMover::startAuto(double posX, double posY, double toPosX, double toPosY, double timeMS)
 {
@@ -48,9 +65,9 @@ void PointMover::startAuto(double posX, double posY, double toPosX, double toPos
     m_targetX = toPosX;
     m_targetY = toPosY;
 
-    double distance = std::sqrt( pow( toPosX-posX, 2 ) + pow( toPosY-posY, 2 ) );
-    m_speed = distance/timeMS;
-    if(m_speed<1.0)
+    double distance = std::sqrt(std::pow(toPosX - posX, 2) + std::pow(toPosY - posY, 2));
+    m_speed = distance / timeMS;
+    if(m_speed < 1.0)
         m_speed = 1.0;
     makeSpeed();
     m_moving = true;
@@ -89,8 +106,8 @@ bool PointMover::iterate(double tickTime)
             return false;
         }
 
-        m_posX += m_speedX*tickTime;
-        m_posY += m_speedY*tickTime;
+        m_posX += m_speedX * tickTime;
+        m_posY += m_speedY * tickTime;
 
         if(passedTargetX())
         {
@@ -109,18 +126,20 @@ bool PointMover::iterate(double tickTime)
 
 void PointMover::makeSpeed()
 {
-    double hDirect = (m_posX>m_targetX) ? 1.0 : -1.0;
-    double vDirect = (m_posY>m_targetY) ? 1.0 : -1.0;
-    double hdist = fabs(m_targetX - m_posX);
-    double vdist = fabs(m_targetY - m_posY);
+    double hDirect = (m_posX > m_targetX) ? 1.0 : -1.0;
+    double vDirect = (m_posY > m_targetY) ? 1.0 : -1.0;
+    double hdist = std::fabs(m_targetX - m_posX);
+    double vdist = std::fabs(m_targetY - m_posY);
     double angle = 0.0;
-    if(vdist != 0)
+    if(vdist != 0.0)
     {
-        angle = atan(hdist/vdist);
-        m_speedX = -sin(angle)*hDirect*m_speed;
-        m_speedY = -cos(angle)*vDirect*m_speed;
-    } else {
-        m_speedX = -hDirect*m_speed;
+        angle = std::atan(hdist / vdist);
+        m_speedX = -std::sin(angle) * hDirect * m_speed;
+        m_speedY = -std::cos(angle) * vDirect * m_speed;
+    }
+    else
+    {
+        m_speedX = -hDirect * m_speed;
         m_speedY = 0.0;
     }
 }
@@ -128,19 +147,15 @@ void PointMover::makeSpeed()
 bool PointMover::passedTargetX()
 {
     if(m_speedX > 0.0)
-    {
-        return m_posX+m_speedX >= m_targetX;
-    } else {
-        return m_posX+m_speedX <= m_targetX;
-    }
+        return m_posX + m_speedX >= m_targetX;
+    else
+        return m_posX + m_speedX <= m_targetX;
 }
 
 bool PointMover::passedTargetY()
 {
     if(m_speedY > 0.0)
-    {
-        return m_posY+m_speedY >= m_targetY;
-    } else {
-        return m_posY+m_speedY <= m_targetY;
-    }
+        return m_posY + m_speedY >= m_targetY;
+    else
+        return m_posY + m_speedY <= m_targetY;
 }

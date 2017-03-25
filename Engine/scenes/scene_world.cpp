@@ -120,6 +120,7 @@ WorldScene::WorldScene()
     pathOpeningInProcess = false;
     pathOpener.setScene(this);
     pathOpener.setInterval(250.0);
+    cameraMover.setSpeed(15.0);
 }
 
 WorldScene::~WorldScene()
@@ -150,7 +151,8 @@ WorldScene::~WorldScene()
 
 void WorldScene::setGameState(EpisodeState *_state)
 {
-    if(!_state) return;
+    if(!_state)
+        return;
 
     gameState = _state;
     numOfPlayers = _state->numOfPlayers;
@@ -166,6 +168,7 @@ void WorldScene::setGameState(EpisodeState *_state)
     {
         posX = gameState->game_state.worldPosX;
         posY = gameState->game_state.worldPosY;
+        cameraMover.setPos(static_cast<double>(posX), static_cast<double>(posY));
         updateAvailablePaths();
         updateCenter();
     }
@@ -394,6 +397,8 @@ bool WorldScene::init()
     //Apply vizibility settings to elements
     initElementsVisibility();
     pathOpener.startAt(PGE_PointF(posX, posY));
+    PGE_PointF pos = pathOpener.curPos();
+    cameraMover.setPos(pos.x(), pos.y());
     pathOpeningInProcess = true;
     updateAvailablePaths();
     updateCenter();
@@ -529,6 +534,8 @@ void WorldScene::doMoveStep(double &posVal)
         updateAvailablePaths();
         updateCenter();
     }
+
+    cameraMover.setPos(posX, posY);
 }
 
 void WorldScene::setDir(int dr)
@@ -691,17 +698,28 @@ void WorldScene::update()
     else
     {
         wld_events.processEvents(uTickf);
+        cameraMover.iterate(uTickf);
         processEffects(uTickf);
 
         if(pathOpeningInProcess)
         {
             lock_controls = true;
-            if(!pathOpener.processOpener(uTickf))
+            bool tickHappen = false;
+            if(!pathOpener.processOpener(uTickf, &tickHappen))
             {
                 pathOpeningInProcess = false;
                 lock_controls = false;
                 updateAvailablePaths();
                 updateCenter();
+                cameraMover.setTargetAuto(posX, posY, 1500.0);
+            }
+            else
+            {
+                if(tickHappen)
+                {
+                    PGE_PointF pos = pathOpener.curPos();
+                    cameraMover.setTarget(pos.x(), pos.y(), 0.2);
+                }
             }
         }
 
@@ -815,12 +833,16 @@ void WorldScene::update()
             break;
         }
 
-        _itemsToRender.clear();
-        m_indexTable.query(Maths::lRound(posX - (viewportRect.width() / 2)),
-                          Maths::lRound(posY - (viewportRect.height() / 2)),
-                          Maths::lRound(posX + (viewportRect.width() / 2)),
-                          Maths::lRound(posY + (viewportRect.height() / 2)),
-                          _itemsToRender, true);
+        {
+            double curPosX = cameraMover.posX();
+            double curPosY = cameraMover.posY();
+            _itemsToRender.clear();
+            m_indexTable.query(Maths::lRound(curPosX - (viewportRect.width() / 2)),
+                              Maths::lRound(curPosY - (viewportRect.height() / 2)),
+                              Maths::lRound(curPosX + (viewportRect.width() / 2)),
+                              Maths::lRound(curPosY + (viewportRect.height() / 2)),
+                              _itemsToRender, true);
+        }
     }
 
     if(controls_1.jump || controls_1.alt_jump)
@@ -1181,10 +1203,12 @@ void WorldScene::render()
     //Viewport zone black background
     GlRenderer::renderRect(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height(), 0.f, 0.f, 0.f);
     {
+        double curPosX = cameraMover.posX();
+        double curPosY = cameraMover.posY();
         //Set small viewport
         GlRenderer::setViewport(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height());
-        double renderX = posX + 16 - (viewportRect.width() / 2);
-        double renderY = posY + 16 - (viewportRect.height() / 2);
+        double renderX = curPosX + 16 - (viewportRect.width() / 2);
+        double renderY = curPosY + 16 - (viewportRect.height() / 2);
         //Render items
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
         const size_t render_sz = _itemsToRender.size();
@@ -1210,6 +1234,9 @@ void WorldScene::render()
             Scene_Effect &item = (*it);
             item.render(renderX, renderY);
         }
+
+        if(pathOpeningInProcess && PGE_Window::showPhysicsDebug)
+            pathOpener.debugRender(renderX, renderY);
 
         //Restore viewport
         GlRenderer::resetViewport();
@@ -1493,6 +1520,7 @@ void WorldScene::jump()
 {
     posX = jumpToXY.x();
     posY = jumpToXY.y();
+    cameraMover.setPos(posX, posY);
 
     if(gameState)
     {

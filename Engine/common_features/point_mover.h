@@ -23,29 +23,67 @@ class PointMover
 {
 public:
     PointMover();
-    PointMover(const PointMover&mp);
+    PointMover(const PointMover &mp) = default;
 
+    /*!
+     * \brief Set position without motion
+     * \param posX X position
+     * \param posY Y position
+     */
+    void setPos(double posX, double posY);
+
+    void setSpeed(double speed);
+
+    void setTarget(double toPosX, double toPosY, double speed = -1.0);
+
+    void setTargetAuto(double toPosX, double toPosY, double timeMS = -1.0);
+
+    /*!
+     * \brief Start point movement animation with speed
+     * \param posX Initial X position
+     * \param posY Initial Y position
+     * \param toPosX Target X position
+     * \param toPosY Target Y position
+     * \param speed Moving speed
+     */
     void start(double posX, double posY, double toPosX, double toPosY, double speed);
+
+    /*!
+     * \brief Start point moving animation with auto-calculation of speed to fit the time
+     * \param posX Initial X position
+     * \param posY Initial Y position
+     * \param toPosX Target X position
+     * \param toPosY Target Y position
+     * \param timeMS Time of movement process
+     */
     void startAuto(double posX, double posY, double toPosX, double toPosY, double timeMS);
 
+    //! Current X position
     double posX();
+    //! Current Y position
     double posY();
 
+    /*!
+     * \brief Iterate the moving process with given milliseconds
+     * \param tickTime Time of one frame in milliseconds
+     * \return is destinition passed
+     */
     bool iterate(double tickTime);
+
     void makeSpeed();
 
 private:
     bool passedTargetX();
     bool passedTargetY();
 
-    bool    m_moving;
-    double  m_speed;
-    double  m_posX;
-    double  m_posY;
-    double  m_speedX;
-    double  m_speedY;
-    double  m_targetX;
-    double  m_targetY;
+    bool    m_moving    = false;
+    double  m_speed     = 1.0;
+    double  m_posX      = 0.0;
+    double  m_posY      = 0.0;
+    double  m_speedX    = 0.0;
+    double  m_speedY    = 0.0;
+    double  m_targetX   = 0.0;
+    double  m_targetY   = 0.0;
 };
 
 

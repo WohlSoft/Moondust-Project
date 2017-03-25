@@ -41,7 +41,6 @@ void WldPathOpener::setInterval(double _ms)
 {
     if(_ms <= 0.0)
         _ms = 1.0;
-
     m_interval = _ms;
 }
 
@@ -53,12 +52,14 @@ void WldPathOpener::startAt(PGE_PointF pos)
     initFetcher();
 }
 
-bool WldPathOpener::processOpener(double tickTime)
+bool WldPathOpener::processOpener(double tickTime, bool *tickHappen)
 {
     m_time -= tickTime;
 
     while((m_time < 0.0) || m_skipAnimation)
     {
+        if(tickHappen)
+            *tickHappen = true;
         m_time += m_interval;
         doFetch();
 
@@ -84,16 +85,20 @@ void WldPathOpener::fetchSideNodes(bool &side, std::vector<WorldNode * > &nodes,
 
             if(contact && !x->vizible)
             {
-                auto it = need_to_walk.begin();
-                for(; it != need_to_walk.end(); it++)
+                auto it = need_to_walk.rbegin();
+                for(; it != need_to_walk.rend(); it++)
                 {
-                    if(_search_pos == (*it))
+                    if(_search_pos == (*it).first)
+                    {
+                        (*it).second = 1;
                         break;
+                    }
                 }
-                if(it == need_to_walk.end())
-                    need_to_walk.push_back(_search_pos);
-
-                next.push_back(x);
+                if(it == need_to_walk.rend())
+                {
+                    need_to_walk.push_back({_search_pos, 0});
+                    next.push_back(x);
+                }
                 side |= contact;
             }
         }
@@ -104,7 +109,17 @@ void WldPathOpener::fetchSideNodes(bool &side, std::vector<WorldNode * > &nodes,
 
             if(contact && !x->vizible)
             {
-                next.push_back(x);
+                auto it = need_to_walk.rbegin();
+                for(; it != need_to_walk.rend(); it++)
+                {
+                    if(_search_pos == (*it).first)
+                        break;
+                }
+                if(it == need_to_walk.rend())
+                {
+                    need_to_walk.push_back({_search_pos, 1});
+                    next.push_back(x);
+                }
                 side |= contact;
             }
         }
@@ -120,18 +135,23 @@ void WldPathOpener::doFetch()
     LogDebug("Fetch leaf....");
     #endif
 
-    if(!next.empty())
+    while(!next.empty())
     {
-        findAndHideSceneries(next.back());
-        next.pop_back();
-        PGE_Audio::playSoundByRole(obj_sound_role::WorldOpenPath);
+        if(findAndHideSceneries())
+        {
+            PGE_Audio::playSoundByRole(obj_sound_role::WorldOpenPath);
+            break;
+        }
     }
 
     if(need_to_walk.empty())
         return;
 
-    _current_pos = need_to_walk.back();
+    WalkBranch *branch = &need_to_walk.back();
+    _current_pos = branch->first;
     need_to_walk.pop_back();
+    if(branch->second == 1)
+        return;
 
     //left
     _search_pos.setX(_current_pos.x() - m_s->m_indexTable.grid());
@@ -178,16 +198,20 @@ static void spawnSmoke(WorldScene *s, WorldNode *at)
     s->launchEffect(smoke, true);
 }
 
-void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
+bool WldPathOpener::findAndHideSceneries()
 {
+    bool processed = false;
+    WorldNode *relativeTo = next.back();
+
     //Set element to be vizible
     if(relativeTo->type == WorldNode::path)
     {
         WldPathItem *y = dynamic_cast<WldPathItem *>(relativeTo);
 
-        if(y)
+        if(y && !y->vizible)
         {
             y->vizible = true;
+            processed = true;
             spawnSmoke(m_s, y);
         }
     }
@@ -195,20 +219,20 @@ void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
     {
         WldLevelItem *y = dynamic_cast<WldLevelItem *>(relativeTo);
 
-        if(y)
+        if(y && !y->vizible)
         {
             y->vizible = true;
+            processed = true;
             spawnSmoke(m_s, y);
         }
     }
 
     //Set all sceneries under this item to be invizible
     std::vector<WorldNode * > nodes;
-    m_s->m_indexTable.query(relativeTo->x,
-                         relativeTo->y,
-                         relativeTo->x + relativeTo->w,
-                         relativeTo->y + relativeTo->h,
-                         nodes);
+    m_s->m_indexTable.query(relativeTo->x, relativeTo->y,
+                            relativeTo->x + relativeTo->w,
+                            relativeTo->y + relativeTo->h,
+                            nodes);
 
     for(WorldNode *x : nodes)
     {
@@ -219,8 +243,31 @@ void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
                 y->vizible = false;
         }
     }
+
+    popProcessed();
+    return processed;
 }
 
+void WldPathOpener::popProcessed()
+{
+    while(!next.empty())
+    {
+        WorldNode *relativeTo = next.back();
+        if(relativeTo->type == WorldNode::path)
+        {
+            WldPathItem *y = dynamic_cast<WldPathItem *>(relativeTo);
+            if(y && !y->vizible)
+                break;
+        }
+        else if(relativeTo->type == WorldNode::level)
+        {
+            WldLevelItem *y = dynamic_cast<WldLevelItem *>(relativeTo);
+            if(y && !y->vizible)
+                break;
+        }
+        next.pop_back();
+    }
+}
 
 void WldPathOpener::initFetcher()
 {
@@ -379,6 +426,11 @@ void WldPathOpener::skipAnimation()
     m_skipAnimation = true;
 }
 
+PGE_PointF WldPathOpener::curPos()
+{
+    return _current_pos;
+}
+
 bool WldPathOpener::isAllowedSide(int SideCode, int ExitCode)
 {
     if(m_forceOpen)
@@ -391,4 +443,15 @@ bool WldPathOpener::isAllowedSide(int SideCode, int ExitCode)
         return true;
 
     return false;
+}
+
+void WldPathOpener::debugRender(double camX, double camY)
+{
+    for(WorldNode *w : next)
+    {
+        GlRenderer::renderRect(float(w->x - camX),
+                               float(w->y - camY),
+                               w->w, w->h,
+                               1.0f, 0.0f, 0.0f, 0.5f);
+    }
 }

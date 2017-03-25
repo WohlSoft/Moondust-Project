@@ -26,6 +26,7 @@
 #include <common_features/episode_state.h>
 #include <common_features/rect.h>
 #include <common_features/point.h>
+#include <common_features/point_mover.h>
 #include <common_features/event_queue.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_menubox.h>
@@ -116,6 +117,7 @@ class WorldScene : public Scene
         };
         double  posX;
         double  posY;
+        PointMover cameraMover;
         int     walk_direction;
         double  move_speed;//!< Calculated movement step dependent to physical step
         double  move_steps_count;//!< Speps counterm, used to correct inter-cell position
@@ -143,11 +145,11 @@ class WorldScene : public Scene
         PGE_PointF jumpToXY;
 
         /************Printable stuff****************/
-        long      health;
-        long      lives;
-        long      stars;
-        long      points;
-        long      coins;
+        long    health;
+        long    lives;
+        long    stars;
+        long    points;
+        long    coins;
         std::string levelTitle;
         /*******************************************/
         bool    allow_left;

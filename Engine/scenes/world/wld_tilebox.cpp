@@ -481,7 +481,7 @@ static bool _TreeSearchCallback_with_vizibility(WorldNode *item, void *arg)
 void TileBox::query(long X, long Y, std::vector<WorldNode *> &list)
 {
     //PGE_Point t = applyGrid(X,Y);
-    long margin = gridSize_h - 1l;
+    long margin = gridSize_h - 2l;
     RPoint lt = { X - margin, Y - margin };
     RPoint rb = { X + margin, Y + margin };
     tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(&list));

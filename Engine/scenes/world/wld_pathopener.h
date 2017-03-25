@@ -21,6 +21,8 @@
 
 #include <deque>
 #include <vector>
+#include <utility>
+#include <cstdint>
 #include <common_features/pointf.h>
 
 class WorldNode;
@@ -34,11 +36,13 @@ class WldPathOpener
         void setScene(WorldScene *_s);
         void setInterval(double _ms);
         void startAt(PGE_PointF pos);
-        bool processOpener(double tickTime);
+        bool processOpener(double tickTime, bool *tickHappen = nullptr);
 
         void initFetcher();
         void setForce();
         void skipAnimation();
+
+        PGE_PointF curPos();
 
         enum SideExitCode
         {
@@ -46,16 +50,19 @@ class WldPathOpener
             SIDE_DenyAny    = 0
         };
         bool isAllowedSide(int SideCode, int ExitCode);
+        void debugRender(double camX, double camY);
 
     private:
         void fetchSideNodes(bool &side, std::vector<WorldNode *> &nodes, double cx, double cy);
         void doFetch();
-        void findAndHideSceneries(WorldNode *relativeTo);
+        bool findAndHideSceneries();
+        void popProcessed();
 
         PGE_PointF _start_at;
         PGE_PointF _current_pos;
         PGE_PointF _search_pos;
-        std::deque<PGE_PointF>  need_to_walk;
+        typedef std::pair<PGE_PointF /*Point position*/, uint8_t /*Not-opened Branches*/> WalkBranch;
+        std::deque<WalkBranch>  need_to_walk;
         std::deque<WorldNode *> next;
 
         //! Allows to immediately skip long path opening animation
