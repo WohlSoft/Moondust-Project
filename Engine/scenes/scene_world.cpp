@@ -696,7 +696,6 @@ void WorldScene::update()
         if(pathOpeningInProcess)
         {
             lock_controls = true;
-
             if(!pathOpener.processOpener(uTickf))
             {
                 pathOpeningInProcess = false;
@@ -1324,7 +1323,12 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     case SDLK_ESCAPE: // ESC
     case SDLK_RETURN:// Enter
     {
-        if(isPauseMenu || m_doExit || lock_controls) break;
+        if(isPauseMenu || m_doExit || lock_controls)
+        {
+            if(pathOpeningInProcess)
+                pathOpener.skipAnimation();
+            break;
+        }
 
         isPauseMenu = true;
     }

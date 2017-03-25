@@ -24,28 +24,17 @@
 
 #include "../scene_world.h"
 
-void WldPathOpener::construct()
-{
-    interval = 1.0;
-    _time = 0.0;
-    force = false;
-}
-
 WldPathOpener::WldPathOpener()
-{
-    s = nullptr;
-    construct();
-}
+{}
 
 WldPathOpener::WldPathOpener(WorldScene *_s)
 {
-    s = _s;
-    construct();
+    m_s = _s;
 }
 
 void WldPathOpener::setScene(WorldScene *_s)
 {
-    s = _s;
+    m_s = _s;
 }
 
 void WldPathOpener::setInterval(double _ms)
@@ -53,7 +42,7 @@ void WldPathOpener::setInterval(double _ms)
     if(_ms <= 0.0)
         _ms = 1.0;
 
-    interval = _ms;
+    m_interval = _ms;
 }
 
 void WldPathOpener::startAt(PGE_PointF pos)
@@ -66,11 +55,11 @@ void WldPathOpener::startAt(PGE_PointF pos)
 
 bool WldPathOpener::processOpener(double tickTime)
 {
-    _time -= tickTime;
+    m_time -= tickTime;
 
-    while(_time < 0.0)
+    while((m_time < 0.0) || m_skipAnimation)
     {
-        _time += interval;
+        m_time += m_interval;
         doFetch();
 
         if(need_to_walk.empty() && next.empty())
@@ -145,38 +134,38 @@ void WldPathOpener::doFetch()
     need_to_walk.pop_back();
 
     //left
-    _search_pos.setX(_current_pos.x() - s->m_indexTable.grid());
+    _search_pos.setX(_current_pos.x() - m_s->m_indexTable.grid());
     _search_pos.setY(_current_pos.y());
-    x = _current_pos.x() + s->m_indexTable.grid_half() - s->m_indexTable.grid();
-    y = _current_pos.y() + s->m_indexTable.grid_half();
-    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+    x = _current_pos.x() + m_s->m_indexTable.grid_half() - m_s->m_indexTable.grid();
+    y = _current_pos.y() + m_s->m_indexTable.grid_half();
+    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
     fetchSideNodes(found, nodes, x, y);
     nodes.clear();
 
     //Right
-    _search_pos.setX(_current_pos.x() + s->m_indexTable.grid());
+    _search_pos.setX(_current_pos.x() + m_s->m_indexTable.grid());
     _search_pos.setY(_current_pos.y());
-    x = _current_pos.x() + s->m_indexTable.grid_half() + s->m_indexTable.grid();
-    y = _current_pos.y() + s->m_indexTable.grid_half();
-    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+    x = _current_pos.x() + m_s->m_indexTable.grid_half() + m_s->m_indexTable.grid();
+    y = _current_pos.y() + m_s->m_indexTable.grid_half();
+    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
     fetchSideNodes(found, nodes, x, y);
     nodes.clear();
 
     //Top
     _search_pos.setX(_current_pos.x());
-    _search_pos.setY(_current_pos.y() - s->m_indexTable.grid());
-    x = _current_pos.x() + s->m_indexTable.grid_half();
-    y = _current_pos.y() + s->m_indexTable.grid_half() - s->m_indexTable.grid();
-    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+    _search_pos.setY(_current_pos.y() - m_s->m_indexTable.grid());
+    x = _current_pos.x() + m_s->m_indexTable.grid_half();
+    y = _current_pos.y() + m_s->m_indexTable.grid_half() - m_s->m_indexTable.grid();
+    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
     fetchSideNodes(found, nodes, x, y);
     nodes.clear();
 
     //Bottom
     _search_pos.setX(_current_pos.x());
-    _search_pos.setY(_current_pos.y() + s->m_indexTable.grid());
-    x = _current_pos.x() + s->m_indexTable.grid_half();
-    y = _current_pos.y() + s->m_indexTable.grid_half() + s->m_indexTable.grid();
-    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+    _search_pos.setY(_current_pos.y() + m_s->m_indexTable.grid());
+    x = _current_pos.x() + m_s->m_indexTable.grid_half();
+    y = _current_pos.y() + m_s->m_indexTable.grid_half() + m_s->m_indexTable.grid();
+    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
     fetchSideNodes(found, nodes, x, y);
     nodes.clear();
 }
@@ -199,7 +188,7 @@ void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
         if(y)
         {
             y->vizible = true;
-            spawnSmoke(s, y);
+            spawnSmoke(m_s, y);
         }
     }
     else if(relativeTo->type == WorldNode::level)
@@ -209,13 +198,13 @@ void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
         if(y)
         {
             y->vizible = true;
-            spawnSmoke(s, y);
+            spawnSmoke(m_s, y);
         }
     }
 
     //Set all sceneries under this item to be invizible
     std::vector<WorldNode * > nodes;
-    s->m_indexTable.query(relativeTo->x,
+    m_s->m_indexTable.query(relativeTo->x,
                          relativeTo->y,
                          relativeTo->x + relativeTo->w,
                          relativeTo->y + relativeTo->h,
@@ -235,13 +224,15 @@ void WldPathOpener::findAndHideSceneries(WorldNode *relativeTo)
 
 void WldPathOpener::initFetcher()
 {
+    m_skipAnimation = false;
     std::vector<WorldNode * > lvlnodes;
-    int exitCode = s->gameState->_recent_ExitCode_level;
+    int exitCode = m_s->gameState->_recent_ExitCode_level;
     long lx, ly;
-    lx = Maths::lRound(_current_pos.x() + s->m_indexTable.grid_half());
-    ly = Maths::lRound(_current_pos.y() + s->m_indexTable.grid_half());
+    lx = Maths::lRound(_current_pos.x() + m_s->m_indexTable.grid_half());
+    ly = Maths::lRound(_current_pos.y() + m_s->m_indexTable.grid_half());
+
     D_pLogDebug("Initialization of the path opener....");
-    s->m_indexTable.query(lx, ly, lvlnodes);
+    m_s->m_indexTable.query(lx, ly, lvlnodes);
 
     for(WorldNode *n : lvlnodes)
     {
@@ -267,11 +258,11 @@ void WldPathOpener::initFetcher()
                 if(isAllowedSide(wl->data.left_exit, exitCode))
                 {
                     //left
-                    _search_pos.setX(_current_pos.x() - s->m_indexTable.grid());
+                    _search_pos.setX(_current_pos.x() - m_s->m_indexTable.grid());
                     _search_pos.setY(_current_pos.y());
-                    x = _current_pos.x() + s->m_indexTable.grid_half() - s->m_indexTable.grid();
-                    y = _current_pos.y() + s->m_indexTable.grid_half();
-                    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+                    x = _current_pos.x() + m_s->m_indexTable.grid_half() - m_s->m_indexTable.grid();
+                    y = _current_pos.y() + m_s->m_indexTable.grid_half();
+                    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
                     #ifdef DEBUG_BUILD
                     if(nodes.empty())
                         pLogDebug("No nodes at left");
@@ -294,11 +285,11 @@ void WldPathOpener::initFetcher()
                 if(isAllowedSide(wl->data.right_exit, exitCode))
                 {
                     //Right
-                    _search_pos.setX(_current_pos.x() + s->m_indexTable.grid());
+                    _search_pos.setX(_current_pos.x() + m_s->m_indexTable.grid());
                     _search_pos.setY(_current_pos.y());
-                    x = _current_pos.x() + s->m_indexTable.grid_half() + s->m_indexTable.grid();
-                    y = _current_pos.y() + s->m_indexTable.grid_half();
-                    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+                    x = _current_pos.x() + m_s->m_indexTable.grid_half() + m_s->m_indexTable.grid();
+                    y = _current_pos.y() + m_s->m_indexTable.grid_half();
+                    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
                     #ifdef DEBUG_BUILD
                     if(nodes.empty())
                         pLogDebug("No nodes at right");
@@ -322,10 +313,10 @@ void WldPathOpener::initFetcher()
                 {
                     //Top
                     _search_pos.setX(_current_pos.x());
-                    _search_pos.setY(_current_pos.y() - s->m_indexTable.grid());
-                    x = _current_pos.x() + s->m_indexTable.grid_half();
-                    y = _current_pos.y() + s->m_indexTable.grid_half() - s->m_indexTable.grid();
-                    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+                    _search_pos.setY(_current_pos.y() - m_s->m_indexTable.grid());
+                    x = _current_pos.x() + m_s->m_indexTable.grid_half();
+                    y = _current_pos.y() + m_s->m_indexTable.grid_half() - m_s->m_indexTable.grid();
+                    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
                     #ifdef DEBUG_BUILD
                     if(nodes.empty())
                         D_pLogDebug("No nodes at top");
@@ -349,10 +340,10 @@ void WldPathOpener::initFetcher()
                 {
                     //Bottom
                     _search_pos.setX(_current_pos.x());
-                    _search_pos.setY(_current_pos.y() + s->m_indexTable.grid());
-                    x = _current_pos.x() + s->m_indexTable.grid_half();
-                    y = _current_pos.y() + s->m_indexTable.grid_half() + s->m_indexTable.grid();
-                    s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
+                    _search_pos.setY(_current_pos.y() + m_s->m_indexTable.grid());
+                    x = _current_pos.x() + m_s->m_indexTable.grid_half();
+                    y = _current_pos.y() + m_s->m_indexTable.grid_half() + m_s->m_indexTable.grid();
+                    m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
 
                     #ifdef DEBUG_BUILD
                     if(nodes.empty())
@@ -373,19 +364,24 @@ void WldPathOpener::initFetcher()
                 break;
             }
 
-            force = false; // Reset "force"
+            m_forceOpen = false; // Reset "force"
         }
     }
 }
 
 void WldPathOpener::setForce()
 {
-    force = true;
+    m_forceOpen = true;
+}
+
+void WldPathOpener::skipAnimation()
+{
+    m_skipAnimation = true;
 }
 
 bool WldPathOpener::isAllowedSide(int SideCode, int ExitCode)
 {
-    if(force)
+    if(m_forceOpen)
         return true;
 
     if((ExitCode <= 0) || (SideCode == SIDE_DenyAny))

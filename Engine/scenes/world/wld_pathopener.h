@@ -28,7 +28,6 @@ class WorldScene;
 
 class WldPathOpener
 {
-        void construct();
     public:
         WldPathOpener();
         WldPathOpener(WorldScene *_s);
@@ -36,8 +35,11 @@ class WldPathOpener
         void setInterval(double _ms);
         void startAt(PGE_PointF pos);
         bool processOpener(double tickTime);
+
         void initFetcher();
         void setForce();
+        void skipAnimation();
+
         enum SideExitCode
         {
             SIDE_AllowAny   = -1,
@@ -56,10 +58,16 @@ class WldPathOpener
         std::deque<PGE_PointF>  need_to_walk;
         std::deque<WorldNode *> next;
 
-        double interval;
-        double _time;
-        bool force;
-        WorldScene *s;
+        //! Allows to immediately skip long path opening animation
+        bool    m_skipAnimation = false;
+        //! Interval between every cell opening
+        double  m_interval = 1.0;
+        //! Wait timer betweeen cell opening
+        double  m_time    = 0.0;
+        //! Force opening of the closed cells without exit code checking
+        bool    m_forceOpen    = false;
+        //! Pointer to the parent world map scene
+        WorldScene  *m_s   = nullptr;
 };
 
 #endif // WLDPATHOPENER_H
