@@ -74,7 +74,7 @@ void PGE_MenuBoxBase::construct(std::string _title, PGE_MenuBoxBase::msgType _ty
     updateTickValue();
     _page = 0;
     running = false;
-    _answer_id = -1;
+    _answer_id = PGE_Menu::npos;
     _pos = pos;
     _menu.setTextLenLimit(30, true);
     setTitleFont(ConfigManager::setup_menu_box.title_font_name);
@@ -100,7 +100,7 @@ void PGE_MenuBoxBase::setParentScene(Scene *_parentScene)
 
 void PGE_MenuBoxBase::setType(PGE_MenuBoxBase::msgType _type)
 {
-    switch(type)
+    switch(int(type))
     {
     case msg_info:
         bg_color =       GlColor(0, 0, 0);
@@ -163,7 +163,7 @@ void PGE_MenuBoxBase::setPos(double x, double y)
     updateSize();
 }
 
-void PGE_MenuBoxBase::setMaxMenuItems(int items)
+void PGE_MenuBoxBase::setMaxMenuItems(size_t items)
 {
     _menu.setItemsNumber(items);
     updateSize();
@@ -171,8 +171,8 @@ void PGE_MenuBoxBase::setMaxMenuItems(int items)
 
 void PGE_MenuBoxBase::setBoxSize(double _Width, double _Height, double _padding)
 {
-    width = _Width;
-    height = _Height;
+    width   = _Width;
+    height  = _Height;
     padding = _padding;
 }
 
@@ -350,14 +350,14 @@ void PGE_MenuBoxBase::setRejectSnd(long sndRole)
     reject_snd = ConfigManager::getSoundByRole(_sndRole);
 }
 
-int PGE_MenuBoxBase::answer()
+size_t PGE_MenuBoxBase::answer()
 {
     return _answer_id;
 }
 
 void PGE_MenuBoxBase::reject()
 {
-    _answer_id = -1;
+    _answer_id = PGE_Menu::npos;
     _page++;
     setFade(10, 0.0, 0.05);
 
@@ -504,7 +504,7 @@ void PGE_MenuBoxBase::processBox(double)
         if(_menu.isAccepted())
             _answer_id = _menu.currentItemI();
         else
-            _answer_id = -1;
+            _answer_id = PGE_Menu::npos;
 
         _page++;
         setFade(10, 0.0, 0.05);

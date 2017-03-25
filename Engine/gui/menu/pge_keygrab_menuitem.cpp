@@ -58,7 +58,7 @@ void PGE_KeyGrabMenuItem::processJoystickBind()
             chosing = false;
             *targetKey = jkey;
             PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
-            if(menu) menu->is_keygrab = false;
+            if(menu) menu->m_is_keygrab = false;
         }
     }
 }
@@ -68,7 +68,7 @@ void PGE_KeyGrabMenuItem::grabKey()
     chosing = true;
     if(targetKey && menu)
     {
-        menu->is_keygrab = true;
+        menu->m_is_keygrab = true;
         menu->m_item = this;
     }
 }
@@ -108,7 +108,7 @@ void PGE_KeyGrabMenuItem::pushKey(int scancode)
         }
 
         if(menu)
-            menu->is_keygrab = false;
+            menu->m_is_keygrab = false;
     }
 }
 

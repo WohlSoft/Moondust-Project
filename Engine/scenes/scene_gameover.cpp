@@ -62,7 +62,7 @@ int GameOverScene::exec()
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();
 
-    if (continueOrQuit.answer() >= 0)
+    if (continueOrQuit.answer() != PGE_Menu::npos)
         if (continueOrQuit.answer() == 0)
             return GameOverSceneResult::CONTINUE;
 

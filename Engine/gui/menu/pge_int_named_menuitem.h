@@ -39,10 +39,10 @@ public:
     void render(int x, int y);
 
 private:
-    int *intvalue;
+    int     *intvalue;
     std::vector<NamedIntItem > items;
-    int curItem;
-    bool allowRotation;
+    size_t  curItem;
+    bool    allowRotation;
     friend class PGE_Menu;
 };
 

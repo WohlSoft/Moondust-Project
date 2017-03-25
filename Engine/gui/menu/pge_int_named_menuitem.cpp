@@ -45,11 +45,11 @@ void PGE_NamedIntMenuItem::left()
         return;
     if(items.empty())
         return;
-
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
-    curItem--;
-    if(curItem < 0)
+    if(curItem == 0)
         curItem = allowRotation ? (items.size() - 1) : 0;
+    else
+        curItem--;
     *intvalue = items[curItem].value;
     extAction();
 }
@@ -62,7 +62,7 @@ void PGE_NamedIntMenuItem::right()
         return;
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     curItem++;
-    if(curItem >= static_cast<int>(items.size()))
+    if(curItem >= items.size())
         curItem = allowRotation ?  0  : (items.size() - 1);
     *intvalue = items[curItem].value;
     extAction();

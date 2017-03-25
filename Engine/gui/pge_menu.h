@@ -44,8 +44,9 @@ class PGE_Menu
 friend class PGE_KeyGrabMenuItem;
 public:
     enum menuAlignment { HORIZONTAL, VERTICLE };
+    static const size_t npos = SIZE_MAX;
 
-    PGE_Menu(menuAlignment align=VERTICLE, int itemGap = 0);
+    PGE_Menu(menuAlignment align = VERTICLE, int itemGap = 0);
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
@@ -55,7 +56,7 @@ public:
                          std::function<void()> _extAction=([]()->void{}), bool enabled=true);
     void addIntMenuItem(int *intvalue, int min, int max, std::string value, std::string title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}), bool enabled=true );
-    void addNamedIntMenuItem(int *intvalue, std::vector<NamedIntItem > _items, std::string value, std::string title, bool rotate=false,
+    void addNamedIntMenuItem(int *intvalue, std::vector<NamedIntItem > m_items, std::string value, std::string title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}), bool enabled=true );
     void addKeyGrabMenuItem(KM_Key *key, std::string item_key, std::string title, SDL_Joystick *joystick_device=NULL, bool enabled=true);
 
@@ -84,11 +85,11 @@ public:
                                           Will be selected item which under mouse*/
 
     void setMouseClickPos(int x, int y);
-    int findItem(int x, int y);
+    size_t findItem(int x, int y);
 
     void reset();   //!< Reset menu to initial state
 
-    void setItemsNumber(int q); //!< Set number of item which will show on screen
+    void setItemsNumber(size_t q); //!< Set number of item which will show on screen
 
     void sort();   //!< Sort menu items in alphabetic order
     void render(); //!< Draw menu on screen
@@ -100,12 +101,12 @@ public:
     void storeKey(int scancode);
     menuAlignment getAlignment();
     const PGE_Menuitem currentItem(); //!< Returns current menu item entry
-    int currentItemI();       //!< Returns index of current menu item
-    void setCurrentItem(int i); //!< Sets current index of menuitem
-    int line();  //!< Returns number of current line where cursor is located on screen
-    void setLine(int ln); //!< Sets current line number
-    int offset();          //!< Returns scrolling offset from begin of menu list
-    void setOffset(int of);//!< Sets scrolling offset from begin of menu list
+    size_t currentItemI();       //!< Returns index of current menu item
+    void setCurrentItem(size_t i); //!< Sets current index of menuitem
+    size_t line();  //!< Returns number of current line where cursor is located on screen
+    void setLine(size_t ln); //!< Sets current line number
+    size_t offset();          //!< Returns scrolling offset from begin of menu list
+    void setOffset(size_t off);//!< Sets scrolling offset from begin of menu list
 
     //Position and size Rectangle
     PGE_Rect rect(); //!< Returns rectangle of menu box
@@ -116,53 +117,58 @@ public:
     void setSize(int w, int h); //!< Sets size of menu box
     void setSize(PGE_Size s);      //!< Sets size of menu box
     void setTextLenLimit(uint32_t maxlen, bool strict=false);
-    int  getMenuItemGap();
+    int getMenuItemGap();
 
     bool isKeygrabViaKey() const;
     void setKeygrabViaKey(bool value);
 
 private:
     void refreshRect();
-    PGE_Rect menuRect;
+    PGE_Rect m_menuRect;
 
     /*******Key grabbing********/
     PGE_KeyGrabMenuItem *m_item = nullptr;
-    bool is_keygrab = false;
+    bool m_is_keygrab = false;
     //This is needed, because the first inital keypress should not be prossesed.
-    bool is_keygrabViaKey = false;
+    bool m_is_keygrabViaKey = false;
     /*******Key grabbing********/
-    menuAlignment alignment;
-    int _itemsOnScreen = 5;
-    int _currentItem = 0;
-    int _line = 0;
-    int _offset = 0;
-    bool arrowUpViz = false;
-    bool arrowDownViz = false;
-    bool _EndSelection = false;
-    bool _accept = false;
-    VPtrList<PGE_BoolMenuItem >     _items_bool;
-    VPtrList<PGE_IntMenuItem >      _items_int;
-    VPtrList<PGE_NamedIntMenuItem > _items_named_int;
-    VPtrList<PGE_Menuitem >         _items_normal;
-    VPtrList<PGE_KeyGrabMenuItem >  _items_keygrabs;
+    menuAlignment m_alignment;
+    size_t m_itemsOnScreen = 5;
+    size_t m_currentItem = 0;
+    size_t m_line = 0;
+    size_t m_offset = 0;
+    bool m_arrowUpViz = false;
+    bool m_arrowDownViz = false;
+    bool m_endSelection = false;
+    bool m_accept = false;
+    VPtrList<PGE_BoolMenuItem >     m_items_bool;
+    VPtrList<PGE_IntMenuItem >      m_items_int;
+    VPtrList<PGE_NamedIntMenuItem > m_items_named_int;
+    VPtrList<PGE_Menuitem >         m_items_normal;
+    VPtrList<PGE_KeyGrabMenuItem >  m_items_keygrabs;
 
-    std::vector<PGE_Menuitem *> _items;
+    std::vector<PGE_Menuitem *>     m_items;
+
     typedef std::unordered_map<std::string, PGE_Menuitem *> MenuIndex;
-    MenuIndex _items_index;
+    MenuIndex m_items_index;
+
     bool namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     bool namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     void autoOffset();
-    PGE_Texture _selector;
-    PGE_Texture _scroll_up;
-    PGE_Texture _scroll_down;
-    int _item_height = 32;
-    int _width_limit = 100;
-    uint32_t _text_len_limit;
-    bool _text_len_limit_strict = false;
-    int menuItemGap = 0;
 
-    int _font_id = 0;
-    int _font_offset = 0;
+    PGE_Texture m_selector;
+    PGE_Texture m_scroll_up;
+    PGE_Texture m_scroll_down;
+
+    int         m_item_height = 32;
+    int         m_width_limit = 100;
+
+    uint32_t    m_text_len_limit;
+    bool        m_text_len_limit_strict = false;
+    int         m_menuItemGap = 0;
+
+    int         m_font_id = 0;
+    int         m_font_offset = 0;
 };
 
 #endif // PGE_MENU_H

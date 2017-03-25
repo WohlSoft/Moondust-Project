@@ -33,7 +33,7 @@
 
 #include <script/lua_titlescreen_engine.h>
 
-typedef std::pair<int, int> menustate;
+typedef std::pair<size_t, size_t> menustate;
 
 struct TitleScene_misc_img
 {

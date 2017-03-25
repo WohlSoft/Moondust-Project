@@ -1093,12 +1093,12 @@ int GlRenderer::makeShot_action(void *_pixels)
 
 static struct gifRecord
 {
-    GifWriter   writer;
-    SDL_Thread *worker;
-    SDL_mutex  *mutex;
-    bool        enabled;
-    unsigned char padding[7];
-} g_gif{{nullptr, nullptr, true}, 0, 0, false, {0, 0, 0, 0, 0, 0, 0}};
+    GifWriter   writer      = {nullptr, nullptr, true};
+    SDL_Thread *worker      = nullptr;
+    SDL_mutex  *mutex       = nullptr;
+    bool        enabled     = false;
+    unsigned char padding[7]= {0, 0, 0, 0, 0, 0, 0};
+} g_gif;
 
 bool GlRenderer::recordInProcess()
 {
@@ -1121,7 +1121,7 @@ void GlRenderer::toggleRecorder()
         if(GifBegin(&g_gif.writer,
                     saveTo.data(),
                     static_cast<uint32_t>(m_viewport_w),
-                    static_cast<uint32_t>(m_viewport_h), 3, 8, false))
+                    static_cast<uint32_t>(m_viewport_h), 12, 8, false))
         {
             g_gif.enabled = true;
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
@@ -1185,7 +1185,7 @@ void GlRenderer::processRecorder(double /*ticktime*/)
         GifWriteFrame(&g_gif.writer, img,
                       static_cast<uint32_t>(m_viewport_w),
                       static_cast<uint32_t>(m_viewport_h),
-                      4/*uint32_t((ticktime)/10.0)*/, 8, false);
+                      12/*uint32_t((ticktime)/10.0)*/, 8, false);
         FreeImage_Unload(shotImg);
         delete[] pixels;
         pixels = nullptr;

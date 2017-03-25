@@ -40,14 +40,14 @@ void TitleScene::processMenu()
         return;
 
     //Waiter in process
-    switch(_currentMenu)
+    switch(int(_currentMenu))
     {
     case menu_playlevel_wait:
     case menu_playbattle_wait:
     case menu_playepisode_wait:
         if(filefind_finished)
         {
-            switch(_currentMenu)
+            switch(int(_currentMenu))
             {
             case menu_playepisode_wait:
                 setMenu(menu_playepisode);
@@ -66,7 +66,6 @@ void TitleScene::processMenu()
         if(menu.isAccepted())
             menu.resetState();
         return;
-        break;
     default:
         break;
     }
@@ -79,7 +78,7 @@ void TitleScene::processMenu()
         menustates[_currentMenu].second = menu.offset();
 
         std::string value = menu.currentItem().item_key;
-        switch(_currentMenu)
+        switch(int(_currentMenu))
         {
         case menu_main:
             if(value == "game1p")
@@ -264,7 +263,7 @@ void TitleScene::processMenu()
                 menubox.setMaxMenuItems(5);
                 menubox.exec();
 
-                if(menubox.answer() >= 0)
+                if(menubox.answer() != PGE_Menu::npos)
                 {
                     PGE_MsgBox msg(this, "Your answer is:\n" + items[menubox.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1, -1),
                                    ConfigManager::setup_message_box.box_padding,
@@ -295,7 +294,7 @@ void TitleScene::processMenu()
                 hor.addMenuItems(items);
                 hor.setRejectSnd(obj_sound_role::BlockSmashed);
                 hor.exec();
-                if(hor.answer() >= 0)
+                if(hor.answer() != PGE_Menu::npos)
                 {
                     PGE_MsgBox msg(this, "Answer on so dumb question is:\n" + items[hor.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1, -1),
                                    ConfigManager::setup_message_box.box_padding,
@@ -350,7 +349,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     _currentMenu = _menu;
     menu.clear();
     menu.setTextLenLimit(22);
-    switch(_menu)
+    switch(int(_menu))
     {
     case menu_main:
         menu.setPos(300, 350);
@@ -434,9 +433,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         {
             if(!PGE_Window::vsync)
             {
-                PGE_Window::TicksPerSecond = 1000.0f / g_AppSettings.timeOfFrame;
+                PGE_Window::TicksPerSecond = 1000.0 / double(g_AppSettings.timeOfFrame);
                 PGE_Window::TimeOfFrame = g_AppSettings.timeOfFrame;
-                g_AppSettings.TicksPerSecond = 1000.0f / g_AppSettings.timeOfFrame;
+                g_AppSettings.TicksPerSecond = 1000.0 / double(g_AppSettings.timeOfFrame);
                 this->updateTickValue();
             }
             else
@@ -472,8 +471,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player1_joysticks.size())))
             {
                 if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
-                    jdev        = g_AppSettings.joysticks[*mct_p];
-                mp_p         = &g_AppSettings.player1_joysticks[*mct_p];
+                    jdev = g_AppSettings.joysticks[size_t(*mct_p)];
+                mp_p = &g_AppSettings.player1_joysticks[size_t(*mct_p)];
             }
             else
                 mp_p = &g_AppSettings.player1_keyboard;
@@ -488,8 +487,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player2_joysticks.size())))
             {
                 if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
-                    jdev        = g_AppSettings.joysticks[*mct_p];
-                mp_p = &g_AppSettings.player2_joysticks[*mct_p];
+                    jdev = g_AppSettings.joysticks[size_t(*mct_p)];
+                mp_p = &g_AppSettings.player2_joysticks[size_t(*mct_p)];
             }
             else
                 mp_p = &g_AppSettings.player2_keyboard;
@@ -505,7 +504,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         ctrls.push_back(controller);
         for(size_t i = 0; i < g_AppSettings.joysticks.size(); i++)
         {
-            controller.value = i;
+            controller.value = int(i);
             //FIXME: missing in-string arguments support
             //% "Joystick: %1"
             controller.label = qtTrId("PLAYER_CONTROLS_SETUP_JOYSTICK") + SDL_JoystickName(g_AppSettings.joysticks[i]);

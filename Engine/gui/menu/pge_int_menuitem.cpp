@@ -22,11 +22,11 @@
 
 PGE_IntMenuItem::PGE_IntMenuItem() : PGE_Menuitem()
 {
-    intvalue=NULL;
-    type=ITEM_Int;
-    min=0;
-    max=0;
-    allowRotation=false;
+    intvalue = NULL;
+    type = ITEM_Int;
+    min = 0;
+    max = 0;
+    allowRotation = false;
 }
 
 PGE_IntMenuItem::PGE_IntMenuItem(const PGE_IntMenuItem &it) : PGE_Menuitem(it)
@@ -45,8 +45,8 @@ void PGE_IntMenuItem::left()
     if(!intvalue) return;
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     (*intvalue)--;
-    if((*intvalue)<min)
-        *intvalue=allowRotation?max:min;
+    if((*intvalue) < min)
+        *intvalue = allowRotation ? max : min;
 
     extAction();
 }
@@ -56,8 +56,8 @@ void PGE_IntMenuItem::right()
     if(!intvalue) return;
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     (*intvalue)++;
-    if((*intvalue)>max)
-        *intvalue=allowRotation?min:max;
+    if((*intvalue) > max)
+        *intvalue = allowRotation ? min : max;
 
     extAction();
 }
@@ -67,5 +67,5 @@ void PGE_IntMenuItem::render(int x, int y)
     PGE_Menuitem::render(x, y);
     float colorLevel = m_enabled ? 1.0 : 0.5;
     if(intvalue)
-        FontManager::printText(std::to_string(*intvalue), x+valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
+        FontManager::printText(std::to_string(*intvalue), x + valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);
 }

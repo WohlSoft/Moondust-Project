@@ -601,7 +601,7 @@ void LevelScene::render()
 
     //Draw camera separators
     for(c = 1; c < cameras.size(); c++)
-        GlRenderer::renderRect(0, cameras[c].h() * c - 1, cameras[c].w(), 2, 0.f, 0.f, 0.f, 1.f);
+        GlRenderer::renderRect(0, float(cameras[c].h()) * c - 1, cameras[c].w(), 2, 0.f, 0.f, 0.f, 1.f);
 
     if(PGE_Window::showDebugInfo)
     {
