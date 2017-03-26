@@ -95,11 +95,13 @@ static const unsigned FLAC__CPUINFO_IA32_CPUID_SSE = 0x02000000;
 static const unsigned FLAC__CPUINFO_IA32_CPUID_SSE2 = 0x04000000;
 #endif
 
+#if !defined(FLAC__NO_ASM)
 /* these are flags in ECX of CPUID AX=00000001 */
 static const unsigned FLAC__CPUINFO_IA32_CPUID_SSE3 = 0x00000001;
 static const unsigned FLAC__CPUINFO_IA32_CPUID_SSSE3 = 0x00000200;
 static const unsigned FLAC__CPUINFO_IA32_CPUID_SSE41 = 0x00080000;
 static const unsigned FLAC__CPUINFO_IA32_CPUID_SSE42 = 0x00100000;
+#endif
 
 #if defined FLAC__AVX_SUPPORTED
 /* these are flags in ECX of CPUID AX=00000001 */
