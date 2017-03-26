@@ -40,7 +40,7 @@ include($$PWD/languages.pri)
 !macx: TARGET = pge_engine
 macx:  TARGET = "PGE Engine"
 TEMPLATE = app
-CONFIG += c++11
+CONFIG += c++14
 CONFIG += thread
 CONFIG += console
 CONFIG += static

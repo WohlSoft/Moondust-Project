@@ -12,14 +12,16 @@ then
     fi
 
     QtCacheFolder=qtcache580
-    QtTarballName=qt-5-8-0-static-ubuntu-14-04-x64.tar.bz2
+    QtTarballName=qt-5-8-0-static-ubuntu-14-04-x64-gcc6.tar.bz2
     QtStaticVersion=5.8.0_static
 
     bash _Misc/dev_scripts/generate_version_files.sh
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+    sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test;
     sudo apt-get update -qq
     # sudo DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade
-    sudo apt-get install -qq "^libxcb.*" libx11-dev libx11-xcb-dev libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev libproxy-dev ccache
+    sudo apt-get install -qq "^libxcb.*" libx11-dev libx11-xcb-dev libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev libproxy-dev ccache gcc-6 g++-6
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc=6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-6
 
     if [ ! -d /home/runner/Qt/$QtCacheFolder ]; then
         mkdir -p /home/runner/Qt/$QtCacheFolder
