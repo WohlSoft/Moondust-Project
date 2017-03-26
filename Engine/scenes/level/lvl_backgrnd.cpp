@@ -85,13 +85,12 @@ void LVL_Background::setBg(obj_BG &bg)
     isMagic = false;
     strips.clear();
 
-    switch(bgType)
+    switch((int)bgType)
     {
     case single_row:
     case tiled:
     {
         int tID = ConfigManager::getBGTexture(bg.id);
-
         if(tID >= 0)
         {
             txData1 = ConfigManager::level_textures[tID];
@@ -106,34 +105,35 @@ void LVL_Background::setBg(obj_BG &bg)
 
             if(bg.magic)
             {
-                for(int32_t i = 0; static_cast<uint32_t>(i) < bg.magic_strips; i++)
+                for(uint32_t i = 0; i < bg.magic_strips; i++)
                 {
                     LVL_Background_strip x;
 
-                    if(i - 1 <  int32_t(bg.magic_splits_i.size()))
-                        x.top = (i == 0 ? 0.0 :
-                                 (static_cast<double>(bg.magic_splits_i[i - 1])
-                                  / static_cast<double>(txData1.frame_h)));
+                    if((i > 0) && (i - 1 <  bg.magic_splits_i.size()))
+                    {
+                        x.top = (static_cast<double>(bg.magic_splits_i[i - 1])
+                                / static_cast<double>(txData1.frame_h));
+                    }
                     else
                         x.top = 0.0;
 
-                    if(i < int32_t(bg.magic_splits_i.size()))
+                    if(i < bg.magic_splits_i.size())
                         x.bottom = static_cast<double>(bg.magic_splits_i[i]) / static_cast<double>(txData1.frame_h);
                     else
                         x.bottom = 1.0;
 
                     x.height = Maths::iRound(
-                                   ((i < int32_t(bg.magic_splits_i.size())) ? bg.magic_splits_i[i] : txData1.frame_h)
+                                   ( (i < bg.magic_splits_i.size()) ? bg.magic_splits_i[i] : txData1.frame_h)
                                    - (i == 0 ? 0.0 : (bg.magic_splits_i[i - 1]))
                                );
 
-                    if(i < int32_t(bg.magic_speeds_i.size()))
+                    if(i < bg.magic_speeds_i.size())
                         x.repeat_h = bg.magic_speeds_i[i];
                     else
                         x.repeat_h = bg.repeat_h;
 
-                    if(x.repeat_h <= 0) x.repeat_h = 1;
-
+                    if(x.repeat_h <= 0)
+                        x.repeat_h = 1;
                     //                            qDebug() << "Magic " << (i==0 ? 0 : bg.magic_splits_i[i-1] )
                     //                                    << (( i <  bg.magic_splits_i.size())
                     //                                       ? bg.magic_splits_i[i]: txData1.h )

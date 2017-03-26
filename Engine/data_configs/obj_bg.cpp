@@ -82,9 +82,9 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
     setup->read("tiled-in-editor", sbg.editing_tiled, pMerge(editing_tiled, false));
     setup->read("magic", sbg.magic, pMerge(magic, false));
 
-    setup->read("magic-strips", sbg.magic_strips, pMerge(magic_strips, 1));
+    setup->read("magic-strips", sbg.magic_strips, pMerge(magic_strips, 1u));
     NumberLimiter::applyD(sbg.magic_strips, 1u, 1u);
-    setup->read("magic-splits", sbg.magic_splits_i, pMerge(magic_splits_i, std::vector<int>()));
+    setup->read("magic-splits", sbg.magic_splits_i, pMerge(magic_splits_i, std::vector<uint32_t>()));
     setup->read("magic-speeds", sbg.magic_speeds_i, pMerge(magic_speeds_i, std::vector<double>()));
 
     setup->read("animated", sbg.animated, pMerge(animated, false)); //animated

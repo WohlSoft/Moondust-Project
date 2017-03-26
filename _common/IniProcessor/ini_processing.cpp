@@ -34,6 +34,7 @@ DEALINGS IN THE SOFTWARE.
 #include <cstdlib>
 #include <clocale>
 #include <sstream>
+#include <algorithm>
 #include <assert.h>
 #ifdef _WIN32
 #include <windows.h>
@@ -957,6 +958,7 @@ template<class TList>
 inline void StrToNumVectorHelper(const std::string &source, TList &dest, const typename TList::value_type &def)
 {
     typedef typename TList::value_type T;
+    dest.clear();
 
     if(!source.empty())
     {
@@ -964,6 +966,7 @@ inline void StrToNumVectorHelper(const std::string &source, TList &dest, const t
         std::string item;
         while(std::getline(ss, item, ','))
         {
+            std::remove(item.begin(), item.end(), ' ');
             try
             {
                 if(std::is_same<T, int>::value ||

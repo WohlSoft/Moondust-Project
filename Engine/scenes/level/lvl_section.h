@@ -38,7 +38,7 @@ class LVL_Section
         LVL_Section();
         LVL_Section(const LVL_Section &_sct);
         ~LVL_Section();
-        void setData(LevelSection _d);
+        void setData(const LevelSection &_d);
         LevelSection data;
         void registerElement(PGE_Phys_Object *item);
         void unregisterElement(PGE_Phys_Object *item);

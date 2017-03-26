@@ -56,7 +56,7 @@ LVL_Section::~LVL_Section()
     tree.RemoveAll();
 }
 
-void LVL_Section::setData(LevelSection _d)
+void LVL_Section::setData(const LevelSection &_d)
 {
     data = _d;
     isInit = true;

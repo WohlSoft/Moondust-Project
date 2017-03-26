@@ -53,9 +53,9 @@ struct obj_BG
     unsigned int display_frame;
 
     bool magic;
-    unsigned int magic_strips;
+    uint32_t    magic_strips;
     std::string magic_splits;
-    std::vector<int> magic_splits_i;
+    std::vector<uint32_t> magic_splits_i;
     std::string magic_speeds;
     std::vector<double> magic_speeds_i;
 
