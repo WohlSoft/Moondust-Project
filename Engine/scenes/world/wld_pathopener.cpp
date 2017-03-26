@@ -272,6 +272,7 @@ void WldPathOpener::popProcessed()
 void WldPathOpener::initFetcher()
 {
     m_skipAnimation = false;
+    m_time = 0.0;
     std::vector<WorldNode * > lvlnodes;
     int exitCode = m_s->gameState->_recent_ExitCode_level;
     long lx, ly;
