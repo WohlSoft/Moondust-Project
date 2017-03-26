@@ -51,7 +51,7 @@ android:{
 macx:   TARGET = "PGE Editor"
 TEMPLATE = app
 
-CONFIG += c++11
+CONFIG += c++14
 
 CONFIG += static
 CONFIG += thread
@@ -80,6 +80,7 @@ win32: {
 
 linux-g++||unix:!macx:!android: {
     LIBS += -lSDL2 -lSDL2_mixer_ext
+    LIBS += -static-libgcc -static-libstdc++
 }
 android: {
     LIBS += -lSDL2 -lSDL2_mixer_ext

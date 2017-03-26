@@ -4,7 +4,7 @@ TARGET = luabind
 TEMPLATE = lib
 CONFIG += staticlib
 CONFIG -= qt
-CONFIG += c++11
+CONFIG += c++14
 
 DEFINES += _LIBLUABIND
 

@@ -34,7 +34,7 @@ include($$PWD/../_common/dest_dir.pri)
 TARGET = pge_manager
 TEMPLATE = app
 
-CONFIG += c++11
+CONFIG += c++14
 
 CONFIG += static
 CONFIG += thread
@@ -42,6 +42,7 @@ CONFIG += thread
 !macx: {
     QMAKE_CXXFLAGS += -static -static-libgcc
     QMAKE_LFLAGS   += -Wl,-rpath=\'\$\$ORIGIN\'
+    QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
 }
 
 include($$PWD/../_common/strip_garbage.pri)

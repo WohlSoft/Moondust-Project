@@ -36,7 +36,7 @@ CONFIG   -= windows
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
-CONFIG   += c++11
+CONFIG   += c++14
 
 include ($$PWD/../_common/lib_destdir.pri)
 

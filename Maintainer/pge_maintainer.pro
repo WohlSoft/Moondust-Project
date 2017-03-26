@@ -22,7 +22,7 @@
 #-------------------------------------------------
 
 QT       += core gui widgets concurrent
-CONFIG += c++11
+CONFIG += c++14
 CONFIG += thread
 
 include($$PWD/../_common/dest_dir.pri)

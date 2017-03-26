@@ -36,7 +36,7 @@ include($$PWD/../_common/build_props.pri)
 macx:  TARGET = "Character Calibrator"
 TEMPLATE = app
 CONFIG   += static
-CONFIG   += c++11
+CONFIG   += c++14
 
 macx {
     ICON = _resourses/calibrator.icns

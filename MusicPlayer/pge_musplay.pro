@@ -34,7 +34,7 @@ TARGET = pge_musplay
 include($$PWD/../_common/build_props.pri)
 macx:  TARGET = "PGE Music Player"
 
-CONFIG += c++11
+CONFIG += c++14
 CONFIG += thread
 
 win32:{
