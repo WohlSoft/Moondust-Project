@@ -93,13 +93,15 @@ class WorldScene : public Scene
         WorldMapSetup   common_setup;
         WorldData       data;
 
-        bool     worldIsContinues;
-        bool     lock_controls;
+        bool        worldIsContinues;
+        bool        lock_controls;
 
-        PGE_Rect viewportRect;
+        PGE_Rect    viewportRect;
 
-        int     exitWorldDelay;
-        int     exitWorldCode;
+        PGE_Fader   m_viewportFader;
+
+        int         exitWorldDelay;
+        int         exitWorldCode;
 
         int                         numOfPlayers;
         std::vector<PlayerState >   players;

@@ -672,6 +672,7 @@ void WorldScene::update()
 {
     tickAnimations(uTickf);
     Scene::update();
+    m_viewportFader.tickFader(uTickf);
     updateLua();
 
     if(m_doExit)
@@ -684,7 +685,8 @@ void WorldScene::update()
         }
         else
         {
-            if(m_fader.isNull()) m_fader.setFade(10, 1.0, 0.01);
+            if(m_fader.isNull())
+                m_fader.setFade(10, 1.0, 0.01);
 
             if(m_fader.isFull())
             {
@@ -867,24 +869,30 @@ void WorldScene::update()
                 gameState->_recent_ExitCode_level = LvlExit::EXIT_Warp;
                 //Create events
                 EventQueueEntry<WorldScene >event1;
-                event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
+                event1.makeWaiterCond([this]()->bool
+                {
+                    return m_viewportFader.isFading();
+                }, true, 100);
                 wld_events.events.push_back(event1);
+
                 EventQueueEntry<WorldScene >event2;
                 event2.makeCallerT(this, &WorldScene::jump, 100);
                 wld_events.events.push_back(event2);
+
                 EventQueueEntry<WorldScene >event3;
                 event3.makeCaller([this]()->void
                 {
-                    this->m_fader.setFade(10, 0.0, 0.05);
+                    m_viewportFader.setFade(10, 0.0, 0.05);
                     this->lock_controls = false;
                     //Open new paths if possible
                     this->pathOpener.startAt(PGE_PointF(this->posX, this->posY));
                     this->pathOpeningInProcess = true;
                 }, 0);
                 wld_events.events.push_back(event3);
+
                 this->lock_controls = true;
                 PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                m_fader.setFade(10, 1.0, 0.05);
+                m_viewportFader.setFade(10, 1.0, 0.03);
             }
         }
     }
@@ -1237,6 +1245,16 @@ void WorldScene::render()
 
         if(pathOpeningInProcess && PGE_Window::showPhysicsDebug)
             pathOpener.debugRender(renderX, renderY);
+
+        if(!m_viewportFader.isNull())
+        {
+            GlRenderer::renderRect(0.f,
+                                   0.f,
+                                   static_cast<float>(viewportRect.width()),
+                                   static_cast<float>(viewportRect.height()),
+                                   0.f, 0.f, 0.f,
+                                   static_cast<float>(m_viewportFader.fadeRatio()));
+        }
 
         //Restore viewport
         GlRenderer::resetViewport();
