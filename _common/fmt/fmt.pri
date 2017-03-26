@@ -15,7 +15,8 @@ HEADERS += \
     $$PWD/fmt_posix.h \
     $$PWD/fmt_printf.h \
     $$PWD/fmt_string.h \
-    $$PWD/fmt_time.h
+    $$PWD/fmt_time.h \
+    $$PWD/fmt_qformat.h
 
 SOURCES += \
     $$PWD/fmt_format.cpp \

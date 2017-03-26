@@ -218,8 +218,9 @@ skipSpcMusic:
 
         if(musicset.lastError() != IniProcessing::ERR_OK)
         {
-            addError(fmt::format("ERROR LOADING music.ini N:{0} (special music {1})", musicset.lineWithError(), i));
-            PGE_MsgBox::error(fmt::format("ERROR LOADING music.ini N:%1 (special music %2)", musicset.lineWithError(), i));
+            std::string msg = fmt::format("ERROR LOADING music.ini N:{0} (special music {1})", musicset.lineWithError(), i);
+            addError(msg);
+            PGE_MsgBox::error(msg);
             break;
         }
     }

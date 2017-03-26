@@ -609,9 +609,9 @@ void LevelScene::render()
         int dpos = 60;
         FontManager::printText(fmt::format("Player J={0} G={1} F={2}; TICK-SUB: {3}\n"
                                        "NPC's: {4}, Active {5}; BLOCKS: {6}",
-                                        debug_player_jumping,
-                                        debug_player_onground,
-                                        debug_player_foots,
+                                        int(debug_player_jumping),
+                                        int(debug_player_onground),
+                                        int(debug_player_foots),
                                         uTickf,
                                         npcs.size(),
                                         active_npcs.size(),
@@ -619,12 +619,12 @@ void LevelScene::render()
         dpos += 35;
         FontManager::printText(fmt::format("Vizible objects: {0}", !cameras.empty() ? cameras[0].renderObjects_count() : 0), 10, dpos);
         dpos += 35;
-        FontManager::printText(fmt::format("Delays E=%03d R=%03d P=%03d",
+        FontManager::printText(fmt::format("Delays E={0} R={1} P={2}",
                                             debug_event_delay,
                                             debug_render_delay,
                                             debug_phys_delay), 10, dpos);
         dpos += 35;
-        FontManager::printText(fmt::format("Time Real:%010d\nTime Loop:%010d",
+        FontManager::printText(fmt::format("Time Real:{0}\nTime Loop:{1}",
                                             debug_TimeReal.elapsed(),
                                             debug_TimeCounted), 10, dpos);
         dpos += 35;

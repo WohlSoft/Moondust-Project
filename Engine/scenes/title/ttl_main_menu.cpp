@@ -18,6 +18,7 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <fmt/fmt_qformat.h>
 
 #include <common_features/logger.h>
 #include <common_features/tr.h>
@@ -507,7 +508,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             controller.value = int(i);
             //FIXME: missing in-string arguments support
             //% "Joystick: %1"
-            controller.label = qtTrId("PLAYER_CONTROLS_SETUP_JOYSTICK") + SDL_JoystickName(g_AppSettings.joysticks[i]);
+            controller.label = fmt::qformat(qtTrId("PLAYER_CONTROLS_SETUP_JOYSTICK"), SDL_JoystickName(g_AppSettings.joysticks[i]));
             ctrls.push_back(controller);
         }
         //% "Input:"

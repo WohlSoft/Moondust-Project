@@ -30,6 +30,7 @@
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
 #include <fmt/fmt_format.h>
+#include <fmt/fmt_qformat.h>
 
 #include <gui/pge_msgbox.h>
 #include <gui/pge_textinputbox.h>
@@ -405,7 +406,7 @@ PlayWorldMap:
             if(!sceneResult)
             {
                 //% "ERROR:\nFail to start world map\n\n%1"
-                PGE_MsgBox::error(qtTrId("ERROR_FAIL_START_WLD") /*.arg(wScene->getLastError())*/ );
+                PGE_MsgBox::error( fmt::qformat(qtTrId("ERROR_FAIL_START_WLD"), wScene->getLastError()) );
                 ExitCode = WldExit::EXIT_error;
             }
         }
@@ -423,7 +424,7 @@ PlayWorldMap:
         {
             ExitCode = WldExit::EXIT_error;
             //% "World map was closed with error.\n%1"
-            PGE_MsgBox::error( qtTrId("WLD_ERROR_LVLCLOSED") /*.arg(wScene->errorString())*/ );
+            PGE_MsgBox::error( fmt::qformat(qtTrId("WLD_ERROR_LVLCLOSED"), wScene->errorString()) );
         }
 
         g_GameState._recent_ExitCode_world = ExitCode;
@@ -440,7 +441,7 @@ PlayWorldMap:
             {
                 std::string msg;
                 //% "Start level\n%1"
-                msg += qtTrId("MSG_START_LEVEL") /*.arg(g_GameState.LevelFile)*/ + "\n\n";
+                msg += fmt::qformat(qtTrId("MSG_START_LEVEL"), g_GameState.LevelFile) + "\n\n";
                 //% "Type an exit code (signed integer)"
                 msg += qtTrId("MSG_WLDTEST_EXIT_CODE");
                 PGE_TextInputBox text(nullptr, msg, PGE_BoxBase::msg_info_light,
@@ -671,7 +672,7 @@ PlayLevel:
                 g_jumpOnLevelEndTo = (g_GameState.isEpisode) ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 playAgain = false;
                 //% "Level was closed with error.\n%1"
-                PGE_MsgBox::error(qtTrId("LVL_ERROR_LVLCLOSED") /*.arg(lScene->errorString())*/ );
+                PGE_MsgBox::error( fmt::qformat(qtTrId("LVL_ERROR_LVLCLOSED"), lScene->errorString()) );
             }
             break;
 
