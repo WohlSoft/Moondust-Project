@@ -274,7 +274,7 @@ void WldPathOpener::initFetcher()
     m_skipAnimation = false;
     m_time = 0.0;
     std::vector<WorldNode * > lvlnodes;
-    int exitCode = m_s->gameState->_recent_ExitCode_level;
+    int exitCode = m_s->m_gameState->_recent_ExitCode_level;
     long lx, ly;
     lx = Maths::lRound(_current_pos.x() + m_s->m_indexTable.grid_half());
     ly = Maths::lRound(_current_pos.y() + m_s->m_indexTable.grid_half());

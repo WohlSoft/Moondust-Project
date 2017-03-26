@@ -61,12 +61,12 @@ class WorldNode
         bool vizible;
 };
 
-class WldTileItem: public WorldNode
+class WldTerrainItem: public WorldNode
 {
     public:
-        WldTileItem(const WorldTerrainTile &_data);
-        WldTileItem(const WldTileItem &x);
-        ~WldTileItem();
+        WldTerrainItem(const WorldTerrainTile &_data);
+        WldTerrainItem(const WldTerrainItem &x);
+        ~WldTerrainItem();
         bool init();
         void render(double rx, double ry);
         obj_w_tile setup;

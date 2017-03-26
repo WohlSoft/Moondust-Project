@@ -460,9 +460,9 @@ void PGE_TextInputBox::updateControllers()
             {
                 s->tickAnimations(m_uTickf);
                 s->m_fader.tickFader(m_uTickf);
-                s->player1Controller->update();
-                s->player1Controller->sendControls();
-                keys = s->player1Controller->keys;
+                s->m_player1Controller->update();
+                s->m_player1Controller->sendControls();
+                keys = s->m_player1Controller->keys;
             }
         }
     }

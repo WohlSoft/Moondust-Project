@@ -552,7 +552,7 @@ void PGE_MenuBoxBase::initControllers()
 
             if(s)
             {
-                _ctrl1 = s->player1Controller;
+                _ctrl1 = s->m_player1Controller;
                 _ctrl2 = nullptr;
             }
         }

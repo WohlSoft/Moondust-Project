@@ -93,7 +93,7 @@ bool WorldNode::collideWith(WorldNode *it)
 
 
 
-WldTileItem::WldTileItem(const WorldTerrainTile &_data): WorldNode()
+WldTerrainItem::WldTerrainItem(const WorldTerrainTile &_data): WorldNode()
 {
     data = _data;
     x = data.x;
@@ -102,17 +102,17 @@ WldTileItem::WldTileItem(const WorldTerrainTile &_data): WorldNode()
     type = tile;
 }
 
-WldTileItem::WldTileItem(const WldTileItem &x): WorldNode(x)
+WldTerrainItem::WldTerrainItem(const WldTerrainItem &x): WorldNode(x)
 {
     data = x.data;
     type = tile;
     setup = x.setup;
 }
 
-WldTileItem::~WldTileItem()
+WldTerrainItem::~WldTerrainItem()
 {}
 
-bool WldTileItem::init()
+bool WldTerrainItem::init()
 {
     r = 1.f;
     g = 1.f;
@@ -134,7 +134,7 @@ bool WldTileItem::init()
     return true;
 }
 
-void WldTileItem::render(double rx, double ry)
+void WldTerrainItem::render(double rx, double ry)
 {
     AniPos a(0, 1);
 

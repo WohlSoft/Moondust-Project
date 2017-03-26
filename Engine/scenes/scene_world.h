@@ -80,34 +80,34 @@ class WorldScene : public Scene
         void setGameState(EpisodeState *_state);
 
     private:
-        bool isInit;
+        bool            m_isInit;
 
-        Controller     *player1Controller;
-        controller_keys controls_1;
+        Controller     *m_player1Controller;
+        controller_keys m_controls_1;
 
-        bool frameSkip;
+        bool            m_frameSkip;
 
-        EpisodeState   *gameState;
-        std::string     errorMsg;
+        EpisodeState   *m_gameState;
+        std::string     m_errorMsg;
 
-        WorldMapSetup   common_setup;
-        WorldData       data;
+        WorldMapSetup   m_commonSetup;
+        WorldData       m_data;
 
-        bool        worldIsContinues;
-        bool        lock_controls;
+        bool            m_worldIsContinues;
+        bool            m_lockControls;
 
-        PGE_Rect    viewportRect;
+        PGE_Rect        m_viewportRect;
+        PGE_Fader       m_viewportFader;
+        PointMover      m_viewportCameraMover;
 
-        PGE_Fader   m_viewportFader;
+        int             m_exitWorldDelay;
+        int             m_exitWorldCode;
 
-        int         exitWorldDelay;
-        int         exitWorldCode;
+        int                         m_numOfPlayers;
+        std::vector<PlayerState >   m_players;
 
-        int                         numOfPlayers;
-        std::vector<PlayerState >   players;
-
-        PGE_Texture                 backgroundTex;
-        std::vector<PGE_Texture >   textures_bank;
+        PGE_Texture                 m_backgroundTexture;
+        std::vector<PGE_Texture >   m_texturesBank;
 
         enum WalkDirections
         {
@@ -117,68 +117,84 @@ class WorldScene : public Scene
             Walk_Up,
             Walk_Down
         };
-        double  posX;
-        double  posY;
-        PointMover cameraMover;
-        int     walk_direction;
-        double  move_speed;//!< Calculated movement step dependent to physical step
-        double  move_steps_count;//!< Speps counterm, used to correct inter-cell position
+        struct MapWalker
+        {
+            //! X Position of the playable character
+            double          posX;
+            //! Y Position of the playable character
+            double          posY;
+            //! Walk direction of the playable character
+            int             walkDirection;
+            //! Calculated movement step dependent to physical step
+            double          moveSpeed;
+            //! Speps counterm, used to correct inter-cell position
+            double          moveStepsCount;
+            //! Playable character setup
+            obj_player      setup;
+            //! Texture of the map walker playable character
+            PGE_Texture     texture;
+            //! Height of using image
+            double          img_h;
+            //! Simple animator
+            SimpleAnimator  ani;
+            double          offsetX;
+            double          offsetY;
+            void            refreshDirection();
+        } m_mapWalker;
+
         void    doMoveStep(double &posVal);
         void    setDir(int dr);
 
-        obj_player     mapwalker_setup;
-        PGE_Texture    mapwalker_texture;
-        float          mapwalker_img_h;
-        SimpleAnimator mapwalker_ani;
-        int            mapwalker_offset_x;
-        int            mapwalker_offset_y;
-        void           mapwalker_refreshDirection();
+        void        playMusic(unsigned long musicID, std::string customMusicFile, bool fade = false, int fadeLen = 300);
+        void        stopMusic(bool fade = false, int fadeLen = 300);
+        bool        m_playStopSnd;
+        bool        m_playDenySnd;
 
-
-        void    playMusic(unsigned long musicID, std::string customMusicFile, bool fade = false, int fadeLen = 300);
-        void    stopMusic(bool fade = false, int fadeLen = 300);
-        bool    _playStopSnd;
-        bool    _playDenySnd;
-
-        std::string currentMusicFile;
+        std::string m_currentMusicFile;
 
         void       jump();
-        bool       jumpTo;
-        PGE_PointF jumpToXY;
+        bool       m_jumpTo;
+        PGE_PointF m_jumpToXY;
 
         /************Printable stuff****************/
-        long    health;
-        long    lives;
-        long    stars;
-        long    points;
-        long    coins;
-        std::string levelTitle;
+        struct Counters
+        {
+            long        health = 0;
+            long        lives = 0;
+            uint32_t    stars = 0;
+            long        points = 0;
+            long        coins = 0;
+        } m_counters;
+
+        std::string m_levelTitle;
         /*******************************************/
-        bool    allow_left;
-        bool    allow_up;
-        bool    allow_right;
-        bool    allow_down;
-        void    updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
-        void    updateCenter();
+        bool    m_allowedLeft   = false;
+        bool    m_allowedUp     = false;
+        bool    m_allowedRight  = false;
+        bool    m_allowedDown   = false;
+
+        void        updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
+        void        updateCenter();
+
         static void fetchSideNodes(bool &side, std::vector<WorldNode *> &nodes, long cx, long cy);
-        void    initElementsVisibility();
-        void    saveElementsVisibility();
+        void        initElementsVisibility();
+        void        saveElementsVisibility();
 
-        bool    pathOpeningInProcess;
-        WldPathOpener pathOpener;
+        bool            m_pathOpeningInProcess = false;
+        WldPathOpener   m_pathOpener;
 
-        std::vector<WorldScene_misc_img > imgs;
-        std::vector<WorldScene_Portrait > portraits;
+        std::vector<WorldScene_misc_img > m_imgs;
+        std::vector<WorldScene_Portrait > m_portraits;
 
-        TileBox m_indexTable;
-        VPtrList<WldTileItem >          wld_tiles;
-        VPtrList<WldSceneryItem >       wld_sceneries;
-        VPtrList<WldPathItem >          wld_paths;
-        VPtrList<WldLevelItem >         wld_levels;
-        VPtrList<WldMusicBoxItem >      wld_musicboxes;
-        EventQueue<WorldScene >         wld_events;
+        TileBox                         m_indexTable;
+        VPtrList<WldTerrainItem >       m_itemsTerrain;
+        VPtrList<WldSceneryItem >       m_itemsSceneries;
+        VPtrList<WldPathItem >          m_itemsPaths;
+        VPtrList<WldLevelItem >         m_itemsLevels;
+        VPtrList<WldMusicBoxItem >      m_itemsMusicBoxes;
+        EventQueue<WorldScene >         m_events;
 
-        std::vector<WorldNode*>         _itemsToRender;
+        std::vector<WorldNode*>         m_itemsToRender;
 
 
         /*****************Pause Menu*******************/
@@ -194,12 +210,16 @@ class WorldScene : public Scene
             PAUSE_2_Continue = 0,
             PAUSE_2_Exit
         };
-        int         _pauseMenuID;
-        bool        isPauseMenu;
-        PGE_MenuBox _pauseMenu;
-        bool        _pauseMenu_opened;
-        void initPauseMenu1();
-        void initPauseMenu2();
+        struct PauseMenu
+        {
+            int         menuId = 0;
+            bool        isShown = false;
+            PGE_MenuBox menu;
+            bool        isOpened = false;
+            void initPauseMenu1(WorldScene *parent);
+            void initPauseMenu2(WorldScene *parent);
+        } m_pauseMenu;
+
         void processPauseMenu();
         /*****************Pause Menu**end**************/
 
