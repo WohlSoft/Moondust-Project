@@ -103,22 +103,22 @@ void LVL_ModeSquare::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     else
         s->setLabelBoxItem(false);
 
-        if(s->m_cursorItemImg && s->m_cursorItemImg->isVisible())
-        {
-            QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->m_cursorItemImg);
-            QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
-                                   LvlPlacingItems::gridSz,
-                                   LvlPlacingItems::gridOffset);
+    if(s->m_cursorItemImg && s->m_cursorItemImg->isVisible())
+    {
+        QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->m_cursorItemImg);
+        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
+                               LvlPlacingItems::gridSz,
+                               LvlPlacingItems::gridOffset);
 
-            QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+        QSize hs = QSize( (int)fabs(drawStartPos.x() - hw.x()),  (int)fabs( drawStartPos.y() - hw.y() ) );
 
 
-            cur->setRect(0,0, hs.width(), hs.height());
-            cur->setPos(
-                        ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
-                        ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
-                        );
-        }
+        cur->setRect(0,0, hs.width(), hs.height());
+        cur->setPos(
+                    ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
+                    ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
+                    );
+    }
 
 }
 
@@ -133,7 +133,7 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     {
         QGraphicsRectItem * cur = dynamic_cast<QGraphicsRectItem *>(s->m_cursorItemImg);
         // /////////// Don't draw with zero width or height //////////////
-        if( (cur->rect().width()==0) || (cur->rect().height()==0) )
+        if( (cur->rect().width() == 0.0) || (cur->rect().height() == 0.0) )
         {
             s->m_cursorItemImg->hide();
             dontCallEvent = true;
@@ -144,7 +144,7 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         if(((s->m_placingItemType==LvlScene::PLC_Block)&&(!LvlPlacingItems::sizableBlock))||
                 (s->m_placingItemType==LvlScene::PLC_BGO))
         {
-            item_rectangles::drawMatrix(s, QRect (cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
+            item_rectangles::drawMatrix(s, QRect(cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
                                            QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH) );
         }
 

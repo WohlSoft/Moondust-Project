@@ -368,7 +368,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             }
         }
 
-        foreach(obj_block* x, s->m_customBlocks)
+        for(obj_block* x : s->m_customBlocks)
         {
             foreach(LevelBlock y, box->LvlData.blocks)
             {
@@ -423,9 +423,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
         }
 
-        foreach(obj_bgo* x, s->m_customBGOs)
+        for(obj_bgo* x : s->m_customBGOs)
         {
-            foreach(LevelBGO y, box->LvlData.bgo)
+            for(LevelBGO y : box->LvlData.bgo)
             {
                 if(y.id == x->setup.id)
                 {
@@ -455,12 +455,12 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
 
 
-        foreach(obj_npc *x, s->m_customNPCs)
+        for(obj_npc *x : s->m_customNPCs)
         {
             QList<unsigned long > usedIDs;
 
             //Used in level
-            foreach(LevelNPC y, box->LvlData.npc)
+            for(LevelNPC y : box->LvlData.npc)
             {
                 if(y.id==x->setup.id)
                 {
@@ -470,7 +470,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             }
 
             //Used in NPC containers
-            foreach(LevelNPC y, box->LvlData.npc)
+            for(LevelNPC y : box->LvlData.npc)
             {
                 bool found=false;
                 foreach(unsigned long z, npcContainers)
@@ -489,7 +489,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             }
 
             //included into blocks
-            foreach(LevelBlock y, box->LvlData.blocks)
+            for(LevelBlock y : box->LvlData.blocks)
             {
                 if((y.npc_id>0) && ((unsigned long)y.npc_id == x->setup.id))
                 {
@@ -498,12 +498,12 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                 }
             }
 
-            foreach(unsigned long npcID, usedIDs)
+            for(unsigned long &npcID : usedIDs)
             {
                 QString image;
                 QString mask;
                 QString textConfig;
-                if( (npcID>0) && configs.main_npc.contains(npcID) )
+                if( (npcID > 0) && configs.main_npc.contains(npcID) )
                 {
                     image = levelCustomDirectory + "/" + x->setup.image_n;
                     mask = levelCustomDirectory + "/" + x->setup.mask_n;
@@ -527,15 +527,16 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                     if(filesForRemove[i].toLower()==textConfig.toLower())
                     {filesForRemove.removeAt(i); i--;textRemoved=true;}
                 }
-                break;
+                //break;
             }
         }
 
         if(filesForRemove.isEmpty())
         {
-            QMessageBox::information(this, "No unused fules",
-                                     "This level haven't unused custom data",
-                                     QMessageBox::Ok );
+            QMessageBox::information(this,
+                                     "No unused files",
+                                     "This level has no unused custom data.",
+                                     QMessageBox::Ok);
             return;
         }
 
@@ -546,10 +547,11 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
          *  Here add dialog with QListWidget where user will check/uncheck data for removing
         */
 
-        if(QMessageBox::question(this, "Files to remove",
-                                 "Found "+QString::number(filesForRemove.size())+" unused files"
-                                 "\n\nDo you wanna remove them?",
-                              QMessageBox::Yes, QMessageBox::No ) != QMessageBox::Yes )
+        if(QMessageBox::question(this,
+                                 "Files to remove",
+                                 QString("Found %1 unused files"
+                                 "\n\nDo you wanna remove them?").arg(filesForRemove.size()),
+                                 QMessageBox::Yes, QMessageBox::No ) != QMessageBox::Yes )
             return;
 
 
@@ -557,17 +559,18 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         if(!unused_dir.exists()) unused_dir.mkdir(levelCustomDirectory+"/_unused");
 
         //Remove selected
-        foreach(QString f, filesForRemove)
-        {\
+        for(QString &f : filesForRemove)
+        {
             QFile x(f);
             if(x.exists())
             {
-                x.copy(f, levelCustomDirectory+"/_unused/"+QFileInfo(f).fileName());
+                x.copy(f, levelCustomDirectory + "/_unused/" + QFileInfo(f).fileName());
                 x.remove();
             }
         }
 
-        QMessageBox::information(this, "Unused files removed",
+        QMessageBox::information(this,
+                                 "Unused files removed",
                                  "All unused files successfully removed from custom directory!",
                                  QMessageBox::Ok );
     }
