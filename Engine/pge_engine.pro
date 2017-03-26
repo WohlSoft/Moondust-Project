@@ -136,6 +136,7 @@ include($$PWD/../_common/PgeGameSave/pge_gamesave.pri)
 include($$PWD/../_common/ConfigPackManager/PGE_ConfigPackManager.pri)
 include($$PWD/../_common/Utils/Utils.pri)
 include($$PWD/../_common/Utils/UtilsSDL.pri)
+include($$PWD/../_common/Utils/openUrl.pri)
 macx:{
     include($$PWD/common_features/apple/apple_extras.pri)
 }

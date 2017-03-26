@@ -6,10 +6,10 @@ HEADERS += \
     $$PWD/files.h \
     $$PWD/strings.h \
     $$PWD/elapsed_timer.h \
-    $$PWD/vptrlist.h
+    $$PWD/vptrlist.h \
 
 SOURCES += \
     $$PWD/maths.cpp \
     $$PWD/files.cpp \
     $$PWD/strings.cpp \
-    $$PWD/elapsed_timer.cpp
+    $$PWD/elapsed_timer.cpp \

@@ -28,6 +28,7 @@
 #include <settings/global_settings.h>
 
 #include <Utils/files.h>
+#include <Utils/open_url.h>
 #include <DirManager/dirman.h>
 #include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
@@ -251,16 +252,16 @@ void ConfigSelectScene::onMouseMoved(SDL_MouseMotionEvent &mmevent)
 
 void ConfigSelectScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 {
-    if(m_doExit) return;
+    if(m_doExit)
+        return;
 
     switch(mbevent.button)
     {
     case SDL_BUTTON_LEFT:
         mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
         menu.setMouseClickPos(mousePos.x(), mousePos.y());
-    //  FIXME: Implement own URL opener class!
-    //        if(m_waterMarkRect.collidePoint(mousePos.x(), mousePos.y()))
-    //            QDesktopServices::openUrl(QUrl("http://wohlsoft.ru/PGE"));
+        if(m_waterMarkRect.collidePoint(mousePos.x(), mousePos.y()))
+            Utils::openUrl("http://wohlsoft.ru/PGE");
         break;
 
     case SDL_BUTTON_RIGHT:

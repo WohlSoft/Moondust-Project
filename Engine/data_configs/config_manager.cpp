@@ -28,6 +28,7 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <Utils/open_url.h>
 #include <fmt/fmt_format.h>
 #include <algorithm>
 
@@ -159,8 +160,7 @@ bool ConfigManager::loadBasics()
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                      title.c_str(), msg.c_str(),
                                      PGE_Window::window);
-            // FIXME: Implement the own crossplatform URL opener module
-            //QDesktopServices::openUrl(QUrl(QString::fromStdString(url)));
+            Utils::openUrl(url);
         }
 
         if(appDir)
