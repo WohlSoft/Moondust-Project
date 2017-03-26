@@ -47,7 +47,19 @@ std::string qformat(CStringRef format_str, const Args & ... args)
             break;
     }
 
-    return format(fmt, std::forward<const Args&>(args)...);
+    std::string out;
+    try
+    {
+        out = format(fmt, std::forward<const Args&>(args)...);
+    }
+    catch(FormatError e)
+    {
+        out.append(e.what());
+        out.append(" [");
+        out.append(fmt);
+        out.push_back(']');
+    }
+    return out;
 }
 
 }

@@ -613,7 +613,7 @@ PlayLevel:
                     if(!target.empty())
                     {
                         //% "Warp exit\n\nExit into:\n%1\n\nEntrance point: %2"
-                        PGE_MsgBox::warn( qtTrId("LVL_EXIT_WARP_INFO") /*.arg(target) .arg(entranceID)*/ );
+                        PGE_MsgBox::warn( fmt::qformat(qtTrId("LVL_EXIT_WARP_INFO"), target, entranceID) );
                     }
 
                     playAgain = false;
