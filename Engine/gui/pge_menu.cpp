@@ -466,43 +466,43 @@ void PGE_Menu::sort()
         return;
     }
 
-    std::vector<size_t> beg;
-    std::vector<size_t> end;
+    std::vector<ssize_t> beg;
+    std::vector<ssize_t> end;
     beg.reserve(m_items.size());
     end.reserve(m_items.size());
     PGE_Menuitem *piv;
-    size_t i = 0;
-    size_t L, R, swapv;
+    ssize_t i = 0;
+    ssize_t L, R, swapv;
     beg.push_back(0);
-    end.push_back(m_items.size());
+    end.push_back(ssize_t(m_items.size()));
     bool run = true;
     while(run)
     {
-        L = beg[i];
-        R = end[i] - 1;
+        L = beg[size_t(i)];
+        R = end[size_t(i)] - 1;
         if(L < R)
         {
-            piv = m_items[L];
+            piv = m_items[size_t(L)];
             while(L < R)
             {
-                while((namefileMoreThan(m_items[R], piv)) && (L < R)) R--;
-                if(L < R) m_items[L++] = m_items[R];
+                while((namefileMoreThan(m_items[size_t(R)], piv)) && (L < R)) R--;
+                if(L < R) m_items[size_t(L++)] = m_items[size_t(R)];
 
-                while((namefileLessThan(m_items[L], piv)) && (L < R)) L++;
-                if(L < R) m_items[R--] = m_items[L];
+                while((namefileLessThan(m_items[size_t(L)], piv)) && (L < R)) L++;
+                if(L < R) m_items[size_t(R--)] = m_items[size_t(L)];
             }
-            m_items[L] = piv;
+            m_items[size_t(L)] = piv;
             beg.push_back(L + 1);
-            end.push_back(end[i]);
-            end[i++] = (L);
-            if((end[i] - beg[i]) > (end[i - 1] - beg[i - 1]))
+            end.push_back(end[size_t(i)]);
+            end[size_t(i++)] = (L);
+            if((end[size_t(i)] - beg[size_t(i)]) > (end[size_t(i - 1)] - beg[size_t(i - 1)]))
             {
-                swapv = beg[i];
-                beg[i] = beg[i - 1];
-                beg[i - 1] = swapv;
-                swapv = end[i];
-                end[i] = end[i - 1];
-                end[i - 1] = swapv;
+                swapv = beg[size_t(i)];
+                beg[size_t(i)] = beg[size_t(i - 1)];
+                beg[size_t(i - 1)] = swapv;
+                swapv = end[size_t(i)];
+                end[size_t(i)] = end[size_t(i - 1)];
+                end[size_t(i - 1)] = swapv;
             }
         }
         else
