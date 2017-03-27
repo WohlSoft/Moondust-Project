@@ -25,21 +25,39 @@
 #include <cmath>
 #include <assert.h>
 
+//#define USE_OS_SPECIFIC_RANDS
+
+#ifdef USE_OS_SPECIFIC_RANDS
 #ifdef _WIN32
 #include <windows.h>    //BOOL, LONG, etc.
 #include <wincrypt.h>   //CryptGenRandom
+#include <random>
 #else
 #include <stdio.h>
+#endif
+#else
+#include <chrono>
+#include <random>
 #endif
 
 template<typename T>
 static T osRandom()
 {
+    #ifndef USE_OS_SPECIFIC_RANDS
+    auto t = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    //std::mt19937_64 e;
+    std::default_random_engine e;
+    e.seed(static_cast<T>(t)); //Seed engine with timed value.
+    return e();
+    #else
     T dst = 0;
     #ifdef _WIN32
     HCRYPTPROV hCryptProv = 0;
+    if(!CryptAcquireContextW(&hCryptProv, NULL, NULL, PROV_RSA_FULL, 0))
+        return static_cast<T>(std::rand());
     BOOL res =  CryptGenRandom(hCryptProv, sizeof(T), reinterpret_cast<BYTE*>(&dst));
     assert(res != 0);
+
     #else
     FILE *d = fopen("/dev/urandom", "rb");
     assert(d);
@@ -47,6 +65,7 @@ static T osRandom()
     fclose(d);
     #endif
     return dst;
+    #endif
 }
 
 int8_t Maths::rand()
