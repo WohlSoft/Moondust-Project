@@ -38,6 +38,8 @@ namespace Maths
     uint32_t urand32();
     int64_t  rand64();
     uint64_t urand64();
+    float    frand();
+    double   drand();
 
     long    roundTo(long src, long grid);
     double  roundTo(double src, double grid);

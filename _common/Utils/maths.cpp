@@ -25,106 +25,67 @@
 #include <cmath>
 #include <assert.h>
 
-//#define USE_OS_SPECIFIC_RANDS
-
-#ifdef USE_OS_SPECIFIC_RANDS
-#ifdef _WIN32
-#include <windows.h>    //BOOL, LONG, etc.
-#include <wincrypt.h>   //CryptGenRandom
-#include <random>
-#else
-#include <random>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <fcntl.h>
-#endif
-#else
 #include <chrono>
 #include <random>
-#endif
 
-template<typename T>
-static T osRandom()
+static double osRandom()
 {
-    #ifndef USE_OS_SPECIFIC_RANDS
     auto t = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-    //std::mt19937_64 e;
-    std::default_random_engine e;
-    e.seed(static_cast<T>(t)); //Seed engine with timed value.
-    return e();
-    #else
-    T dst = 0;
-    #ifdef _WIN32
-    HCRYPTPROV hCryptProv = 0;
-    if(!CryptAcquireContextW(&hCryptProv, NULL, NULL, PROV_RSA_FULL, 0))
-        return static_cast<T>(std::rand());
-    BOOL res =  CryptGenRandom(hCryptProv, sizeof(T), reinterpret_cast<BYTE*>(&dst));
-    assert(res != 0);
-
-    #else
-    {
-        int d = open("/dev/urandom", O_RDONLY);
-        char *randBuf = reinterpret_cast<char*>(&dst);
-        size_t reslen = 0;
-        while(reslen < sizeof(T))
-        {
-            ssize_t result = read(d, randBuf + reslen, sizeof(T) - reslen);
-            if (result < 0)
-            {
-                close(d);
-                return static_cast<T>(std::rand());
-            }
-            reslen += result;
-        }
-        close(d);
-    }
-    #endif
-    return dst;
-    #endif
+    std::default_random_engine e;//Seed engine with timed value.
+    e.seed(static_cast<std::default_random_engine::result_type>(t));
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    return distribution(e);
 }
 
 int8_t Maths::rand()
 {
-    return osRandom<int8_t>();
+    return static_cast<int8_t>(((osRandom() * 2.0) - 1.0) * INT8_MAX);
 }
 
 uint8_t Maths::urand8()
 {
-    return osRandom<uint8_t>();
+    return static_cast<uint8_t>(osRandom() * UINT8_MAX);
 }
 
 int16_t Maths::rand16()
 {
-    return osRandom<int16_t>();
+    return static_cast<int16_t>(((osRandom() * 2.0) - 1.0) * INT16_MAX);
 }
 
 uint16_t Maths::urand16()
 {
-    return osRandom<uint16_t>();
+    return static_cast<uint16_t>(osRandom() * UINT16_MAX);
 }
 
 int32_t Maths::rand32()
 {
-    return osRandom<int32_t>();
+    return static_cast<int32_t>(((osRandom() * 2.0) - 1.0) * INT32_MAX);
 }
 
 uint32_t Maths::urand32()
 {
-    return osRandom<uint32_t>();
+    return static_cast<uint32_t>(osRandom() * UINT32_MAX);
 }
 
 int64_t Maths::rand64()
 {
-    return osRandom<int64_t>();
+    return static_cast<int64_t>(((osRandom() * 2.0) - 1.0) * INT64_MAX);
 }
 
 uint64_t Maths::urand64()
 {
-    return osRandom<uint64_t>();
+    return static_cast<uint64_t>(osRandom() * UINT64_MAX);
 }
 
+float Maths::frand()
+{
+    return static_cast<float>(osRandom());
+}
+
+double Maths::drand()
+{
+    return osRandom();
+}
 
 long Maths::roundTo(long src, long gridSize)
 {
