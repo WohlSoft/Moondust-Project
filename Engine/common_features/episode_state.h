@@ -14,7 +14,7 @@ struct PlayEpisodeResult
 {
     std::string worldfile;
     std::string savefile;
-    int         character;
+    int         character = 0;
 };
 
 class LvlExit

@@ -33,7 +33,12 @@
 #include <wincrypt.h>   //CryptGenRandom
 #include <random>
 #else
+#include <random>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
 #endif
 #else
 #include <chrono>
@@ -59,10 +64,22 @@ static T osRandom()
     assert(res != 0);
 
     #else
-    FILE *d = fopen("/dev/urandom", "rb");
-    assert(d);
-    fread(&dst, 1, sizeof(T), d);
-    fclose(d);
+    {
+        int d = open("/dev/urandom", O_RDONLY);
+        char *randBuf = reinterpret_cast<char*>(&dst);
+        size_t reslen = 0;
+        while(reslen < sizeof(T))
+        {
+            ssize_t result = read(d, randBuf + reslen, sizeof(T) - reslen);
+            if (result < 0)
+            {
+                close(d);
+                return static_cast<T>(std::rand());
+            }
+            reslen += result;
+        }
+        close(d);
+    }
     #endif
     return dst;
     #endif

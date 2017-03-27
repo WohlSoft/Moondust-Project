@@ -69,8 +69,8 @@ class TitleScene : public Scene
 
         int exec();
         void resetController();
-        PGE_Menu menu;
 
+        PGE_Menu m_menu;
         enum CurrentMenu
         {
             menu_main = 0,
@@ -108,42 +108,44 @@ class TitleScene : public Scene
             ANSWER_GAMEOVER
         };
 
-        int numOfPlayers;
-        PlayEpisodeResult result_episode; //play episode
-        PlayLevelResult   result_level; //Play level/battle
+        int                 m_numOfPlayers      = 1;
+        //! play episode
+        PlayEpisodeResult   m_result_episode;
+        //! Play level/battle
+        PlayLevelResult     m_result_level;
 
-        Controller *controller;
+        Controller *controller = nullptr;
 
         /**********************file_finder************************/
         static int findEpisodes(void *);
         static int findLevels(void *);
-        static SDL_Thread                      *filefind_thread;
-        static std::string                      filefind_folder;
-        static std::vector<std::pair<std::string, std::string > > filefind_found_files;
-        static std::atomic_bool                 filefind_finished;
+        static SDL_Thread                                          *m_filefind_thread;
+        static std::string                                          m_filefind_folder;
+        static std::vector<std::pair<std::string, std::string > >   m_filefind_found_files;
+        static std::atomic_bool                                     m_filefind_finished;
         /**********************file_finder************************/
 
     private:
-        int ret;//!< Exit code
-        PGE_Point mousePos;
-        CurrentMenu _currentMenu;
+        int         m_exitCode = 0;//!< Exit code
+        CurrentMenu m_currentMenu = menu_main;
         void setMenu(CurrentMenu _menu);
-        std::map<CurrentMenu, menustate> menustates;
-        std::vector<int > menuChain;
+        std::map<CurrentMenu, menustate>    m_menustates;
+        std::vector<int>                    m_menuChain;
 
-        PGE_Texture background;
-        bool        _bgIsLoaded;
-        PGEColor    bgcolor;
-        std::vector<TitleScene_misc_img > imgs;
+        PGE_Texture m_backgroundTexture;
+        bool        m_backgroundLoaded = false;
+        PGEColor    m_backgroundColor;
+        std::vector<TitleScene_misc_img > m_imgs;
 
-        PGE_Texture cursor;
-        bool _cursorIsLoaded;
+        PGE_Texture m_cursorTexture;
+        bool        m_cursorLoaded = false;
+        PGE_Point   m_cursorPos;
 
-        int debug_joy_keyval;
-        int debug_joy_keyid;
-        int debug_joy_keytype;
+        int m_debug_joy_keyval    = 0;
+        int m_debug_joy_keyid     = 0;
+        int m_debug_joy_keytype   = 0;
 
-        LuaTitleScreenEngine luaEngine;
+        LuaTitleScreenEngine m_luaEngine;
 };
 
 #endif // SCENE_TITLE_H

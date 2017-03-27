@@ -296,7 +296,7 @@ void GlobalSettings::saveJoyCtrlMapType(KeyMap &map, IniProcessing &set, std::st
 
 Controller *GlobalSettings::openController(int player)
 {
-    Controller *TargetController = NULL;
+    Controller *TargetController = nullptr;
 
     if(player == 1)
     {
@@ -324,10 +324,8 @@ Controller *GlobalSettings::openController(int player)
         {
             TargetController = new JoystickController();
             size_t DeviceID = static_cast<size_t>(player2_controller);
-
             if(DeviceID < player2_joysticks.size())
                 TargetController->setKeyMap(player2_joysticks[DeviceID]);
-
             if(DeviceID < joysticks.size())
             {
                 JoystickController*jc = dynamic_cast<JoystickController *>(TargetController);

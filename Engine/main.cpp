@@ -317,8 +317,8 @@ MainMenu:
         iScene->init();
         iScene->m_fader.setFade(10, 0.0, 0.02);
         int answer = iScene->exec();
-        PlayLevelResult   res_level   = iScene->result_level;
-        PlayEpisodeResult res_episode = iScene->result_episode;
+        PlayLevelResult   res_level   = iScene->m_result_level;
+        PlayEpisodeResult res_episode = iScene->m_result_episode;
 
         if(iScene->doShutDown())
             answer = TitleScene::ANSWER_EXIT;

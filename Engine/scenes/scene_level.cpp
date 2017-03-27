@@ -189,10 +189,7 @@ LevelScene::~LevelScene()
     D_pLogDebug("Destroy players");
     for(i = 0; i < players.size(); i++)
     {
-        LVL_Player *tmp;
-        tmp = players[i];
-        player1Controller->removeFromControl(tmp);
-
+        LVL_Player *tmp = players[i];
         if(tmp)
         {
             if(player1Controller)
@@ -208,12 +205,10 @@ LevelScene::~LevelScene()
     D_pLogDebug("Destroy blocks");
     for(i = 0; i < blocks.size(); i++)
     {
-        LVL_Block *tmp;
-        tmp = blocks[i];
-        layers.removeRegItem(tmp->data.layer, tmp);
-
+        LVL_Block *tmp = blocks[i];
         if(tmp)
         {
+            layers.removeRegItem(tmp->data.layer, tmp);
             tmp->unregisterFromTree();
             delete tmp;
         }
@@ -222,12 +217,10 @@ LevelScene::~LevelScene()
     D_pLogDebug("Destroy BGO");
     for(i = 0; i < bgos.size(); i++)
     {
-        LVL_Bgo *tmp;
-        tmp = bgos[i];
-        layers.removeRegItem(tmp->data.layer, tmp);
-
+        LVL_Bgo *tmp = bgos[i];
         if(tmp)
         {
+            layers.removeRegItem(tmp->data.layer, tmp);
             tmp->unregisterFromTree();
             delete tmp;
         }
@@ -236,13 +229,10 @@ LevelScene::~LevelScene()
     D_pLogDebug("Destroy NPC");
     for(i = 0; i < npcs.size(); i++)
     {
-        LVL_Npc *tmp;
-        tmp = npcs[i];
-
+        LVL_Npc *tmp = npcs[i];
         if(tmp)
         {
             tmp->unregisterFromTree();
-
             if(!tmp->isLuaNPC)
                 delete tmp;
         }
@@ -251,12 +241,10 @@ LevelScene::~LevelScene()
     D_pLogDebug("Destroy Warps");
     for(i = 0; i < warps.size(); i++)
     {
-        LVL_Warp *tmp;
-        tmp = warps[i];
-        layers.removeRegItem(tmp->data.layer, tmp);
-
+        LVL_Warp *tmp = warps[i];
         if(tmp)
         {
+            layers.removeRegItem(tmp->data.layer, tmp);
             tmp->unregisterFromTree();
             delete tmp;
         }
@@ -265,12 +253,10 @@ LevelScene::~LevelScene()
     D_pLogDebug("Destroy Physical Environment zones");
     for(i = 0; i < physenvs.size(); i++)
     {
-        LVL_PhysEnv *tmp;
-        tmp = physenvs[i];
-        layers.removeRegItem(tmp->data.layer, tmp);
-
+        LVL_PhysEnv *tmp = physenvs[i];
         if(tmp)
         {
+            layers.removeRegItem(tmp->data.layer, tmp);
             tmp->unregisterFromTree();
             delete tmp;
         }

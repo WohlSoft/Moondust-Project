@@ -32,41 +32,41 @@
 
 #include "scene_title.h"
 
-SDL_Thread                      *TitleScene::filefind_thread = NULL;
-std::string                      TitleScene::filefind_folder = "";
-std::vector<std::pair<std::string, std::string> > TitleScene::filefind_found_files;
-std::atomic_bool                 TitleScene::filefind_finished(false);
+SDL_Thread                      *TitleScene::m_filefind_thread = NULL;
+std::string                      TitleScene::m_filefind_folder = "";
+std::vector<std::pair<std::string, std::string> > TitleScene::m_filefind_found_files;
+std::atomic_bool                 TitleScene::m_filefind_finished(false);
 
-TitleScene::TitleScene() : Scene(Title), luaEngine(this)
+TitleScene::TitleScene() : Scene(Title), m_luaEngine(this)
 {
     m_doExit = false;
-    mousePos.setX(-300);
-    mousePos.setY(-300);
-    _cursorIsLoaded = false;
-    ret = 0;
-    numOfPlayers = 1;
+    m_cursorPos.setX(-300);
+    m_cursorPos.setY(-300);
+    m_cursorLoaded = false;
+    m_exitCode = 0;
+    m_numOfPlayers = 1;
     controller = nullptr;
-    bgcolor.r = ConfigManager::setup_TitleScreen.backgroundColor.Red();
-    bgcolor.g = ConfigManager::setup_TitleScreen.backgroundColor.Green();
-    bgcolor.b = ConfigManager::setup_TitleScreen.backgroundColor.Blue();
+    m_backgroundColor.r = ConfigManager::setup_TitleScreen.backgroundColor.Red();
+    m_backgroundColor.g = ConfigManager::setup_TitleScreen.backgroundColor.Green();
+    m_backgroundColor.b = ConfigManager::setup_TitleScreen.backgroundColor.Blue();
 
     if(ConfigManager::setup_cursors.normal.empty())
-        _cursorIsLoaded = false;
+        m_cursorLoaded = false;
     else
     {
-        GlRenderer::loadTextureP(cursor, ConfigManager::setup_cursors.normal);
-        _cursorIsLoaded = true;
+        GlRenderer::loadTextureP(m_cursorTexture, ConfigManager::setup_cursors.normal);
+        m_cursorLoaded = true;
     }
 
     if(!ConfigManager::setup_TitleScreen.backgroundImg.empty())
     {
-        GlRenderer::loadTextureP(background, ConfigManager::setup_TitleScreen.backgroundImg);
-        _bgIsLoaded = true;
+        GlRenderer::loadTextureP(m_backgroundTexture, ConfigManager::setup_TitleScreen.backgroundImg);
+        m_backgroundLoaded = true;
     }
     else
-        _bgIsLoaded = false;
+        m_backgroundLoaded = false;
 
-    imgs.clear();
+    m_imgs.clear();
 
     for(size_t i = 0; i < ConfigManager::setup_TitleScreen.AdditionalImages.size(); i++)
     {
@@ -120,13 +120,13 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
                         ConfigManager::setup_TitleScreen.AdditionalImages[i].frames,
                         static_cast<int>(ConfigManager::setup_TitleScreen.AdditionalImages[i].framespeed));
         img.frmH = (img.t.h / ConfigManager::setup_TitleScreen.AdditionalImages[i].frames);
-        imgs.push_back(img);
+        m_imgs.push_back(img);
     }
 
-    debug_joy_keyval = 0;
-    debug_joy_keyid = 0;
-    debug_joy_keytype = 0;
-    filefind_thread = NULL;
+    m_debug_joy_keyval = 0;
+    m_debug_joy_keyid = 0;
+    m_debug_joy_keytype = 0;
+    m_filefind_thread = NULL;
 }
 
 TitleScene::~TitleScene()
@@ -134,15 +134,15 @@ TitleScene::~TitleScene()
     //Clear screen
     GlRenderer::clearScreen();
 
-    if(_cursorIsLoaded)
-        GlRenderer::deleteTexture(cursor);
+    if(m_cursorLoaded)
+        GlRenderer::deleteTexture(m_cursorTexture);
 
-    GlRenderer::deleteTexture(background);
+    GlRenderer::deleteTexture(m_backgroundTexture);
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        GlRenderer::deleteTexture(imgs[i].t);
+    for(size_t i = 0; i < m_imgs.size(); i++)
+        GlRenderer::deleteTexture(m_imgs[i].t);
 
-    imgs.clear();
+    m_imgs.clear();
 
     if(controller)
         delete controller;
@@ -165,10 +165,10 @@ bool TitleScene::init()
         ConfigManager::buildSoundIndex();
     }
 
-    luaEngine.setLuaScriptPath(ConfigManager::PathScript());
-    luaEngine.setCoreFile(":/script/maincore_title.lua");
-    luaEngine.setUserFile(ConfigManager::setup_TitleScreen.luaFile);
-    luaEngine.setErrorReporterFunc([this](const std::string & errorMessage, const std::string & stacktrace)
+    m_luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    m_luaEngine.setCoreFile(":/script/maincore_title.lua");
+    m_luaEngine.setUserFile(ConfigManager::setup_TitleScreen.luaFile);
+    m_luaEngine.setErrorReporterFunc([this](const std::string & errorMessage, const std::string & stacktrace)
     {
         pLogWarning("Lua-Error: ");
         pLogWarning("Error Message: %s", errorMessage.c_str());
@@ -177,7 +177,7 @@ bool TitleScene::init()
         msgBox.exec();
     });
     D_pLogDebug("Attempt to init...");
-    luaEngine.init();
+    m_luaEngine.init();
     D_pLogDebug("done!");
     return true;
 }
@@ -186,15 +186,15 @@ void TitleScene::onKeyboardPressed(SDL_Scancode scancode)
 {
     if(m_doExit) return;
 
-    if(menu.isKeyGrabbing())
+    if(m_menu.isKeyGrabbing())
     {
         if(scancode != SDL_SCANCODE_ESCAPE)
-            menu.storeKey(scancode);
+            m_menu.storeKey(scancode);
         else
-            menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
+            m_menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
 
         //If key was grabbed, reset controlls
-        if(!menu.isKeyGrabbing()) resetController();
+        if(!m_menu.isKeyGrabbing()) resetController();
 
         /**************Control men via controllers*************/
     }
@@ -204,47 +204,47 @@ void TitleScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
     if(m_doExit) return;
 
-    if(menu.isKeyGrabbing()) return;
+    if(m_menu.isKeyGrabbing()) return;
 
     if(controller->keys.up)
-        menu.selectUp();
+        m_menu.selectUp();
     else if(controller->keys.down)
-        menu.selectDown();
+        m_menu.selectDown();
     else if(controller->keys.left)
-        menu.selectLeft();
+        m_menu.selectLeft();
     else if(controller->keys.right)
-        menu.selectRight();
+        m_menu.selectRight();
     else if(controller->keys.jump)
-        menu.acceptItem();
+        m_menu.acceptItem();
     else if(controller->keys.alt_jump)
-        menu.acceptItem();
+        m_menu.acceptItem();
     else if(controller->keys.run)
-        menu.rejectItem();
+        m_menu.rejectItem();
     else
         switch(sdl_key)
         {
         case SDLK_UP:
-            menu.selectUp();
+            m_menu.selectUp();
             break;
 
         case SDLK_DOWN:
-            menu.selectDown();
+            m_menu.selectDown();
             break;
 
         case SDLK_LEFT:
-            menu.selectLeft();
+            m_menu.selectLeft();
             break;
 
         case SDLK_RIGHT:
-            menu.selectRight();
+            m_menu.selectRight();
             break;
 
         case SDLK_RETURN:
-            menu.acceptItem();
+            m_menu.acceptItem();
             break;
 
         case SDLK_ESCAPE:
-            menu.rejectItem();
+            m_menu.rejectItem();
             break;
 
         default:
@@ -254,27 +254,27 @@ void TitleScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
 void TitleScene::onMouseMoved(SDL_MouseMotionEvent &mmevent)
 {
-    mousePos = GlRenderer::MapToScr(mmevent.x, mmevent.y);
-    if(!menu.isKeyGrabbing() && !m_doExit)
-        menu.setMouseHoverPos(mousePos.x(), mousePos.y());
+    m_cursorPos = GlRenderer::MapToScr(mmevent.x, mmevent.y);
+    if(!m_menu.isKeyGrabbing() && !m_doExit)
+        m_menu.setMouseHoverPos(m_cursorPos.x(), m_cursorPos.y());
 }
 
 void TitleScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 {
     if(m_doExit) return;
 
-    if(menu.isKeyGrabbing())
-        menu.storeKey(PGE_KEYGRAB_CANCEL); //Calcel Keygrabbing
+    if(m_menu.isKeyGrabbing())
+        m_menu.storeKey(PGE_KEYGRAB_CANCEL); //Calcel Keygrabbing
     else
         switch(mbevent.button)
         {
         case SDL_BUTTON_LEFT:
-            mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
-            menu.setMouseClickPos(mousePos.x(), mousePos.y());
+            m_cursorPos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
+            m_menu.setMouseClickPos(m_cursorPos.x(), m_cursorPos.y());
             break;
 
         case SDL_BUTTON_RIGHT:
-            menu.rejectItem();
+            m_menu.rejectItem();
             break;
 
         default:
@@ -284,18 +284,18 @@ void TitleScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 
 void TitleScene::onMouseWheel(SDL_MouseWheelEvent &wheelevent)
 {
-    if(!menu.isKeyGrabbing() && !m_doExit)
+    if(!m_menu.isKeyGrabbing() && !m_doExit)
     {
         if(wheelevent.y > 0)
-            menu.scrollUp();
+            m_menu.scrollUp();
         else
-            menu.scrollDown();
+            m_menu.scrollDown();
     }
 }
 
 LuaEngine *TitleScene::getLuaEngine()
 {
-    return &luaEngine;
+    return &m_luaEngine;
 }
 
 void TitleScene::processEvents()
@@ -308,16 +308,16 @@ void TitleScene::processEvents()
         {
             KM_Key jkey;
             JoystickController::bindJoystickKey(g_AppSettings.joysticks.front(), jkey);
-            debug_joy_keyval    = jkey.val;
-            debug_joy_keyid     = jkey.id;
-            debug_joy_keytype   = jkey.type;
+            m_debug_joy_keyval    = jkey.val;
+            m_debug_joy_keyid     = jkey.id;
+            m_debug_joy_keytype   = jkey.type;
         }
     }
 
-    if(menu.processJoystickBinder())
+    if(m_menu.processJoystickBinder())
     {
         //If key was grabbed, reset controlls
-        if(!menu.isKeyGrabbing()) resetController();
+        if(!m_menu.isKeyGrabbing()) resetController();
     }
 
     controller->update();
@@ -329,8 +329,8 @@ void TitleScene::update()
     Scene::update();
     updateLua();
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        imgs[i].a.manualTick(uTickf);
+    for(size_t i = 0; i < m_imgs.size(); i++)
+        m_imgs[i].a.manualTick(uTickf);
 
     if(m_doExit)
     {
@@ -345,25 +345,25 @@ void TitleScene::update()
 void TitleScene::render()
 {
     GlRenderer::clearScreen();
-    GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, bgcolor.r, bgcolor.g, bgcolor.b, 1.0);
+    GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, 1.0);
 
-    if(_bgIsLoaded)
+    if(m_backgroundLoaded)
     {
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
-        GlRenderer::renderTexture(&background, PGE_Window::Width / 2 - background.w / 2,
-                                  PGE_Window::Height / 2 - background.h / 2);
+        GlRenderer::renderTexture(&m_backgroundTexture, PGE_Window::Width / 2 - m_backgroundTexture.w / 2,
+                                  PGE_Window::Height / 2 - m_backgroundTexture.h / 2);
     }
 
-    for(size_t i = 0; i < imgs.size(); i++)
+    for(size_t i = 0; i < m_imgs.size(); i++)
     {
         AniPos x(0, 1);
-        x = imgs[i].a.image();
+        x = m_imgs[i].a.image();
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
-        GlRenderer::renderTexture(&imgs[i].t,
-                                  imgs[i].x,
-                                  imgs[i].y,
-                                  imgs[i].t.w,
-                                  imgs[i].frmH,
+        GlRenderer::renderTexture(&m_imgs[i].t,
+                                  m_imgs[i].x,
+                                  m_imgs[i].y,
+                                  m_imgs[i].t.w,
+                                  m_imgs[i].frmH,
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
     }
@@ -373,9 +373,9 @@ void TitleScene::render()
         FontManager::printText(fmt::format("Joystick key: val={0}, id={1}, type={2}\n"
                                        "fader ratio {3} N{4} F{5} TKS-{6}\n"
                                        "TICK: {7}, Graphical engine: {8}",
-                                        debug_joy_keyval,
-                                        debug_joy_keyid,
-                                        debug_joy_keytype,
+                                        m_debug_joy_keyval,
+                                        m_debug_joy_keyid,
+                                        m_debug_joy_keytype,
                                         m_fader.fadeRatio(),
                                         m_fader.isNull(),
                                         m_fader.isFull(),
@@ -409,19 +409,19 @@ void TitleScene::render()
         //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 290, FontManager::DefaultTTF_Font, 1.0, 0.5, 1.0, 1.0);
     }
 
-    menu.render();
+    m_menu.render();
     Scene::render();
 }
 
 void TitleScene::renderMouse()
 {
-    int posX = mousePos.x();
-    int posY = mousePos.y();
+    int posX = m_cursorPos.x();
+    int posY = m_cursorPos.y();
 
-    if(_cursorIsLoaded)
+    if(m_cursorLoaded)
     {
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
-        GlRenderer::renderTexture(&cursor, posX, posY);
+        GlRenderer::renderTexture(&m_cursorTexture, posX, posY);
     }
     else
         GlRenderer::renderRect(posX, posY, 10, 10, 0.f, 1.f, 0.f, 1.0f);
@@ -434,13 +434,13 @@ int TitleScene::exec()
     LoopTiming times;
     times.start_common = SDL_GetTicks();
     bool frameSkip = g_AppSettings.frameSkip;
-    menustates.clear();
-    menuChain.clear();
+    m_menustates.clear();
+    m_menuChain.clear();
     //Set black color clearer
     GlRenderer::setClearColor(0.f, 0.f, 0.f, 1.0f);
 
     for(int i = menuFirst; i < menuLast; i++)
-        menustates[static_cast<CurrentMenu>(i)] = menustate(0, 0);
+        m_menustates[static_cast<CurrentMenu>(i)] = menustate(0, 0);
 
     setMenu(menu_main);
     //Hide mouse cursor
@@ -486,11 +486,11 @@ int TitleScene::exec()
             SDL_Delay(uTick - times.passedCommonTime());
     }
 
-    menu.clear();
+    m_menu.clear();
     PGE_Window::clean();
     //Show mouse cursor
     PGE_Window::setCursorVisibly(true);
-    return ret;
+    return m_exitCode;
 }
 
 void TitleScene::resetController()

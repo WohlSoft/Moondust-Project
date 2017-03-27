@@ -25,29 +25,28 @@
 struct controller_keys
 {
     //! Start key
-    bool start;
+    bool start = false;
 
     //! Left arrow
-    bool left;
+    bool left = false;
     //! Right arrow
-    bool right;
+    bool right = false;
     //! Up arrow
-    bool up;
+    bool up = false;
     //! Down arrow
-    bool down;
+    bool down = false;
 
     //! Run/shoot/whip/beat/attack
-    bool run;
+    bool run = false;
     //! Jump/Swim up
-    bool jump;
+    bool jump = false;
     //! Alt-jump/Spin-jump/Unmount-vehicle
-    bool alt_run;
+    bool alt_run = false;
     //! Alt-jump/Shoot/Whip/Attack
-    bool alt_jump;
+    bool alt_jump = false;
 
     //! Drop a holden item from a reserve box or Choice & Use item in the stock (Weapon, Potion, Armor, Shield, Bomb, etc.)
-    bool drop;
-
+    bool drop = false;
 };
 
 /*!

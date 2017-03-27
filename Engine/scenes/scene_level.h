@@ -86,11 +86,11 @@ class LevelScene : public Scene
         bool init();
         bool init_items();
         static int init_thread(void *self);
-        SDL_Thread *initializer_thread;
+        SDL_Thread *initializer_thread = nullptr;
     private:
-        bool isInit;
-        bool isInitFinished;
-        bool isInitFailed;
+        bool isInit = false;
+        bool isInitFinished = false;
+        bool isInitFailed = false;
     public:
 
         //Init 1
@@ -164,33 +164,33 @@ class LevelScene : public Scene
         int         exitLevelCode;
         /****************Level Running State*****************/
 
-        int numberOfPlayers;
+        int numberOfPlayers = 1;
 
-        Controller *player1Controller;
-        Controller *player2Controller;
+        Controller *player1Controller = nullptr;
+        Controller *player2Controller = nullptr;
 
         //Garbage collecting
         void collectGarbageNPCs();
         void collectGarbagePlayers();
 
         /**************Z-Layers**************/
-        long double  zCounter;
+        long double  zCounter = 0.0l;
         static const LevelZOrderTable zOrder;
         /**************Z-Layers**************/
 
 
         /**************LoadScreen**************/
-        int loaderSpeed;
-        bool IsLoaderWorks;
+        int loaderSpeed = 32;
+        bool IsLoaderWorks = false;
         void drawLoader();
         void setLoaderAnimation(int speed);
         void stopLoaderAnimation();
         void destroyLoaderTexture();
         static unsigned int nextLoadAniFrame(unsigned int x, void *p);
         void loaderTick();
-        bool doLoaderStep;
+        bool doLoaderStep = false;
         void loaderStep();
-        SDL_TimerID loader_timer_id;
+        SDL_TimerID loader_timer_id = 0;
         /**************LoadScreen**************/
 
         /*!
