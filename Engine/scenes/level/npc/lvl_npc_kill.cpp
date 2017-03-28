@@ -81,7 +81,7 @@ void LVL_Npc::talkWith()
     m_scene->m_messages.showMsg( data.msg );
     if(!data.event_talk.empty())
     {
-        m_scene->events.triggerEvent(data.event_talk);
+        m_scene->m_events.triggerEvent(data.event_talk);
     }
 }
 
@@ -102,7 +102,7 @@ void LVL_Npc::kill(int damageReason)
 
     //Pre-unregistring event
     if(!data.event_die.empty())
-        m_scene->events.triggerEvent(data.event_die);
+        m_scene->m_events.triggerEvent(data.event_die);
 
     unregister();
 
@@ -189,8 +189,8 @@ void LVL_Npc::kill(int damageReason)
     //Post-unregistring event
     if(!data.event_emptylayer.empty())
     {
-        if(m_scene->layers.isEmpty(data.layer))
-            m_scene->events.triggerEvent(data.event_emptylayer);
+        if(m_scene->m_layers.isEmpty(data.layer))
+            m_scene->m_events.triggerEvent(data.event_emptylayer);
     }
 
 }
@@ -200,7 +200,7 @@ void LVL_Npc::unregister()
     killed=true;
     m_is_visible=false;
     unregisterFromTree();
-    m_scene->dead_npcs.push_back(this);
-    m_scene->layers.removeRegItem(data.layer, this);
+    m_scene->m_npcDead.push_back(this);
+    m_scene->m_layers.removeRegItem(data.layer, this);
 }
 

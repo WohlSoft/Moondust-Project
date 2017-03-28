@@ -41,16 +41,16 @@ void LVL_Player::lua_processKeyEvents()
 {
     try
     {
-        lua_updateKey(keys_prev.left, KEY_LEFT, keys.left);
-        lua_updateKey(keys_prev.right, KEY_RIGHT, keys.right);
-        lua_updateKey(keys_prev.up, KEY_UP, keys.up);
-        lua_updateKey(keys_prev.down, KEY_DOWN, keys.down);
-        lua_updateKey(keys_prev.run, KEY_RUN, keys.run);
-        lua_updateKey(keys_prev.jump, KEY_JUMP, keys.jump);
-        lua_updateKey(keys_prev.alt_run, KEY_ALT_RUN, keys.alt_run);
-        lua_updateKey(keys_prev.alt_jump, KEY_ALT_JUMP, keys.alt_jump);
-        lua_updateKey(keys_prev.drop, KEY_DROP, keys.drop);
-        lua_updateKey(keys_prev.start, KEY_DROP, keys.start);
+        lua_updateKey(m_keysPrev.left, KEY_LEFT, keys.left);
+        lua_updateKey(m_keysPrev.right, KEY_RIGHT, keys.right);
+        lua_updateKey(m_keysPrev.up, KEY_UP, keys.up);
+        lua_updateKey(m_keysPrev.down, KEY_DOWN, keys.down);
+        lua_updateKey(m_keysPrev.run, KEY_RUN, keys.run);
+        lua_updateKey(m_keysPrev.jump, KEY_JUMP, keys.jump);
+        lua_updateKey(m_keysPrev.alt_run, KEY_ALT_RUN, keys.alt_run);
+        lua_updateKey(m_keysPrev.alt_jump, KEY_ALT_JUMP, keys.alt_jump);
+        lua_updateKey(m_keysPrev.drop, KEY_DROP, keys.drop);
+        lua_updateKey(m_keysPrev.start, KEY_DROP, keys.start);
     }
     catch(luabind::error &e)
     {
@@ -60,7 +60,7 @@ void LVL_Player::lua_processKeyEvents()
 
 void LVL_Player::update(double tickTime)
 {
-    if(isLocked) return;
+    if(m_isLocked) return;
 
     if(!m_isInited) return;
 
@@ -70,23 +70,22 @@ void LVL_Player::update(double tickTime)
 
     if(!section) return;
 
-    event_queue.processEvents(tickTime);
+    m_eventQueue.processEvents(tickTime);
 
-    if((isWarping) || (!isAlive))
+    if((m_isWarping) || (!isAlive))
     {
-        animator.tickAnimation(tickTime);
+        m_animator.tickAnimation(tickTime);
         updateCamera();
         return;
     }
 
-    if(invincible)
+    if(m_invincible)
     {
-        invincible_delay -= tickTime;
-
-        if(invincible_delay < 0.0f)
+        m_invincibleDelay -= tickTime;
+        if(m_invincibleDelay < 0.0)
         {
-            invincible = false;
-            blink_screen = false;
+            m_invincible = false;
+            m_blinkScreen = false;
         }
     }
 
@@ -94,7 +93,7 @@ void LVL_Player::update(double tickTime)
     //on_slippery_surface = !foot_sl_contacts_map.empty();
     bool climbableUp  = !climbable_map.empty();
     bool climbableDown = climbableUp && !m_stand;
-    climbing = (climbableUp && climbing && !m_stand && (m_momentum.centerY() >= (climbableHeight - physics_cur.velocity_climb_y_up)));
+    m_climbing = (climbableUp && m_climbing && !m_stand && (m_momentum.centerY() >= (m_climbableHeight - physics_cur.velocity_climb_y_up)));
 
     if(m_stand)
     {
@@ -114,38 +113,30 @@ void LVL_Player::update(double tickTime)
     else
         phys_setup.decelerate_x = physics_cur.decelerate_air;
 
-    if(climbing)
+    if(m_climbing)
     {
         PGE_Phys_Object *climbableItem = (climbable_map.begin())->second;
         if(climbableItem)
         {
             m_momentum.velX = climbableItem->speedX();
             m_momentum.velY = climbableItem->speedY();
-            //LEGACY_m_velocityX_add=climbableItem->speedX();
-            //LEGACY_m_velocityY_add=climbableItem->speedY();
-        } /*else
-
-        {
-            //LEGACY_m_velocityX_add=0.0f;
-            //LEGACY_m_velocityY_add=0.0f;
-        }*/
-
-        if(gscale_Backup != 1.0)
+        }
+        if(m_gscale_Backup != 1.0)
         {
             setGravityScale(0);
-            gscale_Backup = 1.0;
+            m_gscale_Backup = 1.0;
         }
     }
     else
     {
-        if(gscale_Backup != 0.0)
+        if(m_gscale_Backup != 0.0)
         {
             setGravityScale(physics_cur.gravity_scale);
-            gscale_Backup = 0.0;
+            m_gscale_Backup = 0.0;
         }
     }
 
-    if(climbing)
+    if(m_climbing)
         setSpeed(0, 0);
 
     if(environments_map.empty())
@@ -156,8 +147,7 @@ void LVL_Player::update(double tickTime)
     else
     {
         int newEnv = section->getPhysicalEnvironment();
-
-        for(const std::pair<int, int> &x : environments_map)
+        for(const std::pair<const int, int> &x : environments_map)
             newEnv = x.second;
 
         if((newEnv != LVL_PhysEnv::Env_SameAsAround) && (last_environment != newEnv))
@@ -171,8 +161,8 @@ void LVL_Player::update(double tickTime)
 
     if(m_stand)
     {
-        if(!floating_isworks)
-            floating_timer = floating_maxtime;
+        if(!m_floatingIsWorks)
+            m_floatingTimer = m_floatingMaxtime;
     }
 
     //Processing lua key events
@@ -181,29 +171,29 @@ void LVL_Player::update(double tickTime)
     //Running key
     if(keys.run || keys.alt_run)
     {
-        if(!_isRunning)
+        if(!m_isRunning)
         {
             phys_setup.max_vel_x = physics_cur.MaxSpeed_run;
             phys_setup.min_vel_x = -physics_cur.MaxSpeed_run;
-            _isRunning = true;
+            m_isRunning = true;
         }
     }
     else
     {
-        if(_isRunning)
+        if(m_isRunning)
         {
             phys_setup.max_vel_x = physics_cur.MaxSpeed_walk;
             phys_setup.min_vel_x = -physics_cur.MaxSpeed_walk;
-            _isRunning = false;
+            m_isRunning = false;
         }
     }
 
     if((physics_cur.ground_c_max != 1.0))
     {
-        phys_setup.max_vel_x = fabs(_isRunning ?
+        phys_setup.max_vel_x = fabs(m_isRunning ?
                                     physics_cur.MaxSpeed_run :
                                     physics_cur.MaxSpeed_walk) * (m_stand ? physics_cur.ground_c_max : 1.0);
-        phys_setup.min_vel_x = -fabs(_isRunning ?
+        phys_setup.min_vel_x = -fabs(m_isRunning ?
                                      physics_cur.MaxSpeed_run :
                                      physics_cur.MaxSpeed_walk) * (m_stand ? physics_cur.ground_c_max : 1.0);
     }
@@ -212,9 +202,9 @@ void LVL_Player::update(double tickTime)
     {
         if(PGE_Debugger::cheat_chucknorris)
         {
-            if(attack_enabled && !attack_pressed && !climbing)
+            if(m_attackEnabled && !m_attackPressed && !m_climbing)
             {
-                attack_pressed = true;
+                m_attackPressed = true;
 
                 if(keys.up)
                     attack(Attack_Up);
@@ -224,14 +214,15 @@ void LVL_Player::update(double tickTime)
                 {
                     attack(Attack_Forward);
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
-                    animator.playOnce(MatrixAnimator::RacoonTail, _direction, 75, true, true, 1);
+                    m_animator.playOnce(MatrixAnimator::RacoonTail, m_direction, 75, true, true, 1);
                 }
             }
         }
     }
     else
     {
-        if(attack_pressed) attack_pressed = false;
+        if(m_attackPressed)
+            m_attackPressed = false;
     }
 
     //  if(!keys.up && !keys.down && !keys.left && !keys.right)
@@ -244,63 +235,64 @@ void LVL_Player::update(double tickTime)
     //  }
 
     //Reset state
-    if(wasEntered)
+    if(m_wasEntered)
     {
-        wasEnteredTimeout -= tickTime;
+        m_wasEnteredTimeout -= tickTime;
 
-        if(wasEnteredTimeout < 0)
+        if(m_wasEnteredTimeout < 0)
         {
-            wasEnteredTimeout = 0;
-            wasEntered = false;
+            m_wasEnteredTimeout = 0;
+            m_wasEntered = false;
         }
     }
 
     if(keys.up)
     {
-        if(climbableUp && (jumpTime <= 0))
+        if(climbableUp && (m_jumpTime <= 0))
         {
             setDuck(false);
-            climbing = true;
-            floating_isworks = false; //!< Reset floating on climbing start
+            m_climbing = true;
+            m_floatingIsWorks = false; //!< Reset floating on climbing start
         }
 
-        if(climbing)
+        if(m_climbing)
         {
-            if(m_momentum.centerY() >= climbableHeight)
+            if(m_momentum.centerY() >= m_climbableHeight)
                 setSpeedY(-physics_cur.velocity_climb_y_up);
         }
         else
         {
-            if(collided_talkable_npc) collided_talkable_npc->talkWith();
+            if(collided_talkable_npc)
+                collided_talkable_npc->talkWith();
         }
     }
 
     if(keys.down)
     {
-        if(climbableDown && (jumpTime <= 0))
+        if(climbableDown && (m_jumpTime <= 0))
         {
             setDuck(false);
-            climbing = true;
-            floating_isworks = false; //!< Reset floating on climbing start
+            m_climbing = true;
+            m_floatingIsWorks = false; //!< Reset floating on climbing start
         }
         else
         {
-            if((duck_allow & !ducking) && ((animator.curAnimation() != MatrixAnimator::RacoonTail)))
+            if((m_duckAllow & !m_ducking) && ((m_animator.curAnimation() != MatrixAnimator::RacoonTail)))
                 setDuck(true);
         }
 
-        if(climbing)
+        if(m_climbing)
             setSpeedY(physics_cur.velocity_climb_y_down);
     }
     else
     {
-        if(ducking)
+        if(m_ducking)
             setDuck(false);
     }
 
     if((!keys.left) || (!keys.right))
     {
-        bool turning = (((speedX() > 0) && (_direction < 0)) || ((speedX() < 0) && (_direction > 0)));
+        bool turning = (((speedX() > 0) && (m_direction < 0)) || ((speedX() < 0) && (m_direction > 0)));
         double force = turning ?
                        physics_cur.decelerate_turn :
                        (fabs(speedX()) > physics_cur.MaxSpeed_walk) ? physics_cur.run_force : physics_cur.walk_force;
@@ -310,16 +302,16 @@ void LVL_Player::update(double tickTime)
         else if((m_stand) && (physics_cur.ground_c != 1.0))
             force = force * physics_cur.ground_c;
 
-        if(keys.left) _direction = -1;
+        if(keys.left) m_direction = -1;
 
-        if(keys.right) _direction = 1;
+        if(keys.right) m_direction = 1;
 
-        if(!ducking || !m_stand)
+        if(!m_ducking || !m_stand)
         {
             //If left key is pressed
             if(keys.right)
             {
-                if(climbing)
+                if(m_climbing)
                     setSpeedX(physics_cur.velocity_climb_x);
                 else
                     applyAccel(force, 0.0);
@@ -328,7 +320,7 @@ void LVL_Player::update(double tickTime)
             //If right key is pressed
             if(keys.left)
             {
-                if(climbing)
+                if(m_climbing)
                     setSpeedX(-physics_cur.velocity_climb_x);
                 else
                     applyAccel(-force, 0.0);
@@ -350,17 +342,17 @@ void LVL_Player::update(double tickTime)
     if(keys.alt_jump && PGE_Debugger::cheat_superman)
     {
         //Temporary it is ability to fly up!
-        if(!bumpDown && !bumpUp)
+        if(!m_bumpDown && !m_bumpUp)
             setSpeedY(-physics_cur.velocity_jump);
     }
 
     if(keys.jump || keys.alt_jump)
     {
-        if(!JumpPressed)
+        if(!m_jumpPressed)
         {
             if(environment != LVL_PhysEnv::Env_Water)
             {
-                if(climbing || m_stand || (environment == LVL_PhysEnv::Env_Quicksand))
+                if(m_climbing || m_stand || (environment == LVL_PhysEnv::Env_Quicksand))
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump);
             }
             else
@@ -369,94 +361,96 @@ void LVL_Player::update(double tickTime)
 
         if((environment == LVL_PhysEnv::Env_Water) || (environment == LVL_PhysEnv::Env_Quicksand))
         {
-            if(!JumpPressed)
+            if(!m_jumpPressed)
             {
                 if(environment == LVL_PhysEnv::Env_Water)
                 {
-                    if(!ducking) animator.playOnce(MatrixAnimator::SwimUp, _direction, 75);
+                    if(!m_ducking)
+                        m_animator.playOnce(MatrixAnimator::SwimUp, m_direction, 75);
                 }
                 else if(environment == LVL_PhysEnv::Env_Quicksand)
                 {
-                    if(!ducking) animator.playOnce(MatrixAnimator::JumpFloat, _direction, 64);
+                    if(!m_ducking)
+                        m_animator.playOnce(MatrixAnimator::JumpFloat, m_direction, 64);
                 }
 
-                JumpPressed = true;
-                jumpTime = physics_cur.jump_time;
-                jumpVelocity = physics_cur.velocity_jump;
-                floating_timer = floating_maxtime;
-                setSpeedY(speedY() - jumpVelocity);
+                m_jumpPressed   = true;
+                m_jumpTime      = physics_cur.jump_time;
+                m_jumpVelocity  = physics_cur.velocity_jump;
+                m_floatingTimer = m_floatingMaxtime;
+                setSpeedY(speedY() - m_jumpVelocity);
             }
         }
-        else if(!JumpPressed)
+        else if(!m_jumpPressed)
         {
-            JumpPressed = true;
+            m_jumpPressed = true;
 
-            if(m_stand || climbing)
+            if(m_stand || m_climbing)
             {
-                climbing = false;
-                jumpTime = physics_cur.jump_time;
-                jumpVelocity = physics_cur.velocity_jump;
-                floating_timer = floating_maxtime;
+                m_climbing = false;
+                m_jumpTime = physics_cur.jump_time;
+                m_jumpVelocity = physics_cur.velocity_jump;
+                m_floatingTimer = m_floatingMaxtime;
                 //LEGACY_m_velocityY_add = 0;//Remove Y speed-add when player jumping
-                setSpeedY(-jumpVelocity - fabs(speedX() / physics_cur.velocity_jump_c));
+                setSpeedY(-m_jumpVelocity - fabs(speedX() / physics_cur.velocity_jump_c));
             }
-            else if((floating_allow) && (floating_timer > 0.0))
+            else if((m_floatingAllow) && (m_floatingTimer > 0.0))
             {
-                floating_isworks = true;
+                m_floatingIsWorks = true;
                 //if true - do floating with sin, if false - do with cos.
-                floating_start_type = (speedY() < 0.0);
+                m_floatingStartType = (speedY() < 0.0);
                 setSpeedY(0.0);
                 setGravityScale(0.0);
             }
         }
         else
         {
-            if(jumpTime > 0)
+            if(m_jumpTime > 0)
             {
-                jumpTime -= tickTime;
-                setSpeedY(-jumpVelocity - fabs(speedX() / physics_cur.velocity_jump_c));
+                m_jumpTime -= tickTime;
+                setSpeedY(-m_jumpVelocity - fabs(speedX() / physics_cur.velocity_jump_c));
             }
 
-            if(floating_isworks)
+            if(m_floatingIsWorks)
             {
-                floating_timer -= tickTime;
+                m_floatingTimer -= tickTime;
 
-                if(floating_start_type)
-                    setSpeedY(state_cur.floating_amplitude * (-cos(floating_timer / 80.0)));
+                if(m_floatingStartType)
+                    setSpeedY(state_cur.floating_amplitude * (-cos(m_floatingTimer / 80.0)));
                 else
-                    setSpeedY(state_cur.floating_amplitude * (cos(floating_timer / 80.0)));
+                    setSpeedY(state_cur.floating_amplitude * (cos(m_floatingTimer / 80.0)));
 
-                if(floating_timer <= 0)
+                if(m_floatingTimer <= 0)
                 {
-                    floating_timer = 0;
-                    floating_isworks = false;
-                    setGravityScale(climbing ? 0.0 : physics_cur.gravity_scale);
+                    m_floatingTimer = 0;
+                    m_floatingIsWorks = false;
+                    setGravityScale(m_climbing ? 0.0 : physics_cur.gravity_scale);
                 }
             }
         }
     }
     else
     {
-        jumpTime = 0;
+        m_jumpTime = 0;
 
-        if(JumpPressed)
+        if(m_jumpPressed)
         {
-            JumpPressed = false;
+            m_jumpPressed = false;
 
-            if(floating_allow)
+            if(m_floatingAllow)
             {
-                if(floating_isworks)
+                if(m_floatingIsWorks)
                 {
-                    floating_timer = 0;
-                    floating_isworks = false;
-                    setGravityScale(climbing ? 0 : physics_cur.gravity_scale);
+                    m_floatingTimer = 0;
+                    m_floatingIsWorks = false;
+                    setGravityScale(m_climbing ? 0 : physics_cur.gravity_scale);
                 }
             }
         }
     }
 
     refreshAnimation();
-    animator.tickAnimation(tickTime);
+    m_animator.tickAnimation(tickTime);
     PGE_RectF sBox = section->sectionLimitBox();
     struct
     {
@@ -489,7 +483,7 @@ void LVL_Player::update(double tickTime)
     }
 
     //Connection of section opposite sides
-    if(isExiting) // Allow walk offscreen if exiting
+    if(m_isExiting) // Allow walk offscreen if exiting
     {
         if((posX() < sBox.left() - m_width_registered - 1) || (posX() > sBox.right() + 1))
         {
@@ -503,15 +497,15 @@ void LVL_Player::update(double tickTime)
             {
                 keys.run = true;
 
-                if(_exiting_swimTimer < 0 && !keys.jump)
+                if(m_exiting_swimTimer < 0 && !keys.jump)
                     keys.jump = true;
-                else if(_exiting_swimTimer < 0 && keys.jump)
+                else if(m_exiting_swimTimer < 0 && keys.jump)
                 {
                     keys.jump = false;
-                    _exiting_swimTimer = (environment == LVL_PhysEnv::Env_Quicksand) ? 1 : 500;
+                    m_exiting_swimTimer = (environment == LVL_PhysEnv::Env_Quicksand) ? 1 : 500;
                 }
 
-                _exiting_swimTimer -= tickTime;
+                m_exiting_swimTimer -= tickTime;
             }
             else keys.run = false;
         }
@@ -569,7 +563,7 @@ void LVL_Player::update(double tickTime)
             if((posX() < sBox.left() - m_width_registered - 1.0) || (posX() > sBox.right() + 1.0))
             {
                 setLocked(true);
-                _no_render = true;
+                m_noRender = true;
                 m_scene->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }

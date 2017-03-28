@@ -21,74 +21,76 @@
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
 #include <fmt/fmt_format.h>
+#include <scenes/scene_level.h>
 
 void LVL_Player::render(double camX, double camY)
 {
     if(!isAlive) return;
     if(!m_isInited) return;
-    if(_no_render) return;
+    if(m_noRender) return;
 
-    if(blink_screen)
+    if(m_blinkScreen)
     {
-        blink_screen_state=!blink_screen_state;
-        if(blink_screen_state) return;
+        //Syncronious blinking on all cameras!
+        if(m_scene->m_blinkStateFlag)
+            return;
     }
 
-    PGE_RectF tPos = animator.curFrame();
-    PGE_PointF Ofs = animator.curOffset();
+    PGE_RectF tPos = m_animator.curFrame();
+    PGE_PointF Ofs = m_animator.curOffset();
 
     PGE_RectF player;
     player.setRect(round(posX()-camX)-Ofs.x(),
                    round(posY()-Ofs.y())-camY,
-                            frameW,
-                            frameH
+                            m_frameW,
+                            m_frameH
                          );
 
-    if(isWarping)
+    if(m_isWarping)
     {
-        if(warpPipeOffset>=1.0)
+        if(m_warpPipeOffset>=1.0)
             return;
         //     Exit direction: [1] down  [3] up  [4] left  [2] right
         // Entrance direction: [3] down, [1] up, [2] left, [4] right
-        switch(warpDirectO)
+        switch(m_warpDirectO)
         {
             case 2://Left entrance, right Exit
                 {
-                    float wOfs = Ofs.x()/warpFrameW;//Relative X offset
-                    float wOfsF = m_width_registered/warpFrameW; //Relative hitbox width
-                    tPos.setLeft(tPos.left()+wOfs+(warpPipeOffset*wOfsF));
+                    float wOfs = Ofs.x()/m_warpFrameW;//Relative X offset
+                    float wOfsF = m_width_registered/m_warpFrameW; //Relative hitbox width
+                    tPos.setLeft(tPos.left()+wOfs+(m_warpPipeOffset*wOfsF));
                     player.setLeft( player.left()+Ofs.x() );
-                    player.setRight( player.right()-(warpPipeOffset*m_width_registered) );
+                    player.setRight( player.right()-(m_warpPipeOffset*m_width_registered) );
                 }
                 break;
             case 1://Up entrance, down exit
                 {
-                    float hOfs = Ofs.y()/warpFrameH;//Relative Y offset
-                    float hOfsF = m_height_registered/warpFrameH; //Relative hitbox Height
-                    tPos.setTop(tPos.top()+hOfs+(warpPipeOffset*hOfsF));
+                    float hOfs = Ofs.y()/m_warpFrameH;//Relative Y offset
+                    float hOfsF = m_height_registered/m_warpFrameH; //Relative hitbox Height
+                    tPos.setTop(tPos.top()+hOfs+(m_warpPipeOffset*hOfsF));
                     player.setTop( player.top()+Ofs.y() );
-                    player.setBottom( player.bottom()-(warpPipeOffset*m_height_registered) );
+                    player.setBottom( player.bottom()-(m_warpPipeOffset*m_height_registered) );
                 }
                 break;
             case 4://right emtramce. left exit
                 {
-                    float wOfs =  Ofs.x()/warpFrameW;               //Relative X offset
-                    float fWw =   animator.sizeOfFrame().w();   //Relative width of frame
-                    float wOfHB = m_width_registered/warpFrameW;                 //Relative width of hitbox
-                    float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
-                    tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpPipeOffset*wOfHB));
-                    player.setLeft( player.left()+(warpPipeOffset*m_width_registered) );
+                    float wOfs =  Ofs.x()/m_warpFrameW;               //Relative X offset
+                    float fWw =   m_animator.sizeOfFrame().w();   //Relative width of frame
+                    float wOfHB = m_width_registered/m_warpFrameW;                 //Relative width of hitbox
+                    float wWAbs = m_warpFrameW*fWw;                   //Absolute width of frame
+                    tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(m_warpPipeOffset*wOfHB));
+                    player.setLeft( player.left()+(m_warpPipeOffset*m_width_registered) );
                     player.setRight( player.right()-(wWAbs-Ofs.x()-m_width_registered) );
                 }
                 break;
             case 3://down entrance, up exit
                 {
-                    float hOfs =  Ofs.y()/warpFrameH;               //Relative Y offset
-                    float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
-                    float hOfHB = m_height_registered/warpFrameH;                //Relative height of hitbox
-                    float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
-                    tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpPipeOffset*hOfHB));
-                    player.setTop( player.top()+(warpPipeOffset*m_height_registered) );
+                    float hOfs =  Ofs.y()/m_warpFrameH;               //Relative Y offset
+                    float fHh =   m_animator.sizeOfFrame().h();  //Relative height of frame
+                    float hOfHB = m_height_registered/m_warpFrameH;                //Relative height of hitbox
+                    float hHAbs = m_warpFrameH*fHh;                   //Absolute height of frame
+                    tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(m_warpPipeOffset*hOfHB));
+                    player.setTop( player.top()+(m_warpPipeOffset*m_height_registered) );
                     player.setBottom( player.bottom()-(hHAbs-Ofs.y()-m_height_registered) );
                 }
                 break;

@@ -59,77 +59,77 @@ void LevelScene::process_InterprocessCommands()
             }
 
             //Don't show placing item sprite before mouse will be on screen
-            placingMode_renderAt.setPoint(PGE_Window::Width + placingMode_drawSize.x() + 16,
-                                          PGE_Window::Height + placingMode_drawSize.y() + 16);
+            m_placingMode_renderAt.setPoint(PGE_Window::Width + m_placingMode_drawSize.x() + 16,
+                                          PGE_Window::Height + m_placingMode_drawSize.y() + 16);
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrab2);
 
             if(raw.compare(0, 11, "BLOCK_PLACE"))
             {
                 if(got.blocks.empty())
                     break;
-                placingMode = true;
-                placingMode_item_type = 0;
-                placingMode_block = got.blocks[0];
-                int tID = ConfigManager::getBlockTexture(placingMode_block.id);
+                m_placingMode = true;
+                m_placingMode_item_type = 0;
+                m_placingMode_block = got.blocks[0];
+                int tID = ConfigManager::getBlockTexture(m_placingMode_block.id);
                 if(tID  >= 0)
                 {
-                    placingMode_texture = ConfigManager::level_textures[tID];
-                    obj_block &bl = ConfigManager::lvl_block_indexes[placingMode_block.id];
-                    placingMode_animated = bl.setup.animated;
-                    placingMode_animatorID = bl.animator_ID;
-                    placingMode_drawSize.setX(placingMode_texture.w);
-                    placingMode_drawSize.setY(placingMode_texture.h / static_cast<int>(bl.setup.frames));
+                    m_placingMode_texture = ConfigManager::level_textures[tID];
+                    obj_block &bl = ConfigManager::lvl_block_indexes[m_placingMode_block.id];
+                    m_placingMode_animated = bl.setup.animated;
+                    m_placingMode_animatorID = bl.animator_ID;
+                    m_placingMode_drawSize.setX(m_placingMode_texture.w);
+                    m_placingMode_drawSize.setY(m_placingMode_texture.h / static_cast<int>(bl.setup.frames));
                 }
             }
             else if(raw.compare(0, 9, "BGO_PLACE"))
             {
                 if(got.bgo.empty())
                     break;
-                placingMode = true;
-                placingMode_item_type = 1;
-                placingMode_bgo = got.bgo[0];
-                int tID = ConfigManager::getBgoTexture(placingMode_bgo.id);
+                m_placingMode = true;
+                m_placingMode_item_type = 1;
+                m_placingMode_bgo = got.bgo[0];
+                int tID = ConfigManager::getBgoTexture(m_placingMode_bgo.id);
                 if(tID  >= 0)
                 {
-                    placingMode_texture = ConfigManager::level_textures[tID];
-                    obj_bgo &bg = ConfigManager::lvl_bgo_indexes[placingMode_bgo.id];
-                    placingMode_animated = bg.setup.animated;
-                    placingMode_animatorID = bg.animator_ID;
-                    placingMode_drawSize.setX(placingMode_texture.w);
-                    placingMode_drawSize.setY(placingMode_texture.h);
+                    m_placingMode_texture = ConfigManager::level_textures[tID];
+                    obj_bgo &bg = ConfigManager::lvl_bgo_indexes[m_placingMode_bgo.id];
+                    m_placingMode_animated = bg.setup.animated;
+                    m_placingMode_animatorID = bg.animator_ID;
+                    m_placingMode_drawSize.setX(m_placingMode_texture.w);
+                    m_placingMode_drawSize.setY(m_placingMode_texture.h);
                 }
             }
             else if(raw.compare(0, 9, "NPC_PLACE"))
             {
                 if(got.npc.empty())
                     break;
-                placingMode = true;
-                placingMode_item_type = 2;
-                placingMode_npc = got.npc[0];
-                int tID = ConfigManager::getNpcTexture(placingMode_npc.id);
+                m_placingMode = true;
+                m_placingMode_item_type = 2;
+                m_placingMode_npc = got.npc[0];
+                int tID = ConfigManager::getNpcTexture(m_placingMode_npc.id);
                 if(tID >= 0)
                 {
-                    placingMode_texture = ConfigManager::level_textures[tID];
-                    obj_npc &np = ConfigManager::lvl_npc_indexes[placingMode_npc.id];
-                    placingMode_animated = ((np.setup.frames > 1) || (np.setup.framestyle > 0));
+                    m_placingMode_texture = ConfigManager::level_textures[tID];
+                    obj_npc &np = ConfigManager::lvl_npc_indexes[m_placingMode_npc.id];
+                    m_placingMode_animated = ((np.setup.frames > 1) || (np.setup.framestyle > 0));
 
                     if(np.animator_ID < 0)
                     {
                         if((np.setup.frames > 1) || (np.setup.framestyle > 0))
                         {
-                            AdvNpcAnimator animator(placingMode_texture, np);
+                            AdvNpcAnimator animator(m_placingMode_texture, np);
                             ConfigManager::Animator_NPC.push_back(animator);
                             ConfigManager::Animator_NPC.back().start();
                             np.animator_ID = ConfigManager::Animator_NPC.size() - 1;
                         }
                         else
-                            placingMode_animated = false;
+                            m_placingMode_animated = false;
                     }
 
-                    placingMode_animatorID = np.animator_ID;
-                    placingMode_drawSize.setX(np.setup.gfx_w);
-                    placingMode_drawSize.setY(np.setup.gfx_h);
-                    int d = placingMode_npc.direct;
+                    m_placingMode_animatorID = np.animator_ID;
+                    m_placingMode_drawSize.setX(np.setup.gfx_w);
+                    m_placingMode_drawSize.setY(np.setup.gfx_h);
+                    int d = m_placingMode_npc.direct;
 
                     if(d == 0) d = -1;
 
@@ -141,7 +141,7 @@ void LevelScene::process_InterprocessCommands()
                     double offsetY = static_cast<double>(np.setup.gfx_offset_y);
                     double imgOffsetX = -(round((gfxW - physW) / -2.0) + (-offsetX * d));
                     double imgOffsetY = round(- gfxH + physH + offsetY);
-                    placingMode_renderOffset.setPoint(imgOffsetX, imgOffsetY);
+                    m_placingMode_renderOffset.setPoint(imgOffsetX, imgOffsetY);
                 }
             }
             else PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
@@ -156,49 +156,49 @@ void LevelScene::process_InterprocessCommands()
 
 void LevelScene::drawPlacingItem()
 {
-    if(!placingMode) return;
+    if(!m_placingMode) return;
 
     AniPos x(0, 1);
     int d = 0;
 
-    switch(placingMode_item_type)
+    switch(m_placingMode_item_type)
     {
     case 0:
-        if(placingMode_animated) x = ConfigManager::Animator_Blocks[placingMode_animatorID].image();
+        if(m_placingMode_animated) x = ConfigManager::Animator_Blocks[m_placingMode_animatorID].image();
 
-        GlRenderer::renderTexture(&placingMode_texture,
-                                  static_cast<float>(placingMode_renderAt.x()),
-                                  static_cast<float>(placingMode_renderAt.y()),
-                                  static_cast<float>(placingMode_drawSize.x()),
-                                  static_cast<float>(placingMode_drawSize.y()),
+        GlRenderer::renderTexture(&m_placingMode_texture,
+                                  static_cast<float>(m_placingMode_renderAt.x()),
+                                  static_cast<float>(m_placingMode_renderAt.y()),
+                                  static_cast<float>(m_placingMode_drawSize.x()),
+                                  static_cast<float>(m_placingMode_drawSize.y()),
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
         break;
 
     case 1:
-        if(placingMode_animated) x = ConfigManager::Animator_BGO[placingMode_animatorID].image();
+        if(m_placingMode_animated) x = ConfigManager::Animator_BGO[m_placingMode_animatorID].image();
 
-        GlRenderer::renderTexture(&placingMode_texture,
-                                  static_cast<float>(placingMode_renderAt.x()),
-                                  static_cast<float>(placingMode_renderAt.y()),
-                                  static_cast<float>(placingMode_drawSize.x()),
-                                  static_cast<float>(placingMode_drawSize.y()),
+        GlRenderer::renderTexture(&m_placingMode_texture,
+                                  static_cast<float>(m_placingMode_renderAt.x()),
+                                  static_cast<float>(m_placingMode_renderAt.y()),
+                                  static_cast<float>(m_placingMode_drawSize.x()),
+                                  static_cast<float>(m_placingMode_drawSize.y()),
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
         break;
 
     case 2:
-        if(placingMode_animated) x = ConfigManager::Animator_NPC[placingMode_animatorID].image(placingMode_npc.direct);
+        if(m_placingMode_animated) x = ConfigManager::Animator_NPC[m_placingMode_animatorID].image(m_placingMode_npc.direct);
 
-        d = placingMode_npc.direct;
+        d = m_placingMode_npc.direct;
 
         if(d == 0) d = -1;
 
-        GlRenderer::renderTexture(&placingMode_texture,
-                                  static_cast<float>(placingMode_renderAt.x() + placingMode_renderOffset.x()*d),
-                                  static_cast<float>(placingMode_renderAt.y() + placingMode_renderOffset.y()),
-                                  static_cast<float>(placingMode_drawSize.x()),
-                                  static_cast<float>(placingMode_drawSize.y()),
+        GlRenderer::renderTexture(&m_placingMode_texture,
+                                  static_cast<float>(m_placingMode_renderAt.x() + m_placingMode_renderOffset.x()*d),
+                                  static_cast<float>(m_placingMode_renderAt.y() + m_placingMode_renderOffset.y()),
+                                  static_cast<float>(m_placingMode_drawSize.x()),
+                                  static_cast<float>(m_placingMode_drawSize.y()),
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
         break;
@@ -207,70 +207,70 @@ void LevelScene::drawPlacingItem()
 
 void LevelScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 {
-    if(!placingMode) return;
+    if(!m_placingMode) return;
 
     PGE_Point mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
-    mousePos.setX(mousePos.x() - static_cast<int>(placingMode_drawSize.x()) / 2);
-    mousePos.setY(mousePos.y() - static_cast<int>(placingMode_drawSize.y()) / 2);
+    mousePos.setX(mousePos.x() - static_cast<int>(m_placingMode_drawSize.x()) / 2);
+    mousePos.setY(mousePos.y() - static_cast<int>(m_placingMode_drawSize.y()) / 2);
 
     if(mbevent.button == SDL_BUTTON_LEFT)
         placeItemByMouse(mousePos.x(), mousePos.y());
     else if(mbevent.button == SDL_BUTTON_RIGHT)
-        placingMode = false;
+        m_placingMode = false;
 }
 
 void LevelScene::onMouseMoved(SDL_MouseMotionEvent &mvevent)
 {
-    if(!placingMode) return;
+    if(!m_placingMode) return;
 
-    placingMode_renderAt = GlRenderer::MapToScr(mvevent.x, mvevent.y);
-    placingMode_renderAt.setX(placingMode_renderAt.x() - placingMode_drawSize.x() / 2);
-    placingMode_renderAt.setY(placingMode_renderAt.y() - placingMode_drawSize.y() / 2);
+    m_placingMode_renderAt = GlRenderer::MapToScr(mvevent.x, mvevent.y);
+    m_placingMode_renderAt.setX(m_placingMode_renderAt.x() - m_placingMode_drawSize.x() / 2);
+    m_placingMode_renderAt.setY(m_placingMode_renderAt.y() - m_placingMode_drawSize.y() / 2);
 }
 
 void LevelScene::onMouseReleased(SDL_MouseButtonEvent &)
 {
-    if(!placingMode) return;
+    if(!m_placingMode) return;
 }
 
 
 void LevelScene::placeItemByMouse(int x, int y)
 {
-    if(!placingMode)
+    if(!m_placingMode)
         return;
 
-    for(size_t i = 0; i < cameras.size(); i++)
+    for(size_t i = 0; i < m_cameras.size(); i++)
     {
         PGE_Rect camRect;
-        camRect.setRect(0, cameras[i].h() * i, cameras[i].w(), cameras[i].h());
+        camRect.setRect(0, m_cameras[i].h() * i, m_cameras[i].w(), m_cameras[i].h());
         if(camRect.collidePoint(x, y))
         {
-            x += cameras[i].posX();
-            y += cameras[i].posY();
+            x += m_cameras[i].posX();
+            y += m_cameras[i].posY();
             break;
         }
     }
 
-    pLogDebug("Placed: %d in pos: %d x %d", placingMode_item_type, x, y);
+    pLogDebug("Placed: %d in pos: %d x %d", m_placingMode_item_type, x, y);
 
-    switch(placingMode_item_type)
+    switch(m_placingMode_item_type)
     {
     case 0:
-        placingMode_block.x = x;
-        placingMode_block.y = y;
-        spawnBlock(placingMode_block);
+        m_placingMode_block.x = x;
+        m_placingMode_block.y = y;
+        spawnBlock(m_placingMode_block);
         break;
 
     case 1:
-        placingMode_bgo.x = x;
-        placingMode_bgo.y = y;
-        spawnBGO(placingMode_bgo);
+        m_placingMode_bgo.x = x;
+        m_placingMode_bgo.y = y;
+        spawnBGO(m_placingMode_bgo);
         break;
 
     case 2:
-        placingMode_npc.x = x;
-        placingMode_npc.y = y;
-        spawnNPC(placingMode_npc, GENERATOR_APPEAR, SPAWN_UP);
+        m_placingMode_npc.x = x;
+        m_placingMode_npc.y = y;
+        spawnNPC(m_placingMode_npc, GENERATOR_APPEAR, SPAWN_UP);
         break;
     }
 }

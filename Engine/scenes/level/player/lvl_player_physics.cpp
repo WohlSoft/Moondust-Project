@@ -67,12 +67,12 @@ void LVL_Player::refreshEnvironmentState()
         if(physics_cur.slow_speed_x_on_enter)
             setSpeedX(speedX() * (physics_cur.slow_speed_x_coeff));
 
-        if(JumpPressed) jumpVelocity = physics_cur.velocity_jump;
+        if(m_jumpPressed) m_jumpVelocity = physics_cur.velocity_jump;
 
-        phys_setup.max_vel_x = fabs(_isRunning ?
+        phys_setup.max_vel_x = fabs(m_isRunning ?
                                     physics_cur.MaxSpeed_run :
                                     physics_cur.MaxSpeed_walk) * (m_stand ? physics_cur.ground_c_max : 1.0f);
-        phys_setup.min_vel_x = -fabs(_isRunning ?
+        phys_setup.min_vel_x = -fabs(m_isRunning ?
                                      physics_cur.MaxSpeed_run :
                                      physics_cur.MaxSpeed_walk) * (m_stand ? physics_cur.ground_c_max : 1.0f);
         phys_setup.max_vel_y = fabs(physics_cur.MaxSpeed_down);
@@ -80,7 +80,7 @@ void LVL_Player::refreshEnvironmentState()
         phys_setup.decelerate_x = physics_cur.decelerate_air;
         phys_setup.gravityScale = physics_cur.gravity_scale;
         phys_setup.grd_dec_x    = physics_cur.walk_force;
-        floating_isworks = false; //< Reset floating on re-entering into another physical envirinment
+        m_floatingIsWorks = false; //< Reset floating on re-entering into another physical envirinment
     }
 }
 
@@ -103,9 +103,9 @@ void LVL_Player::processContacts()
         {
         case LVLWarp:
         {
-            contactedWarp = static_cast<LVL_Warp *>(cEL);
-            SDL_assert(contactedWarp);
-            contactedWithWarp = true;
+            m_contactedWarp = static_cast<LVL_Warp *>(cEL);
+            SDL_assert(m_contactedWarp);
+            m_contactedWithWarp = true;
             break;
         }
 
@@ -120,9 +120,9 @@ void LVL_Player::processContacts()
                 climbable_map[intptr_t(cEL)] = cEL;
 
                 if(hasClimbables)
-                    climbableHeight = cEL->m_momentum.top();
-                else if(cEL->top() < climbableHeight)
-                    climbableHeight = cEL->m_momentum.top();
+                    m_climbableHeight = cEL->m_momentum.top();
+                else if(cEL->top() < m_climbableHeight)
+                    m_climbableHeight = cEL->m_momentum.top();
             }
             break;
         }
@@ -174,9 +174,9 @@ void LVL_Player::processContacts()
                 climbable_map[intptr_t(cEL)] = cEL;
 
                 if(set)
-                    climbableHeight = cEL->m_momentum.top();
-                else if(cEL->m_momentum.top() < climbableHeight)
-                    climbableHeight = cEL->m_momentum.top();
+                    m_climbableHeight = cEL->m_momentum.top();
+                else if(cEL->m_momentum.top() < m_climbableHeight)
+                    m_climbableHeight = cEL->m_momentum.top();
             }
 
             if((!npc->data.friendly) && (npc->setup->setup.takable))
@@ -187,7 +187,7 @@ void LVL_Player::processContacts()
                 break;
             }
 
-            if(bumpUp || bumpDown)
+            if(m_bumpUp || m_bumpDown)
                 break;
 
             if(!npc->isActivated)
@@ -447,12 +447,12 @@ void LVL_Player::processContacts()
         npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
         bump(true);
         //Reset floating state
-        floating_timer = floating_maxtime;
+        m_floatingTimer = m_floatingMaxtime;
 
-        if(floating_isworks)
+        if(m_floatingIsWorks)
         {
-            floating_isworks = false;
-            setGravityScale(climbing ? 0 : physics_cur.gravity_scale);
+            m_floatingIsWorks = false;
+            setGravityScale(m_climbing ? 0 : physics_cur.gravity_scale);
         }
 
         kill_npc(npc, NPC_Stomped);
@@ -461,10 +461,10 @@ void LVL_Player::processContacts()
 
 void LVL_Player::preCollision()
 {
-    bumpDown = false;
-    bumpUp = false;
-    contactedWarp = nullptr;
-    contactedWithWarp = false;
+    m_bumpDown = false;
+    m_bumpUp = false;
+    m_contactedWarp = nullptr;
+    m_contactedWithWarp = false;
     collided_talkable_npc = nullptr;
     climbable_map.clear();
     environments_map.clear();
@@ -483,7 +483,7 @@ void LVL_Player::postCollision()
         if(m_stand)
         {
             m_momentum.velXsrc = 0.0;
-            m_momentum.velX = -_direction * 8;
+            m_momentum.velX = -m_direction * 8;
             applyAccel(0.0, 0.0);
         }
     }
@@ -538,7 +538,7 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
         else
             PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
 
-        jumpTime = 0;
+        m_jumpTime = 0;
     }
 }
 
@@ -560,16 +560,16 @@ bool LVL_Player::preCollisionCheck(PGE_Phys_Object *body)
 
 void LVL_Player::setDuck(bool duck)
 {
-    if(!duck_allow)
+    if(!m_duckAllow)
         return;
-    if(duck == ducking)
+    if(duck == m_ducking)
         return;
     double b = m_momentum.bottom();
     setSize(state_cur.width, duck ? state_cur.duck_height : state_cur.height);
     setPos(posX(), b - m_height_registered);
-    ducking = duck;
+    m_ducking = duck;
 
-    if(!duck && !isWarping)
+    if(!duck && !m_isWarping)
     {
         _heightDelta = state_cur.duck_height - state_cur.height;
         if(_heightDelta > 0.0)
@@ -582,32 +582,32 @@ void LVL_Player::bump(bool _up, double bounceSpeed, int timeToJump)
 {
     if(_up)
     {
-        bumpUp = true;
-        bumpJumpTime = (timeToJump > 0) ? timeToJump : physics_cur.jump_time_bounce ;
-        bumpJumpVelocity = (bounceSpeed > 0) ? bounceSpeed : physics_cur.velocity_jump_bounce;
+        m_bumpUp = true;
+        m_bumpJumpTime = (timeToJump > 0) ? timeToJump : physics_cur.jump_time_bounce ;
+        m_bumpJumpVelocity = (bounceSpeed > 0) ? bounceSpeed : physics_cur.velocity_jump_bounce;
 
         if(keys.jump)
         {
-            jumpTime = bumpJumpTime;
-            jumpVelocity = bumpJumpVelocity;
+            m_jumpTime = m_bumpJumpTime;
+            m_jumpVelocity = m_bumpJumpVelocity;
         }
 
         setSpeedY((keys.jump ?
-                   (-fabs(bumpJumpVelocity) - fabs(speedX() / physics_cur.velocity_jump_c)) :
-                   -fabs(bumpJumpVelocity)));
+                   (-fabs(m_bumpJumpVelocity) - fabs(speedX() / physics_cur.velocity_jump_c)) :
+                   -fabs(m_bumpJumpVelocity)));
     }
     else
     {
-        bumpDown = true;
-        bumpVelocity = fabs(bounceSpeed);//4.0;
-        setSpeedY(bumpVelocity);
-        jumpTime = 0;
+        m_bumpDown = true;
+        m_bumpVelocity = fabs(bounceSpeed);//4.0;
+        setSpeedY(m_bumpVelocity);
+        m_jumpTime = 0;
     }
 }
 
 bool LVL_Player::isRunning()
 {
-    return _isRunning;
+    return m_isRunning;
 }
 
 bool LVL_Player::onGround()
@@ -617,5 +617,5 @@ bool LVL_Player::onGround()
 
 int LVL_Player::direction()
 {
-    return _direction;
+    return m_direction;
 }

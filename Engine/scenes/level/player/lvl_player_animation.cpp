@@ -29,18 +29,18 @@ void LVL_Player::refreshAnimation()
 {
     using namespace LVL_Player_refreshAnimation;
     /**********************************Animation switcher**********************************/
-        if(climbing)
+        if(m_climbing)
         {
-            animator.unlock();
+            m_animator.unlock();
             if((speedY()<0.0)||(speedX()!=0.0))
-                animator.switchAnimation(MatrixAnimator::Climbing, _direction, 128);
+                m_animator.switchAnimation(MatrixAnimator::Climbing, m_direction, 128);
             else
-                animator.switchAnimation(MatrixAnimator::Climbing, _direction, -1);
+                m_animator.switchAnimation(MatrixAnimator::Climbing, m_direction, -1);
         }
         else
-        if(ducking)
+        if(m_ducking)
         {
-            animator.switchAnimation(MatrixAnimator::SitDown, _direction, 128);
+            m_animator.switchAnimation(MatrixAnimator::SitDown, m_direction, 128);
         }
         else
         if(!m_stand)
@@ -48,29 +48,29 @@ void LVL_Player::refreshAnimation()
             if(environment==LVL_PhysEnv::Env_Water)
             {
                 if(speedY()>=0)
-                    animator.switchAnimation(MatrixAnimator::Swim, _direction, 128);
+                    m_animator.switchAnimation(MatrixAnimator::Swim, m_direction, 128);
                 else
-                    animator.switchAnimation(MatrixAnimator::SwimUp, _direction, 128);
+                    m_animator.switchAnimation(MatrixAnimator::SwimUp, m_direction, 128);
             }
             else if(environment==LVL_PhysEnv::Env_Quicksand)
             {
                 if(speedY()<0)
-                    animator.switchAnimation(MatrixAnimator::JumpFloat, _direction, 64);
+                    m_animator.switchAnimation(MatrixAnimator::JumpFloat, m_direction, 64);
                 else if(speedY()>0)
-                    animator.switchAnimation(MatrixAnimator::Idle, _direction, 64);
+                    m_animator.switchAnimation(MatrixAnimator::Idle, m_direction, 64);
             }
             else
             {
                 if(speedY()<0)
-                    animator.switchAnimation(MatrixAnimator::JumpFloat, _direction, 64);
+                    m_animator.switchAnimation(MatrixAnimator::JumpFloat, m_direction, 64);
                 else if(speedY()>0)
-                    animator.switchAnimation(MatrixAnimator::JumpFall, _direction, 64);
+                    m_animator.switchAnimation(MatrixAnimator::JumpFall, m_direction, 64);
             }
         }
         else
         {
             bool busy=false;
-            if((speedX()<-1)&&(_direction>0))
+            if((speedX()<-1)&&(m_direction>0))
                 if(keys.right)
                 {
                     if(SDL_GetTicks()-slideTicks>100)
@@ -78,13 +78,13 @@ void LVL_Player::refreshAnimation()
                         PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
                         slideTicks=SDL_GetTicks();
                     }
-                    animator.switchAnimation(MatrixAnimator::Sliding, _direction, 64);
+                    m_animator.switchAnimation(MatrixAnimator::Sliding, m_direction, 64);
                     busy=true;
                 }
 
             if(!busy)
             {
-                if((speedX()>1)&&(_direction<0))
+                if((speedX()>1)&&(m_direction<0))
                     if(keys.left)
                     {
                         if(SDL_GetTicks()-slideTicks>100)
@@ -92,7 +92,7 @@ void LVL_Player::refreshAnimation()
                             PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
                             slideTicks=SDL_GetTicks();
                         }
-                        animator.switchAnimation(MatrixAnimator::Sliding, _direction, 64);
+                        m_animator.switchAnimation(MatrixAnimator::Sliding, m_direction, 64);
                         busy=true;
                     }
             }
@@ -101,13 +101,13 @@ void LVL_Player::refreshAnimation()
             {
                 float velX = speedX();
                 if( ((!m_onSlippery)&&(velX>0.0))||((m_onSlippery)&&(m_accelX>0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, _direction,
+                    m_animator.switchAnimation(MatrixAnimator::Run, m_direction,
                                                (100-((velX*12)<85 ? velX*12 : 85)) );
                 else if( ((!m_onSlippery)&& (velX<0.0))||((m_onSlippery)&&(m_accelX<0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, _direction,
+                    m_animator.switchAnimation(MatrixAnimator::Run, m_direction,
                                              (100-((-velX*12)<85 ? -velX*12 : 85)) );
                 else
-                    animator.switchAnimation(MatrixAnimator::Idle, _direction, 64);
+                    m_animator.switchAnimation(MatrixAnimator::Idle, m_direction, 64);
             }
         }
     /**********************************Animation switcher**********************************/

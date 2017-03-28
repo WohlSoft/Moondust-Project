@@ -23,8 +23,8 @@
 
 void LevelScene::initPauseMenu1()
 {
-    _pauseMenu_opened=false;
-    _pauseMenuID=1;
+    m_pauseMenu_opened=false;
+    m_pauseMenuID=1;
     m_pauseMenu.setParentScene(this);
 
 
@@ -49,13 +49,13 @@ void LevelScene::initPauseMenu1()
     m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     m_pauseMenu.setMaxMenuItems(4);
     m_isPauseMenu=false;
-    isTimeStopped=false;
+    m_isTimeStopped=false;
 }
 
 void LevelScene::initPauseMenu2()
 {
-    _pauseMenu_opened=false;
-    _pauseMenuID=2;
+    m_pauseMenu_opened=false;
+    m_pauseMenuID=2;
     m_pauseMenu.setParentScene(this);
     m_pauseMenu.construct(
                 //% "Pause"
@@ -75,13 +75,13 @@ void LevelScene::initPauseMenu2()
     m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     m_pauseMenu.setMaxMenuItems(4);
     m_isPauseMenu=false;
-    isTimeStopped=false;
+    m_isTimeStopped=false;
 }
 
 void LevelScene::initPauseMenu3()
 {
-    _pauseMenu_opened=false;
-    _pauseMenuID=3;
+    m_pauseMenu_opened=false;
+    m_pauseMenuID=3;
     m_pauseMenu.setParentScene(this);
     m_pauseMenu.construct(
                 //% "Pause"
@@ -103,15 +103,15 @@ void LevelScene::initPauseMenu3()
     m_pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     m_pauseMenu.setMaxMenuItems(3);
     m_isPauseMenu=false;
-    isTimeStopped=false;
+    m_isTimeStopped=false;
 }
 
 void LevelScene::processPauseMenu()
 {
-    if(!_pauseMenu_opened)
+    if(!m_pauseMenu_opened)
     {
         m_pauseMenu.restart();
-        _pauseMenu_opened=true;
+        m_pauseMenu_opened=true;
         PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
     }
     else
@@ -119,7 +119,7 @@ void LevelScene::processPauseMenu()
         m_pauseMenu.update(uTickf);
         if(!m_pauseMenu.isRunning())
         {
-            switch(_pauseMenuID)
+            switch(m_pauseMenuID)
             {
             case 1:
                 switch(m_pauseMenu.answer())
@@ -129,11 +129,11 @@ void LevelScene::processPauseMenu()
                 break;
                 case PAUSE_SaveCont:
                     //Save game state!
-                    gameState->save();
+                    m_gameState->save();
                 break;
                 case PAUSE_SaveQuit:
                     //Save game state! and exit from episode
-                    gameState->save();
+                    m_gameState->save();
                     setExiting(0, LvlExit::EXIT_MenuExit);
                     break;
                 case PAUSE_Exit:
@@ -174,7 +174,7 @@ void LevelScene::processPauseMenu()
                 }
                 break;
             }
-            _pauseMenu_opened=false;
+            m_pauseMenu_opened=false;
             m_isPauseMenu=false;
         }
     }

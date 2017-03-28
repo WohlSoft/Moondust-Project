@@ -31,9 +31,9 @@ void PlayerPosDetector::processDetector()
         return;
 
     double d = 0.0;
-    for(size_t i = 0; i < _scene->players.size(); i++)
+    for(size_t i = 0; i < _scene->m_itemsPlayers.size(); i++)
     {
-        LVL_Player *p = _scene->players[i];
+        LVL_Player *p = _scene->m_itemsPlayers[i];
         double d1 = distance(p);
         if((d1 < d) || (i == 0))
         {

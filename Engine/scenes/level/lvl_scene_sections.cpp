@@ -25,9 +25,9 @@ int LevelScene::findNearestSection(long x, long y)
     int  result = 0;
 
     //Try to find intersecting section first
-    for(size_t i = 0; i < data.sections.size(); i++)
+    for(size_t i = 0; i < m_data.sections.size(); i++)
     {
-        LevelSection &s = data.sections[i];
+        LevelSection &s = m_data.sections[i];
 
         if((x >= s.size_left) && (x <= s.size_right) &&
            (y >= s.size_top)  && (y <= s.size_bottom))
@@ -35,9 +35,9 @@ int LevelScene::findNearestSection(long x, long y)
     }
 
     //Find section by nearest center or corner
-    for(size_t i = 0; i < data.sections.size(); i++)
+    for(size_t i = 0; i < m_data.sections.size(); i++)
     {
-        LevelSection &s = data.sections[i];
+        LevelSection &s = m_data.sections[i];
         long centerX = s.size_left + std::abs(s.size_left - s.size_right) / 2;
         long centerY = s.size_top  + std::abs(s.size_top  - s.size_bottom) / 2;
         //Find distance to center
@@ -89,13 +89,13 @@ int LevelScene::findNearestSection(long x, long y)
 
 LVL_Section *LevelScene::getSection(int sct)
 {
-    if((sct >= 0) && (sct < int32_t(sections.size())))
+    if((sct >= 0) && (sct < int32_t(m_sections.size())))
     {
-        if(sections[sct].data.id == sct)
-            return &sections[sct];
+        if(m_sections[sct].data.id == sct)
+            return &m_sections[sct];
         else
         {
-            for(LVL_SectionsList::iterator it = sections.begin(); it != sections.end(); it++)
+            for(LVL_SectionsList::iterator it = m_sections.begin(); it != m_sections.end(); it++)
                 if(it->data.id == sct)
                     return &(*it);
         }
@@ -106,7 +106,7 @@ LVL_Section *LevelScene::getSection(int sct)
 
 EpisodeState *LevelScene::getGameState()
 {
-    return gameState;
+    return m_gameState;
 }
 
 

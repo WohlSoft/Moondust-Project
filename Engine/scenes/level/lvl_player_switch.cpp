@@ -83,9 +83,9 @@ void CharacterSwitcherEngine::refreshState()
             unsigned long needed = static_cast<unsigned long>(sw.CharacterID);
             bool found = false;
 
-            for(int j = 1; j <= m_scene->numberOfPlayers; j++)
+            for(int j = 1; j <= m_scene->m_numberOfPlayers; j++)
             {
-                if(needed == m_scene->gameState->getPlayerState(j).characterID)
+                if(needed == m_scene->m_gameState->getPlayerState(j).characterID)
                 {
                     found = true;
                     break;
@@ -110,9 +110,9 @@ void CharacterSwitcherEngine::refreshState()
             unsigned long needed = static_cast<unsigned long>(blk.CharacterID);
             bool found = false;
 
-            for(int j = 1; j <= m_scene->numberOfPlayers; j++)
+            for(int j = 1; j <= m_scene->m_numberOfPlayers; j++)
             {
-                if(needed == m_scene->gameState->getPlayerState(j).characterID)
+                if(needed == m_scene->m_gameState->getPlayerState(j).characterID)
                 {
                     found = true;
                     break;

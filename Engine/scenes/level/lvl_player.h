@@ -109,17 +109,17 @@ public:
     PGE_DataArray<obj_player_physics > physics;
     std::unordered_map<int, int> environments_map;
 
-    obj_player_physics physics_cur;
-    int     environment;
-    int     last_environment;
+    obj_player_physics  physics_cur;
+    int                 environment = 0;
+    int                 last_environment = 0;
     /*******************Environmept*********************/
 
     /*******************Motion*************************/
-    bool isRunning();
-    bool    _isRunning;
+    bool    isRunning();
+    bool    m_isRunning;
 
-    int  direction();
-    int     _direction;
+    int     direction();
+    int     m_direction;
     /*******************Motion*************************/
 
     /*******************Life and Death*****************/
@@ -133,35 +133,34 @@ public:
     void    kill(deathReason reason = DEAD_killed);
     void    unregister();
 
-    bool    doKill;
-    deathReason kill_reason;
+    bool    m_killDo;
+    deathReason m_killReason;
 
-    int     health;
-    bool    invincible;
-    float   invincible_delay;
-    bool    blink_screen;
-    bool    blink_screen_state;
+    int     m_health;
+    bool    m_invincible;
+    double  m_invincibleDelay;
+    bool    m_blinkScreen = false;
     void    harm(int _damage = 1);
-    void    setInvincible(bool state, float delay, bool enableScreenBlink = false);
+    void    setInvincible(bool state, double delay, bool enableScreenBlink = false);
     /*******************Life and Death*****************/
 
-    double  gscale_Backup; //!< BackUP of last gravity scale
+    double  m_gscale_Backup; //!< BackUP of last gravity scale
 
     /********************Jumps***************************/
-    bool    JumpPressed;
+    bool    m_jumpPressed = false;
     bool    onGround();
     std::unordered_map<intptr_t, PGE_Phys_Object * > foot_contacts_map;  //!< staying on ground surfaces
     std::unordered_map<intptr_t, PGE_Phys_Object * > foot_sl_contacts_map; //!< Slipery surfaces
-    double  jumpTime;
-    double  jumpVelocity;
+    double  m_jumpTime;
+    double  m_jumpVelocity;
     /********************Jumps***************************/
 
     /********************Bump***************************/
-    bool    bumpDown;
-    bool    bumpUp;
-    double  bumpVelocity;//!< down velocity
-    double  bumpJumpVelocity;//! Up jump velocity
-    int     bumpJumpTime;    //!< Up jump time
+    bool    m_bumpDown = false;
+    bool    m_bumpUp = false;
+    double  m_bumpVelocity;//!< down velocity
+    double  m_bumpJumpVelocity;//! Up jump velocity
+    int     m_bumpJumpTime;    //!< Up jump time
     void    bump(bool _up = false, double bounceSpeed = 0.0, int timeToJump = 0);
     inline void bumpf(bool _up, float bounceSpeed = 0.0f, int timeToJump = 0)
     {
@@ -171,35 +170,35 @@ public:
 
     /********************Climbing***************************/
     std::unordered_map<intptr_t, PGE_Phys_Object * > climbable_map;
-    bool        climbing;
-    double      climbableHeight;
+    bool        m_climbing = false;
+    double      m_climbableHeight;
     /********************Climbing***************************/
 
     /*******************Warps*********************/
-    PointMover m_cameraMover;
-    bool    contactedWithWarp;
-    LVL_Warp *contactedWarp;
-    bool    wasEntered;
-    int     wasEnteredTimeout;
-    bool    isWarping;
+    PointMover  m_cameraMover;
+    bool        m_contactedWithWarp;
+    LVL_Warp    *m_contactedWarp;
+    bool        m_wasEntered;
+    int         m_wasEnteredTimeout;
+    bool        m_isWarping;
 
-    int     warpDirectO;
-    double  warpPipeOffset;
-    double  warpFrameW;
-    double  warpFrameH;
+    int         m_warpDirectO;
+    double      m_warpPipeOffset;
+    double      m_warpFrameW;
+    double      m_warpFrameH;
 
-    EventQueue<LVL_Player > event_queue;
+    EventQueue<LVL_Player > m_eventQueue;
     void    processWarpChecking();
     void    WarpTo(double x, double y, int warpType, int warpDirection = 1, bool cannon = false, double cannon_speed = 10.0);
     void    WarpTo(const LevelDoor &warp);
     /*******************Warps*********************/\
 
     /******************floating*******************/
-    bool    floating_allow;
-    bool    floating_isworks;
-    double  floating_timer;
-    double  floating_maxtime;
-    bool    floating_start_type;//!< true= sin(time), false= cos(time)
+    bool    m_floatingAllow;
+    bool    m_floatingIsWorks;
+    double  m_floatingTimer;
+    double  m_floatingMaxtime;
+    bool    m_floatingStartType;//!< true= sin(time), false= cos(time)
     /******************floating*******************/
 
     /******************Attack*******************/
@@ -210,8 +209,8 @@ public:
         Attack_Up,
         Attack_Down
     };
-    bool    attack_enabled;
-    bool    attack_pressed;
+    bool    m_attackEnabled;
+    bool    m_attackPressed;
     void    attack(AttackDirection _dir);
     /******************Attack*******************/
 
@@ -230,19 +229,19 @@ public:
            duck '-`\\`__
                     `-._{
     ************************************************/
-    bool duck_allow;
-    bool ducking;
+    bool m_duckAllow;
+    bool m_ducking;
     void setDuck(bool duck);
     /******************Duck*************************/
 public:
     void render(double camX, double camY);
-    MatrixAnimator animator;
-    int frameW;
-    int frameH;
+    MatrixAnimator m_animator;
+    int m_frameW;
+    int m_frameH;
     bool locked();
     void setLocked(bool lock);
-    bool isExiting;
-    int  _exiting_swimTimer;
+    bool m_isExiting;
+    int  m_exiting_swimTimer;
 
     /********************Lua Stuff*******************
                         .-""""-
@@ -254,15 +253,15 @@ public:
                         `-.__.-'
      ***********************************************/
 
-    lua_LevelPlayerState *global_state;
+    lua_LevelPlayerState *m_global_state;
 
     /*Controller processing*/
     void lua_processKeyEvents();
     void lua_updateKey(bool &target_key, ControllableObject::KeyType ktype, bool &state);
-    controller_keys keys_prev;
-    inline bool  lua_getKeyState(int keyType)
+    controller_keys m_keysPrev;
+    inline bool lua_getKeyState(int keyType)
     {
-        return getKeyState(keyType);
+        return  getKeyState(keyType);
     }
     virtual void lua_onKeyPressed(ControllableObject::KeyType) {}
     virtual void lua_onKeyReleased(ControllableObject::KeyType) {}
@@ -274,25 +273,25 @@ public:
     virtual void lua_onTransform(unsigned long, unsigned long) {}
     virtual void lua_onTakeNpc(LVL_Npc *) {}
     virtual void lua_onKillNpc(LVL_Npc *) {}
-    inline void lua_playAnimationOnce(int animationID,
-                                      int speed,
-                                      bool fixed_speed,
-                                      bool locked,
-                                      int skipLastFrames)
+    inline void  lua_playAnimationOnce(int animationID,
+                                       int speed,
+                                       bool fixed_speed,
+                                       bool locked,
+                                       int skipLastFrames)
     {
-        animator.playOnce(static_cast<MatrixAnimator::MatrixAnimates>(animationID),
-                          _direction, speed, fixed_speed,
+        m_animator.playOnce(static_cast<MatrixAnimator::MatrixAnimates>(animationID),
+                          m_direction, speed, fixed_speed,
                           locked, skipLastFrames);
     }
     inline void lua_setAnimation(int animationID, int framespeed)
     {
-        animator.switchAnimation(static_cast<MatrixAnimator::MatrixAnimates>(animationID),
-                                 _direction,
+        m_animator.switchAnimation(static_cast<MatrixAnimator::MatrixAnimates>(animationID),
+                                 m_direction,
                                  framespeed);
     }
     inline long getHealth()
     {
-        return health;
+        return m_health;
     }
     void setHealth(int _health);
     inline void setCharacterID(unsigned long _character)
@@ -304,14 +303,14 @@ public:
         setCharacterSafe(characterID, _state);
     }
     LVL_Npc *lua_spawnNPC(unsigned long npcID, int sp_type, int sp_dir, bool reSpawnable);
-    bool isLuaPlayer;
+    bool m_isLuaPlayer;
     /********************Lua Stuff******************/
 
     bool isInited();
 
 private:
-    bool _no_render;
-    bool isLocked;
+    bool m_noRender;
+    bool m_isLocked;
     bool m_isInited;
     void refreshAnimation();
 };

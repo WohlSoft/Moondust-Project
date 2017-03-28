@@ -542,8 +542,8 @@ void PGE_MenuBoxBase::initControllers()
 
             if(s)
             {
-                _ctrl1 = s->player1Controller;
-                _ctrl2 = s->player2Controller;
+                _ctrl1 = s->m_player1Controller;
+                _ctrl2 = s->m_player2Controller;
             }
         }
         else if(m_parentScene->type() == Scene::World)

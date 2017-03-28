@@ -573,7 +573,7 @@ PlayLevel:
             {
             case LvlExit::EXIT_Warp:
             {
-                if(lScene->warpToWorld)
+                if(lScene->m_warpToWorld)
                 {
                     g_GameState.game_state.worldPosX = lScene->toWorldXY().x();
                     g_GameState.game_state.worldPosY = lScene->toWorldXY().y();
@@ -590,7 +590,7 @@ PlayLevel:
                     if(g_GameState.isHubLevel)
                     {
                         g_GameState.isHubLevel = false;
-                        g_GameState.game_state.last_hub_warp = lScene->lastWarpID;
+                        g_GameState.game_state.last_hub_warp = lScene->m_lastWarpID;
                     }
                 }
 
@@ -601,7 +601,7 @@ PlayLevel:
                 {
                     std::string target;
 
-                    if(lScene->warpToWorld)
+                    if(lScene->m_warpToWorld)
                     {
                         target = fmt::format("X={0}, Y={1}",
                                  g_GameState.game_state.worldPosX,

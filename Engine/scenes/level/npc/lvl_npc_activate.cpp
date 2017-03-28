@@ -40,7 +40,7 @@ void LVL_Npc::Activate()
     isActivated = true;
 
     if(!data.event_activate.empty())
-        m_scene->events.triggerEvent(data.event_activate);
+        m_scene->m_events.triggerEvent(data.event_activate);
 
     if(isLuaNPC)
     {

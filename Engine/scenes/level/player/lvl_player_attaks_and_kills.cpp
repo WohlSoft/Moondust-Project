@@ -45,7 +45,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         attackZone.setRect(posCenterX() - 5, bottom(), 10, 5);
         break;
     case Attack_Forward:
-        if(_direction >= 0)
+        if(m_direction >= 0)
             attackZone.setRect(right(), bottom() - 32, 10, 10);
         else
             attackZone.setRect(left() - 10, bottom() - 32, 10, 10);
@@ -203,25 +203,25 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
             PGE_Audio::playSound(snd);
         }
         /***********************Reset and unplug controllers************************/
-        m_scene->player1Controller->resetControls();
-        m_scene->player1Controller->sendControls();
-        m_scene->player1Controller->removeFromControl(this);
-        m_scene->player2Controller->resetControls();
-        m_scene->player2Controller->sendControls();
-        m_scene->player2Controller->removeFromControl(this);
+        m_scene->m_player1Controller->resetControls();
+        m_scene->m_player1Controller->sendControls();
+        m_scene->m_player1Controller->removeFromControl(this);
+        m_scene->m_player2Controller->resetControls();
+        m_scene->m_player2Controller->sendControls();
+        m_scene->m_player2Controller->removeFromControl(this);
         /***********************Reset and unplug controllers*end********************/
         if(target->setup->setup.exit_walk_direction < 0)
             keys.left = true;
         else if(target->setup->setup.exit_walk_direction > 0)
             keys.right = true;
-        isExiting = true;
+        m_isExiting = true;
         m_scene->setExiting(target->setup->setup.exit_delay, target->setup->setup.exit_code);
     }
 }
 
 void LVL_Player::harm(int _damage)
 {
-    if(invincible || PGE_Debugger::cheat_pagangod) return;
+    if(m_invincible || PGE_Debugger::cheat_pagangod) return;
 
     LVL_Player_harm_event dmg;
     dmg.doHarm = true;
@@ -240,8 +240,8 @@ void LVL_Player::harm(int _damage)
     _damage = dmg.doHarm_damage;
 
     //doHarm=true;
-    health -= _damage;
-    if(health <= 0)
+    m_health -= _damage;
+    if(m_health <= 0)
         kill(DEAD_killed);
     else
     {
@@ -250,11 +250,11 @@ void LVL_Player::harm(int _damage)
     }
 }
 
-void LVL_Player::setInvincible(bool state, float delay, bool enableScreenBlink)
+void LVL_Player::setInvincible(bool state, double delay, bool enableScreenBlink)
 {
-    invincible = state;
-    invincible_delay = delay;
-    blink_screen = enableScreenBlink;
+    m_invincible = state;
+    m_invincibleDelay = delay;
+    m_blinkScreen = enableScreenBlink;
 }
 
 
@@ -262,29 +262,29 @@ void LVL_Player::kill(deathReason reason)
 {
     if((reason != DEAD_fall) && PGE_Debugger::cheat_pagangod) return;
 
-    doKill = true;
+    m_killDo = true;
     isAlive = false;
-    kill_reason = reason;
+    m_killReason = reason;
 
-    if(global_state)
-        global_state->setHealth(0);
+    if(m_global_state)
+        m_global_state->setHealth(0);
 
     setPaused(true);
-    if(kill_reason == DEAD_burn)
+    if(m_killReason == DEAD_burn)
     {
         m_scene->launchStaticEffectC(ConfigManager::g_setup_npc.eff_lava_burn,
                                     posCenterX(),
-                                    posCenterY(), 1, 0, 0, 0, 0, _direction);
+                                    posCenterY(), 1, 0, 0, 0, 0, m_direction);
     }
-    else if(kill_reason == DEAD_killed)
+    else if(m_killReason == DEAD_killed)
     {
         SpawnEffectDef effect = setup.fail_effect;
         if(effect.id > 0)
         {
             effect.startX = m_momentum.centerX();
             effect.startY = m_momentum.centerY();
-            effect.velocityX *= _direction;
-            effect.direction *= _direction;
+            effect.velocityX *= m_direction;
+            effect.direction *= m_direction;
             m_scene->launchEffect(effect, true);
         }
     }
@@ -296,13 +296,13 @@ void LVL_Player::unregister()
     isAlive = false;
     m_is_visible = false;
     //Unregister controllers
-    if(m_scene->player1Controller) m_scene->player1Controller->removeFromControl(this);
-    if(m_scene->player2Controller) m_scene->player2Controller->removeFromControl(this);
+    if(m_scene->m_player1Controller) m_scene->m_player1Controller->removeFromControl(this);
+    if(m_scene->m_player2Controller) m_scene->m_player2Controller->removeFromControl(this);
 
     unregisterFromTree();
 
     //Store into death list
-    m_scene->dead_players.push_back(this);
+    m_scene->m_playersDead.push_back(this);
 }
 
 

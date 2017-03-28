@@ -26,19 +26,19 @@
 
 bool LevelScene::loadFile(std::string filePath)
 {
-    data.meta.ReadFileValid = false;
+    m_data.meta.ReadFileValid = false;
 
     if(!Files::fileExists(filePath))
     {
-        errorMsg += "File not exist\n\n";
-        errorMsg += filePath;
+        m_errorMsg += "File not exist\n\n";
+        m_errorMsg += filePath;
         return false;
     }
 
-    if(!FileFormats::OpenLevelFile(filePath, data))
-        errorMsg += "Bad file format\n";
+    if(!FileFormats::OpenLevelFile(filePath, m_data))
+        m_errorMsg += "Bad file format\n";
 
-    return data.meta.ReadFileValid;
+    return m_data.meta.ReadFileValid;
 }
 
 
@@ -46,8 +46,8 @@ bool LevelScene::loadFileIP()
 {
     if(!IntProc::isEnabled()) return false;
 
-    FileFormats::CreateLevelData(data);
-    data.meta.ReadFileValid = false;
+    FileFormats::CreateLevelData(m_data);
+    m_data.meta.ReadFileValid = false;
     pLogDebug("ICP: Requesting editor for a file....");
     IntProc::sendMessage("CMD:CONNECT_TO_ENGINE");
     ElapsedTimer time;
@@ -62,7 +62,7 @@ bool LevelScene::loadFileIP()
         loaderStep();
 
         //Abort loading process and exit from game if window was closed
-        if(!isLevelContinues)
+        if(!m_isLevelContinues)
             return false;
 
         if(time.elapsed() > 1500)
@@ -74,7 +74,7 @@ bool LevelScene::loadFileIP()
 
         if(attempts > 4)
         {
-            errorMsg += "Wait timeout\n";
+            m_errorMsg += "Wait timeout\n";
             timeOut = true;
             break;
         }
@@ -82,12 +82,12 @@ bool LevelScene::loadFileIP()
         SDL_Delay(30);
     }
 
-    data = IntProc::editor->m_acceptedLevel;
+    m_data = IntProc::editor->m_acceptedLevel;
 
-    if(!timeOut && !data.meta.ReadFileValid)
-        errorMsg += "Bad file format\n";
+    if(!timeOut && !m_data.meta.ReadFileValid)
+        m_errorMsg += "Bad file format\n";
 
     pLogDebug("ICP: Done, starting a game....");
     IntProc::setState("Done. Starting game...");
-    return data.meta.ReadFileValid;
+    return m_data.meta.ReadFileValid;
 }

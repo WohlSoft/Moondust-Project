@@ -16,13 +16,13 @@ bool Binding_Level_CommonFuncs::Lua_getSwitchState(lua_State *L, uint32_t switch
 void Binding_Level_CommonFuncs::Lua_triggerEvent(lua_State *L, std::string eventName)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    scene->events.triggerEvent( eventName );
+    scene->m_events.triggerEvent( eventName );
 }
 
 void Binding_Level_CommonFuncs::Lua_ShakeScreen(lua_State *L, double forceX, double forceY, double decX, double decY)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    for(LevelScene::LVL_CameraList::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
+    for(LevelScene::LVL_CameraList::iterator it = scene->m_cameras.begin(); it != scene->m_cameras.end(); it++)
     {
         PGE_LevelCamera* cam=&(*it);
         cam->shakeScreen(forceX, forceY, decX, decY);
@@ -32,7 +32,7 @@ void Binding_Level_CommonFuncs::Lua_ShakeScreen(lua_State *L, double forceX, dou
 void Binding_Level_CommonFuncs::Lua_ShakeScreenX(lua_State *L, double forceX, double decX)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    for(LevelScene::LVL_CameraList::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
+    for(LevelScene::LVL_CameraList::iterator it = scene->m_cameras.begin(); it != scene->m_cameras.end(); it++)
     {
         PGE_LevelCamera* cam=&(*it);
         cam->shakeScreenX(forceX, decX);
@@ -42,7 +42,7 @@ void Binding_Level_CommonFuncs::Lua_ShakeScreenX(lua_State *L, double forceX, do
 void Binding_Level_CommonFuncs::Lua_ShakeScreenY(lua_State *L, double forceY, double decY)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    for(LevelScene::LVL_CameraList::iterator it = scene->cameras.begin(); it != scene->cameras.end(); it++)
+    for(LevelScene::LVL_CameraList::iterator it = scene->m_cameras.begin(); it != scene->m_cameras.end(); it++)
     {
         PGE_LevelCamera* cam=&(*it);
         cam->shakeScreenY(forceY, decY);

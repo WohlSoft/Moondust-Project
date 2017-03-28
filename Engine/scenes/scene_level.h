@@ -86,13 +86,12 @@ class LevelScene : public Scene
         bool init();
         bool init_items();
         static int init_thread(void *self);
-        SDL_Thread *initializer_thread = nullptr;
+        SDL_Thread *m_initializer_thread = nullptr;
     private:
-        bool isInit = false;
-        bool isInitFinished = false;
-        bool isInitFailed = false;
+        bool m_isInit = false;
+        bool m_isInitFinished = false;
+        bool m_isInitFailed = false;
     public:
-
         //Init 1
         bool        loadFile(std::string filePath);
         bool        loadFileIP(); //!< Load data via interprocessing
@@ -100,13 +99,13 @@ class LevelScene : public Scene
         //Init 2
         bool        setEntrance(unsigned long entr);
     private:
-        bool        isWarpEntrance;
-        PGE_PointF  cameraStart;
-        bool        cameraStartDirected;
-        int         cameraStartDirection;
+        bool        m_isWarpEntrance;
+        PGE_PointF  m_cameraStart;
+        bool        m_cameraStartDirected;
+        int         m_cameraStartDirection;
 
-        LevelDoor   startWarp;
-        int         NewPlayerID;
+        LevelDoor   m_warpInitial;
+        int         m_newPlayerID;
 
     public:
         PlayerPoint getStartLocation(int playerID);
@@ -137,60 +136,60 @@ class LevelScene : public Scene
         bool isExit();
 
         //Dummy textures
-        PGE_Texture TextureBuffer[3];
+        PGE_Texture m_textureBuffer[3];
 
         int exitType();
 
         //Flags
-        bool isTimeStopped;
+        bool m_isTimeStopped;
 
         /****************Level Running State*****************/
-        bool isLevelContinues;
+        bool m_isLevelContinues;
 
         void setExiting(int delay, int reason);
 
         std::string     toAnotherLevel();
-        std::string     warpToLevelFile;
-        unsigned long lastWarpID;
+        std::string     m_warpToLevelFile;
+        unsigned long   m_lastWarpID;
 
         unsigned long toAnotherEntrance();
-        unsigned long warpToArrayID;
+        unsigned long m_warpToArrayID;
 
         PGE_Point   toWorldXY();
-        bool        warpToWorld;
-        PGE_Point   warpToWorldXY;
+        bool        m_warpToWorld;
+        PGE_Point   m_warpToWorldXY;
 
-        double      exitLevelDelay;
-        int         exitLevelCode;
+        double      m_exitLevelDelay;
+        int         m_exitLevelCode;
         /****************Level Running State*****************/
 
-        int numberOfPlayers = 1;
+        int m_numberOfPlayers = 1;
 
-        Controller *player1Controller = nullptr;
-        Controller *player2Controller = nullptr;
+        Controller *m_player1Controller = nullptr;
+        Controller *m_player2Controller = nullptr;
 
         //Garbage collecting
         void collectGarbageNPCs();
         void collectGarbagePlayers();
 
         /**************Z-Layers**************/
-        long double  zCounter = 0.0l;
+        long double  m_zCounter = 0.0l;
         static const LevelZOrderTable zOrder;
         /**************Z-Layers**************/
 
 
         /**************LoadScreen**************/
-        int loaderSpeed = 32;
-        bool IsLoaderWorks = false;
-        void drawLoader();
-        void setLoaderAnimation(int speed);
-        void stopLoaderAnimation();
-        void destroyLoaderTexture();
-        static unsigned int nextLoadAniFrame(unsigned int x, void *p);
-        void loaderTick();
-        bool doLoaderStep = false;
-        void loaderStep();
-        SDL_TimerID loader_timer_id = 0;
+        int     m_loaderSpeed = 32;
+        bool    m_loaderIsWorks = false;
+        void    drawLoader();
+        void    setLoaderAnimation(int speed);
+        void    stopLoaderAnimation();
+        void    destroyLoaderTexture();
+        static  unsigned int nextLoadAniFrame(unsigned int x, void *p);
+        void    loaderTick();
+        bool    m_loaderDoStep = false;
+        void    loaderStep();
+        SDL_TimerID m_loader_timer_id = 0;
         /**************LoadScreen**************/
 
         /*!
@@ -200,14 +199,14 @@ class LevelScene : public Scene
         LevelData *levelData();
 
         //! Queue of blocks which are requires transformation
-        std::deque<transformTask_block > block_transforms;
+        std::deque<transformTask_block > m_blockTransforms;
 
         /**********************Switch blocks*************************/
         typedef std::vector<LVL_Block *>                    BlocksList;
         typedef std::unordered_map<uint32_t, BlocksList >   SwitchBlocksMap;
 
         //! Table of registered switchable blocks per SwitchID
-        SwitchBlocksMap switch_blocks;
+        SwitchBlocksMap     m_switchBlocks;
 
         /*!
          * \brief Toggles switch by SwitchID
@@ -222,21 +221,18 @@ class LevelScene : public Scene
         bool lua_switchState(uint32_t switch_id);
 
         //! States of the SwitchID's, Has no effect on switchable blocks, used only to tell Lua scripts which current state of the switches now is
-        std::vector<bool> switch_states;
+        std::vector<bool>       m_switchStates;
         /**********************Switch blocks*************************/
         /*************************Character switchers*************************/
-        CharacterSwitcherEngine character_switchers;
+        CharacterSwitcherEngine m_characterSwitchers;
         /*************************Character switchers*************************/
 
         /**********************NPC Management*********************/
-        std::vector<LVL_Npc * > active_npcs;
-        std::vector<LVL_Npc * > dead_npcs;
+        std::vector<LVL_Npc * > m_npcActive;
+        std::vector<LVL_Npc * > m_npcDead;
         /**********************NPC Management*********************/
-
-        std::vector<LVL_Player * > dead_players;
-
-        std::vector<LVL_Block * > fading_blocks;
-
+        std::vector<LVL_Player * >  m_playersDead;
+        std::vector<LVL_Block * >   m_blocksInFade;
         /*********************Item placing**********************/
         /*********************Initial*placing*******************/
         void placeBlock(LevelBlock& blockData);
@@ -254,10 +250,10 @@ class LevelScene : public Scene
         };
         enum NpcSpawnDirection
         {
-            SPAWN_LEFT = 2,
+            SPAWN_LEFT  = 2,
             SPAWN_RIGHT = 4,
-            SPAWN_UP = 1,
-            SPAWN_DOWN = 3,
+            SPAWN_UP    = 1,
+            SPAWN_DOWN  = 3,
         };
         LVL_Block *spawnBlock(const LevelBlock &blockData);
         LVL_Bgo   *spawnBGO(const LevelBGO &bgoData);
@@ -265,31 +261,31 @@ class LevelScene : public Scene
         /*******************************************************/
 
         /********************Interprocess Stuff*****************/
-        bool       placingMode;
-        int        placingMode_item_type;
-        LevelBlock placingMode_block;
-        LevelBGO   placingMode_bgo;
-        LevelNPC   placingMode_npc;
-        PGE_PointF placingMode_renderAt;
-        PGE_PointF placingMode_renderOffset;
-        PGE_PointF placingMode_drawSize;
+        bool       m_placingMode;
+        int        m_placingMode_item_type;
+        LevelBlock m_placingMode_block;
+        LevelBGO   m_placingMode_bgo;
+        LevelNPC   m_placingMode_npc;
+        PGE_PointF m_placingMode_renderAt;
+        PGE_PointF m_placingMode_renderOffset;
+        PGE_PointF m_placingMode_drawSize;
         /********************Rect***********************/
-        bool       placingMode_sizableBlock;
-        bool       placingMode_rect_draw;
-        PGE_PointF placingMode_drawBegin;
-        PGE_PointF placingMode_drawEnd;
+        bool       m_placingMode_sizableBlock;
+        bool       m_placingMode_rect_draw;
+        PGE_PointF m_placingMode_drawBegin;
+        PGE_PointF m_placingMode_drawEnd;
         /********************Rect***********************/
 
         /********************Placing element's texture***********************/
-        bool        placingMode_animated;
-        int         placingMode_animatorID;
-        PGE_Texture placingMode_texture;
+        bool        m_placingMode_animated;
+        int         m_placingMode_animatorID;
+        PGE_Texture m_placingMode_texture;
         /********************Placing element's texture***********************/
 
-        void       process_InterprocessCommands();
+        void        process_InterprocessCommands();
 
-        void       drawPlacingItem();
-        void       placeItemByMouse(int x, int y);
+        void        drawPlacingItem();
+        void        placeItemByMouse(int x, int y);
         /*******************************************************/
 
         /*********************Item placing**end*****************/
@@ -297,31 +293,36 @@ class LevelScene : public Scene
         void destroyBlock(LVL_Block *&_block);
         void setGameState(EpisodeState *_gameState);
 
-        EventQueue<LevelScene > system_events;
+        EventQueue<LevelScene > m_systemEvents;
 
-        LVL_Section *getSection(int sct);
-        EpisodeState *getGameState();
+        LVL_Section     *getSection(int sct);
+        EpisodeState    *getGameState();
 
         bool isVizibleOnScreen(PGE_RectF &rect);
         bool isVizibleOnScreen(PGE_Phys_Object::Momentum &momentum);
         bool isVizibleOnScreen(double x, double y, double w, double h);
 
     private:
-        LevelData data;
+        LevelData m_data;
 
-        EpisodeState *gameState;
-        std::string errorMsg;
+        EpisodeState    *m_gameState = nullptr;
+        std::string     m_errorMsg;
 
-        bool frameSkip;
+        bool            m_frameSkip;
 
         typedef VPtrList<PGE_LevelCamera>   LVL_CameraList;
         typedef VPtrList<LVL_Section>       LVL_SectionsList;
 
-        LVL_CameraList      cameras;
-        LVL_SectionsList    sections;
+    public:
+        bool m_blinkStateFlag = false;
+
+    private:
+        LVL_CameraList      m_cameras;
+        LVL_SectionsList    m_sections;
+
 
     public:
-        std::vector<lua_LevelPlayerState>   player_states;
+        std::vector<lua_LevelPlayerState>   m_playerStates;
 
         typedef std::vector<LVL_Player * >  LVL_PlayersArray;
         typedef std::vector<LVL_Block * >   LVL_BlocksArray;
@@ -330,15 +331,15 @@ class LevelScene : public Scene
         typedef std::vector<LVL_Warp * >    LVL_WarpsArray;
         typedef std::vector<LVL_PhysEnv * > LVL_PhysEnvsArray;
 
-        LVL_LayerEngine     layers;
-        LVL_EventEngine     events;
+        LVL_LayerEngine     m_layers;
+        LVL_EventEngine     m_events;
 
-        LVL_PlayersArray    players;
-        LVL_BlocksArray     blocks;
-        LVL_BgosArray       bgos;
-        LVL_NpcsArray       npcs;
-        LVL_WarpsArray      warps;
-        LVL_PhysEnvsArray   physenvs;
+        LVL_PlayersArray    m_itemsPlayers;
+        LVL_BlocksArray     m_itemsBlocks;
+        LVL_BgosArray       m_itemsBgo;
+        LVL_NpcsArray       m_itemsNpc;
+        LVL_WarpsArray      m_itemsWarps;
+        LVL_PhysEnvsArray   m_itemsPhysEnvs;
 
     private:
         /*****************Pause Menu*******************/
@@ -360,25 +361,26 @@ class LevelScene : public Scene
             PAUSE_3_Replay,
             PAUSE_3_Exit
         };
-        int         _pauseMenuID;
+
+        int         m_pauseMenuID;
         bool        m_isPauseMenu;
         PGE_MenuBox m_pauseMenu;
-        bool        _pauseMenu_opened;
+        bool        m_pauseMenu_opened;
         void initPauseMenu1();
         void initPauseMenu2();
         void initPauseMenu3();
         void processPauseMenu();
         /*****************Pause Menu**end**************/
 
-        bool debug_player_jumping;
-        bool debug_player_onground;
-        int  debug_player_foots;
-        int  debug_render_delay;
-        int  debug_phys_delay;
-        int  debug_event_delay;
+        bool m_debug_player_jumping = false;
+        bool m_debug_player_onground= false;
+        int  m_debug_player_foots   = 0;
+        int  m_debug_render_delay   = 0;
+        int  m_debug_phys_delay     = 0;
+        int  m_debug_event_delay    = 0;
 
     public:
-        double globalGravity;
+        double m_globalGravity = 1.0;
         void processPhysics(double ticks);
         void processAllCollisions();
 
@@ -401,10 +403,10 @@ class LevelScene : public Scene
         LVL_BgosArray   &getBGOs();
 
     private:
-        IndexTree tree;
-        std::vector<PGE_Texture > textures_bank;
+        IndexTree                   m_tree;
+        std::vector<PGE_Texture >   m_texturesBank;
 
-        LuaLevelEngine luaEngine;
+        LuaLevelEngine              m_luaEngine;
 };
 
 

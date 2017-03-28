@@ -38,6 +38,6 @@ void LVL_Warp::init()
     setPos(data.ix, data.iy);
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
-    m_scene->layers.registerItem(data.layer, this);
+    m_scene->m_layers.registerItem(data.layer, this);
     m_momentum.saveOld();
 }

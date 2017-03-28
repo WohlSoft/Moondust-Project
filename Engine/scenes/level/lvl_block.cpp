@@ -75,7 +75,7 @@ void LVL_Block::init(bool force)
         data = dataInitial;
     }
 
-    m_scene->layers.registerItem(data.layer, this);
+    m_scene->m_layers.registerItem(data.layer, this);
     transformTo_x(data.id);
     _isInited = true;
     m_momentum.saveOld();
@@ -91,7 +91,7 @@ void LVL_Block::transformTo(unsigned long id, int type)
         t.block = this;
         t.id = id;
         t.type = type;
-        m_scene->block_transforms.push_back(t);
+        m_scene->m_blockTransforms.push_back(t);
     }
 
     if(type == 1) //Other NPC
@@ -143,8 +143,8 @@ void LVL_Block::transformTo_x(unsigned long id)
         if(setup->setup.switch_Block &&
            (((setup->setup.switch_ID != newSetup->setup.switch_ID) && (newSetup->setup.switch_Block)) || (!newSetup->setup.switch_Block)))
         {
-            LevelScene::SwitchBlocksMap::iterator i = m_scene->switch_blocks.find(setup->setup.switch_ID);
-            if(i != m_scene->switch_blocks.end())
+            LevelScene::SwitchBlocksMap::iterator i = m_scene->m_switchBlocks.find(setup->setup.switch_ID);
+            if(i != m_scene->m_switchBlocks.end())
             {
                 std::remove(i->second.begin(), i->second.end(), this);
             }
@@ -170,11 +170,11 @@ void LVL_Block::transformTo_x(unsigned long id)
         else
             z_index = LevelScene::zOrder.blockBack1;
 
-        m_scene->zCounter += 0.0000000000001L;
-        z_index += m_scene->zCounter;
+        m_scene->m_zCounter += 0.0000000000001L;
+        z_index += m_scene->m_zCounter;
 
-        if(m_scene->zCounter >= 1.0L)
-            m_scene->zCounter = 0.0L;
+        if(m_scene->m_zCounter >= 1.0L)
+            m_scene->m_zCounter = 0.0L;
     }
 
     bool do_init_player_switch = ((setup->animator_ID <= 0) && (setup->setup.plSwitch_Button));
@@ -282,27 +282,27 @@ void LVL_Block::transformTo_x(unsigned long id)
     // Register switch block
     if(setup->setup.switch_Block)
     {
-        LevelScene::SwitchBlocksMap::iterator i = m_scene->switch_blocks.find(setup->setup.switch_ID);
-        if(i == m_scene->switch_blocks.end())
+        LevelScene::SwitchBlocksMap::iterator i = m_scene->m_switchBlocks.find(setup->setup.switch_ID);
+        if(i == m_scene->m_switchBlocks.end())
         {
-            m_scene->switch_blocks.insert({setup->setup.switch_ID, LevelScene::BlocksList()});
-            i = m_scene->switch_blocks.find(setup->setup.switch_ID);
-            SDL_assert(i != m_scene->switch_blocks.end());
+            m_scene->m_switchBlocks.insert({setup->setup.switch_ID, LevelScene::BlocksList()});
+            i = m_scene->m_switchBlocks.find(setup->setup.switch_ID);
+            SDL_assert(i != m_scene->m_switchBlocks.end());
         }
         i->second.push_back(this);
 
         //Fill switch states until it will be fited to defined SwitchID
-        while(static_cast<unsigned int>(m_scene->switch_states.size()) <= setup->setup.switch_ID)
-            m_scene->switch_states.push_back(false);
+        while(static_cast<unsigned int>(m_scene->m_switchStates.size()) <= setup->setup.switch_ID)
+            m_scene->m_switchStates.push_back(false);
     }
 
     //Register player switch block if needed
     if(do_init_player_switch)
-        m_scene->character_switchers.buildSwitch(*setup);
+        m_scene->m_characterSwitchers.buildSwitch(*setup);
 
     //Register player filter block if needed
     if(do_init_player_filter)
-        m_scene->character_switchers.buildBrick(*setup);
+        m_scene->m_characterSwitchers.buildBrick(*setup);
 }
 
 
@@ -593,8 +593,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
                 transformTo(static_cast<unsigned long>(setup->setup.transfororm_on_hit_into), 2);
         }
 
-        if(!m_scene->player_states.empty())
-            m_scene->player_states[0].appendCoins(1);
+        if(!m_scene->m_playerStates.empty())
+            m_scene->m_playerStates[0].appendCoins(1);
 
         //! TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
         {
@@ -713,16 +713,16 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(triggerEvent)
     {
         //Register block as "destroyed" to be able turn it into it's initial state
-        m_scene->layers.registerItem(DESTROYED_LAYER_NAME, this);
+        m_scene->m_layers.registerItem(DESTROYED_LAYER_NAME, this);
     }
 
     if(triggerEvent && (!data.event_hit.empty()))
-        m_scene->events.triggerEvent(data.event_hit);
+        m_scene->m_events.triggerEvent(data.event_hit);
 
     if(doFade)
     {
         if(!isFading())
-            m_scene->fading_blocks.push_back(this);
+            m_scene->m_blocksInFade.push_back(this);
 
         fadeOffset = 0.0;
         setFade(5, 1.0, 0.07);
@@ -762,17 +762,17 @@ void LVL_Block::destroy(bool playEffect)
     m_blocked[2] = Block_NONE;
     m_destroyed = true;
     std::string oldLayer = data.layer;
-    m_scene->layers.removeRegItem(data.layer, this);
+    m_scene->m_layers.removeRegItem(data.layer, this);
     data.layer = DESTROYED_LAYER_NAME;
-    m_scene->layers.registerItem(data.layer, this);
+    m_scene->m_layers.registerItem(data.layer, this);
 
     if(!data.event_destroy.empty())
-        m_scene->events.triggerEvent(data.event_destroy);
+        m_scene->m_events.triggerEvent(data.event_destroy);
 
     if(!data.event_emptylayer.empty())
     {
-        if(m_scene->layers.isEmpty(oldLayer))
-            m_scene->events.triggerEvent(data.event_emptylayer);
+        if(m_scene->m_layers.isEmpty(oldLayer))
+            m_scene->m_events.triggerEvent(data.event_emptylayer);
     }
 }
 

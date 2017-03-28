@@ -94,7 +94,7 @@ int LVL_Npc::lua_activate_neighbours()
         if(!body->isActivated)
         {
             body->Activate();
-            m_scene->active_npcs.push_back(body);
+            m_scene->m_npcActive.push_back(body);
             found++;
         }
     }

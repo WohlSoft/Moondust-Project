@@ -4,6 +4,7 @@
 - Added an ability to skip the long path opening animation by hit of the pause key on the world map
 - Accuracy of the path opener has been improved and added support for debug rendering for it on the world map
 - Added a smooth camera following to opening path cells on the world map
+- Fixed the blinking of the playable character while it shown on multiple cameras
 
 0.2.6
 - Improved testing of the renderers supports to avoid accidental running of the unsupported renderer

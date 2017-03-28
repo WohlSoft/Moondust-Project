@@ -119,7 +119,7 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     if(m_paused && !force)
         return;
 
-    double G = phys_setup.gravityScale * m_scene->globalGravity;
+    double G = phys_setup.gravityScale * m_scene->m_globalGravity;
     double accelCof = ticks / 1000.0;
     double Xmod = 0.0;
 

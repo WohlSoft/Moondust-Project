@@ -25,46 +25,46 @@
 void LevelScene::collectGarbageNPCs()
 {
     std::vector<LVL_Npc *> stillVizible;//Avoid camera crash (which uses a cached render list)
-    while(!dead_npcs.empty())
+    while(!m_npcDead.empty())
     {
-        LVL_Npc *corpse = dead_npcs.back();
-        dead_npcs.pop_back();
+        LVL_Npc *corpse = m_npcDead.back();
+        m_npcDead.pop_back();
         if(corpse->isInRenderList())
         {
             stillVizible.push_back(corpse);//Avoid camera crash (which uses a cached render list)
             continue;
         }
 
-        active_npcs.erase(std::remove(active_npcs.begin(), active_npcs.end(), corpse), active_npcs.end());
-        npcs.erase(std::remove(npcs.begin(), npcs.end(), corpse), npcs.end());
-        layers.removeRegItem(corpse->data.layer, corpse);
-        luaEngine.destoryLuaNpc(corpse);
+        m_npcActive.erase(std::remove(m_npcActive.begin(), m_npcActive.end(), corpse), m_npcActive.end());
+        m_itemsNpc.erase(std::remove(m_itemsNpc.begin(), m_itemsNpc.end(), corpse), m_itemsNpc.end());
+        m_layers.removeRegItem(corpse->data.layer, corpse);
+        m_luaEngine.destoryLuaNpc(corpse);
     }
-    dead_npcs.insert(dead_npcs.end(), stillVizible.begin(), stillVizible.end());
+    m_npcDead.insert(m_npcDead.end(), stillVizible.begin(), stillVizible.end());
 }
 
 void LevelScene::collectGarbagePlayers()
 {
     std::vector<LVL_Player *> stillVizible;//Avoid camera crash (which uses a cached render list)
-    while(!dead_players.empty())
+    while(!m_playersDead.empty())
     {
-        LVL_Player *corpse = dead_players.back();
-        dead_players.pop_back();
+        LVL_Player *corpse = m_playersDead.back();
+        m_playersDead.pop_back();
         if(corpse->isInRenderList())
         {
             stillVizible.push_back(corpse);//Avoid camera crash (which uses a cached render list)
             continue;
         }
-        LVL_Player::deathReason reason = corpse->kill_reason;
-        players.erase(std::remove(players.begin(), players.end(), corpse), players.end());
-        luaEngine.destoryLuaPlayer(corpse);
+        LVL_Player::deathReason reason = corpse->m_killReason;
+        m_itemsPlayers.erase(std::remove(m_itemsPlayers.begin(), m_itemsPlayers.end(), corpse), m_itemsPlayers.end());
+        m_luaEngine.destoryLuaPlayer(corpse);
 
         switch(reason)
         {
         case LVL_Player::deathReason::DEAD_burn:
         case LVL_Player::deathReason::DEAD_fall:
         case LVL_Player::deathReason::DEAD_killed:
-            if(players.size() > 0)
+            if(m_itemsPlayers.size() > 0)
                 PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
             else
             {
@@ -77,8 +77,8 @@ void LevelScene::collectGarbagePlayers()
             PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
     }
 
-    dead_players.insert(dead_players.end(), stillVizible.begin(), stillVizible.end());
-    if(players.empty())
+    m_playersDead.insert(m_playersDead.end(), stillVizible.begin(), stillVizible.end());
+    if(m_itemsPlayers.empty())
     {
         PGE_MusPlayer::stop();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);

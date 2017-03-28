@@ -49,7 +49,7 @@ void LVL_Npc::init()
     }
 
     m_isInited = true;
-    m_scene->layers.registerItem(data.layer, this);
+    m_scene->m_layers.registerItem(data.layer, this);
     m_momentum.saveOld();
 }
 
@@ -96,9 +96,9 @@ void LVL_Npc::transformTo(unsigned long id, int type)
         if(transformedFromBlock)
         {
             def = transformedFromBlock->data;
-            m_scene->layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
+            m_scene->m_layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
             transformedFromBlock->data.layer = data.layer;
-            m_scene->layers.registerItem(data.layer, transformedFromBlock);
+            m_scene->m_layers.registerItem(data.layer, transformedFromBlock);
             transformedFromBlock->setPos(round(posX()), round(posY()));
             transformedFromBlock->setDestroyed(false);
             transformedFromBlock->transformTo(id, 2);
@@ -172,11 +172,11 @@ void LVL_Npc::transformTo_x(unsigned long id)
         targetZ = LevelScene::zOrder.npcStd;
 
     z_index = targetZ + static_cast<long double>(setup->setup.z_offset);
-    m_scene->zCounter += 0.0000000000001L;
-    z_index += m_scene->zCounter;
+    m_scene->m_zCounter += 0.0000000000001L;
+    z_index += m_scene->m_zCounter;
 
-    if(m_scene->zCounter >= 1.0L)
-        m_scene->zCounter = 0.0L;
+    if(m_scene->m_zCounter >= 1.0L)
+        m_scene->m_zCounter = 0.0L;
 
     int tID = ConfigManager::getNpcTexture(_npc_id);
     if(tID >= 0)

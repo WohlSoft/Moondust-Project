@@ -33,17 +33,17 @@ bool LevelScene::setEntrance(unsigned long entr)
     player_defs.clear();
     unsigned int plr = 1;
 
-    for(unsigned long &xxx : gameState->game_state.currentCharacter)
+    for(unsigned long &xxx : m_gameState->game_state.currentCharacter)
     {
         LVL_PlayerDef def;
         def.setPlayerID(static_cast<int>(plr));
         def.setCharacterID(xxx);
 
-        for(size_t j = 0; j < gameState->game_state.characterStates.size(); j++)
+        for(size_t j = 0; j < m_gameState->game_state.characterStates.size(); j++)
         {
-            if(gameState->game_state.characterStates[j].id == xxx)
+            if(m_gameState->game_state.characterStates[j].id == xxx)
             {
-                def.setState(gameState->game_state.characterStates[j].state);
+                def.setState(m_gameState->game_state.characterStates[j].state);
                 break;
             }
         }
@@ -52,19 +52,19 @@ bool LevelScene::setEntrance(unsigned long entr)
         plr++;
     }
 
-    if((entr == 0) || (entr > static_cast<unsigned long>(data.doors.size())))
+    if((entr == 0) || (entr > static_cast<unsigned long>(m_data.doors.size())))
     {
-        isWarpEntrance = false;
+        m_isWarpEntrance = false;
         bool found = false;
 
-        for(size_t i = 0, j = 0; (i < data.players.size()) && (int32_t(j) < numberOfPlayers); i++)
+        for(size_t i = 0, j = 0; (i < m_data.players.size()) && (int32_t(j) < m_numberOfPlayers); i++)
         {
-            if(data.players[i].w == 0 && data.players[i].h == 0)
+            if(m_data.players[i].w == 0 && m_data.players[i].h == 0)
                 continue; //Skip empty points
 
-            LVL_PlayerDef d = player_defs[data.players[i].id];
-            cameraStart.setX(data.players[i].x + (data.players[i].w / 2) - (d.width() / 2));
-            cameraStart.setY(data.players[i].y +  data.players[i].h    -  d.height());
+            LVL_PlayerDef d = player_defs[m_data.players[i].id];
+            m_cameraStart.setX(m_data.players[i].x + (m_data.players[i].w / 2) - (d.width() / 2));
+            m_cameraStart.setY(m_data.players[i].y +  m_data.players[i].h    -  d.height());
             found = true;
             j++;
             break;
@@ -72,7 +72,7 @@ bool LevelScene::setEntrance(unsigned long entr)
 
         if(!found)
         {
-            exitLevelCode = LvlExit::EXIT_Error;
+            m_exitLevelCode = LvlExit::EXIT_Error;
             PGE_MsgBox msgBox(NULL, "ERROR:\nCan't start level without player's start point.\nPlease set a player's start point and start level again.",
                               PGE_MsgBox::msg_error);
             msgBox.exec();
@@ -83,16 +83,16 @@ bool LevelScene::setEntrance(unsigned long entr)
     }
     else
     {
-        for(size_t i = 0; i < data.doors.size(); i++)
+        for(size_t i = 0; i < m_data.doors.size(); i++)
         {
-            if(data.doors[i].meta.array_id == static_cast<unsigned int>(entr))
+            if(m_data.doors[i].meta.array_id == static_cast<unsigned int>(entr))
             {
-                isWarpEntrance = true;
-                startWarp = data.doors[i];
-                cameraStartDirected = (startWarp.type == 1);
-                cameraStartDirection = startWarp.odirect;
+                m_isWarpEntrance = true;
+                m_warpInitial = m_data.doors[i];
+                m_cameraStartDirected = (m_warpInitial.type == 1);
+                m_cameraStartDirection = m_warpInitial.odirect;
 
-                for(int i = 1; i <= numberOfPlayers; i++)
+                for(int i = 1; i <= m_numberOfPlayers; i++)
                 {
                     LVL_PlayerDef d = player_defs[static_cast<unsigned int>(i)];
                     int w = d.width(), h = d.height();
@@ -101,17 +101,17 @@ bool LevelScene::setEntrance(unsigned long entr)
                     {
                         PlayerPoint newPoint = getStartLocation(i);
                         newPoint.id = static_cast<unsigned>(i);
-                        newPoint.x = startWarp.ox;
-                        newPoint.y = startWarp.oy;
+                        newPoint.x = m_warpInitial.ox;
+                        newPoint.y = m_warpInitial.oy;
                         newPoint.w = w;
                         newPoint.h = h;
                         newPoint.direction = 1;
                         this->addPlayer(newPoint, true,
-                        startWarp.type, startWarp.odirect,
-                        startWarp.cannon_exit, startWarp.cannon_exit_speed);
-                        isWarpEntrance = false;
+                        m_warpInitial.type, m_warpInitial.odirect,
+                        m_warpInitial.cannon_exit, m_warpInitial.cannon_exit_speed);
+                        m_isWarpEntrance = false;
                     }, 1000);
-                    system_events.events.push_back(event3);
+                    m_systemEvents.events.push_back(event3);
                 }
 
                 return true;
@@ -119,35 +119,35 @@ bool LevelScene::setEntrance(unsigned long entr)
         }
     }
 
-    isWarpEntrance = false;
+    m_isWarpEntrance = false;
     PGE_MsgBox msgBox(NULL, "ERROR:\nTarget section is not found.\nMayby level is empty.",
                       PGE_MsgBox::msg_error);
     msgBox.exec();
     //Error, sections is not found
-    exitLevelCode = LvlExit::EXIT_Error;
+    m_exitLevelCode = LvlExit::EXIT_Error;
     return false;
 }
 
 PlayerPoint LevelScene::getStartLocation(int playerID)
 {
     //If no placed player star points
-    if(data.players.empty())
+    if(m_data.players.empty())
     {
         PlayerPoint point;
 
-        if(this->isWarpEntrance)
+        if(this->m_isWarpEntrance)
         {
             //Construct spawn point with basing on camera position
-            point.x = static_cast<long>(cameraStart.x());
-            point.y = static_cast<long>(cameraStart.x());
+            point.x = static_cast<long>(m_cameraStart.x());
+            point.y = static_cast<long>(m_cameraStart.x());
             point.w = 20;
             point.h = 60;
         }
-        else if(!data.sections.empty())
+        else if(!m_data.sections.empty())
         {
             //Construct point based on first section boundary coordinates
-            point.x = data.sections[0].size_left + 20;
-            point.y = data.sections[0].size_top + 60;
+            point.x = m_data.sections[0].size_left + 20;
+            point.y = m_data.sections[0].size_top + 60;
             point.w = 20;
             point.h = 60;
         }
@@ -165,7 +165,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
         return point;
     }
 
-    for(PlayerPoint &p : data.players)
+    for(PlayerPoint &p : m_data.players)
     {
         //Return player ID specific spawn point
         if(p.id == unsigned(playerID))
@@ -176,19 +176,19 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
         }
     }
 
-    if(playerID <= int32_t(data.players.size()))
+    if(playerID <= int32_t(m_data.players.size()))
     {
-        PlayerPoint p = data.players[playerID - 1];
+        PlayerPoint p = m_data.players[playerID - 1];
 
         //Return spawn point by array index if not out of range [Not null]
         if((p.w != 0) && (p.h != 0))
         {
             p.id = playerID;
-            return data.players[playerID - 1];
+            return m_data.players[playerID - 1];
         }
     }
 
-    for(PlayerPoint &p : data.players)
+    for(PlayerPoint &p : m_data.players)
     {
         //Return first not null point
         if((p.w != 0) && (p.h != 0))
@@ -199,7 +199,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
     }
 
     //Return first presented point entry even if null
-    return data.players.front();
+    return m_data.players.front();
 }
 
 
@@ -209,27 +209,27 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
 bool LevelScene::loadConfigs()
 {
     bool success = true;
-    std::string musIni = data.meta.path + "/music.ini";
-    std::string sndIni = data.meta.path + "/sounds.ini";
+    std::string musIni = m_data.meta.path + "/music.ini";
+    std::string sndIni = m_data.meta.path + "/sounds.ini";
 
     if(ConfigManager::music_lastIniFile != musIni)
     {
         ConfigManager::loadDefaultMusics();
-        ConfigManager::loadMusic(data.meta.path + "/", musIni, true);
+        ConfigManager::loadMusic(m_data.meta.path + "/", musIni, true);
     }
 
     if(ConfigManager::sound_lastIniFile != sndIni)
     {
         ConfigManager::loadDefaultSounds();
-        ConfigManager::loadSound(data.meta.path + "/", sndIni, true);
+        ConfigManager::loadSound(m_data.meta.path + "/", sndIni, true);
 
         if(ConfigManager::soundIniChanged())
             ConfigManager::buildSoundIndex();
     }
 
     //Set paths
-    std::string metaPath  = data.meta.path;
-    std::string metaFName = data.meta.filename;
+    std::string metaPath  = m_data.meta.path;
+    std::string metaFName = m_data.meta.filename;
     ConfigManager::Dir_Blocks.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBlock());
     ConfigManager::Dir_BGO.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBGO());
     ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC());
@@ -244,51 +244,51 @@ bool LevelScene::loadConfigs()
 
     if(!success)
     {
-        exitLevelCode = LvlExit::EXIT_Error;
+        m_exitLevelCode = LvlExit::EXIT_Error;
         goto abortInit;
     }
 
     success = ConfigManager::loadLevelBGO();    //!< BGO
     if(!success)
     {
-        exitLevelCode = LvlExit::EXIT_Error;
+        m_exitLevelCode = LvlExit::EXIT_Error;
         goto abortInit;
     }
 
     success = ConfigManager::loadLevelNPC();  //!< NPC
     if(!success)
     {
-        exitLevelCode = LvlExit::EXIT_Error;
+        m_exitLevelCode = LvlExit::EXIT_Error;
         goto abortInit;
     }
 
     success = ConfigManager::loadLevelBackG();  //!< Backgrounds
     if(!success)
     {
-        exitLevelCode = LvlExit::EXIT_Error;
+        m_exitLevelCode = LvlExit::EXIT_Error;
         goto abortInit;
     }
 
     success = ConfigManager::loadLevelEffects();  //!< Effects
     if(!success)
     {
-        exitLevelCode = LvlExit::EXIT_Error;
+        m_exitLevelCode = LvlExit::EXIT_Error;
         goto abortInit;
     }
 
     //Validate all playable characters until use game state!
-    if(gameState)
+    if(m_gameState)
     {
-        for(int i = 1; i <= numberOfPlayers; i++)
+        for(int i = 1; i <= m_numberOfPlayers; i++)
         {
-            PlayerState st = gameState->getPlayerState(i);
+            PlayerState st = m_gameState->getPlayerState(i);
 
             if(!ConfigManager::playable_characters.contains(st.characterID))
             {
                 //% "Invalid playable character ID"
                 _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_CHARACTER") + " "
                                + std::to_string(st.characterID);
-                errorMsg = _errorString;
+                m_errorMsg = _errorString;
                 success = false;
                 break;
             }
@@ -297,14 +297,14 @@ bool LevelScene::loadConfigs()
                 //% "Invalid playable character state ID"
                 _errorString = qtTrId("ERROR_LVL_UNKNOWN_PL_STATE") + " "
                                + std::to_string(st.stateID);
-                errorMsg = _errorString;
+                m_errorMsg = _errorString;
                 success = false;
                 break;
             }
         }
     }
 
-    if(!success) exitLevelCode = LvlExit::EXIT_Error;
+    if(!success) m_exitLevelCode = LvlExit::EXIT_Error;
 
 abortInit:
     return success;
@@ -313,17 +313,17 @@ abortInit:
 bool LevelScene::init_items()
 {
     //Global script path
-    luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    m_luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     //Episode path
-    luaEngine.appendLuaScriptPath(data.meta.path);
+    m_luaEngine.appendLuaScriptPath(m_data.meta.path);
     //Level custom path
-    luaEngine.appendLuaScriptPath(data.meta.path + "/" + data.meta.filename);
-    luaEngine.setFileSearchPath(data.meta.path + "/" + data.meta.filename);
-    luaEngine.setCoreFile(":/script/maincore_level.lua");
-    luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
-    luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
-    luaEngine.setPlayerBaseClassPath(":/script/player/maincore_player.lua");
-    luaEngine.setErrorReporterFunc([this](const std::string &errorMessage, const std::string &stacktrace)->void
+    m_luaEngine.appendLuaScriptPath(m_data.meta.path + "/" + m_data.meta.filename);
+    m_luaEngine.setFileSearchPath(m_data.meta.path + "/" + m_data.meta.filename);
+    m_luaEngine.setCoreFile(":/script/maincore_level.lua");
+    m_luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
+    m_luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
+    m_luaEngine.setPlayerBaseClassPath(":/script/player/maincore_player.lua");
+    m_luaEngine.setErrorReporterFunc([this](const std::string &errorMessage, const std::string &stacktrace)->void
     {
         pLogWarning("Lua-Error: ");
         pLogWarning("Error Message: %s", errorMessage.data());
@@ -331,9 +331,9 @@ bool LevelScene::init_items()
         _errorString = std::string("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!";
         //return false;
     });
-    luaEngine.init();
+    m_luaEngine.init();
 
-    if(luaEngine.shouldShutdown())
+    if(m_luaEngine.shouldShutdown())
         return false;
 
     for(unsigned long i = 1; i < ConfigManager::lvl_npc_indexes.size(); i++)
@@ -342,7 +342,7 @@ bool LevelScene::init_items()
         std::string scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(npc.setup.algorithm_script);
 
         if((!scriptPath.empty()) && (Files::fileExists(scriptPath)))
-            luaEngine.loadNPCClass(npc.setup.id, scriptPath);
+            m_luaEngine.loadNPCClass(npc.setup.id, scriptPath);
     }
 
     for(unsigned long i = 1; i < ConfigManager::playable_characters.size(); i++)
@@ -351,58 +351,58 @@ bool LevelScene::init_items()
         std::string scriptPath = ConfigManager::Dir_PlayerScript.getCustomFile(player.script);
 
         if((!scriptPath.empty()) && (Files::fileExists(scriptPath)))
-            luaEngine.loadPlayerClass(player.id, scriptPath);
+            m_luaEngine.loadPlayerClass(player.id, scriptPath);
     }
 
-    zCounter = 0.0L;
+    m_zCounter = 0.0L;
     D_pLogDebug("Build sections");
 
-    for(size_t i = 0; i < data.sections.size(); i++)
+    for(size_t i = 0; i < m_data.sections.size(); i++)
     {
         LVL_Section sct;
-        sections.push_back(sct);
-        sections.back().setData(data.sections[i]);
-        sections.back().setMusicRoot(data.meta.path);
+        m_sections.push_back(sct);
+        m_sections.back().setData(m_data.sections[i]);
+        m_sections.back().setMusicRoot(m_data.meta.path);
     }
 
     D_pLogDebug("Create cameras");
 
     //quit from game if window was closed
-    if(!isLevelContinues) return false;
+    if(!m_isLevelContinues) return false;
 
-    for(int i = 0; i < numberOfPlayers; i++)
+    for(int i = 0; i < m_numberOfPlayers; i++)
     {
         int width  = PGE_Window::Width;
-        int height = PGE_Window::Height / numberOfPlayers;
+        int height = PGE_Window::Height / m_numberOfPlayers;
         LVL_PlayerDef d = player_defs[static_cast<const unsigned int>(i + 1)];
 
-        if(isWarpEntrance)
+        if(m_isWarpEntrance)
         {
-            cameraStart.setX(startWarp.ox + 16 - (d.width() / 2));
-            cameraStart.setY(startWarp.oy + 32 - d.height());
+            m_cameraStart.setX(m_warpInitial.ox + 16 - (d.width() / 2));
+            m_cameraStart.setY(m_warpInitial.oy + 32 - d.height());
 
-            if(cameraStartDirected)
+            if(m_cameraStartDirected)
             {
-                switch(startWarp.odirect)
+                switch(m_warpInitial.odirect)
                 {
                 case 2://right
-                    cameraStart.setX(startWarp.ox);
-                    cameraStart.setY(startWarp.oy + 32 - d.height());
+                    m_cameraStart.setX(m_warpInitial.ox);
+                    m_cameraStart.setY(m_warpInitial.oy + 32 - d.height());
                     break;
 
                 case 1://down
-                    cameraStart.setX(startWarp.ox + 16 - d.width() / 2);
-                    cameraStart.setY(startWarp.oy);
+                    m_cameraStart.setX(m_warpInitial.ox + 16 - d.width() / 2);
+                    m_cameraStart.setY(m_warpInitial.oy);
                     break;
 
                 case 4://left
-                    cameraStart.setX(startWarp.ox + 32 - d.width());
-                    cameraStart.setY(startWarp.oy + 32 - d.height());
+                    m_cameraStart.setX(m_warpInitial.ox + 32 - d.width());
+                    m_cameraStart.setY(m_warpInitial.oy + 32 - d.height());
                     break;
 
                 case 3://up
-                    cameraStart.setX(startWarp.ox + 16 - d.width() / 2);
-                    cameraStart.setY(startWarp.oy + 32 - d.height());
+                    m_cameraStart.setX(m_warpInitial.ox + 16 - d.width() / 2);
+                    m_cameraStart.setY(m_warpInitial.oy + 32 - d.height());
                     break;
 
                 default:
@@ -411,8 +411,8 @@ bool LevelScene::init_items()
             }
         }
 
-        int sID = findNearestSection(Maths::lRound(cameraStart.x()),
-                                     Maths::lRound(cameraStart.y()));
+        int sID = findNearestSection(Maths::lRound(m_cameraStart.x()),
+                                     Maths::lRound(m_cameraStart.y()));
         LVL_Section *t_sct = getSection(sID);
 
         if(!t_sct)
@@ -420,12 +420,12 @@ bool LevelScene::init_items()
             /*% "Fatal error: Impossible to find start section.\n"
                 "Did you placed player start point (or entrance warp point) too far off of the section(s)?" */
             _errorString = qtTrId("LVL_ERROR_NOSECTIONS");
-            errorMsg = _errorString;
+            m_errorMsg = _errorString;
             return false;
         }
 
-        double x = cameraStart.x();
-        double y = cameraStart.y();
+        double x = m_cameraStart.x();
+        double y = m_cameraStart.y();
         //Init Cameras
         PGE_LevelCamera camera(this);
         camera.init(x, y, width, height);
@@ -435,50 +435,50 @@ bool LevelScene::init_items()
         camera.changeSection(t_sct, true);
         camera.setPos(x - camera.w() / 2 + d.width() / 2,
                       y - camera.h() / 2 + d.height() / 2);
-        cameras.push_back(camera);
+        m_cameras.push_back(camera);
         lua_LevelPlayerState luaPlState(this, (i + 1));
-        player_states.push_back(luaPlState);
+        m_playerStates.push_back(luaPlState);
     }
 
     //Init data
     //blocks
-    for(size_t i = 0; i < data.blocks.size(); i++)
+    for(size_t i = 0; i < m_data.blocks.size(); i++)
     {
-        if(!isLevelContinues)
+        if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
-        placeBlock(data.blocks[i]);
+        placeBlock(m_data.blocks[i]);
     }
 
     //Build character switchers and configure switches and filters
-    character_switchers.refreshState();
+    m_characterSwitchers.refreshState();
 
     //BGO
-    for(size_t i = 0; i < data.bgo.size(); i++)
+    for(size_t i = 0; i < m_data.bgo.size(); i++)
     {
-        if(!isLevelContinues)
+        if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
-        placeBGO(data.bgo[i]);
+        placeBGO(m_data.bgo[i]);
     }
 
     //NPC
-    for(size_t i = 0; i < data.npc.size(); i++)
+    for(size_t i = 0; i < m_data.npc.size(); i++)
     {
-        if(!isLevelContinues)
+        if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
-        placeNPC(data.npc[i]);
+        placeNPC(m_data.npc[i]);
     }
 
     //BGO
-    for(size_t i = 0; i < data.doors.size(); i++)
+    for(size_t i = 0; i < m_data.doors.size(); i++)
     {
-        if(!isLevelContinues)
+        if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
         //Don't put contactable points for "level entrance" points
-        if(data.doors[i].lvl_i)
+        if(m_data.doors[i].lvl_i)
             continue;
 
         LVL_Warp *warpP;
-        LevelDoor door = data.doors[i];
+        LevelDoor door = m_data.doors[i];
         bool two_way_opposite = false;
 place_door_again:
         warpP = new LVL_Warp(this);
@@ -492,7 +492,7 @@ place_door_again:
             warpP->setParentSection(sct);
 
         warpP->_syncPosition();
-        warps.push_back(warpP);
+        m_itemsWarps.push_back(warpP);
 
         if(!two_way_opposite && door.two_way)//Place opposite entrance point
         {
@@ -506,26 +506,26 @@ place_door_again:
     }
 
     //BGO
-    for(size_t i = 0; i < data.physez.size(); i++)
+    for(size_t i = 0; i < m_data.physez.size(); i++)
     {
-        if(!isLevelContinues)
+        if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
 
         LVL_PhysEnv *physesP;
         physesP = new LVL_PhysEnv(this);
-        physesP->data = data.physez[i];
+        physesP->data = m_data.physez[i];
         physesP->init();
         physesP->_syncPosition();
-        physenvs.push_back(physesP);
+        m_itemsPhysEnvs.push_back(physesP);
     }
 
     D_pLogDebug("Total textures loaded: %d", ConfigManager::level_textures.size());
     int added_players = 0;
 
-    if(!isWarpEntrance) //Dont place players if entered through warp
-        for(int i = 1; i <= numberOfPlayers; i++)
+    if(!m_isWarpEntrance) //Dont place players if entered through warp
+        for(int i = 1; i <= m_numberOfPlayers; i++)
         {
-            if(!isLevelContinues) return false;//!< quit from game if window was closed
+            if(!m_isLevelContinues) return false;//!< quit from game if window was closed
 
             PlayerPoint startPoint = getStartLocation(i);
             startPoint.id = static_cast<unsigned int>(i);
@@ -537,35 +537,35 @@ place_door_again:
             added_players++;
         }
 
-    if(added_players <= 0 && !isWarpEntrance)
+    if(added_players <= 0 && !m_isWarpEntrance)
     {
         _errorString = "No defined players!";
-        errorMsg = _errorString;
+        m_errorMsg = _errorString;
         return false;
     }
 
     D_pLogDebug("Apply layers");
 
-    for(size_t i = 0; i < data.layers.size(); i++)
+    for(size_t i = 0; i < m_data.layers.size(); i++)
     {
-        if(data.layers[i].hidden)
-            layers.hide(data.layers[i].name, false);
+        if(m_data.layers[i].hidden)
+            m_layers.hide(m_data.layers[i].name, false);
     }
 
     D_pLogDebug("Apply Events");
 
-    for(size_t i = 0; i < data.events.size(); i++)
-        events.addSMBX64Event(data.events[i]);
+    for(size_t i = 0; i < m_data.events.size(); i++)
+        m_events.addSMBX64Event(m_data.events[i]);
 
-    isInit = true;
+    m_isInit = true;
     return true;
 }
 
 
 bool LevelScene::init()
 {
-    isInitFinished = false;
-    isInitFailed = false;
+    m_isInitFinished = false;
+    m_isInitFailed = false;
     #if 0
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext_background);
     initializer_thread = SDL_CreateThread(init_thread, "LevelInitializer", this);
@@ -587,10 +587,10 @@ bool LevelScene::init()
     init_thread(this);
     #endif
 
-    if(isInitFailed)
+    if(m_isInitFailed)
         PGE_MsgBox::error(_errorString);
 
-    return !isInitFailed;
+    return !m_isInitFailed;
 }
 
 
@@ -603,10 +603,10 @@ int LevelScene::init_thread(void *self)
         return -1;
 //  _self->isInitFailed = true;
     if(!_self->loadConfigs())
-        _self->isInitFailed = true;
+        _self->m_isInitFailed = true;
     else if(!_self->init_items())
-        _self->isInitFailed = true;
+        _self->m_isInitFailed = true;
 
-    _self->isInitFinished = true;
+    _self->m_isInitFinished = true;
     return 0;
 }

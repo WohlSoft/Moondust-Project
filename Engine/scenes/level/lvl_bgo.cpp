@@ -43,7 +43,7 @@ void LVL_Bgo::init()
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
     _isInited = true;
-    m_scene->layers.registerItem(data.layer, this);
+    m_scene->m_layers.registerItem(data.layer, this);
     m_momentum.saveOld();
 }
 
@@ -110,11 +110,11 @@ void LVL_Bgo::transformTo_x(unsigned long id)
     }
 
     z_index = targetZ;
-    m_scene->zCounter += 0.0000000000001L;
-    z_index += m_scene->zCounter;
+    m_scene->m_zCounter += 0.0000000000001L;
+    z_index += m_scene->m_zCounter;
 
-    if(m_scene->zCounter >= 1.0L)
-        m_scene->zCounter = 0.0L;
+    if(m_scene->m_zCounter >= 1.0L)
+        m_scene->m_zCounter = 0.0L;
 
     int tID = ConfigManager::getBgoTexture(data.id);
 

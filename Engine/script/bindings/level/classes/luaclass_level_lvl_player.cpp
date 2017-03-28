@@ -5,7 +5,7 @@
 
 Binding_Level_ClassWrapper_LVL_Player::Binding_Level_ClassWrapper_LVL_Player() : LVL_Player()
 {
-    isLuaPlayer = true;
+    m_isLuaPlayer = true;
 }
 
 Binding_Level_ClassWrapper_LVL_Player::~Binding_Level_ClassWrapper_LVL_Player()
@@ -78,7 +78,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
         .def("getKeyState",  &LVL_Player::lua_getKeyState)
         .def("setAnimation", &LVL_Player::lua_setAnimation)
         .def("playAnimationOnce", &LVL_Player::lua_playAnimationOnce)
-        .property("globalState",  &LVL_Player::global_state)
+        .property("globalState",  &LVL_Player::m_global_state)
         .property("health", &LVL_Player::getHealth, &LVL_Player::setHealth)
         .def("bump", &LVL_Player::bump)
         .def("setState", &LVL_Player::setState)
@@ -88,7 +88,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
         .def_readonly("stateID", &LVL_Player::stateID)
         .property("direction", &LVL_Player::direction)
         .def_readonly("onGround", &LVL_Player::onGround)
-        .def_readonly("isDucking", &LVL_Player::ducking)
+        .def_readonly("isDucking", &LVL_Player::m_ducking)
         ;
 }
 

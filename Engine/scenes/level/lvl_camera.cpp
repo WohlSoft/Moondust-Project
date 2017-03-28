@@ -229,7 +229,7 @@ void PGE_LevelCamera::updatePost(double ticks)
             if(!npc->isActivated && !npc->wasDeactivated)
             {
                 npc->Activate();
-                _scene->active_npcs.push_back(npc);
+                _scene->m_npcActive.push_back(npc);
             }
             else
             {
@@ -492,7 +492,7 @@ void PGE_LevelCamera::queryItems(PGE_RectF &zone)
 {
     double lt[2] = { zone.left(),  zone.top() };
     double rb[2] = { zone.right(), zone.bottom() };
-    _scene->tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(this));
+    _scene->m_tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(this));
 }
 
 void PGE_LevelCamera::AutoScrooler::resetAutoscroll()
@@ -722,7 +722,7 @@ bool LevelScene::isVizibleOnScreen(PGE_Phys_Object::Momentum &momentum)
 {
     PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
 
-    for(LevelScene::LVL_CameraList::iterator it = cameras.begin(); it != cameras.end(); it++)
+    for(LevelScene::LVL_CameraList::iterator it = m_cameras.begin(); it != m_cameras.end(); it++)
     {
         screen.setPos((*it).posX(), (*it).posY());
 
@@ -737,7 +737,7 @@ bool LevelScene::isVizibleOnScreen(PGE_RectF &rect)
 {
     PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
 
-    for(LevelScene::LVL_CameraList::iterator it = cameras.begin(); it != cameras.end(); it++)
+    for(LevelScene::LVL_CameraList::iterator it = m_cameras.begin(); it != m_cameras.end(); it++)
     {
         screen.setPos((*it).posX(), (*it).posY());
 
@@ -751,7 +751,7 @@ bool LevelScene::isVizibleOnScreen(double x, double y, double w, double h)
 {
     PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
 
-    for(LevelScene::LVL_CameraList::iterator it = cameras.begin(); it != cameras.end(); it++)
+    for(LevelScene::LVL_CameraList::iterator it = m_cameras.begin(); it != m_cameras.end(); it++)
     {
         screen.setPos((*it).posX(), (*it).posY());
 

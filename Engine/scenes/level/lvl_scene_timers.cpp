@@ -64,7 +64,7 @@ void LevelScene::drawLoader()
 void LevelScene::setLoaderAnimation(int speed)
 {
     using namespace lvl_scene_loader;
-    loaderSpeed = speed;
+    m_loaderSpeed = speed;
 
     if(IntProc::isEnabled())
     {
@@ -82,16 +82,16 @@ void LevelScene::setLoaderAnimation(int speed)
                                      128,
                                      0, -1, false, false);
     loading_Ani->start();
-    loader_timer_id = SDL_AddTimer(static_cast<Uint32>(speed), &LevelScene::nextLoadAniFrame, this);
-    IsLoaderWorks = true;
+    m_loader_timer_id = SDL_AddTimer(static_cast<Uint32>(speed), &LevelScene::nextLoadAniFrame, this);
+    m_loaderIsWorks = true;
 }
 
 void LevelScene::stopLoaderAnimation()
 {
     using namespace lvl_scene_loader;
-    doLoaderStep = false;
-    IsLoaderWorks = false;
-    SDL_RemoveTimer(loader_timer_id);
+    m_loaderDoStep = false;
+    m_loaderIsWorks = false;
+    SDL_RemoveTimer(m_loader_timer_id);
     render();
 
     if(loading_Ani)
@@ -118,15 +118,15 @@ unsigned int LevelScene::nextLoadAniFrame(unsigned int x, void *p)
 
 void LevelScene::loaderTick()
 {
-    doLoaderStep = true;
+    m_loaderDoStep = true;
 }
 
 void LevelScene::loaderStep()
 {
-    if(!IsLoaderWorks)
+    if(!m_loaderIsWorks)
         return;
 
-    if(!doLoaderStep)
+    if(!m_loaderDoStep)
         return;
 
     SDL_Event event; //  Events of SDL
@@ -139,7 +139,7 @@ void LevelScene::loaderStep()
         {
         case SDL_QUIT:
             //Give able to quit from game even loading process is not finished
-            isLevelContinues = false;
+            m_isLevelContinues = false;
             m_doExit = true;
             break;
         }
@@ -148,14 +148,14 @@ void LevelScene::loaderStep()
     drawLoader();
     GlRenderer::flush();
     GlRenderer::repaint();
-    loader_timer_id = SDL_AddTimer(static_cast<Uint32>(loaderSpeed),
+    m_loader_timer_id = SDL_AddTimer(static_cast<Uint32>(m_loaderSpeed),
                                    &LevelScene::nextLoadAniFrame, this);
-    doLoaderStep = false;
+    m_loaderDoStep = false;
 }
 
 LevelData *LevelScene::levelData()
 {
-    return &data;
+    return &m_data;
 }
 
 /**************************LoadAnimation**end**************************/

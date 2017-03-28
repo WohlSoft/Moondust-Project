@@ -39,7 +39,7 @@ void LevelScene::placeBlock(LevelBlock &blockData)
 
     block->data = blockData;
     block->init();
-    blocks.push_back(block);
+    m_itemsBlocks.push_back(block);
 }
 
 LVL_Block *LevelScene::spawnBlock(const LevelBlock &blockData)
@@ -56,15 +56,15 @@ LVL_Block *LevelScene::spawnBlock(const LevelBlock &blockData)
         throw("Out of memory [new LVL_Block spawn]");
 
     block->data = blockData;
-    block->data.meta.array_id = ++data.blocks_array_id;
+    block->data.meta.array_id = ++m_data.blocks_array_id;
     block->init();
-    blocks.push_back(block);
+    m_itemsBlocks.push_back(block);
     return block;
 }
 
 void LevelScene::destroyBlock(LVL_Block *&_block)
 {
-    std::remove(blocks.begin(), blocks.end(), _block);
+    std::remove(m_itemsBlocks.begin(), m_itemsBlocks.end(), _block);
     delete _block;
     _block = nullptr;
 }
@@ -83,7 +83,7 @@ void LevelScene::placeBGO(LevelBGO& bgoData)
 
     bgo->data = bgoData;
     bgo->init();
-    bgos.push_back(bgo);
+    m_itemsBgo.push_back(bgo);
 }
 
 LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
@@ -100,9 +100,9 @@ LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
         throw("Out of memory [new LVL_Bgo] spawn");
 
     bgo->data = bgoData;
-    bgo->data.meta.array_id = ++data.blocks_array_id;
+    bgo->data.meta.array_id = ++m_data.blocks_array_id;
     bgo->init();
-    bgos.push_back(bgo);
+    m_itemsBgo.push_back(bgo);
     return bgo;
 }
 
@@ -115,7 +115,7 @@ void LevelScene::placeNPC(LevelNPC& npcData)
         return;
 
     obj_npc *curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
-    LVL_Npc *npc = luaEngine.createLuaNpc(npcData.id);
+    LVL_Npc *npc = m_luaEngine.createLuaNpc(npcData.id);
 
     if(!npc)
         return;
@@ -124,7 +124,7 @@ void LevelScene::placeNPC(LevelNPC& npcData)
     npc->setup = curNpcData;
     npc->data  = npcData;
     npc->init();
-    npcs.push_back(npc);
+    m_itemsNpc.push_back(npc);
 }
 
 LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
@@ -139,7 +139,7 @@ LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
         return nullptr;
 
     obj_npc *curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
-    LVL_Npc *npc = luaEngine.createLuaNpc(npcData.id);
+    LVL_Npc *npc = m_luaEngine.createLuaNpc(npcData.id);
 
     if(!npc)
         return nullptr;
@@ -148,7 +148,7 @@ LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
     npc->setup = curNpcData;
     npc->reSpawnable = reSpawnable;
     npc->data = npcData;
-    npc->data.meta.array_id = ++data.npc_array_id;
+    npc->data.meta.array_id = ++m_data.npc_array_id;
     npc->init();
     npc->m_spawnedGeneratorType = sp_type;
     npc->m_spawnedGeneratorDirection = sp_dir;
@@ -202,8 +202,8 @@ LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
     }
 
     npc->Activate();
-    active_npcs.push_back(npc);
-    npcs.push_back(npc);
+    m_npcActive.push_back(npc);
+    m_itemsNpc.push_back(npc);
     return npc;
 }
 
@@ -211,8 +211,8 @@ void LevelScene::toggleSwitch(unsigned int switch_id)
 {
     PGE_Audio::playSoundByRole(obj_sound_role::BlockSwitch);
 
-    SwitchBlocksMap::iterator i = switch_blocks.find(switch_id);
-    if(i != switch_blocks.end())
+    SwitchBlocksMap::iterator i = m_switchBlocks.find(switch_id);
+    if(i != m_switchBlocks.end())
     {
         std::vector<LVL_Block *> &list = i->second;
 
@@ -228,16 +228,16 @@ void LevelScene::toggleSwitch(unsigned int switch_id)
         }
 
         //Change state of the switch to allow lua script see this
-        switch_states[static_cast<size_t>(switch_id)] = !switch_states[static_cast<size_t>(switch_id)];
+        m_switchStates[static_cast<size_t>(switch_id)] = !m_switchStates[static_cast<size_t>(switch_id)];
     }
 }
 
 bool LevelScene::lua_switchState(uint32_t switch_id)
 {
-    if(switch_id >= switch_states.size())
+    if(switch_id >= m_switchStates.size())
         return false;
     else
-        return switch_states[switch_id];
+        return m_switchStates[switch_id];
 }
 
 
@@ -246,9 +246,9 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 {
     LVL_Player *player = nullptr;
 
-    if(luaEngine.isValid())
+    if(m_luaEngine.isValid())
     {
-        player = luaEngine.createLuaPlayer();
+        player = m_luaEngine.createLuaPlayer();
 
         if(player == nullptr)
             player = new LVL_Player(this);
@@ -261,10 +261,10 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     player->m_scene = this;
 
-    if(players.size() == 0)
-        player->camera = &cameras.front();
-    else if(players.size() == 1)
-        player->camera = &cameras.back();
+    if(m_itemsPlayers.size() == 0)
+        player->camera = &m_cameras.front();
+    else if(m_itemsPlayers.size() == 1)
+        player->camera = &m_cameras.back();
 
     int sID = findNearestSection(playerData.x, playerData.y);
     LVL_Section *sct = getSection(sID);
@@ -277,23 +277,23 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     player->setParentSection(sct);
     player->z_index = zOrder.player;
-    player->global_state = ((static_cast<unsigned>(player_states.size()) > (playerData.id - 1)) ?
-                            &player_states[static_cast<int>(playerData.id - 1)] : nullptr);
+    player->m_global_state = ((static_cast<unsigned>(m_playerStates.size()) > (playerData.id - 1)) ?
+                            &m_playerStates[static_cast<int>(playerData.id - 1)] : nullptr);
     player->setPlayerPointInfo(playerData);
     if(!player->init())
     {
         delete player;
-        errorMsg = "Failed to initialize playable character!\nSee log file for more information!";
+        m_errorMsg = "Failed to initialize playable character!\nSee log file for more information!";
         m_fader.setFade(10, 1.0, 1.0);
         setExiting(0, LvlExit::EXIT_Error);
         return;
     }
-    players.push_back(player);
+    m_itemsPlayers.push_back(player);
 
     if(playerData.id == 1)
-        player1Controller->registerInControl(player);
+        m_player1Controller->registerInControl(player);
     else if(playerData.id == 2)
-        player2Controller->registerInControl(player);
+        m_player2Controller->registerInControl(player);
 
     if(byWarp)
     {
