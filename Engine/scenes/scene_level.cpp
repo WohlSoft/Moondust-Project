@@ -603,7 +603,7 @@ void LevelScene::render()
                                         m_npcActive.size(),
                                         m_itemsBlocks.size()), 10, dpos);
         dpos += 35;
-        FontManager::printText(fmt::format("Vizible objects: {0}", !m_cameras.empty() ? m_cameras[0].renderObjects_count() : 0), 10, dpos);
+        FontManager::printText(fmt::format("Visible objects: {0}", !m_cameras.empty() ? m_cameras[0].renderObjects_count() : 0), 10, dpos);
         dpos += 35;
         FontManager::printText(fmt::format("Delays E={0} R={1} P={2}",
                                             m_debug_event_delay,

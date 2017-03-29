@@ -1339,7 +1339,7 @@ void WorldScene::render()
             PGE_Point grid = m_indexTable.applyGrid(Maths::lRound(m_mapWalker.posX), Maths::lRound(m_mapWalker.posY));
             FontManager::printText(fmt::format("TILE X={0} Y={1}", grid.x(), grid.y()), 300, 45);
         }
-        FontManager::printText(fmt::format("TICK-SUB: {0}, Vizible items={1};", uTickf, m_itemsToRender.size()), 10, 100);
+        FontManager::printText(fmt::format("TICK-SUB: {0}, Visible items={1};", uTickf, m_itemsToRender.size()), 10, 100);
         FontManager::printText(fmt::format("Delays E={0} R={1} P={2} [{3}]",
                                             debug_event_delay,
                                             debug_render_delay,
