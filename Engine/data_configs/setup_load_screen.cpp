@@ -47,16 +47,16 @@ void LoadingScreenSetup::init(IniProcessing &engine_ini)
 
             img.imgFile = engine_ini.value("image", "").toString();
             ConfigManager::checkForImage(img.imgFile, ConfigManager::dirs.gcommon);
-
-            img.animated = engine_ini.value("animated", false).toBool();
+            engine_ini.read("animated", img.animated, false);
             if(img.animated)
-                img.frames = engine_ini.value("frames", 1).toInt();
+                engine_ini.read("frames", img.frames, 1);
             else
                 img.frames = 1;
             if(img.frames <= 0) img.frames = 1;
+            engine_ini.read("frame-delay", img.frameDelay, updateDelay);
+            engine_ini.read("pos-x", img.x, 1);
+            engine_ini.read("pos-y", img.y, 1);
 
-            img.x =  engine_ini.value("pos-x", 1).toInt();
-            img.y =  engine_ini.value("pos-y", 1).toInt();
             AdditionalImages.push_back(img);
         }
         engine_ini.endGroup();

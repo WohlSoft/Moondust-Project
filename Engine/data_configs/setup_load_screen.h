@@ -30,6 +30,7 @@ struct LoadingScreenAdditionalImage
     std::string imgFile;
     bool animated;
     int frames;
+    uint32_t frameDelay;
     int x;
     int y;
 };
@@ -39,7 +40,7 @@ struct LoadingScreenSetup
     void init(IniProcessing& engine_ini);
     std::string backgroundImg;
     GlColor backgroundColor;
-    int updateDelay;
+    uint32_t updateDelay;
     std::string luaFile;
     std::vector<LoadingScreenAdditionalImage > AdditionalImages;
 };

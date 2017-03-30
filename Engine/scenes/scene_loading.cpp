@@ -87,7 +87,7 @@ void LoadingScene::init()
         img.y = simg.y;
         img.a.construct(simg.animated,
                         simg.frames,
-                        ConfigManager::setup_LoadingScreen.updateDelay);
+                        int(simg.frameDelay));
         img.frmH = (img.t.h / simg.frames);
         imgs.push_back(img);
     }
