@@ -942,7 +942,7 @@ void PGE_Menu::render()
 
         if(m_alignment == menuAlignment::HORIZONTAL)
         {
-            for(size_t temp = i - 1; temp >= m_offset; temp--)
+            for(size_t temp = i - 1; (temp >= m_offset) && (temp != npos); temp--)
                 xPos += m_items[temp]->_width + m_menuItemGap;
             xPos_s = (xPos + m_items[i]->_width / 2) - m_selector.w / 2;
         }
