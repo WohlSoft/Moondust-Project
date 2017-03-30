@@ -57,6 +57,7 @@ public:
     static bool recordInProcess();
     static void toggleRecorder();
     static void processRecorder(double ticktime);
+    static int  processRecorder_action(void *_pixels);
 
     static bool ready();
     static void flush();

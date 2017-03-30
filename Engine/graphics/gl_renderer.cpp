@@ -1096,6 +1096,8 @@ static struct gifRecord
     GifWriter   writer      = {nullptr, nullptr, true};
     SDL_Thread *worker      = nullptr;
     SDL_mutex  *mutex       = nullptr;
+    uint32_t    delay       = 8;
+    double      delayTimer  = 0.0;
     bool        enabled     = false;
     unsigned char padding[7]= {0, 0, 0, 0, 0, 0, 0};
 } g_gif;
@@ -1109,6 +1111,7 @@ void GlRenderer::toggleRecorder()
 {
     if(!g_gif.enabled)
     {
+        //g_gif.mutex = SDL_CreateMutex();
         auto now = std::chrono::system_clock::now();
         std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
         tm *t = std::localtime(&in_time_t);
@@ -1121,7 +1124,7 @@ void GlRenderer::toggleRecorder()
         if(GifBegin(&g_gif.writer,
                     saveTo.data(),
                     static_cast<uint32_t>(m_viewport_w),
-                    static_cast<uint32_t>(m_viewport_h), 12, 8, false))
+                    static_cast<uint32_t>(m_viewport_h), g_gif.delay, 8, false))
         {
             g_gif.enabled = true;
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
@@ -1129,20 +1132,27 @@ void GlRenderer::toggleRecorder()
     }
     else
     {
+        if(g_gif.worker)
+            SDL_WaitThread(g_gif.worker, NULL);
+        g_gif.worker = nullptr;
+        //if(g_gif.mutex)
+        //    SDL_DestroyMutex(g_gif.mutex);
+        //g_gif.mutex = nullptr;
         GifEnd(&g_gif.writer);
         g_gif.enabled = false;
         PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
     }
 }
 
-void GlRenderer::processRecorder(double /*ticktime*/)
+void GlRenderer::processRecorder(double ticktime)
 {
     if(g_gif.enabled)
     {
-        static bool skip = true;
-        skip = !skip;
-
-        if(skip) return;
+        g_gif.delayTimer += ticktime;
+        if(g_gif.delayTimer >= double(g_gif.delay * 10))
+            g_gif.delayTimer = 0.0;
+        if(g_gif.delayTimer != 0.0)
+            return;
 
         // Make the BYTE array, factor of 3 because it's RBG.
         int w, h;
@@ -1158,38 +1168,56 @@ void GlRenderer::processRecorder(double /*ticktime*/)
         h = h - static_cast<int>(m_offset_y) * 2;
         uint8_t *pixels = new uint8_t[4 * w * h];
         g_renderer->getScreenPixelsRGBA(static_cast<int>(m_offset_x), static_cast<int>(m_offset_y), w, h, pixels);
-        FIBITMAP *shotImg = FreeImage_ConvertFromRawBitsEx(false, reinterpret_cast<BYTE *>(pixels), FIT_BITMAP, w, h,
-                            4 * w, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, g_renderer->isTopDown());
 
-        if((w != m_viewport_w) || (h != m_viewport_h))
-        {
-            FIBITMAP *temp;
-            temp = FreeImage_Rescale(shotImg, m_viewport_w, m_viewport_h, FILTER_BOX);
-
-            if(!temp)
-            {
-                FreeImage_Unload(shotImg);
-                delete[] pixels;
-                pixels = nullptr;
-                return;
-            }
-
-            FreeImage_Unload(shotImg);
-            shotImg = temp;
-        }
-
-        if(FreeImage_HasPixels(shotImg) == FALSE)
-            pLogWarning("Can't save gif frame: no pixel data!");
-
-        uint8_t *img = FreeImage_GetBits(shotImg);
-        GifWriteFrame(&g_gif.writer, img,
-                      static_cast<uint32_t>(m_viewport_w),
-                      static_cast<uint32_t>(m_viewport_h),
-                      12/*uint32_t((ticktime)/10.0)*/, 8, false);
-        FreeImage_Unload(shotImg);
-        delete[] pixels;
-        pixels = nullptr;
+        PGE_GL_shoot *shoot = new PGE_GL_shoot();
+        shoot->pixels = pixels;
+        shoot->w = w;
+        shoot->h = h;
+        if(g_gif.worker)
+            SDL_WaitThread(g_gif.worker, NULL);
+        g_gif.worker = SDL_CreateThread(processRecorder_action, "gif_recorder", reinterpret_cast<void *>(shoot));
     }
+}
+
+int GlRenderer::processRecorder_action(void *_pixels)
+{
+    //SDL_LockMutex(g_gif.mutex);
+    PGE_GL_shoot *shoot = reinterpret_cast<PGE_GL_shoot *>(_pixels);
+    FIBITMAP *shotImg = FreeImage_ConvertFromRawBitsEx(false, reinterpret_cast<BYTE *>(shoot->pixels), FIT_BITMAP,
+                                                       shoot->w, shoot->h,
+                                                        4 * shoot->w, 32,
+                                                       0xFF000000, 0x00FF0000, 0x0000FF00, g_renderer->isTopDown());
+    if((shoot->w != m_viewport_w) || (shoot->h != m_viewport_h))
+    {
+        FIBITMAP *temp;
+        temp = FreeImage_Rescale(shotImg, m_viewport_w, m_viewport_h, FILTER_BOX);
+        if(!temp)
+        {
+            FreeImage_Unload(shotImg);
+            delete []shoot->pixels;
+            shoot->pixels = nullptr;
+            delete []shoot;
+            SDL_UnlockMutex(g_gif.mutex);
+            return 0;
+        }
+        FreeImage_Unload(shotImg);
+        shotImg = temp;
+    }
+
+    if(FreeImage_HasPixels(shotImg) == FALSE)
+        pLogWarning("Can't save gif frame: no pixel data!");
+
+    uint8_t *img = FreeImage_GetBits(shotImg);
+    GifWriteFrame(&g_gif.writer, img,
+                  static_cast<uint32_t>(m_viewport_w),
+                  static_cast<uint32_t>(m_viewport_h),
+                  g_gif.delay/*uint32_t((ticktime)/10.0)*/, 8, false);
+    FreeImage_Unload(shotImg);
+    delete[] shoot->pixels;
+    shoot->pixels = nullptr;
+    delete []shoot;
+    //SDL_UnlockMutex(g_gif.mutex);
+    return 0;
 }
 
 
