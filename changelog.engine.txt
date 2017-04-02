@@ -5,6 +5,7 @@
 - Accuracy of the path opener has been improved and added support for debug rendering for it on the world map
 - Added a smooth camera following to opening path cells on the world map
 - Fixed the blinking of the playable character while it shown on multiple cameras
+- Fixed a bug which caused appearance of self in the list of contacted objects which causes very unexpected result
 
 0.2.6
 - Improved testing of the renderers supports to avoid accidental running of the unsupported renderer

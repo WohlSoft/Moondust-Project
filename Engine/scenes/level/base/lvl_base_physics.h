@@ -3,7 +3,7 @@
 
 #include <cmath>
 #include <vector>
-#include <unordered_map>
+#include <unordered_set>
 #include <common_features/rectf.h>
 
 class PGE_Phys_Object;
@@ -296,8 +296,8 @@ public:
         objRect rect;
         int     shape = SL_Rect;
     };
-    typedef std::unordered_map<intptr_t, PGE_Phys_Object *> ObjectColliders;
-    typedef std::unordered_map<intptr_t, PGE_Phys_Object *>::iterator ObjectCollidersIt;
+    typedef std::unordered_set<PGE_Phys_Object *> ObjectColliders;
+    typedef std::unordered_set<PGE_Phys_Object *>::iterator ObjectCollidersIt;
     ObjectColliders l_contactAny;
     ObjectColliders l_contactL;
     ObjectColliders l_contactR;
@@ -305,26 +305,26 @@ public:
     ObjectColliders l_contactB;
     inline void l_pushAny(PGE_Phys_Object *ob)
     {
-        l_contactAny[intptr_t(ob)] = ob;
+        l_contactAny.insert(ob);
     }
     inline void l_pushL(PGE_Phys_Object *ob)
     {
-        l_contactL[intptr_t(ob)] = ob;
+        l_contactL.insert(ob);
         l_pushAny(ob);
     }
     inline void l_pushR(PGE_Phys_Object *ob)
     {
-        l_contactR[intptr_t(ob)] = ob;
+        l_contactR.insert(ob);
         l_pushAny(ob);
     }
     inline void l_pushT(PGE_Phys_Object *ob)
     {
-        l_contactT[intptr_t(ob)] = ob;
+        l_contactT.insert(ob);
         l_pushAny(ob);
     }
     inline void l_pushB(PGE_Phys_Object *ob)
     {
-        l_contactB[intptr_t(ob)] = ob;
+        l_contactB.insert(ob);
         l_pushAny(ob);
     }
 

@@ -33,7 +33,7 @@ void LVL_Npc::processContacts()
 
     for(ObjectCollidersIt it = l_contactAny.begin(); it != l_contactAny.end(); it++)
     {
-        PGE_Phys_Object *cEL = it->second;
+        PGE_Phys_Object *cEL = *it;
         switch(cEL->type)
         {
         case PGE_Phys_Object::LVLBGO:
@@ -110,19 +110,20 @@ void LVL_Npc::processContacts()
         }
         case PGE_Phys_Object::LVLPlayer:
         {
-            LVL_Player *plr = static_cast<LVL_Player *>(cEL);
+            LVL_Player *plr = dynamic_cast<LVL_Player *>(cEL);
             SDL_assert(plr);
             l_pushPlr(plr);
             break;
         }
         case PGE_Phys_Object::LVLNPC:
         {
-            LVL_Npc *npc = static_cast<LVL_Npc *>(cEL);
+            LVL_Npc *npc = dynamic_cast<LVL_Npc *>(cEL);
             SDL_assert(npc);
-            if(npc->killed) break;
-            if(npc->data.friendly) break;
-            if(npc->m_isGenerator) break;
-            if(!npc->isActivated) break;
+            if(npc->killed ||
+               npc->data.friendly ||
+               npc->m_isGenerator ||
+               !npc->isActivated)
+                break;
             l_pushNpc(npc);
             break;
         }

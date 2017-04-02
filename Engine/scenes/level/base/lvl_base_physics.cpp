@@ -664,7 +664,15 @@ void PGE_Phys_Object::updateCollisions()
         posRectC.setBottom(posRectC.bottom() + m_slopeFloor.rect.h * 1.5);
     }
 
-    m_scene->queryItems(posRectC, &objs);
+    std::function<bool(PGE_Phys_Object*)> itemValidator = [this](PGE_Phys_Object *CUR)->bool
+    {
+        return (CUR) &&
+               (dynamic_cast<PGE_Phys_Object*>(CUR) != dynamic_cast<PGE_Phys_Object*>(this)) &&
+               (!CUR->m_paused) &&
+               (CUR->m_is_visible);
+    };
+
+    m_scene->queryItems(posRectC, &objs, &itemValidator);
     double k = 0;
     int tm = -1, td = 0;
     PhysObject::ContactAt contactAt = PhysObject::Contact_None;
@@ -701,25 +709,20 @@ void PGE_Phys_Object::updateCollisions()
         }
 
         CUR = objs[i];
+        //if((!CUR) || (dynamic_cast<PGE_Phys_Object*>(CUR) == dynamic_cast<PGE_Phys_Object*>(this)) || (CUR->m_paused) || (!CUR->m_is_visible))
+        //{
+        //    objs.erase(objs.begin() + static_cast<std::vector<PGE_Phys_Object *>::difference_type>(i));
+        //    --i;
+        //    continue;
+        //}
 
-        //CURO = static_cast<PGE_Phys_Object*>(CUR);
-        if(!CUR) continue;
-
-        if(CUR == this) continue;
-
-        if(CUR->m_paused) continue;
-
-        if(!CUR->m_is_visible) continue;
-
-        if(preCollisionCheck(CUR) ||
-           (CUR->m_blocked[m_filterID] == Block_NONE))
+        if(preCollisionCheck(CUR) || (CUR->m_blocked[m_filterID] == Block_NONE))
         {
             if(
                 (CUR->m_shape == PhysObject::SL_Rect) &&
                 figureTouch(m_momentum, CUR->m_momentum, CUR->m_contactPadding, CUR->m_contactPadding)
             )
                 l_pushAny(CUR);
-
             continue;
         }
 
@@ -1569,7 +1572,7 @@ skipTriangleResolving:
                     else
                     {
                         if(tm != -2)
-                            tm = i;
+                            tm = static_cast<int>(i);
                     }
                 }
             }
@@ -1671,8 +1674,10 @@ skipTriangleResolving:
 
     if(tm >= 0)
     {
-        i = tm;
+        i = static_cast<PGE_SizeT>(tm);
         CUR = objs[i];
+        if(dynamic_cast<PGE_Phys_Object*>(CUR) == dynamic_cast<PGE_Phys_Object*>(this))
+            PGE_MsgBox::info("AHA! I ate you!");
         td = 1;
         goto tipRectShape;
     }
@@ -1716,8 +1721,7 @@ skipTriangleResolving:
 
         while(it != l_contactL.end())
         {
-            PhysObject *cEL = it->second;
-
+            PhysObject *cEL = *it;
             if(!cEL->m_momentum.betweenV(m_momentum.top() + 1.0, m_momentum.bottom() - 1.0))
                 it = l_contactL.erase(it);
             else
@@ -1729,8 +1733,7 @@ skipTriangleResolving:
 
         while(it != l_contactR.end())
         {
-            PhysObject *cEL = it->second;
-
+            PhysObject *cEL = *it;
             if(!cEL->m_momentum.betweenV(m_momentum.top() + 1.0, m_momentum.bottom() - 1.0))
                 it = l_contactR.erase(it);
             else
@@ -1742,8 +1745,7 @@ skipTriangleResolving:
 
         while(it != l_contactT.end())
         {
-            PhysObject *cEL = it->second;
-
+            PhysObject *cEL = *it;
             if(!cEL->m_momentum.betweenH(m_momentum.left() + 1.0, m_momentum.right() - 1.0))
                 it = l_contactT.erase(it);
             else
@@ -1755,8 +1757,7 @@ skipTriangleResolving:
 
         while(it != l_contactB.end())
         {
-            PhysObject *cEL = it->second;
-
+            PhysObject *cEL = *it;
             if(!cEL->m_momentum.betweenH(m_momentum.left() + 1.0, m_momentum.right() - 1.0))
                 it = l_contactB.erase(it);
             else

@@ -62,15 +62,12 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     warpSpriteOffset = 1.0f;
     warpFrameW = 0.0f;
     warpFrameH = 0.0f;
-    _onGround = false;
     m_disableBlockCollision = false;
     disableNpcCollision = false;
     enablePlayerCollision = true;
     _stucked = false;
     bumpDown = false;
     bumpUp = false;
-    forceCollideCenter = false;
-    _heightDelta = 0.0f;
     health = 1;
     m_isGenerator = false;
     generatorTimeLeft = 0;

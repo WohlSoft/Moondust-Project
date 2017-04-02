@@ -392,8 +392,12 @@ class LevelScene : public Scene
         void registerElement(PhysObjPtr item);
         void unregisterElement(PhysObjPtr item);
         typedef double RPoint[2];
-        void queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object * > *resultList);
-        void queryItems(double x, double y, std::vector<PGE_Phys_Object *> *resultList);
+        void queryItems(PGE_RectF &zone,
+                        std::vector<PGE_Phys_Object * > *resultList,
+                        std::function<bool(PGE_Phys_Object*)> *validator = nullptr);
+        void queryItems(double x, double y,
+                        std::vector<PGE_Phys_Object *> *resultList,
+                        std::function<bool(PGE_Phys_Object*)> *validator = nullptr);
 
         LVL_PlayersArray &getPlayers();
         LVL_NpcsArray &getNpcs();

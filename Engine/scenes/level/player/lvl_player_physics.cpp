@@ -97,7 +97,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactAny.begin(); it != l_contactAny.end(); it++)
     {
-        PGE_Phys_Object *cEL = it->second;
+        PGE_Phys_Object *cEL = *it;
 
         switch(cEL->type)
         {
@@ -227,7 +227,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactB.begin(); it != l_contactB.end(); it++)
     {
-        PGE_Phys_Object *cEL = it->second;
+        PGE_Phys_Object *cEL = *it;
 
         switch(cEL->type)
         {
@@ -312,7 +312,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactT.begin(); it != l_contactT.end(); it++)
     {
-        PGE_Phys_Object *cEL = it->second;
+        PGE_Phys_Object *cEL = *it;
 
         switch(cEL->type)
         {
@@ -337,7 +337,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactL.begin(); it != l_contactL.end(); it++)
     {
-        PGE_Phys_Object *cEL = it->second;
+        PGE_Phys_Object *cEL = *it;
 
         switch(cEL->type)
         {
@@ -362,7 +362,7 @@ void LVL_Player::processContacts()
 
     for(ObjectCollidersIt it = l_contactR.begin(); it != l_contactR.end(); it++)
     {
-        PGE_Phys_Object *cEL = it->second;
+        PGE_Phys_Object *cEL = *it;
 
         switch(cEL->type)
         {

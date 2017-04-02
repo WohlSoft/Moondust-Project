@@ -16,6 +16,7 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 #include <set>
+#include <unordered_set>
 
 class LVL_Player;
 class LVL_Npc : public PGE_Phys_Object
@@ -97,37 +98,31 @@ public:
     void collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit);
     bool preCollisionCheck(PGE_Phys_Object *body);
 
-    //! collide with invizible blocks at center
-    bool forceCollideCenter = false;
-    float _heightDelta = 0.0; //Delta of changing height. Need to protect going through block on character switching
     bool onCliff();
 
     /*****************NPC's and blocks******************/
     bool onGround();
-    bool  _onGround = false;
-    std::unordered_map<intptr_t, intptr_t > foot_contacts_map;   //!< staying on ground surfaces
-    std::unordered_map<intptr_t, intptr_t > foot_sl_contacts_map;//!< Slipery surfaces
 
-    typedef std::unordered_map<intptr_t, PGE_Phys_Object *> CollisionTable;
-    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_blocks;
-    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_bgos;
-    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_npc;
-    std::unordered_map<intptr_t, PGE_Phys_Object *> contacted_players;
+    typedef std::unordered_set<PGE_Phys_Object *> CollisionTable;
+    std::unordered_set<PGE_Phys_Object *> contacted_blocks;
+    std::unordered_set<PGE_Phys_Object *> contacted_bgos;
+    std::unordered_set<PGE_Phys_Object *> contacted_npc;
+    std::unordered_set<PGE_Phys_Object *> contacted_players;
     inline void l_pushBlk(PGE_Phys_Object *ob)
     {
-        contacted_blocks[intptr_t(ob)] = ob;
+        contacted_blocks.insert(ob);
     }
     inline void l_pushBgo(PGE_Phys_Object *ob)
     {
-        contacted_bgos[intptr_t(ob)] = ob;
+        contacted_bgos.insert(ob);
     }
     inline void l_pushNpc(PGE_Phys_Object *ob)
     {
-        contacted_npc[intptr_t(ob)] = ob;
+        contacted_npc.insert(ob);
     }
     inline void l_pushPlr(PGE_Phys_Object *ob)
     {
-        contacted_players[intptr_t(ob)] = ob;
+        contacted_players.insert(ob);
     }
 
     bool  m_disableBlockCollision = false;

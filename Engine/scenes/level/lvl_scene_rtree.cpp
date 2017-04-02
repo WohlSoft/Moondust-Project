@@ -17,6 +17,7 @@
  */
 
 #include "../scene_level.h"
+#include <functional>
 
 void LevelScene::registerElement(PGE_Phys_Object *item)
 {
@@ -36,26 +37,36 @@ void LevelScene::unregisterElement(PGE_Phys_Object *item)
     m_tree.Remove(lt, rb, item);
 }
 
+struct _TreeSearchData
+{
+    std::function<bool(PGE_Phys_Object*)> *validator;
+    PGE_RenderList* list;
+};
 
 static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
 {
-    PGE_RenderList* list = static_cast<PGE_RenderList* >(arg);
-    if(list)
+    _TreeSearchData *d = static_cast<_TreeSearchData*>(arg);
+    if(d && d->list)
     {
-        if(item) (*list).push_back(item);
+        if(item)
+        {
+            if(!d->validator || (*(d->validator))(item))
+                d->list->push_back(item);
+        }
     }
     return true;
 }
 
-void LevelScene::queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object *> *resultList)
+void LevelScene::queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object *> *resultList, std::function<bool(PGE_Phys_Object*)> *validator)
 {
     RPoint lt = { zone.left(),  zone.top() };
     RPoint rb = { zone.right(), zone.bottom() };
-    m_tree.Search(lt, rb, _TreeSearchCallback, (void*)resultList);
+    _TreeSearchData d{validator, resultList};
+    m_tree.Search(lt, rb, _TreeSearchCallback, (void*)&d);
 }
 
-void LevelScene::queryItems(double x, double y, std::vector<PGE_Phys_Object* > *resultList)
+void LevelScene::queryItems(double x, double y, std::vector<PGE_Phys_Object* > *resultList, std::function<bool(PGE_Phys_Object*)> *validator)
 {
     PGE_RectF zone = PGE_RectF(x, y, 1, 1);
-    queryItems(zone, resultList);
+    queryItems(zone, resultList, validator);
 }

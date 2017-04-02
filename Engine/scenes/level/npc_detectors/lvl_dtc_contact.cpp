@@ -41,9 +41,10 @@ luabind::adl::object ContactDetector::getBlocks(lua_State *L)
         it!=_parentNPC->contacted_blocks.end();
         it++)
     {
-        if(it->second->type != PGE_Phys_Object::LVLBlock)
+        PGE_Phys_Object *obj = *it;
+        if(obj->type != PGE_Phys_Object::LVLBlock)
             continue;
-        LVL_Block* block = static_cast<LVL_Block*>(it->second);
+        LVL_Block* block = static_cast<LVL_Block*>(obj);
         if(block)
             tableOfBlocks[i++] = block;
     }
@@ -58,9 +59,10 @@ luabind::adl::object ContactDetector::getBGOs(lua_State *L)
         it!=_parentNPC->contacted_bgos.end();
         it++)
     {
-        if(it->second->type != PGE_Phys_Object::LVLBGO)
+        PGE_Phys_Object *obj = *it;
+        if(obj->type != PGE_Phys_Object::LVLBGO)
             continue;
-        LVL_Bgo* bgo = static_cast<LVL_Bgo*>(it->second);
+        LVL_Bgo* bgo = static_cast<LVL_Bgo*>(obj);
         if(bgo)
             tableOfBGOs[i++] = bgo;
     }
@@ -72,12 +74,13 @@ luabind::adl::object ContactDetector::getNPCs(lua_State *L)
     luabind::object tableOfNPCs = luabind::newtable(L);
     int i = 1;
     for(LVL_Npc::CollisionTable::iterator it=_parentNPC->contacted_npc.begin();
-        it!=_parentNPC->contacted_npc.end();
+        it != _parentNPC->contacted_npc.end();
         it++)
     {
-        if(it->second->type != PGE_Phys_Object::LVLNPC)
+        PGE_Phys_Object *obj = *it;
+        if(obj->type != PGE_Phys_Object::LVLNPC)
             continue;
-        LVL_Npc* npc = static_cast<LVL_Npc*>(it->second);
+        LVL_Npc* npc = static_cast<LVL_Npc*>(obj);
         Binding_Level_ClassWrapper_LVL_NPC* possibleLuaNPC = dynamic_cast<Binding_Level_ClassWrapper_LVL_NPC*>(npc);
         if(possibleLuaNPC )
             tableOfNPCs[i++] = possibleLuaNPC;
@@ -95,9 +98,10 @@ luabind::adl::object ContactDetector::getPlayers(lua_State *L)
         it!=_parentNPC->contacted_players.end();
         it++)
     {
-        if(it->second->type != PGE_Phys_Object::LVLPlayer)
+        PGE_Phys_Object *obj = *it;
+        if(obj->type != PGE_Phys_Object::LVLPlayer)
             continue;
-        LVL_Player* player = static_cast<LVL_Player*>(it->second);
+        LVL_Player* player = static_cast<LVL_Player*>(obj);
         Binding_Level_ClassWrapper_LVL_Player* possibleLuaPlayer = dynamic_cast<Binding_Level_ClassWrapper_LVL_Player*>(player);
         if(possibleLuaPlayer)
             tableOfPlayers[i++] = possibleLuaPlayer;
