@@ -36,7 +36,7 @@ QString ApplicationPath_x;
 QString AppPathManager::m_settingsPath;
 QString AppPathManager::m_userPath;
 
-#if __ANDROID__ || __APPLE__
+#if defined(__ANDROID__) || defined(__APPLE__)
 #define UserDirName "/PGE Project"
 #else
 #define UserDirName "/.PGE_Project"
@@ -61,13 +61,13 @@ void AppPathManager::initAppPath(const char* argv0)
         CFRelease(appUrlRef);
     }
     #else
-    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).dir().path();
+    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).absoluteDir().absolutePath();
     #endif
     ApplicationPath_x = ApplicationPath;
 
     QApplication::addLibraryPath(".");
     QApplication::addLibraryPath(ApplicationPath);
-    QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv0)).dir().path());
+    QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv0)).absoluteDir().absolutePath());
 
     QApplication::setOrganizationName(_COMPANY);
     QApplication::setOrganizationDomain(_PGE_URL);
@@ -99,7 +99,7 @@ void AppPathManager::initAppPath(const char* argv0)
 
     QSettings setup;
     bool userDir;
-    #if __ANDROID__ || __APPLE__
+    #if defined(__ANDROID__) || defined(__APPLE__)
     userDir = true;
     #else
     userDir = setup.value("EnableUserDir", false).toBool();
@@ -108,7 +108,7 @@ void AppPathManager::initAppPath(const char* argv0)
 
     if(userDir)
     {
-        #if __ANDROID__||__APPLE__
+        #if defined(__ANDROID__) || defined(__APPLE__)
         QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
         #else
         QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
@@ -155,7 +155,7 @@ QString AppPathManager::userAppDir()
 
 void AppPathManager::install()
 {
-    #if __ANDROID__||__APPLE__
+    #if defined(__ANDROID__) || defined(__APPLE__)
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     #else
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
