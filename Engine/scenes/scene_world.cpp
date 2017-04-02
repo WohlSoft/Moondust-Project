@@ -1262,9 +1262,10 @@ void WorldScene::render()
         GlRenderer::resetViewport();
     }
 
-    if(m_commonSetup.points_en)
+    //FIXME: implement "always-visible" flag to show this counter without comparison to zero
+    if(m_commonSetup.points_en && (m_counters.points > 0))
     {
-        FontManager::printText(fmt::format("{0}",m_counters.points),
+        FontManager::printText(fmt::format("{0}", m_counters.points),
                                m_commonSetup.points_x,
                                m_commonSetup.points_y,
                                m_commonSetup.points_fontID,
@@ -1274,6 +1275,7 @@ void WorldScene::render()
                                m_commonSetup.points_rgba.Alpha());
     }
 
+    //FIXME: implement "always-visible" flag to show this counter without comparison to zero
     if(m_commonSetup.health_en)
     {
         FontManager::printText(fmt::format("{0}", m_counters.health),
@@ -1310,6 +1312,7 @@ void WorldScene::render()
                                m_commonSetup.coin_rgba.Alpha());
     }
 
+    //FIXME: implement "always-visible" flag to show this counter without comparison to zero
     if(m_commonSetup.star_en)
     {
         FontManager::printText(fmt::format("{0}", m_counters.stars),
