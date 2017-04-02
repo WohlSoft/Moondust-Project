@@ -148,7 +148,7 @@ void TilesetGroupEditor::on_addTileset_clicked()
         if(tar.exists())
         {
             QMessageBox msgBox;
-            msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
+            msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?").arg(tar.fileName()));
             msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
             msgBox.setDefaultButton(QMessageBox::Cancel);
             if(msgBox.exec() == QMessageBox::Ok)
@@ -201,7 +201,7 @@ void TilesetGroupEditor::on_Open_clicked()
         if(tar.exists())
         {
             QMessageBox msgBox;
-            msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
+            msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?").arg(tar.fileName()));
             msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
             msgBox.setDefaultButton(QMessageBox::Cancel);
             if(msgBox.exec() == QMessageBox::Ok)
