@@ -200,6 +200,8 @@ SOURCES += \
     fontman/font_manager.cpp \
     fontman/font_manager_private.cpp \
     fontman/raster_font.cpp \
+    fontman/ttf_font.cpp \
+    fontman/utf8_helpers.cpp \
     graphics/gl_color.cpp \
     graphics/gl_renderer.cpp \
     graphics/graphics.cpp \
@@ -245,7 +247,6 @@ SOURCES += \
     scenes/level/lvl_scene_interprocess.cpp \
     scenes/level/lvl_scene_items.cpp \
     scenes/level/lvl_scene_pausemenu.cpp \
-    scenes/level/lvl_scene_rtree.cpp \
     scenes/level/lvl_scene_sections.cpp \
     scenes/level/lvl_scene_timers.cpp \
     scenes/level/lvl_section.cpp \
@@ -319,8 +320,8 @@ SOURCES += \
     script/lua_world_engine.cpp \
     settings/debugger.cpp \
     settings/global_settings.cpp \
-    fontman/utf8_helpers.cpp \
-    fontman/ttf_font.cpp
+    scenes/level/lvl_scene_trees.cpp \
+    scenes/level/lvl_quad_tree.cpp
 
 
 HEADERS  += \
@@ -348,6 +349,8 @@ HEADERS  += \
     common_features/point_mover.h \
     common_features/QTranslatorX/ConvertUTF.h \
     common_features/QTranslatorX/qm_translator.h \
+    common_features/QuadTree/LooseQuadtree.h \
+    common_features/QuadTree/LooseQuadtree-impl.h \
     common_features/rectf.h \
     common_features/rect.h \
     common_features/RTree/RTree.h \
@@ -385,9 +388,11 @@ HEADERS  += \
     data_configs/setup_wld_scene.h \
     data_configs/spawn_effect_def.h \
     engine.hpp \
+    fontman/font_engine_base.h \
     fontman/font_manager.h \
     fontman/font_manager_private.h \
     fontman/raster_font.h \
+    fontman/ttf_font.h \
     graphics/gl_color.h \
     graphics/gl_debug.h \
     graphics/gl_renderer.h \
@@ -481,8 +486,7 @@ HEADERS  += \
     settings/debugger.h \
     settings/global_settings.h \
     version.h \
-    fontman/font_engine_base.h \
-    fontman/ttf_font.h
+    scenes/level/lvl_quad_tree.h
 
 DISTFILES += \
     ../changelog.engine.txt \

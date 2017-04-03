@@ -28,6 +28,7 @@
 #include <common_features/event_queue.h>
 #include <common_features/point.h>
 #include <common_features/RTree/RTree.h>
+#include "level/lvl_quad_tree.h"
 
 #include <gui/pge_menubox.h>
 
@@ -71,7 +72,6 @@ struct transformTask_block
     unsigned long id;
     int type;
 };
-
 
 class LevelScene : public Scene
 {
@@ -387,9 +387,11 @@ class LevelScene : public Scene
         typedef PGE_Phys_Object *PhysObjPtr;
     private:
         typedef RTree<PhysObjPtr, double, 2, double > IndexTree;
+        typedef LvlQuadTree IndexTree4;
 
     public:
         void registerElement(PhysObjPtr item);
+        void updateElement(PhysObjPtr item);
         void unregisterElement(PhysObjPtr item);
         typedef double RPoint[2];
         void queryItems(PGE_RectF &zone,
@@ -408,6 +410,7 @@ class LevelScene : public Scene
 
     private:
         IndexTree                   m_tree;
+        IndexTree4                  m_qtree;
         std::vector<PGE_Texture >   m_texturesBank;
 
         LuaLevelEngine              m_luaEngine;

@@ -298,23 +298,24 @@ void PGE_Phys_Object::applyAccel(double x, double y)
 
 void PGE_Phys_Object::_syncPosition()
 {
-    if(_is_registered) m_scene->unregisterElement(this);
-
+    //if(_is_registered)
+    //    m_scene->unregisterElement(this);
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
-    m_scene->registerElement(this);
+    //m_scene->registerElement(this);
+    m_scene->updateElement(this);
     _is_registered = true;
 }
 
 void PGE_Phys_Object::_syncPositionAndSize()
 {
-    if(_is_registered) m_scene->unregisterElement(this);
-
+    //if(_is_registered) m_scene->unregisterElement(this);
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
     m_width_registered = m_width_toRegister;
     m_height_registered = m_height_toRegister;
-    m_scene->registerElement(this);
+    //m_scene->registerElement(this);
+    m_scene->updateElement(this);
     _is_registered = true;
 }
 

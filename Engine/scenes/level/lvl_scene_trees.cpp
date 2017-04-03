@@ -21,20 +21,27 @@
 
 void LevelScene::registerElement(PGE_Phys_Object *item)
 {
-    RPoint lt={item->m_posX_registered, item->m_posY_registered};
-    RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
-    if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
-    if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
-    m_tree.Insert(lt, rb, item);
+    //RPoint lt={item->m_posX_registered, item->m_posY_registered};
+    //RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
+    //if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
+    //if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
+    //m_tree.Insert(lt, rb, item);
+    m_qtree.insert(item);
+}
+
+void LevelScene::updateElement(LevelScene::PhysObjPtr item)
+{
+    m_qtree.update(item);
 }
 
 void LevelScene::unregisterElement(PGE_Phys_Object *item)
 {
-    RPoint lt={item->m_posX_registered, item->m_posY_registered};
-    RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
-    if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
-    if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
-    m_tree.Remove(lt, rb, item);
+    //RPoint lt={item->m_posX_registered, item->m_posY_registered};
+    //RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
+    //if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
+    //if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
+    //m_tree.Remove(lt, rb, item);
+    m_qtree.remove(item);
 }
 
 struct _TreeSearchData
@@ -59,10 +66,11 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
 
 void LevelScene::queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object *> *resultList, std::function<bool(PGE_Phys_Object*)> *validator)
 {
-    RPoint lt = { zone.left(),  zone.top() };
-    RPoint rb = { zone.right(), zone.bottom() };
     _TreeSearchData d{validator, resultList};
-    m_tree.Search(lt, rb, _TreeSearchCallback, (void*)&d);
+    //RPoint lt = { zone.left(),  zone.top() };
+    //RPoint rb = { zone.right(), zone.bottom() };
+    //m_tree.Search(lt, rb, _TreeSearchCallback, (void*)&d);
+    m_qtree.query(zone, _TreeSearchCallback, (void*)&d);
 }
 
 void LevelScene::queryItems(double x, double y, std::vector<PGE_Phys_Object* > *resultList, std::function<bool(PGE_Phys_Object*)> *validator)

@@ -73,7 +73,9 @@ LevelScene::LevelScene()
       /**************************/
       m_luaEngine(this)
 {
-    m_tree.RemoveAll();
+    //m_tree.RemoveAll();
+    m_qtree.clear();
+
     m_layers.m_scene = this;
     m_events.m_scene = this;
     m_data.meta.ReadFileValid = false;

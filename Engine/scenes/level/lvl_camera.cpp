@@ -490,9 +490,16 @@ checkRenderability:
 
 void PGE_LevelCamera::queryItems(PGE_RectF &zone)
 {
-    double lt[2] = { zone.left(),  zone.top() };
-    double rb[2] = { zone.right(), zone.bottom() };
-    _scene->m_tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(this));
+    //double lt[2] = { zone.left(),  zone.top() };
+    //double rb[2] = { zone.right(), zone.bottom() };
+    //_scene->m_tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(this));
+    _scene->m_qtree.query(zone, _TreeSearchCallback, reinterpret_cast<void *>(this));
+//    LevelScene::IndexTree4::Query q = _scene->m_qtree.QueryIntersectsRegion(loose_quadtree::BoundingBox<double>(zone.x(), zone.y(), zone.width(), zone.height()));
+//    while(!q.EndOfQuery())
+//    {
+//        _TreeSearchCallback(q.GetCurrent(), reinterpret_cast<void *>(this));
+//        q.Next();
+//    }
 }
 
 void PGE_LevelCamera::AutoScrooler::resetAutoscroll()
