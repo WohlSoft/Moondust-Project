@@ -119,7 +119,8 @@ void LVL_Npc::processContacts()
         {
             LVL_Npc *npc = dynamic_cast<LVL_Npc *>(cEL);
             SDL_assert(npc);
-            if(npc->killed ||
+            if(!npc ||
+               npc->killed ||
                npc->data.friendly ||
                npc->m_isGenerator ||
                !npc->isActivated)
