@@ -14,7 +14,8 @@ freshLatestSDL()
 freshLatestSDL
 echo "Previous version was $LatestSDL"
 
-wget --content-disposition http://hg.libsdl.org/SDL/archive/tip.tar.gz
+wget --content-disposition https://hg.libsdl.org/SDL/archive/default.tar.gz -O SDL-default-new.tar.gz
+# http://hg.libsdl.org/SDL/archive/tip.tar.gz
 
 if [ $? -eq 0 ];
 then
@@ -24,9 +25,9 @@ then
     then
         rm $OldSDL'.tar.gz'
     fi
+    mv SDL-default-new.tar.gz SDL-default.tar.gz
     echo "Fresh now is $LatestSDL"
 else
     echo "Failed to retreive latest SDL!"
 fi
-
 
