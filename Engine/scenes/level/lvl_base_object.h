@@ -257,7 +257,8 @@ class PGE_Phys_Object: public PGE_physBody
             LVLEffect,
             LVLWarp,
             LVLSpecial,
-            LVLPhysEnv
+            LVLPhysEnv,
+            LVLSubTree
         };
 
         virtual void update();

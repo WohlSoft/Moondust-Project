@@ -20,6 +20,45 @@
 #include <data_configs/config_manager.h>
 #include "../scene_level.h"
 
+#include <common_features/RTree/RTree.h>
+
+struct LVL_SubTree_private
+{
+    typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
+    IndexTree tree;
+};
+
+
+LVL_SubTree::LVL_SubTree(LevelScene *_parent) :
+    PGE_Phys_Object(_parent)
+{
+    type =          LVLSubTree;
+    m_bodytype =    Body_STATIC;
+    p = new LVL_SubTree_private;
+}
+
+LVL_SubTree::LVL_SubTree(const LVL_SubTree &st):
+    PGE_Phys_Object(st.m_scene)
+{
+    p = new LVL_SubTree_private;
+    p->tree = st.p->tree;
+}
+
+LVL_SubTree::~LVL_SubTree()
+{
+    if(p)
+    {
+        p->tree.RemoveAll();
+        delete p;
+    }
+}
+
+
+
+
+
+
+
 LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) :
     m_scene(_parent),
     m_layers()
@@ -243,3 +282,4 @@ void LVL_LayerEngine::clear()
     m_movingLayers.clear();
     m_layers.clear();
 }
+

@@ -26,6 +26,19 @@
 #define SPAWNED_LAYER_NAME      "Spawned NPCs"
 
 class LevelScene;
+
+struct LVL_SubTree_private;
+class LVL_SubTree : public PGE_Phys_Object
+{
+    public:
+        LVL_SubTree(LevelScene *_parent = NULL);
+        LVL_SubTree(const LVL_SubTree &st);
+        ~LVL_SubTree();
+
+    private:
+        LVL_SubTree_private *p = nullptr;
+};
+
 class LVL_LayerEngine
 {
     friend class LevelScene;
