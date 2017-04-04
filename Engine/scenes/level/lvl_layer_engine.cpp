@@ -22,12 +22,13 @@
 
 #include <common_features/RTree/RTree.h>
 
+
+
 struct LVL_SubTree_private
 {
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;
 };
-
 
 LVL_SubTree::LVL_SubTree(LevelScene *_parent) :
     PGE_Phys_Object(_parent)
@@ -51,6 +52,13 @@ LVL_SubTree::~LVL_SubTree()
         p->tree.RemoveAll();
         delete p;
     }
+}
+
+void LVL_SubTree::query(PGE_RectF &zone, LVL_SubTree::t_resultCallback a_resultCallback, void *context)
+{
+    double lt[2] = { zone.left(),  zone.top() };
+    double rb[2] = { zone.right(), zone.bottom() };
+    p->tree.Search(lt, rb, a_resultCallback, context);
 }
 
 

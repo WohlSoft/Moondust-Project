@@ -48,6 +48,7 @@ struct _TreeSearchData
 {
     std::function<bool(PGE_Phys_Object*)> *validator;
     PGE_RenderList* list;
+    PGE_RectF *zone;
 };
 
 static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
@@ -57,6 +58,13 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
     {
         if(item)
         {
+            if(item->type == PGE_Phys_Object::LVLSubTree)
+            {
+                LVL_SubTree *stree = dynamic_cast<LVL_SubTree*>(item);
+                if(stree)//FIXME: use position offset to correctly find elements based on relative coordinates search
+                    stree->query(*d->zone, _TreeSearchCallback, arg);
+                return true;
+            }
             if(!d->validator || (*(d->validator))(item))
                 d->list->push_back(item);
         }
@@ -66,7 +74,7 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
 
 void LevelScene::queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object *> *resultList, std::function<bool(PGE_Phys_Object*)> *validator)
 {
-    _TreeSearchData d{validator, resultList};
+    _TreeSearchData d{validator, resultList, &zone};
     //RPoint lt = { zone.left(),  zone.top() };
     //RPoint rb = { zone.right(), zone.bottom() };
     //m_tree.Search(lt, rb, _TreeSearchCallback, (void*)&d);

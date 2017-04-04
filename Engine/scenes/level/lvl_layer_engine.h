@@ -35,6 +35,9 @@ class LVL_SubTree : public PGE_Phys_Object
         LVL_SubTree(const LVL_SubTree &st);
         ~LVL_SubTree();
 
+        typedef bool (*t_resultCallback)(PGE_Phys_Object*, void *);
+        void query(PGE_RectF &zone, t_resultCallback a_resultCallback, void *context);
+
     private:
         LVL_SubTree_private *p = nullptr;
 };
