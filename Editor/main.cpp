@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
 
     if(!appSingle->shouldContinue())
     {
-        QTextStream(stdout) << "Editor already runned!\n";
+        QTextStream(stdout) << "Editor already running!\n";
         pgeEditorQuit();
         return 0;
     }
@@ -179,8 +179,8 @@ int main(int argc, char *argv[])
     #ifdef Q_OS_LINUX
     {
         QStringList availableStyles = QStyleFactory::keys();
-        if(availableStyles.contains("GTK", Qt::CaseInsensitive))
-            app->setStyle(QStyleFactory::create("GTK"));
+        if(availableStyles.contains("GTK2", Qt::CaseInsensitive))
+            app->setStyle(QStyleFactory::create("GTK2"));
         else if(availableStyles.contains("Fusion", Qt::CaseInsensitive))
             app->setStyle(QStyleFactory::create("Fusion"));
     }

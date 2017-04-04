@@ -44,6 +44,8 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->drawPixmap(rect(), buffer, buffer.rect());
     painter->setPen(Qt::black);
     painter->setBrush(Qt::white);
+    painter->setRenderHint(QPainter::TextAntialiasing);
+    painter->setRenderHint(QPainter::Antialiasing);
     for(int i=0; i<animations.size(); i++)
     {
         QPixmap &frame = animations[i].second->wholeImage();
@@ -58,7 +60,7 @@ void EditorSpashScreen::drawContents(QPainter *painter)
 
     painter->setBrush(QBrush(Qt::black));
     QPen progressLine_bar( QBrush(Qt::black), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    painter->setPen( progressLine_bar );
+    painter->setPen(progressLine_bar);
     painter->drawRect(0, rect().height()-5, rect().width(), 4);
 
     painter->setBrush(QBrush(Qt::green));
@@ -66,11 +68,14 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->drawRect(0, rect().height()-4,
                         Maths::iRound(double(rect().width()) *( (double)_percents/100.0)), 2);
 
-    QPainterPath path;
     painter->setPen(Qt::white);
-    path.addText(rect().x()+20, rect().bottom()-20, QFont("Times", 8, -1, true), _label);
+    painter->setFont(QFont("Lucida Grande", 8, -1, true));
+
+    QPainterPath path;
+    path.addText(rect().x()+20, rect().bottom()-20, painter->font(), _label);
     painter->strokePath(path, QPen(QColor(Qt::black), 4));
-    painter->fillPath(path, QBrush(Qt::white));
+
+    painter->drawText(rect().x()+20, rect().bottom()-20, _label);
 }
 
 void EditorSpashScreen::addAnimation(QPoint p, QPixmap &pixmap, int frames, int speed)
