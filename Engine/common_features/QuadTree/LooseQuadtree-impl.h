@@ -467,7 +467,7 @@ private:
 	using ObjectPointerContainer =
 		std::unordered_map<Object*, Object**,
 		std::hash<Object*>, std::equal_to<Object*>,
-		detail::BlocksAllocatorAdaptor<std::pair<const Object*, Object**>>>;
+		detail::BlocksAllocatorAdaptor<std::pair<Object *const, Object**>>>;
 	using QueryPoolContainer =
 		std::deque<typename LooseQuadtree<Number, Object, BoundingBoxExtractor>::Query::Impl>;
 
