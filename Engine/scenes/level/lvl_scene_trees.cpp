@@ -18,6 +18,7 @@
 
 #include "../scene_level.h"
 #include <functional>
+#include "lvl_subtree.h"
 
 void LevelScene::registerElement(PGE_Phys_Object *item)
 {
@@ -66,7 +67,21 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
                 return true;
             }
             if(!d->validator || (*(d->validator))(item))
+            {
+                if(item->m_parent)
+                {
+                    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(item->m_parent);
+                    if(st)
+                    {
+                        item->m_momentum = item->m_momentum_relative;
+                        item->m_momentum.x -= st->m_offsetX;
+                        item->m_momentum.y -= st->m_offsetY;
+                        item->m_momentum.velXsrc = st->speedX();
+                        item->m_momentum.velY = st->speedY();
+                    }
+                }
                 d->list->push_back(item);
+            }
         }
     }
     return true;

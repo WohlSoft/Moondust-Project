@@ -464,6 +464,19 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object *item, void *arg)
             }
 
 checkRenderability:
+            if(renderable)
+            {
+                if(item->m_parent)
+                {
+                    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(item->m_parent);
+                    if(st)
+                    {
+                        item->m_momentum = item->m_momentum_relative;
+                        item->m_momentum.x -= st->m_offsetX;
+                        item->m_momentum.y -= st->m_offsetY;
+                    }
+                }
+            }
 
             if(renderable && (!item->_render_list || list->_disable_cache_mode))
             {

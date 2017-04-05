@@ -242,7 +242,9 @@ class PGE_Phys_Object: public PGE_physBody
         virtual void hide();
         virtual void setVisible(bool vizible);
         virtual bool isVisible();
-        bool m_is_visible;
+        bool                m_is_visible;
+        Momentum            m_momentum_relative;//Momentum, relative to parent layer's position
+        PGE_Phys_Object     *m_parent = nullptr;
         /******************************************************************/
 
     public:

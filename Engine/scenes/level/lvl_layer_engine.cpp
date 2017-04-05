@@ -20,53 +20,6 @@
 #include <data_configs/config_manager.h>
 #include "../scene_level.h"
 
-#include <common_features/RTree/RTree.h>
-
-
-
-struct LVL_SubTree_private
-{
-    typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
-    IndexTree tree;
-};
-
-LVL_SubTree::LVL_SubTree(LevelScene *_parent) :
-    PGE_Phys_Object(_parent)
-{
-    type =          LVLSubTree;
-    m_bodytype =    Body_STATIC;
-    p = new LVL_SubTree_private;
-}
-
-LVL_SubTree::LVL_SubTree(const LVL_SubTree &st):
-    PGE_Phys_Object(st.m_scene)
-{
-    p = new LVL_SubTree_private;
-    p->tree = st.p->tree;
-}
-
-LVL_SubTree::~LVL_SubTree()
-{
-    if(p)
-    {
-        p->tree.RemoveAll();
-        delete p;
-    }
-}
-
-void LVL_SubTree::query(PGE_RectF &zone, LVL_SubTree::t_resultCallback a_resultCallback, void *context)
-{
-    double lt[2] = { zone.left(),  zone.top() };
-    double rb[2] = { zone.right(), zone.bottom() };
-    p->tree.Search(lt, rb, a_resultCallback, context);
-}
-
-
-
-
-
-
-
 LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) :
     m_scene(_parent),
     m_layers()
@@ -76,11 +29,13 @@ LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) :
         Layer &db = m_layers[DESTROYED_LAYER_NAME];
         db.m_layerType = Layer::T_DESTROYED_BLOCKS;
         db.m_vizible = false;
+        db.m_rtree = m_scene;
     }
     {
         Layer &db = m_layers[SPAWNED_LAYER_NAME];
         db.m_layerType = Layer::T_SPAWNED_NPCs;
         db.m_vizible = true;
+        db.m_rtree = m_scene;
     }
 }
 
@@ -188,6 +143,36 @@ void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item)
 {
     //Register item in the layer
     Layer &lyr = m_layers[layer];
+    if( (item->type == PGE_Phys_Object::LVLBGO)||
+        (item->type == PGE_Phys_Object::LVLBlock)||
+        (item->type == PGE_Phys_Object::LVLWarp)||
+        (item->type == PGE_Phys_Object::LVLPhysEnv) )
+    {
+        if(!lyr.m_rtree.m_scene)
+        {
+            lyr.m_rtree.m_scene = m_scene;
+            lyr.m_rtree.setSize(1.0, 1.0);
+            lyr.m_rtree.m_momentum = item->m_momentum;
+            m_scene->registerElement(&lyr.m_rtree);
+            item->_syncPosition();
+        } else {
+            if(lyr.m_rtree.left() > item->left())
+                lyr.m_rtree.setLeft(item->left());
+            if(lyr.m_rtree.top() > item->top())
+                lyr.m_rtree.setTop(item->top());
+            if(lyr.m_rtree.right() < item->right())
+                lyr.m_rtree.setRight(item->right());
+            if(lyr.m_rtree.bottom() < item->bottom())
+                lyr.m_rtree.setBottom(item->bottom());
+            item->_syncPosition();
+        }
+        item->m_momentum_relative   = item->m_momentum;
+        item->m_momentum_relative.x -= lyr.m_rtree.m_offsetX;
+        item->m_momentum_relative.y -= lyr.m_rtree.m_offsetY;
+        item->m_parent = &lyr.m_rtree;
+        m_scene->unregisterElement(item);
+    }
+
     lyr.m_members[reinterpret_cast<intptr_t>(item)] = item;
     if(lyr.m_layerType == Layer::T_REGULAR)
         item->setVisible(lyr.m_vizible);
@@ -197,6 +182,19 @@ void LVL_LayerEngine::removeRegItem(std::string layer, PGE_Phys_Object *item)
 {
     //Remove item from the layer
     Layer &lyr = m_layers[layer];
+    if( (item->type == PGE_Phys_Object::LVLBGO)||
+        (item->type == PGE_Phys_Object::LVLBlock)||
+        (item->type == PGE_Phys_Object::LVLWarp)||
+        (item->type == PGE_Phys_Object::LVLPhysEnv) )
+    {
+        if(!lyr.m_rtree.m_scene)
+        {
+            item->m_momentum_relative.x += lyr.m_rtree.m_offsetX;
+            item->m_momentum_relative.y += lyr.m_rtree.m_offsetY;
+            item->m_parent = nullptr;
+            lyr.m_rtree.unregisterElement(item);
+        }
+    }
     lyr.m_members.erase(reinterpret_cast<intptr_t>(item));
 }
 
@@ -221,6 +219,7 @@ void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, doubl
         l.m_speedX = speedX;
         l.m_speedY = speedY;
         l.m_members = &lyr.m_members;
+        l.m_subtree = &lyr.m_rtree;
         m_movingLayers.insert({layer, l});
     }
 }
@@ -236,41 +235,47 @@ void LVL_LayerEngine::processMoving(double tickTime)
         layerIt++)
     {
         MovingLayer &l = layerIt->second;
-        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++)
-        {
-            PGE_Phys_Object *obj = it->second;
-            //Don't iterate playable characters
-            if(obj->type == PGE_Phys_Object::LVLPlayer)
-                continue;
+        l.m_subtree->m_momentum.velXsrc = l.m_speedX;
+        l.m_subtree->m_momentum.velY = l.m_speedY;
+        l.m_subtree->iterateStep(tickTime);
+        l.m_subtree->m_offsetX = l.m_subtree->m_momentum.x - l.m_subtree->m_momentum_relative.x;
+        l.m_subtree->m_offsetY = l.m_subtree->m_momentum.y - l.m_subtree->m_momentum_relative.y;
+        l.m_subtree->_syncPosition();
+//        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++)
+//        {
+//            PGE_Phys_Object *obj = it->second;
+//            //Don't iterate playable characters
+//            if(obj->type == PGE_Phys_Object::LVLPlayer)
+//                continue;
 
-            obj->setSpeed(l.m_speedX, l.m_speedY);
+//            //obj->setSpeed(l.m_speedX, l.m_speedY);
 
-            //Don't iterate activated NPC's!
-            if(obj->type == PGE_Phys_Object::LVLNPC)
-            {
-                LVL_Npc *npc = dynamic_cast<LVL_Npc *>(obj);
-                SDL_assert_release(npc);
-                if(npc)
-                {
-                    if(npc->isActivated /* &&
-                       !npc->isGenerator &&
-                       !npc->is_scenery*/)
-                        continue;
-                }
-                else
-                    continue;
-            }
-            obj->iterateStep(tickTime, true);
-            if((l.m_speedX == 0.0) && (l.m_speedY == 0.0))
-            {
-                if(obj->m_bodytype == PGE_physBody::Body_STATIC)
-                {
-                    //obj->m_momentum.y = obj->m_momentum.y < 0 ? floor(obj->m_momentum.y) : ceil(obj->m_momentum.y);
-                    obj->m_momentum.saveOld();
-                }
-            }
-            obj->_syncPosition();
-        }
+//            ////Don't iterate activated NPC's!
+//            //if(obj->type == PGE_Phys_Object::LVLNPC)
+//            //{
+//            //    LVL_Npc *npc = dynamic_cast<LVL_Npc *>(obj);
+//            //    SDL_assert_release(npc);
+//            //    if(npc)
+//            //    {
+//            //        if(npc->isActivated /* &&
+//            //           !npc->isGenerator &&
+//            //           !npc->is_scenery*/)
+//            //            continue;
+//            //    }
+//            //    else
+//            //        continue;
+//            //}
+//            ////obj->iterateStep(tickTime, true);
+//            //if((l.m_speedX == 0.0) && (l.m_speedY == 0.0))
+//            //{
+//            //    if(obj->m_bodytype == PGE_physBody::Body_STATIC)
+//            //    {
+//            //        //obj->m_momentum.y = obj->m_momentum.y < 0 ? floor(obj->m_momentum.y) : ceil(obj->m_momentum.y);
+//            //        obj->m_momentum.saveOld();
+//            //    }
+//            //}
+//            //obj->_syncPosition();
+//        }
         if((l.m_speedX == 0.0) && (l.m_speedY == 0.0))
             remove_list.push_back(layerIt->first);
     }

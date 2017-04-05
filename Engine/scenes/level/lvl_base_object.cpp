@@ -21,6 +21,8 @@
 #include <graphics/gl_renderer.h>
 #include <Utils/maths.h>
 
+#include "lvl_subtree.h"
+
 const double PGE_Phys_Object::m_smbxTickTime = 1000.0 / 65.0/*15.285f*/;
 //1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
 //BUT, Experimentally was found that in real is approximately is 15.285
@@ -86,7 +88,13 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
 PGE_Phys_Object::~PGE_Phys_Object()
 {
     if(_is_registered)
-        m_scene->unregisterElement(this);
+    {
+        LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
+        if(m_parent && st)
+            st->unregisterElement(this);
+        else
+            m_scene->unregisterElement(this);
+    }
 }
 
 void PGE_Phys_Object::registerInTree()
@@ -99,7 +107,13 @@ void PGE_Phys_Object::registerInTree()
 void PGE_Phys_Object::unregisterFromTree()
 {
     if(_is_registered)
-        m_scene->unregisterElement(this);
+    {
+        LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
+        if(m_parent && st)
+            st->unregisterElement(this);
+        else
+            m_scene->unregisterElement(this);
+    }
     _is_registered = false;
 }
 
@@ -298,24 +312,31 @@ void PGE_Phys_Object::applyAccel(double x, double y)
 
 void PGE_Phys_Object::_syncPosition()
 {
-    //if(_is_registered)
-    //    m_scene->unregisterElement(this);
+    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
+    if(_is_registered && m_parent && st)
+        st->unregisterElement(this);
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
-    //m_scene->registerElement(this);
-    m_scene->updateElement(this);
+    if(m_parent && st)
+        st->registerElement(this);
+    else
+        m_scene->updateElement(this);
     _is_registered = true;
 }
 
 void PGE_Phys_Object::_syncPositionAndSize()
 {
-    //if(_is_registered) m_scene->unregisterElement(this);
+    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
+    if(_is_registered && m_parent && st)
+        st->unregisterElement(this);
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
     m_width_registered = m_width_toRegister;
     m_height_registered = m_height_toRegister;
-    //m_scene->registerElement(this);
-    m_scene->updateElement(this);
+    if(m_parent && st)
+        st->registerElement(this);
+    else
+        m_scene->updateElement(this);
     _is_registered = true;
 }
 
@@ -323,10 +344,8 @@ void PGE_Phys_Object::_syncSection(bool sync_position)
 {
     int sID = m_scene->findNearestSection(long(posX()), long(posY()));
     LVL_Section *sct = m_scene->getSection(sID);
-
     if(sct)
         setParentSection(sct);
-
     if(sync_position) _syncPosition();
 }
 

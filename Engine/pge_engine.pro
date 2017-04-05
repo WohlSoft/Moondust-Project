@@ -321,7 +321,8 @@ SOURCES += \
     settings/debugger.cpp \
     settings/global_settings.cpp \
     scenes/level/lvl_scene_trees.cpp \
-    scenes/level/lvl_quad_tree.cpp
+    scenes/level/lvl_quad_tree.cpp \
+    scenes/level/lvl_subtree.cpp
 
 
 HEADERS  += \
@@ -486,7 +487,8 @@ HEADERS  += \
     settings/debugger.h \
     settings/global_settings.h \
     version.h \
-    scenes/level/lvl_quad_tree.h
+    scenes/level/lvl_quad_tree.h \
+    scenes/level/lvl_subtree.h
 
 DISTFILES += \
     ../changelog.engine.txt \

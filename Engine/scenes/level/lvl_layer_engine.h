@@ -21,31 +21,16 @@
 
 #include <unordered_map>
 #include "lvl_base_object.h"
+#include "lvl_subtree.h"
 
 #define DESTROYED_LAYER_NAME    "Destroyed Blocks"
 #define SPAWNED_LAYER_NAME      "Spawned NPCs"
 
 class LevelScene;
-
-struct LVL_SubTree_private;
-class LVL_SubTree : public PGE_Phys_Object
-{
-    public:
-        LVL_SubTree(LevelScene *_parent = NULL);
-        LVL_SubTree(const LVL_SubTree &st);
-        ~LVL_SubTree();
-
-        typedef bool (*t_resultCallback)(PGE_Phys_Object*, void *);
-        void query(PGE_RectF &zone, t_resultCallback a_resultCallback, void *context);
-
-    private:
-        LVL_SubTree_private *p = nullptr;
-};
-
 class LVL_LayerEngine
 {
     friend class LevelScene;
-    LevelScene * m_scene;
+    LevelScene  *m_scene;
 public:
     LVL_LayerEngine(LevelScene *_parent=NULL);
     void spawnSmokeAt(double x, double y);
@@ -56,29 +41,31 @@ public:
     void removeRegItem(std::string layer, PGE_Phys_Object* item);
     bool isEmpty(std::string layer);
     void clear();
+
     struct Layer
     {
-        Layer() :
-            m_vizible(true),
-            m_layerType(T_REGULAR)
-        {}
-        bool m_vizible;
+        bool m_vizible = true;
         typedef std::unordered_map<intptr_t, PGE_Phys_Object* > Members;
-        Members m_members;
+        Members     m_members;
+        //! Sub-tree of statical objects
+        LVL_SubTree m_rtree;
         enum Type
         {
-            T_REGULAR=0,
+            T_REGULAR = 0,
             T_SPAWNED_NPCs,
             T_DESTROYED_BLOCKS
         };
-        Type m_layerType;
+        Type m_layerType = T_REGULAR;
     };
+
     struct MovingLayer
     {
         double m_speedX;
         double m_speedY;
-        Layer::Members *m_members;
+        Layer::Members  *m_members;
+        LVL_SubTree     *m_subtree;
     };
+
     void installLayerMotion(std::string layer, double speedX, double speedY);
     typedef std::unordered_map<std::string, Layer> LayersTable;
     LayersTable         m_layers;
