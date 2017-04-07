@@ -88,6 +88,8 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->playListPush->setVisible(false);
     ui->playListPop->setVisible(false);
 
+    ui->sfx_testing->setVisible(false);
+
     QSettings setup;
     restoreGeometry(setup.value("Window-Geometry").toByteArray());
     ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
@@ -139,12 +141,19 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->adlmidi_xtra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->gme_setup->setVisible(false);
+
+    currentMusic = setup.value("RecentMusic", "").toString();
+    m_testSfxDir = setup.value("RecentSfxDir", "").toString();
+
     adjustSize();
 }
 
 MusPlayer_Qt::~MusPlayer_Qt()
 {
     on_stop_clicked();
+    if(m_testSfx)
+        Mix_FreeChunk(m_testSfx);
+    m_testSfx = nullptr;
     Mix_CloseAudio();
     QSettings setup;
     setup.setValue("Window-Geometry", saveGeometry());
@@ -157,6 +166,8 @@ MusPlayer_Qt::~MusPlayer_Qt()
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->isChecked());
     setup.setValue("ADLMIDI-LogarithmicVolumes", ui->logVolumes->isChecked());
     setup.setValue("Volume", ui->volume->value());
+    setup.setValue("RecentMusic", currentMusic);
+    setup.setValue("RecentSfxDir", m_testSfxDir);
     delete ui;
 }
 
@@ -168,7 +179,7 @@ void MusPlayer_Qt::dropEvent(QDropEvent *e)
     if(ui->recordWav->isChecked())
         return;
 
-    foreach(const QUrl &url, e->mimeData()->urls())
+    for(const QUrl &url : e->mimeData()->urls())
     {
         const QString &fileName = url.toLocalFile();
         currentMusic = fileName;
@@ -198,9 +209,14 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     reverb->setCheckable(true);
     reverb->setChecked(PGE_MusicPlayer::reverbEnabled);
     QAction *assoc_files = x.addAction("Associate files");
-    QAction *play_list   = x.addAction("Play-list mode");
+    QAction *play_list   = x.addAction("Play-list mode [WIP]");
     play_list->setCheckable(true);
     play_list->setChecked(playListMode);
+
+    QAction *sfx_testing = x.addAction("SFX testing");
+    sfx_testing->setCheckable(true);
+    sfx_testing->setChecked(ui->sfx_testing->isVisible());
+
     x.addSeparator();
     QMenu   *about       = x.addMenu("About");
     QAction *version     = about->addAction("SDL Mixer X Music Player v." _FILE_VERSION);
@@ -234,6 +250,12 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     else if(ret == play_list)
     {
         setPlayListMode(!playListMode);
+    }
+    else if(ret == sfx_testing)
+    {
+        ui->sfx_testing->setVisible(!ui->sfx_testing->isVisible());
+        updateGeometry();
+        adjustSize();
     }
     else if(ret == license)
         QDesktopServices::openUrl(QUrl("http://www.gnu.org/licenses/gpl"));
@@ -538,6 +560,78 @@ void MusPlayer_Qt::_blink_red()
         ui->recordWav->setStyleSheet("background-color : red; color : black;");
     else
         ui->recordWav->setStyleSheet("background-color : black; color : red;");
+}
+
+void MusPlayer_Qt::on_sfx_open_clicked()
+{
+    QString file = QFileDialog::getOpenFileName(this, tr("Open SFX file"),
+                   (m_testSfxDir.isEmpty() ? QApplication::applicationDirPath() : m_testSfxDir), "All (*.*)");
+
+    if(file.isEmpty())
+        return;
+
+    if(m_testSfx)
+    {
+        Mix_HaltChannel(0);
+        Mix_FreeChunk(m_testSfx);
+        m_testSfx = nullptr;
+    }
+
+    m_testSfx = Mix_LoadWAV(file.toUtf8().data());
+    if(!m_testSfx)
+        QMessageBox::warning(this, "SFX open error!", QString("Mix_LoadWAV: ") + Mix_GetError());
+    else
+    {
+        QFileInfo f(file);
+        m_testSfxDir = f.absoluteDir().absolutePath();
+        ui->sfx_file->setText(f.fileName());
+    }
+}
+
+
+void MusPlayer_Qt::on_sfx_play_clicked()
+{
+    if(!m_testSfx)
+        return;
+
+    if(Mix_PlayChannelTimedVolume(0,
+                                  m_testSfx,
+                                  ui->sfx_loops->value(),
+                                  ui->sfx_timed->value(),
+                                  ui->sfx_volume->value()) == -1)
+    {
+        QMessageBox::warning(this, "SFX play error!", QString("Mix_PlayChannelTimedVolume: ") + Mix_GetError());
+    }
+}
+
+void MusPlayer_Qt::on_sfx_fadeIn_clicked()
+{
+    if(!m_testSfx)
+        return;
+
+    if(Mix_FadeInChannelTimedVolume(0,
+                                    m_testSfx,
+                                    ui->sfx_loops->value(),
+                                    ui->sfx_fadems->value(),
+                                    ui->sfx_timed->value(),
+                                    ui->sfx_volume->value()) == -1)
+    {
+        QMessageBox::warning(this, "SFX play error!", QString("Mix_PlayChannelTimedVolume: ") + Mix_GetError());
+    }
+}
+
+void MusPlayer_Qt::on_sfx_stop_clicked()
+{
+    if(!m_testSfx)
+        return;
+    Mix_HaltChannel(0);
+}
+
+void MusPlayer_Qt::on_sfx_fadeout_clicked()
+{
+    if(!m_testSfx)
+        return;
+    Mix_FadeOutChannel(0, ui->sfx_fadems->value());
 }
 
 #endif

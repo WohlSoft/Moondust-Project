@@ -15,6 +15,8 @@ namespace Ui {
 class MainWindow;
 }
 
+struct Mix_Chunk;
+
 class MusPlayer_Qt : public QMainWindow, public MusPlayerBase
 {
     Q_OBJECT
@@ -64,6 +66,12 @@ private slots:
      */
     void _blink_red();
 
+    void on_sfx_open_clicked();
+    void on_sfx_play_clicked();
+    void on_sfx_fadeIn_clicked();
+    void on_sfx_stop_clicked();
+    void on_sfx_fadeout_clicked();
+
 private:
     bool playListMode = false;
     PlayListModel playList;
@@ -71,6 +79,9 @@ private:
     QTimer m_blinker;
     //! UI form class pointer
     Ui::MainWindow *ui;
+
+    Mix_Chunk *m_testSfx = nullptr;
+    QString    m_testSfxDir;
 };
 
 #endif // MUSPLAYER_QT_H
