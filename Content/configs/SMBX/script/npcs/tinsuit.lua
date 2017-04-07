@@ -19,7 +19,7 @@ function tinsuit:onActivated()
 end
 
 function tinsuit:onLoop(tickTime)
-    if(self.npc_obj.onGround and not self.touch_ground) then
+    if(self.npc_obj.onGround and not self.touchGround) then
             self.npc_obj.speedY = self.def_normalJumpsSpeedY
             if(self.cur_frame)then
                 self.npc_obj:setSequence(self.animateOne)
