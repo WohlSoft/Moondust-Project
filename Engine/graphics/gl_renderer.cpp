@@ -1096,7 +1096,7 @@ static struct gifRecord
     GifWriter   writer      = {nullptr, nullptr, true};
     SDL_Thread *worker      = nullptr;
     SDL_mutex  *mutex       = nullptr;
-    uint32_t    delay       = 8;
+    uint32_t    delay       = 3;
     double      delayTimer  = 0.0;
     bool        enabled     = false;
     unsigned char padding[7]= {0, 0, 0, 0, 0, 0, 0};
@@ -1235,7 +1235,7 @@ void GlRenderer::flush()
 void GlRenderer::repaint()
 {
     g_renderer->repaint();
-    GlRenderer::processRecorder(65.0);
+    GlRenderer::processRecorder(static_cast<double>(PGE_Window::TimeOfFrame));
 }
 
 void GlRenderer::setClearColor(float r, float g, float b, float a)
