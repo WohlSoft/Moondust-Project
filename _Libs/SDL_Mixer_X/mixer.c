@@ -880,13 +880,7 @@ static int checkchunkintegral(Mix_Chunk *chunk)
     return chunk->alen;
 }
 
-/* Play an audio chunk on a specific channel.
-   If the specified channel is -1, play on the first free channel.
-   'ticks' is the number of milliseconds at most to play the sample, or -1
-   if there is no limit.
-   Returns which channel was used to play the sound.
-*/
-int SDLCALLCC Mix_PlayChannelTimed(int which, Mix_Chunk *chunk, int loops, int ticks)
+int SDLCALLCC Mix_PlayChannelTimedVolume(int which, Mix_Chunk *chunk, int loops, int ticks, int volume)
 {
     int i;
 
@@ -930,12 +924,25 @@ int SDLCALLCC Mix_PlayChannelTimed(int which, Mix_Chunk *chunk, int loops, int t
             mix_channel[which].fading = MIX_NO_FADING;
             mix_channel[which].start_time = sdl_ticks;
             mix_channel[which].expire = (ticks>0) ? (sdl_ticks + ticks) : 0;
+            if(volume >= 0)
+                mix_channel[which].volume = (volume > MIX_MAX_VOLUME) ? MIX_MAX_VOLUME : volume;
         }
     }
     Mix_UnlockAudio();
 
     /* Return the channel on which the sound is being played */
     return(which);
+}
+
+/* Play an audio chunk on a specific channel.
+   If the specified channel is -1, play on the first free channel.
+   'ticks' is the number of milliseconds at most to play the sample, or -1
+   if there is no limit.
+   Returns which channel was used to play the sound.
+*/
+int SDLCALLCC Mix_PlayChannelTimed(int which, Mix_Chunk *chunk, int loops, int ticks)
+{
+    return Mix_PlayChannelTimedVolume(which, chunk, loops, ticks, -1);
 }
 
 /* Change the expiration delay for a channel */
@@ -957,8 +964,7 @@ int SDLCALLCC Mix_ExpireChannel(int which, int ticks)
     return(status);
 }
 
-/* Fade in a sound on a channel, over ms milliseconds */
-int SDLCALLCC Mix_FadeInChannelTimed(int which, Mix_Chunk *chunk, int loops, int ms, int ticks)
+int SDLCALLCC Mix_FadeInChannelTimedVolume(int which, Mix_Chunk *chunk, int loops, int ms, int ticks, int volume)
 {
     int i;
 
@@ -998,6 +1004,8 @@ int SDLCALLCC Mix_FadeInChannelTimed(int which, Mix_Chunk *chunk, int loops, int
             mix_channel[which].chunk = chunk;
             mix_channel[which].paused = 0;
             mix_channel[which].fading = MIX_FADING_IN;
+            if(volume >= 0)
+                mix_channel[which].volume = (volume > MIX_MAX_VOLUME) ? MIX_MAX_VOLUME : volume;
             mix_channel[which].fade_volume = mix_channel[which].volume;
             mix_channel[which].fade_volume_reset = mix_channel[which].volume;
             mix_channel[which].volume = 0;
@@ -1010,6 +1018,12 @@ int SDLCALLCC Mix_FadeInChannelTimed(int which, Mix_Chunk *chunk, int loops, int
 
     /* Return the channel on which the sound is being played */
     return(which);
+}
+
+/* Fade in a sound on a channel, over ms milliseconds */
+int SDLCALLCC Mix_FadeInChannelTimed(int which, Mix_Chunk *chunk, int loops, int ms, int ticks)
+{
+    return Mix_FadeInChannelTimedVolume(which, chunk, loops, ms, ticks, -1);
 }
 
 /* Set volume of a particular channel */
