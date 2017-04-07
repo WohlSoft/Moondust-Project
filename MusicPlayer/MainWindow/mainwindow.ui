@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>671</width>
-    <height>593</height>
+    <width>612</width>
+    <height>751</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -100,6 +100,9 @@ border-bottom-color: rgb(0, 120, 0);
       <property name="text">
        <string/>
       </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="4" column="0" colspan="2">
@@ -114,6 +117,9 @@ border-bottom-color: rgb(0, 120, 0);
       <property name="text">
        <string/>
       </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="2" column="0" colspan="2">
@@ -127,6 +133,9 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -162,33 +171,6 @@ border-bottom-color: rgb(0, 120, 0);
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="tremolo">
-            <property name="text">
-             <string>Tremolo</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="vibrato">
-            <property name="text">
-             <string>Vibrato</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="modulation">
-            <property name="text">
-             <string>Scalable modulation</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="fmbank">
             <property name="currentIndex">
@@ -196,20 +178,6 @@ border-bottom-color: rgb(0, 120, 0);
             </property>
             <property name="maxVisibleItems">
              <number>50</number>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="adlibMode">
-            <property name="text">
-             <string>Ad-Lib drums mode</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QPushButton" name="resetDefaultADLMIDI">
-            <property name="text">
-             <string>Reset to defaults</string>
             </property>
            </widget>
           </item>
@@ -254,10 +222,51 @@ border-bottom-color: rgb(0, 120, 0);
             </item>
            </widget>
           </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="tremolo">
+            <property name="text">
+             <string>Tremolo</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="vibrato">
+            <property name="text">
+             <string>Vibrato</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="adlibMode">
+            <property name="text">
+             <string>Ad-Lib drums mode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="modulation">
+            <property name="text">
+             <string>Scalable modulation</string>
+            </property>
+           </widget>
+          </item>
           <item row="7" column="0" colspan="2">
            <widget class="QCheckBox" name="logVolumes">
             <property name="text">
              <string>Use logarithmic volumes (Generic and CMF volume models only)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QPushButton" name="resetDefaultADLMIDI">
+            <property name="text">
+             <string>Reset to defaults</string>
             </property>
            </widget>
           </item>
@@ -327,6 +336,134 @@ border-bottom-color: rgb(0, 120, 0);
          </layout>
         </widget>
        </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QGroupBox" name="sfx_testing">
+         <property name="title">
+          <string>SFX testing</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="sfx_open">
+            <property name="text">
+             <string>SFX File</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>loops (n-1, -1 = forever)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="sfx_loops">
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>999999999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="sfx_play">
+            <property name="text">
+             <string>play</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QPushButton" name="sfx_stop">
+            <property name="text">
+             <string>stop</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>time limit (ms)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QSpinBox" name="sfx_timed">
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>9999999</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QPushButton" name="sfx_fadeIn">
+            <property name="text">
+             <string>fade in</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QPushButton" name="sfx_fadeout">
+            <property name="text">
+             <string>fade out</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>volume (0...128)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QSpinBox" name="sfx_volume">
+            <property name="minimum">
+             <number>-1</number>
+            </property>
+            <property name="maximum">
+             <number>128</number>
+            </property>
+            <property name="value">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>fade delay (ms)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QSpinBox" name="sfx_fadems">
+            <property name="maximum">
+             <number>9999999</number>
+            </property>
+            <property name="value">
+             <number>1000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="sfx_file">
+            <property name="text">
+             <string>SFX file</string>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -341,6 +478,9 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

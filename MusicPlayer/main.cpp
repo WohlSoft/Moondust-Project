@@ -78,6 +78,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     if(Mix_OpenAudio(44100, AUDIO_S16, 2, 4096) == -1)
         error(QString("Failed to open audio stream: ") + Mix_GetError());
 
+    Mix_AllocateChannels(16);
+
     //Disallow auto-resetting MIDI properties (to allow manipulation with MIDI settings by functions)
     MIX_SetLockMIDIArgs(1);
 
