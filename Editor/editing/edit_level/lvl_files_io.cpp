@@ -174,7 +174,7 @@ RetrySave:
             bool ok = true;
             file_format = static_cast<unsigned int>(
                               QInputDialog::getInt(this, tr("SMBX file version"),
-                                                   tr("Which version you wish to save? (from 0 to 64)\n"
+                                                   tr("Which version do you want to save as? (from 0 to 64)\n"
                                                            "List of known SMBX versions and format codes:\n%1\n"
                                                            "(To allow level file work in specific SMBX version,\n"
                                                            "version code must be less or equal specific code)"
@@ -434,7 +434,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::warning(this, tr("Read file error"),
+        QMessageBox::warning(this, tr("File read error"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));

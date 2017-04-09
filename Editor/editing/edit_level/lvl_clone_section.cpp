@@ -163,7 +163,7 @@ void LvlCloneSection::on_buttonBox_accepted()
     {
         QMessageBox::warning(this,
                              tr("Empty section"),
-                             tr("Source section is empty!\nPlease select another section."));
+                             tr("Source section is empty!\nPlease select another section, or clear."));
         return;
     }
 

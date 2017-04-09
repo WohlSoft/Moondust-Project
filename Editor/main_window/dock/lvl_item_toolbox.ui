@@ -18,7 +18,7 @@
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
-   <string>Level Toolbox</string>
+   <string>Level toolbox</string>
   </property>
   <property name="currentIndex" stdset="0">
    <number>0</number>
@@ -178,7 +178,7 @@
        </item>
        <item>
         <property name="text">
-         <string>ID (contains)</string>
+         <string>ID (contents)</string>
         </property>
        </item>
       </widget>
@@ -397,7 +397,7 @@
        </item>
        <item>
         <property name="text">
-         <string>ID (contains)</string>
+         <string>ID (contents)</string>
         </property>
        </item>
       </widget>
@@ -577,7 +577,7 @@
        </item>
        <item>
         <property name="text">
-         <string>ID (contains)</string>
+         <string>ID (contents)</string>
         </property>
        </item>
       </widget>

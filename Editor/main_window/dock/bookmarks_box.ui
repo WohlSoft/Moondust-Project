@@ -71,7 +71,7 @@
       </property>
       <property name="toolTip">
        <string>Remember current screen position on the level map or on the world map
-and store bookmark.</string>
+and store a bookmark.</string>
       </property>
       <property name="text">
        <string>Add</string>
@@ -87,8 +87,8 @@ and store bookmark.</string>
        </size>
       </property>
       <property name="toolTip">
-       <string>Scroll to remembered position in selected item back.
-You also can double-click to item to scroll to bookmarked position.</string>
+       <string>Scroll to the saved position in the selected item.
+You also can double-click an item to scroll to its bookmarked position.</string>
       </property>
       <property name="text">
        <string>Go To...</string>

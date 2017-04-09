@@ -232,7 +232,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 bool ok = false;
                 long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
-                                               tr("Please select, how far items out of section should be removed too (in pixels)"),
+                                               tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
                 LevelSection &s = m_scene->m_data->sections[m_scene->m_data->CurSection];
@@ -294,7 +294,7 @@ cancelTransform:
     else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {
@@ -303,7 +303,7 @@ cancelTransform:
             .arg(m_data.x)
             .arg(m_data.y)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -314,7 +314,7 @@ cancelTransform:
             .arg(m_imageSize.width())
             .arg(m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -325,7 +325,7 @@ cancelTransform:
             .arg(m_data.x + m_imageSize.width())
             .arg(m_data.y + m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == newNpc)
     {
@@ -459,7 +459,7 @@ cancelTransform:
         {
             bool ok = false;
             long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
-                                           tr("Please select, how far items out of section should be removed too (in pixels)"),
+                                           tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                            32, 0, 214948, 1, &ok);
             if(!ok) goto cancelRemoveSSS;
             LevelSection &s = m_scene->m_data->sections[m_scene->m_data->CurSection];

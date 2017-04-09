@@ -96,5 +96,3 @@ bool    ConfStatus::SmbxTest_By_Default=false;
 #endif
 
 QString ConfStatus::defaultTheme="";
-
-

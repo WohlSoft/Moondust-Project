@@ -96,7 +96,7 @@
           </font>
          </property>
          <property name="title">
-          <string>Document view</string>
+          <string>Window layout</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="0">
@@ -108,7 +108,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Sub Windows</string>
+             <string>Separate Sub-windows (Classic style)</string>
             </property>
            </widget>
           </item>
@@ -121,7 +121,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Tabs</string>
+             <string>Tabbed Sub-windows (Modern style)</string>
             </property>
            </widget>
           </item>
@@ -149,10 +149,10 @@
              </font>
             </property>
             <property name="toolTip">
-             <string comment="Pop-up hint text">Music will be automatically launched when you will open file</string>
+             <string comment="Pop-up hint text">Music will automatically play when you open a level file</string>
             </property>
             <property name="text">
-             <string>Autoplay music on file open</string>
+             <string>Autoplay music after opening file</string>
             </property>
            </widget>
           </item>
@@ -193,7 +193,7 @@
              </font>
             </property>
             <property name="toolTip">
-             <string comment="Pop-up hint text">Maximal number of elements which allow animation for items. If limit will be exided, animation will be paused while you will not remove outed of range elements.</string>
+             <string comment="Pop-up hint text">Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</string>
             </property>
             <property name="maximum">
              <number>999999999</number>
@@ -212,7 +212,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Animation Items limit</string>
+             <string>Animation items limit</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -311,27 +311,27 @@
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_6">
          <property name="title">
-          <string>Middle mouse button features</string>
+          <string>Middle mouse button actions</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QCheckBox" name="Editor_Mid_AllowDupe">
             <property name="text">
-             <string>Duplicate selected items onto cursor's position</string>
+             <string>Copy selected items to cursor position</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="Editor_Mid_AllowPlacing">
             <property name="text">
-             <string>Switch placing mode of the selected item</string>
+             <string>Change the placement mode of the selected item</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="Editor_Mid_AllowDrag">
             <property name="text">
-             <string>Switch to drag scroll without selection</string>
+             <string>Toggle drag-to-scroll while selection is empty</string>
             </property>
            </widget>
           </item>
@@ -341,16 +341,17 @@
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_8">
          <property name="title">
-          <string>Placing mode</string>
+          <string>Placement mode</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_13">
           <item row="0" column="0">
            <widget class="QCheckBox" name="Editor_placing_dontShowPropsBox">
             <property name="toolTip">
-             <string comment="Pop-up hint">Properties box will not be shown atomatically when you will take item to place. For example, you clicked item from item toolbox or from tileset item box.</string>
+             <string comment="Pop-up hint">Properties box will not be shown atomatically when you select an item to place,
+like when choosing an item from the item toolbox or from the tileset item box.</string>
             </property>
             <property name="text">
-             <string>Don't show properties box on taking item to place</string>
+             <string>Don't show properties box when placing items</string>
             </property>
            </widget>
           </item>
@@ -382,14 +383,14 @@
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Max history entries limit:</string>
+             <string>Max history entries:</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QSpinBox" name="historyLimit">
             <property name="toolTip">
-             <string>Maximal number of remembered history actions.</string>
+             <string>Maximum number of remembered history actions.</string>
             </property>
             <property name="minimum">
              <number>100</number>
@@ -499,7 +500,7 @@
           </size>
          </property>
          <property name="title">
-          <string>Classic Events tabs auto-expending</string>
+          <string>Classic Events tabs to auto-expand</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
           <item row="0" column="1">
@@ -643,7 +644,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>Delay:</string>
+                <string>Delay (seconds):</string>
                </property>
               </widget>
              </item>
@@ -789,20 +790,20 @@
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_5">
          <property name="title">
-          <string>World item Toolbox</string>
+          <string>World Map Item toolbox</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_9">
           <item row="0" column="0">
            <widget class="QRadioButton" name="WLDToolboxHorizontal">
             <property name="text">
-             <string>Display tabs horizontal</string>
+             <string>Display tabs horizontally</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
            <widget class="QRadioButton" name="WLDToolboxVertical">
             <property name="text">
-             <string>Display tabs vertical</string>
+             <string>Display tabs vertically</string>
             </property>
            </widget>
           </item>
@@ -825,20 +826,20 @@
        <item row="0" column="0">
         <widget class="QGroupBox" name="groupBox_4">
          <property name="title">
-          <string>Level item Toolbox</string>
+          <string>Level Item toolbox</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_8">
           <item row="0" column="0">
            <widget class="QRadioButton" name="LVLToolboxHorizontal">
             <property name="text">
-             <string>Display tabs horizontal</string>
+             <string>Display tabs horizontally</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
            <widget class="QRadioButton" name="LVLToolboxVertical">
             <property name="text">
-             <string>Display tabs vertical</string>
+             <string>Display tabs vertically</string>
             </property>
            </widget>
           </item>
@@ -860,20 +861,20 @@
        <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox_7">
          <property name="title">
-          <string>Tilesets Item Toolbox</string>
+          <string>Tileset Item toolbox</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_12">
           <item row="0" column="0">
            <widget class="QRadioButton" name="TSTToolboxHorizontal">
             <property name="text">
-             <string>Display tabs horizontal</string>
+             <string>Display tabs horizontally</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
            <widget class="QRadioButton" name="TSTToolboxVertical">
             <property name="text">
-             <string>Display tabs vertical</string>
+             <string>Display tabs vertically</string>
             </property>
            </widget>
           </item>
@@ -884,7 +885,7 @@
      </widget>
      <widget class="QWidget" name="tabLogging">
       <attribute name="title">
-       <string>Loging</string>
+       <string>Logging</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_Logging">
        <item row="0" column="0">
@@ -937,7 +938,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Note: Some of those settings are can be applied on application restart</string>
+          <string>Note: Some of those settings will take change on application restart</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

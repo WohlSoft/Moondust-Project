@@ -34,7 +34,7 @@
 LVL_ModeLine::LVL_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)
 {
-    drawStartPos = QPointF(0,0);
+    drawStartPos = QPointF(0, 0);
 }
 
 LVL_ModeLine::~LVL_ModeLine()
@@ -48,10 +48,10 @@ void LVL_ModeLine::set()
     s->clearSelection();
     s->resetResizers();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=true;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = true;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
@@ -65,7 +65,7 @@ void LVL_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if( mouseEvent->buttons() & Qt::RightButton )
+    if(mouseEvent->buttons() & Qt::RightButton)
     {
         item_rectangles::clearArray();
         s->m_mw->on_actionSelect_triggered();
@@ -74,9 +74,9 @@ void LVL_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    s->m_lastBlockArrayID=s->m_data->blocks_array_id;
-    s->m_lastBgoArrayID=s->m_data->bgo_array_id;
-    s->m_lastNpcArrayID=s->m_data->npc_array_id;
+    s->m_lastBlockArrayID = s->m_data->blocks_array_id;
+    s->m_lastBgoArrayID = s->m_data->bgo_array_id;
+    s->m_lastNpcArrayID = s->m_data->npc_array_id;
 
     if(LvlPlacingItems::npcSpecialAutoIncrement)
         s->m_IncrementingNpcSpecialSpin = LvlPlacingItems::npcSpecialAutoIncrement_begin;
@@ -85,21 +85,21 @@ void LVL_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(s->m_cursorItemImg)
     {
-        drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
-                                          QPoint(LvlPlacingItems::c_offset_x,
-                                                 LvlPlacingItems::c_offset_y),
-                                          LvlPlacingItems::gridSz,
-                                          LvlPlacingItems::gridOffset));
+        drawStartPos = QPointF(s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                            QPoint(LvlPlacingItems::c_offset_x,
+                                                    LvlPlacingItems::c_offset_y),
+                                            LvlPlacingItems::gridSz,
+                                            LvlPlacingItems::gridOffset));
         //cursor->setPos( drawStartPos );
         s->m_cursorItemImg->setVisible(true);
 
-        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint()-
-                               QPoint(LvlPlacingItems::c_offset_x,
-                                      LvlPlacingItems::c_offset_y),
-                               LvlPlacingItems::gridSz,
-                               LvlPlacingItems::gridOffset);
+        QPoint hw = s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                 QPoint(LvlPlacingItems::c_offset_x,
+                                        LvlPlacingItems::c_offset_y),
+                                 LvlPlacingItems::gridSz,
+                                 LvlPlacingItems::gridOffset);
         dynamic_cast<QGraphicsLineItem *>(s->m_cursorItemImg)->setLine(drawStartPos.x(), drawStartPos.y(),
-                                          hw.x(), hw.y());
+                hw.x(), hw.y());
     }
 }
 
@@ -108,49 +108,50 @@ void LVL_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if(!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")
+    if(!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer != "Default")
         s->setLabelBoxItem(true, mouseEvent->scenePos(), LvlPlacingItems::layer + ", " +
-                     QString::number( mouseEvent->scenePos().toPoint().x() ) + "x" +
-                     QString::number( mouseEvent->scenePos().toPoint().y() )
-                      );
+                           QString::number(mouseEvent->scenePos().toPoint().x()) + "x" +
+                           QString::number(mouseEvent->scenePos().toPoint().y())
+                          );
     else
         s->setLabelBoxItem(false);
 
-        if(s->m_cursorItemImg)
+    if(s->m_cursorItemImg)
+    {
+        if(s->m_cursorItemImg->isVisible())
         {
-            if(s->m_cursorItemImg->isVisible())
+            QPoint hs = s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                     QPoint(LvlPlacingItems::c_offset_x,
+                                            LvlPlacingItems::c_offset_y),
+                                     LvlPlacingItems::gridSz,
+                                     LvlPlacingItems::gridOffset);
+
+            QLineF sz = item_rectangles::snapLine(QLineF(drawStartPos.x(), drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),
+                                                  QSizeF((qreal)LvlPlacingItems::itemW, (qreal)LvlPlacingItems::itemH));
+
+            QPoint hw = s->applyGrid(sz.p2().toPoint(),
+                                     LvlPlacingItems::gridSz,
+                                     LvlPlacingItems::gridOffset);
+
+            sz.setP2(QPointF((qreal)hw.x(), (qreal)hw.y()));
+
+            dynamic_cast<QGraphicsLineItem *>(s->m_cursorItemImg)->setLine(sz);
+
+            item_rectangles::drawLine(s, sz,
+                                      QSize((int)LvlPlacingItems::itemW, (int)LvlPlacingItems::itemH)
+                                      );
+
+            if(LvlPlacingItems::npcSpecialAutoIncrement)
             {
-                QPoint hs = s->applyGrid( mouseEvent->scenePos().toPoint()-
-                                       QPoint(LvlPlacingItems::c_offset_x,
-                                              LvlPlacingItems::c_offset_y),
-                                       LvlPlacingItems::gridSz,
-                                       LvlPlacingItems::gridOffset);
-
-                QLineF sz = item_rectangles::snapLine(QLineF(drawStartPos.x(),drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),
-                                                     QSizeF((qreal)LvlPlacingItems::itemW, (qreal)LvlPlacingItems::itemH) );
-
-                QPoint hw = s->applyGrid( sz.p2().toPoint(),
-                                    LvlPlacingItems::gridSz,
-                                    LvlPlacingItems::gridOffset);
-
-                sz.setP2(QPointF((qreal)hw.x(),(qreal)hw.y()));
-
-                dynamic_cast<QGraphicsLineItem *>(s->m_cursorItemImg)->setLine(sz);
-
-                item_rectangles::drawLine(s, sz,
-                       QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH)
-                                            );
-
-                if(LvlPlacingItems::npcSpecialAutoIncrement)
-                {   //Automatically set direction by line angle in auto-incrementing mode
-                    if(sz.angle()>=0 && sz.angle() < 180)
-                        LvlPlacingItems::npcSet.direct=1;   //top
-                    else
-                        LvlPlacingItems::npcSet.direct=-1;  //bottom
-                }
-
+                //Automatically set direction by line angle in auto-incrementing mode
+                if(sz.angle() >= 0 && sz.angle() < 180)
+                    LvlPlacingItems::npcSet.direct = 1; //top
+                else
+                    LvlPlacingItems::npcSet.direct = -1; //bottom
             }
+
         }
+    }
 
 }
 
@@ -183,14 +184,14 @@ void LVL_ModeLine::keyRelease(QKeyEvent *keyEvent)
     Q_UNUSED(keyEvent);
     switch(keyEvent->key())
     {
-        case (Qt::Key_Escape):
-        {
-            item_rectangles::clearArray();
-            LvlScene *s = dynamic_cast<LvlScene *>(scene);
-            if(s) s->m_mw->on_actionSelect_triggered();
-            break;
-        }
-        default:
-            break;
+    case(Qt::Key_Escape):
+    {
+        item_rectangles::clearArray();
+        LvlScene *s = dynamic_cast<LvlScene *>(scene);
+        if(s) s->m_mw->on_actionSelect_triggered();
+        break;
+    }
+    default:
+        break;
     }
 }

@@ -109,7 +109,7 @@
         <item>
          <widget class="QComboBox" name="WarpList">
           <property name="toolTip">
-           <string>Choise a warp entry to edit</string>
+           <string>Choose a warp entry to edit</string>
           </property>
           <property name="maxVisibleItems">
            <number>50</number>
@@ -134,8 +134,8 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Create new warp entry.
-Every warp points pair requires a warp entry</string>
+           <string>Create a new warp entry.
+Every warp point pair requires a warp entry.</string>
           </property>
           <property name="text">
            <string notr="true">+</string>
@@ -730,8 +730,8 @@ Every warp points pair requires a warp entry</string>
         <item>
          <widget class="QCheckBox" name="WarpLevelExit">
           <property name="toolTip">
-           <string>Entering into this warp causes exiting of the level.
-If this flag enabled, possible to place entrance point only.</string>
+           <string>Entering this warp ends the current level
+If this flag is enabled, you can only place a warp entrance.</string>
           </property>
           <property name="text">
            <string>Exit only</string>
@@ -741,9 +741,9 @@ If this flag enabled, possible to place entrance point only.</string>
         <item>
          <widget class="QCheckBox" name="WarpLevelEntrance">
           <property name="toolTip">
-           <string>Disables any possibility to enter into this warp.
-Use this flag if you plan use it for level entrances only.
-If this flag is enabled, possible to place exit point only.</string>
+           <string>Prevents any in-level warp to exit at this warp.
+Used for creating a warp from another level.
+If this flag is enabled, you can only place a warp exit.</string>
           </property>
           <property name="text">
            <string>Enter only</string>
@@ -810,7 +810,7 @@ If this flag is enabled, possible to place exit point only.</string>
          <widget class="QLineEdit" name="WarpToMapX">
           <property name="toolTip">
            <string>Target coordinates of player on the world map
-when you exited from a level through this warp</string>
+when you exit from a level through this warp.</string>
           </property>
          </widget>
         </item>
@@ -825,14 +825,14 @@ when you exited from a level through this warp</string>
          <widget class="QLineEdit" name="WarpToMapY">
           <property name="toolTip">
            <string>Target coordinates of player on the world map
-when you exited from a level through this warp</string>
+when you exit from a level through this warp.</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="WarpGetXYFromWorldMap">
           <property name="toolTip">
-           <string>Browse world map for setting a target exit point</string>
+           <string>Browse the world map to set an exit point</string>
           </property>
           <property name="text">
            <string>Set</string>
@@ -914,7 +914,7 @@ when you exited from a level through this warp</string>
         <item row="1" column="1">
          <widget class="QPushButton" name="WarpSetExit">
           <property name="toolTip">
-           <string>Place exit point or quickly jump to already placed</string>
+           <string>Place exit point or quickly jump to existing warp</string>
           </property>
           <property name="text">
            <string>Set Exit</string>
@@ -1041,11 +1041,11 @@ when you exited from a level through this warp</string>
               </size>
              </property>
              <property name="toolTip">
-              <string>Defines a type of warp:
-0 - Instant, player will be teleported with zero of movement speed.
+              <string>Defines the type of warp:
+0 - Instant, player will be teleported movement speed will be reset to 0.
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
-3 - Portal, player will be teleported with keeping movelent speed as-is.</string>
+3 - Portal, player will be teleported, but preserving movement speed.</string>
              </property>
              <property name="maxVisibleItems">
               <number>20</number>
@@ -1084,8 +1084,8 @@ when you exited from a level through this warp</string>
            <item row="5" column="1">
             <widget class="QLineEdit" name="WarpNeedAStarsMsg">
              <property name="toolTip">
-              <string>Message which will be shown
-if required number of stars is not collected</string>
+              <string>Message which will be shown if the player
+does not have the required number of stars</string>
              </property>
             </widget>
            </item>
@@ -1112,7 +1112,7 @@ if required number of stars is not collected</string>
               </size>
              </property>
              <property name="toolTip">
-              <string>Required number of a stars
+              <string>Required number of stars
 to enter this warp</string>
              </property>
              <property name="maximum">
@@ -1130,11 +1130,11 @@ to enter this warp</string>
            <item row="6" column="0" colspan="2">
             <widget class="QCheckBox" name="WarpHideStars">
              <property name="toolTip">
-              <string>If this warp following to a level, number of existing
-and collected stars will not be shown.</string>
+              <string>If this setting is enabled, even if this warp leads to another level, the
+number of existing and collected stars in the level will not be shown.</string>
              </property>
              <property name="text">
-              <string>Don't show stars number</string>
+              <string>Don't show level completion amount</string>
              </property>
             </widget>
            </item>
@@ -1212,7 +1212,7 @@ and collected stars will not be shown.</string>
            <item>
             <widget class="QComboBox" name="WarpEnterEvent">
              <property name="toolTip">
-              <string>Trigger event when player will enter into this warp</string>
+              <string>Trigger event when he player enters this warp</string>
              </property>
             </widget>
            </item>
@@ -1249,10 +1249,10 @@ and collected stars will not be shown.</string>
            <item>
             <widget class="QCheckBox" name="WarpNoVehicles">
              <property name="toolTip">
-              <string>Any mounted vehicles are will be removed
-when player will pass this warp.
-There are will be restored back when player
-finish level or lose it.</string>
+              <string>Any mounted vehicles will be removed
+when player passes through this warp.
+They will be given back when player
+finishes the level or lose a life.</string>
              </property>
              <property name="text">
               <string comment="In the SMBX - this option named as &quot;No Yoshi&quot;">No Vehicles</string>
@@ -1262,7 +1262,7 @@ finish level or lose it.</string>
            <item>
             <widget class="QCheckBox" name="WarpAllowNPC">
              <property name="toolTip">
-              <string>Player can pass warp together with carried NPC.</string>
+              <string>Player can carry items and NPCs through this warp.</string>
              </property>
              <property name="text">
               <string comment="Please, translate as &quot;Allow items&quot;">Allow NPC</string>
@@ -1282,7 +1282,7 @@ finish level or lose it.</string>
            <item>
             <widget class="QCheckBox" name="WarpBombNeed">
              <property name="toolTip">
-              <string>To be able enter into this warp, lock exlosion is needed.</string>
+              <string>Entrance closed with a lock. Need to blow up the lock to open it.</string>
              </property>
              <property name="text">
               <string>Bomb needed</string>
@@ -1292,8 +1292,8 @@ finish level or lose it.</string>
            <item>
             <widget class="QCheckBox" name="WarpSpecialStateOnly">
              <property name="toolTip">
-              <string>Player with special state only can enter into this warp.
-Special state of playable character is defining by current configuration package settings.</string>
+              <string>The player can only enter this warp under a special state.
+The special state is defined by the active configuration pack.</string>
              </property>
              <property name="text">
               <string>Sp. State only</string>
@@ -1371,7 +1371,7 @@ Special state of playable character is defining by current configuration package
         <item row="1" column="0" colspan="2">
          <widget class="QLineEdit" name="WarpLevelFile">
           <property name="toolTip">
-           <string>If this field is not empty, player will exit this level and will start this level.</string>
+           <string>If this field is not empty, player will travel from the current level to the specified one.</string>
           </property>
          </widget>
         </item>
@@ -1385,9 +1385,8 @@ Special state of playable character is defining by current configuration package
         <item row="2" column="1" colspan="2">
          <widget class="QSpinBox" name="WarpToExitNu">
           <property name="toolTip">
-           <string>Declares Warp-ID of target level if value is not zero.
-Player will enter into target level through specific warp point.
-If value is zero, start level at pre-declared player start points.</string>
+           <string>Determines the warp through which the player will enter the target level.
+If set to zero, the player will start at the pre-defined level start point.</string>
           </property>
           <property name="maximum">
            <number>10000</number>
@@ -1435,9 +1434,9 @@ If value is zero, start level at pre-declared player start points.</string>
         <item row="3" column="0" colspan="3">
          <widget class="QCheckBox" name="WarpHideLevelEnterScreen">
           <property name="toolTip">
-           <string>Show blank screen instead of loading screen.
-In the SMBX Engine level loading screen showing
-a current playable character(s) and number of lives.</string>
+           <string>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</string>
           </property>
           <property name="text">
            <string>Hide level enter screen</string>
@@ -1457,8 +1456,7 @@ a current playable character(s) and number of lives.</string>
         <item row="4" column="0" colspan="3">
          <widget class="QCheckBox" name="WarpAllowNPC_IL">
           <property name="toolTip">
-           <string>Keep carried NPC when player entering
-to another level through this warp.</string>
+           <string>Brings the player's held item to the target level of this warp.</string>
           </property>
           <property name="text">
            <string>Allow inter-level NPC</string>
@@ -1508,8 +1506,8 @@ to another level through this warp.</string>
         <item row="1" column="1">
          <widget class="QDoubleSpinBox" name="WarpCannonSpeed">
           <property name="toolTip">
-           <string>How fast will fly player when it will be shooted.
-Unit is a pixels per 1/65 seconds.</string>
+           <string>The speed at which the player will exit the warp.
+Measured in pixels per 1/65 seconds.</string>
           </property>
           <property name="decimals">
            <number>10</number>
@@ -1525,7 +1523,7 @@ Unit is a pixels per 1/65 seconds.</string>
         <item row="0" column="0" colspan="2">
          <widget class="QCheckBox" name="WarpEnableCannon">
           <property name="toolTip">
-           <string>When player will exit from this warp, it will be shooted by defined direction</string>
+           <string>The direction in which the player will exit the warp.</string>
           </property>
           <property name="text">
            <string>Cannon exit</string>

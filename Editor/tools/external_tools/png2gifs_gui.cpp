@@ -83,7 +83,7 @@ void png2gifs_gui::on_startTool_clicked()
 
     if(!QFile(command).exists())
     {
-        QMessageBox::warning(this, tr("Tool is not found"), tr("Can't run application: \n%1\nPlease, check the application directory.").arg(command), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Tool not found"), tr("Can't run application:\n%1\nPlease, check the application directory and make sure it is installed properly.").arg(command), QMessageBox::Ok);
         return;
     }
 

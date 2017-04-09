@@ -860,7 +860,7 @@ void LvlLayersBox::on_RemoveLayer_clicked()
     if(ui->LvlLayerList->selectedItems().isEmpty()) return;
     QMessageBox::StandardButton answer=QMessageBox::question(mw(),
                                      tr("Remove layer"),
-                                     tr("Are you want to remove this layer?\nAll elements on this layer will be moved to the 'Default' layer."),
+                                     tr("Are you sure you want to remove this layer?\nAll objects on this layer will be moved to the 'Default' layer."),
                                      QMessageBox::Yes|QMessageBox::No);
     if(answer==QMessageBox::Yes) RemoveCurrentLayer(true);
 }
@@ -881,7 +881,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     layer_menu->addSeparator();
 
     QAction * removeLayer = layer_menu->addAction(tr("Remove layer with items"));
-    QAction * removeLayerOnly = layer_menu->addAction(tr("Remove layer and save items"));
+    QAction * removeLayerOnly = layer_menu->addAction(tr("Remove Layer and keep items"));
 
     QAction *selected = layer_menu->exec( globPos );
     if(selected==rename)
@@ -894,14 +894,14 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
         if(selected==removeLayerOnly){
             QMessageBox::StandardButton answer=QMessageBox::question(mw(),
                                              tr("Remove layer"),
-                                             tr("Are you want to remove this layer?\nAll elements of this layer will be moved to the 'Default' layer!"),
+                                             tr("Are you sure you want to remove this layer?\nAll elements of this layer will be moved to the 'Default' layer!"),
                                              QMessageBox::Yes|QMessageBox::No);
             if(answer==QMessageBox::Yes) RemoveCurrentLayer(true);
         } else
         if(selected==removeLayer){
             QMessageBox::StandardButton answer=QMessageBox::question(mw(),
                                              tr("Remove layer"),
-                                             tr("Are you want to remove this layer?\nAll elements of this layer will be removed too!"),
+                                             tr("Are you sure you want to remove this layer?\nAll elements of this layer will be removed too!"),
                                              QMessageBox::Yes|QMessageBox::No);
             if(answer==QMessageBox::Yes) RemoveCurrentLayer(false);
         }

@@ -1086,7 +1086,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
         QFile file(wldPath);
         if (!file.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(this, tr("File open error"),
-                tr("Can't open the file."), QMessageBox::Ok);
+                tr("Can't open the file!"), QMessageBox::Ok);
                 return;
         }
         WorldData FileData;

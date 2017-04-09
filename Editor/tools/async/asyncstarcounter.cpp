@@ -41,7 +41,7 @@ void AsyncStarCounter::startAndShowProgress()
     bool firstRun = true;
 again:;
 
-    QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, m_levels.size(), qobject_cast<QWidget*>(parent()));
+    QProgressDialog progress(tr("Calculating total star count in accessible levels"), tr("Abort"), 0, m_levels.size(), qobject_cast<QWidget*>(parent()));
     progress.setWindowTitle(tr("Counting stars..."));
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);

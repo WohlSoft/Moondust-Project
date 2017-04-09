@@ -46,7 +46,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Item types:</string>
+          <string>Objects defined:</string>
          </property>
         </widget>
        </item>
@@ -73,7 +73,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Config name:</string>
+          <string>Configuration name:</string>
          </property>
         </widget>
        </item>
@@ -86,7 +86,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Config path:</string>
+          <string>Configuration path:</string>
          </property>
         </widget>
        </item>
@@ -137,7 +137,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Config directories:</string>
+          <string>Configuration directories:</string>
          </property>
         </widget>
        </item>
@@ -220,7 +220,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Errors of configuration loading:</string>
+          <string>Configuration Loading Errors:</string>
          </property>
         </widget>
        </item>

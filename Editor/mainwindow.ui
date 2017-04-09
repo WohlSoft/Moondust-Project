@@ -683,7 +683,7 @@
   </action>
   <action name="Exit">
    <property name="text">
-    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;">Exit program</string>
+    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Edit from the editor">Exit</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
@@ -1459,7 +1459,7 @@
      <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
    </property>
    <property name="text">
-    <string>Level Toolbox</string>
+    <string>Level toolbox</string>
    </property>
    <property name="toolTip">
     <string>Level objects tool box</string>
@@ -1554,7 +1554,7 @@
   </action>
   <action name="actionLoad_configs">
    <property name="text">
-    <string>Reload configurations</string>
+    <string>Reload configuration pack</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2385,7 +2385,7 @@
   </action>
   <action name="actionShow_Development_Console">
    <property name="text">
-    <string>Show Development Console</string>
+    <string>Show Developer Console</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2461,7 +2461,7 @@
   </action>
   <action name="actionChangeConfig">
    <property name="text">
-    <string>Change configuration...</string>
+    <string>Change configuration pack...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2485,7 +2485,7 @@
   </action>
   <action name="action_doTest">
    <property name="text">
-    <string>Run testing &lt;Alpha&gt;</string>
+    <string>Test level (Alpha)</string>
    </property>
    <property name="shortcut">
     <string notr="true">F5</string>
@@ -2499,10 +2499,10 @@
   </action>
   <action name="action_testSettings">
    <property name="text">
-    <string>Testing settings</string>
+    <string>Testing options...</string>
    </property>
    <property name="toolTip">
-    <string>Testing settings</string>
+    <string>Testing options...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2580,7 +2580,7 @@
     <string>Position bookmarks</string>
    </property>
    <property name="toolTip">
-    <string>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</string>
+    <string>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</string>
    </property>
   </action>
   <action name="actionCloneSectionTo">
@@ -2801,7 +2801,7 @@
   </action>
   <action name="actionAudioCvt">
    <property name="text">
-    <string>Convert Audio (SoX)...</string>
+    <string>Convert Audio files...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2865,7 +2865,7 @@
     <string>Open custom data folder</string>
    </property>
    <property name="toolTip">
-    <string>Open custom folder: a folder with a name equal to basename of currently opened file</string>
+    <string>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</string>
    </property>
   </action>
   <action name="actionWrapVertically">
@@ -2973,7 +2973,7 @@
     <string>Open local script</string>
    </property>
    <property name="toolTip">
-    <string>Open the level / world map local script. If not exist - file will be created.</string>
+    <string>Open the level / world map local script. If it does not exist, a file will be created.</string>
    </property>
   </action>
   <action name="actionCreateScriptEpisode">
@@ -2981,7 +2981,7 @@
     <string>Open episode script</string>
    </property>
    <property name="toolTip">
-    <string>Open the episode common script. If not exist - file will be created.</string>
+    <string>Open the episode common script. If it does not exist, a file will be created.</string>
    </property>
   </action>
   <action name="actionLunaLUA_lvl">

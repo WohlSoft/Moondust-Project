@@ -243,7 +243,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             QMessageBox::StandardButton reply =  QMessageBox::information(this,
                                                  tr("Section has been clonned"),
-                                                 tr("Section has been successfully clonned!\n"
+                                                 tr("Section has been successfully cloned!\n"
                                                     "Do you want to clone another section?"),
                                                  QMessageBox::Yes | QMessageBox::No);
             if(reply != QMessageBox::Yes)
@@ -266,7 +266,7 @@ void MainWindow::on_actionSCT_Delete_triggered()
         {
             bool ok = false;
             long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                                      tr("Please select, how far items out of section should be removed too (in pixels)"),
+                                      tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                       32, 0, 214948, 1, &ok);
 
             if(!ok)
@@ -347,7 +347,7 @@ void MainWindow::on_actionSCT_RotateLeft_triggered()
         QRectF zone;
         bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  tr("Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed."),
                                   32, 0, 214948, 1, &ok);
 
         if(!ok) return;
@@ -375,7 +375,7 @@ void MainWindow::on_actionSCT_RotateRight_triggered()
         QRectF zone;
         bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  tr("Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed."),
                                   32, 0, 214948, 1, &ok);
 
         if(!ok) return;
@@ -403,7 +403,7 @@ void MainWindow::on_actionSCT_FlipHorizontal_triggered()
         QRectF zone;
         bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  tr("Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed."),
                                   32, 0, 214948, 1, &ok);
 
         if(!ok) return;
@@ -431,7 +431,7 @@ void MainWindow::on_actionSCT_FlipVertical_triggered()
         QRectF zone;
         bool ok = false;
         long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
-                                  tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                                  tr("Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed."),
                                   32, 0, 214948, 1, &ok);
 
         if(!ok) return;

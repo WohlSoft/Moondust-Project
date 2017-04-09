@@ -320,7 +320,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_pointSide == D_Entrance ? m_data.ix : m_data.ox)
             .arg(m_pointSide == D_Entrance ? m_data.iy : m_data.oy)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -331,7 +331,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_itemSize.width())
             .arg(m_itemSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -342,7 +342,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg((m_pointSide == D_Entrance ? m_data.ix : m_data.ox) + m_itemSize.width())
             .arg((m_pointSide == D_Entrance ? m_data.iy : m_data.oy) + m_itemSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == remove)
         m_scene->removeSelectedLvlItems();

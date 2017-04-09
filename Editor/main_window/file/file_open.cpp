@@ -168,7 +168,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         QMessageBox::warning(this,
                              tr("Configuration is loaded with errors"),
                              tr("Cannot open file:\n"
-                                "Configuration package loaded with errors.")
+                                "The configuration pack was loaded, but contains errors.")
                                         .arg(ConfStatus::configPath));
         //Show configuration status window
         on_actionCurConfig_triggered();

@@ -124,7 +124,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Water"),        m_data.env_type == LevelPhysEnv::ENV_WATER);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Quicksand"),    m_data.env_type == LevelPhysEnv::ENV_QUICKSAND);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Custom liquid"), m_data.env_type == LevelPhysEnv::ENV_CUSTOM_LIQUID);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Gravitational Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Gravity Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
@@ -174,7 +174,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.w)
             .arg(m_data.h)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -185,7 +185,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x + m_data.w)
             .arg(m_data.y + m_data.h)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == resize)
         m_scene->setPhysEnvResizer(this, true);

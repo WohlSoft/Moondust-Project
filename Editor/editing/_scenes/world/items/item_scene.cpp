@@ -100,7 +100,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     if(selected==copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosXY)
@@ -110,7 +110,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                                .arg(m_data.x)
                                .arg(m_data.y)
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosXYWH)
@@ -122,7 +122,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                                .arg(m_imageSize.width())
                                .arg(m_imageSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosLTRB)
@@ -134,7 +134,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                                .arg(m_data.x+m_imageSize.width())
                                .arg(m_data.y+m_imageSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==cutTile)

@@ -60,7 +60,7 @@ void MainWindow::on_actionReload_triggered()
         if(!QFileInfo(filePath).exists())
         {
             QMessageBox::critical(this, tr("File open error"),
-                                  tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+                                  tr("Can't open the file!\nFile not exist."), QMessageBox::Ok);
             return;
         }
 
@@ -179,7 +179,7 @@ void MainWindow::on_actionReload_triggered()
 
         //        if (!fileIn.open(QIODevice::ReadOnly)) {
         //        QMessageBox::critical(this, tr("File open error"),
-        //        tr("Can't open the file."), QMessageBox::Ok);
+        //        tr("Can't open the file!"), QMessageBox::Ok);
         //            return;
         //        }
         NPCConfigFile FileData;
@@ -227,7 +227,7 @@ void MainWindow::on_actionReload_triggered()
         if(!QFileInfo(filePath).exists())
         {
             QMessageBox::critical(this, tr("File open error"),
-                                  tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+                                  tr("Can't open the file!\nFile not exist."), QMessageBox::Ok);
             return;
         }
 

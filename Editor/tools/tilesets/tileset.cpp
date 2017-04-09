@@ -72,7 +72,7 @@ void tileset::paintEvent(QPaintEvent *ev)
     if(pieceRects.isEmpty())
     {
         if(highlightedRect.isEmpty())
-            painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!\nRightclick to remove!"));
+            painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items into this box!\nRight-click to remove!"));
     }
     else
     {

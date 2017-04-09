@@ -55,7 +55,7 @@ void DevConsole::init()
     currentDevConsole->restoreGeometry(settings.value("geometry", currentDevConsole->saveGeometry()).toByteArray());
     settings.endGroup();
 
-    DevConsole::log("Welcome to Development Console of PGE Editor!\nType 'help' to get more about console commands");
+    DevConsole::log("Welcome to Developer Console of PGE Editor!\nType 'help' to get more about console commands");
 }
 
 void DevConsole::show()
@@ -261,22 +261,22 @@ void DevConsole::on_edit_command_returnPressed()
 
 void DevConsole::registerCommands()
 {
-    registerCommand({"?", "help"}, &DevConsole::doHelp, tr("Prints the command help"));
+    registerCommand({"?", "help"}, &DevConsole::doHelp, tr("Prints this help text"));
     registerCommand("test", &DevConsole::doTest, tr("Prints a test command"));
-    registerCommand("version", &DevConsole::doVersion, tr("Prints the version"));
+    registerCommand("version", &DevConsole::doVersion, tr("Prints the editor version"));
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
-    registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
-    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validating the PGE-X string array"));
+    registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculates MD5 hash of string"));
+    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validates the PGE-X string array"));
     #ifdef DEBUG_BUILD
     // Debug only commands, must be disabled in releases! (or Static Analyzers will swear!)
     registerCommand("flood",    &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv",  &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
     #endif
-    registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
+    registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} tests if the file is in the PGE-X file format"));
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
-    registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send command or message into running engine"));
+    registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send a command or message into the PGE Engine if it's running"));
     registerCommand("paths", &DevConsole::doOutputPaths, tr("Shows various important paths!"));
 }
 
@@ -447,7 +447,7 @@ void DevConsole::doPgeXTest(QStringList args)
         QFile file(src);
         if(!file.open(QIODevice::ReadOnly))
         {
-            log(QString("-> Error: Can't open the file."));
+            log(QString("-> Error: Can't open the file!"));
             return;
         }
 

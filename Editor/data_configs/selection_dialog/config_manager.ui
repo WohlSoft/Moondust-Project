@@ -79,7 +79,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Please select the game configuration with which you wish to start the Editor with </string>
+         <string>Please select the game configuration you want to start the Editor with</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -108,7 +108,7 @@
       <item>
        <widget class="QCheckBox" name="AskAgain">
         <property name="text">
-         <string>Ask every Startup</string>
+         <string>Ask every startup</string>
         </property>
        </widget>
       </item>

@@ -82,7 +82,7 @@ void MainWindow::on_actionLoad_configs_triggered()
                                0, 100,//Value, Maximum
                                this,//Parent
                                Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-    progress.setWindowTitle(tr("Reloading configurations"));
+    progress.setWindowTitle(tr("Reloading configuration pack"));
     //progress.setWindowModality(Qt::WindowModal);
     progress.setModal(true);
     progress.setFixedSize(progress.size());
@@ -149,7 +149,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     if(isOk.result())
     {
         QMessageBox::information(this, tr("Reloading configuration"),
-                                 tr("Configuration succesfully reloaded!"),
+                                 tr("Configuration successfully reloaded!"),
                                  QMessageBox::Ok);
     }
     else
@@ -192,8 +192,8 @@ void MainWindow::on_actionChangeConfig_triggered()
         saveSettings();
         QMessageBox::information(this,
                                  tr("Configuration changed"),
-                                 tr("The Configuration was switched!\n"
-                                    "To start work with new configuration, please restart application."),
+                                 tr("The configuration pack has changed!\n"
+                                    "To start using the new configuration pack, please restart the application."),
                                  QMessageBox::Ok);
     }
 }

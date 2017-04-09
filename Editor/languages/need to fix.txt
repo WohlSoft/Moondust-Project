@@ -1,0 +1,2059 @@
+1)
+====================
+Args: {[Number] Gigabytes} | Floods the memory with megabytes
+--------------------
+Args: {[Number] Megabytes} | Floods the memory with the selected amount of data (Be careful with this!)
+====================
+2)
+====================
+Does a segmentation violation
+--------------------
+Causes a segmentation fault, for crash-testing purposes
+====================
+3)
+====================
+<html><head/><body><p>This is a <span style=" font-weight:600;">Height</span> of target image. Target image will be scaled to this height.</p></body></html>
+--------------------
+<html><head/><body><p>This is the <span style=" font-weight:600;">Height</span> of the image. Target image will be scaled to this height.</p></body></html>
+====================
+4)
+====================
+ px
+--------------------
+px
+====================
+5)
+====================
+Please, select target image size:
+--------------------
+Please select target image size:
+====================
+6)
+====================
+<html><head/><body><p>With this option will be calculated opposite value for height or width for make target image with correct proportions.</p></body></html>
+--------------------
+<html><head/><body><p>When checked, this will calculate the size of the opposite dimension (height or width) to make a target image with the correct proportions.</p></body></html>
+====================
+7)
+====================
+Save proportion
+--------------------
+Save proportions
+====================
+8)
+====================
+<html><head/><body><p>This is a <span style=" font-weight:600;">Width</span> of target image. Target image will be scaled to this width.</p></body></html>
+--------------------
+<html><head/><body><p>This is the <span style=" font-weight:600;">Width</span> of the image. Target image will be scaled to this width.</p></body></html>
+====================
+9)
+====================
+Tiled background
+--------------------
+Tile background image (recommended)
+====================
+10)
+====================
+<p><b>Tip 1:</b> You still be able to toggle UI via <u>Help</u> menu or toggling toolboxes from <u>View</u> menu and toggling
+sub-windows and tabs mode in the <u>Window</u> menu.<br/>
+<br/>
+<b>Tip 2:</b> Unlike the legacy editor, many features can be quickly accessed from the context menu (opened by right-clicking),
+as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!<br/>
+<br/>
+<b>Tip 3:</b> Use middle mouse button to toggle placing of selected element or duplicate group!</p>
+--------------------
+<p><b>Tip 1:</b> You can change the layout at any time from the <u>Help</u> menu, the toolboxes in the <u>View</u> menu, and the Window Layout checkboxes in the <u>Window</u> menu.<br/>
+<br/>
+<b>Tip 2:</b> Unlike the legacy editor, many features can be quickly accessed from the context menu (opened by right-clicking),
+as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!<br/>
+<br/>
+<b>Tip 3:</b> Use the middle mouse button to toggle between placing the selected object or copying a group of them!</p>
+====================
+11)
+====================
+Add Warp
+--------------------
+Add warp entry
+====================
+12)
+====================
+Place Door
+--------------------
+Place door point
+====================
+13)
+====================
+Remove Warp
+--------------------
+Remove warp entry
+====================
+14)
+====================
+Resize Water
+--------------------
+Resize Water area
+====================
+15)
+====================
+Please enter the Z-value offset:
+--------------------
+Please enter the Z-offset value:
+====================
+16)
+====================
+Margin of section
+--------------------
+Section margin
+====================
+17)
+====================
+Change included NPC...
+--------------------
+Change contained NPC...
+====================
+18)
+====================
+No Vehicles
+--------------------
+Deny vehicles
+====================
+19)
+====================
+Allow NPC
+--------------------
+Allow items
+====================
+20)
+====================
+Path background
+--------------------
+Background Path
+====================
+21)
+====================
+Big Path background
+--------------------
+Big Background Path
+====================
+22)
+====================
+Set message box
+--------------------
+Set message text
+====================
+23)
+====================
+<html><head/><body><p>This is a message, what will be displayed if player will do talk with this NPC.</p><p><span style=" font-weight:600;">Note:</span> All quotes and new-line characters will be removed.</p></body></html>
+--------------------
+<html><head/><body><p>This is the message which will be displayed if the player talks with this NPC.</p><p><span style=" font-weight:600;">Note:</span> All quotes and new-line characters will be removed.</p></body></html>
+====================
+24)
+====================
+<Silence>
+--------------------
+<None>
+====================
+25)
+====================
+[all]
+--------------------
+[All]
+====================
+26)
+====================
+[Empty]
+--------------------
+
+====================
+27)
+====================
+Please, save file
+--------------------
+Please save the file
+====================
+28)
+====================
+Please, save file first, if you want to select custom music file.
+--------------------
+Please save the file first if you want to select a custom music file.
+====================
+29)
+====================
+This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.
+--------------------
+This is a tool for fixing lazily-made masks from SMBX images/sprites. This utility corrects the mask via color comparison. The original images will be overwritten, but backups will be created in a new directory so you can restore the originals if something goes wrong.
+====================
+30)
+====================
+Please, set the source directory
+--------------------
+Please specify the input directory
+====================
+31)
+====================
+Level title: 
+--------------------
+Level title:
+====================
+32)
+====================
+Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow level file work in specific SMBX version,
+version code must be less or equal specific code)
+--------------------
+Which version do you want to save as? (from 0 to 64)
+List of known SMBX versions and format codes:
+%1
+(To allow the level file to work in a specific SMBX version,
+the file version must be less than or equal to that SMBX version code.)
+====================
+33)
+====================
+Extension is not set
+--------------------
+File extension not set
+====================
+34)
+====================
+File Extension isn't defined, please enter file extension!
+--------------------
+File extension isn't set, please enter a valid file extension!
+====================
+35)
+====================
+Do you want to save file anyway?
+Exciting of SMBX64 limits may crash SMBX with 'Subscript out of range' error.
+
+Installed LunaLUA partially extends than limits.
+--------------------
+Do you want to save the file anyway?WWWW
+ Exceeding the SMBX64 limits may crash SMBX with a 'Subscript out of range' error.
+
+Installing LunaLUA partially extends these limits.
+====================
+36)
+====================
+ not saved
+--------------------
+ has not been saved
+====================
+37)
+====================
+1/%1 Loading user data...
+--------------------
+1/%1 Loading custom data...
+====================
+38)
+====================
+Level files list
+--------------------
+Level file list
+====================
+39)
+====================
+<html><head/><body><p>This is a list of level files, what placed with your current file in the same folder.</p></body></html>
+--------------------
+<html><head/><body><p>This is a list of level files which are located in the same folder as the current file.</p></body></html>
+====================
+40)
+====================
+Please, select level file from list for use them:
+--------------------
+Please select a level file from list to use:
+====================
+41)
+====================
+Level toolbox
+--------------------
+Level Item toolbox
+====================
+42)
+====================
+Uniform icon size
+--------------------
+Standard icon size
+====================
+43)
+====================
+Timer type:
+--------------------
+Timer action:
+====================
+44)
+====================
+Violation of SMBX64 standard has beeen found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Are you want continue process?
+--------------------
+
+====================
+45)
+====================
+To run testing via SMBX file must be saved into disk first!
+--------------------
+To run testing via SMBX, the file must be saved to the disk first!
+====================
+46)
+====================
+To take able to test level in the SMBX, file should be saved into SMBX64 format!
+Will be created a temporary file. Do you want to continue?
+--------------------
+To test this level in SMBX, it must be saved in the SMBX64 format.
+A temporary file will be created automatically. Do you want to continue?
+====================
+47)
+====================
+Fail to create temp file %1
+--------------------
+Failed to create temp file %1
+====================
+48)
+====================
+Do you wanna to save file before start testing?
+
+--------------------
+Do you want to save the file before testing?
+====================
+49)
+====================
+Fail to send file patth into LunaDLL: (%1)
+--------------------
+Failed to send file path to LunaDLL: (%1)
+====================
+50)
+====================
+Too long path: 
+--------------------
+File path too long:
+====================
+51)
+====================
+Failed to find SMBX Window
+--------------------
+Failed to find SMBX window
+====================
+52)
+====================
+Destiation
+--------------------
+Destination
+====================
+53)
+====================
+Source and Destination sections should be selected!
+--------------------
+Source and Destination sections must be selected!
+====================
+54)
+====================
+Section is used
+--------------------
+Section is already being used
+====================
+55)
+====================
+Layer visibly
+--------------------
+Layer visibility
+====================
+56)
+====================
+Disable smoke effects
+--------------------
+Disable smoke transition
+====================
+57)
+====================
+Layers movement
+--------------------
+Layer movement
+====================
+58)
+====================
+Horisontal speed:
+--------------------
+Horizontal speed:
+====================
+59)
+====================
+Current section:
+--------------------
+Change settings for section:
+====================
+60)
+====================
+Set music
+--------------------
+Change music
+====================
+61)
+====================
+Replace music to:
+--------------------
+Change music to:
+====================
+62)
+====================
+Set background
+--------------------
+Change background
+====================
+63)
+====================
+Replace background to:
+--------------------
+Change background to:
+====================
+64)
+====================
+Do end game:
+--------------------
+Trigger game end:
+====================
+65)
+====================
+Nothing
+--------------------
+No
+====================
+66)
+====================
+Game end "Bowser defeat"
+--------------------
+Game end: "Bowser defeat"
+====================
+67)
+====================
+Player Control hold keys
+--------------------
+Auto-hold player's controls
+====================
+68)
+====================
+Copyed Event %1
+--------------------
+Copied Event %1
+====================
+69)
+====================
+Please, set current section to %1 for capture data for this event
+--------------------
+Please switch current section to %1 to capture data for this event
+====================
+70)
+====================
+Please, enter message
+(Max line length is 27 characters)
+--------------------
+Please enter message
+(Max line length is 27 characters)
+====================
+71)
+====================
+Undone: %1
+--------------------
+Undone action: %1
+====================
+72)
+====================
+Redone: %1
+--------------------
+Redone action: %1
+====================
+73)
+====================
+Hited:
+--------------------
+Hit:
+====================
+74)
+====================
+Layer empty:
+--------------------
+Layer is empty:
+====================
+75)
+====================
+Layer:
+--------------------
+Current Layer:
+====================
+76)
+====================
+SMBX64 defines:
+--------------------
+SMBX format:
+====================
+77)
+====================
+Sort priority:
+--------------------
+Sorting priority:
+====================
+78)
+====================
+This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
+This option using the SMBX's bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.
+--------------------
+This sets the sorting array priority. With this option, you can make BGOs appear in the foreground. (Set this to -1 to use the default value from the global BGO config).
+This takes advantage of SMBX's buggy BGO rendering. To make this work, simply place one of foreground BGO onto the map (for example, air-screw). This option will not be saved in the LVL file, so you will need to set this option each time you open this level.
+====================
+79)
+====================
+Attach to:
+--------------------
+Attach to layer:
+====================
+80)
+====================
+Contains of current NPC-Container
+--------------------
+Contents of the current container
+====================
+81)
+====================
+%1 coins
+--------------------
+%1 coin(s)
+====================
+82)
+====================
+Layer with name '%1' already exist, do you want to merge layers?
+--------------------
+Layer with name '%1' already exists, do you want to merge the layers?
+====================
+83)
+====================
+Remove layer with items
+--------------------
+Remove layer and items
+====================
+84)
+====================
+Remove Layer and keep items
+--------------------
+Remove layer and keep items
+====================
+85)
+====================
+Are you sure you want to remove this layer?
+All elements of this layer will be moved to the 'Default' layer!
+--------------------
+Are you sure you want to remove this layer?
+All objects on this layer will be moved to the 'Default' layer!
+====================
+86)
+====================
+Are you sure you want to remove this layer?
+All elements of this layer will be removed too!
+--------------------
+Are you sure you want to remove this layer?
+All objects on this layer will be deleted!
+====================
+87)
+====================
+Search User Backgrounds %1
+--------------------
+Searching for custom Backgrounds %1
+====================
+88)
+====================
+Search User Blocks %1
+--------------------
+Searching for custom Blocks %1
+====================
+89)
+====================
+Search User BGOs %1
+--------------------
+Searching for custom BGOs %1
+====================
+90)
+====================
+Search User NPCs %1
+--------------------
+Searching for custom NPCs %1
+====================
+91)
+====================
+Wrong custom images
+--------------------
+Bad custom image files
+====================
+92)
+====================
+This level have a wrong custom graphics files.
+You will see 'ghosties' or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.
+--------------------
+This level has invalid custom graphics files.
+You will see 'ghosties' or other dummy images instead of your custom graphics. This occurred due to a bad conversion, such as from BMP to GIF.
+Please reconvert your images to a valid format and try reloading this level.
+====================
+93)
+====================
+LEVELSCENE_CONTEXTMENU_SectionProperties...
+--------------------
+Section properties...
+====================
+94)
+====================
+LEVELSCENE_CONTEXTMENU_LevelProperties...
+--------------------
+Level properties...
+====================
+95)
+====================
+Player start points:		%1
+Blocks:			%2
+Background objects's:	%3
+Non-playable characters's:	%4
+Warp entries:		%5
+Physical env. zones:	%6
+
+--------------------
+Player start points:	 %1
+Blocks:			 %2
+Background objects's:	 %3
+Non-playable characters: %4
+Warp entries:		 %5
+Physical env. zones:	 %6
+====================
+96)
+====================
+Search of items on the level
+--------------------
+Search for items in the level
+====================
+97)
+====================
+Ev. Destroyed:
+--------------------
+Evt. Destroyed:
+====================
+98)
+====================
+Ev. Hited
+--------------------
+Evt. Hit
+====================
+99)
+====================
+Ev. Layer Empty:
+--------------------
+Evt. Layer Empty:
+====================
+100)
+====================
+Search BGO
+--------------------
+Search Background object
+====================
+101)
+====================
+Evt activate:
+--------------------
+Evt. Activate:
+====================
+102)
+====================
+Evt death:
+--------------------
+Evt. Death:
+====================
+103)
+====================
+Evt talk:
+--------------------
+Evt. Talk:
+====================
+104)
+====================
+Evt empty layer:
+--------------------
+Evt. Layer empty:
+====================
+105)
+====================
+Leaving for the screen, the player enters the screen on the other side
+--------------------
+When leaving the screen, the player will reappear on the opposite side
+====================
+106)
+====================
+Off screen exit
+--------------------
+Offscreen exit
+====================
+107)
+====================
+No turn back (disable moving to left)
+--------------------
+One-way scrolling (no turn-back)
+====================
+108)
+====================
+Current Section
+--------------------
+Current section
+====================
+109)
+====================
+Need stars
+--------------------
+Stars needed
+====================
+110)
+====================
+Warp to World map
+--------------------
+Go to World Map Position
+====================
+111)
+====================
+Warp to other level
+--------------------
+Warp to level
+====================
+112)
+====================
+Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise
+show the current playable character(s) and number of lives.
+--------------------
+Show a blank screen instead of loading screen.
+In the SMBX Engine level loading screen, it would otherwise
+show the current playable character(s) and number of lives.
+====================
+113)
+====================
+Warp #
+--------------------
+Enter at warp #
+====================
+114)
+====================
+You haven't available world map files with this level file.
+Please, put this level file with a world map, or create new world map in the same fomder with this level file.
+File path: %1
+--------------------
+You haven't placed any world map files with this level file.
+Please put this level file with a world map, or create a new world map in the same folder as this level file.
+File path: %1
+====================
+115)
+====================
+Found more than one world map files.
+Please, select necessary world map in a list:
+--------------------
+Found more than one world map file.
+Please select the map you want to use:
+====================
+116)
+====================
+CommonEdit Bar
+--------------------
+Edit
+====================
+117)
+====================
+EditingTools
+--------------------
+Edit tools
+====================
+118)
+====================
+LevelObj Tools
+--------------------
+Level
+====================
+119)
+====================
+Level Sections Switch
+--------------------
+Switch level section
+====================
+120)
+====================
+No turn back
+--------------------
+One-way scrolling
+====================
+121)
+====================
+Level Search
+--------------------
+Search item on the level
+====================
+122)
+====================
+Search for an Item on the Level
+--------------------
+Search of items on the Level
+====================
+123)
+====================
+Fix Lazily-made graphics (LazyFixTool)...
+--------------------
+Fix lazily-made graphics (LazyFixTool)...
+====================
+124)
+====================
+Lock Paths
+--------------------
+Lock all Paths
+====================
+125)
+====================
+Lock Levels
+--------------------
+Lock all Levels
+====================
+126)
+====================
+Lock Music Boxes
+--------------------
+Lock all Music Boxes
+====================
+127)
+====================
+World map Search
+--------------------
+Search on world map
+====================
+128)
+====================
+Clear NPC garbadge...
+--------------------
+Clean up NPCs...
+====================
+129)
+====================
+Fix wrong masks
+--------------------
+Fix bad masks
+====================
+130)
+====================
+This tool will fix all wrong masks of images which causing display bugs
+--------------------
+This tool will fix any visual bugs caused by images with bad masks
+====================
+131)
+====================
+Don't fill out of section
+--------------------
+Don't fill outside of section
+====================
+132)
+====================
+Run testing of saved file
+--------------------
+Test a saved file
+====================
+133)
+====================
+Change log
+--------------------
+Changelog
+====================
+134)
+====================
+Run testing in the SMBX (LunaDLL required)
+--------------------
+Test in SMBX (LunaDLL required)
+====================
+135)
+====================
+Level objects tool box
+--------------------
+Level objects
+====================
+136)
+====================
+Hold mouse button on map and move mouse for draw quicksand zone
+--------------------
+Click and drag the cursor over the area you want to fill with quicksand
+====================
+137)
+====================
+Eriser
+--------------------
+Eraser
+====================
+138)
+====================
+World map Toolbar
+--------------------
+World Map toolbar
+====================
+139)
+====================
+Restart level after fail
+--------------------
+Restart level after death
+====================
+140)
+====================
+World Toolbox
+--------------------
+World Map Itembox
+====================
+141)
+====================
+Eriser (E)
+--------------------
+Eraser (E)
+====================
+142)
+====================
+Attach to grid
+--------------------
+Snap to grid
+====================
+143)
+====================
+Lock all BGO
+--------------------
+Lock all BGOs
+====================
+144)
+====================
+Lock all NPC
+--------------------
+Lock all NPCs
+====================
+145)
+====================
+Lock all door objects
+--------------------
+Lock all warps and doors
+====================
+146)
+====================
+Lock all water squares
+--------------------
+Lock water/quicksand
+====================
+147)
+====================
+Set first player position
+--------------------
+Set Player 1 position
+====================
+148)
+====================
+Set first player start point
+--------------------
+Set Player 1 start point
+====================
+149)
+====================
+Set second player position
+--------------------
+Set Player 2 position
+====================
+150)
+====================
+Set second player start point
+--------------------
+Set Player 2 start point
+====================
+151)
+====================
+Reload file data
+--------------------
+Reload current file
+====================
+152)
+====================
+Reload current file data
+--------------------
+Reload current file
+====================
+153)
+====================
+Scroll hand
+--------------------
+Scroll cursor
+====================
+154)
+====================
+Scrolling (D)
+--------------------
+Move camera (D)
+====================
+155)
+====================
+<html><head/><body><p>Placing item to simular item Protection</p><p>(If enabeld, the movement operation will be slower)</p></body></html>
+--------------------
+<html><head/><body><p>Protects similar items from overlapping each other.</p><p>(If enabled, the movement operation will be slower)</p></body></html>
+====================
+156)
+====================
+Hold mouse button on map and move mouse for draw water zone
+--------------------
+Click and drag the cursor over the area you want to fill with water
+====================
+157)
+====================
+Draw QuickSand zone
+--------------------
+Draw Quicksand zone
+====================
+158)
+====================
+File doesn't saved on disk.
+--------------------
+File not saved to disk.
+====================
+159)
+====================
+Can't open the file!
+File not exist.
+--------------------
+Can't open the file!
+File does not exist.
+====================
+160)
+====================
+Reload file and custom stuff
+--------------------
+Reload file and custom data
+====================
+161)
+====================
+Do you want to save before reload stuff?
+--------------------
+Do you want to save before reloading?
+====================
+162)
+====================
+Reloading error
+--------------------
+Reload Error
+====================
+163)
+====================
+Editor cannot open files:
+Configuration package is loaded with errors.
+--------------------
+The editor was unable to open some files:
+The configuration pack was loaded, but contains errors.
+====================
+164)
+====================
+Cannot open file:
+The configuration pack was loaded, but contains errors.
+--------------------
+The editor was unable to open a file:
+The configuration pack was loaded, but contains errors.
+====================
+165)
+====================
+Bad file
+--------------------
+Bad File
+====================
+166)
+====================
+This file have unknown extension
+--------------------
+This file has an unknown extension
+====================
+167)
+====================
+Saving of file...
+--------------------
+Saving file...
+====================
+168)
+====================
+Saving of files...
+--------------------
+Saving files...
+====================
+169)
+====================
+Close current
+--------------------
+Close current file
+====================
+170)
+====================
+Current Language changed to %1
+--------------------
+Current language changed to %1
+====================
+171)
+====================
+Configuration is loaded with errors
+--------------------
+Configuration pack contains errors
+====================
+172)
+====================
+Cannot create NPC config file:
+The configuration pack was loaded, but contains errors.
+--------------------
+Cannot create NPC config file:
+The configuration pack contains errors.
+====================
+173)
+====================
+Create new NPC.txt configuration file
+--------------------
+Create new NPC configuration file
+====================
+174)
+====================
+Cannot create level file:
+The configuration pack was loaded, but contains errors.
+--------------------
+Cannot create level file:
+The configuration pack contains errors.
+====================
+175)
+====================
+Cannot create world map file:
+The configuration pack was loaded, but contains errors.
+--------------------
+Cannot create world map file:
+The configuration pack contains errors.
+====================
+176)
+====================
+Engine already runned
+--------------------
+Engine already running
+====================
+177)
+====================
+Engine is already testing another level.
+Do you want to abort current testing process?
+--------------------
+Engine is already testing another level.
+Do you want to abort the current testing process?
+====================
+178)
+====================
+To run testing of saved file, please save them into disk first!
+You can run testing without saving of file if you will use "Run testing" menu item.
+--------------------
+To test a saved file, please save it to the disk first!
+You can test without saving by using the "Test level (F5)" menu item.
+====================
+179)
+====================
+Clonning of section...
+--------------------
+Cloning section...
+====================
+180)
+====================
+Section has been clonned
+--------------------
+Section has been cloned
+====================
+181)
+====================
+Do you want to remove all objects of this section?
+--------------------
+Do you want to remove all objects from this section?
+====================
+182)
+====================
+File doesn't use custom graphics.
+
+--------------------
+File doesn't use custom graphics.
+====================
+183)
+====================
+Nothing to do.
+--------------------
+Nothing to do..
+====================
+184)
+====================
+This file is not use GIF graphics with transparent masks or haven't custom graphics.
+--------------------
+This file does not use GIF graphics with transparent masks or isn't a custom graphics file.
+====================
+185)
+====================
+Fixing of masks...
+--------------------
+Fixing masks...
+====================
+186)
+====================
+Masks has been fixed!
+Please reload current file to apply result.
+--------------------
+Masks have been fixed!
+Please reload current file to see the changes.
+====================
+187)
+====================
+Configuration package is loaded with errors.
+--------------------
+Configuration pack is loaded, but has errors.
+====================
+188)
+====================
+Found %1 junk NPC's. Do you want to remove them?
+Press "Help" to show info about the junk NPCs we found.
+--------------------
+Found %1 junk NPCs. Do you want to remove them?
+Press "Help" to show info about the junk NPCs we found.
+====================
+189)
+====================
+NPC garbabe has been removed!
+This operation can be undone with Ctrl+Z or Edit/Undo action.
+--------------------
+NPC garbage has been removed!
+This operation can be undone with Ctrl+Z or by clicking Edit/Undo.
+====================
+190)
+====================
+<html><head/><body><p>This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.</p></body></html>
+--------------------
+<html><head/><body><p>This is a list of music files located in the same folder as the current file, as well as any subdirectories.</p></body></html>
+====================
+191)
+====================
+Please, select music file for use as custom
+--------------------
+Please select custom music file
+====================
+192)
+====================
+NPC Configuration edit
+--------------------
+Edit NPC Configuration
+====================
+193)
+====================
+Player collision top
+--------------------
+Player can stand on top
+====================
+194)
+====================
+Player collision
+--------------------
+Can push player
+====================
+195)
+====================
+NPC collision top
+--------------------
+NPC can stand on top
+====================
+196)
+====================
+NPC collision
+--------------------
+Can push NPCs
+====================
+197)
+====================
+offset y
+--------------------
+Y Offset
+====================
+198)
+====================
+offset x
+--------------------
+X Offset
+====================
+199)
+====================
+Left-Right direction
+--------------------
+Left-Right
+====================
+200)
+====================
+In game
+--------------------
+Gameplay
+====================
+201)
+====================
+Grab side
+--------------------
+Player can grab sides
+====================
+202)
+====================
+Jump hurt
+--------------------
+Hurt player on stomp
+====================
+203)
+====================
+Don't hurt
+--------------------
+NPC can't hurt Player
+====================
+204)
+====================
+Don't freeze on fireball
+--------------------
+Can't be frozen
+====================
+205)
+====================
+Grab top
+--------------------
+Player can grab top
+====================
+206)
+====================
+Modyfied
+--------------------
+Modified
+====================
+207)
+====================
+SMBX custom NPC config file (npc-*.txt)
+--------------------
+NPC config file (npc-*.txt)
+====================
+208)
+====================
+Author:
+--------------------
+Author: 
+====================
+209)
+====================
+Invizible
+--------------------
+Invisible
+====================
+210)
+====================
+Not Moveable
+--------------------
+Not movable
+====================
+211)
+====================
+Included NPC
+--------------------
+Change contained NPC
+====================
+212)
+====================
+Water Type
+--------------------
+Environment type
+====================
+213)
+====================
+Level Warp To
+--------------------
+Warp to another level
+====================
+214)
+====================
+Event Block Destroyed
+--------------------
+Event: Block destroyed
+====================
+215)
+====================
+Event Block Hited
+--------------------
+Event: Block hit
+====================
+216)
+====================
+Event Layer Empty
+--------------------
+Event: Layer empty
+====================
+217)
+====================
+Event NPC Activate
+--------------------
+Event: NPC Activate
+====================
+218)
+====================
+Event NPC Die
+--------------------
+Event: NPC Death
+====================
+219)
+====================
+Event NPC Talk
+--------------------
+Event: NPC Talk
+====================
+220)
+====================
+NPC Special Data
+--------------------
+NPC Extra Data
+====================
+221)
+====================
+Add Hide Layer
+--------------------
+Add Layer into hide list
+====================
+222)
+====================
+Remove Hide Layer
+--------------------
+Remove Layer from hide list
+====================
+223)
+====================
+Add Show Layer
+--------------------
+Add Layer into show list
+====================
+224)
+====================
+Remove Show Layer
+--------------------
+Remove Layer from show list
+====================
+225)
+====================
+Add Toggle Layer
+--------------------
+Add Layer into Toggle list
+====================
+226)
+====================
+Remove Toggle Layer
+--------------------
+Remove Layer from Toggle list
+====================
+227)
+====================
+Layer Speed Horizontal
+--------------------
+Horizontal Layer Speed
+====================
+228)
+====================
+Layer Speed Vertical
+--------------------
+Vertical Layer Speed
+====================
+229)
+====================
+Autoscroll Layer
+--------------------
+Autoscroll Section
+====================
+230)
+====================
+Autoscroll Layer Speed Horizontal
+--------------------
+Horizontal Autoscroll Section Speed
+====================
+231)
+====================
+Autoscroll Layer Speed Vertical
+--------------------
+Vertical Autoscroll Section Speed
+====================
+232)
+====================
+Up Key Activate
+--------------------
+Up Button Activate
+====================
+233)
+====================
+Down Key Activate
+--------------------
+Down Button Activate
+====================
+234)
+====================
+Left Key Activate
+--------------------
+Left Button Activate
+====================
+235)
+====================
+Right Key Activate
+--------------------
+Right Button Activate
+====================
+236)
+====================
+Run Key Activate
+--------------------
+Run Button Activate
+====================
+237)
+====================
+Alt Run Key Activate
+--------------------
+Alt Run Button Activate
+====================
+238)
+====================
+Jump Key Activate
+--------------------
+Jump Button Activate
+====================
+239)
+====================
+Alt Jump Key Activate
+--------------------
+Alt Jump Button Activate
+====================
+240)
+====================
+Drop Key Activate
+--------------------
+Drop Button Activate
+====================
+241)
+====================
+Start Key Activate
+--------------------
+Start Button Activate
+====================
+242)
+====================
+Is Warp
+--------------------
+Level Wrap
+====================
+243)
+====================
+No Back
+--------------------
+One-way scrolling (no turn-back)
+====================
+244)
+====================
+Off Screen Exit
+--------------------
+Offscreen Level Exit
+====================
+245)
+====================
+Big Path Background
+--------------------
+Big Background Path
+====================
+246)
+====================
+Hub styled world
+--------------------
+Hub-styled world
+====================
+247)
+====================
+Intro Level
+--------------------
+Intro level
+====================
+248)
+====================
+Path Background
+--------------------
+Background Path
+====================
+249)
+====================
+Restart after fail
+--------------------
+Restart current level after death
+====================
+250)
+====================
+We're sorry, but PGE Editor has crashed.
+Reason: %1
+
+
+--------------------
+We're sorry, but PGE Editor has crashed.
+Reason: %1
+
+====================
+251)
+====================
+Loading Sound...
+--------------------
+Loading Sounds...
+====================
+252)
+====================
+Loading Sceneries...
+--------------------
+Loading Scenery...
+====================
+253)
+====================
+Close script editor
+--------------------
+Close
+====================
+254)
+====================
+You need to save the level, so you can import custom graphics!
+--------------------
+You need to save the level before you can import custom graphics!
+====================
+255)
+====================
+You need to save the world, so you can import custom graphics!
+--------------------
+You need to save the world before you can import custom graphics!
+====================
+256)
+====================
+PLSET_Character
+--------------------
+Character
+====================
+257)
+====================
+PLSET_State
+--------------------
+State
+====================
+258)
+====================
+PLSET_VehicleID
+--------------------
+Vehicle
+====================
+259)
+====================
+PLSET_VehicleType
+--------------------
+Vehicle type
+====================
+260)
+====================
+2 player
+--------------------
+2 players
+====================
+261)
+====================
+Welcome to tileset editor!
+
+This is an editor of global tilesets.
+All tilesets which made here will be saved in this folder:
+%1
+I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
+
+If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button "New Tileset" in the "Custom" tab.
+--------------------
+Welcome to tileset editor!
+
+This is an editor of global tilesets.
+All tilesets made here will be saved in this folder:
+%1
+I.e. They will be globally available for this configuration package and can be used in the groups of tilesets.
+
+If you wish to create level/world-specific tilesets with custom graphics, please open the Tileset Item Box and find the button "New Tileset" in the "Custom" tab.
+====================
+262)
+====================
+Search: 
+--------------------
+Search:
+====================
+263)
+====================
+Tip of day
+--------------------
+Tip of the day
+====================
+264)
+====================
+Show tip at startup
+--------------------
+Show tips at startup
+====================
+265)
+====================
+Previouse tip
+--------------------
+Previous tip
+====================
+266)
+====================
+Layer exists
+--------------------
+Layer already exists
+====================
+267)
+====================
+Layer "%1" is exist, please, set other name.
+--------------------
+Layer "%1" already exists, please use another name.
+====================
+268)
+====================
+Check for latest stable builds
+--------------------
+Check for new stable builds
+====================
+269)
+====================
+Click to check updates
+--------------------
+Click to check for updates
+====================
+270)
+====================
+Here you can get bug fixes and new features before new stable will be released
+--------------------
+Here you can get bug fixes and new features before they're available in the stable versions
+====================
+271)
+====================
+This is an update checker dialog. Here you can check available updates.
+--------------------
+This is an update checker dialog. Here you can check for available updates.
+====================
+272)
+====================
+You have a latest version!
+--------------------
+You have the latest version!
+====================
+273)
+====================
+Available new update!
+--------------------
+A new version is available!
+====================
+274)
+====================
+Latest update is
+--------------------
+The latest version is
+====================
+275)
+====================
+One or more SSL errors has occurred: %1
+--------------------
+One or more SSL errors have occurred: %1
+====================
+276)
+====================
+Big path background
+--------------------
+Big background path
+====================
+277)
+====================
+Enter to door ID:
+--------------------
+Enter to door #:
+====================
+278)
+====================
+Open path by exists:
+--------------------
+Open paths by exit type:
+====================
+279)
+====================
+1 - Card Roulette Exit
+--------------------
+1 - SMB3 Card Roulette exit
+====================
+280)
+====================
+2 - SMB3 Boss Exit
+--------------------
+2 - SMB3 Boss defeat exit
+====================
+281)
+====================
+4 - Secret Exit
+--------------------
+4 - Secret keyhole exit
+====================
+282)
+====================
+5 - Crystal Sphare Exit
+--------------------
+5 - SMB2 Crystal Sphere exit
+====================
+283)
+====================
+6 - Warp Exit
+--------------------
+6 - Exit via warp/door
+====================
+284)
+====================
+7 - Star Exit
+--------------------
+7 - Collected a star
+====================
+285)
+====================
+8 - Tape Exit
+--------------------
+8 - SMW Goal Tape exit
+====================
+286)
+====================
+Place item on the map first and call 'Properties' context menu item.
+--------------------
+Place item on the map first and open the 'Properties' context menu item.
+====================
+287)
+====================
+Selecting point on the world map
+--------------------
+Selecting a point on the world map
+====================
+288)
+====================
+You will change current position to the last selected point. If point is not set, position will not be changed.
+--------------------
+You will change current position to the last selected point. If a point is not set, position will not be changed.
+====================
+289)
+====================
+Start and stop animation of placed on the map items.
+--------------------
+Start and stop animation of items placed on the map.
+====================
+290)
+====================
+Reset position
+--------------------
+Reset camera position
+====================
+291)
+====================
+Cannot open level world %1:
+because object configurations are not loaded
+.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.
+--------------------
+Cannot open level world %1:
+because object configurations are not loaded
+Please check that the config/SMBX directory exists and contains the *.INI files with object settings.
+====================
+292)
+====================
+1/%1 Loading user data
+--------------------
+1/%1 Loading custom data
+====================
+293)
+====================
+5/%1 Applying Musics...
+--------------------
+5/%1 Applying Music Boxes...
+====================
+294)
+====================
+Select the point on the world map first.
+--------------------
+Select a point on the world map first.
+====================
+295)
+====================
+Export selected rectangle to image
+--------------------
+Export selected area into the image
+====================
+296)
+====================
+Hide all paths and levels like "game already stated"
+--------------------
+Hide all paths and levels
+====================
+297)
+====================
+Search User Tiles %1
+--------------------
+Search Custom Tiles %1
+====================
+298)
+====================
+Search User Sceneries %1
+--------------------
+Search Custom Scenery %1
+====================
+299)
+====================
+Search User Paths %1
+--------------------
+Search Custom Paths %1
+====================
+300)
+====================
+Search User Levels %1
+--------------------
+Search Custom Levels %1
+====================
+301)
+====================
+Tiles:		%1
+Sceneries:			%2
+Paths:	%3
+Levels:	%4
+Music boxes:		%5
+
+--------------------
+Tiles:		%1
+Scenery:	%2
+Paths:		%3
+Levels:		%4
+Music boxes:	%5
+
+====================
+302)
+====================
+Search of items on the World Map
+--------------------
+Search for items on the World Map
+====================
+303)
+====================
+Search Music
+--------------------
+Search Music Box
+====================
+304)
+====================
+2/%1 Applying Sceneries...
+--------------------
+2/%1 Applying Scenery...
+====================
+305)
+====================
+The SMBX64 limit has been exceeded
+--------------------
+The SMBX64 limit has been exceded
+====================
+306)
+====================
+Do you want to save file anyway?
+Exciting of SMBX64 limits may crash SMBX with 'overflow' error.
+
+Installed LunaLUA partially extends than limits.
+--------------------
+Are you sure you want to save in this format?
+Exceeding the SMBX64 limits may crash SMBX with an 'overflow' error.
+
+Installing LunaLUA can partially extend these limits.
+====================
+307)
+====================
+Episode Title: 
+--------------------
+World title:
+====================
+308)
+====================
+World Map Toolbox
+--------------------
+World Map Itembox
+====================
+309)
+====================
+Restart last level after fail
+--------------------
+Restart last level after death
+====================
+310)
+====================
+Hub-styled world (without world map)
+--------------------
+Hub-styled world (disable world map)
+====================
+311)
+====================
+Calculating total star count in accessible levels
+--------------------
+Counting stars in placed levels
+====================
+312)
+====================
+You have a legacy configuration package.
+<br>Editor will be started, but you may have a some problems with items or settings.
+<br>
+<br>Please download and install latest version of a configuration package:
+<br>
+<br>Download: %1
+<br>Note: most of config packs are updates togeter with PGE,<br>
+therefore you can use same link to get updated version
+--------------------
+You have a legacy configuration package.
+<br>Editor will be started, but you may have some problems with items or settings.
+<br>
+<br>Please download and install the latest version of your configuration package:
+<br>
+<br>Download: %1
+<br>Note: most config packs are updated togeter with PGE,<br>
+therefore you can use the same link to get an updated version
+====================
+313)
+====================
+Convert masked GIFs into the PNG
+--------------------
+Convert masked GIFs to PNG
+====================
+314)
+====================
+This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.
+--------------------
+This tool converts SMBX graphics from GIF to PNG using the mask as a transparency key.
+====================
+315)
+====================
+Output dir, where will be saved a PNG images
+(if this field will not be set, target images will be stored into the same directory)
+--------------------
+Select the output location of the PNG image(s)
+(If an output location isn't specified, the image(s) will be stored in the input directory)
+====================
+316)
+====================
+Input directory wich contains the SMBX GIF files (*.gif and *m.gif)
+--------------------
+Select the input location of the SMBX GIF files (*.gif and *m.gif)
+====================
+317)
+====================
+Source directory is not set
+--------------------
+Input directory not specified
+====================
+318)
+====================
+Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
+(if this field will not be set, target images will be stored into the same directory)
+--------------------
+Output dir, where the GIF files will be saved (*.gif and *m.gif)
+(if this field is left empty, the target images will be stored in the original directory)
+====================
+319)
+====================
+Input directory wich contains the PNG Images with own transparency (*.png)
+--------------------
+Input directory which contains the PNG images (*.png)
+====================

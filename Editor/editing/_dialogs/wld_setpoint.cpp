@@ -165,7 +165,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     WldData.meta.modified = false;
     WldData.meta.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Read file error"),
+        QMessageBox::warning(this, tr("File read error"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
@@ -230,7 +230,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     DataSize += 6;
 
     QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, DataSize, this);
-         progress.setWindowTitle(tr("Loading World data"));
+         progress.setWindowTitle(tr("Loading World map data"));
          progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());

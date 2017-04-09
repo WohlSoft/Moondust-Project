@@ -50,7 +50,7 @@
    <item row="1" column="0" colspan="3">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string comment="About GIFs2PNG tool">This is a console tool which convert the PNG images with own transparency into SMBX graphics which have a gif format with transparence mask format with own transparence.</string>
+      <string comment="About GIFs2PNG tool">This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

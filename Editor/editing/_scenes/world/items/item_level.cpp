@@ -221,7 +221,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     if(selected==copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosXY)
@@ -231,7 +231,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_data.x)
                                .arg(m_data.y)
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosXYWH)
@@ -243,7 +243,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_imageSize.width())
                                .arg(m_imageSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==copyPosLTRB)
@@ -255,7 +255,7 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
                                .arg(m_data.x+m_imageSize.width())
                                .arg(m_data.y+m_imageSize.height())
                                );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else
     if(selected==remove)
