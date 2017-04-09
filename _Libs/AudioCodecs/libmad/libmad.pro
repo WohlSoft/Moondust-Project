@@ -12,6 +12,11 @@ include($$PWD/../audio_codec_common.pri)
 
 DEFINES += FPM_DEFAULT HAVE_CONFIG_H
 
+win*-msvc*: {
+DEFINES += _CRT_SECURE_NO_WARNINGS
+QMAKE_CFLAGS += /wd4244 /wd4146
+}
+
 debug {
     DEFINES += DEBUG
 } else: release: {

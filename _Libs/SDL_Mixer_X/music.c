@@ -69,7 +69,10 @@
 #endif
 #ifdef FLAC_MUSIC
 #include "music_flac.h"
-#ifdef _WIN32
+#if defined(_WIN32)
+#ifdef _MSC_VER
+typedef long _off_t;
+#endif
 typedef _off_t off_t;
 #endif
 #endif

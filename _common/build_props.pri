@@ -28,16 +28,16 @@ android:{
     isEmpty(ARCH) {
         UNAMEARCH=$$QMAKE_HOST.arch
         equals(UNAMEARCH, "x86_64") {
-        ARCH=x64
+            ARCH=x64
         } else {
-        ARCH=x32
+            ARCH=x32
         }
     }
 } else {
     !contains(QMAKE_TARGET.arch, x86_64) {
-    ARCH=x32
+        ARCH=x32
     } else {
-    ARCH=x64
+        ARCH=x64
     }
 }
 
@@ -60,11 +60,11 @@ CONFIG(debug, debug|release): {
 }
 
 contains(TEMPLATE, lib) {
-	win32: {
-	BUILD_OBJ_DIR=$$PWD/../bin-w32
-	} else {
-	BUILD_OBJ_DIR=$$PWD/../bin
-	}
+    win32: {
+        BUILD_OBJ_DIR=$$PWD/../bin-w32
+    } else {
+        BUILD_OBJ_DIR=$$PWD/../bin
+    }
 } else {
     BUILD_OBJ_DIR=$$DESTDIR
 }

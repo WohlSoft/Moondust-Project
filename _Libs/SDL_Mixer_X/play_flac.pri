@@ -1,3 +1,5 @@
+DEFINES += FLAC__NO_DLL
+
 HEADERS += \
     $$PWD/load_flac.h \
     $$PWD/dynamic_flac.h \

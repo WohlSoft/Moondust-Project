@@ -278,7 +278,11 @@ FILE *fopen_utf8(const char *filename, const char *mode)
 	while (1) {
 		if (!(wname = wchar_from_utf8(filename))) break;
 		if (!(wmode = wchar_from_utf8(mode))) break;
+        #ifndef _MSC_VER
 		f = _wfopen(wname, wmode);
+        #else
+        _wfopen_s(&f, wname, wmode);
+        #endif
 		break;
 	}
 	if (wname) free(wname);

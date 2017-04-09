@@ -112,7 +112,7 @@ id3_length_t id3_latin1_decodechar(id3_latin1_t const *latin1,
  */
 id3_length_t id3_latin1_encodechar(id3_latin1_t *latin1, id3_ucs4_t ucs4)
 {
-  *latin1 = ucs4;
+  *latin1 = (id3_length_t)ucs4;
   if (ucs4 > 0x000000ffL)
     *latin1 = ID3_UCS4_REPLACEMENTCHAR;
 

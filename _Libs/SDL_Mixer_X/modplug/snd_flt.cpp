@@ -56,9 +56,9 @@ DWORD CSoundFile::CutOffToFrequency(UINT nCutOff, int flt_modifier) const
 	float Fc;
 
 	if (m_dwSongFlags & SONG_EXFILTERRANGE)
-		Fc = 110.0f * pow(2.0f, 0.25f + ((float)(nCutOff*(flt_modifier+256)))/(21.0f*512.0f));
+        Fc = 110.0f * (float)pow(2.0f, 0.25f + ((float)(nCutOff*(flt_modifier+256)))/(21.0f*512.0f));
 	else
-		Fc = 110.0f * pow(2.0f, 0.25f + ((float)(nCutOff*(flt_modifier+256)))/(24.0f*512.0f));
+        Fc = 110.0f * (float)pow(2.0f, 0.25f + ((float)(nCutOff*(flt_modifier+256)))/(24.0f*512.0f));
 	LONG freq = (LONG)Fc;
 	if (freq < 120) return 120;
 	if (freq > 10000) return 10000;

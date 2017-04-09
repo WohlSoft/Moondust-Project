@@ -13,10 +13,10 @@
 
 QTPLUGIN =
 
-CONFIG += static
+!win*-msvc: CONFIG += static
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
-!macx: {
+!macx: !win*-msvc*: {
     QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
     LIBS += -lpthread
     QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
@@ -37,11 +37,17 @@ macx:  TARGET = "PGE Music Player"
 CONFIG += c++14
 CONFIG += thread
 
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+
 win32:{
     RC_FILE = _resources/musicplayer.rc
+    win*-msvc*: {
+        DEFINES += _CRT_SECURE_NO_WARNINGS
+        #QMAKE_CFLAGS_WARN_ON += /wd4244
+        QMAKE_CXXFLAGS_WARN_ON += /wd4065 /wd4244
+    }
 
-    LIBS += -L$$PWD/../_Libs/_builds/win32/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
     usewinapi:{
         DEFINES += MUSPLAY_USE_WINAPI
         LIBS += -static -static-libgcc -static-libstdc++ -static -lpthread \
@@ -49,21 +55,17 @@ win32:{
                 -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a \
                 -lwinmm -lole32 -limm32 -lversion -loleaut32 -luuid -lcomctl32 -mwindows
     } else {
-        LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32 -mwindows
-        static: {
+        LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32
+        !win*-msvc*: LIBS += -mwindows
+        !win*-msvc*: static: {
             QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -Wl,-Bdynamic
         }
     }
 }
 linux-g++||unix:!macx:!android:{
-    LIBS += -L$$PWD/../_Libs/_builds/linux/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
     CONFIG += unversioned_libname
 }
 android:{
-    LIBS += -L$$PWD/../_Libs/_builds/android/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/android/include
-
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
                           $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
@@ -83,8 +85,6 @@ macx:{
             $$PWD/_resources/file_musplay.icns
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
-    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox

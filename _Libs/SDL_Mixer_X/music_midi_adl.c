@@ -250,7 +250,7 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
     if(src != NULL)
     {
         void *bytes=0;
-        long spcsize;
+        long filesize = 0;
         int err = 0;
         Sint64 length=0;
         size_t bytes_l;
@@ -266,18 +266,19 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         }
 
         SDL_RWseek(src, 0, RW_SEEK_SET);
-        bytes = malloc((size_t)length);
+        bytes = SDL_malloc((size_t)length);
 
-        spcsize=0;
+        filesize = 0;
         while( (bytes_l = SDL_RWread(src, &byte, sizeof(Uint8), 1)) != 0)
         {
-            ((unsigned char*)bytes)[spcsize] = byte[0];
-            spcsize++;
+            ((unsigned char*)bytes)[filesize] = byte[0];
+            filesize++;
         }
 
-        if (spcsize == 0)
+        if (filesize == 0)
         {
             Mix_SetError("ADL-MIDI: wrong file\n");
+            SDL_free(bytes);
             return NULL;
         }
 
@@ -289,6 +290,7 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         {
             Mix_SetError("ADL-MIDI: %s", adl_errorString());
             adl_close( adl_midiplayer );
+            SDL_free(bytes);
             return NULL;
         }
 
@@ -299,8 +301,8 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
         adl_setVolumeRangeModel( adl_midiplayer, adlmidi_volumeModel );
         adl_setNumCards( adl_midiplayer, 4 );
 
-        err = adl_openData( adl_midiplayer, bytes, spcsize );
-        free(bytes);
+        err = adl_openData( adl_midiplayer, bytes, filesize );
+        SDL_free(bytes);
 
         if(err != 0)
         {
@@ -308,7 +310,7 @@ struct MUSIC_MIDIADL *ADLMIDI_LoadSongRW(SDL_RWops *src)
             return NULL;
         }
 
-        adlMidi = (struct MUSIC_MIDIADL*)malloc(sizeof(struct MUSIC_MIDIADL));
+        adlMidi = (struct MUSIC_MIDIADL*)SDL_malloc(sizeof(struct MUSIC_MIDIADL));
         adlMidi->adlmidi                = adl_midiplayer;
         adlMidi->playing                = 0;
         adlMidi->gme_t_sample_rate      = mixer.freq;
@@ -360,7 +362,7 @@ int ADLMIDI_playing(struct MUSIC_MIDIADL *music)
 int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
 {
     int srgArraySize, srcLen, gottenLen, dest_len;
-    short* buf;
+    short* buf = NULL;
 
     if( music == NULL )
         return 0;
@@ -378,7 +380,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
     gottenLen = adl_play( music->adlmidi, srcLen, buf );
     if( gottenLen <= 0 )
     {
-        free(buf);
+        SDL_free(buf);
         music->playing = 0;
         return len - 1;
     }
@@ -400,7 +402,7 @@ int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len)
         SDL_MixAudioFormat( stream, (Uint8*)buf, mixer.format, (Uint32)dest_len, music->volume );
     }
 
-    free(buf);
+    SDL_free(buf);
     return len - dest_len;
 }
 
@@ -427,7 +429,7 @@ void ADLMIDI_delete(struct MUSIC_MIDIADL *music)
         if(music->adlmidi)
             adl_close( music->adlmidi );
         music->adlmidi = NULL;
-        free( music );
+        SDL_free( music );
     }
     ADLMIDI_exit();
 }

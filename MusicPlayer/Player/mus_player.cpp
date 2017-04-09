@@ -248,7 +248,7 @@ namespace PGE_MusicPlayer
 
     // make a music play function
     // it expects udata to be a pointer to an int
-    static void myMusicPlayer(void */*udata*/, Uint8 *stream, int len)
+    static void myMusicPlayer(void * /*udata*/, Uint8 *stream, int len)
     {
         wave_write((short *)stream, len / 2);
     }
