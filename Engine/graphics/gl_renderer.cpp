@@ -999,7 +999,7 @@ void GlRenderer::makeShot()
     hF = hF - m_offset_y * 2.0f;
     w = static_cast<int>(wF);
     h = static_cast<int>(hF);
-    uint8_t *pixels = new uint8_t[4 * w * h];
+    uint8_t *pixels = new uint8_t[size_t(4 * w * h)];
     g_renderer->getScreenPixels(static_cast<int>(m_offset_x), static_cast<int>(m_offset_y), w, h, pixels);
     PGE_GL_shoot *shoot = new PGE_GL_shoot();
     shoot->pixels = pixels;
@@ -1166,7 +1166,7 @@ void GlRenderer::processRecorder(double ticktime)
 
         w = w - static_cast<int>(m_offset_x) * 2;
         h = h - static_cast<int>(m_offset_y) * 2;
-        uint8_t *pixels = new uint8_t[4 * w * h];
+        uint8_t *pixels = new uint8_t[size_t(4 * w * h)];
         g_renderer->getScreenPixelsRGBA(static_cast<int>(m_offset_x), static_cast<int>(m_offset_y), w, h, pixels);
 
         PGE_GL_shoot *shoot = new PGE_GL_shoot();
