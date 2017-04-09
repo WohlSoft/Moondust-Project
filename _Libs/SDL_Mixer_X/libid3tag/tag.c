@@ -308,7 +308,7 @@ signed long id3_tag_query(id3_byte_t const *data, id3_length_t length)
 
   case TAGTYPE_ID3V2_FOOTER:
     parse_header(&data, &version, &flags, &size);
-    return -size - 10;
+    return -((long)size) - 10;
 
   case TAGTYPE_NONE:
     break;
@@ -527,14 +527,14 @@ struct id3_tag *v2_parse(id3_byte_t const *ptr)
 	  ehptr  = ptr;
 	  ehsize = id3_parse_syncsafe(&ptr, 4);
 
-      if (ehsize < 6 || ehsize > (unsigned)(end - ehptr))
+	  if (ehsize < 6 || ehsize > (unsigned)(end - ehptr))
 	    goto fail;
 
 	  ehend = ehptr + ehsize;
 
 	  bytes = id3_parse_uint(&ptr, 1);
 
-	  if (bytes < 1 || bytes > ehend - ptr)
+	  if (bytes < 1u || bytes > (unsigned int)(ehend - ptr))
 	    goto fail;
 
 	  ehptr = ptr + bytes;
@@ -552,7 +552,7 @@ struct id3_tag *v2_parse(id3_byte_t const *ptr)
 		  if (dataptr == ehend)
 		    goto fail;
 		  datalen = id3_parse_uint(&dataptr, 1);
-		  if (datalen > 0x7f || datalen > ehend - dataptr)
+		  if (datalen > 0x7f || (long)datalen > ehend - dataptr)
 		    goto fail;
 		  dataptr += datalen;
 		}

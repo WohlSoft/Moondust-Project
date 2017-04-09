@@ -30,6 +30,7 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
+#include <string>
 #ifndef _WIN32
 #include <unistd.h> // for sleep
 #endif // _WIN32
@@ -289,6 +290,7 @@ static void setenv(const char *name, const char *value, int overwrite)
 
 static int abc_isvalidchar(char c)
 {
+    if(c < 0) c = 0;
     return(isalpha(c) || isdigit(c) || isspace(c) || c == '%' || c == ':');
 }
 
@@ -2529,11 +2531,15 @@ static void abc_preprocess(ABCHANDLE *h, ABCMACRO *m)
         k = m->n - m->name;
         for(i = 0; i < 14; i++)
         {
-            char t[strlen(m->name) + 1];
+            std::string t_arr;
+            char *t = &t_arr[0];
+            t_arr.resize(strlen(m->name) + 1);
             strcpy(t, m->name);
             t[k] = "CDEFGABcdefgab"[i];
             l = strlen(m->subst);
-            char s[2 * l + 1];
+            std::string s_arr;
+            s_arr.resize(2 * l + 1);
+            char *s = &s_arr[0];
             char *p = s;
             for(j = 0; j < l; j++)
             {

@@ -84,7 +84,7 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
         }
 
         SDL_RWseek(src, 0, RW_SEEK_SET);
-        bytes = malloc(length);
+        bytes = SDL_malloc(length);
 
         spcsize = 0;
         while((bytes_l = SDL_RWread(src, &byte, sizeof(unsigned char), 1)) != 0)
@@ -101,7 +101,7 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
 
         err = (char *)gme_open_data(bytes, spcsize, &game_emu, mixer.freq);
         /* spc_load_spc( snes_spc, bytes, spcsize ); */
-        free(bytes);
+        SDL_free(bytes);
         if(err != 0)
         {
             Mix_SetError("GAME-EMU: %s", err);
@@ -118,7 +118,7 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
             return NULL;
         }
 
-        spcSpec = (struct MUSIC_GME *)malloc(sizeof(struct MUSIC_GME));
+        spcSpec = (struct MUSIC_GME *)SDL_malloc(sizeof(struct MUSIC_GME));
         spcSpec->game_emu = game_emu;
         spcSpec->playing = 0;
         spcSpec->gme_t_sample_rate = mixer.freq;
@@ -132,7 +132,7 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
         if(err != 0)
         {
             gme_delete(spcSpec->game_emu);
-            free(spcSpec);
+            SDL_free(spcSpec);
             Mix_SetError("GAME-EMU: %s", err);
             return NULL;
         }
@@ -215,7 +215,7 @@ int GME_playAudio(struct MUSIC_GME *music, Uint8 *stream, int len)
     if(err != NULL)
     {
         Mix_SetError("GAME-EMU: %s", err);
-        free(buf);
+        SDL_free(buf);
         return 0;
     }
 
@@ -234,7 +234,7 @@ int GME_playAudio(struct MUSIC_GME *music, Uint8 *stream, int len)
     else
         SDL_MixAudioFormat(stream, (Uint8 *)buf, mixer.format, dest_len, music->volume);
 
-    free(buf);
+    SDL_free(buf);
     return len - dest_len;
 }
 
@@ -264,7 +264,7 @@ void GME_delete(struct MUSIC_GME *music)
             music->game_emu = NULL;
         }
         music->playing = -1;
-        free(music);
+        SDL_free(music);
     }
 }
 

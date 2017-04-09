@@ -357,9 +357,9 @@ blargg_err_t Music_Emu::play( long out_count, sample_t* out )
 		{
 			// during a run of silence, run emulator at >=2x speed so it gets ahead
 			long ahead_time = silence_lookahead * (out_time + out_count - silence_time) + silence_time;
-			while ( emu_time < ahead_time && !(buf_remain | emu_track_ended_) )
+			while ( (emu_time < ahead_time) && !(buf_remain | (long)emu_track_ended_) )
 				fill_buf();
-			
+
 			// fill with silence
 			pos = min( silence_count, out_count );
 			memset( out, 0, pos * sizeof *out );

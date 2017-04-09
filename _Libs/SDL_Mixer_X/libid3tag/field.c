@@ -426,8 +426,13 @@ int id3_field_setint(union id3_field *field, signed long number)
     break;
 
   case ID3_FIELD_TYPE_INT32:
-    if (number > 0x7fffffffL || number < -0x80000000L)
+    #ifdef _MSC_VER
+    if ((number > 0x7fffffffL) || (number < -0x80000000LL))
       return -1;
+    #else
+    if ((number > 0x7fffffffL) || (number < -0x80000000L))
+      return -1;
+    #endif
     break;
 
   default:

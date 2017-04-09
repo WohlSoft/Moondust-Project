@@ -93,11 +93,24 @@
 #define FLAC__U64L(x) x##ULL
 
 #if defined _MSC_VER || defined __BORLANDC__ || defined __MINGW32__
+#if defined _MSC_VER
+#define FLAC__STRCASECMP _stricmp
+#define FLAC__STRNCASECMP _strnicmp
+#else
 #define FLAC__STRCASECMP stricmp
 #define FLAC__STRNCASECMP strnicmp
+#endif
 #else
 #define FLAC__STRCASECMP strcasecmp
 #define FLAC__STRNCASECMP strncasecmp
+#endif
+
+#if defined _MSC_VER
+#define FLAC__STRDUP _strdup
+#define FLAC__FILENO _fileno
+#else
+#define FLAC__STRDUP strdup
+#define FLAC__FILENO fileno
 #endif
 
 #if defined _MSC_VER || defined __MINGW32__ || defined __CYGWIN__ || defined __EMX__

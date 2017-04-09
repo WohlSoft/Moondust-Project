@@ -34,6 +34,10 @@
 
 #include <FLAC/metadata.h>
 
+#ifdef _MSC_VER
+#define strcasecmp _stricmp
+#endif
+
 /* This is the format of the audio mixer data */
 static SDL_AudioSpec mixer;
 
@@ -65,7 +69,7 @@ void FLAC_fetchTags(FLAC_music *music, char *filePath)
             FLAC__byte *ent = tags->data.vorbis_comment.comments[i].entry;
 
             int   paramLen = len + 1;
-            char *param = (char *)malloc(paramLen);
+            char *param = (char *)SDL_malloc(paramLen);
             char *argument  = param;
             char *value     = param;
             memset(param, 0, paramLen);
@@ -100,7 +104,7 @@ void FLAC_fetchTags(FLAC_music *music, char *filePath)
                 strcpy(music->mus_copyright, value);
             }
 
-            free(param);
+            SDL_free(param);
         }
     }
 }

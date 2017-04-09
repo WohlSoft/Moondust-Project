@@ -29,10 +29,10 @@ include($$PWD/../../_common/build_props.pri)
 DESTDIR = $$PWD/../_builds/$$TARGETOS/lib
 COPY=cp
 
+LIBS += -L$$PWD/../_builds/$$TARGETOS/lib
+INCLUDEPATH += $$PWD/../_builds/$$TARGETOS/include
+
 win32:{
-    LIBS += -L$$PWD/../_builds/win32/lib
-    LIBS += -lmingw32 -lSDL2main -mwindows
-    INCLUDEPATH += $$PWD/../_builds/win32/include
     DEFINES += USE_NATIVE_MIDI
     enable-stdcalls:{ #Useful for VB6 usage
         TARGET = SDL2MixerVB
@@ -43,8 +43,6 @@ win32:{
     COPY=copy
 }
 linux-g++||unix:!macx:!android:{
-    LIBS += -L$$PWD/../_builds/linux/lib
-    INCLUDEPATH += $$PWD/../_builds/linux/include
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
     CONFIG -= dll
     CONFIG -= static
@@ -53,13 +51,9 @@ linux-g++||unix:!macx:!android:{
     CONFIG += skip_target_version_ext
 }
 android:{
-    LIBS += -L$$PWD/../_builds/android/lib
-    INCLUDEPATH += $$PWD/../_builds/android/include
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
 }
 macx:{
-    LIBS += -L$$PWD/../_builds/macos/lib
-    INCLUDEPATH += $$PWD/../_builds/macos/include
     DEFINES += HAVE_INTTYPES_H HAVE_SETENV HAVE_SINF
     # Build as static library
     CONFIG -= dll
@@ -68,10 +62,6 @@ macx:{
 }
 
 !win32: LIBS += -lSDL2
-
-win32:{
-    LIBS += -lwinmm -lm -lwinmm
-}
 
 QMAKE_POST_LINK = $$COPY $$shell_path($$PWD/SDL_mixer_ext.h) $$shell_path($$PWD/../_builds/$$TARGETOS/include/SDL2)
 
@@ -118,9 +108,13 @@ android:{
             LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid # -l:libfluidsynth.a
             SOURCES += vb6_sdl_binds.c
         } else {
-            LIBS += -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a #-l:libfluidsynth.a
+            !win*-msvc*:{
+                LIBS += -lSDL2main -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a #-l:libfluidsynth.a
+            } else {
+                LIBS += -lSDL2main -lSDL2 -lFLAC -lvorbisfile -lvorbis -logg -lmad
+            }
         }
-        LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32
+        LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32 -luser32
     }
     #linux-g++||unix:!macx:!android: {
     linux-g++||macx||unix:!android:{
@@ -132,7 +126,9 @@ android:{
     }
 }
 
-LIBS += -lm
+!win*-msvc*:{
+    LIBS += -lm
+}
 
 linux-g++||unix:!macx:!android:{
     SDL2MixerH.path =  $$PWD/../_builds/linux/include/SDL2

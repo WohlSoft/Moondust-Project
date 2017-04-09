@@ -3,7 +3,7 @@
 IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
 IF NOT EXIST _paths.bat goto error
 
-SET MAKE_EXTRA_ARGS=-r -j 4
+SET MAKE_EXTRA_ARGS=-r -s
 
 call _paths.bat
 set OldPATH=%PATH%

@@ -489,11 +489,11 @@ FLAC_API FLAC__bool FLAC__metadata_simple_iterator_init(FLAC__Metadata_SimpleIte
 	if(!read_only && preserve_file_stats)
 		iterator->has_stats = get_file_stats_(filename, &iterator->stats);
 
-	if(0 == (iterator->filename = strdup(filename))) {
+    if(0 == (iterator->filename = FLAC__STRDUP(filename))) {
 		iterator->status = FLAC__METADATA_SIMPLE_ITERATOR_STATUS_MEMORY_ALLOCATION_ERROR;
 		return false;
 	}
-	if(0 != tempfile_path_prefix && 0 == (iterator->tempfile_path_prefix = strdup(tempfile_path_prefix))) {
+    if(0 != tempfile_path_prefix && 0 == (iterator->tempfile_path_prefix = FLAC__STRDUP(tempfile_path_prefix))) {
 		iterator->status = FLAC__METADATA_SIMPLE_ITERATOR_STATUS_MEMORY_ALLOCATION_ERROR;
 		return false;
 	}
@@ -576,7 +576,7 @@ FLAC_API off_t FLAC__metadata_simple_iterator_get_block_offset(const FLAC__Metad
 	FLAC__ASSERT(0 != iterator);
 	FLAC__ASSERT(0 != iterator->file);
 
-	return iterator->offset[iterator->depth];
+    return (off_t)iterator->offset[iterator->depth];
 }
 
 FLAC_API FLAC__MetadataType FLAC__metadata_simple_iterator_get_block_type(const FLAC__Metadata_SimpleIterator *iterator)
@@ -1109,7 +1109,7 @@ static FLAC__off_t chain_prepare_for_write_(FLAC__Metadata_Chain *chain, FLAC__b
 		/* if the metadata shrank and the last block is padding, we just extend the last padding block */
 		if(current_length < chain->initial_length && chain->tail->data->type == FLAC__METADATA_TYPE_PADDING) {
 			const FLAC__off_t delta = chain->initial_length - current_length;
-			chain->tail->data->length += delta;
+            chain->tail->data->length += (unsigned int)delta;
 			current_length += delta;
 			FLAC__ASSERT(current_length == chain->initial_length);
 		}
@@ -1121,7 +1121,7 @@ static FLAC__off_t chain_prepare_for_write_(FLAC__Metadata_Chain *chain, FLAC__b
 				chain->status = FLAC__METADATA_CHAIN_STATUS_MEMORY_ALLOCATION_ERROR;
 				return 0;
 			}
-			padding->length = chain->initial_length - (FLAC__STREAM_METADATA_HEADER_LENGTH + current_length);
+            padding->length = (unsigned)(chain->initial_length - (FLAC__STREAM_METADATA_HEADER_LENGTH + current_length));
 			if(0 == (node = node_new_())) {
 				FLAC__metadata_object_delete(padding);
 				chain->status = FLAC__METADATA_CHAIN_STATUS_MEMORY_ALLOCATION_ERROR;
@@ -1144,7 +1144,7 @@ static FLAC__off_t chain_prepare_for_write_(FLAC__Metadata_Chain *chain, FLAC__b
 				}
 				/* if there is at least 'delta' bytes of padding, trim the padding down */
 				else if((FLAC__off_t)chain->tail->data->length >= delta) {
-					chain->tail->data->length -= delta;
+                    chain->tail->data->length -= delta;
 					current_length -= delta;
 					FLAC__ASSERT(current_length == chain->initial_length);
 				}
@@ -1522,7 +1522,7 @@ static FLAC__bool chain_read_(FLAC__Metadata_Chain *chain, const char *filename,
 
 	chain_clear_(chain);
 
-	if(0 == (chain->filename = strdup(filename))) {
+    if(0 == (chain->filename = FLAC__STRDUP(filename))) {
 		chain->status = FLAC__METADATA_CHAIN_STATUS_MEMORY_ALLOCATION_ERROR;
 		return false;
 	}

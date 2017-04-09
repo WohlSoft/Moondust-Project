@@ -33,6 +33,10 @@
 #include "dynamic_ogg.h"
 #include "music_ogg.h"
 
+#ifdef _MSC_VER
+#define strcasecmp _stricmp
+#endif
+
 /* This is the format of the audio mixer data */
 static SDL_AudioSpec mixer;
 
@@ -126,7 +130,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         for(i = 0; i < ptr->comments; i++)
         {
             int   paramLen = ptr->comment_lengths[i] + 1;
-            char *param = (char *)malloc(paramLen);
+            char *param = (char *)SDL_malloc(paramLen);
             char *argument  = param;
             char *value     = param;
             memset(param, 0, paramLen);
@@ -178,7 +182,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
                 strcpy(music->mus_copyright, value);
             }
 
-            free(param);
+            SDL_free(param);
         }
 
 #undef A_TO_OGG64

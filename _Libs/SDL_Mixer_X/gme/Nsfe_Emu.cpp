@@ -35,7 +35,7 @@ inline void Nsfe_Info::unload()
 void Nsfe_Info::disable_playlist( bool b )
 {
 	playlist_disabled = b;
-	info.track_count = playlist.size();
+	info.track_count = BOOST::uint8_t(playlist.size());
 	if ( !info.track_count || playlist_disabled )
 		info.track_count = actual_track_count_;
 }

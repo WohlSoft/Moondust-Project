@@ -1,14 +1,19 @@
 linux-g++||unix:!macx:!android: {
-TARGETOS=linux
+    TARGETOS=linux
 }
+
 win32: {
-TARGETOS=win32
+    !win*-msvc*:{
+        TARGETOS=win32
+    } else {
+        TARGETOS=win32-msvc
+    }
 }
 
 macx:{
-TARGETOS=macos
+    TARGETOS=macos
 }
 
 android:{
-TARGETOS=android
+    TARGETOS=android
 }

@@ -47,6 +47,11 @@ IF EXIST .\_Libs\_sources\_build_cache\NUL (
     rmdir /s /q _Libs\_sources\_build_cache
 )
 
+IF EXIST .\_Libs\_sources\_build_cache_msvc\NUL (
+    echo 'removing Dependencies build cache for MSVC ...'
+    rmdir /s /q _Libs\_sources\_build_cache_msvc
+)
+
 echo ==== Clear! ====
 exit /B 0
 goto quit;
