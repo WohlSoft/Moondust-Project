@@ -1,5 +1,46 @@
 #/bin/bash
 
+# Prints a line with text in middle
+# Syntax:
+#   printLine <string> <color of text in ANSI format> <color of line>
+printLine()
+{
+    lineLenght=64
+    Str=$1
+    StrLen=${#Str}
+    BeginAt=$(( ($lineLenght/2) - ($StrLen/2) ))
+
+    lineColor=$3
+    textColor=$2
+
+    if [[ "$lineColor" != "" ]]; then
+    printf $lineColor; fi
+
+    for((i=0; i < $lineLenght; i++))
+    do
+        if (($i == $BeginAt))
+        then
+            if [[ "$textColor" != "" ]]; then
+            printf $textColor; fi
+        fi
+
+        if (($i == $BeginAt + $StrLen))
+        then
+            if [[ "$lineColor" != "" ]]; then
+            printf $lineColor; fi
+        fi
+
+        if (( $i >= $BeginAt && $i < $BeginAt + $StrLen ))
+        then
+            printf "${Str:$(($i-$BeginAt)):1}"
+        else
+            printf "="
+        fi
+    done
+    printf "\E[0m"
+    printf "\n"
+}
+
 function show_time()
 {
     num=$1
@@ -18,7 +59,8 @@ function show_time()
     else
         ((sec=num))
     fi
-    echo "===Passed time===== "$hour"h "$min"m "$sec"s ============"
+
+    printLine "Passed time: ${hour}h ${min}m ${sec}s" "\E[0;36m" "\E[0;35m"
 }
 
 pause()
@@ -29,7 +71,7 @@ pause()
 
 errorofbuild()
 {
-    printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+    printLine "AN ERROR OCCURED!" "\E[0;41;37m" "\E[0;31m"
     cd $bak
     exit 1
 }
@@ -38,10 +80,17 @@ checkState()
 {
     if [ $? -eq 0 ]
     then
-        printf "\E[37;42mOK!\E[0m\n"
+        printf "=== \E[37;42mOK!\E[0m ===\n\n"
     else
         errorofbuild
     fi
+}
+
+lackOfDependency()
+{
+    printLine "DEPENDENCIES ARE NOT BUILT! Run ./build_deps.sh first!" "\E[0;41;37m" "\E[0;31m"
+    cd $bak
+    exit 1
 }
 
 osx_realpath() {

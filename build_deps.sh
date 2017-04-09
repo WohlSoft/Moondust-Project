@@ -110,7 +110,7 @@ LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
 
 if $flag_nolibs ; then
 	echo "Building of tag.gz libraries skiped"
-	echo "Building SDL2_mixer_ext, LuaBIND and FreeImage..."
+	echo "Building SDL Mixer X, LuaBIND and FreeImage..."
 else
 	buildLibs
     if $flag_libsonly ; then
@@ -149,13 +149,18 @@ cd ..
 echo ""
 echo "Autotools-based built libraries"
 show_time $TIME_PASSED_LIBS
+
 echo "QMake-based built libraries"
 show_time $TIME_PASSED
+
 echo "Total time of build"
-show_time $(($TIME_PASSED+$TIME_PASSED_LIBS))
-printf "\n\n=========\E[37;42mDEPENDENCIES HAS BEEN BUILT!!\E[0m===========\n\n"
+show_time $(($TIME_PASSED + $TIME_PASSED_LIBS))
+
+printLine "DEPENDENCIES HAS BEEN BUILT!" "\E[0;42;37m" "\E[0;32m"
+
 cd $bak
 if $flag_pause_on_end ; then
-    read -n 1;
+    pause
 fi
+
 exit 0
