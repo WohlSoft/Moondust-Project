@@ -77,12 +77,12 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
         return false;
 
     if(!Files::fileExists(pathToMask))
-        return false; //Nothing to do
+        return false; //Nothing to do.
 
     FIBITMAP *mask = loadImage(pathToMask);
 
     if(!mask)
-        return false;//Nothing to do
+        return false;//Nothing to do.
 
     unsigned int img_w  = FreeImage_GetWidth(image);
     unsigned int img_h  = FreeImage_GetHeight(image);
@@ -390,7 +390,7 @@ void MainWindow::on_actionFixWrongMasks_triggered()
         //qDebug() << fileList.size()+fileList_custom.size();
         if(fileList.size() + fileList_custom.size() <= 0)
         {
-            QMessageBox::warning(this, tr("Nothing to do"),
+            QMessageBox::warning(this, tr("Nothing to do."),
                                  tr("This file is not use GIF graphics with transparent masks or haven't custom graphics."));
             return;
         }

@@ -83,7 +83,7 @@
            </item>
            <item>
             <property name="text">
-             <string>ID (contains)</string>
+             <string>ID (contents)</string>
             </property>
            </item>
           </widget>
@@ -199,7 +199,7 @@
            </item>
            <item>
             <property name="text">
-             <string>ID (contains)</string>
+             <string>ID (contents)</string>
             </property>
            </item>
           </widget>
@@ -291,7 +291,7 @@
            </item>
            <item>
             <property name="text">
-             <string>ID (contains)</string>
+             <string>ID (contents)</string>
             </property>
            </item>
           </widget>

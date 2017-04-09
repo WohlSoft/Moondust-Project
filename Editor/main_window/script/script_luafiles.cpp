@@ -39,7 +39,7 @@ static void showUnsavedFileNotify(MainWindow *p)
     QMessageBox::warning(p,
                          MainWindow::tr("File is not saved"),
                          MainWindow::tr("Impossible to open/create script file.\n"
-                                        "Please save file firtst"));
+                                        "Please save the file first."));
 }
 
 static void processLuaMacros(QString luaFile, QString newFile, const QStringList &enabledMacros)

@@ -39,7 +39,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Please add the Item's ID which will be in this custom group:</string>
+      <string>Please add the Item IDs which will be in this custom group:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -88,7 +88,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Name of counter</string>
+      <string>Counter name:</string>
      </property>
     </widget>
    </item>

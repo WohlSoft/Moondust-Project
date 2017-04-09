@@ -116,7 +116,7 @@ void AudioCvt_Sox_gui::start()
     {
         QMessageBox::warning(this,
                              tr("SoX error"),
-                             tr("SoX binary path is not defined.\nPlease set SoX path first"));
+                             tr("SoX executable path is not defined.\nPlease set SoX path first"));
         return;
     }
 
@@ -124,7 +124,7 @@ void AudioCvt_Sox_gui::start()
     {
         QMessageBox::warning(this,
                              tr("SoX error"),
-                             tr("SoX binary path is wrong.\nPlease set SoX path first"));
+                             tr("SoX executable path is invalid.\nPlease set SoX path first"));
         return;
     }
 
@@ -147,7 +147,7 @@ void AudioCvt_Sox_gui::start()
     if(filesToConvert.isEmpty())
     {
         QMessageBox::warning(this,
-                             tr("Nothing to do"),
+                             tr("Nothing to do."),
                              tr("No files to convert"));
         return;
     }
@@ -201,7 +201,7 @@ void AudioCvt_Sox_gui::stop(bool do_abort)
         PGE_MusPlayer::MUS_playMusic();
         QMessageBox::warning(this,
                              tr("SoX error"),
-                             tr("Operation cancaled"));
+                             tr("Operation canceled"));
     }
 }
 
@@ -214,7 +214,7 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
     {
         QMessageBox::warning(this,
                              tr("SoX error"),
-                             tr("SoX was crashed"));
+                             tr("Sorry, SoX has crashed"));
         stop(true);
         return;
     }
@@ -223,7 +223,7 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
     {
         QMessageBox::warning(this,
                              tr("SoX error"),
-                             tr("SoX returned non-zero code: %1\n%2")
+                             tr("SoX returned a non-zero exit code: %1\n%2")
                              .arg(retStatus)
                              .arg(lastOutput));
         stop(true);
@@ -283,7 +283,7 @@ retry_queue:
         }
 
         QMessageBox::information(this,
-                                 tr("All works completed"),
+                                 tr("Operation complete"),
                                  tr("All files successfully converted!\n%1")
                                  .arg(warns));
         util::memclear(ui->musics_list);
@@ -408,8 +408,8 @@ retry_queue:
 
         if(madeJob == 0)
             QMessageBox::warning(this,
-                                 tr("Nothing to do"),
-                                 tr("Tasks are not defined. Nothing to do."));
+                                 tr("Nothing to do."),
+                                 tr("No tasks defined. Nothing to do."));
 
         stop();
         return;
@@ -444,7 +444,7 @@ void AudioCvt_Sox_gui::on_browse_clicked()
 #else
     filter = "SoX binary (sox)";
 #endif
-    QString dir = QFileDialog::getOpenFileName(this, tr("Open SoX binary path"),
+    QString dir = QFileDialog::getOpenFileName(this, tr("Open SoX executable path"),
                   (ui->sox_bin_path->text().isEmpty() ? ApplicationPath : ui->sox_bin_path->text()),
                   filter);
 
@@ -457,7 +457,7 @@ void AudioCvt_Sox_gui::on_add_clicked()
 {
     QString filter;
     filter = "Audio files (*.wav *.ogg *.flac *.mp3)";
-    QStringList files = QFileDialog::getOpenFileNames(this, tr("Add file to convert"),
+    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select file to convert"),
                         (ui->sox_bin_path->text().isEmpty() ? ApplicationPath : ui->sox_bin_path->text()),
                         filter);
 

@@ -226,7 +226,7 @@ void MainWindow::updateWindowMenu()
     //Window menu
     ui->menuWindow->clear();
 
-    QAction * SubView = ui->menuWindow->addAction(tr("Sub Windows"));
+    QAction * SubView = ui->menuWindow->addAction(tr("Sub-windows"));
     connect(SubView, SIGNAL(triggered()), this, SLOT(setSubView()));
     SubView->setCheckable(true);
     if(GlobalSettings::MainWindowView==QMdiArea::SubWindowView)

@@ -36,7 +36,7 @@
       </size>
      </property>
      <property name="title">
-      <string>Choose the workspace design you want to use</string>
+      <string>Choose the workspace layout you want to use:</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" rowstretch="0,1000" rowminimumheight="0,0">
       <property name="leftMargin">
@@ -107,7 +107,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Modern UI designed for convenient work on screens of various size.</string>
+         <string>Modern UI designed for convenience, works well on screens of various sizes.</string>
         </property>
         <property name="text">
          <string notr="true"/>
@@ -133,7 +133,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Classic interface will be more similar to editor for legacy engine</string>
+         <string>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</string>
         </property>
         <property name="text">
          <string notr="true"/>
@@ -191,8 +191,8 @@
       <string>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
 sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 &lt;br/&gt;
-&lt;b&gt;Tip 2:&lt;/b&gt; Unlike legacy editor, most of features of elements are available from context menu (opening by right mouse button),
-toolboxes from toolbars (draggable panels with icons on top side of window) and menus. This editor uses a multi-selection!&lt;br/&gt;
+&lt;b&gt;Tip 2:&lt;/b&gt; Unlike the legacy editor, many features can be quickly accessed from the context menu (opened by right-clicking),
+as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</string>
      </property>

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Development Console</string>
+   <string>Developer Console</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
@@ -44,7 +44,7 @@ color: rgb(0, 0, 0);</string>
       <bool>true</bool>
      </property>
      <property name="placeholderText">
-      <string>Type command here...</string>
+      <string>Type commands here...</string>
      </property>
     </widget>
    </item>

@@ -238,7 +238,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
             QApplication::restoreOverrideCursor();
             bool ok = true;
             file_format = QInputDialog::getInt(this, tr("SMBX file version"),
-                                               tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
+                                               tr("Which version do you want to save as? (from 0 to 64)"), 64, 0, 64, 1, &ok);
 
             if(!ok) return false;
 
@@ -326,7 +326,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
-        QMessageBox::warning(this, tr("Read file error"),
+        QMessageBox::warning(this, tr("File read error"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
@@ -367,7 +367,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     DataSize += 3;
     DataSize += 6;
     QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, DataSize, MainWinConnect::pMainWin);
-    progress.setWindowTitle(tr("Loading World data"));
+    progress.setWindowTitle(tr("Loading World map data"));
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
@@ -430,7 +430,7 @@ bool WorldEdit::maybeSave()
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(userFriendlyCurrentFile() + tr(" not saved"));
         QLineEdit *wldNameBox = new QLineEdit();
-        sav->addUserItem(tr("Episode title: "), wldNameBox);
+        sav->addUserItem(tr("World title:"), wldNameBox);
         sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);
 

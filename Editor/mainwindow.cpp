@@ -185,7 +185,7 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
     {
         LogWriter::logLevel = PGE_LogLevel::Debug; //Force debug log
         QMessageBox::critical(this, tr("Configuration error"),
-                              tr("Configuration can't be loaded.\nSee in %1 for more information.")
+                              tr("Configuration can't be loaded.\nSee %1 for more information.")
                               .arg(LogWriter::DebugLogFile),
                               QMessageBox::Ok);
         LogFatal("<Error, application closed>");

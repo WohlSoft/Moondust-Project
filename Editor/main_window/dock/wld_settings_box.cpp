@@ -523,7 +523,7 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         /*********************Stop animations to increase performance***********************/
         edit->scene->stopAnimation();
         /*********************Stop animations to increase performance***********************/
-        QProgressDialog progress(tr("Counting stars of placed levels"),
+        QProgressDialog progress(tr("Calculating total star count in accessible levels"),
                                  tr("Abort"),
                                  0,
                                  edit->WldData.levels.size(),

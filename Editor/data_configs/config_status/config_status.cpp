@@ -118,7 +118,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     setRequiredStatusEntry(ui->ItemsStatus, configs->main_npc.stored(),     ConfStatus::total_npc,      tr("Level: NPCs (%1/%2)"));
     //MUSIC
     setRequiredStatusEntry(ui->ItemsStatus, configs->main_music_lvl.stored(), ConfStatus::total_music_lvl, tr("Music (level) (%1/%2)"));
-    setRequiredStatusEntry(ui->ItemsStatus, configs->main_music_wld.stored(), ConfStatus::total_music_wld, tr("Music (world) (%1/%2)"));
+    setRequiredStatusEntry(ui->ItemsStatus, configs->main_music_wld.stored(), ConfStatus::total_music_wld, tr("Music (world map) (%1/%2)"));
     setRequiredStatusEntry(ui->ItemsStatus, configs->main_music_spc.stored(), ConfStatus::total_music_spc, tr("Music (special) (%1/%2)"));
     //SOUND
     setRequiredStatusEntry(ui->ItemsStatus, configs->main_sound.stored(),   ConfStatus::total_sound,    tr("Sounds (%1/%2)"));
@@ -136,7 +136,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ////////////////////////DirList/////////////////////////
     int row=0;
     setDirEntry(ui->ItemsDirs, row++, tr("Level data"), configs->dirs.glevel);
-    setDirEntry(ui->ItemsDirs, row++, tr("World data"), configs->dirs.gworld);
+    setDirEntry(ui->ItemsDirs, row++, tr("World map data"), configs->dirs.gworld);
     setDirEntry(ui->ItemsDirs, row++, tr("Characters"), configs->dirs.gplayble);
     setDirEntry(ui->ItemsDirs, row++, tr("Game worlds"),configs->dirs.worlds);
     setDirEntry(ui->ItemsDirs, row++, tr("Music"),      configs->dirs.music);
@@ -149,7 +149,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
         QFont font;
         font.setItalic(true);
         ui->ItemsErrors->insertRow(0);
-            itemError = new QTableWidgetItem(tr("[Error list is empty]"));
+            itemError = new QTableWidgetItem(tr("[Error list is empty, congratulations!]"));
             itemError->setFont(font);
             ui->ItemsErrors->setItem(0, 0, itemError);
     }

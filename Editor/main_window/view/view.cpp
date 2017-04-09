@@ -75,7 +75,7 @@ void MainWindow::customGrid(bool)
             bool ok=0;
             gridSize = QInputDialog::getInt(this,
                                             tr("Custom align grid size"),
-                                            tr("Please enter align grid size:"),
+                                            tr("Please enter grid alignment size:"),
                                             32, 0, 2147483647, 1, &ok);
             if(!ok) return;
         }

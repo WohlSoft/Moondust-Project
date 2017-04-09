@@ -67,14 +67,13 @@ static void pge_engine_alphatestingNotify(MainWindow *parent)
         QCheckBox box;
         box.setText(MainWindow::tr("Don't show this message again."));
         msg.setCheckBox(&box);
-        msg.setText(MainWindow::tr("Hello! This is a test in PGE Engine.\n"
-                                   "PGE Engine is the in-development part of the PGE Project which implements a gameplay and level testing feature. "
-                                   "Currently, it's experimental and has not implemented many features yet. "
-                                   "Some features may not be implemented or may work incorrectly. "
-                                   "If you are making levels or episodes for the old SMBX Engine and you want to run "
-                                   "a test with a complete feature-set, please run level tests in the SMBX Engine. "
-                                   "Use PGE Testing for cases when you want to test PGE Engine itself or you want to test PGE specific levels "
-                                   "or episodes.")
+        msg.setText(MainWindow::tr("Hello! You are attempting to test a level in the PGE Engine.\n"
+                                   "The PGE Engine is still at an early stage in development, and there "
+                                   "are several features which are missing or do not work correctly. "
+                                   "If you are making levels or episodes for the old SMBX Engine and you "
+                                   "want to test them with a complete feature-set, please test them in "
+                                   "SMBX directly. Use PGE Testing for cases when you want to test the "
+                                   "PGE Engine itself or you want to test levels with PGE-specific features.")
                    );
         msg.setStandardButtons(QMessageBox::Ok);
         msg.setWindowModality(Qt::WindowModal);
@@ -128,7 +127,7 @@ void MainWindow::on_action_doTest_triggered()
     if(!QFileInfo(command).exists())
     {
         QMessageBox::warning(this, tr("Engine is not found"),
-                             tr("Can't start testing, engine is not found: \n%1\nPlease, check the application directory.")
+                             tr("Can't start testing, engine is not found: \n%1\nPlease, check the application directory and make sure it is installed properly.")
                              .arg(command),
                              QMessageBox::Ok);
         return;
@@ -209,7 +208,7 @@ void MainWindow::on_action_doSafeTest_triggered()
     if(!QFileInfo(command).exists())
     {
         QMessageBox::warning(this, tr("Engine is not found"),
-                             tr("Can't start testing, engine is not found: \n%1\nPlease, check the application directory.")
+                             tr("Can't start testing, engine is not found: \n%1\nPlease, check the application directory and make sure it is installed properly.")
                              .arg(command),
                              QMessageBox::Ok);
         return;
@@ -295,7 +294,7 @@ void MainWindow::on_action_Start_Engine_triggered()
     if(!QFileInfo(command).exists())
     {
         QMessageBox::warning(this, tr("Engine is not found"),
-                             tr("Engine is not found: \n%1\nPlease, check the application directory.")
+                             tr("Engine is not found: \n%1\nPlease, check the application directory and make sure it is installed properly.")
                              .arg(command),
                              QMessageBox::Ok);
         return;
@@ -321,4 +320,3 @@ void MainWindow::on_action_testSettings_triggered()
     util::DialogToCenter(&testingSetup, true);
     testingSetup.exec();
 }
-

@@ -99,7 +99,7 @@ public:
  * - Misc
  * - Miltilanguage
  * - Recent Files
- * - Sub Windows
+ * - Sub-windows
  * -- Latest Active Window (See sub_windows.cpp for comments)
  * - Toolbars
  * - Dock widgwets
@@ -467,7 +467,7 @@ public:
 // ////////////////////////////////////////////////////////
 
 
-// ///////////////////// Sub Windows /////////////////////////
+// ///////////////////// Sub-windows /////////////////////////
     public:
         enum WindowType
         {
@@ -580,7 +580,7 @@ public:
          */
         void SWTile();
         /*!
-         * \brief Switch Sub Windows view mode
+         * \brief Switch Separate Sub-windows view mode
          */
         void setSubView();
         /*!

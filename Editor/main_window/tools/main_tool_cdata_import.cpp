@@ -51,7 +51,7 @@ void MainWindow::on_actionCDATA_Import_triggered()
     return;
 
     //QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
-    QString fileName = QFileDialog::getExistingDirectory(this, tr("Select directory with custom data to import"),
+    QString fileName = QFileDialog::getExistingDirectory(this, tr("Select directory with custom data to import."),
                                                  sourceDir,
                                                  QFileDialog::DontResolveSymlinks);
 

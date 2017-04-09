@@ -91,11 +91,11 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
     if(!image) return;
 
     if(!QFile::exists(pathToMask))
-        return; //Nothing to do
+        return; //Nothing to do.
 
     FIBITMAP *mask = loadImage(pathToMask, true);
 
-    if(!mask) return;//Nothing to do
+    if(!mask) return;//Nothing to do.
 
     unsigned int img_w = FreeImage_GetWidth(image);
     unsigned int img_h = FreeImage_GetHeight(image);

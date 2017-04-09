@@ -356,7 +356,7 @@ void CrashHandler::checkCrashsaves()
         //Clean up all files from crash-save folder after restoring
         crashSave.removeRecursively();
         QMessageBox::information(mw,
-                                 tr("Crashsave", "Crash-Save - emergency file saving after crash. A title of message box."),
+                                 tr("Crash recovery", "Crash recovery - emergency file saving after crash. A title of message box."),
                                  tr("Since the last crash, the editor recovered some files.\n"
                                     "Please save them before doing anything else."),
                                  QMessageBox::Ok);

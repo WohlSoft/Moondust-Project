@@ -40,7 +40,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     {
         LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
-                             tr("Cannot create NPC config file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+                             tr("Cannot create NPC config file:\nThe configuration pack was loaded, but contains errors.").arg(ConfStatus::configPath));
         //Show configuration status window
         on_actionCurConfig_triggered();
         return;
@@ -70,7 +70,7 @@ void MainWindow::on_actionNewLevel_triggered()
     {
         LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
-                             tr("Cannot create level file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+                             tr("Cannot create level file:\nThe configuration pack was loaded, but contains errors.").arg(ConfStatus::configPath));
         //Show configuration status window
         on_actionCurConfig_triggered();
         return;
@@ -106,7 +106,7 @@ void MainWindow::on_actionNewWorld_map_triggered()
     {
         LogCritical(QString("Error! *.INI configs not loaded"));
         QMessageBox::warning(this, tr("Configuration is loaded with errors"),
-                             tr("Cannot create world map file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+                             tr("Cannot create world map file:\nThe configuration pack was loaded, but contains errors.").arg(ConfStatus::configPath));
         //Show configuration status window
         on_actionCurConfig_triggered();
         return;

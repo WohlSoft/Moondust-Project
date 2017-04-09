@@ -151,7 +151,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {
@@ -160,7 +160,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x)
             .arg(m_data.y)
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -171,7 +171,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_imageSize.width())
             .arg(m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -182,7 +182,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x + m_imageSize.width())
             .arg(m_data.y + m_imageSize.height())
         );
-        m_scene->m_mw->showStatusMsg(tr("Preferences has been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == cutBlock)
         m_scene->m_mw->on_actionCut_triggered();
@@ -216,7 +216,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 bool ok = false;
                 long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
-                                               tr("Please select, how far items out of section should be removed too (in pixels)"),
+                                               tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
                 LevelSection &s = m_scene->m_data->sections[m_scene->m_data->CurSection];
@@ -267,7 +267,7 @@ typeEventAgain:
             if(ok)
             {
                 ItemMsgBox msgBox(Opened_By::BLOCK, "", false,
-                                  tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"),
+                                  tr("Please enter the message which will be shown.\n(Max line length is 27 characters)"),
                                   tr("Hit message text"), m_scene->m_subWindow);
                 util::DialogToCenter(&msgBox, true);
                 if(msgBox.exec() == QDialog::Accepted)
@@ -298,14 +298,14 @@ typeEventAgain:
                     m_scene->m_mw->setEventsBox();
                     m_scene->m_mw->EventListsSync();
 
-                    QMessageBox::information(m_scene->m_subWindow, tr("Event has been created"),
-                                             tr("Message event has been created!"), QMessageBox::Ok);
+                    QMessageBox::information(m_scene->m_subWindow, tr("Event created"),
+                                             tr("Message event created!"), QMessageBox::Ok);
                 }
             }
         }
         else
             QMessageBox::warning(m_scene->m_subWindow, tr("'Hit' event slot is used"),
-                                 tr("Sorry, but 'Hit' event slot already used by '%1' event.")
+                                 tr("Sorry, but the 'Hit' event slot already used by the event: '%1'.")
                                  .arg(m_data.event_hit), QMessageBox::Ok);
 
     }
@@ -388,7 +388,7 @@ typeEventAgain:
         {
             bool ok = false;
             long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
-                                           tr("Please select, how far items out of section should be removed too (in pixels)"),
+                                           tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                            32, 0, 214948, 1, &ok);
             if(!ok) goto cancelRemoveSSS;
             LevelSection &s = m_scene->m_data->sections[m_scene->m_data->CurSection];

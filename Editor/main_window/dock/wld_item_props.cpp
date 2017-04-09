@@ -657,7 +657,7 @@ void WLD_ItemProps::on_WLD_PROPS_GetPoint_clicked()
 
     if(wlvlPtr<0)
     {
-        QMessageBox::information(this, QString(tr("Placing mode")), tr("Place item on the map first and call 'Properties' context menu item."), QMessageBox::Ok);
+        QMessageBox::information(this, QString(tr("Placement mode")), tr("Place item on the map first and call 'Properties' context menu item."), QMessageBox::Ok);
         return;
     }
     else

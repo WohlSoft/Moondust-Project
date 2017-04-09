@@ -135,7 +135,7 @@ public:
     //! Enalbe middle-mouse switch to drag mode feature
     static bool MidMouse_allowSwitchToDrag;
 
-    //Placing mode flahs
+    //Placement mode flahs
     static bool Placing_dontShowPropertiesBox;
 
     //!Max Limit if history elements

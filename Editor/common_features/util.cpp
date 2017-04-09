@@ -70,7 +70,7 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
         }
         case 2:
         {
-            //search by ID (contains)
+            //search by ID (contents)
             if(!item->data(Qt::UserRole).toString().contains(toSearch, Qt::CaseInsensitive))
                 itemList->setItemHidden(item, true);
             else

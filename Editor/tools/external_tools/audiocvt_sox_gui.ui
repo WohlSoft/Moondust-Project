@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>501</height>
+    <width>503</width>
+    <height>577</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
    <item row="2" column="0" colspan="2">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Sox binary path:</string>
+      <string>SoX executable path:</string>
      </property>
     </widget>
    </item>
@@ -42,7 +42,7 @@
    <item row="5" column="0" colspan="2">
     <widget class="QCheckBox" name="backup">
      <property name="text">
-      <string>make backup</string>
+      <string>Make backup</string>
      </property>
     </widget>
    </item>
@@ -205,7 +205,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Files will be in same format</string>
+          <string>The files' format will not be changed</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -502,7 +502,8 @@
    <item row="0" column="0" colspan="6">
     <widget class="QLabel" name="label_8">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
+&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -535,7 +536,7 @@
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Convert into new format
-(open necessary tab to choice target format)</string>
+(select a tab to choose target format)</string>
      </property>
     </widget>
    </item>

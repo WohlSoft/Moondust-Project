@@ -23,7 +23,7 @@ HistoryElementRemoveLayerAndSave::~HistoryElementRemoveLayerAndSave()
 
 QString HistoryElementRemoveLayerAndSave::getHistoryName()
 {
-    return tr("Remove layer and save items");
+    return tr("Remove Layer and keep items");
 }
 
 void HistoryElementRemoveLayerAndSave::undo()

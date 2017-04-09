@@ -351,15 +351,15 @@ bool ConfigManager::hasConfigPacks()
     if(ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).isEmpty())
     {
         QMessageBox msgBox(this);
-        msgBox.setWindowTitle(tr("Config packs are not found"));
+        msgBox.setWindowTitle(tr("No config packs were found"));
         msgBox.setTextFormat(Qt::RichText); //this is what makes the links clickable
         #if (QT_VERSION >= 0x050100)
         msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
         #endif
         msgBox.setText(
-            tr("Available configuration packages are not found!<br>\n"
-               "Please download and install them into directory<br>\n<br>\n%1<br>\n<br>\n"
-               "You can take any configuration package here:<br>%2")
+            tr("No configuration packages were found!<br>\n"
+               "Please download and install them into this directory<br>\n<br>\n%1<br>\n<br>\n"
+               "You can use any configuration package here:<br>%2")
             .arg(AppPathManager::userAppDir() + "/configs")
             .arg("<a href=\"http://wohlsoft.ru/config_packs/\">"
                  "http://wohlsoft.ru/config_packs/"
@@ -538,8 +538,8 @@ bool ConfigManager::runConfigureTool()
         else
         {
             QMessageBox::critical(parentW,
-                                  tr("Error of the configuring script"),
-                                  tr("Configuring tool has error: %1 at line %2.\n"
+                                  tr("Configuration script failed"),
+                                  tr("Configuring tool encountered an error: %1 at line %2.\n"
                                      "File path: %3")
                                   .arg(js.getLastError())
                                   .arg(js.getLastErrorLine())
@@ -551,7 +551,7 @@ bool ConfigManager::runConfigureTool()
     else
     {
         QMessageBox::information(parentW,
-                                 tr("Configuring is not needed"),
+                                 tr("No configuration needed"),
                                  tr("This config pack has no configuring tool."),
                                  QMessageBox::Ok);
         return false;

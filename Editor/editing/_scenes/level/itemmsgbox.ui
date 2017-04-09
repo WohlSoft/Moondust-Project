@@ -87,7 +87,7 @@ color: rgb(255, 255, 255);</string>
    <item row="1" column="1">
     <widget class="QCheckBox" name="checkFriendly">
      <property name="text">
-      <string>Friendly (Non-friendly npc's can't be talked to)</string>
+      <string>Friendly (Non-friendly NPCs can't be talked to)</string>
      </property>
     </widget>
    </item>

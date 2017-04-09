@@ -1119,7 +1119,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               <item row="1" column="0">
                <widget class="QLabel" name="NpcGenDelay">
                 <property name="text">
-                 <string>Delay:</string>
+                 <string>Delay (seconds):</string>
                 </property>
                </widget>
               </item>
