@@ -1129,7 +1129,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="91"/>
         <source>Name of counter</source>
-        <translation>Имя счётчика</translation>
+        <translation>Имя счётчика:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
@@ -4736,7 +4736,7 @@ or delete them first with &apos;Delete Section&apos; option.</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1408"/>
         <source>Display message:</source>
-        <translation>Показть сообщение:</translation>
+        <translation>Показать сообщение:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1373"/>
@@ -6458,7 +6458,7 @@ Unit is a pixels per 1/65 seconds.</source>
         <source>Target coordinates of player on the world map
 when you exited from a level through this warp</source>
         <translation>Целевые координаты игрока на карте мира
-когда вы выйдите из уровня через этот проход</translation>
+когда вы выйдите из уровня через этот проход.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="829"/>
