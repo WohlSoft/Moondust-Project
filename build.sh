@@ -17,52 +17,53 @@ do
     case "$var" in
         --help)
             echo ""
-            echo "=== Build script for PGE Project ==="
+            echo -e "=== \e[44mBuild script for PGE Project\e[0m ==="
             echo ""
-            echo "SYNTAX:"
+            echo -e "\E[4mSYNTAX:\E[0m"
             echo ""
-            echo "    $0 [<arg1>] [<arg2>] [<arg2>] ..."
+            echo -e "    $0 \e[90m[<arg1>] [<arg2>] [<arg2>] ...\e[0m"
             echo ""
-            echo "AVAILABLE ARGUMENTS:"
-            echo ""
-
-            echo "--- Actions ---"
-            echo " lupdate          - Update the translations"
-            echo " clean            - Remove all object files and caches to build from scratch"
-            echo " isvalid          - Show validation state of dependencies"
+            echo -e "\E[4mAVAILABLE ARGUMENTS:\E[0m"
             echo ""
 
-            echo "--- Flags ---"
-            echo " no-pause         - Don't pause script on completion'"
-            echo " silent-make      - Don't print build commands for each building file"
-            printf " use-ccache       - Use the CCache to speed-up build process"
+            echo -e "--- Actions ---"
+            echo -e " \E[1;4mlupdate\E[0m          - Update the translations"
+            echo -e " \E[1;4mlrelease\E[0m         - Compile the translations"
+            echo -e " \E[1;4mclean\E[0m            - Remove all object files and caches to build from scratch"
+            echo -e " \E[1;4misvalid\E[0m          - Show validation state of dependencies"
+            echo -e ""
+
+            echo -e "--- Flags ---"
+            echo -e " \E[1;4mno-pause\E[0m         - Don't pause script on completion'"
+            echo -e " \E[1;4msilent-make\E[0m      - Don't print build commands for each building file"
+            printf  " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process"
             if [[ ! -f /usr/bin/ccache && ! -f /bin/ccache && ! -f /usr/local/bin/ccache ]]; then
-                printf " \E[0;41;37m<CCache is NOT INSTALLED!>\E[0m"
+                printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
             fi
             printf "\n"
             echo ""
 
-            echo "--- Disable building of components ---"
-            echo " noeditor         - Skip building of PGE Editor compoment"
-            echo " noengine         - Skip building of PGE Engine compoment"
-            echo " nocalibrator     - Skip building of Playable Character Calibrator compoment"
-            echo " nomaintainer     - Skip building of PGE Maintainer compoment"
-            echo " nomanager        - Skip building of PGE Manager compoment"
-            echo " nogifs2png       - Skip building of GIFs2PNG compoment"
-            echo " nopng2gifs       - Skip building of PNG2GIFs compoment"
-            echo " nolazyfixtool    - Skip building of LazyFixTool compoment"
+            echo -e "--- Disable building of components ---"
+            echo -e " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment"
+            echo -e " \E[1;4mnoengine\E[0m         - Skip building of PGE Engine compoment"
+            echo -e " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment"
+            echo -e " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment"
+            echo -e " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment"
+            echo -e " \E[1;4mnogifs2png\E[0m       - Skip building of GIFs2PNG compoment"
+            echo -e " \E[1;4mnopng2gifs\E[0m       - Skip building of PNG2GIFs compoment"
+            echo -e " \E[1;4mnolazyfixtool\E[0m    - Skip building of LazyFixTool compoment"
             echo ""
 
             echo "--- Special ---"
-            echo " debugscript      - Show some extra information to debug this script"
+            echo -e " \E[1;4mdebugscript\E[0m      - Show some extra information to debug this script"
             echo ""
 
             echo "--- For fun ---"
-            echo " colors           - Prints various blocks of different color with showing their codes"
-            echo " cool             - Prints some strings inside the lines (test of printLine command)"
+            echo -e " \E[1;4mcolors\E[0m           - Prints various blocks of different color with showing their codes"
+            echo -e " \E[1;4mcool\E[0m             - Prints some strings inside the lines (test of printLine command)"
             echo ""
 
-            echo "==== IMPORTANT! ===="
+            echo -e "==== \e[43mIMPORTANT!\e[0m ===="
             echo "This script is designed for Linux and macOS operating systems."
             echo "If you trying to start it under Windows, it will automatically start"
             echo "the build.bat script instead of this."
@@ -288,7 +289,20 @@ do
 
             printLine "Done!" "\E[0;42;37m" "\E[0;32m"
             exit 0;
-        ;;
+            ;;
+        lrelease)
+            echo ""
+            echo "Running translation compilation...";
+
+            printLine "Editor" "\E[0;42;37m" "\E[0;34m"
+            ${QT_PATH}/$LRelease Editor/pge_editor.pro
+
+            printLine "Engine" "\E[0;42;37m" "\E[0;34m"
+            ${QT_PATH}/$LRelease Engine/pge_engine.pro
+
+            printLine "Done!" "\E[0;42;37m" "\E[0;32m"
+            exit 0;
+            ;;
     esac
 done
 
