@@ -736,14 +736,14 @@ void PGE_Phys_Object::updateCollisions()
         {
             if(m_momentum.centerY() < CUR->m_momentum.centerY())
             {
-                if(((CUR->m_blocked[m_filterID]&Block_TOP) != 0) &&
+                if(((CUR->m_blocked[m_filterID] & Block_TOP) != 0) &&
                    (CUR->m_momentum.top() >= m_momentum.bottom())
                   )
                     l_clifCheck.push_back(CUR);
             }
             else
             {
-                if((CUR->m_blocked[m_filterID]&Block_BOTTOM) != 0)
+                if((CUR->m_blocked[m_filterID] & Block_BOTTOM) != 0)
                     l_toBump.push_back(CUR);
 
                 if((CUR->m_bodytype == Body_DYNAMIC) &&

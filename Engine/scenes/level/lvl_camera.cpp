@@ -431,10 +431,19 @@ void PGE_LevelCamera::setRenderObjectsCacheEnabled(bool enabled)
     _disable_cache_mode = !enabled;
 }
 
+struct _TreeRenderSearchData
+{
+    PGE_LevelCamera *list;
+    PGE_RectF *zone;
+};
+
 bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object *item, void *arg)
 {
-    PGE_LevelCamera *list = static_cast<PGE_LevelCamera * >(arg);
+    _TreeRenderSearchData *d = static_cast<_TreeRenderSearchData*>(arg);
+    if(!d || !d->list)
+        return false;
 
+    PGE_LevelCamera *list = d->list;
     if(list)
     {
         if(item)
@@ -449,11 +458,23 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object *item, void *arg)
 
             switch(item->type)
             {
+            case PGE_Phys_Object::LVLSubTree:
+            {
+                LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(item);
+                if(st)
+                {
+                    PGE_RectF newRect = *d->zone;
+                    newRect.setPos(newRect.x() + st->m_offsetX, newRect.y() + st->m_offsetY);
+                    _TreeRenderSearchData dd{d->list, &newRect};
+                    st->query(newRect, _TreeSearchCallback, (void*)&dd);
+                    renderable = true;//keep for a debug render
+                }
+                break;
+            }
             case PGE_Phys_Object::LVLNPC:
                 list->npcs_to_activate.push(item);
                 renderable = true;
                 break;
-
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
             case PGE_Phys_Object::LVLPlayer:
@@ -506,7 +527,8 @@ void PGE_LevelCamera::queryItems(PGE_RectF &zone)
     //double lt[2] = { zone.left(),  zone.top() };
     //double rb[2] = { zone.right(), zone.bottom() };
     //_scene->m_tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(this));
-    _scene->m_qtree.query(zone, _TreeSearchCallback, reinterpret_cast<void *>(this));
+    _TreeRenderSearchData d{this, &zone};
+    _scene->m_qtree.query(zone, _TreeSearchCallback, (void*)&d /*reinterpret_cast<void *>(this)*/ );
 //    LevelScene::IndexTree4::Query q = _scene->m_qtree.QueryIntersectsRegion(loose_quadtree::BoundingBox<double>(zone.x(), zone.y(), zone.width(), zone.height()));
 //    while(!q.EndOfQuery())
 //    {

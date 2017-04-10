@@ -38,6 +38,9 @@ class LVL_SubTree : public PGE_Phys_Object
         double  m_offsetX = 0.0;
         double  m_offsetY = 0.0;
 
+        double  m_offsetXold = 0.0;
+        double  m_offsetYold = 0.0;
+
     private:
         LVL_SubTree_private *p = nullptr;
 };

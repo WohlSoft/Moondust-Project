@@ -75,9 +75,9 @@ void LVL_Block::init(bool force)
         data = dataInitial;
     }
 
-    m_scene->m_layers.registerItem(data.layer, this);
     transformTo_x(data.id);
     _isInited = true;
+    m_scene->m_layers.registerItem(data.layer, this);
     m_momentum.saveOld();
 }
 

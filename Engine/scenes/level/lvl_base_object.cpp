@@ -356,35 +356,30 @@ void PGE_Phys_Object::renderDebug(double _camX, double _camY)
     case LVLUnknown:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, false);
         break;
-
+    //case LVLSubTree:
+    //    GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 0.0f, 1.0f, 0.0f, 0.5f, true);
+    //    break;
     case LVLBlock:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, false);
         break;
-
     case LVLBGO:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, false);
         break;
-
     case LVLNPC:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, false);
         break;
-
     case LVLPlayer:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 1.0f, 0.5f, 0.5f, 1.0f, false);
         break;
-
     case LVLEffect:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 0.5f, 0.5f, 0.5f, 1.0f, false);
         break;
-
     case LVLWarp:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 1.0f, 0.0f, 0.0f, 0.5f, true);
         break;
-
     case LVLSpecial:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, true);
         break;
-
     case LVLPhysEnv:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 1.0f, 1.0f, 0.0f, 0.5f, true);
         break;

@@ -20,7 +20,7 @@
 #include <functional>
 #include "lvl_subtree.h"
 
-void LevelScene::registerElement(PGE_Phys_Object *item)
+void LevelScene::registerElement(LevelScene::PhysObjPtr item)
 {
     //RPoint lt={item->m_posX_registered, item->m_posY_registered};
     //RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
@@ -35,7 +35,7 @@ void LevelScene::updateElement(LevelScene::PhysObjPtr item)
     m_qtree.update(item);
 }
 
-void LevelScene::unregisterElement(PGE_Phys_Object *item)
+void LevelScene::unregisterElement(LevelScene::PhysObjPtr item)
 {
     //RPoint lt={item->m_posX_registered, item->m_posY_registered};
     //RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
@@ -62,8 +62,13 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
             if(item->type == PGE_Phys_Object::LVLSubTree)
             {
                 LVL_SubTree *stree = dynamic_cast<LVL_SubTree*>(item);
-                if(stree)//FIXME: use position offset to correctly find elements based on relative coordinates search
-                    stree->query(*d->zone, _TreeSearchCallback, arg);
+                if(stree)
+                {
+                    PGE_RectF newRect = *d->zone;
+                    newRect.setPos(newRect.x() + stree->m_offsetX, newRect.y() + stree->m_offsetY);
+                    _TreeSearchData dd{d->validator, d->list, &newRect};
+                    stree->query(newRect, _TreeSearchCallback, (void*)&dd);
+                }
                 return true;
             }
             if(!d->validator || (*(d->validator))(item))
@@ -76,6 +81,9 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
                         item->m_momentum = item->m_momentum_relative;
                         item->m_momentum.x -= st->m_offsetX;
                         item->m_momentum.y -= st->m_offsetY;
+                        item->m_momentum.oldx -= st->m_offsetXold;
+                        item->m_momentum.oldy -= st->m_offsetYold;
+                        item->m_momentum.velX = st->speedX();
                         item->m_momentum.velXsrc = st->speedX();
                         item->m_momentum.velY = st->speedY();
                     }

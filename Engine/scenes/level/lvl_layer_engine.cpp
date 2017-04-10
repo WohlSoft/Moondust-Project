@@ -29,13 +29,13 @@ LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) :
         Layer &db = m_layers[DESTROYED_LAYER_NAME];
         db.m_layerType = Layer::T_DESTROYED_BLOCKS;
         db.m_vizible = false;
-        db.m_rtree = m_scene;
+        db.m_rtree.m_scene = m_scene;
     }
     {
         Layer &db = m_layers[SPAWNED_LAYER_NAME];
         db.m_layerType = Layer::T_SPAWNED_NPCs;
         db.m_vizible = true;
-        db.m_rtree = m_scene;
+        db.m_rtree.m_scene = m_scene;
     }
 }
 
@@ -153,8 +153,10 @@ void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item)
             lyr.m_rtree.m_scene = m_scene;
             lyr.m_rtree.setSize(1.0, 1.0);
             lyr.m_rtree.m_momentum = item->m_momentum;
+            //Keep initial position of layer itself
+            lyr.m_rtree.m_momentum_relative = lyr.m_rtree.m_momentum;
+            item->m_parent = &lyr.m_rtree;
             m_scene->registerElement(&lyr.m_rtree);
-            item->_syncPosition();
         } else {
             if(lyr.m_rtree.left() > item->left())
                 lyr.m_rtree.setLeft(item->left());
@@ -164,12 +166,19 @@ void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item)
                 lyr.m_rtree.setRight(item->right());
             if(lyr.m_rtree.bottom() < item->bottom())
                 lyr.m_rtree.setBottom(item->bottom());
-            item->_syncPosition();
+            //Keep initial position of layer itself
+            lyr.m_rtree.m_momentum_relative = lyr.m_rtree.m_momentum;
+            lyr.m_rtree.m_momentum_relative.x -= lyr.m_rtree.m_offsetX;
+            lyr.m_rtree.m_momentum_relative.y -= lyr.m_rtree.m_offsetY;
+            lyr.m_rtree.m_momentum_relative.saveOld();
+            item->m_parent = &lyr.m_rtree;
+            //item->_syncPosition();
         }
         item->m_momentum_relative   = item->m_momentum;
-        item->m_momentum_relative.x -= lyr.m_rtree.m_offsetX;
-        item->m_momentum_relative.y -= lyr.m_rtree.m_offsetY;
-        item->m_parent = &lyr.m_rtree;
+        item->m_momentum_relative.x += lyr.m_rtree.m_offsetX;
+        item->m_momentum_relative.y += lyr.m_rtree.m_offsetY;
+        item->m_momentum_relative.saveOld();
+        item->_syncPosition();
         m_scene->unregisterElement(item);
     }
 
@@ -187,10 +196,10 @@ void LVL_LayerEngine::removeRegItem(std::string layer, PGE_Phys_Object *item)
         (item->type == PGE_Phys_Object::LVLWarp)||
         (item->type == PGE_Phys_Object::LVLPhysEnv) )
     {
-        if(!lyr.m_rtree.m_scene)
+        if(lyr.m_rtree.m_scene)
         {
-            item->m_momentum_relative.x += lyr.m_rtree.m_offsetX;
-            item->m_momentum_relative.y += lyr.m_rtree.m_offsetY;
+            item->m_momentum_relative.x -= lyr.m_rtree.m_offsetX;
+            item->m_momentum_relative.y -= lyr.m_rtree.m_offsetY;
             item->m_parent = nullptr;
             lyr.m_rtree.unregisterElement(item);
         }
@@ -235,11 +244,14 @@ void LVL_LayerEngine::processMoving(double tickTime)
         layerIt++)
     {
         MovingLayer &l = layerIt->second;
+        l.m_subtree->m_momentum.velX    = l.m_speedX;
         l.m_subtree->m_momentum.velXsrc = l.m_speedX;
-        l.m_subtree->m_momentum.velY = l.m_speedY;
+        l.m_subtree->m_momentum.velY    = l.m_speedY;
         l.m_subtree->iterateStep(tickTime);
-        l.m_subtree->m_offsetX = l.m_subtree->m_momentum.x - l.m_subtree->m_momentum_relative.x;
-        l.m_subtree->m_offsetY = l.m_subtree->m_momentum.y - l.m_subtree->m_momentum_relative.y;
+        l.m_subtree->m_offsetX    = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.x;
+        l.m_subtree->m_offsetY    = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.y;
+        l.m_subtree->m_offsetXold = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.oldx;
+        l.m_subtree->m_offsetYold = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.oldy;
         l.m_subtree->_syncPosition();
 //        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++)
 //        {
