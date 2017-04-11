@@ -29,13 +29,11 @@ LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) :
         Layer &db = m_layers[DESTROYED_LAYER_NAME];
         db.m_layerType = Layer::T_DESTROYED_BLOCKS;
         db.m_vizible = false;
-        db.m_rtree.m_scene = m_scene;
     }
     {
         Layer &db = m_layers[SPAWNED_LAYER_NAME];
         db.m_layerType = Layer::T_SPAWNED_NPCs;
         db.m_vizible = true;
-        db.m_rtree.m_scene = m_scene;
     }
 }
 
@@ -47,15 +45,28 @@ void LVL_LayerEngine::spawnSmokeAt(double x, double y)
     m_scene->launchEffect(smoke, true);
 }
 
+LVL_LayerEngine::Layer &LVL_LayerEngine::getLayer(const std::string &lyr)
+{
+    LayersTable::iterator li = m_layers.find(lyr);
+    if(li == m_layers.end())
+    {
+        Layer &lr = m_layers[lyr];
+        lr.m_layerType = Layer::T_REGULAR;
+        lr.m_vizible = true;
+        return lr;
+    }
+    return li->second;
+}
+
+
 void LVL_LayerEngine::hide(std::string layer, bool smoke)
 {
-    Layer &lyr = m_layers[layer];
-
+    Layer &lyr = getLayer(layer);
     for(Layer::Members::iterator it = lyr.m_members.begin();
         it != lyr.m_members.end();
         it++)
     {
-        PGE_Phys_Object *body = it->second;
+        PGE_Phys_Object *body = *it;
         if(!body->isVisible())
             continue;
         body->hide();
@@ -69,7 +80,7 @@ void LVL_LayerEngine::hide(std::string layer, bool smoke)
 
 void LVL_LayerEngine::show(std::string layer, bool smoke)
 {
-    Layer &lyr = m_layers[layer];
+    Layer &lyr = getLayer(layer);
 
     if(lyr.m_layerType == Layer::T_DESTROYED_BLOCKS)
     {
@@ -78,7 +89,7 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
             it != lyr.m_members.end();
             it++)
         {
-            LVL_Block *blk = dynamic_cast<LVL_Block *>(it->second);
+            LVL_Block *blk = dynamic_cast<LVL_Block *>(*it);
             if(!blk)
                 continue;
             //lyr.m_members.remove(intptr_t(blk));
@@ -98,7 +109,7 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
             it != lyr.m_members.end();
             it++)
         {
-            PGE_Phys_Object *body = it->second;
+            PGE_Phys_Object *body = *it;
             if(body->isVisible())
                 continue;
             body->show();
@@ -113,7 +124,7 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
 
 void LVL_LayerEngine::toggle(std::string layer, bool smoke)
 {
-    Layer &lyr = m_layers[layer];
+    Layer &lyr = getLayer(layer);
     bool viz = !lyr.m_vizible;
 
     if(viz && (lyr.m_layerType == Layer::T_DESTROYED_BLOCKS))
@@ -129,7 +140,7 @@ void LVL_LayerEngine::toggle(std::string layer, bool smoke)
 
     for(Layer::Members::iterator it = lyr.m_members.begin(); it != lyr.m_members.end(); it++)
     {
-        PGE_Phys_Object *body = it->second;
+        PGE_Phys_Object *body = *it;
         body->setVisible(viz);
         if(smoke)
             spawnSmokeAt(body->posCenterX(), body->posCenterY());
@@ -142,7 +153,7 @@ void LVL_LayerEngine::toggle(std::string layer, bool smoke)
 void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item)
 {
     //Register item in the layer
-    Layer &lyr = m_layers[layer];
+    Layer &lyr = getLayer(layer);
     if( (item->type == PGE_Phys_Object::LVLBGO)||
         (item->type == PGE_Phys_Object::LVLBlock)||
         (item->type == PGE_Phys_Object::LVLWarp)||
@@ -157,7 +168,9 @@ void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item)
             lyr.m_rtree.m_momentum_relative = lyr.m_rtree.m_momentum;
             item->m_parent = &lyr.m_rtree;
             m_scene->registerElement(&lyr.m_rtree);
-        } else {
+        }
+        else
+        {
             if(lyr.m_rtree.left() > item->left())
                 lyr.m_rtree.setLeft(item->left());
             if(lyr.m_rtree.top() > item->top())
@@ -182,7 +195,7 @@ void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item)
         m_scene->unregisterElement(item);
     }
 
-    lyr.m_members[reinterpret_cast<intptr_t>(item)] = item;
+    lyr.m_members.insert(item);
     if(lyr.m_layerType == Layer::T_REGULAR)
         item->setVisible(lyr.m_vizible);
 }
@@ -204,7 +217,7 @@ void LVL_LayerEngine::removeRegItem(std::string layer, PGE_Phys_Object *item)
             lyr.m_rtree.unregisterElement(item);
         }
     }
-    lyr.m_members.erase(reinterpret_cast<intptr_t>(item));
+    lyr.m_members.erase(item);
 }
 
 void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, double speedY)
@@ -247,12 +260,15 @@ void LVL_LayerEngine::processMoving(double tickTime)
         l.m_subtree->m_momentum.velX    = l.m_speedX;
         l.m_subtree->m_momentum.velXsrc = l.m_speedX;
         l.m_subtree->m_momentum.velY    = l.m_speedY;
-        l.m_subtree->iterateStep(tickTime);
-        l.m_subtree->m_offsetX    = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.x;
-        l.m_subtree->m_offsetY    = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.y;
-        l.m_subtree->m_offsetXold = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.oldx;
-        l.m_subtree->m_offsetYold = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.oldy;
-        l.m_subtree->_syncPosition();
+        if(l.m_subtree->m_scene)
+        {
+            l.m_subtree->iterateStep(tickTime);
+            l.m_subtree->m_offsetX    = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.x;
+            l.m_subtree->m_offsetY    = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.y;
+            l.m_subtree->m_offsetXold = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.oldx;
+            l.m_subtree->m_offsetYold = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.oldy;
+            l.m_subtree->_syncPosition();
+        }
 //        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++)
 //        {
 //            PGE_Phys_Object *obj = it->second;

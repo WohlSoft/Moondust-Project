@@ -19,6 +19,7 @@
 #ifndef LVL_LAYER_H
 #define LVL_LAYER_H
 
+#include <unordered_set>
 #include <unordered_map>
 #include "lvl_base_object.h"
 #include "lvl_subtree.h"
@@ -34,18 +35,11 @@ class LVL_LayerEngine
 public:
     LVL_LayerEngine(LevelScene *_parent=NULL);
     void spawnSmokeAt(double x, double y);
-    void hide(std::string layer, bool smoke=true);
-    void show(std::string layer, bool smoke=true);
-    void toggle(std::string layer, bool smoke=true);
-    void registerItem(std::string layer, PGE_Phys_Object* item);
-    void removeRegItem(std::string layer, PGE_Phys_Object* item);
-    bool isEmpty(std::string layer);
-    void clear();
 
     struct Layer
     {
         bool m_vizible = true;
-        typedef std::unordered_map<intptr_t, PGE_Phys_Object* > Members;
+        typedef std::unordered_set<PGE_Phys_Object* > Members;
         Members     m_members;
         //! Sub-tree of statical objects
         LVL_SubTree m_rtree;
@@ -57,6 +51,18 @@ public:
         };
         Type m_layerType = T_REGULAR;
     };
+
+private:
+    Layer &getLayer(const std::string &lyr);
+
+public:
+    void hide(std::string layer, bool smoke=true);
+    void show(std::string layer, bool smoke=true);
+    void toggle(std::string layer, bool smoke=true);
+    void registerItem(std::string layer, PGE_Phys_Object* item);
+    void removeRegItem(std::string layer, PGE_Phys_Object* item);
+    bool isEmpty(std::string layer);
+    void clear();
 
     struct MovingLayer
     {
