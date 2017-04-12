@@ -692,7 +692,8 @@ void PGE_Menu::autoOffset()
         return;
     }
 
-    if(m_currentItem - m_itemsOnScreen > m_offset)
+    if( (m_currentItem >= m_itemsOnScreen) &&
+        (m_currentItem - m_itemsOnScreen > m_offset) )
     {
         m_offset = m_currentItem - m_itemsOnScreen + 1;
         m_line = m_itemsOnScreen - 1;
