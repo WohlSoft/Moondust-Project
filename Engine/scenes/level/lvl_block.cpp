@@ -77,7 +77,7 @@ void LVL_Block::init(bool force)
 
     transformTo_x(data.id);
     _isInited = true;
-    m_scene->m_layers.registerItem(data.layer, this);
+    m_scene->m_layers.registerItem(data.layer, this, !force);
     m_momentum.saveOld();
 }
 
@@ -762,13 +762,10 @@ void LVL_Block::destroy(bool playEffect)
     m_blocked[2] = Block_NONE;
     m_destroyed = true;
     std::string oldLayer = data.layer;
-    m_scene->m_layers.removeRegItem(data.layer, this);
+    m_scene->m_layers.moveToAnotherLayerItem(data.layer, DESTROYED_LAYER_NAME, this, false);
     data.layer = DESTROYED_LAYER_NAME;
-    m_scene->m_layers.registerItem(data.layer, this);
-
     if(!data.event_destroy.empty())
         m_scene->m_events.triggerEvent(data.event_destroy);
-
     if(!data.event_emptylayer.empty())
     {
         if(m_scene->m_layers.isEmpty(oldLayer))
