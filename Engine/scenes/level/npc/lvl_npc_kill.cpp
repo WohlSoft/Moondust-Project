@@ -88,7 +88,7 @@ void LVL_Npc::talkWith()
 
 void LVL_Npc::kill(int damageReason)
 {
-    if((damageReason==DAMAGE_LAVABURN) && (setup->setup.lava_protect)) return;
+    if((damageReason == DAMAGE_LAVABURN) && (setup->setup.lava_protect)) return;
 
     try{
         KillEvent event;
@@ -202,5 +202,12 @@ void LVL_Npc::unregister()
     unregisterFromTree();
     m_scene->m_npcDead.push_back(this);
     m_scene->m_layers.removeRegItem(data.layer, this);
+    if(transformedFromBlock)
+    {
+        //Untegister the source block from all trees
+        m_scene->m_layers.removeRegItem(transformedFromBlock->data.layer, transformedFromBlock);
+        m_scene->m_blocksDestroyed.erase(transformedFromBlock);
+        m_scene->unregisterElement(transformedFromBlock);
+    }
 }
 

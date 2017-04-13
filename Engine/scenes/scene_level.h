@@ -62,6 +62,7 @@
 #include <vector>
 #include <deque>
 #include <unordered_map>
+#include <unordered_set>
 
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_timer.h>
@@ -228,11 +229,19 @@ class LevelScene : public Scene
         /*************************Character switchers*************************/
 
         /**********************NPC Management*********************/
+        //! List of activated NPCs
         std::vector<LVL_Npc * > m_npcActive;
+        //! List of dead NPCs
         std::vector<LVL_Npc * > m_npcDead;
-        /**********************NPC Management*********************/
+        /**********************NPC Management*end*****************/
+        //! List of dead playable character
         std::vector<LVL_Player * >  m_playersDead;
+        //! Blocks are have fading animation in process
         std::vector<LVL_Block * >   m_blocksInFade;
+        typedef std::unordered_set<LVL_Block*> LVL_BlocksSet;
+        //! List of destroyed blocks
+        LVL_BlocksSet m_blocksDestroyed;
+        void restoreDestroyedBlocks(bool smoke = true);
         /*********************Item placing**********************/
         /*********************Initial*placing*******************/
         void placeBlock(LevelBlock& blockData);
@@ -290,7 +299,6 @@ class LevelScene : public Scene
 
         /*********************Item placing**end*****************/
 
-        void destroyBlock(LVL_Block *&_block);
         void setGameState(EpisodeState *_gameState);
 
         EventQueue<LevelScene > m_systemEvents;

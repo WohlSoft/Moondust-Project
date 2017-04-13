@@ -17,6 +17,7 @@
  */
 
 #include "lvl_event_engine.h"
+#include "lvl_layer_engine.h"
 #include "../scene_level.h"
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
@@ -64,8 +65,26 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     if(!evt.layers_show.empty())
     {
         EventQueueEntry<LVL_EventAction> showLayers;
-        PGEStringList layers = evt.layers_show;
-        bool        smoke  = !evt.nosmoke;
+        PGEStringList   layers  = evt.layers_show;
+        bool            smoke   = !evt.nosmoke;
+        // Detect "Destroyed blocks" layer and replace it with special command
+        for(PGEStringList::iterator it = layers.begin(); it != layers.end(); )
+        {
+            std::string *lyr = &(*it);
+            // Undestroy destroyed blocks
+            if(lyr->compare(DESTROYED_LAYER_NAME) == 0)
+            {
+                EventQueueEntry<LVL_EventAction> undestroyBlocks;
+                undestroyBlocks.makeCaller([this, smoke]()->void
+                {
+                    m_scene->restoreDestroyedBlocks(smoke);
+                }, 0);
+                evntAct.m_action.events.push_back(undestroyBlocks);
+                it = layers.erase(it);
+            }
+            else
+                it++;
+        }
         showLayers.makeCaller([this, layers, smoke]()->void
         {
             for(const std::string &ly : layers)

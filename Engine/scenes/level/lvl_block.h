@@ -49,7 +49,7 @@ class LVL_Block : public PGE_Phys_Object
         bool m_isHidden;
         int  m_blockedOrigin[BLOCK_FILTER_COUNT];
 
-        bool m_destroyed;
+        bool m_destroyed = false;
 
         obj_block *setup; //Global config
 

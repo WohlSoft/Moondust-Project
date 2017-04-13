@@ -315,6 +315,19 @@ void PGE_Phys_Object::_syncPosition()
     LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
     if(_is_registered && m_parent && st)
         st->unregisterElement(this);
+//FIXME: Implement a valid way to process offseted position change
+    //if(st)
+    //{
+    //    m_momentum_relative = m_momentum;
+    //    m_momentum_relative.x += st->m_offsetX;
+    //    m_momentum_relative.y += st->m_offsetY;
+    //    m_momentum_relative.saveOld();
+    //    m_posX_registered = m_momentum_relative.x;
+    //    m_posY_registered = m_momentum_relative.y;
+    //} else {
+    //    m_posX_registered = m_momentum.x;
+    //    m_posY_registered = m_momentum.y;
+    //}
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
     if(m_parent && st)
@@ -329,6 +342,19 @@ void PGE_Phys_Object::_syncPositionAndSize()
     LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
     if(_is_registered && m_parent && st)
         st->unregisterElement(this);
+//FIXME: Implement a valid way to process offseted position change
+//    if(st)
+//    {
+//        m_momentum_relative = m_momentum;
+//        m_momentum_relative.x += st->m_offsetX;
+//        m_momentum_relative.y += st->m_offsetY;
+//        m_momentum_relative.saveOld();
+//        m_posX_registered = m_momentum_relative.x;
+//        m_posY_registered = m_momentum_relative.y;
+//    } else {
+//        m_posX_registered = m_momentum.x;
+//        m_posY_registered = m_momentum.y;
+//    }
     m_posX_registered = m_momentum.x;
     m_posY_registered = m_momentum.y;
     m_width_registered = m_width_toRegister;

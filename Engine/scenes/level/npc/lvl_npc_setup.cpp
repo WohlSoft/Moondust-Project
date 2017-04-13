@@ -96,14 +96,13 @@ void LVL_Npc::transformTo(unsigned long id, int type)
         if(transformedFromBlock)
         {
             def = transformedFromBlock->data;
-            m_scene->m_layers.removeRegItem("Destroyed Blocks", transformedFromBlock);
-            transformedFromBlock->data.layer = data.layer;
-            m_scene->m_layers.registerItem(data.layer, transformedFromBlock);
             transformedFromBlock->setPos(round(posX()), round(posY()));
             transformedFromBlock->setDestroyed(false);
             transformedFromBlock->transformTo(id, 2);
             transformedFromBlock->transformedFromNpcID = data.id;
             transformedFromBlock->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
+            m_scene->m_layers.registerItem(data.layer, transformedFromBlock);
+            transformedFromBlock = nullptr;
         }
         else
         {
@@ -114,7 +113,6 @@ void LVL_Npc::transformTo(unsigned long id, int type)
             def.h = static_cast<long>(round(height()));
             def.id = id;
             LVL_Block *res = m_scene->spawnBlock(def);
-
             if(res)
             {
                 res->transformedFromNpcID = data.id;
@@ -224,6 +222,7 @@ void LVL_Npc::transformTo_x(unsigned long id)
         m_contactPadding = 1.0;
         m_disableBlockCollision = true;
         setGravityScale(0.0);
+        m_bodytype = Body_STATIC;
         return;
     }
 

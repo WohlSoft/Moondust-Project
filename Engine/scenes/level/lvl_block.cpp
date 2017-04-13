@@ -71,6 +71,12 @@ void LVL_Block::init(bool force)
     else
     if(force)
     {
+        if(m_destroyed)
+        {
+            LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+            lyr.m_destroyedObjects--;
+            m_destroyed = false;
+        }
         construct();//reset ALL values into initial state
         data = dataInitial;
     }
@@ -111,7 +117,6 @@ void LVL_Block::transformTo(unsigned long id, int type)
         LVL_Npc *npc = m_scene->spawnNPC(def,
                                         LevelScene::GENERATOR_APPEAR,
                                         LevelScene::SPAWN_UP, true);
-
         if(npc)
         {
             npc->transformedFromBlock = this;
@@ -121,8 +126,13 @@ void LVL_Block::transformTo(unsigned long id, int type)
             npc->data.x = long(round(npc->m_momentum.x));
             npc->data.y = long(round(npc->m_momentum.y));
         }
-
         destroy(false);
+        if(npc)
+        {
+            // Don't store block as destroyed
+            m_scene->m_blocksDestroyed.erase(this);
+            m_scene->m_layers.removeRegItem(data.layer, this);
+        }
     }
 }
 
@@ -596,7 +606,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         if(!m_scene->m_playerStates.empty())
             m_scene->m_playerStates[0].appendCoins(1);
 
-        //! TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
+        //! FIXME: TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
         {
             SpawnEffectDef effect;
             effect.id = 11;
@@ -713,7 +723,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(triggerEvent)
     {
         //Register block as "destroyed" to be able turn it into it's initial state
-        m_scene->m_layers.registerItem(DESTROYED_LAYER_NAME, this);
+        m_scene->m_blocksDestroyed.insert(this);
     }
 
     if(triggerEvent && (!data.event_hit.empty()))
@@ -760,15 +770,21 @@ void LVL_Block::destroy(bool playEffect)
 
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
+    if(!m_destroyed)
+    {
+        LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+        lyr.m_destroyedObjects++;
+    }
     m_destroyed = true;
-    std::string oldLayer = data.layer;
-    m_scene->m_layers.moveToAnotherLayerItem(data.layer, DESTROYED_LAYER_NAME, this, false);
-    data.layer = DESTROYED_LAYER_NAME;
+    //Register as destroyed block
+    m_scene->m_blocksDestroyed.insert(this);
+    //Unregister from the layer
+    //m_scene->m_layers.removeRegItem(data.layer, this, false);
     if(!data.event_destroy.empty())
         m_scene->m_events.triggerEvent(data.event_destroy);
     if(!data.event_emptylayer.empty())
     {
-        if(m_scene->m_layers.isEmpty(oldLayer))
+        if(m_scene->m_layers.isEmpty(data.layer))
             m_scene->m_events.triggerEvent(data.event_emptylayer);
     }
 }
@@ -786,11 +802,15 @@ void LVL_Block::setDestroyed(bool dstr)
         {
             m_blocked[1] = Block_NONE;
             m_blocked[2] = Block_NONE;
+            LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+            lyr.m_destroyedObjects++;
         }
         else if(m_destroyed && !dstr)
         {
             m_blocked[1] = Block_BOTTOM;
             m_blocked[2] = Block_NONE;
+            LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+            lyr.m_destroyedObjects--;
         }
     }
 

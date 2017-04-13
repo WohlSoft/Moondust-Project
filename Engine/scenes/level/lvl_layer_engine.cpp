@@ -28,12 +28,12 @@ LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) :
     {
         Layer &db = m_layers[DESTROYED_LAYER_NAME];
         db.m_layerType = Layer::T_DESTROYED_BLOCKS;
-        db.m_vizible = false;
+        db.m_visible = false;
     }
     {
         Layer &db = m_layers[SPAWNED_LAYER_NAME];
         db.m_layerType = Layer::T_SPAWNED_NPCs;
-        db.m_vizible = true;
+        db.m_visible = true;
     }
 }
 
@@ -52,7 +52,7 @@ LVL_LayerEngine::Layer &LVL_LayerEngine::getLayer(const std::string &lyr)
     {
         Layer &lr = m_layers[lyr];
         lr.m_layerType = Layer::T_REGULAR;
-        lr.m_vizible = true;
+        lr.m_visible = true;
         return lr;
     }
     return li->second;
@@ -75,13 +75,13 @@ void LVL_LayerEngine::hide(std::string layer, bool smoke)
     }
 
     if(lyr.m_layerType == Layer::T_REGULAR)
-        lyr.m_vizible = false;
+        lyr.m_visible = false;
 }
 
 void LVL_LayerEngine::show(std::string layer, bool smoke)
 {
     Layer &lyr = getLayer(layer);
-
+    /*
     if(lyr.m_layerType == Layer::T_DESTROYED_BLOCKS)
     {
         //Restore all destroyed and modified blocks into their initial states
@@ -93,10 +93,10 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
             if(!blk)
                 continue;
             //lyr.m_members.remove(intptr_t(blk));
-            bool wasInviz = !blk->isVisible() || blk->m_destroyed;
+            bool wasInvisible = !blk->isVisible() || blk->m_destroyed;
             blk->setVisible(true);
             blk->init(true);//Force re-initialize block from initial data
-            if(smoke && wasInviz)
+            if(smoke && wasInvisible)
             {
                 PGE_Phys_Object::Momentum momentum = blk->m_momentum_relative;
                 Layer &lyrn = getLayer(blk->data.layer);//Get block's original layer
@@ -110,7 +110,7 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
         lyr.m_members.clear();
     }
     else
-    {
+    {*/
         for(Layer::Members::iterator it = lyr.m_members.begin();
             it != lyr.m_members.end();
             it++)
@@ -122,17 +122,16 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
             if(smoke)
                 spawnSmokeAt(body->posCenterX(), body->posCenterY());
         }
-    }
+    //}
 
     if(lyr.m_layerType == Layer::T_REGULAR)
-        lyr.m_vizible = true;
+        lyr.m_visible = true;
 }
 
 void LVL_LayerEngine::toggle(std::string layer, bool smoke)
 {
     Layer &lyr = getLayer(layer);
-    bool viz = !lyr.m_vizible;
-
+    bool viz = !lyr.m_visible;
     if(viz && (lyr.m_layerType == Layer::T_DESTROYED_BLOCKS))
     {
         show(layer);
@@ -153,36 +152,56 @@ void LVL_LayerEngine::toggle(std::string layer, bool smoke)
     }
 
     if(lyr.m_layerType == Layer::T_REGULAR)
-        lyr.m_vizible = viz;
+        lyr.m_visible = viz;
 }
 
 void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item, bool keepAbsPos)
 {
     //Register item in the layer
     Layer &lyr = getLayer(layer);
-    if( (item->type == PGE_Phys_Object::LVLBGO)||
-        (item->type == PGE_Phys_Object::LVLBlock)||
-        (item->type == PGE_Phys_Object::LVLWarp)||
-        (item->type == PGE_Phys_Object::LVLPhysEnv) )
+    //if( (item->type == PGE_Phys_Object::LVLBGO)||
+    //    (item->type == PGE_Phys_Object::LVLBlock)||
+    //    (item->type == PGE_Phys_Object::LVLWarp)||
+    //    (item->type == PGE_Phys_Object::LVLPhysEnv) )
+    if(item->m_bodytype == PGE_Phys_Object::Body_STATIC)
     {
         setItemMovable(lyr, item, true, keepAbsPos);
+        if(item->type == PGE_Phys_Object::LVLBlock)
+        {
+            LVL_Block *blk = dynamic_cast<LVL_Block *>(item);
+            if(blk)
+            {
+                if(blk->m_destroyed)//Mark block as destroyed objects
+                    lyr.m_destroyedObjects++;
+            }
+        }
     }
 
     lyr.m_members.insert(item);
     if(lyr.m_layerType == Layer::T_REGULAR)
-        item->setVisible(lyr.m_vizible);
+        item->setVisible(lyr.m_visible);
 }
 
 void LVL_LayerEngine::removeRegItem(std::string layer, PGE_Phys_Object *item, bool keepAbsPos)
 {
     //Remove item from the layer
     Layer &lyr = m_layers[layer];
-    if( (item->type == PGE_Phys_Object::LVLBGO)||
-        (item->type == PGE_Phys_Object::LVLBlock)||
-        (item->type == PGE_Phys_Object::LVLWarp)||
-        (item->type == PGE_Phys_Object::LVLPhysEnv) )
+    //if( (item->type == PGE_Phys_Object::LVLBGO)||
+    //    (item->type == PGE_Phys_Object::LVLBlock)||
+    //    (item->type == PGE_Phys_Object::LVLWarp)||
+    //    (item->type == PGE_Phys_Object::LVLPhysEnv) )
+    if(item->m_bodytype == PGE_Phys_Object::Body_STATIC)
     {
         setItemMovable(lyr, item, false, keepAbsPos);
+        if(item->type == PGE_Phys_Object::LVLBlock)
+        {
+            LVL_Block *blk = dynamic_cast<LVL_Block *>(item);
+            if(blk)
+            {
+                if(blk->m_destroyed)//Remove from list of destroyed objects
+                    lyr.m_destroyedObjects--;
+            }
+        }
     }
     lyr.m_members.erase(item);
 }
@@ -205,6 +224,7 @@ void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Objec
             //Keep initial position of layer itself
             lyr.m_rtree.m_momentum_relative = lyr.m_rtree.m_momentum;
             item->m_parent = &lyr.m_rtree;
+            // Register tree on the root
             m_scene->registerElement(&lyr.m_rtree);
         }
         else
@@ -236,14 +256,16 @@ void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Objec
             item->m_momentum_relative.oldy += lyr.m_rtree.m_offsetYold;
             item->m_momentum_relative.saveOld();
         }
+        //Syncronize modified momentum and register in the SubTree
         item->_syncPosition();
+        //Untegister from root
         m_scene->unregisterElement(item);
     }
     else
     {
         if(lyr.m_rtree.m_scene)
         {
-            if(keepAbsPos)
+            if(keepAbsPos && item->m_parent)
             {
                 item->m_momentum_relative.x -= lyr.m_rtree.m_offsetX;
                 item->m_momentum_relative.y -= lyr.m_rtree.m_offsetY;
@@ -253,7 +275,9 @@ void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Objec
             }
             item->m_parent = nullptr;
             item->_syncPosition();
+            //Unregister from layer's subtree body
             lyr.m_rtree.unregisterElement(item);
+            //Register in the root
             m_scene->registerElement(item);
         }
     }
@@ -354,7 +378,7 @@ void LVL_LayerEngine::processMoving(double tickTime)
 bool LVL_LayerEngine::isEmpty(std::string layer)
 {
     LayersTable::iterator i = m_layers.find(layer);
-    return (i == m_layers.end()) || i->second.m_members.empty();
+    return (i == m_layers.end()) || ((i->second.m_members.size() - i->second.m_destroyedObjects) == 0);
 }
 
 void LVL_LayerEngine::clear()

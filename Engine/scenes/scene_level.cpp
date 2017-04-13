@@ -133,7 +133,10 @@ void LevelScene::processPhysics(double ticks)
 
     //Iterate activated NPCs
     for(size_t i = 0; i < m_npcActive.size(); i++)
-        m_npcActive[i]->iterateStep(ticks);
+    {
+        LVL_Npc* n = m_npcActive[i];
+        n->iterateStep(ticks);
+    }
 }
 
 static bool comparePosY(PGE_Phys_Object *i, PGE_Phys_Object *j)
@@ -156,8 +159,9 @@ void LevelScene::processAllCollisions()
     //Process collision check and resolving for activated NPC's
     for(size_t i = 0; i < m_npcActive.size(); i++)
     {
-        m_npcActive[i]->resetEvents();
-        toCheck.push_back(m_npcActive[i]);
+        LVL_Npc* n = m_npcActive[i];
+        n->resetEvents();
+        toCheck.push_back(n);
     }
 
     std::stable_sort(toCheck.begin(), toCheck.end(), comparePosY);

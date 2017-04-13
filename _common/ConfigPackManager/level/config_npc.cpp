@@ -330,7 +330,7 @@ bool NpcSetup::parse(IniProcessing *setup,
 
     setup->read("default-special-value", iTmp, -1);
     default_special = (iTmp >= 0);
-    default_special_value = (iTmp >= 0) ? iTmp : pMerge(default_special_value, false);
+    default_special_value = (iTmp >= 0) ? iTmp : pMerge(default_special_value, 0);
 
     #undef pMerge
     #undef pMergeMe

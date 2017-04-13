@@ -38,9 +38,11 @@ public:
 
     struct Layer
     {
-        bool m_vizible = true;
+        bool m_visible = true;
         typedef std::unordered_set<PGE_Phys_Object* > Members;
         Members     m_members;
+        //! Count of destroyed objects are
+        size_t      m_destroyedObjects = 0;
         //! Sub-tree of statical objects
         LVL_SubTree m_rtree;
         enum Type
