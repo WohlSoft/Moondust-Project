@@ -1328,10 +1328,10 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
                 if((npc.special_data >= t_npc.setup.special_combobox_opts.size()) ||
                    (npc.special_data < 0))
                 {
-                    LvlPlacingItems::npcSet.special_data  = 0;
-                    LvlPlacingItems::npcSet.special_data2 = 0;
                     npc.special_data  = 0;
                     npc.special_data2 = 0;
+                    LvlPlacingItems::npcSet.special_data  = npc.special_data;
+                    LvlPlacingItems::npcSet.special_data2 = npc.special_data2;
                 }
             }
 
@@ -1339,7 +1339,8 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             for(int i = 0; i < t_npc.setup.special_combobox_opts.size(); i++)
             {
                 ui->PROPS_NPCSpecialBox->addItem(t_npc.setup.special_combobox_opts[i]);
-                if(i == npc.special_data) ui->PROPS_NPCSpecialBox->setCurrentIndex(i);
+                if(i == npc.special_data)
+                    ui->PROPS_NPCSpecialBox->setCurrentIndex(i);
             }
 
             break;
@@ -1359,7 +1360,7 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             {
                 //Reset value to min, if it out of range
                 if((npc.special_data > t_npc.setup.special_spin_max) ||
-                   (npc.special_data < t_npc.setup.special_spin_max))
+                   (npc.special_data < t_npc.setup.special_spin_min))
                 {
                     LvlPlacingItems::npcSet.special_data = t_npc.setup.special_spin_min;
                     npc.special_data = t_npc.setup.special_spin_min;
