@@ -172,6 +172,7 @@ class LevelScene : public Scene
         //Garbage collecting
         void collectGarbageNPCs();
         void collectGarbagePlayers();
+        void collectGarbageBlocks();
 
         /**************Z-Layers**************/
         long double  m_zCounter = 0.0l;
@@ -229,8 +230,9 @@ class LevelScene : public Scene
         /*************************Character switchers*************************/
 
         /**********************NPC Management*********************/
+        typedef std::unordered_set<LVL_Npc * > LVL_NpcActiveSet;
         //! List of activated NPCs
-        std::vector<LVL_Npc * > m_npcActive;
+        LVL_NpcActiveSet m_npcActive;
         //! List of dead NPCs
         std::vector<LVL_Npc * > m_npcDead;
         /**********************NPC Management*end*****************/
@@ -239,6 +241,8 @@ class LevelScene : public Scene
         //! Blocks are have fading animation in process
         std::vector<LVL_Block * >   m_blocksInFade;
         typedef std::unordered_set<LVL_Block*> LVL_BlocksSet;
+        //! Blocks are pending to be completely deleted
+        std::vector<LVL_Block * >   m_blocksToDelete;
         //! List of destroyed blocks
         LVL_BlocksSet m_blocksDestroyed;
         void restoreDestroyedBlocks(bool smoke = true);
@@ -333,11 +337,12 @@ class LevelScene : public Scene
         std::vector<lua_LevelPlayerState>   m_playerStates;
 
         typedef std::vector<LVL_Player * >  LVL_PlayersArray;
-        typedef std::vector<LVL_Block * >   LVL_BlocksArray;
-        typedef std::vector<LVL_Bgo * >     LVL_BgosArray;
-        typedef std::vector<LVL_Npc * >     LVL_NpcsArray;
-        typedef std::vector<LVL_Warp * >    LVL_WarpsArray;
-        typedef std::vector<LVL_PhysEnv * > LVL_PhysEnvsArray;
+        typedef std::unordered_set<LVL_Block * >   LVL_BlocksArray;
+        typedef std::vector<LVL_Block * >   LVL_BlocksVector;
+        typedef std::unordered_set<LVL_Bgo * >     LVL_BgosArray;
+        typedef std::unordered_set<LVL_Npc * >     LVL_NpcsArray;
+        typedef std::unordered_set<LVL_Warp * >    LVL_WarpsArray;
+        typedef std::unordered_set<LVL_PhysEnv * > LVL_PhysEnvsArray;
 
         LVL_LayerEngine     m_layers;
         LVL_EventEngine     m_events;
@@ -411,7 +416,7 @@ class LevelScene : public Scene
 
         LVL_PlayersArray &getPlayers();
         LVL_NpcsArray &getNpcs();
-        LVL_NpcsArray &getActiveNpcs();
+        LVL_NpcActiveSet &getActiveNpcs();
 
         LVL_BlocksArray &getBlocks();
         LVL_BgosArray   &getBGOs();

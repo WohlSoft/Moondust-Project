@@ -20,13 +20,142 @@
 #include <functional>
 #include "lvl_subtree.h"
 
+void PGE_Phys_Object::TreeMapMember::addToScene(bool keepAbsPos)
+{
+    if(!m_is_registered)
+    {
+        LVL_SubTree *st = nullptr;
+        if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
+        {
+            Momentum m = m_self->m_momentum;
+            if(keepAbsPos)
+            {
+                m.x += st->m_offsetX;
+                m.y += st->m_offsetY;
+                m.oldx += st->m_offsetXold;
+                m.oldy += st->m_offsetYold;
+            }
+            m_self->m_momentum_relative = m;
+            m_posX_registered   = m.x;
+            m_posY_registered   = m.y;
+            m_width_registered  = m.w;
+            m_height_registered = m.h;
+            st->registerElement(m_self);
+        }
+        else
+        {
+            m_self->m_momentum_relative = m_self->m_momentum;
+            m_self->m_scene->registerElement(m_self);
+        }
+    }
+    m_is_registered = true;
+}
+
+void PGE_Phys_Object::TreeMapMember::updatePos()
+{
+    LVL_SubTree *st = nullptr;
+    if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
+    {
+        Momentum m = m_self->m_momentum;
+        m.x += st->m_offsetX;
+        m.y += st->m_offsetY;
+        m.oldx += st->m_offsetXold;
+        m.oldy += st->m_offsetYold;
+        m_self->m_momentum_relative = m;
+        if(m_is_registered)
+            st->unregisterElement(m_self);
+        else
+            m_is_registered = true;
+        m_posX_registered   = m.x;
+        m_posY_registered   = m.y;
+        st->registerElement(m_self);
+    }
+    else
+    {
+        if(!m_is_registered)
+        {
+            m_self->m_scene->registerElement(m_self);
+            m_is_registered = true;
+        }
+        else
+            m_self->m_scene->updateElement(m_self);
+    }
+}
+
+void PGE_Phys_Object::TreeMapMember::updatePosAndSize()
+{
+    LVL_SubTree *st = nullptr;
+    if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
+    {
+        Momentum m = m_self->m_momentum;
+        m.x += st->m_offsetX;
+        m.y += st->m_offsetY;
+        m.oldx += st->m_offsetXold;
+        m.oldy += st->m_offsetYold;
+        m_self->m_momentum_relative = m;
+        if(m_is_registered)
+            st->unregisterElement(m_self);
+        else
+            m_is_registered = true;
+        m_posX_registered   = m.x;
+        m_posY_registered   = m.y;
+        m_width_registered  = m.w;
+        m_height_registered = m.h;
+        st->registerElement(m_self);
+    }
+    else
+    {
+        if(!m_is_registered)
+        {
+            m_self->m_scene->registerElement(m_self);
+            m_is_registered = true;
+        }
+        else
+            m_self->m_scene->updateElement(m_self);
+    }
+}
+
+void PGE_Phys_Object::TreeMapMember::updateSize()
+{
+    LVL_SubTree *st = nullptr;
+    if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
+    {
+        Momentum &m = m_self->m_momentum;
+        if(m_is_registered)
+            st->unregisterElement(m_self);
+        else
+            m_is_registered = true;
+        m_width_registered  = m.w;
+        m_height_registered = m.h;
+        st->registerElement(m_self);
+    }
+    else
+    {
+        if(!m_is_registered)
+        {
+            m_self->m_scene->registerElement(m_self);
+            m_is_registered = true;
+        }
+        else
+            m_self->m_scene->updateElement(m_self);
+    }
+}
+
+void PGE_Phys_Object::TreeMapMember::delFromScene()
+{
+    if(m_is_registered)
+    {
+        LVL_SubTree *st = nullptr;
+        if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
+            st->unregisterElement(m_self);
+        else
+            m_self->m_scene->unregisterElement(m_self);
+    }
+    m_is_registered = false;
+}
+
 void LevelScene::registerElement(LevelScene::PhysObjPtr item)
 {
-    //RPoint lt={item->m_posX_registered, item->m_posY_registered};
-    //RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
-    //if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
-    //if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
-    //m_tree.Insert(lt, rb, item);
     m_qtree.insert(item);
 }
 
@@ -37,11 +166,6 @@ void LevelScene::updateElement(LevelScene::PhysObjPtr item)
 
 void LevelScene::unregisterElement(LevelScene::PhysObjPtr item)
 {
-    //RPoint lt={item->m_posX_registered, item->m_posY_registered};
-    //RPoint rb={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
-    //if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
-    //if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
-    //m_tree.Remove(lt, rb, item);
     m_qtree.remove(item);
 }
 
@@ -83,9 +207,9 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
                         item->m_momentum.y -= st->m_offsetY;
                         item->m_momentum.oldx -= st->m_offsetXold;
                         item->m_momentum.oldy -= st->m_offsetYold;
-                        item->m_momentum.velX = st->speedX();
+                        item->m_momentum.velX =    st->speedXsum();
                         item->m_momentum.velXsrc = st->speedX();
-                        item->m_momentum.velY = st->speedY();
+                        item->m_momentum.velY =    st->speedY();
                     }
                 }
                 d->list->push_back(item);
@@ -98,9 +222,6 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
 void LevelScene::queryItems(PGE_RectF &zone, std::vector<PGE_Phys_Object *> *resultList, std::function<bool(PGE_Phys_Object*)> *validator)
 {
     _TreeSearchData d{validator, resultList, &zone};
-    //RPoint lt = { zone.left(),  zone.top() };
-    //RPoint rb = { zone.right(), zone.bottom() };
-    //m_tree.Search(lt, rb, _TreeSearchCallback, (void*)&d);
     m_qtree.query(zone, _TreeSearchCallback, (void*)&d);
 }
 

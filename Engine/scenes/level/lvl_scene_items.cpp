@@ -65,7 +65,7 @@ void LevelScene::placeBlock(LevelBlock &blockData)
 
     block->data = blockData;
     block->init();
-    m_itemsBlocks.push_back(block);
+    m_itemsBlocks.insert(block);
 }
 
 LVL_Block *LevelScene::spawnBlock(const LevelBlock &blockData)
@@ -85,7 +85,7 @@ LVL_Block *LevelScene::spawnBlock(const LevelBlock &blockData)
     block->data = blockData;
     block->data.meta.array_id = ++m_data.blocks_array_id;
     block->init();
-    m_itemsBlocks.push_back(block);
+    m_itemsBlocks.insert(block);
     return block;
 }
 
@@ -103,7 +103,7 @@ void LevelScene::placeBGO(LevelBGO& bgoData)
 
     bgo->data = bgoData;
     bgo->init();
-    m_itemsBgo.push_back(bgo);
+    m_itemsBgo.insert(bgo);
 }
 
 LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
@@ -122,7 +122,7 @@ LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
     bgo->data = bgoData;
     bgo->data.meta.array_id = ++m_data.blocks_array_id;
     bgo->init();
-    m_itemsBgo.push_back(bgo);
+    m_itemsBgo.insert(bgo);
     return bgo;
 }
 
@@ -143,7 +143,7 @@ void LevelScene::placeNPC(LevelNPC& npcData)
     npc->setup = curNpcData;
     npc->data  = npcData;
     npc->init();
-    m_itemsNpc.push_back(npc);
+    m_itemsNpc.insert(npc);
 }
 
 LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
@@ -220,8 +220,8 @@ LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
     }
 
     npc->Activate();
-    m_npcActive.push_back(npc);
-    m_itemsNpc.push_back(npc);
+    m_npcActive.insert(npc);
+    m_itemsNpc.insert(npc);
     return npc;
 }
 
@@ -232,7 +232,7 @@ void LevelScene::toggleSwitch(unsigned int switch_id)
     SwitchBlocksMap::iterator i = m_switchBlocks.find(switch_id);
     if(i != m_switchBlocks.end())
     {
-        LVL_BlocksArray &list = i->second;
+        LVL_BlocksVector &list = i->second;
         for(size_t x = 0; x < list.size(); x++)
         {
             if((list[x]->setup->setup.switch_Block) && (list[x]->setup->setup.switch_ID == switch_id))

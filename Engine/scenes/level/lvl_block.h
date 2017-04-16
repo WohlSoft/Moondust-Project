@@ -109,7 +109,7 @@ class LVL_Block : public PGE_Phys_Object
 
     private:
         void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
-        bool _isInited;
+        bool m_isInited = false;
 };
 
 #endif // LVL_BLOCK_H

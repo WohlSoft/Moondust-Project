@@ -39,7 +39,6 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     animated = false;
     animator_ID = 0;
     killed = false;
-    transformedFromBlock = NULL;
     transformedFromBlockID = -1ul;
     transformedFromNpcID = -1ul;
     isActivated = false;
@@ -54,7 +53,7 @@ LVL_Npc::LVL_Npc(LevelScene *_parent) :
     m_isInited = false;
     isLuaNPC = false;
     isWarping = false;
-    is_scenery = false;
+    is_static = false;
     is_activity = true;
     is_shared_animation = false;
     keep_position_on_despawn = false;

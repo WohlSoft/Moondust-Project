@@ -81,10 +81,11 @@ void LVL_Npc::deActivate()
             }
 
             setDefaults();
-            setPos(data.x, data.y);
+            setRelativePos(data.x, data.y);
             setDirection(data.direct);
             setPaused(true);
             m_momentum.saveOld();
         }
     }
 }
+

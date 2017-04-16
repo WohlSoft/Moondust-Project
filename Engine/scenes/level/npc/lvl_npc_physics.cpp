@@ -23,6 +23,12 @@
 #include "../lvl_bgo.h"
 #include "../../scene_level.h"
 
+void LVL_Npc::iterateStep(double ticks, bool force)
+{
+    if(!m_isGenerator)
+        PGE_Phys_Object::iterateStep(ticks, force);
+}
+
 void LVL_Npc::processContacts()
 {
     /* *********************** Check all collided sides ***************************** */
@@ -175,6 +181,7 @@ bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
     {
         if(this->m_disableBlockCollision)
             return true;
+        break;
     }
     default:
         ;

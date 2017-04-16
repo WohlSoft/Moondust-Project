@@ -566,7 +566,7 @@ void LVL_Player::setDuck(bool duck)
         return;
     double b = m_momentum.bottom();
     setSize(state_cur.width, duck ? state_cur.duck_height : state_cur.height);
-    setPos(posX(), b - m_height_registered);
+    setPos(posX(), b - m_momentum.h);
     m_ducking = duck;
 
     if(!duck && !m_isWarping)

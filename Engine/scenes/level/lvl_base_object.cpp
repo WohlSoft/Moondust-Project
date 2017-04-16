@@ -34,27 +34,12 @@ double PGE_Phys_Object::SMBXTicksToTime(double ticks)
 
 PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     PGE_physBody(),
-
     /*****Renderer flags*******/
-    _vizible_on_screen(false),
-    _render_list(false),
     m_scene(_parent),
-    _is_registered(false),
     /*****Renderer flags*END***/
-
-    m_posX_registered(0.0),
-    m_posY_registered(0.0),
-    m_width_registered(1.0),
-    m_height_registered(1.0),
-    m_width_half(0.5),
-    m_height_half(0.5),
-    m_width_toRegister(1.0),
-    m_height_toRegister(1.0),
-    type(LVLUnknown)
+    type(LVLUnknown),
+    m_treemap(this)
 {
-    m_width_half = 0.0;
-    m_height_half = 0.0;
-
     switch(type)
     {
     case LVLPlayer:
@@ -72,13 +57,7 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
     texId = 0;
     z_index = 0.0L;
     m_slippery_surface = false;
-    _parentSection = NULL;
-    m_width_registered = 0.0;
-    m_height_registered = 0.0;
-    m_width_toRegister = 0.0;
-    m_height_toRegister = 0.0;
-    m_posX_registered = 0.0;
-    m_posY_registered = 0.0;
+    m_parentSection = NULL;
     m_paused = false;
     m_is_visible = true;
     m_accelX = 0;
@@ -87,34 +66,20 @@ PGE_Phys_Object::PGE_Phys_Object(LevelScene *_parent) :
 
 PGE_Phys_Object::~PGE_Phys_Object()
 {
-    if(_is_registered)
+    if(m_treemap.m_is_registered)
     {
-        LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
-        if(m_parent && st)
-            st->unregisterElement(this);
-        else
-            m_scene->unregisterElement(this);
+        m_treemap.delFromScene();
     }
 }
 
 void PGE_Phys_Object::registerInTree()
 {
-    if(!_is_registered)
-        m_scene->registerElement(this);
-    _is_registered = true;
+    m_treemap.addToScene();
 }
 
 void PGE_Phys_Object::unregisterFromTree()
 {
-    if(_is_registered)
-    {
-        LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
-        if(m_parent && st)
-            st->unregisterElement(this);
-        else
-            m_scene->unregisterElement(this);
-    }
-    _is_registered = false;
+    m_treemap.delFromScene();
 }
 
 double PGE_Phys_Object::posX()
@@ -140,13 +105,13 @@ double PGE_Phys_Object::posCenterY()
 void PGE_Phys_Object::setCenterX(double x)
 {
     m_momentum.setCenterX(x);
-    _syncPosition();
+    m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::setCenterY(double y)
 {
     m_momentum.setCenterY(y);
-    _syncPosition();
+    m_treemap.updatePos();
 }
 
 double PGE_Phys_Object::width()
@@ -167,22 +132,18 @@ double PGE_Phys_Object::top()
 void PGE_Phys_Object::setTop(double tp)
 {
     m_momentum.setTop(tp);
-    m_height_toRegister = m_momentum.h;
-    m_height_half = m_height_toRegister / 2.0;
-    _syncPositionAndSize();
+    m_treemap.updatePosAndSize();
 }
 
 double PGE_Phys_Object::bottom()
 {
-    return posY() + m_height_registered;
+    return m_momentum.bottom();
 }
 
 void PGE_Phys_Object::setBottom(double btm)
 {
     m_momentum.setBottom(btm);
-    m_height_toRegister = m_momentum.h;
-    m_height_half = m_height_toRegister / 2.0;
-    _syncPositionAndSize();
+    m_treemap.updatePosAndSize();
 }
 
 double PGE_Phys_Object::left()
@@ -193,9 +154,7 @@ double PGE_Phys_Object::left()
 void PGE_Phys_Object::setLeft(double lf)
 {
     m_momentum.setLeft(lf);
-    m_width_toRegister = m_momentum.w;
-    m_height_half = m_width_toRegister / 2.0;
-    _syncPositionAndSize();
+    m_treemap.updatePosAndSize();
 }
 
 double PGE_Phys_Object::right()
@@ -206,61 +165,79 @@ double PGE_Phys_Object::right()
 void PGE_Phys_Object::setRight(double rt)
 {
     m_momentum.setRight(rt);
-    m_width_toRegister = m_momentum.w;
-    m_height_half = m_width_toRegister / 2.0;
-    _syncPositionAndSize();
+    m_treemap.updatePosAndSize();
 }
 
 void PGE_Phys_Object::setSize(double w, double h)
 {
     m_momentum.w = w;
     m_momentum.h = h;
-    m_width_toRegister = w;
-    m_height_toRegister = h;
-    m_width_half = m_width_toRegister / 2.0;
-    m_height_half = m_height_toRegister / 2.0;
-    _syncPositionAndSize();
+    m_treemap.updatePosAndSize();
 }
 
 void PGE_Phys_Object::setWidth(double w)
 {
     m_momentum.w = w;
-    m_width_toRegister = w;
-    m_width_half = m_width_toRegister / 2.0;
-    _syncPositionAndSize();
+    m_treemap.updatePosAndSize();
 }
 
 void PGE_Phys_Object::setHeight(double h)
 {
     m_momentum.h = h;
-    m_height_toRegister = h;
-    m_height_half = m_height_toRegister / 2.0;
-    _syncPositionAndSize();
+    m_treemap.updatePosAndSize();
 }
 
 void PGE_Phys_Object::setPos(double x, double y)
 {
     m_momentum.x = x;
     m_momentum.y = y;
-    _syncPosition();
+    m_treemap.updatePos();
+}
+
+void PGE_Phys_Object::setRelativePos(double x, double y)
+{
+    m_momentum.x = x;
+    m_momentum.y = y;
+    m_momentum_relative.x = x;
+    m_momentum_relative.y = y;
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.x = m_momentum_relative.x - st->m_offsetX;
+        m_momentum.y = m_momentum_relative.y - st->m_offsetY;
+    }
+    m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::setPosX(double x)
 {
     m_momentum.x = x;
-    _syncPosition();
+    m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::setPosY(double y)
 {
     m_momentum.y = y;
-    _syncPosition();
+    m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::setCenterPos(double x, double y)
 {
     m_momentum.setCenterPos(x, y);
-    _syncPosition();
+    m_treemap.updatePos();
+}
+
+void PGE_Phys_Object::setRelativeCenterPos(double x, double y)
+{
+    m_momentum.setCenterPos(x, y);
+    m_momentum_relative.setCenterPos(x, y);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.x = m_momentum_relative.x - st->m_offsetX;
+        m_momentum.y = m_momentum_relative.y - st->m_offsetY;
+    }
+    m_treemap.updatePos();
 }
 
 double PGE_Phys_Object::speedX()
@@ -310,61 +287,62 @@ void PGE_Phys_Object::applyAccel(double x, double y)
     m_accelY = y;
 }
 
-void PGE_Phys_Object::_syncPosition()
-{
-    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
-    if(_is_registered && m_parent && st)
-        st->unregisterElement(this);
-//FIXME: Implement a valid way to process offseted position change
-    //if(st)
-    //{
-    //    m_momentum_relative = m_momentum;
-    //    m_momentum_relative.x += st->m_offsetX;
-    //    m_momentum_relative.y += st->m_offsetY;
-    //    m_momentum_relative.saveOld();
-    //    m_posX_registered = m_momentum_relative.x;
-    //    m_posY_registered = m_momentum_relative.y;
-    //} else {
-    //    m_posX_registered = m_momentum.x;
-    //    m_posY_registered = m_momentum.y;
-    //}
-    m_posX_registered = m_momentum.x;
-    m_posY_registered = m_momentum.y;
-    if(m_parent && st)
-        st->registerElement(this);
-    else
-        m_scene->updateElement(this);
-    _is_registered = true;
-}
+//void PGE_Phys_Object::_syncPosition()
+//{
+//    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
+//    if(_is_registered && m_parent && st)
+//        st->unregisterElement(this);
+////FIXME: Implement a valid way to process offseted position change
+//    //if(st)
+//    //{
+//    //    m_momentum_relative = m_momentum;
+//    //    m_momentum_relative.x += st->m_offsetX;
+//    //    m_momentum_relative.y += st->m_offsetY;
+//    //    m_momentum_relative.saveOld();
+//    //    m_posX_registered = m_momentum_relative.x;
+//    //    m_posY_registered = m_momentum_relative.y;
+//    //} else {
+//    //    m_posX_registered = m_momentum.x;
+//    //    m_posY_registered = m_momentum.y;
+//    //}
+//    m_treemap.m_posX_registered = m_momentum.x;
+//    m_treemap.m_posY_registered = m_momentum.y;
+//    if(m_parent && st)
+//        st->registerElement(this);
+//    else
+//        m_scene->updateElement(this);
+//    _is_registered = true;
+//}
 
-void PGE_Phys_Object::_syncPositionAndSize()
-{
-    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
-    if(_is_registered && m_parent && st)
-        st->unregisterElement(this);
-//FIXME: Implement a valid way to process offseted position change
-//    if(st)
-//    {
-//        m_momentum_relative = m_momentum;
-//        m_momentum_relative.x += st->m_offsetX;
-//        m_momentum_relative.y += st->m_offsetY;
-//        m_momentum_relative.saveOld();
-//        m_posX_registered = m_momentum_relative.x;
-//        m_posY_registered = m_momentum_relative.y;
-//    } else {
-//        m_posX_registered = m_momentum.x;
-//        m_posY_registered = m_momentum.y;
-//    }
-    m_posX_registered = m_momentum.x;
-    m_posY_registered = m_momentum.y;
-    m_width_registered = m_width_toRegister;
-    m_height_registered = m_height_toRegister;
-    if(m_parent && st)
-        st->registerElement(this);
-    else
-        m_scene->updateElement(this);
-    _is_registered = true;
-}
+//void PGE_Phys_Object::_syncPositionAndSize()
+//{
+//    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(m_parent);
+//    if(_is_registered && m_parent && st)
+//        st->unregisterElement(this);
+////FIXME: Implement a valid way to process offseted position change
+////    if(st)
+////    {
+////        m_momentum_relative = m_momentum;
+////        m_momentum_relative.x += st->m_offsetX;
+////        m_momentum_relative.y += st->m_offsetY;
+////        m_momentum_relative.saveOld();
+////        m_posX_registered = m_momentum_relative.x;
+////        m_posY_registered = m_momentum_relative.y;
+////    } else {
+////        m_posX_registered = m_momentum.x;
+////        m_posY_registered = m_momentum.y;
+////    }
+
+//    m_treemap.m_posX_registered = m_momentum.x;
+//    m_treemap.m_posY_registered = m_momentum.y;
+//    m_treemap.m_width_registered = m_width_toRegister;
+//    m_treemap.m_height_registered = m_height_toRegister;
+//    if(m_parent && st)
+//        st->registerElement(this);
+//    else
+//        m_scene->updateElement(this);
+//    _is_registered = true;
+//}
 
 void PGE_Phys_Object::_syncSection(bool sync_position)
 {
@@ -372,7 +350,7 @@ void PGE_Phys_Object::_syncSection(bool sync_position)
     LVL_Section *sct = m_scene->getSection(sID);
     if(sct)
         setParentSection(sct);
-    if(sync_position) _syncPosition();
+    if(sync_position) m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::renderDebug(double _camX, double _camY)
@@ -382,9 +360,9 @@ void PGE_Phys_Object::renderDebug(double _camX, double _camY)
     case LVLUnknown:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, false);
         break;
-    //case LVLSubTree:
-    //    GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 0.0f, 1.0f, 0.0f, 0.5f, true);
-    //    break;
+    case LVLSubTree:
+        GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 0.0f, 1.0f, 0.0f, 0.2f, true);
+        break;
     case LVLBlock:
         GlRenderer::renderRect(float(m_momentum.x - _camX), float(m_momentum.y - _camY), float(m_momentum.w) - 1.0f, float(m_momentum.h) - 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, false);
         break;
@@ -414,12 +392,12 @@ void PGE_Phys_Object::renderDebug(double _camX, double _camY)
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)
 {
-    _parentSection = sct;
+    m_parentSection = sct;
 }
 
 LVL_Section *PGE_Phys_Object::sct()
 {
-    return _parentSection;
+    return m_parentSection;
 }
 
 long double PGE_Phys_Object::zIndex()
@@ -429,11 +407,11 @@ long double PGE_Phys_Object::zIndex()
 
 void PGE_Phys_Object::update()
 {
-    _syncPosition();
+    m_treemap.updatePos();
 }
 void PGE_Phys_Object::update(double)
 {
-    _syncPosition();
+    m_treemap.updatePos();
 }
 
 

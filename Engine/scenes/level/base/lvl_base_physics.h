@@ -77,6 +77,13 @@ public:
         Body_DYNAMIC = 1
     };
 
+    enum CollisionCheckPolicy
+    {
+        CollisionCheckPolicy_EVERYTHING             = 0,
+        CollisionCheckPolicy_CENTER_CONTACTS_ONLY   = 0x1,
+        CollisionCheckPolicy_DISABLE_ALIGN          = 0x4,
+    };
+
     struct objRect
     {
         objRect() {}
@@ -388,6 +395,7 @@ public:
     double  m_onSlopeYAdd = 0.0;
     //! Body type
     BodyType m_bodytype = Body_STATIC;
+    int      m_collisionCheckPolicy = CollisionCheckPolicy_EVERYTHING;
 
     //! Allow running over floor holes
     bool    m_allowHoleRuning = false;

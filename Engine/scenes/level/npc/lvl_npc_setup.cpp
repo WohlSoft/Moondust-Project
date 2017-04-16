@@ -29,7 +29,8 @@ bool LVL_Npc::isInited()
 
 void LVL_Npc::init()
 {
-    if(m_isInited) return;
+    if(m_isInited)
+        return;
 
     phys_setup.gravityAccel = ConfigManager::g_setup_npc.phs_gravity_accel;
     phys_setup.max_vel_y =   ConfigManager::g_setup_npc.phs_max_fall_speed;
@@ -49,7 +50,9 @@ void LVL_Npc::init()
     }
 
     m_isInited = true;
+    m_treemap.addToScene();
     m_scene->m_layers.registerItem(data.layer, this);
+    m_momentum_relative.saveOld();
     m_momentum.saveOld();
 }
 
@@ -92,37 +95,32 @@ void LVL_Npc::transformTo(unsigned long id, int type)
     if(type == 2) //block
     {
         LevelBlock def = FileFormats::CreateLvlBlock();
-
-        if(transformedFromBlock)
-        {
-            def = transformedFromBlock->data;
-            transformedFromBlock->setPos(round(posX()), round(posY()));
-            transformedFromBlock->setDestroyed(false);
-            transformedFromBlock->transformTo(id, 2);
-            transformedFromBlock->transformedFromNpcID = data.id;
-            transformedFromBlock->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
-            m_scene->m_layers.registerItem(data.layer, transformedFromBlock);
-            transformedFromBlock = nullptr;
-        }
+        if(transformedFromBlockData.get())
+            def = *transformedFromBlockData;
         else
         {
-            def.x = static_cast<long>(round(posX()));
-            def.y = static_cast<long>(round(posY()));
             def.layer = data.layer;
-            def.w = static_cast<long>(round(width()));
-            def.h = static_cast<long>(round(height()));
-            def.id = id;
-            LVL_Block *res = m_scene->spawnBlock(def);
-            if(res)
-            {
-                res->transformedFromNpcID = data.id;
-                res->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
-                res->m_momentum.saveOld();
-                res->data.x = long(round(res->m_momentum.x));
-                res->data.y = long(round(res->m_momentum.y));
-            }
+            def.w = static_cast<long>(round(m_momentum.w));
+            def.h = static_cast<long>(round(m_momentum.h));
         }
-
+        def.x = static_cast<long>(round(m_momentum.x));
+        def.y = static_cast<long>(round(m_momentum.y));
+        def.id = id;
+        LVL_Block *res = m_scene->spawnBlock(def);
+        if(res)
+        {
+            res->transformedFromNpcID = data.id;
+            res->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
+            res->m_momentum.saveOld();
+            res->m_momentum_relative.saveOld();
+            if(res->m_parent)
+                res->m_momentum = res->m_momentum_relative;
+            res->data.x = long(round(res->m_momentum.x));
+            res->data.y = long(round(res->m_momentum.y));
+            res->dataInitial.x = long(round(res->m_momentum.x));
+            res->dataInitial.y = long(round(res->m_momentum.y));
+        }
+        //}
         this->unregister();
     }
 
@@ -136,7 +134,7 @@ void LVL_Npc::setDefaults()
 
     setDirection(_direction);//Re-apply offset preferences
     motionSpeed = ((!data.nomove) && (setup->setup.movement)) ? (setup->setup.speed) : 0.0;
-    is_scenery  = setup->setup.scenery;
+    is_static   = setup->setup.scenery;
     is_activity = setup->setup.activity;
     is_shared_animation = setup->setup.shared_ani;
     keep_position_on_despawn = setup->setup.keep_position;
@@ -203,11 +201,8 @@ void LVL_Npc::transformTo_x(unsigned long id)
         m_momentum.h = setup->setup.height;
     }
 
-    m_width_toRegister  = m_momentum.w;
-    m_height_toRegister = m_momentum.h;
-    m_width_half = m_width_toRegister / 2.0;
-    m_height_half = m_height_toRegister / 2.0;
-    _syncPositionAndSize();
+    if(m_isInited)
+        m_treemap.updatePosAndSize();
 
     if(data.generator)
     {
@@ -223,6 +218,7 @@ void LVL_Npc::transformTo_x(unsigned long id)
         m_disableBlockCollision = true;
         setGravityScale(0.0);
         m_bodytype = Body_STATIC;
+        m_collisionCheckPolicy = CollisionCheckPolicy_CENTER_CONTACTS_ONLY;
         return;
     }
 

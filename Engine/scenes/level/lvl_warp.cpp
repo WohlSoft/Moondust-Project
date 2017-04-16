@@ -21,8 +21,8 @@
 
 LVL_Warp::LVL_Warp(LevelScene *_parent) : PGE_Phys_Object(_parent)
 {
-     type = LVLWarp;
-     m_bodytype = Body_STATIC;
+    type = LVLWarp;
+    m_bodytype = Body_STATIC;
 }
 
 LVL_Warp::~LVL_Warp()
@@ -30,14 +30,28 @@ LVL_Warp::~LVL_Warp()
 
 void LVL_Warp::init()
 {
-    if(data.idirect==LevelDoor::ENTRANCE_LEFT||data.idirect==LevelDoor::ENTRANCE_RIGHT)
-        setSize(data.length_i, 32);
+    if(data.idirect == LevelDoor::ENTRANCE_LEFT || data.idirect == LevelDoor::ENTRANCE_RIGHT)
+    {
+        m_momentum.w = data.length_i;
+        m_momentum.h = 32;
+    }
     else
-        setSize(32, data.length_i);
+    {
+        m_momentum.w = 32;
+        m_momentum.h = data.length_i;
+    }
 
-    setPos(data.ix, data.iy);
+    m_momentum.x = data.ix;
+    m_momentum.y = data.iy;
+
+    if(!m_treemap.m_is_registered)
+        m_treemap.addToScene();
+    else
+        m_treemap.updatePosAndSize();
+
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
     m_scene->m_layers.registerItem(data.layer, this);
+    m_momentum_relative.saveOld();
     m_momentum.saveOld();
 }

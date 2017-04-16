@@ -491,8 +491,8 @@ place_door_again:
         if(sct)
             warpP->setParentSection(sct);
 
-        warpP->_syncPosition();
-        m_itemsWarps.push_back(warpP);
+        warpP->m_treemap.updatePos();
+        m_itemsWarps.insert(warpP);
 
         if(!two_way_opposite && door.two_way)//Place opposite entrance point
         {
@@ -515,8 +515,8 @@ place_door_again:
         physesP = new LVL_PhysEnv(this);
         physesP->data = m_data.physez[i];
         physesP->init();
-        physesP->_syncPosition();
-        m_itemsPhysEnvs.push_back(physesP);
+        physesP->m_treemap.updatePos();
+        m_itemsPhysEnvs.insert(physesP);
     }
 
     D_pLogDebug("Total textures loaded: %d", ConfigManager::level_textures.size());

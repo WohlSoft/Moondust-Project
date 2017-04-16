@@ -233,7 +233,7 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     m_momentum.saveOld();
     m_momentum.x += iterateX;
     m_momentum.y += iterateY;
-    _syncPosition();
+    m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::iterateStepPostCollide(float ticks)
@@ -655,6 +655,7 @@ void PGE_Phys_Object::updateCollisions()
         return;
 
     std::vector<PGE_Phys_Object *> objs;
+    objs.reserve(25);
     PGE_RectF posRectC = m_momentum.rectF().withMargin(m_momentum.w / 2.0);
 
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
@@ -686,6 +687,7 @@ void PGE_Phys_Object::updateCollisions()
     PhysObject *collideAtBottom = nullptr;
     PhysObject *collideAtLeft  = nullptr;
     PhysObject *collideAtRight = nullptr;
+    bool    policy_CenterContactsOnly = (m_collisionCheckPolicy & CollisionCheckPolicy_CENTER_CONTACTS_ONLY) != 0;
     bool    doSpeedStack = true;
     double  speedNum = 0.0;
     double  speedSum = 0.0;
@@ -715,8 +717,7 @@ void PGE_Phys_Object::updateCollisions()
         //    --i;
         //    continue;
         //}
-
-        if(preCollisionCheck(CUR) || (CUR->m_blocked[m_filterID] == Block_NONE))
+        if(policy_CenterContactsOnly || preCollisionCheck(CUR) || (CUR->m_blocked[m_filterID] == Block_NONE))
         {
             if(
                 (CUR->m_shape == PhysObject::SL_Rect) &&
@@ -1830,10 +1831,13 @@ skipTriangleResolving:
         collisionHitBlockTop(l_toBump);
 
     /* ****************************************************************************** */
-    if(doSpeedStack && (speedNum > 1.0) && (speedSum != 0.0))
-        m_momentum.velX = m_momentum.velXsrc + (speedSum / speedNum);
+    if(m_bodytype != Body_STATIC) // Ignore speed stack if this is a static body
+    {
+        if(doSpeedStack && (speedNum > 1.0) && (speedSum != 0.0))
+            m_momentum.velX = m_momentum.velXsrc + (speedSum / speedNum);
+        m_treemap.updatePos();
+    }
 
-    _syncPosition();
     processContacts();
     postCollision();
     l_clifCheck.clear();

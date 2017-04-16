@@ -34,10 +34,10 @@ void LevelScene::collectGarbageNPCs()
             stillVizible.push_back(corpse);//Avoid camera crash (which uses a cached render list)
             continue;
         }
-
-        m_npcActive.erase(std::remove(m_npcActive.begin(), m_npcActive.end(), corpse), m_npcActive.end());
-        m_itemsNpc.erase(std::remove(m_itemsNpc.begin(), m_itemsNpc.end(), corpse), m_itemsNpc.end());
+        m_npcActive.erase(corpse);
         m_layers.removeRegItem(corpse->data.layer, corpse);
+        corpse->unregisterFromTree();
+        m_itemsNpc.erase(corpse);
         m_luaEngine.destoryLuaNpc(corpse);
     }
     m_npcDead.insert(m_npcDead.end(), stillVizible.begin(), stillVizible.end());
@@ -83,4 +83,24 @@ void LevelScene::collectGarbagePlayers()
         PGE_MusPlayer::stop();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
+}
+
+void LevelScene::collectGarbageBlocks()
+{
+    std::vector<LVL_Block *> stillVizible;//Avoid camera crash (which uses a cached render list)
+    while(!m_blocksToDelete.empty())
+    {
+        LVL_Block *corpse = m_blocksToDelete.back();
+        m_blocksToDelete.pop_back();
+        if(corpse->isInRenderList())
+        {
+            stillVizible.push_back(corpse);//Avoid camera crash (which uses a cached render list)
+            continue;
+        }
+        m_layers.removeRegItem(corpse->data.layer, corpse);
+        corpse->unregisterFromTree();
+        m_itemsBlocks.erase(corpse);
+        delete corpse;
+    }
+    m_blocksToDelete.insert(m_blocksToDelete.end(), stillVizible.begin(), stillVizible.end());
 }

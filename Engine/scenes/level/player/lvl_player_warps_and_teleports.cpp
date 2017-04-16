@@ -195,8 +195,8 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
             m_isWarping = true; setPaused(true);
             m_warpPipeOffset = 0.0;
             m_warpDirectO = 0;
-            teleport(x + 16 - m_width_half,
-            y + 32 - m_height_registered);
+            teleport(x + 16 - (m_momentum.w/2.0),
+            y + 32 - m_momentum.h);
             m_animator.unlock();
             m_animator.switchAnimation(MatrixAnimator::PipeUpDown, m_direction, 115);
         }, 0);
@@ -243,7 +243,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
                 m_direction = 1;
                 m_animator.unlock();
                 m_animator.switchAnimation(MatrixAnimator::Run, m_direction, 115);
-                teleport(x, y + 32 - m_height_registered);
+                teleport(x, y + 32 - m_momentum.h);
             }, 0);
             m_eventQueue.events.push_back(eventX);
         }
@@ -256,7 +256,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
             {
                 m_animator.unlock();
                 m_animator.switchAnimation(MatrixAnimator::PipeUpDown, m_direction, 115);
-                teleport(x + 16 - m_width_half, y);
+                teleport(x + 16.0 - (m_momentum.w / 2.0), y);
             }, 0);
             m_eventQueue.events.push_back(eventX);
         }
@@ -270,7 +270,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
                 m_direction = -1;
                 m_animator.unlock();
                 m_animator.switchAnimation(MatrixAnimator::Run, m_direction, 115);
-                teleport(x + 32 - m_width_registered, y + 32 - m_height_registered);
+                teleport(x + 32 - m_momentum.w, y + 32 - m_momentum.h);
             }, 0);
             m_eventQueue.events.push_back(eventX);
         }
@@ -283,8 +283,8 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
             {
                 m_animator.unlock();
                 m_animator.switchAnimation(MatrixAnimator::PipeUpDown, m_direction, 115);
-                teleport(x + 16 - m_width_half,
-                y + 32 - m_height_registered);
+                teleport(x + 16 - (m_momentum.w/2.0),
+                y + 32 - m_momentum.h);
             }, 0);
             m_eventQueue.events.push_back(eventX);
         }
@@ -366,8 +366,8 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
         setSpeed(0, (speedY() < 0 ? speedY() : 0)); //zero X speed!
 
     case LevelDoor::WARP_PORTAL:
-        teleport(x + 16 - m_width_half,
-                 y + 32 - m_height_registered);
+        teleport(x + 16 - (m_momentum.w/2.0),
+                 y + 32 - m_momentum.h);
         break;
 
     default:
@@ -411,7 +411,7 @@ void LVL_Player::WarpTo(const LevelDoor &warp)
                 m_direction = 1;
                 m_animator.unlock();
                 m_animator.switchAnimation(MatrixAnimator::Run, m_direction, 115);
-                setPos(warp.ix + 32 - m_width_registered, posY());
+                setPos(warp.ix + 32 - m_momentum.w, posY());
             }, 0);
             m_eventQueue.events.push_back(eventX);
         }
@@ -425,7 +425,7 @@ void LVL_Player::WarpTo(const LevelDoor &warp)
                 m_warpDirectO = 3;
                 m_animator.unlock();
                 m_animator.switchAnimation(MatrixAnimator::PipeUpDown, m_direction, 115);
-                setPos(posX(), warp.iy + 32 - m_height_registered);
+                setPos(posX(), warp.iy + 32 - m_momentum.h);
             }, 0);
             m_eventQueue.events.push_back(eventX);
         }
@@ -506,8 +506,8 @@ void LVL_Player::WarpTo(const LevelDoor &warp)
                     double y = warp.oy;
                     double targetX = x;
                     double targetY = y;
-                    double w = m_width_registered;
-                    double h = m_height_registered;
+                    double w = m_momentum.w;
+                    double h = m_momentum.h;
 
                     switch(warp.odirect)
                     {

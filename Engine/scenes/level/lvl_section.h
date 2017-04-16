@@ -40,10 +40,10 @@ class LVL_Section
         ~LVL_Section();
         void setData(const LevelSection &_d);
         LevelSection data;
-        void registerElement(PGE_Phys_Object *item);
-        void unregisterElement(PGE_Phys_Object *item);
-        void queryItems(PGE_RectF zone, R_itemList *resultList);
-        void queryItems(double x, double y, R_itemList *resultList);
+        //void registerElement(PGE_Phys_Object *item);
+        //void unregisterElement(PGE_Phys_Object *item);
+        //void queryItems(PGE_RectF zone, R_itemList *resultList);
+        //void queryItems(double x, double y, R_itemList *resultList);
 
         void changeSectionBorders(long left, long top, long right, long bottom);
         void changeLimitBorders(long left, long top, long right, long bottom);
@@ -79,9 +79,9 @@ class LVL_Section
         int  getPhysicalEnvironment();
 
     private:
-        typedef double RPoint[2];
-        typedef RTree<PGE_Phys_Object *, double, 2, double > IndexTree;
-        IndexTree tree;
+        //typedef double RPoint[2];
+        //typedef RTree<PGE_Phys_Object *, double, 2, double > IndexTree;
+        //IndexTree tree;
 
         std::string     music_root;
         unsigned int    curMus;

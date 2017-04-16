@@ -149,7 +149,7 @@ bool LVL_Player::setCharacter(unsigned long CharacterID, unsigned long _stateID)
         double cx = m_momentum.centerX();
         double b = m_momentum.bottom();
         setSize(state_cur.width, m_ducking ? state_cur.duck_height : state_cur.height);
-        setPos(cx - m_width_registered / 2, b - m_height_registered);
+        setPos(cx - m_momentum.w / 2.0, b - m_momentum.h);
         PlayerState x = m_scene->getGameState()->getPlayerState(playerID);
         x.characterID    = characterID;
         x.stateID        = stateID;

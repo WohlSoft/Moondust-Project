@@ -21,7 +21,7 @@
 
 struct LVL_SubTree_private
 {
-    typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
+    typedef RTree<PGE_Phys_Object *, double, 2, double > IndexTree;
     IndexTree tree;
 };
 
@@ -51,19 +51,27 @@ LVL_SubTree::~LVL_SubTree()
 
 void LVL_SubTree::registerElement(LVL_SubTree::PhysObjPtr item)
 {
-    double lt[2]={item->m_posX_registered, item->m_posY_registered};
-    double rb[2]={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
-    if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
-    if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
+    double lt[2] = {item->m_treemap.m_posX_registered,
+                    item->m_treemap.m_posY_registered};
+    double rb[2] = {item->m_treemap.m_posX_registered + item->m_treemap.m_width_registered,
+                    item->m_treemap.m_posY_registered + item->m_treemap.m_height_registered};
+    if(item->m_treemap.m_width_registered <= 0.0)
+        rb[0] = item->m_treemap.m_posX_registered + 1.0;
+    if(item->m_treemap.m_height_registered <= 0.0)
+        rb[1] = item->m_treemap.m_posY_registered + 1.0;
     p->tree.Insert(lt, rb, item);
 }
 
 void LVL_SubTree::unregisterElement(LVL_SubTree::PhysObjPtr item)
 {
-    double lt[2]={item->m_posX_registered, item->m_posY_registered};
-    double rb[2]={item->m_posX_registered+item->m_width_registered, item->m_posY_registered+item->m_height_registered};
-    if(item->m_width_registered<=0) { rb[0]=item->m_posX_registered+1;}
-    if(item->m_height_registered<=0) { rb[1]=item->m_posY_registered+1;}
+    double lt[2] = {item->m_treemap.m_posX_registered,
+                    item->m_treemap.m_posY_registered};
+    double rb[2] = {item->m_treemap.m_posX_registered + item->m_treemap.m_width_registered,
+                    item->m_treemap.m_posY_registered + item->m_treemap.m_height_registered};
+    if(item->m_treemap.m_width_registered <= 0.0)
+        rb[0] = item->m_treemap.m_posX_registered + 1.0;
+    if(item->m_treemap.m_height_registered <= 0.0)
+        rb[1] = item->m_treemap.m_posY_registered + 1.0;
     p->tree.Remove(lt, rb, item);
 }
 

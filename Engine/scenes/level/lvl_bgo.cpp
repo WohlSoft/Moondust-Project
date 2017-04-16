@@ -37,13 +37,14 @@ LVL_Bgo::~LVL_Bgo()
 
 void LVL_Bgo::init()
 {
-    if(_isInited) return;
-
+    if(_isInited)
+        return;
     transformTo_x(data.id);
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
     _isInited = true;
     m_scene->m_layers.registerItem(data.layer, this);
+    m_momentum_relative.saveOld();
     m_momentum.saveOld();
 }
 
@@ -131,8 +132,16 @@ void LVL_Bgo::transformTo_x(unsigned long id)
         m_momentum.x = data.x;
         m_momentum.y = data.y;
     }
-
-    setSize(texture.frame_w, texture.frame_h);
+    m_momentum.w = texture.frame_w;
+    m_momentum.h = texture.frame_h;
+    if(!m_treemap.m_is_registered)
+        m_treemap.addToScene();
+    else
+    {
+        m_treemap.updateSize();
+        m_momentum_relative.saveOld();
+        m_momentum.saveOld();
+    }
 }
 
 void LVL_Bgo::render(double camX, double camY)
@@ -145,8 +154,8 @@ void LVL_Bgo::render(double camX, double camY)
     GlRenderer::renderTexture(&texture,
                               static_cast<float>(posX() - camX),
                               static_cast<float>(posY() - camY),
-                              static_cast<float>(m_width_registered),
-                              static_cast<float>(m_height_registered),
+                              static_cast<float>(m_momentum.w),
+                              static_cast<float>(m_momentum.h),
                               static_cast<float>(x.first),
                               static_cast<float>(x.second));
 }

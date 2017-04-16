@@ -16,6 +16,7 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 #include <set>
+#include <memory>
 #include <unordered_set>
 
 class LVL_Player;
@@ -47,8 +48,8 @@ public:
     int  direction();
     int _direction = 0;
     double motionSpeed = 0.0;
-    bool  is_scenery = false;
-    bool  is_activity = false;
+    bool  is_static = false;
+    bool  is_activity = true;
     bool  is_shared_animation = false;
     bool  keep_position_on_despawn = false;
 
@@ -82,7 +83,7 @@ public:
     int taskToTransform_t = 0;
     void transformTo(unsigned long id, int type = 0);
     void transformTo_x(unsigned long id);
-    LVL_Block *transformedFromBlock = nullptr;
+    std::unique_ptr<LevelBlock> transformedFromBlockData;
     unsigned long transformedFromBlockID = 0;
     unsigned long transformedFromNpcID = 0;
 
@@ -92,6 +93,7 @@ public:
     void Activate();
     void deActivate();
 
+    virtual void iterateStep(double ticks, bool force = false);
     void processContacts();
     void preCollision();
     void postCollision();
