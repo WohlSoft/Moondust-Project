@@ -179,8 +179,6 @@ void LevelScene::processAllCollisions()
 LevelScene::~LevelScene()
 {
     GlRenderer::clearScreen();
-    m_layers.clear();
-    m_switchBlocks.clear();
     //destroy textures
     size_t i = 0;
     D_pLogDebug("clear level textures");
@@ -272,6 +270,10 @@ LevelScene::~LevelScene()
         }
     }
     m_itemsPhysEnvs.clear();
+
+    //Delete layers AFTER all objects are been deleted
+    m_layers.clear();
+    m_switchBlocks.clear();
 
     D_pLogDebug("Destroy sections");
     m_sections.clear();
