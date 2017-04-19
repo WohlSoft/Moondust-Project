@@ -42,6 +42,8 @@ patch 3
 - Added ability to override busy section while cloning
 patch 4
 - Fixed an inability to setup default value for special spin-box value on NPC
+- Added more detailed tool tip for elements in the item box hovered by the mouse cursor
+- Added a tool tip showing on tileset item box elements
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

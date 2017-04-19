@@ -21,6 +21,8 @@
 #include <common_features/graphics_funcs.h>
 #include <Utils/maths.h>
 
+#include <main_window/dock/item_tooltip_make.hpp>
+
 #include "items.h"
 #include "app_path.h"
 
@@ -155,6 +157,55 @@ void Items::getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGra
     default:
         break;
     }
+}
+
+
+QString Items::getTilesetToolTip(int itemType, unsigned long ItemID, QGraphicsScene *scene)
+{
+    LvlScene *scene_lvl = dynamic_cast<LvlScene *>(scene);
+    WldScene *scene_wld = dynamic_cast<WldScene *>(scene);
+    dataconfigs &config = MainWinConnect::pMainWin->configs;
+    switch(itemType)
+    {
+    case ItemTypes::LVL_Block:
+    {
+        PGE_DataArray<obj_block> *array = scene_lvl ? &scene_lvl->m_localConfigBlocks : &config.main_block;
+        return makeToolTipForTileset("Block", (*array)[ItemID].setup);
+    }
+    case ItemTypes::LVL_BGO:
+    {
+        PGE_DataArray<obj_bgo> *array = scene_lvl ? &scene_lvl->m_localConfigBGOs : &config.main_bgo;
+        return makeToolTipForTileset("Background object", (*array)[ItemID].setup);
+    }
+    case ItemTypes::LVL_NPC:
+    {
+        PGE_DataArray<obj_npc> *array = scene_lvl ? &scene_lvl->m_localConfigNPCs : &config.main_npc;
+        return makeToolTipForTileset("Non-Playable character", (*array)[ItemID].setup);
+    }
+    case ItemTypes::WLD_Tile:
+    {
+        PGE_DataArray<obj_w_tile> *array = scene_wld ? &scene_wld->m_localConfigTerrain : &config.main_wtiles;
+        return makeToolTipSimple("Terrain tile", (*array)[ItemID].setup);
+    }
+    case ItemTypes::WLD_Scenery:
+    {
+        PGE_DataArray<obj_w_scenery> *array = scene_wld ? &scene_wld->m_localConfigScenery : &config.main_wscene;
+        return makeToolTipSimple("Scenery", (*array)[ItemID].setup);
+    }
+    case ItemTypes::WLD_Path:
+    {
+        PGE_DataArray<obj_w_path> *array = scene_wld ? &scene_wld->m_localConfigPaths : &config.main_wpaths;
+        return makeToolTipSimple("Path cell", (*array)[ItemID].setup);
+    }
+    case ItemTypes::WLD_Level:
+    {
+        PGE_DataArray<obj_w_level> *array = scene_wld ? &scene_wld->m_localConfigLevels : &config.main_wlevels;
+        return makeToolTipSimple("Level entry point", (*array)[ItemID].setup);
+    }
+    default:
+        break;
+    }
+    return "";
 }
 
 int Items::getItemType(QString type)

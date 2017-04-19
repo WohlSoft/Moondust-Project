@@ -58,6 +58,8 @@ public:
      */
     static void getItemGFX(const obj_wld_generic* inObj, QPixmap &outImg, bool whole=false, QSize targetSize=QSize(0,0));
 
+    static QString getTilesetToolTip(int itemType, unsigned long ItemID, QGraphicsScene *scene);
+
     /*!
      * \brief Convert item type string into ItemType enum enum
      * \param type String contains a word which specifies item type

@@ -29,6 +29,8 @@
 #include "lvl_item_toolbox.h"
 #include "ui_lvl_item_toolbox.h"
 
+#include "item_tooltip_make.hpp"
+
 LevelItemBox::LevelItemBox(QWidget *parent) :
     QDockWidget(parent),
     MWDock_Base(parent),
@@ -42,8 +44,8 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
     allLabel = "[all]";
     customLabel = "[custom]";
 
-    lock_grp=false;
-    lock_cat=false;
+    lock_grp = false;
+    lock_cat = false;
 
     grp_blocks = "";
     grp_bgo = "";
@@ -55,7 +57,7 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
 
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &m_lastVisibilityState);
+    addState(this, &m_lastVisibilityState);
 }
 
 LevelItemBox::~LevelItemBox()
@@ -82,16 +84,16 @@ void MainWindow::on_actionLVLToolBox_triggered(bool checked)
 
 void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 {
-//    if( (mw()->activeChildWindow() != 1) )
-//        return;
-    if( (setGrp) && ( mw()->activeChildWindow() != 1 ) )
+    //    if( (mw()->activeChildWindow() != 1) )
+    //        return;
+    if((setGrp) && (mw()->activeChildWindow() != 1))
         return;
 
     LevelEdit *edit = mw()->activeLvlEditWin();
-    if((edit==NULL) || (!edit->sceneCreated))
+    if((edit == NULL) || (!edit->sceneCreated))
         return;
 
-    LvlScene* scene = edit->scene;
+    LvlScene *scene = edit->scene;
     if(!scene)
         return;
 
@@ -103,13 +105,13 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
     if(!setCat)
     {
-        lock_cat=true;
+        lock_cat = true;
         cat_blocks = allLabel;
         cat_bgos = allLabel;
         cat_npcs = allLabel;
         if(!setGrp)
         {
-            lock_grp=true;
+            lock_grp = true;
             grp_blocks = allLabel;
             grp_bgo = allLabel;
             grp_npc = allLabel;
@@ -123,7 +125,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     util::memclear(ui->NPCItemsList);
 
     LogDebug("LevelTools -> Declare new");
-    QListWidgetItem * item;
+    QListWidgetItem *item;
     QPixmap tmpI;
 
     QStringList tmpList, tmpGrpList;
@@ -134,87 +136,80 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("LevelTools -> List ob blocks");
     //set custom Block items from loaded level
-    if( (ui->BlockCatList->currentText()==customLabel) && (setCat) && (setGrp) )
+    if((ui->BlockCatList->currentText() == customLabel) && (setCat) && (setGrp))
     {
-        for(int i=0; i<edit->scene->m_customBlocks.size(); i++)
+        for(int i = 0; i < edit->scene->m_customBlocks.size(); i++)
         {
             obj_block &block = *scene->m_customBlocks[i];
-            Items::getItemGFX(&block, tmpI, false, QSize(48,48));
-            item = new QListWidgetItem( block.setup.name );
-            item->setIcon( QIcon( tmpI ) );
-            item->setToolTip( QString("ID: %1").arg(block.setup.id) );
-            item->setData(Qt::UserRole, int(block.setup.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            Items::getItemGFX(&block, tmpI, false, QSize(48, 48));
+            item = new QListWidgetItem(block.setup.name);
+            item->setIcon(QIcon(tmpI));
+            item->setToolTip(makeToolTip("Block", block.setup));
+            item->setData(Qt::UserRole, int(block.setup.id));
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-            ui->BlockItemsList->addItem( item );
+            ui->BlockItemsList->addItem(item);
         }
     }
     else
-    //set Block item box from global configs
-    for(int i=1; i < scene->m_localConfigBlocks.size(); i++)
-    {
-        obj_block &blockItem =  scene->m_localConfigBlocks[i];
+        //set Block item box from global configs
+        for(int i = 1; i < scene->m_localConfigBlocks.size(); i++)
+        {
+            obj_block &blockItem =  scene->m_localConfigBlocks[i];
 
-        //Add Group
-        needToAdd = true;
-        if( blockItem.setup.group.isEmpty() )
-        {
-            needToAdd=false;
-        } //Skip empty values
-        else
-        if(!tmpList.isEmpty())
-        {
-            foreach( QString grp, tmpGrpList )
+            //Add Group
+            needToAdd = true;
+            if(blockItem.setup.group.isEmpty())
+                needToAdd = false; //Skip empty values
+            else if(!tmpList.isEmpty())
             {
-                if(blockItem.setup.group == grp)
+                foreach(QString grp, tmpGrpList)
                 {
-                    needToAdd=false; break;
+                    if(blockItem.setup.group == grp)
+                    {
+                        needToAdd = false;
+                        break;
+                    }
                 }
             }
-        }
-        if(needToAdd)
-        {
-            tmpGrpList.push_back(blockItem.setup.group);
-        }
+            if(needToAdd)
+                tmpGrpList.push_back(blockItem.setup.group);
 
-        //Add category
-        needToAdd = true;
-        if( (blockItem.setup.group != grp_blocks) && (grp_blocks != allLabel) )
-        {
-            needToAdd=false;
-        }
-        else if( !tmpList.isEmpty() )
-        {
-            foreach( QString cat, tmpList )
+            //Add category
+            needToAdd = true;
+            if((blockItem.setup.group != grp_blocks) && (grp_blocks != allLabel))
+                needToAdd = false;
+            else if(!tmpList.isEmpty())
             {
-                if( blockItem.setup.category == cat )
+                foreach(QString cat, tmpList)
                 {
-                    needToAdd=false; break;
+                    if(blockItem.setup.category == cat)
+                    {
+                        needToAdd = false;
+                        break;
+                    }
                 }
             }
+
+            if(needToAdd)
+                tmpList.push_back(blockItem.setup.category);
+
+            if(
+                ((blockItem.setup.group == grp_blocks) || (grp_blocks == allLabel) || (grp_blocks == "")) &&
+                ((blockItem.setup.category == cat_blocks) || (cat_blocks == allLabel))
+            )
+            {
+                Items::getItemGFX(&blockItem, tmpI, false, QSize(48, 48));
+                item = new QListWidgetItem(blockItem.setup.name);
+                item->setIcon(QIcon(tmpI));
+                item->setToolTip(makeToolTip("Block", blockItem.setup));
+                item->setData(Qt::UserRole, int(blockItem.setup.id));
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+                ui->BlockItemsList->addItem(item);
+            }
+
         }
-
-        if(needToAdd)
-        {
-            tmpList.push_back(blockItem.setup.category);
-        }
-
-        if(
-            ( (blockItem.setup.group == grp_blocks) || ( grp_blocks == allLabel) || (grp_blocks == "") )&&
-            ( (blockItem.setup.category == cat_blocks) || ( cat_blocks == allLabel) )
-          )
-        {
-            Items::getItemGFX(&blockItem, tmpI, false, QSize(48,48));
-            item = new QListWidgetItem( blockItem.setup.name );
-            item->setIcon( QIcon( tmpI ) );
-            item->setToolTip( QString("ID: %1").arg(blockItem.setup.id) );
-            item->setData(Qt::UserRole, int(blockItem.setup.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-            ui->BlockItemsList->addItem( item );
-        }
-
-    }
 
     tmpList.sort();
     tmpList.push_front(customLabel);
@@ -241,88 +236,79 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("LevelTools -> List ob BGOs");
     //set custom BGO items from loaded level
-    if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
+    if((ui->BGOCatList->currentText() == customLabel) && (setCat) && (setGrp))
     {
-        for(int i=0; i < scene->m_customBGOs.size(); i++)
+        for(int i = 0; i < scene->m_customBGOs.size(); i++)
         {
             obj_bgo &bgo = *scene->m_customBGOs[i];
-            Items::getItemGFX(&bgo, tmpI, false, QSize(48,48));
+            Items::getItemGFX(&bgo, tmpI, false, QSize(48, 48));
 
-            item = new QListWidgetItem( bgo.setup.name );
-            item->setIcon( QIcon( tmpI ) );
-            item->setToolTip( QString("ID: %1").arg(bgo.setup.id) );
-            item->setData(Qt::UserRole, int(bgo.setup.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-            ui->BGOItemsList->addItem( item );
+            item = new QListWidgetItem(bgo.setup.name);
+            item->setIcon(QIcon(tmpI));
+            item->setToolTip(makeToolTip("Background object", bgo.setup));
+            item->setData(Qt::UserRole, int(bgo.setup.id));
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+            ui->BGOItemsList->addItem(item);
         }
     }
     else
-    //set BGO item box from global array
-    for(int i=1; i<scene->m_localConfigBGOs.size(); i++)
-    {
-        obj_bgo &bgoItem = scene->m_localConfigBGOs[i];
+        //set BGO item box from global array
+        for(int i = 1; i < scene->m_localConfigBGOs.size(); i++)
+        {
+            obj_bgo &bgoItem = scene->m_localConfigBGOs[i];
 
-        //Add Group
-        needToAdd = true;
-        if(bgoItem.setup.group.isEmpty())
-        {
-            needToAdd=false;
-        }//Skip empty values
-        else
-        if(!tmpList.isEmpty())
-        {
-            foreach(QString grp, tmpGrpList)
+            //Add Group
+            needToAdd = true;
+            if(bgoItem.setup.group.isEmpty())
+                needToAdd = false; //Skip empty values
+            else if(!tmpList.isEmpty())
             {
-                if(bgoItem.setup.group==grp)
+                foreach(QString grp, tmpGrpList)
                 {
-                    needToAdd=false;
-                    break;
+                    if(bgoItem.setup.group == grp)
+                    {
+                        needToAdd = false;
+                        break;
+                    }
                 }
             }
-        }
-        if(needToAdd)
-        {
-            tmpGrpList.push_back(bgoItem.setup.group);
-        }
+            if(needToAdd)
+                tmpGrpList.push_back(bgoItem.setup.group);
 
-        //Add category
-        needToAdd = true;
-        if( (bgoItem.setup.group != grp_bgo) && (grp_bgo != allLabel) )
-        {
-            needToAdd = false;
-        }
-        else
-        if(!tmpList.isEmpty())
-        {
-            foreach(QString cat, tmpList)
+            //Add category
+            needToAdd = true;
+            if((bgoItem.setup.group != grp_bgo) && (grp_bgo != allLabel))
+                needToAdd = false;
+            else if(!tmpList.isEmpty())
             {
-                if(bgoItem.setup.category==cat)
+                foreach(QString cat, tmpList)
                 {
-                    needToAdd = false; break;
+                    if(bgoItem.setup.category == cat)
+                    {
+                        needToAdd = false;
+                        break;
+                    }
                 }
             }
-        }
 
-        if(needToAdd)
-        {
-            tmpList.push_back(bgoItem.setup.category);
-        }
+            if(needToAdd)
+                tmpList.push_back(bgoItem.setup.category);
 
-        if(
-            ( (bgoItem.setup.group==grp_bgo) || (grp_bgo==allLabel) || (grp_bgo=="") )&&
-            ( (bgoItem.setup.category==cat_bgos) || (cat_bgos==allLabel) )
-          )
-        {
-            Items::getItemGFX(&bgoItem, tmpI, false, QSize(48,48));
-            item = new QListWidgetItem( bgoItem.setup.name );
-            item->setIcon( QIcon( tmpI ) );
-            item->setToolTip( QString("ID: %1").arg(bgoItem.setup.id) );
-            item->setData(Qt::UserRole, int(bgoItem.setup.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            if(
+                ((bgoItem.setup.group == grp_bgo) || (grp_bgo == allLabel) || (grp_bgo == "")) &&
+                ((bgoItem.setup.category == cat_bgos) || (cat_bgos == allLabel))
+            )
+            {
+                Items::getItemGFX(&bgoItem, tmpI, false, QSize(48, 48));
+                item = new QListWidgetItem(bgoItem.setup.name);
+                item->setIcon(QIcon(tmpI));
+                item->setToolTip(makeToolTip("Background object", bgoItem.setup));
+                item->setData(Qt::UserRole, int(bgoItem.setup.id));
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-            ui->BGOItemsList->addItem( item );
+                ui->BGOItemsList->addItem(item);
+            }
         }
-    }
 
     tmpList.sort();
     tmpList.push_front(customLabel);
@@ -349,89 +335,81 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("LevelTools -> List ob NPCs");
     //set custom NPC items from loaded level
-    if( (ui->NPCCatList->currentText()==customLabel) && (setCat) && (setGrp) )
+    if((ui->NPCCatList->currentText() == customLabel) && (setCat) && (setGrp))
     {
-        for(int i=0; i< scene->m_customNPCs.size(); i++)
+        for(int i = 0; i < scene->m_customNPCs.size(); i++)
         {
             obj_npc &npc = *edit->scene->m_customNPCs[i];
 
-            Items::getItemGFX(&npc, tmpI, false, QSize(48,48));
+            Items::getItemGFX(&npc, tmpI, false, QSize(48, 48));
 
-            item = new QListWidgetItem( npc.setup.name.isEmpty() ? QString("npc-%1").arg(npc.setup.id) : npc.setup.name );
-            item->setIcon( QIcon( tmpI ) );
-            item->setToolTip( QString("ID: %1").arg(npc.setup.id) );
-            item->setData(Qt::UserRole, int(npc.setup.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            item = new QListWidgetItem(npc.setup.name.isEmpty() ? QString("npc-%1").arg(npc.setup.id) : npc.setup.name);
+            item->setIcon(QIcon(tmpI));
+            item->setToolTip(makeToolTip("Non-Playable character", npc.setup));
+            item->setData(Qt::UserRole, int(npc.setup.id));
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-            ui->NPCItemsList->addItem( item );
+            ui->NPCItemsList->addItem(item);
         }
     }
     else
-    //set NPC item box from global config
-    for(int i=1; i < scene->m_localConfigNPCs.size(); i++)
-    {
-        obj_npc &npcItem = scene->m_localConfigNPCs[i];
+        //set NPC item box from global config
+        for(int i = 1; i < scene->m_localConfigNPCs.size(); i++)
+        {
+            obj_npc &npcItem = scene->m_localConfigNPCs[i];
 
-        //Add Group
-        needToAdd = true;
-        if( npcItem.setup.group.isEmpty() )
-        {
-            needToAdd=false;
-        }//Skip empty values
-        else
-        if(!tmpList.isEmpty())
-        {
-            foreach(QString grp, tmpGrpList)
+            //Add Group
+            needToAdd = true;
+            if(npcItem.setup.group.isEmpty())
+                needToAdd = false; //Skip empty values
+            else if(!tmpList.isEmpty())
             {
-                if( npcItem.setup.group==grp )
+                foreach(QString grp, tmpGrpList)
                 {
-                    needToAdd=false; break;
+                    if(npcItem.setup.group == grp)
+                    {
+                        needToAdd = false;
+                        break;
+                    }
                 }
             }
-        }
 
-        if(needToAdd)
-        {
-            tmpGrpList.push_back(npcItem.setup.group);
-        }
+            if(needToAdd)
+                tmpGrpList.push_back(npcItem.setup.group);
 
-        //Add category
-        needToAdd = true;
-        if( (npcItem.setup.group != grp_npc) && (grp_npc != allLabel) )
-        {
-            needToAdd = false;
-        }
-        else
-        if( !tmpList.isEmpty() )
-        {
-            foreach(QString cat, tmpList)
+            //Add category
+            needToAdd = true;
+            if((npcItem.setup.group != grp_npc) && (grp_npc != allLabel))
+                needToAdd = false;
+            else if(!tmpList.isEmpty())
             {
-                if(npcItem.setup.category==cat)
+                foreach(QString cat, tmpList)
                 {
-                    needToAdd = false; break;
+                    if(npcItem.setup.category == cat)
+                    {
+                        needToAdd = false;
+                        break;
+                    }
                 }
             }
-        }
-        if(needToAdd)
-        {
-            tmpList.push_back(npcItem.setup.category);
-        }
+            if(needToAdd)
+                tmpList.push_back(npcItem.setup.category);
 
-        if(
-            ( (npcItem.setup.group==grp_npc) || (grp_npc==allLabel) || (grp_npc=="") )&&
-            ( (npcItem.setup.category==cat_npcs) || (cat_npcs==allLabel) )
-          )
-        {
-            Items::getItemGFX(&npcItem, tmpI, false, QSize(48,48));
-            item = new QListWidgetItem( npcItem.setup.name );
-            item->setIcon( QIcon( tmpI ) );
-            item->setToolTip( QString("ID: %1").arg(npcItem.setup.id) );
-            item->setData(Qt::UserRole, int(npcItem.setup.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            if(
+                ((npcItem.setup.group == grp_npc) || (grp_npc == allLabel) || (grp_npc == "")) &&
+                ((npcItem.setup.category == cat_npcs) || (cat_npcs == allLabel))
+            )
+            {
+                Items::getItemGFX(&npcItem, tmpI, false, QSize(48, 48));
+                item = new QListWidgetItem(npcItem.setup.name);
+                item->setIcon(QIcon(tmpI));
+                item->setToolTip(makeToolTip("Non-Playable character", npcItem.setup));
+                item->setData(Qt::UserRole, int(npcItem.setup.id));
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-            ui->NPCItemsList->addItem( item );
+                ui->NPCItemsList->addItem(item);
+            }
         }
-    }
     tmpList.sort();
     tmpList.push_front(customLabel);
     tmpList.push_front(allLabel);
@@ -452,8 +430,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
         ui->NPCCatList->addItems(tmpList);
     }
 
-    lock_grp=false;
-    lock_cat=false;
+    lock_grp = false;
+    lock_cat = false;
 
     updateFilters();
 
@@ -466,7 +444,7 @@ void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &po
     if(ui->BlockItemsList->selectedItems().isEmpty())
         return;
 
-    LevelEdit * edit = mw()->activeLvlEditWin();
+    LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit)
         return;
 
@@ -478,21 +456,20 @@ void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &po
     obj_block &block = mw()->configs.main_block[itemID];
     QString newImg = block.setup.image_n;
     if(newImg.endsWith(".gif", Qt::CaseInsensitive))
-        newImg.replace(newImg.size()-4, 4, ".png");
+        newImg.replace(newImg.size() - 4, 4, ".png");
     QPixmap &orig = block.image;
 
     QMenu itemMenu(this);
-    QAction *copyToC = itemMenu.addAction( tr("Copy graphic to custom folder") );
-    QAction *copyToE = itemMenu.addAction( tr("Copy graphic to episode folder") );
-    QAction *reply = itemMenu.exec( ui->BlockItemsList->mapToGlobal(pos) );
+    QAction *copyToC = itemMenu.addAction(tr("Copy graphic to custom folder"));
+    QAction *copyToE = itemMenu.addAction(tr("Copy graphic to episode folder"));
+    QAction *reply = itemMenu.exec(ui->BlockItemsList->mapToGlobal(pos));
 
-    if(reply==copyToC)
+    if(reply == copyToC)
     {
         if(!QFile::exists(customDir + "/" + newImg))
             orig.save(customDir + "/" + newImg, "PNG");
     }
-    else
-    if(reply==copyToE)
+    else if(reply == copyToE)
     {
         if(!QFile::exists(episodeDir + "/" + newImg))
             orig.save(episodeDir + "/" + newImg, "PNG");
@@ -504,7 +481,7 @@ void LevelItemBox::on_BGOItemsList_customContextMenuRequested(const QPoint &pos)
     if(ui->BGOItemsList->selectedItems().isEmpty())
         return;
 
-    LevelEdit * edit = mw()->activeLvlEditWin();
+    LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit)
         return;
 
@@ -516,21 +493,20 @@ void LevelItemBox::on_BGOItemsList_customContextMenuRequested(const QPoint &pos)
     obj_bgo &bgo = mw()->configs.main_bgo[itemID];
     QString newImg = bgo.setup.image_n;
     if(newImg.endsWith(".gif", Qt::CaseInsensitive))
-        newImg.replace(newImg.size()-4, 4, ".png");
+        newImg.replace(newImg.size() - 4, 4, ".png");
     QPixmap &orig = bgo.image;
 
     QMenu itemMenu(this);
-    QAction *copyToC = itemMenu.addAction( tr("Copy graphic to custom folder") );
-    QAction *copyToE = itemMenu.addAction( tr("Copy graphic to episode folder") );
-    QAction *reply = itemMenu.exec( ui->BlockItemsList->mapToGlobal(pos) );
+    QAction *copyToC = itemMenu.addAction(tr("Copy graphic to custom folder"));
+    QAction *copyToE = itemMenu.addAction(tr("Copy graphic to episode folder"));
+    QAction *reply = itemMenu.exec(ui->BlockItemsList->mapToGlobal(pos));
 
-    if(reply==copyToC)
+    if(reply == copyToC)
     {
         if(!QFile::exists(customDir + "/" + newImg))
             orig.save(customDir + "/" + newImg, "PNG");
     }
-    else
-    if(reply==copyToE)
+    else if(reply == copyToE)
     {
         if(!QFile::exists(episodeDir + "/" + newImg))
             orig.save(episodeDir + "/" + newImg, "PNG");
@@ -542,7 +518,7 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
     if(ui->NPCItemsList->selectedItems().isEmpty())
         return;
 
-    LevelEdit * edit = mw()->activeLvlEditWin();
+    LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit)
         return;
 
@@ -554,21 +530,20 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
     obj_npc &npc = mw()->configs.main_npc[itemID];
     QString newImg = npc.setup.image_n;
     if(newImg.endsWith(".gif", Qt::CaseInsensitive))
-        newImg.replace(newImg.size()-4, 4, ".png");
+        newImg.replace(newImg.size() - 4, 4, ".png");
     QPixmap &orig = npc.image;
 
     QMenu itemMenu(this);
-    QAction *copyToC = itemMenu.addAction( tr("Copy graphic to custom folder") );
-    QAction *copyToE = itemMenu.addAction( tr("Copy graphic to episode folder") );
-    QAction *reply = itemMenu.exec( ui->BlockItemsList->mapToGlobal(pos) );
+    QAction *copyToC = itemMenu.addAction(tr("Copy graphic to custom folder"));
+    QAction *copyToE = itemMenu.addAction(tr("Copy graphic to episode folder"));
+    QAction *reply = itemMenu.exec(ui->BlockItemsList->mapToGlobal(pos));
 
-    if(reply==copyToC)
+    if(reply == copyToC)
     {
         if(!QFile::exists(customDir + "/" + newImg))
             orig.save(customDir + "/" + newImg, "PNG");
     }
-    else
-    if(reply==copyToE)
+    else if(reply == copyToE)
     {
         if(!QFile::exists(episodeDir + "/" + newImg))
             orig.save(episodeDir + "/" + newImg, "PNG");
@@ -580,21 +555,21 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
 void LevelItemBox::on_BlockGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
-    grp_blocks=arg1;
+    grp_blocks = arg1;
     setLvlItemBoxes(true);
 }
 
 void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
-    grp_bgo=arg1;
+    grp_bgo = arg1;
     setLvlItemBoxes(true);
 }
 
 void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
-    grp_npc=arg1;
+    grp_npc = arg1;
     setLvlItemBoxes(true);
 }
 
@@ -602,7 +577,7 @@ void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 void LevelItemBox::on_BlockCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
-    cat_blocks=arg1;
+    cat_blocks = arg1;
     setLvlItemBoxes(true, true);
 }
 
@@ -610,7 +585,7 @@ void LevelItemBox::on_BlockCatList_currentIndexChanged(const QString &arg1)
 void LevelItemBox::on_BGOCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
-    cat_bgos=arg1;
+    cat_bgos = arg1;
     setLvlItemBoxes(true, true);
 }
 
@@ -618,7 +593,7 @@ void LevelItemBox::on_BGOCatList_currentIndexChanged(const QString &arg1)
 void LevelItemBox::on_NPCCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
-    cat_npcs=arg1;
+    cat_npcs = arg1;
     setLvlItemBoxes(true, true);
 }
 
@@ -652,40 +627,33 @@ void LevelItemBox::on_NPCUniform_clicked(bool checked)
 void LevelItemBox::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 {
     //placeBlock
-    if ((mw()->activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
-    {
+    if((mw()->activeChildWindow() == 1) && (ui->BlockItemsList->hasFocus()))
         mw()->SwitchPlacingItem(ItemTypes::LVL_Block, item->data(Qt::UserRole).toInt());
-    }
 }
 
 void LevelItemBox::on_BGOItemsList_itemClicked(QListWidgetItem *item)
 {
     //placeBGO
-    if ((mw()->activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
-    {
+    if((mw()->activeChildWindow() == 1) && (ui->BGOItemsList->hasFocus()))
         mw()->SwitchPlacingItem(ItemTypes::LVL_BGO, item->data(Qt::UserRole).toInt());
-    }
 }
 
 void LevelItemBox::on_NPCItemsList_itemClicked(QListWidgetItem *item)
 {
     //placeNPC
-    if ((mw()->activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
-    {
+    if((mw()->activeChildWindow() == 1) && (ui->NPCItemsList->hasFocus()))
         mw()->SwitchPlacingItem(ItemTypes::LVL_NPC, item->data(Qt::UserRole).toInt());
-    }
 }
 
 void LevelItemBox::updateFilters()
 {
     int current = ui->LevelToolBoxTabs->currentIndex();
-    if(current == 0){
+    if(current == 0)
         util::updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType);
-    }else if(current == 1){
+    else if(current == 1)
         util::updateFilter(ui->BGOFilterField, ui->BGOItemsList, ui->BGOFilterType);
-    }else if(current == 2){
+    else if(current == 2)
         util::updateFilter(ui->NPCFilterField, ui->NPCItemsList, ui->NPCFilterType);
-    }
 }
 
 void LevelItemBox::clearFilter()
@@ -730,5 +698,4 @@ void LevelItemBox::on_NPCFilterType_currentIndexChanged(int /*index*/)
 {
     updateFilters();
 }
-
 
