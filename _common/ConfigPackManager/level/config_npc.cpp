@@ -62,8 +62,9 @@ bool NpcSetup::parse(IniProcessing *setup,
 
     setup->read("group", group, pMergeMe(group));
     setup->read("category", category, pMergeMe(category));
-    setup->read("image", image_n, pMergeMe(image_n));
+    setup->read("description", description, pMergeMe(description));
 
+    setup->read("image", image_n, pMergeMe(image_n));
     if(!merge_with && !PGE_ImageInfo::getImageSize(npcImgPath + image_n, &gfx_w, &gfx_h, &errCode))
     {
         if(error)
@@ -89,6 +90,9 @@ bool NpcSetup::parse(IniProcessing *setup,
 
     assert(merge_with || ((gfx_w > 0) && (gfx_h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
+
+    setup->read("icon", icon_n, pMergeMe(icon_n));
+
     setup->read("algorithm",        algorithm_script,   pMerge(algorithm_script, (section + ".lua")));
     setup->read("default-effect",   effect_1,           pMerge(effect_1, 10u));
     setup->read("shell-effect",     effect_2,           pMerge(effect_2, 10u));
@@ -346,6 +350,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
 
     group =  (local->en_group) ? local->group : global.group;
     category =  (local->en_category) ? local->category : global.category;
+    description =  (local->en_description) ? local->description : global.description;
 
     image_n = (local->en_image) ? local->image : global.image_n;
     mask_n = PGE_ImageInfo::getMaskName(image_n);

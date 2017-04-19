@@ -35,11 +35,14 @@ struct BlockSetup
     uint64_t        id = 0;
     PGEString       image_n;
     PGEString       mask_n;
+    //! (Optional) In-editor icon for item boxes
+    PGEString       icon_n;
     PGEString       name;
     //    grid=32               ; 32 | 16 Default="32"
     unsigned int    grid = 32;
     PGEString       group = "_NoGroup";
     PGEString       category = "_Other";
+    PGEString       description = "";
     bool            sizable = false;
     int             danger = 0;
     int             collision = 0;
