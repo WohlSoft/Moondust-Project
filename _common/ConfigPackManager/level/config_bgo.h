@@ -36,6 +36,7 @@ struct BgoSetup
     PGEString   name;
     PGEString   group = "_NoGroup";
     PGEString   category = "_Other";
+    PGEString   description = "";
     uint32_t    grid = 32;
 
     enum ZLayerEnum
@@ -52,6 +53,9 @@ struct BgoSetup
 
     PGEString   image_n;
     PGEString   mask_n;
+
+    //! (Optional) In-editor icon for item boxes
+    PGEString   icon_n;
 
     uint32_t    frame_h = 0;
 

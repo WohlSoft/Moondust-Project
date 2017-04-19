@@ -162,9 +162,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>0</y>
-       <width>254</width>
-       <height>1818</height>
+       <y>-1466</y>
+       <width>255</width>
+       <height>1851</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -218,8 +218,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>225</width>
-           <height>499</height>
+           <width>235</width>
+           <height>426</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout">
@@ -505,6 +505,9 @@
           <height>300</height>
          </size>
         </property>
+        <property name="mouseTracking">
+         <bool>false</bool>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::ClickFocus</enum>
         </property>
@@ -516,7 +519,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>240</width>
+           <width>249</width>
            <height>161</height>
           </rect>
          </property>
@@ -537,7 +540,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="maxVisibleItems">
              <number>50</number>
@@ -550,7 +553,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="decimals">
              <number>15</number>
@@ -589,7 +592,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="decimals">
              <number>15</number>
@@ -684,7 +687,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>240</width>
+           <width>249</width>
            <height>146</height>
           </rect>
          </property>
@@ -731,7 +734,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -747,7 +750,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="decimals">
              <number>15</number>
@@ -766,7 +769,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="decimals">
              <number>15</number>
@@ -855,8 +858,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>294</width>
-           <height>523</height>
+           <width>243</width>
+           <height>529</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -879,7 +882,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
            </widget>
           </item>
@@ -1113,7 +1116,7 @@
                 <bool>false</bool>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::ClickFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
               </widget>
              </item>
@@ -1193,7 +1196,7 @@
                 <bool>false</bool>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::ClickFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
               </widget>
              </item>
@@ -1272,8 +1275,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>240</width>
-           <height>153</height>
+           <width>235</width>
+           <height>156</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
@@ -1306,7 +1309,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="maxVisibleItems">
              <number>50</number>
@@ -1350,7 +1353,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="maxVisibleItems">
              <number>50</number>
@@ -1436,8 +1439,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>240</width>
-           <height>119</height>
+           <width>235</width>
+           <height>134</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_7">
@@ -1567,7 +1570,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>240</width>
+           <width>249</width>
            <height>98</height>
           </rect>
          </property>
@@ -1578,7 +1581,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="maxVisibleItems">
              <number>50</number>
@@ -1595,7 +1598,7 @@
           <item row="1" column="1">
            <widget class="QDoubleSpinBox" name="LVLEvent_TriggerDelay">
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="decimals">
              <number>1</number>

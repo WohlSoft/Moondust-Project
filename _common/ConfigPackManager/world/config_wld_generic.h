@@ -36,9 +36,13 @@ struct WldGenericSetup
     PGEString   image_n;
     PGEString   mask_n;
 
+    //! (Optional) In-editor icon for item boxes
+    PGEString   icon_n;
+
     uint32_t    grid = 0;
     PGEString   group    = "_NoGroup";
     PGEString   category = "_Other";
+    PGEString   description = "";
     bool        animated = false;
     uint32_t    frames = 0;
     uint32_t    framespeed = 0; // Default 128 ms

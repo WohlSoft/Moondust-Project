@@ -61,9 +61,10 @@ bool BlockSetup::parse(IniProcessing *setup,
 
     setup->read("group",    group,      pMergeMe(group));
     setup->read("category", category,   pMergeMe(category));
+    setup->read("description", description, pMergeMe(description));
     setup->read("grid",     grid,       pMerge(grid, defaultGrid));
-    setup->read("image",    image_n,    pMerge(image_n, ""));
 
+    setup->read("image",    image_n,    pMerge(image_n, ""));
     if(!PGE_ImageInfo::getImageSize(blockImgPath + image_n, &w, &h, &errCode) && !merge_with)
     {
         if(error)
@@ -86,9 +87,11 @@ bool BlockSetup::parse(IniProcessing *setup,
 
         return false;
     }
-
     assert(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
+
+    setup->read("icon", icon_n, pMergeMe(icon_n));
+
     setup->read("sizable",                  sizable,                pMerge(sizable, false));
     setup->read("danger",                   danger,                 pMerge(danger, 0));
     setup->read("collision",                collision,              pMerge(collision, 1));

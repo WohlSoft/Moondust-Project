@@ -560,7 +560,8 @@ HEADERS  += \
     tools/tilesets/tilesetgroupeditor.h \
     tools/tilesets/tileset.h \
     tools/tilesets/tilesetitembutton.h \
-    version.h
+    version.h \
+    main_window/dock/item_tooltip_make.hpp
 
 FORMS    += \
     common_features/crashhandler.ui \

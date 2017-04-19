@@ -48,6 +48,7 @@ void TilesetItemButton::applyItem(const int &type_i, const int &id, const int &w
     int hei = (height == -1 ? contentsRect().height() : height);
     QPixmap p;
     Items::getItemGFX(type_i, id, p, scn, false, QSize(wid, hei));
+    setToolTip(Items::getTilesetToolTip(type_i, id, scn));
     if(p.isNull())
     {
         m_drawItem = QPixmap(wid, hei);

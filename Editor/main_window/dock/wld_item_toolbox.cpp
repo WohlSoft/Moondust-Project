@@ -31,6 +31,8 @@
 #include "wld_item_toolbox.h"
 #include "ui_wld_item_toolbox.h"
 
+#include "item_tooltip_make.hpp"
+
 WorldItemBox::WorldItemBox(QWidget *parent) :
     QDockWidget(parent),
     MWDock_Base(parent),
@@ -169,7 +171,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             item->setText( NULL );
             item->setSizeHint(QSize(32,32));
             item->setData(Qt::UserRole, int(tileItem.setup.id) );
-            item->setData(Qt::ToolTipRole, QString("ID: %1").arg(tileItem.setup.id) );
+            item->setToolTip(makeToolTipSimple("Terrain tile", tileItem.setup));
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
             ui->WLD_TilesList->setRowHeight(tileItem.setup.row, 34);
@@ -189,7 +191,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             item->setIcon( QIcon( tmpI ) );
             item->setText( NULL );
             item->setData(Qt::UserRole, int(sceneItem.setup.id) );
-            item->setData(Qt::ToolTipRole, QString("ID: %1").arg(sceneItem.setup.id) );
+            item->setToolTip(makeToolTipSimple("Scenery", sceneItem.setup));
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
             ui->WLD_SceneList->addItem( item );
@@ -227,7 +229,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
             item->setText( NULL );
             item->setSizeHint(QSize(32,32));
             item->setData(Qt::UserRole, int(pathItem.setup.id) );
-            item->setData(Qt::ToolTipRole, QString("ID: %1").arg(pathItem.setup.id) );
+            item->setToolTip(makeToolTipSimple("Path cell", pathItem.setup));
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
             ui->WLD_PathsList->setRowHeight(pathItem.setup.row, 34);
@@ -252,7 +254,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
         item->setText( NULL );
         item->setData(Qt::UserRole, int(levelItem.setup.id) );
-        item->setData(Qt::ToolTipRole, QString("ID: %1").arg(levelItem.setup.id) );
+        item->setToolTip(makeToolTipSimple("Level entry point", levelItem.setup));
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->WLD_LevelList->addItem( item );
@@ -264,7 +266,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
         item->setText( tr("[Silence]") );
         item->setData(Qt::UserRole, 0 );
-        item->setData(Qt::ToolTipRole, "Empty element" );
+        item->setToolTip("Empty element" );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         ui->WLD_MusicList->addItem( item );
     };
@@ -276,7 +278,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
         item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
         item->setText( (musicItem.id==mw()->configs.music_w_custom_id)? customWLabel : musicItem.name );
         item->setData(Qt::UserRole, int(musicItem.id) );
-        item->setData(Qt::ToolTipRole, QString("ID: %1").arg(musicItem.id) );
+        item->setToolTip(QString("ID: %1").arg(musicItem.id));
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->WLD_MusicList->addItem( item );
