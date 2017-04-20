@@ -170,17 +170,17 @@ QString Items::getTilesetToolTip(int itemType, unsigned long ItemID, QGraphicsSc
     case ItemTypes::LVL_Block:
     {
         PGE_DataArray<obj_block> *array = scene_lvl ? &scene_lvl->m_localConfigBlocks : &config.main_block;
-        return makeToolTipForTileset("Block", (*array)[ItemID].setup);
+        return makeToolTipForTileset("block", (*array)[ItemID].setup);
     }
     case ItemTypes::LVL_BGO:
     {
         PGE_DataArray<obj_bgo> *array = scene_lvl ? &scene_lvl->m_localConfigBGOs : &config.main_bgo;
-        return makeToolTipForTileset("Background object", (*array)[ItemID].setup);
+        return makeToolTipForTileset("bgo", (*array)[ItemID].setup);
     }
     case ItemTypes::LVL_NPC:
     {
         PGE_DataArray<obj_npc> *array = scene_lvl ? &scene_lvl->m_localConfigNPCs : &config.main_npc;
-        return makeToolTipForTileset("Non-Playable character", (*array)[ItemID].setup);
+        return makeToolTipForTileset("npc", (*array)[ItemID].setup);
     }
     case ItemTypes::WLD_Tile:
     {

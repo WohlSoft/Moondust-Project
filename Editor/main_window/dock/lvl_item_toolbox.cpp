@@ -144,7 +144,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
             Items::getItemGFX(&block, tmpI, false, QSize(48, 48));
             item = new QListWidgetItem(block.setup.name);
             item->setIcon(QIcon(tmpI));
-            item->setToolTip(makeToolTip("Block", block.setup));
+            item->setToolTip(makeToolTip("block", block.setup));
             item->setData(Qt::UserRole, int(block.setup.id));
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -202,7 +202,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&blockItem, tmpI, false, QSize(48, 48));
                 item = new QListWidgetItem(blockItem.setup.name);
                 item->setIcon(QIcon(tmpI));
-                item->setToolTip(makeToolTip("Block", blockItem.setup));
+                item->setToolTip(makeToolTip("block", blockItem.setup));
                 item->setData(Qt::UserRole, int(blockItem.setup.id));
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -245,7 +245,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
             item = new QListWidgetItem(bgo.setup.name);
             item->setIcon(QIcon(tmpI));
-            item->setToolTip(makeToolTip("Background object", bgo.setup));
+            item->setToolTip(makeToolTip("bgo", bgo.setup));
             item->setData(Qt::UserRole, int(bgo.setup.id));
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             ui->BGOItemsList->addItem(item);
@@ -302,7 +302,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&bgoItem, tmpI, false, QSize(48, 48));
                 item = new QListWidgetItem(bgoItem.setup.name);
                 item->setIcon(QIcon(tmpI));
-                item->setToolTip(makeToolTip("Background object", bgoItem.setup));
+                item->setToolTip(makeToolTip("bgo", bgoItem.setup));
                 item->setData(Qt::UserRole, int(bgoItem.setup.id));
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -345,7 +345,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
             item = new QListWidgetItem(npc.setup.name.isEmpty() ? QString("npc-%1").arg(npc.setup.id) : npc.setup.name);
             item->setIcon(QIcon(tmpI));
-            item->setToolTip(makeToolTip("Non-Playable character", npc.setup));
+            item->setToolTip(makeToolTip("npc", npc.setup));
             item->setData(Qt::UserRole, int(npc.setup.id));
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -403,7 +403,7 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
                 Items::getItemGFX(&npcItem, tmpI, false, QSize(48, 48));
                 item = new QListWidgetItem(npcItem.setup.name);
                 item->setIcon(QIcon(tmpI));
-                item->setToolTip(makeToolTip("Non-Playable character", npcItem.setup));
+                item->setToolTip(makeToolTip("npc", npcItem.setup));
                 item->setData(Qt::UserRole, int(npcItem.setup.id));
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
