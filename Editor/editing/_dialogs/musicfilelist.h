@@ -42,9 +42,12 @@ public:
 
 signals:
     void itemAdded(QString item);
+    void digFinished();
 
 private slots:
     void addItem(QString item);
+    void finalizeDig();
+
     void on_FileList_itemDoubleClicked(QListWidgetItem *item);
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
