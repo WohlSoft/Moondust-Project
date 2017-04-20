@@ -52,7 +52,7 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     section     = StdToPGEString(setup->group());
     setup->read("group",    group,      pMergeMe(group));
     setup->read("category", category,   pMergeMe(category));
-    setup->read("description", description, pMergeMe(description));
+    setup->read("description", description, pMerge(description, ""));
 
     setup->read("image",    image_n,    pMerge(image_n, ""));
     if(!merge_with && !PGE_ImageInfo::getImageSize(imgPath + image_n, &w, &h, &errCode))
@@ -80,7 +80,7 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     assert(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
     mask_n  =    PGE_ImageInfo::getMaskName(image_n);
 
-    setup->read("icon", icon_n, pMergeMe(icon_n));
+    setup->read("icon", icon_n, pMerge(icon_n, ""));
 
     setup->read("grid",         grid,       pMerge(grid, defaultGrid));
     setup->read("animated",     animated,   pMerge(animated, 0));

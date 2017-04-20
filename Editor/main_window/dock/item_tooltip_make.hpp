@@ -26,26 +26,19 @@
 template<class SetupStruct>
 QString makeToolTipSimple(const QString &title, SetupStruct &setup)
 {
-    if(setup.description.isEmpty())
-        return QString(
-                   "<table>"
-                   "<caption>%1</caption>"
-                   "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
-                   "</table>"
-               )
-               .arg(title)
-               .arg(setup.id);
-    else
-        return QString(
-                   "<table>"
-                   "<caption>%1</caption>"
-                   "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
-                   "</table>"
-                   "<br/><br/>%3"
-               )
-               .arg(title)
-               .arg(setup.id)
-               .arg(setup.description);
+    QString out = QString(
+                        "<h2>%1</h2>"
+                        "<table>"
+                        "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
+                        "</table>"
+                   )
+                   .arg(title)
+                   .arg(setup.id);
+
+    if(!setup.description.isEmpty())
+        out.append(QString("<br/><br/>%1").arg(setup.description));
+
+    return out;
 }
 
 // For regular item box (Don't show group and category)
@@ -53,30 +46,18 @@ QString makeToolTipSimple(const QString &title, SetupStruct &setup)
 template<class SetupStruct>
 QString makeToolTip(const QString &title, SetupStruct &setup)
 {
-    if(setup.description.isEmpty())
-        return QString(
-                   "<table>"
-                   "<caption>%1</caption>"
-                   "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Name:</th><td>%3</td></tr>"
-                   "</table>"
-               )
-               .arg(title)
-               .arg(setup.id)
-               .arg(setup.name);
-    else
-        return QString(
-                   "<table>"
-                   "<caption>%1</caption>"
-                   "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Name:</th><td>%3</td></tr>"
-                   "</table>"
-                   "<br/><br/>%4"
-               )
-               .arg(title)
-               .arg(setup.id)
-               .arg(setup.name)
-               .arg(setup.description);
+    QString out = QString(
+                        "<h2>%1</h2>"
+                        "<table>"
+                        "<tr><th style=\"text-align:left;\">ID:</th><td>%2-%3</td></tr>"
+                        "</table>")
+                    .arg(setup.name)
+                    .arg(title).arg(setup.id);
+
+    if(!setup.description.isEmpty())
+        out.append(QString("<br/><br/>%1").arg(setup.description));
+
+    return out;
 }
 
 // For tileset item box (Show group and category)
@@ -84,38 +65,24 @@ QString makeToolTip(const QString &title, SetupStruct &setup)
 template<class SetupStruct>
 QString makeToolTipForTileset(const QString &title, SetupStruct &setup)
 {
-    if(setup.description.isEmpty())
-        return QString(
-                   "<table>"
-                   "<caption>%1</caption>"
-                   "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Name:</th><td>%3</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Group:</th><td>%4</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Category:</th><td>%5</td></tr>"
-                   "</table>"
-               )
-               .arg(title)
-               .arg(setup.id)
-               .arg(setup.name)
-               .arg(setup.group)
-               .arg(setup.category);
-    else
-        return QString(
-                   "<table>"
-                   "<caption>%1</caption>"
-                   "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Name:</th><td>%3</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Group:</th><td>%4</td></tr>"
-                   "<tr><th style=\"text-align:left;\">Category:</th><td>%5</td></tr>"
-                   "</table>"
-                   "<br/><br/>%6"
-               )
-               .arg(title)
-               .arg(setup.id)
-               .arg(setup.name)
-               .arg(setup.group)
-               .arg(setup.category)
-               .arg(setup.description);
+    QString out = QString(
+                        "<h2>%1</h2>"
+                        "<table>"
+                        "<tr><th style=\"text-align:left;\">ID:</th><td>%2-%3</td></tr>"
+                        "<tr><th style=\"text-align:left;\">Group:</th><td>%4</td></tr>"
+                        "<tr><th style=\"text-align:left;\">Category:</th><td>%5</td></tr>"
+                        "</table>"
+                   )
+                    .arg(setup.name)
+                    .arg(title)
+                    .arg(setup.id)
+                    .arg(setup.group)
+                    .arg(setup.category);
+
+    if(!setup.description.isEmpty())
+        out.append(QString("<br/><br/>%1").arg(setup.description));
+
+    return out;
 }
 
 
