@@ -30,12 +30,17 @@ LevelFileList::LevelFileList(QString Folder, QString current, QWidget *parent) :
     parentFolder = Folder;
     lastCurrentFile = current;
     ui->setupUi(this);
-    connect(this, SIGNAL(itemAdded(QString)), this, SLOT(addItem(QString)));
+    connect(this, &LevelFileList::itemAdded, this, &LevelFileList::addItem);
+    connect(this, &LevelFileList::digFinished, this, &LevelFileList::finalizeDig);
+    setCursor(Qt::BusyCursor);
     fileWalker = QtConcurrent::run(this, &LevelFileList::buildLevelList);
 }
 
 LevelFileList::~LevelFileList()
 {
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
+    fileWalker.waitForFinished();
     delete ui;
 }
 
@@ -54,19 +59,18 @@ void LevelFileList::buildLevelList()
     {
         dirsList.next();
         emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
-
-        if(fileWalker.isCanceled()) break;
+        if(fileWalker.isCanceled())
+            break;
     }
+    digFinished();
 }
 
 void LevelFileList::addItem(QString item)
 {
     ui->FileList->addItem(item);
-
     if(lastCurrentFile == item)
     {
         QList<QListWidgetItem *> list = ui->FileList->findItems(item, Qt::MatchFixedString);
-
         if(!list.isEmpty())
         {
             list.first()->setSelected(true);
@@ -75,9 +79,23 @@ void LevelFileList::addItem(QString item)
     }
 }
 
+void LevelFileList::finalizeDig()
+{
+    ui->FileList->sortItems(Qt::AscendingOrder);
+    QList<QListWidgetItem *> list = ui->FileList->findItems(lastCurrentFile, Qt::MatchFixedString);
+    if(!list.isEmpty())
+    {
+        list.first()->setSelected(true);
+        ui->FileList->scrollToItem(list.first());
+    }
+    setCursor(Qt::ArrowCursor);
+}
+
 void LevelFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
 {
     SelectedFile = item->text();
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
     accept();
 }
 
@@ -85,12 +103,17 @@ void LevelFileList::on_buttonBox_accepted()
 {
     foreach(QListWidgetItem *container, ui->FileList->selectedItems())
         SelectedFile = container->text();
-
     if(SelectedFile != "")
+    {
+        if(fileWalker.isRunning())
+            fileWalker.cancel();
         accept();
+    }
 }
 
 void LevelFileList::on_buttonBox_rejected()
 {
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
     reject();
 }

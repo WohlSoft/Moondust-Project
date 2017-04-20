@@ -35,7 +35,9 @@ MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
     lastCurrentFile=current;
 
     ui->setupUi(this);
-    connect(this, SIGNAL(itemAdded(QString)), this, SLOT(addItem(QString)));
+    connect(this, &MusicFileList::itemAdded, this, &MusicFileList::addItem);
+    connect(this, &MusicFileList::digFinished, this, &MusicFileList::finalizeDig);
+    setCursor(Qt::BusyCursor);
     fileWalker = QtConcurrent::run(this, &MusicFileList::buildMusicList);
 }
 
@@ -77,6 +79,7 @@ void MusicFileList::buildMusicList()
         emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
         if(fileWalker.isCanceled()) break;
     }
+    digFinished();
 }
 
 void MusicFileList::addItem(QString item)
@@ -93,9 +96,23 @@ void MusicFileList::addItem(QString item)
     }
 }
 
+void MusicFileList::finalizeDig()
+{
+    ui->FileList->sortItems(Qt::AscendingOrder);
+    QList<QListWidgetItem *> list = ui->FileList->findItems(lastCurrentFile, Qt::MatchFixedString);
+    if(!list.isEmpty())
+    {
+        list.first()->setSelected(true);
+        ui->FileList->scrollToItem(list.first());
+    }
+    setCursor(Qt::ArrowCursor);
+}
+
 void MusicFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
 {
     SelectedFile = item->text();
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
     accept();
 }
 
@@ -105,7 +122,11 @@ void MusicFileList::on_buttonBox_accepted()
     SelectedFile = container->text();
     }
     if(SelectedFile!="")
+    {
+        if(fileWalker.isRunning())
+            fileWalker.cancel();
         accept();
+    }
 }
 
 void MusicFileList::on_buttonBox_rejected()
