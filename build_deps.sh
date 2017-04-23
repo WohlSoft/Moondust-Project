@@ -106,6 +106,10 @@ fi
 PATH=$QT_PATH:$PATH
 LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
 
+echo "Clonning missing submodules..."
+git submodule update --init --recursive
+checkState
+
 #=======================================================================
 
 if $flag_nolibs ; then
