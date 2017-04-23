@@ -174,3 +174,5 @@ libSDL2_mixer.dylib
 #PVS-Studio
 PVS-Studio.pri
 
+
+*.directory
