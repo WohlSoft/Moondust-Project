@@ -113,6 +113,7 @@ include($$PWD/../_common/IniProcessor/IniProcessor.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 include($$PWD/../_common/Utf8Main/utf8main.pri)
 include($$PWD/../_common/Utils/Utils.pri)
+include($$PWD/../_Libs/QtPropertyBrowser.pri)
 
 SOURCES += \
     audio/music_player.cpp \
