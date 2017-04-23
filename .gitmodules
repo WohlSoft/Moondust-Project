@@ -14,3 +14,6 @@
 [submodule "_common/PgeGameSave/submodule"]
 	path = _common/PgeGameSave/submodule
 	url = https://github.com/WohlSoft/PgeGameSave.git
+[submodule "_Libs/QtPropertyBrowser"]
+	path = _Libs/QtPropertyBrowser
+	url = https://github.com/WohlSoft/QtPropertyBrowser.git
