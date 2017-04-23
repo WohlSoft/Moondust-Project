@@ -12,24 +12,24 @@ PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;
 echo %PATH%
 
 echo Clonning missing submodules...
-%GitDir%\git submodule update --init --recursive
+"%GitDir%\git.exe" submodule update --init --recursive
 if ERRORLEVEL 1 goto error
 
 cd _Libs
 
 rem build all components
 echo Running %QtDir%\qmake.exe...
-%QtDir%\qmake.exe pge_deps.pro CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT
+"%QtDir%\qmake.exe" pge_deps.pro CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT
 if ERRORLEVEL 1 goto error
 
 echo Building...
-%MinGW%\mingw32-make %MAKE_EXTRA_ARGS% release
+"%MinGW%\mingw32-make.exe" %MAKE_EXTRA_ARGS% release
 if ERRORLEVEL 1 goto error
 
 rem copy data and configs into the build directory
 
 echo Installing...
-%MinGW%\mingw32-make -s install
+"%MinGW%\mingw32-make.exe" -s install
 if ERRORLEVEL 1 goto error
 
 cd ..
