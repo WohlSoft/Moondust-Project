@@ -134,7 +134,7 @@ void LevelScene::processPhysics(double ticks)
     //Iterate activated NPCs
     for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
     {
-        LVL_Npc* n = *i;
+        LVL_Npc *n = *i;
         n->iterateStep(ticks);
     }
 }
@@ -159,7 +159,7 @@ void LevelScene::processAllCollisions()
     //Process collision check and resolving for activated NPC's
     for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
     {
-        LVL_Npc* n = *i;
+        LVL_Npc *n = *i;
         n->resetEvents();
         toCheck.push_back(n);
     }
@@ -405,7 +405,7 @@ void LevelScene::update()
 
         //Process activated NPCs
         //for(size_t i = 0; i < m_npcActive.size(); i++)
-        for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); )
+        for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end();)
         {
             LVL_Npc *n = *i;
             n->update(uTickf);
@@ -611,40 +611,40 @@ void LevelScene::render()
         //FontManager::printText(fmt::format("Camera X={0} Y={1}", cam_x, cam_y), 200,10);
         int dpos = 60;
         FontManager::printText(fmt::format("Player J={0} G={1} F={2}; TICK-SUB: {3}\n"
-                                       "NPC's: {4}, Active {5}; BLOCKS: {6}",
-                                        int(m_debug_player_jumping),
-                                        int(m_debug_player_onground),
-                                        int(m_debug_player_foots),
-                                        uTickf,
-                                        m_itemsNpc.size(),
-                                        m_npcActive.size(),
-                                        m_itemsBlocks.size()), 10, dpos);
+                                           "NPC's: {4}, Active {5}; BLOCKS: {6}",
+                                           int(m_debug_player_jumping),
+                                           int(m_debug_player_onground),
+                                           int(m_debug_player_foots),
+                                           uTickf,
+                                           m_itemsNpc.size(),
+                                           m_npcActive.size(),
+                                           m_itemsBlocks.size()), 10, dpos);
         dpos += 35;
         FontManager::printText(fmt::format("Visible objects: {0}", !m_cameras.empty() ? m_cameras[0].renderObjects_count() : 0), 10, dpos);
         dpos += 35;
         FontManager::printText(fmt::format("Delays E={0} R={1} P={2}",
-                                            m_debug_event_delay,
-                                            m_debug_render_delay,
-                                            m_debug_phys_delay), 10, dpos);
+                                           m_debug_event_delay,
+                                           m_debug_render_delay,
+                                           m_debug_phys_delay), 10, dpos);
         dpos += 35;
         FontManager::printText(fmt::format("Time Real:{0}\nTime Loop:{1}",
-                                            debug_TimeReal.elapsed(),
-                                            debug_TimeCounted), 10, dpos);
+                                           debug_TimeReal.elapsed(),
+                                           debug_TimeCounted), 10, dpos);
         dpos += 35;
 
         if(!m_isLevelContinues)
         {
             FontManager::printText(fmt::format("Exit delay {0}, {1}",
-                                                m_exitLevelDelay,
-                                                uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
+                                               m_exitLevelDelay,
+                                               uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
             dpos += 35;
         }
 
         if(m_placingMode)
             FontManager::printText(fmt::format("Placing! {0} X={1} Y={2}",
-                                                m_placingMode_item_type,
-                                                m_placingMode_renderAt.x(),
-                                                m_placingMode_renderAt.y()), 10, 10, 0);
+                                               m_placingMode_item_type,
+                                               m_placingMode_renderAt.x(),
+                                               m_placingMode_renderAt.y()), 10, 10, 0);
         else
             FontManager::printText(fmt::format("{0}", PGE_MusPlayer::getTitle()), 10, 10, 0);
     }

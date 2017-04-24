@@ -46,19 +46,36 @@ public:
 
     void setDirection(int dir);
     int  direction();
+
+    void setStaticBody(bool isStatic);
+    bool staticBody();
+
+    void setActivity(bool isActive);
+    bool activity();
+
     int _direction = 0;
     double motionSpeed = 0.0;
+    //! Is NPC a statical object which is always sticked on the layer
     bool  is_static = false;
+    //! NPC will unsticky from moving layer on activation
+    bool  is_layer_unstickable = false;
+    //! Is NPC supports activation/deactivation and does it has a loop event?
     bool  is_activity = true;
+    //! Use the same animator for all copies of same NPC type. Otherwise, every NPC will have an indivitual animator
     bool  is_shared_animation = false;
+    //! NPC will not be moved to initial position on deactivation
     bool  keep_position_on_despawn = false;
-
+    //! Does NPC's animator supports animating?
     bool animated = false;
+    //! ID of animator
     long animator_ID = 0;
+    //! Pointer to global NPC configuration
+    obj_npc *setup = nullptr;
 
-    obj_npc *setup = nullptr;//Global config
     bool isKilled();
+    //! Was NPC killed?
     bool killed = false;
+    //! Reason of damage
     enum DamageReason
     {
         DAMAGE_NOREASON = 0,
@@ -71,13 +88,19 @@ public:
         DAMAGE_PITFALL, //Does NPC fell into the pit
         DAMAGE_CUSTOM_REASON
     };
-    void doHarm(int damageReason);
-    void harm(int damage = 1, int damageReason = DAMAGE_NOREASON);
+
+    void doHarm(int damageReason, PGE_Phys_Object *harmBy = nullptr);
+    void harm(int damage, int damageReason, PGE_Phys_Object* harmBy);
+    void harm(int damage, int damageReason);
+    void harm(int damage);
+    void harm();
 
     void talkWith();
-
-    void kill(int damageReason);//! In-Game destroying of NPC with triggering of specific events
-    void unregister();          //! Sielent destroying of NPC without triggering of the events
+    //! In-Game destroying of NPC with triggering of specific events
+    void kill(int damageReason, PGE_Phys_Object *killBy);
+    void kill(int damageReason);
+    //! Sielent destroying of NPC without triggering of the events
+    void unregister();
 
     int taskToTransform = 0;
     int taskToTransform_t = 0;

@@ -54,6 +54,7 @@ void LVL_Npc::init()
     m_scene->m_layers.registerItem(data.layer, this);
     m_momentum_relative.saveOld();
     m_momentum.saveOld();
+    setStaticBody(is_static);
 }
 
 void LVL_Npc::setScenePointer(LevelScene *_pointer)
@@ -86,6 +87,39 @@ void LVL_Npc::setDirection(int dir)
 int LVL_Npc::direction()
 {
     return _direction;
+}
+
+void LVL_Npc::setStaticBody(bool isStatic)
+{
+    if(m_isGenerator)
+        return;
+
+    if(isStatic && (m_bodytype == Body_DYNAMIC))
+    {
+        m_bodytype = Body_STATIC;
+        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, true, true);
+    }
+    else if(!isStatic && (m_bodytype == Body_STATIC))
+    {
+        m_bodytype = Body_DYNAMIC;
+        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, false, true);
+    }
+    is_static = isStatic;
+}
+
+bool LVL_Npc::staticBody()
+{
+    return is_static;
+}
+
+void LVL_Npc::setActivity(bool isActive)
+{
+    is_activity = isActive;
+}
+
+bool LVL_Npc::activity()
+{
+    return is_activity;
 }
 
 void LVL_Npc::transformTo(unsigned long id, int type)
@@ -130,14 +164,17 @@ void LVL_Npc::transformTo(unsigned long id, int type)
 
 void LVL_Npc::setDefaults()
 {
-    if(!setup) return;
-
+    if(!setup)
+        return;
     setDirection(_direction);//Re-apply offset preferences
     motionSpeed = ((!data.nomove) && (setup->setup.movement)) ? (setup->setup.speed) : 0.0;
-    is_static   = setup->setup.scenery;
     is_activity = setup->setup.activity;
     is_shared_animation = setup->setup.shared_ani;
     keep_position_on_despawn = setup->setup.keep_position;
+    is_static            = setup->setup.scenery;
+    is_layer_unstickable = !setup->setup.scenery && !m_isGenerator;
+    if(m_isInited)
+        setStaticBody(setup->setup.scenery);
 }
 
 void LVL_Npc::transformTo_x(unsigned long id)
@@ -218,6 +255,8 @@ void LVL_Npc::transformTo_x(unsigned long id)
         m_disableBlockCollision = true;
         setGravityScale(0.0);
         m_bodytype = Body_STATIC;
+        is_static = true;
+        is_layer_unstickable = false;
         m_collisionCheckPolicy = CollisionCheckPolicy_CENTER_CONTACTS_ONLY;
         return;
     }
