@@ -361,6 +361,7 @@
      <string>Test</string>
     </property>
     <addaction name="action_doTest"/>
+    <addaction name="action_doTestWld"/>
     <addaction name="action_doSafeTest"/>
     <addaction name="separator"/>
     <addaction name="action_Start_Engine"/>
@@ -3016,6 +3017,20 @@
   <action name="actionWelcome">
    <property name="text">
     <string>Welcome dialog</string>
+   </property>
+  </action>
+  <action name="action_doTestWld">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Test world map (Alpha)</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">F5</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>

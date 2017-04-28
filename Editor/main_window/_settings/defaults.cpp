@@ -405,7 +405,13 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveWorld,   ui->actionSemi_transparent_paths, &QAction::setVisible);
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuTest->menuAction(), &QAction::setEnabled);
+
     connect(this, &MainWindow::windowActiveLevel,       ui->action_doTest, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,       ui->action_doTest, &QAction::setVisible);
+
+    connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setVisible);
+
     connect(this, &MainWindow::windowActiveLevelWorld,  ui->action_doSafeTest, &QAction::setEnabled);
     #ifdef Q_OS_WIN
     connect(this, &MainWindow::windowActiveLevel, ui->actionRunTestSMBX, &QAction::setEnabled);
