@@ -1050,6 +1050,10 @@ public:
          */
         void on_action_doTest_triggered();
         /*!
+         * \brief Starts world map testing in PGE Engine with interprocess communication (File saving is not needed)
+         */
+        void on_action_doTestWld_triggered();
+        /*!
          * \brief Starts level testing in PGE Engine without interprocess communication (File saving is needed)
          */
         void on_action_doSafeTest_triggered();

@@ -116,7 +116,6 @@ void MainWindow::stopMusicForTesting()
  */
 void MainWindow::on_action_doTest_triggered()
 {
-
     pge_engine_alphatestingNotify(this);
 
     QString command = ApplicationPath + PGE_ENGINE_EXE;
@@ -192,6 +191,36 @@ void MainWindow::on_action_doTest_triggered()
         return;
 }
 
+void MainWindow::on_action_doTestWld_triggered()
+{
+    /*
+        FIXME!!! Implement the right world map testing via interprocess
+        with ability to start player at absolutely any position on it
+    */
+    if(activeChildWindow() == 3)
+    {
+        WorldEdit *we = activeWldEditWin();
+        if(!we->isUntitled && we->WldData.meta.modified)
+        {
+            QMessageBox::StandardButton reply =
+                    QMessageBox::question(this,
+                                  tr("World map testing of saved file"),
+                                  tr("File is not saved!\n"
+                                     "Do you want to save file or you want to run test "
+                                     "of copy which is currently saved on the disk?"),
+                                  QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+            if(reply == QMessageBox::Yes)
+            {
+                if(!we->save())
+                    return;
+            }
+            else if(reply != QMessageBox::No)
+                return;
+        }
+        on_action_doSafeTest_triggered();
+    }
+}
+
 
 /*!
  * \brief Starts level testing in PGE Engine without interprocess communication (File saving is needed)
@@ -249,7 +278,8 @@ void MainWindow::on_action_doSafeTest_triggered()
 
     if(activeChildWindow() == 1)
     {
-        if(activeLvlEditWin()->isUntitled)
+        LevelEdit * le = activeLvlEditWin();
+        if(le->isUntitled)
         {
             QMessageBox::warning(this, tr("Save file first"),
                                  tr("To run testing of saved file, please save them into disk first!\n"
@@ -257,11 +287,12 @@ void MainWindow::on_action_doSafeTest_triggered()
                                  QMessageBox::Ok);
             return;
         }
-        args << activeLvlEditWin()->curFile;
+        args << le->curFile;
     }
     else if(activeChildWindow() == 3)
     {
-        if(activeWldEditWin()->isUntitled)
+        WorldEdit *we = activeWldEditWin();
+        if(we->isUntitled)
         {
             QMessageBox::warning(this, tr("Save file first"),
                                  tr("To run testing of saved file, please save them into disk first!\n"
@@ -269,7 +300,7 @@ void MainWindow::on_action_doSafeTest_triggered()
                                  QMessageBox::Ok);
             return;
         }
-        args << activeWldEditWin()->curFile;
+        args << we->curFile;
     }
 
     engine_proc.start(command, args);

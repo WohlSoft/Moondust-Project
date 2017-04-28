@@ -45,6 +45,7 @@ patch 4
 - Added more detailed tool tip for elements in the item box hovered by the mouse cursor
 - Added a tool tip showing on tileset item box elements
 - Fixed the freeze caused by not killed level file digger thread
+- Added an ability to run world map test via F5 key
 
 Editor 0.3.1.11
 - Added Polish translation of the editor
