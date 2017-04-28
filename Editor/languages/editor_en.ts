@@ -1173,7 +1173,7 @@ Are you want to configure it?</translation>
         <location filename="../common_features/crashhandler.cpp" line="359"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished">Crash recovery</translation>
+        <translation>Crash recovery</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="360"/>
@@ -6215,7 +6215,7 @@ Physical env. zones:	 %6</translation>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="389"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation>Wrap horizontaly</translation>
+        <translation>Wrap horizontally</translation>
     </message>
     <message>
         <source>Wrap vertucally</source>
@@ -6507,7 +6507,9 @@ The special state is defined by the active configuration pack.</translation>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
+        <translation>Show a blank screen instead of the standard loading screen.
+If this option is not selected, you will see the current character
+and remaining lives when loading a level, like in the legacy engine.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1478"/>
@@ -9765,14 +9767,18 @@ The PGE Engine is still at an early stage in development, and there are several 
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unable to start testing, could not find the PGE Engine executable:
+%1
+Please check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="297"/>
         <source>Engine is not found: 
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Could not find the PGE Engine executable:
+%1
+Please check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -10927,7 +10933,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="185"/>
         <source>Allow NPC inter level</source>
-        <translation>Allow NPC inter level</translation>
+        <translation>Allow items across levels</translation>
     </message>
     <message>
         <location filename="../defines.h" line="186"/>
@@ -11047,27 +11053,27 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="209"/>
         <source>Event NPC Activate</source>
-        <translation>Event: NPC Activate</translation>
+        <translation>Event: NPC activate</translation>
     </message>
     <message>
         <location filename="../defines.h" line="210"/>
         <source>Event NPC Die</source>
-        <translation>Event: NPC Death</translation>
+        <translation>Event: NPC death</translation>
     </message>
     <message>
         <location filename="../defines.h" line="211"/>
         <source>Event NPC Talk</source>
-        <translation>Event: NPC Talk</translation>
+        <translation>Event: NPC talk</translation>
     </message>
     <message>
         <location filename="../defines.h" line="212"/>
         <source>Event Warp Enter</source>
-        <translation>Event Warp Enter</translation>
+        <translation>Event: Warp entered</translation>
     </message>
     <message>
         <location filename="../defines.h" line="213"/>
         <source>NPC Special Data</source>
-        <translation>NPC Extra Data</translation>
+        <translation>NPC extra data</translation>
     </message>
     <message>
         <location filename="../defines.h" line="214"/>
@@ -11112,7 +11118,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="222"/>
         <source>Moving Layer</source>
-        <translation>Moving Layer</translation>
+        <translation>Move Layer</translation>
     </message>
     <message>
         <location filename="../defines.h" line="223"/>
@@ -11227,7 +11233,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="246"/>
         <source>Is Warp</source>
-        <translation>Level Wrap</translation>
+        <translation>Section Wraps Horizontally</translation>
     </message>
     <message>
         <location filename="../defines.h" line="247"/>
@@ -11283,7 +11289,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="264"/>
         <source>Big Path Background</source>
-        <translation>Big Background Path</translation>
+        <translation>Big Path Background</translation>
     </message>
     <message>
         <location filename="../defines.h" line="265"/>
@@ -11409,7 +11415,10 @@ Forum link: wohlsoft.ru/forum</translation>
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="135"/>
@@ -11419,7 +11428,14 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished"></translation>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff, or create an issue on GitHub,
+so we can try to fix this problem.
+
+GitHub link: https://github.com/WohlSoft/PGE-Project
+Forum link: http://wohlsoft.ru/forum</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="155"/>
@@ -11447,7 +11463,8 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
@@ -11514,7 +11531,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="353"/>
         <source>Disable minimal size limit</source>
-        <translation>Disable minimal size limit</translation>
+        <translation>Disable minimum size limit</translation>
     </message>
     <message>
         <location filename="../data_configs/obj_bgo.cpp" line="118"/>
@@ -11618,71 +11635,72 @@ File: %1</translation>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="284"/>
         <source>Unknown values are presented</source>
-        <translation>Unknown values are presented</translation>
+        <translation>Unknown data values detected</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="285"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
-        <translation>Your file have an unknown values which will be removed
- when you will save file</translation>
+        <translation>Your file contains unknown data which will be removed
+if you save the file</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="29"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 section
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 sections.
 The maximum number of sections is %2.
-All boundaries and settings of more than 21 sections will be lost.</translation>
+All boundaries and settings of sections higher than 21 will be lost 
+f you save in this format.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="38"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 blocks
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 blocks.
 The maximum number of blocks is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="45"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Background Objects
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Background Objects.
 The maximum number of Background Objects is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="52"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
-The maximum number of NPC&apos;s is %2.</translation>
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 NPCs.
+The maximum number of NPCs is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="59"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Warps
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Warps.
 The maximum number of Warps is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="66"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
-The maximum number of Water Boxes is %2.</translation>
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 water boxes.
+The maximum number of water boxes is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="73"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Layers
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Layers.
 The maximum number of Layers is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="80"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Events
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Events.
 The maximum number of Events is %2.</translation>
     </message>
     <message>
@@ -11690,53 +11708,53 @@ The maximum number of Events is %2.</translation>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation>A some issues are found on preparing to save SMBX64 Level file format:
+        <translation>Some issues were found while preparing to save in the SMBX64 level file format:
 
-%1Please remove excess elements (or settings) from this level or save file into LVLX format.</translation>
+%1Please remove excess elements (or settings) from this level or save in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="101"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Tiles
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Tiles.
 The maximum number of Tiles is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="108"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Sceneries
-The maximum number of Sceneries is %2.</translation>
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Scenery objects.
+The maximum number of Scenery objects is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="115"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Paths
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Paths.
 The maximum number of Paths is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="122"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Levels
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Levels.
 The maximum number of Levels is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="130"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
-The maximum number of Music Boxes is %2.</translation>
+        <translation>SMBX64 standard doesn&apos;t allow saving %1 Music boxes.
+The maximum number of Music boxes is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="137"/>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation>A some issues are found on preparing to save SMBX64 World map file format:
+        <translation>Some issues were found while preparing to save in the SMBX64 world map file format:
 
-%1Please remove excess elements (or settings) from this world map or save file into WLDX format.</translation>
+%1Please remove excess elements (or settings) from this world map or save in the WLDX format.</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_rotation_tables.cpp" line="49"/>
@@ -14209,13 +14227,13 @@ Do you want to save your changes?</translation>
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
         <translation>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have some problems with items or settings.
+&lt;br&gt;Editor will be started, but you may encounter problems with items or settings.
 &lt;br&gt;
 &lt;br&gt;Please download and install the latest version of your configuration package:
 &lt;br&gt;
 &lt;br&gt;Download: %1
-&lt;br&gt;Note: most config packs are updated togeter with PGE,&lt;br&gt;
-therefore you can use the same link to get an updated version</translation>
+&lt;br&gt;Note: most config packs are updated togeter with PGE,
+&lt;br&gt;therefore you can use the same link to get an updated version.</translation>
     </message>
 </context>
 <context>
@@ -14238,7 +14256,7 @@ therefore you can use the same link to get an updated version</translation>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="275"/>
         <source>All file associations have been set</source>
-        <translation>All file associations have been set</translation>
+        <translation>All file associations have been set.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="277"/>

@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1675</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -106,7 +106,7 @@
     </property>
     <widget class="QMenu" name="menuNew">
      <property name="title">
-      <string>New</string>
+      <string>&amp;New</string>
      </property>
      <addaction name="actionNewLevel"/>
      <addaction name="actionNewWorld_map"/>
@@ -114,7 +114,7 @@
     </widget>
     <widget class="QMenu" name="menuOpenRecent">
      <property name="title">
-      <string>Open Recent</string>
+      <string>Open &amp;Recent</string>
      </property>
      <addaction name="action_recent1"/>
      <addaction name="action_recent2"/>
@@ -150,7 +150,7 @@
     </property>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
-      <string>Language</string>
+      <string>&amp;Language</string>
      </property>
      <addaction name="actionLangEnglish"/>
     </widget>
@@ -173,14 +173,14 @@
      <bool>true</bool>
     </property>
     <property name="title">
-     <string>Level</string>
+     <string>&amp;Level</string>
     </property>
     <widget class="QMenu" name="menuCurrent_section">
      <property name="enabled">
       <bool>true</bool>
      </property>
      <property name="title">
-      <string>Current section</string>
+      <string>&amp;Current section</string>
      </property>
      <addaction name="actionSection_1"/>
      <addaction name="actionSection_2"/>
@@ -210,7 +210,7 @@
       <bool>true</bool>
      </property>
      <property name="title">
-      <string>Section modifications</string>
+      <string>&amp;Section modifications</string>
      </property>
      <addaction name="actionCloneSectionTo"/>
      <addaction name="actionSCT_Delete"/>
@@ -246,11 +246,11 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <widget class="QMenu" name="menuSetGridSize">
      <property name="title">
-      <string>Set align grid size</string>
+      <string>Set align grid si&amp;ze</string>
      </property>
     </widget>
     <addaction name="actionWLDToolBox"/>
@@ -279,7 +279,7 @@
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
-     <string>Window</string>
+     <string>Wi&amp;ndow</string>
     </property>
     <addaction name="actionEmpty"/>
    </widget>
@@ -289,7 +289,7 @@
     </property>
     <widget class="QMenu" name="menuPattles_and_tilesets">
      <property name="title">
-      <string>Palettes and tilesets</string>
+      <string>&amp;Palettes and tilesets</string>
      </property>
      <addaction name="actionConfigure_Tilesets"/>
      <addaction name="actionTileset_groups_editor"/>
@@ -298,7 +298,7 @@
     </widget>
     <widget class="QMenu" name="menuExternal_tools">
      <property name="title">
-      <string>External tools</string>
+      <string>&amp;External tools</string>
      </property>
      <addaction name="actionLazyFixTool"/>
      <addaction name="actionGIFs2PNG"/>
@@ -307,7 +307,7 @@
     </widget>
     <widget class="QMenu" name="menuCustom_data">
      <property name="title">
-      <string>Custom data</string>
+      <string>&amp;Custom data</string>
      </property>
      <addaction name="actionCDATA_clear_unused"/>
      <addaction name="actionCDATA_Import"/>
@@ -373,7 +373,7 @@
     </property>
     <widget class="QMenu" name="menuLunaLUA_scripts">
      <property name="title">
-      <string>LunaLUA scripts</string>
+      <string>&amp;LunaLUA scripts</string>
      </property>
      <property name="icon">
       <iconset resource="_resources/editor.qrc">
@@ -391,7 +391,7 @@
    </widget>
    <widget class="QMenu" name="menuConfiguration">
     <property name="title">
-     <string>Configuration</string>
+     <string>&amp;Configuration</string>
     </property>
     <addaction name="actionCurConfig"/>
     <addaction name="actionLoad_configs"/>
@@ -401,7 +401,7 @@
    </widget>
    <widget class="QMenu" name="menuPlugins">
     <property name="title">
-     <string>Plugins</string>
+     <string>Pl&amp;ugins</string>
     </property>
    </widget>
    <addaction name="menuFile"/>
@@ -468,6 +468,12 @@
    <property name="windowTitle">
     <string>CommonEdit Bar</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -529,6 +535,12 @@
    <property name="windowTitle">
     <string>LevelObj Tools</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <property name="floatable">
     <bool>true</bool>
    </property>
@@ -560,6 +572,12 @@
    <property name="windowTitle">
     <string>World map Toolbar</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -588,6 +606,12 @@
    </property>
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -631,6 +655,12 @@
    <property name="windowTitle">
     <string>Placing</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -649,6 +679,12 @@
    <property name="windowTitle">
     <string>Resizing</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -663,11 +699,11 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
-    <string>Open...</string>
+    <string>&amp;Open...</string>
    </property>
    <property name="toolTip">
     <string>Open (Ctrl+O)</string>
@@ -684,7 +720,7 @@
   </action>
   <action name="Exit">
    <property name="text">
-    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Edit from the editor">Exit</string>
+    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Edit from the editor">E&amp;xit</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
@@ -699,7 +735,7 @@
      <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
    </property>
    <property name="text">
-    <string>Level...</string>
+    <string>&amp;Level...</string>
    </property>
   </action>
   <action name="actionNewWorld_map">
@@ -708,7 +744,7 @@
      <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
    </property>
    <property name="text">
-    <string>World map...</string>
+    <string>&amp;World map...</string>
    </property>
   </action>
   <action name="actionNewNPC_config">
@@ -717,7 +753,7 @@
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
-    <string>NPC config...</string>
+    <string>&amp;NPC config...</string>
    </property>
   </action>
   <action name="actionSave">
@@ -725,11 +761,11 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="_resources/editor.qrc">
+    <iconset resource="../PlayableCalibrator/_resourses/images.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
-    <string>Save</string>
+    <string>&amp;Save</string>
    </property>
    <property name="toolTip">
     <string>Save (Ctrl+S)</string>
@@ -753,7 +789,7 @@
      <normaloff>:/images/saveas.png</normaloff>:/images/saveas.png</iconset>
    </property>
    <property name="text">
-    <string>Save as...</string>
+    <string>Sa&amp;ve as...</string>
    </property>
    <property name="toolTip">
     <string>Save as (Ctrl+Shift+S)</string>
@@ -773,7 +809,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Close</string>
+    <string>&amp;Close</string>
    </property>
   </action>
   <action name="actionSave_all">
@@ -781,7 +817,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Save all</string>
+    <string>Save a&amp;ll</string>
    </property>
    <property name="toolTip">
     <string>Save all (Ctrl+Alt+S)</string>
@@ -792,7 +828,7 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -806,7 +842,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Contents</string>
+    <string>&amp;Contents</string>
    </property>
    <property name="toolTip">
     <string>Contents (F1)</string>
@@ -831,7 +867,7 @@
      <normalon>:/sections/sections/01.png</normalon>:/sections/sections/01_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 1</string>
+    <string>&amp;Section 1</string>
    </property>
    <property name="toolTip">
     <string>Section 1 (Ctrl+1)</string>
@@ -856,7 +892,7 @@
      <normalon>:/sections/sections/02.png</normalon>:/sections/sections/02_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 2</string>
+    <string>Section &amp;2</string>
    </property>
    <property name="toolTip">
     <string>Section 2 (Ctrl+2)</string>
@@ -881,7 +917,7 @@
      <normalon>:/sections/sections/03.png</normalon>:/sections/sections/03_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 3</string>
+    <string>Section &amp;3</string>
    </property>
    <property name="toolTip">
     <string>Section 3 (Ctrl+3)</string>
@@ -906,7 +942,7 @@
      <normalon>:/sections/sections/04.png</normalon>:/sections/sections/04_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 4</string>
+    <string>Section &amp;4</string>
    </property>
    <property name="toolTip">
     <string>Section 4 (Ctrl+4)</string>
@@ -931,7 +967,7 @@
      <normalon>:/sections/sections/05.png</normalon>:/sections/sections/05_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 5</string>
+    <string>Section &amp;5</string>
    </property>
    <property name="toolTip">
     <string>Section 5 (Ctrl+5)</string>
@@ -956,7 +992,7 @@
      <normalon>:/sections/sections/06.png</normalon>:/sections/sections/06_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 6</string>
+    <string>Section &amp;6</string>
    </property>
    <property name="toolTip">
     <string>Section 6 (Ctrl+6)</string>
@@ -981,7 +1017,7 @@
      <normalon>:/sections/sections/07.png</normalon>:/sections/sections/07_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 7</string>
+    <string>Section &amp;7</string>
    </property>
    <property name="toolTip">
     <string>Section 7 (Ctrl+7)</string>
@@ -1006,7 +1042,7 @@
      <normalon>:/sections/sections/08.png</normalon>:/sections/sections/08_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 8</string>
+    <string>Section &amp;8</string>
    </property>
    <property name="toolTip">
     <string>Section 8 (Ctrl+8)</string>
@@ -1031,7 +1067,7 @@
      <normalon>:/sections/sections/09.png</normalon>:/sections/sections/09_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 9</string>
+    <string>Section &amp;9</string>
    </property>
    <property name="toolTip">
     <string>Section 9 (Ctrl+9)</string>
@@ -1056,7 +1092,7 @@
      <normalon>:/sections/sections/10.png</normalon>:/sections/sections/10_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 10</string>
+    <string>Section &amp;10</string>
    </property>
    <property name="toolTip">
     <string>Section 10 (Ctrl+0)</string>
@@ -1081,7 +1117,7 @@
      <normalon>:/sections/sections/11.png</normalon>:/sections/sections/11_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 11</string>
+    <string>S&amp;ection 11</string>
    </property>
    <property name="toolTip">
     <string>Section 11 (Ctrl+Alt+1)</string>
@@ -1106,7 +1142,7 @@
      <normalon>:/sections/sections/12.png</normalon>:/sections/sections/12_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 12</string>
+    <string>Se&amp;ction 12</string>
    </property>
    <property name="toolTip">
     <string>Section 12 (Ctrl+Alt+2)</string>
@@ -1131,7 +1167,7 @@
      <normalon>:/sections/sections/13.png</normalon>:/sections/sections/13_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 13</string>
+    <string>Sect&amp;ion 13</string>
    </property>
    <property name="toolTip">
     <string>Section 13 (Ctrl+Alt+3)</string>
@@ -1156,7 +1192,7 @@
      <normalon>:/sections/sections/14.png</normalon>:/sections/sections/14_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 14</string>
+    <string>Secti&amp;on 14</string>
    </property>
    <property name="toolTip">
     <string>Section 14 (Ctrl+Alt+4)</string>
@@ -1181,7 +1217,7 @@
      <normalon>:/sections/sections/15.png</normalon>:/sections/sections/15_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 15</string>
+    <string>Sectio&amp;n 15</string>
    </property>
    <property name="toolTip">
     <string>Section 15 (Ctrl+Alt+5)</string>
@@ -1306,7 +1342,7 @@
      <normalon>:/sections/sections/20.png</normalon>:/sections/sections/20_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 20</string>
+    <string>Section 2&amp;0</string>
    </property>
    <property name="toolTip">
     <string>Section 20 (Ctrl+Alt+0)</string>
@@ -1351,7 +1387,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Wrap Horizontally</string>
+    <string>&amp;Wrap Horizontally</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1368,7 +1404,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Offscreen exit</string>
+    <string>&amp;Offscreen exit</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1382,7 +1418,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>No turn back</string>
+    <string>&amp;No turn back</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1396,7 +1432,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Underwater</string>
+    <string>&amp;Underwater</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1407,7 +1443,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Export to image...</string>
+    <string>&amp;Export to image...</string>
    </property>
    <property name="toolTip">
     <string>Export current section to image (F12)</string>
@@ -1421,7 +1457,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Properties...</string>
+    <string>&amp;Properties...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1432,7 +1468,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Disable world map</string>
+    <string>&amp;Disable world map</string>
    </property>
   </action>
   <action name="actionWLDFailRestart">
@@ -1440,12 +1476,12 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Restart level after fail</string>
+    <string>&amp;Restart level after fail</string>
    </property>
   </action>
   <action name="actionWLDProperties">
    <property name="text">
-    <string>Properties...</string>
+    <string>&amp;Properties...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1460,7 +1496,7 @@
      <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
    </property>
    <property name="text">
-    <string>Level toolbox</string>
+    <string>&amp;Level toolbox</string>
    </property>
    <property name="toolTip">
     <string>Level objects tool box</string>
@@ -1478,7 +1514,7 @@
      <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
    </property>
    <property name="text">
-    <string>World Toolbox</string>
+    <string>&amp;World Toolbox</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -1499,7 +1535,7 @@
      <normaloff>:/images/arrow.png</normaloff>:/images/arrow.png</iconset>
    </property>
    <property name="text">
-    <string>Select and Move</string>
+    <string>Select and &amp;Move</string>
    </property>
    <property name="toolTip">
     <string>Select (S)</string>
@@ -1523,7 +1559,7 @@
      <normaloff>:/images/rubber.png</normaloff>:/images/rubber.png</iconset>
    </property>
    <property name="text">
-    <string>Eriser</string>
+    <string>&amp;Eriser</string>
    </property>
    <property name="toolTip">
     <string>Eriser (E)</string>
@@ -1541,7 +1577,7 @@
      <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
    </property>
    <property name="text">
-    <string>Section Settings</string>
+    <string>&amp;Section Settings</string>
    </property>
    <property name="visible">
     <bool>true</bool>
@@ -1555,7 +1591,7 @@
   </action>
   <action name="actionLoad_configs">
    <property name="text">
-    <string>Reload configuration pack</string>
+    <string>&amp;Reload configuration pack</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1591,7 +1627,7 @@
      <normaloff>:/images/grid.png</normaloff>:/images/grid.png</iconset>
    </property>
    <property name="text">
-    <string>Attach to grid</string>
+    <string>&amp;Attach to grid</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -1719,7 +1755,7 @@
      <normaloff>:/reload.png</normaloff>:/reload.png</iconset>
    </property>
    <property name="text">
-    <string>Reload file data</string>
+    <string>Reload &amp;file data</string>
    </property>
    <property name="toolTip">
     <string>Reload current file data</string>
@@ -1743,7 +1779,7 @@
      <normaloff>:/hand.png</normaloff>:/hand.png</iconset>
    </property>
    <property name="text">
-    <string>Scroll hand</string>
+    <string>&amp;Scroll hand</string>
    </property>
    <property name="toolTip">
     <string>Scrolling (D)</string>
@@ -1761,7 +1797,7 @@
      <normaloff>:/images/edit_undo.png</normaloff>:/images/edit_undo.png</iconset>
    </property>
    <property name="text">
-    <string>Undo</string>
+    <string>&amp;Undo</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Z</string>
@@ -1776,7 +1812,7 @@
      <normaloff>:/images/edit_redo.png</normaloff>:/images/edit_redo.png</iconset>
    </property>
    <property name="text">
-    <string>Redo</string>
+    <string>&amp;Redo</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Y</string>
@@ -1791,7 +1827,7 @@
      <normaloff>:/doors.png</normaloff>:/doors.png</iconset>
    </property>
    <property name="text">
-    <string>Warps and Doors</string>
+    <string>Wa&amp;rps and Doors</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+D</string>
@@ -1806,7 +1842,7 @@
      <normaloff>:/images/animation.png</normaloff>:/images/animation.png</iconset>
    </property>
    <property name="text">
-    <string>Animation</string>
+    <string>A&amp;nimation</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it's recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1820,7 +1856,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&lt;empty&gt;</string>
+    <string>&lt;&amp;empty&gt;</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -1831,7 +1867,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&lt;empty&gt;</string>
+    <string>&lt;e&amp;mpty&gt;</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -1842,7 +1878,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&lt;empty&gt;</string>
+    <string>&lt;em&amp;pty&gt;</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -1853,7 +1889,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&lt;empty&gt;</string>
+    <string>&lt;empt&amp;y&gt;</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -1934,7 +1970,7 @@
      <normaloff>:/images/edit_copy.png</normaloff>:/images/edit_copy.png</iconset>
    </property>
    <property name="text">
-    <string>Copy</string>
+    <string>&amp;Copy</string>
    </property>
    <property name="toolTip">
     <string>Copy selected items</string>
@@ -1948,7 +1984,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Collisions</string>
+    <string>&amp;Collisions</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1996,7 +2032,7 @@
      <normaloff>:/images/edit_paste.png</normaloff>:/images/edit_paste.png</iconset>
    </property>
    <property name="text">
-    <string>Paste</string>
+    <string>&amp;Paste</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+V</string>
@@ -2011,7 +2047,7 @@
      <normaloff>:/layers.png</normaloff>:/layers.png</iconset>
    </property>
    <property name="text">
-    <string>Layers</string>
+    <string>La&amp;yers</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+L</string>
@@ -2022,7 +2058,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>[No opened files]</string>
+    <string>[&amp;No opened files]</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -2054,7 +2090,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string notr="true">English</string>
+    <string notr="true">&amp;English</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2072,7 +2108,7 @@
      <normaloff>:/select_only.png</normaloff>:/select_only.png</iconset>
    </property>
    <property name="text">
-    <string>Select only</string>
+    <string>Select onl&amp;y</string>
    </property>
    <property name="shortcut">
     <string notr="true">W</string>
@@ -2080,7 +2116,7 @@
   </action>
   <action name="actionApplication_settings">
    <property name="text">
-    <string>Application settings</string>
+    <string>&amp;Application settings</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -2113,7 +2149,7 @@
      <normaloff>:/images/events.png</normaloff>:/images/events.png</iconset>
    </property>
    <property name="text">
-    <string>Events</string>
+    <string>&amp;Events</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+E</string>
@@ -2124,7 +2160,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Current configuration status...</string>
+    <string>&amp;Current configuration status...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2162,7 +2198,7 @@
   </action>
   <action name="actionRefresh_menu_and_toolboxes">
    <property name="text">
-    <string>Refresh menus</string>
+    <string>&amp;Refresh menus</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2173,7 +2209,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Fullscreen</string>
+    <string>&amp;Fullscreen</string>
    </property>
    <property name="shortcut">
     <string notr="true">Alt+Return</string>
@@ -2181,7 +2217,7 @@
   </action>
   <action name="actionConfigure_Tilesets">
    <property name="text">
-    <string>Tilesets Editor</string>
+    <string>&amp;Tilesets Editor</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2189,7 +2225,7 @@
   </action>
   <action name="actionLazyFixTool">
    <property name="text">
-    <string>Fix Lazily-made graphics (LazyFixTool)...</string>
+    <string>&amp;Fix Lazily-made graphics (LazyFixTool)...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2197,7 +2233,7 @@
   </action>
   <action name="actionGIFs2PNG">
    <property name="text">
-    <string>Convert GIF with mask to PNG (GIFs2PNG)...</string>
+    <string>&amp;Convert GIF with mask to PNG (GIFs2PNG)...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2205,7 +2241,7 @@
   </action>
   <action name="actionPNG2GIFs">
    <property name="text">
-    <string>Convert PNG to GIF with mask (PNG2GIFs)...</string>
+    <string>Convert &amp;PNG to GIF with mask (PNG2GIFs)...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2220,7 +2256,7 @@
      <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
    </property>
    <property name="text">
-    <string>World settings</string>
+    <string>W&amp;orld settings</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2300,7 +2336,7 @@
      <normaloff>:/images/square_fill.png</normaloff>:/images/square_fill.png</iconset>
    </property>
    <property name="text">
-    <string>Rectangular fill</string>
+    <string>Recta&amp;ngular fill</string>
    </property>
    <property name="toolTip">
     <string>Rectangular Fill (Shift+S)</string>
@@ -2318,7 +2354,7 @@
      <normaloff>:/images/overwrite.png</normaloff>:/images/overwrite.png</iconset>
    </property>
    <property name="text">
-    <string>Overwrite mode</string>
+    <string>&amp;Overwrite mode</string>
    </property>
   </action>
   <action name="actionResizeApply">
@@ -2360,7 +2396,7 @@
      <normaloff>:/images/line_fill.png</normaloff>:/images/line_fill.png</iconset>
    </property>
    <property name="text">
-    <string>Line</string>
+    <string>&amp;Line</string>
    </property>
    <property name="toolTip">
     <string>Line (Shift+D)</string>
@@ -2378,7 +2414,7 @@
      <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
    </property>
    <property name="text">
-    <string comment="Must be like &quot;Search on the world map&quot;">World map Search</string>
+    <string comment="Must be like &quot;Search on the world map&quot;">World &amp;map Search</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+F</string>
@@ -2386,7 +2422,7 @@
   </action>
   <action name="actionShow_Development_Console">
    <property name="text">
-    <string>Show Developer Console</string>
+    <string>&amp;Show Developer Console</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2394,7 +2430,7 @@
   </action>
   <action name="actionTileset_groups_editor">
    <property name="text">
-    <string>Tileset Groups Editor</string>
+    <string>Tileset &amp;Groups Editor</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2445,7 +2481,7 @@
      <normaloff>:/images/tileset_box.png</normaloff>:/images/tileset_box.png</iconset>
    </property>
    <property name="text">
-    <string>Tileset Item Box</string>
+    <string>&amp;Tileset Item Box</string>
    </property>
   </action>
   <action name="actionDebugger">
@@ -2457,12 +2493,12 @@
      <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
    </property>
    <property name="text">
-    <string>Debugger</string>
+    <string>&amp;Debugger</string>
    </property>
   </action>
   <action name="actionChangeConfig">
    <property name="text">
-    <string>Change configuration pack...</string>
+    <string>Change configuration &amp;pack...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2473,12 +2509,12 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Semi-transparent paths</string>
+    <string>Sem&amp;i-transparent paths</string>
    </property>
   </action>
   <action name="actionExport_to_image_section">
    <property name="text">
-    <string>Export section to image...</string>
+    <string>Export section to &amp;image...</string>
    </property>
    <property name="toolTip">
     <string>Export whole level section to image</string>
@@ -2486,7 +2522,7 @@
   </action>
   <action name="action_doTest">
    <property name="text">
-    <string>Test level (Alpha)</string>
+    <string>&amp;Test level (Alpha)</string>
    </property>
    <property name="shortcut">
     <string notr="true">F5</string>
@@ -2500,7 +2536,7 @@
   </action>
   <action name="action_testSettings">
    <property name="text">
-    <string>Testing options...</string>
+    <string>Testing &amp;options...</string>
    </property>
    <property name="toolTip">
     <string>Testing options...</string>
@@ -2518,7 +2554,7 @@
      <normaloff>:/images/flood_fill.png</normaloff>:/images/flood_fill.png</iconset>
    </property>
    <property name="text">
-    <string>Fill</string>
+    <string>&amp;Fill</string>
    </property>
    <property name="shortcut">
     <string notr="true">Shift+F</string>
@@ -2526,7 +2562,7 @@
   </action>
   <action name="actionCDATA_clear_unused">
    <property name="text">
-    <string>Clear unused data</string>
+    <string>&amp;Clear unused data</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2552,7 +2588,7 @@
   </action>
   <action name="actionSprite_editor">
    <property name="text">
-    <string>Sprite Editor</string>
+    <string>&amp;Sprite Editor</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2560,7 +2596,7 @@
   </action>
   <action name="actionCDATA_Import">
    <property name="text">
-    <string>Import...</string>
+    <string>&amp;Import...</string>
    </property>
    <property name="toolTip">
     <string>Import</string>
@@ -2578,7 +2614,7 @@
      <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
    </property>
    <property name="text">
-    <string>Position bookmarks</string>
+    <string>&amp;Position bookmarks</string>
    </property>
    <property name="toolTip">
     <string>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</string>
@@ -2589,7 +2625,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Clone section to...</string>
+    <string>&amp;Clone section to...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2600,7 +2636,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Rotate left</string>
+    <string>&amp;Rotate left</string>
    </property>
   </action>
   <action name="actionSCT_RotateRight">
@@ -2608,7 +2644,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Rotate right</string>
+    <string>R&amp;otate right</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2619,7 +2655,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Flip horizontal</string>
+    <string>&amp;Flip horizontal</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2630,7 +2666,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Flip vertical</string>
+    <string>Flip &amp;vertical</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2641,7 +2677,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Align selected</string>
+    <string>&amp;Align selected</string>
    </property>
   </action>
   <action name="actionRotateLeft">
@@ -2657,7 +2693,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Rotate right</string>
+    <string>Rotate ri&amp;ght</string>
    </property>
   </action>
   <action name="actionFlipHorizontal">
@@ -2665,7 +2701,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Flip horizontal</string>
+    <string>Flip &amp;horizontal</string>
    </property>
   </action>
   <action name="actionFlipVertical">
@@ -2673,12 +2709,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Flip vertical</string>
+    <string>Flip &amp;vertical</string>
    </property>
   </action>
   <action name="actionFixWrongMasks">
    <property name="text">
-    <string>Fix wrong masks</string>
+    <string>&amp;Fix wrong masks</string>
    </property>
    <property name="toolTip">
     <string>This tool will fix all wrong masks of images which causing display bugs</string>
@@ -2692,7 +2728,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Delete section</string>
+    <string>&amp;Delete section</string>
    </property>
   </action>
   <action name="actionAdditional_Settings">
@@ -2753,12 +2789,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Don't fill out of section</string>
+    <string>&amp;Don't fill out of section</string>
    </property>
   </action>
   <action name="actionSMBX_like_GUI">
    <property name="text">
-    <string>SMBX-like GUI</string>
+    <string>SMBX-like &amp;GUI</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2766,7 +2802,7 @@
   </action>
   <action name="action_doSafeTest">
    <property name="text">
-    <string>Run testing of saved file</string>
+    <string>&amp;Run testing of saved file</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2774,7 +2810,7 @@
   </action>
   <action name="actionChange_log">
    <property name="text">
-    <string>Change log</string>
+    <string>Cha&amp;nge log</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2782,7 +2818,7 @@
   </action>
   <action name="actionCheckUpdates">
    <property name="text">
-    <string>Check for updates...</string>
+    <string>Check &amp;for updates...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2802,7 +2838,7 @@
   </action>
   <action name="actionAudioCvt">
    <property name="text">
-    <string>Convert Audio files...</string>
+    <string>C&amp;onvert Audio files...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2810,7 +2846,7 @@
   </action>
   <action name="actionClear_NPC_garbadge">
    <property name="text">
-    <string>Clear NPC garbadge...</string>
+    <string>Clear &amp;NPC garbadge...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2821,7 +2857,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>More sections...</string>
+    <string>&amp;More sections...</string>
    </property>
    <property name="iconText">
     <string notr="true">...</string>
@@ -2832,7 +2868,7 @@
   </action>
   <action name="actionTipOfDay">
    <property name="text">
-    <string>Tip of the day...</string>
+    <string>&amp;Tip of the day...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2844,7 +2880,7 @@
      <normaloff>:/images/cat/cat_16.png</normaloff>:/images/cat/cat_16.png</iconset>
    </property>
    <property name="text">
-    <string>Start Engine</string>
+    <string>&amp;Start Engine</string>
    </property>
    <property name="toolTip">
     <string>Launch game engine application.</string>
@@ -2855,7 +2891,7 @@
   </action>
   <action name="action_openEpisodeFolder">
    <property name="text">
-    <string>Open folder of current file</string>
+    <string>Open &amp;folder of current file</string>
    </property>
    <property name="toolTip">
     <string>Open folder which contains currently opened file</string>
@@ -2863,7 +2899,7 @@
   </action>
   <action name="action_openCustomFolder">
    <property name="text">
-    <string>Open custom data folder</string>
+    <string>Open custom &amp;data folder</string>
    </property>
    <property name="toolTip">
     <string>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</string>
@@ -2874,7 +2910,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Wrap Vertically</string>
+    <string>Wrap &amp;Vertically</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2889,7 +2925,7 @@
      <normaloff>:/images/circle_fill.png</normaloff>:/images/circle_fill.png</iconset>
    </property>
    <property name="text">
-    <string>Circular fill</string>
+    <string>C&amp;ircular fill</string>
    </property>
    <property name="toolTip">
     <string>Circular fill (Shift+C)</string>
@@ -2910,7 +2946,7 @@
      <normaloff>:/images/grid.png</normaloff>:/images/grid.png</iconset>
    </property>
    <property name="text">
-    <string>Show grid</string>
+    <string>Show &amp;grid</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -2918,7 +2954,7 @@
   </action>
   <action name="actionModern_GUI">
    <property name="text">
-    <string>Modern GUI</string>
+    <string>&amp;Modern GUI</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2929,7 +2965,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Variables</string>
+    <string>&amp;Variables</string>
    </property>
   </action>
   <action name="actionGotoTopRight">
@@ -2958,7 +2994,7 @@
   </action>
   <action name="actionScriptEditor">
    <property name="text">
-    <string>Script Editor</string>
+    <string>&amp;Script Editor</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2966,12 +3002,12 @@
   </action>
   <action name="actionReConfigure">
    <property name="text">
-    <string>Run configure tool...</string>
+    <string>R&amp;un configure tool...</string>
    </property>
   </action>
   <action name="actionCreateScriptLocal">
    <property name="text">
-    <string>Open local script</string>
+    <string>O&amp;pen local script</string>
    </property>
    <property name="toolTip">
     <string>Open the level / world map local script. If it does not exist, a file will be created.</string>
@@ -2979,7 +3015,7 @@
   </action>
   <action name="actionCreateScriptEpisode">
    <property name="text">
-    <string>Open episode script</string>
+    <string>&amp;Open episode script</string>
    </property>
    <property name="toolTip">
     <string>Open the episode common script. If it does not exist, a file will be created.</string>
@@ -2987,7 +3023,7 @@
   </action>
   <action name="actionLunaLUA_lvl">
    <property name="text">
-    <string>Level local (%1)</string>
+    <string>&amp;Level local (%1)</string>
    </property>
    <property name="toolTip">
     <string>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</string>
@@ -2995,7 +3031,7 @@
   </action>
   <action name="actionLunaLUA_eps">
    <property name="text">
-    <string>Level global (%1)</string>
+    <string>Level &amp;global (%1)</string>
    </property>
    <property name="toolTip">
     <string>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</string>
@@ -3003,7 +3039,7 @@
   </action>
   <action name="actionLunaLUA_wld">
    <property name="text">
-    <string>World map script (%1)</string>
+    <string>&amp;World map script (%1)</string>
    </property>
    <property name="toolTip">
     <string>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</string>
@@ -3016,7 +3052,7 @@
   </action>
   <action name="actionWelcome">
    <property name="text">
-    <string>Welcome dialog</string>
+    <string>&amp;Welcome dialog</string>
    </property>
   </action>
   <action name="action_doTestWld">
@@ -3036,6 +3072,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../PlayableCalibrator/_resourses/images.qrc"/>
   <include location="_resources/editor.qrc"/>
  </resources>
  <connections/>
