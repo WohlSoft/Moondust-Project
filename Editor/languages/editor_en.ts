@@ -6508,8 +6508,8 @@ The special state is defined by the active configuration pack.</translation>
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
         <translation>Show a blank screen instead of the standard loading screen.
-This will prevent the Legacy Engine from displaying the player&apos;s
-current character and remaining lives when loading a level.</translation>
+If this option is not selected, you will see the current character
+and remaining lives when loading a level, like in the legacy engine.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1478"/>
