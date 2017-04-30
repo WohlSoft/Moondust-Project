@@ -114,7 +114,7 @@ android:{
                 LIBS += -lSDL2main -lSDL2 -lFLAC -lvorbisfile -lvorbis -logg -lmad
             }
         }
-        LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32 -luser32
+        LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32 -luser32 -lgdi32
     }
     #linux-g++||unix:!macx:!android: {
     linux-g++||macx||unix:!android:{
