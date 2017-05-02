@@ -55,7 +55,7 @@ public:
     LunaTester();
     ~LunaTester();
     //! Pointer to main window
-    MainWindow *m_mw;
+    MainWindow *m_mw = nullptr;
     //! List of registered menu items
     QAction *m_menuItems[6];
     /**
@@ -80,27 +80,25 @@ public:
     //! LunaLoader process information
     PROCESS_INFORMATION m_pi;
     //! LunaLUA IPC Out pipe
-    HANDLE              m_ipc_pipe_out;
+    HANDLE              m_ipc_pipe_out = 0;
     //! LunaLUA IPC Out pipe backend
-    HANDLE              m_ipc_pipe_out_i;
+    HANDLE              m_ipc_pipe_out_i = 0;
     //! LunaLUA IPC In pipe
-    HANDLE              m_ipc_pipe_in;
+    HANDLE              m_ipc_pipe_in = 0;
     //! LunaLUA IPC In pipe backend
-    HANDLE              m_ipc_pipe_in_o;
+    HANDLE              m_ipc_pipe_in_o = 0;
     //! Helper which protects from editor freezing
     QFuture<void>       m_helper;
     //! Ranner thread
-    QThread            *m_helperThread;
+    QThread            *m_helperThread = nullptr;
     //! Don't run same function multiple times
     QMutex              m_engine_mutex;
     //! Disable OpenGL on LunaLua side
-    bool                m_noGL;
+    bool                m_noGL = false;
+    bool                m_killPreviousSession = false;
 public slots:
     /********Menu items*******/
-    /**
-     * @brief Start testing of currently opened level and forcedly stop LunaLua engine running in background
-     */
-    void startLunaTesterWithForceRestart();
+    void killEngine();
     /**
      * @brief Start testing of currently opened level
      */

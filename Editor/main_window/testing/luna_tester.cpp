@@ -122,14 +122,6 @@ void LunaTester::initLunaMenu(MainWindow *mw,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunLunaTest;
     }
-    QAction *RunLunaTestForce;
-    {
-        RunLunaTestForce = lunaMenu->addAction("runTestingForce");
-        mw->connect(RunLunaTestForce,   &QAction::triggered,
-                    this,               &LunaTester::startLunaTesterWithForceRestart,
-                    Qt::QueuedConnection);
-        m_menuItems[menuItemId++] = RunLunaTestForce;
-    }
     {
         QAction *ResetCheckPoints = lunaMenu->addAction("resetCheckpoints");
         mw->connect(ResetCheckPoints,   &QAction::triggered,
@@ -147,6 +139,18 @@ void LunaTester::initLunaMenu(MainWindow *mw,
             m_noGL = state;
         });
         m_menuItems[menuItemId++] = disableOpenGL;
+    }
+    QAction *enableKeepingInBackground;
+    {
+        enableKeepingInBackground = lunaMenu->addAction("enableKeepingInBackground");
+        enableKeepingInBackground->setCheckable(true);
+        enableKeepingInBackground->setChecked(!m_killPreviousSession);
+        mw->connect(enableKeepingInBackground,   &QAction::toggled,
+                    [this](bool state)
+        {
+            m_killPreviousSession = !state;
+        });
+        m_menuItems[menuItemId++] = enableKeepingInBackground;
     }
     {
         QAction *KillFrozenThread = lunaMenu->addAction("Termitate frozen loader");
@@ -180,7 +184,6 @@ void LunaTester::initLunaMenu(MainWindow *mw,
         pgeEngine.addPixmap(QPixmap(":/images/cat/cat_48.png"));
 
         mainmenu->insertAction(defaultTestAction, RunLunaTest);
-        mainmenu->insertAction(RunLunaTest, RunLunaTestForce);
 
         QMenu *pgeEngineMenu = mainmenu->addMenu(pgeEngine, "PGE Engine");
         mainmenu->insertMenu(lunaMenu->menuAction(), pgeEngineMenu);
@@ -196,10 +199,6 @@ void LunaTester::initLunaMenu(MainWindow *mw,
         RunLunaTest->setShortcut(QStringLiteral("F5"));
         RunLunaTest->setShortcutContext(Qt::WindowShortcut);
         RunLunaTest->setIcon(lunaIcon);
-
-        RunLunaTestForce->setShortcut(QStringLiteral("Ctrl+F5"));
-        RunLunaTestForce->setShortcutContext(Qt::WindowShortcut);
-        RunLunaTestForce->setIcon(lunaIcon);
     }
 }
 
@@ -215,14 +214,6 @@ void LunaTester::retranslateMenu()
                                    "Otherwise, it will be very limited."));
     }
     {
-        QAction *RunLunaTestForce = m_menuItems[menuItemId++];
-        RunLunaTestForce->setText(tr("Test level (force restart)",
-                                     "Run the LunaTester based level testing with force restart of engine which is running in background."));
-        RunLunaTestForce->setToolTip(tr("Starts level testing in the legacy engine with force killing of the background running copy.\n"
-                                        "To have this feature work, latest LunaLUA must be installed.\n"
-                                        "Otherwise, it will be very limited."));
-    }
-    {
         QAction *ResetCheckPoints = m_menuItems[menuItemId++];
         ResetCheckPoints->setText(tr("Reset checkpoints"));
         ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
@@ -233,6 +224,14 @@ void LunaTester::retranslateMenu()
         disableOpenGL->setToolTip(tr("Disable OpenGL rendering engine and use the GDI. "
                                      "Useful if your video card does not support OpenGL or "
                                      "LunaLua is crashing on the attempt to use it."));
+    }
+    {
+        QAction *enableKeepingInBackground = m_menuItems[menuItemId++];
+        enableKeepingInBackground->setText(tr("Keep running in background",
+                                              "Keep Legacy Engine be running in background to speed-up testing starts after first launch."));
+        enableKeepingInBackground->setToolTip(tr("Allows to start level testing very fast after first launch.\n"
+                                                 "Requires powerful computer, otherwise engine will freeze on next test launch.\n"
+                                                 "Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing."));
     }
     {
         QAction *KillFrozenThread = m_menuItems[menuItemId++];
@@ -248,20 +247,7 @@ void LunaTester::retranslateMenu()
     }
 }
 
-/*****************************************Menu slots*************************************************/
-
-inline void busyThreadBox(MainWindow *mw)
-{
-    QMessageBox::warning(mw,
-                         "LunaTester",
-                         LunaTester::tr("LunaLUA test loader thread is busy, try again or try termiate frozen loader!"),
-                         QMessageBox::Ok);
-}
-
-/**
- * @brief Start testing of currently opened level and forcedly stop LunaLua engine running in background
- */
-void startLunaTesterWithForceRestart()
+void LunaTester::killEngine()
 {
     DWORD lpExitCode = 0;
 
@@ -288,8 +274,16 @@ void startLunaTesterWithForceRestart()
         CloseHandle(this->m_ipc_pipe_in);
         this->m_ipc_pipe_in = 0;
     }
+}
 
-    startLunaTester();
+/*****************************************Menu slots*************************************************/
+
+inline void busyThreadBox(MainWindow *mw)
+{
+    QMessageBox::warning(mw,
+                         "LunaTester",
+                         LunaTester::tr("LunaLUA test loader thread is busy, try again or try termiate frozen loader!"),
+                         QMessageBox::Ok);
 }
 
 /*!
@@ -306,6 +300,7 @@ void LunaTester::startLunaTester()
             LevelEdit *lvl = m_mw->activeLvlEditWin();
             if(lvl)
             {
+                if(m_killPreviousSession) killEngine();
                 m_helper = QtConcurrent::run(this,
                                              &LunaTester::lunaRunnerThread,
                                              lvl->LvlData,
