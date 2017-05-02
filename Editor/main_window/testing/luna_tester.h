@@ -57,7 +57,7 @@ public:
     //! Pointer to main window
     MainWindow *m_mw;
     //! List of registered menu items
-    QAction *m_menuItems[5];
+    QAction *m_menuItems[6];
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
@@ -97,6 +97,10 @@ public:
     bool                m_noGL;
 public slots:
     /********Menu items*******/
+    /**
+     * @brief Start testing of currently opened level and forcedly stop LunaLua engine running in background
+     */
+    void startLunaTesterWithForceRestart();
     /**
      * @brief Start testing of currently opened level
      */
