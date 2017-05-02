@@ -155,7 +155,6 @@ int main(int argc, char *argv[])
         #endif
     }
 
-
     app     = new PGE_Application(argc, argv);
     args    = app->arguments();
 

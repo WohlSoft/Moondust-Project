@@ -115,6 +115,8 @@ include($$PWD/../_common/Utf8Main/utf8main.pri)
 include($$PWD/../_common/Utils/Utils.pri)
 include($$PWD/../_Libs/QtPropertyBrowser.pri)
 
+win32: include($$PWD/main_window/testing/luna_tester.pri)
+
 SOURCES += \
     audio/music_player.cpp \
     audio/sdl_music_player.cpp \
@@ -338,7 +340,6 @@ SOURCES += \
     main_window/_settings/defaults.cpp \
     main_window/_settings/settings_io.cpp \
     main_window/sub_windows.cpp \
-    main_window/testing/luna_tester.cpp \
     main_window/testing/testing.cpp \
     main_window/testing/testing_settings.cpp \
     main_window/tip_of_day/tip_of_day.cpp \
@@ -536,7 +537,6 @@ HEADERS  += \
     main_window/plugins/pge_editorpluginitem.h \
     main_window/plugins/pge_editorpluginmanager.h \
     main_window/script/script_editor.h \
-    main_window/testing/luna_tester.h \
     main_window/testing/testing_settings.h \
     main_window/tip_of_day/tip_of_day.h \
     main_window/tools/app_settings.h \
