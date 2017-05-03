@@ -28,6 +28,11 @@
 #ifndef PGE_ENGINE//Don't use in PGE Engine where SDL Main is already in use
 //Windows platform
 #ifdef _WIN32
+//Avoid Qt to steal Main function
+#if defined(QT_NEEDS_QMAIN)
+#undef main
+#endif
+//Define custom UTF8 main function which will convert command line arguments into UTF8 and will pass them
 #define main UTF8_Main
 #endif
 
