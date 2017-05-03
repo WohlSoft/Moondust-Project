@@ -122,8 +122,8 @@ void LunaTester::initLunaMenu(MainWindow *mw,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunLunaTest;
     }
+    QAction *ResetCheckPoints = lunaMenu->addAction("resetCheckpoints");
     {
-        QAction *ResetCheckPoints = lunaMenu->addAction("resetCheckpoints");
         mw->connect(ResetCheckPoints,   &QAction::triggered,
                     this,               &LunaTester::resetCheckPoints,
                     Qt::QueuedConnection);
@@ -199,6 +199,10 @@ void LunaTester::initLunaMenu(MainWindow *mw,
         RunLunaTest->setShortcut(QStringLiteral("F5"));
         RunLunaTest->setShortcutContext(Qt::WindowShortcut);
         RunLunaTest->setIcon(lunaIcon);
+
+        ResetCheckPoints->setShortcut(QStringLiteral("Ctrl+F5"));
+        ResetCheckPoints->setShortcutContext(Qt::WindowShortcut);
+        ResetCheckPoints->setIcon(lunaIcon);
     }
 }
 
@@ -1312,8 +1316,8 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             /**********************************************
              **********Do LunaLUA testing launch!**********
              **********************************************/
-            //params << "--patch";
-            params << "--hideOnCloseIPC";
+            params << (m_killPreviousSession ? "--patch" : "--hideOnCloseIPC");
+
             if(m_noGL)
                 params << "--nogl";
 
