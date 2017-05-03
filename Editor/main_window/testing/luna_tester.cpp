@@ -202,7 +202,6 @@ void LunaTester::initLunaMenu(MainWindow *mw,
 
         ResetCheckPoints->setShortcut(QStringLiteral("Ctrl+F5"));
         ResetCheckPoints->setShortcutContext(Qt::WindowShortcut);
-        ResetCheckPoints->setIcon(lunaIcon);
     }
 }
 
