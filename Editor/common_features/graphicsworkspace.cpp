@@ -762,7 +762,12 @@ void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
         // The last mouse release on the viewport will trigger clearing the cursor.
         _q_unsetViewportCursor();
     }
-    #endif
+#endif
+}
+
+void GraphicsWorkspace::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    mousePressEvent(event);
 }
 
 #ifdef QT_SHARED // avoid conflict with symbol in static lib
