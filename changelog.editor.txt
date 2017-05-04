@@ -46,6 +46,7 @@ patch 4
 - Added a tool tip showing on tileset item box elements
 - Fixed the freeze caused by not killed level file digger thread
 - Added an ability to run world map test via F5 key
+- Fixed the weird bug that causes a junk placing while scrolling after double-click on the editing scene surface
 
 Editor 0.3.1.11
 - Added Polish translation of the editor
