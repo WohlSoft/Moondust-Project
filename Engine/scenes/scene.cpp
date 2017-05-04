@@ -40,7 +40,8 @@ void Scene::construct()
 
 void Scene::updateTickValue()
 {
-    uTickf = static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
+    uTickf = Maths::roundToDown(PGE_Window::TimeOfFrame, 0.4875);//Experimentally
+            //static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick  = Maths::uRound(uTickf);
     if(uTick == 0)
         uTick = 1;

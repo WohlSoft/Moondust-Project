@@ -56,12 +56,12 @@ void PGE_Phys_Object::TreeMapMember::updatePos()
     LVL_SubTree *st = nullptr;
     if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
     {
-        Momentum m = m_self->m_momentum;
-        m.x += st->m_offsetX;
-        m.y += st->m_offsetY;
-        m.oldx += st->m_offsetXold;
-        m.oldy += st->m_offsetYold;
-        m_self->m_momentum_relative = m;
+        Momentum m = m_self->m_momentum_relative;
+        //m.x += st->m_offsetX;
+        //m.y += st->m_offsetY;
+        //m.oldx += st->m_offsetXold;
+        //m.oldy += st->m_offsetYold;
+        //m_self->m_momentum_relative = m;
         if(m_is_registered)
             st->unregisterElement(m_self);
         else
@@ -87,21 +87,28 @@ void PGE_Phys_Object::TreeMapMember::updatePosAndSize()
     LVL_SubTree *st = nullptr;
     if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
     {
-        Momentum m = m_self->m_momentum;
-        m.x += st->m_offsetX;
-        m.y += st->m_offsetY;
-        m.oldx += st->m_offsetXold;
-        m.oldy += st->m_offsetYold;
-        m_self->m_momentum_relative = m;
-        if(m_is_registered)
-            st->unregisterElement(m_self);
-        else
-            m_is_registered = true;
-        m_posX_registered   = m.x;
-        m_posY_registered   = m.y;
-        m_width_registered  = m.w;
-        m_height_registered = m.h;
-        st->registerElement(m_self);
+        Momentum m = m_self->m_momentum_relative;
+        //m.x += st->m_offsetX;
+        //m.y += st->m_offsetY;
+        //m.oldx += st->m_offsetXold;
+        //m.oldy += st->m_offsetYold;
+        //m_self->m_momentum_relative = m;
+        if((!m_is_registered) ||
+           (m_posX_registered != m.x) ||
+           (m_posY_registered != m.y) ||
+           (m_width_registered != m.w) ||
+           (m_height_registered != m.h) )
+        {
+            if(m_is_registered)
+                st->unregisterElement(m_self);
+            else
+                m_is_registered = true;
+            m_posX_registered   = m.x;
+            m_posY_registered   = m.y;
+            m_width_registered  = m.w;
+            m_height_registered = m.h;
+            st->registerElement(m_self);
+        }
     }
     else
     {
