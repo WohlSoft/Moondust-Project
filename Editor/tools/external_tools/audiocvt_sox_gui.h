@@ -49,6 +49,7 @@ private:
     bool isBackUp;
 
     QString     curSectionMusic;
+    QString     lastWarnOutput;
     QString     lastOutput;
     QStringList curLevelMusic;
 

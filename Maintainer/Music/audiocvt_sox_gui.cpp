@@ -314,6 +314,12 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
 retry_queue:
     if(filesToConvert.isEmpty())
     {
+        QString warns = lastOutput;
+        if(warns.size() > 200)
+        {
+            warns.resize(200);
+            warns.append("...");
+        }
         QMessageBox::information(this, tr("All works completed"),
                                  tr("All files successfully converted!\n"
                                     "Converted files: %1\n"
@@ -323,8 +329,7 @@ retry_queue:
                                  .arg(stat_converted_files)
                                  .arg(stat_overwritten_levels)
                                  .arg(stat_overwritten_worlds)
-                                 .arg(lastOutput));
-
+                                 .arg(warns));
         memclear(ui->musics_list);
 
         stop();
