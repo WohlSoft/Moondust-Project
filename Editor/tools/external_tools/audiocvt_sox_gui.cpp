@@ -221,11 +221,17 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
 
     if(retStatus != 0)
     {
+        QString warns = lastOutput;
+        if(warns.size() > 200)
+        {
+            warns.resize(200);
+            warns.append("...");
+        }
         QMessageBox::warning(this,
                              tr("SoX error"),
                              tr("SoX returned a non-zero exit code: %1\n%2")
                              .arg(retStatus)
-                             .arg(lastOutput));
+                             .arg(warns));
         stop(true);
         return;
     }
@@ -275,7 +281,6 @@ retry_queue:
         PGE_MusPlayer::MUS_changeVolume(MainWinConnect::pMainWin->musicVolume());
         PGE_MusPlayer::MUS_playMusic();
         QString warns = lastOutput;
-
         if(warns.size() > 200)
         {
             warns.resize(200);
@@ -431,8 +436,9 @@ void AudioCvt_Sox_gui::consoleMessage()
 void AudioCvt_Sox_gui::consoleMessageErr()
 {
     QByteArray strdata = converter.readAllStandardError();
-    lastOutput.append(strdata);
-    lastOutput.append("\n");
+    QString &out = strdata.contains("WARN") ? lastWarnOutput : lastOutput;
+    out.append(strdata);
+    out.append("\n");
     DevConsole::log(strdata, "SoX");
 }
 
