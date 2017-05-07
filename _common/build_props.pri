@@ -78,6 +78,17 @@ RCC_DIR     = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
 UI_DIR      = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
 message("$$TARGET will be built as $$BUILDTP $$ARCH $$TARGETOS ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR, GIT version $$GIT_VERSION")
 
+# Compiler info
+*-g++:      message("GCC compiler will be used")
+*-clang:    message("CLANG compiler will be used")
+win*-msvc*: message("MSVC compiler will be used")
+
+# Global optimization flags
+!win*-msvc*:    QMAKE_CFLAGS_RELEASE += -fno-omit-frame-pointer
+*-g++:          QMAKE_CFLAGS_RELEASE += --enable-frame-pointer
+!win*-msvc*:    QMAKE_CXXFLAGS_RELEASE += -fno-omit-frame-pointer
+*-g++:          QMAKE_CXXFLAGS_RELEASE += --enable-frame-pointer
+
 useccache: {
     #To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
     QMAKE_CC = ccache gcc
