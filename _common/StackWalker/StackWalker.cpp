@@ -241,9 +241,11 @@ DWORD64
 
 static void MyStrCpy(char* szDest, size_t nMaxDestSize, const char* szSrc)
 {
-  if (nMaxDestSize <= 0) return;
-  strncpy_s(szDest, nMaxDestSize, szSrc, _TRUNCATE);
-  szDest[nMaxDestSize-1] = 0;  // INFO: _TRUNCATE will ensure that it is nul-terminated; but with older compilers (<1400) it uses "strncpy" and this does not!)
+    if(nMaxDestSize <= 0)
+        return;
+    memset(szDest, 0, nMaxDestSize);
+    strncpy(szDest, szSrc, nMaxDestSize);
+    szDest[nMaxDestSize - 1] = 0;// INFO: _TRUNCATE will ensure that it is nul-terminated; but with older compilers (<1400) it uses "strncpy" and this does not!)
 }  // MyStrCpy
 
 // Normally it should be enough to use 'CONTEXT_FULL' (better would be 'CONTEXT_ALL')
@@ -293,31 +295,36 @@ public:
     // First try to load the newsest one from
 
     std::wstring szTemp;
+    szTemp.resize(4100);
     // But before wqe do this, we first check if the ".local" file exists
-    wchar_t* szTempS = (wchar_t*)szTemp.c_str();
-    if (GetModuleFileName(NULL, szTempS, 4096) > 0)
+    DWORD szTempSize = GetModuleFileNameW(NULL, &szTemp[0], 4096);
+    szTemp.resize(szTempSize);
+    if (szTempSize > 0)
     {
       szTemp += L".local";
-      if (GetFileAttributes(szTemp.c_str()) == INVALID_FILE_ATTRIBUTES)
+      if(GetFileAttributesW(&szTemp[0]) == INVALID_FILE_ATTRIBUTES)
       {
         // ".local" file does not exist, so we can try to load the dbghelp.dll from the "Debugging Tools for Windows"
         // Ok, first try the new path according to the archtitecture:
+          if(!m_hDbhHelp)
+          {
+              szTempSize = GetEnvironmentVariableW(L"ProgramFiles", &szTemp[0], 4096);
+              szTemp.resize(szTempSize);
+          }
 #ifdef _M_IX86
-        if ( (m_hDbhHelp == NULL) && (GetEnvironmentVariable(L"ProgramFiles", szTempS, 4096) > 0) )
+        if ( (m_hDbhHelp == NULL) && (szTempSize > 0) )
         {
           szTemp = szTemp + L"\\Debugging Tools for Windows (x86)\\dbghelp.dll";
-          szTempS = (wchar_t*)szTemp.c_str();
           // now check if the file exists:
-          if (GetFileAttributes(szTemp.c_str()) != INVALID_FILE_ATTRIBUTES)
+          if (GetFileAttributesW(szTemp.c_str()) != INVALID_FILE_ATTRIBUTES)
           {
-            m_hDbhHelp = LoadLibrary(szTemp.c_str());
+             m_hDbhHelp = LoadLibraryW(szTemp.c_str());
           }
         }
 #elif _M_X64
-        if ( (m_hDbhHelp == NULL) && (GetEnvironmentVariable(_T("ProgramFiles"), szTemp, 4096) > 0) )
+        if ( (m_hDbhHelp == NULL) && (szTempSize > 0) )
         {
           szTemp += L"\\Debugging Tools for Windows (x64)\\dbghelp.dll";
-          szTempS = (wchar_t*)szTemp.c_str();
           // now check if the file exists:
           if (GetFileAttributes(szTemp.c_str()) != INVALID_FILE_ATTRIBUTES)
           {
@@ -325,10 +332,9 @@ public:
           }
         }
 #elif _M_IA64
-        if ( (m_hDbhHelp == NULL) && (GetEnvironmentVariable(_T("ProgramFiles"), szTemp, 4096) > 0) )
+        if ( (m_hDbhHelp == NULL) && (szTempSize > 0) )
         {
           szTemp += L"\\Debugging Tools for Windows (ia64)\\dbghelp.dll";
-          szTempS = (wchar_t*)szTemp.c_str();
           // now check if the file exists:
           if (GetFileAttributes(szTempS) != INVALID_FILE_ATTRIBUTES)
           {
@@ -336,20 +342,29 @@ public:
           }
         }
 #endif
-        // If still not found, try the old directories...
-        if ( (m_hDbhHelp == NULL) && (GetEnvironmentVariable(L"ProgramFiles", szTempS, 4096) > 0) )
+        if(!m_hDbhHelp)
         {
-          szTemp += L"\\Debugging Tools for Windows\\dbghelp.dll";
-          szTempS = (wchar_t*)szTemp.c_str();
-          // now check if the file exists:
-          if (GetFileAttributes(szTempS) != INVALID_FILE_ATTRIBUTES)
-          {
-            m_hDbhHelp = LoadLibrary(szTempS);
-          }
+            szTempSize = GetEnvironmentVariableW(L"ProgramFiles", &szTemp[0], 4096);
+            szTemp.resize(szTempSize);
+        }
+        // If still not found, try the old directories...
+        if ( (m_hDbhHelp == NULL) && (szTempSize > 0) )
+        {
+            szTemp += L"\\Debugging Tools for Windows\\dbghelp.dll";
+            // now check if the file exists:
+            if (GetFileAttributesW(&szTemp[0]) != INVALID_FILE_ATTRIBUTES)
+            {
+                m_hDbhHelp = LoadLibraryW(&szTemp[0]);
+            }
         }
 #if defined _M_X64 || defined _M_IA64
+        if(!m_hDbhHelp)
+        {
+            szTempSize = GetEnvironmentVariableW(L"ProgramFiles", &szTemp[0], 4096);
+            szTemp.resize(szTempSize);
+        }
         // Still not found? Then try to load the (old) 64-Bit version:
-        if ( (m_hDbhHelp == NULL) && (GetEnvironmentVariable(_T("ProgramFiles"), szTempS, 4096) > 0) )
+        if ( (m_hDbhHelp == NULL) && (szTempSize > 0) )
         {
           szTemp += L"\\Debugging Tools for Windows 64-Bit\\dbghelp.dll";
           szTempS = (wchar_t*)szTemp.c_str();
@@ -362,7 +377,7 @@ public:
       }
     }
     if (m_hDbhHelp == NULL)  // if not already loaded, try to load a default-one
-      m_hDbhHelp = LoadLibrary( L"dbghelp.dll" );
+      m_hDbhHelp = LoadLibraryW( L"dbghelp.dll" );
     if (m_hDbhHelp == NULL)
       return FALSE;
     pSI = (tSI) GetProcAddress(m_hDbhHelp, "SymInitialize" );

@@ -37,6 +37,10 @@
 #include "devconsole.h"
 #include <ui_devconsole.h>
 
+#ifdef ENABLE_CRASH_TESTS
+#include <common_features/crashhandler.h>
+#endif
+
 #include "../version.h"
 
 DevConsole *DevConsole::currentDevConsole = 0;
@@ -268,8 +272,9 @@ void DevConsole::registerCommands()
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculates MD5 hash of string"));
     registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validates the PGE-X string array"));
-    #ifdef DEBUG_BUILD
+    #ifdef ENABLE_CRASH_TESTS
     // Debug only commands, must be disabled in releases! (or Static Analyzers will swear!)
+    registerCommand("crashme",  &DevConsole::doFakeCrash, tr("Simulates crash signal"));
     registerCommand("flood",    &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv",  &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
@@ -377,7 +382,12 @@ void DevConsole::doSavesettings(QStringList /*args*/)
     log("-> Application Settings was saved!", ui->tabWidget->tabText(0));
 }
 
-#ifdef DEBUG_BUILD
+#ifdef ENABLE_CRASH_TESTS
+void DevConsole::doFakeCrash(QStringList /*args*/)
+{
+    CrashHandler::crashBySIGNAL(SIGSEGV);
+}
+
 void DevConsole::doFlood(QStringList args)
 {
     if(args.size() > 0)

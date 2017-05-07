@@ -6,6 +6,10 @@
 #include <QPlainTextEdit>
 #include <initializer_list>
 
+#if 1//#ifdef DEBUG_BUILD
+#define ENABLE_CRASH_TESTS
+#endif
+
 namespace Ui
 {
     class DevConsole;
@@ -56,8 +60,9 @@ private:
     void registerCommand(const std::initializer_list<QString> commandNames, DevConsole::command cmd, const QString helpText);
     void doCommand();
 
-    #ifdef DEBUG_BUILD
+    #ifdef ENABLE_CRASH_TESTS
     // Debug only commands, must be disabled in releases! (or Static Analyzers will swear!)
+    void doFakeCrash(QStringList args);
     void doFlood(QStringList args);
     void doThrowUnhandledException(QStringList);
     void doSegmentationViolation(QStringList);
