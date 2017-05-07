@@ -85,9 +85,7 @@ win*-msvc*: message("MSVC compiler will be used")
 
 # Global optimization flags
 !win*-msvc*:    QMAKE_CFLAGS_RELEASE += -fno-omit-frame-pointer
-*-g++:          QMAKE_CFLAGS_RELEASE += --enable-frame-pointer
 !win*-msvc*:    QMAKE_CXXFLAGS_RELEASE += -fno-omit-frame-pointer
-*-g++:          QMAKE_CXXFLAGS_RELEASE += --enable-frame-pointer
 
 useccache: {
     #To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
