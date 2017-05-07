@@ -436,7 +436,7 @@ bool dataconfigs::loadconfigs()
     m_recentIniFile.clear();
     LogDebug(QString("-------------------------"));
 
-    m_isValid = check();
+    m_isValid = !check();
 
     return true;
 }
@@ -458,7 +458,7 @@ bool dataconfigs::check()
             (main_music_spc.stored() <= 0) ||
             (main_sound.stored() <= 0) ||
             !errorsList[ERR_GLOBAL].isEmpty()
-                ) && (!m_isValid);
+                )/* && (!m_isValid)*/;
 }
 
 bool dataconfigs::checkCustom()
