@@ -116,6 +116,7 @@ include($$PWD/../_common/Utils/Utils.pri)
 include($$PWD/../_Libs/QtPropertyBrowser.pri)
 
 win32: include($$PWD/main_window/testing/luna_tester.pri)
+win32: include($$PWD/../_common/StackWalker/StackWalker.pri)
 
 SOURCES += \
     audio/music_player.cpp \
