@@ -385,7 +385,7 @@ void DevConsole::doSavesettings(QStringList /*args*/)
 #ifdef ENABLE_CRASH_TESTS
 void DevConsole::doFakeCrash(QStringList /*args*/)
 {
-    CrashHandler::crashBySIGNAL(SIGSEGV);
+    CrashHandler::crashBySIGNAL(0);
 }
 
 void DevConsole::doFlood(QStringList args)
