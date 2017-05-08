@@ -30,6 +30,7 @@ do
             echo -e " \E[1;4mlupdate\E[0m          - Update the translations"
             echo -e " \E[1;4mlrelease\E[0m         - Compile the translations"
             echo -e " \E[1;4mclean\E[0m            - Remove all object files and caches to build from scratch"
+            echo -e " \E[1;4mrepair-submodules\E[0m- Repair invalid or broken submodules"
             echo -e " \E[1;4misvalid\E[0m          - Show validation state of dependencies"
             echo -e ""
 
