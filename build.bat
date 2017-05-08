@@ -6,6 +6,7 @@ SET MAKE_EXTRA_ARGS=-r -j 4
 
 :argsloop
 if "%1"=="clean"  goto cleanX
+if "%1"=="repair-submodules"  goto repairSubModules
 if "%1"=="nopause"  SET NoPause=1
 if "%1"=="noeditor" SET BuildArgs=%BuildArgs% CONFIG+=noeditor
 if "%1"=="noengine" SET BuildArgs=%BuildArgs% CONFIG+=noengine
@@ -56,8 +57,32 @@ echo ==== Clear! ====
 exit /B 0
 goto quit;
 
-:run
+:repairSubModules
+rem !!FIXME!! Implement parsing of submodules list and fill this array automatically
+rem NOTE: Don't use "git submodule foreach" because broken submodule will not shown in it's list!
+set SUBMODULES=_Libs\FreeImage
+set SUBMODULES=%SUBMODULES% _Libs\QtPropertyBrowser
+set SUBMODULES=%SUBMODULES% _Libs\sqlite3
+set SUBMODULES=%SUBMODULES% _common\PGE_File_Formats
+set SUBMODULES=%SUBMODULES% _common\PgeGameSave\submodule
+rem \===============================================================================
+for %%s in (%SUBMODULES%) do (
+echo Remove folder %%s ...
+if exist %%s\nul rd /Q /S %%s
+)
+echo Fetching new submodules...
+git submodule init
+git submodule update
+echo.
+git submodule foreach git checkout master
+git submodule foreach git pull origin master
+echo.
+echo ==== Fixed! ====
+exit /B 0
+goto quit;
 
+
+:run
 cd %CD%\Editor
 %QtDir%\lrelease.exe *.pro
 cd ..\Engine

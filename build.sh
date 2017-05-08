@@ -125,6 +125,33 @@ do
                 exit 0;
             ;;
 
+        repair-submodules)
+            #!!FIXME!! Implement parsing of submodules list and fill this array automatically
+            #NOTE: Don't use "git submodule foreach" because broken submodule will not shown in it's list!
+            SUBMODULES="_Libs/FreeImage"
+            SUBMODULES="${SUBMODULES} _Libs/QtPropertyBrowser"
+            SUBMODULES="${SUBMODULES} _Libs/sqlite3"
+            SUBMODULES="$SUBMODULES _common/PGE_File_Formats"
+            SUBMODULES="$SUBMODULES _common/PgeGameSave/submodule"
+            # \===============================================================================
+            for s in $SUBMODULES
+            do
+                if [ -d $s ];then
+                    echo "Remove folder ${s}..."
+                    rm -Rf $s
+                fi
+            done
+            echo "Fetching new submodules..."
+            git submodule init
+            git submodule update
+            echo ""
+            git submodule foreach git checkout master
+            git submodule foreach git pull origin master
+            echo ""
+            echo "==== Fixed! ===="
+            exit 0;
+            ;;
+
         # Enable debuggin of this script by showing states of inernal variables with pauses
         debugscript)
             flag_debugThisScript=true
@@ -174,11 +201,11 @@ source ./_common/functions.sh
 
 if [ -f "$SCRDIR/_paths.sh" ]
 then
-	source "$SCRDIR/_paths.sh"
+    source "$SCRDIR/_paths.sh"
 else
-	echo ""
-	echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
-	errorofbuild
+    echo ""
+    echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
+    errorofbuild
 fi
 
 PATH=$QT_PATH:$PATH
