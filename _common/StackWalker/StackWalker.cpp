@@ -90,15 +90,15 @@
 #include "StackWalker.h"
 #include <string>
 
-void ansi2utf8(char *inout, DWORD maxLen)
+void ansi2utf8(char *inout, const DWORD maxLen)
 {
-    wchar_t *tmpW = (wchar_t*)malloc(maxLen * sizeof(wchar_t));
-    memset(tmpW, 0, maxLen * sizeof(wchar_t));
+    std::wstring tmpW;
+    tmpW.resize(maxLen);
+    memset(&tmpW[0], 0, sizeof(wchar_t) * maxLen);
     int len = strlen(inout);
-    len = MultiByteToWideChar(CP_ACP, 0, inout, len, tmpW, maxLen);
-    len = WideCharToMultiByte(CP_UTF8, 0, tmpW, len, inout, (maxLen - 1), 0, 0);
+    len = MultiByteToWideChar(CP_ACP, 0, inout, len, &tmpW[0], maxLen);
+    len = WideCharToMultiByte(CP_UTF8, 0, &tmpW[0], len, inout, (maxLen - 1), 0, 0);
     inout[len] = '\0';
-    free(tmpW);
 }
 
 // If VC7 and later, then use the shipped 'dbghelp.h'-file
@@ -429,17 +429,14 @@ public:
     // SymSetOptions
     symOptions = this->pSSO(symOptions);
 
-    char    buf[StackWalker::STACKWALK_MAX_NAMELEN];
-    memset(buf, 0, StackWalker::STACKWALK_MAX_NAMELEN);
-
+    char   buf[StackWalker::STACKWALK_MAX_NAMELEN] = {0};
     if (this->pSGSP != NULL)
     {
         if (this->pSGSP(m_hProcess, buf, StackWalker::STACKWALK_MAX_NAMELEN) == FALSE)
             this->m_parent->OnDbgHelpErr("SymGetSearchPath", GetLastError(), 0);
     }
-    char    szUserName[1024];
-    memset(szUserName, 0, 1024);
-    DWORD dwSize = 1024;
+    char    szUserName[1024] = {0};
+    DWORD   dwSize = 1024;
     GetUserNameA(szUserName, &dwSize);
     this->m_parent->OnSymInit(buf, symOptions, szUserName);
 
