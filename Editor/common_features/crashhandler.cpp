@@ -42,27 +42,16 @@
 #include <common_features/logger_sets.h>
 
 #ifdef _WIN32
-class StackWalkerToString : public StackWalker
-{
-    std::string *m_out;
-public:
-    StackWalkerToString(std::string &out) : m_out(&out) {}
-protected:
-    virtual void OnOutput(LPCSTR szText)
-    {
-        m_out->append(szText);
-    }
-};
-
-//
-// http://blog.aaronballman.com/2011/04/generating-a-stack-crawl/
-//
 static bool GetStackWalk(std::string &outWalk)
 {
     #ifdef USE_STACK_WALKER
     StackWalkerToString x(outWalk);
     x.ShowCallstack();
     #else
+    //
+    // http://blog.aaronballman.com/2011/04/generating-a-stack-crawl/
+    //
+
     // Set up the symbol options so that we can gather information from the current
     // executable's PDB files, as well as the Microsoft symbol servers.  We also want
     // to undecorate the symbol names we're returned.  If you want, you can add other
