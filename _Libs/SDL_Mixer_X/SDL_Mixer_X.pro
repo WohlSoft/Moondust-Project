@@ -145,7 +145,7 @@ macx: {
 }
 
 SDL2MixerH.files += SDL_mixer_ext.h
-INSTALLS = SDL2MixerH
+INSTALLS += SDL2MixerH
 
 win32: {
     SDL2MixerSO.path = $$PWD/../_builds/win32/bin
