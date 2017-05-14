@@ -52,7 +52,7 @@ QCheckBox {
     border-width: 0px;
 	color: rgb(0, 255, 255);
  }
-QComboBox, QSpinBox{
+QComboBox, QSpinBox, QLineEdit{
 	border-radius: 3px;
     border-width: 2px;
     border-style: solid;
@@ -313,7 +313,7 @@ border-bottom-color: rgb(0, 120, 0);
            <widget class="QComboBox" name="mididevice">
             <item>
              <property name="text">
-              <string>ADL Midi (OPL Synth emulation)</string>
+              <string>ADL Midi (OPL3 Synth emulation)</string>
              </property>
             </item>
             <item>
@@ -324,6 +324,11 @@ border-bottom-color: rgb(0, 120, 0);
             <item>
              <property name="text">
               <string>Native midi (Built-in MIDI of your OS)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>OPN Midi (YM2612 Synth emulation)</string>
              </property>
             </item>
             <item>
@@ -458,6 +463,32 @@ border-bottom-color: rgb(0, 120, 0);
             </property>
             <property name="scaledContents">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="opnmidi_extra">
+         <property name="title">
+          <string>OPNMIDI Extra Setup</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="opn_bank"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Custom bank file:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="opn_bank_browse">
+            <property name="text">
+             <string>Browse</string>
             </property>
            </widget>
           </item>

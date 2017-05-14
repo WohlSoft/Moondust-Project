@@ -48,6 +48,9 @@
 #  ifdef USE_ADL_MIDI
 #    include "music_midi_adl.h"
 #  endif
+#  ifdef USE_OPN2_MIDI
+#    include "music_midi_opn.h"
+#  endif
 #  ifdef USE_TIMIDITY_MIDI
 #    include "timidity/timidity.h"
 #  endif
@@ -132,6 +135,9 @@ struct _Mix_Music
         #ifdef USE_ADL_MIDI
         struct MUSIC_MIDIADL *midi_adl;
         #endif
+        #ifdef USE_OPN2_MIDI
+        struct MUSIC_MIDIOPN *midi_opn;
+        #endif
         #ifdef USE_FLUIDSYNTH_MIDI
         FluidSynthMidiSong *fluidsynthmidi;
         #endif
@@ -164,6 +170,9 @@ static int samplesize;
 #endif
 #ifdef USE_ADL_MIDI
 static int adl_midi_ok;
+#endif
+#ifdef USE_OPN2_MIDI
+static int opn2_midi_ok;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
 static int fluidsynth_ok;
@@ -346,6 +355,7 @@ void music_mixer(void *udata, Uint8 *stream, int len)
                 }
                 break;
                 #endif
+
                 #ifdef USE_FLUIDSYNTH_MIDI
             case MIDI_Fluidsynth:
                 if(fluidsynth_ok)
@@ -355,6 +365,7 @@ void music_mixer(void *udata, Uint8 *stream, int len)
                 }
                 break;
                 #endif
+
                 #ifdef USE_ADL_MIDI
             case MIDI_ADLMIDI:
                 if(adl_midi_ok)
@@ -364,6 +375,17 @@ void music_mixer(void *udata, Uint8 *stream, int len)
                 }
                 break;
                 #endif
+
+                #ifdef USE_OPN2_MIDI
+            case MIDI_OPNMIDI:
+                if(opn2_midi_ok)
+                {
+                    left = OPNMIDI_playAudio(music_playing->data.midi_opn, stream, len);
+                    goto skip;
+                }
+                break;
+                #endif
+
                 #ifdef USE_TIMIDITY_MIDI
             case MIDI_Timidity:
                 if(timidity_ok)
@@ -421,19 +443,24 @@ int open_music(SDL_AudioSpec *mixer)
     if(WAVStream_Init(mixer) == 0)
         add_music_decoder("WAVE");
     #endif
+
     #ifdef MODPLUG_MUSIC
     if(modplug_init(mixer) == 0)
         add_music_decoder("MODPLUG");
     #endif
+
     #ifdef MOD_MUSIC
     if(MOD_init(mixer) == 0)
         add_music_decoder("MIKMOD");
     #endif
+
     #ifdef GME_MUSIC
     if(GME_init(mixer) == 0)
         add_music_decoder("GAMEEMU");
     #endif
+
     #ifdef MID_MUSIC
+
     #ifdef USE_ADL_MIDI
     if(ADLMIDI_init(mixer) == 0)
     {
@@ -441,6 +468,15 @@ int open_music(SDL_AudioSpec *mixer)
         add_music_decoder("ADLMIDI");
     }
     #endif
+
+    #ifdef USE_OPN2_MIDI
+    if(OPNMIDI_init(mixer) == 0)
+    {
+        opn2_midi_ok = 1;
+        add_music_decoder("OPNMIDI");
+    }
+    #endif
+
     #ifdef USE_TIMIDITY_MIDI
     samplesize = mixer->size / mixer->samples;
     if(Timidity_Init(mixer->freq, mixer->format,
@@ -452,6 +488,7 @@ int open_music(SDL_AudioSpec *mixer)
     else
         timidity_ok = 0;
     #endif
+
     #ifdef USE_FLUIDSYNTH_MIDI
     if(fluidsynth_init(mixer) == 0)
     {
@@ -461,6 +498,7 @@ int open_music(SDL_AudioSpec *mixer)
     else
         fluidsynth_ok = 0;
     #endif
+
     #ifdef USE_NATIVE_MIDI
     /* Don't block Native MIDI usage if other MIDI devices are fine to allows dynamic toggling of midi-devices */
     /*
@@ -468,10 +506,12 @@ int open_music(SDL_AudioSpec *mixer)
        native_midi_ok = !fluidsynth_ok;
        if ( native_midi_ok )
     #endif
+
     #ifdef USE_ADL_MIDI
            native_midi_ok = !adl_midi_ok;
        if ( native_midi_ok )
     #endif
+
     #ifdef USE_TIMIDITY_MIDI
            native_midi_ok = !timidity_ok;
        if ( !native_midi_ok ) {
@@ -484,15 +524,18 @@ int open_music(SDL_AudioSpec *mixer)
     if(native_midi_ok)
         add_music_decoder("NATIVEMIDI");
     #endif
+
     #endif
     #ifdef OGG_MUSIC
     if(OGG_init(mixer) == 0)
         add_music_decoder("OGG");
     #endif
+
     #ifdef FLAC_MUSIC
     if(FLAC_init(mixer) == 0)
         add_music_decoder("FLAC");
     #endif
+
     #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
     /* Keep a copy of the mixer */
     used_mixer = *mixer;
@@ -689,6 +732,7 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     /* MIDI files have the magic four bytes "MThd" */
     if(strncmp((char *)magic, "MThd", 4) == 0)
         return MUS_MID;
+
     #ifdef USE_ADL_MIDI
     if(strncmp((char *)magic, "MUS\x1A", 4) == 0)
         return MUS_ADLMIDI;
@@ -700,6 +744,7 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     if(strncmp((char *)magic, "CTMF", 4) == 0)
         return MUS_ADLMIDI;
     #endif
+
     /* MIDI files have the magic four bytes "RIFF" */
     if((strncmp((char *)magic, "RIFF", 4) == 0) && (strncmp((char *)(moremagic + 4), "RMID", 4) == 0))
         return MUS_MID;
@@ -864,6 +909,7 @@ void parse_adlmidi_args(char *args)
                     ADLMIDI_setScaleMod(value);
                     break;
                     #endif
+
                 case 's':
                     MIX_SetMidiDevice(value);
                     break;
@@ -1158,6 +1204,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         break;
         #endif
         #ifdef MID_MUSIC
+
         #ifdef USE_ADL_MIDI
     case MUS_ADLMIDI:
         #endif
@@ -1168,6 +1215,9 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
             mididevice_next = 0;
             #ifdef USE_ADL_MIDI
             ADLMIDI_setDefaults();
+            #endif
+            #ifdef USE_OPN2_MIDI
+            OPNMIDI_setDefaults();
             #endif
             parse_adlmidi_args(music_args);
         }
@@ -1197,6 +1247,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
                 Mix_SetError("Native MIDI is not ok: %s", native_midi_error());
             break;
             #endif
+
             #ifdef USE_FLUIDSYNTH_MIDI
         case MIDI_Fluidsynth:
             if(fluidsynth_ok)
@@ -1209,6 +1260,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
             }
             break;
             #endif
+
             #ifdef USE_ADL_MIDI
         case MIDI_ADLMIDI:
             if(adl_midi_ok)
@@ -1221,6 +1273,20 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
             }
             break;
             #endif
+
+            #ifdef USE_OPN2_MIDI
+        case MIDI_OPNMIDI:
+            if(opn2_midi_ok)
+            {
+                SDL_RWseek(src, start, RW_SEEK_SET);
+                music->data.midi_opn = OPNMIDI_new_RW(src, freesrc);
+                if(music->data.midi_opn)
+                    music->error = 0;
+                break;
+            }
+            break;
+            #endif
+
             #ifdef USE_TIMIDITY_MIDI
         case MIDI_Timidity:
             if(timidity_ok)
@@ -1239,6 +1305,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         }
         break;
         #endif
+
         #ifdef GME_MUSIC
     case MUS_SPC:
         if(music->error)
@@ -1255,6 +1322,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         }
         break;
         #endif
+
         #if defined(MODPLUG_MUSIC) || defined(MOD_MUSIC)
     case MUS_MOD:
         #ifdef MODPLUG_MUSIC
@@ -1267,6 +1335,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
                 music->error = 0;
         }
         #endif
+
         #ifdef MOD_MUSIC
         if(music->error)
         {
@@ -1357,6 +1426,7 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
                 }
                 break;
                 #endif
+
                 #ifdef USE_FLUIDSYNTH_MIDI
             case MIDI_Fluidsynth:
                 if(fluidsynth_ok)
@@ -1366,6 +1436,7 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
                 }
                 break;
                 #endif
+
                 #ifdef USE_ADL_MIDI
             case MIDI_ADLMIDI:
                 if(adl_midi_ok)
@@ -1375,6 +1446,17 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
                 }
                 break;
                 #endif
+
+                #ifdef USE_OPN2_MIDI
+            case MIDI_OPNMIDI:
+                if(opn2_midi_ok)
+                {
+                    OPNMIDI_delete(music->data.midi_opn);
+                    goto skip;
+                }
+                break;
+                #endif
+
                 #ifdef USE_TIMIDITY_MIDI
             case MIDI_Timidity:
                 if(timidity_ok)
@@ -1675,6 +1757,7 @@ static int music_internal_play(Mix_Music *music, double position)
             }
             break;
             #endif
+
             #ifdef USE_FLUIDSYNTH_MIDI
         case MIDI_Fluidsynth:
             if(fluidsynth_ok)
@@ -1684,6 +1767,7 @@ static int music_internal_play(Mix_Music *music, double position)
             }
             break;
             #endif
+
             #ifdef USE_ADL_MIDI
         case MIDI_ADLMIDI:
             if(adl_midi_ok)
@@ -1695,6 +1779,19 @@ static int music_internal_play(Mix_Music *music, double position)
             }
             break;
             #endif
+
+            #ifdef USE_OPN2_MIDI
+        case MIDI_OPNMIDI:
+            if(opn2_midi_ok)
+            {
+                OPNMIDI_setInfiniteLoop(music_playing->data.midi_opn, music_loops < 0 ? 1 : 0);
+                OPNMIDI_play(music->data.midi_opn);
+                music_internal_initialize_volume();
+                goto skip;
+            }
+            break;
+            #endif
+
             #ifdef USE_TIMIDITY_MIDI
         case MIDI_Timidity:
             if(timidity_ok)
@@ -1934,6 +2031,7 @@ static void music_internal_volume(int volume)
             }
             break;
             #endif
+
             #ifdef USE_FLUIDSYNTH_MIDI
         case MIDI_Fluidsynth:
             if(fluidsynth_ok)
@@ -1943,6 +2041,7 @@ static void music_internal_volume(int volume)
             }
             break;
             #endif
+
             #ifdef USE_ADL_MIDI
         case MIDI_ADLMIDI:
             if(adl_midi_ok)
@@ -1952,6 +2051,17 @@ static void music_internal_volume(int volume)
             }
             break;
             #endif
+
+            #ifdef USE_OPN2_MIDI
+        case MIDI_OPNMIDI:
+            if(opn2_midi_ok)
+            {
+                OPNMIDI_setvolume(music_playing->data.midi_opn, volume);
+                return;
+            }
+            break;
+            #endif
+
             #ifdef USE_TIMIDITY_MIDI
         case MIDI_Timidity:
             if(timidity_ok)
@@ -2049,6 +2159,7 @@ static void music_internal_halt(void)
             }
             break;
             #endif
+
             #ifdef USE_FLUIDSYNTH_MIDI
         case MIDI_Fluidsynth:
             if(fluidsynth_ok)
@@ -2058,6 +2169,7 @@ static void music_internal_halt(void)
             }
             break;
             #endif
+
             #ifdef USE_ADL_MIDI
         case MIDI_ADLMIDI:
             if(adl_midi_ok)
@@ -2067,6 +2179,17 @@ static void music_internal_halt(void)
             }
             break;
             #endif
+
+            #ifdef USE_OPN2_MIDI
+        case MIDI_OPNMIDI:
+            if(opn2_midi_ok)
+            {
+                OPNMIDI_stop(music_playing->data.midi_opn);
+                goto skip;
+            }
+            break;
+            #endif
+
             #ifdef USE_TIMIDITY_MIDI
         case MIDI_Timidity:
             if(timidity_ok)
@@ -2265,6 +2388,7 @@ static int music_internal_playing()
             }
             break;
             #endif
+
             #ifdef USE_ADL_MIDI
         case MIDI_ADLMIDI:
             if(adl_midi_ok)
@@ -2275,6 +2399,18 @@ static int music_internal_playing()
             }
             break;
             #endif
+
+            #ifdef USE_OPN2_MIDI
+        case MIDI_OPNMIDI:
+            if(opn2_midi_ok)
+            {
+                if(! OPNMIDI_playing(music_playing->data.midi_opn))
+                    playing = 0;
+                goto skip;
+            }
+            break;
+            #endif
+
             #ifdef USE_TIMIDITY_MIDI
         case MIDI_Timidity:
             if(timidity_ok)
@@ -2372,22 +2508,33 @@ void close_music(void)
     #ifdef CMD_MUSIC
     Mix_SetMusicCMD(NULL);
     #endif
+
     #ifdef MODPLUG_MUSIC
     modplug_exit();
     #endif
+
     #ifdef MOD_MUSIC
     MOD_exit();
     #endif
+
     #ifdef GME_MUSIC
     GME_exit();
     #endif
+
     #ifdef MID_MUSIC
-    # ifdef USE_ADL_MIDI
+
+    #ifdef USE_ADL_MIDI
     ADLMIDI_exit();
-    # endif
+    #endif
+
+    #ifdef USE_OPN2_MIDI
+    OPNMIDI_exit();
+    #endif
+
     # ifdef USE_TIMIDITY_MIDI
     Timidity_Close();
     # endif
+
     #endif
 
     if(music_file) SDL_free(music_file);
@@ -2632,28 +2779,46 @@ void SDLCALLCC MIX_ADLMIDI_setVolumeModel(int vm)
 }
 
 
+void SDLCALLCC MIX_OPNMIDI_setCustomBankFile(const char *bank_wonp_path)
+{
+    #ifdef USE_OPN2_MIDI
+    OPNMIDI_setCustomBankFile(bank_wonp_path);
+    #endif
+}
+
+
 int SDLCALLCC MIX_SetMidiDevice(int device)
 {
     switch(device)
     {
         #ifdef MID_MUSIC
+
         #ifdef USE_ADL_MIDI
     case MIDI_ADLMIDI:
         #endif
+
+        #ifdef USE_OPN2_MIDI
+    case MIDI_OPNMIDI:
+        #endif
+
         #ifdef USE_TIMIDITY_MIDI
     case MIDI_Timidity:
         #endif
+
         #ifdef USE_NATIVE_MIDI
     case MIDI_Native:
         #endif
+
         #ifdef USE_FLUIDSYNTH_MIDI
     case MIDI_Fluidsynth:
         #endif
+
         mididevice_next = device;
         need_reset_midi = 0;
         return 0;
         break;
         #endif
+
     default:
         Mix_SetError("Unknown MIDI Device");
         return -1;
@@ -2665,3 +2830,4 @@ void SDLCALLCC MIX_SetLockMIDIArgs(int lock_midiargs)
 {
     lock_midi_args = lock_midiargs;
 }
+

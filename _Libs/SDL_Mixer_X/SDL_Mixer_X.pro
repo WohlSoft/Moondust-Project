@@ -74,6 +74,7 @@ DEFINES += \
     USE_TIMIDITY_MIDI \
     #USE_FLUIDSYNTH_MIDI \
     USE_ADL_MIDI \
+    USE_OPN2_MIDI \
     OGG_MUSIC \
     FLAC_MUSIC \
     MP3_MAD_MUSIC \
@@ -153,6 +154,7 @@ win32: {
 }
 
 contains(DEFINES, USE_ADL_MIDI):        include($$PWD/play_midi_adl.pri)
+contains(DEFINES, USE_OPN2_MIDI):       include($$PWD/play_midi_opn.pri)
 contains(DEFINES, USE_TIMIDITY_MIDI):   include($$PWD/timidity/timidity.pri)
 contains(DEFINES, USE_NATIVE_MIDI):     include($$PWD/play_midi_native.pri)
 contains(DEFINES, USE_FLUIDSYNTH_MIDI): include($$PWD/play_midi_fluid.pri)
