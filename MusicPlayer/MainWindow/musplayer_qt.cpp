@@ -94,31 +94,33 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     restoreGeometry(setup.value("Window-Geometry").toByteArray());
     ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
 
+    ui->opnmidi_extra->setVisible(ui->mididevice->currentIndex() == 3);
+    ui->adlmidi_xtra->setVisible(ui->mididevice->currentIndex() == 0);
+
     switch(ui->mididevice->currentIndex())
     {
     case 0:
         MIX_SetMidiDevice(MIDI_ADLMIDI);
-        ui->adlmidi_xtra->setVisible(true);
         break;
 
     case 1:
         MIX_SetMidiDevice(MIDI_Timidity);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 2:
         MIX_SetMidiDevice(MIDI_Native);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 3:
+        MIX_SetMidiDevice(MIDI_OPNMIDI);
+        break;
+
+    case 4:
         MIX_SetMidiDevice(MIDI_Fluidsynth);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     default:
         MIX_SetMidiDevice(MIDI_ADLMIDI);
-        ui->adlmidi_xtra->setVisible(true);
         break;
     }
 
@@ -139,6 +141,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->volume->setValue(setup.value("Volume", 128).toInt());
     m_prevTrackID = ui->trackID->value();
     ui->adlmidi_xtra->setVisible(false);
+    ui->opnmidi_extra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->gme_setup->setVisible(false);
 
@@ -354,6 +357,7 @@ void MusPlayer_Qt::switchMidiDevice(int index)
 {
     ui->midi_setup->setVisible(false);
     ui->adlmidi_xtra->setVisible(false);
+    ui->opnmidi_extra->setVisible(false);
     ui->midi_setup->setVisible(true);
 
     switch(index)
@@ -365,17 +369,19 @@ void MusPlayer_Qt::switchMidiDevice(int index)
 
     case 1:
         MIX_SetMidiDevice(MIDI_Timidity);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 2:
         MIX_SetMidiDevice(MIDI_Native);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 3:
+        MIX_SetMidiDevice(MIDI_OPNMIDI);
+        ui->opnmidi_extra->setVisible(true);
+        break;
+
+    case 4:
         MIX_SetMidiDevice(MIDI_Fluidsynth);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     default:
@@ -450,6 +456,7 @@ void MusPlayer_Qt::on_play_clicked()
     ui->musCopyright->setText(PGE_MusicPlayer::MUS_getMusCopy());
     ui->gme_setup->setVisible(false);
     ui->adlmidi_xtra->setVisible(false);
+    ui->opnmidi_extra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->frame->setVisible(false);
     ui->frame->setVisible(true);
@@ -460,6 +467,7 @@ void MusPlayer_Qt::on_play_clicked()
     {
     case MUS_MID:
         ui->adlmidi_xtra->setVisible(ui->mididevice->currentIndex() == 0);
+        ui->opnmidi_extra->setVisible(ui->mididevice->currentIndex() == 3);
         ui->midi_setup->setVisible(true);
         ui->frame->setVisible(true);
         break;
