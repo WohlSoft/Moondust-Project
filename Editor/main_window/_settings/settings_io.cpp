@@ -140,7 +140,7 @@ void MainWindow::loadSettings()
         loadToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps,     false,  false);
         loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      false,  true);
 
-        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        false,  true);
+        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        true,   true);
         loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       false,  true);
         loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      false,  true);
         loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      false,  true);

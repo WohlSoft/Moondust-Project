@@ -104,12 +104,12 @@ void MainWindow::on_actionModern_GUI_triggered()
         on_actionLVLToolBox_triggered(true);
     if(win==WND_World)
         on_actionWLDToolBox_triggered(true);
-    if((win==WND_Level) || (win==WND_World))
-        on_actionTilesetBox_triggered(false);
+    //if((win==WND_Level) || (win==WND_World))
+    //    on_actionTilesetBox_triggered(false);
 
     dock_LvlItemBox->m_lastVisibilityState = true;
     dock_WldItemBox->m_lastVisibilityState = true;
-    dock_TilesetBox->m_lastVisibilityState = false;
+    //dock_TilesetBox->m_lastVisibilityState = false;
     m_toolbarVanilla->setVisible(false);
 }
 
