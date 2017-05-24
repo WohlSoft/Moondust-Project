@@ -48,21 +48,27 @@ int Mix_InitFluidSynth()
         if ( fluidsynth.handle == NULL ) return -1;
 #endif
 
+        #ifndef USE_FLUIDLIGHT
         FLUIDSYNTH_LOADER(delete_fluid_player, int (*)(fluid_player_t*));
+        #endif
         FLUIDSYNTH_LOADER(delete_fluid_settings, void (*)(fluid_settings_t*));
         FLUIDSYNTH_LOADER(delete_fluid_synth, int (*)(fluid_synth_t*));
+        #ifndef USE_FLUIDLIGHT
         FLUIDSYNTH_LOADER(fluid_player_add, int (*)(fluid_player_t*, const char*));
         FLUIDSYNTH_LOADER(fluid_player_add_mem, int (*)(fluid_player_t*, const void*, size_t));
         FLUIDSYNTH_LOADER(fluid_player_get_status, int (*)(fluid_player_t*));
         FLUIDSYNTH_LOADER(fluid_player_play, int (*)(fluid_player_t*));
         FLUIDSYNTH_LOADER(fluid_player_set_loop, int (*)(fluid_player_t*, int));
         FLUIDSYNTH_LOADER(fluid_player_stop, int (*)(fluid_player_t*));
+        #endif
         FLUIDSYNTH_LOADER(fluid_settings_setnum, int (*)(fluid_settings_t*, const char*, double));
         FLUIDSYNTH_LOADER(fluid_synth_get_settings, fluid_settings_t* (*)(fluid_synth_t*));
         FLUIDSYNTH_LOADER(fluid_synth_set_gain, void (*)(fluid_synth_t*, float));
         FLUIDSYNTH_LOADER(fluid_synth_sfload, int(*)(fluid_synth_t*, const char*, int));
         FLUIDSYNTH_LOADER(fluid_synth_write_s16, int(*)(fluid_synth_t*, int, void*, int, int, void*, int, int));
+        #ifndef USE_FLUIDLIGHT
         FLUIDSYNTH_LOADER(new_fluid_player, fluid_player_t* (*)(fluid_synth_t*));
+        #endif
         FLUIDSYNTH_LOADER(new_fluid_settings, fluid_settings_t* (*)(void));
         FLUIDSYNTH_LOADER(new_fluid_synth, fluid_synth_t* (*)(fluid_settings_t*));
     }

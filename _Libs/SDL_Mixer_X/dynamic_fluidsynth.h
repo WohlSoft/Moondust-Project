@@ -24,27 +24,38 @@
 
 #ifdef USE_FLUIDSYNTH_MIDI
 
+#ifndef USE_FLUIDLIGHT
 #include <fluidsynth.h>
+#else
+#include "FluidLite/fluidlite.h"
+#include "FluidLite/fluid_midi.h"
+#endif
 
 typedef struct {
     int loaded;
     void *handle;
 
+    #ifndef USE_FLUIDLIGHT
     int (*delete_fluid_player)(fluid_player_t*);
+    #endif
     void (*delete_fluid_settings)(fluid_settings_t*);
     int (*delete_fluid_synth)(fluid_synth_t*);
+    #ifndef USE_FLUIDLIGHT
     int (*fluid_player_add)(fluid_player_t*, const char*);
     int (*fluid_player_add_mem)(fluid_player_t*, const void*, size_t);
     int (*fluid_player_get_status)(fluid_player_t*);
     int (*fluid_player_play)(fluid_player_t*);
     int (*fluid_player_set_loop)(fluid_player_t*, int);
     int (*fluid_player_stop)(fluid_player_t*);
+    #endif
     int (*fluid_settings_setnum)(fluid_settings_t*, const char*, double);
     fluid_settings_t* (*fluid_synth_get_settings)(fluid_synth_t*);
     void (*fluid_synth_set_gain)(fluid_synth_t*, float);
     int (*fluid_synth_sfload)(fluid_synth_t*, const char*, int);
     int (*fluid_synth_write_s16)(fluid_synth_t*, int, void*, int, int, void*, int, int);
+    #ifndef USE_FLUIDLIGHT
     fluid_player_t* (*new_fluid_player)(fluid_synth_t*);
+    #endif
     fluid_settings_t* (*new_fluid_settings)(void);
     fluid_synth_t* (*new_fluid_synth)(fluid_settings_t*);
 } fluidsynth_loader;
