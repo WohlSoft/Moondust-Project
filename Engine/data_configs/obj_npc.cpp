@@ -139,6 +139,8 @@ bool ConfigManager::loadLevelNPC()
 
         snpc.setup.id = i;
         lvl_npc_indexes.storeElement(snpc.setup.id, snpc);
+        //Load custom config if possible
+        loadCustomConfig<obj_npc>(lvl_npc_indexes, i, Dir_NPC, "npc", "npc", &loadLevelNPC, true);
         //Process NPC.txt if possible
         loadNpcTxtConfig(i);
 

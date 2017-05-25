@@ -156,13 +156,14 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
                       CustomDirManager &dir,
                       std::string fileName = "file",
                       std::string section = "item",
-                      bool (*loaderFunk)(obj_T &, std::string, obj_T *, std::string, IniProcessing *) = nullptr
+                      bool (*loaderFunk)(obj_T &, std::string, obj_T *, std::string, IniProcessing *) = nullptr,
+                      bool skipTXT = false
                      )
 {
     bool isDefault = false;
     std::string file = dir.getCustomFile(fmt::format("{1}-{0}.ini", ID, fileName), &isDefault);
 
-    if(file.empty())
+    if(!skipTXT && file.empty())
         file = dir.getCustomFile(fmt::format("{1}-{0}.txt", ID, fileName), &isDefault);
 
     if(!file.empty() && !isDefault)
