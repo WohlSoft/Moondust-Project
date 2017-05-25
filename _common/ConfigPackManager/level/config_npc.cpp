@@ -177,7 +177,7 @@ bool NpcSetup::parse(IniProcessing *setup,
     /*************Build custom animation settings**end**********/
 
     /***************GRID And snap*********************************/
-    setup->read("grid", grid, merge_with ? merge_with->grid : defaultGrid);
+    setup->read("grid", grid, pMerge(grid, defaultGrid));
     NumberLimiter::apply(grid, 1u);
     setup->read("grid-attachement-style", grid_attach_style, 0);
     NumberLimiter::apply(grid_attach_style, 0u);

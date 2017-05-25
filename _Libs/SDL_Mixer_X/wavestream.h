@@ -42,6 +42,8 @@ typedef struct {
     SDL_AudioCVT cvt;
     struct MyResampler resample;
     int len_available;
+    int volume;
+    int playing;
     Uint8 *snd_available;
     int numloops;
     WAVLoopPoint *loops;
@@ -53,7 +55,7 @@ typedef struct {
 extern int WAVStream_Init(SDL_AudioSpec *mixer);
 
 /* Unimplemented */
-extern void WAVStream_SetVolume(int volume);
+extern void WAVStream_SetVolume(WAVStream *music, int volume);
 
 /* Load a WAV stream from an SDL_RWops object */
 extern WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc);
@@ -62,13 +64,13 @@ extern WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc);
 extern void WAVStream_Start(WAVStream *wave);
 
 /* Play some of a stream previously started with WAVStream_Start() */
-extern int WAVStream_PlaySome(Uint8 *stream, int len);
+extern int WAVStream_PlaySome(WAVStream *music, Uint8 *stream, int len);
 
 /* Stop playback of a stream previously started with WAVStream_Start() */
-extern void WAVStream_Stop(void);
+extern void WAVStream_Stop(WAVStream *wave);
 
 /* Close the given WAV stream */
 extern void WAVStream_FreeSong(WAVStream *wave);
 
 /* Return non-zero if a stream is currently playing */
-extern int WAVStream_Active(void);
+extern int WAVStream_Active(WAVStream *wave);

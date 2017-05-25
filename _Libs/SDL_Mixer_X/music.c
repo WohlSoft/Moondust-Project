@@ -324,7 +324,7 @@ void music_mixer(void *udata, Uint8 *stream, int len)
             #endif
             #ifdef WAV_MUSIC
         case MUS_WAV:
-            left = WAVStream_PlaySome(stream, len);
+            left = WAVStream_PlaySome(music_playing->data.wave, stream, len);
             break;
             #endif
             #ifdef MODPLUG_MUSIC
@@ -2000,7 +2000,7 @@ static void music_internal_volume(int volume)
         #endif
         #ifdef WAV_MUSIC
     case MUS_WAV:
-        WAVStream_SetVolume(volume);
+        WAVStream_SetVolume(music_playing->data.wave, volume);
         break;
         #endif
         #ifdef MODPLUG_MUSIC
@@ -2128,7 +2128,7 @@ static void music_internal_halt(void)
         #endif
         #ifdef WAV_MUSIC
     case MUS_WAV:
-        WAVStream_Stop();
+        WAVStream_Stop(music_playing->data.wave);
         break;
         #endif
         #ifdef MODPLUG_MUSIC
@@ -2342,7 +2342,7 @@ static int music_internal_playing()
         #endif
         #ifdef WAV_MUSIC
     case MUS_WAV:
-        if(! WAVStream_Active())
+        if(! WAVStream_Active(music_playing->data.wave))
             playing = 0;
         break;
         #endif
