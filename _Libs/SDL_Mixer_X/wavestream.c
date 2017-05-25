@@ -102,13 +102,8 @@ typedef struct {
 #define SSND        0x444e5353      /* "SSND" */
 #define COMM        0x4d4d4f43      /* "COMM" */
 
-
-/* Currently we only support a single stream at a time */
-static WAVStream *music = NULL;
-
 /* This is the format of the audio mixer data */
 static SDL_AudioSpec mixer;
-static int wavestream_volume = MIX_MAX_VOLUME;
 
 /* Function to load the WAV/AIFF stream */
 static SDL_bool LoadWAVStream(WAVStream *wave);
@@ -123,9 +118,9 @@ int WAVStream_Init(SDL_AudioSpec *mixerfmt)
     return(0);
 }
 
-void WAVStream_SetVolume(int volume)
+void WAVStream_SetVolume(WAVStream *music, int volume)
 {
-    wavestream_volume = volume;
+    music->volume = volume;
 }
 
 /* Load a WAV stream from the given RWops object */
@@ -145,6 +140,7 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
         Uint32 magic;
 
         SDL_zerop(wave);
+        wave->volume = MIX_MAX_VOLUME;
         wave->src = src;
         wave->freesrc = (SDL_bool)freesrc;
         MyResample_zero(&wave->resample);
@@ -207,7 +203,7 @@ void WAVStream_Start(WAVStream *wave)
         loop->current_play_count = loop->initial_play_count;
     }
     SDL_RWseek(wave->src, wave->start, RW_SEEK_SET);
-    music = wave;
+    wave->playing = 1;
 }
 
 /* Play some of a stream previously started with WAVStream_Start() */
@@ -310,11 +306,11 @@ static void PlaySome(WAVStream* music)
     }
 }
 
-int WAVStream_PlaySome(Uint8 *stream, int len)
+int WAVStream_PlaySome(WAVStream *music, Uint8 *stream, int len)
 {
     int mixable;
 
-    if (!music)
+    if(!music || !music->playing)
         return 0;
 
     while ((SDL_RWtell(music->src) < music->stop) && (len > 0))
@@ -327,11 +323,11 @@ int WAVStream_PlaySome(Uint8 *stream, int len)
         if ( mixable > music->len_available ) {
             mixable = music->len_available;
         }
-        if( wavestream_volume == MIX_MAX_VOLUME ) {
+        if( music->volume == MIX_MAX_VOLUME ) {
             SDL_memcpy(stream, music->snd_available, (size_t)mixable);
         } else {
             SDL_MixAudioFormat(stream, music->snd_available, mixer.format,
-                               (Uint32)mixable, wavestream_volume);
+                               (Uint32)mixable, music->volume);
         }
         music->len_available -= mixable;
         music->snd_available += mixable;
@@ -342,9 +338,9 @@ int WAVStream_PlaySome(Uint8 *stream, int len)
 }
 
 /* Stop playback of a stream previously started with WAVStream_Start() */
-void WAVStream_Stop(void)
+void WAVStream_Stop(WAVStream *wave)
 {
-    music = NULL;
+    wave->playing = 0;
 }
 
 /* Close the given WAV stream */
@@ -366,14 +362,16 @@ void WAVStream_FreeSong(WAVStream *wave)
 }
 
 /* Return non-zero if a stream is currently playing */
-int WAVStream_Active(void)
+int WAVStream_Active(WAVStream *wave)
 {
     int active;
 
     active = 0;
-    if (music && (SDL_RWtell(music->src) < music->stop)) {
+    if(wave && wave->playing && (SDL_RWtell(wave->src) < wave->stop))
+    {
         active = 1;
     }
+
     return(active);
 }
 
