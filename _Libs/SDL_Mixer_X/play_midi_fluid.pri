@@ -1,3 +1,5 @@
+include($$PWD/FluidLite/FluidLite.pri)
+
 HEADERS += \
     $$PWD/dynamic_fluidsynth.h \
     $$PWD/music_fluidsynth.h
