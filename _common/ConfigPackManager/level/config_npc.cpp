@@ -285,14 +285,15 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("death-sound-id", death_sound_id, merge_with ? merge_with->death_sound_id : 0);
 
     //Editor features
-    setup->read("direction-alt-title", direct_alt_title, "");
-    setup->read("direction-alt-left-field", direct_alt_left, "");
-    setup->read("direction-alt-right-field", direct_alt_right, "");
-    setup->read("direction-no-rand-field", direct_disable_random, pMerge(direct_disable_random, false));
+    setup->read("direction-alt-title",      direct_alt_title,       pMerge(direct_alt_title, ""));
+    setup->read("direction-alt-left-field", direct_alt_left,        pMerge(direct_alt_left, ""));
+    setup->read("direction-alt-right-field",direct_alt_right,       pMerge(direct_alt_right, ""));
+    setup->read("direction-alt-rand-field", direct_alt_rand,        pMerge(direct_alt_rand, ""));
+    setup->read("direction-no-rand-field",  direct_disable_random,  pMerge(direct_disable_random, false));
 
     //Events
-    setup->read("deactivate", deactivation, pMerge(deactivation, 0));
-    setup->read("deactivate-delay", deactivationDelay, pMerge(deactivationDelay, 4000));
+    setup->read("deactivate",           deactivation,           pMerge(deactivation, 0));
+    setup->read("deactivate-delay",     deactivationDelay,      pMerge(deactivationDelay, 4000));
     NumberLimiter::applyD(deactivationDelay, 4000u, 0u);
     setup->read("deactivate-off-room",  deactivate_off_room,    pMerge(deactivate_off_room, false));
     setup->read("bump-on-stomp",        bump_on_stomp,          pMerge(bump_on_stomp, true));

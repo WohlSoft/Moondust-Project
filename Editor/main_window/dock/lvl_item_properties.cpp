@@ -510,49 +510,25 @@ void LvlItemProperties::LvlItemProps(int Type,
             npc.attach_layer = "";
             LvlPlacingItems::npcSet.attach_layer = "";
 
-            if(ui->PROPS_NpcEventActovateLock->isChecked())
-                LvlPlacingItems::npcSet.event_activate = NpcEventActivated;
-            else
-                LvlPlacingItems::npcSet.event_activate = "";
+            LvlPlacingItems::npcSet.event_activate = ui->PROPS_NpcEventActovateLock->isChecked() ? NpcEventActivated : "";
             npc.event_activate = LvlPlacingItems::npcSet.event_activate;
 
-            if(ui->PROPS_NpcEventDeathLock->isChecked())
-                LvlPlacingItems::npcSet.event_die = NpcEventDeath;
-            else
-                LvlPlacingItems::npcSet.event_die = "";
+            LvlPlacingItems::npcSet.event_die = ui->PROPS_NpcEventDeathLock->isChecked() ? NpcEventDeath : "";
             npc.event_die = LvlPlacingItems::npcSet.event_die;
 
-            if(ui->PROPS_NpcEventTalkLock->isChecked())
-                LvlPlacingItems::npcSet.event_talk = NpcEventTalk;
-            else
-                LvlPlacingItems::npcSet.event_talk = "";
+            LvlPlacingItems::npcSet.event_talk = ui->PROPS_NpcEventTalkLock->isChecked() ? NpcEventTalk : "";
             npc.event_talk = LvlPlacingItems::npcSet.event_talk;
 
-            if(ui->PROPS_NpcEventLEmptyLock->isChecked())
-                LvlPlacingItems::npcSet.event_emptylayer = NpcEventLayerEmpty;
-            else
-                LvlPlacingItems::npcSet.event_emptylayer = "";
+            LvlPlacingItems::npcSet.event_emptylayer = ui->PROPS_NpcEventLEmptyLock->isChecked() ? NpcEventLayerEmpty : "";
             npc.event_emptylayer = LvlPlacingItems::npcSet.event_emptylayer;
         }
 
         ui->PROPS_NpcPos->setText(tr("Position: [%1, %2]").arg(npc.x).arg(npc.y));
-
-        if(t_npc.setup.direct_alt_title != "")
-            ui->PROPS_NpcDir->setTitle(t_npc.setup.direct_alt_title);
-        else
-            ui->PROPS_NpcDir->setTitle(tr("Direction"));
-
-        if(t_npc.setup.direct_alt_left != "")
-            ui->PROPS_NPCDirLeft->setText(t_npc.setup.direct_alt_left);
-        else
-            ui->PROPS_NPCDirLeft->setText(tr("Left"));
-
+        ui->PROPS_NpcDir->setTitle(t_npc.setup.direct_alt_title.isEmpty() ? tr("Direction") : t_npc.setup.direct_alt_title);
+        ui->PROPS_NPCDirLeft->setText(t_npc.setup.direct_alt_left.isEmpty() ? tr("Left") : t_npc.setup.direct_alt_left);
         ui->PROPS_NPCDirRand->setEnabled(!t_npc.setup.direct_disable_random);
-
-        if(t_npc.setup.direct_alt_right != "")
-            ui->PROPS_NPCDirRight->setText(t_npc.setup.direct_alt_right);
-        else
-            ui->PROPS_NPCDirRight->setText(tr("Right"));
+        ui->PROPS_NPCDirRand->setText(t_npc.setup.direct_alt_rand.isEmpty() ? tr("Random") : t_npc.setup.direct_alt_rand);
+        ui->PROPS_NPCDirRight->setText(t_npc.setup.direct_alt_right.isEmpty() ? tr("Right") : t_npc.setup.direct_alt_right);
 
         switch(npc.direct)
         {

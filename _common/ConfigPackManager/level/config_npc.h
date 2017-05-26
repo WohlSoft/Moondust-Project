@@ -220,6 +220,7 @@ struct NpcSetup
     PGEString       direct_alt_title;
     PGEString       direct_alt_left;
     PGEString       direct_alt_right;
+    PGEString       direct_alt_rand;
     bool            direct_disable_random = false;
 
 //    ; Physics
