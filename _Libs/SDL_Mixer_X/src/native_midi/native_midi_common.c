@@ -22,7 +22,7 @@
 
 #include "native_midi_common.h"
 
-#include "../SDL_mixer_ext.h"
+#include <SDL_mixer_ext/SDL_mixer_ext.h>
 
 #include <stdlib.h>
 #include <string.h>
