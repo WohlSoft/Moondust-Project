@@ -29,8 +29,8 @@
 #include <unistd.h>
 #endif
 
-#include "SDL.h"
-#include "SDL_mixer_ext.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer_ext.h>
 
 #ifdef HAVE_SIGNAL_H
 #include <signal.h>
