@@ -150,7 +150,8 @@ typedef enum
     MIDI_ADLMIDI,
     MIDI_Native,
     MIDI_Timidity,
-    MIDI_Fluidsynth
+    MIDI_OPNMIDI,
+    MIDI_Fluidsynth,
 } Mix_MIDI_Device;
 
 /* Volume model type in the ADLMIDI */
@@ -731,6 +732,9 @@ extern DECLSPEC int  SDLCALL MIX_ADLMIDI_getVolumeModel();
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setVolumeModel(int vm);
 /* Reset all ADLMIDI properties to default state */
 extern DECLSPEC void SDLCALL MIX_ADLMIDI_setSetDefaults();
+
+/* Sets WOPN bank file for OPNMIDI playing device, affects on MIDI file reopen */
+extern DECLSPEC void SDLCALL MIX_OPNMIDI_setCustomBankFile(const char *bank_wonp_path);
 
 /* Change MIDI playing device (ADLMIDI, Timidity, Native MIDI (if available) and FluidSynth) */
 extern DECLSPEC int  SDLCALL MIX_SetMidiDevice(int device);
