@@ -33,7 +33,7 @@ bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_til
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
 
     if(stile.setup.parse(setup, tilePath, defaultGrid.terrain, merge_with ? &merge_with->setup : nullptr, &errStr))

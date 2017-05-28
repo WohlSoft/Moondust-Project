@@ -47,9 +47,11 @@ struct BgoSetup
         z_foreground_2 = 2
     };
     int32_t     zLayer = 0; //-1, 0, 1, 2
+    long double zOffset = 0.0l;
+    bool        zValueOverride = false;
+    long double zValue = 0.0l;
     int32_t     offsetX = 0;
     int32_t     offsetY = 0;
-    long double zOffset = 0.0l;
 
     PGEString   image_n;
     PGEString   mask_n;

@@ -190,18 +190,29 @@ bool BlockSetup::parse(IniProcessing *setup,
         frame_sequence = plFilter_frames_false;
     }
 
-    setup->readEnum("view", view, merge_with ? merge_with->view : 0,
-                    {
-                        {"background", 0},
-                        {"foreground", 1}
-                    });
+    {
+        IniProcessing::StrEnumMap zLayers = {
+            {"background", 0},
+            {"background1", 0},
+            {"foreground", 1},
+            {"foreground1", 1}
+        };
+        setup->readEnum("z-layer",  view, pMerge(view, 0), zLayers);
+        setup->readEnum("view",     view, view, zLayers);
+    }
 
     setup->read("animated",                 animated,       pMerge(animated, false));
     setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation
     setup->read("animation-bidirectional",  animation_bid,  pMerge(animation_bid, false)); //Bidirectional animation
     setup->read("frames",                   frames,         pMerge(frames, 1));
     NumberLimiter::apply(frames, 1u);
-    setup->read("framespeed",               framespeed,     pMerge(framespeed, 125));
+    setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
+    setup->read("frame-speed", framespeed, framespeed);//Alias
+    if(setup->hasKey("framespeed"))
+    {
+        setup->read("framespeed",  framespeed, framespeed);//Alias
+        framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
+    }
     NumberLimiter::apply(framespeed, 1u);
     setup->read("hit-sound-id",             hit_sound_id,   pMerge(hit_sound_id, 0));
     NumberLimiter::apply(hit_sound_id, 0u);

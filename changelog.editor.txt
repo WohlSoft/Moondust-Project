@@ -1,3 +1,8 @@
+Editor 0.3.1.13
+- All frame delay values in all INI files are renamed from "framespeed" and "frame-speed" into "frame-delay". Old values kept as aliases. Except "framespeed" now has 1/65 unit while others have millisecond unit.
+- Added an absolute Z-Value redefinition for BGOs in the INI configuration
+- Custom item INI files no more requiring to have the section declaration at begin
+
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
 - Added ability to define fixed size for exportable section piece

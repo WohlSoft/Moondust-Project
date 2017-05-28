@@ -45,7 +45,7 @@ ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
 void ItemBGO::construct()
 {
     m_gridSize = 32;
-    m_zMode = LevelBGO::ZDefault;
+    m_zLayer = LevelBGO::ZDefault;
     setData(ITEM_TYPE, "BGO");
 }
 
@@ -504,8 +504,10 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
     if(mergedSet)
     {
         m_localProps = (*mergedSet);
-        m_zMode       = m_localProps.setup.zLayer;
-        m_zOffset     = m_localProps.setup.zOffset;
+        m_zValueOverride = m_localProps.setup.zValueOverride;
+        m_zValue         = m_localProps.setup.zValue;
+        m_zLayer         = m_localProps.setup.zLayer;
+        m_zOffset        = m_localProps.setup.zOffset;
         m_gridSize    = m_localProps.setup.grid;
         m_gridOffsetX = m_localProps.setup.offsetX;
         m_gridOffsetY = m_localProps.setup.offsetY;
@@ -530,22 +532,27 @@ void ItemBGO::setZMode(int mode, qreal offset, bool init)
     m_data.z_offset = offset;
 
     qreal targetZ = 0;
-    switch(m_zMode)
-    {
-    case -1:
-        targetZ = m_scene->Z_BGOBack2 + m_zOffset + m_data.z_offset;
-        break;
-    case 1:
-        targetZ = m_scene->Z_BGOFore1 + m_zOffset + m_data.z_offset;
-        break;
-    case 2:
-        targetZ = m_scene->Z_BGOFore2 + m_zOffset + m_data.z_offset;
-        break;
-    case 0:
-    default:
-        targetZ = m_scene->Z_BGOBack1 + m_zOffset + m_data.z_offset;
-    }
 
+    if(m_zValueOverride)
+        targetZ = m_zValue;
+    else
+    {
+        switch(m_zLayer)
+        {
+        case -1:
+            targetZ = m_scene->Z_BGOBack2 + m_zOffset + m_data.z_offset;
+            break;
+        case 1:
+            targetZ = m_scene->Z_BGOFore1 + m_zOffset + m_data.z_offset;
+            break;
+        case 2:
+            targetZ = m_scene->Z_BGOFore2 + m_zOffset + m_data.z_offset;
+            break;
+        case 0:
+        default:
+            targetZ = m_scene->Z_BGOBack1 + m_zOffset + m_data.z_offset;
+        }
+    }
 
     switch(m_data.z_mode)
     {

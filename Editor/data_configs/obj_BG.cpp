@@ -54,7 +54,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg,
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
     {
         setup->read("name", sbg.name, pMerge(name, PGEString()));

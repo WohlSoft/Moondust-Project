@@ -63,7 +63,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
 
     if(sblock.setup.parse(setup, blockPath, defaultGrid.block, merge_with ? &merge_with->setup : nullptr, &errStr))

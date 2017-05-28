@@ -33,7 +33,7 @@ bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_s
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
 
     if(sScene.setup.parse(setup, scenePath, defaultGrid.scenery, merge_with ? &merge_with->setup : nullptr, &errStr))

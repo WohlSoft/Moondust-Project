@@ -139,7 +139,13 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("gfx-width",        gfx_w, pMerge(gfx_w, gfx_w));
     NumberLimiter::apply(gfx_w, 1u);
 
-    setup->read("frame-speed",              framespeed,     pMerge(framespeed, 128));
+    setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
+    setup->read("frame-speed", framespeed, framespeed);//Alias
+    if(setup->hasKey("framespeed"))
+    {
+        setup->read("framespeed",  framespeed, framespeed);//Alias
+        framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
+    }
     setup->read("display-frame",            display_frame,  pMerge(display_frame, false));
     setup->read("foreground",               foreground,     pMerge(foreground, false));
     setup->read("background",               background,     pMerge(background, false));
@@ -155,24 +161,31 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("custom-animation-er",      custom_ani_er,  pMerge(custom_ani_er, -1));
 
     /*************Build custom animation settings***************/
-    frames_left.clear();
-    frames_right.clear();
-    if(custom_ani_alg == 2)
+    if(setup->hasKey("custom-animation-alg"))
     {
-        IntArray common;
-        setup->read("ani-frames-cmn", common, common); // Common frames list
-        setup->read("ani-frames-left", frames_left, common); //left direction
-        setup->read("ani-frames-right", frames_right, common); //right direction
-        if(!common.empty())
+        /*
+         * Avoid accidental clean-up made by custom config file
+         * by checking existing of "custom-animation-alg" key
+         */
+        frames_left.clear();
+        frames_right.clear();
+        if(custom_ani_alg == 2)
         {
-            uint32_t framesOffset = ((framestyle > 0)? 1 : 0) * frames;
-            for(pge_size_t i = 0; i < frames_right.size(); i++)
-                frames_right[i] += framesOffset;
+            IntArray common;
+            setup->read("ani-frames-cmn", common, common); // Common frames list
+            setup->read("ani-frames-left", frames_left, common); //left direction
+            setup->read("ani-frames-right", frames_right, common); //right direction
+            if(!common.empty())
+            {
+                uint32_t framesOffset = ((framestyle > 0)? 1 : 0) * frames;
+                for(pge_size_t i = 0; i < frames_right.size(); i++)
+                    frames_right[i] += framesOffset;
+            }
+            custom_ani_fl = frames_left.front();
+            custom_ani_el = frames_left.back();
+            custom_ani_fr = frames_right.front();
+            custom_ani_er = frames_right.back();
         }
-        custom_ani_fl = frames_left.front();
-        custom_ani_el = frames_left.back();
-        custom_ani_fr = frames_right.front();
-        custom_ani_er = frames_right.back();
     }
     /*************Build custom animation settings**end**********/
 
@@ -263,7 +276,7 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("shared-animation",     shared_ani,             pMerge(shared_ani, 0));
     setup->read("immortal",             immortal,               pMerge(immortal, 0));
     setup->read("can-be-eaten",         can_be_eaten,           pMerge(can_be_eaten, 0));
-    setup->read("yoshicaneat",          can_be_eaten,           can_be_eaten);//<-- LEGACY! Update all config packs and remove this!
+    setup->read("yoshicaneat",          can_be_eaten,           can_be_eaten);//Alias. LEGACY! Update all config packs and remove this!
     setup->read("takable",              takable,                pMerge(takable, 0));
     setup->read("takable-sound-id",     takable_snd,            pMerge(takable_snd, 0));
     setup->read("grab-side",            grab_side,              pMerge(grab_side, 0));
@@ -362,12 +375,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     width =             (local->en_width) ? local->width : global.width;
     height =            (local->en_height) ? local->height : global.height;
     foreground =        (local->en_foreground) ? local->foreground : global.foreground;
-    framespeed =        (local->en_framespeed) ?
-                static_cast<uint32_t>(
-                    Maths::iRound(static_cast<double>(global.framespeed)
-                           / (8.0 / static_cast<double>(local->framespeed))))
-                : global.framespeed;
-
+    framespeed =        (local->en_framespeed) ? ((local->framespeed * 1000) / 8) : global.framespeed;
     framestyle =        (local->en_framestyle) ? static_cast<uint32_t>(local->framestyle) : global.framestyle;
 
     //Copy physical size to GFX size

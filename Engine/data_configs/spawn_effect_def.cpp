@@ -60,7 +60,8 @@ void SpawnEffectDef::fill(const std::string &prefix, IniProcessing *setup)
     setup->read((prefix + "-effect-start-y").c_str(), startY, 0.0);
     setup->read((prefix + "-effect-animation-loops").c_str(), animationLoops, 1);
     setup->read((prefix + "-effect-delay").c_str(), delay, 0);
-    setup->read((prefix + "-effect-framespeed").c_str(), framespeed , 0);
+    setup->read((prefix + "-effect-frame-delay").c_str(), framespeed, 0);
+    setup->read((prefix + "-effect-framespeed").c_str(), framespeed, framespeed);
     setup->read((prefix + "-effect-velocity-x").c_str(), velocityX, 0.0);
     setup->read((prefix + "-effect-velocity-y").c_str(), velocityY, 0.0);
     setup->read((prefix + "-effect-z-index").c_str(), zIndex, -5.0l);

@@ -6,6 +6,9 @@
 - Added a smooth camera following to opening path cells on the world map
 - Fixed the blinking of the playable character while it shown on multiple cameras
 - Fixed a bug which caused appearance of self in the list of contacted objects which causes very unexpected result
+- All frame delay values in all INI files are renamed from "framespeed" and "frame-speed" into "frame-delay". Old values kept as aliases. Except "framespeed" now has 1/65 unit while others have millisecond unit.
+- Added an absolute Z-Value redefinition for BGOs in the INI configuration
+- Custom item INI files no more requiring to have the section declaration at begin
 
 0.2.6
 - Improved testing of the renderers supports to avoid accidental running of the unsupported renderer

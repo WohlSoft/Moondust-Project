@@ -95,23 +95,34 @@ bool BgoSetup::parse(IniProcessing *setup,
     setup->read("icon", icon_n, pMerge(icon_n, ""));
 
     {
-        setup->readEnum("view", zLayer, (merge_with ? merge_with->zLayer : z_background_1),
-                        {
-                            {"foreground2", z_foreground_2},
-                            {"foreground1", z_foreground_1},
-                            {"foreground",  z_foreground_1},
-                            {"background",  z_background_1},
-                            {"background1", z_background_1},
-                            {"background2", z_background_2},
-                        });
+        IniProcessing::StrEnumMap zLayers = {
+            {"foreground2", z_foreground_2},
+            {"foreground1", z_foreground_1},
+            {"foreground",  z_foreground_1},
+            {"background",  z_background_1},
+            {"background1", z_background_1},
+            {"background2", z_background_2},
+        };
+        setup->readEnum("z-layer", zLayer, pMerge(zLayer, z_background_1), zLayers);
+        setup->readEnum("view", zLayer, zLayer, zLayers);//Alias
     }
-
     setup->read("z-offset", zOffset,    pMerge(zOffset, 0.0l));
+
+    zValueOverride = setup->hasKey("z-value") || setup->hasKey("priority");
+    setup->read("z-value",  zValue,    pMerge(zValue, 0.0l));
+    setup->read("priority", zValue,    zValue);//Alias
+
     setup->read("climbing", climbing ,  pMerge(climbing, false));
     setup->read("animated", animated,   pMerge(animated, false));
     setup->read("frames", frames,       pMerge(frames, 1));
     NumberLimiter::apply(frames, 1u);
-    setup->read("frame-speed", framespeed, pMerge(framespeed, 125));
+    setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
+    setup->read("frame-speed", framespeed, framespeed);//Alias
+    if(setup->hasKey("framespeed"))
+    {
+        setup->read("framespeed",  framespeed, framespeed);//Alias
+        framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
+    }
     NumberLimiter::apply(frame_h, 0u);
     frame_h =   animated ? Maths::uRound(double(h) / double(frames)) : h;
     setup->read("display-frame", display_frame, pMerge(display_frame, 0));

@@ -236,7 +236,8 @@ bool ConfigManager::loadPlayableCharacters()
 
                 if(splayer.wld_frames < 1) splayer.wld_frames = 1;
 
-                setup.read("frame-speed", splayer.wld_framespeed, 128);
+                setup.read("frame-delay", splayer.wld_framespeed, 128);//Real
+                setup.read("frame-speed", splayer.wld_framespeed, splayer.wld_framespeed);//Alias
 
                 if(splayer.wld_framespeed < 1) splayer.wld_framespeed = 1;
                 {
