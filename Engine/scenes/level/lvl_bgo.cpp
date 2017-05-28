@@ -63,51 +63,52 @@ void LVL_Bgo::transformTo_x(unsigned long id)
     long double targetZ = 0.0L;
     long double zOffset = static_cast<long double>(setup->setup.zOffset);
     int zMode = data.z_mode;
-
     if(zMode == LevelBGO::ZDefault)
     {
-        switch(setup->setup.zLayer)
+        zMode = setup->setup.zLayer;
+        if(setup->setup.zValueOverride)
+            targetZ = setup->setup.zValue;
+        else
         {
-        case -1:
-            zMode = LevelBGO::Background2;
+            switch(zMode)
+            {
+            case -1:
+                targetZ = LevelScene::zOrder.bgoBack2;
+                break;
+            case 0:
+                targetZ = LevelScene::zOrder.bgoBack1;
+                break;
+            case 1:
+                targetZ = LevelScene::zOrder.bgoFront1;
+                break;
+            case 2:
+                targetZ = LevelScene::zOrder.bgoFront1;
+                break;
+            default://Background-1 layer is default
+                targetZ = LevelScene::zOrder.bgoBack1;
+            }
+        }
+    }
+    else
+    {
+        switch(zMode)
+        {
+        case LevelBGO::Background2:
+            targetZ = LevelScene::zOrder.bgoBack2;
             break;
-
-        case 0:
-            zMode = LevelBGO::Background1;
+        case LevelBGO::Background1:
+            targetZ = LevelScene::zOrder.bgoBack1;
             break;
-
-        case 1:
-            zMode = LevelBGO::Foreground1;
+        case LevelBGO::Foreground1:
+            targetZ = LevelScene::zOrder.bgoFront1;
             break;
-
-        case 2:
-            zMode = LevelBGO::Foreground2;
+        case LevelBGO::Foreground2:
+            targetZ = LevelScene::zOrder.bgoFront1;
             break;
         }
     }
 
-    switch(zMode)
-    {
-    case LevelBGO::Background2:
-        targetZ = LevelScene::zOrder.bgoBack2 + zOffset + static_cast<long double>(data.z_offset);
-        break;
-
-    case LevelBGO::Background1:
-        targetZ = LevelScene::zOrder.bgoBack1 + zOffset + static_cast<long double>(data.z_offset);
-        break;
-
-    case LevelBGO::Foreground1:
-        targetZ = LevelScene::zOrder.bgoFront1 + zOffset + static_cast<long double>(data.z_offset);
-        break;
-
-    case LevelBGO::Foreground2:
-        targetZ = LevelScene::zOrder.bgoFront2 + zOffset + static_cast<long double>(data.z_offset);
-        break;
-
-    default:
-        targetZ = LevelScene::zOrder.bgoBack1 + zOffset + static_cast<long double>(data.z_offset);
-        break;
-    }
+    targetZ += zOffset + static_cast<long double>(data.z_offset);
 
     z_index = targetZ;
     m_scene->m_zCounter += 0.0000000000001L;

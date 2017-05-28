@@ -456,7 +456,13 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.meta.array_id));
 
-        obj_npc &t_npc = mw()->configs.main_npc[npc.id];
+        bool isLvlWin = ((mw()->activeChildWindow() == 1) && (mw()->activeLvlEditWin()));
+        obj_npc &t_npc   = isLvlWin ?
+                             mw()->activeLvlEditWin()->scene->m_localConfigNPCs[npc.id] :
+                             mw()->configs.main_npc[npc.id];
+
+        if(!t_npc.isValid)
+            t_npc = mw()->configs.main_npc[1];
 
         ui->PROPS_NPCContaiter->hide();
         ui->PROPS_NpcContainsLabel->hide();

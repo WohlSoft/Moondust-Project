@@ -33,7 +33,7 @@ bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
 
     if(spath.setup.parse(setup, pathPath, defaultGrid.paths, merge_with ? &merge_with->setup : nullptr, &errStr))

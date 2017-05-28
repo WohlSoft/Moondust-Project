@@ -247,11 +247,8 @@ private:
 
     void loadRotationTable();
 
-    //! Recently loaded INI-file
-    std::string m_recentIniFile;
-
     QString     getFullIniPath(QString iniFileName);
-    bool        openSection(IniProcessing *config, const std::string &section);
+    bool        openSection(IniProcessing *config, const std::string &section, bool tryGeneral = false);
     inline void closeSection(IniProcessing* file) { file->endGroup(); }
 
     //! Write errors into custom errors config

@@ -90,9 +90,10 @@ bool ConfigManager::loadLevelEffects()
             goto skipEffect;
         }
 
-        seffect.frames = effectset.value("frames", "1").toUInt();
-        seffect.framestyle = effectset.value("frame-style", "0").toInt();
-        seffect.framespeed = effectset.value("frame-speed", "125").toInt();
+        effectset.read("frames", seffect.frames, 1);
+        effectset.read("frame-style", seffect.framestyle, 0);
+        effectset.read("frame-delay", seffect.framespeed, 125);
+        effectset.read("frame-speed", seffect.framespeed, seffect.framespeed);//Alias
         seffect.frame_h = 0;
         seffect.id = uint64_t(i);
         //Add to Index

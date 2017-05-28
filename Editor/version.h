@@ -28,7 +28,7 @@
 #define _BUILD_VER "<empty>"
 #endif
 
-#define _FILE_VERSION "0.3.1.12"
+#define _FILE_VERSION "0.3.1.13"
 #define _FILE_RELEASE ""
 
 //Version of this program

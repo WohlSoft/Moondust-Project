@@ -61,7 +61,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
 
     if(sbgo.setup.parse(setup, bgoPath, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))

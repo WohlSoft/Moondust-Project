@@ -42,7 +42,8 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
         ptr_guard.reset(setup);
     }
 
-    setup->beginGroup(section);
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
         setup->read("name", sbg.name, pMerge(name, ""));
         if(sbg.name.empty())

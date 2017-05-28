@@ -86,7 +86,13 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     setup->read("animated",     animated,   pMerge(animated, 0));
     setup->read("frames",       frames,     pMerge(frames, 1));
     NumberLimiter::apply(frames, uint32_t(1u));
-    setup->read("frame-speed",  framespeed, pMerge(framespeed, 175));
+    setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
+    setup->read("frame-speed", framespeed, framespeed);//Alias
+    if(setup->hasKey("framespeed"))
+    {
+        setup->read("framespeed",  framespeed, framespeed);//Alias
+        framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
+    }
     NumberLimiter::apply(framespeed, uint32_t(1u));
     frame_h = animated ? Maths::uRound(double(h) / double(frames)) : h;
     NumberLimiter::apply(frame_h, uint32_t(0u));
