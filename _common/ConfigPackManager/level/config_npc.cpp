@@ -375,7 +375,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     width =             (local->en_width) ? local->width : global.width;
     height =            (local->en_height) ? local->height : global.height;
     foreground =        (local->en_foreground) ? local->foreground : global.foreground;
-    framespeed =        (local->en_framespeed) ? ((local->framespeed * 1000) / 8) : global.framespeed;
+    framespeed =        (local->en_framespeed) ? ((local->framespeed * 1000) / 65) : global.framespeed;
     framestyle =        (local->en_framestyle) ? static_cast<uint32_t>(local->framestyle) : global.framestyle;
 
     //Copy physical size to GFX size
