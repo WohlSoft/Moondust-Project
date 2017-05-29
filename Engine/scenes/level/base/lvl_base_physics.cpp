@@ -118,6 +118,13 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
 {
     if(m_paused && !force)
         return;
+//FIXME: Fix the missing in-area detector's trap position
+    if(m_parent && (m_bodytype == Body_DYNAMIC))
+    {
+        m_momentum.velX     = m_momentum_relative.velX;
+        m_momentum.velXsrc  = m_momentum_relative.velXsrc;
+        m_momentum.velY     = m_momentum_relative.velY;
+    }
 
     double G = phys_setup.gravityScale * m_scene->m_globalGravity;
     double accelCof = ticks / 1000.0;
@@ -233,6 +240,18 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     m_momentum.saveOld();
     m_momentum.x += iterateX;
     m_momentum.y += iterateY;
+
+//FIXME: Fix the missing in-area detector's trap position
+    if(m_parent && (m_bodytype == Body_DYNAMIC))
+    {
+        //m_momentum_relative.saveOld();
+        m_momentum_relative.velX    = m_momentum.velX;
+        m_momentum_relative.velXsrc = m_momentum.velXsrc;
+        m_momentum_relative.velY    = m_momentum.velY;
+        m_momentum_relative.x += iterateX;
+        m_momentum_relative.y += iterateY;
+    }
+
     m_treemap.updatePos();
 }
 

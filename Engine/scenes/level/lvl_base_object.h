@@ -72,53 +72,98 @@ class PGE_Phys_Object: public PGE_physBody
          * \return Position X at left-top corner
          */
         virtual double posX();
+        virtual double posXrelative();
         /*!
          * \brief Position Y at left-top corner
          * \return Position Y at left-top corner
          */
         virtual double posY();
+        virtual double posYrelative();
         /*!
          * \brief Position X at center
          * \return Position X at center
          */
         double posCenterX();
+        double posCenterXrelative();
         /*!
          * \brief Position Y at center
          * \return Position Y at center
          */
         double posCenterY();
+        double posCenterYrelative();
         /*!
          * \brief width of body
          * \return width of body
          */
         double width();
+        double widthRelative();
         /*!
          * \brief height of body
          * \return height of body
          */
         double height();
+        double heightRelative();
 
         double top();
+        double topRelative();
         void setTop(double tp);
+        void setTopRelative(double tp);
         double bottom();
+        double bottomRelative();
         void setBottom(double btm);
+        void setBottomRelative(double btm);
         double left();
+        double leftRelative();
         void setLeft(double lf);
+        void setLeftRelative(double lf);
         double right();
+        double rightRelative();
         void setRight(double rt);
+        void setRightRelative(double rt);
 
         void setSize(double w, double h);
         void setWidth(double w);
         void setHeight(double h);
 
+        double  luaPosX();
+        double  luaPosY();
+        double  luaWidth();
+        double  luaHeight();
+        double  luaPosCenterX();
+        double  luaPosCenterY();
+        double  luaLeft();
+        double  luaTop();
+        double  luaRight();
+        double  luaBottom();
+
+        void    luaSetPosX(double x);
+        void    luaSetPosY(double y);
+        void    luaSetWidth(double w);
+        void    luaSetHeight(double h);
+        void    luaSetPosCenterX(double x);
+        void    luaSetPosCenterY(double y);
+        void    luaSetPos(double x, double y);
+        void    luaSetCenterPos(double x, double y);
+        void    luaSetCenterX(double x);
+        void    luaSetCenterY(double y);
+        void    luaSetSize(double w, double h);
+        void    luaSetLeft(double l);
+        void    luaSetTop(double t);
+        void    luaSetRight(double r);
+        void    luaSetBottom(double b);
+
         virtual void setPos(double x, double y);
         virtual void setRelativePos(double x, double y);
         void setPosX(double x);
+        void setPosXrelative(double x);
         void setPosY(double y);
+        void setPosYrelative(double y);
         void setCenterPos(double x, double y);
         void setRelativeCenterPos(double x, double y);
         void setCenterX(double x);
+        void setCenterXrelative(double x);
         void setCenterY(double y);
+        void setCenterYrelative(double y);
 
         double speedX();
         double speedY();

@@ -50,6 +50,8 @@ public:
     void setStaticBody(bool isStatic);
     bool staticBody();
 
+    void setBodyType(bool isStatic, bool isSticky);
+
     void setActivity(bool isActive);
     bool activity();
 

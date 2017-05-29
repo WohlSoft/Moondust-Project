@@ -112,6 +112,22 @@ bool LVL_Npc::staticBody()
     return is_static;
 }
 
+void LVL_Npc::setBodyType(bool isStatic, bool isSticky)
+{
+    if(m_isGenerator)
+        return;
+
+    if(isStatic)
+        m_bodytype = Body_STATIC;
+    else
+        m_bodytype = Body_DYNAMIC;
+
+    if((bool)m_parent != isSticky)
+        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, isSticky, true);
+
+    is_static = isStatic;
+}
+
 void LVL_Npc::setActivity(bool isActive)
 {
     is_activity = isActive;

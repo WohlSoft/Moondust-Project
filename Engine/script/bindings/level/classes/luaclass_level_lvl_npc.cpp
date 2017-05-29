@@ -97,6 +97,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
         .def_readonly("spawnedGenType", &LVL_Npc::m_spawnedGeneratorType)
         .def_readonly("spawnedGenDirection", &LVL_Npc::m_spawnedGeneratorDirection)
         //Functions
+        .def("setBodyType", &LVL_Npc::setBodyType)
         .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)
         .def("setSequenceRight", &LVL_Npc::lua_setSequenceRight)
         .def("setSequence", &LVL_Npc::lua_setSequence)

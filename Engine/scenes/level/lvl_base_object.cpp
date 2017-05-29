@@ -84,33 +84,107 @@ void PGE_Phys_Object::unregisterFromTree()
 
 double PGE_Phys_Object::posX()
 {
+//    LVL_SubTree *st = nullptr;
+//    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+//    {
+//        return m_momentum_relative.x - st->m_offsetX;
+//    }
     return m_momentum.x;
+}
+
+double PGE_Phys_Object::posXrelative()
+{
+    return m_momentum_relative.x;
 }
 
 double PGE_Phys_Object::posY()
 {
+//    LVL_SubTree *st = nullptr;
+//    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+//    {
+//        return m_momentum_relative.y - st->m_offsetY;
+//    }
     return m_momentum.y;
+}
+
+double PGE_Phys_Object::posYrelative()
+{
+    return m_momentum_relative.y;
 }
 
 double PGE_Phys_Object::posCenterX()
 {
+//    LVL_SubTree *st = nullptr;
+//    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+//    {
+//        return m_momentum_relative.centerX() - st->m_offsetX;
+//    }
     return m_momentum.centerX();
+}
+
+double PGE_Phys_Object::posCenterXrelative()
+{
+    return m_momentum_relative.centerX();
 }
 
 double PGE_Phys_Object::posCenterY()
 {
+//    LVL_SubTree *st = nullptr;
+//    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+//    {
+//        return m_momentum_relative.centerY() - st->m_offsetY;
+//    }
     return m_momentum.centerY();
+}
+
+double PGE_Phys_Object::posCenterYrelative()
+{
+    return m_momentum_relative.centerY();
 }
 
 void PGE_Phys_Object::setCenterX(double x)
 {
     m_momentum.setCenterX(x);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.x = m_momentum.x + st->m_offsetX;
+    }
+    m_treemap.updatePos();
+}
+
+void PGE_Phys_Object::setCenterXrelative(double x)
+{
+    m_momentum.setCenterX(x);
+    m_momentum_relative.setCenterX(x);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.x = m_momentum_relative.x - st->m_offsetX;
+    }
     m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::setCenterY(double y)
 {
     m_momentum.setCenterY(y);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.y = m_momentum.y + st->m_offsetY;
+    }
+    m_treemap.updatePos();
+}
+
+void PGE_Phys_Object::setCenterYrelative(double y)
+{
+    m_momentum.setCenterY(y);
+    m_momentum_relative.setCenterY(y);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.y = m_momentum_relative.y - st->m_offsetY;
+    }
     m_treemap.updatePos();
 }
 
@@ -119,9 +193,19 @@ double PGE_Phys_Object::width()
     return m_momentum.w;
 }
 
+double PGE_Phys_Object::widthRelative()
+{
+    return m_momentum_relative.w;
+}
+
 double PGE_Phys_Object::height()
 {
     return m_momentum.h;
+}
+
+double PGE_Phys_Object::heightRelative()
+{
+    return m_momentum_relative.h;
 }
 
 double PGE_Phys_Object::top()
@@ -129,9 +213,31 @@ double PGE_Phys_Object::top()
     return posY();
 }
 
+double PGE_Phys_Object::topRelative()
+{
+    return posYrelative();
+}
+
 void PGE_Phys_Object::setTop(double tp)
 {
     m_momentum.setTop(tp);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.y = m_momentum.y + st->m_offsetY;
+    }
+    m_treemap.updatePosAndSize();
+}
+
+void PGE_Phys_Object::setTopRelative(double tp)
+{
+    m_momentum.setTop(tp);
+    m_momentum_relative.setTop(tp);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.y = m_momentum_relative.y - st->m_offsetY;
+    }
     m_treemap.updatePosAndSize();
 }
 
@@ -140,9 +246,33 @@ double PGE_Phys_Object::bottom()
     return m_momentum.bottom();
 }
 
+double PGE_Phys_Object::bottomRelative()
+{
+    return m_momentum_relative.bottom();
+}
+
 void PGE_Phys_Object::setBottom(double btm)
 {
     m_momentum.setBottom(btm);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.y = m_momentum.y + st->m_offsetY;
+        m_momentum_relative.h = m_momentum.h;
+    }
+    m_treemap.updatePosAndSize();
+}
+
+void PGE_Phys_Object::setBottomRelative(double btm)
+{
+    m_momentum.setBottom(btm);
+    m_momentum_relative.setBottom(btm);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.y = m_momentum_relative.y - st->m_offsetY;
+        m_momentum.h = m_momentum_relative.h;
+    }
     m_treemap.updatePosAndSize();
 }
 
@@ -151,9 +281,31 @@ double PGE_Phys_Object::left()
     return posX();
 }
 
+double PGE_Phys_Object::leftRelative()
+{
+    return posXrelative();
+}
+
 void PGE_Phys_Object::setLeft(double lf)
 {
     m_momentum.setLeft(lf);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.x = m_momentum.x + st->m_offsetX;
+    }
+    m_treemap.updatePosAndSize();
+}
+
+void PGE_Phys_Object::setLeftRelative(double lf)
+{
+    m_momentum.setLeft(lf);
+    m_momentum_relative.setLeft(lf);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.x = m_momentum_relative.x - st->m_offsetX;
+    }
     m_treemap.updatePosAndSize();
 }
 
@@ -162,9 +314,33 @@ double PGE_Phys_Object::right()
     return m_momentum.right();
 }
 
+double PGE_Phys_Object::rightRelative()
+{
+    return m_momentum_relative.right();
+}
+
 void PGE_Phys_Object::setRight(double rt)
 {
     m_momentum.setRight(rt);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.x = m_momentum.x + st->m_offsetX;
+        m_momentum_relative.w = m_momentum.w;
+    }
+    m_treemap.updatePosAndSize();
+}
+
+void PGE_Phys_Object::setRightRelative(double rt)
+{
+    m_momentum.setRight(rt);
+    m_momentum_relative.setRight(rt);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.x = m_momentum_relative.x - st->m_offsetX;
+        m_momentum.w = m_momentum_relative.w;
+    }
     m_treemap.updatePosAndSize();
 }
 
@@ -172,19 +348,214 @@ void PGE_Phys_Object::setSize(double w, double h)
 {
     m_momentum.w = w;
     m_momentum.h = h;
+    m_momentum_relative.w = w;
+    m_momentum_relative.w = w;
     m_treemap.updatePosAndSize();
 }
 
 void PGE_Phys_Object::setWidth(double w)
 {
     m_momentum.w = w;
+    m_momentum_relative.w = w;
     m_treemap.updatePosAndSize();
 }
 
 void PGE_Phys_Object::setHeight(double h)
 {
     m_momentum.h = h;
+    m_momentum_relative.h = h;
     m_treemap.updatePosAndSize();
+}
+
+double PGE_Phys_Object::luaPosX()
+{
+    if(m_parent)
+        return m_momentum_relative.x;
+    else
+        return m_momentum.x;
+}
+
+double PGE_Phys_Object::luaPosY()
+{
+    if(m_parent)
+        return m_momentum_relative.y;
+    else
+        return m_momentum.y;
+}
+
+double PGE_Phys_Object::luaWidth()
+{
+    if(m_parent)
+        return m_momentum_relative.w;
+    else
+        return m_momentum.w;
+}
+
+double PGE_Phys_Object::luaHeight()
+{
+    if(m_parent)
+        return m_momentum_relative.h;
+    else
+        return m_momentum.h;
+}
+
+double PGE_Phys_Object::luaPosCenterX()
+{
+    if(m_parent)
+        return m_momentum_relative.centerX();
+    else
+        return m_momentum.centerX();
+}
+
+double PGE_Phys_Object::luaPosCenterY()
+{
+    if(m_parent)
+        return m_momentum_relative.centerY();
+    else
+        return m_momentum.centerY();
+}
+
+double PGE_Phys_Object::luaLeft()
+{
+    if(m_parent)
+        return m_momentum_relative.left();
+    else
+        return m_momentum.left();
+}
+
+double PGE_Phys_Object::luaTop()
+{
+    if(m_parent)
+        return m_momentum_relative.top();
+    else
+        return m_momentum.top();
+}
+
+double PGE_Phys_Object::luaRight()
+{
+    if(m_parent)
+        return m_momentum_relative.right();
+    else
+        return m_momentum.right();
+}
+
+double PGE_Phys_Object::luaBottom()
+{
+    if(m_parent)
+        return m_momentum_relative.bottom();
+    else
+        return m_momentum.bottom();
+}
+
+void PGE_Phys_Object::luaSetPosX(double x)
+{
+    if(m_parent)
+        setPosXrelative(x);
+    else
+        setPosX(x);
+}
+
+void PGE_Phys_Object::luaSetPosY(double y)
+{
+    if(m_parent)
+        setPosYrelative(y);
+    else
+        setPosY(y);
+}
+
+void PGE_Phys_Object::luaSetWidth(double w)
+{
+    setWidth(w);
+}
+
+void PGE_Phys_Object::luaSetHeight(double h)
+{
+    setHeight(h);
+}
+
+void PGE_Phys_Object::luaSetPosCenterX(double x)
+{
+    if(m_parent)
+        setCenterXrelative(x);
+    else
+        setCenterX(x);
+}
+
+void PGE_Phys_Object::luaSetPosCenterY(double y)
+{
+    if(m_parent)
+        setCenterYrelative(y);
+    else
+        setCenterY(y);
+}
+
+void PGE_Phys_Object::luaSetPos(double x, double y)
+{
+    if(m_parent)
+        setRelativePos(x, y);
+    else
+        setPos(x, y);
+}
+
+void PGE_Phys_Object::luaSetCenterPos(double x, double y)
+{
+    if(m_parent)
+        setRelativeCenterPos(x, y);
+    else
+        setCenterPos(x, y);
+}
+
+void PGE_Phys_Object::luaSetCenterX(double x)
+{
+    if(m_parent)
+        setCenterXrelative(x);
+    else
+        setCenterX(x);
+}
+
+void PGE_Phys_Object::luaSetCenterY(double y)
+{
+    if(m_parent)
+        setCenterYrelative(y);
+    else
+        setCenterY(y);
+}
+
+void PGE_Phys_Object::luaSetSize(double w, double h)
+{
+    setSize(w, h);
+}
+
+void PGE_Phys_Object::luaSetLeft(double l)
+{
+    if(m_parent)
+        setLeftRelative(l);
+    else
+        setLeft(l);
+}
+
+void PGE_Phys_Object::luaSetTop(double t)
+{
+    if(m_parent)
+        setTopRelative(t);
+    else
+        setTop(t);
+}
+
+void PGE_Phys_Object::luaSetRight(double r)
+{
+    if(m_parent)
+        setRightRelative(r);
+    else
+        setRight(r);
+}
+
+void PGE_Phys_Object::luaSetBottom(double b)
+{
+    if(m_parent)
+        setBottomRelative(b);
+    else
+        setBottom(b);
 }
 
 void PGE_Phys_Object::setPos(double x, double y)
@@ -212,18 +583,58 @@ void PGE_Phys_Object::setRelativePos(double x, double y)
 void PGE_Phys_Object::setPosX(double x)
 {
     m_momentum.x = x;
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.x = m_momentum.x + st->m_offsetX;
+    }
+    m_treemap.updatePos();
+}
+
+void PGE_Phys_Object::setPosXrelative(double x)
+{
+    m_momentum.x = x;
+    m_momentum_relative.x = x;
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.x = m_momentum_relative.x - st->m_offsetX;
+    }
     m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::setPosY(double y)
 {
     m_momentum.y = y;
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.y = m_momentum.y + st->m_offsetY;
+    }
+    m_treemap.updatePos();
+}
+
+void PGE_Phys_Object::setPosYrelative(double y)
+{
+    m_momentum.y = y;
+    m_momentum_relative.y = y;
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum.y = m_momentum_relative.y - st->m_offsetY;
+    }
     m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::setCenterPos(double x, double y)
 {
     m_momentum.setCenterPos(x, y);
+    LVL_SubTree *st = nullptr;
+    if(m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_parent)) != nullptr))
+    {
+        m_momentum_relative.x = m_momentum.x + st->m_offsetX;
+        m_momentum_relative.y = m_momentum.y + st->m_offsetY;
+    }
     m_treemap.updatePos();
 }
 
@@ -263,17 +674,21 @@ double PGE_Phys_Object::speedYsum()
 void PGE_Phys_Object::setSpeed(double x, double y)
 {
     m_momentum.velXsrc = x;
+    m_momentum_relative.velXsrc = x;
     m_momentum.velY = y;
+    m_momentum_relative.velY = y;
 }
 
 void PGE_Phys_Object::setSpeedX(double x)
 {
     m_momentum.velXsrc = x;
+    m_momentum_relative.velXsrc = x;
 }
 
 void PGE_Phys_Object::setSpeedY(double y)
 {
     m_momentum.velY = y;
+    m_momentum_relative.velY = y;
 }
 
 void PGE_Phys_Object::setDecelX(double x)
