@@ -83,10 +83,11 @@ typedef _off_t off_t;
 #include "music_gme.h"
 #endif
 
+/* DEPRECATED
 #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
 static SDL_AudioSpec used_mixer;
 #endif
-
+*/
 
 int volatile music_active = 1;
 static int volatile music_stopped = 0;
@@ -111,49 +112,56 @@ static int lock_midi_args = 0;
 
 struct _Mix_Music
 {
-    Mix_MusicType    type;
-    AudioCodec       codec;
-    AudioCodecStream*music;
+    AudioCodec          codec;
+    AudioCodecStream*   music;
+    Mix_MusicType       type;
     union
     {
         #ifdef CMD_MUSIC
         MusicCMD *cmd;
         #endif
+
         #ifdef WAV_MUSIC
         WAVStream *wave;
         #endif
+
         #ifdef MODPLUG_MUSIC
         modplug_data *modplug;
         #endif
+
         #ifdef MOD_MUSIC
         struct MODULE *module;
         #endif
+
         #ifdef GME_MUSIC
         int gameemu_track;
         struct MUSIC_GME *gameemu;
         #endif
+
         #ifdef MID_MUSIC
-        #ifdef USE_TIMIDITY_MIDI
-        MidiSong *midi;
-        #endif
-        #ifdef USE_ADL_MIDI
-        struct MUSIC_MIDIADL *midi_adl;
-        #endif
-        #ifdef USE_OPN2_MIDI
-        struct MUSIC_MIDIOPN *midi_opn;
-        #endif
-        #ifdef USE_FLUIDSYNTH_MIDI
-        FluidSynthMidiSong *fluidsynthmidi;
-        #endif
-        #ifdef USE_NATIVE_MIDI
-        NativeMidiSong *nativemidi;
-        #endif
-        #endif
+            #ifdef USE_TIMIDITY_MIDI
+            MidiSong *midi;
+            #endif
+
+            #ifdef USE_ADL_MIDI
+            struct MUSIC_MIDIADL *midi_adl;
+            #endif
+
+            #ifdef USE_OPN2_MIDI
+            struct MUSIC_MIDIOPN *midi_opn;
+            #endif
+
+            #ifdef USE_FLUIDSYNTH_MIDI
+            FluidSynthMidiSong *fluidsynthmidi;
+            #endif
+
+            #ifdef USE_NATIVE_MIDI
+            NativeMidiSong *nativemidi;
+            #endif
+        #endif/*MID_MUSIC*/
+
         #ifdef MP3_MUSIC
         SMPEG *mp3;
-        #endif
-        #ifdef MP3_MAD_MUSIC
-        mad_data *mp3_mad;
         #endif
     } data;
     Mix_Fading fading;
@@ -397,22 +405,21 @@ void music_mixer(void *udata, Uint8 *stream, int len)
             }
             break;
             #endif
-            #if defined(OGG_MUSIC) || defined(FLAC_MUSIC)
+
+            #if defined(OGG_MUSIC) || defined(FLAC_MUSIC) || defined(MP3_MAD_MUSIC)
         case MUS_OGG:
         case MUS_FLAC:
+        case MUS_MP3_MAD:
             left = music_playing->codec.playAudio(music_playing->music, stream, len);
             break;
             #endif
+
             #ifdef MP3_MUSIC
         case MUS_MP3:
             left = (len - smpeg.SMPEG_playAudio(music_playing->data.mp3, stream, len));
             break;
             #endif
-            #ifdef MP3_MAD_MUSIC
-        case MUS_MP3_MAD:
-            left = mad_getSamples(music_playing->data.mp3_mad, stream, len);
-            break;
-            #endif
+
         default:
             /* Unknown music type?? */
             break;
@@ -523,18 +530,19 @@ int open_music(SDL_AudioSpec *mixer)
 
     #endif
     #ifdef OGG_MUSIC
-    if(OGG_init2(&available_codecs[MUS_OGG], mixer) == 0)
-        add_music_decoder("OGG");
+    OGG_init2(&available_codecs[MUS_OGG], mixer);
+    add_music_decoder("OGG");
     #endif
 
     #ifdef FLAC_MUSIC
-    if(FLAC_init2(&available_codecs[MUS_FLAC], mixer) == 0)
-        add_music_decoder("FLAC");
+    FLAC_init2(&available_codecs[MUS_FLAC], mixer);
+    add_music_decoder("FLAC");
     #endif
 
     #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
-    /* Keep a copy of the mixer */
-    used_mixer = *mixer;
+    #ifdef MP3_MAD_MUSIC
+    MAD_init2(&available_codecs[MUS_MP3_MAD], mixer);
+    #endif
     add_music_decoder("MP3");
     #endif
 
@@ -543,7 +551,7 @@ int open_music(SDL_AudioSpec *mixer)
     Mix_VolumeMusic(SDL_MIX_MAXVOLUME);
 
     /* Calculate the number of ms for each callback */
-    ms_per_step = (int)(((float)mixer->samples * 1000.0) / mixer->freq);
+    ms_per_step = (int)(((double)mixer->samples * 1000.0) / mixer->freq);
 
     return(0);
 }
@@ -1136,15 +1144,16 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
 
     switch(type)
     {
-        #ifdef WAV_MUSIC
+    #ifdef WAV_MUSIC
     case MUS_WAV:
         music->type = MUS_WAV;
         music->data.wave = WAVStream_LoadSong_RW(src, freesrc);
         if(music->data.wave)
             music->error = 0;
         break;
-        #endif
-        #ifdef OGG_MUSIC
+    #endif
+
+    #ifdef OGG_MUSIC
     case MUS_OGG:
         music->type = MUS_OGG;
         music->codec = available_codecs[MUS_OGG];
@@ -1152,8 +1161,9 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         if(music->music != NULL)
             music->error = 0;
         break;
-        #endif
-        #ifdef FLAC_MUSIC
+    #endif
+
+    #ifdef FLAC_MUSIC
     case MUS_FLAC:
         music->type = MUS_FLAC;
         music->codec = available_codecs[MUS_FLAC];
@@ -1163,8 +1173,20 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         else
             Mix_SetError("Could not initialize FLAC stream.");
         break;
-        #endif
-        #ifdef MP3_MUSIC
+    #endif
+
+    #if defined(MP3_MAD_MUSIC)
+    case MUS_MP3:
+        music->type = MUS_MP3_MAD;
+        music->codec = available_codecs[MUS_MP3_MAD];
+        music->music = music->codec.open(src, freesrc);
+        if(music->music)
+            music->error = 0;
+        else
+            Mix_SetError("Could not initialize MPEG stream.");
+        break;
+
+    #elif defined(MP3_MUSIC)
     case MUS_MP3:
         if(Mix_Init(MIX_INIT_MP3))
         {
@@ -1185,19 +1207,8 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
             }
         }
         break;
-        #elif defined(MP3_MAD_MUSIC)
-    case MUS_MP3:
-        music->type = MUS_MP3_MAD;
-        music->data.mp3_mad = mad_openFileRW(src, &used_mixer, freesrc);
-        if(music->data.mp3_mad)
-        {
-            music->error = 0;
-            mad_fetchID3Tags(music->data.mp3_mad, music_file);
-        }
-        else
-            Mix_SetError("Could not initialize MPEG stream.");
-        break;
-        #endif
+    #endif
+
         #ifdef MID_MUSIC
 
         #ifdef USE_ADL_MIDI
@@ -1464,23 +1475,21 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
             }
             break;
             #endif
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
         case MUS_OGG:
         case MUS_FLAC:
+        case MUS_MP3_MAD:
             music->codec.close(music->music);
             music->music = 0;
             break;
             #endif
+
             #ifdef MP3_MUSIC
         case MUS_MP3:
             smpeg.SMPEG_delete(music->data.mp3);
             break;
             #endif
-            #ifdef MP3_MAD_MUSIC
-        case MUS_MP3_MAD:
-            mad_closeFile(music->data.mp3_mad);
-            break;
-            #endif
+
         default:
             /* Unknown music type?? */
             break;
@@ -1527,30 +1536,28 @@ const char *SDLCALLCC Mix_GetMusicTitleTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
         case MUS_OGG:
         case MUS_FLAC:
+        case MUS_MP3_MAD:
             return music->codec.metaTitle(music->music);
             break;
             #endif
-            #ifdef MP3_MAD_MUSIC
-        case MUS_MP3_MAD:
-            if(music->data.mp3_mad->mus_title != NULL)
-                return music->data.mp3_mad->mus_title;
-            break;
-            #endif
+
             #ifdef MODPLUG_MUSIC
         case MUS_MODPLUG:
             if(music->data.modplug->mus_title != NULL)
                 return music->data.modplug->mus_title;
             break;
             #endif
+
             #ifdef GME_MUSIC
         case MUS_SPC:
             if(music->data.gameemu->mus_title != NULL)
                 return music->data.gameemu->mus_title;
             break;
             #endif
+
         default:
             break;
         }
@@ -1564,24 +1571,21 @@ const char *SDLCALLCC Mix_GetMusicArtistTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
         case MUS_OGG:
         case MUS_FLAC:
+        case MUS_MP3_MAD:
             return music->codec.metaArtist(music->music);
             break;
             #endif
-            #ifdef MP3_MAD_MUSIC
-        case MUS_MP3_MAD:
-            if(music->data.mp3_mad->mus_artist != NULL)
-                return music->data.mp3_mad->mus_artist;
-            break;
-            #endif
+
             #ifdef GME_MUSIC
         case MUS_SPC:
             if(music->data.gameemu->mus_artist != NULL)
                 return music->data.gameemu->mus_artist;
             break;
             #endif
+
         default:
             break;
         }
@@ -1595,24 +1599,21 @@ const char *SDLCALLCC Mix_GetMusicAlbumTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
         case MUS_OGG:
         case MUS_FLAC:
+        case MUS_MP3_MAD:
             return music->codec.metaAlbum(music->music);
             break;
             #endif
-            #ifdef MP3_MAD_MUSIC
-        case MUS_MP3_MAD:
-            if(music->data.mp3_mad->mus_album != NULL)
-                return music->data.mp3_mad->mus_album;
-            break;
-            #endif
+
             #ifdef GME_MUSIC
         case MUS_SPC:
             if(music->data.gameemu->mus_album != NULL)
                 return music->data.gameemu->mus_album;
             break;
             #endif
+
         default:
             break;
         }
@@ -1626,18 +1627,14 @@ const char *SDLCALLCC Mix_GetMusicCopyrightTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
         case MUS_OGG:
         case MUS_FLAC:
+        case MUS_MP3_MAD:
             return music->codec.metaCopyright(music->music);
             break;
             #endif
-            #ifdef MP3_MAD_MUSIC
-        case MUS_MP3_MAD:
-            if(music->data.mp3_mad->mus_copyright != NULL)
-                return music->data.mp3_mad->mus_copyright;
-            break;
-            #endif
+
             #ifdef GME_MUSIC
         case MUS_SPC:
             if(music->data.gameemu->mus_copyright != NULL)
@@ -1772,9 +1769,10 @@ static int music_internal_play(Mix_Music *music, double position)
         }
         break;
         #endif
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
     case MUS_OGG:
     case MUS_FLAC:
+    case MUS_MP3_MAD:
         music->codec.setLoops(music->music, music_loops);
         music->codec.play(music->music);
         break;
@@ -1784,11 +1782,6 @@ static int music_internal_play(Mix_Music *music, double position)
         smpeg.SMPEG_enableaudio(music->data.mp3, 1);
         smpeg.SMPEG_enablevideo(music->data.mp3, 0);
         smpeg.SMPEG_play(music_playing->data.mp3);
-        break;
-        #endif
-        #ifdef MP3_MAD_MUSIC
-    case MUS_MP3_MAD:
-        mad_start(music->data.mp3_mad);
         break;
         #endif
     default:
@@ -1892,9 +1885,10 @@ int music_internal_position(double position)
         MOD_jump_to_time(music_playing->data.module, position);
         break;
         #endif
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
     case MUS_OGG:
     case MUS_FLAC:
+    case MUS_MP3_MAD:
         music_playing->codec.jumpToTime(music_playing->music, position);
         break;
         #endif
@@ -1904,11 +1898,6 @@ int music_internal_position(double position)
         smpeg.SMPEG_play(music_playing->data.mp3);
         if(position > 0.0)
             smpeg.SMPEG_skip(music_playing->data.mp3, (float)position);
-        break;
-        #endif
-        #ifdef MP3_MAD_MUSIC
-    case MUS_MP3_MAD:
-        mad_seek(music_playing->data.mp3_mad, position);
         break;
         #endif
     default:
@@ -2034,20 +2023,16 @@ static void music_internal_volume(int volume)
         }
         break;
         #endif
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
     case MUS_OGG:
     case MUS_FLAC:
+    case MUS_MP3_MAD:
         music_playing->codec.setVolume(music_playing->music, volume);
         break;
         #endif
         #ifdef MP3_MUSIC
     case MUS_MP3:
         smpeg.SMPEG_setvolume(music_playing->data.mp3, (int)(((float)volume / (float)MIX_MAX_VOLUME) * 100.0));
-        break;
-        #endif
-        #ifdef MP3_MAD_MUSIC
-    case MUS_MP3_MAD:
-        mad_setVolume(music_playing->data.mp3_mad, volume);
         break;
         #endif
     default:
@@ -2158,20 +2143,16 @@ static void music_internal_halt(void)
         }
         break;
         #endif
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
     case MUS_OGG:
     case MUS_FLAC:
+    case MUS_MP3_MAD:
         music_playing->codec.stop(music_playing->music);
         break;
         #endif
         #ifdef MP3_MUSIC
     case MUS_MP3:
         smpeg.SMPEG_stop(music_playing->data.mp3);
-        break;
-        #endif
-        #ifdef MP3_MAD_MUSIC
-    case MUS_MP3_MAD:
-        mad_stop(music_playing->data.mp3_mad);
         break;
         #endif
     default:
@@ -2376,9 +2357,10 @@ static int music_internal_playing()
         }
         break;
         #endif
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)
     case MUS_OGG:
     case MUS_FLAC:
+    case MUS_MP3_MAD:
         if(!music_playing->codec.isPlaying(music_playing->music))
             playing = 0;
         break;
@@ -2389,12 +2371,7 @@ static int music_internal_playing()
             playing = 0;
         break;
         #endif
-        #ifdef MP3_MAD_MUSIC
-    case MUS_MP3_MAD:
-        if(!mad_isPlaying(music_playing->data.mp3_mad))
-            playing = 0;
-        break;
-        #endif
+
     default:
         playing = 0;
         break;
