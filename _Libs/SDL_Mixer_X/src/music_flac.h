@@ -26,75 +26,11 @@
 
 #ifdef FLAC_MUSIC
 
-#include <FLAC/stream_decoder.h>
-
-#include "resample/my_resample.h"
-
-typedef struct {
-    FLAC__uint64 sample_size;
-    unsigned sample_rate;
-    unsigned channels;
-    unsigned bits_per_sample;
-    FLAC__uint64 total_samples;
-
-    /* the following are used to handle the callback nature of the writer */
-    int max_to_read;
-    char *data;             /* pointer to beginning of data array */
-    int data_len;           /* size of data array */
-    int data_read;          /* amount of data array used */
-    char *overflow;         /* pointer to beginning of overflow array */
-    int overflow_len;       /* size of overflow array */
-    int overflow_read;      /* amount of overflow array used */
-} FLAC_Data;
-
-typedef struct {
-    int playing;
-    int volume;
-    int section;
-    FLAC__StreamDecoder *flac_decoder;
-    FLAC_Data flac_data;
-    SDL_RWops *src;
-    int freesrc;
-    SDL_AudioCVT cvt;
-    int len_available;
-    Uint8 *snd_available;
-    char* mus_title;
-    char* mus_artist;
-    char* mus_album;
-    char* mus_copyright;
-    struct MyResampler resample;
-} FLAC_music;
+#include "audio_codec.h"
 
 /* Initialize the FLAC player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
-extern int FLAC_init(SDL_AudioSpec *mixer);
-
-/* Set the volume for a FLAC stream */
-extern void FLAC_setvolume(FLAC_music *music, int volume);
-
-/* Fetches meta-tags from a file */
-extern void FLAC_fetchTags(FLAC_music *music, char *filePath);
-
-/* Load an FLAC stream from an SDL_RWops object */
-extern FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc);
-
-/* Start playback of a given FLAC stream */
-extern void FLAC_play(FLAC_music *music);
-
-/* Return non-zero if a stream is currently playing */
-extern int FLAC_playing(FLAC_music *music);
-
-/* Play some of a stream previously started with FLAC_play() */
-extern int FLAC_playAudio(FLAC_music *music, Uint8 *stream, int len);
-
-/* Stop playback of a stream previously started with FLAC_play() */
-extern void FLAC_stop(FLAC_music *music);
-
-/* Close the given FLAC stream */
-extern void FLAC_delete(FLAC_music *music);
-
-/* Jump (seek) to a given position (time is in seconds) */
-extern void FLAC_jump_to_time(FLAC_music *music, double time);
+extern int FLAC_init2(AudioCodec *codec, SDL_AudioSpec *mixer);
 
 #endif /* FLAC_MUSIC */

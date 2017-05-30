@@ -38,76 +38,138 @@
 #define strcasecmp _stricmp
 #endif
 
+#include <FLAC/stream_decoder.h>
+
+#include "resample/my_resample.h"
+
+typedef struct {
+    FLAC__uint64 sample_size;
+    unsigned sample_rate;
+    unsigned channels;
+    unsigned bits_per_sample;
+    FLAC__uint64 total_samples;
+
+    /* the following are used to handle the callback nature of the writer */
+    int max_to_read;
+    char *data;             /* pointer to beginning of data array */
+    int data_len;           /* size of data array */
+    int data_read;          /* amount of data array used */
+    char *overflow;         /* pointer to beginning of overflow array */
+    int overflow_len;       /* size of overflow array */
+    int overflow_read;      /* amount of overflow array used */
+} FLAC_Data;
+
+typedef struct {
+    int playing;
+    int paused;
+    int volume;
+    int section;
+    FLAC__StreamDecoder *flac_decoder;
+    FLAC_Data flac_data;
+    SDL_RWops *src;
+    int freesrc;
+    SDL_AudioCVT cvt;
+    int len_available;
+    Uint8 *snd_available;
+    char* mus_title;
+    char* mus_artist;
+    char* mus_album;
+    char* mus_copyright;
+    struct MyResampler resample;
+} FLAC_music;
+
 /* This is the format of the audio mixer data */
 static SDL_AudioSpec mixer;
+
+/* Load an FLAC stream from an SDL_RWops object */
+static void     *FLAC_new_RW(SDL_RWops *src, int freesrc);
+/* Close the given FLAC_music object */
+static void     FLAC_delete(void *music_p);
+
+static void     FLAC_setloops(void *music_p, int loops);
+static void     FLAC_setvolume(void *music_p, int volume);
+
+/* Start playback of a given FLAC stream */
+static void     FLAC_play(void *music_p);
+static void     FLAC_pause(void *music_p);
+static void     FLAC_resume(void *music_p);
+/* Stop playback of a stream previously started with FLAC_play() */
+static void     FLAC_stop(void *music_p);
+
+/* Return non-zero if a stream is currently playing */
+static int      FLAC_playing(void *music_p);
+static int      FLAC_paused(void *music_p);
+
+static const char *FLAC_metaTitle(void *music_p);
+static const char *FLAC_metaArtist(void *music_p);
+static const char *FLAC_metaAlbum(void *music_p);
+static const char *FLAC_metaCopyright(void *music_p);
+
+/* Jump (seek) to a given position (time is in seconds) */
+static void     FLAC_jump_to_time(void *music_p, double time);
+static double   FLAC_get_time(void *music_p);
+
+/* Play some of a stream previously started with FLAC_play() */
+static int      FLAC_playAudio(void *music_p, Uint8 *snd, int len);
+
 
 /* Initialize the FLAC player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
+int FLAC_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
+{
+    mixer = *mixerfmt;
+
+    codec->isValid = 1;
+
+    codec->open  = FLAC_new_RW;
+    codec->close = FLAC_delete;
+
+    codec->play   = FLAC_play;
+    codec->pause  = FLAC_pause;
+    codec->resume = FLAC_resume;
+    codec->stop   = FLAC_stop;
+
+    codec->isPlaying   = FLAC_playing;
+    codec->isPaused    = FLAC_paused;
+
+    codec->setLoops    = FLAC_setloops;
+    codec->setVolume   = FLAC_setvolume;
+
+    codec->jumpToTime     = FLAC_jump_to_time;
+    codec->getCurrentTime = FLAC_get_time;
+
+    codec->metaTitle    = FLAC_metaTitle;
+    codec->metaArtist   = FLAC_metaArtist;
+    codec->metaAlbum    = FLAC_metaAlbum;
+    codec->metaCopyright= FLAC_metaCopyright;
+
+    codec->playAudio    = FLAC_playAudio;
+
+    return(0);
+}
+
+/*DEPRECATED*/
+/*
 int FLAC_init(SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
     return(0);
+}*/
+
+static void FLAC_setloops(void *music_p, int loops)
+{
+    FLAC_music *music = (FLAC_music *)music_p;
+    /* FIXME: Implement this! */
 }
 
 /* Set the volume for an FLAC stream */
-void FLAC_setvolume(FLAC_music *music, int volume)
+static void FLAC_setvolume(void *music_p, int volume)
 {
+    FLAC_music *music = (FLAC_music*)music_p;
     music->volume = volume;
 }
 
-void FLAC_fetchTags(FLAC_music *music, char *filePath)
-{
-    FLAC__StreamMetadata *tags = NULL;
-    if(FLAC__metadata_get_tags(filePath, &tags))
-    {
-        int i, num = tags->data.vorbis_comment.num_comments;
-
-        for(i = 0; i < num; i++)
-        {
-            FLAC__uint32 len = tags->data.vorbis_comment.comments[i].length;
-            FLAC__byte *ent = tags->data.vorbis_comment.comments[i].entry;
-
-            int   paramLen = len + 1;
-            char *param = (char *)SDL_malloc(paramLen);
-            char *argument  = param;
-            char *value     = param;
-            memset(param, 0, paramLen);
-            memcpy(param, ent, len);
-            value = strchr(param, '=');
-            if(value == NULL)
-            {
-                value = param + paramLen - 1; /* set null */
-            } else {
-                *(value++) = '\0';
-            }
-
-            if(strcasecmp(argument, "TITLE") == 0)
-            {
-                music->mus_title = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
-                strcpy(music->mus_title, value);
-            }
-            else
-            if(strcasecmp(argument, "ARTIST") == 0)
-            {
-                music->mus_artist = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
-                strcpy(music->mus_artist, value);
-            }
-            else if(strcasecmp(argument, "ALBUM") == 0)
-            {
-                music->mus_album = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
-                strcpy(music->mus_album, value);
-            }
-            else if(strcasecmp(argument, "COPYRIGHT") == 0)
-            {
-                music->mus_copyright = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
-                strcpy(music->mus_copyright, value);
-            }
-
-            SDL_free(param);
-        }
-    }
-}
 
 static FLAC__StreamDecoderReadStatus flac_read_music_cb(
     const FLAC__StreamDecoder *decoder,
@@ -341,6 +403,53 @@ static void flac_metadata_music_cb(
         data->flac_data.sample_size = data->flac_data.channels *
                                       ((data->flac_data.bits_per_sample) / 8);
     }
+    else if(metadata->type == FLAC__METADATA_TYPE_VORBIS_COMMENT)
+    {
+        int i, num = metadata->data.vorbis_comment.num_comments;
+        for(i = 0; i < num; i++)
+        {
+            FLAC__uint32 len = metadata->data.vorbis_comment.comments[i].length;
+            FLAC__byte *ent = metadata->data.vorbis_comment.comments[i].entry;
+
+            int   paramLen = len + 1;
+            char *param = (char *)SDL_malloc(paramLen);
+            char *argument  = param;
+            char *value     = param;
+            memset(param, 0, paramLen);
+            memcpy(param, ent, len);
+            value = strchr(param, '=');
+            if(value == NULL)
+            {
+                value = param + paramLen - 1; /* set null */
+            } else {
+                *(value++) = '\0';
+            }
+
+            if(strcasecmp(argument, "TITLE") == 0)
+            {
+                data->mus_title = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
+                strcpy(data->mus_title, value);
+            }
+            else
+            if(strcasecmp(argument, "ARTIST") == 0)
+            {
+                data->mus_artist = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
+                strcpy(data->mus_artist, value);
+            }
+            else if(strcasecmp(argument, "ALBUM") == 0)
+            {
+                data->mus_album = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
+                strcpy(data->mus_album, value);
+            }
+            else if(strcasecmp(argument, "COPYRIGHT") == 0)
+            {
+                data->mus_copyright = (char *)SDL_malloc(sizeof(char) * strlen(value) + 1);
+                strcpy(data->mus_copyright, value);
+            }
+
+            SDL_free(param);
+        }
+    }
 }
 
 static void flac_error_music_cb(
@@ -372,7 +481,7 @@ static void flac_error_music_cb(
 }
 
 /* Load an FLAC stream from an SDL_RWops object */
-FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc)
+static void *FLAC_new_RW(SDL_RWops *src, int freesrc)
 {
     FLAC_music *music;
     int init_stage = 0;
@@ -410,6 +519,10 @@ FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc)
 
         if(music->flac_decoder != NULL)
         {
+            /* Retreive stream info and vorbis comments. Must be called BEFORE stream initialization */
+            FLAC__stream_decoder_set_metadata_respond(music->flac_decoder, FLAC__METADATA_TYPE_STREAMINFO);
+            FLAC__stream_decoder_set_metadata_respond(music->flac_decoder, FLAC__METADATA_TYPE_VORBIS_COMMENT);
+
             init_stage++; /*  stage 2! */
 
             if(flac.FLAC__stream_decoder_init_stream(
@@ -423,7 +536,7 @@ FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc)
                 init_stage++; /*  stage 3! */
 
                 if(flac.FLAC__stream_decoder_process_until_end_of_metadata
-                   (music->flac_decoder))
+                        (music->flac_decoder))
                     was_error = 0;
                 else
                     SDL_SetError("FLAC__stream_decoder_process_until_end_of_metadata() failed");
@@ -460,16 +573,45 @@ FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc)
 }
 
 /* Start playback of a given FLAC stream */
-void FLAC_play(FLAC_music *music)
+static void FLAC_play(void *music_p)
 {
+    FLAC_music *music = (FLAC_music*)music_p;
     music->playing = 1;
 }
 
-/* Return non-zero if a stream is currently playing */
-int FLAC_playing(FLAC_music *music)
+/* Dummy functions */
+static void FLAC_pause(void *music_p)
 {
+    FLAC_music *music = (FLAC_music*)music_p;
+    music->paused = 1;
+}
+
+static void FLAC_resume(void *music_p)
+{
+    FLAC_music *music = (FLAC_music*)music_p;
+    music->paused = 0;
+}
+
+/* Stop playback of a stream previously started with FLAC_play() */
+static void FLAC_stop(void *music_p)
+{
+    FLAC_music *music = (FLAC_music*)music_p;
+    music->playing = 0;
+}
+
+/* Return non-zero if a stream is currently playing */
+static int FLAC_playing(void *music_p)
+{
+    FLAC_music *music = (FLAC_music*)music_p;
     return(music->playing);
 }
+
+static int FLAC_paused(void *music_p)
+{
+    FLAC_music *music = (FLAC_music *)music_p;
+    return(music->playing && music->paused);
+}
+
 
 /* Read some FLAC stream data and convert it for output */
 static void FLAC_getsome(FLAC_music *music)
@@ -590,8 +732,9 @@ static void FLAC_getsome(FLAC_music *music)
 }
 
 /* Play some of a stream previously started with FLAC_play() */
-int FLAC_playAudio(FLAC_music *music, Uint8 *snd, int len)
+static int FLAC_playAudio(void *music_p, Uint8 *snd, int len)
 {
+    FLAC_music *music = (FLAC_music*)music_p;
     int mixable;
 
     while((len > 0) && music->playing)
@@ -614,15 +757,10 @@ int FLAC_playAudio(FLAC_music *music, Uint8 *snd, int len)
     return len;
 }
 
-/* Stop playback of a stream previously started with FLAC_play() */
-void FLAC_stop(FLAC_music *music)
-{
-    music->playing = 0;
-}
-
 /* Close the given FLAC_music object */
-void FLAC_delete(FLAC_music *music)
+static void FLAC_delete(void *music_p)
 {
+    FLAC_music *music = (FLAC_music*)music_p;
     if(music)
     {
         if(music->flac_decoder)
@@ -656,9 +794,34 @@ void FLAC_delete(FLAC_music *music)
     }
 }
 
-/* Jump (seek) to a given position (time is in seconds) */
-void FLAC_jump_to_time(FLAC_music *music, double time)
+static const char *FLAC_metaTitle(void *music_p)
 {
+    FLAC_music *music = (FLAC_music *)music_p;
+    return music->mus_title ? music->mus_title : "";
+}
+
+static const char *FLAC_metaArtist(void *music_p)
+{
+    FLAC_music *music = (FLAC_music *)music_p;
+    return music->mus_artist ? music->mus_artist : "";
+}
+
+static const char *FLAC_metaAlbum(void *music_p)
+{
+    FLAC_music *music = (FLAC_music *)music_p;
+    return music->mus_album ? music->mus_album : "";
+}
+
+static const char *FLAC_metaCopyright(void *music_p)
+{
+    FLAC_music *music = (FLAC_music *)music_p;
+    return music->mus_copyright ? music->mus_copyright : "";
+}
+
+/* Jump (seek) to a given position (time is in seconds) */
+static void FLAC_jump_to_time(void *music_p, double time)
+{
+    FLAC_music *music = (FLAC_music*)music_p;
     if(music)
     {
         if(music->flac_decoder)
@@ -698,6 +861,29 @@ void FLAC_jump_to_time(FLAC_music *music, double time)
     }
     else
         SDL_SetError("Seeking of FLAC stream failed: music was NULL.");
+}
+
+double FLAC_get_time(void *music_p)
+{
+    FLAC_music *music = (FLAC_music *)music_p;
+    if(music)
+    {
+        if(music->flac_decoder)
+        {
+            FLAC__uint64 abs_pos = 0;
+            if(!FLAC__stream_decoder_get_decode_position(music->flac_decoder, &abs_pos))
+                SDL_SetError("Getting position of FLAC stream failed: libFLAC tell failed.");
+            return (double)abs_pos / (double)music->flac_data.sample_rate;
+        }
+        else
+        {
+            SDL_SetError("Getting position of FLAC stream failed: FLAC decoder was NULL.");
+        }
+    }
+    else
+        SDL_SetError("Getting position of FLAC stream failed: music was NULL.");
+
+    return 0.0;
 }
 
 #endif /* FLAC_MUSIC */

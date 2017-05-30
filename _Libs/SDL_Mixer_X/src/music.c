@@ -155,9 +155,6 @@ struct _Mix_Music
         #ifdef MP3_MAD_MUSIC
         mad_data *mp3_mad;
         #endif
-        #ifdef FLAC_MUSIC
-        FLAC_music *flac;
-        #endif
     } data;
     Mix_Fading fading;
     int fade_step;
@@ -400,14 +397,10 @@ void music_mixer(void *udata, Uint8 *stream, int len)
             }
             break;
             #endif
-            #ifdef OGG_MUSIC
+            #if defined(OGG_MUSIC) || defined(FLAC_MUSIC)
         case MUS_OGG:
-            left = music_playing->codec.playAudio(music_playing->music, stream, len);
-            break;
-            #endif
-            #ifdef FLAC_MUSIC
         case MUS_FLAC:
-            left = FLAC_playAudio(music_playing->data.flac, stream, len);
+            left = music_playing->codec.playAudio(music_playing->music, stream, len);
             break;
             #endif
             #ifdef MP3_MUSIC
@@ -535,7 +528,7 @@ int open_music(SDL_AudioSpec *mixer)
     #endif
 
     #ifdef FLAC_MUSIC
-    if(FLAC_init(mixer) == 0)
+    if(FLAC_init2(&available_codecs[MUS_FLAC], mixer) == 0)
         add_music_decoder("FLAC");
     #endif
 
@@ -1163,12 +1156,10 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         #ifdef FLAC_MUSIC
     case MUS_FLAC:
         music->type = MUS_FLAC;
-        music->data.flac = FLAC_new_RW(src, freesrc);
-        if(music->data.flac)
-        {
+        music->codec = available_codecs[MUS_FLAC];
+        music->music = music->codec.open(src, freesrc);
+        if(music->music)
             music->error = 0;
-            FLAC_fetchTags(music->data.flac, music_file);
-        }
         else
             Mix_SetError("Could not initialize FLAC stream.");
         break;
@@ -1473,15 +1464,11 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
             }
             break;
             #endif
-            #ifdef OGG_MUSIC
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
         case MUS_OGG:
+        case MUS_FLAC:
             music->codec.close(music->music);
             music->music = 0;
-            break;
-            #endif
-            #ifdef FLAC_MUSIC
-        case MUS_FLAC:
-            FLAC_delete(music->data.flac);
             break;
             #endif
             #ifdef MP3_MUSIC
@@ -1540,15 +1527,10 @@ const char *SDLCALLCC Mix_GetMusicTitleTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #ifdef OGG_MUSIC
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
         case MUS_OGG:
-            return music->codec.metaTitle(music->music);
-            break;
-            #endif
-            #ifdef FLAC_MUSIC
         case MUS_FLAC:
-            if(music->data.flac->mus_title != NULL)
-                return music->data.flac->mus_title;
+            return music->codec.metaTitle(music->music);
             break;
             #endif
             #ifdef MP3_MAD_MUSIC
@@ -1582,15 +1564,10 @@ const char *SDLCALLCC Mix_GetMusicArtistTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #ifdef OGG_MUSIC
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
         case MUS_OGG:
-            return music->codec.metaArtist(music->music);
-            break;
-            #endif
-            #ifdef FLAC_MUSIC
         case MUS_FLAC:
-            if(music->data.flac->mus_artist != NULL)
-                return music->data.flac->mus_artist;
+            return music->codec.metaArtist(music->music);
             break;
             #endif
             #ifdef MP3_MAD_MUSIC
@@ -1618,15 +1595,10 @@ const char *SDLCALLCC Mix_GetMusicAlbumTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #ifdef OGG_MUSIC
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
         case MUS_OGG:
-            return music->codec.metaAlbum(music->music);
-            break;
-            #endif
-            #ifdef FLAC_MUSIC
         case MUS_FLAC:
-            if(music->data.flac->mus_album != NULL)
-                return music->data.flac->mus_album;
+            return music->codec.metaAlbum(music->music);
             break;
             #endif
             #ifdef MP3_MAD_MUSIC
@@ -1654,15 +1626,10 @@ const char *SDLCALLCC Mix_GetMusicCopyrightTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #ifdef OGG_MUSIC
+            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
         case MUS_OGG:
-            return music->codec.metaCopyright(music->music);
-            break;
-            #endif
-            #ifdef FLAC_MUSIC
         case MUS_FLAC:
-            if(music->data.flac->mus_copyright != NULL)
-                return music->data.flac->mus_copyright;
+            return music->codec.metaCopyright(music->music);
             break;
             #endif
             #ifdef MP3_MAD_MUSIC
@@ -1805,15 +1772,11 @@ static int music_internal_play(Mix_Music *music, double position)
         }
         break;
         #endif
-        #ifdef OGG_MUSIC
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
     case MUS_OGG:
+    case MUS_FLAC:
         music->codec.setLoops(music->music, music_loops);
         music->codec.play(music->music);
-        break;
-        #endif
-        #ifdef FLAC_MUSIC
-    case MUS_FLAC:
-        FLAC_play(music->data.flac);
         break;
         #endif
         #ifdef MP3_MUSIC
@@ -1929,14 +1892,10 @@ int music_internal_position(double position)
         MOD_jump_to_time(music_playing->data.module, position);
         break;
         #endif
-        #ifdef OGG_MUSIC
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
     case MUS_OGG:
-        music_playing->codec.jumpToTime(music_playing->music, position);
-        break;
-        #endif
-        #ifdef FLAC_MUSIC
     case MUS_FLAC:
-        FLAC_jump_to_time(music_playing->data.flac, position);
+        music_playing->codec.jumpToTime(music_playing->music, position);
         break;
         #endif
         #ifdef MP3_MUSIC
@@ -2075,14 +2034,10 @@ static void music_internal_volume(int volume)
         }
         break;
         #endif
-        #ifdef OGG_MUSIC
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
     case MUS_OGG:
-        music_playing->codec.setVolume(music_playing->music, volume);
-        break;
-        #endif
-        #ifdef FLAC_MUSIC
     case MUS_FLAC:
-        FLAC_setvolume(music_playing->data.flac, volume);
+        music_playing->codec.setVolume(music_playing->music, volume);
         break;
         #endif
         #ifdef MP3_MUSIC
@@ -2203,14 +2158,10 @@ static void music_internal_halt(void)
         }
         break;
         #endif
-        #ifdef OGG_MUSIC
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
     case MUS_OGG:
-        music_playing->codec.stop(music_playing->music);
-        break;
-        #endif
-        #ifdef FLAC_MUSIC
     case MUS_FLAC:
-        FLAC_stop(music_playing->data.flac);
+        music_playing->codec.stop(music_playing->music);
         break;
         #endif
         #ifdef MP3_MUSIC
@@ -2425,15 +2376,10 @@ static int music_internal_playing()
         }
         break;
         #endif
-        #ifdef OGG_MUSIC
+        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)
     case MUS_OGG:
-        if(!music_playing->codec.isPlaying(music_playing->music))
-            playing = 0;
-        break;
-        #endif
-        #ifdef FLAC_MUSIC
     case MUS_FLAC:
-        if(! FLAC_playing(music_playing->data.flac))
+        if(!music_playing->codec.isPlaying(music_playing->music))
             playing = 0;
         break;
         #endif
