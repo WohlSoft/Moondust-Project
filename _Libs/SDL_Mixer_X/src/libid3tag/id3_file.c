@@ -114,19 +114,31 @@ void id3f_rewind(struct id3_file *ctx)
         rewind(ctx->iofile);
 }
 
-int id3f_getpos(struct id3_file *ctx, fpos_t *pos)
+typedef struct id3f_pos_t_ttt
+{
+    Sint64 rwoffset;
+    fpos_t real_fpos;
+} id3f_pos_t;
+
+int id3f_getpos(struct id3_file *ctx, id3f_pos_t *pos)
 {
     if(!ctx || !pos)
         return -1;
-    pos->__pos = (off_t)id3f_tell(ctx);
-    return pos->__pos != -1 ? 0 : -1;
+    if(ctx->iorwops)
+    {
+        pos->rwoffset = (off_t)id3f_tell(ctx);
+        return pos->rwoffset != -1 ? 0 : -1;
+    }
+    return fgetpos(ctx->iofile, &pos->real_fpos);
 }
 
-int id3f_setpos(struct id3_file *ctx, fpos_t *pos)
+int id3f_setpos(struct id3_file *ctx, const id3f_pos_t *pos)
 {
     if(!ctx || !pos)
         return -1;
-    return id3f_seek(ctx, pos->__pos, SEEK_SET) == 0 ? 0 : -1;
+    if(ctx->iorwops)
+        return id3f_seek(ctx, pos->rwoffset, SEEK_SET) == 0 ? 0 : -1;
+    return fsetpos(ctx->iofile, &pos->real_fpos);
 }
 
 int id3f_flush(struct id3_file *ctx)
@@ -156,7 +168,7 @@ enum
 static
 signed long query_tag(struct id3_file *iofile)
 {
-    fpos_t save_position;
+    id3f_pos_t save_position;
     id3_byte_t query[ID3_TAG_QUERYSIZE];
     signed long size;
 
@@ -344,7 +356,7 @@ struct id3_tag *add_tag(struct id3_file *file, id3_length_t length)
 static
 int search_tags(struct id3_file *file)
 {
-    fpos_t save_position;
+    id3f_pos_t save_position;
     signed long size;
 
     /*
