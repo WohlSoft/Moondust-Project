@@ -1192,7 +1192,6 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         if(music->data.mp3_mad)
         {
             music->error = 0;
-            mad_fetchID3Tags(music->data.mp3_mad, music_file);
         }
         else
             Mix_SetError("Could not initialize MPEG stream.");

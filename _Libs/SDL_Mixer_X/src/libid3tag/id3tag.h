@@ -25,6 +25,8 @@
 # ifndef LIBID3TAG_ID3TAG_H
 # define LIBID3TAG_ID3TAG_H
 
+#include <SDL2/SDL_rwops.h>
+
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -244,6 +246,7 @@ enum id3_file_mode {
   ID3_FILE_MODE_READWRITE
 };
 
+struct id3_file *id3_file_from_rwops(SDL_RWops *src, enum id3_file_mode);
 struct id3_file *id3_file_open(char const *, enum id3_file_mode);
 struct id3_file *id3_file_fdopen(int, enum id3_file_mode);
 int id3_file_close(struct id3_file *);

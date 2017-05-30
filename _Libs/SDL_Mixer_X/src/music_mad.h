@@ -71,8 +71,6 @@ typedef struct
     struct MyResampler resample;
 } mad_data;
 
-void mad_fetchID3Tags(mad_data *mp3_mad, char *filePath);
-
 mad_data *mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc);
 void mad_closeFile(mad_data *mp3_mad);
 
