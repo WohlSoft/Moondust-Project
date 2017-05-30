@@ -21,6 +21,8 @@
 
 #ifdef MP3_MAD_MUSIC
 
+#include "audio_codec.h"
+
 #include "mad.h"
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
@@ -71,15 +73,25 @@ typedef struct
     struct MyResampler resample;
 } mad_data;
 
+int     MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt);
+
+/*
+    Access to those functions is kept because this API is used in
+    the chunks loading sub-system
+
+    TODO: Chunks API also must use audio codec thing too,
+          and make those functions (and structures above!!!) be static and private
+*/
+
 mad_data *mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc);
-void mad_closeFile(mad_data *mp3_mad);
+void    mad_closeFile(void *mp3_mad_p);
 
-void mad_start(mad_data *mp3_mad);
-void mad_stop(mad_data *mp3_mad);
-int mad_isPlaying(mad_data *mp3_mad);
+void    mad_start(void *mp3_mad_p);
+void    mad_stop(void *mp3_mad_p);
+int     mad_isPlaying(void *mp3_mad_p);
 
-int mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len);
-void mad_seek(mad_data *mp3_mad, double position);
-void mad_setVolume(mad_data *mp3_mad, int volume);
+int     mad_getSamples(void *mp3_mad_p, Uint8 *stream, int len);
+void    mad_seek(void *mp3_mad_p, double position);
+void    mad_setVolume(void *mp3_mad_p, int volume);
 
 #endif

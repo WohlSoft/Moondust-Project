@@ -31,6 +31,16 @@
 
 typedef void AudioCodecStream;
 
+/*
+    Dummy callbacks. Use them if codec doesn't supports some features
+*/
+void        audioCodec_dummy_cb_void_1arg(AudioCodecStream* music);
+int         audioCodec_dummy_cb_int_1arg(AudioCodecStream* music);
+const char *audioCodec_dummy_meta_tag(AudioCodecStream* music);
+void        audioCodec_dummy_cb_regulator(AudioCodecStream* music, int value);
+void        audioCodec_dummy_cb_seek(AudioCodecStream* music, double position);
+double      audioCodec_dummy_cb_tell(AudioCodecStream* music);
+
 /* A generic audio playing codec interface interface */
 typedef struct _AudioCodec
 {
