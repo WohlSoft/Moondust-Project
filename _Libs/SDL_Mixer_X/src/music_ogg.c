@@ -37,21 +37,137 @@
 #define strcasecmp _stricmp
 #endif
 
+#if defined(OGG_HEADER)
+#include OGG_HEADER
+#elif defined(OGG_USE_TREMOR)
+#include <tremor/ivorbisfile.h>
+#else
+#include <vorbis/vorbisfile.h>
+#endif
+
+#include "resample/my_resample.h"
+
+typedef struct {
+    SDL_RWops *src;
+    int freesrc;
+    int playing;
+    int paused;
+    int volume;
+    OggVorbis_File vf;
+    int section;
+    SDL_AudioCVT cvt;
+    struct MyResampler resample;
+    int len_available;
+    Uint8 *snd_available;
+    int channels;
+    /* Loop points stuff [by Wohlstand] */
+    int loop;
+    int loops_count;
+    ogg_int64_t loop_start;
+    ogg_int64_t loop_end;
+    ogg_int64_t loop_len;
+    ogg_int64_t loop_len_ch;
+    /* Loop points stuff [by Wohlstand] */
+    char *mus_title;
+    char *mus_artist;
+    char *mus_album;
+    char *mus_copyright;
+} OGG_music;
+
+
 /* This is the format of the audio mixer data */
 static SDL_AudioSpec mixer;
 
-/* Initialize the Ogg Vorbis player, with the given mixer settings
-   This function returns 0, or -1 if there was an error.
- */
+/* Load an OGG stream from an SDL_RWops object */
+static void     *OGG_new_RW(SDL_RWops *src, int freesrc);
+/* Close the given OGG stream */
+static void     OGG_delete(void *music_p);
+
+/* Set the volume for an OGG stream */
+static void     OGG_setloops(void *music_p, int loops);
+static void     OGG_setvolume(void *music_p, int volume);
+
+/* Start playback of a given OGG stream */
+static void     OGG_play(void *music_p);
+static void     OGG_pause(void *music_p);
+static void     OGG_resume(void *music_p);
+/* Stop playback of a stream previously started with OGG_play() */
+static void     OGG_stop(void *music_p);
+
+/* Return non-zero if a stream is currently playing */
+static int      OGG_playing(void *music_p);
+static int      OGG_paused(void *music_p);
+
+static const char *OGG_metaTitle(void *music_p);
+static const char *OGG_metaArtist(void *music_p);
+static const char *OGG_metaAlbum(void *music_p);
+static const char *OGG_metaCopyright(void *music_p);
+
+/* Jump (seek) to a given position (time is in seconds) */
+static void     OGG_jump_to_time(void *music_p, double time);
+static double   OGG_get_time(void *music_p);
+
+static int      OGG_playAudio(void *music_p, Uint8 *snd, int len);
+
+/* DEPRECATED */
+/*
 int OGG_init(SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
     return(0);
+}*/
+
+/* Initialize the Ogg Vorbis player, with the given mixer settings
+   This function returns 0, or -1 if there was an error.
+ */
+int OGG_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
+{
+    mixer = *mixerfmt;
+
+    codec->isValid = 1;
+
+    codec->open  = OGG_new_RW;
+    codec->close = OGG_delete;
+
+    codec->play   = OGG_play;
+    codec->pause  = OGG_pause;
+    codec->resume = OGG_resume;
+    codec->stop   = OGG_stop;
+
+    codec->isPlaying   = OGG_playing;
+    codec->isPaused    = OGG_paused;
+
+    codec->setLoops    = OGG_setloops;
+    codec->setVolume   = OGG_setvolume;
+
+    codec->jumpToTime     = OGG_jump_to_time;
+    codec->getCurrentTime = OGG_get_time;
+
+    codec->metaTitle    = OGG_metaTitle;
+    codec->metaArtist   = OGG_metaArtist;
+    codec->metaAlbum    = OGG_metaAlbum;
+    codec->metaCopyright= OGG_metaCopyright;
+
+    codec->playAudio    = OGG_playAudio;
+
+    return(0);
+}
+
+
+
+
+static void OGG_setloops(void *music_p, int loops)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    if(loops == 0)
+        music->loop = -1;
+    music->loops_count = loops;
 }
 
 /* Set the volume for an OGG stream */
-void OGG_setvolume(OGG_music *music, int volume)
+static void OGG_setvolume(void *music_p, int volume)
 {
+    OGG_music *music = (OGG_music *)music_p;
     music->volume = volume;
 }
 
@@ -71,7 +187,7 @@ static long sdl_tell_func(void *datasource)
 }
 
 /* Load an OGG stream from an SDL_RWops object */
-OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
+static void *OGG_new_RW(SDL_RWops *src, int freesrc)
 {
     OGG_music *music;
     ov_callbacks callbacks;
@@ -97,7 +213,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         SDL_memset(music, 0, (sizeof * music));
         music->src = src;
         music->freesrc = freesrc;
-        OGG_stop(music);
+        OGG_stop((void*)music);
         OGG_setvolume(music, MIX_MAX_VOLUME);
         music->section = -1;
         music->channels = 0;
@@ -216,22 +332,72 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
 }
 
 /* Ignore loop points if found */
+/*
 void OGG_IgnoreLoop(OGG_music *music)
 {
     if(music) music->loop = -1;
-}
+}*/
 
 
 /* Start playback of a given OGG stream */
-void OGG_play(OGG_music *music)
+static void OGG_play(void *music_p)
 {
+    OGG_music *music = (OGG_music *)music_p;
     music->playing = 1;
+    music->paused = 0;
 }
 
-/* Return non-zero if a stream is currently playing */
-int OGG_playing(OGG_music *music)
+
+static void OGG_pause(void *music_p)
 {
-    return(music->playing);
+    OGG_music *music = (OGG_music *)music_p;
+    if(music->playing)
+        music->paused = 1;
+}
+
+static void OGG_resume(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    if(music->playing)
+        music->paused = 0;
+}
+
+
+/* Return non-zero if a stream is currently playing */
+static int OGG_playing(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    return(music->playing && !music->paused);
+}
+
+static int OGG_paused(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    return(music->playing && music->paused);
+}
+
+static const char *OGG_metaTitle(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    return music->mus_title ? music->mus_title : "";
+}
+
+static const char *OGG_metaArtist(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    return music->mus_artist ? music->mus_artist : "";
+}
+
+static const char *OGG_metaAlbum(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    return music->mus_album ? music->mus_album : "";
+}
+
+static const char *OGG_metaCopyright(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    return music->mus_copyright ? music->mus_copyright : "";
 }
 
 /* Read some Ogg stream data and convert it for output */
@@ -260,6 +426,12 @@ static void OGG_getsome(OGG_music *music)
     {
         len -= ((pcmpos - music->loop_end) * music->loop_len_ch) * sizeof(Uint16);
         ov_pcm_seek(&music->vf, music->loop_start);
+        if(music->loops_count > 0)
+        {
+            music->loops_count--;
+            if(music->loops_count == 0)
+                music->loop = -1;
+        }
     }
 
     if(len <= 0)
@@ -322,8 +494,10 @@ static void OGG_getsome(OGG_music *music)
 }
 
 /* Play some of a stream previously started with OGG_play() */
-int OGG_playAudio(OGG_music *music, Uint8 *snd, int len)
+int OGG_playAudio(void *music_p, Uint8 *snd, int len)
 {
+    OGG_music *music = (OGG_music *)music_p;
+
     int mixable;
 
     while((len > 0) && music->playing)
@@ -350,14 +524,16 @@ int OGG_playAudio(OGG_music *music, Uint8 *snd, int len)
 }
 
 /* Stop playback of a stream previously started with OGG_play() */
-void OGG_stop(OGG_music *music)
+static void OGG_stop(void *music_p)
 {
+    OGG_music *music = (OGG_music *)music_p;
     music->playing = 0;
 }
 
 /* Close the given OGG stream */
-void OGG_delete(OGG_music *music)
+void OGG_delete(void *music_p)
 {
+    OGG_music *music = (OGG_music *)music_p;
     if(music)
     {
         if(music->cvt.buf)
@@ -378,8 +554,9 @@ void OGG_delete(OGG_music *music)
 }
 
 /* Jump (seek) to a given position (time is in seconds) */
-void OGG_jump_to_time(OGG_music *music, double time)
+void OGG_jump_to_time(void *music_p, double time)
 {
+    OGG_music *music = (OGG_music *)music_p;
     #ifdef OGG_USE_TREMOR
     vorbis.ov_time_seek(&music->vf, (ogg_int64_t)(time * 1000.0));
     #else
@@ -387,4 +564,16 @@ void OGG_jump_to_time(OGG_music *music, double time)
     #endif
 }
 
+double OGG_get_time(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    #ifdef OGG_USE_TREMOR
+    return (double)(ov_time_tell(&music->vf) / 1000);
+    #else
+    return ov_time_tell(&music->vf);
+    #endif
+}
+
 #endif /* OGG_MUSIC */
+
+

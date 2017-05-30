@@ -101,6 +101,8 @@ static int music_volume = MIX_MAX_VOLUME;
 static int mididevice_next    = MIDI_ADLMIDI;
 static int mididevice_current = MIDI_ADLMIDI;
 
+static AudioCodec   available_codecs[MUS_KnownCodecs];
+
 /* Reset MIDI settings every file reopening (to allow right argument passing) */
 static int need_reset_midi = 1;
 
@@ -109,7 +111,9 @@ static int lock_midi_args = 0;
 
 struct _Mix_Music
 {
-    Mix_MusicType type;
+    Mix_MusicType    type;
+    AudioCodec       codec;
+    AudioCodecStream*music;
     union
     {
         #ifdef CMD_MUSIC
@@ -144,9 +148,6 @@ struct _Mix_Music
         #ifdef USE_NATIVE_MIDI
         NativeMidiSong *nativemidi;
         #endif
-        #endif
-        #ifdef OGG_MUSIC
-        OGG_music *ogg;
         #endif
         #ifdef MP3_MUSIC
         SMPEG *mp3;
@@ -401,8 +402,7 @@ void music_mixer(void *udata, Uint8 *stream, int len)
             #endif
             #ifdef OGG_MUSIC
         case MUS_OGG:
-
-            left = OGG_playAudio(music_playing->data.ogg, stream, len);
+            left = music_playing->codec.playAudio(music_playing->music, stream, len);
             break;
             #endif
             #ifdef FLAC_MUSIC
@@ -439,6 +439,9 @@ skip:
 /* Initialize the music players with a certain desired audio format */
 int open_music(SDL_AudioSpec *mixer)
 {
+    SDL_memset(available_codecs, 0, sizeof(available_codecs));
+
+    /* available_codecs */
     #ifdef WAV_MUSIC
     if(WAVStream_Init(mixer) == 0)
         add_music_decoder("WAVE");
@@ -527,7 +530,7 @@ int open_music(SDL_AudioSpec *mixer)
 
     #endif
     #ifdef OGG_MUSIC
-    if(OGG_init(mixer) == 0)
+    if(OGG_init2(&available_codecs[MUS_OGG], mixer) == 0)
         add_music_decoder("OGG");
     #endif
 
@@ -1151,8 +1154,9 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         #ifdef OGG_MUSIC
     case MUS_OGG:
         music->type = MUS_OGG;
-        music->data.ogg = OGG_new_RW(src, freesrc);
-        if(music->data.ogg)
+        music->codec = available_codecs[MUS_OGG];
+        music->music = music->codec.open(src, freesrc);
+        if(music->music != NULL)
             music->error = 0;
         break;
         #endif
@@ -1471,7 +1475,8 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
             #endif
             #ifdef OGG_MUSIC
         case MUS_OGG:
-            OGG_delete(music->data.ogg);
+            music->codec.close(music->music);
+            music->music = 0;
             break;
             #endif
             #ifdef FLAC_MUSIC
@@ -1537,8 +1542,7 @@ const char *SDLCALLCC Mix_GetMusicTitleTag(const Mix_Music *music)
         {
             #ifdef OGG_MUSIC
         case MUS_OGG:
-            if(music->data.ogg->mus_title != NULL)
-                return music->data.ogg->mus_title;
+            return music->codec.metaTitle(music->music);
             break;
             #endif
             #ifdef FLAC_MUSIC
@@ -1580,8 +1584,7 @@ const char *SDLCALLCC Mix_GetMusicArtistTag(const Mix_Music *music)
         {
             #ifdef OGG_MUSIC
         case MUS_OGG:
-            if(music->data.ogg->mus_artist != NULL)
-                return music->data.ogg->mus_artist;
+            return music->codec.metaArtist(music->music);
             break;
             #endif
             #ifdef FLAC_MUSIC
@@ -1617,8 +1620,7 @@ const char *SDLCALLCC Mix_GetMusicAlbumTag(const Mix_Music *music)
         {
             #ifdef OGG_MUSIC
         case MUS_OGG:
-            if(music->data.ogg->mus_album != NULL)
-                return music->data.ogg->mus_album;
+            return music->codec.metaAlbum(music->music);
             break;
             #endif
             #ifdef FLAC_MUSIC
@@ -1654,8 +1656,7 @@ const char *SDLCALLCC Mix_GetMusicCopyrightTag(const Mix_Music *music)
         {
             #ifdef OGG_MUSIC
         case MUS_OGG:
-            if(music->data.ogg->mus_copyright != NULL)
-                return music->data.ogg->mus_copyright;
+            return music->codec.metaCopyright(music->music);
             break;
             #endif
             #ifdef FLAC_MUSIC
@@ -1806,8 +1807,8 @@ static int music_internal_play(Mix_Music *music, double position)
         #endif
         #ifdef OGG_MUSIC
     case MUS_OGG:
-        if(music_loops >= 0) OGG_IgnoreLoop(music->data.ogg);
-        OGG_play(music->data.ogg);
+        music->codec.setLoops(music->music, music_loops);
+        music->codec.play(music->music);
         break;
         #endif
         #ifdef FLAC_MUSIC
@@ -1930,7 +1931,7 @@ int music_internal_position(double position)
         #endif
         #ifdef OGG_MUSIC
     case MUS_OGG:
-        OGG_jump_to_time(music_playing->data.ogg, position);
+        music_playing->codec.jumpToTime(music_playing->music, position);
         break;
         #endif
         #ifdef FLAC_MUSIC
@@ -2076,7 +2077,7 @@ static void music_internal_volume(int volume)
         #endif
         #ifdef OGG_MUSIC
     case MUS_OGG:
-        OGG_setvolume(music_playing->data.ogg, volume);
+        music_playing->codec.setVolume(music_playing->music, volume);
         break;
         #endif
         #ifdef FLAC_MUSIC
@@ -2204,7 +2205,7 @@ static void music_internal_halt(void)
         #endif
         #ifdef OGG_MUSIC
     case MUS_OGG:
-        OGG_stop(music_playing->data.ogg);
+        music_playing->codec.stop(music_playing->music);
         break;
         #endif
         #ifdef FLAC_MUSIC
@@ -2426,7 +2427,7 @@ static int music_internal_playing()
         #endif
         #ifdef OGG_MUSIC
     case MUS_OGG:
-        if(! OGG_playing(music_playing->data.ogg))
+        if(!music_playing->codec.isPlaying(music_playing->music))
             playing = 0;
         break;
         #endif
