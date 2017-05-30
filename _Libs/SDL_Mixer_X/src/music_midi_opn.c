@@ -313,5 +313,5 @@ void OPNMIDI_jump_to_time(struct MUSIC_MIDIOPN *music, double time)
     }
 }
 
-#endif //USE_OPN2_MIDI
+#endif /*USE_OPN2_MIDI*/
 
