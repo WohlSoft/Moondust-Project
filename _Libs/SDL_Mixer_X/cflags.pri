@@ -1,6 +1,6 @@
 
 !win*-msvc*:{
-    QMAKE_CFLAGS += -std=c99
+    QMAKE_CFLAGS += -std=c90
 
     QMAKE_CFLAGS_WARN_ON += \
         -Wno-missing-field-initializers \

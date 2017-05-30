@@ -160,6 +160,7 @@ HEADERS += \
     include/SDL_mixer_ext/SDL_mixer_ext.h \
     include/SDL_mixer_ext/begin_code.h \
     include/SDL_mixer_ext/close_code.h \
+    src/audio_codec.h \
     src/effects_internal.h \
     src/load_aiff.h \
     src/load_voc.h \
