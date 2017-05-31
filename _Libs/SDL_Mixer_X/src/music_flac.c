@@ -122,30 +122,32 @@ int FLAC_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 
     codec->isValid = 1;
 
-    codec->open  = FLAC_new_RW;
-    codec->openEx = audioCodec_dummy_cb_openEx;
-    codec->close = FLAC_delete;
+    codec->capabilities     = audioCodec_default_capabilities;
 
-    codec->play   = FLAC_play;
-    codec->pause  = FLAC_pause;
-    codec->resume = FLAC_resume;
-    codec->stop   = FLAC_stop;
+    codec->open             = FLAC_new_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = FLAC_delete;
 
-    codec->isPlaying   = FLAC_playing;
-    codec->isPaused    = FLAC_paused;
+    codec->play             = FLAC_play;
+    codec->pause            = FLAC_pause;
+    codec->resume           = FLAC_resume;
+    codec->stop             = FLAC_stop;
 
-    codec->setLoops    = FLAC_setloops;
-    codec->setVolume   = FLAC_setvolume;
+    codec->isPlaying        = FLAC_playing;
+    codec->isPaused         = FLAC_paused;
 
-    codec->jumpToTime     = FLAC_jump_to_time;
-    codec->getCurrentTime = FLAC_get_time;
+    codec->setLoops         = FLAC_setloops;
+    codec->setVolume        = FLAC_setvolume;
 
-    codec->metaTitle    = FLAC_metaTitle;
-    codec->metaArtist   = FLAC_metaArtist;
-    codec->metaAlbum    = FLAC_metaAlbum;
-    codec->metaCopyright= FLAC_metaCopyright;
+    codec->jumpToTime       = FLAC_jump_to_time;
+    codec->getCurrentTime   = FLAC_get_time;
 
-    codec->playAudio    = FLAC_playAudio;
+    codec->metaTitle        = FLAC_metaTitle;
+    codec->metaArtist       = FLAC_metaArtist;
+    codec->metaAlbum        = FLAC_metaAlbum;
+    codec->metaCopyright    = FLAC_metaCopyright;
+
+    codec->playAudio        = FLAC_playAudio;
 
     return(0);
 }

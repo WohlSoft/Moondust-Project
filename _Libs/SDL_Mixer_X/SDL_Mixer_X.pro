@@ -65,10 +65,8 @@ macx:{
 
 QMAKE_POST_LINK = $$COPY $$shell_path($$PWD/include/SDL_mixer_ext/SDL_mixer_ext.h) $$shell_path($$PWD/../_builds/$$TARGETOS/include/SDL2)
 
+# Codecs
 DEFINES += \
-    main=SDL_main \
-    HAVE_SIGNAL_H \
-    HAVE_SETBUF \
     WAV_MUSIC \
     MID_MUSIC \
     USE_TIMIDITY_MIDI \
@@ -80,9 +78,15 @@ DEFINES += \
     FLAC_MUSIC \
     MP3_MAD_MUSIC \
     GME_MUSIC \
-    SPC_MORE_ACCURACY \#NO_OLDNAMES
     MODPLUG_MUSIC \
+    #CMD_MUSIC
+
+DEFINES += \
+    main=SDL_main \
+    HAVE_SIGNAL_H \
+    HAVE_SETBUF \
     PIC \
+    SPC_MORE_ACCURACY \#NO_OLDNAMES
     _REENTRANT \
     _USE_MATH_DEFINES
 

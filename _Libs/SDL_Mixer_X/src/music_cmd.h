@@ -23,40 +23,13 @@
 
 #ifdef CMD_MUSIC
 
-#include <sys/types.h>
-#include <limits.h>
-#include <stdio.h>
-#if defined(__linux__) && defined(__arm__)
-# include <linux/limits.h>
-#endif
-typedef struct {
-    char *file;
-    char *cmd;
-    pid_t pid;
-} MusicCMD;
+#include "audio_codec.h"
 
-/* Unimplemented */
-extern void MusicCMD_SetVolume(int volume);
+int MusicCMD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt);
 
-/* Load a music stream from the given file */
-extern MusicCMD *MusicCMD_LoadSong(const char *cmd, const char *file);
-
-/* Start playback of a given music stream */
-extern void MusicCMD_Start(MusicCMD *music);
-
-/* Stop playback of a stream previously started with MusicCMD_Start() */
-extern void MusicCMD_Stop(MusicCMD *music);
-
-/* Pause playback of a given music stream */
-extern void MusicCMD_Pause(MusicCMD *music);
-
-/* Resume playback of a given music stream */
-extern void MusicCMD_Resume(MusicCMD *music);
-
-/* Close the given music stream */
-extern void MusicCMD_FreeSong(MusicCMD *music);
-
-/* Return non-zero if a stream is currently playing */
-extern int MusicCMD_Active(MusicCMD *music);
+/*  Load a music stream from the given file
+    to free song, please use codec->close(music) function
+*/
+void *MusicCMD_LoadSong(const char *cmd, const char *file);
 
 #endif /* CMD_MUSIC */

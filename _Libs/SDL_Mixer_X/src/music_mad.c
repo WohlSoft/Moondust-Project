@@ -52,30 +52,32 @@ int MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
 
     codec->isValid = 1;
 
-    codec->open  = MAD_new_RW;
-    codec->openEx= audioCodec_dummy_cb_openEx;
-    codec->close = mad_closeFile;
+    codec->capabilities     = audioCodec_default_capabilities;
 
-    codec->play   = mad_start;
-    codec->pause  = audioCodec_dummy_cb_void_1arg;
-    codec->resume = audioCodec_dummy_cb_void_1arg;
-    codec->stop   = mad_stop;
+    codec->open             = MAD_new_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = mad_closeFile;
 
-    codec->isPlaying   = mad_isPlaying;
-    codec->isPaused    = audioCodec_dummy_cb_int_1arg;
+    codec->play             = mad_start;
+    codec->pause            = audioCodec_dummy_cb_void_1arg;
+    codec->resume           = audioCodec_dummy_cb_void_1arg;
+    codec->stop             = mad_stop;
 
-    codec->setLoops    = audioCodec_dummy_cb_regulator;
-    codec->setVolume   = mad_setVolume;
+    codec->isPlaying        = mad_isPlaying;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
 
-    codec->jumpToTime     = mad_seek;
-    codec->getCurrentTime = audioCodec_dummy_cb_tell;
+    codec->setLoops         = audioCodec_dummy_cb_regulator;
+    codec->setVolume        = mad_setVolume;
 
-    codec->metaTitle    = MAD_metaTitle;
-    codec->metaArtist   = MAD_metaArtist;
-    codec->metaAlbum    = MAD_metaAlbum;
-    codec->metaCopyright= MAD_metaCopyright;
+    codec->jumpToTime       = mad_seek;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
 
-    codec->playAudio    = mad_getSamples;
+    codec->metaTitle        = MAD_metaTitle;
+    codec->metaArtist       = MAD_metaArtist;
+    codec->metaAlbum        = MAD_metaAlbum;
+    codec->metaCopyright    = MAD_metaCopyright;
+
+    codec->playAudio        = mad_getSamples;
 
     return(0);
 }

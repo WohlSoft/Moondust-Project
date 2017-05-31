@@ -70,6 +70,10 @@ static double modplug_get_current_time(void *music_p);
 /* Play some of a stream previously started with modplug_play() */
 static int modplug_playAudio(void *music_p, Uint8 *stream, int len);
 
+static Uint32      modpug_Codec_capabilities()
+{
+    return ACODEC_NEED_VOLUME_INIT;
+}
 
 int modplug_init2(AudioCodec *codec, SDL_AudioSpec *spec)
 {
@@ -132,30 +136,32 @@ int modplug_init2(AudioCodec *codec, SDL_AudioSpec *spec)
 
     codec->isValid = 1;
 
-    codec->open  = modplug_new_RW;
-    codec->openEx= audioCodec_dummy_cb_openEx;
-    codec->close = modplug_delete;
+    codec->capabilities     = modpug_Codec_capabilities;
 
-    codec->play   = modplug_play;
-    codec->pause  = audioCodec_dummy_cb_void_1arg;
-    codec->resume = audioCodec_dummy_cb_void_1arg;
-    codec->stop   = modplug_stop;
+    codec->open             = modplug_new_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = modplug_delete;
 
-    codec->isPlaying   = modplug_playing;
-    codec->isPaused    = audioCodec_dummy_cb_int_1arg;
+    codec->play             = modplug_play;
+    codec->pause            = audioCodec_dummy_cb_void_1arg;
+    codec->resume           = audioCodec_dummy_cb_void_1arg;
+    codec->stop             = modplug_stop;
 
-    codec->setLoops    = audioCodec_dummy_cb_regulator;
-    codec->setVolume   = modplug_setvolume;
+    codec->isPlaying        = modplug_playing;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
 
-    codec->jumpToTime     = modplug_jump_to_time;
-    codec->getCurrentTime = modplug_get_current_time;
+    codec->setLoops         = audioCodec_dummy_cb_regulator;
+    codec->setVolume        = modplug_setvolume;
 
-    codec->metaTitle    = modplug_metaTitle;
-    codec->metaArtist   = audioCodec_dummy_meta_tag;
-    codec->metaAlbum    = audioCodec_dummy_meta_tag;
-    codec->metaCopyright = audioCodec_dummy_meta_tag;
+    codec->jumpToTime       = modplug_jump_to_time;
+    codec->getCurrentTime   = modplug_get_current_time;
 
-    codec->playAudio    = modplug_playAudio;
+    codec->metaTitle        = modplug_metaTitle;
+    codec->metaArtist       = audioCodec_dummy_meta_tag;
+    codec->metaAlbum        = audioCodec_dummy_meta_tag;
+    codec->metaCopyright    = audioCodec_dummy_meta_tag;
+
+    codec->playAudio        = modplug_playAudio;
 
     return 0;
 }
