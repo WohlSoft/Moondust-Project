@@ -2368,39 +2368,32 @@ int SDLCALLCC Mix_GetSynchroValue(void)
 void close_music(void)
 {
     Mix_HaltMusic();
+
     #ifdef CMD_MUSIC
     Mix_SetMusicCMD(NULL);
-    #endif
-
-    #ifdef MODPLUG_MUSIC
-    modplug_exit();
     #endif
 
     #ifdef MOD_MUSIC
     MOD_exit();
     #endif
 
-    #ifdef GME_MUSIC
-    GME_exit();
-    #endif
-
     #ifdef MID_MUSIC
+        #ifdef USE_ADL_MIDI
+        ADLMIDI_exit();
+        #endif
 
-    #ifdef USE_ADL_MIDI
-    ADLMIDI_exit();
+        #ifdef USE_OPN2_MIDI
+        OPNMIDI_exit();
+        #endif
+
+        # ifdef USE_TIMIDITY_MIDI
+        Timidity_Close();
+        # endif
     #endif
 
-    #ifdef USE_OPN2_MIDI
-    OPNMIDI_exit();
-    #endif
+    if(music_file)
+        SDL_free(music_file);
 
-    # ifdef USE_TIMIDITY_MIDI
-    Timidity_Close();
-    # endif
-
-    #endif
-
-    if(music_file) SDL_free(music_file);
     music_file = NULL;
     music_filename = NULL;
 
