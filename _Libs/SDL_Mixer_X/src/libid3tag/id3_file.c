@@ -61,6 +61,7 @@ struct filetag
 struct id3_file
 {
     FILE *iofile;
+    SDL_RWops *iorwops;
     enum id3_file_mode mode;
     char *path;
 
@@ -72,6 +73,89 @@ struct id3_file
     struct filetag *tags;
 };
 
+/* Add support for SDL_RWops*/
+size_t id3f_read(void *data, size_t count, size_t size, struct id3_file *ctx)
+{
+    if(ctx->iorwops)
+        return SDL_RWread(ctx->iorwops, data, count, size);
+    else
+        return fread(data, size, count, ctx->iofile);
+}
+
+size_t id3f_write(const void *data, size_t count, size_t size, struct id3_file *ctx)
+{
+    if(ctx->iorwops)
+        return SDL_RWwrite(ctx->iorwops, data, count, size);
+    else
+        return fwrite(data, size, count, ctx->iofile);
+}
+
+Sint64 id3f_tell(struct id3_file *ctx)
+{
+    if(ctx->iorwops)
+        return SDL_RWtell(ctx->iorwops);
+    else
+        return ftell(ctx->iofile);
+}
+
+Sint64 id3f_seek(struct id3_file *ctx, Sint64 offset, int whence)
+{
+    if(ctx->iorwops)
+        return SDL_RWseek(ctx->iorwops, offset, whence) != -1 ? 0 : -1;
+    else
+        return fseek(ctx->iofile, offset, whence);
+}
+
+void id3f_rewind(struct id3_file *ctx)
+{
+    if(ctx->iorwops)
+        SDL_RWseek(ctx->iorwops, 0, SEEK_SET);
+    else
+        rewind(ctx->iofile);
+}
+
+typedef struct id3f_pos_t_ttt
+{
+    Sint64 rwoffset;
+    fpos_t real_fpos;
+} id3f_pos_t;
+
+int id3f_getpos(struct id3_file *ctx, id3f_pos_t *pos)
+{
+    if(!ctx || !pos)
+        return -1;
+    if(ctx->iorwops)
+    {
+        pos->rwoffset = (off_t)id3f_tell(ctx);
+        return pos->rwoffset != -1 ? 0 : -1;
+    }
+    return fgetpos(ctx->iofile, &pos->real_fpos);
+}
+
+int id3f_setpos(struct id3_file *ctx, const id3f_pos_t *pos)
+{
+    if(!ctx || !pos)
+        return -1;
+    if(ctx->iorwops)
+        return id3f_seek(ctx, pos->rwoffset, SEEK_SET) == 0 ? 0 : -1;
+    return fsetpos(ctx->iofile, &pos->real_fpos);
+}
+
+int id3f_flush(struct id3_file *ctx)
+{
+    if(ctx->iorwops)
+        return 0;
+    else
+        return fflush(ctx->iofile);
+}
+
+void id3f_clearerr(struct id3_file *ctx)
+{
+    if(!ctx->iorwops)
+        clearerr(ctx->iofile);
+}
+
+
 enum
 {
     ID3_FILE_FLAG_ID3V1 = 0x0001
@@ -82,18 +166,18 @@ enum
  * DESCRIPTION: check for a tag at a file's current position
  */
 static
-signed long query_tag(FILE *iofile)
+signed long query_tag(struct id3_file *iofile)
 {
-    fpos_t save_position;
+    id3f_pos_t save_position;
     id3_byte_t query[ID3_TAG_QUERYSIZE];
     signed long size;
 
-    if(fgetpos(iofile, &save_position) == -1)
+    if(id3f_getpos(iofile, &save_position) == -1)
         return 0;
 
-    size = id3_tag_query(query, fread(query, 1, sizeof(query), iofile));
+    size = id3_tag_query(query, id3f_read(query, 1, sizeof(query), iofile));
 
-    if(fsetpos(iofile, &save_position) == -1)
+    if(id3f_setpos(iofile, &save_position) == -1)
         return 0;
 
     return size;
@@ -104,7 +188,7 @@ signed long query_tag(FILE *iofile)
  * DESCRIPTION: read and parse a tag at a file's current position
  */
 static
-struct id3_tag *read_tag(FILE *iofile, id3_length_t size)
+struct id3_tag *read_tag(struct id3_file *iofile, id3_length_t size)
 {
     id3_byte_t *data;
     struct id3_tag *tag = 0;
@@ -112,7 +196,7 @@ struct id3_tag *read_tag(FILE *iofile, id3_length_t size)
     data = (id3_byte_t *)malloc(size);
     if(data)
     {
-        if(fread(data, size, 1, iofile) == 1)
+        if(id3f_read(data, size, 1, iofile) == 1)
             tag = id3_tag_parse(data, size);
 
         free(data);
@@ -220,7 +304,8 @@ struct id3_tag *add_tag(struct id3_file *file, id3_length_t length)
     struct filetag filetag;
     struct id3_tag *tag;
 
-    location = ftell(file->iofile);
+    location = id3f_tell(file);
+
     if(location == -1)
         return 0;
 
@@ -228,7 +313,7 @@ struct id3_tag *add_tag(struct id3_file *file, id3_length_t length)
     {
         unsigned long begin1, end1, begin2, end2;
 
-        begin1 = location;
+        begin1 = (unsigned long)location;
         end1   = begin1 + length;
 
         for(i = 0; i < file->ntags; ++i)
@@ -244,10 +329,10 @@ struct id3_tag *add_tag(struct id3_file *file, id3_length_t length)
         }
     }
 
-    tag = read_tag(file->iofile, length);
+    tag = read_tag(file, length);
 
     filetag.tag      = tag;
-    filetag.location = location;
+    filetag.location = (unsigned long)location;
     filetag.length   = length;
 
     if(add_filetag(file, &filetag) == -1 ||
@@ -271,7 +356,7 @@ struct id3_tag *add_tag(struct id3_file *file, id3_length_t length)
 static
 int search_tags(struct id3_file *file)
 {
-    fpos_t save_position;
+    id3f_pos_t save_position;
     signed long size;
 
     /*
@@ -283,20 +368,20 @@ int search_tags(struct id3_file *file)
      * [Apparently not even fsetpos() is sufficient under Win32.]
      */
 
-    if(fgetpos(file->iofile, &save_position) == -1 ||
-       fsetpos(file->iofile, &save_position) == -1)
+    if(id3f_getpos(file, &save_position) == -1 ||
+       id3f_setpos(file, &save_position) == -1)
         return -1;
 
     /* look for an ID3v1 tag */
 
-    if(fseek(file->iofile, -128, SEEK_END) == 0)
+    if(id3f_seek(file, -128, SEEK_END) == 0)
     {
-        size = query_tag(file->iofile);
+        size = query_tag(file);
         if(size > 0)
         {
             struct id3_tag const *tag;
 
-            tag = add_tag(file, size);
+            tag = add_tag(file, (id3_length_t)size);
 
             /* if this is indeed an ID3v1 tag, mark the file so */
 
@@ -307,15 +392,15 @@ int search_tags(struct id3_file *file)
 
     /* look for a tag at the beginning of the file */
 
-    rewind(file->iofile);
+    id3f_rewind(file);
 
-    size = query_tag(file->iofile);
+    size = query_tag(file);
     if(size > 0)
     {
         struct id3_tag const *tag;
         struct id3_frame const *frame;
 
-        tag = add_tag(file, size);
+        tag = add_tag(file, (id3_length_t)size);
 
         /* locate tags indicated by SEEK frames */
 
@@ -324,33 +409,33 @@ int search_tags(struct id3_file *file)
             long seek;
 
             seek = id3_field_getint(id3_frame_field(frame, 0));
-            if(seek < 0 || fseek(file->iofile, seek, SEEK_CUR) == -1)
+            if(seek < 0 || id3f_seek(file, seek, SEEK_CUR) == -1)
                 break;
 
-            size = query_tag(file->iofile);
-            tag  = (size > 0) ? add_tag(file, size) : 0;
+            size = query_tag(file);
+            tag  = (size > 0) ? add_tag(file, (id3_length_t)size) : 0;
         }
     }
 
     /* look for a tag at the end of the file (before any ID3v1 tag) */
 
-    if(fseek(file->iofile, ((file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0) +
+    if(id3f_seek(file, ((file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0) +
              -10, SEEK_END) == 0)
     {
-        size = query_tag(file->iofile);
-        if(size < 0 && fseek(file->iofile, size, SEEK_CUR) == 0)
+        size = query_tag(file);
+        if(size < 0 && id3f_seek(file, size, SEEK_CUR) == 0)
         {
-            size = query_tag(file->iofile);
+            size = query_tag(file);
             if(size > 0)
-                add_tag(file, size);
+                add_tag(file, (id3_length_t)size);
         }
     }
 
-    clearerr(file->iofile);
+    id3f_clearerr(file);
 
     /* restore seek position */
 
-    if(fsetpos(file->iofile, &save_position) == -1)
+    if(id3f_setpos(file, &save_position) == -1)
         return -1;
 
     /* set primary tag options and target padded length for convenience */
@@ -403,13 +488,11 @@ void finish_file(struct id3_file *file)
     free(file);
 }
 
-/*
- * NAME:    new_file()
- * DESCRIPTION: create a new file structure and load tags
- */
 static
-struct id3_file *new_file(FILE *iofile, enum id3_file_mode mode,
-                          char const *path)
+struct id3_file *new_file_private(SDL_RWops *rwops_src,
+                                  FILE *iofile,
+                                  enum id3_file_mode mode,
+                                  char const *path)
 {
     struct id3_file *file;
     char *nullP = 0;
@@ -419,8 +502,9 @@ struct id3_file *new_file(FILE *iofile, enum id3_file_mode mode,
         goto fail;
 
     file->iofile  = iofile;
+    file->iorwops = rwops_src;
     file->mode    = mode;
-    file->path    = path ? (char *)strdup(path) : nullP;
+    file->path    = path ? (char*)strdup(path) : nullP;
 
     file->flags   = 0;
 
@@ -450,6 +534,38 @@ fail:
             file = 0;
         }
     }
+
+    return file;
+}
+
+static
+struct id3_file *new_file_rwops(SDL_RWops *src, enum id3_file_mode mode)
+{
+    return new_file_private(src, NULL, mode, NULL);
+}
+
+/*
+ * NAME:    new_file()
+ * DESCRIPTION: create a new file structure and load tags
+ */
+static
+struct id3_file *new_file(FILE *iofile, enum id3_file_mode mode,
+                          char const *path)
+{
+    return new_file_private(NULL, iofile, mode, path);
+}
+
+struct id3_file *id3_file_from_rwops(SDL_RWops *src, enum id3_file_mode mode)
+{
+    struct id3_file *file;
+    if(src == 0)
+        return 0;
+
+    SDL_RWseek(src, 0, SEEK_SET);
+
+    file = new_file_rwops(src, mode);
+    if(file == 0)
+        return 0;
 
     return file;
 }
@@ -521,7 +637,13 @@ int id3_file_close(struct id3_file *file)
 
     assert(file);
 
-    if(fclose(file->iofile) == EOF)
+    if(file->iorwops)
+    {
+        //Don't close RWops, just remove id3-tag descriptor
+        id3f_rewind(file);
+        result = 0;
+    }
+    else if(fclose(file->iofile) == EOF)
         result = -1;
 
     finish_file(file);
@@ -554,11 +676,11 @@ int v1_write(struct id3_file *file,
     {
         long location;
 
-        if(fseek(file->iofile, (file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0,
+        if(id3f_seek(file, (file->flags & ID3_FILE_FLAG_ID3V1) ? -128 : 0,
                  SEEK_END) == -1 ||
-           (location = ftell(file->iofile)) == -1 ||
-           fwrite(data, 128, 1, file->iofile) != 1 ||
-           fflush(file->iofile) == EOF)
+           (location = id3f_tell(file)) == -1 ||
+           id3f_write(data, 128, 1, file) != 1 ||
+           id3f_flush(file) == EOF)
             return -1;
 
         /* add file tag reference */
@@ -568,7 +690,7 @@ int v1_write(struct id3_file *file,
             struct filetag filetag;
 
             filetag.tag      = 0;
-            filetag.location = location;
+            filetag.location = (unsigned long)location;
             filetag.length   = 128;
 
             if(add_filetag(file, &filetag) == -1)
@@ -621,9 +743,9 @@ int v2_write(struct id3_file *file,
     {
         /* easy special case: rewrite existing tag in-place */
 
-        if(fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
-           fwrite(data, length, 1, file->iofile) != 1 ||
-           fflush(file->iofile) == EOF)
+        if(id3f_seek(file, (Sint64)file->tags[0].location, SEEK_SET) == -1 ||
+           id3f_write(data, length, 1, file) != 1 ||
+           id3f_flush(file) == EOF)
             return -1;
 
         goto done;
@@ -697,7 +819,7 @@ int id3_file_update(struct id3_file *file)
        v1_write(file, id3v1, v1size) == -1)
         goto fail;
 
-    rewind(file->iofile);
+    id3f_rewind(file);
 
     /* update file tags array? ... */
 

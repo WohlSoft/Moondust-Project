@@ -169,6 +169,7 @@ HEADERS += \
     src/mixer.h \
 
 SOURCES += \
+    src/audio_codec.c \
     src/effect_position.c \
     src/effect_stereoreverse.c \
     src/effects_internal.c \

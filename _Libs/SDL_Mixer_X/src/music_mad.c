@@ -29,17 +29,62 @@
 #include "libid3tag/id3tag.h"
 
 
-void mad_fetchID3Tags(mad_data *mp3_mad, char *filePath)
+/* This is the format of the audio mixer data */
+static SDL_AudioSpec global_mixer;
+
+static void * MAD_new_RW(SDL_RWops *src, int freesrc)
+{
+    return mad_openFileRW(src, &global_mixer, freesrc);
+}
+
+static const char *MAD_metaTitle(void *music_p);
+static const char *MAD_metaArtist(void *music_p);
+static const char *MAD_metaAlbum(void *music_p);
+static const char *MAD_metaCopyright(void *music_p);
+
+
+/* Initialize the MAD player, with the given mixer settings
+   This function returns 0, or -1 if there was an error.
+ */
+int MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
+{
+    global_mixer = *mixerfmt;
+
+    codec->isValid = 1;
+
+    codec->open  = MAD_new_RW;
+    codec->close = mad_closeFile;
+
+    codec->play   = mad_start;
+    codec->pause  = audioCodec_dummy_cb_void_1arg;
+    codec->resume = audioCodec_dummy_cb_void_1arg;
+    codec->stop   = mad_stop;
+
+    codec->isPlaying   = mad_isPlaying;
+    codec->isPaused    = audioCodec_dummy_cb_int_1arg;
+
+    codec->setLoops    = audioCodec_dummy_cb_regulator;
+    codec->setVolume   = mad_setVolume;
+
+    codec->jumpToTime     = mad_seek;
+    codec->getCurrentTime = audioCodec_dummy_cb_tell;
+
+    codec->metaTitle    = MAD_metaTitle;
+    codec->metaArtist   = MAD_metaArtist;
+    codec->metaAlbum    = MAD_metaAlbum;
+    codec->metaCopyright= MAD_metaCopyright;
+
+    codec->playAudio    = mad_getSamples;
+
+    return(0);
+}
+
+
+static void mad_fetchID3Tags(mad_data *mp3_mad)
 {
     struct id3_file *tags;
 
-    if(filePath == NULL)
-        return;
-
-    if(strlen(filePath) == 0)
-        return;
-
-    tags = id3_file_open(filePath, ID3_FILE_MODE_READONLY);
+    tags = id3_file_from_rwops(mp3_mad->src, ID3_FILE_MODE_READONLY);
 
     if(tags)
     {
@@ -47,8 +92,7 @@ void mad_fetchID3Tags(mad_data *mp3_mad, char *filePath)
         struct id3_frame *pFrame;
 
         /* Attempt to skip that dumb ID3 that causes junk begin on some MP3 files :-P */
-        mp3_mad->src_begin_pos = tag->paddedsize;
-        SDL_RWseek(mp3_mad->src, tag->paddedsize, RW_SEEK_SET);
+        mp3_mad->src_begin_pos = (int)tag->paddedsize;
 
         /* Search for given frame by frame id */
         pFrame = id3_tag_findframe(tag, ID3_FRAME_TITLE, 0);
@@ -104,6 +148,7 @@ void mad_fetchID3Tags(mad_data *mp3_mad, char *filePath)
             }
         }
         id3_file_close(tags);
+        SDL_RWseek(mp3_mad->src, (Sint64)mp3_mad->src_begin_pos, RW_SEEK_SET);
     }
 }
 
@@ -135,13 +180,14 @@ mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
         mp3_mad->mus_artist = NULL;
         mp3_mad->mus_copyright = NULL;
         MyResample_zero(&mp3_mad->resample);
+        mad_fetchID3Tags(mp3_mad);
     }
     return mp3_mad;
 }
 
-void
-mad_closeFile(mad_data *mp3_mad)
+void mad_closeFile(void *mp3_mad_p)
 {
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     mad_stream_finish(&mp3_mad->stream);
     mad_frame_finish(&mp3_mad->frame);
     mad_synth_finish(&mp3_mad->synth);
@@ -169,27 +215,26 @@ void writeToLogMad(const char *mode, int number, const char *app)
 #endif
 
 /* Starts the playback. */
-void
-mad_start(mad_data *mp3_mad)
+void mad_start(void *mp3_mad_p)
 {
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     mp3_mad->status |= MS_playing;
-
     #ifdef DebugMAD
     writeToLogMad("w", -1, "");
     #endif
 }
 
 /* Stops the playback. */
-void
-mad_stop(mad_data *mp3_mad)
+void mad_stop(void *mp3_mad_p)
 {
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     mp3_mad->status &= ~MS_playing;
 }
 
 /* Returns true if the playing is engaged, false otherwise. */
-int
-mad_isPlaying(mad_data *mp3_mad)
+int mad_isPlaying(void *mp3_mad_p)
 {
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     return ((mp3_mad->status & MS_playing) != 0);
 }
 
@@ -210,7 +255,7 @@ read_next_frame(mad_data *mp3_mad)
            them. */
         if(mp3_mad->stream.next_frame != NULL)
         {
-            remaining = mp3_mad->stream.bufend - mp3_mad->stream.next_frame;
+            remaining = (size_t)(mp3_mad->stream.bufend - mp3_mad->stream.next_frame);
             memmove(mp3_mad->input_buffer, mp3_mad->stream.next_frame, remaining);
             read_start = mp3_mad->input_buffer + remaining;
             read_size = MAD_INPUT_BUFFER_SIZE - remaining;
@@ -310,12 +355,12 @@ decode_frame(mad_data *mp3_mad)
         In particular, it tells us enough to set up the convert
         structure now. */
         MyResample_init(&mp3_mad->resample,
-                        mp3_mad->frame.header.samplerate,
+                        (int)mp3_mad->frame.header.samplerate,
                         mp3_mad->mixer.freq,
                         pcm->channels,
                         AUDIO_S16);
 
-        SDL_BuildAudioCVT(&mp3_mad->cvt, AUDIO_S16, pcm->channels,
+        SDL_BuildAudioCVT(&mp3_mad->cvt, AUDIO_S16, (Uint8)pcm->channels,
                           mp3_mad->mixer.freq/*mp3_mad->frame.header.samplerate*/, /*  <-- HACK: Avoid SDL's internal resamplers usage */
                           mp3_mad->mixer.format,
                           mp3_mad->mixer.channels,
@@ -344,13 +389,13 @@ decode_frame(mad_data *mp3_mad)
             *out++ = ((sample >> 8) & 0xff);
         }
     }
-    mp3_mad->output_end = out - mp3_mad->output_buffer;
+    mp3_mad->output_end = (int)(out - mp3_mad->output_buffer);
     /*assert(mp3_mad->output_end <= MAD_OUTPUT_BUFFER_SIZE);*/
 }
 
-int
-mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len)
+int mad_getSamples(void *mp3_mad_p, Uint8 *stream, int len)
 {
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     int bytes_remaining;
     int num_bytes;
     Uint8 *out;
@@ -358,7 +403,7 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len)
     if((mp3_mad->status & MS_playing) == 0)
     {
         /* We're not supposed to be playing, so send silence instead. */
-        SDL_memset(stream, 0, len);
+        SDL_memset(stream, 0, (size_t)len);
         return 0;
     }
 
@@ -378,9 +423,9 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len)
             if(num_bytes >= 0)
             {
                 if(mp3_mad->volume == MIX_MAX_VOLUME)
-                    SDL_memcpy(out, mp3_mad->resample.buf, num_bytes);
+                    SDL_memcpy(out, mp3_mad->resample.buf, (size_t)num_bytes);
                 else
-                    SDL_MixAudioFormat(out, mp3_mad->resample.buf, mp3_mad->mixer.format, num_bytes, mp3_mad->volume);
+                    SDL_MixAudioFormat(out, mp3_mad->resample.buf, mp3_mad->mixer.format, (Uint32)num_bytes, mp3_mad->volume);
             }
             out += num_bytes;
 
@@ -401,7 +446,7 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len)
                     {
                         /* Couldn't read a frame; either an error condition or
                            end-of-file.  Stop. */
-                        SDL_memset(out, 0, bytes_remaining);
+                        SDL_memset(out, 0, (size_t)bytes_remaining);
                         mp3_mad->status &= ~MS_playing;
                         return bytes_remaining;
                     }
@@ -458,12 +503,12 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len)
             if(num_bytes >= 0)
             {
                 if(mp3_mad->volume == MIX_MAX_VOLUME)
-                    SDL_memcpy(out, mp3_mad->output_buffer + mp3_mad->output_begin, num_bytes);
+                    SDL_memcpy(out, mp3_mad->output_buffer + mp3_mad->output_begin, (size_t)num_bytes);
                 else
                 {
                     SDL_MixAudioFormat(out, mp3_mad->output_buffer + mp3_mad->output_begin,
                                        mp3_mad->mixer.format,
-                                       num_bytes, mp3_mad->volume);
+                                       (Uint32)num_bytes, mp3_mad->volume);
                 }
             }
             out += num_bytes;
@@ -474,15 +519,39 @@ mad_getSamples(mad_data *mp3_mad, Uint8 *stream, int len)
     return 0;
 }
 
-void
-mad_seek(mad_data *mp3_mad, double position)
+static const char *MAD_metaTitle(void *music_p)
 {
+    mad_data *music = (mad_data *)music_p;
+    return music->mus_title ? music->mus_title : "";
+}
+
+static const char *MAD_metaArtist(void *music_p)
+{
+    mad_data *music = (mad_data *)music_p;
+    return music->mus_artist ? music->mus_artist : "";
+}
+
+static const char *MAD_metaAlbum(void *music_p)
+{
+    mad_data *music = (mad_data *)music_p;
+    return music->mus_album ? music->mus_album : "";
+}
+
+static const char *MAD_metaCopyright(void *music_p)
+{
+    mad_data *music = (mad_data *)music_p;
+    return music->mus_copyright ? music->mus_copyright : "";
+}
+
+void mad_seek(void *mp3_mad_p, double position)
+{
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     mad_timer_t target;
     int int_part;
 
     int_part = (int)position;
-    mad_timer_set(&target, int_part,
-                  (int)((position - int_part) * 1000000), 1000000);
+    mad_timer_set(&target, (unsigned long)int_part,
+                  (unsigned long)((position - int_part) * 1000000), 1000000);
 
     if(mad_timer_compare(mp3_mad->next_frame_start, target) > 0)
     {
@@ -524,8 +593,9 @@ mad_seek(mad_data *mp3_mad, double position)
 }
 
 void
-mad_setVolume(mad_data *mp3_mad, int volume)
+mad_setVolume(void *mp3_mad_p, int volume)
 {
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     mp3_mad->volume = volume;
 }
 
