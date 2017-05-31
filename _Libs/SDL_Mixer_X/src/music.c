@@ -529,6 +529,11 @@ int open_music(SDL_AudioSpec *mixer)
     add_music_decoder("MP3");
     #endif
 
+    #ifdef CMD_MUSIC
+    MusicCMD_init2(&available_codecs[MUS_CMD], mixer);
+    add_music_decoder("CMD");
+    #endif
+
     music_playing = NULL;
     music_stopped = 0;
     Mix_VolumeMusic(SDL_MIX_MAXVOLUME);
