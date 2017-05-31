@@ -78,6 +78,7 @@ DEFINES += \
     FLAC_MUSIC \
     MP3_MAD_MUSIC \
     GME_MUSIC \
+    #MOD_MUSIC \
     MODPLUG_MUSIC \
     #CMD_MUSIC
 

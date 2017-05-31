@@ -33,9 +33,22 @@ typedef void AudioCodecStream;
 
 typedef enum
 {
-    ACODEC_NOCAPS               = 0x0000000,
-    ACODEC_ASYNC                = 0x0000001,/* Asyncronious player plays audio through separately opened audio output */
-    ACODEC_NEED_VOLUME_INIT     = 0x0000002 /* Need to additionally initialize the volume value before play begin */
+    ACODEC_NOCAPS               = 0x00000000,/* Codec has no any special capabilities */
+
+    ACODEC_ASYNC                = 0x00000001,/* Asyncronious player which plays audio into separately opened output
+                                                (Examples: CMD-Music, when music playing by external tool,
+                                                           Native-Midi, when music playing via external driver
+                                                           provided by operating system)*/
+
+    ACODEC_NEED_VOLUME_INIT     = 0x00000002,/* Need to additionally initialize the volume value before playing begin */
+
+    ACODEC_NEED_VOLUME_INIT_POST= 0x00000004,/* Need to additionally initialize the volume value after playing began */
+
+    ACODEC_SINGLETON            = 0x00000008 /* Codec is able to play only one song in same time.
+                                                You can't play two or more concurrent tracks playing by this same codec
+                                                (Examples: MikMod because of interface of library,
+                                                           NativeMidi because one external device
+                                                           is able to play only one MIDI file) */
 } AudioCodec_Caps;
 
 /*

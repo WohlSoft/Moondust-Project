@@ -32,7 +32,7 @@
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "mixer.h"
 
-#if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)||defined(CMD_MUSIC)
+#if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MOD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)||defined(CMD_MUSIC)
 #define USE_AUDIOCODEC_API
 #endif
 
@@ -320,12 +320,6 @@ void music_mixer(void *udata, Uint8 *stream, int len)
             break;
             #endif
 
-            #ifdef MOD_MUSIC
-        case MUS_MOD:
-            left = MOD_playAudio(music_playing->data.module, stream, len);
-            break;
-            #endif
-
             #ifdef MID_MUSIC
         case MUS_MID:
             switch(mididevice_current)
@@ -388,6 +382,7 @@ void music_mixer(void *udata, Uint8 *stream, int len)
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
+        case MUS_MOD:
         case MUS_MODPLUG:
         case MUS_SPC:
         case MUS_CMD:
@@ -436,7 +431,7 @@ int open_music(SDL_AudioSpec *mixer)
     #endif
 
     #ifdef MOD_MUSIC
-    if(MOD_init(mixer) == 0)
+    if(MOD_init2(&available_codecs[MUS_MOD], mixer) == 0)
         add_music_decoder("MIKMOD");
     #endif
 
@@ -1334,8 +1329,9 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         {
             SDL_RWseek(src, start, RW_SEEK_SET);
             music->type = MUS_MOD;
-            music->data.module = MOD_new_RW(src, freesrc);
-            if(music->data.module)
+            music->codec = available_codecs[MUS_MOD];
+            music->music = music->codec.open(src, freesrc);
+            if(music->music)
                 music->error = 0;
         }
         #endif
@@ -1384,12 +1380,6 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
             #ifdef WAV_MUSIC
         case MUS_WAV:
             WAVStream_FreeSong(music->data.wave);
-            break;
-            #endif
-
-            #ifdef MOD_MUSIC
-        case MUS_MOD:
-            MOD_delete(music->data.module);
             break;
             #endif
 
@@ -1454,6 +1444,7 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
+        case MUS_MOD:
         case MUS_MODPLUG:
         case MUS_SPC:
         case MUS_CMD:
@@ -1636,14 +1627,6 @@ static int music_internal_play(Mix_Music *music, double position)
         break;
         #endif
 
-        #ifdef MOD_MUSIC
-    case MUS_MOD:
-        MOD_play(music->data.module);
-        /* Player_SetVolume() does nothing before Player_Start() */
-        music_internal_initialize_volume();
-        break;
-        #endif
-
         #ifdef MID_MUSIC
     case MUS_MID:
         switch(mididevice_current)
@@ -1709,6 +1692,7 @@ static int music_internal_play(Mix_Music *music, double position)
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
+    case MUS_MOD:
     case MUS_MODPLUG:
     case MUS_SPC:
     case MUS_CMD:
@@ -1716,6 +1700,8 @@ static int music_internal_play(Mix_Music *music, double position)
             music_internal_initialize_volume();
         music->codec.setLoops(music->music, music_loops);
         music->codec.play(music->music);
+        if((music->codec.capabilities() & ACODEC_NEED_VOLUME_INIT_POST) != 0)
+            music_internal_initialize_volume();
         break;
         #endif
 
@@ -1818,16 +1804,11 @@ int music_internal_position(double position)
 
     switch(music_playing->type)
     {
-        #ifdef MOD_MUSIC
-    case MUS_MOD:
-        MOD_jump_to_time(music_playing->data.module, position);
-        break;
-        #endif
-
         #ifdef USE_AUDIOCODEC_API
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
+    case MUS_MOD:
     case MUS_MODPLUG:
     case MUS_SPC:
         music_playing->codec.jumpToTime(music_playing->music, position);
@@ -1887,12 +1868,6 @@ static void music_internal_volume(int volume)
         #ifdef WAV_MUSIC
     case MUS_WAV:
         WAVStream_SetVolume(music_playing->data.wave, volume);
-        break;
-        #endif
-
-        #ifdef MOD_MUSIC
-    case MUS_MOD:
-        MOD_setvolume(music_playing->data.module, volume);
         break;
         #endif
 
@@ -1957,6 +1932,7 @@ static void music_internal_volume(int volume)
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
+    case MUS_MOD:
     case MUS_MODPLUG:
     case MUS_SPC:
     case MUS_CMD:
@@ -2000,12 +1976,6 @@ static void music_internal_halt(void)
         #ifdef WAV_MUSIC
     case MUS_WAV:
         WAVStream_Stop(music_playing->data.wave);
-        break;
-        #endif
-
-        #ifdef MOD_MUSIC
-    case MUS_MOD:
-        MOD_stop(music_playing->data.module);
         break;
         #endif
 
@@ -2070,6 +2040,7 @@ static void music_internal_halt(void)
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
+    case MUS_MOD:
     case MUS_MODPLUG:
     case MUS_SPC:
     case MUS_CMD:
@@ -2202,14 +2173,6 @@ static int music_internal_playing()
         break;
         #endif
 
-        #ifdef MOD_MUSIC
-    case MUS_MOD:
-        if(! MOD_playing(music_playing->data.module))
-            playing = 0;
-        break;
-        #endif
-
-
         #ifdef MID_MUSIC
     case MUS_MID:
         switch(mididevice_current)
@@ -2275,6 +2238,7 @@ static int music_internal_playing()
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
+    case MUS_MOD:
     case MUS_MODPLUG:
     case MUS_SPC:
     case MUS_CMD:

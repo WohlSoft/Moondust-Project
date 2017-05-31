@@ -23,40 +23,17 @@
 
 #ifdef MOD_MUSIC
 
+#include "audio_codec.h"
+
 /* This file supports MOD tracker music streams */
 
-struct MODULE;
-
-/* Initialize the Ogg Vorbis player, with the given mixer settings
+/* Initialize the MikMod player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
-extern int MOD_init(SDL_AudioSpec *mixer);
+extern int MOD_init2(AudioCodec* codec, SDL_AudioSpec *mixer);
 
 /* Uninitialize the music players */
 extern void MOD_exit(void);
 
-/* Set the volume for a MOD stream */
-extern void MOD_setvolume(struct MODULE *music, int volume);
-
-/* Load a MOD stream from an SDL_RWops object */
-extern struct MODULE *MOD_new_RW(SDL_RWops *rw, int freerw);
-
-/* Start playback of a given MOD stream */
-extern void MOD_play(struct MODULE *music);
-
-/* Return non-zero if a stream is currently playing */
-extern int MOD_playing(struct MODULE *music);
-
-/* Play some of a stream previously started with MOD_play() */
-extern int MOD_playAudio(struct MODULE *music, Uint8 *stream, int len);
-
-/* Stop playback of a stream previously started with MOD_play() */
-extern void MOD_stop(struct MODULE *music);
-
-/* Close the given MOD stream */
-extern void MOD_delete(struct MODULE *music);
-
-/* Jump (seek) to a given position (time is in seconds) */
-extern void MOD_jump_to_time(struct MODULE *music, double time);
 
 #endif /* MOD_MUSIC */
