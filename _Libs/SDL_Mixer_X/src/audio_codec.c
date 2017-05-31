@@ -24,6 +24,18 @@
 
 #include "audio_codec.h"
 
+void *audioCodec_dummy_cb_open(SDL_RWops *src, int freesrc)
+{
+    (void)src; (void)freesrc;
+    return NULL;
+}
+
+void *audioCodec_dummy_cb_openEx(SDL_RWops *src, int freesrc, const char *extraSettings)
+{
+    (void)src; (void)freesrc; (void)extraSettings;
+    return NULL;
+}
+
 void audioCodec_dummy_cb_void_1arg(AudioCodecStream* music)
 {
     (void)music;

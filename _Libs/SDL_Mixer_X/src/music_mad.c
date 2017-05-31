@@ -53,6 +53,7 @@ int MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
     codec->isValid = 1;
 
     codec->open  = MAD_new_RW;
+    codec->openEx= audioCodec_dummy_cb_openEx;
     codec->close = mad_closeFile;
 
     codec->play   = mad_start;

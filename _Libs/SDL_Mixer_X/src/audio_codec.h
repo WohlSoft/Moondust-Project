@@ -34,6 +34,8 @@ typedef void AudioCodecStream;
 /*
     Dummy callbacks. Use them if codec doesn't supports some features
 */
+void       *audioCodec_dummy_cb_open(SDL_RWops* src, int freesrc);
+void       *audioCodec_dummy_cb_openEx(SDL_RWops* src, int freesrc, const char *extraSettings);
 void        audioCodec_dummy_cb_void_1arg(AudioCodecStream* music);
 int         audioCodec_dummy_cb_int_1arg(AudioCodecStream* music);
 const char *audioCodec_dummy_meta_tag(AudioCodecStream* music);
@@ -46,6 +48,7 @@ typedef struct _AudioCodec
 {
     int   isValid;
     AudioCodecStream* (*open)(SDL_RWops* src, int freesrc);
+    AudioCodecStream* (*openEx)(SDL_RWops* src, int freesrc, const char *extraSettings);
     void  (*close)(AudioCodecStream* music);
 
     void  (*play)(AudioCodecStream* music);

@@ -26,54 +26,12 @@
 
 #ifdef GME_MUSIC
 
-/* First parameter of most gme_ functions is a pointer to the Music_Emu */
-typedef struct Music_Emu Music_Emu;
+#include "audio_codec.h"
 
-/* This file supports Game Music Emulator music streams */
-struct MUSIC_GME
-{
-    Music_Emu* game_emu;
-    int playing;
-    int volume;
-    int gme_t_sample_rate;
-    char *mus_title;
-    char *mus_artist;
-    char *mus_album;
-    char *mus_copyright;
-    SDL_AudioCVT cvt;
-};
-
-/* Initialize the Ogg Vorbis player, with the given mixer settings
+/* Initialize the Game Music Emulators player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
-extern int GME_init(SDL_AudioSpec *mixer);
-
-/* Uninitialize the music players */
-extern void GME_exit(void);
-
-/* Set the volume for a Game Music Emulators stream */
-extern void GME_setvolume(struct MUSIC_GME *music, int volume);
-
-/* Load a Game Music Emulators stream from an SDL_RWops object */
-extern struct MUSIC_GME *GME_new_RW(SDL_RWops *rw, int freerw, int trackNum);
-
-/* Start playback of a given Game Music Emulators stream */
-extern void GME_play(struct MUSIC_GME *music);
-
-/* Return non-zero if a stream is currently playing */
-extern int GME_playing(struct MUSIC_GME *music);
-
-/* Play some of a stream previously started with GME_play() */
-extern int GME_playAudio(struct MUSIC_GME *music, Uint8 *stream, int len);
-
-/* Stop playback of a stream previously started with GME_play() */
-extern void GME_stop(struct MUSIC_GME *music);
-
-/* Close the given Game Music Emulators stream */
-extern void GME_delete(struct MUSIC_GME *music);
-
-/* Jump (seek) to a given position (time is in seconds) */
-extern void GME_jump_to_time(struct MUSIC_GME *music, double time);
+extern int GME_init2(AudioCodec *codec, SDL_AudioSpec *mixer);
 
 #endif /* GME_MUSIC */
 

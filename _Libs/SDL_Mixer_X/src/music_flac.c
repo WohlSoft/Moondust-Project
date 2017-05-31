@@ -123,6 +123,7 @@ int FLAC_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
     codec->isValid = 1;
 
     codec->open  = FLAC_new_RW;
+    codec->openEx = audioCodec_dummy_cb_openEx;
     codec->close = FLAC_delete;
 
     codec->play   = FLAC_play;
