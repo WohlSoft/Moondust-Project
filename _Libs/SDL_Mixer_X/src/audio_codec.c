@@ -24,6 +24,11 @@
 
 #include "audio_codec.h"
 
+Uint32 audioCodec_default_capabilities()
+{
+    return ACODEC_NOCAPS;
+}
+
 void *audioCodec_dummy_cb_open(SDL_RWops *src, int freesrc)
 {
     (void)src; (void)freesrc;
@@ -70,3 +75,12 @@ void audioCodec_dummy_cb_regulator(AudioCodecStream *music, int value)
     (void)music;
     (void)value;
 }
+
+int audioCodec_dummy_playAudio(AudioCodecStream *music, Uint8 *data, int length)
+{
+    (void)music;
+    (void)data;
+    (void)length;
+    return 0;
+}
+

@@ -80,7 +80,6 @@ static void GME_jump_to_time(void *music_p, double time);
 /* Play some of a stream previously started with GME_play() */
 static int GME_playAudio(void *music_p, Uint8 *stream, int len);
 
-
 /*
  * Initialize the Game Music Emulators player, with the given mixer settings
  * This function returns 0, or -1 if there was an error.
@@ -90,6 +89,8 @@ int GME_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
     mixer = *mixerfmt;
 
     codec->isValid = 1;
+
+    codec->capabilities     = audioCodec_default_capabilities;
 
     codec->open             = GME_new_RW;
     codec->openEx           = GME_new_RWEx;

@@ -32,6 +32,10 @@
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "mixer.h"
 
+#if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)||defined(CMD_MUSIC)
+#define USE_AUDIOCODEC_API
+#endif
+
 #ifdef CMD_MUSIC
 #include "music_cmd.h"
 #endif
@@ -117,10 +121,6 @@ struct _Mix_Music
     Mix_MusicType       type;
     union
     {
-        #ifdef CMD_MUSIC
-        MusicCMD *cmd;
-        #endif
-
         #ifdef WAV_MUSIC
         WAVStream *wave;
         #endif
@@ -314,12 +314,6 @@ void music_mixer(void *udata, Uint8 *stream, int len)
 
         switch(music_playing->type)
         {
-            #ifdef CMD_MUSIC
-        case MUS_CMD:
-            /* The playing is done externally */
-            break;
-            #endif
-
             #ifdef WAV_MUSIC
         case MUS_WAV:
             left = WAVStream_PlaySome(music_playing->data.wave, stream, len);
@@ -390,12 +384,15 @@ void music_mixer(void *udata, Uint8 *stream, int len)
             break;
             #endif
 
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+            #ifdef USE_AUDIOCODEC_API
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
         case MUS_MODPLUG:
         case MUS_SPC:
+        case MUS_CMD:
+            if((music_playing->codec.capabilities() & ACODEC_ASYNC) != 0)
+                goto skip;/*Asyncronious player plays audio through separately opened audio output*/
             left = music_playing->codec.playAudio(music_playing->music, stream, len);
             break;
             #endif
@@ -990,8 +987,9 @@ Mix_Music *SDLCALLCC Mix_LoadMUS(const char *file)
         }
         music->error = 0;
         music->type = MUS_CMD;
-        music->data.cmd = MusicCMD_LoadSong(music_cmd, music_file);
-        if(music->data.cmd == NULL)
+        music->codec = available_codecs[MUS_CMD];
+        music->music = MusicCMD_LoadSong(music_cmd, music_file);
+        if(music->music == NULL)
         {
             SDL_free(music);
             music = NULL;
@@ -1378,12 +1376,6 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
         Mix_UnlockAudio();
         switch(music->type)
         {
-            #ifdef CMD_MUSIC
-        case MUS_CMD:
-            MusicCMD_FreeSong(music->data.cmd);
-            break;
-            #endif
-
             #ifdef WAV_MUSIC
         case MUS_WAV:
             WAVStream_FreeSong(music->data.wave);
@@ -1453,12 +1445,13 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
             break;
             #endif
 
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+            #ifdef USE_AUDIOCODEC_API
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
         case MUS_MODPLUG:
         case MUS_SPC:
+        case MUS_CMD:
             music->codec.close(music->music);
             music->music = 0;
             break;
@@ -1516,7 +1509,7 @@ const char *SDLCALLCC Mix_GetMusicTitleTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+            #ifdef USE_AUDIOCODEC_API
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
@@ -1539,7 +1532,7 @@ const char *SDLCALLCC Mix_GetMusicArtistTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+            #ifdef USE_AUDIOCODEC_API
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
@@ -1562,7 +1555,7 @@ const char *SDLCALLCC Mix_GetMusicAlbumTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+            #ifdef USE_AUDIOCODEC_API
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
@@ -1585,7 +1578,7 @@ const char *SDLCALLCC Mix_GetMusicCopyrightTag(const Mix_Music *music)
     {
         switch(music->type)
         {
-            #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+            #ifdef USE_AUDIOCODEC_API
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
@@ -1632,12 +1625,6 @@ static int music_internal_play(Mix_Music *music, double position)
     /* Set up for playback */
     switch(music->type)
     {
-        #ifdef CMD_MUSIC
-    case MUS_CMD:
-        MusicCMD_Start(music->data.cmd);
-        break;
-        #endif
-
         #ifdef WAV_MUSIC
     case MUS_WAV:
         WAVStream_Start(music->data.wave);
@@ -1712,13 +1699,15 @@ static int music_internal_play(Mix_Music *music, double position)
         }
         break;
         #endif
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+
+        #ifdef USE_AUDIOCODEC_API
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
     case MUS_MODPLUG:
     case MUS_SPC:
-        if((music->type == MUS_MODPLUG)||(music->type == MUS_SPC))
+    case MUS_CMD:
+        if((music->codec.capabilities() & ACODEC_NEED_VOLUME_INIT) != 0)
             music_internal_initialize_volume();
         music->codec.setLoops(music->music, music_loops);
         music->codec.play(music->music);
@@ -1830,11 +1819,12 @@ int music_internal_position(double position)
         break;
         #endif
 
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)
+        #ifdef USE_AUDIOCODEC_API
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
     case MUS_MODPLUG:
+    case MUS_SPC:
         music_playing->codec.jumpToTime(music_playing->music, position);
         break;
         #endif
@@ -1889,12 +1879,6 @@ static void music_internal_volume(int volume)
 {
     switch(music_playing->type)
     {
-        #ifdef CMD_MUSIC
-    case MUS_CMD:
-        MusicCMD_SetVolume(volume);
-        break;
-        #endif
-
         #ifdef WAV_MUSIC
     case MUS_WAV:
         WAVStream_SetVolume(music_playing->data.wave, volume);
@@ -1964,12 +1948,13 @@ static void music_internal_volume(int volume)
         break;
         #endif
 
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+        #ifdef USE_AUDIOCODEC_API
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
     case MUS_MODPLUG:
     case MUS_SPC:
+    case MUS_CMD:
         music_playing->codec.setVolume(music_playing->music, volume);
         break;
         #endif
@@ -2007,12 +1992,6 @@ static void music_internal_halt(void)
 {
     switch(music_playing->type)
     {
-        #ifdef CMD_MUSIC
-    case MUS_CMD:
-        MusicCMD_Stop(music_playing->data.cmd);
-        break;
-        #endif
-
         #ifdef WAV_MUSIC
     case MUS_WAV:
         WAVStream_Stop(music_playing->data.wave);
@@ -2082,12 +2061,13 @@ static void music_internal_halt(void)
         break;
         #endif
 
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+        #ifdef USE_AUDIOCODEC_API
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
     case MUS_MODPLUG:
     case MUS_SPC:
+    case MUS_CMD:
         music_playing->codec.stop(music_playing->music);
         break;
         #endif
@@ -2210,13 +2190,6 @@ static int music_internal_playing()
 
     switch(music_playing->type)
     {
-        #ifdef CMD_MUSIC
-    case MUS_CMD:
-        if(!MusicCMD_Active(music_playing->data.cmd))
-            playing = 0;
-        break;
-        #endif
-
         #ifdef WAV_MUSIC
     case MUS_WAV:
         if(! WAVStream_Active(music_playing->data.wave))
@@ -2293,12 +2266,13 @@ static int music_internal_playing()
         break;
         #endif
 
-        #if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)
+        #ifdef USE_AUDIOCODEC_API
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
     case MUS_MODPLUG:
     case MUS_SPC:
+    case MUS_CMD:
         if(!music_playing->codec.isPlaying(music_playing->music))
             playing = 0;
         break;

@@ -31,9 +31,17 @@
 
 typedef void AudioCodecStream;
 
+typedef enum
+{
+    ACODEC_NOCAPS               = 0x0000000,
+    ACODEC_ASYNC                = 0x0000001,/* Asyncronious player plays audio through separately opened audio output */
+    ACODEC_NEED_VOLUME_INIT     = 0x0000002 /* Need to additionally initialize the volume value before play begin */
+} AudioCodec_Caps;
+
 /*
     Dummy callbacks. Use them if codec doesn't supports some features
 */
+Uint32      audioCodec_default_capabilities();
 void       *audioCodec_dummy_cb_open(SDL_RWops* src, int freesrc);
 void       *audioCodec_dummy_cb_openEx(SDL_RWops* src, int freesrc, const char *extraSettings);
 void        audioCodec_dummy_cb_void_1arg(AudioCodecStream* music);
@@ -42,11 +50,16 @@ const char *audioCodec_dummy_meta_tag(AudioCodecStream* music);
 void        audioCodec_dummy_cb_regulator(AudioCodecStream* music, int value);
 void        audioCodec_dummy_cb_seek(AudioCodecStream* music, double position);
 double      audioCodec_dummy_cb_tell(AudioCodecStream* music);
+int         audioCodec_dummy_playAudio(AudioCodecStream* music, Uint8* data, int length);
 
 /* A generic audio playing codec interface interface */
 typedef struct _AudioCodec
 {
-    int   isValid;
+    int     isValid;
+
+    /* Capabilities of the codec */
+    Uint32 (*capabilities)(void);
+
     AudioCodecStream* (*open)(SDL_RWops* src, int freesrc);
     AudioCodecStream* (*openEx)(SDL_RWops* src, int freesrc, const char *extraSettings);
     void  (*close)(AudioCodecStream* music);

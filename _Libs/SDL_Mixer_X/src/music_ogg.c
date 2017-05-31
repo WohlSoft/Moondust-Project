@@ -126,30 +126,32 @@ int OGG_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
 
     codec->isValid = 1;
 
-    codec->open  = OGG_new_RW;
-    codec->openEx= audioCodec_dummy_cb_openEx;
-    codec->close = OGG_delete;
+    codec->capabilities     = audioCodec_default_capabilities;
 
-    codec->play   = OGG_play;
-    codec->pause  = OGG_pause;
-    codec->resume = OGG_resume;
-    codec->stop   = OGG_stop;
+    codec->open             = OGG_new_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = OGG_delete;
 
-    codec->isPlaying   = OGG_playing;
-    codec->isPaused    = OGG_paused;
+    codec->play             = OGG_play;
+    codec->pause            = OGG_pause;
+    codec->resume           = OGG_resume;
+    codec->stop             = OGG_stop;
 
-    codec->setLoops    = OGG_setloops;
-    codec->setVolume   = OGG_setvolume;
+    codec->isPlaying        = OGG_playing;
+    codec->isPaused         = OGG_paused;
 
-    codec->jumpToTime     = OGG_jump_to_time;
-    codec->getCurrentTime = OGG_get_time;
+    codec->setLoops         = OGG_setloops;
+    codec->setVolume        = OGG_setvolume;
 
-    codec->metaTitle    = OGG_metaTitle;
-    codec->metaArtist   = OGG_metaArtist;
-    codec->metaAlbum    = OGG_metaAlbum;
-    codec->metaCopyright= OGG_metaCopyright;
+    codec->jumpToTime       = OGG_jump_to_time;
+    codec->getCurrentTime   = OGG_get_time;
 
-    codec->playAudio    = OGG_playAudio;
+    codec->metaTitle        = OGG_metaTitle;
+    codec->metaArtist       = OGG_metaArtist;
+    codec->metaAlbum        = OGG_metaAlbum;
+    codec->metaCopyright    = OGG_metaCopyright;
+
+    codec->playAudio        = OGG_playAudio;
 
     return(0);
 }

@@ -36,14 +36,89 @@
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "music_cmd.h"
 
+#include <sys/types.h>
+#include <limits.h>
+#include <stdio.h>
+#if defined(__linux__) && defined(__arm__)
+# include <linux/limits.h>
+#endif
+typedef struct {
+    char *file;
+    char *cmd;
+    pid_t pid;
+} MusicCMD;
+
+/* Close the given music stream */
+static void MusicCMD_FreeSong(void *music_p);
+
 /* Unimplemented */
-void MusicCMD_SetVolume(int volume)
+static void MusicCMD_SetVolume(void *music_p, int volume);
+
+/* Start playback of a given music stream */
+static void MusicCMD_Start(void *music_p);
+/* Pause playback of a given music stream */
+static void MusicCMD_Pause(void *music_p);
+/* Resume playback of a given music stream */
+static void MusicCMD_Resume(void *music_p);
+/* Stop playback of a stream previously started with MusicCMD_Start() */
+static void MusicCMD_Stop(void *music_p);
+
+/* Return non-zero if a stream is currently playing */
+static int MusicCMD_Active(void *music_p);
+
+static Uint32 MusicCMD_Codec_capabilities()
 {
+    return ACODEC_ASYNC;
+}
+
+int MusicCMD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
+{
+    (void)mixerfmt;//Unused!
+
+    codec->isValid = 1;
+
+    codec->capabilities     = MusicCMD_Codec_capabilities;
+
+    codec->open             = audioCodec_dummy_cb_open;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = MusicCMD_FreeSong;
+
+    codec->play             = MusicCMD_Start;
+    codec->pause            = MusicCMD_Pause;
+    codec->resume           = MusicCMD_Resume;
+    codec->stop             = MusicCMD_Stop;
+
+    codec->isPlaying        = MusicCMD_Active;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
+
+    codec->setLoops         = audioCodec_dummy_cb_regulator;
+    codec->setVolume        = MusicCMD_SetVolume;
+
+    codec->jumpToTime       = audioCodec_dummy_cb_seek;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+
+    codec->metaTitle        = audioCodec_dummy_meta_tag;
+    codec->metaArtist       = audioCodec_dummy_meta_tag;
+    codec->metaAlbum        = audioCodec_dummy_meta_tag;
+    codec->metaCopyright    = audioCodec_dummy_meta_tag;
+
+    codec->playAudio        = audioCodec_dummy_playAudio;
+
+    return(0);
+}
+
+
+
+/* Unimplemented */
+static void MusicCMD_SetVolume(void *music_p, int volume)
+{
+    (void)music_p;
+    (void)volume;
     Mix_SetError("No way to modify external player volume");
 }
 
 /* Load a music stream from the given file */
-MusicCMD *MusicCMD_LoadSong(const char *cmd, const char *file)
+void *MusicCMD_LoadSong(const char *cmd, const char *file)
 {
     MusicCMD *music;
 
@@ -138,8 +213,9 @@ static char **parse_args(char *command, char *last_arg)
 }
 
 /* Start playback of a given music stream */
-void MusicCMD_Start(MusicCMD *music)
+static void MusicCMD_Start(void *music_p)
 {
+    MusicCMD *music = (MusicCMD*)music_p;
 #ifdef HAVE_FORK
     music->pid = fork();
 #else
@@ -185,8 +261,9 @@ void MusicCMD_Start(MusicCMD *music)
 }
 
 /* Stop playback of a stream previously started with MusicCMD_Start() */
-void MusicCMD_Stop(MusicCMD *music)
+static void MusicCMD_Stop(void *music_p)
 {
+    MusicCMD *music = (MusicCMD*)music_p;
     int status;
 
     if ( music->pid > 0 ) {
@@ -200,32 +277,36 @@ void MusicCMD_Stop(MusicCMD *music)
 }
 
 /* Pause playback of a given music stream */
-void MusicCMD_Pause(MusicCMD *music)
+static void MusicCMD_Pause(void *music_p)
 {
+    MusicCMD *music = (MusicCMD*)music_p;
     if ( music->pid > 0 ) {
         kill(music->pid, SIGSTOP);
     }
 }
 
 /* Resume playback of a given music stream */
-void MusicCMD_Resume(MusicCMD *music)
+static void MusicCMD_Resume(void *music_p)
 {
+    MusicCMD *music = (MusicCMD*)music_p;
     if ( music->pid > 0 ) {
         kill(music->pid, SIGCONT);
     }
 }
 
 /* Close the given music stream */
-void MusicCMD_FreeSong(MusicCMD *music)
+static void MusicCMD_FreeSong(void *music_p)
 {
+    MusicCMD *music = (MusicCMD*)music_p;
     SDL_free(music->file);
     SDL_free(music->cmd);
     SDL_free(music);
 }
 
 /* Return non-zero if a stream is currently playing */
-int MusicCMD_Active(MusicCMD *music)
+static int MusicCMD_Active(void *music_p)
 {
+    MusicCMD *music = (MusicCMD*)music_p;
     int status;
     int active;
 
