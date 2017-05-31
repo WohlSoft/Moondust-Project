@@ -127,6 +127,7 @@ int OGG_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
     codec->isValid = 1;
 
     codec->open  = OGG_new_RW;
+    codec->openEx= audioCodec_dummy_cb_openEx;
     codec->close = OGG_delete;
 
     codec->play   = OGG_play;
