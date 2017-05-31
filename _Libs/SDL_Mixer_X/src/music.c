@@ -32,7 +32,7 @@
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "mixer.h"
 
-#if defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MOD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)||defined(CMD_MUSIC)
+#if defined(WAV_MUSIC)||defined(OGG_MUSIC)||defined(FLAC_MUSIC)||defined(MP3_MAD_MUSIC)||defined(MOD_MUSIC)||defined(MODPLUG_MUSIC)||defined(GME_MUSIC)||defined(CMD_MUSIC)
 #define USE_AUDIOCODEC_API
 #endif
 
@@ -121,14 +121,6 @@ struct _Mix_Music
     Mix_MusicType       type;
     union
     {
-        #ifdef WAV_MUSIC
-        WAVStream *wave;
-        #endif
-
-        #ifdef MOD_MUSIC
-        struct MODULE *module;
-        #endif
-
         #ifdef MID_MUSIC
             #ifdef USE_TIMIDITY_MIDI
             MidiSong *midi;
@@ -314,12 +306,6 @@ void music_mixer(void *udata, Uint8 *stream, int len)
 
         switch(music_playing->type)
         {
-            #ifdef WAV_MUSIC
-        case MUS_WAV:
-            left = WAVStream_PlaySome(music_playing->data.wave, stream, len);
-            break;
-            #endif
-
             #ifdef MID_MUSIC
         case MUS_MID:
             switch(mididevice_current)
@@ -379,6 +365,7 @@ void music_mixer(void *udata, Uint8 *stream, int len)
             #endif
 
             #ifdef USE_AUDIOCODEC_API
+        case MUS_WAV:
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
@@ -421,7 +408,7 @@ int open_music(SDL_AudioSpec *mixer)
 
     /* available_codecs */
     #ifdef WAV_MUSIC
-    if(WAVStream_Init(mixer) == 0)
+    if(WAVStream_Init2(&available_codecs[MUS_WAV], mixer) == 0)
         add_music_decoder("WAVE");
     #endif
 
@@ -1131,8 +1118,9 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
     #ifdef WAV_MUSIC
     case MUS_WAV:
         music->type = MUS_WAV;
-        music->data.wave = WAVStream_LoadSong_RW(src, freesrc);
-        if(music->data.wave)
+        music->codec = available_codecs[MUS_WAV];
+        music->music = music->codec.open(src, freesrc);
+        if(music->music != NULL)
             music->error = 0;
         break;
     #endif
@@ -1377,12 +1365,6 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
         Mix_UnlockAudio();
         switch(music->type)
         {
-            #ifdef WAV_MUSIC
-        case MUS_WAV:
-            WAVStream_FreeSong(music->data.wave);
-            break;
-            #endif
-
             #ifdef MID_MUSIC
         case MUS_MID:
             switch(mididevice_current)
@@ -1441,6 +1423,7 @@ void SDLCALLCC Mix_FreeMusic(Mix_Music *music)
             #endif
 
             #ifdef USE_AUDIOCODEC_API
+        case MUS_WAV:
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
@@ -1506,9 +1489,11 @@ const char *SDLCALLCC Mix_GetMusicTitleTag(const Mix_Music *music)
         switch(music->type)
         {
             #ifdef USE_AUDIOCODEC_API
+        case MUS_WAV:
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
+        case MUS_MOD:
         case MUS_MODPLUG:
         case MUS_SPC:
             return music->codec.metaTitle(music->music);
@@ -1529,9 +1514,11 @@ const char *SDLCALLCC Mix_GetMusicArtistTag(const Mix_Music *music)
         switch(music->type)
         {
             #ifdef USE_AUDIOCODEC_API
+        case MUS_WAV:
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
+        case MUS_MOD:
         case MUS_MODPLUG:
         case MUS_SPC:
             return music->codec.metaArtist(music->music);
@@ -1552,9 +1539,11 @@ const char *SDLCALLCC Mix_GetMusicAlbumTag(const Mix_Music *music)
         switch(music->type)
         {
             #ifdef USE_AUDIOCODEC_API
+        case MUS_WAV:
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
+        case MUS_MOD:
         case MUS_MODPLUG:
         case MUS_SPC:
             return music->codec.metaAlbum(music->music);
@@ -1575,9 +1564,11 @@ const char *SDLCALLCC Mix_GetMusicCopyrightTag(const Mix_Music *music)
         switch(music->type)
         {
             #ifdef USE_AUDIOCODEC_API
+        case MUS_WAV:
         case MUS_OGG:
         case MUS_FLAC:
         case MUS_MP3_MAD:
+        case MUS_MOD:
         case MUS_MODPLUG:
         case MUS_SPC:
             return music->codec.metaCopyright(music->music);
@@ -1621,12 +1612,6 @@ static int music_internal_play(Mix_Music *music, double position)
     /* Set up for playback */
     switch(music->type)
     {
-        #ifdef WAV_MUSIC
-    case MUS_WAV:
-        WAVStream_Start(music->data.wave);
-        break;
-        #endif
-
         #ifdef MID_MUSIC
     case MUS_MID:
         switch(mididevice_current)
@@ -1689,6 +1674,7 @@ static int music_internal_play(Mix_Music *music, double position)
         #endif
 
         #ifdef USE_AUDIOCODEC_API
+    case MUS_WAV:
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
@@ -1865,12 +1851,6 @@ static void music_internal_volume(int volume)
 {
     switch(music_playing->type)
     {
-        #ifdef WAV_MUSIC
-    case MUS_WAV:
-        WAVStream_SetVolume(music_playing->data.wave, volume);
-        break;
-        #endif
-
         #ifdef MID_MUSIC
     case MUS_MID:
         switch(mididevice_current)
@@ -1929,6 +1909,7 @@ static void music_internal_volume(int volume)
         #endif
 
         #ifdef USE_AUDIOCODEC_API
+    case MUS_WAV:
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
@@ -1973,12 +1954,6 @@ static void music_internal_halt(void)
 {
     switch(music_playing->type)
     {
-        #ifdef WAV_MUSIC
-    case MUS_WAV:
-        WAVStream_Stop(music_playing->data.wave);
-        break;
-        #endif
-
         #ifdef MID_MUSIC
     case MUS_MID:
         switch(mididevice_current)
@@ -2037,6 +2012,7 @@ static void music_internal_halt(void)
         #endif
 
         #ifdef USE_AUDIOCODEC_API
+    case MUS_WAV:
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:
@@ -2166,13 +2142,6 @@ static int music_internal_playing()
 
     switch(music_playing->type)
     {
-        #ifdef WAV_MUSIC
-    case MUS_WAV:
-        if(! WAVStream_Active(music_playing->data.wave))
-            playing = 0;
-        break;
-        #endif
-
         #ifdef MID_MUSIC
     case MUS_MID:
         switch(mididevice_current)
@@ -2235,6 +2204,7 @@ static int music_internal_playing()
         #endif
 
         #ifdef USE_AUDIOCODEC_API
+    case MUS_WAV:
     case MUS_OGG:
     case MUS_FLAC:
     case MUS_MP3_MAD:

@@ -34,6 +34,60 @@
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "wavestream.h"
 
+#include "resample/my_resample.h"
+
+typedef struct {
+    SDL_bool active;
+    Uint32 start;
+    Uint32 stop;
+    Uint32 initial_play_count;
+    Uint32 current_play_count;
+} WAVLoopPoint;
+
+typedef struct {
+    SDL_RWops *src;
+    SDL_bool freesrc;
+    SDL_AudioSpec spec;
+    Sint64 start;
+    Sint64 stop;
+    SDL_AudioCVT cvt;
+    struct MyResampler resample;
+    int len_available;
+    int volume;
+    int playing;
+    Uint8 *snd_available;
+    int numloops;
+    WAVLoopPoint *loops;
+    char *mus_title;
+    char *mus_artist;
+    char *mus_album;
+    char *mus_copyright;
+} WAVStream;
+
+/* Load a WAV stream from an SDL_RWops object */
+static void *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc);
+/* Close the given WAV stream */
+static void WAVStream_FreeSong(void *wave_p);
+
+static void WAVStream_SetVolume(void *wave_p, int volume);
+
+/* Start playback of a given WAV stream */
+static void WAVStream_Start(void *wave_p);
+/* Stop playback of a stream previously started with WAVStream_Start() */
+static void WAVStream_Stop(void *wave_p);
+
+/* Return non-zero if a stream is currently playing */
+static int WAVStream_Active(void *wave_p);
+
+static const char *WAVStream_metaTitle(void *music_p);
+static const char *WAVStream_metaArtist(void *music_p);
+static const char *WAVStream_metaAlbum(void *music_p);
+static const char *WAVStream_metaCopyright(void *music_p);
+
+/* Play some of a stream previously started with WAVStream_Start() */
+static int WAVStream_PlaySome(void *wave_p, Uint8 *stream, int len);
+
+
 /*
     Taken with permission from SDL_wave.h, part of the SDL library,
     available at: http://www.libsdl.org/
@@ -50,6 +104,8 @@
 #define FMT         0x20746D66      /* "fmt " */
 #define DATA        0x61746164      /* "data" */
 #define SMPL        0x6c706d73      /* "smpl" */
+#define LIST        0x5453494c      /* "LIST" */
+#define ID3_        0x20336469      /* "id3 " */
 #define PCM_CODE    1
 #define ADPCM_CODE  2
 #define WAVE_MONO   1
@@ -112,19 +168,50 @@ static SDL_bool LoadAIFFStream(WAVStream *wave);
 /* Initialize the WAVStream player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
-int WAVStream_Init(SDL_AudioSpec *mixerfmt)
+int WAVStream_Init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
+
+    codec->isValid = 1;
+
+    codec->capabilities     = audioCodec_default_capabilities;
+
+    codec->open             = WAVStream_LoadSong_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = WAVStream_FreeSong;
+
+    codec->play             = WAVStream_Start;
+    codec->pause            = audioCodec_dummy_cb_void_1arg;
+    codec->resume           = audioCodec_dummy_cb_void_1arg;
+    codec->stop             = WAVStream_Stop;
+
+    codec->isPlaying        = WAVStream_Active;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
+
+    codec->setLoops         = audioCodec_dummy_cb_regulator;
+    codec->setVolume        = WAVStream_SetVolume;
+
+    codec->jumpToTime       = audioCodec_dummy_cb_seek;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+
+    codec->metaTitle        = WAVStream_metaTitle;
+    codec->metaArtist       = WAVStream_metaArtist;
+    codec->metaAlbum        = WAVStream_metaAlbum;
+    codec->metaCopyright    = WAVStream_metaCopyright;
+
+    codec->playAudio        = WAVStream_PlaySome;
+
     return(0);
 }
 
-void WAVStream_SetVolume(WAVStream *music, int volume)
+static void WAVStream_SetVolume(void *wave_p, int volume)
 {
-    music->volume = volume;
+    WAVStream *wave = (WAVStream*)wave_p;
+    wave->volume = volume;
 }
 
 /* Load a WAV stream from the given RWops object */
-WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
+static void *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
 {
     WAVStream *wave;
     SDL_bool loaded = SDL_FALSE;
@@ -194,8 +281,9 @@ WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc)
 }
 
 /* Start playback of a given WAV stream */
-void WAVStream_Start(WAVStream *wave)
+static void WAVStream_Start(void *wave_p)
 {
+    WAVStream *wave = (WAVStream*)wave_p;
     int i;
     for (i = 0; i < wave->numloops; ++i) {
         WAVLoopPoint *loop = &wave->loops[i];
@@ -306,8 +394,9 @@ static void PlaySome(WAVStream* music)
     }
 }
 
-int WAVStream_PlaySome(WAVStream *music, Uint8 *stream, int len)
+static int WAVStream_PlaySome(void *wave_p, Uint8 *stream, int len)
 {
+    WAVStream *music = (WAVStream*)wave_p;
     int mixable;
 
     if(!music || !music->playing)
@@ -338,14 +427,16 @@ int WAVStream_PlaySome(WAVStream *music, Uint8 *stream, int len)
 }
 
 /* Stop playback of a stream previously started with WAVStream_Start() */
-void WAVStream_Stop(WAVStream *wave)
+static void WAVStream_Stop(void *wave_p)
 {
+    WAVStream *wave = (WAVStream*)wave_p;
     wave->playing = 0;
 }
 
 /* Close the given WAV stream */
-void WAVStream_FreeSong(WAVStream *wave)
+static void WAVStream_FreeSong(void *wave_p)
 {
+    WAVStream *wave = (WAVStream*)wave_p;
     if (wave) {
         /* Clean up associated data */
         if (wave->loops) {
@@ -357,13 +448,22 @@ void WAVStream_FreeSong(WAVStream *wave)
         if (wave->freesrc) {
             SDL_RWclose(wave->src);
         }
+        if(wave->mus_title)
+            SDL_free(wave->mus_title);
+        if(wave->mus_artist)
+            SDL_free(wave->mus_artist);
+        if(wave->mus_album)
+            SDL_free(wave->mus_album);
+        if(wave->mus_copyright)
+            SDL_free(wave->mus_copyright);
         SDL_free(wave);
     }
 }
 
 /* Return non-zero if a stream is currently playing */
-int WAVStream_Active(WAVStream *wave)
+static int WAVStream_Active(void *wave_p)
 {
+    WAVStream *wave = (WAVStream*)wave_p;
     int active;
 
     active = 0;
@@ -493,6 +593,123 @@ static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
     return loaded;
 }
 
+static void readMetaField(WAVStream *wave, char**field,size_t *i, Uint32 chunk_length, Uint8 *data, size_t fieldOffset)
+{
+    Uint32 len = 0;
+    *i += 4;
+    len = fieldOffset == 4 ?
+                SDL_SwapLE32(*((Uint32*)(data + *i))) :
+                SDL_SwapBE32(*((Uint32*)(data + *i)));
+    if(len > chunk_length)
+        return;/* Do nothin, lenght is broken */
+    *i += fieldOffset;
+    if(*field)/* Free if already busy */
+        SDL_free(*field);
+    *field = (char*)SDL_malloc(len);
+    SDL_memset(*field, 0, len);
+    strncpy(*field, (char*)(data + *i), fieldOffset == 4 ? len : len - 1);
+    *i += len;
+}
+
+static SDL_bool ParseLIST(WAVStream *wave, Uint32 chunk_length)
+{
+    SDL_bool loaded = SDL_FALSE;
+
+    Uint8 *data;
+    data = (Uint8 *)SDL_malloc(chunk_length);
+    if (!data) {
+        Mix_SetError("Out of memory");
+        return SDL_FALSE;
+    }
+
+    if (!SDL_RWread(wave->src, data, chunk_length, 1)) {
+        Mix_SetError("Couldn't read %d bytes from WAV file", chunk_length);
+        return SDL_FALSE;
+    }
+
+    if(strncmp((char*)data, "INFO", 4) == 0)
+    {
+        size_t i = 4;
+        for(i = 4; i < chunk_length - 4;)
+        {
+            if(strncmp((char*)(data + i), "INAM", 4) == 0)
+            {
+                readMetaField(wave, &wave->mus_title, &i, chunk_length, data, 4);
+                continue;
+            }
+
+            if(strncmp((char*)(data + i), "IART", 4) == 0)
+            {
+                readMetaField(wave, &wave->mus_artist, &i, chunk_length, data, 4);
+                continue;
+            }
+
+            if(strncmp((char*)(data + i), "IALB", 4) == 0)
+            {
+                readMetaField(wave, &wave->mus_album, &i, chunk_length, data, 4);
+                continue;
+            }
+
+            if(strncmp((char*)(data + i), "BCPR", 4) == 0)
+            {
+                readMetaField(wave, &wave->mus_copyright, &i, chunk_length, data, 4);
+                continue;
+            }
+            i++;
+        }
+        loaded = SDL_TRUE;
+    }
+
+/* done: */
+    SDL_free(data);
+
+    return loaded;
+}
+
+static SDL_bool ParseID3(WAVStream *wave, Uint32 chunk_length)
+{
+    SDL_bool loaded = SDL_FALSE;
+
+    Uint8 *data;
+    data = (Uint8 *)SDL_malloc(chunk_length);
+    if (!data) {
+        Mix_SetError("Out of memory");
+        return SDL_FALSE;
+    }
+
+    if (!SDL_RWread(wave->src, data, chunk_length, 1)) {
+        Mix_SetError("Couldn't read %d bytes from WAV file", chunk_length);
+        return SDL_FALSE;
+    }
+
+    if(strncmp((char*)data, "ID3", 3) == 0)
+    {
+        size_t i = 4;
+        for(i = 4; i < chunk_length - 4;)
+        {
+            if(strncmp((char*)(data + i), "TALB", 4) == 0)
+            {
+                readMetaField(wave, &wave->mus_album, &i, chunk_length, data, 7);
+                continue;
+            }
+
+            if(strncmp((char*)(data + i), "TCOP", 4) == 0)
+            {
+                readMetaField(wave, &wave->mus_copyright, &i, chunk_length, data, 7);
+                continue;
+            }
+            i++;
+        }
+        loaded = SDL_TRUE;
+    }
+
+/* done: */
+    SDL_free(data);
+
+    return loaded;
+}
+
+
 static SDL_bool LoadWAVStream(WAVStream *wave)
 {
     SDL_RWops *src = wave->src;
@@ -531,6 +748,14 @@ static SDL_bool LoadWAVStream(WAVStream *wave)
             break;
         case SMPL:
             if (!ParseSMPL(wave, chunk_length))
+                return SDL_FALSE;
+            break;
+        case LIST:
+            if (!ParseLIST(wave, chunk_length))
+                return SDL_FALSE;
+            break;
+        case ID3_:
+            if (!ParseID3(wave, chunk_length))
                 return SDL_FALSE;
             break;
         default:
@@ -681,3 +906,27 @@ static SDL_bool LoadAIFFStream(WAVStream *wave)
     return SDL_TRUE;
 }
 
+
+static const char *WAVStream_metaTitle(void *music_p)
+{
+    WAVStream *music = (WAVStream *)music_p;
+    return music->mus_title ? music->mus_title : "";
+}
+
+static const char *WAVStream_metaArtist(void *music_p)
+{
+    WAVStream *music = (WAVStream *)music_p;
+    return music->mus_artist ? music->mus_artist : "";
+}
+
+static const char *WAVStream_metaAlbum(void *music_p)
+{
+    WAVStream *music = (WAVStream *)music_p;
+    return music->mus_album ? music->mus_album : "";
+}
+
+static const char *WAVStream_metaCopyright(void *music_p)
+{
+    WAVStream *music = (WAVStream *)music_p;
+    return music->mus_copyright ? music->mus_copyright : "";
+}
