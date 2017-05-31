@@ -23,7 +23,6 @@
 
 #ifdef OGG_MUSIC
 
-/* This file supports Ogg Vorbis music streams */
 #include "audio_codec.h"
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings

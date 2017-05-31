@@ -23,54 +23,10 @@
 
 /* This file supports streaming WAV files */
 
-#include "resample/my_resample.h"
-
-typedef struct {
-    SDL_bool active;
-    Uint32 start;
-    Uint32 stop;
-    Uint32 initial_play_count;
-    Uint32 current_play_count;
-} WAVLoopPoint;
-
-typedef struct {
-    SDL_RWops *src;
-    SDL_bool freesrc;
-    SDL_AudioSpec spec;
-    Sint64 start;
-    Sint64 stop;
-    SDL_AudioCVT cvt;
-    struct MyResampler resample;
-    int len_available;
-    int volume;
-    int playing;
-    Uint8 *snd_available;
-    int numloops;
-    WAVLoopPoint *loops;
-} WAVStream;
+#include "audio_codec.h"
 
 /* Initialize the WAVStream player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
-extern int WAVStream_Init(SDL_AudioSpec *mixer);
+extern int WAVStream_Init2(AudioCodec *codec, SDL_AudioSpec *mixer);
 
-/* Unimplemented */
-extern void WAVStream_SetVolume(WAVStream *music, int volume);
-
-/* Load a WAV stream from an SDL_RWops object */
-extern WAVStream *WAVStream_LoadSong_RW(SDL_RWops *src, int freesrc);
-
-/* Start playback of a given WAV stream */
-extern void WAVStream_Start(WAVStream *wave);
-
-/* Play some of a stream previously started with WAVStream_Start() */
-extern int WAVStream_PlaySome(WAVStream *music, Uint8 *stream, int len);
-
-/* Stop playback of a stream previously started with WAVStream_Start() */
-extern void WAVStream_Stop(WAVStream *wave);
-
-/* Close the given WAV stream */
-extern void WAVStream_FreeSong(WAVStream *wave);
-
-/* Return non-zero if a stream is currently playing */
-extern int WAVStream_Active(WAVStream *wave);

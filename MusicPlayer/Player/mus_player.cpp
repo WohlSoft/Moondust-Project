@@ -33,7 +33,7 @@ namespace PGE_MusicPlayer
                    type == MUS_NONE ? "No Music" :
                    type == MUS_CMD ? "CMD" :
                    type == MUS_WAV ? "PCM Wave" :
-                   type == MUS_MOD ? "MidMod" :
+                   type == MUS_MOD ? "MikMod" :
                    type == MUS_MODPLUG ? "ModPlug" :
                    type == MUS_MID ? "MIDI/IMF" :
                    type == MUS_OGG ? "OGG" :
