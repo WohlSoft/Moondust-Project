@@ -38,9 +38,8 @@
 SDL_AudioSpec *Mix_LoadMP3_RW(SDL_RWops *src, int freesrc, SDL_AudioSpec *spec, Uint8 **audio_buf, Uint32 *audio_len)
 {
     /* note: spec is initialized to mixer spec */
-
     #if defined(MP3_MUSIC)
-    SMPEG *mp3;
+    SMPEG *mp3 = NULL;
     SMPEG_Info info;
     #elif defined(MP3_MAD_MUSIC)
     mad_data *mp3_mad = NULL;/* Sam, you forgot to initialize this :P */

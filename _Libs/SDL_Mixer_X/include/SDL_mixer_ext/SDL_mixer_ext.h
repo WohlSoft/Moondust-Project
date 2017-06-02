@@ -153,6 +153,7 @@ typedef enum
     MIDI_Timidity,
     MIDI_OPNMIDI,
     MIDI_Fluidsynth,
+    MIDI_KnuwnDevices   /* Count of MIDI device types */
 } Mix_MIDI_Device;
 
 /* Volume model type in the ADLMIDI */

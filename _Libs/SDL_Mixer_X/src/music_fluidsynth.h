@@ -27,6 +27,8 @@
 
 #ifdef USE_FLUIDSYNTH_MIDI
 
+#include "audio_codec.h"
+
 #include "dynamic_fluidsynth.h"
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
@@ -37,14 +39,15 @@ typedef struct {
     fluid_player_t* player;
 } FluidSynthMidiSong;
 
-int fluidsynth_init(SDL_AudioSpec *mixer);
-FluidSynthMidiSong *fluidsynth_loadsong_RW(SDL_RWops *rw, int freerw);
-void fluidsynth_freesong(FluidSynthMidiSong *song);
-void fluidsynth_start(FluidSynthMidiSong *song);
-void fluidsynth_stop(FluidSynthMidiSong *song);
-int fluidsynth_active(FluidSynthMidiSong *song);
-void fluidsynth_setvolume(FluidSynthMidiSong *song, int volume);
-int fluidsynth_playsome(FluidSynthMidiSong *song, void *stream, int len);
+extern int fluidsynth_init2(AudioCodec *codec, SDL_AudioSpec *mixer);
+
+void    *fluidsynth_loadsong_RW(SDL_RWops *rw, int freerw);
+void    fluidsynth_freesong(void *song_p);
+void    fluidsynth_start(void *song_p);
+void    fluidsynth_stop(void *song_p);
+int     fluidsynth_active(void *song_p);
+void    fluidsynth_setvolume(void *song_p, int volume);
+int     fluidsynth_playsome(void *song_p, void *stream, int len);
 
 #endif /* USE_FLUIDSYNTH_MIDI */
 

@@ -21,7 +21,7 @@
 
 #ifdef MP3_MUSIC
 
-#include "SDL_loadso.h"
+#include <SDL2/SDL_loadso.h>
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "dynamic_mp3.h"
 
@@ -177,6 +177,113 @@ void Mix_QuitMP3()
     --smpeg.loaded;
 }
 #endif /* MP3_DYNAMIC */
+
+static SDL_AudioSpec global_mixer;
+
+static void *SMPEG_openFileRW(SDL_RWops *src, int freesrc)
+{
+    SMPEG *mp3;
+    SMPEG_Info info;
+    mp3 = smpeg.SMPEG_new_rwops(src, &info, freesrc, 0);
+    if(!info.has_audio)
+    {
+        Mix_SetError("MPEG file does not have any audio stream.");
+        smpeg.SMPEG_delete(mp3);
+        /* Deleting the MP3 closed the source if desired */
+        freesrc = SDL_FALSE;
+        mp3 = NULL;
+    }
+    else
+    {
+        smpeg.SMPEG_actualSpec(mp3, &global_mixer);
+    }
+    return mp3;
+}
+
+static void SMPEG_closeFile(void *mp3_p)
+{
+    SMPEG *mp3 = (SMPEG*)mp3_p;
+    smpeg.SMPEG_delete(mp3);
+}
+
+static int SMPEG_isPlaying(void *mp3_p)
+{
+    SMPEG *mp3 = (SMPEG*)mp3_p;
+    return smpeg.SMPEG_status(mp3) == SMPEG_PLAYING ? 1 : 0;
+}
+
+static void SMPEG_start(void *mp3_p)
+{
+    SMPEG *mp3 = (SMPEG*)mp3_p;
+    smpeg.SMPEG_enableaudio(mp3, 1);
+    smpeg.SMPEG_enablevideo(mp3, 0);
+    smpeg.SMPEG_play(mp3);
+}
+
+static void SMPEG_stopMix(void *mp3_p)
+{
+    SMPEG *mp3 = (SMPEG*)mp3_p;
+    smpeg.SMPEG_stop(mp3);
+}
+
+static void SMPEG_setVolume(void *mp3_p, int volume)
+{
+    SMPEG *mp3 = (SMPEG*)mp3_p;
+    smpeg.SMPEG_setvolume(mp3, (int)(((float)volume / (float)MIX_MAX_VOLUME) * 100.0f));
+}
+
+static void SMPEG_seekMix(void *mp3_p, double position)
+{
+    SMPEG *mp3 = (SMPEG*)mp3_p;
+    smpeg.SMPEG_rewind(mp3);
+    smpeg.SMPEG_play(mp3);
+    if(position > 0.0)
+        smpeg.SMPEG_skip(mp3, (float)position);
+}
+
+static int SMPEG_getSamples(void *mp3_p, Uint8 *stream, int len)
+{
+    SMPEG *mp3 = (SMPEG*)mp3_p;
+    return (len - smpeg.SMPEG_playAudio(mp3, stream, len));
+}
+
+
+int SMPEG_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
+{
+    global_mixer = *mixerfmt;
+
+    codec->isValid = 1;
+
+    codec->capabilities     = audioCodec_default_capabilities;
+
+    codec->open             = SMPEG_openFileRW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = SMPEG_closeFile;
+
+    codec->play             = SMPEG_start;
+    codec->pause            = audioCodec_dummy_cb_void_1arg;
+    codec->resume           = audioCodec_dummy_cb_void_1arg;
+    codec->stop             = SMPEG_stopMix;
+
+    codec->isPlaying        = SMPEG_isPlaying;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
+
+    codec->setLoops         = audioCodec_dummy_cb_regulator;
+    codec->setVolume        = SMPEG_setVolume;
+
+    codec->jumpToTime       = SMPEG_seekMix;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+
+    codec->metaTitle        = audioCodec_dummy_meta_tag;
+    codec->metaArtist       = audioCodec_dummy_meta_tag;
+    codec->metaAlbum        = audioCodec_dummy_meta_tag;
+    codec->metaCopyright    = audioCodec_dummy_meta_tag;
+
+    codec->playAudio        = SMPEG_getSamples;
+
+    return(0);
+}
+
 #else
 int  Mix_InitMP3() {return 0;}
 void Mix_QuitMP3() {}

@@ -36,6 +36,7 @@
 struct _NativeMidiSong {
   int MusicLoaded;
   int MusicPlaying;
+  int MusicPaused;
   int Loops;
   int CurrentHdr;
   MIDIHDR MidiStreamHdr[2];
@@ -208,7 +209,7 @@ int native_midi_detect()
   return 1;
 }
 
-NativeMidiSong *native_midi_loadsong_RW(SDL_RWops *src, int freesrc)
+void *native_midi_loadsong_RW(SDL_RWops *src, int freesrc)
 {
     NativeMidiSong *newsong;
     MIDIEvent       *evntlist = NULL;
@@ -241,8 +242,9 @@ NativeMidiSong *native_midi_loadsong_RW(SDL_RWops *src, int freesrc)
     return newsong;
 }
 
-void native_midi_freesong(NativeMidiSong *song)
+void native_midi_freesong(void *song_p)
 {
+  NativeMidiSong *song = (NativeMidiSong *)song_p;
   if (hMidiStream)
   {
     midiStreamStop(hMidiStream);
@@ -256,8 +258,15 @@ void native_midi_freesong(NativeMidiSong *song)
   }
 }
 
-void native_midi_start(NativeMidiSong *song, int loops)
+void native_midi_setloops(void *song_p, int loops)
 {
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    song->Loops=loops;
+}
+
+void native_midi_start(void *song_p)
+{
+  NativeMidiSong *song = (NativeMidiSong*)song_p;
   MMRESULT merr;
   MIDIPROPTIMEDIV mptd;
 
@@ -273,8 +282,8 @@ void native_midi_start(NativeMidiSong *song, int loops)
     /* midiStreamStop(hMidiStream); */
     currentsong=song;
     currentsong->NewPos=0;
-    currentsong->MusicPlaying=1;
-    currentsong->Loops=loops;
+    currentsong->MusicPlaying = 1;
+    currentsong->MusicPaused = 0;
     mptd.cbStruct=sizeof(MIDIPROPTIMEDIV);
     mptd.dwTimeDiv=currentsong->ppqn;
     merr=midiStreamProperty(hMidiStream,(LPBYTE)&mptd,MIDIPROP_SET | MIDIPROP_TIMEDIV);
@@ -283,8 +292,33 @@ void native_midi_start(NativeMidiSong *song, int loops)
   }
 }
 
-void native_midi_stop()
+void native_midi_pause(void *song_p)
 {
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    if (!hMidiStream)
+      return;
+    midiStreamPause(hMidiStream);
+    song->MusicPaused = 1;
+}
+
+void native_midi_resume(void *song_p)
+{
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    if (!hMidiStream)
+      return;
+    midiStreamRestart(hMidiStream);
+    song->MusicPaused = 0;
+}
+
+int native_midi_paused(void *song_p)
+{
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    return (song->MusicPaused && song->MusicPlaying);
+}
+
+void native_midi_stop(void *midi)
+{
+  (void)midi;
   if (!hMidiStream)
     return;
   midiStreamStop(hMidiStream);
@@ -293,8 +327,9 @@ void native_midi_stop()
   hMidiStream = NULL;
 }
 
-int native_midi_active()
+int native_midi_active(void *midi)
 {
+  (void)midi;
   return currentsong->MusicPlaying;
 }
 
