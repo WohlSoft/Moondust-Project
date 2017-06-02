@@ -32,6 +32,7 @@
 #include <signal.h>
 
 #include <dev_console/devconsole.h>
+#include <version.h>
 
 #include "crashhandler.h"
 #include <ui_crashhandler.h>
@@ -40,6 +41,21 @@
 #include <common_features/app_path.h>
 #include <common_features/logger.h>
 #include <common_features/logger_sets.h>
+
+static const char *g_messageToUser =
+    "\n"
+    "================================================\n"
+    "            Additional information:\n"
+    "================================================\n"
+    _FILE_DESC " version: " _FILE_VERSION _FILE_RELEASE "\n"
+    "GIT Revision code: " GIT_VERSION "\n"
+    "Build date: " _DATE_OF_BUILD "\n"
+    "================================================\n"
+    " Please send this log file to the developers by one of ways:\n"
+    " - Via contact form:          http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin\n"
+    " - Official forums:           http://wohlsoft.ru/forum/\n"
+    " - Make issue at GitHub repo: https://github.com/WohlSoft/PGE-Project\n\n"
+    "================================================\n";
 
 #ifdef _WIN32
 static bool GetStackWalk(std::string &outWalk)
@@ -206,6 +222,8 @@ void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)
 {
     //Force debug log enabling
     LogWriter::logLevel = PGE_LogLevel::Debug;
+    //Append extra explanation to user how to report the crash
+    crashMsg += g_messageToUser;
     //Write crash message into the log file first
     crashMsg += QString("\n\n") + getStacktrace();
     //Also save crash report into log file

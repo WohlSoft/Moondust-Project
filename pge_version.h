@@ -19,18 +19,38 @@
 #ifndef GLOBAL_PGE_VERSION
 #define GLOBAL_PGE_VERSION
 
-//Version of whole project
-#define _VERSION "0.4.0.0"
-#define _RELEASE "" //Developing state (for release this field must be empty)
-
 #define _VP1 0
 #define _VP2 4
 #define _VP3 0
 #define _VP4 0
 
-#define _COPYRIGHT "2014-2016 by Wohlstand"
+#define GEN_VERSION_NUMBER_2(v1,v2)     v1 "." v2
+#define GEN_VERSION_NUMBER_3(v1,v2,v3)  v1 "." v2 "." v3
+#define GEN_VERSION_NUMBER_4(v1,v2,v3,v4)  v1 "." v2 "." v3 "." v4
 
-#define _COMPANY "Wohlhabend Networks"
+#define STR_VALUE_REAL(arg)  #arg
+#define STR_VALUE(verf)      STR_VALUE_REAL(verf)
+#define _VP1_s STR_VALUE(_VP1)
+#define _VP2_s STR_VALUE(_VP2)
+#define _VP3_s STR_VALUE(_VP3)
+#define _VP4_s STR_VALUE(_VP4)
+#if _VP4 == 0
+    #if _VP3 == 0
+        #define _PROJECT_VERSION_NUM GEN_VERSION_NUMBER_2(_VP1_s, _VP2_s)
+    #else
+        #define _PROJECT_VERSION_NUM GEN_VERSION_NUMBER_3(_VP1_s, _VP2_s, _VP3_s)
+    #endif
+#else
+    #define _PROJECT_VERSION_NUM GEN_VERSION_NUMBER_4(_VP1_s, _VP2_s, _VP3_s, _VP4_s)
+#endif
+
+//Version of whole project
+#define _VERSION _PROJECT_VERSION_NUM
+#define _RELEASE "" //Developing state (for release this field must be empty)
+
+#define _COPYRIGHT "2014-2017 by Wohlstand"
+
+#define _COMPANY "PGE Team"
 
 #define _PGE_URL "wohlsoft.ru"
 

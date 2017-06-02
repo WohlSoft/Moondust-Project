@@ -142,7 +142,8 @@ typedef enum
     MUS_FLAC,
     MUS_MODPLUG,
     MUS_SPC,
-    MUS_ADLMIDI
+    MUS_ADLMIDI,
+    MUS_KnownCodecs     /* Count of codec types */
 } Mix_MusicType;
 
 typedef enum
@@ -152,6 +153,7 @@ typedef enum
     MIDI_Timidity,
     MIDI_OPNMIDI,
     MIDI_Fluidsynth,
+    MIDI_KnuwnDevices   /* Count of MIDI device types */
 } Mix_MIDI_Device;
 
 /* Volume model type in the ADLMIDI */
@@ -605,16 +607,16 @@ extern DECLSPEC int SDLCALL Mix_GroupNewer(int tag);
 /* The same as above, but the sound is played at most 'ticks' milliseconds */
 extern DECLSPEC int SDLCALL Mix_PlayChannelTimed(int channel, Mix_Chunk *chunk, int loops, int ticks);
 extern DECLSPEC int SDLCALL Mix_PlayMusic(Mix_Music *music, int loops);
-#define Mix_PlayChannelVol(channel,chunk,loops,vol) Mix_PlayChannelTimedVolume(channel,chunk,loops,-1,vol)//MIXER-X
-extern DECLSPEC int SDLCALL Mix_PlayChannelTimedVolume(int which, Mix_Chunk *chunk, int loops, int ticks, int volume);//MIXER-X
+#define Mix_PlayChannelVol(channel,chunk,loops,vol) Mix_PlayChannelTimedVolume(channel,chunk,loops,-1,vol)/*MIXER-X*/
+extern DECLSPEC int SDLCALL Mix_PlayChannelTimedVolume(int which, Mix_Chunk *chunk, int loops, int ticks, int volume);/*MIXER-X*/
 
 /* Fade in music or a channel over "ms" milliseconds, same semantics as the "Play" functions */
 extern DECLSPEC int SDLCALL Mix_FadeInMusic(Mix_Music *music, int loops, int ms);
 extern DECLSPEC int SDLCALL Mix_FadeInMusicPos(Mix_Music *music, int loops, int ms, double position);
 #define Mix_FadeInChannel(channel,chunk,loops,ms) Mix_FadeInChannelTimed(channel,chunk,loops,ms,-1)
 extern DECLSPEC int SDLCALL Mix_FadeInChannelTimed(int channel, Mix_Chunk *chunk, int loops, int ms, int ticks);
-#define Mix_FadeInChannelVolume(channel,chunk,loops,ms,vol) Mix_FadeInChannelTimed(channel,chunk,loops,ms,-1,vol)//MIXER-X
-extern DECLSPEC int SDLCALL Mix_FadeInChannelTimedVolume(int which, Mix_Chunk *chunk, int loops, int ms, int ticks, int volume);//MIXER-X
+#define Mix_FadeInChannelVolume(channel,chunk,loops,ms,vol) Mix_FadeInChannelTimed(channel,chunk,loops,ms,-1,vol)/*MIXER-X*/
+extern DECLSPEC int SDLCALL Mix_FadeInChannelTimedVolume(int which, Mix_Chunk *chunk, int loops, int ms, int ticks, int volume);/*MIXER-X*/
 
 
 /* Set the volume in the range of 0-128 of a specific channel or chunk.
