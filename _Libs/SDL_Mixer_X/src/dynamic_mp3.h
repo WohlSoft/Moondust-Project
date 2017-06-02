@@ -20,7 +20,9 @@
 */
 
 #ifdef MP3_MUSIC
-#include "smpeg.h"
+#include <smpeg/smpeg.h>
+
+#include "audio_codec.h"
 
 typedef struct {
     int loaded;
@@ -40,6 +42,8 @@ typedef struct {
 } smpeg_loader;
 
 extern smpeg_loader smpeg;
+
+extern int SMPEG_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt);
 
 #endif /* MUSIC_MP3 */
 

@@ -69,10 +69,11 @@ void OPNMIDI_setVolumeModel(int vm)
         opnmidi_volumeModel = 0;
 }
 
-void OPNMIDI_setInfiniteLoop(struct MUSIC_MIDIOPN *music, int loop)
+void OPNMIDI_setLoops(void *music_p, int loop)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     if(music)
-        opn2_setLoopEnabled(music->opnmidi, loop);
+        opn2_setLoopEnabled(music->opnmidi, (loop >=0 ? 0 : 1));
 }
 
 void OPNMIDI_setDefaults()
@@ -87,6 +88,42 @@ void OPNMIDI_setDefaults()
 
 /* This is the format of the audio mixer data */
 static SDL_AudioSpec mixer;
+
+int OPNMIDI_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
+{
+    mixer = *mixerfmt;
+
+    codec->isValid = 1;
+
+    codec->capabilities     = audioCodec_default_capabilities;
+
+    codec->open             = OPNMIDI_new_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = OPNMIDI_delete;
+
+    codec->play             = OPNMIDI_play;
+    codec->pause            = audioCodec_dummy_cb_void_1arg;
+    codec->resume           = audioCodec_dummy_cb_void_1arg;
+    codec->stop             = OPNMIDI_stop;
+
+    codec->isPlaying        = OPNMIDI_playing;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
+
+    codec->setLoops         = OPNMIDI_setLoops;
+    codec->setVolume        = OPNMIDI_setvolume;
+
+    codec->jumpToTime       = OPNMIDI_jump_to_time;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+
+    codec->metaTitle        = audioCodec_dummy_meta_tag;
+    codec->metaArtist       = audioCodec_dummy_meta_tag;
+    codec->metaAlbum        = audioCodec_dummy_meta_tag;
+    codec->metaCopyright    = audioCodec_dummy_meta_tag;
+
+    codec->playAudio        = OPNMIDI_playAudio;
+
+    return(0);
+}
 
 int OPNMIDI_init(SDL_AudioSpec *mixerfmt)
 {
@@ -103,8 +140,9 @@ int OPNMIDI_init(SDL_AudioSpec *mixerfmt)
 void OPNMIDI_exit(void) {}
 
 /* Set the volume for a OPNMIDI stream */
-void OPNMIDI_setvolume(struct MUSIC_MIDIOPN *music, int volume)
+void OPNMIDI_setvolume(void *music_p, int volume)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     if(music)
     {
         music->volume = (int)round(128.0*sqrt(((double)volume)*(1.0/128.0) ));
@@ -193,7 +231,7 @@ struct MUSIC_MIDIOPN *OPNMIDI_LoadSongRW(SDL_RWops *src)
 }
 
 /* Load OPNMIDI stream from an SDL_RWops object */
-struct MUSIC_MIDIOPN *OPNMIDI_new_RW(struct SDL_RWops *src, int freesrc)
+void *OPNMIDI_new_RW(struct SDL_RWops *src, int freesrc)
 {
     struct MUSIC_MIDIOPN *adlmidiMusic;
 
@@ -212,15 +250,17 @@ struct MUSIC_MIDIOPN *OPNMIDI_new_RW(struct SDL_RWops *src, int freesrc)
 }
 
 /* Start playback of a given Game Music Emulators stream */
-void OPNMIDI_play(struct MUSIC_MIDIOPN *music)
+void OPNMIDI_play(void *music_p)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     if(music)
         music->playing = 1;
 }
 
 /* Return non-zero if a stream is currently playing */
-int OPNMIDI_playing(struct MUSIC_MIDIOPN *music)
+int OPNMIDI_playing(void *music_p)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     if(music)
         return music->playing;
     else
@@ -228,8 +268,9 @@ int OPNMIDI_playing(struct MUSIC_MIDIOPN *music)
 }
 
 /* Play some of a stream previously started with OPNMIDI_play() */
-int OPNMIDI_playAudio(struct MUSIC_MIDIOPN *music, Uint8 *stream, int len)
+int OPNMIDI_playAudio(void *music_p, Uint8 *stream, int len)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     int srgArraySize, srcLen, gottenLen, dest_len;
     short* buf = NULL;
 
@@ -276,8 +317,9 @@ int OPNMIDI_playAudio(struct MUSIC_MIDIOPN *music, Uint8 *stream, int len)
 }
 
 /* Stop playback of a stream previously started with OPNMIDI_play() */
-void OPNMIDI_stop(struct MUSIC_MIDIOPN *music)
+void OPNMIDI_stop(void *music_p)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     if(music)
     {
         music->playing = 0;
@@ -286,8 +328,9 @@ void OPNMIDI_stop(struct MUSIC_MIDIOPN *music)
 }
 
 /* Close the given Game Music Emulators stream */
-void OPNMIDI_delete(struct MUSIC_MIDIOPN *music)
+void OPNMIDI_delete(void *music_p)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     if(music)
     {
         if( music->mus_title )
@@ -304,8 +347,9 @@ void OPNMIDI_delete(struct MUSIC_MIDIOPN *music)
 }
 
 /* Jump (seek) to a given position (time is in seconds) */
-void OPNMIDI_jump_to_time(struct MUSIC_MIDIOPN *music, double time)
+void OPNMIDI_jump_to_time(void *music_p, double time)
 {
+    struct MUSIC_MIDIOPN *music = (struct MUSIC_MIDIOPN*)music_p;
     (void)time;
     if( music )
     {

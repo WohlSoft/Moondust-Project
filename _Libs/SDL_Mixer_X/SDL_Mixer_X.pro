@@ -76,6 +76,7 @@ DEFINES += \
     USE_OPN2_MIDI \
     OGG_MUSIC \
     FLAC_MUSIC \
+    #MP3_MUSIC \
     MP3_MAD_MUSIC \
     GME_MUSIC \
     #MOD_MUSIC \

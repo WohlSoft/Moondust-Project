@@ -26,6 +26,8 @@
 
 #ifdef USE_ADL_MIDI
 
+#include "audio_codec.h"
+
 struct ADL_MIDIPlayer;
 
 /* This structure supports ADLMIDI-based MIDI music streams */
@@ -38,6 +40,8 @@ struct MUSIC_MIDIADL
     char *mus_title;
     SDL_AudioCVT cvt;
 };
+
+extern int ADLMIDI_init2(AudioCodec *codec, SDL_AudioSpec *mixer);
 
 /*Setup editing functions (changes applying on file reopening)*/
 extern int  ADLMIDI_getBanksCount();
@@ -61,34 +65,29 @@ extern void ADLMIDI_setDefaults();
 
 extern void ADLMIDI_setInfiniteLoop(struct MUSIC_MIDIADL *music, int loop);
 
-extern int ADLMIDI_init(SDL_AudioSpec *mixer);
+/* Set the volume for a ADL MIDI stream */
+extern void ADLMIDI_setvolume(void *music_p, int volume);
 
-/* Uninitialize the music players */
-extern void ADLMIDI_exit(void);
+/* Load a ADL MIDI stream from an SDL_RWops object */
+extern void *ADLMIDI_new_RW(SDL_RWops *rw, int freerw);
 
-/* Set the volume for a ADM MIDI stream */
-extern void ADLMIDI_setvolume(struct MUSIC_MIDIADL *music, int volume);
-
-/* Load a ADM MIDI stream from an SDL_RWops object */
-extern struct MUSIC_MIDIADL *ADLMIDI_new_RW(SDL_RWops *rw, int freerw);
-
-/* Start playback of a given ADM MIDI stream */
-extern void ADLMIDI_play(struct MUSIC_MIDIADL *music);
+/* Start playback of a given ADL MIDI stream */
+extern void ADLMIDI_play(void *music_p);
 
 /* Return non-zero if a stream is currently playing */
-extern int ADLMIDI_playing(struct MUSIC_MIDIADL *music);
+extern int ADLMIDI_playing(void *music_p);
 
 /* Play some of a stream previously started with ADLMIDI_play() */
-extern int ADLMIDI_playAudio(struct MUSIC_MIDIADL *music, Uint8 *stream, int len);
+extern int ADLMIDI_playAudio(void *music_p, Uint8 *stream, int len);
 
 /* Stop playback of a stream previously started with ADLMIDI_play() */
-extern void ADLMIDI_stop(struct MUSIC_MIDIADL *music);
+extern void ADLMIDI_stop(void *music_p);
 
-/* Close the given ADM MIDI stream */
-extern void ADLMIDI_delete(struct MUSIC_MIDIADL *music);
+/* Close the given ADL MIDI stream */
+extern void ADLMIDI_delete(void *music_p);
 
 /* Jump (seek) to a given position (time is in seconds) */
-extern void ADLMIDI_jump_to_time(struct MUSIC_MIDIADL *music, double time);
+extern void ADLMIDI_jump_to_time(void *music_p, double time);
 
 #endif /* USE_ADL_MIDI */
 

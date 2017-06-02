@@ -44,11 +44,12 @@ typedef enum
 
     ACODEC_NEED_VOLUME_INIT_POST= 0x00000004,/* Need to additionally initialize the volume value after playing began */
 
-    ACODEC_SINGLETON            = 0x00000008 /* Codec is able to play only one song in same time.
+    ACODEC_SINGLETON            = 0x00000008,/* Codec is able to play only one song in same time.
                                                 You can't play two or more concurrent tracks playing by this same codec
                                                 (Examples: MikMod because of interface of library,
                                                            NativeMidi because one external device
                                                            is able to play only one MIDI file) */
+    ACODEC_HAS_PAUSE            = 0x00000010 /* Codec has own pause state */
 } AudioCodec_Caps;
 
 /*
