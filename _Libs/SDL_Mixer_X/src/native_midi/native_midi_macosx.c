@@ -290,7 +290,7 @@ void native_midi_start(void *song_p)
 
     vol = latched_volume;
     latched_volume++;  /* just make this not match. */
-    native_midi_setvolume(vol);
+    native_midi_setvolume(song, vol);
 
     Mix_LockAudio();
     SDL_PauseAudio(0);
@@ -347,8 +347,9 @@ int native_midi_active(void *midi)
     return 0;
 }
 
-void native_midi_setvolume(int volume)
+void native_midi_setvolume(void *midi_p, int volume)
 {
+    (void)midi_p;
     if (latched_volume == volume)
         return;
 

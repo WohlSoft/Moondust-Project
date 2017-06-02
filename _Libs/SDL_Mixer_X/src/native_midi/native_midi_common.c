@@ -40,9 +40,9 @@ extern void native_midi_resume(void *song);/*FIXME: Implement this*/
 extern void native_midi_stop(void *midi);
 extern int  native_midi_active(void *midi);
 extern int  native_midi_paused(void *midi);/*FIXME: Implement this*/
-extern void native_midi_setvolume(int volume);
+extern void native_midi_setvolume(void *midi, int volume);
 
-static void native_midi_caps()
+static Uint32 native_midi_caps()
 {
     return ACODEC_ASYNC|ACODEC_SINGLETON|ACODEC_HAS_PAUSE;
 }
