@@ -38,10 +38,11 @@ void native_midi_setloops(void *song, int loops);
 void native_midi_start(void *song);
 void native_midi_pause(void *song);
 void native_midi_resume(void *song);
-void native_midi_stop(void *midi);
-int native_midi_active(void *midi);
-int native_midi_paused(void *midi);
-void native_midi_setvolume(int volume);
+void native_midi_stop(void *song);
+int native_midi_active(void *song);
+int native_midi_paused(void *song);
+void native_midi_setvolume(void *song, int volume);
+
 const char *native_midi_error(void);
 
 #endif /* _NATIVE_MIDI_H_ */
