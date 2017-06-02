@@ -157,7 +157,7 @@ int native_midi_detect()
     return 1;  /* always available. */
 }
 
-NativeMidiSong *native_midi_loadsong_RW(SDL_RWops *src, int freesrc)
+void *native_midi_loadsong_RW(SDL_RWops *src, int freesrc)
 {
     NativeMidiSong *retval = NULL;
     void *buf = NULL;
@@ -247,8 +247,9 @@ fail:
     return NULL;
 }
 
-void native_midi_freesong(NativeMidiSong *song)
+void native_midi_freesong(void *song_p)
 {
+    NativeMidiSong *song = (NativeMidiSong *)song_p;
     if (song != NULL) {
         if (currentsong == song)
             currentsong = NULL;
@@ -259,8 +260,15 @@ void native_midi_freesong(NativeMidiSong *song)
     }
 }
 
-void native_midi_start(NativeMidiSong *song, int loops)
+void native_midi_setloops(void *song_p, int loops)
 {
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    song->loops = loops;
+}
+
+void native_midi_start(void *song_p)
+{
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
     int vol;
 
     if (song == NULL)
@@ -273,7 +281,6 @@ void native_midi_start(NativeMidiSong *song, int loops)
         MusicPlayerStop(currentsong->player);
 
     currentsong = song;
-    currentsong->loops = loops;
 
     MusicPlayerPreroll(song->player);
     MusicPlayerSetTime(song->player, 0);
@@ -283,14 +290,34 @@ void native_midi_start(NativeMidiSong *song, int loops)
 
     vol = latched_volume;
     latched_volume++;  /* just make this not match. */
-    native_midi_setvolume(vol);
+    native_midi_setvolume(song, vol);
 
     Mix_LockAudio();
     SDL_PauseAudio(0);
 }
 
-void native_midi_stop()
+void native_midi_pause(void *song_p)
 {
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    /*FIXME: Implement this!*/
+}
+
+void native_midi_resume(void *song_p)
+{
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    /*FIXME: Implement this!*/
+}
+
+int native_midi_paused(void *song_p)
+{
+    NativeMidiSong *song = (NativeMidiSong*)song_p;
+    /*FIXME: Implement this!*/
+    return 0;
+}
+
+void native_midi_stop(void *midi)
+{
+    (void)midi;
     if (currentsong) {
         SDL_PauseAudio(1);
         Mix_UnlockAudio();
@@ -301,8 +328,9 @@ void native_midi_stop()
     }
 }
 
-int native_midi_active()
+int native_midi_active(void *midi)
 {
+    (void)midi;
     MusicTimeStamp currentTime = 0;
     if (currentsong == NULL)
         return 0;
@@ -319,8 +347,9 @@ int native_midi_active()
     return 0;
 }
 
-void native_midi_setvolume(int volume)
+void native_midi_setvolume(void *midi_p, int volume)
 {
+    (void)midi_p;
     if (latched_volume == volume)
         return;
 

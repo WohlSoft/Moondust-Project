@@ -21,12 +21,65 @@
 
 
 #include "native_midi_common.h"
+#include "../audio_codec.h"
 
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+
+extern int  native_midi_detect();
+
+extern void *native_midi_loadsong_RW(SDL_RWops *src, int freesrc);
+extern void native_midi_freesong(void *song);
+extern void native_midi_setloops(void *song, int loops);
+extern void native_midi_start(void *song);
+extern void native_midi_pause(void *song);/*FIXME: Implement this*/
+extern void native_midi_resume(void *song);/*FIXME: Implement this*/
+extern void native_midi_stop(void *midi);
+extern int  native_midi_active(void *midi);
+extern int  native_midi_paused(void *midi);/*FIXME: Implement this*/
+extern void native_midi_setvolume(void *midi, int volume);
+
+static Uint32 native_midi_caps()
+{
+    return ACODEC_ASYNC|ACODEC_SINGLETON|ACODEC_HAS_PAUSE;
+}
+
+int NativeMIDI_init2(AudioCodec *codec)
+{
+    codec->isValid          = native_midi_detect();
+
+    codec->capabilities     = native_midi_caps;
+
+    codec->open             = native_midi_loadsong_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = native_midi_freesong;
+
+    codec->play             = native_midi_start;
+    codec->pause            = native_midi_pause;
+    codec->resume           = native_midi_resume;
+    codec->stop             = native_midi_stop;
+
+    codec->isPlaying        = native_midi_active;
+    codec->isPaused         = native_midi_paused;
+
+    codec->setLoops         = native_midi_setloops;
+    codec->setVolume        = native_midi_setvolume;
+
+    codec->jumpToTime       = audioCodec_dummy_cb_seek;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+
+    codec->metaTitle        = audioCodec_dummy_meta_tag;
+    codec->metaArtist       = audioCodec_dummy_meta_tag;
+    codec->metaAlbum        = audioCodec_dummy_meta_tag;
+    codec->metaCopyright    = audioCodec_dummy_meta_tag;
+
+    codec->playAudio        = audioCodec_dummy_playAudio;
+
+    return(codec->isValid ? 0 : -1);
+}
 
 
 /* The maximum number of midi tracks that we can handle

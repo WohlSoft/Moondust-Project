@@ -54,16 +54,47 @@ int fluidsynth_load_soundfont(const char *path, void *data)
     return 1;
 }
 
-int fluidsynth_init(SDL_AudioSpec *mixer)
+int fluidsynth_init2(AudioCodec *codec, SDL_AudioSpec *mixer)
 {
+    codec->isValid = 0;
+
     if (!Mix_EachSoundFont(fluidsynth_check_soundfont, NULL))
         return -1;
 
-    format = mixer->format;
-    channels = mixer->channels;
-    freq = mixer->freq;
+    format      = mixer->format;
+    channels    = mixer->channels;
+    freq        = mixer->freq;
 
-    return 0;
+    codec->isValid          = 1;
+
+    codec->capabilities     = audioCodec_default_capabilities;
+
+    codec->open             = fluidsynth_loadsong_RW;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = fluidsynth_freesong;
+
+    codec->play             = fluidsynth_start;
+    codec->pause            = audioCodec_dummy_cb_void_1arg;
+    codec->resume           = audioCodec_dummy_cb_void_1arg;
+    codec->stop             = fluidsynth_stop;
+
+    codec->isPlaying        = fluidsynth_active;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
+
+    codec->setLoops         = audioCodec_dummy_cb_regulator;
+    codec->setVolume        = fluidsynth_setvolume;
+
+    codec->jumpToTime       = audioCodec_dummy_cb_seek;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+
+    codec->metaTitle        = audioCodec_dummy_meta_tag;
+    codec->metaArtist       = audioCodec_dummy_meta_tag;
+    codec->metaAlbum        = audioCodec_dummy_meta_tag;
+    codec->metaCopyright    = audioCodec_dummy_meta_tag;
+
+    codec->playAudio        = fluidsynth_playsome;
+
+    return(0);
 }
 
 static FluidSynthMidiSong *fluidsynth_loadsong_common(int (*function)(FluidSynthMidiSong*, void*), void *data)
@@ -139,7 +170,7 @@ static int fluidsynth_loadsong_RW_internal(FluidSynthMidiSong *song, void *data)
     return 0;
 }
 
-FluidSynthMidiSong *fluidsynth_loadsong_RW(SDL_RWops *src, int freesrc)
+void *fluidsynth_loadsong_RW(SDL_RWops *src, int freesrc)
 {
     FluidSynthMidiSong *song;
 
@@ -150,8 +181,9 @@ FluidSynthMidiSong *fluidsynth_loadsong_RW(SDL_RWops *src, int freesrc)
     return song;
 }
 
-void fluidsynth_freesong(FluidSynthMidiSong *song)
+void fluidsynth_freesong(void *song_p)
 {
+    FluidSynthMidiSong *song = (FluidSynthMidiSong*)song_p;
     if (!song) return;
     fluidsynth.delete_fluid_player(song->player);
     fluidsynth.delete_fluid_settings(fluidsynth.fluid_synth_get_settings(song->synth));
@@ -159,30 +191,35 @@ void fluidsynth_freesong(FluidSynthMidiSong *song)
     SDL_free(song);
 }
 
-void fluidsynth_start(FluidSynthMidiSong *song)
+void fluidsynth_start(void *song_p)
 {
+    FluidSynthMidiSong *song = (FluidSynthMidiSong*)song_p;
     fluidsynth.fluid_player_set_loop(song->player, 1);
     fluidsynth.fluid_player_play(song->player);
 }
 
-void fluidsynth_stop(FluidSynthMidiSong *song)
+void fluidsynth_stop(void *song_p)
 {
+    FluidSynthMidiSong *song = (FluidSynthMidiSong*)song_p;
     fluidsynth.fluid_player_stop(song->player);
 }
 
-int fluidsynth_active(FluidSynthMidiSong *song)
+int fluidsynth_active(void *song_p)
 {
+    FluidSynthMidiSong *song = (FluidSynthMidiSong*)song_p;
     return fluidsynth.fluid_player_get_status(song->player) == FLUID_PLAYER_PLAYING ? 1 : 0;
 }
 
-void fluidsynth_setvolume(FluidSynthMidiSong *song, int volume)
+void fluidsynth_setvolume(void *song_p, int volume)
 {
+    FluidSynthMidiSong *song = (FluidSynthMidiSong*)song_p;
     /* FluidSynth's default is 0.2. Make 1.2 the maximum. */
     fluidsynth.fluid_synth_set_gain(song->synth, (float) (volume * 1.2 / MIX_MAX_VOLUME));
 }
 
-int fluidsynth_playsome(FluidSynthMidiSong *song, void *dest, int dest_len)
+int fluidsynth_playsome(void *song_p, void *dest, int dest_len)
 {
+    FluidSynthMidiSong *song = (FluidSynthMidiSong*)song_p;
     int result = -1;
     int frames = dest_len / channels / ((format & 0xFF) / 8);
     int src_len = frames * 4; /* 16-bit stereo */

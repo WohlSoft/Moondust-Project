@@ -1689,8 +1689,9 @@ int Timidity_PlaySome(void *stream, int samples)
 }
 
 
-void Timidity_SetVolume(int volume)
+void Timidity_SetVolume(void *song_p, int volume)
 {
+    (void)song_p;
     int i;
     if(volume > MAX_AMPLIFICATION)
         amplification = MAX_AMPLIFICATION;
@@ -1708,7 +1709,7 @@ void Timidity_SetVolume(int volume)
     ctl->master_volume(amplification);
 }
 
-MidiSong *Timidity_LoadSong_RW(SDL_RWops *src, int freesrc)
+void *Timidity_LoadSong_RW(SDL_RWops *src, int freesrc)
 {
     MidiSong *song;
     int32 events;
@@ -1733,8 +1734,9 @@ MidiSong *Timidity_LoadSong_RW(SDL_RWops *src, int freesrc)
     return(song);
 }
 
-void Timidity_Start(MidiSong *song)
+void Timidity_Start(void *song_p)
 {
+    MidiSong*song = (MidiSong*)song_p;
     load_missing_instruments();
     adjust_amplification();
     sample_count = song->samples;
@@ -1745,13 +1747,15 @@ void Timidity_Start(MidiSong *song)
     midi_playing = 1;
 }
 
-int Timidity_Active(void)
+int Timidity_Active(void *song_p)
 {
+    (void)song_p;
     return(midi_playing);
 }
 
-void Timidity_Stop(void)
+void Timidity_Stop(void *song_p)
 {
+    (void)song_p;
     midi_playing = 0;
 }
 

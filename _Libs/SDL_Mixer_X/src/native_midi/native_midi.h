@@ -24,15 +24,25 @@
 
 #include <SDL2/SDL_rwops.h>
 
+#include "../audio_codec.h"
+
 typedef struct _NativeMidiSong NativeMidiSong;
 
+int NativeMIDI_init2(AudioCodec *codec);
+
 int native_midi_detect();
-NativeMidiSong *native_midi_loadsong_RW(SDL_RWops *src, int freesrc);
-void native_midi_freesong(NativeMidiSong *song);
-void native_midi_start(NativeMidiSong *song, int loops);
-void native_midi_stop();
-int native_midi_active();
-void native_midi_setvolume(int volume);
+
+void *native_midi_loadsong_RW(SDL_RWops *src, int freesrc);
+void native_midi_freesong(void *song);
+void native_midi_setloops(void *song, int loops);
+void native_midi_start(void *song);
+void native_midi_pause(void *song);
+void native_midi_resume(void *song);
+void native_midi_stop(void *song);
+int native_midi_active(void *song);
+int native_midi_paused(void *song);
+void native_midi_setvolume(void *song, int volume);
+
 const char *native_midi_error(void);
 
 #endif /* _NATIVE_MIDI_H_ */

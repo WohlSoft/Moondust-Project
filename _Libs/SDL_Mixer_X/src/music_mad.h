@@ -73,7 +73,7 @@ typedef struct
     struct MyResampler resample;
 } mad_data;
 
-int     MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt);
+extern int MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt);
 
 /*
     Access to those functions is kept because this API is used in
