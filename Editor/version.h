@@ -28,17 +28,29 @@
 #define _BUILD_VER "<empty>"
 #endif
 
-#define _FILE_VERSION "0.3.1.13"
-#define _FILE_RELEASE ""
-
-//Version of this program
-#define _LATEST_STABLE  _FILE_VERSION "-" _BUILD_VER
-
 #define _VF1 0
 #define _VF2 3
 #define _VF3 1
-#define _VF4 12
+#define _VF4 13
+#define _FILE_RELEASE "" //"-alpha","-beta","-dev", or "" aka "release"
 
+#define _VF1_s STR_VALUE(_VF1)
+#define _VF2_s STR_VALUE(_VF2)
+#define _VF3_s STR_VALUE(_VF3)
+#define _VF4_s STR_VALUE(_VF4)
+#if _VF4 == 0
+    #if _VF3 == 0
+        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_2(_VF1_s, _VF2_s)
+    #else
+        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_3(_VF1_s, _VF2_s, _VF3_s)
+    #endif
+#else
+    #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_4(_VF1_s, _VF2_s, _VF3_s, _VF4_s)
+#endif
+
+#define _FILE_VERSION _FILE_VERSION_NUM
+//Version of this program
+#define _LATEST_STABLE  _FILE_VERSION "-" _BUILD_VER
 
 #define _FILE_DESC "Platformer Game Engine - Editor"
 

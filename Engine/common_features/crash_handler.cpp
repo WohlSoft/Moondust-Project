@@ -48,6 +48,7 @@ static const char *g_messageToUser =
     "================================================\n"
     _FILE_DESC " version: " _FILE_VERSION _FILE_RELEASE "\n"
     "GIT Revision code: " GIT_VERSION "\n"
+	"Build date: " _DATE_OF_BUILD "\n"
     "================================================\n"
     " Please send this log file to the developers by one of ways:\n"
     " - Via contact form:          http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin\n"
