@@ -162,7 +162,7 @@ void native_midi_freesong(void *song_p)
 
     /* If this is the currently playing song, stop it now */
     if (song->tuneSequence == gCurrentTuneSequence)
-        native_midi_stop();
+        native_midi_stop(song_p);
 
     /* Finally, free the data storage */
     free(song->tuneSequence);
@@ -199,7 +199,7 @@ void native_midi_start(void *song_p)
     Mix_UnlockAudio();
 
     /* First, stop the currently playing music */
-    native_midi_stop();
+    native_midi_stop(song_p);
 
     /* Set up the queue flags */
     queueFlags = kTuneStartNow;
@@ -296,8 +296,9 @@ int native_midi_active(void *midi)
         return 0;
 }
 
-void native_midi_setvolume(int volume)
+void native_midi_setvolume(void *midi_p, int volume)
 {
+    (void)midi_p;
     if (gTunePlayer == NULL)
         return;
 

@@ -270,7 +270,7 @@ void native_midi_start(void *song_p)
   MMRESULT merr;
   MIDIPROPTIMEDIV mptd;
 
-  native_midi_stop();
+  native_midi_stop(song_p);
   if (!hMidiStream)
   {
     merr=midiStreamOpen(&hMidiStream,&MidiDevice,(DWORD)1,(DWORD_PTR)MidiProc,(DWORD_PTR)0,CALLBACK_FUNCTION);
@@ -333,8 +333,9 @@ int native_midi_active(void *midi)
   return currentsong->MusicPlaying;
 }
 
-void native_midi_setvolume(int volume)
+void native_midi_setvolume(void *midi_p, int volume)
 {
+  (void)midi_p;
   int calcVolume;
   if (volume > 128)
     volume = 128;
