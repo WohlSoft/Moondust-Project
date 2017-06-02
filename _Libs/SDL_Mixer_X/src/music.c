@@ -128,18 +128,6 @@ static int num_decoders = 0;
 char *soundfont_paths = NULL;
 #endif
 
-AudioCodec chooseMidiCodec(const char* extraSettings, int force_codec)
-{
-    /* Force ADLMIDI for file formats which are requires it (IMF, MUS, CMF and GMF) */
-    if(force_codec >= 0)
-        mididevice_current = force_codec;
-    mididevice_current = mididevice_next;
-
-    /* FIXME: parse extra settings and find synthesizer type */
-
-    return available_MIDI[mididevice_next];
-}
-
 int SDLCALLCC Mix_GetNumMusicDecoders(void)
 {
     return(num_decoders);
@@ -499,6 +487,17 @@ readHeader:
 }
 #endif
 
+/*
+    XMI and MUS are can be played on ADLMIDI or OPNMIDI only. Yet.
+ */
+static Mix_MusicType compatible_midi_player()
+{
+    if((mididevice_next != MIDI_ADLMIDI) && (mididevice_next != MIDI_OPNMIDI))
+        return MUS_ADLMIDI;
+    else
+        return MUS_MID;
+}
+
 
 /* MUS_MOD can't be auto-detected. If no other format was detected, MOD is
  * assumed and MUS_MOD will be returned, meaning that the format might not
@@ -553,10 +552,10 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 
     #ifdef USE_ADL_MIDI
     if(strncmp((char *)magic, "MUS\x1A", 4) == 0)
-        return MUS_ADLMIDI;
+        return compatible_midi_player();
     if( (memcmp(extramagic, "FORM", 4) == 0) &&
         (memcmp(extramagic + 8, "XDIR", 4) == 0) )
-        return MUS_ADLMIDI;
+        return compatible_midi_player();
     if(strncmp((char *)magic, "GMF\x1", 4) == 0)
         return MUS_ADLMIDI;
     if(strncmp((char *)magic, "CTMF", 4) == 0)
@@ -759,6 +758,35 @@ void parse_adlmidi_args(char *args)
     }
 }
 
+AudioCodec chooseMidiCodec(char* extraSettings, int force_codec)
+{
+    if((need_reset_midi == 1) || (lock_midi_args == 0))
+    {
+        mididevice_next = 0;
+        #ifdef USE_ADL_MIDI
+        ADLMIDI_setDefaults();
+        #endif
+        #ifdef USE_OPN2_MIDI
+        OPNMIDI_setDefaults();
+        #endif
+        parse_adlmidi_args(extraSettings);
+    }
+
+    /* Force ADLMIDI for file formats which are requires it (IMF, MUS, CMF and GMF) */
+    if(force_codec >= 0)
+        mididevice_current = force_codec;
+    else
+        mididevice_current = mididevice_next;
+
+    if((mididevice_current < 0) || (mididevice_current >= MIDI_KnuwnDevices))
+    {
+        /* On out of range use the default MIDI device */
+        mididevice_current = 0;
+    }
+
+    /* FIXME: parse extra settings and find synthesizer type */
+    return available_MIDI[mididevice_current];
+}
 
 /* Load a music file */
 Mix_Music *SDLCALLCC Mix_LoadMUS(const char *file)
@@ -1027,19 +1055,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
     case MUS_MID:
 
         music->type = MUS_MID;
-        if((need_reset_midi == 1) || (lock_midi_args == 0))
-        {
-            mididevice_next = 0;
-            #ifdef USE_ADL_MIDI
-            ADLMIDI_setDefaults();
-            #endif
-            #ifdef USE_OPN2_MIDI
-            OPNMIDI_setDefaults();
-            #endif
-            parse_adlmidi_args(music_args);
-        }
-
-        music->codec = chooseMidiCodec(music_args, (type == MUS_ADLMIDI) ? MUS_ADLMIDI : -1);
+        music->codec = chooseMidiCodec(music_args, (type == MUS_ADLMIDI) ? MIDI_ADLMIDI : -1);
         if(music->codec.isValid)
         {
             music->music = music->codec.open(src, freesrc);
@@ -1052,45 +1068,47 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
             {
             case MIDI_ADLMIDI:
             #ifdef USE_ADL_MIDI
-            Mix_SetError("ADLMIDI is not ok");
+                Mix_SetError("ADLMIDI is not ok");
             #else
-            Mix_SetError("ADLMIDI support is disabled in this build");
+                Mix_SetError("ADLMIDI support is disabled in this build");
             #endif
             break;
 
             case MIDI_OPNMIDI:
             #ifdef USE_OPN2_MIDI
-            Mix_SetError("OPNMIDI is not ok");
+                Mix_SetError("OPNMIDI is not ok");
             #else
-            Mix_SetError("OPNMIDI support is disabled in this build");
+                Mix_SetError("OPNMIDI support is disabled in this build");
             #endif
             break;
 
             case MIDI_Native:
             #ifdef USE_NATIVE_MIDI
-            Mix_SetError("Native MIDI is not ok: %s", native_midi_error());
+                Mix_SetError("Native MIDI is not ok: %s", native_midi_error());
             #else
-            Mix_SetError("Native MIDI support is disabled in this build");
+                Mix_SetError("Native MIDI support is disabled in this build");
             #endif
             break;
 
             case MIDI_Fluidsynth:
             #ifdef USE_FLUIDSYNTH_MIDI
-            Mix_SetError("FluidSynth is not ok");
+                Mix_SetError("FluidSynth is not ok");
             #else
-            Mix_SetError("FluidSynth support is disabled in this build");
+                Mix_SetError("FluidSynth support is disabled in this build");
             #endif
             break;
 
             case MIDI_Timidity:
             #ifdef USE_TIMIDITY_MIDI
-            Mix_SetError("Timidty is not ok: %s", Timidity_Error());
+                Mix_SetError("Timidty is not ok: %s", Timidity_Error());
             #else
-            Mix_SetError("Timidty support is disabled in this build");
+                Mix_SetError("Timidty support is disabled in this build");
             #endif
             break;
 
-            default: break;
+            default:
+                Mix_SetError("Unknown/Unsupported MIDI device (Index %d)", mididevice_current);
+            break;
             }
         }
         break;
