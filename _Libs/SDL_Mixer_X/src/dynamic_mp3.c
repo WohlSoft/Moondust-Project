@@ -26,7 +26,10 @@
 #include "dynamic_mp3.h"
 
 smpeg_loader smpeg = {
-    0, NULL
+    0,
+    NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL
 };
 
 #ifdef MP3_DYNAMIC

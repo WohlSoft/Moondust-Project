@@ -75,7 +75,8 @@ static const char *GME_metaAlbum(void *music_p);
 static const char *GME_metaCopyright(void *music_p);
 
 /* Jump (seek) to a given position (time is in seconds) */
-static void GME_jump_to_time(void *music_p, double time);
+static void     GME_jump_to_time(void *music_p, double time);
+static double   GME_get_cur_time(void *music_p);
 
 /* Play some of a stream previously started with GME_play() */
 static int GME_playAudio(void *music_p, Uint8 *stream, int len);
@@ -87,6 +88,8 @@ static int GME_playAudio(void *music_p, Uint8 *stream, int len);
 int GME_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
+
+    initAudioCodec(codec);
 
     codec->isValid = 1;
 
@@ -108,7 +111,8 @@ int GME_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
     codec->setVolume        = GME_setvolume;
 
     codec->jumpToTime       = GME_jump_to_time;
-    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+    codec->getCurrentTime   = GME_get_cur_time;
+    codec->getTimeLength    = audioCodec_dummy_cb_tell;
 
     codec->metaTitle        = GME_metaTitle;
     codec->metaArtist       = GME_metaArtist;
@@ -374,6 +378,14 @@ static void GME_jump_to_time(void *music_p, double time)
     struct MUSIC_GME *music = (struct MUSIC_GME*)music_p;
     if(music)
         gme_seek(music->game_emu, (int)round(time * 1000));
+}
+
+static double GME_get_cur_time(void *music_p)
+{
+    struct MUSIC_GME *music = (struct MUSIC_GME*)music_p;
+    if(music)
+        return (double)gme_tell(music->game_emu) / 1000.0;
+    return -1.0;
 }
 
 #endif

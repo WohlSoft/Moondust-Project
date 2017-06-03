@@ -50,6 +50,8 @@ int MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
 {
     global_mixer = *mixerfmt;
 
+    initAudioCodec(codec);
+
     codec->isValid = 1;
 
     codec->capabilities     = audioCodec_default_capabilities;
@@ -70,7 +72,8 @@ int MAD_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
     codec->setVolume        = mad_setVolume;
 
     codec->jumpToTime       = mad_seek;
-    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+    codec->getCurrentTime   = mad_tell;
+    codec->getTimeLength    = mad_total;
 
     codec->metaTitle        = MAD_metaTitle;
     codec->metaArtist       = MAD_metaArtist;
@@ -155,8 +158,64 @@ static void mad_fetchID3Tags(mad_data *mp3_mad)
     }
 }
 
-mad_data *
-mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
+static int read_next_frame(mad_data *mp3_mad);
+
+/*
+    Retreive track length.
+    May take a time since need to fetch entire MP3 file for all it's frames to get full song length
+*/
+static void mad_fetchTrackLength(mad_data *mp3_mad)
+{
+    int frames_read = mp3_mad->frames_read;
+
+    /* Seek to begin, and count all samples from every frame */
+    mp3_mad->frames_read = 0;
+    mad_timer_reset(&mp3_mad->next_frame_start);
+    mp3_mad->status &= ~MS_error_flags;
+    mp3_mad->output_begin = 0;
+    mp3_mad->output_end = 0;
+    SDL_RWseek(mp3_mad->src, mp3_mad->src_begin_pos, RW_SEEK_SET);
+
+    do
+    {
+        signed long spos = 0;
+        if(!read_next_frame(mp3_mad))
+        {
+            if((mp3_mad->status & MS_error_flags) != 0)
+                break;
+        }
+        spos = mad_timer_count(mp3_mad->next_frame_start, (enum mad_units)mp3_mad->frame.header.samplerate);
+        mp3_mad->sample_rate = (int)mp3_mad->frame.header.samplerate;
+        mp3_mad->total_length = (int)(spos);
+    } while(1);
+
+    /* Return back to previous position */
+    mp3_mad->frames_read = 0;
+    mad_timer_reset(&mp3_mad->next_frame_start);
+    mp3_mad->status &= ~MS_error_flags;
+    mp3_mad->output_begin = 0;
+    mp3_mad->output_end = 0;
+    SDL_RWseek(mp3_mad->src, mp3_mad->src_begin_pos, RW_SEEK_SET);
+
+    while(mp3_mad->frames_read < frames_read)
+    {
+        signed long spos = 0;
+        if(!read_next_frame(mp3_mad))
+        {
+            if((mp3_mad->status & MS_error_flags) != 0)
+            {
+                /* Couldn't read a frame; either an error condition or
+                   end-of-file.  Stop. */
+                mp3_mad->status &= ~MS_playing;
+                break;
+            }
+        }
+        spos = mad_timer_count(mp3_mad->next_frame_start, (enum mad_units)mp3_mad->frame.header.samplerate);
+        mp3_mad->sample_position = (int)spos;
+    }
+}
+
+mad_data *mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
 {
     mad_data *mp3_mad;
 
@@ -176,6 +235,9 @@ mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
         mp3_mad->output_begin = 0;
         mp3_mad->output_end = 0;
         mp3_mad->mixer = *mixer;
+        mp3_mad->total_length = 0;
+        mp3_mad->sample_rate = 0;
+        mp3_mad->sample_position = 0;
         mp3_mad->len_available = 0;
         mp3_mad->snd_available = NULL;
         mp3_mad->mus_title = NULL;
@@ -184,6 +246,7 @@ mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
         mp3_mad->mus_copyright = NULL;
         MyResample_zero(&mp3_mad->resample);
         mad_fetchID3Tags(mp3_mad);
+        mad_fetchTrackLength(mp3_mad);
     }
     return mp3_mad;
 }
@@ -354,6 +417,8 @@ decode_frame(mad_data *mp3_mad)
     if((mp3_mad->status & MS_cvt_decoded) == 0)
     {
         mp3_mad->status |= MS_cvt_decoded;
+        mp3_mad->sample_rate = (int)mp3_mad->frame.header.samplerate;
+        mp3_mad->sample_position = 0;
         /* The first frame determines some key properties of the stream.
         In particular, it tells us enough to set up the convert
         structure now. */
@@ -376,6 +441,8 @@ decode_frame(mad_data *mp3_mad)
     right_ch  = pcm->samples[1];
 
     nsamples  = pcm->length;
+    /* Increase samples counter */
+    mp3_mad->sample_position += nsamples;
 
     while(nsamples--)
     {
@@ -556,6 +623,8 @@ void mad_seek(void *mp3_mad_p, double position)
     mad_timer_set(&target, (unsigned long)int_part,
                   (unsigned long)((position - int_part) * 1000000), 1000000);
 
+    mp3_mad->sample_position = (int)(position * mp3_mad->sample_rate);
+
     if(mad_timer_compare(mp3_mad->next_frame_start, target) > 0)
     {
         /* In order to seek backwards in a VBR file, we have to rewind and
@@ -595,12 +664,24 @@ void mad_seek(void *mp3_mad_p, double position)
        the appropriate number of samples out of it. */
 }
 
-void
-mad_setVolume(void *mp3_mad_p, int volume)
+double mad_tell(void *mp3_mad_p)
+{
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
+    return (double)mp3_mad->sample_position / (double)mp3_mad->sample_rate;
+}
+
+double mad_total(void *mp3_mad_p)
+{
+    mad_data *mp3_mad = (mad_data *)mp3_mad_p;
+    if(mp3_mad->total_length == 0)
+        mad_fetchTrackLength(mp3_mad);
+    return (double)mp3_mad->total_length / (double)mp3_mad->sample_rate;
+}
+
+void mad_setVolume(void *mp3_mad_p, int volume)
 {
     mad_data *mp3_mad = (mad_data *)mp3_mad_p;
     mp3_mad->volume = volume;
 }
-
 
 #endif  /* MP3_MAD_MUSIC */

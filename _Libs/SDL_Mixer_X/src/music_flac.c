@@ -48,6 +48,7 @@ typedef struct {
     unsigned channels;
     unsigned bits_per_sample;
     FLAC__uint64 total_samples;
+    FLAC__uint64 sample_position;
 
     /* the following are used to handle the callback nature of the writer */
     int max_to_read;
@@ -108,6 +109,7 @@ static const char *FLAC_metaCopyright(void *music_p);
 /* Jump (seek) to a given position (time is in seconds) */
 static void     FLAC_jump_to_time(void *music_p, double time);
 static double   FLAC_get_time(void *music_p);
+static double   FLAC_get_time_length(void *music_p);
 
 /* Play some of a stream previously started with FLAC_play() */
 static int      FLAC_playAudio(void *music_p, Uint8 *snd, int len);
@@ -119,6 +121,8 @@ static int      FLAC_playAudio(void *music_p, Uint8 *snd, int len);
 int FLAC_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
+
+    initAudioCodec(codec);
 
     codec->isValid = 1;
 
@@ -141,6 +145,7 @@ int FLAC_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 
     codec->jumpToTime       = FLAC_jump_to_time;
     codec->getCurrentTime   = FLAC_get_time;
+    codec->getTimeLength    = FLAC_get_time_length;
 
     codec->metaTitle        = FLAC_metaTitle;
     codec->metaArtist       = FLAC_metaArtist;
@@ -238,7 +243,8 @@ static FLAC__StreamDecoderLengthStatus flac_length_music_cb(
     FLAC_music *data = (FLAC_music *)client_data;
 
     Sint64 pos = SDL_RWtell(data->src);
-    Sint64 length = SDL_RWseek(data->src, 0, RW_SEEK_END);
+    SDL_RWseek(data->src, 0, RW_SEEK_END);
+    Sint64 length = SDL_RWtell(data->src);
     (void)decoder;
 
     if(SDL_RWseek(data->src, pos, RW_SEEK_SET) != pos || length < 0)
@@ -399,10 +405,8 @@ static void flac_metadata_music_cb(
     {
         data->flac_data.sample_rate = metadata->data.stream_info.sample_rate;
         data->flac_data.channels = metadata->data.stream_info.channels;
-        data->flac_data.total_samples =
-            metadata->data.stream_info.total_samples;
-        data->flac_data.bits_per_sample =
-            metadata->data.stream_info.bits_per_sample;
+        data->flac_data.total_samples = metadata->data.stream_info.total_samples;
+        data->flac_data.bits_per_sample = metadata->data.stream_info.bits_per_sample;
         data->flac_data.sample_size = data->flac_data.channels *
                                       ((data->flac_data.bits_per_sample) / 8);
     }
@@ -682,6 +686,10 @@ static void FLAC_getsome(FLAC_music *music)
             music->playing = 0;
         return;
     }
+
+    /* Increase sample position */
+    music->flac_data.sample_position += ((FLAC__uint64)music->flac_data.data_read / music->flac_data.sample_size);
+
     cvt = &music->cvt;
     if(music->section < 0)
     {
@@ -854,6 +862,8 @@ static void FLAC_jump_to_time(void *music_p, double time)
 
                 SDL_SetError
                 ("Seeking of FLAC stream failed: libFLAC seek failed.");
+            } else {
+                music->flac_data.sample_position = (FLAC__uint64)seek_sample;
             }
         }
         else
@@ -866,27 +876,28 @@ static void FLAC_jump_to_time(void *music_p, double time)
         SDL_SetError("Seeking of FLAC stream failed: music was NULL.");
 }
 
-double FLAC_get_time(void *music_p)
+static double FLAC_get_time(void *music_p)
+{
+    FLAC_music *music = (FLAC_music *)music_p;
+    if(music)
+        return (double)music->flac_data.sample_position / (double)(music->flac_data.sample_rate);
+    else
+        SDL_SetError("Getting position of FLAC stream failed: music was NULL.");
+    return -1.0;
+}
+
+static double   FLAC_get_time_length(void *music_p)
 {
     FLAC_music *music = (FLAC_music *)music_p;
     if(music)
     {
         if(music->flac_decoder)
         {
-            FLAC__uint64 abs_pos = 0;
-            if(!FLAC__stream_decoder_get_decode_position(music->flac_decoder, &abs_pos))
-                SDL_SetError("Getting position of FLAC stream failed: libFLAC tell failed.");
-            return (double)abs_pos / (double)music->flac_data.sample_rate;
-        }
-        else
-        {
-            SDL_SetError("Getting position of FLAC stream failed: FLAC decoder was NULL.");
+            FLAC__uint64 len = FLAC__stream_decoder_get_total_samples(music->flac_decoder);
+            return (double)len / (double)(music->flac_data.sample_rate);
         }
     }
-    else
-        SDL_SetError("Getting position of FLAC stream failed: music was NULL.");
-
-    return 0.0;
+    return -1.0;
 }
 
 #endif /* FLAC_MUSIC */

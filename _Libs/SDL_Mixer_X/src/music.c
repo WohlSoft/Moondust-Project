@@ -289,7 +289,7 @@ int open_music(SDL_AudioSpec *mixer)
     #endif
 
     #ifdef GME_MUSIC
-    GME_init2(&available_codecs[MUS_SPC], mixer);
+    GME_init2(&available_codecs[MUS_GME], mixer);
     add_music_decoder("GAMEEMU");
     #endif
 
@@ -568,29 +568,29 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
 
     /* GME Specific files */
     if(strncmp((char *)magic, "ZXAY", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "GBS\x01", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "GYMX", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "HESM", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "KSCC", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "KSSX", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "NESM", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "NSFE", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "SAP\x0D", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "SNES", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "Vgm ", 4) == 0)
-        return MUS_SPC;
+        return MUS_GME;
     if(strncmp((char *)magic, "\x1f\x8b", 2) == 0)
-        return MUS_SPC;
+        return MUS_GME;
 
     /* Detect some module files */
     if(strncmp((char *)extramagic, "Extended Module", 15) == 0)
@@ -1115,12 +1115,12 @@ Mix_Music *SDLCALLCC Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int 
         #endif /* MID_MUSIC */
 
         #ifdef GME_MUSIC
-    case MUS_SPC:
+    case MUS_GME:
         if(music->error)
         {
             SDL_RWseek(src, start, RW_SEEK_SET);
-            music->type = MUS_SPC;
-            music->codec = available_codecs[MUS_SPC];
+            music->type = MUS_GME;
+            music->codec = available_codecs[MUS_GME];
             music->music = music->codec.openEx(src, freesrc, music_args);
             if(music->music)
                 music->error = 0;
@@ -1405,7 +1405,7 @@ int SDLCALLCC Mix_SetMusicPosition(double position)
     {
         retval = music_internal_position(position);
         if(retval < 0)
-            Mix_SetError("Position not implemented for music type");
+            Mix_SetError("Position not implemented for this music type");
     }
     else
     {
@@ -1414,6 +1414,162 @@ int SDLCALLCC Mix_SetMusicPosition(double position)
     }
     Mix_UnlockAudio();
 
+    return(retval);
+}
+
+/* Get the current position of music*/
+double music_internal_position_get(Mix_Music *music)
+{
+    double retval = 0;
+    if(music->codec.isValid && music->music)
+    {
+        retval = music->codec.getCurrentTime(music->music);
+    } else {
+        retval = -1.0;
+    }
+
+    return(retval);
+}
+double SDLCALLCC Mix_GetMusicPosition(Mix_Music *music)
+{
+    double retval;
+
+    Mix_LockAudio();
+    if(music)
+    {
+        retval = music_internal_position_get(music);
+    }
+    else
+    {
+        Mix_SetError("Music is NULL");
+        retval = -1.0;
+    }
+    Mix_UnlockAudio();
+
+    return(retval);
+}
+
+/* Get total playing music position */
+double music_internal_position_total(Mix_Music *music)
+{
+    double retval = 0;
+    if(music->codec.isValid && music->music)
+    {
+        retval = music->codec.getTimeLength(music->music);
+    } else {
+        retval = -1.0;
+    }
+
+    return(retval);
+}
+double SDLCALLCC Mix_GetMusicTotalTime(Mix_Music *music)
+{
+    double retval;
+
+    Mix_LockAudio();
+    if(music)
+    {
+        retval = music_internal_position_total(music);
+    }
+    else
+    {
+        Mix_SetError("Music is NULL");
+        retval = -1.0;
+    }
+    Mix_UnlockAudio();
+    return(retval);
+}
+
+/* Get Loopt start position */
+double music_internal_loop_start(Mix_Music *music)
+{
+    double retval = 0;
+    if(music->codec.isValid && music->music)
+    {
+        retval = music->codec.getLoopStartTime(music->music);
+    } else {
+        retval = -1.0;
+    }
+
+    return(retval);
+}
+double SDLCALLCC Mix_GetMusicLoopStartTime(Mix_Music *music)
+{
+    double retval;
+
+    Mix_LockAudio();
+    if(music)
+    {
+        retval = music_internal_loop_start(music);
+    }
+    else
+    {
+        Mix_SetError("Music is NULL");
+        retval = -1.0;
+    }
+    Mix_UnlockAudio();
+    return(retval);
+}
+
+/* Get Loopt start position */
+double music_internal_loop_end(Mix_Music *music)
+{
+    double retval = 0;
+    if(music->codec.isValid && music->music)
+    {
+        retval = music->codec.getLoopEndTime(music->music);
+    } else {
+        retval = -1.0;
+    }
+
+    return(retval);
+}
+double SDLCALLCC Mix_GetMusicLoopEndTime(Mix_Music *music)
+{
+    double retval;
+
+    Mix_LockAudio();
+    if(music)
+    {
+        retval = music_internal_loop_end(music);
+    }
+    else
+    {
+        Mix_SetError("Music is NULL");
+        retval = -1.0;
+    }
+    Mix_UnlockAudio();
+    return(retval);
+}
+
+/* Get Loopt start position */
+double music_internal_loop_length(Mix_Music *music)
+{
+    double retval = 0;
+    if(music->codec.isValid && music->music)
+    {
+        retval = music->codec.getLoopLengthTime(music->music);
+    } else {
+        retval = -1.0;
+    }
+
+    return(retval);
+}
+double SDLCALLCC Mix_GetMusicLoopLengthTime(Mix_Music *music)
+{
+    double retval;
+
+    Mix_LockAudio();
+    if(music)
+    {
+        retval = music_internal_loop_length(music);
+    }
+    else
+    {
+        Mix_SetError("Music is NULL");
+        retval = -1.0;
+    }
+    Mix_UnlockAudio();
     return(retval);
 }
 

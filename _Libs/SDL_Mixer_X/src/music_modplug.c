@@ -37,6 +37,7 @@
 typedef struct {
     ModPlugFile *file;
     int playing;
+    Uint64 sample_counter;
     char *mus_title;
 } modplug_data;
 
@@ -66,6 +67,7 @@ static const char *modplug_metaTitle(void *music_p);
 /* Jump (seek) to a given position (time is in seconds) */
 static void modplug_jump_to_time(void *music_p, double time);
 static double modplug_get_current_time(void *music_p);
+static double modplug_get_total_time(void *music_p);
 
 /* Play some of a stream previously started with modplug_play() */
 static int modplug_playAudio(void *music_p, Uint8 *stream, int len);
@@ -134,6 +136,8 @@ int modplug_init2(AudioCodec *codec, SDL_AudioSpec *spec)
     settings.mLoopCount = -1;
     modplug.ModPlug_SetSettings(&settings);
 
+    initAudioCodec(codec);
+
     codec->isValid = 1;
 
     codec->capabilities     = modpug_Codec_capabilities;
@@ -155,6 +159,7 @@ int modplug_init2(AudioCodec *codec, SDL_AudioSpec *spec)
 
     codec->jumpToTime       = modplug_jump_to_time;
     codec->getCurrentTime   = modplug_get_current_time;
+    codec->getTimeLength    = modplug_get_total_time;
 
     codec->metaTitle        = modplug_metaTitle;
     codec->metaArtist       = audioCodec_dummy_meta_tag;
@@ -198,6 +203,7 @@ static void *modplug_new_RW(SDL_RWops *src, int freesrc)
             if(music)
             {
                 music->playing = 0;
+                music->sample_counter = 0;
                 music->mus_title = NULL;
                 music->file = modplug.ModPlug_Load(buf, sz);
                 if(!music->file)
@@ -206,7 +212,7 @@ static void *modplug_new_RW(SDL_RWops *src, int freesrc)
                     music = NULL;
                 }
                 else
-                    music->mus_title = (char *)ModPlug_GetName(music->file);
+                    music->mus_title = (char *)modplug.ModPlug_GetName(music->file);
             }
             else
                 SDL_OutOfMemory();
@@ -359,14 +365,20 @@ static const char *modplug_metaTitle(void *music_p)
 static void modplug_jump_to_time(void *music_p, double time)
 {
     modplug_data *music = (modplug_data *)music_p;
+    music->sample_counter = (Uint64)(time * (double)settings.mFrequency * (double)current_output_channels * (settings.mBits / 8));
     modplug.ModPlug_Seek(music->file, (int)(time * 1000));
 }
 
 static double modplug_get_current_time(void *music_p)
 {
     modplug_data *music = (modplug_data *)music_p;
-    return 0.0;
+    return (double)ModPlug_Tell(music->file) / 1000.0;
 }
+
+static double modplug_get_total_time(void *music_p)
+{
+    modplug_data *music = (modplug_data *)music_p;
+    return (double)ModPlug_GetLength(music->file) / 1000.0;
+}
+
 #endif /* MODPLUG_MUSIC */
-
-
