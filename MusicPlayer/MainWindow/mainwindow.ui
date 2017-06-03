@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>612</width>
-    <height>751</height>
+    <width>580</width>
+    <height>842</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -75,6 +75,9 @@ QLabel
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
     <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="label">
       <property name="font">
@@ -139,14 +142,14 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
      </widget>
     </item>
-    <item row="8" column="0" colspan="2">
+    <item row="9" column="0" colspan="2">
      <widget class="QCheckBox" name="recordWav">
       <property name="text">
        <string>Record WAV</string>
       </property>
      </widget>
     </item>
-    <item row="9" column="0" rowspan="2" colspan="2">
+    <item row="10" column="0" rowspan="2" colspan="2">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -155,6 +158,9 @@ border-bottom-color: rgb(0, 120, 0);
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
        <item row="3" column="0" colspan="2">
         <widget class="QGroupBox" name="adlmidi_xtra">
          <property name="title">
@@ -515,7 +521,7 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
      </widget>
     </item>
-    <item row="7" column="0" colspan="2">
+    <item row="8" column="0" colspan="2">
      <widget class="QFrame" name="frame_2">
       <property name="minimumSize">
        <size>
@@ -530,6 +536,9 @@ border-bottom-color: rgb(0, 120, 0);
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
        <item>
         <widget class="QPushButton" name="open">
          <property name="minimumSize">
@@ -553,12 +562,16 @@ border-bottom-color: rgb(0, 120, 0);
         <widget class="QPushButton" name="play">
          <property name="minimumSize">
           <size>
-           <width>45</width>
+           <width>24</width>
            <height>0</height>
           </size>
          </property>
-         <property name="text">
+         <property name="toolTip">
           <string>Play</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../_resources/musicplayer.qrc">
+           <normaloff>:/buttons/play.png</normaloff>:/buttons/play.png</iconset>
          </property>
          <property name="shortcut">
           <string>Space</string>
@@ -572,12 +585,16 @@ border-bottom-color: rgb(0, 120, 0);
         <widget class="QPushButton" name="stop">
          <property name="minimumSize">
           <size>
-           <width>45</width>
+           <width>24</width>
            <height>0</height>
           </size>
          </property>
-         <property name="text">
+         <property name="toolTip">
           <string>Stop</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../_resources/musicplayer.qrc">
+           <normaloff>:/buttons/stop.png</normaloff>:/buttons/stop.png</iconset>
          </property>
          <property name="shortcut">
           <string>.</string>
@@ -620,24 +637,48 @@ border-bottom-color: rgb(0, 120, 0);
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QLabel" name="isLooping">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../_resources/musicplayer.qrc">:/loop_in_use.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="playingTimeLabel">
+         <property name="text">
+          <string>--:--:--</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="playingTimeLenghtLabel">
+         <property name="text">
+          <string>/ --:--:--</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
-    <item row="10" column="2">
+    <item row="11" column="2">
      <widget class="QPushButton" name="playListPush">
       <property name="text">
        <string>Insert</string>
       </property>
      </widget>
     </item>
-    <item row="10" column="3">
+    <item row="11" column="3">
      <widget class="QPushButton" name="playListPop">
       <property name="text">
        <string>Remove</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="2" rowspan="10" colspan="2">
+    <item row="0" column="2" rowspan="11" colspan="2">
      <widget class="QListView" name="playList">
       <property name="styleSheet">
        <string notr="true">border-color: rgb(115, 210, 22);
@@ -645,6 +686,31 @@ border-width: 2px;
 background-color: rgb(85, 87, 83);
 border-radius: 5px;
 padding: 2px;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QSlider" name="musicPosition">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(211, 215, 207);</string>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="invertedControls">
+       <bool>false</bool>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksAbove</enum>
       </property>
      </widget>
     </item>

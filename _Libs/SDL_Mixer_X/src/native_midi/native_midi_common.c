@@ -49,6 +49,8 @@ static Uint32 native_midi_caps()
 
 int NativeMIDI_init2(AudioCodec *codec)
 {
+    initAudioCodec(codec);
+
     codec->isValid          = native_midi_detect();
 
     codec->capabilities     = native_midi_caps;
@@ -70,6 +72,7 @@ int NativeMIDI_init2(AudioCodec *codec)
 
     codec->jumpToTime       = audioCodec_dummy_cb_seek;
     codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+    codec->getTimeLength    = audioCodec_dummy_cb_tell;
 
     codec->metaTitle        = audioCodec_dummy_meta_tag;
     codec->metaArtist       = audioCodec_dummy_meta_tag;

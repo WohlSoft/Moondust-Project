@@ -40,7 +40,7 @@ namespace PGE_MusicPlayer
                    type == MUS_MP3 ? "MP3 (SMPEG)" :
                    type == MUS_MP3_MAD ? "MP3 (LibMAD)" :
                    type == MUS_FLAC ? "FLAC" :
-                   type == MUS_SPC ? "Game Music Emulator" : "<Unknown>");
+                   type == MUS_GME ? "Game Music Emulator" : "<Unknown>");
     }
     QString musicType()
     {

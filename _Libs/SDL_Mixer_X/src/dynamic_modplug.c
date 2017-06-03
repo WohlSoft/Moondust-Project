@@ -26,7 +26,7 @@
 #include "dynamic_modplug.h"
 
 modplug_loader modplug = {
-    0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+    0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 };
 
 #ifdef MODPLUG_DYNAMIC
@@ -65,6 +65,10 @@ int Mix_InitModPlug()
         modplug.ModPlug_SetMasterVolume =
             (void (*)(ModPlugFile* file,unsigned int cvol))
             SDL_LoadFunction(modplug.handle, "ModPlug_SetMasterVolume");
+
+        modplug.ModPlug_GetName =
+            (const char* (*)(ModPlugFile* file))
+            SDL_LoadFunction(modplug.handle, "ModPlug_GetName");
     }
     ++modplug.loaded;
 
@@ -102,6 +106,7 @@ int Mix_InitModPlug()
         modplug.ModPlug_GetSettings = ModPlug_GetSettings;
         modplug.ModPlug_SetSettings = ModPlug_SetSettings;
         modplug.ModPlug_SetMasterVolume = ModPlug_SetMasterVolume;
+        modplug.ModPlug_GetName = ModPlug_GetName;
     }
     ++modplug.loaded;
 

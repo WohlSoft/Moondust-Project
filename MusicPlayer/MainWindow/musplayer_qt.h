@@ -72,11 +72,16 @@ private slots:
     void on_sfx_stop_clicked();
     void on_sfx_fadeout_clicked();
 
+    void updatePositionSlider();
+    void on_musicPosition_valueChanged(int value);
+
 private:
     bool playListMode = false;
     PlayListModel playList;
     //! Controlls blinking of the wav-recording label
     QTimer m_blinker;
+    QTimer m_positionWatcher;
+    bool   m_positionWatcherLock = false;
     //! UI form class pointer
     Ui::MainWindow *ui;
 

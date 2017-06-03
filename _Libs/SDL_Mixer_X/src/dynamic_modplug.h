@@ -38,6 +38,7 @@ typedef struct {
     void (*ModPlug_GetSettings)(ModPlug_Settings* settings);
     void (*ModPlug_SetSettings)(const ModPlug_Settings* settings);
     void (*ModPlug_SetMasterVolume)(ModPlugFile* file,unsigned int cvol) ;
+    const char* (*ModPlug_GetName)(ModPlugFile* file);
 } modplug_loader;
 
 extern modplug_loader modplug;

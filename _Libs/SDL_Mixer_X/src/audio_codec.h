@@ -91,6 +91,11 @@ typedef struct _AudioCodec
 
     double (*getCurrentTime)(AudioCodecStream* music);
     void  (*jumpToTime)(AudioCodecStream* music, double position);
+    double (*getTimeLength)(AudioCodecStream* music);
+
+    double (*getLoopStartTime)(AudioCodecStream* music);
+    double (*getLoopEndTime)(AudioCodecStream* music);
+    double (*getLoopLengthTime)(AudioCodecStream* music);
 
     const char* (*metaTitle)(AudioCodecStream* music);
     const char* (*metaArtist)(AudioCodecStream* music);
@@ -100,6 +105,11 @@ typedef struct _AudioCodec
     int   (*playAudio)(AudioCodecStream* music, Uint8* data, int length);
 
 } AudioCodec;
+
+/*
+    Set all function pointers to dummy calls
+ */
+void initAudioCodec(AudioCodec *codec);
 
 #endif /* AUDIO_CODEC_H*/
 

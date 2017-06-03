@@ -58,6 +58,9 @@ typedef struct
     int volume;
     int status;
     int output_begin, output_end;
+    int total_length;
+    int sample_rate;
+    int sample_position;
     SDL_AudioSpec mixer;
     SDL_AudioCVT cvt;
     int   len_available;
@@ -92,6 +95,8 @@ int     mad_isPlaying(void *mp3_mad_p);
 
 int     mad_getSamples(void *mp3_mad_p, Uint8 *stream, int len);
 void    mad_seek(void *mp3_mad_p, double position);
+double  mad_tell(void *mp3_mad_p);
+double  mad_total(void *mp3_mad_p);
 void    mad_setVolume(void *mp3_mad_p, int volume);
 
 #endif

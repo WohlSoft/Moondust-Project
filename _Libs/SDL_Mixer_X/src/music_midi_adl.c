@@ -232,6 +232,8 @@ int ADLMIDI_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
 
+    initAudioCodec(codec);
+
     codec->isValid = 1;
 
     codec->capabilities     = audioCodec_default_capabilities;
@@ -253,6 +255,7 @@ int ADLMIDI_init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 
     codec->jumpToTime       = ADLMIDI_jump_to_time;
     codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+    codec->getTimeLength    = audioCodec_dummy_cb_tell;
 
     codec->metaTitle        = audioCodec_dummy_meta_tag;
     codec->metaArtist       = audioCodec_dummy_meta_tag;

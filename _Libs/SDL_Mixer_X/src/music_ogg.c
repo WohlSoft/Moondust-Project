@@ -67,6 +67,7 @@ typedef struct {
     ogg_int64_t loop_end;
     ogg_int64_t loop_len;
     ogg_int64_t loop_len_ch;
+    long samplerate;
     /* Loop points stuff [by Wohlstand] */
     char *mus_title;
     char *mus_artist;
@@ -106,6 +107,11 @@ static const char *OGG_metaCopyright(void *music_p);
 /* Jump (seek) to a given position (time is in seconds) */
 static void     OGG_jump_to_time(void *music_p, double time);
 static double   OGG_get_time(void *music_p);
+static double   OGG_get_length(void *music_p);
+
+static double   OGG_get_loop_start(void *music_p);
+static double   OGG_get_loop_end(void *music_p);
+static double   OGG_get_loop_length(void *music_p);
 
 static int      OGG_playAudio(void *music_p, Uint8 *snd, int len);
 
@@ -123,6 +129,8 @@ int OGG_init(SDL_AudioSpec *mixerfmt)
 int OGG_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
+
+    initAudioCodec(codec);
 
     codec->isValid = 1;
 
@@ -145,6 +153,11 @@ int OGG_init2(AudioCodec* codec, SDL_AudioSpec *mixerfmt)
 
     codec->jumpToTime       = OGG_jump_to_time;
     codec->getCurrentTime   = OGG_get_time;
+    codec->getTimeLength    = OGG_get_length;
+
+    codec->getLoopStartTime = OGG_get_loop_start;
+    codec->getLoopEndTime   = OGG_get_loop_end;
+    codec->getLoopLengthTime= OGG_get_loop_length;
 
     codec->metaTitle        = OGG_metaTitle;
     codec->metaArtist       = OGG_metaArtist;
@@ -242,6 +255,7 @@ static void *OGG_new_RW(SDL_RWops *src, int freesrc)
 
         vi = vorbis.ov_info(&music->vf, -1);
         music->channels = vi->channels;
+        music->samplerate = vi->rate;
 
         /* Parse comments and extract title and loop points */
         ptr = ov_comment(&music->vf, -1);
@@ -571,12 +585,50 @@ double OGG_get_time(void *music_p)
 {
     OGG_music *music = (OGG_music *)music_p;
     #ifdef OGG_USE_TREMOR
-    return (double)(ov_time_tell(&music->vf) / 1000);
+    return (double)(ov_time_tell(&music->vf)) / 1000.0;
     #else
     return ov_time_tell(&music->vf);
     #endif
 }
 
+static double   OGG_get_length(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    #ifdef OGG_USE_TREMOR
+    return (double)(ov_time_total(&music->vf, -1)) / 1000.0;
+    #else
+    return ov_time_total(&music->vf, -1);
+    #endif
+}
+
+static double   OGG_get_loop_start(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    if(music && music->loop)
+    {
+        return (double)music->loop_start / (double)music->samplerate;
+    }
+    return -1.0;
+}
+
+static double   OGG_get_loop_end(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    if(music && music->loop)
+    {
+        return (double)music->loop_end / (double)music->samplerate;
+    }
+    return -1.0;
+}
+
+static double   OGG_get_loop_length(void *music_p)
+{
+    OGG_music *music = (OGG_music *)music_p;
+    if(music && music->loop)
+    {
+        return (double)music->loop_len / (double)music->samplerate;
+    }
+    return -1.0;
+}
+
 #endif /* OGG_MUSIC */
-
-

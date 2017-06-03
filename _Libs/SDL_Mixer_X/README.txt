@@ -21,19 +21,24 @@ https://bitbucket.org/Wohlstand/pge-project
 =============================================================================
 Difference between original and this library:
 -----------------------------------------------------------------------------
-+ Added new codecs: 
-  - Game Music Emulators (LGPL v2.1) which adds support of chip tunes 
++ Added new codecs:
+  - Game Music Emulators (LGPL v2.1) which adds support of chip tunes
         like NSF, VGM, SPC, HES, etc.
-  - libADLMIDI (GPL v3, LGPL v3) (remake from ADLMIDI) to play MIDI with 
-        emulated OPL synthesiser, also supports loop points
+  - libADLMIDI (GPL v3, LGPL v3) (remake from ADLMIDI) to play MIDI with
+        emulated OPL3 synthesiser, also supports loop points
+        "loopStart" and "loopEnd"
+  - libOPNMIDI (GPL v3, LGPL v3) to play MIDI with
+        emulated OPN2 synthesiser, also supports loop points
         "loopStart" and "loopEnd"
 + Added some new functions
 + Added support of loop points for OGG files (via "LOOPSTART" and "LOOPEND"
   (or "LOOPLENGTH" to be compatible with RPG Maker) vorbis comments)
++ Reorganized music codecs processing system
++ Added support to get current position and track lenght for a seekable codecs
 
 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 IMPORTANT: To choice a track number of NSF, GBM, HES, etc file,
-           you must append "|xxx" to end of file path for 
+           you must append "|xxx" to end of file path for
            Mix_LoadMUS function.
            Where xxx - actual number of chip track, (from 0 to N-1)
            Examples: "file.nsf|12", "file.hes|2"
@@ -57,112 +62,154 @@ available parameters:
         m - (0 or 1) enable scalable modulation on ADLMIDI
         a - (0 or 1) enable AdLib mode of percussion on ADLMIDI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=============================================================================
+Added music codecs:
+-----------------------------------------------------------------------------
+General:
+- MUS_GME - Game Music Emulatirs
+
+MIDI Playing:
+- ADLMIDI - A software synthesizer is based on Yamaha OPL3 (YMF262) chip emulator
+- OPNMIDI - A software synthesizer is based on Yamaha OPL3 (YM2612) chip emulator
 
 =============================================================================
 Added functions:
 -----------------------------------------------------------------------------
+/*
+    Allows you to set up custom path for Timidify patches
+*/
 void MIX_Timidity_addToPathList(const char *path);
 
-  //Allows you to set up custom path for Timidify patches
-
-
+/*
+    Get music title from meta-tag if possible. If title tag is empty, filename will be returned
+*/
 const char* Mix_GetMusicTitle(const Mix_Music *music);
 
-  //Get music title from meta-tag if possible. If title tag is empty, filename will be returned
-
-
+/*
+    Get music title from meta-tag if possible
+*/
 const char* Mix_GetMusicTitleTag(const Mix_Music *music);
 
-  //Get music title from meta-tag if possible
-
+/*
+    Get music artist from meta-tag if possible
+*/
 const char* Mix_GetMusicArtistTag(const Mix_Music *music);
 
-  //Get music artist from meta-tag if possible
-
-
+/*
+    Get music album from meta-tag if possible
+*/
 const char* Mix_GetMusicAlbumTag(const Mix_Music *music);
 
-  //Get music album from meta-tag if possible
-
-
+/*
+    Get music copyright from meta-tag if possible
+*/
 const char* Mix_GetMusicCopyrightTag(const Mix_Music *music);
 
-  //Get music copyright from meta-tag if possible
-
-
+/*
+    Load music from memory with passing of extra arguments
+*/
 Mix_Music * SDLCALLCC Mix_LoadMUS_RW_ARG(SDL_RWops *src, int freesrc, char *args)
 
-    //Load music from memory with passing arguments
-
-
+/*
+    Load music from memory with passing NSF/HES/etc. track number (accepts integer unlike SDLCALLCC Mix_LoadMUS_RW_ARG)
+*/
 Mix_Music * SDLCALLCC Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesrc, int trackID)
 
-    //Load music from memory with passing NSF/HES/etc. track number (accepts integer unlike SDLCALLCC Mix_LoadMUS_RW_ARG)
-
-
-typedef enum {
+typedef enum
+{
     MIDI_ADLMIDI,
     MIDI_Native,
     MIDI_Timidity,
-    MIDI_Fluidsynth
+    MIDI_OPNMIDI,
+    MIDI_Fluidsynth,
+    MIDI_KnuwnDevices   /* Count of MIDI device types */
 } Mix_MIDI_Device;
 
+/*
+  Allows you to toggle MIDI Devices!
+   (change will be applied on re-opening of MIDI file)
+   Attempt to toggle unsupported MIDI device takes no effect
+   (for case when library built without linking of required library)
+*/
 int MIX_SetMidiDevice(int device);
 
-  //Allows you to toggle MIDI Devices!
-  // (change will be applied on re-opening of MIDI file)
-  // Attempt to toggle unsupported MIDI device takes no effect
-  // (for case when library built without linking of required library)
-
+/*
+    Returns current ADLMIDI bank number
+*/
 int  MIX_ADLMIDI_getBankID();
 
-  //Returns current ADLMIDI bank number
-
-
+/*
+    Changes ADLMIDI bank number (changes applying on MIDI file reopen)
+*/
 void MIX_ADLMIDI_setBankID(int bnk);
 
-  //Changes ADLMIDI bank number (changes applying on MIDI file reopen)
-
-
+/*
+    Returns current state of ADLMIDI deep tremolo flag
+*/
 int  MIX_ADLMIDI_getTremolo();
 
-  //Returns current state of ADLMIDI deep tremolo flag
-
-
+/*
+    Changes ADLMIDI deep tremolo flag (changes applying on MIDI file reopen)
+*/
 void MIX_ADLMIDI_setTremolo(int tr);
 
-  //Changes ADLMIDI deep tremolo flag (changes applying on MIDI file reopen)
-
-
+/*
+    Returns current state of ADLMIDI deep vibrato flag
+*/
 int  MIX_ADLMIDI_getVibrato();
 
-  //Returns current state of ADLMIDI deep vibrato flag
-
-
+/*
+    Changes ADLMIDI deep vibrato flag (changes applying on MIDI file reopen)
+*/
 void MIX_ADLMIDI_setVibrato(int vib);
 
-  //Changes ADLMIDI deep vibrato flag (changes applying on MIDI file reopen)
-
+/*
+    Returns current state of ADLMIDI deep scaling modulation flag
+*/
 int  MIX_ADLMIDI_getScaleMod();
 
-  //Returns current state of ADLMIDI deep scaling modulation flag
-
-
+/*
+    Changes ADLMIDI scaling modulation flag (changes applying on MIDI file reopen)
+*/
 void MIX_ADLMIDI_setScaleMod(int sc);
 
-  //Changes ADLMIDI scaling modulation flag (changes applying on MIDI file reopen)
-
-
+/*
+    Resets ADLMIDI flags and settings to default state
+*/
 void MIX_ADLMIDI_setSetDefaults();
 
-  //Resets ADLMIDI flags and settings to default state
+/*
+    Get the time current position of music stream
+    returns -1.0 if this feature is not supported for some codec
+*/
+double Mix_GetMusicPosition(Mix_Music *music);
+/*
+    Get the total time length of music stream
+    returns -1.0 if this feature is not supported for some codec
+ */
+double Mix_GetMusicTotalTime(Mix_Music *music);
 
+/*
+   Get the loop start time position of music stream
+   returns -1.0 if this feature is not used for this music or not supported for some codec
+*/
+double Mix_GetMusicLoopStartTime(Mix_Music *music);
+/*
+    Get the loop end time position of music stream
+    returns -1.0 if this feature is not used for this music or not supported for some codec
+*/
+double Mix_GetMusicLoopEndTime(Mix_Music *music);
+/*
+    Get the loop time length of music stream
+    returns -1.0 if this feature is not used for this music or not supported for some codec
+*/
+double Mix_GetMusicLoopLengthTime(Mix_Music *music);
 
 =============================================================================
 
 Due to popular demand, here is a simple multi-channel audio mixer.
 It supports 8 channels of 16 bit stereo audio, plus a single channel
-of music, mixed by the Modplug MOD, Timidity MIDI, ADLMIDI, GME 
+of music, mixed by the Modplug MOD, Timidity MIDI, ADLMIDI, GME
 and LibMAD MP3 libraries.
 
 See the header file SDL_mixer_ext.h for documentation on this mixer library.

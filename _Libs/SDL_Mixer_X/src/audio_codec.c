@@ -67,7 +67,7 @@ void audioCodec_dummy_cb_seek(AudioCodecStream* music, double position)
 double audioCodec_dummy_cb_tell(AudioCodecStream* music)
 {
     (void)music;
-    return 0.0;
+    return -1.0;
 }
 
 void audioCodec_dummy_cb_regulator(AudioCodecStream *music, int value)
@@ -84,3 +84,43 @@ int audioCodec_dummy_playAudio(AudioCodecStream *music, Uint8 *data, int length)
     return 0;
 }
 
+
+void initAudioCodec(AudioCodec *codec)
+{
+    if(!codec)
+        return;
+
+    codec->isValid = 0;
+
+    codec->capabilities     = audioCodec_default_capabilities;
+
+    codec->open             = audioCodec_dummy_cb_open;
+    codec->openEx           = audioCodec_dummy_cb_openEx;
+    codec->close            = audioCodec_dummy_cb_void_1arg;
+
+    codec->play             = audioCodec_dummy_cb_void_1arg;
+    codec->pause            = audioCodec_dummy_cb_void_1arg;
+    codec->resume           = audioCodec_dummy_cb_void_1arg;
+    codec->stop             = audioCodec_dummy_cb_void_1arg;
+
+    codec->isPlaying        = audioCodec_dummy_cb_int_1arg;
+    codec->isPaused         = audioCodec_dummy_cb_int_1arg;
+
+    codec->setLoops         = audioCodec_dummy_cb_regulator;
+    codec->setVolume        = audioCodec_dummy_cb_regulator;
+
+    codec->jumpToTime       = audioCodec_dummy_cb_seek;
+    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+    codec->getTimeLength    = audioCodec_dummy_cb_tell;
+
+    codec->getLoopStartTime = audioCodec_dummy_cb_tell;
+    codec->getLoopEndTime   = audioCodec_dummy_cb_tell;
+    codec->getLoopLengthTime= audioCodec_dummy_cb_tell;
+
+    codec->metaTitle        = audioCodec_dummy_meta_tag;
+    codec->metaArtist       = audioCodec_dummy_meta_tag;
+    codec->metaAlbum        = audioCodec_dummy_meta_tag;
+    codec->metaCopyright    = audioCodec_dummy_meta_tag;
+
+    codec->playAudio        = audioCodec_dummy_playAudio;
+}

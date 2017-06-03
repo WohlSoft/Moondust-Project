@@ -8,5 +8,9 @@
         <file>cat_musplay/cat_musplay_48x48.png</file>
         <file>cat_musplay/cat_musplay_256x256.png</file>
         <file>flie_musplay.ico</file>
+        <file>buttons/pause.png</file>
+        <file>buttons/play.png</file>
+        <file>buttons/stop.png</file>
+        <file>loop_in_use.png</file>
     </qresource>
 </RCC>

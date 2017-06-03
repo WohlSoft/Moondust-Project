@@ -68,6 +68,8 @@ MODPLUG_EXPORT int ModPlug_GetLength(ModPlugFile* file);
  * ModPlug_GetLength() does not report the full length. */
 MODPLUG_EXPORT void ModPlug_Seek(ModPlugFile* file, int millisecond);
 
+MODPLUG_EXPORT int  ModPlug_Tell(ModPlugFile* file);
+
 enum _ModPlug_Flags
 {
 	MODPLUG_ENABLE_OVERSAMPLING     = 1 << 0,  /* Enable oversampling (*highly* recommended) */

@@ -326,6 +326,9 @@ Uint32 Timidity_capabilities()
 int Timidity_init2(AudioCodec *codec, SDL_AudioSpec *mixer)
 {
     samplesize = mixer->size / mixer->samples;
+
+    initAudioCodec(codec);
+
     codec->isValid = (Timidity_Init(mixer->freq,
                                     mixer->format,
                                     mixer->channels,
@@ -350,6 +353,7 @@ int Timidity_init2(AudioCodec *codec, SDL_AudioSpec *mixer)
 
     codec->jumpToTime       = audioCodec_dummy_cb_seek;
     codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+    codec->getTimeLength    = audioCodec_dummy_cb_tell;
 
     codec->metaTitle        = audioCodec_dummy_meta_tag;
     codec->metaArtist       = audioCodec_dummy_meta_tag;

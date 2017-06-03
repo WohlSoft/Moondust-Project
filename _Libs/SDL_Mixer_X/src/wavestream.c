@@ -55,6 +55,7 @@ typedef struct {
     int len_available;
     int volume;
     int playing;
+    int samplesize; /* Size of one sample in bytes */
     Uint8 *snd_available;
     int numloops;
     WAVLoopPoint *loops;
@@ -83,6 +84,10 @@ static const char *WAVStream_metaTitle(void *music_p);
 static const char *WAVStream_metaArtist(void *music_p);
 static const char *WAVStream_metaAlbum(void *music_p);
 static const char *WAVStream_metaCopyright(void *music_p);
+
+static void     WAVStream_seek(void *music_p, double position);
+static double   WAVStream_tell(void *music_p);
+static double   WAVStream_fullLength(void *music_p);
 
 /* Play some of a stream previously started with WAVStream_Start() */
 static int WAVStream_PlaySome(void *wave_p, Uint8 *stream, int len);
@@ -172,6 +177,8 @@ int WAVStream_Init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
 {
     mixer = *mixerfmt;
 
+    initAudioCodec(codec);
+
     codec->isValid = 1;
 
     codec->capabilities     = audioCodec_default_capabilities;
@@ -191,8 +198,9 @@ int WAVStream_Init2(AudioCodec *codec, SDL_AudioSpec *mixerfmt)
     codec->setLoops         = audioCodec_dummy_cb_regulator;
     codec->setVolume        = WAVStream_SetVolume;
 
-    codec->jumpToTime       = audioCodec_dummy_cb_seek;
-    codec->getCurrentTime   = audioCodec_dummy_cb_tell;
+    codec->jumpToTime       = WAVStream_seek;
+    codec->getCurrentTime   = WAVStream_tell;
+    codec->getTimeLength    = WAVStream_fullLength;
 
     codec->metaTitle        = WAVStream_metaTitle;
     codec->metaArtist       = WAVStream_metaArtist;
@@ -522,6 +530,7 @@ static SDL_bool ParseFMT(WAVStream *wave, Uint32 chunk_length)
     }
     spec->channels = (Uint8) SDL_SwapLE16(format->channels);
     spec->samples = 4096;       /* Good default buffer size */
+    wave->samplesize = spec->channels * (format->bitspersample / 8);
 
     loaded = SDL_TRUE;
 
@@ -562,7 +571,7 @@ static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
 {
     SamplerChunk *chunk;
     Uint8 *data;
-    int i, loops = 0;
+    Uint32 i, loops = 0;
     SDL_bool loaded = SDL_FALSE;
 
     data = (Uint8 *)SDL_malloc(chunk_length);
@@ -593,13 +602,14 @@ static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
     return loaded;
 }
 
-static void readMetaField(WAVStream *wave, char**field,size_t *i, Uint32 chunk_length, Uint8 *data, size_t fieldOffset)
+static void readMetaField(char**field, size_t *i, Uint32 chunk_length, Uint8 *data, size_t fieldOffset)
 {
     Uint32 len = 0;
+    int isID3 = fieldOffset == 7;
     *i += 4;
-    len = fieldOffset == 4 ?
-                SDL_SwapLE32(*((Uint32*)(data + *i))) :
-                SDL_SwapBE32(*((Uint32*)(data + *i)));
+    len = isID3 ?
+                SDL_SwapBE32(*((Uint32*)(data + *i))) : /* ID3  */
+                SDL_SwapLE32(*((Uint32*)(data + *i)));  /* LIST */
     if(len > chunk_length)
         return;/* Do nothin, lenght is broken */
     *i += fieldOffset;
@@ -607,7 +617,7 @@ static void readMetaField(WAVStream *wave, char**field,size_t *i, Uint32 chunk_l
         SDL_free(*field);
     *field = (char*)SDL_malloc(len);
     SDL_memset(*field, 0, len);
-    strncpy(*field, (char*)(data + *i), fieldOffset == 4 ? len : len - 1);
+    strncpy(*field, (char*)(data + *i), isID3 ? len -1 : len);
     *i += len;
 }
 
@@ -634,25 +644,25 @@ static SDL_bool ParseLIST(WAVStream *wave, Uint32 chunk_length)
         {
             if(strncmp((char*)(data + i), "INAM", 4) == 0)
             {
-                readMetaField(wave, &wave->mus_title, &i, chunk_length, data, 4);
+                readMetaField(&wave->mus_title, &i, chunk_length, data, 4);
                 continue;
             }
 
             if(strncmp((char*)(data + i), "IART", 4) == 0)
             {
-                readMetaField(wave, &wave->mus_artist, &i, chunk_length, data, 4);
+                readMetaField(&wave->mus_artist, &i, chunk_length, data, 4);
                 continue;
             }
 
             if(strncmp((char*)(data + i), "IALB", 4) == 0)
             {
-                readMetaField(wave, &wave->mus_album, &i, chunk_length, data, 4);
+                readMetaField(&wave->mus_album, &i, chunk_length, data, 4);
                 continue;
             }
 
             if(strncmp((char*)(data + i), "BCPR", 4) == 0)
             {
-                readMetaField(wave, &wave->mus_copyright, &i, chunk_length, data, 4);
+                readMetaField(&wave->mus_copyright, &i, chunk_length, data, 4);
                 continue;
             }
             i++;
@@ -689,13 +699,13 @@ static SDL_bool ParseID3(WAVStream *wave, Uint32 chunk_length)
         {
             if(strncmp((char*)(data + i), "TALB", 4) == 0)
             {
-                readMetaField(wave, &wave->mus_album, &i, chunk_length, data, 7);
+                readMetaField(&wave->mus_album, &i, chunk_length, data, 7);
                 continue;
             }
 
             if(strncmp((char*)(data + i), "TCOP", 4) == 0)
             {
-                readMetaField(wave, &wave->mus_copyright, &i, chunk_length, data, 7);
+                readMetaField(&wave->mus_copyright, &i, chunk_length, data, 7);
                 continue;
             }
             i++;
@@ -884,6 +894,7 @@ static SDL_bool LoadAIFFStream(WAVStream *wave)
         return SDL_FALSE;
     }
 
+    wave->samplesize = channels * (samplesize / 8);
     wave->stop = wave->start + channels * numsamples * (samplesize / 8);
 
     /* Decode the audio data format */
@@ -929,4 +940,30 @@ static const char *WAVStream_metaCopyright(void *music_p)
 {
     WAVStream *music = (WAVStream *)music_p;
     return music->mus_copyright ? music->mus_copyright : "";
+}
+
+static void     WAVStream_seek(void *music_p, double position)
+{
+    WAVStream *music = (WAVStream *)music_p;
+    if(!music)
+        return;
+    SDL_RWseek(music->src,
+               music->start + (Sint64)(position * (double)music->spec.freq * music->samplesize), SEEK_SET);
+}
+
+static double   WAVStream_tell(void *music_p)
+{
+    WAVStream *music = (WAVStream *)music_p;
+    if(!music)
+        return -1.0;
+    Sint64 physPos = SDL_RWtell(music->src);
+    return (double)(physPos - music->start) / (double)(music->spec.freq * music->samplesize);
+}
+
+static double   WAVStream_fullLength(void *music_p)
+{
+    WAVStream *music = (WAVStream *)music_p;
+    if(!music)
+        return -1.0;
+    return (double)(music->stop - music->start) / (double)(music->spec.freq * music->samplesize);
 }
