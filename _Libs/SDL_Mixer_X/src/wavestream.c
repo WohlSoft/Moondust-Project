@@ -569,29 +569,55 @@ static SDL_bool AddLoopPoint(WAVStream *wave, Uint32 play_count, Uint32 start, U
 
 static SDL_bool ParseSMPL(WAVStream *wave, Uint32 chunk_length)
 {
-    SamplerChunk *chunk;
+    SamplerChunk chunk;
     Uint8 *data;
     Uint32 i, loops = 0;
     SDL_bool loaded = SDL_FALSE;
+
+    if(chunk_length < 36) {
+        Mix_SetError("Error of WAV file: SMPL chunk is too small");
+        return SDL_FALSE;
+    }
 
     data = (Uint8 *)SDL_malloc(chunk_length);
     if (!data) {
         Mix_SetError("Out of memory");
         return SDL_FALSE;
     }
+
     if (!SDL_RWread(wave->src, data, chunk_length, 1)) {
         Mix_SetError("Couldn't read %d bytes from WAV file", chunk_length);
         return SDL_FALSE;
     }
-    chunk = (SamplerChunk *)data;
-    loops = SDL_SwapLE32(chunk->sample_loops);
+
+    chunk.manufacturer          = SDL_SwapLE32(*((Uint32*)(data + 0*4)));
+    chunk.product               = SDL_SwapLE32(*((Uint32*)(data + 1*4)));
+    chunk.sample_period         = SDL_SwapLE32(*((Uint32*)(data + 2*4)));
+    chunk.MIDI_unity_note       = SDL_SwapLE32(*((Uint32*)(data + 3*4)));
+    chunk.MIDI_pitch_fraction   = SDL_SwapLE32(*((Uint32*)(data + 4*4)));
+    chunk.SMTPE_format          = SDL_SwapLE32(*((Uint32*)(data + 5*4)));
+    chunk.SMTPE_offset          = SDL_SwapLE32(*((Uint32*)(data + 6*4)));
+    chunk.sample_loops          = SDL_SwapLE32(*((Uint32*)(data + 7*4)));
+    chunk.sampler_data          = SDL_SwapLE32(*((Uint32*)(data + 8*4)));
+    chunk.loops = (SampleLoop*)(data + 9*4);
+    loops = chunk.sample_loops;
+
+    if(chunk_length < 36 + 24 * loops)
+    {
+        Mix_SetError("Error of WAV file: SMPL chunk is too small (loops array is cuted off)");
+        return SDL_FALSE;
+    }
 
     for (i = 0; i < loops; ++i)
     {
         const Uint32 LOOP_TYPE_FORWARD = 0;
-        Uint32 loop_type = SDL_SwapLE32(chunk->loops[i].type);
-        if (loop_type == LOOP_TYPE_FORWARD) {
-            AddLoopPoint(wave, SDL_SwapLE32(chunk->loops[i].play_count), SDL_SwapLE32(chunk->loops[i].start), SDL_SwapLE32(chunk->loops[i].end));
+        Uint32 loop_type = SDL_SwapLE32(chunk.loops[i].type);
+        if(loop_type == LOOP_TYPE_FORWARD)
+        {
+            AddLoopPoint(wave,
+                         SDL_SwapLE32(chunk.loops[i].play_count),
+                         SDL_SwapLE32(chunk.loops[i].start),
+                         SDL_SwapLE32(chunk.loops[i].end));
         }
     }
 
