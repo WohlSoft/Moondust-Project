@@ -9,6 +9,7 @@
 #include <QMenu>
 #include <QDesktopServices>
 #include <QUrl>
+#include <cmath>
 
 #include "ui_mainwindow.h"
 #include "musplayer_qt.h"
