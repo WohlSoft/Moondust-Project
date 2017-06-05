@@ -58,7 +58,7 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
 
     if(snpc.setup.parse(setup, npcPath, defaultGrid.npc, merge_with ? &merge_with->setup : nullptr, &errStr))

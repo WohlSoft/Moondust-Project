@@ -34,7 +34,7 @@ function fireball:onLoop(tickTime)
                     BLOCK.slippery = false
                     self.npc_obj:kill(NPC_DAMAGE_NOREASON)
                     Audio.playSoundByRole(SoundRoles.BlockHit)
-                elseif( (BLOCK.bottom <= self.npc_obj.top) or 
+                elseif( (BLOCK.bottom <= self.npc_obj.top) or
                          self.npc_obj.blockedAtLeft or
                          self.npc_obj.blockedAtRight )then
                     self.npc_obj:kill(NPC_DAMAGE_NOREASON)
@@ -47,10 +47,10 @@ function fireball:onLoop(tickTime)
         for K,NPC in pairs(NPCs) do
             if( (NPC.id~=13) and (npc_isCoin(NPC.id)==false) )then
                 if(NPC.killableByFire)then
-                    NPC:harm(1, NPC_DAMAGE_BY_KICK)
+                    NPC:harm(1, NPC_DAMAGE_BY_KICK, self.npc_obj)
                     Audio.playSoundByRole(SoundRoles.PlayerKick)
                 end
-                self.npc_obj:kill(NPC_DAMAGE_NOREASON)
+                self.npc_obj:kill(NPC_DAMAGE_NOREASON, nil)
                 Audio.playSoundByRole(SoundRoles.BlockHit)
                 break
             end

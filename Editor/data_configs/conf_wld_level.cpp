@@ -33,7 +33,7 @@ bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_lev
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString()))
+    if(!openSection(setup, section.toStdString(), internal))
         return false;
 
     if(slevel.setup.parse(setup, wlvlPath, defaultGrid.levels, merge_with ? &merge_with->setup : nullptr, &errStr))

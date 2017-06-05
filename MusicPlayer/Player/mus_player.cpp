@@ -33,14 +33,14 @@ namespace PGE_MusicPlayer
                    type == MUS_NONE ? "No Music" :
                    type == MUS_CMD ? "CMD" :
                    type == MUS_WAV ? "PCM Wave" :
-                   type == MUS_MOD ? "MidMod" :
+                   type == MUS_MOD ? "MikMod" :
                    type == MUS_MODPLUG ? "ModPlug" :
                    type == MUS_MID ? "MIDI/IMF" :
                    type == MUS_OGG ? "OGG" :
                    type == MUS_MP3 ? "MP3 (SMPEG)" :
                    type == MUS_MP3_MAD ? "MP3 (LibMAD)" :
                    type == MUS_FLAC ? "FLAC" :
-                   type == MUS_SPC ? "Game Music Emulator" : "<Unknown>");
+                   type == MUS_GME ? "Game Music Emulator" : "<Unknown>");
     }
     QString musicType()
     {

@@ -22,17 +22,31 @@
 #ifndef MANAGER_VERSION_H
 #define MANAGER_VERSION_H
 
-//Version of this program
-#define _LATEST_STABLE "0.0.1-alpha"
-
-#define _FILE_VERSION "0.0.1.0"
-#define _FILE_RELEASE "-pre-alpha"
-
 #define _VF1 0
 #define _VF2 0
 #define _VF3 1
 #define _VF4 0
+#define _FILE_RELEASE "-pre-alpha"
 
+#define _VF1_s STR_VALUE(_VF1)
+#define _VF2_s STR_VALUE(_VF2)
+#define _VF3_s STR_VALUE(_VF3)
+#define _VF4_s STR_VALUE(_VF4)
+#if _VF4 == 0
+    #if _VF3 == 0
+        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_2(_VF1_s, _VF2_s)
+    #else
+        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_3(_VF1_s, _VF2_s, _VF3_s)
+    #endif
+#else
+    #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_4(_VF1_s, _VF2_s, _VF3_s, _VF4_s)
+#endif
+
+//Version of this program
+#define _FILE_VERSION _FILE_VERSION_NUM
+
+//Version of this program
+#define _LATEST_STABLE _FILE_VERSION_NUM _FILE_RELEASE
 
 #define _FILE_DESC "PGE Content Manager"
 

@@ -63,24 +63,32 @@ macx:{
 
 !win32: LIBS += -lSDL2
 
-QMAKE_POST_LINK = $$COPY $$shell_path($$PWD/SDL_mixer_ext.h) $$shell_path($$PWD/../_builds/$$TARGETOS/include/SDL2)
+QMAKE_POST_LINK = $$COPY $$shell_path($$PWD/include/SDL_mixer_ext/SDL_mixer_ext.h) $$shell_path($$PWD/../_builds/$$TARGETOS/include/SDL2)
+
+# Codecs
+DEFINES += \
+    WAV_MUSIC \
+    MID_MUSIC \
+    USE_TIMIDITY_MIDI \
+    #USE_FLUIDSYNTH_MIDI \
+    #USE_FLUIDLIGHT \
+    USE_ADL_MIDI \
+    USE_OPN2_MIDI \
+    OGG_MUSIC \
+    FLAC_MUSIC \
+    #MP3_MUSIC \
+    MP3_MAD_MUSIC \
+    GME_MUSIC \
+    #MOD_MUSIC \
+    MODPLUG_MUSIC \
+    #CMD_MUSIC
 
 DEFINES += \
     main=SDL_main \
     HAVE_SIGNAL_H \
     HAVE_SETBUF \
-    WAV_MUSIC \
-    MID_MUSIC \
-    USE_TIMIDITY_MIDI \
-    #USE_FLUIDSYNTH_MIDI \
-    USE_ADL_MIDI \
-    OGG_MUSIC \
-    FLAC_MUSIC \
-    MP3_MAD_MUSIC \
-    GME_MUSIC \
-    SPC_MORE_ACCURACY \#NO_OLDNAMES
-    MODPLUG_MUSIC \
     PIC \
+    SPC_MORE_ACCURACY \#NO_OLDNAMES
     _REENTRANT \
     _USE_MATH_DEFINES
 
@@ -105,23 +113,22 @@ android:{
     win32:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
-            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid # -l:libfluidsynth.a
+            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
             SOURCES += vb6_sdl_binds.c
         } else {
             !win*-msvc*:{
-                LIBS += -lSDL2main -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a #-l:libfluidsynth.a
+                LIBS += -lSDL2main -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a
             } else {
                 LIBS += -lSDL2main -lSDL2 -lFLAC -lvorbisfile -lvorbis -logg -lmad
             }
         }
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32 -luser32 -lgdi32
     }
-    #linux-g++||unix:!macx:!android: {
     linux-g++||macx||unix:!android:{
         macx: {
-            LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad #-lfluidsynth
+            LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad
         } else {
-            LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic #-l:libfluidsynth.a
+            LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic
         }
     }
 }
@@ -130,21 +137,9 @@ android:{
     LIBS += -lm
 }
 
-linux-g++||unix:!macx:!android:{
-    SDL2MixerH.path =  $$PWD/../_builds/linux/include/SDL2
-}
-android: {
-    SDL2MixerH.path =  $$PWD/../_builds/android/include/SDL2
-}
-win32: {
-    SDL2MixerH.path =  $$PWD/../_builds/win32/include/SDL2
-}
-macx: {
-    SDL2MixerH.path =  $$PWD/../_builds/macos/include/SDL2
-}
-
-SDL2MixerH.files += SDL_mixer_ext.h
-INSTALLS = SDL2MixerH
+SDL2MixerH.path =  $$PWD/../_builds/$$TARGETOS/include/SDL2
+SDL2MixerH.files += $$PWD/include/SDL_mixer_ext/SDL_mixer_ext.h
+INSTALLS += SDL2MixerH
 
 win32: {
     SDL2MixerSO.path = $$PWD/../_builds/win32/bin
@@ -152,36 +147,42 @@ win32: {
     INSTALLS += SDL2MixerSO
 }
 
-contains(DEFINES, USE_ADL_MIDI):        include($$PWD/play_midi_adl.pri)
-contains(DEFINES, USE_TIMIDITY_MIDI):   include($$PWD/timidity/timidity.pri)
-contains(DEFINES, USE_NATIVE_MIDI):     include($$PWD/play_midi_native.pri)
-contains(DEFINES, USE_FLUIDSYNTH_MIDI): include($$PWD/play_midi_fluid.pri)
-contains(DEFINES, OGG_MUSIC):           include($$PWD/play_ogg.pri)
-contains(DEFINES, FLAC_MUSIC):          include($$PWD/play_flac.pri)
-contains(DEFINES, MOD_MUSIC):           include($$PWD/play_mikmod.pri)
-contains(DEFINES, MODPLUG_MUSIC):       include($$PWD/play_modplug.pri)
-contains(DEFINES, MP3_MAD_MUSIC):       include($$PWD/play_mp3.pri)
-contains(DEFINES, GME_MUSIC):           include($$PWD/play_gme.pri)
-contains(DEFINES, CMD_MUSIC):           include($$PWD/play_cmdmusic.pri)
+INCLUDEPATH += $$PWD/include/
+
+contains(DEFINES, USE_ADL_MIDI):        include($$PWD/src/play_midi_adl.pri)
+contains(DEFINES, USE_OPN2_MIDI):       include($$PWD/src/play_midi_opn.pri)
+contains(DEFINES, USE_TIMIDITY_MIDI):   include($$PWD/src/timidity/timidity.pri)
+contains(DEFINES, USE_NATIVE_MIDI):     include($$PWD/src/play_midi_native.pri)
+contains(DEFINES, USE_FLUIDSYNTH_MIDI): include($$PWD/src/play_midi_fluid.pri)
+contains(DEFINES, OGG_MUSIC):           include($$PWD/src/play_ogg.pri)
+contains(DEFINES, FLAC_MUSIC):          include($$PWD/src/play_flac.pri)
+contains(DEFINES, MOD_MUSIC):           include($$PWD/src/play_mikmod.pri)
+contains(DEFINES, MODPLUG_MUSIC):       include($$PWD/src/play_modplug.pri)
+contains(DEFINES, MP3_MAD_MUSIC):       include($$PWD/src/play_mp3.pri)
+contains(DEFINES, GME_MUSIC):           include($$PWD/src/play_gme.pri)
+contains(DEFINES, CMD_MUSIC):           include($$PWD/src/play_cmdmusic.pri)
 
 HEADERS += \
-    SDL_mixer_ext.h \
-    begin_code.h \
-    close_code.h \
-    effects_internal.h \
-    load_aiff.h \
-    load_voc.h \
-    wavestream.h \
-    resample/my_resample.h \
-    mixer.h \
+    include/SDL_mixer_ext/SDL_mixer_ext.h \
+    include/SDL_mixer_ext/begin_code.h \
+    include/SDL_mixer_ext/close_code.h \
+    src/audio_codec.h \
+    src/effects_internal.h \
+    src/load_aiff.h \
+    src/load_voc.h \
+    src/wavestream.h \
+    src/resample/my_resample.h \
+    src/mixer.h \
 
 SOURCES += \
-    effect_position.c \
-    effect_stereoreverse.c \
-    effects_internal.c \
-    load_aiff.c \
-    load_voc.c \
-    mixer.c \
-    music.c \
-    wavestream.c \
-    resample/my_resample.c
+    src/audio_codec.c \
+    src/effect_position.c \
+    src/effect_stereoreverse.c \
+    src/effects_internal.c \
+    src/load_aiff.c \
+    src/load_voc.c \
+    src/mixer.c \
+    src/music.c \
+    src/wavestream.c \
+    src/resample/my_resample.c
+

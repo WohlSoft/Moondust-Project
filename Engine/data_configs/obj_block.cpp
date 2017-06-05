@@ -48,16 +48,18 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, std::string section, obj_b
     sblock.image = NULL;
     sblock.textureArrayId = 0;
     sblock.animator_ID = -1;
-    setup->beginGroup(section);
 
-    if(sblock.setup.parse(setup, blockPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        valid = true;
-    else
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
-        addError(errStr);
-        valid = false;
+        if(sblock.setup.parse(setup, blockPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
+        {
+            addError(errStr);
+            valid = false;
+        }
     }
-
     setup->endGroup();
 
     return valid;

@@ -56,8 +56,10 @@ public:
     LevelBGO    m_data;
     obj_bgo     m_localProps;
 
-    int         m_zMode;
-    qreal       m_zOffset;
+    bool        m_zValueOverride = false;
+    qreal       m_zValue = 0.0;
+    int         m_zLayer = 0;
+    qreal       m_zOffset = 0.0;
 
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *event );

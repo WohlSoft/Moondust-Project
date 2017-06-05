@@ -3,10 +3,13 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSlider>
+#include <QDateTime>
+#include <QTime>
 #include <QSettings>
 #include <QMenu>
 #include <QDesktopServices>
 #include <QUrl>
+#include <cmath>
 
 #include "ui_mainwindow.h"
 #include "musplayer_qt.h"
@@ -42,6 +45,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
         Qt::WindowMinimizeButtonHint |
         Qt::MSWindowsFixedSizeDialogHint);
     connect(&m_blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
+    connect(&m_positionWatcher, SIGNAL(timeout()), this, SLOT(updatePositionSlider()));
     connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenu(QPoint)));
     connect(ui->volume, &QSlider::valueChanged, [this](int x)
     {
@@ -84,41 +88,44 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     QApplication::setApplicationName("PGE Music Player");
     ui->playList->setModel(&playList);
 
+    QSettings setup;
+    ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
+
+    ui->musicPosition->setVisible(false);
+    ui->isLooping->setVisible(false);
     ui->playList->setVisible(false);
     ui->playListPush->setVisible(false);
     ui->playListPop->setVisible(false);
 
     ui->sfx_testing->setVisible(false);
 
-    QSettings setup;
-    restoreGeometry(setup.value("Window-Geometry").toByteArray());
-    ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
+    ui->opnmidi_extra->setVisible(ui->mididevice->currentIndex() == 3);
+    ui->adlmidi_xtra->setVisible(ui->mididevice->currentIndex() == 0);
 
     switch(ui->mididevice->currentIndex())
     {
     case 0:
         MIX_SetMidiDevice(MIDI_ADLMIDI);
-        ui->adlmidi_xtra->setVisible(true);
         break;
 
     case 1:
         MIX_SetMidiDevice(MIDI_Timidity);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 2:
         MIX_SetMidiDevice(MIDI_Native);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 3:
+        MIX_SetMidiDevice(MIDI_OPNMIDI);
+        break;
+
+    case 4:
         MIX_SetMidiDevice(MIDI_Fluidsynth);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     default:
         MIX_SetMidiDevice(MIDI_ADLMIDI);
-        ui->adlmidi_xtra->setVisible(true);
         break;
     }
 
@@ -139,12 +146,14 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->volume->setValue(setup.value("Volume", 128).toInt());
     m_prevTrackID = ui->trackID->value();
     ui->adlmidi_xtra->setVisible(false);
+    ui->opnmidi_extra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->gme_setup->setVisible(false);
 
     currentMusic = setup.value("RecentMusic", "").toString();
     m_testSfxDir = setup.value("RecentSfxDir", "").toString();
-
+    restoreGeometry(setup.value("Window-Geometry").toByteArray());
+    layout()->activate();
     adjustSize();
 }
 
@@ -254,7 +263,6 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     else if(ret == sfx_testing)
     {
         ui->sfx_testing->setVisible(!ui->sfx_testing->isVisible());
-        updateGeometry();
         adjustSize();
     }
     else if(ret == license)
@@ -354,6 +362,7 @@ void MusPlayer_Qt::switchMidiDevice(int index)
 {
     ui->midi_setup->setVisible(false);
     ui->adlmidi_xtra->setVisible(false);
+    ui->opnmidi_extra->setVisible(false);
     ui->midi_setup->setVisible(true);
 
     switch(index)
@@ -365,17 +374,19 @@ void MusPlayer_Qt::switchMidiDevice(int index)
 
     case 1:
         MIX_SetMidiDevice(MIDI_Timidity);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 2:
         MIX_SetMidiDevice(MIDI_Native);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     case 3:
+        MIX_SetMidiDevice(MIDI_OPNMIDI);
+        ui->opnmidi_extra->setVisible(true);
+        break;
+
+    case 4:
         MIX_SetMidiDevice(MIDI_Fluidsynth);
-        ui->adlmidi_xtra->setVisible(false);
         break;
 
     default:
@@ -401,8 +412,13 @@ void MusPlayer_Qt::on_open_clicked()
 
 void MusPlayer_Qt::on_stop_clicked()
 {
+    m_positionWatcher.stop();
+    ui->playingTimeLabel->setText("--:--:--");
+    ui->musicPosition->setValue(0);
+    ui->musicPosition->setEnabled(false);
     PGE_MusicPlayer::MUS_stopMusic();
-    ui->play->setText(tr("Play"));
+    ui->play->setToolTip(tr("Play"));
+    ui->play->setIcon(QIcon(":/buttons/play.png"));
 
     if(ui->recordWav->isChecked())
     {
@@ -423,26 +439,51 @@ void MusPlayer_Qt::on_play_clicked()
         if(Mix_PausedMusic())
         {
             Mix_ResumeMusic();
-            ui->play->setText(tr("Pause"));
+            ui->play->setToolTip(tr("Pause"));
+            ui->play->setIcon(QIcon(":/buttons/pause.png"));
             return;
         }
         else
         {
             Mix_PauseMusic();
-            ui->play->setText(tr("Resume"));
+            ui->play->setToolTip(tr("Resume"));
+            ui->play->setIcon(QIcon(":/buttons/play.png"));
             return;
         }
     }
 
-    ui->play->setText(tr("Play"));
+    ui->play->setToolTip(tr("Play"));
+    ui->play->setIcon(QIcon(":/buttons/play.png"));
+    ui->isLooping->setVisible(false);
     m_prevTrackID = ui->trackID->value();
 
     if(PGE_MusicPlayer::MUS_openFile(currentMusic + "|" + ui->trackID->text()))
     {
         PGE_MusicPlayer::MUS_changeVolume(ui->volume->value());
         PGE_MusicPlayer::MUS_playMusic();
-        ui->play->setText(tr("Pause"));
+        ui->play->setToolTip(tr("Pause"));
+        ui->play->setIcon(QIcon(":/buttons/pause.png"));
     }
+
+    m_positionWatcher.stop();
+    ui->musicPosition->setEnabled(false);
+    ui->playingTimeLabel->setText("--:--:--");
+    ui->playingTimeLenghtLabel->setText("/ --:--:--");
+
+    double total = Mix_GetMusicTotalTime(PGE_MusicPlayer::play_mus);
+    if(total > 0)
+    {
+        ui->musicPosition->setEnabled(true);
+        ui->musicPosition->setRange(0, (int)std::ceil(total));
+        ui->musicPosition->setValue(0);
+        ui->playingTimeLenghtLabel->setText(QDateTime::fromTime_t((uint)std::floor(total)).toUTC().toString("/ hh:mm:ss"));
+        m_positionWatcher.start(128);
+    }
+    ui->musicPosition->setVisible(ui->musicPosition->isEnabled());
+
+    double loopStart = Mix_GetMusicLoopStartTime(PGE_MusicPlayer::play_mus);
+    if(loopStart >= 0.0)
+        ui->isLooping->setVisible(true);
 
     ui->musTitle->setText(PGE_MusicPlayer::MUS_getMusTitle());
     ui->musArtist->setText(PGE_MusicPlayer::MUS_getMusArtist());
@@ -450,6 +491,7 @@ void MusPlayer_Qt::on_play_clicked()
     ui->musCopyright->setText(PGE_MusicPlayer::MUS_getMusCopy());
     ui->gme_setup->setVisible(false);
     ui->adlmidi_xtra->setVisible(false);
+    ui->opnmidi_extra->setVisible(false);
     ui->midi_setup->setVisible(false);
     ui->frame->setVisible(false);
     ui->frame->setVisible(true);
@@ -460,6 +502,7 @@ void MusPlayer_Qt::on_play_clicked()
     {
     case MUS_MID:
         ui->adlmidi_xtra->setVisible(ui->mididevice->currentIndex() == 0);
+        ui->opnmidi_extra->setVisible(ui->mididevice->currentIndex() == 3);
         ui->midi_setup->setVisible(true);
         ui->frame->setVisible(true);
         break;
@@ -560,6 +603,26 @@ void MusPlayer_Qt::_blink_red()
         ui->recordWav->setStyleSheet("background-color : red; color : black;");
     else
         ui->recordWav->setStyleSheet("background-color : black; color : red;");
+}
+
+void MusPlayer_Qt::updatePositionSlider()
+{
+    double pos = Mix_GetMusicPosition(PGE_MusicPlayer::play_mus);
+    m_positionWatcherLock = true;
+    ui->musicPosition->setValue((int)std::floor(pos));
+    ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)std::floor(pos)).toUTC().toString("hh:mm:ss"));
+    m_positionWatcherLock = false;
+}
+
+void MusPlayer_Qt::on_musicPosition_valueChanged(int value)
+{
+    if(m_positionWatcherLock)
+        return;
+    if(Mix_PlayingMusic())
+    {
+        Mix_SetMusicPosition((double)value);
+        ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)value).toUTC().toString("hh:mm:ss"));
+    }
 }
 
 void MusPlayer_Qt::on_sfx_open_clicked()

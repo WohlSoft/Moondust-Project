@@ -55,21 +55,24 @@ bool ConfigManager::loadLevelNPC(obj_npc &snpc,
     snpc.image = NULL;
     snpc.textureArrayId = 0;
     snpc.animator_ID = -1;
-    setup->beginGroup(section);
 
-    if(snpc.setup.parse(setup, npcPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        valid = true;
-    else
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
-        addError(errStr);
-        valid = false;
-    }
+        if(snpc.setup.parse(setup, npcPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
+        {
+            addError(errStr);
+            valid = false;
+        }
 
-    snpc.effect_1_def.fill("stomp", setup);
-    snpc.effect_2_def.fill("kick",  setup);
-    snpc.block_spawn_type  = setup->value("block-spawn-type",  merge_with ? merge_with->block_spawn_type : 0).toUInt();
-    snpc.block_spawn_speed = setup->value("block-spawn-speed", merge_with ? merge_with->block_spawn_speed : 3.0).toDouble();
-    snpc.block_spawn_sound = setup->value("block-spawn-sound", merge_with ? merge_with->block_spawn_sound : true).toBool();
+        snpc.effect_1_def.fill("stomp", setup);
+        snpc.effect_2_def.fill("kick",  setup);
+        snpc.block_spawn_type  = setup->value("block-spawn-type",  merge_with ? merge_with->block_spawn_type : 0).toUInt();
+        snpc.block_spawn_speed = setup->value("block-spawn-speed", merge_with ? merge_with->block_spawn_speed : 3.0).toDouble();
+        snpc.block_spawn_sound = setup->value("block-spawn-sound", merge_with ? merge_with->block_spawn_sound : true).toBool();
+    }
     setup->endGroup();
 
     return valid;
@@ -139,6 +142,8 @@ bool ConfigManager::loadLevelNPC()
 
         snpc.setup.id = i;
         lvl_npc_indexes.storeElement(snpc.setup.id, snpc);
+        //Load custom config if possible
+        loadCustomConfig<obj_npc>(lvl_npc_indexes, i, Dir_NPC, "npc", "npc", &loadLevelNPC, true);
         //Process NPC.txt if possible
         loadNpcTxtConfig(i);
 

@@ -66,16 +66,18 @@ bool ConfigManager::loadWorldTile(obj_w_tile &tile, std::string section, obj_w_t
     tile.image = NULL;
     tile.textureArrayId = 0;
     tile.animator_ID = 0;
-    setup->beginGroup(section);
 
-    if(tile.setup.parse(setup, tilePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        valid = true;
-    else
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
-        addError(errStr);
-        valid = false;
+        if(tile.setup.parse(setup, tilePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
+        {
+            addError(errStr);
+            valid = false;
+        }
     }
-
     setup->endGroup();
 
     return valid;
@@ -98,16 +100,18 @@ bool ConfigManager::loadWorldPath(obj_w_path &path, std::string section, obj_w_p
     path.image = NULL;
     path.textureArrayId = 0;
     path.animator_ID = 0;
-    setup->beginGroup(section);
 
-    if(path.setup.parse(setup, pathPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        valid = true;
-    else
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
-        addError(errStr);
-        valid = false;
+        if(path.setup.parse(setup, pathPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
+        {
+            addError(errStr);
+            valid = false;
+        }
     }
-
     setup->endGroup();
 
     return valid;
@@ -130,16 +134,18 @@ bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, std::string section, 
     scene.image = NULL;
     scene.textureArrayId = 0;
     scene.animator_ID = 0;
-    setup->beginGroup(section);
 
-    if(scene.setup.parse(setup, scenePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        valid = true;
-    else
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
-        addError(errStr);
-        valid = false;
+        if(scene.setup.parse(setup, scenePath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
+        {
+            addError(errStr);
+            valid = false;
+        }
     }
-
     setup->endGroup();
 
     return valid;
@@ -162,16 +168,18 @@ bool ConfigManager::loadWorldLevel(obj_w_level &level, std::string section, obj_
     level.image = NULL;
     level.textureArrayId = 0;
     level.animator_ID = 0;
-    setup->beginGroup(section);
 
-    if(level.setup.parse(setup, wlvlPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        valid = true;
-    else
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
-        addError(errStr);
-        valid = false;
+        if(level.setup.parse(setup, wlvlPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
+        {
+            addError(errStr);
+            valid = false;
+        }
     }
-
     setup->endGroup();
 
     return valid;

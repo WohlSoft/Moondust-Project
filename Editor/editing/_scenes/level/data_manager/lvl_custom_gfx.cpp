@@ -359,9 +359,17 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         if(!t_npc.cur_image->isNull())
             capturedS = t_npc.cur_image->size();
 
+        // NPC.INI and NPC.TXT are has different format. Therefore parse both of them
+        QString CustomTxt = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".ini", true);
+        if(!CustomTxt.isEmpty())
+        {
+            m_configs->loadLevelNPC(t_npc, "npc", npcD, CustomTxt);
+            custom = true;
+        }
+
         // /////////////////////// Looking for user's NPC.txt ////////////////////////////
         // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
-        QString CustomTxt = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".txt", true);
+        CustomTxt = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".txt", true);
         if(!CustomTxt.isEmpty())
         {
             QFile file(CustomTxt);

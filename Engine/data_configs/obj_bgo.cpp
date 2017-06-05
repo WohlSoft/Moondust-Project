@@ -47,16 +47,18 @@ bool ConfigManager::loadLevelBGO(obj_bgo &sbgo, std::string section, obj_bgo *me
     sbgo.image  = merge_with ? merge_with->image : nullptr;
     sbgo.textureArrayId = merge_with ? merge_with->textureArrayId : 0;
     sbgo.animator_ID = merge_with ? merge_with->animator_ID : 0;
-    setup->beginGroup(section);
 
-    if(sbgo.setup.parse(setup, bgoPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
-        valid = true;
-    else
+    if(!setup->beginGroup(section) && internal)
+        setup->beginGroup("General");
     {
-        addError(errStr);
-        valid = false;
+        if(sbgo.setup.parse(setup, bgoPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
+        {
+            addError(errStr);
+            valid = false;
+        }
     }
-
     setup->endGroup();
 
     return valid;

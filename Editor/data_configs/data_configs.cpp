@@ -86,23 +86,19 @@ QString dataconfigs::getFullIniPath(QString iniFileName)
     return path_ini;
 }
 
-bool dataconfigs::openSection(IniProcessing *config, const std::string &section)
+bool dataconfigs::openSection(IniProcessing *config, const std::string &section, bool tryGeneral)
 {
-    //Cache name of recent INI-file and it's sections
-    if(m_recentIniFile != config->fileName())
-    {
-        m_recentIniFile = config->fileName();
-    }
-
     //Check for availability of the INI section
     if(!config->beginGroup(section))
     {
+        if(tryGeneral && config->beginGroup("General"))
+            return true;//Allow section-less custom config files
+
         addError(QString("ERROR LOADING %1: [%2] section is missed!")
                  .arg(StdToPGEString(config->fileName()))
                  .arg(StdToPGEString(section)), PGE_LogLevel::Critical);
         return false;
     }
-
     return true;
 }
 
@@ -219,8 +215,6 @@ bool dataconfigs::loadBasics()
         }
     }
 
-    m_recentIniFile.clear();
-
     return true;
 }
 
@@ -236,8 +230,6 @@ bool dataconfigs::loadconfigs()
     errorsList[ERR_GLOBAL].clear();
     errorsList[ERR_CUSTOM].clear();
     m_errOut = ERR_GLOBAL;
-
-    m_recentIniFile.clear();
 
     LogDebug("=== Starting of global configuration loading ===");
 
@@ -437,8 +429,6 @@ bool dataconfigs::loadconfigs()
     LogDebug(QString("Loaded Special music   %1/%2").arg(main_music_spc.stored()).arg(ConfStatus::total_music_spc));
     LogDebug(QString("Loaded World music     %1/%2").arg(main_music_wld.stored()).arg(ConfStatus::total_music_wld));
     LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
-
-    m_recentIniFile.clear();
     LogDebug(QString("-------------------------"));
 
     m_isValid = !check();

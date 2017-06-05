@@ -135,7 +135,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     setLeft->setCheckable(true);
     setLeft->setChecked(m_data.direct == -1);
 
-    QAction *setRand =          chDir->addAction(tr("Random"));
+    QAction *setRand =          chDir->addAction((!m_localProps.setup.direct_alt_rand.isEmpty()) ? m_localProps.setup.direct_alt_rand : tr("Random"));
     setRand->setVisible(!m_localProps.setup.direct_disable_random);
     setRand->setCheckable(true);
     setRand->setChecked(m_data.direct == 0);
