@@ -374,7 +374,8 @@ SOURCES += \
     tools/tilesets/tilesetconfiguredialog.cpp \
     tools/tilesets/tileset.cpp \
     tools/tilesets/tilesetgroupeditor.cpp \
-    tools/tilesets/tilesetitembutton.cpp
+    tools/tilesets/tilesetitembutton.cpp \
+    data_configs/obj_custom_property.cpp
 
 HEADERS  += \
     audio/music_player.h \
@@ -563,7 +564,8 @@ HEADERS  += \
     tools/tilesets/tileset.h \
     tools/tilesets/tilesetitembutton.h \
     version.h \
-    main_window/dock/item_tooltip_make.hpp
+    main_window/dock/item_tooltip_make.hpp \
+    data_configs/obj_custom_property.h
 
 FORMS    += \
     common_features/crashhandler.ui \

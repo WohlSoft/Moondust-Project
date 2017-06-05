@@ -290,6 +290,9 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("direction-alt-right-field", direct_alt_right, "");
     setup->read("direction-no-rand-field", direct_disable_random, pMerge(direct_disable_random, false));
 
+    //Editor custom property
+    setup->read("custom-property", custom_property, "");
+
     //Events
     setup->read("deactivate", deactivation, pMerge(deactivation, 0));
     setup->read("deactivate-delay", deactivationDelay, pMerge(deactivationDelay, 4000));

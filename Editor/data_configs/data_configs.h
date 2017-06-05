@@ -40,6 +40,7 @@
 #include "obj_player.h"
 #include "obj_wld_items.h"
 #include "obj_tilesets.h"
+#include "obj_custom_property.h"
 #include "obj_rotation_table.h"
 
 struct DataFolders
@@ -154,6 +155,9 @@ public:
     QList<SimpleTileset >      main_tilesets;
     QList<SimpleTilesetGroup > main_tilesets_grp;
 
+    // Custom properties
+    QList<obj_custom_property> main_custom_properties;
+
     QList<obj_rotation_table > main_rotation_table;
 
     bool check(); //Returns true, if something config entry is not initialized
@@ -178,7 +182,8 @@ public:
     long getMusSpcI(unsigned long itemID);
 
 
-    void  loadTilesets();
+    void loadTilesets();
+    void loadCustomProperties(); // Depends on loadLevelNPC
 
     void setConfigPath(QString p);
     bool loadBasics();

@@ -78,6 +78,7 @@ private:
     void doPgeXTest(QStringList args);
     void doSendCheat(QStringList args);
     void doOutputPaths(QStringList args);
+    void doCustomPropertyDisplay(QStringList args);
 };
 
 #endif // DEVCONSOLE_H

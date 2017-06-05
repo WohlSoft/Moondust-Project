@@ -222,6 +222,9 @@ struct NpcSetup
     PGEString       direct_alt_right;
     bool            direct_disable_random = false;
 
+    //Editor custom properties
+    PGEString       custom_property;
+
 //    ; Physics
     uint32_t        height = 0; //    ; Size of NPC's body (Collision box)
     uint32_t        width = 0;

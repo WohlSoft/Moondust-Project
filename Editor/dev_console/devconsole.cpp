@@ -283,6 +283,7 @@ void DevConsole::registerCommands()
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
     registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send a command or message into the PGE Engine if it's running"));
     registerCommand("paths", &DevConsole::doOutputPaths, tr("Shows various important paths!"));
+    registerCommand("custom-property-display", &DevConsole::doCustomPropertyDisplay, tr("Args: {npc-id} | Displays the custom property structure of an npc id"));
 }
 
 void DevConsole::doCommand()
@@ -525,3 +526,43 @@ void DevConsole::doOutputPaths(QStringList /*args*/)
     log(QString("Settings file: ") + AppPathManager::settingsFile());
     log(QString("Current log file: ") + LogWriter::DebugLogFile);
 }
+
+void DevConsole::doCustomPropertyDisplay(QStringList args)
+{
+    if(args.size() <= 0) {
+        log("Required npc id argument!");
+        return;
+    }
+    bool ok = true;
+    int npcId = args[0].toInt(&ok);
+    if(!ok) {
+        log("Malformed npc id! Not a number?");
+        return;
+    }
+
+    bool found = false;
+    for(const obj_custom_property& prop : MainWinConnect::pMainWin->configs.main_custom_properties) {
+        if(prop.npc_id) {
+            found = true;
+
+            auto& enumGroupMap = prop.enums;
+            for(const QString& enumGroupKey : enumGroupMap.keys()) {
+                auto& enumElementMap = enumGroupMap[enumGroupKey];
+                for(const QString& enumElementKey : enumElementMap.keys()) {
+                    auto& obj = enumElementMap[enumElementKey];
+                    log(QString("Enum: --> %1 --> %2 --> text: %3").arg(enumGroupKey, enumElementKey, obj.text));
+                }
+            }
+        }
+    }
+
+    if(!found) {
+        log("Did not find npc or custom property bound to this npc id!");
+    }
+}
+
+
+
+
+
+
