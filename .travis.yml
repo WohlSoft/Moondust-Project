@@ -51,10 +51,10 @@ matrix:
           build_command_prepend: "./clean_make.sh nopause"
           build_command:   "bash ./build.sh no-pause noeditor nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer;"
           branch_pattern: master
-      cache:
-        directories:
-          - bin/_build_x64
-          - _Libs/_builds/linux
+#      cache:
+#        directories:
+#          - bin/_build_x64
+#          - _Libs/_builds/linux
     - os: osx
       osx_image: xcode8.2
       compiler: clang++
