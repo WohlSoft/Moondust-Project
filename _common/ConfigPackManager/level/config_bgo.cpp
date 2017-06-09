@@ -106,11 +106,15 @@ bool BgoSetup::parse(IniProcessing *setup,
         setup->readEnum("z-layer", zLayer, pMerge(zLayer, z_background_1), zLayers);
         setup->readEnum("view", zLayer, zLayer, zLayers);//Alias
     }
-    setup->read("z-offset", zOffset,    pMerge(zOffset, 0.0l));
 
     zValueOverride = setup->hasKey("z-value") || setup->hasKey("priority");
     setup->read("z-value",  zValue,    pMerge(zValue, 0.0l));
     setup->read("priority", zValue,    zValue);//Alias
+
+    if(merge_with && zValueOverride)
+        setup->read("z-offset", zOffset,    0.0l);
+    else
+        setup->read("z-offset", zOffset,    pMerge(zOffset, 0.0l));
 
     setup->read("climbing", climbing ,  pMerge(climbing, false));
     setup->read("animated", animated,   pMerge(animated, false));
