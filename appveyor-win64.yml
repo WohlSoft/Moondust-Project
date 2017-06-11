@@ -46,11 +46,12 @@ clone_depth:  3  # clone entire repository history if not defined
 # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
-  - ps: Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
-  - ps: (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z', 'MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z')
-  - ps: (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z', 'Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z')
-  - ps: sevenzip x MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z -oC:\MinGW-w64
-  - ps: sevenzip x Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z -oC:\Qt
+  - ps: |
+      Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
+      (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z', 'MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z')
+      (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z', 'Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z')
+      sevenzip x MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z -oC:\MinGW-w64
+      sevenzip x Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z -oC:\Qt
   - cmd: git submodule init
   - cmd: git submodule update
   - cmd: echo set QtDir=C:\Qt\5.9.0-x64\bin>> _paths.bat # Qt since 5.8 no more supports Windows XP
