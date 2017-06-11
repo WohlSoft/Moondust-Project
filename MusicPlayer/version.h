@@ -27,37 +27,37 @@
 #define IDI_ICON2 30002
 
 
-#define _VF1 1
-#define _VF2 1
-#define _VF3 0
-#define _VF4 0
-#define _FILE_RELEASE ""
+#define V_VF1 1
+#define V_VF2 1
+#define V_VF3 0
+#define V_VF4 0
+#define V_FILE_RELEASE ""
 
-#define _VF1_s STR_VALUE(_VF1)
-#define _VF2_s STR_VALUE(_VF2)
-#define _VF3_s STR_VALUE(_VF3)
-#define _VF4_s STR_VALUE(_VF4)
-#if _VF4 == 0
-    #if _VF3 == 0
-        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_2(_VF1_s, _VF2_s)
+#define V_VF1_s STR_VALUE(V_VF1)
+#define V_VF2_s STR_VALUE(V_VF2)
+#define V_VF3_s STR_VALUE(V_VF3)
+#define V_VF4_s STR_VALUE(V_VF4)
+#if V_VF4 == 0
+    #if V_VF3 == 0
+        #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_2(V_VF1_s, V_VF2_s)
     #else
-        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_3(_VF1_s, _VF2_s, _VF3_s)
+        #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_3(V_VF1_s, V_VF2_s, V_VF3_s)
     #endif
 #else
-    #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_4(_VF1_s, _VF2_s, _VF3_s, _VF4_s)
+    #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_4(V_VF1_s, V_VF2_s, V_VF3_s, V_VF4_s)
 #endif
 
 //Version of this program
-#define _FILE_VERSION _FILE_VERSION_NUM
+#define V_FILE_VERSION V_FILE_VERSION_NUM
 
-#define _FILE_DESC "Simple SDL2 Mixer X Music player"
+#define V_FILE_DESC "Simple SDL2 Mixer X Music player"
 
-#define _INTERNAL_NAME "pge_musplay"
+#define V_INTERNAL_NAME "pge_musplay"
 
 #ifdef _WIN32
-    #define _ORIGINAL_NAME "pge_musplay.exe" // for Windows platforms
+    #define V_ORIGINAL_NAME "pge_musplay.exe" // for Windows platforms
 #else
-    #define _ORIGINAL_NAME "pge_musplay" // for any other platforms, however impossible, because RC is Windows-only file :P
+    #define V_ORIGINAL_NAME "pge_musplay" // for any other platforms, however impossible, because RC is Windows-only file :P
 #endif
 
 //Uncomment this for enable detal logging

@@ -571,7 +571,7 @@ void MusPlayer_WinAPI::initUI(HWND hWnd)
     AppendMenuW(m_contextMenu, MF_SEPARATOR, 0, 0);
 
     hSubMenu = CreatePopupMenu();
-    AppendMenuA(hSubMenu, MF_STRING, CMD_Version, "SDL Mixer X Music Player [WinAPI], v." _FILE_VERSION);
+    AppendMenuA(hSubMenu, MF_STRING, CMD_Version, "SDL Mixer X Music Player [WinAPI], v." V_FILE_VERSION);
     EnableMenuItem(hSubMenu, CMD_Version, MF_GRAYED);
     AppendMenuW(hSubMenu, MF_STRING, CMD_ShowLicense, L"Licensed under GNU GPLv3 license");
     AppendMenuW(hSubMenu, MF_SEPARATOR, 0, 0);

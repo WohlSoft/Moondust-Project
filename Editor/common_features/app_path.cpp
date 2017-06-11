@@ -69,8 +69,8 @@ void AppPathManager::initAppPath(const char* argv0)
     QApplication::addLibraryPath(ApplicationPath);
     QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv0)).absoluteDir().absolutePath());
 
-    QApplication::setOrganizationName(_COMPANY);
-    QApplication::setOrganizationDomain(_PGE_URL);
+    QApplication::setOrganizationName(V_COMPANY);
+    QApplication::setOrganizationDomain(V_PGE_URL);
     QApplication::setApplicationName("PGE Editor");
 
     #ifdef __ANDROID__

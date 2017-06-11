@@ -259,9 +259,9 @@ int main(int argc, char *argv[])
     try
     {
         // Define the command line object.
-        TCLAP::CmdLine  cmd(_FILE_DESC "\n"
+        TCLAP::CmdLine  cmd(V_FILE_DESC "\n"
                             "Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>\n"
-                            "This program is distributed under the GNU GPLv3+ license\n", ' ', _FILE_VERSION _FILE_RELEASE);
+                            "This program is distributed under the GNU GPLv3+ license\n", ' ', V_FILE_VERSION V_FILE_RELEASE);
 
         TCLAP::SwitchArg switchRemove("r", "remove", "Remove source images after a succesful conversion", false);
         TCLAP::SwitchArg switchSkipBG("b", "ingnore-bg", "Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)", false);
@@ -326,7 +326,7 @@ int main(int argc, char *argv[])
     }
 
     fprintf(stderr, "============================================================================\n"
-            "Pair of GIFs to PNG converter tool by Wohlstand. Version " _FILE_VERSION _FILE_RELEASE "\n"
+            "Pair of GIFs to PNG converter tool by Wohlstand. Version " V_FILE_VERSION V_FILE_RELEASE "\n"
             "============================================================================\n"
             "This program is distributed under the GNU GPLv3 license \n"
             "============================================================================\n");

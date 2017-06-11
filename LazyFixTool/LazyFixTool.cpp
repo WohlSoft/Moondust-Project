@@ -344,9 +344,9 @@ int main(int argc, char *argv[])
     try
     {
         // Define the command line object.
-        TCLAP::CmdLine  cmd(_FILE_DESC "\n"
+        TCLAP::CmdLine  cmd(V_FILE_DESC "\n"
                             "Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>\n"
-                            "This program is distributed under the GNU GPLv3+ license\n", ' ', _FILE_VERSION _FILE_RELEASE);
+                            "This program is distributed under the GNU GPLv3+ license\n", ' ', V_FILE_VERSION V_FILE_RELEASE);
 
         TCLAP::SwitchArg switchNoBackups("n",       "no-backup", "Don't create backup", false);
         TCLAP::SwitchArg switchDigRecursive("d",    "dig-recursive", "Look for images in subdirectories", false);
@@ -402,7 +402,7 @@ int main(int argc, char *argv[])
     }
 
     fprintf(stderr, "============================================================================\n"
-                    "Lazily-made image masks fix tool by Wohlstand. Version " _FILE_VERSION _FILE_RELEASE "\n"
+                    "Lazily-made image masks fix tool by Wohlstand. Version " V_FILE_VERSION V_FILE_RELEASE "\n"
                     "============================================================================\n"
                     "This program is distributed under the GNU GPLv3 license \n"
                     "============================================================================\n");

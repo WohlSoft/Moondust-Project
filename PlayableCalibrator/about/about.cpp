@@ -26,7 +26,7 @@ about::about(QWidget *parent) :
     ui(new Ui::about)
 {
     ui->setupUi(this);
-    ui->about1->setText(ui->about1->text().arg(_FILE_VERSION).arg(_FILE_RELEASE));
+    ui->about1->setText(ui->about1->text().arg(V_FILE_VERSION).arg(V_FILE_RELEASE));
 }
 
 about::~about()

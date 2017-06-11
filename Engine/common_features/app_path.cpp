@@ -147,8 +147,8 @@ static bool winReg_setUserDir()
 
 void AppPathManager::initAppPath()
 {
-    //PGE_Application::setOrganizationName(_COMPANY);
-    //PGE_Application::setOrganizationDomain(_PGE_URL);
+    //PGE_Application::setOrganizationName(V_COMPANY);
+    //PGE_Application::setOrganizationDomain(V_PGE_URL);
     //PGE_Application::setApplicationName("PGE Engine");
     /*
     ApplicationPathSTD = DirMan(Files::dirname(argv0)).absolutePath();

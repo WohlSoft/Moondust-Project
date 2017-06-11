@@ -19,10 +19,10 @@
 #ifndef GLOBAL_PGE_VERSION
 #define GLOBAL_PGE_VERSION
 
-#define _VP1 0
-#define _VP2 4
-#define _VP3 0
-#define _VP4 0
+#define V_VP1 0
+#define V_VP2 4
+#define V_VP3 0
+#define V_VP4 0
 
 #define GEN_VERSION_NUMBER_2(v1,v2)     v1 "." v2
 #define GEN_VERSION_NUMBER_3(v1,v2,v3)  v1 "." v2 "." v3
@@ -30,35 +30,35 @@
 
 #define STR_VALUE_REAL(arg)  #arg
 #define STR_VALUE(verf)      STR_VALUE_REAL(verf)
-#define _VP1_s STR_VALUE(_VP1)
-#define _VP2_s STR_VALUE(_VP2)
-#define _VP3_s STR_VALUE(_VP3)
-#define _VP4_s STR_VALUE(_VP4)
-#if _VP4 == 0
-    #if _VP3 == 0
-        #define _PROJECT_VERSION_NUM GEN_VERSION_NUMBER_2(_VP1_s, _VP2_s)
+#define V_VP1_s STR_VALUE(V_VP1)
+#define V_VP2_s STR_VALUE(V_VP2)
+#define V_VP3_s STR_VALUE(V_VP3)
+#define V_VP4_s STR_VALUE(V_VP4)
+#if V_VP4 == 0
+    #if V_VP3 == 0
+        #define V_PROJECT_VERSION_NUM GEN_VERSION_NUMBER_2(V_VP1_s, V_VP2_s)
     #else
-        #define _PROJECT_VERSION_NUM GEN_VERSION_NUMBER_3(_VP1_s, _VP2_s, _VP3_s)
+        #define V_PROJECT_VERSION_NUM GEN_VERSION_NUMBER_3(V_VP1_s, V_VP2_s, V_VP3_s)
     #endif
 #else
-    #define _PROJECT_VERSION_NUM GEN_VERSION_NUMBER_4(_VP1_s, _VP2_s, _VP3_s, _VP4_s)
+    #define V_PROJECT_VERSION_NUM GEN_VERSION_NUMBER_4(V_VP1_s, V_VP2_s, V_VP3_s, V_VP4_s)
 #endif
 
 //Version of whole project
-#define _VERSION _PROJECT_VERSION_NUM
-#define _RELEASE "" //Developing state (for release this field must be empty)
+#define V_VERSION V_PROJECT_VERSION_NUM
+#define V_RELEASE "" //Developing state (for release this field must be empty)
 
-#define _COPYRIGHT "2014-2017 by Wohlstand"
+#define V_COPYRIGHT "2014-2017 by Wohlstand"
 
-#define _COMPANY "PGE Team"
+#define V_COMPANY "PGE Team"
 
-#define _PGE_URL "wohlsoft.ru"
+#define V_PGE_URL "wohlsoft.ru"
 
-#define _PRODUCT_NAME "Platformer Game Engine"
+#define V_PRODUCT_NAME "Platformer Game Engine"
 
-#ifdef _WIN64
+#if defined(_WIN64)
 	#define OPERATION_SYSTEM "Windows x64"
-#elif  _WIN32
+#elif defined(_WIN32)
 	#define OPERATION_SYSTEM "Windows"
 #elif defined __APPLE__
 	#define OPERATION_SYSTEM "MacOSX"
@@ -70,8 +70,30 @@
 	#define OPERATION_SYSTEM "Other"
 #endif
 
-#define _DATE_OF_BUILD __DATE__ " " __TIME__
 
+#if defined(_X86_)||defined(__i386__)||defined(__i486__)||defined(__i586__)||defined(__i686__)||defined(_M_IX86)
+    #define FILE_CPU "x86 (32-bit)"
+#elif defined(__x86_64__)||defined(__amd64__)||defined(_WIN64)||defined(_M_X64)||defined(_M_AMD64)
+    #define FILE_CPU "x86_64 (64-bit)"
+#elif defined(__arm__)||defined(_M_ARM)||defined(_M_ARMT)
+    #ifdef __aarch64__
+        #define FILE_CPU "ARM (64-bit)"
+    #else
+        #define FILE_CPU "ARM (32-bit)"
+    #endif
+#elif defined(__mips__)||defined(__mips)||defined(__MIPS__)
+    #define FILE_CPU "MIPS"
+#elif defined(__powerpc__)||defined(_M_PPC)||defined(__POWERPC__)
+    #if defined(__powerpc64__)||defined(__ppc64__)||defined(__PPC64__)
+        #define FILE_CPU "PowerPC (64-bit)"
+    #else
+        #define FILE_CPU "PowerPC (32-bit)"
+    #endif
+#else
+    #define FILE_CPU "unknown"
+#endif
+
+#define V_DATE_OF_BUILD __DATE__ " " __TIME__
 
 #endif
 

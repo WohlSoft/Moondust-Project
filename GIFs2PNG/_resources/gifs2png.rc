@@ -4,8 +4,8 @@ IDI_ICON1               ICON    DISCARDABLE     "cat_gif2png.ico"
 #include "../version.h"
 
 VS_VERSION_INFO     VERSIONINFO
-FILEVERSION         _VF1, _VF2, _VF3, _VF4
-PRODUCTVERSION      _VP1, _VP2, _VP3, _VP4
+FILEVERSION         V_VF1, V_VF2, V_VF3, V_VF4
+PRODUCTVERSION      V_VP1, V_VP2, V_VP3, V_VP4
 FILEFLAGSMASK       0x3fL
 FILEFLAGS           0
 FILEOS              VOS_NT_WINDOWS32
@@ -20,14 +20,14 @@ BLOCK   "StringFileInfo"
 BEGIN
     BLOCK   "040904b0"
     BEGIN
-        VALUE   "CompanyName",      _COMPANY
-        VALUE   "FileDescription",  _FILE_DESC
-        VALUE   "FileVersion",      _FILE_VERSION _FILE_RELEASE
-        VALUE   "InternalName",     _INTERNAL_NAME
-        VALUE   "LegalCopyright",   _COPYRIGHT
-        VALUE   "OriginalFilename", _ORIGINAL_NAME
-        VALUE   "ProductName",      _PRODUCT_NAME
-        VALUE   "ProductVersion",   _VERSION _RELEASE
+        VALUE   "CompanyName",      V_COMPANY
+        VALUE   "FileDescription",  V_FILE_DESC
+        VALUE   "FileVersion",      V_FILE_VERSION V_FILE_RELEASE
+        VALUE   "InternalName",     V_INTERNAL_NAME
+        VALUE   "LegalCopyright",   V_COPYRIGHT
+        VALUE   "OriginalFilename", V_ORIGINAL_NAME
+        VALUE   "ProductName",      V_PRODUCT_NAME
+        VALUE   "ProductVersion",   V_VERSION V_RELEASE
     END
 END
 END
