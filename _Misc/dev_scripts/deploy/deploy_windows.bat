@@ -6,28 +6,36 @@ set CurDir=%CD%
 
 IF NOT EXIST "%SEVENZIP%\7z.exe" GOTO ErrorNo7z
 
+IF "%DEST_TO_64%"=="TRUE" (
+	set BINDIR=bin-w64
+	set ARCH_CPU=win64
+) ELSE (
+	set BINDIR=bin-w32
+	set ARCH_CPU=win32
+)
+
 set COMPRESS_DLL=%CurDir%\upx.exe -9
 set COMPRESS_EXE=%CurDir%\upx.exe -9 --compress-icons=0
 
-cd "%SOURCEDIR%\Editor"
 call "%SOURCEDIR%\_paths.bat"
 set OldPATH=%PATH%
 PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;%PATH%
 
+cd "%SOURCEDIR%\Editor"
 "%QtDir%\lrelease" pge_editor.pro
-copy languages\*.qm %SOURCEDIR%\bin-w32\languages
-copy languages\*.png %SOURCEDIR%\bin-w32\languages
+copy languages\*.qm %SOURCEDIR%\%BINDIR%\languages
+copy languages\*.png %SOURCEDIR%\%BINDIR%\languages
 
 rem Delete junk translation file causes German Ok/Cancel translations in the dialogs
-if exist %SOURCEDIR%\bin-w32\languages\qt_en.qm del /Q %SOURCEDIR%\bin-w32\languages\qt_en.qm
-if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\translations\qt_en.qm
+if exist %SOURCEDIR%\%BINDIR%\languages\qt_en.qm del /Q %SOURCEDIR%\%BINDIR%\languages\qt_en.qm
+if exist %SOURCEDIR%\%BINDIR%\translations\qt_en.qm del /Q %SOURCEDIR%\%BINDIR%\translations\qt_en.qm
 
 echo "Preparing Windows deploy..."
-cd %SOURCEDIR%\bin-w32
+cd %SOURCEDIR%\%BINDIR%
 
-set DeployDir=%SOURCEDIR%\bin-w32\_win32_deploy
+set DeployDir=%SOURCEDIR%\%BINDIR%\_win32_deploy
 set PgePrjSD=PGE_Project
-set TarGzArName=pge-project-dev-win32.zip
+set TarGzArName=pge-project-dev-%ARCH_CPU%.zip
 set DeployFlags=--release --no-opengl-sw --no-system-d3d-compiler
 
 if exist "%DeployDir%\*" del /Q /F /S "%DeployDir%\*"
@@ -46,13 +54,23 @@ copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %QtDir%\windeployqt %DeployFlags% LazyFixTool.exe
 %QtDir%\windeployqt %DeployFlags% pge_manager.exe
 %QtDir%\windeployqt %DeployFlags% pge_maintainer.exe
+IF "%DEST_TO_64%"=="TRUE" (
+	rem Copy missing DLLS are wasn't copied by windeployqt
+	if not exist "platforms\*" md "platforms"
+	if not exist "imageformats\*" md "imageformats"
+	copy "%QtDir%\..\plugins\platforms\qwindows.dll" platforms\
+	copy "%QtDir%\..\plugins\imageformats\qgif.dll" imageformats\
+	copy "%QtDir%\..\plugins\imageformats\qicns.dll" imageformats\
+	copy "%QtDir%\..\plugins\imageformats\qico.dll" imageformats\
+	copy "%QtDir%\..\plugins\imageformats\qsvg.dll" imageformats\
+)
 
 rem Delete junk translation file causes German Ok/Cancel translations in the dialogs
-if exist %SOURCEDIR%\bin-w32\languages\qt_en.qm del /Q %SOURCEDIR%\bin-w32\languages\qt_en.qm
-if exist %SOURCEDIR%\bin-w32\translations\qt_en.qm del /Q %SOURCEDIR%\bin-w32\translations\qt_en.qm
+if exist %SOURCEDIR%\%BINDIR%\languages\qt_en.qm del /Q %SOURCEDIR%\%BINDIR%\languages\qt_en.qm
+if exist %SOURCEDIR%\%BINDIR%\translations\qt_en.qm del /Q %SOURCEDIR%\%BINDIR%\translations\qt_en.qm
 
 rem Remove possible temporary files of UPX
-if exist %SOURCEDIR%\bin-w32\*.upx del /Q "%SOURCEDIR%\bin-w32\*.upx"
+if exist %SOURCEDIR%\%BINDIR%\*.upx del /Q "%SOURCEDIR%\%BINDIR%\*.upx"
 
 REM rem %COMPRESS_DLL% D3Dcompiler_*.dll
 REM %COMPRESS_DLL% libEGL.dll
@@ -137,13 +155,13 @@ cd "%DeployDir%"
 
 if exist ".\%TarGzArName%" del ".\%TarGzArName%"
 
-if not exist "%SOURCEDIR%\bin-w32\_packed" md "%SOURCEDIR%\bin-w32\_packed"
-if exist "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%" del "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
+if not exist "%SOURCEDIR%\%BINDIR%\_packed" md "%SOURCEDIR%\%BINDIR%\_packed"
+if exist "%SOURCEDIR%\%BINDIR%\_packed\%TarGzArName%" del "%SOURCEDIR%\%BINDIR%\_packed\%TarGzArName%"
 
 # =========== Packing full archive ==========
 echo Packing complete archive...
 "%SEVENZIP%\7z" a -tzip -mx9 "%TarGzArName%" "%PgePrjSD%"
-move ".\%TarGzArName%" "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
+move ".\%TarGzArName%" "%SOURCEDIR%\%BINDIR%\_packed\%TarGzArName%"
 
 # ======== Packing thematic archives ========
 SET PGEMaintainer=
@@ -162,7 +180,11 @@ rem SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\iconengines"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\imageformats"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\platforms"
 
-SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
+IF "%DEST_TO_64%"=="TRUE" (
+	SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll"
+) ELSE (
+	SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
+)
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libstdc++-6.dll"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Core.dll"
@@ -172,7 +194,11 @@ SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Widgets.dll"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\imageformats"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\platforms"
 
-SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
+IF "%DEST_TO_64%"=="TRUE" (
+	SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll"
+) ELSE (
+	SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
+)
 SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libstdc++-6.dll"
 SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
 SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Core.dll"
@@ -211,13 +237,13 @@ SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\calibrator"
 
 echo Packing of Online-Install packages data
-"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-common-dev-win32.zip" %PGECommon%
-"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-editor-dev-win32.zip" %PGEEditor%
-"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-engine-dev-win32.zip" %PGEEngine%
-"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-tools-dev-win32.zip" %PGETools%
-"%SEVENZIP%\7z" a -tzip -mx9 "pge-musplay-dev-win32.zip" %PGEMusPlay%
-"%SEVENZIP%\7z" a -tzip -mx9 "pge-maintainer-dev-win32.zip" %PGEMaintainer%
-move ".\*.zip" "%SOURCEDIR%\bin-w32\_packed"
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-common-dev-%ARCH_CPU%.zip" %PGECommon%
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-editor-dev-%ARCH_CPU%.zip" %PGEEditor%
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-engine-dev-%ARCH_CPU%.zip" %PGEEngine%
+"%SEVENZIP%\7z" a -tzip -mx9 "install-pge-tools-dev-%ARCH_CPU%.zip" %PGETools%
+"%SEVENZIP%\7z" a -tzip -mx9 "pge-musplay-dev-%ARCH_CPU%.zip" %PGEMusPlay%
+"%SEVENZIP%\7z" a -tzip -mx9 "pge-maintainer-dev-%ARCH_CPU%.zip" %PGEMaintainer%
+move ".\*.zip" "%SOURCEDIR%\%BINDIR%\_packed"
 
 PATH=%OldPATH%
 

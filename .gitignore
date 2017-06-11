@@ -21,46 +21,45 @@ _Libs/_builds/android/*
 _Libs/_builds/win*-msvc/*
 
 # Exclude audio codecs on Windows
-_Libs/_builds/win32/include/FLAC/*
-_Libs/_builds/win32/include/ogg/*
-_Libs/_builds/win32/include/mad.h
-_Libs/_builds/win32/include/vorbis/*
-_Libs/_builds/win32/lib/libFLAC.a
-_Libs/_builds/win32/lib/libmad.a
-_Libs/_builds/win32/lib/libogg.a
-_Libs/_builds/win32/lib/libvorbis*.a
+_Libs/_builds/win*/include/FLAC/*
+_Libs/_builds/win*/include/ogg/*
+_Libs/_builds/win*/include/mad.h
+_Libs/_builds/win*/include/vorbis/*
+_Libs/_builds/win*/lib/libFLAC.a
+_Libs/_builds/win*/lib/libmad.a
+_Libs/_builds/win*/lib/libogg.a
+_Libs/_builds/win*/lib/libvorbis*.a
 
 # GLEW
-_Libs/_builds/win32/lib/libglew*.a
-_Libs/_builds/win32/include/GL/*
-_Libs/_builds/win32/bin/glew32.dll
-_Libs/_builds/win32/lib/pkgconfig/glew.pc
+_Libs/_builds/win*/lib/libglew*.a
+_Libs/_builds/win*/include/GL/*
+_Libs/_builds/win*/bin/glew32.dll
+_Libs/_builds/win*/lib/pkgconfig/glew.pc
 
 # Exclude SDL Mixer X, FreeImage and some other libraries on Windows
-_Libs/_builds/sdl2_mixer_mod/*
-_Libs/_builds/win32/lib/SDL2_mixer.dll
-_Libs/_builds/win32/bin/SDL2_mixer.dll
-_Libs/_builds/win32/bin/*.exe
-_Libs/_builds/win32/lib/SDL2_mixer_ext.dll
-_Libs/_builds/win32/bin/SDL2_mixer_ext.dll
-_Libs/_builds/win32/bin/SDL2_mixer_ext_vb6.dll
-_Libs/_builds/win32/lib/SDL2_mixer_ext_vb6.dll
-_Libs/_builds/win32/bin/SDL2MixerVB.dll
-_Libs/_builds/win32/lib/SDL2MixerVB.dll
-_Libs/_builds/win32/lib/libfreeimage.a
-_Libs/_builds/win32/lib/libfreeimagelite.a
-_Libs/_builds/win32/lib/libluabind.a
-_Libs/_builds/win32/lib/libSDL2_mixer.a
-_Libs/_builds/win32/lib/libSDL2_mixer.la
-_Libs/_builds/win32/lib/libSDL2_mixer_ext.a
-_Libs/_builds/win32/lib/libSDL2_mixer_ext.la
-_Libs/_builds/win32/lib/libSDL2_mixer_ext_vb6.la
-_Libs/_builds/win32/lib/libSDL2_mixer_ext_vb6.a
-_Libs/_builds/win32/lib/libSDL2MixerVB.la
-_Libs/_builds/win32/lib/libSDL2MixerVB.a
-_Libs/_builds/win32/lib/libSDL_Mixer_Xstatic.a
-_Libs/_builds/win32/lib/libsqlite3.a
-_Libs/_builds/win32/share
+_Libs/_builds/win*/lib/SDL2_mixer.dll
+_Libs/_builds/win*/bin/SDL2_mixer.dll
+_Libs/_builds/win*/bin/*.exe
+_Libs/_builds/win*/lib/SDL2_mixer_ext.dll
+_Libs/_builds/win*/bin/SDL2_mixer_ext.dll
+_Libs/_builds/win*/bin/SDL2_mixer_ext_vb6.dll
+_Libs/_builds/win*/lib/SDL2_mixer_ext_vb6.dll
+_Libs/_builds/win*/bin/SDL2MixerVB.dll
+_Libs/_builds/win*/lib/SDL2MixerVB.dll
+_Libs/_builds/win*/lib/libfreeimage.a
+_Libs/_builds/win*/lib/libfreeimagelite.a
+_Libs/_builds/win*/lib/libluabind.a
+_Libs/_builds/win*/lib/libSDL2_mixer.a
+_Libs/_builds/win*/lib/libSDL2_mixer.la
+_Libs/_builds/win*/lib/libSDL2_mixer_ext.a
+_Libs/_builds/win*/lib/libSDL2_mixer_ext.la
+_Libs/_builds/win*/lib/libSDL2_mixer_ext_vb6.la
+_Libs/_builds/win*/lib/libSDL2_mixer_ext_vb6.a
+_Libs/_builds/win*/lib/libSDL2MixerVB.la
+_Libs/_builds/win*/lib/libSDL2MixerVB.a
+_Libs/_builds/win*/lib/libSDL_Mixer_Xstatic.a
+_Libs/_builds/win*/lib/libsqlite3.a
+_Libs/_builds/win*/share
 
 _Libs/.qmake.stash
 
@@ -107,6 +106,7 @@ Makefile.*
 *build-*
 /bin
 /bin-w32
+/bin-w64
 /ServerLib/bin
 /android-build
 /Editor/app_process

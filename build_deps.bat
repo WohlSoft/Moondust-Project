@@ -9,6 +9,10 @@ call _paths.bat
 set OldPATH=%PATH%
 PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;
 
+IF "%MINGWx64Dest%"=="yes" (
+	SET QMAKE_EXTRA_ARGS=CONFIG+=win64
+)
+
 echo %PATH%
 
 echo Clonning missing submodules...
@@ -19,7 +23,7 @@ cd _Libs
 
 rem build all components
 echo Running %QtDir%\qmake.exe...
-"%QtDir%\qmake.exe" pge_deps.pro CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT
+"%QtDir%\qmake.exe" pge_deps.pro CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT %QMAKE_EXTRA_ARGS%
 if ERRORLEVEL 1 goto error
 
 echo Building...

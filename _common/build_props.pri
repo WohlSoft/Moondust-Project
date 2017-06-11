@@ -61,7 +61,11 @@ CONFIG(debug, debug|release): {
 
 contains(TEMPLATE, lib) {
     win32: {
-        BUILD_OBJ_DIR=$$PWD/../bin-w32
+        !win64:{
+            BUILD_OBJ_DIR=$$PWD/../bin-w32
+        } else {
+            BUILD_OBJ_DIR=$$PWD/../bin-w64
+        }
     } else {
         BUILD_OBJ_DIR=$$PWD/../bin
     }
