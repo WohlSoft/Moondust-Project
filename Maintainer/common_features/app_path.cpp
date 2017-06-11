@@ -42,8 +42,8 @@ QString AppPathManager::_settingsPath;
 
 void AppPathManager::initAppPath()
 {
-    QApplication::setOrganizationName(_COMPANY);
-    QApplication::setOrganizationDomain(_PGE_URL);
+    QApplication::setOrganizationName(V_COMPANY);
+    QApplication::setOrganizationDomain(V_PGE_URL);
     QApplication::setApplicationName("PGE Maintainer");
 
     #ifdef __APPLE__

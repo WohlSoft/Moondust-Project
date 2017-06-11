@@ -22,7 +22,7 @@
 #include <graphics/gl_renderer.h>
 #include <common_features/episode_state.h>
 
-#define INITIAL_WINDOW_TITLE "Platformer Game Engine - v" _FILE_VERSION _FILE_RELEASE  " build "  _BUILD_VER
+#define INITIAL_WINDOW_TITLE "Platformer Game Engine - v" V_FILE_VERSION V_FILE_RELEASE  " build " V_BUILD_VER " (Arch: " FILE_CPU ")"
 
 enum Level_returnTo
 {

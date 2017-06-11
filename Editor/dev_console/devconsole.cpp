@@ -367,7 +367,7 @@ void DevConsole::doValidateStrArray(QStringList args)
 
 void DevConsole::doVersion(QStringList /*args*/)
 {
-    log(QString("-> " _FILE_DESC ", version " _FILE_VERSION _FILE_RELEASE), ui->tabWidget->tabText(0));
+    log(QString("-> " V_FILE_DESC ", version " V_FILE_VERSION V_FILE_RELEASE), ui->tabWidget->tabText(0));
 }
 
 void DevConsole::doQuit(QStringList /*args*/)
