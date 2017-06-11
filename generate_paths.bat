@@ -27,6 +27,8 @@ echo set QtDir=C:\Qt\%QT_VERSION%\bin>> _paths.bat
 echo. >> _paths.bat
 echo rem ------------Actual path to MinGW compiler---------- >> _paths.bat
 echo set MinGW=C:\Qt\Tools\%MINGW_VERSION%\bin>> _paths.bat
+echo rem --Uncomment this if you building for x86_64 with MinGW-w64-- >> _paths.bat
+echo rem set MINGWx64Dest=yes>> _paths.bat
 echo. >> _paths.bat
 echo rem ------------Actual path to git for Windows--------- >> _paths.bat
 echo set GitDir=%GIT_PATH%>> _paths.bat

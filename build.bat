@@ -27,6 +27,10 @@ call _paths.bat
 set OldPATH=%PATH%
 PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;
 
+IF "%MINGWx64Dest%"=="yes" (
+	SET BuildArgs=%BuildArgs% CONFIG+=win64
+)
+
 goto run
 :cleanX
 echo ======== Remove all cached object files and automatically generated Makefiles ========
@@ -36,6 +40,11 @@ call ./clean_make.bat nopause
 IF EXIST .\bin-w32\_build_x32\NUL (
                     echo removing bin-w32/_build_x32 ...
                     rmdir /s /q bin-w32\_build_x32
+)
+
+IF EXIST .\bin-w64\_build_x32\NUL (
+                    echo removing bin-w64/_build_x32 ...
+                    rmdir /s /q bin-w64\_build_x32
 )
 
 IF EXIST .\bin-w32\_build_x64\NUL (

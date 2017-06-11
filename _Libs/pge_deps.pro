@@ -48,7 +48,11 @@ linux-g++: {
 }
 
 win32: {
-    deplibs.files += $$PWD/_builds/win32/bin/*.dll $$PWD/_builds/win32/lib/SDL2_mixer_ext.dll
+    !win64:{
+        deplibs.files += $$PWD/_builds/win32/bin/*.dll $$PWD/_builds/win32/lib/SDL2_mixer_ext.dll
+    } else {
+        deplibs.files += $$PWD/_builds/win64/bin/*.dll $$PWD/_builds/win64/lib/SDL2_mixer_ext.dll
+    }
 }
 
 !macx:{

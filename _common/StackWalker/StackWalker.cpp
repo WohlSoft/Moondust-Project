@@ -385,7 +385,7 @@ public:
                 if((m_hDbhHelp == NULL) && (szTempSize > 0))
                 {
                     szTemp += L"\\Debugging Tools for Windows 64-Bit\\dbghelp.dll";
-                    szTempS = (wchar_t *)szTemp.c_str();
+                    const wchar_t *szTempS = (wchar_t *)szTemp.c_str();
                     if(GetFileAttributes(szTempS) != INVALID_FILE_ATTRIBUTES)
                     {
                         m_hDbhHelp = LoadLibrary(szTempS);

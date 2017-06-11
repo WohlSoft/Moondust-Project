@@ -4,7 +4,11 @@ linux-g++||unix:!macx:!android: {
 
 win32: {
     !win*-msvc*:{
-        TARGETOS=win32
+		!win64:{
+			TARGETOS=win32
+		} else {
+			TARGETOS=win64
+		}
     } else {
         TARGETOS=win32-msvc
     }
