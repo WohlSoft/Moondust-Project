@@ -56,6 +56,16 @@
 
 #define _INTERNAL_NAME "pge_editor"
 
+#if defined(_X86_)||defined(__i386__)||defined(__i486__)||defined(__i586__)||defined(__i686__)||defined(_M_IX86)
+#define FILE_CPU "x86 (32-bit)"
+#elif defined(__x86_64__)||defined(__amd64__)||defined(_WIN64)||defined(_M_X64)||defined(_M_AMD64)
+#define FILE_CPU "x86_64 (64-bit)"
+#elif defined(__arm__)||defined(_M_ARM)||defined(_M_ARMT)
+#define FILE_CPU "arm"
+#else
+#define FILE_CPU "unknown"
+#endif
+
 #ifdef _WIN32
 	#define _ORIGINAL_NAME "pge_editor.exe" // for Windows platforms
 #else

@@ -1,8 +1,18 @@
 @echo off
 call _paths.bat
-cd %SOURCEDIR%\bin-w32\_build_x32
-echo %CD%
-for /r %%F in (*) do if %%~zF==0 del "%%F" && echo deleted %%F
+
+IF EXIST %SOURCEDIR%\bin-w32\_build_x32\NUL (
+	cd %SOURCEDIR%\bin-w32\_build_x32
+	echo %CD%
+	for /r %%F in (*) do if %%~zF==0 del "%%F" && echo deleted %%F
+)
+
+IF EXIST %SOURCEDIR%\bin-w64\_build_x32\NUL (
+	cd %SOURCEDIR%\bin-w64\_build_x32
+	echo %CD%
+	for /r %%F in (*) do if %%~zF==0 del "%%F" && echo deleted %%F
+)
+
 echo.
 echo Empty object files was removed!
 echo.

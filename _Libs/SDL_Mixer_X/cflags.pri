@@ -19,8 +19,12 @@
     macx:{
         QMAKE_CXXFLAGS_WARN_ON += -Wno-header-guard
     } else {
-        QMAKE_CFLAGS_WARN_ON    += -Wno-unused-but-set-variable -Wno-deprecated-register
-        QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-but-set-variable -Wno-deprecated-register
+        QMAKE_CFLAGS_WARN_ON    += -Wno-unused-but-set-variable
+        QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-but-set-variable
+        !win64:{
+            QMAKE_CFLAGS_WARN_ON    += -Wno-deprecated-register
+            QMAKE_CXXFLAGS_WARN_ON  += -Wno-deprecated-register
+        }
         QMAKE_LFLAGS    += -Wl,-rpath=\'\$\$ORIGIN\'
     }
 } else {

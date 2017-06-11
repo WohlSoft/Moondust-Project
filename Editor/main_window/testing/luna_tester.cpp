@@ -50,6 +50,9 @@
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>
 
+#ifdef _WIN64
+#define USE_LUNAHEXER
+#endif
 
 class QThreadPointNuller
 {
@@ -523,8 +526,22 @@ typedef char LUNACHAR;
 #define LunaW "wb"
 #endif
 
+static bool isPatched(const LUNACHAR *dstexe)
+{
+    FILE *test = LunaFOPEN(dstexe, LunaR);
+    if(test)
+    {
+        fclose(test);
+        return true;
+    }
+    return false;
+}
+
 static int patchSMBX(const LUNACHAR *srcexe, const LUNACHAR *dstexe)
 {
+    if(isPatched(dstexe))
+        return 0; //Already patched!
+
     char ch = 0;
     char null[4096];
     memset(null, 0, 4096);
@@ -669,7 +686,7 @@ LunaTester::LunaLoaderResult LunaTester::LunaHexerRun(
 
 
 
-static inline void setJmpAddr(uint8_t *patch, DWORD patchAddr, DWORD patchOffset, DWORD target)
+static inline void setJmpAddr(uint8_t *patch, DWORD patchAddr, DWORD patchOffset, intptr_t target)
 {
     DWORD *dwordAddr = (DWORD *)&patch[patchOffset + 1];
     *dwordAddr = (DWORD)target - (DWORD)(patchAddr + patchOffset + 5);
@@ -772,21 +789,21 @@ LunaTester::LunaLoaderResult LunaTester::LunaLoaderRun(
     };
 
     // Allocate space for Patch 2
-    DWORD LoaderPatchAddr2 = (DWORD)VirtualAllocEx(
+    intptr_t LoaderPatchAddr2 = (intptr_t)VirtualAllocEx(
                                  m_pi.hProcess,         // Target process
                                  NULL,                  // Don't request any particular address
                                  sizeof(LoaderPatch2),  // Length of Patch 2
                                  MEM_COMMIT,            // Type of memory allocation
                                  PAGE_READWRITE         // Memory protection type
                              );
-    if(LoaderPatchAddr2 == (DWORD)NULL)
+    if(LoaderPatchAddr2 == (intptr_t)NULL)
         return LUNALOADER_PATCH_FAIL;
 
     // Set Patch1 Addresses
     setJmpAddr(LoaderPatch1, LoaderPatchAddr1, 0x00, LoaderPatchAddr2);
 
     // Set Patch2 Addresses
-    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x10, (DWORD)&LoadLibraryA);
+    setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x10, (intptr_t)&LoadLibraryA);
     setJmpAddr(LoaderPatch2, LoaderPatchAddr2, 0x1D, LoaderPatchAddr1 + 5);
 
     // Patch the entry point...
