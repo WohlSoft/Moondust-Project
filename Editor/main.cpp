@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
         }
         else if(arg == "--version")
         {
-            std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE "-" _BUILD_VER << std::endl;
+            std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << std::endl;
             pgeEditorQuit();
             return 0;
         }

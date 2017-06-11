@@ -11,10 +11,10 @@ int main(int arvc, char**argv)
 {
 
     #ifdef VER_FULL
-    printf( _INTERNAL_NAME " " _FILE_VERSION  _FILE_RELEASE "-" _BUILD_VER );
+    printf( V_INTERNAL_NAME " " V_FILE_VERSION  V_FILE_RELEASE "-" V_BUILD_VER );
     #endif
     #ifdef VER_SHORT
-    printf( _FILE_VERSION  _FILE_RELEASE );
+    printf( V_FILE_VERSION  V_FILE_RELEASE );
     #endif
     return 0;
 }

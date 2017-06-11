@@ -314,14 +314,14 @@ void UpdateChecker::httpFinished()
         latest = latest.trimmed();
         latest.remove('\n');
 
-        bool isLatest = ( DatetimeToTimestamp(latest) <= BuildDateToTimestamp(_DATE_OF_BUILD) );
+        bool isLatest = ( DatetimeToTimestamp(latest) <= BuildDateToTimestamp(V_DATE_OF_BUILD) );
 
         switch(which_version)
         {
         case V_STABLE:
             //qDebug() << QString("%1").arg(_LATEST_STABLE) << "vs" << latest;
 
-            qDebug() << QString("%1").arg(_DATE_OF_BUILD) << "vs" << latest;
+            qDebug() << QString("%1").arg(V_DATE_OF_BUILD) << "vs" << latest;
             //qDebug() << VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), latest) << " win!" <<
             qDebug() << ( isLatest ? "fresh" : "old" );
 

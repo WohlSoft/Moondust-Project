@@ -83,8 +83,8 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     connect(ui->playListPush, &QPushButton::clicked, this, &MusPlayer_Qt::playList_pushCurrent);
     connect(ui->playListPop, &QPushButton::clicked, this, &MusPlayer_Qt::playList_popCurrent);
 
-    QApplication::setOrganizationName(_COMPANY);
-    QApplication::setOrganizationDomain(_PGE_URL);
+    QApplication::setOrganizationName(V_COMPANY);
+    QApplication::setOrganizationDomain(V_PGE_URL);
     QApplication::setApplicationName("PGE Music Player");
     ui->playList->setModel(&playList);
 
@@ -228,7 +228,7 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
 
     x.addSeparator();
     QMenu   *about       = x.addMenu("About");
-    QAction *version     = about->addAction("SDL Mixer X Music Player v." _FILE_VERSION);
+    QAction *version     = about->addAction("SDL Mixer X Music Player v." V_FILE_VERSION);
     version->setEnabled(false);
     QAction *license     = about->addAction("Licensed under GNU GPLv3 license");
     about->addSeparator();

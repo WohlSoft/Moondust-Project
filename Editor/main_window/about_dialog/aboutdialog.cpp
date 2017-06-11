@@ -56,12 +56,12 @@ aboutDialog::aboutDialog(QWidget *parent) :
     #endif
 
     ui->About1->setText(ui->About1->text()
-                        .arg(_FILE_VERSION)
-                        .arg(_FILE_RELEASE)
+                        .arg(V_FILE_VERSION)
+                        .arg(V_FILE_RELEASE)
                         .arg(FILE_CPU)
                         .arg(QString("Revision: %1, Build date: <u>%2</u>")
-                             .arg(_BUILD_VER)
-                             .arg(_DATE_OF_BUILD))
+                             .arg(V_BUILD_VER)
+                             .arg(V_DATE_OF_BUILD))
                         );
 
     QFile mFile(":/credits.html");

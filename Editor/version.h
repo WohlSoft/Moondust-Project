@@ -23,53 +23,43 @@
 #define EDITOR_VERSION_H
 
 #ifdef GIT_VERSION
-#define _BUILD_VER GIT_VERSION
+#define V_BUILD_VER GIT_VERSION
 #else
-#define _BUILD_VER "<empty>"
+#define V_BUILD_VER "<empty>"
 #endif
 
-#define _VF1 0
-#define _VF2 3
-#define _VF3 1
-#define _VF4 13
-#define _FILE_RELEASE "" //"-alpha","-beta","-dev", or "" aka "release"
+#define V_VF1 0
+#define V_VF2 3
+#define V_VF3 1
+#define V_VF4 13
+#define V_FILE_RELEASE "" //"-alpha","-beta","-dev", or "" aka "release"
 
-#define _VF1_s STR_VALUE(_VF1)
-#define _VF2_s STR_VALUE(_VF2)
-#define _VF3_s STR_VALUE(_VF3)
-#define _VF4_s STR_VALUE(_VF4)
-#if _VF4 == 0
-    #if _VF3 == 0
-        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_2(_VF1_s, _VF2_s)
+#define V_VF1_s STR_VALUE(V_VF1)
+#define V_VF2_s STR_VALUE(V_VF2)
+#define V_VF3_s STR_VALUE(V_VF3)
+#define V_VF4_s STR_VALUE(V_VF4)
+#if V_VF4 == 0
+    #if V_VF3 == 0
+        #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_2(V_VF1_s, V_VF2_s)
     #else
-        #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_3(_VF1_s, _VF2_s, _VF3_s)
+        #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_3(V_VF1_s, V_VF2_s, V_VF3_s)
     #endif
 #else
-    #define _FILE_VERSION_NUM GEN_VERSION_NUMBER_4(_VF1_s, _VF2_s, _VF3_s, _VF4_s)
+    #define V_FILE_VERSION_NUM GEN_VERSION_NUMBER_4(V_VF1_s, V_VF2_s, V_VF3_s, V_VF4_s)
 #endif
 
-#define _FILE_VERSION _FILE_VERSION_NUM
+#define V_FILE_VERSION   V_FILE_VERSION_NUM
 //Version of this program
-#define _LATEST_STABLE  _FILE_VERSION "-" _BUILD_VER
+#define V_LATEST_STABLE  V_FILE_VERSION "-" V_BUILD_VER
 
-#define _FILE_DESC "Platformer Game Engine - Editor"
+#define V_FILE_DESC "Platformer Game Engine - Editor"
 
-#define _INTERNAL_NAME "pge_editor"
-
-#if defined(_X86_)||defined(__i386__)||defined(__i486__)||defined(__i586__)||defined(__i686__)||defined(_M_IX86)
-#define FILE_CPU "x86 (32-bit)"
-#elif defined(__x86_64__)||defined(__amd64__)||defined(_WIN64)||defined(_M_X64)||defined(_M_AMD64)
-#define FILE_CPU "x86_64 (64-bit)"
-#elif defined(__arm__)||defined(_M_ARM)||defined(_M_ARMT)
-#define FILE_CPU "arm"
-#else
-#define FILE_CPU "unknown"
-#endif
+#define V_INTERNAL_NAME "pge_editor"
 
 #ifdef _WIN32
-	#define _ORIGINAL_NAME "pge_editor.exe" // for Windows platforms
+    #define V_ORIGINAL_NAME "pge_editor.exe" // for Windows platforms
 #else
-	#define _ORIGINAL_NAME "pge_editor" // for any other platforms
+    #define V_ORIGINAL_NAME "pge_editor" // for any other platforms
 #endif
 
 //Uncomment this for enable detal logging

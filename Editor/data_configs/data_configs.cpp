@@ -162,7 +162,7 @@ bool dataconfigs::loadBasics()
     QString url     = guiset.value("home-page", "http://wohlsoft.ru/config_packs/").toQString();
     QString version = guiset.value("pge-editor-version", "0.0").toQString();
     bool ver_notify = guiset.value("enable-version-notify", true).toBool();
-    if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_FILE_VERSION), version)))
+    if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(V_FILE_VERSION), version)))
     {
         QMessageBox box;
         box.setWindowTitle("Legacy configuration package");

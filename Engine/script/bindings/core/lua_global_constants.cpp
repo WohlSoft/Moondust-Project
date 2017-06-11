@@ -8,7 +8,7 @@ void Binding_Global_Constants::bindToLua(lua_State *L)
     using namespace luabind;
     object _G = globals(L);
     _G["GAME_ENGINE"] = GAME_ENGINE;
-    _G["PGE_ENGINE_VER"] = _FILE_VERSION _FILE_RELEASE;
+    _G["PGE_ENGINE_VER"] = V_FILE_VERSION V_FILE_RELEASE;
 
     //Level Scene enums
     _G["GENERATOR_APPEAR"] = LevelScene::GENERATOR_APPEAR;
