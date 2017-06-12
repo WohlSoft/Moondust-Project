@@ -4,11 +4,13 @@ linux-g++||unix:!macx:!android: {
 
 win32: {
     !win*-msvc*:{
-		!win64:{
-			TARGETOS=win32
-		} else {
-			TARGETOS=win64
-		}
+        win64:{
+            TARGETOS=win64
+        } else:win32-mingw-w64 {
+            TARGETOS=win32-mingw-w64
+        } else {
+            TARGETOS=win32
+        }
     } else {
         TARGETOS=win32-msvc
     }
@@ -21,3 +23,5 @@ macx:{
 android:{
     TARGETOS=android
 }
+
+message("Target library path is $$TARGETOS!")
