@@ -142,6 +142,7 @@ typedef enum
     MUS_FLAC,
     MUS_MODPLUG,
     MUS_SPC,
+    MUS_GME = MUS_SPC,
     MUS_ADLMIDI,
     MUS_KnownCodecs     /* Count of codec types */
 } Mix_MusicType;
@@ -665,10 +666,37 @@ extern DECLSPEC int SDLCALL Mix_PausedMusic(void);
 /* Set the current position in the music stream.
    This returns 0 if successful, or -1 if it failed or isn't implemented.
    This function is only implemented for MOD music formats (set pattern
-   order number) and for OGG, FLAC, MP3_MAD, and MODPLUG music (set
+   order number) and for WAV, OGG, FLAC, MP3_MAD, and MODPLUG music (set
    position in seconds), at the moment.
 */
 extern DECLSPEC int SDLCALL Mix_SetMusicPosition(double position);
+/*
+    Get the time current position of music stream
+    returns -1.0 if this feature is not supported for some codec
+ */
+extern DECLSPEC double SDLCALLCC Mix_GetMusicPosition(Mix_Music *music);
+/*
+    Get the total time length of music stream
+    returns -1.0 if this feature is not supported for some codec
+ */
+extern DECLSPEC double SDLCALLCC Mix_GetMusicTotalTime(Mix_Music *music);
+
+/*
+    Get the loop start time position of music stream
+    returns -1.0 if this feature is not used for this music or not supported for some codec
+ */
+extern DECLSPEC double SDLCALLCC Mix_GetMusicLoopStartTime(Mix_Music *music);
+/*
+    Get the loop end time position of music stream
+    returns -1.0 if this feature is not used for this music or not supported for some codec
+ */
+extern DECLSPEC double SDLCALLCC Mix_GetMusicLoopEndTime(Mix_Music *music);
+/*
+    Get the loop time length of music stream
+    returns -1.0 if this feature is not used for this music or not supported for some codec
+ */
+extern DECLSPEC double SDLCALLCC Mix_GetMusicLoopLengthTime(Mix_Music *music);
+
 
 /* Check the status of a specific channel.
    If the specified channel is -1, check all channels.
