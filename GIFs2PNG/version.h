@@ -27,7 +27,7 @@
 
 #define V_VF1 3
 #define V_VF2 0
-#define V_VF3 0
+#define V_VF3 1
 #define V_VF4 0
 #define V_FILE_RELEASE ""
 

@@ -45,11 +45,12 @@ public:
 
     /**
      * @brief Find file in added data directories
-     * @param file file to find
-     * @param customPath custom directory path
+     * @param [__in] file file to find
+     * @param [__in] customPath custom directory path
+     * @param [__out] isReadonly Is file a part of config pack (true) or is a custom file which located in same folder as custom Path (false)
      * @return absolute path to found file. Empty string if no files are found.
      */
-    std::string getFile(const std::string &file, std::string customPath);
+    std::string getFile(const std::string &file, std::string customPath, bool *isReadonly = nullptr);
 
 private:
     bool                    m_is_using;

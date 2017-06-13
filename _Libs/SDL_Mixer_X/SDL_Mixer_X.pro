@@ -114,7 +114,7 @@ android:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
             LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
-            SOURCES += vb6_sdl_binds.c
+            SOURCES += $$PWD/src/vb6_sdl_binds.c
         } else {
             !win*-msvc*:{
                 LIBS += -lSDL2main -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a

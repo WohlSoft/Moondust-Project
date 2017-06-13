@@ -190,9 +190,10 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     }
 
     std::string maskFileIn;
+    bool isMaskReadOnly = false;
     getGifMask(maskFileIn, imgFileIn);
 
-    maskPathIn = cnf.getFile(maskFileIn, pathIn);
+    maskPathIn = cnf.getFile(maskFileIn, pathIn, &isMaskReadOnly);
 
     FIBITMAP *image = loadImage(imgPathIn);
     if(!image)
@@ -232,12 +233,11 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
         {
             if(Files::deleteFile(imgPathIn))
                 std::cout << ".F-DEL.";
-            if(Files::deleteFile(maskPathIn))
+            if(!isMaskReadOnly && Files::deleteFile(maskPathIn))
                 std::cout << ".M-DEL.";
         }
         std::cout << "...done\n";
     }
-
 
     std::cout.flush();
 }
