@@ -123,15 +123,26 @@ void ConfigPackMiniManager::appendDirList(const std::string& dir)
     }
 }
 
-std::string ConfigPackMiniManager::getFile(const std::string &file, std::string customPath)
+std::string ConfigPackMiniManager::getFile(const std::string &file, std::string customPath, bool *isReadonly)
 {
     addSlashToTail(customPath);
 
     if(!m_is_using)
+    {
+        if(isReadonly)
+            *isReadonly = false;
         return customPath + file;
+    }
 
     if(Files::fileExists(customPath + file))
+    {
+        if(isReadonly)
+            *isReadonly = false;
         return customPath + file;
+    }
+
+    if(isReadonly)
+        *isReadonly = true; //File is not custom, must not be removed!
 
     for(std::vector<std::string>::reverse_iterator it = m_dir_list.rbegin();
         it != m_dir_list.rend();
