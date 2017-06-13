@@ -19,6 +19,7 @@
 
 #include <locale>
 #include <iostream>
+#include <set>
 #include <stdio.h>
 
 #include <FileMapper/file_mapper.h>
@@ -130,19 +131,32 @@ static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
 
 struct GIFs2PNG_Setup
 {
+    //! Input path (folder)
     std::string pathIn;
+    //! Is a list of files mode (otherwise, checking entire folder)
     bool listOfFiles        = false;
 
+    //! Output path (folder where destinition images will be saved)
     std::string pathOut;
+    //! Put every image into same folder where original is located
     bool pathOutSame        = false;
 
+    //! Path to configuration package which a source of missing mask files
     std::string configPath;
+    //! List of masks (which are located in the episode-folder, are dependent to sub-directories and must be deleted after conversion completion)
+    std::set<std::string> deleteLater;
 
+    //! Source images are will be removed after conversion
     bool removeSource       = false;
+    //! Scan also all subdirectories, otherwise only current folder content will be converted
     bool walkSubDirs        = false;
+    //! Skip background2-*.gif images (which are rendering buggy in LunaLua in PNG format, in GIF there are valid)
     bool skipBackground2    = false;
+    //! Count of successfully converted images
     unsigned int count_success  = 0;
+    //! Count of failed conversions
     unsigned int count_failed   = 0;
+    //! Count of skipped image conversions
     unsigned int count_skipped  = 0;
 };
 
@@ -190,10 +204,10 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     }
 
     std::string maskFileIn;
-    bool isMaskReadOnly = false;
+    bool maskIsReadOnly = false;
     getGifMask(maskFileIn, imgFileIn);
 
-    maskPathIn = cnf.getFile(maskFileIn, pathIn, &isMaskReadOnly);
+    maskPathIn = cnf.getFile(maskFileIn, pathIn, &maskIsReadOnly);
 
     FIBITMAP *image = loadImage(imgPathIn);
     if(!image)
@@ -205,8 +219,9 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     }
 
     bool isFail = false;
+    bool maskIsExists = Files::fileExists(maskPathIn);
 
-    if(Files::fileExists(maskPathIn))
+    if(maskIsExists)
         mergeBitBltToRGBA(image, maskPathIn);
 
     if(image)
@@ -233,8 +248,16 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
         {
             if(Files::deleteFile(imgPathIn))
                 std::cout << ".F-DEL.";
-            if(!isMaskReadOnly && Files::deleteFile(maskPathIn))
-                std::cout << ".M-DEL.";
+            //Try to delete or delete-late mask if it is exist and is not read-only
+            if(maskIsExists && !maskIsReadOnly)
+            {
+                /* Delete-Later if mask file is stored in the root of episode directory.
+                   Mask file is dependent to images are inside the subfolder */
+                if(!setup.listOfFiles && setup.walkSubDirs && (setup.pathIn == Files::dirname(maskPathIn)))
+                    setup.deleteLater.insert(maskPathIn);
+                else if(Files::deleteFile(maskPathIn)) //Or just delete the mask file
+                    std::cout << ".M-DEL.";
+            }
         }
         std::cout << "...done\n";
     }
@@ -422,6 +445,21 @@ int main(int argc, char *argv[])
                     doGifs2PNG(curPath, file, setup.pathOut, setup, config);
                 }
             }
+        }
+    }
+
+    if(!setup.deleteLater.empty())
+    {
+        printf("======================Deleting old files...=================================\n");
+        fflush(stdout);
+        for(const std::string &s : setup.deleteLater)
+        {
+            std::cout << s << "...";
+            std::cout.flush();
+            if(Files::deleteFile(s))
+                std::cout << ".DEL.";
+            std::cout << "\n";
+            std::cout.flush();
         }
     }
 
