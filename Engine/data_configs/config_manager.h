@@ -163,7 +163,7 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
     bool isDefault = false;
     std::string file = dir.getCustomFile(fmt::format("{1}-{0}.ini", ID, fileName), &isDefault);
 
-    if(!skipTXT && file.empty())
+    if(!skipTXT && isDefault /*file.empty()*/)
         file = dir.getCustomFile(fmt::format("{1}-{0}.txt", ID, fileName), &isDefault);
 
     if(!file.empty() && !isDefault)
