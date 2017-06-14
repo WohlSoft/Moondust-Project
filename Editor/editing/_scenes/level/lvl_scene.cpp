@@ -110,28 +110,28 @@ LvlScene::LvlScene(MainWindow* mw,
     }
 
     //set Default Z Indexes
-    Z_backImage     = -1000; //Background
+    Z_backImage     = -1000.0; //Background
     //Background-2
-    Z_BGOBack2      = -160; // backround BGO
-    Z_blockSizable  = -150; // sizable blocks
+    Z_BGOBack2      = -95.0; // backround BGO
+    Z_blockSizable  = -90.0; // sizable blocks
     //Background-1
-    Z_BGOBack1      = -100; // backround BGO
-    Z_npcBack       = -10; // background NPC
-    Z_Block         = 1; // standart block
-    Z_npcStd        = 30; // standart NPC
-    Z_Player        = 35; //player Point
+    Z_BGOBack1      = -85.0; // backround BGO
+    Z_npcBack       = -75.0; // background NPC
+    Z_Block         = -65.0; // standart block
+    Z_npcStd        = -45.0; // standart NPC
+    Z_Player        = -25.0; //player Point
     //Foreground-1
-    Z_BGOFore1      = 50; // foreground BGO
-    Z_npcFore       = 100; // foreground NPC
-    Z_BlockFore     = 150; //foreground BLOCK
+    Z_BGOFore1      = -20.0; // foreground BGO
+    Z_npcFore       = -15.0; // foreground NPC
+    Z_BlockFore     = -10.0; //foreground BLOCK
     //Foreground-2
-    Z_BGOFore2      = 160; // foreground BGO
+    Z_BGOFore2      = 2.0; // foreground BGO
 
     //System foreground
-    Z_sys_PhysEnv   = 500;
-    Z_sys_door      = 700;
-    Z_sys_interspace1 = 1000; // interSection space layer
-    Z_sys_sctBorder = 1020; // section Border
+    Z_sys_PhysEnv   = 500.0;
+    Z_sys_door      = 700.0;
+    Z_sys_interspace1 = 1000.0; // interSection space layer
+    Z_sys_sctBorder = 1020.0; // section Border
 
     //Build animators for dummies
     SimpleAnimator * tmpAnimator;

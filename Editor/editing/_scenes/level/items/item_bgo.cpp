@@ -540,18 +540,19 @@ void ItemBGO::setZMode(int mode, qreal offset, bool init)
         switch(m_zLayer)
         {
         case -1:
-            targetZ = m_scene->Z_BGOBack2 + m_zOffset + m_data.z_offset;
+            targetZ = m_scene->Z_BGOBack2;
             break;
         case 1:
-            targetZ = m_scene->Z_BGOFore1 + m_zOffset + m_data.z_offset;
+            targetZ = m_scene->Z_BGOFore1;
             break;
         case 2:
-            targetZ = m_scene->Z_BGOFore2 + m_zOffset + m_data.z_offset;
+            targetZ = m_scene->Z_BGOFore2;
             break;
         case 0:
         default:
-            targetZ = m_scene->Z_BGOBack1 + m_zOffset + m_data.z_offset;
+            targetZ = m_scene->Z_BGOBack1;
         }
+        targetZ += m_zOffset + m_data.z_offset;
     }
 
     switch(m_data.z_mode)
@@ -571,6 +572,7 @@ void ItemBGO::setZMode(int mode, qreal offset, bool init)
     default:
         break;
     }
+
     setZValue(targetZ);
 
     if(!init) arrayApply();
