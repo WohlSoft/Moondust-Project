@@ -203,7 +203,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     }
 
     SDL_SetWindowMinimumSize(window, Width, Height);
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     GraphicsHelps::initFreeImage();
     #ifdef _WIN32
     FIBITMAP *img[2];
@@ -460,7 +460,8 @@ int PGE_Window::processEvents(SDL_Event &event)
     {
     case SDL_WINDOWEVENT:
     {
-        if(event.window.event == SDL_WINDOWEVENT_RESIZED)
+        if((event.window.event == SDL_WINDOWEVENT_RESIZED)||
+                (event.window.event == SDL_WINDOWEVENT_MOVED))
             GlRenderer::resetViewport();
 
         return 1;

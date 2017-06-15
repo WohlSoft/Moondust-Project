@@ -82,27 +82,36 @@ class Render_OpenGL31 : public Render_Base
         PGE_Texture _dummyTexture;
 
         //Virtual resolution of renderable zone
-        float window_w;
-        float window_h;
+        float window_w = 800.0f;
+        float window_h = 600.0f;
 
-        //Scale of virtual and window resolutuins
-        float scale_x;
-        float scale_y;
-        //Side offsets to keep ratio
-        float offset_x;
-        float offset_y;
-        //current viewport
-        float viewport_x;
-        float viewport_y;
-        //Need to calculate relative viewport position when screen was scaled
-        float viewport_scale_x;
-        float viewport_scale_y;
+        //Scale of virtual and window resolutuins (Real)
+        float scale_x = 1.0f;
+        float scale_y = 1.0f;
+        //Scale of virtual and window resolutions (Renderable)
+        float scale_x_draw = 1.0f;
+        float scale_y_draw = 1.0f;
+        //Side offsets to keep ratio (Real)
+        float offset_x = 0.0f;
+        float offset_y = 0.0f;
+        //Side offsets (Renderable)
+        float offset_x_draw = 0.0f;
+        float offset_y_draw = 0.0f;
+        //current viewport (internal values)
+        float viewport_x = 0.0f;
+        float viewport_y = 0.0f;
+        //Need to calculate relative viewport position when screen has scaled (Real)
+        float viewport_scale_x = 1.0f;
+        float viewport_scale_y = 1.0f;
+        //Need to calculate relative viewport position when screen has scaled (Renderable)
+        float viewport_scale_x_draw = 1.0f;
+        float viewport_scale_y_draw = 1.0f;
         //Resolution of viewport
-        float viewport_w;
-        float viewport_h;
+        float viewport_w = 800.0f;
+        float viewport_h = 600.0f;
         //Half values of viewport Resolution
-        float viewport_w_half;
-        float viewport_h_half;
+        float viewport_w_half = 400.0f;
+        float viewport_h_half = 300.0f;
 
         //Texture render color levels
         float color_binded_texture[16];

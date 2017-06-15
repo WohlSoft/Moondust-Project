@@ -537,8 +537,8 @@ PGE_Point Render_SW_SDL::MapToScr(PGE_Point point)
 PGE_Point Render_SW_SDL::MapToScr(int x, int y)
 {
     return PGE_Point(
-               static_cast<int>((static_cast<float>(x) / viewport_scale_x) - offset_x),
-               static_cast<int>((static_cast<float>(y) / viewport_scale_y) - offset_y)
+               static_cast<int>( (static_cast<float>(x) - offset_x) / viewport_scale_x),
+               static_cast<int>( (static_cast<float>(y) - offset_y) / viewport_scale_y)
            );
 }
 
