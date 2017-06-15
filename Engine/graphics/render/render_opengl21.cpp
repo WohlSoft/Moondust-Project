@@ -85,28 +85,6 @@ static void toPowofTwo(FIBITMAP **image)
 }
 
 Render_OpenGL21::Render_OpenGL21() : Render_Base("OpenGL 2.1"),
-    //Virtual resolution of renderable zone
-    window_w(800.0f),
-    window_h(600.0f),
-    //Scale of virtual and window resolutuins
-    scale_x(1.0f),
-    scale_y(1.0f),
-    //Side offsets to keep ratio
-    offset_x(0.0f),
-    offset_y(0.0f),
-    //current viewport
-    viewport_x(0.0f),
-    viewport_y(0.0f),
-    //Need to calculate relative viewport position when screen was scaled
-    viewport_scale_x(1.0f),
-    viewport_scale_y(1.0f),
-    //Resolution of viewport
-    viewport_w(800.0f),
-    viewport_h(600.0f),
-    //Half values of viewport Resolution
-    viewport_w_half(400.0f),
-    viewport_h_half(300.0f),
-    //Texture render color levels
     color_binded_texture{1.0f, 1.0f, 1.0f, 1.0f}
 {}
 
@@ -295,10 +273,10 @@ void Render_OpenGL21::getScreenPixelsRGBA(int x, int y, int w, int h, unsigned c
 
 void Render_OpenGL21::setViewport(int x, int y, int w, int h)
 {
-    glViewport(static_cast<GLint>(offset_x + x * viewport_scale_x),
-               static_cast<GLint>(offset_y + (window_h - (y + h))*viewport_scale_y),
-               static_cast<GLsizei>(w * viewport_scale_x),
-               static_cast<GLsizei>(h * viewport_scale_y));
+    glViewport(static_cast<GLint>(offset_x_draw + x * viewport_scale_x_draw),
+               static_cast<GLint>(offset_y_draw + (window_h - (y + h)) * viewport_scale_y_draw),
+               static_cast<GLsizei>(w * viewport_scale_x_draw),
+               static_cast<GLsizei>(h * viewport_scale_y_draw));
     GLERRORCHECK();
     viewport_x = x;
     viewport_y = y;
@@ -307,35 +285,54 @@ void Render_OpenGL21::setViewport(int x, int y, int w, int h)
 
 void Render_OpenGL21::resetViewport()
 {
-    float w, w1, h, h1;
-    int   wi, hi;
+    float w, w1, wd1, h, h1, hd1, wd, hd;
+    int   wi, hi, wid, hid;
     SDL_GetWindowSize(PGE_Window::window, &wi, &hi);
+    SDL_GL_GetDrawableSize(PGE_Window::window, &wid, &hid);
+    //Real size of window
     w = wi;
     h = hi;
+    //Real renderable area size
+    wd = wid;
+    hd = hid;
+    //Scaled window size
     w1 = w;
     h1 = h;
+    //Scaled renderable area size
+    wd1 = wd;
+    hd1 = hd;
     scale_x = w / window_w;
     scale_y = h / window_h;
+    scale_x_draw = wd / window_w;
+    scale_y_draw = hd / window_h;
     viewport_scale_x = scale_x;
     viewport_scale_y = scale_y;
+    viewport_scale_x_draw = scale_x_draw;
+    viewport_scale_y_draw = scale_y_draw;
 
-    if(scale_x > scale_y)
+    if(scale_x_draw > scale_y_draw)
     {
         w1 = scale_y * window_w;
+        wd1 = scale_y_draw * window_w;
         viewport_scale_x = w1 / window_w;
+        viewport_scale_x_draw = wd1 / window_w;
     }
-    else if(scale_x < scale_y)
+    else if(scale_x_draw < scale_y_draw)
     {
         h1 = scale_x * window_h;
+        hd1 = scale_x_draw * window_h;
         viewport_scale_y = h1 / window_h;
+        viewport_scale_y_draw = hd1 / window_h;
     }
 
-    offset_x = (w - w1) / 2;
-    offset_y = (h - h1) / 2;
-    glViewport(static_cast<GLint>(offset_x),
-               static_cast<GLint>(offset_y),
-               static_cast<GLsizei>(w1),
-               static_cast<GLsizei>(h1));
+    offset_x = (w - w1) / 2.0f;
+    offset_y = (h - h1) / 2.0f;
+    offset_x_draw = (wd - wd1) / 2.0f;
+    offset_y_draw = (hd - hd1) / 2.0f;
+    glViewport(static_cast<GLint>(offset_x_draw),
+               static_cast<GLint>(offset_y_draw),
+               static_cast<GLsizei>(wd1),
+               static_cast<GLsizei>(hd1));
     GLERRORCHECK();
     setViewportSize(window_w, window_h);
 }
@@ -571,8 +568,8 @@ PGE_Point Render_OpenGL21::MapToScr(PGE_Point point)
 PGE_Point Render_OpenGL21::MapToScr(int x, int y)
 {
     return PGE_Point(
-               static_cast<int>(((static_cast<float>(x)) / viewport_scale_x) - offset_x),
-               static_cast<int>(((static_cast<float>(y)) / viewport_scale_y) - offset_y)
+               static_cast<int>( (static_cast<float>(x) - offset_x) / viewport_scale_x),
+               static_cast<int>( (static_cast<float>(y) - offset_y) / viewport_scale_y)
            );
 }
 
