@@ -40,6 +40,8 @@ debug: DEFINES += DEBUG_BUILD
     QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
 }
 
+macx: LIBS += -framework Cocoa
+
 include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
 

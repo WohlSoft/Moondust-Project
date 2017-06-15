@@ -60,6 +60,7 @@ include ($$PWD/../_common/lib_destdir.pri)
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lfreeimagelite
+macx: LIBS += -framework Cocoa
 
 SOURCES += \
     main.cpp\

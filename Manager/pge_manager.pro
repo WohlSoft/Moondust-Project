@@ -57,6 +57,8 @@ include($$PWD/../_common/build_props.pri)
 
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
+macx: LIBS += -framework Cocoa
+
 SOURCES += main.cpp\
     mainwindow.cpp \
     common_features/app_path.cpp \
