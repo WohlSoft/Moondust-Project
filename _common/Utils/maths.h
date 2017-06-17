@@ -44,6 +44,16 @@ namespace Maths
     long    roundTo(long src, long grid);
     double  roundTo(double src, double grid);
 
+    inline double roundToDown(double num, double multto)
+    {
+        if(multto == 0.0)
+            return num;
+        double remind = std::fmod(num, multto);
+        if(remind == 0.0)
+            return num;
+        return num - remind;
+    }
+
     inline int iRound(double d)
     {
         return d >= 0.0 ? int(d + 0.5) : int(d - double(int(d - 1)) + 0.5) + int(d - 1);

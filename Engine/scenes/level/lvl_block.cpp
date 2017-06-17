@@ -38,7 +38,6 @@ void LVL_Block::construct()
     taskToTransform_t = 0;
     transformedFromBlockID = -1ul;
     transformedFromNpcID = -1ul;
-    _isInited = false;
 }
 
 LVL_Block::LVL_Block(LevelScene *_parent) :
@@ -54,6 +53,7 @@ LVL_Block::LVL_Block(LevelScene *_parent) :
     manual_ticks = 0.0;
     offset_x = 0.0;
     offset_y = 0.0;
+    m_isInited = false;
     construct();
 }
 
@@ -63,21 +63,51 @@ LVL_Block::~LVL_Block()
 
 void LVL_Block::init(bool force)
 {
-    if(_isInited && !force)
+    if(m_isInited && !force)
         return;
 
-    if(!_isInited)
+    bool    force_wasInited = false;
+    double  force_alignedX  = 0.0;
+    double  force_alignedY  = 0.0;
+
+    if(!m_isInited)
         dataInitial = data;
     else
     if(force)
     {
+        if(m_destroyed)
+        {
+            LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+            lyr.m_destroyedObjects--;
+            m_destroyed = false;
+        }
         construct();//reset ALL values into initial state
         data = dataInitial;
+        if(m_isInited)
+        {
+            force_wasInited = true;
+            //Keep decimal position
+            force_alignedX  = m_momentum.x;
+            force_alignedY  = m_momentum.y;
+            //Round to integers
+            dataInitial.x = Maths::lRound(m_momentum.x);
+            dataInitial.y = Maths::lRound(m_momentum.y);
+            data.x = Maths::lRound(m_momentum.x);
+            data.y = Maths::lRound(m_momentum.y);
+        }
+        m_isInited = false;
     }
-
-    m_scene->m_layers.registerItem(data.layer, this);
     transformTo_x(data.id);
-    _isInited = true;
+    if(force_wasInited)
+    {
+        //Restore decimal position back
+        m_momentum.x = force_alignedX;
+        m_momentum.y = force_alignedY;
+        m_treemap.updatePos();
+    }
+    m_isInited = true;
+    m_scene->m_layers.registerItem(data.layer, this, true);
+    m_momentum_relative.saveOld();
     m_momentum.saveOld();
 }
 
@@ -97,39 +127,49 @@ void LVL_Block::transformTo(unsigned long id, int type)
     if(type == 1) //Other NPC
     {
         LevelNPC def = FileFormats::CreateLvlNpc();
-        def.id = id;
-        def.x = long(round(posX()));
-        def.y = long(round(posY()));
-        def.direct = 0;
-        def.generator = false;
-        def.layer = data.layer;
-        def.attach_layer = "";
-        def.event_activate = "";
-        def.event_die = "";
-        def.event_talk = "";
+        def.id               = id;
+        def.x                = long(round(posX()));
+        def.y                = long(round(posY()));
+        def.direct           = 0;
+        def.generator        = false;
+        def.layer            = data.layer;
+        def.attach_layer     = "";
+        def.event_activate   = "";
+        def.event_die        = "";
+        def.event_talk       = "";
         def.event_emptylayer = "";
         LVL_Npc *npc = m_scene->spawnNPC(def,
                                         LevelScene::GENERATOR_APPEAR,
                                         LevelScene::SPAWN_UP, true);
-
         if(npc)
         {
-            npc->transformedFromBlock = this;
+            npc->transformedFromBlockData.reset(new LevelBlock(data));
             npc->transformedFromBlockID = data.id;
-            npc->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
+            if(m_parent)
+                npc->setRelativeCenterPos(m_momentum.centerX(), m_momentum.centerY());
+            else
+                npc->setCenterPos(m_momentum.centerX(), m_momentum.centerY());
             npc->m_momentum.saveOld();
+            npc->m_momentum_relative.saveOld();
             npc->data.x = long(round(npc->m_momentum.x));
             npc->data.y = long(round(npc->m_momentum.y));
         }
-
         destroy(false);
+        if(npc)
+        {
+            // Don't store block as destroyed
+            m_scene->m_blocksDestroyed.erase(this);
+            m_scene->m_layers.removeRegItem(data.layer, this);
+            unregisterFromTree();
+            m_scene->m_blocksToDelete.push_back(this);
+        }
     }
 }
 
 void LVL_Block::transformTo_x(unsigned long id)
 {
     obj_block *newSetup = nullptr;
-    if(_isInited)
+    if(m_isInited)
     {
         if(data.id == id)
             return;
@@ -194,13 +234,23 @@ void LVL_Block::transformTo_x(unsigned long id)
         data.h = (unsigned(texture.h) / setup->setup.frames);
     }
 
-    if(!_isInited)
+    if(!m_isInited)
     {
         m_momentum.x = data.x;
         m_momentum.y = data.y;
     }
+    m_momentum.w = data.w;
+    m_momentum.h = data.h;
 
-    setSize(data.w, data.h);
+    if(!m_treemap.m_is_registered)
+        m_treemap.addToScene();
+    else
+    {
+        m_treemap.updateSize();
+        m_momentum_relative.saveOld();
+        m_momentum.saveOld();
+    }
+
     sizable = setup->setup.sizable;
     //LEGACY_collide_player = COLLISION_ANY;
     m_blocked[1] = Block_ALL;
@@ -316,8 +366,8 @@ void LVL_Block::render(double camX, double camY)
     PGE_RectF blockG;
     blockG.setRect(posX() - camX + offset_x,
                    posY() - camY + offset_y,
-                   m_width_registered,
-                   m_height_registered);
+                   m_momentum.w,
+                   m_momentum.h);
     AniPos x(0, 1);
 
     if(animated) //Get current animated frame
@@ -328,8 +378,8 @@ void LVL_Block::render(double camX, double camY)
 
     if(sizable)
     {
-        int w = int(round(m_width_registered));
-        int h = int(round(m_height_registered));
+        int w = int(round(m_momentum.w));
+        int h = int(round(m_momentum.h));
         int x, y, x2, y2, i, j;
         int hc, wc;
         x = Maths::iRound(double(texture.w) / 3); // Width of one piece
@@ -482,7 +532,7 @@ void LVL_Block::render(double camX, double camY)
 
 bool LVL_Block::isInited()
 {
-    return _isInited;
+    return m_isInited;
 }
 
 long LVL_Block::lua_getID()
@@ -596,7 +646,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         if(!m_scene->m_playerStates.empty())
             m_scene->m_playerStates[0].appendCoins(1);
 
-        //! TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
+        //! FIXME: TEMPORARY AND EXPERIMENTAL!, REPLACE THIS WITH LUA
         {
             SpawnEffectDef effect;
             effect.id = 11;
@@ -713,7 +763,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(triggerEvent)
     {
         //Register block as "destroyed" to be able turn it into it's initial state
-        m_scene->m_layers.registerItem(DESTROYED_LAYER_NAME, this);
+        m_scene->m_blocksDestroyed.insert(this);
     }
 
     if(triggerEvent && (!data.event_hit.empty()))
@@ -760,18 +810,21 @@ void LVL_Block::destroy(bool playEffect)
 
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
+    if(!m_destroyed)
+    {
+        LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+        lyr.m_destroyedObjects++;
+    }
     m_destroyed = true;
-    std::string oldLayer = data.layer;
-    m_scene->m_layers.removeRegItem(data.layer, this);
-    data.layer = DESTROYED_LAYER_NAME;
-    m_scene->m_layers.registerItem(data.layer, this);
-
+    //Register as destroyed block
+    m_scene->m_blocksDestroyed.insert(this);
+    //Unregister from the layer
+    //m_scene->m_layers.removeRegItem(data.layer, this, false);
     if(!data.event_destroy.empty())
         m_scene->m_events.triggerEvent(data.event_destroy);
-
     if(!data.event_emptylayer.empty())
     {
-        if(m_scene->m_layers.isEmpty(oldLayer))
+        if(m_scene->m_layers.isEmpty(data.layer))
             m_scene->m_events.triggerEvent(data.event_emptylayer);
     }
 }
@@ -789,11 +842,15 @@ void LVL_Block::setDestroyed(bool dstr)
         {
             m_blocked[1] = Block_NONE;
             m_blocked[2] = Block_NONE;
+            LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+            lyr.m_destroyedObjects++;
         }
         else if(m_destroyed && !dstr)
         {
             m_blocked[1] = Block_BOTTOM;
             m_blocked[2] = Block_NONE;
+            LVL_LayerEngine::Layer &lyr = m_scene->m_layers.getLayer(data.layer);
+            lyr.m_destroyedObjects--;
         }
     }
 

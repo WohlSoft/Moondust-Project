@@ -33,7 +33,7 @@ luabind::adl::object Binding_Level_GlobalFuncs_NPC::get(lua_State *L)
 luabind::adl::object Binding_Level_GlobalFuncs_NPC::getActive(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    LevelScene::LVL_NpcsArray &allActiveNPCs = scene->getActiveNpcs();
+    LevelScene::LVL_NpcActiveSet &allActiveNPCs = scene->getActiveNpcs();
 
     luabind::object tableOfNPCs = luabind::newtable(L);
 

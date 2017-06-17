@@ -465,14 +465,14 @@ void LVL_Player::update(double tickTime)
     //Return player to start position on fall down
     if(section->isWrapV())
     {
-        if(posY() < sBox.top() - m_height_registered - 1)
+        if(posY() < sBox.top() - m_momentum.h - 1)
             setPosY(sBox.bottom() - 1);
         else if(posY() > sBox.bottom() + 1)
-            setPosY(sBox.top() - m_height_registered + 1);
+            setPosY(sBox.top() - m_momentum.h + 1);
     }
     else
     {
-        if(posY() > sBox.bottom() + m_height_registered)
+        if(posY() > sBox.bottom() + m_momentum.h)
             kill(DEAD_fall);
         else if((sAS.speedY > 0.0)
                 && (m_momentum.bottom() < (sBox.top() - 32.0))
@@ -485,7 +485,7 @@ void LVL_Player::update(double tickTime)
     //Connection of section opposite sides
     if(m_isExiting) // Allow walk offscreen if exiting
     {
-        if((posX() < sBox.left() - m_width_registered - 1) || (posX() > sBox.right() + 1))
+        if((posX() < sBox.left() - m_momentum.w - 1) || (posX() > sBox.right() + 1))
         {
             setGravityScale(0.0);//Prevent falling [we anyway exited from this level, isn't it?]
             setSpeedY(0.0);
@@ -512,10 +512,10 @@ void LVL_Player::update(double tickTime)
     }
     else if(section->isWrapH())
     {
-        if(posX() < sBox.left() - m_width_registered - 1.0)
+        if(posX() < sBox.left() - m_momentum.w - 1.0)
             setPosX(sBox.right() + 1.0);
         else if(posX() > sBox.right() + 1.0)
-            setPosX(sBox.left() - m_width_registered - 1.0);
+            setPosX(sBox.left() - m_momentum.w - 1.0);
     }
     else
     {
@@ -543,9 +543,9 @@ void LVL_Player::update(double tickTime)
 
                 if(section->LeftOnly())
                 {
-                    if(posX() + m_width_registered > sBox.right())
+                    if(posX() + m_momentum.w > sBox.right())
                     {
-                        setPosX(sBox.right() - m_width_registered);
+                        setPosX(sBox.right() - m_momentum.w);
 
                         if(sAS.speedX == 0.0)
                             setSpeedX(0.0);
@@ -560,7 +560,7 @@ void LVL_Player::update(double tickTime)
                 }
             }
 
-            if((posX() < sBox.left() - m_width_registered - 1.0) || (posX() > sBox.right() + 1.0))
+            if((posX() < sBox.left() - m_momentum.w - 1.0) || (posX() > sBox.right() + 1.0))
             {
                 setLocked(true);
                 m_noRender = true;
@@ -589,9 +589,9 @@ void LVL_Player::update(double tickTime)
                         kill(DEAD_killed);
                 }
             }
-            else if(posX() + m_width_registered > rightBorder)
+            else if(posX() + m_momentum.w > rightBorder)
             {
-                setPosX(rightBorder - m_width_registered);
+                setPosX(rightBorder - m_momentum.w);
 
                 if(sAS.speedX == 0.0)
                     setSpeedX(0.0);
@@ -626,7 +626,7 @@ void LVL_Player::update(double tickTime)
         m_scene->getLuaEngine()->postLateShutdownError(e);
     }
 
-    _syncPosition();
+    m_treemap.updatePos();
 }
 
 void LVL_Player::updateCamera()

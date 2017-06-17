@@ -35,8 +35,8 @@ end
 
 
 function jumping_piranha_plant:initProps()
+    self.npc_obj:setBodyType(false, true); --set sticky dynamic NPC
     -- Animation properties
-
     -- Top position (reset size to initial)
     self.npc_obj.y      = self.def_y
     self.npc_obj.top    = self.def_top
@@ -64,6 +64,7 @@ end
 
 function jumping_piranha_plant:__init(npc_obj)
     self.npc_obj = npc_obj
+
     -- Config
     self.def_y   = npc_obj.y
     self.def_top = npc_obj.top
@@ -85,7 +86,7 @@ function jumping_piranha_plant:__init(npc_obj)
     self.def_hidingDownTicks = smbx_utils.ticksToTime(self.npc_obj.height/self.speedDOWN)
 
     -- FOR AI_HIDING_IDLE
-    self.def_hidingIdleTicks = smbx_utils.ticksToTime(90)    
+    self.def_hidingIdleTicks = smbx_utils.ticksToTime(90)
     -- If player stands over, reset time to -10 seconds
     self.def_hidingIdleTicks_waitPlayer = smbx_utils.ticksToTime(65)
 
@@ -139,6 +140,7 @@ function jumping_piranha_plant:onLoop(tickTime)
             self.cur_mode = AI_HIDING_IDLE
             self:hideSprite()
             self.cur_hidingDownTicks = 0
+            self.npc_obj.y = self.def_bottom -- Avoid unnecessary self-going down
             self.npc_obj.paused_physics=true
         end
     elseif(self.cur_mode == AI_HIDING_IDLE)then

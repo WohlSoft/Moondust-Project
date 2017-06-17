@@ -39,6 +39,9 @@ void LVL_Npc::Activate()
     animator.start();
     isActivated = true;
 
+    if(is_layer_unstickable)
+        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, false, true);
+
     if(!data.event_activate.empty())
         m_scene->m_events.triggerEvent(data.event_activate);
 
@@ -79,12 +82,12 @@ void LVL_Npc::deActivate()
             {
                 transformTo_x(data.id); //Transform NPC back into initial form
             }
-
             setDefaults();
-            setPos(data.x, data.y);
+            setRelativePos(data.x, data.y);
             setDirection(data.direct);
             setPaused(true);
             m_momentum.saveOld();
         }
     }
 }
+

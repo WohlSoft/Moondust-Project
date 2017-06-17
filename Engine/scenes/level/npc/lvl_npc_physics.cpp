@@ -23,11 +23,20 @@
 #include "../lvl_bgo.h"
 #include "../../scene_level.h"
 
+void LVL_Npc::iterateStep(double ticks, bool force)
+{
+    if(!m_isGenerator && !is_static)
+        PGE_Phys_Object::iterateStep(ticks, force);
+}
+
 void LVL_Npc::processContacts()
 {
     /* *********************** Check all collided sides ***************************** */
+//#define USE_DOHURT    //Enable when is needed to be handled. Don't treat static analyzers with dead code
+#ifdef USE_DOHURT
     bool doHurt = false;
     int  hurtDamage = 0;
+#endif
     bool doKill = false;
     int  killReason = DAMAGE_NOREASON;
 
@@ -133,8 +142,10 @@ void LVL_Npc::processContacts()
 
     if(doKill)
         kill(killReason);
+#ifdef USE_DOHURT
     else if(doHurt)
         harm(hurtDamage, killReason);
+#endif
 }
 
 void LVL_Npc::preCollision()
@@ -175,6 +186,7 @@ bool LVL_Npc::preCollisionCheck(PGE_Phys_Object *body)
     {
         if(this->m_disableBlockCollision)
             return true;
+        break;
     }
     default:
         ;

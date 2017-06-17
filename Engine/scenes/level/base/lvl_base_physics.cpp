@@ -118,6 +118,13 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
 {
     if(m_paused && !force)
         return;
+//FIXME: Fix the missing in-area detector's trap position
+    if(m_parent && (m_bodytype == Body_DYNAMIC))
+    {
+        m_momentum.velX     = m_momentum_relative.velX;
+        m_momentum.velXsrc  = m_momentum_relative.velXsrc;
+        m_momentum.velY     = m_momentum_relative.velY;
+    }
 
     double G = phys_setup.gravityScale * m_scene->m_globalGravity;
     double accelCof = ticks / 1000.0;
@@ -233,7 +240,19 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     m_momentum.saveOld();
     m_momentum.x += iterateX;
     m_momentum.y += iterateY;
-    _syncPosition();
+
+//FIXME: Fix the missing in-area detector's trap position
+    if(m_parent && (m_bodytype == Body_DYNAMIC))
+    {
+        //m_momentum_relative.saveOld();
+        m_momentum_relative.velX    = m_momentum.velX;
+        m_momentum_relative.velXsrc = m_momentum.velXsrc;
+        m_momentum_relative.velY    = m_momentum.velY;
+        m_momentum_relative.x += iterateX;
+        m_momentum_relative.y += iterateY;
+    }
+
+    m_treemap.updatePos();
 }
 
 void PGE_Phys_Object::iterateStepPostCollide(float ticks)
@@ -655,6 +674,7 @@ void PGE_Phys_Object::updateCollisions()
         return;
 
     std::vector<PGE_Phys_Object *> objs;
+    objs.reserve(25);
     PGE_RectF posRectC = m_momentum.rectF().withMargin(m_momentum.w / 2.0);
 
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
@@ -686,6 +706,7 @@ void PGE_Phys_Object::updateCollisions()
     PhysObject *collideAtBottom = nullptr;
     PhysObject *collideAtLeft  = nullptr;
     PhysObject *collideAtRight = nullptr;
+    bool    policy_CenterContactsOnly = (m_collisionCheckPolicy & CollisionCheckPolicy_CENTER_CONTACTS_ONLY) != 0;
     bool    doSpeedStack = true;
     double  speedNum = 0.0;
     double  speedSum = 0.0;
@@ -715,8 +736,7 @@ void PGE_Phys_Object::updateCollisions()
         //    --i;
         //    continue;
         //}
-
-        if(preCollisionCheck(CUR) || (CUR->m_blocked[m_filterID] == Block_NONE))
+        if(policy_CenterContactsOnly || preCollisionCheck(CUR) || (CUR->m_blocked[m_filterID] == Block_NONE))
         {
             if(
                 (CUR->m_shape == PhysObject::SL_Rect) &&
@@ -736,14 +756,14 @@ void PGE_Phys_Object::updateCollisions()
         {
             if(m_momentum.centerY() < CUR->m_momentum.centerY())
             {
-                if(((CUR->m_blocked[m_filterID]&Block_TOP) != 0) &&
+                if(((CUR->m_blocked[m_filterID] & Block_TOP) != 0) &&
                    (CUR->m_momentum.top() >= m_momentum.bottom())
                   )
                     l_clifCheck.push_back(CUR);
             }
             else
             {
-                if((CUR->m_blocked[m_filterID]&Block_BOTTOM) != 0)
+                if((CUR->m_blocked[m_filterID] & Block_BOTTOM) != 0)
                     l_toBump.push_back(CUR);
 
                 if((CUR->m_bodytype == Body_DYNAMIC) &&
@@ -1830,10 +1850,13 @@ skipTriangleResolving:
         collisionHitBlockTop(l_toBump);
 
     /* ****************************************************************************** */
-    if(doSpeedStack && (speedNum > 1.0) && (speedSum != 0.0))
-        m_momentum.velX = m_momentum.velXsrc + (speedSum / speedNum);
+    if(m_bodytype != Body_STATIC) // Ignore speed stack if this is a static body
+    {
+        if(doSpeedStack && (speedNum > 1.0) && (speedSum != 0.0))
+            m_momentum.velX = m_momentum.velXsrc + (speedSum / speedNum);
+        m_treemap.updatePos();
+    }
 
-    _syncPosition();
     processContacts();
     postCollision();
     l_clifCheck.clear();

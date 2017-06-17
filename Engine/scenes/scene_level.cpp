@@ -132,8 +132,11 @@ void LevelScene::processPhysics(double ticks)
     }
 
     //Iterate activated NPCs
-    for(size_t i = 0; i < m_npcActive.size(); i++)
-        m_npcActive[i]->iterateStep(ticks);
+    for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
+    {
+        LVL_Npc *n = *i;
+        n->iterateStep(ticks);
+    }
 }
 
 static bool comparePosY(PGE_Phys_Object *i, PGE_Phys_Object *j)
@@ -154,10 +157,11 @@ void LevelScene::processAllCollisions()
     }
 
     //Process collision check and resolving for activated NPC's
-    for(size_t i = 0; i < m_npcActive.size(); i++)
+    for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
     {
-        m_npcActive[i]->resetEvents();
-        toCheck.push_back(m_npcActive[i]);
+        LVL_Npc *n = *i;
+        n->resetEvents();
+        toCheck.push_back(n);
     }
 
     std::stable_sort(toCheck.begin(), toCheck.end(), comparePosY);
@@ -175,8 +179,6 @@ void LevelScene::processAllCollisions()
 LevelScene::~LevelScene()
 {
     GlRenderer::clearScreen();
-    m_layers.clear();
-    m_switchBlocks.clear();
     //destroy textures
     size_t i = 0;
     D_pLogDebug("clear level textures");
@@ -205,9 +207,9 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebug("Destroy blocks");
-    for(i = 0; i < m_itemsBlocks.size(); i++)
+    for(LVL_BlocksArray::iterator i = m_itemsBlocks.begin(); i != m_itemsBlocks.end(); ++i)
     {
-        LVL_Block *tmp = m_itemsBlocks[i];
+        LVL_Block *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -215,11 +217,12 @@ LevelScene::~LevelScene()
             delete tmp;
         }
     }
+    m_itemsBlocks.clear();
 
     D_pLogDebug("Destroy BGO");
-    for(i = 0; i < m_itemsBgo.size(); i++)
+    for(LVL_BgosArray::iterator i = m_itemsBgo.begin(); i != m_itemsBgo.end(); ++i)
     {
-        LVL_Bgo *tmp = m_itemsBgo[i];
+        LVL_Bgo *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -227,11 +230,12 @@ LevelScene::~LevelScene()
             delete tmp;
         }
     }
+    m_itemsBlocks.clear();
 
     D_pLogDebug("Destroy NPC");
-    for(i = 0; i < m_itemsNpc.size(); i++)
+    for(LVL_NpcsArray::iterator i = m_itemsNpc.begin(); i != m_itemsNpc.end(); ++i)
     {
-        LVL_Npc *tmp = m_itemsNpc[i];
+        LVL_Npc *tmp = *i;
         if(tmp)
         {
             tmp->unregisterFromTree();
@@ -239,11 +243,12 @@ LevelScene::~LevelScene()
                 delete tmp;
         }
     }
+    m_itemsNpc.clear();
 
     D_pLogDebug("Destroy Warps");
-    for(i = 0; i < m_itemsWarps.size(); i++)
+    for(LVL_WarpsArray::iterator i = m_itemsWarps.begin(); i != m_itemsWarps.end(); ++i)
     {
-        LVL_Warp *tmp = m_itemsWarps[i];
+        LVL_Warp *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -251,11 +256,12 @@ LevelScene::~LevelScene()
             delete tmp;
         }
     }
+    m_itemsWarps.clear();
 
     D_pLogDebug("Destroy Physical Environment zones");
-    for(i = 0; i < m_itemsPhysEnvs.size(); i++)
+    for(LVL_PhysEnvsArray::iterator i = m_itemsPhysEnvs.begin(); i != m_itemsPhysEnvs.end(); ++i)
     {
-        LVL_PhysEnv *tmp = m_itemsPhysEnvs[i];
+        LVL_PhysEnv *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -263,6 +269,11 @@ LevelScene::~LevelScene()
             delete tmp;
         }
     }
+    m_itemsPhysEnvs.clear();
+
+    //Delete layers AFTER all objects are been deleted
+    m_layers.clear();
+    m_switchBlocks.clear();
 
     D_pLogDebug("Destroy sections");
     m_sections.clear();
@@ -393,30 +404,31 @@ void LevelScene::update()
         }
 
         //Process activated NPCs
-        for(size_t i = 0; i < m_npcActive.size(); i++)
+        //for(size_t i = 0; i < m_npcActive.size(); i++)
+        for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end();)
         {
-            m_npcActive[i]->update(uTickf);
-
-            if(m_npcActive[i]->isKilled())
+            LVL_Npc *n = *i;
+            n->update(uTickf);
+            if(n->isKilled())
             {
-                m_npcActive.erase(m_npcActive.begin() + i);
-                i--;
+                i = m_npcActive.erase(i);
+                continue;
             }
-            else if(m_npcActive[i]->activationTimeout <= 0)
+            else if(n->activationTimeout <= 0)
             {
-                if(!m_npcActive[i]->warpSpawing)
-                    m_npcActive[i]->deActivate();
-
-                if(m_npcActive[i]->wasDeactivated)
+                if(!n->warpSpawing)
+                    n->deActivate();
+                if(n->wasDeactivated)
                 {
-                    if(!isVizibleOnScreen(m_npcActive[i]->m_momentum) || !m_npcActive[i]->isVisible() || !m_npcActive[i]->is_activity)
+                    if(!isVizibleOnScreen(n->m_momentum) || !n->isVisible() || !n->is_activity)
                     {
-                        m_npcActive[i]->wasDeactivated = false;
-                        m_npcActive.erase(m_npcActive.begin() + i);
-                        i--;
+                        n->wasDeactivated = false;
+                        i = m_npcActive.erase(i);
+                        continue;
                     }
                 }
             }
+            ++i;
         }
 
         if(!m_isTimeStopped) //if activated Time stop bonus or time disabled by special event
@@ -431,6 +443,9 @@ void LevelScene::update()
 
         if(!m_playersDead.empty())
             collectGarbagePlayers();
+
+        if(!m_blocksToDelete.empty())
+            collectGarbageBlocks();
 
         /**********************************************/
 
@@ -596,40 +611,40 @@ void LevelScene::render()
         //FontManager::printText(fmt::format("Camera X={0} Y={1}", cam_x, cam_y), 200,10);
         int dpos = 60;
         FontManager::printText(fmt::format("Player J={0} G={1} F={2}; TICK-SUB: {3}\n"
-                                       "NPC's: {4}, Active {5}; BLOCKS: {6}",
-                                        int(m_debug_player_jumping),
-                                        int(m_debug_player_onground),
-                                        int(m_debug_player_foots),
-                                        uTickf,
-                                        m_itemsNpc.size(),
-                                        m_npcActive.size(),
-                                        m_itemsBlocks.size()), 10, dpos);
+                                           "NPC's: {4}, Active {5}; BLOCKS: {6}",
+                                           int(m_debug_player_jumping),
+                                           int(m_debug_player_onground),
+                                           int(m_debug_player_foots),
+                                           uTickf,
+                                           m_itemsNpc.size(),
+                                           m_npcActive.size(),
+                                           m_itemsBlocks.size()), 10, dpos);
         dpos += 35;
         FontManager::printText(fmt::format("Visible objects: {0}", !m_cameras.empty() ? m_cameras[0].renderObjects_count() : 0), 10, dpos);
         dpos += 35;
         FontManager::printText(fmt::format("Delays E={0} R={1} P={2}",
-                                            m_debug_event_delay,
-                                            m_debug_render_delay,
-                                            m_debug_phys_delay), 10, dpos);
+                                           m_debug_event_delay,
+                                           m_debug_render_delay,
+                                           m_debug_phys_delay), 10, dpos);
         dpos += 35;
         FontManager::printText(fmt::format("Time Real:{0}\nTime Loop:{1}",
-                                            debug_TimeReal.elapsed(),
-                                            debug_TimeCounted), 10, dpos);
+                                           debug_TimeReal.elapsed(),
+                                           debug_TimeCounted), 10, dpos);
         dpos += 35;
 
         if(!m_isLevelContinues)
         {
             FontManager::printText(fmt::format("Exit delay {0}, {1}",
-                                                m_exitLevelDelay,
-                                                uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
+                                               m_exitLevelDelay,
+                                               uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
             dpos += 35;
         }
 
         if(m_placingMode)
             FontManager::printText(fmt::format("Placing! {0} X={1} Y={2}",
-                                                m_placingMode_item_type,
-                                                m_placingMode_renderAt.x(),
-                                                m_placingMode_renderAt.y()), 10, 10, 0);
+                                               m_placingMode_item_type,
+                                               m_placingMode_renderAt.x(),
+                                               m_placingMode_renderAt.y()), 10, 10, 0);
         else
             FontManager::printText(fmt::format("{0}", PGE_MusPlayer::getTitle()), 10, 10, 0);
     }
@@ -997,7 +1012,7 @@ LevelScene::LVL_NpcsArray &LevelScene::getNpcs()
     return m_itemsNpc;
 }
 
-LevelScene::LVL_NpcsArray &LevelScene::getActiveNpcs()
+LevelScene::LVL_NpcActiveSet &LevelScene::getActiveNpcs()
 {
     return m_npcActive;
 }

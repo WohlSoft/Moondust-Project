@@ -201,13 +201,15 @@ void PGE_LevelCamera::updatePost(double ticks)
         {
             if(offset > 0)
                 _objects_to_render[i] = _objects_to_render[i + offset];
+            PGE_Phys_Object *obj = _objects_to_render[i];
+            PGE_Phys_Object::metaCamera *meta = &obj->m_camera_meta;
 
-            if(_objects_to_render[i]->_vizible_on_screen && _objects_to_render[i]->isVisible())
-                _objects_to_render[i]->_vizible_on_screen = false;
+            if(meta->isVizibleOnScreen && obj->isVisible())
+                meta->isVizibleOnScreen = false;
             else
             {
-                _objects_to_render[i]->_render_list = false;
-                _objects_to_render[i]->_vizible_on_screen = false;
+                meta->isInIenderList = false;
+                meta->isVizibleOnScreen = false;
                 offset++;
                 _objects_to_render_stored--;
                 i--;
@@ -229,7 +231,7 @@ void PGE_LevelCamera::updatePost(double ticks)
             if(!npc->isActivated && !npc->wasDeactivated)
             {
                 npc->Activate();
-                _scene->m_npcActive.push_back(npc);
+                _scene->m_npcActive.insert(npc);
             }
             else
             {
@@ -431,16 +433,25 @@ void PGE_LevelCamera::setRenderObjectsCacheEnabled(bool enabled)
     _disable_cache_mode = !enabled;
 }
 
+struct _TreeRenderSearchData
+{
+    PGE_LevelCamera *list;
+    PGE_RectF *zone;
+};
+
 bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object *item, void *arg)
 {
-    PGE_LevelCamera *list = static_cast<PGE_LevelCamera * >(arg);
+    _TreeRenderSearchData *d = static_cast<_TreeRenderSearchData*>(arg);
+    if(!d || !d->list)
+        return false;
 
+    PGE_LevelCamera *list = d->list;
     if(list)
     {
         if(item)
         {
             if(!list->_disable_cache_mode)
-                item->_vizible_on_screen = true;
+                item->m_camera_meta.isVizibleOnScreen = true;
 
             bool renderable = false;
 
@@ -449,11 +460,23 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object *item, void *arg)
 
             switch(item->type)
             {
+            case PGE_Phys_Object::LVLSubTree:
+            {
+                LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(item);
+                if(st)
+                {
+                    PGE_RectF newRect = *d->zone;
+                    newRect.setPos(newRect.x() + st->m_offsetX, newRect.y() + st->m_offsetY);
+                    _TreeRenderSearchData dd{d->list, &newRect};
+                    st->query(newRect, _TreeSearchCallback, (void*)&dd);
+                    renderable = true;//keep for a debug render
+                }
+                break;
+            }
             case PGE_Phys_Object::LVLNPC:
                 list->npcs_to_activate.push(item);
                 renderable = true;
                 break;
-
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
             case PGE_Phys_Object::LVLPlayer:
@@ -464,8 +487,21 @@ bool PGE_LevelCamera::_TreeSearchCallback(PGE_Phys_Object *item, void *arg)
             }
 
 checkRenderability:
+            if(renderable)
+            {
+                if(item->m_parent)
+                {
+                    LVL_SubTree *st = dynamic_cast<LVL_SubTree *>(item->m_parent);
+                    if(st)
+                    {
+                        item->m_momentum = item->m_momentum_relative;
+                        item->m_momentum.x -= st->m_offsetX;
+                        item->m_momentum.y -= st->m_offsetY;
+                    }
+                }
+            }
 
-            if(renderable && (!item->_render_list || list->_disable_cache_mode))
+            if(renderable && (!item->m_camera_meta.isInIenderList || list->_disable_cache_mode))
             {
                 if(list->_objects_to_render_stored >= list->_objects_to_render_max - 2)
                 {
@@ -475,12 +511,10 @@ checkRenderability:
                     if(!list->_objects_to_render)
                         throw("Memory overflow!");
                 }
-
                 list->_objects_to_render[list->_objects_to_render_stored] = item;
                 list->_objects_to_render_stored++;
-
                 if(!list->_disable_cache_mode)
-                    item->_render_list = true;
+                    item->m_camera_meta.isInIenderList = true;
             }
         }
     }
@@ -490,16 +524,8 @@ checkRenderability:
 
 void PGE_LevelCamera::queryItems(PGE_RectF &zone)
 {
-    //double lt[2] = { zone.left(),  zone.top() };
-    //double rb[2] = { zone.right(), zone.bottom() };
-    //_scene->m_tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(this));
-    _scene->m_qtree.query(zone, _TreeSearchCallback, reinterpret_cast<void *>(this));
-//    LevelScene::IndexTree4::Query q = _scene->m_qtree.QueryIntersectsRegion(loose_quadtree::BoundingBox<double>(zone.x(), zone.y(), zone.width(), zone.height()));
-//    while(!q.EndOfQuery())
-//    {
-//        _TreeSearchCallback(q.GetCurrent(), reinterpret_cast<void *>(this));
-//        q.Next();
-//    }
+    _TreeRenderSearchData d{this, &zone};
+    _scene->m_qtree.query(zone, _TreeSearchCallback, (void*)&d /*reinterpret_cast<void *>(this)*/ );
 }
 
 void PGE_LevelCamera::AutoScrooler::resetAutoscroll()

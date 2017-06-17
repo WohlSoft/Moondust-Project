@@ -182,7 +182,7 @@ void LVL_Player::processContacts()
             if((!npc->data.friendly) && (npc->setup->setup.takable))
             {
                 collided_talkable_npc = nullptr;
-                npc->doHarm(LVL_Npc::DAMAGE_TAKEN);
+                npc->doHarm(LVL_Npc::DAMAGE_TAKEN, this);
                 kill_npc(npc, LVL_Player::NPC_Taked_Coin);
                 break;
             }
@@ -438,13 +438,11 @@ void LVL_Player::processContacts()
     {
         LVL_Npc *npc = npcs_to_stomp.back();
         npcs_to_stomp.pop_back();
-
         //Avoid workarround "don't hurt while flying up"
         if(m_momentum.bottom() >= npc->m_momentum.top() + m_contactPadding)
             m_momentum.setYatBottom(npc->m_momentum.top() + m_contactPadding - 0.2);
-
         setSpeedY(npc->speedY());
-        npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
+        npc->doHarm(LVL_Npc::DAMAGE_STOMPED, this);
         bump(true);
         //Reset floating state
         m_floatingTimer = m_floatingMaxtime;
@@ -454,7 +452,6 @@ void LVL_Player::processContacts()
             m_floatingIsWorks = false;
             setGravityScale(m_climbing ? 0 : physics_cur.gravity_scale);
         }
-
         kill_npc(npc, NPC_Stomped);
     }
 }
@@ -566,7 +563,7 @@ void LVL_Player::setDuck(bool duck)
         return;
     double b = m_momentum.bottom();
     setSize(state_cur.width, duck ? state_cur.duck_height : state_cur.height);
-    setPos(posX(), b - m_height_registered);
+    setPos(posX(), b - m_momentum.h);
     m_ducking = duck;
 
     if(!duck && !m_isWarping)

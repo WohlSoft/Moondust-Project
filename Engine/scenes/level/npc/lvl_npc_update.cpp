@@ -91,20 +91,20 @@ void LVL_Npc::update(double tickTime)
 
     if(section->isWrapH())
     {
-        if(posX() < sBox.left() - m_width_registered - 1.0)
+        if(posX() < sBox.left() - m_momentum.w - 1.0)
             setPosX(sBox.right() - 1.0);
         else if(posX() > sBox.right() + 1.0)
-            setPosX(sBox.left() - m_width_registered + 1.0);
+            setPosX(sBox.left() - m_momentum.w + 1.0);
     }
 
     if(section->isWrapV())
     {
-        if(posY() < sBox.top() - m_height_registered - 1.0)
+        if(posY() < sBox.top() - m_momentum.h - 1.0)
             setPosY(sBox.bottom() - 1.0);
         else if(posY() > sBox.bottom() + 1.0)
-            setPosY(sBox.top() - m_height_registered + 1.0);
+            setPosY(sBox.top() - m_momentum.h + 1.0);
     }
-    else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom() + m_height_registered))
+    else if((setup->setup.kill_on_pit_fall) && (posY() > sBox.bottom() + m_momentum.h))
         kill(DAMAGE_PITFALL);
 
     for(auto i = detectors.begin(); i != detectors.end(); i++)

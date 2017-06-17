@@ -578,7 +578,7 @@ void PGE_Menu::resetState()
 void PGE_Menu::setMouseHoverPos(int x, int y)
 {
     size_t item = findItem(x, y);
-    if(item == size_t(-1))
+    if(item == npos)
         return;
     if(m_currentItem != item)
         PGE_Audio::playSoundByRole(obj_sound_role::MenuScroll);

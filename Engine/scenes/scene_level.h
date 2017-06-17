@@ -62,6 +62,7 @@
 #include <vector>
 #include <deque>
 #include <unordered_map>
+#include <unordered_set>
 
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_timer.h>
@@ -171,6 +172,7 @@ class LevelScene : public Scene
         //Garbage collecting
         void collectGarbageNPCs();
         void collectGarbagePlayers();
+        void collectGarbageBlocks();
 
         /**************Z-Layers**************/
         long double  m_zCounter = 0.0l;
@@ -228,11 +230,22 @@ class LevelScene : public Scene
         /*************************Character switchers*************************/
 
         /**********************NPC Management*********************/
-        std::vector<LVL_Npc * > m_npcActive;
+        typedef std::unordered_set<LVL_Npc * > LVL_NpcActiveSet;
+        //! List of activated NPCs
+        LVL_NpcActiveSet m_npcActive;
+        //! List of dead NPCs
         std::vector<LVL_Npc * > m_npcDead;
-        /**********************NPC Management*********************/
+        /**********************NPC Management*end*****************/
+        //! List of dead playable character
         std::vector<LVL_Player * >  m_playersDead;
+        //! Blocks are have fading animation in process
         std::vector<LVL_Block * >   m_blocksInFade;
+        typedef std::unordered_set<LVL_Block*> LVL_BlocksSet;
+        //! Blocks are pending to be completely deleted
+        std::vector<LVL_Block * >   m_blocksToDelete;
+        //! List of destroyed blocks
+        LVL_BlocksSet m_blocksDestroyed;
+        void restoreDestroyedBlocks(bool smoke = true);
         /*********************Item placing**********************/
         /*********************Initial*placing*******************/
         void placeBlock(LevelBlock& blockData);
@@ -290,7 +303,6 @@ class LevelScene : public Scene
 
         /*********************Item placing**end*****************/
 
-        void destroyBlock(LVL_Block *&_block);
         void setGameState(EpisodeState *_gameState);
 
         EventQueue<LevelScene > m_systemEvents;
@@ -325,11 +337,12 @@ class LevelScene : public Scene
         std::vector<lua_LevelPlayerState>   m_playerStates;
 
         typedef std::vector<LVL_Player * >  LVL_PlayersArray;
-        typedef std::vector<LVL_Block * >   LVL_BlocksArray;
-        typedef std::vector<LVL_Bgo * >     LVL_BgosArray;
-        typedef std::vector<LVL_Npc * >     LVL_NpcsArray;
-        typedef std::vector<LVL_Warp * >    LVL_WarpsArray;
-        typedef std::vector<LVL_PhysEnv * > LVL_PhysEnvsArray;
+        typedef std::unordered_set<LVL_Block * >   LVL_BlocksArray;
+        typedef std::vector<LVL_Block * >   LVL_BlocksVector;
+        typedef std::unordered_set<LVL_Bgo * >     LVL_BgosArray;
+        typedef std::unordered_set<LVL_Npc * >     LVL_NpcsArray;
+        typedef std::unordered_set<LVL_Warp * >    LVL_WarpsArray;
+        typedef std::unordered_set<LVL_PhysEnv * > LVL_PhysEnvsArray;
 
         LVL_LayerEngine     m_layers;
         LVL_EventEngine     m_events;
@@ -403,7 +416,7 @@ class LevelScene : public Scene
 
         LVL_PlayersArray &getPlayers();
         LVL_NpcsArray &getNpcs();
-        LVL_NpcsArray &getActiveNpcs();
+        LVL_NpcActiveSet &getActiveNpcs();
 
         LVL_BlocksArray &getBlocks();
         LVL_BgosArray   &getBGOs();

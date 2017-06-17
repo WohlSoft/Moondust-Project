@@ -22,13 +22,13 @@
 
 void LVL_Npc::updateGenerator(double tickTime)
 {
-    if(!m_isGenerator) return;
+    if(!m_isGenerator)
+        return;
 
     generatorTimeLeft -= tickTime;
-
     if(generatorTimeLeft <= 0)
     {
-        generatorTimeLeft += data.generator_period * 100;
+        generatorTimeLeft += data.generator_period * 100.0;
         if(!contacted_npc.empty())
             return;
         if(!contacted_players.empty())

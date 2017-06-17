@@ -1,7 +1,7 @@
 class 'vinehead'
 
-function vinehead:round(num) 
-    if num >= 0 then return math.floor(num+.5) 
+function vinehead:round(num)
+    if num >= 0 then return math.floor(num+.5)
     else return math.ceil(num-.5) end
 end
 
@@ -58,6 +58,25 @@ function vinehead:onActivated()
     self:initProps()
 end
 
+function isTouch(Blk, npc)
+    if not Blk.isSolid then
+        return false;
+    end
+
+    if((Blk.top + (Blk.height/2.0)) < npc.top)then
+        return false;
+    end
+
+    if(Blk.left > npc.right - 1.0)then
+        return false;
+    end
+    if(Blk.right < npc.left + 1.0)then
+        return false;
+    end
+
+    return true;
+end
+
 function vinehead:onLoop(tickTime)
     if(self.firstTime)then
         self:spawnVine()
@@ -73,9 +92,7 @@ function vinehead:onLoop(tickTime)
         if(self.contacts:detected())then
             local blocks= self.contacts:getBlocks()
             for K,Blk in pairs(blocks) do
-                if(Blk.isSolid and ((Blk.top+(Blk.height/2.0)) >= self.npc_obj.top )
-                               and ((Blk.left-(Blk.width/2.0))<=self.npc_obj.left) 
-                               and (Blk.right+(Blk.width/2.0))>=self.npc_obj.right )then
+                if(isTouch(Blk, self.npc_obj)) then
                     self.npc_obj:unregister()
                     return
                 end

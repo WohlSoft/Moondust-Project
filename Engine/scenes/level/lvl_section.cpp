@@ -53,7 +53,7 @@ LVL_Section::LVL_Section(const LVL_Section &_sct)
 
 LVL_Section::~LVL_Section()
 {
-    tree.RemoveAll();
+    //tree.RemoveAll();
 }
 
 void LVL_Section::setData(const LevelSection &_d)
@@ -200,42 +200,42 @@ int LVL_Section::getPhysicalEnvironment()
     return data.underwater ? LVL_PhysEnv::Env_Water : LVL_PhysEnv::Env_Air ;
 }
 
-void LVL_Section::registerElement(PGE_Phys_Object *item)
-{
-    RPoint lt = {item->m_posX_registered, item->m_posY_registered};
-    RPoint rb = {item->m_posX_registered + item->m_width_registered, item->m_posY_registered + item->m_height_registered};
-    tree.Insert(lt, rb, item);
-}
+//void LVL_Section::registerElement(PGE_Phys_Object *item)
+//{
+//    RPoint lt = {item->m_treemap.m_posX_registered, item->m_treemap.m_posY_registered};
+//    RPoint rb = {item->m_treemap.m_posX_registered + item->m_treemap.m_width_registered, item->m_treemap.m_posY_registered + item->m_treemap.m_height_registered};
+//    tree.Insert(lt, rb, item);
+//}
 
-void LVL_Section::unregisterElement(PGE_Phys_Object *item)
-{
-    RPoint lt = {item->m_posX_registered, item->m_posY_registered};
-    RPoint rb = {item->m_posX_registered + item->m_width_registered, item->m_posY_registered + item->m_height_registered};
-    tree.Remove(lt, rb, item);
-}
+//void LVL_Section::unregisterElement(PGE_Phys_Object *item)
+//{
+//    RPoint lt = {item->m_treemap.m_posX_registered, item->m_treemap.m_posY_registered};
+//    RPoint rb = {item->m_treemap.m_posX_registered + item->m_treemap.m_width_registered, item->m_treemap.m_posY_registered + item->m_treemap.m_height_registered};
+//    tree.Remove(lt, rb, item);
+//}
 
 
-bool _TreeSearchCallback(PGE_Phys_Object *item, void *arg)
-{
-    R_itemList *list = static_cast<R_itemList * >(arg);
+//bool _TreeSearchCallback(PGE_Phys_Object *item, void *arg)
+//{
+//    R_itemList *list = static_cast<R_itemList * >(arg);
 
-    if(list)
-    {
-        if(item)(*list).push_back(item);
-    }
+//    if(list)
+//    {
+//        if(item)(*list).push_back(item);
+//    }
 
-    return true;
-}
+//    return true;
+//}
 
-void LVL_Section::queryItems(PGE_RectF zone, R_itemList *resultList)
-{
-    RPoint lt = {zone.left(), zone.top()};
-    RPoint rb = {zone.right(), zone.bottom()};
-    tree.Search(lt, rb, _TreeSearchCallback, (void *)resultList);
-}
+//void LVL_Section::queryItems(PGE_RectF zone, R_itemList *resultList)
+//{
+//    RPoint lt = {zone.left(), zone.top()};
+//    RPoint rb = {zone.right(), zone.bottom()};
+//    tree.Search(lt, rb, _TreeSearchCallback, (void *)resultList);
+//}
 
-void LVL_Section::queryItems(double x, double y, R_itemList *resultList)
-{
-    PGE_RectF zone = PGE_RectF(x, y, 1, 1);
-    queryItems(zone, resultList);
-}
+//void LVL_Section::queryItems(double x, double y, R_itemList *resultList)
+//{
+//    PGE_RectF zone = PGE_RectF(x, y, 1, 1);
+//    queryItems(zone, resultList);
+//}

@@ -24,6 +24,32 @@
 //static double zCounter = 0;
 #include <PGE_File_Formats/file_formats.h>
 
+void LevelScene::restoreDestroyedBlocks(bool smoke)
+{
+    //Restore all destroyed and modified blocks into their initial states
+    for(LVL_BlocksSet::iterator it = m_blocksDestroyed.begin();
+        it != m_blocksDestroyed.end();
+        it++)
+    {
+        LVL_Block *blk = *it;
+        SDL_assert(blk);
+        if(!blk)
+            continue;
+        bool wasInvisible = !blk->isVisible() || blk->m_destroyed;
+        blk->setVisible(true);
+        blk->init(true);//Force re-initialize block from initial data
+        if(smoke && wasInvisible)
+        {
+            PGE_Phys_Object::Momentum momentum = blk->m_momentum_relative;
+            LVL_LayerEngine::Layer &lyrn = m_layers.getLayer(blk->data.layer);//Get block's original layer
+            momentum.x -= lyrn.m_rtree.m_offsetX;
+            momentum.y -= lyrn.m_rtree.m_offsetY;
+            m_layers.spawnSmokeAt(momentum.centerX(), momentum.centerY());
+        }
+    }
+    m_blocksDestroyed.clear();
+}
+
 void LevelScene::placeBlock(LevelBlock &blockData)
 {
     if(blockData.id <= 0)
@@ -34,39 +60,33 @@ void LevelScene::placeBlock(LevelBlock &blockData)
 
     LVL_Block *block;
     block = new LVL_Block(this);
-
+    SDL_assert_release(block);
     if(!block) throw("Out of memory [new LVL_Block place]");
 
     block->data = blockData;
     block->init();
-    m_itemsBlocks.push_back(block);
+    m_itemsBlocks.insert(block);
 }
 
 LVL_Block *LevelScene::spawnBlock(const LevelBlock &blockData)
 {
-    if(blockData.id <= 0) return NULL;
+    if(blockData.id <= 0)
+        return NULL;
 
     if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
         return nullptr;
 
     LVL_Block *block;
     block = new LVL_Block(this);
-    SDL_assert(block);
+    SDL_assert_release(block);
     if(!block)
         throw("Out of memory [new LVL_Block spawn]");
 
     block->data = blockData;
     block->data.meta.array_id = ++m_data.blocks_array_id;
     block->init();
-    m_itemsBlocks.push_back(block);
+    m_itemsBlocks.insert(block);
     return block;
-}
-
-void LevelScene::destroyBlock(LVL_Block *&_block)
-{
-    std::remove(m_itemsBlocks.begin(), m_itemsBlocks.end(), _block);
-    delete _block;
-    _block = nullptr;
 }
 
 void LevelScene::placeBGO(LevelBGO& bgoData)
@@ -78,12 +98,12 @@ void LevelScene::placeBGO(LevelBGO& bgoData)
 
     LVL_Bgo *bgo;
     bgo = new LVL_Bgo(this);
-
+    SDL_assert_release(bgo);
     if(!bgo) throw("Out of memory [new LVL_Bgo place]");
 
     bgo->data = bgoData;
     bgo->init();
-    m_itemsBgo.push_back(bgo);
+    m_itemsBgo.insert(bgo);
 }
 
 LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
@@ -95,14 +115,14 @@ LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
 
     LVL_Bgo *bgo;
     bgo = new LVL_Bgo(this);
-    SDL_assert(bgo);
+    SDL_assert_release(bgo);
     if(!bgo)
         throw("Out of memory [new LVL_Bgo] spawn");
 
     bgo->data = bgoData;
     bgo->data.meta.array_id = ++m_data.blocks_array_id;
     bgo->init();
-    m_itemsBgo.push_back(bgo);
+    m_itemsBgo.insert(bgo);
     return bgo;
 }
 
@@ -116,15 +136,14 @@ void LevelScene::placeNPC(LevelNPC& npcData)
 
     obj_npc *curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
     LVL_Npc *npc = m_luaEngine.createLuaNpc(npcData.id);
-
+    SDL_assert_release(npc);
     if(!npc)
         return;
-
     npc->setScenePointer(this);
     npc->setup = curNpcData;
     npc->data  = npcData;
     npc->init();
-    m_itemsNpc.push_back(npc);
+    m_itemsNpc.insert(npc);
 }
 
 LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
@@ -140,10 +159,9 @@ LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
 
     obj_npc *curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
     LVL_Npc *npc = m_luaEngine.createLuaNpc(npcData.id);
-
+    SDL_assert_release(npc);
     if(!npc)
         return nullptr;
-
     npc->setScenePointer(this);
     npc->setup = curNpcData;
     npc->reSpawnable = reSpawnable;
@@ -202,8 +220,8 @@ LVL_Npc *LevelScene::spawnNPC(const LevelNPC &npcData,
     }
 
     npc->Activate();
-    m_npcActive.push_back(npc);
-    m_itemsNpc.push_back(npc);
+    m_npcActive.insert(npc);
+    m_itemsNpc.insert(npc);
     return npc;
 }
 
@@ -214,19 +232,17 @@ void LevelScene::toggleSwitch(unsigned int switch_id)
     SwitchBlocksMap::iterator i = m_switchBlocks.find(switch_id);
     if(i != m_switchBlocks.end())
     {
-        std::vector<LVL_Block *> &list = i->second;
-
+        LVL_BlocksVector &list = i->second;
         for(size_t x = 0; x < list.size(); x++)
         {
             if((list[x]->setup->setup.switch_Block) && (list[x]->setup->setup.switch_ID == switch_id))
                 list[x]->transformTo(list[x]->setup->setup.switch_transform, 2);
             else
             {
-                list.erase(list.begin() + x);
+                list.erase(list.begin() + LVL_BlocksArray::difference_type(x));
                 x--; //Remove blocks which are not fits into specific Switch-ID
             }
         }
-
         //Change state of the switch to allow lua script see this
         m_switchStates[static_cast<size_t>(switch_id)] = !m_switchStates[static_cast<size_t>(switch_id)];
     }
@@ -239,7 +255,6 @@ bool LevelScene::lua_switchState(uint32_t switch_id)
     else
         return m_switchStates[switch_id];
 }
-
 
 
 void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect, bool cannon, double cannon_speed)

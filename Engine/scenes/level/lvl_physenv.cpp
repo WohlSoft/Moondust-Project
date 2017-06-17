@@ -33,8 +33,16 @@ LVL_PhysEnv::~LVL_PhysEnv()
 
 void LVL_PhysEnv::init()
 {
-    setSize(data.w, data.h);
-    setPos(data.x, data.y);
+    m_momentum.x = data.x;
+    m_momentum.y = data.y;
+    m_momentum.w = data.w;
+    m_momentum.h = data.h;
+    if(!m_treemap.m_is_registered)
+    {
+        m_treemap.addToScene();
+    } else {
+        m_treemap.updatePosAndSize();
+    }
 
     switch(data.env_type)
     {
@@ -57,5 +65,7 @@ void LVL_PhysEnv::init()
     m_blocked[1] = Block_NONE;
     m_blocked[2] = Block_NONE;
     m_scene->m_layers.registerItem(data.layer, this);
+
     m_momentum.saveOld();
+    m_momentum_relative.saveOld();
 }

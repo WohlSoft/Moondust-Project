@@ -33,33 +33,33 @@ function venus_firetrap:hideSprite()
 end
 
 function venus_firetrap:updateWarp()
-    self.npc_obj:setSpriteWarp(1.0-(math.abs(self.npc_obj.top-self.npc_obj.bottom)/(self.def_height)), NPC_WARP_BOTTOM, true)
+    self.npc_obj:setSpriteWarp(1.0-(math.abs(self.npc_obj.top-self.npc_obj.bottom) / (self.def_height)), NPC_WARP_BOTTOM, true)
 end
 
 function venus_firetrap:shot()
     local bullet=self.npc_obj:spawnNPC(246, GENERATOR_APPEAR, SPAWN_UP, false)
     bullet.speedX = self.npc_obj.direction * 3.0
-    bullet.center_x = self.npc_obj.center_x + self.npc_obj.direction*( (self.npc_obj.width/2)-4 )
-    bullet.center_y = self.def_top+24
-    
+    bullet.center_x = self.npc_obj.abs_center_x + self.npc_obj.direction*( (self.npc_obj.width/2)-4 )
+    bullet.center_y = self.npc_obj.abs_top + 24
+
     local pposX = self.plrpos_detector:positionX()
     local pposY = self.plrpos_detector:positionY()
     local hDirect = self.plrpos_detector:directedTo()
     local vDirect = 0
-    if(pposY<self.npc_obj.center_y)then
+    if(pposY < self.npc_obj.abs_center_y)then
         vDirect=-1
     else
         vDirect=1
     end
-    local hdist = math.abs(pposX-self.npc_obj.center_x)
-    local vdist = math.abs(pposY-self.npc_obj.center_y)
+    local hdist = math.abs(pposX-self.npc_obj.abs_center_x)
+    local vdist = math.abs(pposY-self.npc_obj.abs_center_y)
     local angle = 0
     if(vdist~=0)then
         angle = math.atan(hdist/vdist)
     end
     -- bullet.speedX = math.sin(angle)* 3.0 * hDirect
     bullet.speedY = math.cos(angle)* 3.0 * vDirect
-    
+
     if( bullet.speedY < -2.0 ) then
         bullet.speedY = -2.0
     elseif( bullet.speedY > 2.0 ) then
