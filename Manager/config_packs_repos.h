@@ -4,6 +4,7 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QNetworkReply>
 #include "config_packs.h"
 
 namespace Ui {
@@ -24,6 +25,7 @@ private slots:
     void on_remove_clicked();
     void clearList();
     void on_repoList_itemChanged(QListWidgetItem *item);
+    void replyFinished(QNetworkReply* reply);
 
 private:
     bool lockAdd;
