@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     curstep = 0;
     totalSteps = 0;
-    tempDir = AppPathManager::userAppDir() + "/.ManagerTemp";
+    tempDir = AppPathManager::userAppDir() + "/PGE Content Manager";
     ui->cpack_info_box->setEnabled(false);
     connect(&downloader, SIGNAL(finished()), this, SLOT(downloadSuccess()));
     connect(&downloader, SIGNAL(canceled()), this, SLOT(downloadAborted()));
