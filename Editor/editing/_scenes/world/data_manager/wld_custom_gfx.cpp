@@ -113,8 +113,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
         bool custom=false;
 
         QString CustomTxt = uWLD.getCustomFile("tile-" + QString::number(t_tile.setup.id)+".ini", true);
-        if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("tile-" + QString::number(t_tile.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadWorldTerrain(t_tile, "tile", &tileD, CustomTxt);
@@ -185,8 +183,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
         bool custom=false;
 
         QString CustomTxt = uWLD.getCustomFile("scene-" + QString::number(t_scenery.setup.id)+".ini", true);
-        if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("scene-" + QString::number(t_scenery.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadWorldScene(t_scenery, "scenery", &sceneryD, CustomTxt);
@@ -256,8 +252,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
         bool custom=false;
 
         QString CustomTxt = uWLD.getCustomFile("path-" + QString::number(t_path.setup.id)+".ini", true);
-        if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("path-" + QString::number(t_path.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadWorldPath(t_path, "path", &pathD, CustomTxt);
@@ -328,8 +322,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
         bool custom=false;
 
         QString CustomTxt = uWLD.getCustomFile("level-" + QString::number(t_level.setup.id)+".ini", true);
-        if(CustomTxt.isEmpty())
-            CustomTxt=uWLD.getCustomFile("level-" + QString::number(t_level.setup.id)+".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadWorldLevel(t_level, "level", &levelD, CustomTxt);

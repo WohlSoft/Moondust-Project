@@ -123,7 +123,7 @@ bool ConfigManager::loadLevelBlocks()
         //Store loaded config
         lvl_block_indexes.storeElement(sblock.setup.id, sblock);
         //Load custom config if possible
-        loadCustomConfig<obj_block>(lvl_block_indexes, i, Dir_Blocks, "block", "block", &loadLevelBlock);
+        loadCustomConfig<obj_block>(lvl_block_indexes, i, Dir_Blocks, "block", "block", &loadLevelBlock, true);
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {

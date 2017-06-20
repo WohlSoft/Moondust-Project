@@ -105,8 +105,6 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         UserBGs uBG;
 
         QString CustomTxt = uLVL.getCustomFile("background2-" + QString::number(bgD->id) + ".ini", true);
-        if(CustomTxt.isEmpty())
-            CustomTxt = uLVL.getCustomFile("background2-" + QString::number(bgD->id) + ".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_localConfigBackgrounds[bgD->id] = *bgD;
@@ -195,8 +193,6 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         bool custom = false;
 
         QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->setup.id) + ".ini", true);
-        if(CustomTxt.isEmpty())
-            CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->setup.id) + ".txt", true);
         if(!CustomTxt.isEmpty())
         {
             m_configs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
