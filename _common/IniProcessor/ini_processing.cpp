@@ -327,6 +327,11 @@ bool IniProcessing::parseHelper(char *data, size_t size)
                 value = lskip(end + 1);
                 end = find_char_or_comment(value, '\0');
 
+                #ifndef CASE_SENSITIVE_KEYS
+                for(char *iter = name; *iter != '\0'; ++iter)
+                    *iter = (char)tolower(*iter);
+                #endif
+
                 if(*end == ';')
                     *end = '\0';
 

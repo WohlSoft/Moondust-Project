@@ -105,6 +105,7 @@ static const int tableOf_num4opChans[] =
     0,/* 69 */
     0,/* 70 */
     0,/* 71 */
+    0,/* 72 */
 };
 
 

@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     a.setStyle("GTK");
     #endif
 
-    AppPathManager::initAppPath();
+    AppPathManager::initAppPath(argv[0]);
 
     ManagerSettings::load();
     MainWindow w;

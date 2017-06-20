@@ -183,7 +183,7 @@ bool ConfigManager::loadLevelBackG()
             sbg.id = i;
             lvl_bg_indexes.storeElement(sbg.id, sbg);
             //Load custom config if possible
-            loadCustomConfig<obj_BG>(lvl_bg_indexes, i, Dir_BG, "background2", "background2", &loadLevelBackground);
+            loadCustomConfig<obj_BG>(lvl_bg_indexes, i, Dir_BG, "background2", "background2", &loadLevelBackground, true);
         }
 
         if(bgset.lastError() != IniProcessing::ERR_OK)

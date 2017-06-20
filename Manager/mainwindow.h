@@ -6,6 +6,7 @@
 #include <http_downloader/http_downloader.h>
 #include <QQueue>
 #include "config_packs.h"
+#include <QToolButton>
 
 namespace Ui {
 class MainWindow;
@@ -58,6 +59,8 @@ private slots:
     void downloadFailed(QString reason);
     void setProgress(qint64 bytesRead, qint64 totalBytes);
 
+    void cancelStatusBarButtonClicked();
+
 protected:
     void closeEvent(QCloseEvent* e);
 
@@ -67,6 +70,8 @@ private:
     void addItemToCPACKList(ConfigPackInfo &rp);
 
     Ui::MainWindow *ui;
+
+    QToolButton* cancelStatusBarButton;
 };
 
 #endif // MAINWINDOW_H

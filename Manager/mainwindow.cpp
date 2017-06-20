@@ -5,6 +5,7 @@
 #include "xml_parse/xml_cpack_list.h"
 #include <common_features/app_path.h>
 #include <QtDebug>
+#include <QToolButton>
 
 #include <QMessageBox>
 
@@ -16,13 +17,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     curstep = 0;
     totalSteps = 0;
-    tempDir = AppPathManager::userAppDir() + "/.ManagerTemp";
+    tempDir = AppPathManager::userAppDir() + "/PGE Content Manager";
     ui->cpack_info_box->setEnabled(false);
     connect(&downloader, SIGNAL(finished()), this, SLOT(downloadSuccess()));
     connect(&downloader, SIGNAL(canceled()), this, SLOT(downloadAborted()));
     connect(&downloader, SIGNAL(failed(QString)), this, SLOT(downloadFailed(QString)));
     connect(&downloader, SIGNAL(progress(qint64, qint64)), this, SLOT(setProgress(qint64, qint64)));
     ui->progressBar->hide();
+
+    cancelStatusBarButton = new QToolButton(ui->statusBar);
+    cancelStatusBarButton->setText("x");
+    cancelStatusBarButton->setToolTip("Cancel current action.");
+
+    statusBar()->addPermanentWidget(cancelStatusBarButton);
+
+    cancelStatusBarButton->hide();
+
+    connect(cancelStatusBarButton, &QToolButton::clicked, this, &MainWindow::cancelStatusBarButtonClicked);
 }
 
 MainWindow::~MainWindow()
@@ -80,6 +91,14 @@ void MainWindow::on_refresh_clicked()
     //run QtConcurrent updateConfigPacksList()
 }
 
+void MainWindow::cancelStatusBarButtonClicked()
+{
+    if(downloader.isBusy())
+    {
+        downloader.cancelDownload();
+        statusBar()->clearMessage();
+    }
+}
 
 void MainWindow::updateConfigPacksList()
 {
@@ -92,11 +111,7 @@ void MainWindow::updateConfigPacksList()
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     if(downloader.isBusy())
-    {
         downloader.cancelDownload();
-        e->ignore();
-        return;
-    }
 
     ManagerSettings::save();
     e->accept();
@@ -148,6 +163,7 @@ void MainWindow::queueStepBegin()
         qDebug() << "ACT: lock config page";
         ui->refresh->setEnabled(false);
         statusBar()->clearMessage();
+        cancelStatusBarButton->hide();
         ui->progressBar->show();
         queueStepBegin();
         break;
@@ -157,6 +173,7 @@ void MainWindow::queueStepBegin()
         curstep++;
         downloader.downloadFile(currentAct.param1, currentAct.param2);
         statusBar()->showMessage(tr("Step %1/%2 Downloading file %3...").arg(curstep).arg(totalSteps).arg(currentAct.param1));
+        cancelStatusBarButton->show();
         break;
 
     case ACT_PARSE_CPACK_LIST_XML:
@@ -192,6 +209,7 @@ void MainWindow::queueStepBegin()
         qDebug() << "ACT: unlock config page";
         ui->refresh->setEnabled(true);
         ui->progressBar->hide();
+        cancelStatusBarButton->hide();
         queueStepBegin();
         break;
 
