@@ -145,7 +145,7 @@ defaultSettingsPath:
 
 QString AppPathManager::settingsFile()
 {
-    return m_settingsPath + "/pge_editor.ini";
+    return m_settingsPath + "/pge_manager.ini";
 }
 
 QString AppPathManager::userAppDir()

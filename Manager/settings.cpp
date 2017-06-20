@@ -2,6 +2,7 @@
 #include "config_packs.h"
 #include <common_features/app_path.h>
 #include <QSettings>
+#include "mainwindow.h"
 
 void ManagerSettings::load()
 {
@@ -25,6 +26,10 @@ void ManagerSettings::load()
         cpacks_reposList.push_back(repo);
     }
     setup.endGroup();
+
+    setup.beginGroup("manager");
+    MainWindow::autoRefresh = setup.value(QString("auto-refresh")).toBool();
+    setup.endGroup();
 }
 
 void ManagerSettings::save()
@@ -37,5 +42,9 @@ void ManagerSettings::save()
         setup.setValue(QString("repo-%1").arg(i+1), cpacks_reposList[i].url);
         setup.setValue(QString("repo-%1-enabled").arg(i+1), cpacks_reposList[i].enabled);
     }
+    setup.endGroup();
+
+    setup.beginGroup("manager");
+    setup.setValue(QString("auto-refresh"), MainWindow::autoRefresh);
     setup.endGroup();
 }
