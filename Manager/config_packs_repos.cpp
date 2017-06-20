@@ -3,6 +3,7 @@
 #include "config_packs.h"
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QNetworkAccessManager>
 
 ConfPacksRepos::ConfPacksRepos(QWidget *parent) :
     QDialog(parent),
@@ -61,8 +62,33 @@ tryAgain:
     addItemToList(cpacks_reposList.last());
 }
 
+void ConfPacksRepos::replyFinished(QNetworkReply* reply)
+{
+    if(reply->error() == QNetworkReply::NoError) //no error, duh
+    {
+        QMessageBox::information(this, "PGE Content Manager", "URL exists!", QMessageBox::Ok, 0);
+    }
+    else //error
+    {
+        QMessageBox::critical(this, "PGE Content Manager", "URL doesn't exist!", QMessageBox::Ok, 0);
+    }
+}
+
 void ConfPacksRepos::on_checkRepo_clicked()
-{}
+{
+    QListWidgetItem* selectedItem = ui->repoList->selectedItems()[0];
+    QNetworkAccessManager* network = new QNetworkAccessManager(this);
+
+    if(network->networkAccessible() == QNetworkAccessManager::NotAccessible)
+    {
+        QMessageBox::critical(this, "PGE Content Manager", "You must be connected to the internet!", QMessageBox::Ok, 0);
+        return;
+    }
+
+    connect(network, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    network->get(QNetworkRequest(QUrl(selectedItem->text())));
+    //network->deleteLater();
+}
 
 void ConfPacksRepos::on_remove_clicked()
 {
