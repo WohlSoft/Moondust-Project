@@ -92,7 +92,13 @@ private:
         if(!m_params.currentGroup)
             return params::IniKeys::iterator();
 
-        params::IniKeys::iterator e = m_params.currentGroup->find(key);
+        #ifndef CASE_SENSITIVE_KEYS
+        std::string key1(key);
+        for(char *iter = &key1[0]; *iter != '\0'; ++iter)
+            *iter = (char)tolower(*iter);
+        #endif
+
+        params::IniKeys::iterator e = m_params.currentGroup->find(key1);
 
         if(e != m_params.currentGroup->end())
             ok = true;
