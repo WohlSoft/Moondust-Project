@@ -25,57 +25,55 @@
 
 struct obj_BG
 {
-    unsigned long id = 0;
-    std::string name;
-
-    std::string image_n;
+    uint64_t        id = 0;
+    std::string     name;
+    std::string     image_n;
 
     /*   OpenGL    */
-    bool isInit = false;
-    PGE_Texture *image = nullptr;
-    GLuint textureID = 0;
-    int textureArrayId = 0;
-    int animator_ID = 0;
-    PGEColor Color_upper;
-    PGEColor Color_lower;
+    bool            isInit = false;
+    PGE_Texture     *image = nullptr;
+    GLuint          textureID = 0;
+    int             textureArrayId = 0;
+    int             animator_ID = 0;
+    PGEColor        Color_upper;
+    PGEColor        Color_lower;
     /*   OpenGL    */
 
-    unsigned int type;//convert from string
-    double       repeat_h;
-    unsigned int repead_v;
-    unsigned int attached;
-    bool editing_tiled;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
+    uint32_t        type;//convert from string
+    double          repeat_h;
+    uint32_t        repead_v;
+    uint32_t        attached;
+    bool            editing_tiled;
+    bool            animated;
+    uint32_t        frames;
+    uint32_t        framespeed;
+    uint32_t        frame_h; //Hegth of the frame. Calculating automatically
 
-    unsigned int display_frame;
+    uint32_t        display_frame;
 
-    bool magic;
-    uint32_t    magic_strips;
-    std::string magic_splits;
+    bool            magic;
+    uint32_t        magic_strips;
+    std::string     magic_splits;
     std::vector<uint32_t> magic_splits_i;
-    std::string magic_speeds;
+    std::string     magic_speeds;
     std::vector<double> magic_speeds_i;
 
     std::string second_image_n;
     //QPixmap second_image;
 
     /*   OpenGL    */
-    bool second_isInit;
-    PGE_Texture *second_image;
-    GLuint second_textureID;
-    int second_textureArrayId;
-    int second_animator_ID;
-    PGEColor second_Color_upper;
-    PGEColor second_Color_lower;
+    bool            second_isInit;
+    PGE_Texture     *second_image;
+    GLuint          second_textureID;
+    int             second_textureArrayId;
+    int             second_animator_ID;
+    PGEColor        second_Color_upper;
+    PGEColor        second_Color_lower;
     /*   OpenGL    */
 
-    double       second_repeat_h;
-    unsigned int second_repeat_v;
-    unsigned int second_attached;
-
+    double          second_repeat_h;
+    uint32_t        second_repeat_v;
+    uint32_t        second_attached;
 };
 
 #endif // OBJ_BG_H
