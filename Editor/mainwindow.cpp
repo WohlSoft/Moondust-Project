@@ -194,12 +194,11 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
     }
 
 #ifdef Q_OS_MACX
-    QPixmap dummy;
-    dummy.fill(Qt::transparent);
-    foreach(QAction* act, ui->menuBar->actions())
+    foreach(QAction* menu, ui->menuBar->actions())
     {
-        act->setVisible(true);
-        act->setIcon(QIcon(dummy));
+        menu->setVisible(true);
+        foreach(QAction* item, menu->menu()->actions())
+            item->setIconVisibleInMenu(false);
     }
     ui->Exit->setMenuRole(QAction::QuitRole);
     ui->Exit->setVisible(true);
