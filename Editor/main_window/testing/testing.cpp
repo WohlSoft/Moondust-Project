@@ -160,9 +160,8 @@ TryAgain:
     {
         QMessageBox::warning(parent, MainWindow::tr("Engine is not found"),
                                      MainWindow::tr("Can't start testing, engine is not found: \n%1\n"
-                                "Please, choose the engine application yourself!")
-                             .arg(PGE_ENGINE_BUNLDE),
-                             QMessageBox::Ok);
+                                    "Please, choose the engine application yourself!").arg(PGE_ENGINE_BUNLDE),
+                                    QMessageBox::Ok);
         command = QFileDialog::getOpenFileName(parent,
                                                MainWindow::tr("Choose the Engine application"),
                                                GlobalSettings::testing.enginePath,
