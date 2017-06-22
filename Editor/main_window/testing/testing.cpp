@@ -21,6 +21,9 @@
 #include <QMessageBox>
 #include <QCheckBox>
 #include <QProcess>
+#ifdef Q_OS_MAC
+#include <QStandardPaths>
+#endif
 
 #include <common_features/app_path.h>
 #include <common_features/logger_sets.h>
@@ -41,11 +44,18 @@
 #endif
 
 #ifdef _WIN32
-#define PGE_ENGINE_EXE "/pge_engine.exe"
+#define PGE_ENGINE_EXE "pge_engine.exe"
+#define PGE_ENGINE_BUNLDE PGE_ENGINE_EXE
+#define PGE_ENGINE_BUNLDE_MASK PGE_ENGINE_EXE
 #elif __APPLE__
-#define PGE_ENGINE_EXE "/PGE Engine.app/Contents/MacOS/PGE Engine"
+#define PGE_ENGINE_BUNLDE "PGE Engine.app"
+#define PGE_ENGINE_BUNLDE_MASK "PGE Engine"
+#define PGE_ENGINE_EXECUTABLE "/Contents/MacOS/PGE Engine"
+#define PGE_ENGINE_EXE PGE_ENGINE_BUNLDE PGE_ENGINE_EXECUTABLE
 #else
-#define PGE_ENGINE_EXE "/pge_engine";
+#define PGE_ENGINE_EXE "pge_engine";
+#define PGE_ENGINE_BUNLDE PGE_ENGINE_EXE
+#define PGE_ENGINE_BUNLDE_MASK PGE_ENGINE_EXE
 #endif
 
 /*!
@@ -112,25 +122,74 @@ void MainWindow::stopMusicForTesting()
 }
 
 /*!
+ * \brief Find the engine application in the available paths list
+ * \param enginePath found engine application
+ * \return true if engine application has been found, false if engine application wasn't found
+ */
+static bool findEngineApp(QString &enginePath)
+{
+    QStringList possiblePaths;
+    possiblePaths.push_back(ApplicationPath + QStringLiteral("/") + PGE_ENGINE_EXE);
+#ifdef Q_OS_MAC
+    {
+        //! Because of path randomizer thing since macOS Sierra, we are must detect it by absolute path
+        QString app = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, "PGE Project/" PGE_ENGINE_BUNLDE, QStandardPaths::LocateDirectory);
+        if(!app.isEmpty())
+            possiblePaths.push_back(app + QStringLiteral(PGE_ENGINE_EXECUTABLE));
+    }
+#endif
+    //! Reserve path in case Engine is not available in the default path
+    if(!GlobalSettings::testing.enginePath.isEmpty())
+        possiblePaths.push_back(GlobalSettings::testing.enginePath);
+
+    for(QString &f : possiblePaths)
+    {
+        if(QFile::exists(f))
+        {
+            enginePath = f;
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool findEngine(MainWindow *parent, QString &command)
+{
+TryAgain:
+    if(!findEngineApp(command))
+    {
+        QMessageBox::warning(parent, MainWindow::tr("Engine is not found"),
+                                     MainWindow::tr("Can't start testing, engine is not found: \n%1\n"
+                                "Please, choose the engine application yourself!")
+                             .arg(PGE_ENGINE_BUNLDE),
+                             QMessageBox::Ok);
+        command = QFileDialog::getOpenFileName(parent,
+                                               MainWindow::tr("Choose the Engine application"),
+                                               GlobalSettings::testing.enginePath,
+                                               QString("PGE Engine executable (%1);;All files(*.*)")
+                                               .arg(PGE_ENGINE_BUNLDE_MASK));
+        if(command.isEmpty())
+            return false;
+        GlobalSettings::testing.enginePath = command;
+        goto TryAgain;
+    }
+    return true;
+}
+
+/*!
  * \brief Starts level testing in PGE Engine with interprocess communication (File saving is not needed)
  */
 void MainWindow::on_action_doTest_triggered()
 {
     pge_engine_alphatestingNotify(this);
 
-    QString command = ApplicationPath + PGE_ENGINE_EXE;
+    QString command;
 
     QMutexLocker mlocker(&engine_mutex);
     Q_UNUSED(mlocker);
 
-    if(!QFileInfo(command).exists())
-    {
-        QMessageBox::warning(this, tr("Engine is not found"),
-                             tr("Can't start testing, engine is not found: \n%1\nPlease, check the application directory and make sure it is installed properly.")
-                             .arg(command),
-                             QMessageBox::Ok);
+    if(!findEngine(this, command))
         return;
-    }
 
     if(engine_proc.state() == QProcess::Running)
     {
@@ -229,19 +288,13 @@ void MainWindow::on_action_doSafeTest_triggered()
 {
     pge_engine_alphatestingNotify(this);
 
-    QString command = ApplicationPath + PGE_ENGINE_EXE;
+    QString command = ApplicationPath + QStringLiteral("/") + PGE_ENGINE_EXE;
 
     QMutexLocker mlocker(&engine_mutex);
     Q_UNUSED(mlocker);
 
-    if(!QFileInfo(command).exists())
-    {
-        QMessageBox::warning(this, tr("Engine is not found"),
-                             tr("Can't start testing, engine is not found: \n%1\nPlease, check the application directory and make sure it is installed properly.")
-                             .arg(command),
-                             QMessageBox::Ok);
+    if(!findEngine(this, command))
         return;
-    }
 
     if(engine_proc.state() == QProcess::Running)
     {
@@ -317,19 +370,13 @@ void MainWindow::on_action_doSafeTest_triggered()
  */
 void MainWindow::on_action_Start_Engine_triggered()
 {
-    QString command = ApplicationPath + PGE_ENGINE_EXE;
+    QString command = ApplicationPath + QStringLiteral("/") + PGE_ENGINE_EXE;
 
     QMutexLocker mlocker(&engine_mutex);
     Q_UNUSED(mlocker);
 
-    if(!QFileInfo(command).exists())
-    {
-        QMessageBox::warning(this, tr("Engine is not found"),
-                             tr("Engine is not found: \n%1\nPlease, check the application directory and make sure it is installed properly.")
-                             .arg(command),
-                             QMessageBox::Ok);
+    if(!findEngine(this, command))
         return;
-    }
 
     QStringList args;
     args << "--config=\"" + configs.config_dir + "\"";

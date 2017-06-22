@@ -173,6 +173,8 @@ void MainWindow::loadSettings()
 
     settings.beginGroup("testing");
     {
+        GlobalSettings::testing.enginePath = settings.value("engine-path", QString()).toString();
+        GlobalSettings::testing.lunaLuaPath = settings.value("lunalua-path", QString()).toString();
         GlobalSettings::testing.xtra_god = settings.value("ex-god", false).toBool();
         GlobalSettings::testing.xtra_flyup = settings.value("ex-flyup", false).toBool();
         GlobalSettings::testing.xtra_chuck = settings.value("ex-chuck", false).toBool();
@@ -314,6 +316,8 @@ void MainWindow::saveSettings()
 
     settings.beginGroup("testing");
     {
+        settings.setValue("engine-path", GlobalSettings::testing.enginePath);
+        settings.setValue("lunalua-path", GlobalSettings::testing.lunaLuaPath);
         settings.setValue("ex-god", GlobalSettings::testing.xtra_god);
         settings.setValue("ex-flyup", GlobalSettings::testing.xtra_flyup);
         settings.setValue("ex-chuck", GlobalSettings::testing.xtra_chuck);
