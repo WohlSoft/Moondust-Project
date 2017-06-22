@@ -171,6 +171,8 @@ struct BgSetup
 
     struct BgLayer
     {
+        //! Background image of this layer
+        PGEString   image;
         //! Z index. <0 - background, >0 - foreground
         long double z_index = -50.0l;
         /// Horizontal parallax coefficient. In auto mode will be calculated automatically proportionally to z position
@@ -232,6 +234,16 @@ struct BgSetup
         double      padding_x = 0.0;
         //! Vertical padding between repeating tiles
         double      padding_y = 0.0;
+
+        //! Auto-scroll image (works when releat X is enabled)
+        bool        auto_scrolling_x = false;
+        //! Auto-scroll speed in pixels per second
+        uint32_t    auto_scrolling_x_speed = 32;
+
+        //! Auto-scroll image (works when releat Y is enabled)
+        bool        auto_scrolling_y = false;
+        //! Auto-scroll speed in pixels per second
+        uint32_t    auto_scrolling_y_speed = 32;
     };
 
     PGEList<BgLayer> layers;
