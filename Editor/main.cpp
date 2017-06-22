@@ -55,6 +55,7 @@
 #define FREEIMAGE_LIB 1
 //#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
 #endif
+
 #include <FreeImageLite.h>
 
 static bool initied_sdl = false;
@@ -162,6 +163,7 @@ int main(int argc, char *argv[])
     QDir dir(QApplication::applicationDirPath());
     dir.cdUp();
     QApplication::setLibraryPaths(QStringList(dir.absolutePath()));
+    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus, true);
     #endif
 
     int ret = 0;
