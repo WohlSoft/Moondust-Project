@@ -17,6 +17,7 @@
  */
 
 #include <QDesktopWidget>
+#include <QStandardPaths>
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
@@ -65,7 +66,7 @@ void WorldEdit::ExportingReady() //slot
         QString inifile = AppPathManager::settingsFile();
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", AppPathManager::userAppDir()).toString();
+        latest_export_path = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 

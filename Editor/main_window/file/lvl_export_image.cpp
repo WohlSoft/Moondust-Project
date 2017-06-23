@@ -21,6 +21,7 @@
 #include <QGraphicsScene>
 #include <QProgressDialog>
 #include <QDesktopWidget>
+#include <QStandardPaths>
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/app_path.h>
@@ -83,7 +84,7 @@ void LevelEdit::ExportingReady() //slot
         QString inifile = AppPathManager::settingsFile();
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        m_recentExportPath = settings.value("export-path", AppPathManager::userAppDir()).toString();
+        m_recentExportPath = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 
