@@ -155,8 +155,7 @@ static bool findEngineApp(QString &enginePath)
 
 static bool findEngine(MainWindow *parent, QString &command)
 {
-TryAgain:
-    if(!findEngineApp(command))
+    while(!findEngineApp(command))
     {
         QMessageBox::warning(parent, MainWindow::tr("Engine is not found"),
                                      MainWindow::tr("Can't start testing, engine is not found: \n%1\n"
@@ -170,7 +169,6 @@ TryAgain:
         if(command.isEmpty())
             return false;
         GlobalSettings::testing.enginePath = command;
-        goto TryAgain;
     }
     return true;
 }
