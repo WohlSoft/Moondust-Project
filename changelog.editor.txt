@@ -2,6 +2,8 @@ Editor 0.3.1.13
 - All frame delay values in all INI files are renamed from "framespeed" and "frame-speed" into "frame-delay". Old values kept as aliases. Except "framespeed" now has 1/65 unit while others have millisecond unit.
 - Added an absolute Z-Value redefinition for BGOs in the INI configuration
 - Custom item INI files no more requiring to have the section declaration at begin
+- Added the absolute ~/Application/PGE Project alternate folder to escape path randomizing on macOS Sierra and higher
+- Added ability to choose engine application in different folder if pge_engine does not exist in the same folder as editor
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
@@ -28,7 +30,7 @@ Editor 0.3.1.12
 - Added ability to disable OpenGL in the LunaTester to allow using it on the old machines.
 - Added a warning message on attempt to start LunaTester on the world map.
 patch 1
-- Attempt to fix scaling on the HighDPI screens
+- Attempt to fix mode of scale on the HighDPI screens
 - Fixed a bug caused duplicated ArrayID value by physical environment zones (after copy-pasting)
 - Fixed support of tilesets with the same title name
 patch 2
@@ -39,17 +41,17 @@ patch 2
 - Fixed too tall result message box after SoX audio converter working
 - Added ability to disable OpenGL in the LunaTester
 - Fixed some crashes
-- Updated built-in fixer of the lazyliy-made masks to be compare with new algorithm
-- Updated console tools API to support updated API of GIFs2PNG, PNG2GIFs and LazyFixTool (which now are using "tclap" as arguments parser)
+- Updated built-in fixer of the lazily-made masks to be compared with new algorithm
+- Updated console tools API to support updated API of GIFs2PNG, PNG2GIFs, and LazyFixTool (which now are using "tclap" as arguments parser)
 patch 3
-- Fixed false alert about config pack invalidity when real error has occouped in the custom configs which are in the level custom folder
+- Fixed false alert about config pack invalidity when real error has occupied in the custom configs which are in the level custom folder
 - Added message box which notifies about possible errors in the custom configs of the level or world map
 - Added ability to override busy section while cloning
 patch 4
 - Fixed an inability to setup default value for special spin-box value on NPC
-- Added more detailed tool tip for elements in the item box hovered by the mouse cursor
+- Added more detailed tooltip for elements in the item box hovered by the mouse cursor
 - Added a tool tip showing on tileset item box elements
-- Fixed the freeze caused by not killed level file digger thread
+- Fixed the freeze caused by not killed level file digging thread
 - Added an ability to run world map test via F5 key
 - Fixed the weird bug that causes a junk placing while scrolling after double-click on the editing scene surface
 
@@ -61,7 +63,7 @@ Editor 0.3.1.11
 - Fixed empty category entry width appears on some groups in blocks and BGO lists
 - Added ability to show default only elements in the tile-sets editor box
 - Added "Top-Right" and "Right-Bottom" section sides for camera position reset
-- Test are finally working
+- Test is finally working
 - Fixed frame-sequence based animator for the blocks
 - Fixed junk element entries on damaged or absence of the image file
 - Added support for the automatically running of the configure utilities in the config packs. Now configure utilities are working in JavaScript instead of executables!
@@ -102,7 +104,7 @@ Editor 0.3.1.9
 - Use Breeze theme on KDE, XFCE, OS X and on Windows 10
 - Fixed bug with multi-selection item dialog where impossible to add NPC's into custom counter
 - Added ability to copy any parameters/metrics of any placed element
-- Added a good protection which avoids accidental running of multiple copies of engine for a testing
+- Added a good protection which avoids accidental starting of multiple copies of engine for a testing
 
 Editor 0.3.1.8
 - Fixed bug with non-initialized NPC.txt fields on a new file creation
@@ -114,7 +116,7 @@ Editor 0.3.1.7
 - Small update of File Library
 - Support for "health" tag inside npc-*.txt custom configs
 - Added support of emulated FM Synth MIDI playback based on ADLMIDI. Also added support of loopStart/loopEnd tags in MIDI files
-- Fixed serious bug causes crash on attempt to place something after removing with enabled collisions.
+- Fixed a serious bug which causes a crash on attempt to place something after removing with enabled collisions.
 - Added experimental support of background2-*.txt custom configs (currently works with Editor only, engine still don't work with it) which allows reconfiguring animation, image filenames or settings for custom backgrounds. Note: unlike npc-*.txt, background2-*.txt uses INI-file syntax and requires a header "[background2-x]" at top of file. Instead of X put a number of backgrounds.
 - Fixed bug with locked event entry after un-deletion
 - Added "Open folder of file" and "Open custom folder of file" to quickly open custom folder of current level or world map
@@ -148,8 +150,8 @@ Editor 0.3.1
 - Added tool which provides clean-up of garbage NPC's caused by SMBX bug (any climbable NPC's such as vines are flooding SMBX)
 - Added config pack version notifier (if your config pack is outdated, you will be notified)
 - Better designed development console box
-- Fixed a bug which made crashing possible if the F5 keys were pressed too often.
-- Performance when editing big levels and world maps has been improved.
+- Fixed a bug which made crashing possibly if the F5 keys were pressed too often.
+- Performance when editing big levels and world maps have been improved.
 - In the flood-fill mode, BGOs are now colliding with other BGO's.
 
 Editor 0.3.0.2
@@ -197,7 +199,7 @@ Minor updates after release (updated version since 11 may 2015 build date):
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
 - Fixed window focus on switch into placing mode
-- Fixed 'Trigger event' and 'Set moving layer' combo boxes on switch into placing mode
+- Fixed 'Trigger Event' and 'Set moving layer' combo boxes on switch into placing mode
 - Fixed crash in protector for 'out of range' inside NPC animator
 - Improved stars counter tool: now it counts accurate and everywhere
 - Fixed "Add to new layer" not updated layer lists
@@ -205,7 +207,7 @@ Editor 0.2.2
 - Added basic inter-processing features
 - Added smart custom data importing (when you drag&drop files or folders into the editing level file, they will be imported and level will restart)
 - Added flood filling tool
-- Added able to use line tool for NPC's.
+- Added ability to use line tool for NPC's.
 - Added auto-incrementing of special value (which a much useful for placing of, for example, fire-bars)
 - Added "Don't show properties box" feature for placing mode
 - Added position bookmarks. You can store current point into bookmark which gives able to return back later
@@ -234,7 +236,7 @@ Editor 0.2.1.1
 - Fixed zoom icons customization
 - Fixed tiny mouse events of locked items bug
 - Fixed mouse wheel artifacts while placing mode are enabled
-- Added "Show zone range data" which will show X, Y, Width and Height of physical environment zone
+- Added "Show zone range data" which will show X, Y, Width, and Height of physical environment zone
 - Fixed multi-line messages of NPC and events parsing error for SMBX64 level file format (found in Talkhaus's levels)
 - Fixed crash on range erasing on world map
 
@@ -281,7 +283,7 @@ Editor 0.2.0
 - Added Italian translation
 - Design of warp points and physical environment zones are improved, also magenta-colored bounding box has been changed to Crimson
 - Added debugger box
-- Background-selecting list now has thumbnails for previewing!
+- The background-selecting list now has thumbnails for previewing!
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
@@ -369,7 +371,7 @@ Editor 0.0.8
 - Added "Selection only" tool, you can select item groups without moving them
 - Fixed eraser tool
 - Water/Quicksand zones, sizable blocks placing in "Draw-Square" style
-- "Square Fill" tool: you can draw square and it will be filled by selected block or BGO (Warning, collisions ignoring!)
+- "Square Fill" tool: you can draw a rectangle and it will be filled by selected block or BGO (Warning, collisions ignoring!)
 - Fixes in configs: almost all blocks, BGOs, and NPCs are sorted
 - Full control of door entries
 - "Goto entrance" and "Goto exit" - makes it possible to quickly find the other side of a door, even in other sections
@@ -383,7 +385,7 @@ Editor 0.0.8
 Editor 0.0.7
 - Added door points array-ID text
 - Added player's points on level map
-- Added support for move objects on level map, change properties by blocks with context menu
+- Added support for move objects on level map and changing of properties of blocks via context menu
 - Added blocks animation
 - Optimized level data loading
 - Added locks for objects by type
@@ -435,4 +437,3 @@ Editor 0.0.2
 
 Editor 0.0.1
 - First test version, can only check parsing of LVL files
-

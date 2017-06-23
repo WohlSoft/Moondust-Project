@@ -2,13 +2,15 @@
 - Qt has been removed from dependencies for PGE Engine, for now, PGE Engine has: SDL2 only
 - Font Manager was been reworked for direct usage of FreeType library instead of QFont
 - Added an ability to skip the long path opening animation by hit of the pause key on the world map
-- Accuracy of the path opener has been improved and added support for debug rendering for it on the world map
+- Accuracy of the path opener has been improved and added support for debugging rendering for it on the world map
 - Added a smooth camera following to opening path cells on the world map
-- Fixed the blinking of the playable character while it shown on multiple cameras
+- Fixed the blinking of the playable character while it showed on multiple cameras
 - Fixed a bug which caused appearance of self in the list of contacted objects which causes very unexpected result
 - All frame delay values in all INI files are renamed from "framespeed" and "frame-speed" into "frame-delay". Old values kept as aliases. Except "framespeed" now has 1/65 unit while others have millisecond unit.
 - Added an absolute Z-Value redefinition for BGOs in the INI configuration
 - Custom item INI files no more requiring to have the section declaration at begin
+- Fixed troubles related to HighDPI screens support: mouse cursor accuracy and rendering (worst case was reproduced on macOS with Retina screen)
+- Use a subfolder of default screenshot folder on macOS operating systems
 
 0.2.6
 - Improved testing of the renderers supports to avoid accidental running of the unsupported renderer
@@ -46,7 +48,7 @@ patch-1
 - Added separated support of portal and instant warps: instant warp will do same as in SMBX, portal warp will teleport character with keeping of kinetic energy
 - Added support for entering event for warps
 - Added support of two-way directed warps
-- Added support of cannon exit warps
+- Added support of Cannon Exit warps
 - Better and stable inter-processing with editor based on stdin/stdout!1
 - Added a support of character filter blocks and character switch blocks!
 - Better speed-adding physics
@@ -122,4 +124,3 @@ patch-1
 - Fixed imperfection with auto-closing of message box while "run" or "jump" key are holding
 - Episode/Level lists are no more freezing engine!
 - Working auto scrolling of sections has been implemented! (Unlike SMBX, auto-scroll internally is an option of specific section which will work anyway, even you entered into this section from a side, you will get auto-scrolling in this section)
-
