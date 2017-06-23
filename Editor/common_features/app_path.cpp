@@ -23,6 +23,7 @@
 #include <QFileInfo>
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
 #include <QUrl>
 #endif
 
@@ -151,6 +152,20 @@ QString AppPathManager::settingsFile()
 QString AppPathManager::userAppDir()
 {
     return m_userPath;
+}
+
+QString AppPathManager::languagesDir()
+{
+#ifndef Q_OS_MAC
+    return ApplicationPath + "/languages";
+#else
+    CFURLRef appUrlRef;
+    appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
+    CFStringRef filePathRef = CFURLGetString(appUrlRef);
+    QString path = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+    CFRelease(appUrlRef);
+    return path;
+#endif
 }
 
 void AppPathManager::install()

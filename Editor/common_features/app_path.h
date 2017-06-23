@@ -47,6 +47,12 @@ class AppPathManager
          * @return Path to user profile application dir
          */
         static QString userAppDir();
+
+        /**
+         * @brief Path to UI translation files
+         * @return Path to UI translation files
+         */
+        static QString languagesDir();
         /**
          * @brief Process installation (make user directory, save properties to operating system registry)
          */
