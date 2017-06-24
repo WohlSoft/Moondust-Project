@@ -90,6 +90,8 @@ win*-msvc*: message("MSVC compiler will be used")
 # Global optimization flags
 !win*-msvc*:    QMAKE_CFLAGS_RELEASE += -fno-omit-frame-pointer
 !win*-msvc*:    QMAKE_CXXFLAGS_RELEASE += -fno-omit-frame-pointer
+# set minimal version 10.10
+macx:           QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
 
 useccache: {
     #To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html

@@ -278,9 +278,20 @@ BuildFreeType()
     UnArch 'freetype-2.7.1'
     printf "=========\E[37;42mFreeType\E[0m===========\n"
     FREETYPE_ARGS="${FREETYPE_ARGS} --prefix=${InstallTo}"
+    FT_CFLAGS=""
+    FT_CXXFLAGS=""
     if [[ "$OSTYPE" != "msys"* ]]; then
-        FREETYPE_ARGS="${FREETYPE_ARGS} CFLAGS=-fPIC CXXFLAGS=-fPIC"
+        FT_CFLAGS="${FT_CFLAGS} -fPIC"
+        FT_CXXFLAGS="${FT_CXXFLAGS} -fPIC"
     fi
+    if [[ "$OurOS" == "macos" ]]; then
+        FT_CFLAGS="${FT_CFLAGS} -mmacosx-version-min=10.10"
+        FT_CXXFLAGS="${FT_CXXFLAGS} -mmacosx-version-min=10.10"
+    fi
+    if [[ "$FT_CFLAGS" != "" || "$FT_CXXFLAGS" != "" ]]; then
+        FREETYPE_ARGS="${FREETYPE_ARGS} CFLAGS='${FT_CFLAGS}' CXXFLAGS='${FT_CXXFLAGS}'"
+    fi
+
     FREETYPE_ARGS="${FREETYPE_ARGS} --with-zlib=no --with-bzip2=no --with-png=false"
     FREETYPE_ARGS="${FREETYPE_ARGS} --with-harfbuzz=false"
     FREETYPE_ARGS="${FREETYPE_ARGS} --enable-static=yes --enable-shared=no"
