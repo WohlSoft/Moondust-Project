@@ -230,7 +230,7 @@ void AppPathManager::initAppPath()
                 goto defaultSettingsPath;
 #ifdef __APPLE__
             if(!DirMan::exists(ApplicationPathSTD + "/Data directory"))
-                system(fmt::format("ln -s \"{0}\" \"{1}/Data directory\"", path + UserDirName, ApplicationPathSTD).c_str());
+                symlink((path).c_str(), (ApplicationPathSTD + "/Data directory").c_str());
 #endif
             m_userPath = appDir.absolutePath();
             m_userPath.push_back('/');
@@ -273,6 +273,22 @@ std::string AppPathManager::languagesDir()
     if(path.compare(0, 7, "file://") == 0)
         path.erase(0, 7);
     return path;
+#endif
+}
+
+std::string AppPathManager::screenshotsDir()
+{
+    #ifndef __APPLE__
+    return m_userPath + "/screenshots";
+    #else
+    std::string path = m_userPath;
+    char *base_path = getScreenCaptureDir();
+    if(base_path)
+    {
+        path = base_path;
+        SDL_free(base_path);
+    }
+    return path + "/Moondust Game Screenshots";
     #endif
 }
 

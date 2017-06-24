@@ -54,6 +54,10 @@ struct SETTINGS_ItemDefaults
 
 struct SETTINGS_TestSettings
 {
+    //! Custom path to PGE Engine (in case if original was not found)
+    QString enginePath;
+    //! Custom path to LunaLua (in case if original was not found)
+    QString lunaLuaPath;
     bool xtra_god = false;
     bool xtra_flyup = false;
     bool xtra_chuck = false;

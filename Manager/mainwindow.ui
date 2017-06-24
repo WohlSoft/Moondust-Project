@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>626</width>
+    <width>636</width>
     <height>516</height>
    </rect>
   </property>
@@ -44,6 +44,7 @@
        </property>
        <addaction name="actionConnection"/>
        <addaction name="actionRepositories"/>
+       <addaction name="actionAuto_Refresh_on_Startup"/>
       </widget>
       <widget class="QMenu" name="menu">
        <property name="title">
@@ -385,6 +386,14 @@ Platform Game Engine!</string>
    </action>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionAuto_Refresh_on_Startup">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto Refresh on Startup</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

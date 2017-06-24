@@ -17,6 +17,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    static bool autoRefresh; //whether or not to auto refresh on startup
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     HttpDownloader downloader;
@@ -61,6 +63,8 @@ private slots:
 
     void cancelStatusBarButtonClicked();
 
+    void on_actionAuto_Refresh_on_Startup_triggered();
+
 protected:
     void closeEvent(QCloseEvent* e);
 
@@ -68,10 +72,13 @@ private:
     void buildConfigPackList();
     void clearCPACKList();
     void addItemToCPACKList(ConfigPackInfo &rp);
+    void refreshRepos();
 
     Ui::MainWindow *ui;
 
     QToolButton* cancelStatusBarButton;
+
+
 };
 
 #endif // MAINWINDOW_H

@@ -30,6 +30,7 @@ class AppPathManager
         static std::string settingsFileSTD();
         static std::string userAppDirSTD();
         static std::string languagesDir();
+        static std::string screenshotsDir();
         static void install();
         static bool isPortable();
         static bool userDirIsAvailable();

@@ -7,6 +7,7 @@ extern "C"
 #endif
 
 char * getAppSupportDir(void);
+char * getScreenCaptureDir(void);
 
 #ifdef __cplusplus
 }

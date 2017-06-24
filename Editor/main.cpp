@@ -55,6 +55,7 @@
 #define FREEIMAGE_LIB 1
 //#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
 #endif
+
 #include <FreeImageLite.h>
 
 static bool initied_sdl = false;
@@ -146,6 +147,10 @@ int main(int argc, char *argv[])
         advSetup.beginGroup("extra");
         bool atr_hdpi   = advSetup.value("high-dpi-scaling", true).toBool();
         advSetup.endGroup();
+        #ifdef Q_OS_MAC
+        QApplication::setAttribute(Qt::AA_DontShowIconsInMenus, true);
+        //QApplication::setAttribute(Qt::AA_NativeWindows, true);  //Experimentally
+        #endif
         #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, !atr_hdpi);
         QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, atr_hdpi);

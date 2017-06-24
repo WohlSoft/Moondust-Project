@@ -49,3 +49,27 @@ char * getAppSupportDir(void)
     return retval;
 }}
 
+char * getScreenCaptureDir(void)
+{ @autoreleasepool
+{
+    char *retval = NULL;
+
+    // Get current screencapture location
+    NSUserDefaults *appUserDefaults = [[NSUserDefaults alloc] init];
+        [appUserDefaults addSuiteNamed:@"com.apple.screencapture"];
+    NSDictionary *prefsDict = [appUserDefaults dictionaryRepresentation];
+
+    NSString *str = [prefsDict valueForKey:@"location"];
+    const char *base = [str fileSystemRepresentation];
+    if (base) {
+        const size_t len = SDL_strlen(base) + 4;
+        retval = (char *)SDL_malloc(len);
+        if (retval == NULL) {
+            SDL_OutOfMemory();
+        } else {
+            SDL_snprintf(retval, len, "%s", base);
+        }
+    }
+
+    return retval;
+}}

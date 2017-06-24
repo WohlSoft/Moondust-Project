@@ -194,8 +194,12 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
     }
 
 #ifdef Q_OS_MACX
-    foreach(QAction* act, ui->menuBar->actions())
-        act->setVisible(true);
+    foreach(QAction* menu, ui->menuBar->actions())
+    {
+        menu->setVisible(true);
+        foreach(QAction* item, menu->menu()->actions())
+            item->setIconVisibleInMenu(false);
+    }
     ui->Exit->setMenuRole(QAction::QuitRole);
     ui->Exit->setVisible(true);
     ui->Exit->setEnabled(true);

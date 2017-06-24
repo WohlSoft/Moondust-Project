@@ -32,11 +32,17 @@ macx:{
     # Install translations into bundle resources
     APP_TRANSLATION_FILES.files = \
         $$PWD/languages/editor_de.qm \
+        $$PWD/languages/de.png \
         $$PWD/languages/editor_en.qm \
+        $$PWD/languages/en.png \
         $$PWD/languages/editor_es.qm \
+        $$PWD/languages/es.png \
         $$PWD/languages/editor_pl.qm \
+        $$PWD/languages/pl.png \
         $$PWD/languages/editor_pt.qm \
+        $$PWD/languages/pt.png \
         $$PWD/languages/editor_ru.qm \
+        $$PWD/languages/ru.png \
 
 
     APP_TRANSLATION_FILES.path  = Contents/Resources/languages

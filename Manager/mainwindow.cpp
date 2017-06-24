@@ -9,6 +9,8 @@
 
 #include <QMessageBox>
 
+bool MainWindow::autoRefresh = false;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     downloader(this),
@@ -34,6 +36,13 @@ MainWindow::MainWindow(QWidget *parent) :
     cancelStatusBarButton->hide();
 
     connect(cancelStatusBarButton, &QToolButton::clicked, this, &MainWindow::cancelStatusBarButtonClicked);
+
+    if(MainWindow::autoRefresh)
+    {
+        refreshRepos();
+    }
+
+    ui->actionAuto_Refresh_on_Startup->setChecked(MainWindow::autoRefresh);
 }
 
 MainWindow::~MainWindow()
@@ -48,6 +57,11 @@ void MainWindow::on_actionRepositories_triggered()
 }
 
 void MainWindow::on_refresh_clicked()
+{
+    this->refreshRepos();
+}
+
+void MainWindow::refreshRepos()
 {
     curstep = 0;
     totalSteps = 0;
@@ -271,4 +285,9 @@ void MainWindow::setProgress(qint64 bytesRead, qint64 totalBytes)
 {
     ui->progressBar->setMaximum(static_cast<int>(totalBytes));
     ui->progressBar->setValue(static_cast<int>(bytesRead));
+}
+
+void MainWindow::on_actionAuto_Refresh_on_Startup_triggered()
+{
+    MainWindow::autoRefresh = ui->actionAuto_Refresh_on_Startup->isChecked();
 }

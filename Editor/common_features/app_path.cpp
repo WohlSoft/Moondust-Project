@@ -23,6 +23,7 @@
 #include <QFileInfo>
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
 #include <QUrl>
 #endif
 
@@ -105,7 +106,6 @@ void AppPathManager::initAppPath(const char* argv0)
     userDir = setup.value("EnableUserDir", false).toBool();
     #endif
 //openUserDir:
-
     if(userDir)
     {
         #if defined(__ANDROID__) || defined(__APPLE__)
@@ -115,13 +115,13 @@ void AppPathManager::initAppPath(const char* argv0)
         #endif
         if(!path.isEmpty())
         {
-            QDir appDir(path+UserDirName);
+            QDir appDir(path + UserDirName);
             if(!appDir.exists())
-                if(!appDir.mkpath(path+UserDirName))
+                if(!appDir.mkpath(path + UserDirName))
                     goto defaultSettingsPath;
             #ifdef __APPLE__
-                if(!QDir(ApplicationPath+"/Data directory").exists()) {
-                    system(QString("ln -s \"%1\" \"%2/Data directory\"").arg(path+UserDirName).arg(ApplicationPath).toLocal8Bit().data());
+                if(!QDir(ApplicationPath + "/Data directory").exists()) {
+                    symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());
                 }
             #endif
             m_userPath = appDir.absolutePath();
@@ -151,6 +151,20 @@ QString AppPathManager::settingsFile()
 QString AppPathManager::userAppDir()
 {
     return m_userPath;
+}
+
+QString AppPathManager::languagesDir()
+{
+#ifndef Q_OS_MAC
+    return ApplicationPath + "/languages";
+#else
+    CFURLRef appUrlRef;
+    appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
+    CFStringRef filePathRef = CFURLGetString(appUrlRef);
+    QString path = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+    CFRelease(appUrlRef);
+    return path;
+#endif
 }
 
 void AppPathManager::install()
