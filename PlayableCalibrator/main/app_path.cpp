@@ -60,6 +60,16 @@ void AppPathManager::initAppPath()
         }
         //CFRelease(filePathRef);
         CFRelease(appUrlRef);
+
+        //! If it's a path randomizer
+        if(ApplicationPath.startsWith("/private/var/"))
+        {
+            QString realAppPath("/Applications/PGE Project");
+            if(QDir(realAppPath).exists())
+            {
+                ApplicationPath = realAppPath;
+            }
+        }
     }
     #else
     ApplicationPath = QApplication::applicationDirPath();
