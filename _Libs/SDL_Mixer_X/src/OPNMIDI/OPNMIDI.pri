@@ -1,3 +1,5 @@
+macx: QMAKE_CXXFLAGS_WARN_ON += -Wno-absolute-value
+
 HEADERS += \
     $$PWD/opnmidi.h \
     $$PWD/opnmidi_xmi2mid.h \
