@@ -23,7 +23,6 @@ SOURCES += \
     $$PWD/id3_file.c \
     $$PWD/id3_compat.c \
     $$PWD/id3_crc.c \
-    $$PWD/id3_debug.c \
     $$PWD/id3_field.c \
     $$PWD/id3_frame.c \
     $$PWD/id3_frametype.c \
@@ -38,4 +37,4 @@ SOURCES += \
     $$PWD/id3_util.c \
     $$PWD/id3_version.c
 
-contains(DEFINES, DEBUG): SOURCES +=
+contains(DEFINES, DEBUG): include($$PWD/debug.pri)

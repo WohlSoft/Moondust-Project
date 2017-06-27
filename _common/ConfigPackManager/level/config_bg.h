@@ -27,7 +27,7 @@ class IniProcessing;
 struct BgSetup
 {
     bool parse(IniProcessing* setup,
-               PGEString bgoImgPath,
+               PGEString bgImgPath,
                uint32_t defaultGrid,
                BgSetup* merge_with = nullptr,
                PGEString *error = nullptr);
@@ -63,6 +63,7 @@ struct BgSetup
         BG_ATTACH_2_TO_TOP = 2
     };
 
+    typedef PGEList<int32_t> IntArray;
 
     /*
      *  Generic properties
@@ -82,6 +83,8 @@ struct BgSetup
      */
     //! Filename for first image
     PGEString       image_n;
+    //! Icon that will be shown in the backgrounds list
+    PGEString       icon_n;
     //! Type of background
     uint32_t        type = BG_TYPE_SingleRow;
     //! Horizontal parallax coefficient
@@ -121,11 +124,11 @@ struct BgSetup
     //! Count of stripses
     uint32_t        magic_strips = 1u;
     //! Comma-separated set of Y coordinates of split lines
-    std::string     magic_splits;
+    PGEString       magic_splits;
     //! Decoded set of Y coordinates of split lines  [decoded from magic_splits]
     PGEList<uint32_t> magic_splits_i;
     //! Comma-separated set of parallax coefficients for every strip line
-    std::string     magic_speeds;
+    PGEString       magic_speeds;
     //! Decoded set of parallax coefficients for every strip line [decoded from magic_speeds]
     PGEList<double> magic_speeds_i;
 
@@ -133,7 +136,7 @@ struct BgSetup
      *  Second image
      */
     //! Filename for second background image [Double-row only]
-    std::string     second_image_n;
+    PGEString       second_image_n;
     //! Parallax coefficient for second image
     double          second_repeat_h = 4.0;
     //! Algorithm of vertical repeat and parallax of second image
@@ -171,6 +174,8 @@ struct BgSetup
 
     struct BgLayer
     {
+        //! Name of layer (optionally, can be empty)
+        PGEString   name;
         //! Background image of this layer
         PGEString   image;
         //! Z index. <0 - background, >0 - foreground
@@ -244,6 +249,19 @@ struct BgSetup
         bool        auto_scrolling_y = false;
         //! Auto-scroll speed in pixels per second
         uint32_t    auto_scrolling_y_speed = 32;
+
+        //! Is this layer animated?
+        bool            animated = false;
+        //! Count of animation frames of background image
+        uint32_t        frames = 1;
+        //! Delay between animation frames in milliseconds
+        uint32_t        framespeed = 128;
+        //! Height of one frame [must be calculated automatically by using real image metrics]
+        uint32_t        frame_h = 1;
+        //! Default frame to display when animation is disabled
+        uint32_t        display_frame = 0;
+        //! Custom frame sequence based on frame numbers
+        IntArray        frame_sequence;
     };
 
     PGEList<BgLayer> layers;

@@ -39,18 +39,16 @@ bool BgoSetup::parse(IniProcessing *setup,
     /*************Buffers*********************/
     uint32_t    w = 0,
                 h = 0;
-
     /*************Buffers*********************/
     if(!setup)
     {
         if(error)
-            *error = "setup QSettings is null!";
-
+            *error = "setup IniProcessing is null!";
         return false;
     }
 
     section = StdToPGEString(setup->group());
-    setup->read("name", name, (merge_with ? merge_with->name : section));
+    setup->read("name", name, pMerge(name, section));
 
     if(name.size() == 0)
     {
@@ -89,7 +87,14 @@ bool BgoSetup::parse(IniProcessing *setup,
 
         return false;
     }
-    assert(merge_with || ((w > 0) && (h > 0) && "Width or height of image has zero or negative value!"));
+
+    if(!merge_with && ((w == 0)||(h == 0)))
+    {
+        if(error)
+            *error = "Width or height of image has zero or negative value in image " + bgoImgPath + image_n;
+        return false;
+    }
+
     mask_n = PGE_ImageInfo::getMaskName(image_n);
 
     setup->read("icon", icon_n, pMerge(icon_n, ""));

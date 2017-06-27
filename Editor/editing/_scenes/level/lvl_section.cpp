@@ -335,10 +335,10 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
     WriteToLog(QtDebugMsg, "Draw BG -> Draw BG Image");
     #endif
 
-    attach = bgsetup.attached;
+    attach = bgsetup.setup.attached;
 
 // ///////////////////SingleRow BG///////////////////////////
-    if((bgsetup.type==0)&&(!bgsetup.editing_tiled)&&(!forceTiled))
+    if((bgsetup.setup.type==0)&&(!bgsetup.setup.editing_tiled)&&(!forceTiled))
     {
         #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "Draw BG -> Style: SingleRow BG");
@@ -385,13 +385,13 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
     else
 
 // ///////////////////DoubleRow BG////////////////////////
-    if((bgsetup.type==1)&&(!bgsetup.editing_tiled)&&(!forceTiled))
+    if((bgsetup.setup.type==1)&&(!bgsetup.setup.editing_tiled)&&(!forceTiled))
     {
         #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "Draw BG -> Style: DoubleRow BG");
         #endif
 
-        si_attach = bgsetup.second_attached; // Second image attach
+        si_attach = bgsetup.setup.second_attached; // Second image attach
 
         R1W = srcimg.width();
         R1H = srcimg.height();

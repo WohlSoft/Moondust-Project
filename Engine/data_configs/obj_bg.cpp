@@ -22,6 +22,7 @@
 #include <common_features/util.h>
 #include <fmt/fmt_format.h>
 #include <Utils/files.h>
+#include <graphics/gl_color.h>
 
 /*****Level BG************/
 PGE_DataArray<obj_BG>           ConfigManager::lvl_bg_indexes;
@@ -34,6 +35,7 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
     #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
     bool valid = true;
     bool internal = !setup;
+    std::string errStr;
 
     std::unique_ptr<IniProcessing> ptr_guard;
     if(internal)
@@ -42,89 +44,36 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
         ptr_guard.reset(setup);
     }
 
+    sbg.isInit = pMerge(isInit, false);
+    sbg.image  = pMerge(image, nullptr);
+    sbg.textureArrayId = pMerge(textureArrayId, 0);
+    sbg.animator_ID = pMerge(animator_ID, 0);
+
+    sbg.second_isInit = pMerge(second_isInit, false);
+    sbg.second_image  = pMerge(second_image, nullptr);
+    sbg.second_textureArrayId = pMerge(second_textureArrayId, 0);
+    sbg.second_animator_ID = pMerge(second_animator_ID, 0);
+
     if(!setup->beginGroup(section) && internal)
         setup->beginGroup("General");
     {
-        setup->read("name", sbg.name, pMerge(name, ""));
-        if(sbg.name.empty())
+        if(sbg.setup.parse(setup, BGPath, default_grid, merge_with ? &merge_with->setup : nullptr, &errStr))
+            valid = true;
+        else
         {
-            addError(fmt::format("{0} Item name isn't defined", section));
-            return false;
+            addError(errStr);
+            valid = false;
         }
     }
 
-    setup->readEnum("type", sbg.type,
-                            pMerge(type, 0),
-                            {
-                                {"single-row", 0},
-                                {"double-row", 1},
-                                {"tiled", 2}
-    });
-
-    sbg.repeat_h = setup->value("repeat-h", (merge_with ? merge_with->repeat_h : 2.0)).toDouble();
-    NumberLimiter::applyD(sbg.repeat_h, 1.0, 0.0);
-
-    setup->readEnum("repeat-v", sbg.repead_v,
-                            pMerge(repead_v, 0),
-                            {
-                                {"NR", 0},
-                                {"ZR", 1},
-                                {"RP", 2},
-                                {"RZ", 3}
-    });
-
-    setup->read("image", sbg.image_n, pMerge(image_n, ""));
-    setup->readEnum("attached", sbg.attached,
-                                        pMerge(attached, 0),
-                            {
-                                {"bottom", 0},
-                                {"top", 1}
-    });
-    setup->read("tiled-in-editor", sbg.editing_tiled, pMerge(editing_tiled, false));
-    setup->read("magic", sbg.magic, pMerge(magic, false));
-
-    setup->read("magic-strips", sbg.magic_strips, pMerge(magic_strips, 1u));
-    NumberLimiter::applyD(sbg.magic_strips, 1u, 1u);
-    setup->read("magic-splits", sbg.magic_splits_i, pMerge(magic_splits_i, std::vector<uint32_t>()));
-    setup->read("magic-speeds", sbg.magic_speeds_i, pMerge(magic_speeds_i, std::vector<double>()));
-
-    setup->read("animated", sbg.animated, pMerge(animated, false)); //animated
-
-    setup->read("frames", sbg.frames, pMerge(frames, 1));
-    NumberLimiter::apply(sbg.frames, 1u);
-
-    setup->read("framespeed", sbg.framespeed, pMerge(framespeed, 128));
-    NumberLimiter::apply(sbg.framespeed, 1u);
-
-    setup->read("display-frame", sbg.display_frame, pMerge(display_frame, 0));
-    NumberLimiter::apply(sbg.display_frame, 0u);
-
-    //frames
-    if(sbg.type == 1)
+    if(sbg.setup.fill_color != "auto")
     {
-        setup->read("second-image", sbg.second_image_n, pMerge(second_image_n, ""));
-        setup->read("second-repeat-h", sbg.second_repeat_h, pMerge(second_repeat_h, 2.0));
-        NumberLimiter::applyD(sbg.second_repeat_h, 1.0, 0.0);
-
-        setup->readEnum("second-repeat-v",
-                                    sbg.second_repeat_v,
-                                    pMerge(second_repeat_v, 0u),
-                                    {
-                                        {"NR", 0},
-                                        {"ZR", 1},
-                                        {"RP", 2},
-                                        {"RZ", 3}
-        });
-
-        setup->readEnum("second-attached",
-                                    sbg.second_attached,
-                                    pMerge(second_attached, 0),
-                                    {
-                                        {"overfirst", 0},
-                                        {"bottom", 1},
-                                        {"top", 2}
-        });
+        GlColor color(sbg.setup.fill_color);
+        sbg.fill_color.r = color.Red();
+        sbg.fill_color.g = color.Green();
+        sbg.fill_color.b = color.Blue();
     }
+
     setup->endGroup();
 
     return valid;
@@ -180,8 +129,8 @@ bool ConfigManager::loadLevelBackG()
 
         if(valid)
         {
-            sbg.id = i;
-            lvl_bg_indexes.storeElement(sbg.id, sbg);
+            sbg.setup.id = i;
+            lvl_bg_indexes.storeElement(sbg.setup.id, sbg);
             //Load custom config if possible
             loadCustomConfig<obj_BG>(lvl_bg_indexes, i, Dir_BG, "background2", "background2", &loadLevelBackground, true);
         }

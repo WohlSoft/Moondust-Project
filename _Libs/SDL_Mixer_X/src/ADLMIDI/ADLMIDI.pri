@@ -1,3 +1,5 @@
+macx: QMAKE_CXXFLAGS_WARN_ON += -Wno-absolute-value
+
 HEADERS += \
     $$PWD/adldata.hh \
     $$PWD/adlmidi.h \

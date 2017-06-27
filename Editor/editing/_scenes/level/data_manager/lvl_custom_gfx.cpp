@@ -104,17 +104,17 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         obj_BG *bgD = &m_configs->main_bg[i];
         UserBGs uBG;
 
-        QString CustomTxt = uLVL.getCustomFile("background2-" + QString::number(bgD->id) + ".ini", true);
+        QString CustomTxt = uLVL.getCustomFile("background2-" + QString::number(bgD->setup.id) + ".ini", true);
         if(!CustomTxt.isEmpty())
         {
-            m_localConfigBackgrounds[bgD->id] = *bgD;
-            obj_BG &bgN = m_localConfigBackgrounds[bgD->id];
+            m_localConfigBackgrounds[bgD->setup.id] = *bgD;
+            obj_BG &bgN = m_localConfigBackgrounds[bgD->setup.id];
             m_configs->loadLevelBackground(bgN, "background2", bgD, CustomTxt);
             bgD = &bgN;
         }
 
         //check for first image
-        QString CustomFile = uLVL.getCustomFile(bgD->image_n, true);
+        QString CustomFile = uLVL.getCustomFile(bgD->setup.image_n, true);
         if(!CustomFile.isEmpty())
         {
             GraphicsHelps::loadQImage(tempImg, CustomFile);
@@ -122,23 +122,23 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 WrongImagesDetected = true;
             else
                 uBG.image = QPixmap::fromImage(tempImg);
-            uBG.id = bgD->id;
+            uBG.id = bgD->setup.id;
             loaded1 = true;
         }
 
-        if((loaded1) && (bgD->animated))
+        if((loaded1) && (bgD->setup.animated))
         {
             double h      = static_cast<double>(uBG.image.height());
-            double frames = static_cast<double>(bgD->frames);
+            double frames = static_cast<double>(bgD->setup.frames);
             uBG.image = uBG.image.copy(0, 0,
                                        uBG.image.width(),
                                        Maths::iRound(h / frames));
         }
 
         //check for second image
-        if(bgD->type == 1)
+        if(bgD->setup.type == 1)
         {
-            QString CustomFile = uLVL.getCustomFile(bgD->second_image_n, true);
+            QString CustomFile = uLVL.getCustomFile(bgD->setup.second_image_n, true);
             if(!CustomFile.isEmpty())
             {
                 GraphicsHelps::loadQImage(tempImg, CustomFile);
@@ -146,7 +146,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     WrongImagesDetected = true;
                 else
                     uBG.second_image = QPixmap::fromImage(tempImg);
-                uBG.id = bgD->id;
+                uBG.id = bgD->setup.id;
                 loaded2 = true;
             }
         }

@@ -35,8 +35,7 @@ void obj_BG::copyTo(obj_BG &bg)
         bg.cur_image   = &image;
     if(cur_image_second == nullptr)
         bg.cur_image_second = &image;
-    bg.frame_h         = frame_h;
-    /* for internal usage */
+    bg.setup = setup;
 }
 
 bool dataconfigs::loadLevelBackground(obj_BG &sbg,
@@ -45,10 +44,9 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg,
                                       QString iniFile,
                                       IniProcessing *setup)
 {
-#define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
     bool valid = true;
     bool internal = !setup;
-    QString errStr, imgFile;
+    QString errStr;
     if(internal)
         setup = new IniProcessing(iniFile);
 
@@ -56,133 +54,21 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg,
 
     if(!openSection(setup, section.toStdString(), internal))
         return false;
-    {
-        setup->read("name", sbg.name, pMerge(name, PGEString()));
-        if(sbg.name.isEmpty())
-        {
-            addError(QString("%1 Item name isn't defined").arg(section.toUpper()));
-            valid = false;
-            goto abort;
-        }
 
-        setup->readEnum("type", sbg.type,
-                        (merge_with ? merge_with->type : 0),
-        {
-            {"single-row", 0},
-            {"double-row", 1},
-            {"tiled", 2}
-        });
-
-        sbg.repeat_h = (qFabs(setup->value("repeat-h", pMerge(repeat_h, 2.0)).toDouble()));
-
-        setup->readEnum("repeat-v", sbg.repead_v,
-                        (merge_with ? merge_with->repead_v : 0),
-        {
-            {"NR", 0},
-            {"ZR", 1},
-            {"RP", 2},
-            {"RZ", 3}
-        });
-
-        setup->read("image", sbg.image_n, pMerge(image_n, sbg.image_n));
-        if(!merge_with)
-        {
-            if(!sbg.image_n.isEmpty())
-            {
-                GraphicsHelps::loadMaskedImage(BGPath,
-                                               sbg.image_n, imgFile,
-                                               sbg.image,
-                                               errStr);
-
-                if(!errStr.isEmpty())
-                {
-                    addError(QString("%1 %2").arg(section).arg(errStr));
-                    valid = false;
-                    //goto abort;
-                }
-
-            }
-            else
-            {
-                addError(QString("%1 (%2) Image filename isn't defined").arg(section).arg(iniFile));
-                valid = false;
-                //goto abort;
-            }
-        }
-
-        setup->readEnum("attached", sbg.attached,
-                        pMerge(attached, 0),
-        {
-            {"bottom", 0},
-            {"top", 1}
-        });
-
-        setup->read("tiled-in-editor", sbg.editing_tiled, pMerge(editing_tiled, false));
-
-        setup->read("magic",    sbg.magic, pMerge(magic, false));
-        setup->read("magic-strips", sbg.magic_strips, pMerge(magic_strips, 1));
-        setup->read("magic-splits", sbg.magic_splits, pMerge(magic_splits, PGEStringLit("0")));
-        setup->read("magic-speeds", sbg.magic_speeds, pMerge(magic_speeds, PGEStringLit("0")));
-
-        setup->read("animated",      sbg.animated,         pMerge(animated, false));//animated
-        setup->read("frames",        sbg.frames,           pMerge(frames, 1));
-        setup->read("framespeed",    sbg.framespeed,       pMerge(framespeed, 128));
-        setup->read("display-frame", sbg.display_frame,    pMerge(display_frame, 0));
-        //frames
-
-        if(sbg.type == 1)
-        {
-            setup->read("second-image", sbg.second_image_n, pMerge(second_image_n, sbg.second_image_n));
-            if(!merge_with)
-            {
-                if(!sbg.second_image_n.isEmpty())
-                {
-                    GraphicsHelps::loadMaskedImage(BGPath,
-                                                   sbg.second_image_n, imgFile,
-                                                   sbg.second_image,
-                                                   errStr);
-                }
-                else
-                    sbg.second_image = Themes::Image(Themes::dummy_bg);
-            }
-
-            sbg.second_repeat_h = (qFabs(setup->value("second-repeat-h", pMerge(second_repeat_h, 2.0)).toDouble()));
-
-            setup->readEnum("second-repeat-v",
-                            sbg.second_repeat_v,
-                            pMerge(second_repeat_v, 0u),
-            {
-                {"NR", 0},
-                {"ZR", 1},
-                {"RP", 2},
-                {"RZ", 3}
-            });
-
-            setup->readEnum("second-attached",
-                            sbg.second_attached,
-                            pMerge(second_attached, 0),
-            {
-                {"overfirst", 0},
-                {"bottom", 1},
-                {"top", 2}
-            });
-        }
-
-        if(sbg.animated)
-        {
-            int fHeight = sbg.image.height() / int(sbg.frames);
-            sbg.image = sbg.image.copy(0, 0, sbg.image.width(), fHeight);
-        }
-
+    if(sbg.setup.parse(setup, BGPath, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
         sbg.isValid = true;
+    else
+    {
+        addError(errStr);
+        sbg.isValid = false;
     }
-abort:
+
+    if(sbg.setup.fill_color != "auto")
+        sbg.fill_color = QColor(sbg.setup.fill_color);
+
     closeSection(setup);
     if(internal)
         delete setup;
-
-#undef pMerge
-#undef pMergeMe
     return valid;
 }
 
@@ -242,8 +128,45 @@ void dataconfigs::loadLevelBackgrounds()
         else
             valid = loadLevelBackground(sbg, QString("background2-%1").arg(i), 0, "", &setup);
 
-        sbg.id = i;
-        main_bg.storeElement(int(i), sbg, valid);
+        if(valid)
+        {
+            QString errStr;
+            GraphicsHelps::loadMaskedImage(BGPath,
+                                           sbg.setup.image_n, imgFile,
+                                           sbg.image,
+                                           errStr);
+
+            if(!errStr.isEmpty())
+            {
+                valid = false;
+                addError(QString("BG-%1 Image: %2").arg(i).arg(errStr));
+            }
+            else
+            {
+                /* =======================================================================================
+                   TODO: Remove this after implementing of support for in-editor animating backgrounds     */
+                if(sbg.setup.animated)
+                    sbg.image = sbg.image.copy(0, 0, sbg.image.width(), static_cast<int>(sbg.setup.frame_h));
+                /* ======================================================================================= */
+            }
+
+            if(sbg.setup.type == BgSetup::BG_TYPE_DoubleRow)
+            {
+                GraphicsHelps::loadMaskedImage(BGPath,
+                                               sbg.setup.second_image_n, imgFile,
+                                               sbg.second_image,
+                                               errStr);
+
+                if(!errStr.isEmpty())
+                {
+                    valid = false;
+                    addError(QString("BG-%1 Second image: %2").arg(i).arg(errStr));
+                }
+            }
+        }
+
+        sbg.setup.id = i;
+        main_bg.storeElement(static_cast<int>(i), sbg, valid);
 
         if(setup.lastError() != IniProcessing::ERR_OK)
             addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(setup.lastError()).arg(i), PGE_LogLevel::Critical);

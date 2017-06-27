@@ -22,12 +22,11 @@
 #include <string>
 #include <vector>
 #include "../graphics/graphics.h"
+#include <ConfigPackManager/level/config_bg.h>
 
 struct obj_BG
 {
-    uint64_t        id = 0;
-    std::string     name;
-    std::string     image_n;
+    PGEColor        fill_color;
 
     /*   OpenGL    */
     bool            isInit = false;
@@ -39,28 +38,6 @@ struct obj_BG
     PGEColor        Color_lower;
     /*   OpenGL    */
 
-    uint32_t        type;//convert from string
-    double          repeat_h;
-    uint32_t        repead_v;
-    uint32_t        attached;
-    bool            editing_tiled;
-    bool            animated;
-    uint32_t        frames;
-    uint32_t        framespeed;
-    uint32_t        frame_h; //Hegth of the frame. Calculating automatically
-
-    uint32_t        display_frame;
-
-    bool            magic;
-    uint32_t        magic_strips;
-    std::string     magic_splits;
-    std::vector<uint32_t> magic_splits_i;
-    std::string     magic_speeds;
-    std::vector<double> magic_speeds_i;
-
-    std::string second_image_n;
-    //QPixmap second_image;
-
     /*   OpenGL    */
     bool            second_isInit;
     PGE_Texture     *second_image;
@@ -71,9 +48,7 @@ struct obj_BG
     PGEColor        second_Color_lower;
     /*   OpenGL    */
 
-    double          second_repeat_h;
-    uint32_t        second_repeat_v;
-    uint32_t        second_attached;
+    BgSetup setup;
 };
 
 #endif // OBJ_BG_H
