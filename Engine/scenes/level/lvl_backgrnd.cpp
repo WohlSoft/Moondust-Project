@@ -71,15 +71,15 @@ void LVL_Background::setBg(obj_BG &bg)
 {
     if((!bg.isInit) && (!bg.second_isInit))
     {
-        std::string CustomTxt = ConfigManager::Dir_BG.getCustomFile(fmt::format("background2-{0}.ini", bg.id));
+        std::string CustomTxt = ConfigManager::Dir_BG.getCustomFile(fmt::format("background2-{0}.ini", bg.setup.id));
         if(CustomTxt.empty())
-            CustomTxt = ConfigManager::Dir_BG.getCustomFile(fmt::format("background2-{0}.txt", bg.id));
+            CustomTxt = ConfigManager::Dir_BG.getCustomFile(fmt::format("background2-{0}.txt", bg.setup.id));
         if(!CustomTxt.empty())
             ConfigManager::loadLevelBackground(bg, "background2", &bg, CustomTxt);
     }
 
     setup = bg;
-    bgType = static_cast<type>(setup.type);
+    bgType = static_cast<type>(setup.setup.type);
     pLogDebug("BG Type %d", bgType);
     //Reset magic background parameters
     isMagic = false;
@@ -90,47 +90,47 @@ void LVL_Background::setBg(obj_BG &bg)
     case single_row:
     case tiled:
     {
-        int tID = ConfigManager::getBGTexture(bg.id);
+        int tID = ConfigManager::getBGTexture(bg.setup.id);
         if(tID >= 0)
         {
             txData1 = ConfigManager::level_textures[tID];
 
-            if(bg.attached)
+            if(bg.setup.attached)
                 color = bg.Color_lower;
             else
                 color = bg.Color_upper;
 
-            isAnimated = bg.animated;
+            isAnimated = bg.setup.animated;
             animator_ID = bg.animator_ID;
 
-            if(bg.magic)
+            if(bg.setup.magic)
             {
-                for(uint32_t i = 0; i < bg.magic_strips; i++)
+                for(uint32_t i = 0; i < bg.setup.magic_strips; i++)
                 {
                     LVL_Background_strip x;
 
-                    if((i > 0) && (i - 1 <  bg.magic_splits_i.size()))
+                    if((i > 0) && (i - 1 <  bg.setup.magic_splits_i.size()))
                     {
-                        x.top = (static_cast<double>(bg.magic_splits_i[i - 1])
+                        x.top = (static_cast<double>(bg.setup.magic_splits_i[i - 1])
                                 / static_cast<double>(txData1.frame_h));
                     }
                     else
                         x.top = 0.0;
 
-                    if(i < bg.magic_splits_i.size())
-                        x.bottom = static_cast<double>(bg.magic_splits_i[i]) / static_cast<double>(txData1.frame_h);
+                    if(i < bg.setup.magic_splits_i.size())
+                        x.bottom = static_cast<double>(bg.setup.magic_splits_i[i]) / static_cast<double>(txData1.frame_h);
                     else
                         x.bottom = 1.0;
 
                     x.height = Maths::iRound(
-                                   ( (i < bg.magic_splits_i.size()) ? bg.magic_splits_i[i] : txData1.frame_h)
-                                   - (i == 0 ? 0.0 : (bg.magic_splits_i[i - 1]))
+                                   ( (i < bg.setup.magic_splits_i.size()) ? bg.setup.magic_splits_i[i] : txData1.frame_h)
+                                   - (i == 0 ? 0.0 : (bg.setup.magic_splits_i[i - 1]))
                                );
 
-                    if(i < bg.magic_speeds_i.size())
-                        x.repeat_h = bg.magic_speeds_i[i];
+                    if(i < bg.setup.magic_speeds_i.size())
+                        x.repeat_h = bg.setup.magic_speeds_i[i];
                     else
-                        x.repeat_h = bg.repeat_h;
+                        x.repeat_h = bg.setup.repeat_h;
 
                     if(x.repeat_h <= 0)
                         x.repeat_h = 1;
@@ -154,22 +154,22 @@ void LVL_Background::setBg(obj_BG &bg)
 
     case double_row:
     {
-        int tID = ConfigManager::getBGTexture(bg.id);
+        int tID = ConfigManager::getBGTexture(bg.setup.id);
 
         if(tID >= 0)
         {
             txData1 = ConfigManager::level_textures[tID];
 
-            if(bg.attached)
+            if(bg.setup.attached)
                 color = bg.Color_lower;
             else
                 color = bg.Color_upper;
 
-            isAnimated = bg.animated;
+            isAnimated = bg.setup.animated;
             animator_ID = bg.animator_ID;
         }
 
-        int tID2 = ConfigManager::getBGTexture(bg.id, true);
+        int tID2 = ConfigManager::getBGTexture(bg.setup.id, true);
 
         if(tID2 >= 0)
         {
@@ -185,7 +185,7 @@ void LVL_Background::setBg(obj_BG &bg)
             else sbg.second_repeat_v = 0;
             */
 
-            if(bg.second_attached)
+            if(bg.setup.second_attached)
                 color = bg.Color_upper;
             else
                 color = bg.second_Color_upper;
@@ -205,7 +205,7 @@ void LVL_Background::setBg(obj_BG &bg)
 void LVL_Background::setNone()
 {
     isNoImage = true;
-    setup.id = 0;
+    setup.setup.id = 0;
     color.r = 0.0f;
     color.g = 0.0f;
     color.b = 0.0f;
@@ -231,8 +231,8 @@ void LVL_Background::draw(double x, double y, double w, double h)
     double  imgPos_X = 0;
     double  imgPos_Y = 0;
 
-    if(setup.repeat_h > 0)
-        imgPos_X = std::fmod((box.left() - x) / setup.repeat_h, txData1.frame_w);
+    if(setup.setup.repeat_h > 0)
+        imgPos_X = std::fmod((box.left() - x) / setup.setup.repeat_h, txData1.frame_w);
     else
     {
         if(fWidth < w) //If image height less than screen
@@ -254,16 +254,16 @@ void LVL_Background::draw(double x, double y, double w, double h)
     //          sbg.repead_v = 3;
     //    else sbg.repead_v = 0;
 
-    switch(setup.repead_v)
+    switch(setup.setup.repead_v)
     {
     case 2: //Repeat vertical with paralax coefficient =2
-        imgPos_Y = (setup.attached == 1) ?
+        imgPos_Y = (setup.setup.attached == 1) ?
                    std::fmod((box.top() - y) / 2.0, fHeight1) :
                    std::fmod((box.bottom() + h - y) / 2.0, fHeight1);
         break;
 
     case 1: //Zero Repeat
-        imgPos_Y = (setup.attached == 1) ?
+        imgPos_Y = (setup.setup.attached == 1) ?
                    (box.top() - y) :
                    (box.bottom() - y - fHeight1);
         break;
@@ -271,13 +271,13 @@ void LVL_Background::draw(double x, double y, double w, double h)
     case 0: //Proportional repeat
     default:
         if(fHeight1 < h) //If image height less than screen
-            imgPos_Y = (setup.attached == 1) ? 0.0 : (h - fHeight1);
+            imgPos_Y = (setup.setup.attached == 1) ? 0.0 : (h - fHeight1);
         else if(sHeight > fHeight1)
             imgPos_Y = (box.top() - y) / ((sHeight - h) / (txData1.frame_h - h));
         else if(sHeightI == txData1.frame_h)
             imgPos_Y = box.top() - y;
         else
-            imgPos_Y = (setup.attached == 1) ?
+            imgPos_Y = (setup.setup.attached == 1) ?
                        (box.top() - y) :
                        (box.bottom() - y - fHeight1);
 
@@ -298,7 +298,7 @@ void LVL_Background::draw(double x, double y, double w, double h)
     {
         verticalRepeats = 0;
         lenght_v -= fHeight1;
-        imgPos_Y -= fHeight1 * ((setup.attached == 0) ? -1.0 : 1.0);
+        imgPos_Y -= fHeight1 * ((setup.setup.attached == 0) ? -1.0 : 1.0);
 
         while(lenght_v <= h * 2.0  || (lenght_v <= fHeight1 * 2))
         {
@@ -355,7 +355,7 @@ void LVL_Background::draw(double x, double y, double w, double h)
         verticalRepeats--;
 
         if(verticalRepeats > 0)
-            imgPos_Y += txData1.frame_h * ((setup.attached == 0) ? -1 : 1);
+            imgPos_Y += txData1.frame_h * ((setup.setup.attached == 0) ? -1 : 1);
     }
 
     if(bgType == double_row)
@@ -364,14 +364,14 @@ void LVL_Background::draw(double x, double y, double w, double h)
         double fWidth2 = static_cast<double>(txData2.frame_w);
         double fHeight2 = static_cast<double>(txData2.frame_h);
 
-        if(setup.second_attached == 0) // over first
+        if(setup.setup.second_attached == 0) // over first
             imgPos_Y = box.bottom() - y - fHeight1 - fHeight2;
-        else if(setup.second_attached == 1) //bottom
+        else if(setup.setup.second_attached == 1) //bottom
             imgPos_Y = box.bottom() - y - fHeight2;
-        else if(setup.second_attached == 2) //top
+        else if(setup.setup.second_attached == 2) //top
             imgPos_Y = 0; //pCamera->s_bottom-y-txData1.h - txData2.h;
 
-        double imgPos_X = std::fmod(((box.left() - x) / setup.second_repeat_h), fWidth2);
+        double imgPos_X = std::fmod(((box.left() - x) / setup.setup.second_repeat_h), fWidth2);
         lenght = 0;
 
         while((lenght <= w * 2.0) || (lenght <= fWidth * 2))
@@ -400,5 +400,5 @@ unsigned long LVL_Background::curBgId()
     if(_isInited)
         return 0;
     else
-        return setup.id;
+        return setup.setup.id;
 }

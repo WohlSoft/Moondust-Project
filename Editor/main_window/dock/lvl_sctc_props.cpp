@@ -173,15 +173,15 @@ void LvlSectionProps::initDefaults()
     {
         obj_BG &bgD=mw()->configs.main_bg[i];
         QPixmap bgThumb(100,BkgIconHeight); bgThumb.fill(QColor(Qt::white));
-        QPainter xx(&bgThumb); bool isCustom=false; QString bgTitle=bgD.name;
+        QPainter xx(&bgThumb); bool isCustom=false; QString bgTitle=bgD.setup.name;
         QPixmap tmp = bgD.image.scaledToHeight(70);
 
         if (mw()->activeChildWindow()==1) {
             LevelEdit * edit = mw()->activeLvlEditWin();
-            if(edit->scene->m_localConfigBackgrounds.contains(bgD.id)) {
-                obj_BG &bgX = edit->scene->m_localConfigBackgrounds[bgD.id];
+            if(edit->scene->m_localConfigBackgrounds.contains(bgD.setup.id)) {
+                obj_BG &bgX = edit->scene->m_localConfigBackgrounds[bgD.setup.id];
                 if(!bgX.image.isNull()) tmp = bgX.image.scaledToHeight(70);
-                bgTitle=bgX.name;
+                bgTitle=bgX.setup.name;
                 isCustom=true;
             }
         }
@@ -199,8 +199,8 @@ void LvlSectionProps::initDefaults()
         bgThumb = bgThumb.copy(0, ((bgThumb.height()/2)-(25/2)), bgThumb.width(), 25);
         #endif
 
-        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), (isCustom?"* ":"")+bgTitle, QVariant::fromValue<unsigned long>(bgD.id));
-        mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.id));
+        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), (isCustom?"* ":"")+bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
+        mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
     }
 
     for(i=1; i< mw()->configs.main_music_lvl.size(); i++)

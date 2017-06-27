@@ -347,12 +347,12 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             obj_BG &x=*bgIT;
             foreach(LevelSection y, box->LvlData.sections)
             {
-                if(y.background == x.id)
+                if(y.background == x.setup.id)
                 {
                     QString image;
-                    if(configs.main_bg.contains(x.id))
+                    if(configs.main_bg.contains(x.setup.id))
                     {
-                        image = levelCustomDirectory + "/" + configs.main_bg[x.id].image_n;
+                        image = levelCustomDirectory + "/" + configs.main_bg[x.setup.id].setup.image_n;
                     }
                     bool imageRemoved = !QFileInfo(image).exists();
 

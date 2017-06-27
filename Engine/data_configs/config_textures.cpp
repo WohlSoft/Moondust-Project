@@ -389,9 +389,9 @@ int  ConfigManager::getBGTexture(unsigned long bgID, bool isSecond)
         std::string imgFile = "";
 
         if(isSecond)
-            imgFile = Dir_BG.getCustomFile(bgSetup->second_image_n);
+            imgFile = Dir_BG.getCustomFile(bgSetup->setup.second_image_n);
         else
-            imgFile = Dir_BG.getCustomFile(bgSetup->image_n);
+            imgFile = Dir_BG.getCustomFile(bgSetup->setup.image_n);
 
         int id = level_textures.size();
 
@@ -422,20 +422,20 @@ int  ConfigManager::getBGTexture(unsigned long bgID, bool isSecond)
         }
 
         //Also, load and init animator
-        if(bgSetup->animated && !isSecond)
+        if(bgSetup->setup.animated && !isSecond)
         {
             int frameFirst = 0;
             int frameLast = -1;
             //calculate height of frame
-            bgSetup->frame_h =
+            bgSetup->setup.frame_h =
                 static_cast<unsigned int>(round(static_cast<double>(level_textures[id].h)
-                                                / static_cast<double>(bgSetup->frames)));
+                                                / static_cast<double>(bgSetup->setup.frames)));
             //store animated texture value back
-            level_textures[id].frame_h = static_cast<int>(bgSetup->frame_h);
+            level_textures[id].frame_h = static_cast<int>(bgSetup->setup.frame_h);
             SimpleAnimator animator(
                 true,
-                static_cast<int>(bgSetup->frames),
-                static_cast<int>(bgSetup->framespeed), //bgSetup->framespeed, //Ouch, forgot made framespeed value for background :P Will add later...
+                static_cast<int>(bgSetup->setup.frames),
+                static_cast<int>(bgSetup->setup.framespeed), //bgSetup->framespeed, //Ouch, forgot made framespeed value for background :P Will add later...
                 //3 june 2015. I Finally implemented this sweet variable :D
                 frameFirst,
                 frameLast,
