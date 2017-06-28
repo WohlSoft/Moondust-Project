@@ -19,68 +19,73 @@
 #ifndef GRAPHICS_LVL_BACKGRND_H
 #define GRAPHICS_LVL_BACKGRND_H
 
+#include <memory>
+
 #include <data_configs/obj_bg.h>
 
 #include <common_features/pge_texture.h>
 #include <common_features/rectf.h>
 
 #include "lvl_camera.h"
-
-//Magic background strip value
-struct LVL_Background_strip
-{
-    double repeat_h;
-    double top;
-    double bottom;
-    int height;
-};
+#include "bg/bg_base.h"
 
 class PGE_LevelCamera;
+
 class LVL_Background
 {
-        friend class PGE_LevelCamera;
-    public:
-        LVL_Background();
-        LVL_Background(const LVL_Background &_bg);
-        ~LVL_Background();
+    friend class PGE_LevelCamera;
+public:
+    LVL_Background() = default;
+    LVL_Background(const LVL_Background &_bg);
+    ~LVL_Background() = default;
 
-        void setBg(obj_BG &bg);
-        void setNone();
-        void setBox(PGE_RectF &_box);
-        void draw(double x, double y, double w, double h); //draw by camera position
-        bool isInit();
-        unsigned long curBgId();
+    /*!
+     * \brief Load background with attempt to load custom background settings
+     * \param bg Referrence to background config
+     */
+    void setBg(obj_BG &bg);
 
-        bool _isInited;
+    /*!
+     * \brief Set blank black background
+     */
+    void setNone();
 
-        enum type
-        {
-            single_row      = 0,
-            double_row      = 1,
-            tiled           = 2,
-            multi_layered   = 3
-        };
-        obj_BG setup;
-        type bgType;
+    /*!
+     * \brief Set the section box
+     * \param _box Area of the section
+     */
+    void setBox(const PGE_RectF &box);
 
-        bool isNoImage;
+    /*!
+     * \brief Draw background on the screen
+     * \param x X in-scene position of the camera
+     * \param y Y in-scene position of the camera
+     * \param w Width of the camera
+     * \param h Height of the camera
+     */
+    void draw(double x, double y, double w, double h);
 
-        PGE_Texture txData1;
-        PGE_Texture txData2;
+    /*!
+     * \brief Is background initialized
+     * \return true if background is initialized
+     */
+    bool isInit();
 
-        bool isAnimated;
-        long animator_ID;
+    /*!
+     * \brief Get ID of currently initialized background image
+     * \return ID of background image in use
+     */
+    unsigned long curBgId();
 
-        bool isMagic;
-        std::vector<LVL_Background_strip > strips;
+private:
+    obj_BG      m_setup;
+    bool        m_blankBackground = true;
+    PGEColor    m_color;
+    PGE_RectF   m_box;
+    bool        m_isInitialized = false;
+    std::unique_ptr<LevelBackgroundBase> m_bg_base;
 
-        PGEColor color;
-
-        PGE_RectF box;
-
-    private:
-        void construct();
-        PGE_RectF backgrndG;//!< Used in draw process
+    void construct();
 };
 
 

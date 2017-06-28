@@ -78,7 +78,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
         return false;
     }
 
-    if(!merge_with && ((w == 0)||(h == 0)))
+    if(!merge_with && ((w == 0) || (h == 0)))
     {
         if(error)
             *error = "Width or height of image has zero or negative value in image " + bgImgPath + image_n;
@@ -88,30 +88,30 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     setup->read("icon", icon_n, pMerge(icon_n, ""));
 
     setup->readEnum("type", type,
-                            pMerge(type, 0),
-                            {
-                                {"single-row", BG_TYPE_SingleRow},
-                                {"double-row", BG_TYPE_DoubleRow},
-                                {"tiled", BG_TYPE_Tiled}
+                    pMerge(type, 0),
+    {
+        {"single-row", BG_TYPE_SingleRow},
+        {"double-row", BG_TYPE_DoubleRow},
+        {"tiled", BG_TYPE_Tiled}
     });
 
     setup->read("repeat-h", repeat_h, pMerge(repeat_h, 2.0));
     NumberLimiter::applyD(repeat_h, 1.0, 0.0);
 
-    setup->readEnum("repeat-v", repead_v,
-                            pMerge(repead_v, (uint32_t)BG_REPEAT_V_NR_NoRepeat),
-                            {
-                                {"NR", BG_REPEAT_V_NR_NoRepeat},
-                                {"ZR", BG_REPEAT_V_ZR_NoRepeatNoParallax},
-                                {"RP", BG_REPEAT_V_RP_RepeatParallax},
-                                {"RZ", BG_REPEAT_V_RZ_RepeatNoParallax}
+    setup->readEnum("repeat-v", repeat_v,
+                    pMerge(repeat_v, (uint32_t)BG_REPEAT_V_NR_NoRepeat),
+    {
+        {"NR", BG_REPEAT_V_NR_NoRepeat},
+        {"ZR", BG_REPEAT_V_ZR_NoRepeatNoParallax},
+        {"RP", BG_REPEAT_V_RP_RepeatParallax},
+        {"RZ", BG_REPEAT_V_RZ_RepeatNoParallax}
     });
 
     setup->readEnum("attached", attached,
-                                        pMerge(attached, (uint32_t)BG_ATTACH_TO_BOTTOM),
-                            {
-                                {"bottom", BG_ATTACH_TO_BOTTOM},
-                                {"top", BG_ATTACH_TO_TOP}
+                    pMerge(attached, (uint32_t)BG_ATTACH_TO_BOTTOM),
+    {
+        {"bottom", BG_ATTACH_TO_BOTTOM},
+        {"top", BG_ATTACH_TO_TOP}
     });
 
     setup->read("tiled-in-editor", editing_tiled, pMerge(editing_tiled, false));
@@ -153,22 +153,22 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
         NumberLimiter::applyD(second_repeat_h, 1.0, 0.0);
 
         setup->readEnum("second-repeat-v",
-                                    second_repeat_v,
-                                    pMerge(second_repeat_v, (uint32_t)BG_REPEAT_V_NR_NoRepeat),
-                                    {
-                                        {"NR", BG_REPEAT_V_NR_NoRepeat},
-                                        {"ZR", BG_REPEAT_V_ZR_NoRepeatNoParallax},
-                                        {"RP", BG_REPEAT_V_RP_RepeatParallax},
-                                        {"RZ", BG_REPEAT_V_RZ_RepeatNoParallax}
+                        second_repeat_v,
+                        pMerge(second_repeat_v, (uint32_t)BG_REPEAT_V_NR_NoRepeat),
+        {
+            {"NR", BG_REPEAT_V_NR_NoRepeat},
+            {"ZR", BG_REPEAT_V_ZR_NoRepeatNoParallax},
+            {"RP", BG_REPEAT_V_RP_RepeatParallax},
+            {"RZ", BG_REPEAT_V_RZ_RepeatNoParallax}
         });
 
         setup->readEnum("second-attached",
-                                    second_attached,
-                                    pMerge(second_attached, (uint32_t)BG_ATTACH_2_TO_TOP_OF_FIRST),
-                                    {
-                                        {"overfirst", BG_ATTACH_2_TO_TOP_OF_FIRST},
-                                        {"bottom", BG_ATTACH_2_TO_BOTTOM},
-                                        {"top", BG_ATTACH_2_TO_TOP}
+                        second_attached,
+                        pMerge(second_attached, (uint32_t)BG_ATTACH_2_TO_TOP_OF_FIRST),
+        {
+            {"overfirst", BG_ATTACH_2_TO_TOP_OF_FIRST},
+            {"bottom", BG_ATTACH_2_TO_BOTTOM},
+            {"top", BG_ATTACH_2_TO_TOP}
         });
     }
 
@@ -179,13 +179,13 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     setup->read("multi-layer-count", multi_layers_count, pMerge(multi_layers_count, 0));
 
     setup->readEnum("multi-layer-parallax-type",
-                                multi_parallax_type,
-                                pMerge(multi_parallax_type, (uint32_t)ML_PARALLAX_AUTO),
-                                {
-                                    {"auto", ML_PARALLAX_AUTO},
-                                    {"0", ML_PARALLAX_AUTO},
-                                    {"manual", ML_PARALLAX_MANUAL},
-                                    {"1", ML_PARALLAX_MANUAL}
+                    multi_parallax_type,
+                    pMerge(multi_parallax_type, (uint32_t)ML_PARALLAX_AUTO),
+    {
+        {"auto", ML_PARALLAX_AUTO},
+        {"0", ML_PARALLAX_AUTO},
+        {"manual", ML_PARALLAX_MANUAL},
+        {"1", ML_PARALLAX_MANUAL}
     });
 
     setup->read("multi-layer-parallax-z-min", multi_parallax_auto_distance_min, pMerge(multi_parallax_auto_distance_min, -100.0l));
@@ -200,7 +200,8 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
             BgLayer lyr;
             std::ostringstream lr_name_o;
             lr_name_o << PGEStringToStd(section) << "-layer-" << layer;
-            const char* lr_name = lr_name_o.str().c_str();
+            std::string lr_name_s = lr_name_o.str();
+            const char *lr_name = lr_name_s.c_str();
 
             setup->beginGroup(lr_name);
             {
@@ -214,34 +215,34 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("parallax-coefficient-x", lyr.parallax_coefficient_x, 1.0);
                 setup->read("parallax-coefficient-y", lyr.parallax_coefficient_y, 1.0);
                 setup->readEnum("parallax-mode-x",
-                                            lyr.parallax_mode_x,
-                                            (uint32_t)BgLayer::P_MODE_SCROLL,
-                                            {
-                                                {"scroll", BgLayer::P_MODE_SCROLL},
-                                                {"fit", BgLayer::P_MODE_FIT},
-                                                {"fixed", BgLayer::P_MODE_FIXED}
+                                lyr.parallax_mode_x,
+                                (uint32_t)BgLayer::P_MODE_SCROLL,
+                {
+                    {"scroll", BgLayer::P_MODE_SCROLL},
+                    {"fit", BgLayer::P_MODE_FIT},
+                    {"fixed", BgLayer::P_MODE_FIXED}
                 });
                 setup->readEnum("parallax-mode-y",
-                                            lyr.parallax_mode_y,
-                                            (uint32_t)BgLayer::P_MODE_SCROLL,
-                                            {
-                                                {"scroll", BgLayer::P_MODE_SCROLL},
-                                                {"fit", BgLayer::P_MODE_FIT},
-                                                {"fixed", BgLayer::P_MODE_FIXED}
+                                lyr.parallax_mode_y,
+                                (uint32_t)BgLayer::P_MODE_SCROLL,
+                {
+                    {"scroll", BgLayer::P_MODE_SCROLL},
+                    {"fit", BgLayer::P_MODE_FIT},
+                    {"fixed", BgLayer::P_MODE_FIXED}
                 });
                 setup->readEnum("reference-point-x",
-                                            lyr.reference_point_x,
-                                            (uint32_t)BgLayer::R_LEFT,
-                                            {
-                                                {"left", BgLayer::R_LEFT},
-                                                {"right", BgLayer::R_RIGHT}
+                                lyr.reference_point_x,
+                                (uint32_t)BgLayer::R_LEFT,
+                {
+                    {"left", BgLayer::R_LEFT},
+                    {"right", BgLayer::R_RIGHT}
                 });
                 setup->readEnum("reference-point-y",
-                                            lyr.reference_point_y,
-                                            (uint32_t)BgLayer::R_BOTTOM,
-                                            {
-                                                {"bottom", BgLayer::R_BOTTOM},
-                                                {"top", BgLayer::R_TOP}
+                                lyr.reference_point_y,
+                                (uint32_t)BgLayer::R_BOTTOM,
+                {
+                    {"bottom", BgLayer::R_BOTTOM},
+                    {"top", BgLayer::R_TOP}
                 });
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);

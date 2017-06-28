@@ -26,10 +26,10 @@ class IniProcessing;
 
 struct BgSetup
 {
-    bool parse(IniProcessing* setup,
+    bool parse(IniProcessing *setup,
                PGEString bgImgPath,
                uint32_t defaultGrid,
-               BgSetup* merge_with = nullptr,
+               BgSetup *merge_with = nullptr,
                PGEString *error = nullptr);
 
     enum BgType
@@ -90,7 +90,7 @@ struct BgSetup
     //! Horizontal parallax coefficient
     double          repeat_h = 2.0;
     //! Algorithm of vertical repeat and parallax
-    uint32_t        repead_v = BG_REPEAT_V_NR_NoRepeat;
+    uint32_t        repeat_v = BG_REPEAT_V_NR_NoRepeat;
     //! Attach background to top or bottom of section
     uint32_t        attached = BG_ATTACH_TO_BOTTOM;
     //! Force editor draw background via tiling algorithm

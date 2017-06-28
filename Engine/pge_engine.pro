@@ -322,7 +322,8 @@ SOURCES += \
     settings/global_settings.cpp \
     scenes/level/lvl_scene_trees.cpp \
     scenes/level/lvl_quad_tree.cpp \
-    scenes/level/lvl_subtree.cpp
+    scenes/level/lvl_subtree.cpp \
+    scenes/level/bg/bg_standard.cpp
 
 
 HEADERS  += \
@@ -488,7 +489,9 @@ HEADERS  += \
     settings/global_settings.h \
     version.h \
     scenes/level/lvl_quad_tree.h \
-    scenes/level/lvl_subtree.h
+    scenes/level/lvl_subtree.h \
+    scenes/level/bg/bg_base.h \
+    scenes/level/bg/bg_standard.h
 
 DISTFILES += \
     ../changelog.engine.txt \
