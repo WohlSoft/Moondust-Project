@@ -48,7 +48,7 @@ public:
     /*!
      * \brief Set blank black background
      */
-    void setNone();
+    void setBlank();
 
     /*!
      * \brief Set the section box
@@ -63,7 +63,9 @@ public:
      * \param w Width of the camera
      * \param h Height of the camera
      */
-    void draw(double x, double y, double w, double h);
+    void drawBack(double x, double y, double w, double h);
+
+    void drawFront(double x, double y, double w, double h);
 
     /*!
      * \brief Is background initialized
@@ -78,7 +80,8 @@ public:
     unsigned long curBgId();
 
 private:
-    obj_BG      m_setup;
+    uint64_t    m_bgId = 0;
+    obj_BG      *m_setup = nullptr;
     bool        m_blankBackground = true;
     PGEColor    m_color;
     PGE_RectF   m_box;

@@ -39,7 +39,7 @@ class LVL_Section
         LVL_Section(const LVL_Section &_sct);
         ~LVL_Section();
         void setData(const LevelSection &_d);
-        LevelSection data;
+        LevelSection m_data;
         //void registerElement(PGE_Phys_Object *item);
         //void unregisterElement(PGE_Phys_Object *item);
         //void queryItems(PGE_RectF zone, R_itemList *resultList);
@@ -58,14 +58,15 @@ class LVL_Section
         void setMusic(unsigned int musID);
         void setMusic(std::string musFile);
 
-        void renderBG(double x, double y, double w, double h);
+        void renderBackground(double x, double y, double w, double h);
+        void renderForeground(double x, double y, double w, double h);
 
-        void setBG(unsigned long bgID);
+        void setBG(uint64_t bgID);
         void resetBG();
 
-        bool isAutoscroll;
-        double _autoscrollVelocityX;
-        double _autoscrollVelocityY;
+        bool m_isAutoscroll;
+        double m_autoscrollVelocityX;
+        double m_autoscrollVelocityY;
 
         PGE_RectF sectionRect();
         PGE_RectF sectionLimitBox();
@@ -83,19 +84,19 @@ class LVL_Section
         //typedef RTree<PGE_Phys_Object *, double, 2, double > IndexTree;
         //IndexTree tree;
 
-        std::string     music_root;
-        unsigned int    curMus;
-        std::string     curCustomMus;
-        unsigned long   curBgID;
-        LVL_Background  _background;
+        std::string     m_music_root;
+        uint64_t        m_curMus;
+        std::string     m_curCustomMus;
+        uint64_t        m_curBgID;
+        LVL_Background  m_background;
 
-        bool isInit;
+        bool m_isInit;
 
         /// Limits of section motion
-        PGE_RectF limitBox;
+        PGE_RectF m_limitBox;
 
         /// Default section box
-        PGE_RectF sectionBox;
+        PGE_RectF m_sectionBox;
 };
 
 #endif // LVL_SECTION_H

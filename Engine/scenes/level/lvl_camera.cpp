@@ -240,7 +240,7 @@ void PGE_LevelCamera::updatePost(double ticks)
                 else
                 {
                     if(npc->is_activity)
-                        npc->activationTimeout = npc->setup->setup.deactivationDelay;
+                        npc->activationTimeout = static_cast<int>(npc->setup->setup.deactivationDelay);
                     else
                         npc->activationTimeout = 150;
                 }
@@ -345,18 +345,22 @@ void PGE_LevelCamera::sortElements()
 
     std::vector<int> beg;
     std::vector<int> end;
-    beg.reserve(_objects_to_render_stored);
-    end.reserve(_objects_to_render_stored);
+    beg.reserve(static_cast<size_t>(_objects_to_render_stored));
+    end.reserve(static_cast<size_t>(_objects_to_render_stored));
 
     PGE_Phys_Object *piv;
     int i = 0, L, R, swapv;
     beg.push_back(0);
     end.push_back(_objects_to_render_stored);
 
+//Macros to fix "int to size_t" warning conversion
+#define Beg(x) beg[static_cast<size_t>(x)]
+#define End(y) end[static_cast<size_t>(y)]
+
     while(i >= 0)
     {
-        L = beg[i];
-        R = end[i] - 1;
+        L = Beg(i);
+        R = End(i) - 1;
 
         if(L < R)
         {
@@ -373,17 +377,17 @@ void PGE_LevelCamera::sortElements()
 
             _objects_to_render[L] = piv;
             beg.push_back(L + 1);
-            end.push_back(end[i]);
-            end[i++] = (L);
+            end.push_back(End(i));
+            End(i++) = (L);
 
-            if((end[i] - beg[i]) > (end[i - 1] - beg[i - 1]))
+            if((End(i) - Beg(i)) > (End(i - 1) - Beg(i - 1)))
             {
-                swapv = beg[i];
-                beg[i] = beg[i - 1];
-                beg[i - 1] = swapv;
-                swapv = end[i];
-                end[i] = end[i - 1];
-                end[i - 1] = swapv;
+                swapv = Beg(i);
+                Beg(i) = Beg(i - 1);
+                Beg(i - 1) = swapv;
+                swapv = End(i);
+                End(i) = End(i - 1);
+                End(i - 1) = swapv;
             }
         }
         else
@@ -393,6 +397,10 @@ void PGE_LevelCamera::sortElements()
             end.pop_back();
         }
     }
+
+//Remove those macros
+#undef Beg
+#undef End
 }
 
 void PGE_LevelCamera::changeSectionBorders(long left, long top, long right, long bottom)
@@ -537,8 +545,8 @@ void PGE_LevelCamera::AutoScrooler::resetAutoscroll()
         return;
 
     camera->limitBox = camera->cur_section->sectionLimitBox();
-    velXmax  = camera->cur_section->_autoscrollVelocityX;
-    velYmax  = camera->cur_section->_autoscrollVelocityY;
+    velXmax  = camera->cur_section->m_autoscrollVelocityX;
+    velYmax  = camera->cur_section->m_autoscrollVelocityY;
 }
 
 void PGE_LevelCamera::AutoScrooler::processAutoscroll(double tickTime)
@@ -642,17 +650,17 @@ void PGE_LevelCamera::_applyLimits()
     if(!cur_section)
         return;
 
-    PGE_RectF &limBox = cur_section->limitBox;
+    PGE_RectF &limBox = cur_section->m_limitBox;
 
     if(posRect.width() > limBox.width())
         posRect.setX(limBox.left() + (limBox.width() / 2.0) - (posRect.width() / 2.0));
     else
     {
-        if(posRect.left() < cur_section->limitBox.left())
-            posRect.setX(cur_section->limitBox.left());
+        if(posRect.left() < cur_section->m_limitBox.left())
+            posRect.setX(cur_section->m_limitBox.left());
 
-        if(posRect.right() > cur_section->limitBox.right())
-            posRect.setX(cur_section->limitBox.right() - posRect.width());
+        if(posRect.right() > cur_section->m_limitBox.right())
+            posRect.setX(cur_section->m_limitBox.right() - posRect.width());
     }
 
     if(posRect.height() > limBox.height())
@@ -677,12 +685,17 @@ void PGE_LevelCamera::_applyLimits()
 void PGE_LevelCamera::drawBackground()
 {
     if(cur_section)
-        cur_section->renderBG(posRect.x() + offset_x, posRect.y() + offset_y, posRect.width(), posRect.height());
+        cur_section->renderBackground(posRect.x() + offset_x, posRect.y() + offset_y, posRect.width(), posRect.height());
 }
 
 
 void PGE_LevelCamera::drawForeground()
 {
+    //Draw foreground layers of background
+    if(cur_section)
+        cur_section->renderForeground(posRect.x() + offset_x, posRect.y() + offset_y, posRect.width(), posRect.height());
+
+    //Draw screen fade rectangle
     if(!fader.isNull())
         GlRenderer::renderRect(0, 0,
                                static_cast<float>(posRect.width()),
@@ -690,9 +703,10 @@ void PGE_LevelCamera::drawForeground()
                                0.0f, 0.0f, 0.0f,
                                static_cast<float>(fader.fadeRatio()));
 
+    //Fill out of section space (In cases when section is smaller than size of the screen)
     if(cur_section)
     {
-        PGE_RectF *limBox = m_autoScrool.enabled ? &limitBox : &(cur_section->limitBox);
+        PGE_RectF *limBox = m_autoScrool.enabled ? &limitBox : &(cur_section->m_limitBox);
         double left   = posRect.left() + offset_x;
         double top    = posRect.top() + offset_y;
         double right  = posRect.right() + offset_x;
@@ -738,15 +752,15 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct, bool isInit)
     if(!sct) return;
 
     cur_section = sct;
-    section = &sct->data;
+    section = &sct->m_data;
 
     if(!isInit)
     {
         cur_section->playMusic();//Play current section music
         cur_section->initBG();   //Init background if not initialized
-        m_autoScrool.enabled = cur_section->isAutoscroll;
+        m_autoScrool.enabled = cur_section->m_isAutoscroll;
 
-        if(cur_section->isAutoscroll) m_autoScrool.resetAutoscroll();
+        if(cur_section->m_isAutoscroll) m_autoScrool.resetAutoscroll();
     }
 }
 

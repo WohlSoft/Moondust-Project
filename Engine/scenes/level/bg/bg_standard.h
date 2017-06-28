@@ -29,7 +29,8 @@ public:
     ~StandardBackground() = default;
     void init(const obj_BG &bg);
     void process(double tickDelay);
-    void render(const PGE_RectF &box, double x, double y, double w, double h);
+    void renderBackground(const PGE_RectF &box, double x, double y, double w, double h);
+    void renderForeground(const PGE_RectF &box, double x, double y, double w, double h);
 
 private:
     BgSetup::BgType         m_bgType            = BgSetup::BG_TYPE_SingleRow;

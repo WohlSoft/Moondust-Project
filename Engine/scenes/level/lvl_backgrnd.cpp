@@ -30,6 +30,7 @@
 LevelBackgroundBase::~LevelBackgroundBase() {}
 
 #include "bg/bg_standard.h"
+#include "bg/bg_multilayer.h"
 
 
 LVL_Background::LVL_Background(const LVL_Background &_bg)
@@ -38,10 +39,10 @@ LVL_Background::LVL_Background(const LVL_Background &_bg)
     m_color = _bg.m_color;
     m_box   = _bg.m_box;
     m_blankBackground = _bg.m_blankBackground;
-    if(!m_blankBackground)
+    if(!m_blankBackground && _bg.m_setup)
     {
-        obj_BG setup = _bg.m_setup;
-        setBg(setup);
+        obj_BG *setup = _bg.m_setup;
+        setBg(*setup);
     }
     else
     {
@@ -58,28 +59,26 @@ void LVL_Background::setBg(obj_BG &bg)
             ConfigManager::loadLevelBackground(bg, "background2", &bg, CustomTxt);
     }
 
-    m_setup = bg;
-    // Set default fill color
-    m_color = m_setup.fill_color;
+    m_setup = &bg;
+    m_bgId = bg.setup.id;
 
-    if(m_setup.setup.multi_layered)
-    {
-        //TODO: Implement multi-layering background!
-    }
+    // Set default fill color
+    m_color = bg.fill_color;
+
+    if(bg.setup.multi_layered)
+        m_bg_base.reset(new MultilayerBackground);  //Modern backgrounds model
     else
-    {
-        m_bg_base.reset(new StandardBackground);
-        m_bg_base->init(m_setup);
-    }
+        m_bg_base.reset(new StandardBackground);    //Legacy backgrounds model, kept for compatibility with legacy engine
+    m_bg_base->init(*m_setup);
 
     m_blankBackground = false;
 }
 
-void LVL_Background::setNone()
+void LVL_Background::setBlank()
 {
     m_bg_base.reset();
     m_blankBackground = true;
-    m_setup.setup.id = 0;
+    m_bgId = 0;
     m_color.r = 0.0f;
     m_color.g = 0.0f;
     m_color.b = 0.0f;
@@ -90,15 +89,21 @@ void LVL_Background::setBox(const PGE_RectF &box)
     m_box = box;
 }
 
-void LVL_Background::draw(double x, double y, double w, double h)
+void LVL_Background::drawBack(double x, double y, double w, double h)
 {
     GlRenderer::renderRect(0.0f, 0.0f, static_cast<float>(w), static_cast<float>(h), m_color.r, m_color.g, m_color.b, 1.0f);
-
     if(m_blankBackground)
         return; //draw BG if is set
-
     if(m_bg_base)
-        m_bg_base->render(m_box, x, y, w, h);
+        m_bg_base->renderBackground(m_box, x, y, w, h);
+}
+
+void LVL_Background::drawFront(double x, double y, double w, double h)
+{
+    if(m_blankBackground)
+        return; //draw BG if is set
+    if(m_bg_base)
+        m_bg_base->renderForeground(m_box, x, y, w, h);
 }
 
 bool LVL_Background::isInit()
@@ -111,5 +116,5 @@ unsigned long LVL_Background::curBgId()
     if(m_isInitialized)
         return 0;
     else
-        return m_setup.setup.id;
+        return m_bgId;
 }

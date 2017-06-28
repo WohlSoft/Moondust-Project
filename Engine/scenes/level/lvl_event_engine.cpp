@@ -247,9 +247,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         installAutoscroll.makeCaller([this, evt]()->void
         {
             LVL_Section &section = m_scene->m_sections[static_cast<size_t>(evt.scroll_section)];
-            section.isAutoscroll = true;
-            section._autoscrollVelocityX = evt.move_camera_x;
-            section._autoscrollVelocityY = evt.move_camera_y;
+            section.m_isAutoscroll = true;
+            section.m_autoscrollVelocityX = evt.move_camera_x;
+            section.m_autoscrollVelocityY = evt.move_camera_y;
 
             for(size_t j = 0; j < m_scene->m_cameras.size(); j++)
             {

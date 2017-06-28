@@ -53,7 +53,17 @@ public:
      * \param w Width of screen
      * \param h Heigh of screen
      */
-    virtual void render(const PGE_RectF &box, double x, double y, double w, double h) = 0;
+    virtual void renderBackground(const PGE_RectF &box, double x, double y, double w, double h) = 0;
+
+    /*!
+     * \brief Draw foreground on the screen
+     * \param box Current section box
+     * \param x X position on the screen
+     * \param y Y position on the screen
+     * \param w Width of screen
+     * \param h Heigh of screen
+     */
+    virtual void renderForeground(const PGE_RectF &box, double x, double y, double w, double h) = 0;
 };
 
 #endif // BG_BASE_H
