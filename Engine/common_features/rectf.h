@@ -40,8 +40,8 @@ class PGE_RectF
         void setRight(double r);
         void setTop(double t);
         void setBottom(double b);
-        PGE_RectF withMargin(double margin);
-        PGE_RectF withMargin(double marginX, double marginY);
+        PGE_RectF withMargin(double margin) const;
+        PGE_RectF withMargin(double marginX, double marginY) const;
 
         void setX(double x);
         void setY(double y);
@@ -60,28 +60,28 @@ class PGE_RectF
         void setBottomRight(double r, double b);
         void setBottomLeft(double l, double b);
 
-        double x();
-        double y();
+        double x() const;
+        double y() const;
 
-        double left();
-        double top();
-        double bottom();
-        double right();
+        double left() const;
+        double top() const;
+        double bottom() const;
+        double right() const;
 
-        double width();
-        double height();
+        double width() const;
+        double height() const;
 
-        PGE_PointF center();
-        PGE_SizeF size();
-        double centerX();
-        double centerY();
+        PGE_PointF center() const;
+        PGE_SizeF size() const;
+        double centerX() const;
+        double centerY() const;
 
-        bool collidePoint(double x, double y);
-        bool collideRect(double x, double y, double w, double h);
-        bool collideRect(PGE_RectF &rect);
-        bool collideRectDeep(PGE_RectF &rect, double deep);
-        bool collideRectDeep(PGE_RectF &rect, double deepX, double deepY);
-        bool collideRect(PGE_Rect &rect);
+        bool collidePoint(double x, double y) const;
+        bool collideRect(double x, double y, double w, double h) const;
+        bool collideRect(PGE_RectF &rect) const;
+        bool collideRectDeep(PGE_RectF &rect, double depth) const;
+        bool collideRectDeep(PGE_RectF &rect, double deepX, double deepY) const;
+        bool collideRect(PGE_Rect &rect) const;
 
     private:
         double m_x;

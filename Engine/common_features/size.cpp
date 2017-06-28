@@ -55,17 +55,17 @@ void PGE_Size::setHeight(int h)
     m_h = h;
 }
 
-bool PGE_Size::isNull()
+bool PGE_Size::isNull() const
 {
     return ((m_w == 0) && (m_h == 0));
 }
 
-int PGE_Size::w()
+int PGE_Size::w() const
 {
     return m_w;
 }
 
-int PGE_Size::h()
+int PGE_Size::h() const
 {
     return m_h;
 }
