@@ -37,9 +37,9 @@ void MultilayerBackground::init(const obj_BG &bg)
         // TODO: Implement here actual loading of texture and loading properties per every layer
 
         if(layer.z_index <= 0)      //Background layer
-            m_layers_back.push_back(l);
+            m_layers_back.push_back(LayerPtr(new Layer(l)));
         else if(layer.z_index > 0)  //Foreground layer
-            m_layers_front.push_back(l);
+            m_layers_front.push_back(LayerPtr(new Layer(l)));
     }
 
     m_scrollers.clear();
@@ -51,16 +51,25 @@ void MultilayerBackground::init(const obj_BG &bg)
 
 void MultilayerBackground::initScrollers(MultilayerBackground::LayersList &ls)
 {
+    struct LessThanZ
+    {
+        inline bool operator() (const LayerPtr& struct1, const LayerPtr& struct2)
+        {
+            return (struct1->setup.z_index < struct2->setup.z_index);
+        }
+    };
+
     //Sort by Z-index
-    std::sort(ls.begin(),  ls.end(), std::greater<Layer>());
+    std::sort(ls.begin(),  ls.end(), LessThanZ());
 
     //Add pointers to every layer into the scroller
-    for(Layer &layer : ls)
+    for(LayerPtr &layer_ptr : ls)
     {
+        Layer &layer = *layer_ptr;
         if(layer.autoscroll_x || layer.autoscroll_y)
         {
             Scroller s;
-            s.layer = &layer;
+            s.layer = layer_ptr;
             s.speed_x = layer.autoscroll_x ? layer.setup.auto_scrolling_x_speed : 0.0;
             s.speed_y = layer.autoscroll_y ? layer.setup.auto_scrolling_y_speed : 0.0;
             m_scrollers.push_back(s);
@@ -72,23 +81,24 @@ void MultilayerBackground::process(double tickDelay)
 {
     for(Scroller &scroller : m_scrollers)
     {
+        Layer &layer = *scroller.layer;
         //Iterate scrolling
-        scroller.layer->autoscroll_x_offset += scroller.speed_x * (tickDelay / 1000.0);
-        scroller.layer->autoscroll_y_offset += scroller.speed_y * (tickDelay / 1000.0);
+        layer.autoscroll_x_offset += scroller.speed_x * (tickDelay / 1000.0);
+        layer.autoscroll_y_offset += scroller.speed_y * (tickDelay / 1000.0);
 
         //Return offset to initial position with small difference when it reaches width or height of layer image
-        double w = scroller.layer->texture.w        + scroller.layer->setup.padding_x;
-        double h = scroller.layer->texture.frame_h  + scroller.layer->setup.padding_y;
+        double w = layer.texture.w        + layer.setup.padding_x;
+        double h = layer.texture.frame_h  + layer.setup.padding_y;
 
-        if(scroller.layer->autoscroll_y_offset > h)
-            scroller.layer->autoscroll_y_offset -= h;
-        else if(scroller.layer->autoscroll_y_offset < 0.0)
-            scroller.layer->autoscroll_y_offset += h;
+        if(layer.autoscroll_y_offset > h)
+            layer.autoscroll_y_offset -= h;
+        else if(layer.autoscroll_y_offset < 0.0)
+            layer.autoscroll_y_offset += h;
 
-        if(scroller.layer->autoscroll_x_offset > w)
-            scroller.layer->autoscroll_x_offset -= w;
-        else if(scroller.layer->autoscroll_x_offset < 0.0)
-            scroller.layer->autoscroll_x_offset += w;
+        if(layer.autoscroll_x_offset > w)
+            layer.autoscroll_x_offset -= w;
+        else if(layer.autoscroll_x_offset < 0.0)
+            layer.autoscroll_x_offset += w;
         //(scroller.layer->autoscroll_y_offset > scroller.layer->texture.frame_h)
     }
 }

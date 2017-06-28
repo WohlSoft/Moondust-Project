@@ -20,6 +20,7 @@
 #define BG_MULTILAYER_H
 
 #include "bg_base.h"
+#include <memory>
 
 class MultilayerBackground : public LevelBackgroundBase
 {
@@ -31,8 +32,8 @@ public:
     void process(double tickDelay);
     void renderBackground(const PGE_RectF &box, double x, double y, double w, double h);
     void renderForeground(const PGE_RectF &box, double x, double y, double w, double h);
-private:
 
+private:
     bool m_isInitialized = false;
 
     struct Layer
@@ -57,12 +58,17 @@ private:
 
     struct Scroller
     {
-        Layer *layer = nullptr;
+        /*  == Small note about std::shared_ptr ==
+            Same shared pointer will point to same contructed object
+            when copy shared pointer itself */
+        std::shared_ptr<Layer> layer;
         double speed_x = 0.0;
         double speed_y = 0.0;
     };
 
-    typedef std::vector<Layer> LayersList;
+    typedef std::shared_ptr<Layer> LayerPtr;
+    typedef std::vector<LayerPtr> LayersList;
+
     //! Back layers, must be sorted by Z index
     LayersList m_layers_back;
     //! Front layers, must be sorted by Z index
