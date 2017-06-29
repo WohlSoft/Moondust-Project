@@ -260,9 +260,9 @@ std::string AppPathManager::userAppDirSTD()
 
 std::string AppPathManager::languagesDir()
 {
-    #ifndef __APPLE__
+#ifndef __APPLE__
     return ApplicationPathSTD + "languages";
-    #else
+#else
     CFURLRef appUrlRef;
     appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
     CFStringRef filePathRef = CFURLGetString(appUrlRef);
@@ -278,9 +278,9 @@ std::string AppPathManager::languagesDir()
 
 std::string AppPathManager::screenshotsDir()
 {
-    #ifndef __APPLE__
+#ifndef __APPLE__
     return m_userPath + "/screenshots";
-    #else
+#else
     std::string path = m_userPath;
     char *base_path = getScreenCaptureDir();
     if(base_path)
@@ -289,7 +289,7 @@ std::string AppPathManager::screenshotsDir()
         SDL_free(base_path);
     }
     return path + "/Moondust Game Screenshots";
-    #endif
+#endif
 }
 
 void AppPathManager::install()
@@ -302,11 +302,11 @@ void AppPathManager::install()
         if(!appDir.exists() && !appDir.mkpath(path))
             return;
 
-        #ifdef _WIN32
+    #ifdef _WIN32
         winReg_setUserDir();
-        #endif
+    #endif
 
-        #ifdef __gnu_linux__
+    #ifdef __gnu_linux__
         DirMan configDir(path + "/.config/Wohlhabend Networks/");
         if(!configDir.exists())
             configDir.mkpath(".");
@@ -315,7 +315,7 @@ void AppPathManager::install()
         setup.setValue("EnableUserDir", true);
         setup.endGroup();
         setup.writeIniFile();
-        #endif
+    #endif
     }
 }
 
