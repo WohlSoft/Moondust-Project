@@ -128,15 +128,16 @@ void LogWriter::LoadLogSettings()
     QString mainIniFile = AppPathManager::settingsFile();
     QSettings logSettings(mainIniFile, QSettings::IniFormat);
 
-    QDir defLogDir(AppPathManager::userAppDir()+"/logs");
+    QString logDirS = AppPathManager::logsDir();
+    QDir defLogDir(logDirS);
     if(!defLogDir.exists())
     {
-        if(!defLogDir.mkpath(AppPathManager::userAppDir()+"/logs"))
+        if(!defLogDir.mkpath(logDirS))
             defLogDir.setPath(AppPathManager::userAppDir());
     }
 
     logSettings.beginGroup("logging");
-        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+logFileName).toString();
+        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath() + "/" + logFileName).toString();
         if(!QFileInfo(DebugLogFile).absoluteDir().exists())
             DebugLogFile = defLogDir.absolutePath()+"/" + logFileName;
         DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath() + "/" + logFileName;

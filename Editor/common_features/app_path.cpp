@@ -45,7 +45,7 @@ QString AppPathManager::m_userPath;
 
 void AppPathManager::initAppPath(const char* argv0)
 {
-    #ifdef __APPLE__
+#ifdef __APPLE__
     Q_UNUSED(argv0);
     {
         CFURLRef appUrlRef;
@@ -71,9 +71,9 @@ void AppPathManager::initAppPath(const char* argv0)
             }
         }
     }
-    #else
+#else
     ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).absoluteDir().absolutePath();
-    #endif
+#endif
     ApplicationPath_x = ApplicationPath;
 
     QApplication::addLibraryPath(".");
@@ -84,7 +84,7 @@ void AppPathManager::initAppPath(const char* argv0)
     QApplication::setOrganizationDomain(V_PGE_URL);
     QApplication::setApplicationName("PGE Editor");
 
-    #ifdef __ANDROID__
+#ifdef __ANDROID__
     ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)+"/PGE Project Data";
     QDir appPath(ApplicationPath);
     if(!appPath.exists())
@@ -103,26 +103,26 @@ void AppPathManager::initAppPath(const char* argv0)
         themesFolder.mkpath(ApplicationPath+"/themes");
         DirCopy::copy("assets:/themes", themesFolder.absolutePath());
     }
-    #endif
+#endif
 
     if(isPortable())
         return;
 
     QSettings setup;
     bool userDir;
-    #if defined(__ANDROID__) || defined(__APPLE__)
+#if defined(__ANDROID__) || defined(__APPLE__)
     userDir = true;
-    #else
+#else
     userDir = setup.value("EnableUserDir", false).toBool();
-    #endif
+#endif
 //openUserDir:
     if(userDir)
     {
-        #if defined(__ANDROID__) || defined(__APPLE__)
+    #if defined(__ANDROID__) || defined(__APPLE__)
         QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-        #else
+    #else
         QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-        #endif
+    #endif
         if(!path.isEmpty())
         {
             QDir appDir(path + UserDirName);
@@ -177,13 +177,22 @@ QString AppPathManager::languagesDir()
 #endif
 }
 
+QString AppPathManager::logsDir()
+{
+#ifndef Q_OS_MAC
+    return m_userPath + "/logs";
+#else
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Library/Logs/PGE Project";
+#endif
+}
+
 void AppPathManager::install()
 {
-    #if defined(__ANDROID__) || defined(__APPLE__)
+#if defined(__ANDROID__) || defined(__APPLE__)
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-    #else
+#else
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    #endif
+#endif
     if(!path.isEmpty())
     {
         QDir appDir(path + UserDirName);
