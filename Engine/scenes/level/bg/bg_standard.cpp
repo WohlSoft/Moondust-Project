@@ -169,8 +169,8 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
     if(m_repeat_h > 0)
     {
         //If referrence point is positive (for example, changing size of section lefter than section), fix it!
-        while(refPointX > 0.0)
-            refPointX -= fWidth * m_repeat_h;
+        if(refPointX > 0.0)
+            refPointX = -((fWidth * m_repeat_h) - std::fmod(refPointX, fWidth * m_repeat_h));
         imgPos_X = std::fmod(refPointX / m_repeat_h, fWidth);
     }
     else
@@ -325,8 +325,9 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
         double imgPos_X = 0.0;
         refPointX = box.left() - x;
         //If referrence point is positive (for example, changing size of section lefter than section), fix it!
-        while(refPointX > 0.0)
-            refPointX -= fWidth2 * m_second_repeat_h;
+        if(refPointX > 0.0)
+            refPointX = -((fWidth2 * m_second_repeat_h) - std::fmod(refPointX, fWidth2 * m_second_repeat_h));
+
         imgPos_X = std::fmod((refPointX / m_second_repeat_h), fWidth2);
         lenght = 0;
 
