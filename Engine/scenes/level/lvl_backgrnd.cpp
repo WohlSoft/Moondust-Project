@@ -106,6 +106,12 @@ void LVL_Background::drawFront(double x, double y, double w, double h)
         m_bg_base->renderForeground(m_box, x, y, w, h);
 }
 
+void LVL_Background::process(double frameDelay)
+{
+    if(!m_blankBackground && m_bg_base)
+        m_bg_base->process(frameDelay);
+}
+
 bool LVL_Background::isInit()
 {
     return m_isInitialized;

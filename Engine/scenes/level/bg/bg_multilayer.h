@@ -38,7 +38,9 @@ private:
 
     struct Layer
     {
+        uint32_t            layerId = 0;
         BgSetup::BgLayer    setup;
+        obj_BG::TextureId   tID;
         PGE_Texture         texture;
         bool    autoscroll_x = false;
         double  autoscroll_x_offset = 0.0;

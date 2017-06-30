@@ -224,7 +224,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 });
                 setup->readEnum("parallax-mode-y",
                                 lyr.parallax_mode_y,
-                                (uint32_t)BgLayer::P_MODE_SCROLL,
+                                (uint32_t)BgLayer::P_MODE_FIT,
                 {
                     {"scroll", BgLayer::P_MODE_SCROLL},
                     {"fit", BgLayer::P_MODE_FIT},

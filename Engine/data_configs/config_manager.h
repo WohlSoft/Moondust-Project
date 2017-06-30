@@ -326,6 +326,7 @@ namespace ConfigManager
     bool loadLevelBackG();
     bool loadLevelBackground(obj_BG &sbg, std::string section, obj_BG *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getBGTexture(unsigned long bgID, bool isSecond = false);
+    int  getBGLayerTexture(uint64_t bgID, size_t layerId);
     /*****************************/
     extern PGE_DataArray<obj_BG>   lvl_bg_indexes;
     extern CustomDirManager Dir_BG;

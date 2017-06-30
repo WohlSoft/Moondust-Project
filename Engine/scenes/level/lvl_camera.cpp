@@ -171,18 +171,24 @@ void PGE_LevelCamera::setOffset(int x, int y)
     offset_y = y;
 }
 
-void PGE_LevelCamera::updatePre(double ticks)
+void PGE_LevelCamera::updatePre(double frameDelay)
 {
     if(!cur_section)
         return;
 
-    fader.tickFader(ticks);
+    // Process built-in background's algorithms
+    // (for example, auto-scrollers per every layer)
+    cur_section->m_background.process(frameDelay);
 
+    // Process fade in/out effect if requested
+    fader.tickFader(frameDelay);
+
+    // Process camera autoscroll in the section
     if(m_autoScrool.enabled)
-        m_autoScrool.processAutoscroll(ticks);
+        m_autoScrool.processAutoscroll(frameDelay);
 }
 
-void PGE_LevelCamera::updatePost(double ticks)
+void PGE_LevelCamera::updatePost(double frameDelay)
 {
     if(!cur_section)
         return;
@@ -268,7 +274,7 @@ void PGE_LevelCamera::updatePost(double ticks)
             offset_x = 0.0;
 
         if(shake_force_x > 0.0)
-            shake_force_x -= ticks * shake_force_decelerate_x;
+            shake_force_x -= frameDelay * shake_force_decelerate_x;
 
         if(shake_force_x <= 0.0)
         {
@@ -288,7 +294,7 @@ void PGE_LevelCamera::updatePost(double ticks)
             offset_y = 0.0;
 
         if(shake_force_y > 0.0)
-            shake_force_y -= ticks * shake_force_decelerate_y;
+            shake_force_y -= frameDelay * shake_force_decelerate_y;
 
         if(shake_force_y <= 0.0)
         {

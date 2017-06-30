@@ -65,7 +65,20 @@ public:
      */
     void drawBack(double x, double y, double w, double h);
 
+    /*!
+     * \brief Draw foreground on the screen
+     * \param x X in-scene position of the camera
+     * \param y Y in-scene position of the camera
+     * \param w Width of the camera
+     * \param h Height of the camera
+     */
     void drawFront(double x, double y, double w, double h);
+
+    /*!
+     * \brief Process internal algorithms of each background type if available
+     * \param frameDelay Frame delay in milliseconds
+     */
+    void process(double frameDelay);
 
     /*!
      * \brief Is background initialized

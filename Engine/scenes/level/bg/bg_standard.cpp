@@ -47,7 +47,7 @@ void StandardBackground::init(const obj_BG &bg)
         {
             m_txData1 = ConfigManager::level_textures[tID];
 
-            if(bg.setup.attached)
+            if(bg.setup.attached == BgSetup::BG_ATTACH_TO_TOP)
                 m_color = bg.Color_lower;
             else
                 m_color = bg.Color_upper;

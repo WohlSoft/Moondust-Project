@@ -41,9 +41,9 @@ public:
 
     /*!
      * \brief Process internal animation (scrolling, etc.) if available
-     * \param tickDelay (Delay of one frame in milliseconds)
+     * \param frameDelay (Delay of one frame in milliseconds)
      */
-    virtual void process(double tickDelay) = 0;
+    virtual void process(double frameDelay) = 0;
 
     /*!
      * \brief Draw background on the screen
