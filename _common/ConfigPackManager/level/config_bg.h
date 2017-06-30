@@ -243,12 +243,12 @@ struct BgSetup
         //! Auto-scroll image (works when releat X is enabled)
         bool        auto_scrolling_x = false;
         //! Auto-scroll speed in pixels per second
-        uint32_t    auto_scrolling_x_speed = 32;
+        int32_t     auto_scrolling_x_speed = 32;
 
         //! Auto-scroll image (works when releat Y is enabled)
         bool        auto_scrolling_y = false;
         //! Auto-scroll speed in pixels per second
-        uint32_t    auto_scrolling_y_speed = 32;
+        int32_t     auto_scrolling_y_speed = 32;
 
         //! Is this layer animated?
         bool            animated = false;

@@ -191,8 +191,12 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     setup->read("multi-layer-parallax-z-min", multi_parallax_auto_distance_min, pMerge(multi_parallax_auto_distance_min, -100.0l));
     setup->read("multi-layer-parallax-z-max", multi_parallax_auto_distance_max, pMerge(multi_parallax_auto_distance_max, -100.0l));
 
+    if(!merge_with)
+        layers.clear();
+
     if(multi_layered && (multi_layers_count > 0))
     {
+        layers.clear();
         setup->endGroup();
 
         for(uint32_t layer = 0; layer < multi_layers_count; layer++)

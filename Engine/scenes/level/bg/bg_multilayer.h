@@ -27,7 +27,7 @@ class MultilayerBackground : public LevelBackgroundBase
 public:
     MultilayerBackground() = default;
     MultilayerBackground(const MultilayerBackground &) = default;
-    ~MultilayerBackground() = default;
+    ~MultilayerBackground();
     void init(const obj_BG &bg);
     void process(double tickDelay);
     void renderBackground(const PGE_RectF &box, double x, double y, double w, double h);
