@@ -163,16 +163,29 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
     double  imgPos_X = 0;
     double  imgPos_Y = 0;
 
+    double refPointX = 0.0;
+    refPointX = box.left() - x;
+
     if(m_repeat_h > 0)
-        imgPos_X = std::fmod((box.left() - x) / m_repeat_h, m_txData1.frame_w);
+    {
+        //If referrence point is positive (for example, changing size of section lefter than section), fix it!
+        while(refPointX > 0.0)
+            refPointX -= fWidth * m_repeat_h;
+        imgPos_X = std::fmod(refPointX / m_repeat_h, fWidth);
+    }
     else
     {
         if(fWidth < w) //If image height less than screen
             imgPos_X = 0.0;
         else if(sWidth > fWidth)
-            imgPos_X = (box.left() - x) / ((sWidth - w) / (fWidth - w));
+        {
+            if(refPointX <= 0.0)
+                imgPos_X = (refPointX) / ((sWidth - w) / (fWidth - w));
+            else
+                imgPos_X = 0.0;
+        }
         else
-            imgPos_X = box.left() - x;
+            imgPos_X = refPointX;
     }
 
     //     tmpstr = bgset.value("repeat-v", "NR").toString();
@@ -293,7 +306,7 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
     if(m_bgType == BgSetup::BG_TYPE_DoubleRow)
     {
         ani_x = AniPos(0, 1);
-        double fWidth2 = static_cast<double>(m_txData2.frame_w);
+        double fWidth2  = static_cast<double>(m_txData2.frame_w);
         double fHeight2 = static_cast<double>(m_txData2.frame_h);
 
         switch(m_second_attached)
@@ -309,7 +322,12 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
             break;
         }
 
-        double imgPos_X = std::fmod(((box.left() - x) / m_second_repeat_h), fWidth2);
+        double imgPos_X = 0.0;
+        refPointX = box.left() - x;
+        //If referrence point is positive (for example, changing size of section lefter than section), fix it!
+        while(refPointX > 0.0)
+            refPointX -= fWidth2 * m_second_repeat_h;
+        imgPos_X = std::fmod((refPointX / m_second_repeat_h), fWidth2);
         lenght = 0;
 
         while((lenght <= w * 2.0) || (lenght <= fWidth * 2))
