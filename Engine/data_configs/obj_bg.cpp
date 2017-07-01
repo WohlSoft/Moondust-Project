@@ -67,33 +67,9 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
         }
     }
 
-    if(sbg.texturePerLayer.empty())
-    {
-        sbg.texturePerLayer.resize(sbg.setup.layers.size());
-        for(obj_BG::TextureId &id : sbg.texturePerLayer)
-            id = obj_BG::TextureId();
-    }
-    else
-    {
-        if(sbg.texturePerLayer.size() != sbg.setup.layers.size())
-        {
-            if(sbg.texturePerLayer.size() > sbg.setup.layers.size())
-            {
-                while(sbg.texturePerLayer.size() > sbg.setup.layers.size())
-                {
-                    obj_BG::TextureId *b = &sbg.texturePerLayer.back();
-                    if(b->image)
-                        GlRenderer::deleteTexture(*b->image);
-                    sbg.texturePerLayer.pop_back();
-                }
-            }
-            else
-            {
-                while(sbg.texturePerLayer.size() < sbg.setup.layers.size())
-                    sbg.texturePerLayer.push_back(obj_BG::TextureId());
-            }
-        }
-    }
+    sbg.texturePerLayer.resize(sbg.setup.layers.size());
+    for(obj_BG::TextureId &id : sbg.texturePerLayer)
+        id = obj_BG::TextureId();
 
     if(sbg.setup.fill_color != "auto")
     {

@@ -52,13 +52,6 @@ LVL_Background::LVL_Background(const LVL_Background &_bg)
 
 void LVL_Background::setBg(obj_BG &bg)
 {
-    if((!bg.isInit) && (!bg.second_isInit))
-    {
-        std::string CustomTxt = ConfigManager::Dir_BG.getCustomFile(fmt::format("background2-{0}.ini", bg.setup.id));
-        if(!CustomTxt.empty())
-            ConfigManager::loadLevelBackground(bg, "background2", &bg, CustomTxt);
-    }
-
     m_setup = &bg;
     m_bgId = bg.setup.id;
 
