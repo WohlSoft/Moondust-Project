@@ -202,8 +202,11 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 refPointX = box.left() - pointX + offsetXpre;
                 break;
             case BgSetup::BgLayer::R_RIGHT:
-                refPointX = ((box.right() - w) /*- (fWidth * layer.setup.parallax_coefficient_x)*/) - pointX + offsetXpre;
-                offsetXpost = (w - fWidth) - fWidth;
+                refPointX = (box.right() - w) - pointX + offsetXpre;
+                if(layer.setup.repeat_x)
+                    offsetXpost = (w - fWidth) - (w - fmod(w, fWidth));
+                else
+                    offsetXpost = (w - fWidth);
                 break;
             }
             //If referrence point is negative (for example, autoscrolling have moved left), offset it
@@ -257,7 +260,10 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 break;
             case BgSetup::BgLayer::R_BOTTOM:
                 refPointY = (box.bottom() - h) - pointY + offsetYpre;
-                offsetYpost = (h - fHeight) - fHeight;
+                if(layer.setup.repeat_y)
+                    offsetYpost = (h - fHeight) - (h - fmod(h, fHeight));
+                else
+                    offsetYpost = (h - fHeight);
                 break;
             }
             //If referrence point is negative (for example, autoscrolling have moved up), offset it
