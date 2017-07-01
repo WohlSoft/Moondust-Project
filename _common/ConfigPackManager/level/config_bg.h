@@ -170,7 +170,7 @@ struct BgSetup
     //! Maximal background distance
     long double     multi_parallax_auto_distance_min = -100.0l;
     //! Maximal background distance
-    long double     multi_parallax_auto_distance_max = 100.0l;
+    long double     multi_parallax_auto_distance_max = +100.0l;
 
     struct BgLayer
     {

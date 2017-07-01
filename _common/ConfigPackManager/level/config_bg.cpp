@@ -189,7 +189,10 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     });
 
     setup->read("multi-layer-parallax-z-min", multi_parallax_auto_distance_min, pMerge(multi_parallax_auto_distance_min, -100.0l));
-    setup->read("multi-layer-parallax-z-max", multi_parallax_auto_distance_max, pMerge(multi_parallax_auto_distance_max, 100.0l));
+    NumberLimiter::apply(multi_parallax_auto_distance_min, std::numeric_limits<long double>::lowest(), -1.0l);
+
+    setup->read("multi-layer-parallax-z-max", multi_parallax_auto_distance_max, pMerge(multi_parallax_auto_distance_max, +100.0l));
+    NumberLimiter::apply(multi_parallax_auto_distance_max, 1.0l, std::numeric_limits<long double>::max());
 
     if(!merge_with)
         layers.clear();
@@ -214,7 +217,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("z-value",  lyr.z_index, -50.0l);
                 setup->read("z-index",  lyr.z_index, lyr.z_index);//< Alias to z-value
                 setup->read("priority", lyr.z_index, lyr.z_index);//< Alias to z-value
-                NumberLimiter::applyD(lyr.z_index, -50.0l, multi_parallax_auto_distance_min, multi_parallax_auto_distance_max);//Avoid out of range
+                NumberLimiter::apply(lyr.z_index, multi_parallax_auto_distance_min, multi_parallax_auto_distance_max);//Avoid out of range
                 setup->read("opacity",  lyr.opacity, 1.0);
                 NumberLimiter::applyD(lyr.padding_x, 1.0, 0.0, 1.0);//Opacity can be between 0.0 and 1.0
                 setup->read("repeat-x", lyr.repeat_x, true);
