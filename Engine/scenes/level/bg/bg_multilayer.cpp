@@ -340,6 +340,9 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         double draw_x = imgPos_X;
         PGE_RectF m_backgrndG;
 
+        GlRenderer::BindTexture(&layer.texture);
+        GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, static_cast<float>(layer.setup.opacity));
+
         while(verticalRepeats > 0)
         {
             draw_x = imgPos_X;
@@ -357,13 +360,12 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                     if((draw_x <= w) && (r_right >= 0.0))//Draw cell if it is visible on screen
                     {
                         m_backgrndG.setRect(draw_x, imgPos_Y, layer.texture.frame_w, layer.texture.frame_h);
-                        GlRenderer::renderTexture(&layer.texture,
-                                                  static_cast<float>(m_backgrndG.left()),
-                                                  static_cast<float>(m_backgrndG.top()),
-                                                  static_cast<float>(m_backgrndG.width()),
-                                                  static_cast<float>(m_backgrndG.height()),
-                                                  static_cast<float>(d_top),
-                                                  static_cast<float>(d_bottom));
+                        GlRenderer::renderTextureCur(static_cast<float>(m_backgrndG.left()),
+                                                     static_cast<float>(m_backgrndG.top()),
+                                                     static_cast<float>(m_backgrndG.width()),
+                                                     static_cast<float>(m_backgrndG.height()),
+                                                     static_cast<float>(d_top),
+                                                     static_cast<float>(d_bottom));
                     }
                     hRepeats--;
                     lenght_h    += fWidth;
@@ -374,5 +376,7 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
             if(verticalRepeats > 0)
                 imgPos_Y += fHeight;// * ((layer.setup.reference_point_y == BgSetup::BgLayer::R_BOTTOM) ? -1 : 1);
         }
+
+        GlRenderer::UnBindTexture();
     }
 }

@@ -180,6 +180,9 @@ struct BgSetup
         PGEString   image;
         //! Z index. <0 - background, >0 - foreground
         long double z_index = -50.0l;
+        //! Opacity of the layer
+        double      opacity = 1.0;
+
         /// Horizontal parallax coefficient. In auto mode will be calculated automatically proportionally to z position
         /*!
             - >1        parallax slower than section scrolling (far sky, city, forest, etc.)
