@@ -407,7 +407,8 @@ void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y)
     setUnbindTexture();
 }
 
-void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
+void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y, float w, float h,
+                                  float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
     if(!texture) return;
 
@@ -426,6 +427,19 @@ void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y, float 
 
     float texW = static_cast<float>(texture->w);
     float texH = static_cast<float>(texture->h);
+
+    int flip = SDL_FLIP_NONE;
+    if( ani_left > ani_right )
+    {
+        std::swap(ani_left, ani_right);
+        flip |= SDL_FLIP_HORIZONTAL;
+    }
+    if( ani_top > ani_bottom )
+    {
+        std::swap(ani_top, ani_bottom);
+        flip |= SDL_FLIP_HORIZONTAL;
+    }
+
     SDL_Rect sourceRect =
     {
         Maths::iRound(texW * ani_left),
@@ -439,7 +453,8 @@ void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y, float 
                            static_cast<unsigned char>(255.f * color_binded_texture[1]),
                            static_cast<unsigned char>(255.f * color_binded_texture[2]));
     SDL_SetTextureAlphaMod(m_currentTexture, static_cast<unsigned char>(255.f * color_binded_texture[3]));
-    SDL_RenderCopy(m_gRenderer, m_currentTexture, &sourceRect, &destRect);
+    SDL_RenderCopyEx(m_gRenderer, m_currentTexture, &sourceRect, &destRect,
+                     0.0, NULL, static_cast<SDL_RendererFlip>(flip));
     setUnbindTexture();
 }
 
@@ -457,6 +472,19 @@ void Render_SW_SDL::renderTextureCur(float x, float y, float w, float h, float a
 
     float texW = static_cast<float>(m_currentTextureRect.width());
     float texH = static_cast<float>(m_currentTextureRect.height());
+
+    int flip = SDL_FLIP_NONE;
+    if( ani_left > ani_right )
+    {
+        std::swap(ani_left, ani_right);
+        flip |= SDL_FLIP_HORIZONTAL;
+    }
+    if( ani_top > ani_bottom )
+    {
+        std::swap(ani_top, ani_bottom);
+        flip |= SDL_FLIP_HORIZONTAL;
+    }
+
     SDL_Rect sourceRect =
     {
         Maths::iRound(texW * ani_left),
@@ -470,7 +498,8 @@ void Render_SW_SDL::renderTextureCur(float x, float y, float w, float h, float a
                            static_cast<unsigned char>(255.f * color_binded_texture[1]),
                            static_cast<unsigned char>(255.f * color_binded_texture[2]));
     SDL_SetTextureAlphaMod(m_currentTexture, static_cast<unsigned char>(255.f * color_binded_texture[3]));
-    SDL_RenderCopy(m_gRenderer, m_currentTexture, &sourceRect, &destRect);
+    SDL_RenderCopyEx(m_gRenderer, m_currentTexture, &sourceRect, &destRect,
+                     0.0, NULL, static_cast<SDL_RendererFlip>(flip));
 }
 
 
