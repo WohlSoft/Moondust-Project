@@ -148,10 +148,10 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
 
     // TODO: Implement support for all INI values for multi-layer backgrounds:
     /*
-     * padding - whitespace between every repeating layer
-     * offset  - position offset of referrence point
-     * auto-parallax - automatically calculate parallax coefficients per every layer in dependence on Z-Value
-     * auto-scrolling - increase/decreaze offset value together with a time
+     * [V] padding - whitespace between every repeating layer
+     * [V] offset  - position offset of referrence point
+     * [ ] auto-parallax - automatically calculate parallax coefficients per every layer in dependence on Z-Value
+     * [V] auto-scrolling - increase/decreaze offset value together with a time
      */
 
     for(const LayerPtr &layer_ptr : layers)
