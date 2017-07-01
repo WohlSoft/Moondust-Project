@@ -225,7 +225,9 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("repeat-x", lyr.repeat_x, true);
                 setup->read("repeat-y", lyr.repeat_y, false);
                 setup->read("parallax-coefficient-x", lyr.parallax_coefficient_x, 1.0);
+                NumberLimiter::applyD(lyr.parallax_coefficient_x, 1.0, 0.00000000000001);//Don't allow zero or smaller values
                 setup->read("parallax-coefficient-y", lyr.parallax_coefficient_y, 1.0);
+                NumberLimiter::applyD(lyr.parallax_coefficient_y, 1.0, 0.00000000000001);//Don't allow zero or smaller values
                 setup->readEnum("parallax-mode-x",
                                 lyr.parallax_mode_x,
                                 (uint32_t)BgLayer::P_MODE_SCROLL,
@@ -258,15 +260,17 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 });
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);
-                setup->read("padding-x", lyr.padding_x_right, 0.0);
-                setup->read("padding-x-right", lyr.padding_x_right, lyr.padding_x_right);
+
+                double paddingX = 0.0, paddingY = 0.0;
+                setup->read("padding-x", paddingX, 0.0);
+                setup->read("padding-y", paddingY, 0.0);
+                setup->read("padding-x-right", lyr.padding_x_right, paddingX);
                 NumberLimiter::applyD(lyr.padding_x_right, 0.0, 0.0);
-                setup->read("padding-x-left", lyr.padding_x_left, 0.0);
+                setup->read("padding-x-left", lyr.padding_x_left, paddingX);
                 NumberLimiter::applyD(lyr.padding_x_left, 0.0, 0.0);
-                setup->read("padding-y", lyr.padding_y_bottom, 0.0);
-                setup->read("padding-y-bottom", lyr.padding_y_bottom, lyr.padding_y_bottom);
+                setup->read("padding-y-bottom", lyr.padding_y_bottom, paddingY);
                 NumberLimiter::applyD(lyr.padding_y_bottom, 0.0, 0.0);
-                setup->read("padding-y-top", lyr.padding_y_top, 0.0);
+                setup->read("padding-y-top", lyr.padding_y_top, paddingY);
                 NumberLimiter::applyD(lyr.padding_y_top, 0.0, 0.0);
 
                 setup->read("auto-scroll-x", lyr.auto_scrolling_x, false);
