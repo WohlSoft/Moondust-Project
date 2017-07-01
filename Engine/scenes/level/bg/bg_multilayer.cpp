@@ -115,8 +115,8 @@ void MultilayerBackground::process(double tickDelay)
         layer.autoscroll_y_offset += scroller.speed_y * (tickDelay / 1000.0);
 
         //Return offset to initial position with small difference when it reaches width or height of layer image
-        double w = (layer.texture.w        + layer.setup.padding_x) * layer.setup.parallax_coefficient_x;
-        double h = (layer.texture.frame_h  + layer.setup.padding_y) * layer.setup.parallax_coefficient_y;
+        double w = (layer.texture.w        + layer.setup.padding_x_left + layer.setup.padding_x_right) * layer.setup.parallax_coefficient_x;
+        double h = (layer.texture.frame_h  + layer.setup.padding_y_top + layer.setup.padding_y_bottom) * layer.setup.parallax_coefficient_y;
 
         if(layer.autoscroll_y_offset > h)
             layer.autoscroll_y_offset -= h;
@@ -159,8 +159,8 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         Layer   &layer    = *layer_ptr;
         const double  sWidth    = box.width();
         const double  sHeight   = box.height();
-        const double  fWidth     = static_cast<double>(layer.texture.frame_w) + layer.setup.padding_x;
-        const double  fHeight    = static_cast<double>(layer.texture.frame_h) + layer.setup.padding_y;
+        const double  fWidth     = static_cast<double>(layer.texture.frame_w) + layer.setup.padding_x_right + layer.setup.padding_x_left;
+        const double  fHeight    = static_cast<double>(layer.texture.frame_h) + layer.setup.padding_y_bottom + layer.setup.padding_y_top;
 
         double      pointX = x;
         double      pointY = y;
@@ -352,16 +352,19 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
             double d_top    = layer.setup.flip_v ? ani_x.second : ani_x.first;
             double d_bottom = layer.setup.flip_v ? ani_x.first: ani_x.second;
 
-            double r_bottom = imgPos_Y + static_cast<double>(layer.texture.frame_h);
+            double r_bottom = imgPos_Y + static_cast<double>(layer.texture.frame_h) + layer.setup.padding_y_top;
             if((imgPos_Y <= h) && (r_bottom >= 0.0))//Draw row if it is visible on screen
             {
                 int hRepeats = horizontalRepeats;
                 while(hRepeats > 0)
                 {
-                    double r_right = draw_x + static_cast<double>(layer.texture.frame_w);
+                    double r_right = draw_x + static_cast<double>(layer.texture.frame_w) + layer.setup.padding_x_left;
                     if((draw_x <= w) && (r_right >= 0.0))//Draw cell if it is visible on screen
                     {
-                        m_backgrndG.setRect(draw_x, imgPos_Y, layer.texture.frame_w, layer.texture.frame_h);
+                        m_backgrndG.setRect(draw_x + layer.setup.padding_x_left,
+                                            imgPos_Y + layer.setup.padding_y_top,
+                                            layer.texture.frame_w,
+                                            layer.texture.frame_h);
                         GlRenderer::renderTextureCur(static_cast<float>(m_backgrndG.left()),
                                                      static_cast<float>(m_backgrndG.top()),
                                                      static_cast<float>(m_backgrndG.width()),

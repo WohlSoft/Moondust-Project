@@ -219,7 +219,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("priority", lyr.z_index, lyr.z_index);//< Alias to z-value
                 NumberLimiter::apply(lyr.z_index, multi_parallax_auto_distance_min, multi_parallax_auto_distance_max);//Avoid out of range
                 setup->read("opacity",  lyr.opacity, 1.0);
-                NumberLimiter::applyD(lyr.padding_x, 1.0, 0.0, 1.0);//Opacity can be between 0.0 and 1.0
+                NumberLimiter::applyD(lyr.opacity, 1.0, 0.0, 1.0);//Opacity can be between 0.0 and 1.0
                 setup->read("flip-h",  lyr.flip_h, false);
                 setup->read("flip-v",  lyr.flip_v, false);
                 setup->read("repeat-x", lyr.repeat_x, true);
@@ -258,10 +258,16 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 });
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);
-                setup->read("padding-x", lyr.padding_x, 0.0);
-                NumberLimiter::applyD(lyr.padding_x, 0.0, 0.0);
-                setup->read("padding-y", lyr.padding_y, 0.0);
-                NumberLimiter::applyD(lyr.padding_y, 0.0, 0.0);
+                setup->read("padding-x", lyr.padding_x_right, 0.0);
+                setup->read("padding-x-right", lyr.padding_x_right, lyr.padding_x_right);
+                NumberLimiter::applyD(lyr.padding_x_right, 0.0, 0.0);
+                setup->read("padding-x-left", lyr.padding_x_left, 0.0);
+                NumberLimiter::applyD(lyr.padding_x_left, 0.0, 0.0);
+                setup->read("padding-y", lyr.padding_y_bottom, 0.0);
+                setup->read("padding-y-bottom", lyr.padding_y_bottom, lyr.padding_y_bottom);
+                NumberLimiter::applyD(lyr.padding_y_bottom, 0.0, 0.0);
+                setup->read("padding-y-top", lyr.padding_y_top, 0.0);
+                NumberLimiter::applyD(lyr.padding_y_top, 0.0, 0.0);
 
                 setup->read("auto-scroll-x", lyr.auto_scrolling_x, false);
                 setup->read("auto-scroll-x-speed", lyr.auto_scrolling_x_speed, 32);

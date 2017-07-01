@@ -241,10 +241,14 @@ struct BgSetup
         double      offset_x = 0.0;
         //! Initial offset Y at top/bottop section edge (dependent on vertical reference point)
         double      offset_y = 0.0;
-        //! Horizontal padding between repeating tiles
-        double      padding_x = 0.0;
-        //! Vertical padding between repeating tiles
-        double      padding_y = 0.0;
+        //! Horizontal padding at right between repeating tiles
+        double      padding_x_right       = 0.0;
+        //! Horizontal padding at left between repeating tiles
+        double      padding_x_left  = 0.0;
+        //! Vertical padding at bottom between repeating tiles
+        double      padding_y_bottom       = 0.0;
+        //! Vertical padding at top between repeating tiles
+        double      padding_y_top   = 0.0;
 
         //! Auto-scroll image (works when releat X is enabled)
         bool        auto_scrolling_x = false;
