@@ -182,15 +182,15 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         {
         // Proportionally move sprite with camera's position inside section
         case BgSetup::BgLayer::P_MODE_FIT:
-            if(fWidth < w)
-                goto bgSetupFixedW;//If image width less than screen - act as Fixed
-            else if(sWidth > fWidth)
-                imgPos_X = (box.left() - pointX) / ((sWidth - w) / (fWidth - w));
+            //If image width less than screen or larger than section - act as Fixed
+            if((fWidth < w) || (fWidth > sWidth))
+                goto bgSetupFixedW;
             else
-                imgPos_X = box.left() - pointX;
-
-            if(imgPos_X > 0.0)
-                imgPos_X = 0.0;
+            {
+                imgPos_X = (box.left() - pointX) / ((sWidth - w) / (fWidth - w));
+                if(imgPos_X > 0.0)
+                    imgPos_X = 0.0;
+            }
 
             break;
         // Scroll backround with divided offset at reference point edge
@@ -209,11 +209,18 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                     offsetXpost = (w - fWidth);
                 break;
             }
-            //If referrence point is negative (for example, autoscrolling have moved left), offset it
-            if(refPointX > 0.0)
-                refPointX = -( (fWidth * layer.setup.parallax_coefficient_x)
-                                - std::fmod(refPointX, fWidth * layer.setup.parallax_coefficient_x) );
-            imgPos_X = std::fmod(refPointX / layer.setup.parallax_coefficient_x, fWidth) + offsetXpost;
+            if(layer.setup.repeat_x)
+            {
+                //If referrence point is positive (for example, autoscrolling have moved left), offset it
+                if(refPointX > 0.0)
+                    refPointX = -( (fWidth * layer.setup.parallax_coefficient_x)
+                                    - std::fmod(refPointX, fWidth * layer.setup.parallax_coefficient_x) );
+                imgPos_X = std::fmod(refPointX / layer.setup.parallax_coefficient_x, fWidth) + offsetXpost;
+            }
+            else
+            {
+                imgPos_X = (refPointX / layer.setup.parallax_coefficient_x) + offsetXpost;
+            }
             break;
 
         // Fixed position
@@ -239,15 +246,15 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         {
         // Proportionally move sprite with camera's position inside section
         case BgSetup::BgLayer::P_MODE_FIT:
-            if(fHeight < h)
-                goto bgSetupFixedH;//If image width less than screen - act as Fixed
-            else if(sHeight > fHeight)
-                imgPos_Y = (box.top() - pointY) / ((sHeight - h) / (fHeight - h));
+            //If image width less than screen or larger than section - act as Fixed
+            if((fHeight < h) || (fHeight > sHeight))
+                goto bgSetupFixedH;
             else
-                imgPos_Y = box.top() - pointY;
-
-            if(imgPos_Y > 0.0)
-                imgPos_Y = 0.0;
+            {
+                imgPos_Y = (box.top() - pointY) / ((sHeight - h) / (fHeight - h));
+                if(imgPos_Y > 0.0)
+                    imgPos_Y = 0.0;
+            }
             break;
 
         // Scroll backround with divided offset at reference point edge
@@ -266,11 +273,19 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                     offsetYpost = (h - fHeight);
                 break;
             }
-            //If referrence point is negative (for example, autoscrolling have moved up), offset it
-            if(refPointY > 0.0)
-                refPointY = -( (fHeight * layer.setup.parallax_coefficient_y)
-                                - std::fmod(refPointY, fHeight * layer.setup.parallax_coefficient_y) );
-            imgPos_Y = std::fmod(refPointY / layer.setup.parallax_coefficient_y, fHeight) + offsetYpost;
+
+            if(layer.setup.repeat_y)
+            {
+                //If referrence point is positive (for example, autoscrolling have moved up), offset it
+                if(refPointY > 0.0)
+                    refPointY = -( (fHeight * layer.setup.parallax_coefficient_y)
+                                    - std::fmod(refPointY, fHeight * layer.setup.parallax_coefficient_y) );
+                imgPos_Y = std::fmod(refPointY / layer.setup.parallax_coefficient_y, fHeight) + offsetYpost;
+            }
+            else
+            {
+                imgPos_Y = (refPointY / layer.setup.parallax_coefficient_y) + offsetYpost;
+            }
             break;
 
         // Fixed position
@@ -298,14 +313,23 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
 
         double lenght_h = imgPos_X;
         double lenght_v = imgPos_Y;
-        //for vertical repeats
+
+        int horizontalRepeats = 1;
         int verticalRepeats = 1;
+
+        if(layer.setup.repeat_x)
+        {
+            horizontalRepeats = 1;
+            while((lenght_h <= w) || (lenght_h <= fWidth))
+            {
+                horizontalRepeats++;
+                lenght_h += fWidth;
+            }
+        }
 
         if(layer.setup.repeat_y)
         {
             verticalRepeats = 1;
-            //lenght_v -= fHeight;
-            //imgPos_Y -= fHeight;// * ((layer.setup.reference_point_y == BgSetup::BgLayer::R_BOTTOM) ? -1.0 : 1.0);
             while(lenght_v <= h  || (lenght_v <= fHeight))
             {
                 verticalRepeats++;
@@ -320,23 +344,32 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         {
             draw_x = imgPos_X;
             lenght_h = -fWidth;
+            double d_top    = ani_x.first;
+            double d_bottom = ani_x.second;
 
-            while((lenght_h <= w) || (lenght_h <= fWidth))
+            double r_bottom = imgPos_Y + static_cast<double>(layer.texture.frame_h);
+            if((imgPos_Y <= h) && (r_bottom >= 0.0))//Draw row if it is visible on screen
             {
-                m_backgrndG.setRect(draw_x, imgPos_Y, layer.texture.frame_w, layer.texture.frame_h);
-                double d_top    = ani_x.first;
-                double d_bottom = ani_x.second;
-                GlRenderer::renderTexture(&layer.texture,
-                                          static_cast<float>(m_backgrndG.left()),
-                                          static_cast<float>(m_backgrndG.top()),
-                                          static_cast<float>(m_backgrndG.width()),
-                                          static_cast<float>(m_backgrndG.height()),
-                                          static_cast<float>(d_top),
-                                          static_cast<float>(d_bottom));
-                lenght_h    += fWidth;
-                draw_x      += fWidth;
+                int hRepeats = horizontalRepeats;
+                while(hRepeats > 0)
+                {
+                    double r_right = draw_x + static_cast<double>(layer.texture.frame_w);
+                    if((draw_x <= w) && (r_right >= 0.0))//Draw cell if it is visible on screen
+                    {
+                        m_backgrndG.setRect(draw_x, imgPos_Y, layer.texture.frame_w, layer.texture.frame_h);
+                        GlRenderer::renderTexture(&layer.texture,
+                                                  static_cast<float>(m_backgrndG.left()),
+                                                  static_cast<float>(m_backgrndG.top()),
+                                                  static_cast<float>(m_backgrndG.width()),
+                                                  static_cast<float>(m_backgrndG.height()),
+                                                  static_cast<float>(d_top),
+                                                  static_cast<float>(d_bottom));
+                    }
+                    hRepeats--;
+                    lenght_h    += fWidth;
+                    draw_x      += fWidth;
+                }
             }
-
             verticalRepeats--;
             if(verticalRepeats > 0)
                 imgPos_Y += fHeight;// * ((layer.setup.reference_point_y == BgSetup::BgLayer::R_BOTTOM) ? -1 : 1);
