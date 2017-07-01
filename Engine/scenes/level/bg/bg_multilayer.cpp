@@ -347,8 +347,10 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         {
             draw_x = imgPos_X;
             lenght_h = -fWidth;
-            double d_top    = ani_x.first;
-            double d_bottom = ani_x.second;
+            double d_left   = layer.setup.flip_h ? 1.0 : 0.0;
+            double d_right  = layer.setup.flip_h ? 0.0 : 1.0;
+            double d_top    = layer.setup.flip_v ? ani_x.second : ani_x.first;
+            double d_bottom = layer.setup.flip_v ? ani_x.first: ani_x.second;
 
             double r_bottom = imgPos_Y + static_cast<double>(layer.texture.frame_h);
             if((imgPos_Y <= h) && (r_bottom >= 0.0))//Draw row if it is visible on screen
@@ -365,7 +367,9 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                                                      static_cast<float>(m_backgrndG.width()),
                                                      static_cast<float>(m_backgrndG.height()),
                                                      static_cast<float>(d_top),
-                                                     static_cast<float>(d_bottom));
+                                                     static_cast<float>(d_bottom),
+                                                     static_cast<float>(d_left),
+                                                     static_cast<float>(d_right));
                     }
                     hRepeats--;
                     lenght_h    += fWidth;

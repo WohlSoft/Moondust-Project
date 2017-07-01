@@ -220,6 +220,8 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 NumberLimiter::apply(lyr.z_index, multi_parallax_auto_distance_min, multi_parallax_auto_distance_max);//Avoid out of range
                 setup->read("opacity",  lyr.opacity, 1.0);
                 NumberLimiter::applyD(lyr.padding_x, 1.0, 0.0, 1.0);//Opacity can be between 0.0 and 1.0
+                setup->read("flip-h",  lyr.flip_h, false);
+                setup->read("flip-v",  lyr.flip_v, false);
                 setup->read("repeat-x", lyr.repeat_x, true);
                 setup->read("repeat-y", lyr.repeat_y, false);
                 setup->read("parallax-coefficient-x", lyr.parallax_coefficient_x, 1.0);

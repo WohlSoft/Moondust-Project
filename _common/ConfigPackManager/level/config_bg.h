@@ -183,6 +183,9 @@ struct BgSetup
         //! Opacity of the layer
         double      opacity = 1.0;
 
+        bool        flip_h = false;
+        bool        flip_v = false;
+
         /// Horizontal parallax coefficient. In auto mode will be calculated automatically proportionally to z position
         /*!
             - >1        parallax slower than section scrolling (far sky, city, forest, etc.)
