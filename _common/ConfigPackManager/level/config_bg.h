@@ -193,18 +193,20 @@ struct BgSetup
 
         /// Horizontal parallax coefficient. In auto mode will be calculated automatically proportionally to z position
         /*!
-            - >1        parallax slower than section scrolling (far sky, city, forest, etc.)
-            - =1        statically relative section edge, (for example, a wall in the building)
-            - <1 but >0 faster than section scrolling (suggested for a foregrounds like plants, clouds, fog, etc.)
+            - =0        fixed position on the camera with no matter position in the section
+            - <1        parallax slower than section scrolling
+            - =1        statically relative section edge,
+            - >1        faster than section scrolling (suggested for a foregrounds like plants, clouds, fog, etc.)
         */
-        double      parallax_coefficient_x = 1.0;
+        double      parallax_x = 1.0;
         /// Vertical parallax coefficient
         /*!
-            - >1        parallax slower than section scrolling
+            - =0        fixed position on the camera with no matter position in the section
+            - <1        parallax slower than section scrolling
             - =1        statically relative section edge,
-            - <1 but >0 faster than section scrolling
+            - >1        faster than section scrolling
         */
-        double      parallax_coefficient_y = 1.0;
+        double      parallax_y = 1.0;
 
         enum ParallaxModes
         {

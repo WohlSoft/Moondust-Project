@@ -228,22 +228,18 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("repeat-x", lyr.repeat_x, true);
                 setup->read("repeat-y", lyr.repeat_y, false);
 
+                IniProcessing::StrEnumMap pMode = {
+                    {"scroll", BgLayer::P_MODE_SCROLL},
+                    {"fit", BgLayer::P_MODE_FIT},
+                    {"fixed", BgLayer::P_MODE_FIXED}
+                };
                 setup->readEnum("parallax-mode-x",
                                 lyr.parallax_mode_x,
-                                (uint32_t)BgLayer::P_MODE_SCROLL,
-                {
-                    {"scroll", BgLayer::P_MODE_SCROLL},
-                    {"fit", BgLayer::P_MODE_FIT},
-                    {"fixed", BgLayer::P_MODE_FIXED}
-                });
+                                (uint32_t)BgLayer::P_MODE_SCROLL, pMode);
                 setup->readEnum("parallax-mode-y",
                                 lyr.parallax_mode_y,
-                                (uint32_t)BgLayer::P_MODE_FIT,
-                {
-                    {"scroll", BgLayer::P_MODE_SCROLL},
-                    {"fit", BgLayer::P_MODE_FIT},
-                    {"fixed", BgLayer::P_MODE_FIXED}
-                });
+                                (uint32_t)BgLayer::P_MODE_FIT, pMode);
+
                 setup->readEnum("reference-point-x",
                                 lyr.reference_point_x,
                                 (uint32_t)BgLayer::R_LEFT,
@@ -264,20 +260,24 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 {
                     if(lyr.z_index == 0.0l)
                     {
-                        parallaxX = 1.0;
-                        parallaxY = 1.0;
+                        parallaxX = 0.0;
+                        parallaxY = 0.0;
                     }
                     else
                     {
+                        /*
+                         *  TODO: Implement right auto-calculation of parallax instead of this
+                        */
                         parallaxX = parallaxY = (lyr.z_index > 0.0l) ?
-                            static_cast<double>(1.0l / (1.0l + lyr.z_index)) :
-                            static_cast<double>(std::fabs(lyr.z_index) + 1.0l);
-                        if(parallaxX >= (1.0 + static_cast<double>(std::fabs(multi_parallax_auto_distance_max))) )
+                            static_cast<double>((1.0l + lyr.z_index)) :
+                            static_cast<double>(1.0l / std::fabs(lyr.z_index));
+
+                        if(parallaxX <= (1.0 / static_cast<double>(1.0l + multi_parallax_auto_distance_max)))
                         {
                             lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
                             lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
                         }
-                        else if(parallaxX <= (1.0 / static_cast<double>(1.0l + multi_parallax_auto_distance_max)))
+                        else if(parallaxX >= (1.0 + static_cast<double>(std::fabs(multi_parallax_auto_distance_max))) )
                         {
                             lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
                             lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
@@ -286,10 +286,21 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                     }
                 }
 
-                setup->read("parallax-coefficient-x", lyr.parallax_coefficient_x, parallaxX);
-                NumberLimiter::applyD(lyr.parallax_coefficient_x, 1.0, 0.00000000000001);//Don't allow zero or smaller values
-                setup->read("parallax-coefficient-y", lyr.parallax_coefficient_y, parallaxY);
-                NumberLimiter::applyD(lyr.parallax_coefficient_y, 1.0, 0.00000000000001);//Don't allow zero or smaller values
+                double parallaxX_1 = parallaxX, parallaxY_1 = parallaxY;
+                setup->read("parallax-coefficient-x", parallaxX_1, parallaxX == 0.0 ? 0.0 : 1.0 / parallaxX);
+                setup->read("parallax-coefficient-y", parallaxY_1, parallaxY == 0.0 ? 0.0 : 1.0 / parallaxY);
+                setup->read("parallax-x", lyr.parallax_x, parallaxX_1 == 0.0 ? 0.0 : 1.0 / parallaxX_1);
+                setup->read("parallax-x", lyr.parallax_y, parallaxY_1 == 0.0 ? 0.0 : 1.0 / parallaxX_1);
+
+                NumberLimiter::applyD(lyr.parallax_x, 0.0, 0.0);
+                if((lyr.parallax_mode_x == BgLayer::P_MODE_SCROLL) && (lyr.parallax_x == 0.0))
+                    lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
+
+                NumberLimiter::applyD(lyr.parallax_y, 0.0, 0.0);
+                if((lyr.parallax_mode_y == BgLayer::P_MODE_SCROLL) && (lyr.parallax_y == 0.0))
+                    lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
+
+
 
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);

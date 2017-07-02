@@ -88,7 +88,7 @@ void MultilayerBackground::initScrollers(MultilayerBackground::LayersList &ls)
 {
     struct LessThanZ
     {
-        inline bool operator() (const LayerPtr& struct1, const LayerPtr& struct2)
+        inline bool operator()(const LayerPtr &struct1, const LayerPtr &struct2)
         {
             return (struct1->setup.z_index < struct2->setup.z_index);
         }
@@ -122,8 +122,8 @@ void MultilayerBackground::process(double tickDelay)
         layer.autoscroll_y_offset += scroller.speed_y * (tickDelay / 1000.0);
 
         //Return offset to initial position with small difference when it reaches width or height of layer image
-        double w = (layer.texture.w        + layer.setup.padding_x_left + layer.setup.padding_x_right) * layer.setup.parallax_coefficient_x;
-        double h = (layer.texture.frame_h  + layer.setup.padding_y_top + layer.setup.padding_y_bottom) * layer.setup.parallax_coefficient_y;
+        double w = (layer.texture.w        + layer.setup.padding_x_left + layer.setup.padding_x_right) / layer.setup.parallax_x;
+        double h = (layer.texture.frame_h  + layer.setup.padding_y_top + layer.setup.padding_y_bottom) / layer.setup.parallax_y;
 
         if(layer.autoscroll_y_offset > h)
             layer.autoscroll_y_offset -= h;
@@ -223,19 +223,21 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
             {
                 //If referrence point is positive (for example, autoscrolling have moved left), offset it
                 if(refPointX > 0.0)
-                    refPointX = -( (fWidth * layer.setup.parallax_coefficient_x)
-                                    - std::fmod(refPointX, fWidth * layer.setup.parallax_coefficient_x) );
-                imgPos_X = std::fmod(refPointX / layer.setup.parallax_coefficient_x, fWidth) + offsetXpost;
+                {
+                    double fWidth_normalized = fWidth / layer.setup.parallax_x;
+                    refPointX = std::fmod(refPointX, fWidth_normalized) - fWidth_normalized;
+                }
+                imgPos_X = std::fmod(refPointX * layer.setup.parallax_x, fWidth) + offsetXpost;
             }
             else
             {
-                imgPos_X = (refPointX / layer.setup.parallax_coefficient_x) + offsetXpost;
+                imgPos_X = (refPointX * layer.setup.parallax_x) + offsetXpost;
             }
             break;
 
         // Fixed position
         case BgSetup::BgLayer::P_MODE_FIXED:
-        bgSetupFixedW:
+bgSetupFixedW:
             switch(layer.setup.reference_point_x)
             {
             case BgSetup::BgLayer::R_LEFT:
@@ -247,7 +249,7 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
             }
 
             if(layer.setup.repeat_x && (imgPos_X > 0.0))
-                imgPos_X = -( (fWidth) - std::fmod(imgPos_X, fWidth) );
+                imgPos_X = -((fWidth) - std::fmod(imgPos_X, fWidth));
             break;
         }
 
@@ -287,19 +289,21 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
             {
                 //If referrence point is positive (for example, autoscrolling have moved up), offset it
                 if(refPointY > 0.0)
-                    refPointY = -( (fHeight * layer.setup.parallax_coefficient_y)
-                                    - std::fmod(refPointY, fHeight * layer.setup.parallax_coefficient_y) );
-                imgPos_Y = std::fmod(refPointY / layer.setup.parallax_coefficient_y, fHeight) + offsetYpost;
+                {
+                    double fHeight_normalized = fHeight / layer.setup.parallax_y;
+                    refPointY = std::fmod(refPointY, fHeight_normalized) - fHeight_normalized;
+                }
+                imgPos_Y = std::fmod(refPointY * layer.setup.parallax_y, fHeight) + offsetYpost;
             }
             else
             {
-                imgPos_Y = (refPointY / layer.setup.parallax_coefficient_y) + offsetYpost;
+                imgPos_Y = (refPointY * layer.setup.parallax_y) + offsetYpost;
             }
             break;
 
         // Fixed position
         case BgSetup::BgLayer::P_MODE_FIXED:
-        bgSetupFixedH:
+bgSetupFixedH:
             switch(layer.setup.reference_point_y)
             {
             case BgSetup::BgLayer::R_TOP:
@@ -310,7 +314,7 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 break;
             }
             if(layer.setup.repeat_y && (imgPos_Y > 0.0))
-                imgPos_Y = -( (fHeight) - std::fmod(imgPos_Y, fHeight));
+                imgPos_Y = -((fHeight) - std::fmod(imgPos_Y, fHeight));
             break;
         }
 
@@ -362,7 +366,7 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
             double d_left   = layer.setup.flip_h ? 1.0 : 0.0;
             double d_right  = layer.setup.flip_h ? 0.0 : 1.0;
             double d_top    = layer.setup.flip_v ? ani_x.second : ani_x.first;
-            double d_bottom = layer.setup.flip_v ? ani_x.first: ani_x.second;
+            double d_bottom = layer.setup.flip_v ? ani_x.first : ani_x.second;
 
             double r_bottom = imgPos_Y + static_cast<double>(layer.texture.frame_h) + layer.setup.padding_y_top;
             if((imgPos_Y <= h) && (r_bottom >= 0.0))//Draw row if it is visible on screen
@@ -378,32 +382,39 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                                             layer.texture.frame_w,
                                             layer.texture.frame_h);
 
+                        #define FL(x) static_cast<float>(x)
+                        struct
+                        {
+                            float x;
+                            float y;// = static_cast<float>(m_backgrndG.top());
+                            float w;// = static_cast<float>(m_backgrndG.width());
+                            float h;// = static_cast<float>(m_backgrndG.height());
+                            float imgT;// = static_cast<float>(d_top);
+                            float imgB;// = static_cast<float>(d_bottom);
+                            float imgL;// = static_cast<float>(d_left);
+                            float imgR;// = static_cast<float>(d_right);
+                        } txPosArgs =
+                        {
+                            FL(m_backgrndG.left()), FL(m_backgrndG.top()),
+                            FL(m_backgrndG.width()), FL(m_backgrndG.height()),
+                            FL(d_top), FL(d_bottom), FL(d_left), FL(d_right)
+                        };
+                        #undef FL
+
                         if(!layer.setup.inscene_draw || !m_scene)
                         {
-                            GlRenderer::renderTextureCur(static_cast<float>(m_backgrndG.left()),
-                                                         static_cast<float>(m_backgrndG.top()),
-                                                         static_cast<float>(m_backgrndG.width()),
-                                                         static_cast<float>(m_backgrndG.height()),
-                                                         static_cast<float>(d_top),
-                                                         static_cast<float>(d_bottom),
-                                                         static_cast<float>(d_left),
-                                                         static_cast<float>(d_right));
+                            GlRenderer::renderTextureCur(txPosArgs.x, txPosArgs.y, txPosArgs.w, txPosArgs.h,
+                                                         txPosArgs.imgT, txPosArgs.imgB, txPosArgs.imgL, txPosArgs.imgR);
                         }
                         else
                         {
                             PGE_Texture *tx = &layer.texture;
-                            m_scene->renderArrayAddFunction([ = ](double /*CameraX*/, double /*CameraY*/)
+                            float opacity = static_cast<float>(layer.setup.opacity);
+                            m_scene->renderArrayAddFunction([tx, txPosArgs, opacity](double /*CameraX*/, double /*CameraY*/)
                             {
-                                GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, static_cast<float>(layer.setup.opacity));
-                                GlRenderer::renderTexture(tx,
-                                                          static_cast<float>(m_backgrndG.left()),
-                                                          static_cast<float>(m_backgrndG.top()),
-                                                          static_cast<float>(m_backgrndG.width()),
-                                                          static_cast<float>(m_backgrndG.height()),
-                                                          static_cast<float>(d_top),
-                                                          static_cast<float>(d_bottom),
-                                                          static_cast<float>(d_left),
-                                                          static_cast<float>(d_right));
+                                GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, opacity);
+                                GlRenderer::renderTexture(tx, txPosArgs.x, txPosArgs.y, txPosArgs.w, txPosArgs.h,
+                                                          txPosArgs.imgT, txPosArgs.imgB, txPosArgs.imgL, txPosArgs.imgR);
                             }, layer.setup.z_index);
                         }
                     }
