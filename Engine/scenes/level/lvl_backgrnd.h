@@ -30,6 +30,7 @@
 #include "bg/bg_base.h"
 
 class PGE_LevelCamera;
+class LevelScene;
 
 class LVL_Background
 {
@@ -42,8 +43,9 @@ public:
     /*!
      * \brief Load background with attempt to load custom background settings
      * \param bg Referrence to background config
+     * \param scene Pointer to actual level scene (needed to be able draw in-scene backgrounds)
      */
-    void setBg(obj_BG &bg);
+    void setBg(obj_BG &bg, LevelScene *scene = nullptr);
 
     /*!
      * \brief Set blank black background
@@ -64,6 +66,18 @@ public:
      * \param h Height of the camera
      */
     void drawBack(double x, double y, double w, double h);
+
+    /*!
+     * \brief Draw in-scene background layers on the screen.
+     * \param x X in-scene position of the camera
+     * \param y Y in-scene position of the camera
+     * \param w Width of the camera
+     * \param h Height of the camera
+     *
+     * Instead of directly draw, this function puts prepared to draw image pieces to the special queue.
+     * Don't call it in render() function or you have a risk to overflow memory!
+     */
+    void drawInScene(double x, double y, double w, double h);
 
     /*!
      * \brief Draw foreground on the screen

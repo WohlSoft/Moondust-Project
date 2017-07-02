@@ -22,6 +22,8 @@
 #include <data_configs/obj_bg.h>
 #include <common_features/rectf.h>
 
+class LevelScene;
+
 /*!
  * \brief Generic level background processor
  */
@@ -40,6 +42,12 @@ public:
     virtual void init(const obj_BG &bg) = 0;
 
     /*!
+     * \brief Give the level scene pointer to the background processor (to allow in-scene rendering)
+     * \param scene Pointer to level scene
+     */
+    virtual void setScene(LevelScene *scene) = 0;
+
+    /*!
      * \brief Process internal animation (scrolling, etc.) if available
      * \param frameDelay (Delay of one frame in milliseconds)
      */
@@ -54,6 +62,20 @@ public:
      * \param h Heigh of screen
      */
     virtual void renderBackground(const PGE_RectF &box, double x, double y, double w, double h) = 0;
+
+    /*!
+     * \brief Draw in-scene background on the screen
+     * \param box Current section box
+     * \param x X position on the screen
+     * \param y Y position on the screen
+     * \param w Width of screen
+     * \param h Heigh of screen
+     *
+     * Instead of directly draw, this function puts prepared to draw image pieces to the special queue.
+     * You must call it once per PHYSICAL step and don't call it in render() function or you have a risk
+     * to overflow memory while game pause is turned on!
+     */
+    virtual void renderInScene(const PGE_RectF &box, double x, double y, double w, double h) = 0;
 
     /*!
      * \brief Draw foreground on the screen

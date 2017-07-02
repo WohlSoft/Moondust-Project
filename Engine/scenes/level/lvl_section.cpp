@@ -42,6 +42,7 @@ LVL_Section::LVL_Section(const LVL_Section &m_sct)
     m_sectionBox = m_sct.m_sectionBox;
     m_limitBox = m_sct.m_limitBox;
     m_data = m_sct.m_data;
+    m_scene = m_sct.m_scene;
     m_music_root = m_sct.m_music_root;
     m_curMus = m_sct.m_curMus;
     m_curCustomMus = m_sct.m_curCustomMus;
@@ -54,6 +55,11 @@ LVL_Section::LVL_Section(const LVL_Section &m_sct)
 LVL_Section::~LVL_Section()
 {
     //tree.RemoveAll();
+}
+
+void LVL_Section::setScene(LevelScene *scene)
+{
+    m_scene = scene;
 }
 
 void LVL_Section::setData(const LevelSection &_d)
@@ -130,6 +136,11 @@ void LVL_Section::renderBackground(double x, double y, double w, double h)
     m_background.drawBack(x, y, w, h);
 }
 
+void LVL_Section::renderInScene(double x, double y, double w, double h)
+{
+    m_background.drawInScene(x, y, w, h);
+}
+
 void LVL_Section::renderForeground(double x, double y, double w, double h)
 {
     m_background.drawFront(x, y, w, h);
@@ -149,9 +160,8 @@ void LVL_Section::setBG(uint64_t bgID)
 {
     if(m_background.isInit() && (bgID == m_background.curBgId()))
         return;
-
     if((bgID > 0) && ConfigManager::lvl_bg_indexes.contains(bgID))
-        m_background.setBg(ConfigManager::lvl_bg_indexes[bgID]);
+        m_background.setBg(ConfigManager::lvl_bg_indexes[bgID], m_scene);
     else
         m_background.setBlank();
 

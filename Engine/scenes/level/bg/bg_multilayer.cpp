@@ -21,6 +21,7 @@
 #include <common_features/logger.h>
 #include <graphics/gl_renderer.h>
 #include <Utils/maths.h>
+#include <scenes/scene_level.h>
 
 #include <algorithm>
 
@@ -64,8 +65,9 @@ void MultilayerBackground::init(const obj_BG &bg)
         }
 
         // TODO: Implement here actual loading of texture and loading properties per every layer
-
-        if(layer.z_index <= 0)      //Background layer
+        if(layer.inscene_draw)//In-Scene layer
+            m_layers_inscene.push_back(LayerPtr(new Layer(l)));
+        else if((layer.z_index <= 0))//Background layer
             m_layers_back.push_back(LayerPtr(new Layer(l)));
         else if(layer.z_index > 0)  //Foreground layer
             m_layers_front.push_back(LayerPtr(new Layer(l)));
@@ -75,6 +77,11 @@ void MultilayerBackground::init(const obj_BG &bg)
     initScrollers(m_layers_front);
 
     m_isInitialized = true;
+}
+
+void MultilayerBackground::setScene(LevelScene *scene)
+{
+    m_scene = scene;
 }
 
 void MultilayerBackground::initScrollers(MultilayerBackground::LayersList &ls)
@@ -136,6 +143,11 @@ void MultilayerBackground::renderBackground(const PGE_RectF &box, double x, doub
     renderLayersList(m_layers_back, box, x, y, w, h);
 }
 
+void MultilayerBackground::renderInScene(const PGE_RectF &box, double x, double y, double w, double h)
+{
+    renderLayersList(m_layers_inscene, box, x, y, w, h);
+}
+
 void MultilayerBackground::renderForeground(const PGE_RectF &box, double x, double y, double w, double h)
 {
     renderLayersList(m_layers_front, box, x, y, w, h);
@@ -176,7 +188,6 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
 
         double      offsetXpost = 0.0;
         double      offsetYpost = 0.0;
-
 
         switch(layer.setup.parallax_mode_x)
         {
@@ -340,8 +351,11 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         double draw_x = imgPos_X;
         PGE_RectF m_backgrndG;
 
-        GlRenderer::BindTexture(&layer.texture);
-        GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, static_cast<float>(layer.setup.opacity));
+        if(!layer.setup.inscene_draw)
+        {
+            GlRenderer::BindTexture(&layer.texture);
+            GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, static_cast<float>(layer.setup.opacity));
+        }
 
         while(verticalRepeats > 0)
         {
@@ -365,25 +379,48 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                                             imgPos_Y + layer.setup.padding_y_top,
                                             layer.texture.frame_w,
                                             layer.texture.frame_h);
-                        GlRenderer::renderTextureCur(static_cast<float>(m_backgrndG.left()),
-                                                     static_cast<float>(m_backgrndG.top()),
-                                                     static_cast<float>(m_backgrndG.width()),
-                                                     static_cast<float>(m_backgrndG.height()),
-                                                     static_cast<float>(d_top),
-                                                     static_cast<float>(d_bottom),
-                                                     static_cast<float>(d_left),
-                                                     static_cast<float>(d_right));
+
+                        if(!layer.setup.inscene_draw || !m_scene)
+                        {
+                            GlRenderer::renderTextureCur(static_cast<float>(m_backgrndG.left()),
+                                                         static_cast<float>(m_backgrndG.top()),
+                                                         static_cast<float>(m_backgrndG.width()),
+                                                         static_cast<float>(m_backgrndG.height()),
+                                                         static_cast<float>(d_top),
+                                                         static_cast<float>(d_bottom),
+                                                         static_cast<float>(d_left),
+                                                         static_cast<float>(d_right));
+                        }
+                        else
+                        {
+                            PGE_Texture *tx = &layer.texture;
+                            m_scene->renderArrayAddFunction([ = ](double /*CameraX*/, double /*CameraY*/)
+                            {
+                                GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, static_cast<float>(layer.setup.opacity));
+                                GlRenderer::renderTexture(tx,
+                                                          static_cast<float>(m_backgrndG.left()),
+                                                          static_cast<float>(m_backgrndG.top()),
+                                                          static_cast<float>(m_backgrndG.width()),
+                                                          static_cast<float>(m_backgrndG.height()),
+                                                          static_cast<float>(d_top),
+                                                          static_cast<float>(d_bottom),
+                                                          static_cast<float>(d_left),
+                                                          static_cast<float>(d_right));
+                            }, layer.setup.z_index);
+                        }
                     }
                     hRepeats--;
                     lenght_h    += fWidth;
                     draw_x      += fWidth;
                 }
             }
+
             verticalRepeats--;
             if(verticalRepeats > 0)
                 imgPos_Y += fHeight;// * ((layer.setup.reference_point_y == BgSetup::BgLayer::R_BOTTOM) ? -1 : 1);
         }
 
-        GlRenderer::UnBindTexture();
+        if(!layer.setup.inscene_draw)
+            GlRenderer::UnBindTexture();
     }
 }

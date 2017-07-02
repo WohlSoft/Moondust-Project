@@ -28,8 +28,10 @@ public:
     StandardBackground(const StandardBackground &) = default;
     ~StandardBackground() = default;
     void init(const obj_BG &bg);
+    void setScene(LevelScene *scene);
     void process(double tickDelay);
     void renderBackground(const PGE_RectF &box, double x, double y, double w, double h);
+    void renderInScene(const PGE_RectF &box, double x, double y, double w, double h);
     void renderForeground(const PGE_RectF &box, double x, double y, double w, double h);
 
 private:

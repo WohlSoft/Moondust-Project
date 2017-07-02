@@ -29,6 +29,7 @@ typedef std::vector<PGE_Phys_Object * > R_itemList;
 
 class PGE_Phys_Object;
 class PGE_LevelCamera;
+class LevelScene;
 
 class LVL_Section
 {
@@ -38,7 +39,19 @@ class LVL_Section
         LVL_Section();
         LVL_Section(const LVL_Section &_sct);
         ~LVL_Section();
+
+        /*!
+         * \brief Give actual scene pointer (needed for in-scene background render)
+         * \param scene Actual level scene pointer
+         */
+        void setScene(LevelScene *scene);
+
+        /*!
+         * \brief Initialize section with level file data
+         * \param _d Reference to actual section data
+         */
         void setData(const LevelSection &_d);
+
         LevelSection m_data;
         //void registerElement(PGE_Phys_Object *item);
         //void unregisterElement(PGE_Phys_Object *item);
@@ -59,6 +72,7 @@ class LVL_Section
         void setMusic(std::string musFile);
 
         void renderBackground(double x, double y, double w, double h);
+        void renderInScene(double x, double y, double w, double h);
         void renderForeground(double x, double y, double w, double h);
 
         void setBG(uint64_t bgID);
@@ -84,13 +98,15 @@ class LVL_Section
         //typedef RTree<PGE_Phys_Object *, double, 2, double > IndexTree;
         //IndexTree tree;
 
+        LevelScene      *m_scene = nullptr;
+
         std::string     m_music_root;
-        uint64_t        m_curMus;
+        uint64_t        m_curMus = 0l;
         std::string     m_curCustomMus;
-        uint64_t        m_curBgID;
+        uint64_t        m_curBgID = 0l;
         LVL_Background  m_background;
 
-        bool m_isInit;
+        bool m_isInit = false;
 
         /// Limits of section motion
         PGE_RectF m_limitBox;

@@ -148,6 +148,11 @@ void StandardBackground::init(const obj_BG &bg)
     }
 }
 
+void StandardBackground::setScene(LevelScene * /*scene*/)
+{
+    /* Unsupported for standard backgrounds */
+}
+
 void StandardBackground::process(double /*tickDelay*/)
 {
     /* Unsupported for standard backgrounds */
@@ -345,6 +350,11 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
             imgPos_X += fWidth2;
         }
     }
+}
+
+void StandardBackground::renderInScene(const PGE_RectF &/*box*/, double /*x*/, double /*y*/, double /*w*/, double /*h*/)
+{
+    //In-Scene not supported for standard backgrounds
 }
 
 void StandardBackground::renderForeground(const PGE_RectF &/*box*/, double /*x*/, double /*y*/, double /*w*/, double /*h*/)

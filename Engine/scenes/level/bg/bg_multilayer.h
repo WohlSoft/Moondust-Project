@@ -29,12 +29,16 @@ public:
     MultilayerBackground(const MultilayerBackground &) = default;
     ~MultilayerBackground();
     void init(const obj_BG &bg);
+    void setScene(LevelScene *scene);
     void process(double tickDelay);
     void renderBackground(const PGE_RectF &box, double x, double y, double w, double h);
+    void renderInScene(const PGE_RectF &box, double x, double y, double w, double h);
     void renderForeground(const PGE_RectF &box, double x, double y, double w, double h);
 
 private:
     bool m_isInitialized = false;
+
+    LevelScene *m_scene = nullptr;
 
     struct Layer
     {
@@ -73,6 +77,8 @@ private:
 
     //! Back layers, must be sorted by Z index
     LayersList m_layers_back;
+    //! Layers must be drawin between elements on the scene
+    LayersList m_layers_inscene;
     //! Front layers, must be sorted by Z index
     LayersList m_layers_front;
 

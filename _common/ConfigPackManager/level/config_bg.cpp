@@ -214,20 +214,20 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
             {
                 setup->read("name", lyr.name, lr_name);
                 setup->read("image", lyr.image, "");
-                setup->read("z-value",  lyr.z_index, -50.0l);
-                setup->read("z-index",  lyr.z_index, lyr.z_index);//< Alias to z-value
-                setup->read("priority", lyr.z_index, lyr.z_index);//< Alias to z-value
+                setup->read("z-value",   lyr.z_index, -50.0l);
+                setup->read("z-index",   lyr.z_index, lyr.z_index);//< Alias to z-value
+                setup->read("z-position",lyr.z_index, lyr.z_index);//< Alias to z-value
+                setup->read("priority",  lyr.z_index, lyr.z_index);//< Alias to z-value
                 NumberLimiter::apply(lyr.z_index, multi_parallax_auto_distance_min, multi_parallax_auto_distance_max);//Avoid out of range
                 setup->read("opacity",  lyr.opacity, 1.0);
                 NumberLimiter::applyD(lyr.opacity, 1.0, 0.0, 1.0);//Opacity can be between 0.0 and 1.0
                 setup->read("flip-h",  lyr.flip_h, false);
                 setup->read("flip-v",  lyr.flip_v, false);
+                setup->read("in-scene-draw",  lyr.inscene_draw, false);
+                setup->read("in-world-draw",  lyr.inscene_draw, lyr.inscene_draw);
                 setup->read("repeat-x", lyr.repeat_x, true);
                 setup->read("repeat-y", lyr.repeat_y, false);
-                setup->read("parallax-coefficient-x", lyr.parallax_coefficient_x, 1.0);
-                NumberLimiter::applyD(lyr.parallax_coefficient_x, 1.0, 0.00000000000001);//Don't allow zero or smaller values
-                setup->read("parallax-coefficient-y", lyr.parallax_coefficient_y, 1.0);
-                NumberLimiter::applyD(lyr.parallax_coefficient_y, 1.0, 0.00000000000001);//Don't allow zero or smaller values
+
                 setup->readEnum("parallax-mode-x",
                                 lyr.parallax_mode_x,
                                 (uint32_t)BgLayer::P_MODE_SCROLL,
@@ -258,6 +258,39 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                     {"bottom", BgLayer::R_BOTTOM},
                     {"top", BgLayer::R_TOP}
                 });
+
+                double parallaxX = 1.0, parallaxY = 1.0;
+                if((multi_parallax_type == ML_PARALLAX_AUTO) && !lyr.inscene_draw)
+                {
+                    if(lyr.z_index == 0.0l)
+                    {
+                        parallaxX = 1.0;
+                        parallaxY = 1.0;
+                    }
+                    else
+                    {
+                        parallaxX = parallaxY = (lyr.z_index > 0.0l) ?
+                            static_cast<double>(1.0l / (1.0l + lyr.z_index)) :
+                            static_cast<double>(std::fabs(lyr.z_index) + 1.0l);
+                        if(parallaxX >= (1.0 + static_cast<double>(std::fabs(multi_parallax_auto_distance_max))) )
+                        {
+                            lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
+                            lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
+                        }
+                        else if(parallaxX <= (1.0 / static_cast<double>(1.0l + multi_parallax_auto_distance_max)))
+                        {
+                            lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
+                            lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
+                            lyr.opacity = 0.0;//Layer is invisible!
+                        }
+                    }
+                }
+
+                setup->read("parallax-coefficient-x", lyr.parallax_coefficient_x, parallaxX);
+                NumberLimiter::applyD(lyr.parallax_coefficient_x, 1.0, 0.00000000000001);//Don't allow zero or smaller values
+                setup->read("parallax-coefficient-y", lyr.parallax_coefficient_y, parallaxY);
+                NumberLimiter::applyD(lyr.parallax_coefficient_y, 1.0, 0.00000000000001);//Don't allow zero or smaller values
+
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);
 

@@ -50,7 +50,7 @@ LVL_Background::LVL_Background(const LVL_Background &_bg)
     }
 }
 
-void LVL_Background::setBg(obj_BG &bg)
+void LVL_Background::setBg(obj_BG &bg, LevelScene *scene)
 {
     m_setup = &bg;
     m_bgId = bg.setup.id;
@@ -63,6 +63,7 @@ void LVL_Background::setBg(obj_BG &bg)
     else
         m_bg_base.reset(new StandardBackground);    //Legacy backgrounds model, kept for compatibility with legacy engine
     m_bg_base->init(*m_setup);
+    m_bg_base->setScene(scene);
 
     m_blankBackground = false;
 }
@@ -89,6 +90,14 @@ void LVL_Background::drawBack(double x, double y, double w, double h)
         return; //draw BG if is set
     if(m_bg_base)
         m_bg_base->renderBackground(m_box, x, y, w, h);
+}
+
+void LVL_Background::drawInScene(double x, double y, double w, double h)
+{
+    if(m_blankBackground)
+        return; //draw BG if is set
+    if(m_bg_base)
+        m_bg_base->renderInScene(m_box, x, y, w, h);
 }
 
 void LVL_Background::drawFront(double x, double y, double w, double h)

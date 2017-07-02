@@ -263,6 +263,9 @@ void PGE_LevelCamera::updatePost(double frameDelay)
         _objects_to_render_recent = _objects_to_render_stored;
     }
 
+    // Draw in-scene backgrounds
+    cur_section->m_background.drawInScene(posRect.x() + offset_x, posRect.y() + offset_y, posRect.width(), posRect.height());
+
     /*****************************Screen shaking*******************************/
     if(shake_enabled_x)
     {

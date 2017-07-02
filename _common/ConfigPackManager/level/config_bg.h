@@ -183,8 +183,13 @@ struct BgSetup
         //! Opacity of the layer
         double      opacity = 1.0;
 
+        //! Flip background image Horizontally
         bool        flip_h = false;
+        //! Flip background image Vertically
         bool        flip_v = false;
+
+        //! Draw image as in-scene element
+        bool        inscene_draw = false;
 
         /// Horizontal parallax coefficient. In auto mode will be calculated automatically proportionally to z position
         /*!
