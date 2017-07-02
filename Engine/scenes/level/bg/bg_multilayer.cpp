@@ -216,7 +216,7 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 refPointX = (box.right() - w) - pointX + offsetXpre;
                 offsetXpost = (w - fWidth);
                 if(layer.setup.repeat_x)
-                    offsetXpost -= (w - fmod(w, fWidth));
+                    offsetXpost -= (w - std::fmod(w, fWidth));
                 break;
             }
             if(layer.setup.repeat_x)
@@ -279,7 +279,7 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 refPointY = (box.bottom() - h) - pointY + offsetYpre;
                 offsetYpost = (h - fHeight);
                 if(layer.setup.repeat_y)
-                    offsetYpost -= (h - fmod(h, fHeight));
+                    offsetYpost -= (h - std::fmod(h, fHeight));
                 break;
             }
 
