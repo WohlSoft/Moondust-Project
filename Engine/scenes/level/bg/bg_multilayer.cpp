@@ -202,9 +202,9 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 if(imgPos_X > 0.0)
                     imgPos_X = 0.0;
             }
-
             break;
-        // Scroll backround with divided offset at reference point edge
+
+        // Scroll background with divided offset at reference point edge
         case BgSetup::BgLayer::P_MODE_SCROLL:
 
             switch(layer.setup.reference_point_x)
@@ -214,10 +214,9 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 break;
             case BgSetup::BgLayer::R_RIGHT:
                 refPointX = (box.right() - w) - pointX + offsetXpre;
+                offsetXpost = (w - fWidth);
                 if(layer.setup.repeat_x)
-                    offsetXpost = (w - fWidth) - (w - fmod(w, fWidth));
-                else
-                    offsetXpost = (w - fWidth);
+                    offsetXpost -= (w - fmod(w, fWidth));
                 break;
             }
             if(layer.setup.repeat_x)
@@ -278,10 +277,9 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
                 break;
             case BgSetup::BgLayer::R_BOTTOM:
                 refPointY = (box.bottom() - h) - pointY + offsetYpre;
+                offsetYpost = (h - fHeight);
                 if(layer.setup.repeat_y)
-                    offsetYpost = (h - fHeight) - (h - fmod(h, fHeight));
-                else
-                    offsetYpost = (h - fHeight);
+                    offsetYpost -= (h - fmod(h, fHeight));
                 break;
             }
 
