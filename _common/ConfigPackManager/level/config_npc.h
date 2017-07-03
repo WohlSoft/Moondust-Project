@@ -161,7 +161,7 @@ struct NpcSetup
     bool            special_option = false;  //    ; Special option
                                      //    have-special=0; Special NPC's option, what can used by NPC's algorithm
     PGEString       special_name; //    ;special-name="Cheep-cheep"	; 60
-    uint32_t        special_type; //    ;special-type=0; 61 0 combobox, 1 - spin, 2 - npc-id
+    uint32_t        special_type = 0; //    ;special-type=0; 61 0 combobox, 1 - spin, 2 - npc-id
     PGEStringList   special_combobox_opts;//;special-combobox-size=3; 62 quantity of options
                                       //;special-option-0="Swim"; 63 set title for 0 option combobox
                                       //;special-option-1="Jump"; 64 set title for 1 option combobox

@@ -296,50 +296,45 @@ void GlobalSettings::saveJoyCtrlMapType(KeyMap &map, IniProcessing &set, std::st
 
 Controller *GlobalSettings::openController(int player)
 {
-    Controller *TargetController = nullptr;
+    Controller *targetController = nullptr;
 
     if(player == 1)
     {
         if(player1_controller >= 0)
         {
-            TargetController = new JoystickController();
-            size_t DeviceID = static_cast<size_t>(player1_controller);
-
-            if(DeviceID < player1_joysticks.size())
-                TargetController->setKeyMap(player1_joysticks[DeviceID]);
-
-            if(DeviceID < joysticks.size())
-                dynamic_cast<JoystickController *>(TargetController)->
-                setJoystickDevice(joysticks[DeviceID]);
+            JoystickController *joysticController = new JoystickController();
+            size_t deviceID = static_cast<size_t>(player1_controller);
+            if(deviceID < player1_joysticks.size())
+                joysticController->setKeyMap(player1_joysticks[deviceID]);
+            if(deviceID < joysticks.size())
+                joysticController->setJoystickDevice(joysticks[deviceID]);
+            targetController = joysticController;
         }
         else
         {
-            TargetController = new KeyboardController();
-            TargetController->setKeyMap(player1_keyboard);
+            targetController = new KeyboardController();
+            targetController->setKeyMap(player1_keyboard);
         }
     }
     else if(player == 2)
     {
         if(player2_controller >= 0)
         {
-            TargetController = new JoystickController();
-            size_t DeviceID = static_cast<size_t>(player2_controller);
-            if(DeviceID < player2_joysticks.size())
-                TargetController->setKeyMap(player2_joysticks[DeviceID]);
-            if(DeviceID < joysticks.size())
-            {
-                JoystickController*jc = dynamic_cast<JoystickController *>(TargetController);
-                if(jc)
-                    jc->setJoystickDevice(joysticks[DeviceID]);
-            }
+            JoystickController *joysticController = new JoystickController();
+            size_t deviceID = static_cast<size_t>(player2_controller);
+            if(deviceID < player2_joysticks.size())
+                joysticController->setKeyMap(player2_joysticks[deviceID]);
+            if(deviceID < joysticks.size())
+                joysticController->setJoystickDevice(joysticks[deviceID]);
+            targetController = joysticController;
         }
         else
         {
-            TargetController = new KeyboardController();
-            TargetController->setKeyMap(player2_keyboard);
+            targetController = new KeyboardController();
+            targetController->setKeyMap(player2_keyboard);
         }
     }
 
-    return TargetController;
+    return targetController;
 }
 

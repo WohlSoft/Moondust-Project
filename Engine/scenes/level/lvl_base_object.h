@@ -50,9 +50,9 @@ class PGE_Phys_Object: public PGE_physBody
         } m_camera_meta;
 
         //! Tells, does this object was catched by camera since recent render action
-        bool         m_isVizibleOnScreen;
+        bool         m_isVizibleOnScreen = false;
         //! Tells, does this object stored into the render list
-        bool         m_isInIenderList;
+        bool         m_isInIenderList    = false;
     public:
         inline bool isInRenderList()
         {
@@ -60,9 +60,9 @@ class PGE_Phys_Object: public PGE_physBody
         }
     public:
         //! Pointer of the parent scene
-        LevelScene  *m_scene;
+        LevelScene  *m_scene = nullptr;
     public:
-        PGE_Phys_Object(LevelScene *_parent = NULL);
+        PGE_Phys_Object(LevelScene *_parent = nullptr);
         virtual ~PGE_Phys_Object();
         void registerInTree();
         void unregisterFromTree();
