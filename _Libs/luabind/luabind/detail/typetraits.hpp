@@ -26,39 +26,40 @@
 
 #include <type_traits>
 
-namespace luabind { namespace detail 
-{
-	template< typename T >
-	struct is_const_reference
-		: public std::conditional< std::is_reference<T>::value && std::is_const<typename std::remove_reference<T>::type>::value, std::true_type, std::false_type >::type
-	{
-	};
+namespace luabind {
+	namespace detail {
+		template< typename T >
+		struct is_const_reference
+			: public std::conditional< std::is_reference<T>::value && std::is_const<typename std::remove_reference<T>::type>::value, std::true_type, std::false_type >::type
+		{
+		};
 
-	template<class T>
-	struct is_nonconst_reference
-		: public std::conditional< std::is_reference<T>::value && !std::is_const<typename std::remove_reference<T>::type>::value, std::true_type, std::false_type >::type
-	{
-	};
-	
-	template<class T>
-	struct is_const_pointer
-		: public std::conditional< std::is_const<typename std::remove_pointer<T>::type>::value && std::is_pointer<T>::value, std::true_type, std::false_type >::type
-	{
-	};
+		template<class T>
+		struct is_nonconst_reference
+			: public std::conditional< std::is_reference<T>::value && !std::is_const<typename std::remove_reference<T>::type>::value, std::true_type, std::false_type >::type
+		{
+		};
 
-	template<class T>
-	struct is_nonconst_pointer :
-		public std::conditional < std::is_pointer<T>::value && !std::is_const<typename std::remove_pointer<T>::type>::value, std::true_type, std::false_type >::type 
-	{
-	};
+		template<class T>
+		struct is_const_pointer
+			: public std::conditional< std::is_const<typename std::remove_pointer<T>::type>::value && std::is_pointer<T>::value, std::true_type, std::false_type >::type
+		{
+		};
 
-	template<int v1, int v2>
-	struct max_c
-	{
-		enum { value = (v1>v2)?v1:v2 };
-	};
+		template<class T>
+		struct is_nonconst_pointer :
+			public std::conditional < std::is_pointer<T>::value && !std::is_const<typename std::remove_pointer<T>::type>::value, std::true_type, std::false_type >::type
+		{
+		};
 
-}}
+		template<int v1, int v2>
+		struct max_c
+		{
+			enum { value = (v1 > v2) ? v1 : v2 };
+		};
+
+	} // namespace detail
+} // namespace luabind
 
 #endif // LUABIND_TYPETRAITS_HPP_INCLUDED
 

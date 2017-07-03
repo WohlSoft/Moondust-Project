@@ -26,23 +26,23 @@
 // TODO: Unused in whole project => Remove.
 namespace luabind {
 
-    namespace detail {
+	namespace detail {
 
-    template<class T> T& deref_type(T(*)(), int);
-    template<class T> T& deref_type(T*(*)(), long);
+		template<class T> T& deref_type(T(*)(), int);
+		template<class T> T& deref_type(T*(*)(), long);
 
-    } // namespace detail
+	} // namespace detail
 
-    // returns the indirect sizeof U, as in
-    //    sizeof(T*) = sizeof(T)
-    //    sizeof(T&) = sizeof(T)
-    //    sizeof(T)  = sizeof(T)
-    template<class T>
-    struct pointee_sizeof
-    {
-		static const int value = sizeof(detail::deref_type((T(*)())0), 0L);
-		typedef std::integral_constant<int, value> type;
-    };
+	// returns the indirect sizeof U, as in
+	//    sizeof(T*) = sizeof(T)
+	//    sizeof(T&) = sizeof(T)
+	//    sizeof(T)  = sizeof(T)
+	template<class T>
+	struct pointee_sizeof
+	{
+		static constexpr int value = sizeof(detail::deref_type((T(*)())0), 0L);
+		using type = std::integral_constant<int, value>;
+	};
 
 } // namespace luabind
 

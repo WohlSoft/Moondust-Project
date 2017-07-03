@@ -63,7 +63,7 @@ namespace luabind
 	class LUABIND_API cast_failed : public std::exception
 	{
 	public:
-		cast_failed(lua_State* L, type_id const& i): m_L(L), m_info(i) {}
+		cast_failed(lua_State* L, type_id const& i) : m_L(L), m_info(i) {}
 		lua_State* state() const throw() { return m_L; }
 		type_id info() const throw() { return m_info; }
 		virtual const char* what() const throw() { return "unable to make cast"; }

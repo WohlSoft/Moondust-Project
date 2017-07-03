@@ -29,68 +29,70 @@
 #include <luabind/detail/object_rep.hpp>  // for object_rep
 #include <luabind/detail/primitives.hpp>  // for null_type
 
-namespace luabind { namespace detail 
-{
-	// makes A dependent on B, meaning B will outlive A.
-	// internally A stores a reference to B
-	template<int A, int B>
-	struct dependency_policy
-	{
-		template< unsigned int... StackIndices >
-        static void postcall(lua_State* L, int /*results*/, meta::index_list<StackIndices...> )
+namespace luabind {
+	namespace detail {
+
+		// makes A dependent on B, meaning B will outlive A.
+		// internally A stores a reference to B
+		template<int A, int B>
+		struct dependency_policy
 		{
-			object_rep* nurse = static_cast<object_rep*>(lua_touserdata(L, meta::get<meta::index_list<StackIndices...>, A>::value));
+			template< unsigned int... StackIndices >
+			static void postcall(lua_State* L, int results, meta::index_list<StackIndices...>)
+			{
+				object_rep* nurse = static_cast<object_rep*>(lua_touserdata(L, meta::get<meta::index_list<StackIndices...>, A>::value));
 
-			// If the nurse isn't an object_rep, just make this a nop.
-			if (nurse == 0)
-				return;
+				// If the nurse isn't an object_rep, just make this a nop.
+				if(nurse == 0)
+					return;
 
-			nurse->add_dependency(L, meta::get<meta::index_list<StackIndices...>, B>::value);
-		}
-	};
+				nurse->add_dependency(L, meta::get<meta::index_list<StackIndices...>, B>::value);
+			}
+		};
 
-	template<int B>
-	struct dependency_policy<0,B>
-	{
-		template< unsigned int... StackIndices >
-		static void postcall(lua_State* L, int results, meta::index_list<StackIndices...> )
+		template<int B>
+		struct dependency_policy<0, B>
 		{
-			object_rep* nurse = static_cast<object_rep*>(lua_touserdata(L, meta::get<meta::index_list<StackIndices...>, 0>::value+results));
+			template< unsigned int... StackIndices >
+			static void postcall(lua_State* L, int results, meta::index_list<StackIndices...>)
+			{
+				object_rep* nurse = static_cast<object_rep*>(lua_touserdata(L, meta::get<meta::index_list<StackIndices...>, 0>::value + results));
 
-			// If the nurse isn't an object_rep, just make this a nop.
-			if (nurse == 0)
-				return;
+				// If the nurse isn't an object_rep, just make this a nop.
+				if(nurse == 0)
+					return;
 
-			nurse->add_dependency(L, meta::get<meta::index_list<StackIndices...>, B>::value);
-		}
-	};
+				nurse->add_dependency(L, meta::get<meta::index_list<StackIndices...>, B>::value);
+			}
+		};
 
-	template<int A>
-	struct dependency_policy<A, 0>
-	{
-		template< unsigned int... StackIndices >
-		static void postcall(lua_State* L, int results, meta::index_list<StackIndices...> )
+		template<int A>
+		struct dependency_policy<A, 0>
 		{
-			object_rep* nurse = static_cast<object_rep*>(lua_touserdata(L, meta::get<meta::index_list<StackIndices...>, A>::value));
+			template< unsigned int... StackIndices >
+			static void postcall(lua_State* L, int results, meta::index_list<StackIndices...>)
+			{
+				object_rep* nurse = static_cast<object_rep*>(lua_touserdata(L, meta::get<meta::index_list<StackIndices...>, A>::value));
 
-			// If the nurse isn't an object_rep, just make this a nop.
-			if (nurse == 0)
-				return;
+				// If the nurse isn't an object_rep, just make this a nop.
+				if(nurse == 0)
+					return;
 
-			nurse->add_dependency(L, meta::get<meta::index_list<StackIndices...>, 0>::value + results);
-		}
-	};
+				nurse->add_dependency(L, meta::get<meta::index_list<StackIndices...>, 0>::value + results);
+			}
+		};
 
-}}
+	}
+}
 
 namespace luabind
 {
 	// Caution: If we use the aliased type "policy_list" here, MSVC crashes.
 	template<unsigned int A, unsigned int B>
-	using dependency_policy = meta::type_list<call_policy_injector<detail::dependency_policy<A,B>>>;
+	using dependency_policy = meta::type_list<call_policy_injector<detail::dependency_policy<A, B>>>;
 
 	template<unsigned int A>
-	using return_internal_reference = meta::type_list<call_policy_injector<detail::dependency_policy<0,A>>>;
+	using return_internal_reference = meta::type_list<call_policy_injector<detail::dependency_policy<0, A>>>;
 }
 
 #endif // LUABIND_DEPENDENCY_POLICY_HPP_INCLUDED

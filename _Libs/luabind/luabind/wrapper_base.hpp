@@ -51,18 +51,18 @@ namespace luabind
 		R call_member_impl(lua_State* L, std::false_type /*void*/, meta::index_list<Indices...>, Args&&... args);
 	}
 
-	struct wrapped_self_t: weak_ref
+	struct wrapped_self_t : weak_ref
 	{
 		detail::lua_reference m_strong_ref;
 	};
-		
+
 	struct wrap_base
 	{
 		friend struct detail::wrap_access;
 		wrap_base() {}
 
 		template<class R, typename... Args>
-		R call(char const* name, Args&&... args ) const
+		R call(char const* name, Args&&... args) const
 		{
 			// this will be cleaned up by the proxy object
 			// once the call has been made
@@ -77,7 +77,7 @@ namespace luabind
 			assert(!lua_isnil(L, -1));
 			detail::do_call_member_selection(L, name);
 
-			if (lua_isnil(L, -1))
+			if(lua_isnil(L, -1))
 			{
 				lua_pop(L, 1);
 				throw std::runtime_error("Attempt to call nonexistent function");
@@ -89,7 +89,7 @@ namespace luabind
 			// now the function and self objects
 			// are on the stack. These will both
 			// be popped by pcall
-			return detail::call_member_impl<R>(L,std::is_void<R>(), meta::index_range<1,sizeof...(Args)+1>(), std::forward<Args>(args)... );
+			return detail::call_member_impl<R>(L, std::is_void<R>(), meta::index_range<1, sizeof...(Args)+1>(), std::forward<Args>(args)...);
 		}
 
 	private:

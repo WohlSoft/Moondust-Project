@@ -17,11 +17,11 @@ namespace luabind {
 			: public lua_proxy_interface<index_proxy<Next> >
 		{
 		public:
-			typedef index_proxy<Next> this_type;
+			using this_type = index_proxy<Next>;
 
 			template<class Key>
 			index_proxy(Next const& next, lua_State* interpreter, Key const& key)
-				: m_interpreter(interpreter), m_key_index(lua_gettop(interpreter)+1), m_next(next)
+				: m_interpreter(interpreter), m_key_index(lua_gettop(interpreter) + 1), m_next(next)
 			{
 				detail::push(m_interpreter, key);
 			}
@@ -101,7 +101,7 @@ namespace luabind {
 		template<class Next>
 		inline void index_proxy<Next>::push(lua_State* interpreter)
 		{
-			assert(interpreter==m_interpreter);
+			assert(interpreter == m_interpreter);
 
 			lua_proxy_traits<Next>::unwrap(m_interpreter, m_next);
 
@@ -115,7 +115,7 @@ namespace luabind {
 	template<class T>
 	struct lua_proxy_traits<adl::index_proxy<T> >
 	{
-		typedef std::true_type is_specialized;
+		using is_specialized = std::true_type;
 
 		template<class Next>
 		static lua_State* interpreter(adl::index_proxy<Next> const& proxy)

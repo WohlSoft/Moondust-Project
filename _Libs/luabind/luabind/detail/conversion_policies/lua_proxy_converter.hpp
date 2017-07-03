@@ -21,14 +21,13 @@
 #include <type_traits>
 
 namespace luabind {
-
 	namespace detail {
 
 		template <class U>
 		struct lua_proxy_converter
 		{
-			typedef lua_proxy_converter<U> type;
-			typedef std::true_type is_native;
+			using type      = lua_proxy_converter<U>;
+			using is_native = std::true_type;
 
 			enum { consumed_args = 1 };
 
@@ -68,7 +67,6 @@ namespace luabind {
 		};
 
 	}
-
 }
 
 #endif

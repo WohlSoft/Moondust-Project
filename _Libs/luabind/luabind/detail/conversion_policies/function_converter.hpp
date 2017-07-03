@@ -15,7 +15,7 @@ namespace luabind {
 	template <typename R = object>
 	struct function
 	{
-		typedef R result_type;
+		using result_type = R;
 
 		function(luabind::object const& obj)
 			: m_func(obj)
@@ -23,7 +23,7 @@ namespace luabind {
 		}
 
 		template< typename... Args>
-		R operator() ( Args&&... args )
+		R operator() (Args&&... args)
 		{
 			return call_function<R>(m_func, std::forward<Args>(args)...);
 		}
@@ -43,16 +43,16 @@ namespace luabind {
 		template< typename R, typename... Args, typename WrappedType >
 		struct call_types <std::function< R(Args...) >, WrappedType >
 		{
-			typedef meta::type_list< R, Args... > signature_type;
+			using signature_type = meta::type_list< R, Args... >;
 		};
 
 	}
 
 
 	template <typename F>
-	struct default_converter<F, typename std::enable_if<detail::is_function<F>::value>::type> 
+	struct default_converter<F, typename std::enable_if<detail::is_function<F>::value>::type>
 	{
-		typedef std::true_type is_native;
+		using is_native = std::true_type;
 
 		enum { consumed_args = 1 };
 
@@ -63,7 +63,7 @@ namespace luabind {
 		template <class U>
 		static int match(lua_State* L, U, int index)
 		{
-			if(lua_type(L, index)==LUA_TFUNCTION)
+			if(lua_type(L, index) == LUA_TFUNCTION)
 				return 0;
 			if(luaL_getmetafield(L, index, "__call")) {
 				lua_pop(L, 1);

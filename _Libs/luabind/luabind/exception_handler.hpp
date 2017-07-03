@@ -14,63 +14,62 @@ namespace luabind {
 
 # ifndef LUABIND_NO_EXCEPTIONS
 
-namespace detail
-{
+	namespace detail {
 
-  struct LUABIND_API exception_handler_base
-  {
-      exception_handler_base()
-        : next(0)
-      {}
+		struct LUABIND_API exception_handler_base
+		{
+			exception_handler_base()
+				: next(0)
+			{}
 
-      virtual ~exception_handler_base() {}
-      virtual void handle(lua_State*) const = 0;
+			virtual ~exception_handler_base() {}
+			virtual void handle(lua_State*) const = 0;
 
-      void try_next(lua_State*) const;
+			void try_next(lua_State*) const;
 
-      exception_handler_base* next;
-  };
+			exception_handler_base* next;
+		};
 
-  template<class E, class Handler>
-  struct exception_handler : exception_handler_base
-  {
-      typedef E const& argument;
+		template<class E, class Handler>
+		struct exception_handler : exception_handler_base
+		{
+			using argument = E const&;
 
-      exception_handler(Handler handler)
-        : handler(handler)
-      {}
+			exception_handler(Handler handler)
+				: handler(handler)
+			{}
 
-      void handle(lua_State* L) const
-      {
-          try
-          {
-              try_next(L);
-          }
-          catch (argument e)
-          {
-              handler(L, e);
-          }
-      }
+			void handle(lua_State* L) const
+			{
+				try
+				{
+					try_next(L);
+				}
+				catch(argument e)
+				{
+					handler(L, e);
+				}
+			}
 
-      Handler handler;
-  };
+			Handler handler;
+		};
 
-  LUABIND_API void handle_exception_aux(lua_State* L);
-  LUABIND_API void register_exception_handler(exception_handler_base*);
+		LUABIND_API void handle_exception_aux(lua_State* L);
+		LUABIND_API void register_exception_handler(exception_handler_base*);
 
-} // namespace detail
+	} // namespace detail
 
 # endif
 
-template<class E, class Handler>
-void register_exception_handler(Handler handler, meta::type<E>* = 0)
-{
+	template<class E, class Handler>
+	void register_exception_handler(Handler handler, meta::type<E>* = 0)
+	{
 # ifndef LUABIND_NO_EXCEPTIONS
-    detail::register_exception_handler(
-        new detail::exception_handler<E, Handler>(handler)
-    );
+		detail::register_exception_handler(
+			new detail::exception_handler<E, Handler>(handler)
+		);
 # endif
-}
+	}
 
 } // namespace luabind
 

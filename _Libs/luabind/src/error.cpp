@@ -28,16 +28,16 @@
 #endif
 
 
-namespace luabind
-{
+namespace luabind {
+
 #ifndef LUABIND_NO_EXCEPTIONS	
 	error::error(lua_State* L)
 	{
-		const char* message=lua_tostring(L, -1);
-		
-		if (message)
+		const char* message = lua_tostring(L, -1);
+
+		if(message)
 		{
-			m_message=message;
+			m_message = message;
 		}
 
 		lua_pop(L, 1);

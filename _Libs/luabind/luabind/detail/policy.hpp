@@ -33,7 +33,6 @@
 #include <string>
 #include <memory>
 
-//#include <luabind/detail/conversion_policies/conversion_policies.hpp>
 #include <luabind/detail/meta.hpp>
 
 #if LUA_VERSION_NUM < 502
@@ -123,7 +122,7 @@ namespace luabind
 		// for the concrete type [T] with [Direction] being either "lua_to_cpp" or "cpp_to_lua".
 		template<unsigned int Index, typename PolicyList, typename T, typename Direction>
 		using specialized_converter_policy_n = typename policy_detail::get_converter_policy<Index, PolicyList>::type::template specialize<T, Direction >::type;
-		
+
 		/*
 			call_policies
 		*/
@@ -137,11 +136,11 @@ namespace luabind
 } // namespace luabind::detail
 
 namespace luabind {
-  extern LUABIND_API meta::index<0> return_value;
-  extern LUABIND_API meta::index<0> result;
-  extern LUABIND_API meta::index<1> _1;
-  extern LUABIND_API meta::index<2> _2;
-  extern LUABIND_API meta::index<3> _3;
+	extern LUABIND_API meta::index<0> return_value;
+	extern LUABIND_API meta::index<0> result;
+	extern LUABIND_API meta::index<1> _1;
+	extern LUABIND_API meta::index<2> _2;
+	extern LUABIND_API meta::index<3> _3;
 }
 
 #endif // LUABIND_POLICY_HPP_INCLUDED

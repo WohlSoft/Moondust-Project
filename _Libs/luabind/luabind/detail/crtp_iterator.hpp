@@ -14,16 +14,16 @@ namespace luabind {
 
 
 			CRTP& operator++()
-			{ 
+			{
 				upcast().increment();
 				return upcast();
 			}
 
 			CRTP operator++(int)
-			{ 
+			{
 				CRTP tmp(upcast());
 				upcast().increment();
-				return tmp; 
+				return tmp;
 			}
 
 			bool operator==(const CRTP& rhs)
@@ -35,7 +35,7 @@ namespace luabind {
 			{
 				return !upcast().equal(rhs);
 			}
-			
+
 			typename base_type::reference operator*()
 			{
 				return upcast().dereference();

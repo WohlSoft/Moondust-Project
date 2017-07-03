@@ -32,14 +32,13 @@
 
 
 namespace luabind {
-
 	namespace detail {
 
 		// Something's strange with the references here... need to know when to copy :(
 		template <class T, class Clone>
 		void make_pointee_instance(lua_State* L, T&& x, std::true_type, Clone)
 		{
-			if (get_pointer(x))
+			if(get_pointer(x))
 			{
 				make_pointer_instance(L, std::forward<T>(x));
 			}
@@ -52,7 +51,7 @@ namespace luabind {
 		template <class T>
 		void make_pointee_instance(lua_State* L, T&& x, std::false_type, std::true_type)
 		{
-			typedef typename std::remove_reference<T>::type value_type;
+			using value_type = typename std::remove_reference<T>::type;
 
 			std::unique_ptr<value_type> ptr(new value_type(std::move(x)));
 			make_pointer_instance(L, std::move(ptr));

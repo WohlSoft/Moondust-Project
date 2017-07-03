@@ -35,7 +35,7 @@ namespace luabind {
 		return pointer;
 	}
 
-	template<typename T> 
+	template<typename T>
 	T* get_pointer(const std::unique_ptr<T>& pointer)
 	{
 		return pointer.get();
@@ -59,21 +59,21 @@ namespace luabind {
 		struct pointer_traits<T*>
 		{
 			enum { is_pointer = true };
-			typedef T value_type;
+			using value_type = T;
 		};
 
 		template<typename T>
 		struct pointer_traits<std::unique_ptr<T>>
 		{
 			enum { is_pointer = true };
-			typedef T value_type;
+			using value_type = T;
 		};
 
 		template<typename T>
 		struct pointer_traits<std::shared_ptr<T>>
 		{
 			enum { is_pointer = true };
-			typedef T value_type;
+			using value_type = T;
 		};
 
 		template<typename T>
@@ -120,7 +120,7 @@ namespace luabind {
 			detail::has_get_pointer_::no_overload_tag
 				get_pointer(detail::has_get_pointer_::any);
 
-
+			///@TODO: Rework
 			template<class T>
 			yes check(T const&);
 			no check(no_overload_tag);
@@ -129,7 +129,7 @@ namespace luabind {
 			struct impl
 			{
 				static typename std::add_lvalue_reference<T>::type x;
-				static const bool value = (sizeof(has_get_pointer_::check((get_pointer(x), 0)))==1);
+				static const bool value = (sizeof(has_get_pointer_::check((get_pointer(x), 0))) == 1);
 				typedef std::integral_constant<bool, value> type;
 			};
 

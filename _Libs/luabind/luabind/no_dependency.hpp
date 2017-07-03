@@ -9,16 +9,16 @@
 
 namespace luabind {
 
-namespace detail
-{
+	namespace detail
+	{
 
-  struct no_dependency_policy
-  {
-      static void postcall(lua_State*, int /*results*/, meta::index_list_tag)
-      {}
-  };
+		struct no_dependency_policy
+		{
+			static void postcall(lua_State*, int /*results*/, meta::index_list_tag)
+			{}
+		};
 
-} // namespace detail
+	} // namespace detail
 
 	using no_dependency = policy_list<call_policy_injector<detail::no_dependency_policy>>;
 

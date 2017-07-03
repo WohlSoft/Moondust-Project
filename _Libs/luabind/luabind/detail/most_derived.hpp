@@ -25,19 +25,21 @@
 
 # include <type_traits>
 
-namespace luabind { namespace detail {
+namespace luabind {
+	namespace detail {
 
-template<class Class, class WrappedClass>
-struct most_derived
-{
-    typedef typename std::conditional<
-		std::is_base_of<Class, WrappedClass>::value
-      , WrappedClass
-      , Class
-    >::type type;
-};
+		template<class Class, class WrappedClass>
+		struct most_derived
+		{
+			using type = typename std::conditional<
+				std::is_base_of<Class, WrappedClass>::value
+				, WrappedClass
+				, Class
+			>::type;
+		};
 
-}} // namespace luabind::detail
+	}
+} // namespace luabind::detail
 
 #endif // MOST_DERIVED_051018_HPP
 

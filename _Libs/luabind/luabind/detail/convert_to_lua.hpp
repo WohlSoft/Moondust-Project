@@ -27,16 +27,16 @@
 #include <luabind/config.hpp>
 #include <luabind/detail/policy.hpp>
 
-namespace luabind { 
-	
+namespace luabind {
+
 	namespace detail {
 
 		template< typename T >
 		struct unwrapped {
 			static const bool is_wrapped_ref = false;
-			typedef T type;
+			using type = T;
 
-			static const T& get( const T& t ) {
+			static const T& get(const T& t) {
 				return t;
 			}
 		};
@@ -45,7 +45,7 @@ namespace luabind {
 		struct unwrapped< std::reference_wrapper< T > >
 		{
 			static const bool is_wrapped_ref = true;
-			typedef T& type;
+			using type = T&;
 
 			static T& get(const std::reference_wrapper<T>& refwrap)
 			{
@@ -57,7 +57,7 @@ namespace luabind {
 		void push_to_lua(lua_State* L, const T& v)
 		{
 			using value_type = typename unwrapped< T >::type;
-		
+
 			specialized_converter_policy_n<PolicyIndex, Policies, value_type, cpp_to_lua>()
 				.to_lua(L, unwrapped<T>::get(v));
 		}

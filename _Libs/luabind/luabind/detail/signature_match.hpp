@@ -25,7 +25,5 @@
 
 #include <luabind/config.hpp>
 
-
-
 #endif // LUABIND_SIGNATURE_MATCH_HPP_INCLUDED
 
