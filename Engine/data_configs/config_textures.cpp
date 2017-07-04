@@ -451,13 +451,73 @@ int  ConfigManager::getBGTexture(unsigned long bgID, bool isSecond)
 }
 
 
+int ConfigManager::getBGLayerTexture(uint64_t bgID, size_t layerId)
+{
+    if(!lvl_bg_indexes.contains(bgID))
+        return -1;
+    obj_BG *bgSetup = &lvl_bg_indexes[bgID];
 
+    if(bgSetup->texturePerLayer.size() <= layerId)
+        return -1;
 
+    obj_BG::TextureId &tID = bgSetup->texturePerLayer[layerId];
+    if(tID.textureArrayId >= 0)
+    {
+        if(tID.textureArrayId < int64_t(level_textures.size()))
+            return (int)tID.textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        std::string imgFile = "";
+        BgSetup::BgLayer &layer = bgSetup->setup.layers[layerId];
 
+        imgFile = Dir_BG.getCustomFile(layer.image);
 
+        size_t id = level_textures.size();
 
+        tID.textureArrayId = static_cast<int64_t>(id);
 
+        PGE_Texture texture;
+        level_textures.push_back(texture);
+        GlRenderer::loadTextureP(level_textures[id], imgFile);
 
+        tID.image          = &(level_textures[id]);
+        tID.textureId      = level_textures[id].texture;
+
+        //Also, load and init animator
+        if(layer.animated)
+        {
+            int frameFirst  = 0;
+            int frameLast   = -1;
+            //calculate height of frame
+            layer.frame_h =
+                static_cast<unsigned int>(round(static_cast<double>(level_textures[id].h)
+                                                / static_cast<double>(layer.frames)));
+            //store animated texture value back
+            level_textures[id].frame_h = static_cast<int>(layer.frame_h);
+            SimpleAnimator animator(
+                true,
+                static_cast<int>(layer.frames),
+                static_cast<int>(layer.framespeed), //bgSetup->framespeed, //Ouch, forgot made framespeed value for background :P Will add later...
+                //3 june 2015. I Finally implemented this sweet variable :D
+                frameFirst,
+                frameLast,
+                false,
+                false
+            );
+
+            if(!layer.frame_sequence.empty())
+                animator.setFrameSequance(layer.frame_sequence);
+
+            Animator_BG.push_back(animator);
+            tID.animatorId = int64_t(Animator_BG.size() - 1);
+        }
+
+        return (int)id;
+    }
+}
 
 
 

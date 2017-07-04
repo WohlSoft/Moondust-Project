@@ -37,27 +37,38 @@ SOURCES += \
     ../src/set_package_preload.cpp \
     ../src/stack_content_by_name.cpp \
     ../src/weak_ref.cpp \
-    ../src/wrapper_base.cpp
+    ../src/wrapper_base.cpp \
+    ../src/headertest.cpp \
+
 
 HEADERS += \
-    ../luabind/detail/conversion_policies/conversion_base.hpp \
-    ../luabind/detail/conversion_policies/conversion_policies.hpp \
-    ../luabind/detail/conversion_policies/enum_converter.hpp \
-    ../luabind/detail/conversion_policies/function_converter.hpp \
-    ../luabind/detail/conversion_policies/lua_proxy_converter.hpp \
-    ../luabind/detail/conversion_policies/native_converter.hpp \
-    ../luabind/detail/conversion_policies/pointer_converter.hpp \
-    ../luabind/detail/conversion_policies/reference_converter.hpp \
-    ../luabind/detail/conversion_policies/value_converter.hpp \
-    ../luabind/detail/call.hpp \
+    ../luabind/adopt_policy.hpp \
+    ../luabind/back_reference_fwd.hpp \
+    ../luabind/back_reference.hpp \
+    ../luabind/class.hpp \
+    ../luabind/class_info.hpp \
+    ../luabind/config.hpp \
+    ../luabind/container_policy.hpp \
+    ../luabind/copy_policy.hpp \
+    ../luabind/dependency_policy.hpp \
     ../luabind/detail/call_function.hpp \
+    ../luabind/detail/call.hpp \
     ../luabind/detail/call_member.hpp \
     ../luabind/detail/call_shared.hpp \
     ../luabind/detail/call_traits.hpp \
     ../luabind/detail/class_registry.hpp \
     ../luabind/detail/class_rep.hpp \
     ../luabind/detail/constructor.hpp \
+    ../luabind/detail/conversion_policies/conversion_base.hpp \
+    ../luabind/detail/conversion_policies/conversion_policies.hpp \
+    ../luabind/detail/conversion_policies/enum_converter.hpp \
+    ../luabind/detail/conversion_policies/function_converter.hpp \
     ../luabind/detail/conversion_policies.hpp \
+    ../luabind/detail/conversion_policies/lua_proxy_converter.hpp \
+    ../luabind/detail/conversion_policies/native_converter.hpp \
+    ../luabind/detail/conversion_policies/pointer_converter.hpp \
+    ../luabind/detail/conversion_policies/reference_converter.hpp \
+    ../luabind/detail/conversion_policies/value_converter.hpp \
     ../luabind/detail/conversion_storage.hpp \
     ../luabind/detail/convert_to_lua.hpp \
     ../luabind/detail/crtp_iterator.hpp \
@@ -90,18 +101,9 @@ HEADERS += \
     ../luabind/detail/stack_utils.hpp \
     ../luabind/detail/typetraits.hpp \
     ../luabind/detail/yes_no.hpp \
-    ../luabind/adopt_policy.hpp \
-    ../luabind/back_reference.hpp \
-    ../luabind/back_reference_fwd.hpp \
-    ../luabind/class.hpp \
-    ../luabind/class_info.hpp \
-    ../luabind/config.hpp \
-    ../luabind/container_policy.hpp \
-    ../luabind/copy_policy.hpp \
-    ../luabind/dependency_policy.hpp \
     ../luabind/discard_result_policy.hpp \
-    ../luabind/error.hpp \
     ../luabind/error_callback_fun.hpp \
+    ../luabind/error.hpp \
     ../luabind/exception_handler.hpp \
     ../luabind/from_stack.hpp \
     ../luabind/function.hpp \
@@ -110,13 +112,13 @@ HEADERS += \
     ../luabind/handle.hpp \
     ../luabind/iterator_policy.hpp \
     ../luabind/lua_argument_proxy.hpp \
+    ../luabind/luabind.hpp \
     ../luabind/lua_include.hpp \
     ../luabind/lua_index_proxy.hpp \
     ../luabind/lua_iterator_proxy.hpp \
     ../luabind/lua_proxy.hpp \
     ../luabind/lua_proxy_interface.hpp \
     ../luabind/lua_state_fwd.hpp \
-    ../luabind/luabind.hpp \
     ../luabind/make_function.hpp \
     ../luabind/nil.hpp \
     ../luabind/no_dependency.hpp \
@@ -136,6 +138,4 @@ HEADERS += \
     ../luabind/version.hpp \
     ../luabind/weak_ref.hpp \
     ../luabind/wrapper_base.hpp \
-    ../luabind/yield_policy.hpp
-
-
+    ../luabind/yield_policy.hpp \

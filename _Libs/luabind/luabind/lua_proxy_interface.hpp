@@ -1,21 +1,3 @@
-/*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 #ifndef LUA_PROXY_INTERFACE_HPP_INCLUDED
 #define LUA_PROXY_INTERFACE_HPP_INCLUDED
 
@@ -40,18 +22,19 @@ namespace luabind {
 		void push(lua_State* interpreter, T& value, policy_list<Policies...> const& = no_policies())
 		{
 			using PolicyList = policy_list<Policies...>;
-			typedef T unwrapped_type; // = T; //typename apply_reference_wrapper<T>::type;
-			using converter_type = specialized_converter_policy_n<0, PolicyList, T/*unwrapped_type*/, cpp_to_lua >;
+			using unwrapped_type = T;
+			using converter_type = specialized_converter_policy_n<0, PolicyList, T, cpp_to_lua >;
 			converter_type().to_lua(interpreter, implicit_cast<unwrapped_type&>(value));
 		}
 
 	} // namespace detail
-	
+
 	namespace adl {
 
 		template <class T>
 		class lua_proxy_interface;
 
+		///@TODO: replace by decltype construct
 		namespace is_object_interface_aux
 		{
 			typedef char(&yes)[1];
@@ -64,7 +47,7 @@ namespace luabind {
 			template <class T>
 			struct impl
 			{
-				static const bool value = sizeof(is_object_interface_aux::check((T*) 0))==sizeof(yes);
+				static const bool value = sizeof(is_object_interface_aux::check((T*)0)) == sizeof(yes);
 				typedef std::integral_constant<bool, value> type;
 			};
 
@@ -77,7 +60,7 @@ namespace luabind {
 
 		template <class R, class T, class U>
 		struct enable_binary
-			: std::enable_if< is_object_interface<T>::value||is_object_interface<U>::value, R >
+			: std::enable_if< is_object_interface<T>::value || is_object_interface<U>::value, R >
 		{};
 
 		template<class T, class U>
@@ -88,13 +71,13 @@ namespace luabind {
 
 			// you are comparing objects with different interpreters
 			// that's not allowed.
-			assert(L==L2||L==0||L2==0);
+			assert(L == L2 || L == 0 || L2 == 0);
 
 			// if the two objects we compare have different interpreters
 			// then they
 
-			if(L!=L2) return -1;
-			if(L==0) return 1;
+			if(L != L2) return -1;
+			if(L == 0) return 1;
 			return 0;
 		}
 
@@ -120,7 +103,7 @@ namespace luabind {
 
 		template<class LHS, class RHS>
 		typename enable_binary<bool, LHS, RHS>::type
-		operator==(LHS const& lhs, RHS const& rhs)
+			operator==(LHS const& lhs, RHS const& rhs)
 		{
 			lua_State* L = 0;
 			switch(binary_interpreter(L, lhs, rhs)) {
@@ -132,7 +115,7 @@ namespace luabind {
 			detail::push(L, lhs);
 			detail::stack_pop pop2(L, 1);
 			detail::push(L, rhs);
-			return lua_compare(L, -1, -2, LUA_OPEQ)!=0;
+			return lua_compare(L, -1, -2, LUA_OPEQ) != 0;
 		}
 
 		template<class LHS, class RHS>
@@ -149,7 +132,7 @@ namespace luabind {
 			detail::push(L, lhs);
 			detail::stack_pop pop2(L, 1);
 			detail::push(L, rhs);
-			return lua_compare(L, -1, -2, LUA_OPLT)!=0;
+			return lua_compare(L, -1, -2, LUA_OPLT) != 0;
 		}
 
 		template<class ValueWrapper>
@@ -172,28 +155,28 @@ namespace luabind {
 		typename enable_binary<bool, LHS, RHS>::type
 			operator>(LHS const& lhs, RHS const& rhs)
 		{
-			return !(lhs<rhs||lhs==rhs);
+			return !(lhs < rhs || lhs == rhs);
 		}
 
 		template<class LHS, class RHS>
 		typename enable_binary<bool, LHS, RHS>::type
-		operator<=(LHS const& lhs, RHS const& rhs)
+			operator<=(LHS const& lhs, RHS const& rhs)
 		{
-			return lhs<rhs||lhs==rhs;
+			return lhs < rhs || lhs == rhs;
 		}
 
 		template<class LHS, class RHS>
 		typename enable_binary<bool, LHS, RHS>::type
-		operator>=(LHS const& lhs, RHS const& rhs)
+			operator>=(LHS const& lhs, RHS const& rhs)
 		{
-			return !(lhs<rhs);
-			}
+			return !(lhs < rhs);
+		}
 
 		template<class LHS, class RHS>
 		typename enable_binary<bool, LHS, RHS>::type
 			operator!=(LHS const& lhs, RHS const& rhs)
 		{
-			return !(lhs==rhs);
+			return !(lhs == rhs);
 		}
 
 		template<class Derived>
@@ -216,7 +199,7 @@ namespace luabind {
 				if(!L) return 0;
 				lua_proxy_traits<Derived>::unwrap(L, derived());
 				detail::stack_pop pop(L, 1);
-				return lua_toboolean(L, -1)==1;
+				return lua_toboolean(L, -1) == 1;
 			}
 
 		private:
@@ -253,11 +236,9 @@ namespace luabind {
 			detail::stack_pop pop(interpreter, 1);
 			specialized_converter_policy_n<0, Policies, T, lua_to_cpp> cv;
 
-#ifndef LUABIND_NO_ERROR_CHECKING
-			if(cv.match(interpreter, decorated_type<T>(), -1)<0) {
+			if(cv.match(interpreter, decorated_type<T>(), -1) < 0) {
 				return error_policy.handle_error(interpreter, typeid(T));
 			}
-#endif
 			return cv.to_cpp(interpreter, decorated_type<T>(), -1);
 		}
 
@@ -272,11 +253,11 @@ namespace luabind {
 				cast_failed_callback_fun e = get_cast_failed_callback();
 				if(e) e(interpreter, type_info);
 
-				assert(0&&"object_cast failed. If you want to handle this error use "
-					   "luabind::set_error_callback()");
+				assert(0 && "object_cast failed. If you want to handle this error use "
+					"luabind::set_error_callback()");
 				std::terminate();
 #endif
-                //return *(typename std::remove_reference<T>::type*)0; //DEAD CODE!
+				//return *(typename std::remove_reference<T>::type*)0; //DEAD CODE!
 			}
 		};
 
@@ -295,25 +276,25 @@ namespace luabind {
 	} // namespace detail
 
 	template<class T, class ValueWrapper> inline
-	T object_cast(ValueWrapper const& value_wrapper)
+		T object_cast(ValueWrapper const& value_wrapper)
 	{
-		return detail::object_cast_aux(value_wrapper, (T*) 0, (no_policies*) 0, detail::throw_error_policy<T>(), (T*) 0);
+		return detail::object_cast_aux(value_wrapper, (T*)0, (no_policies*)0, detail::throw_error_policy<T>(), (T*)0);
 	}
 
 	template<class T, class ValueWrapper, class Policies> inline
-	T object_cast(ValueWrapper const& value_wrapper, Policies const&)
+		T object_cast(ValueWrapper const& value_wrapper, Policies const&)
 	{
-		return detail::object_cast_aux(value_wrapper, (T*) 0, (Policies*) 0, detail::throw_error_policy<T>(), (T*) 0);
+		return detail::object_cast_aux(value_wrapper, (T*)0, (Policies*)0, detail::throw_error_policy<T>(), (T*)0);
 	}
 
 	template<typename T, typename ValueWrapper, typename ReturnValue> inline
-	ReturnValue object_cast_nothrow(ValueWrapper const& value_wrapper, ReturnValue default_value)
+		ReturnValue object_cast_nothrow(ValueWrapper const& value_wrapper, ReturnValue default_value)
 	{
 		return detail::object_cast_aux(value_wrapper, (T*)0, (no_policies*)0, detail::nothrow_error_policy<ReturnValue>(default_value), (ReturnValue*)0);
 	}
 
 	template<typename T, typename ValueWrapper, typename Policies, typename ReturnValue> inline
-	ReturnValue object_cast_nothrow(ValueWrapper const& value_wrapper, Policies const&, ReturnValue default_value)
+		ReturnValue object_cast_nothrow(ValueWrapper const& value_wrapper, Policies const&, ReturnValue default_value)
 	{
 		return detail::object_cast_aux(value_wrapper, (T*)0, (Policies*)0, detail::nothrow_error_policy<ReturnValue>(default_value), (ReturnValue*)0);
 	}

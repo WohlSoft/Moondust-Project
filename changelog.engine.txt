@@ -11,6 +11,7 @@
 - Custom item INI files no more requiring to have the section declaration at begin
 - Fixed troubles related to HighDPI screens support: mouse cursor accuracy and rendering (worst case was reproduced on macOS with Retina screen)
 - Use a subfolder of default screenshot folder on macOS operating systems
+- Added support for true multi-layering backgrounds
 
 0.2.6
 - Improved testing of the renderers supports to avoid accidental running of the unsupported renderer

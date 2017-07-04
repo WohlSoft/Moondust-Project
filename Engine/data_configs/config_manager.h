@@ -240,12 +240,12 @@ namespace ConfigManager
     /********Music and sounds*******/
     bool loadMusic(std::string rootPath, std::string iniFile, bool isCustom = false);
     bool loadDefaultMusics();
-    std::string getWldMusic(unsigned long musicID, std::string customMusic = "");
-    std::string getLvlMusic(unsigned long musicID, std::string customMusic = "");
-    std::string getSpecialMusic(unsigned long musicID);
+    std::string getWldMusic(uint64_t musicID, std::string customMusic = std::string());
+    std::string getLvlMusic(uint64_t musicID, std::string customMusic = std::string());
+    std::string getSpecialMusic(uint64_t musicID);
 
-    extern unsigned long music_custom_id;
-    extern unsigned long music_w_custom_id;
+    extern uint64_t music_custom_id;
+    extern uint64_t music_w_custom_id;
     extern PGE_DataArray<obj_music> main_music_lvl;
     extern PGE_DataArray<obj_music> main_music_wld;
     extern PGE_DataArray<obj_music> main_music_spc;
@@ -257,7 +257,7 @@ namespace ConfigManager
     bool loadSoundRolesTable();
 
     extern PGE_DataArray<obj_sound > main_sound;
-    extern PGE_DataArray<long > main_sound_table;
+    extern PGE_DataArray<long> main_sound_table;
     void buildSoundIndex();
     void clearSoundIndex();
     extern std::vector<obj_sound_index > main_sfx_index;
@@ -326,6 +326,7 @@ namespace ConfigManager
     bool loadLevelBackG();
     bool loadLevelBackground(obj_BG &sbg, std::string section, obj_BG *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getBGTexture(unsigned long bgID, bool isSecond = false);
+    int  getBGLayerTexture(uint64_t bgID, size_t layerId);
     /*****************************/
     extern PGE_DataArray<obj_BG>   lvl_bg_indexes;
     extern CustomDirManager Dir_BG;

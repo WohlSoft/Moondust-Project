@@ -49,12 +49,12 @@
 
 
 namespace luabind {
-    LUABIND_API void set_package_preload(lua_State * L, const char * modulename, int (*loader) (lua_State *)) {
-        rawget(rawget(globals(L), "package"), "preload").push(L);
-        lua_pushcclosure(L, loader, 0);
-        lua_setfield(L, -2, modulename);
-        lua_pop(L, 1);
-    }
+	LUABIND_API void set_package_preload(lua_State * L, const char * modulename, int(*loader) (lua_State *)) {
+		rawget(rawget(globals(L), "package"), "preload").push(L);
+		lua_pushcclosure(L, loader, 0);
+		lua_setfield(L, -2, modulename);
+		lua_pop(L, 1);
+	}
 
 } // namespace luabind
 

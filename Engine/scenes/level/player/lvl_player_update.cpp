@@ -459,7 +459,7 @@ void LVL_Player::update(double tickTime)
     }
     sAS{camera->m_autoScrool.velX, camera->m_autoScrool.velY};
 
-    if((section->isAutoscroll) && (camera->m_autoScrool.enabled))
+    if((section->m_isAutoscroll) && (camera->m_autoScrool.enabled))
         sBox = camera->limitBox;
 
     //Return player to start position on fall down

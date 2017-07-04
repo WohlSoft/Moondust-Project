@@ -34,12 +34,12 @@ namespace luabind {
 	template<class T>
 	struct lua_proxy_traits
 	{
-		typedef std::false_type is_specialized;
+		using is_specialized = std::false_type;
 	};
 
 	template<class T>
 	struct is_lua_proxy_type
-	  : lua_proxy_traits<T>::is_specialized
+		: lua_proxy_traits<T>::is_specialized
 	{};
 
 	template< class T >

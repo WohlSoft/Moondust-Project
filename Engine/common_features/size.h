@@ -32,9 +32,9 @@ class PGE_Size
         void setSize(int w, int h);
         void setWidth(int w);
         void setHeight(int h);
-        bool isNull();
-        int w();
-        int h();
+        bool isNull() const;
+        int w() const;
+        int h() const;
     private:
         int m_w;
         int m_h;

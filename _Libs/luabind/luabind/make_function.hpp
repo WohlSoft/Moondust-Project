@@ -19,8 +19,8 @@ namespace luabind {
 		LUABIND_API void handle_exception_aux(lua_State* L);
 # endif
 
-// MSVC complains about member being sensitive to alignment (C4121)
-// when F is a pointer to member of a class with virtual bases.
+		// MSVC complains about member being sensitive to alignment (C4121)
+		// when F is a pointer to member of a class with virtual bases.
 # ifdef _MSC_VER
 #  pragma pack(push)
 #  pragma pack(16)
@@ -47,7 +47,7 @@ namespace luabind {
 				detail::format_signature(L, function, Signature());
 			}
 
-            static bool invoke_defer(lua_State* L, function_object_impl* impl, invoke_context& ctx, int& results)
+			static bool invoke_defer(lua_State* L, function_object_impl* impl, invoke_context& ctx, int& results)
 			{
 				bool exception_caught = false;
 
@@ -68,7 +68,7 @@ namespace luabind {
 
 			static int entry_point(lua_State* L)
 			{
-				function_object_impl const* impl_const = *(function_object_impl const**) lua_touserdata(L, lua_upvalueindex(1));
+				function_object_impl const* impl_const = *(function_object_impl const**)lua_touserdata(L, lua_upvalueindex(1));
 
 				// TODO: Can this be done differently?
 				function_object_impl* impl = const_cast<function_object_impl*>(impl_const);
@@ -76,14 +76,14 @@ namespace luabind {
 				int results = 0;
 
 # ifndef LUABIND_NO_EXCEPTIONS
-                bool exception_caught = invoke_defer(L, impl, ctx, results);
+				bool exception_caught = invoke_defer(L, impl, ctx, results);
 				if(exception_caught) lua_error(L);
 # else
-	#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
+#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
 				results = invoke(L, *impl, ctx, impl->f, Signature(), InjectorList());
-	#else
+#else
 				results = invoke<InjectorList, Signature>(L, *impl, ctx, impl->f);
-	#endif
+#endif
 # endif
 				if(!ctx) {
 					ctx.format_error(L, impl);
@@ -106,9 +106,9 @@ namespace luabind {
 	} // namespace detail
 
 	template <class F, typename... SignatureElements, typename... PolicyInjectors >
-	object make_function(lua_State* L, F f, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors... > )
+	object make_function(lua_State* L, F f, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors... >)
 	{
-		return detail::make_function_aux( L, new detail::function_object_impl<F, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors...> >( f ) );
+		return detail::make_function_aux(L, new detail::function_object_impl<F, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors...> >(f));
 	}
 
 	template <class F, typename... PolicyInjectors >

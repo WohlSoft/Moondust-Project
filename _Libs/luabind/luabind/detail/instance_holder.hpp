@@ -10,14 +10,14 @@
 # include <luabind/typeid.hpp>
 # include <stdexcept>
 
-namespace luabind { 
+namespace luabind {
 	namespace detail {
 
 		class instance_holder
 		{
 		public:
 			instance_holder(bool pointee_const)
-			  : m_pointee_const(pointee_const)
+				: m_pointee_const(pointee_const)
 			{}
 
 			virtual ~instance_holder()
@@ -39,8 +39,8 @@ namespace luabind {
 		class pointer_holder : public instance_holder
 		{
 		public:
-			pointer_holder( P p, class_id dynamic_id, void* dynamic_ptr ) :
-				instance_holder( detail::is_pointer_to_const<P>() ),
+			pointer_holder(P p, class_id dynamic_id, void* dynamic_ptr) :
+				instance_holder(detail::is_pointer_to_const<P>()),
 				p(std::move(p)), weak(0), dynamic_id(dynamic_id), dynamic_ptr(dynamic_ptr)
 			{
 			}
@@ -48,16 +48,16 @@ namespace luabind {
 			std::pair<void*, int> get(cast_graph const& casts, class_id target) const override
 			{
 				// if somebody wants the smart-ptr, he can get a reference to it
-				if (target == registered_class<P>::id) return std::pair<void*, int>(&this->p, 0);
+				if(target == registered_class<P>::id) return std::pair<void*, int>(&this->p, 0);
 
 				void* naked_ptr = const_cast<void*>(static_cast<void const*>(weak ? weak : get_pointer(p)));
-				if (!naked_ptr) return std::pair<void*, int>(nullptr, 0);
+				if(!naked_ptr) return std::pair<void*, int>(nullptr, 0);
 
-				typedef typename std::remove_cv<typename std::remove_reference<decltype(*get_pointer(p))>::type>::type pointee_type;
+				using pointee_type = typename std::remove_cv<typename std::remove_reference<decltype(*get_pointer(p))>::type>::type;
 
-				return casts.cast( naked_ptr,
-								  registered_class< pointee_type >::id
-								  , target, dynamic_id, dynamic_ptr );
+				return casts.cast(naked_ptr,
+					registered_class< pointee_type >::id,
+					target, dynamic_id, dynamic_ptr);
 			}
 
 			explicit operator bool() const
@@ -82,12 +82,12 @@ namespace luabind {
 		};
 
 		template <class ValueType>
-		class value_holder : 
+		class value_holder :
 			public instance_holder
 		{
 		public:
 			// No need for dynamic_id / dynamic_ptr, since we always get the most derived type
-            value_holder(lua_State* /*L*/, ValueType val)
+			value_holder(lua_State* /*L*/, ValueType val)
 				: instance_holder(false), val_(std::move(val))
 			{}
 
@@ -100,7 +100,7 @@ namespace luabind {
 			{
 				const auto this_id = registered_class<ValueType>::id;
 				void* const naked_ptr = const_cast<void*>((const void*)&val_);
-				if(target==this_id) return std::pair<void*, int>(naked_ptr, 0);
+				if(target == this_id) return std::pair<void*, int>(naked_ptr, 0);
 				return casts.cast(naked_ptr, this_id, target, this_id, naked_ptr);
 			}
 
@@ -115,13 +115,13 @@ namespace luabind {
 			Pointer types should automatically convert to reference types
 		*/
 		template <class ValueType>
-		class pointer_like_holder : 
+		class pointer_like_holder :
 			public instance_holder
 		{
 		public:
 			// No need for dynamic_id / dynamic_ptr, since we always get the most derived type
-            pointer_like_holder(lua_State* /*L*/, ValueType val, class_id dynamic_id, void* dynamic_ptr)
-				: 
+			pointer_like_holder(lua_State* /*L*/, ValueType val, class_id dynamic_id, void* dynamic_ptr)
+				:
 				instance_holder(std::is_const< decltype(*get_pointer(val)) >::value),
 				val_(std::move(val)),
 				dynamic_id_(dynamic_id),
@@ -137,13 +137,13 @@ namespace luabind {
 			std::pair<void*, int> get(cast_graph const& casts, class_id target) const override
 			{
 				const auto value_id = registered_class<ValueType>::id;
-				void* const naked_value_ptr = const_cast<void*>((const void*) &val_);
-				if(target==value_id) return std::pair<void*, int>(naked_value_ptr, 0);
+				void* const naked_value_ptr = const_cast<void*>((const void*)&val_);
+				if(target == value_id) return std::pair<void*, int>(naked_value_ptr, 0);
 				// If we were to support automatic pointer conversion, this would be the place
 
-				typedef typename std::remove_cv<typename std::remove_reference<decltype(*get_pointer(val_))>::type >::type pointee_type;
+				using pointee_type = typename std::remove_cv<typename std::remove_reference<decltype(*get_pointer(val_))>::type >::type;
 				const auto pointee_id = registered_class< pointee_type >::id;
-				void* const naked_pointee_ptr = const_cast<void*>((const void*) get_pointer(val_));
+				void* const naked_pointee_ptr = const_cast<void*>((const void*)get_pointer(val_));
 				return casts.cast(naked_pointee_ptr, pointee_id, target, dynamic_id_, dynamic_ptr_);
 			}
 

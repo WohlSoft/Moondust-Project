@@ -113,8 +113,8 @@ class PGE_LevelCamera
         void setCenterPos(double x, double y);
         void setSize(int w, int h);
         void setOffset(int x, int y);
-        void updatePre(double ticks);
-        void updatePost(double ticks);
+        void updatePre(double frameDelay);
+        void updatePost(double frameDelay);
         void drawBackground();
         void drawForeground();
 

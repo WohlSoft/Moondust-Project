@@ -32,9 +32,9 @@ class PGE_Point
         void setPoint(int x, int y);
         void setX(int x);
         void setY(int y);
-        bool isNull();
-        int x();
-        int y();
+        bool isNull() const;
+        int x() const;
+        int y() const;
         friend bool operator==(const PGE_Point &lhs, const PGE_Point &rhs);
         friend bool operator!=(const PGE_Point &lhs, const PGE_Point &rhs);
 

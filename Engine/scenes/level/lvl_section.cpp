@@ -27,28 +27,29 @@
 
 LVL_Section::LVL_Section()
 {
-    data = FileFormats::CreateLvlSection();
-    isInit = false;
-    curMus = 0;
-    curBgID = 0;
-    isAutoscroll = false;
-    _autoscrollVelocityX = 0.0;
-    _autoscrollVelocityY = 0.0;
+    m_data = FileFormats::CreateLvlSection();
+    m_isInit = false;
+    m_curMus = 0;
+    m_curBgID = 0;
+    m_isAutoscroll = false;
+    m_autoscrollVelocityX = 0.0;
+    m_autoscrollVelocityY = 0.0;
 }
 
-LVL_Section::LVL_Section(const LVL_Section &_sct)
+LVL_Section::LVL_Section(const LVL_Section &m_sct)
 {
-    isInit = _sct.isInit;
-    sectionBox = _sct.sectionBox;
-    limitBox = _sct.limitBox;
-    data = _sct.data;
-    music_root = _sct.music_root;
-    curMus = _sct.curMus;
-    curCustomMus = _sct.curCustomMus;
-    curBgID = _sct.curBgID;
-    isAutoscroll = _sct.isAutoscroll;
-    _autoscrollVelocityX = _sct._autoscrollVelocityX;
-    _autoscrollVelocityY = _sct._autoscrollVelocityY;
+    m_isInit = m_sct.m_isInit;
+    m_sectionBox = m_sct.m_sectionBox;
+    m_limitBox = m_sct.m_limitBox;
+    m_data = m_sct.m_data;
+    m_scene = m_sct.m_scene;
+    m_music_root = m_sct.m_music_root;
+    m_curMus = m_sct.m_curMus;
+    m_curCustomMus = m_sct.m_curCustomMus;
+    m_curBgID = m_sct.m_curBgID;
+    m_isAutoscroll = m_sct.m_isAutoscroll;
+    m_autoscrollVelocityX = m_sct.m_autoscrollVelocityX;
+    m_autoscrollVelocityY = m_sct.m_autoscrollVelocityY;
 }
 
 LVL_Section::~LVL_Section()
@@ -56,49 +57,54 @@ LVL_Section::~LVL_Section()
     //tree.RemoveAll();
 }
 
+void LVL_Section::setScene(LevelScene *scene)
+{
+    m_scene = scene;
+}
+
 void LVL_Section::setData(const LevelSection &_d)
 {
-    data = _d;
-    isInit = true;
+    m_data = _d;
+    m_isInit = true;
     resetMusic();
-    curBgID = data.background;
-    changeSectionBorders(data.size_left, data.size_top, data.size_right, data.size_bottom);
+    m_curBgID = m_data.background;
+    changeSectionBorders(m_data.size_left, m_data.size_top, m_data.size_right, m_data.size_bottom);
 }
 
 void LVL_Section::changeSectionBorders(long left, long top, long right, long bottom)
 {
-    sectionBox.setTopLeft(left, top);
-    sectionBox.setBottomRight(right, bottom);
-    limitBox = sectionBox;
-    _background.setBox(sectionBox);
+    m_sectionBox.setTopLeft(left, top);
+    m_sectionBox.setBottomRight(right, bottom);
+    m_limitBox = m_sectionBox;
+    m_background.setBox(m_sectionBox);
 }
 
 void LVL_Section::changeLimitBorders(long left, long top, long right, long bottom)
 {
-    limitBox.setTopLeft(left, top);
-    limitBox.setBottomRight(right, bottom);
+    m_limitBox.setTopLeft(left, top);
+    m_limitBox.setBottomRight(right, bottom);
 }
 
 void LVL_Section::resetLimits()
 {
-    limitBox = sectionBox;
+    m_limitBox = m_sectionBox;
 }
 
 void LVL_Section::setMusicRoot(std::string _path)
 {
-    music_root = _path;
-    if(!music_root.empty())
+    m_music_root = _path;
+    if(!m_music_root.empty())
     {
-        if(music_root.back() != '/')
-            music_root.push_back('/');
+        if(m_music_root.back() != '/')
+            m_music_root.push_back('/');
     }
 }
 
 void LVL_Section::playMusic()
 {
-    std::string musFile = curCustomMus;
+    std::string musFile = m_curCustomMus;
     std::replace(musFile.begin(), musFile.end(), '\\', '/');
-    musFile = ConfigManager::getLvlMusic(curMus, music_root + musFile);
+    musFile = ConfigManager::getLvlMusic(m_curMus, m_music_root + musFile);
 
     if(!musFile.empty())
     {
@@ -111,93 +117,100 @@ void LVL_Section::playMusic()
 
 void LVL_Section::resetMusic()
 {
-    curMus = data.music_id;
-    curCustomMus = data.music_file;
+    m_curMus = m_data.music_id;
+    m_curCustomMus = m_data.music_file;
 }
 
 void LVL_Section::setMusic(unsigned int musID)
 {
-    curMus = musID;
+    m_curMus = musID;
 }
 
 void LVL_Section::setMusic(std::string musFile)
 {
-    curCustomMus = musFile;
+    m_curCustomMus = musFile;
 }
 
-void LVL_Section::renderBG(double x, double y, double w, double h)
+void LVL_Section::renderBackground(double x, double y, double w, double h)
 {
-    _background.draw(x, y, w, h);
+    m_background.drawBack(x, y, w, h);
+}
+
+void LVL_Section::renderInScene(double x, double y, double w, double h)
+{
+    m_background.drawInScene(x, y, w, h);
+}
+
+void LVL_Section::renderForeground(double x, double y, double w, double h)
+{
+    m_background.drawFront(x, y, w, h);
 }
 
 unsigned long LVL_Section::getBgId()
 {
-    return curBgID;
+    return m_curBgID;
 }
 
 void LVL_Section::initBG()
 {
-    setBG(curBgID);
+    setBG(m_curBgID);
 }
 
-void LVL_Section::setBG(unsigned long bgID)
+void LVL_Section::setBG(uint64_t bgID)
 {
-    if(_background.isInit() && (bgID == _background.curBgId())) return;
-
-    if((bgID > 0) && (ConfigManager::lvl_bg_indexes.contains(bgID)))
-    {
-        obj_BG *bgSetup = &ConfigManager::lvl_bg_indexes[bgID];
-        _background.setBg(*bgSetup);
-    }
+    if(m_background.isInit() && (bgID == m_background.curBgId()))
+        return;
+    if((bgID > 0) && ConfigManager::lvl_bg_indexes.contains(bgID))
+        m_background.setBg(ConfigManager::lvl_bg_indexes[bgID], m_scene);
     else
-        _background.setNone();
+        m_background.setBlank();
 
-    curBgID = bgID;
+    m_curBgID = bgID;
 }
 
 void LVL_Section::resetBG()
 {
-    setBG(data.background);
+    setBG(m_data.background);
 }
 
 PGE_RectF LVL_Section::sectionRect()
 {
-    return sectionBox;
+    return m_sectionBox;
 }
 
 PGE_RectF LVL_Section::sectionLimitBox()
 {
-    return limitBox;
+    return m_limitBox;
 }
 
 bool LVL_Section::isWrapH()
 {
-    return data.wrap_h;
+    return m_data.wrap_h;
 }
 
 bool LVL_Section::isWrapV()
 {
-    return data.wrap_v;
+    return m_data.wrap_v;
 }
 
 bool LVL_Section::LeftOnly()
 {
-    return data.lock_right_scroll;
+    return m_data.lock_right_scroll;
 }
 
 bool LVL_Section::RightOnly()
 {
-    return data.lock_left_scroll;
+    return m_data.lock_left_scroll;
 }
 
 bool LVL_Section::ExitOffscreen()
 {
-    return data.OffScreenEn;
+    return m_data.OffScreenEn;
 }
 
 int LVL_Section::getPhysicalEnvironment()
 {
-    return data.underwater ? LVL_PhysEnv::Env_Water : LVL_PhysEnv::Env_Air ;
+    return m_data.underwater ? LVL_PhysEnv::Env_Water : LVL_PhysEnv::Env_Air ;
 }
 
 //void LVL_Section::registerElement(PGE_Phys_Object *item)

@@ -11,7 +11,6 @@
 #include <luabind/detail/inheritance.hpp>
 
 namespace luabind {
-
 	namespace detail {
 
 		inline void inject_backref(lua_State*, void*, void*)
@@ -29,8 +28,7 @@ namespace luabind {
 		template< class T, class Pointer, class Signature, typename... Arguments, unsigned int... ArgumentIndices >
 		struct construct_aux_helper< T, Pointer, Signature, meta::type_list< Arguments... >, meta::index_list< ArgumentIndices... > >
 		{
-			typedef pointer_holder<Pointer, T> holder_type;
-			typedef meta::type_list< Arguments... > ArgumentList;
+			using holder_type = pointer_holder<Pointer, T>;
 
 			void operator()(argument const& self_, Arguments... args) const
 			{
@@ -44,18 +42,18 @@ namespace luabind {
 
 				void* storage = self->allocate(sizeof(holder_type));
 
-				self->set_instance(new (storage) holder_type(std::move( ptr ), registered_class<T>::id, naked_ptr));
+				self->set_instance(new (storage) holder_type(std::move(ptr), registered_class<T>::id, naked_ptr));
 			}
 		};
 
 
 		template< class T, class Pointer, class Signature >
 		struct construct :
-			public construct_aux_helper < 
-				T,
-				Pointer,
-				Signature, typename meta::sub_range< Signature, 2, meta::size<Signature>::value >::type,
-				typename meta::make_index_range<0, meta::size<Signature>::value - 2>::type >
+			public construct_aux_helper <
+			T,
+			Pointer,
+			Signature, typename meta::sub_range< Signature, 2, meta::size<Signature>::value >::type,
+			typename meta::make_index_range<0, meta::size<Signature>::value - 2>::type >
 		{
 		};
 

@@ -12,14 +12,14 @@
 # include <vector>
 # include <luabind/typeid.hpp>
 
-namespace luabind { 
+namespace luabind {
 
 	namespace detail {
 
-		typedef void*(*cast_function)(void*);
-		typedef std::size_t class_id;
+		using cast_function = void*(*)(void*);
+		using class_id      = std::size_t;
 
-		class_id const unknown_class = (std::numeric_limits<class_id>::max)();
+		constexpr class_id unknown_class = std::numeric_limits<class_id>::max();
 
 		class class_rep;
 
@@ -33,7 +33,7 @@ namespace luabind {
 			// for a polymorphic type, the pointer must be cast with
 			// dynamic_cast<void*> before being passed in here, and `src` has to
 			// match typeid(*p).
-			std::pair<void*, int> cast( void* p, class_id src, class_id target, class_id dynamic_id, void const* dynamic_ptr) const;
+			std::pair<void*, int> cast(void* p, class_id src, class_id target, class_id dynamic_id, void const* dynamic_ptr) const;
 			void insert(class_id src, class_id target, cast_function cast);
 
 		private:
@@ -55,7 +55,7 @@ namespace luabind {
 			void put(class_id id, type_id const& type);
 
 		private:
-			typedef std::map<type_id, class_id> map_type;
+			using map_type = std::map<type_id, class_id>;
 			map_type m_classes;
 			class_id m_local_id;
 
@@ -63,7 +63,7 @@ namespace luabind {
 		};
 
 		inline class_id_map::class_id_map()
-		  : m_local_id(local_id_base)
+			: m_local_id(local_id_base)
 		{}
 
 		inline class_id class_id_map::get(type_id const& type) const
@@ -71,7 +71,8 @@ namespace luabind {
 			map_type::const_iterator i = m_classes.find(type);
 			if(i == m_classes.end() || i->second >= local_id_base) {
 				return unknown_class;
-			} else {
+			}
+			else {
 				return i->second;
 			}
 		}
@@ -80,8 +81,8 @@ namespace luabind {
 		{
 			std::pair<map_type::iterator, bool> result = m_classes.insert(std::make_pair(type, 0));
 
-			if (result.second) result.first->second = m_local_id++;
-			assert(m_local_id>=local_id_base);
+			if(result.second) result.first->second = m_local_id++;
+			assert(m_local_id >= local_id_base);
 			return result.first->second;
 		}
 
@@ -113,14 +114,14 @@ namespace luabind {
 
 		inline class_rep* class_map::get(class_id id) const
 		{
-			if (id >= m_classes.size())
+			if(id >= m_classes.size())
 				return 0;
 			return m_classes[id];
 		}
 
 		inline void class_map::put(class_id id, class_rep* cls)
 		{
-			if (id >= m_classes.size())
+			if(id >= m_classes.size())
 				m_classes.resize(id + 1);
 			m_classes[id] = cls;
 		}
@@ -157,7 +158,7 @@ namespace luabind {
 
 		template <class T>
 		struct registered_class<T const>
-		  : registered_class<T>
+			: registered_class<T>
 		{};
 
 	}	// namespace detail

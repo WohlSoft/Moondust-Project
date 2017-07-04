@@ -27,50 +27,51 @@
 #include <luabind/config.hpp>
 #include <luabind/detail/primitives.hpp>
 
-namespace luabind { namespace detail
-{
-	template<class T>
-	struct decorated_type_helper
-	{
-		using type = by_value<T>;
-	};
+namespace luabind {
+	namespace detail {
 
-	template<class T>
-	struct decorated_type_helper<T*>
-	{
-		using type = by_pointer<T>;
-	};
+		template<class T>
+		struct decorated_type_helper
+		{
+			using type = by_value<T>;
+		};
 
-	template<class T>
-	struct decorated_type_helper<const T*>
-	{
-		using type = by_const_pointer<T>;
-	};
+		template<class T>
+		struct decorated_type_helper<T*>
+		{
+			using type = by_pointer<T>;
+		};
 
-	template<class T>
-	struct decorated_type_helper<const T* const>
-	{
-		using type = by_const_pointer<T>;
-	};
+		template<class T>
+		struct decorated_type_helper<const T*>
+		{
+			using type = by_const_pointer<T>;
+		};
 
-	template<class T>
-	struct decorated_type_helper<T&>
-	{
-		using type = by_reference<T>;
-	};
+		template<class T>
+		struct decorated_type_helper<const T* const>
+		{
+			using type = by_const_pointer<T>;
+		};
 
-	template<class T>
-	struct decorated_type_helper<const T&>
-	{
-		using type = by_const_reference<T>;
-	};
+		template<class T>
+		struct decorated_type_helper<T&>
+		{
+			using type = by_reference<T>;
+		};
 
-	template<class T>
-	struct decorated_type_helper<T&&>
-	{
-		using type = by_rvalue_reference<T>;
-	};
-}
+		template<class T>
+		struct decorated_type_helper<const T&>
+		{
+			using type = by_const_reference<T>;
+		};
+
+		template<class T>
+		struct decorated_type_helper<T&&>
+		{
+			using type = by_rvalue_reference<T>;
+		};
+	}
 
 	template< typename T >
 	using decorated_type = typename luabind::detail::decorated_type_helper<T>::type;

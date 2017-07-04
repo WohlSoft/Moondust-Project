@@ -26,10 +26,10 @@ class IniProcessing;
 
 struct BgSetup
 {
-    bool parse(IniProcessing* setup,
+    bool parse(IniProcessing *setup,
                PGEString bgImgPath,
                uint32_t defaultGrid,
-               BgSetup* merge_with = nullptr,
+               BgSetup *merge_with = nullptr,
                PGEString *error = nullptr);
 
     enum BgType
@@ -90,7 +90,7 @@ struct BgSetup
     //! Horizontal parallax coefficient
     double          repeat_h = 2.0;
     //! Algorithm of vertical repeat and parallax
-    uint32_t        repead_v = BG_REPEAT_V_NR_NoRepeat;
+    uint32_t        repeat_v = BG_REPEAT_V_NR_NoRepeat;
     //! Attach background to top or bottom of section
     uint32_t        attached = BG_ATTACH_TO_BOTTOM;
     //! Force editor draw background via tiling algorithm
@@ -170,7 +170,7 @@ struct BgSetup
     //! Maximal background distance
     long double     multi_parallax_auto_distance_min = -100.0l;
     //! Maximal background distance
-    long double     multi_parallax_auto_distance_max = 100.0l;
+    long double     multi_parallax_auto_distance_max = +100.0l;
 
     struct BgLayer
     {
@@ -180,20 +180,33 @@ struct BgSetup
         PGEString   image;
         //! Z index. <0 - background, >0 - foreground
         long double z_index = -50.0l;
+        //! Opacity of the layer
+        double      opacity = 1.0;
+
+        //! Flip background image Horizontally
+        bool        flip_h = false;
+        //! Flip background image Vertically
+        bool        flip_v = false;
+
+        //! Draw image as in-scene element
+        bool        inscene_draw = false;
+
         /// Horizontal parallax coefficient. In auto mode will be calculated automatically proportionally to z position
         /*!
-            - >1        parallax slower than section scrolling (far sky, city, forest, etc.)
-            - =1        statically relative section edge, (for example, a wall in the building)
-            - <1 but >0 faster than section scrolling (suggested for a foregrounds like plants, clouds, fog, etc.)
+            - =0        fixed position on the camera with no matter position in the section
+            - <1        parallax slower than section scrolling
+            - =1        statically relative section edge,
+            - >1        faster than section scrolling (suggested for a foregrounds like plants, clouds, fog, etc.)
         */
-        double      parallax_coefficient_x = 1.0;
+        double      parallax_x = 1.0;
         /// Vertical parallax coefficient
         /*!
-            - >1        parallax slower than section scrolling
+            - =0        fixed position on the camera with no matter position in the section
+            - <1        parallax slower than section scrolling
             - =1        statically relative section edge,
-            - <1 but >0 faster than section scrolling
+            - >1        faster than section scrolling
         */
-        double      parallax_coefficient_y = 1.0;
+        double      parallax_y = 1.0;
 
         enum ParallaxModes
         {
@@ -235,20 +248,24 @@ struct BgSetup
         double      offset_x = 0.0;
         //! Initial offset Y at top/bottop section edge (dependent on vertical reference point)
         double      offset_y = 0.0;
-        //! Horizontal padding between repeating tiles
-        double      padding_x = 0.0;
-        //! Vertical padding between repeating tiles
-        double      padding_y = 0.0;
+        //! Horizontal padding at right between repeating tiles
+        double      padding_x_right       = 0.0;
+        //! Horizontal padding at left between repeating tiles
+        double      padding_x_left  = 0.0;
+        //! Vertical padding at bottom between repeating tiles
+        double      padding_y_bottom       = 0.0;
+        //! Vertical padding at top between repeating tiles
+        double      padding_y_top   = 0.0;
 
         //! Auto-scroll image (works when releat X is enabled)
         bool        auto_scrolling_x = false;
         //! Auto-scroll speed in pixels per second
-        uint32_t    auto_scrolling_x_speed = 32;
+        int32_t     auto_scrolling_x_speed = 32;
 
         //! Auto-scroll image (works when releat Y is enabled)
         bool        auto_scrolling_y = false;
         //! Auto-scroll speed in pixels per second
-        uint32_t    auto_scrolling_y_speed = 32;
+        int32_t     auto_scrolling_y_speed = 32;
 
         //! Is this layer animated?
         bool            animated = false;

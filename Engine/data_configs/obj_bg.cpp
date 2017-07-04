@@ -23,6 +23,7 @@
 #include <fmt/fmt_format.h>
 #include <Utils/files.h>
 #include <graphics/gl_color.h>
+#include <graphics/gl_renderer.h>
 
 /*****Level BG************/
 PGE_DataArray<obj_BG>           ConfigManager::lvl_bg_indexes;
@@ -65,6 +66,10 @@ bool ConfigManager::loadLevelBackground(obj_BG &sbg, std::string section, obj_BG
             valid = false;
         }
     }
+
+    sbg.texturePerLayer.resize(sbg.setup.layers.size());
+    for(obj_BG::TextureId &id : sbg.texturePerLayer)
+        id = obj_BG::TextureId();
 
     if(sbg.setup.fill_color != "auto")
     {

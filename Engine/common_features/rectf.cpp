@@ -94,7 +94,7 @@ void PGE_RectF::setBottom(double b)
     m_h = m_b - m_y;
 }
 
-PGE_RectF PGE_RectF::withMargin(double margin)
+PGE_RectF PGE_RectF::withMargin(double margin) const
 {
     PGE_RectF rect;
     rect.m_x = m_x - margin;
@@ -106,7 +106,7 @@ PGE_RectF PGE_RectF::withMargin(double margin)
     return rect;
 }
 
-PGE_RectF PGE_RectF::withMargin(double marginX, double marginY)
+PGE_RectF PGE_RectF::withMargin(double marginX, double marginY) const
 {
     PGE_RectF rect;
     rect.m_x = m_x - marginX;
@@ -206,140 +206,116 @@ void PGE_RectF::setBottomLeft(double l, double b)
 
 
 
-double PGE_RectF::x()
+double PGE_RectF::x() const
 {
     return m_x;
 }
 
-double PGE_RectF::y()
+double PGE_RectF::y() const
 {
     return m_y;
 }
 
-double PGE_RectF::left()
+double PGE_RectF::left() const
 {
     return m_x;
 }
 
-double PGE_RectF::top()
+double PGE_RectF::top() const
 {
     return m_y;
 }
 
-double PGE_RectF::bottom()
+double PGE_RectF::bottom() const
 {
     return m_b;
 }
 
-double PGE_RectF::right()
+double PGE_RectF::right() const
 {
     return m_r;
 }
 
-double PGE_RectF::width()
+double PGE_RectF::width() const
 {
     return m_w;
 }
 
-double PGE_RectF::height()
+double PGE_RectF::height() const
 {
     return m_h;
 }
 
-PGE_PointF PGE_RectF::center()
+PGE_PointF PGE_RectF::center() const
 {
     return PGE_PointF(m_x + m_w / 2.0, m_y + m_h / 2.0);
 }
 
-PGE_SizeF PGE_RectF::size()
+PGE_SizeF PGE_RectF::size() const
 {
     return PGE_SizeF(m_w, m_h);
 }
 
-double PGE_RectF::centerX()
+double PGE_RectF::centerX() const
 {
     return m_x + m_w / 2.0;
 }
 
-double PGE_RectF::centerY()
+double PGE_RectF::centerY() const
 {
     return m_y + m_h / 2.0;
 }
 
-bool PGE_RectF::collidePoint(double x, double y)
+bool PGE_RectF::collidePoint(double x, double y) const
 {
     if(x < m_x) return false;
-
     if(y < m_y) return false;
-
     if(x > m_r) return false;
-
     if(y > m_b) return false;
-
     return true;
 }
 
-bool PGE_RectF::collideRect(double x, double y, double w, double h)
+bool PGE_RectF::collideRect(double x, double y, double w, double h) const
 {
     if((x + w) < m_x) return false;
-
     if((y + h) < m_y) return false;
-
     if(x > m_r) return false;
-
     if(y > m_b) return false;
-
     return true;
 }
 
-bool PGE_RectF::collideRect(PGE_RectF &rect)
+bool PGE_RectF::collideRect(PGE_RectF &rect) const
 {
     if(rect.m_r < m_x) return false;
-
     if(rect.m_b < m_y) return false;
-
     if(rect.m_x > m_r) return false;
-
     if(rect.m_y > m_b) return false;
-
     return true;
 }
 
-bool PGE_RectF::collideRectDeep(PGE_RectF &rect, double deep)
+bool PGE_RectF::collideRectDeep(PGE_RectF &rect, double depth) const
 {
-    if(rect.m_r < (m_x + deep)) return false;
-
-    if(rect.m_b < (m_y + deep)) return false;
-
-    if(rect.m_x > (m_r - deep)) return false;
-
-    if(rect.m_y > (m_b - deep)) return false;
-
+    if(rect.m_r < (m_x + depth)) return false;
+    if(rect.m_b < (m_y + depth)) return false;
+    if(rect.m_x > (m_r - depth)) return false;
+    if(rect.m_y > (m_b - depth)) return false;
     return true;
 }
 
-bool PGE_RectF::collideRectDeep(PGE_RectF &rect, double deepX, double deepY)
+bool PGE_RectF::collideRectDeep(PGE_RectF &rect, double deepX, double deepY) const
 {
     if(rect.m_r < (m_x + deepX)) return false;
-
     if(rect.m_b < (m_y + deepY)) return false;
-
     if(rect.m_x > (m_r - deepX)) return false;
-
     if(rect.m_y > (m_b - deepY)) return false;
-
     return true;
 }
 
-bool PGE_RectF::collideRect(PGE_Rect &rect)
+bool PGE_RectF::collideRect(PGE_Rect &rect) const
 {
     if(rect.m_r < int(m_x)) return false;
-
     if(rect.m_b < int(m_y)) return false;
-
     if(rect.m_x > int(m_r)) return false;
-
     if(rect.m_y > int(m_b)) return false;
-
     return true;
 }

@@ -48,7 +48,7 @@
 
 namespace luabind {
 
-	LUABIND_API void set_package_preload(lua_State * L, const char * modulename, int (*loader) (lua_State *));
+	LUABIND_API void set_package_preload(lua_State * L, const char * modulename, int(*loader) (lua_State *));
 }
 #endif // INCLUDED_set_package_preload_hpp_GUID_563c882e_86f7_4ea7_8603_4594ea41737e
 

@@ -55,17 +55,17 @@ void PGE_Point::setY(int y)
     m_y = y;
 }
 
-bool PGE_Point::isNull()
+bool PGE_Point::isNull() const
 {
     return ((m_x == 0) && (m_y == 0));
 }
 
-int PGE_Point::x()
+int PGE_Point::x() const
 {
     return m_x;
 }
 
-int PGE_Point::y()
+int PGE_Point::y() const
 {
     return m_y;
 }

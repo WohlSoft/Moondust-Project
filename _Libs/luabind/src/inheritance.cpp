@@ -12,8 +12,7 @@
 #include <luabind/typeid.hpp>
 #include <luabind/detail/inheritance.hpp>
 
-namespace luabind { 
-	
+namespace luabind {
 	namespace detail {
 
 		class_id const class_id_map::local_id_base = std::numeric_limits<class_id>::max() / 2;
@@ -46,27 +45,27 @@ namespace luabind {
 				std::vector<edge> edges;
 			};
 
-			typedef std::pair<std::ptrdiff_t, int> cache_entry;
+			using cache_entry = std::pair<std::ptrdiff_t, int>;
 
 			class cache
 			{
 			public:
-				static std::ptrdiff_t const unknown;
-				static std::ptrdiff_t const invalid;
+				static constexpr std::ptrdiff_t unknown = std::numeric_limits<std::ptrdiff_t>::max();
+				static constexpr std::ptrdiff_t invalid = unknown - 1;
 
 				cache_entry get(class_id src, class_id target, class_id dynamic_id, std::ptrdiff_t object_offset) const;
 
-				void put( class_id src, class_id target, class_id dynamic_id, std::ptrdiff_t object_offset, std::ptrdiff_t offset, int distance);
+				void put(class_id src, class_id target, class_id dynamic_id, std::ptrdiff_t object_offset, std::ptrdiff_t offset, int distance);
 				void invalidate();
 
 			private:
-				typedef std::tuple<class_id, class_id, class_id, std::ptrdiff_t> key_type;
-				typedef std::map<key_type, cache_entry> map_type;
+				using key_type = std::tuple<class_id, class_id, class_id, std::ptrdiff_t>;
+				using map_type = std::map<key_type, cache_entry>;
 				map_type m_cache;
 			};
 
-			std::ptrdiff_t const cache::unknown = std::numeric_limits<std::ptrdiff_t>::max();
-			std::ptrdiff_t const cache::invalid = cache::unknown - 1;
+			constexpr std::ptrdiff_t cache::unknown;
+			constexpr std::ptrdiff_t cache::invalid;
 
 			cache_entry cache::get(class_id src, class_id target, class_id dynamic_id, std::ptrdiff_t object_offset) const
 			{
@@ -106,9 +105,9 @@ namespace luabind {
 			struct queue_entry
 			{
 				queue_entry(void* p, class_id vertex_id, int distance)
-				: p(p)
-				, vertex_id(vertex_id)
-				, distance(distance)
+					: p(p)
+					, vertex_id(vertex_id)
+					, distance(distance)
 				{}
 
 				void* p;
@@ -120,15 +119,15 @@ namespace luabind {
 
 		std::pair<void*, int> cast_graph::impl::cast(void* const p, class_id src, class_id target, class_id dynamic_id, void const* dynamic_ptr) const
 		{
-			if (src == target) return std::make_pair(p, 0);
-			if (src >= m_vertices.size() || target >= m_vertices.size()) return std::pair<void*, int>((void*)0, -1);
+			if(src == target) return std::make_pair(p, 0);
+			if(src >= m_vertices.size() || target >= m_vertices.size()) return std::pair<void*, int>((void*)0, -1);
 
 			std::ptrdiff_t const object_offset = (char const*)dynamic_ptr - (char const*)p;
 			cache_entry cached = m_cache.get(src, target, dynamic_id, object_offset);
 
-			if (cached.first != cache::unknown)
+			if(cached.first != cache::unknown)
 			{
-				if (cached.first == cache::invalid)
+				if(cached.first == cache::invalid)
 					return std::pair<void*, int>((void*)0, -1);
 				return std::make_pair((char*)p + cached.first, cached.second);
 			}
@@ -140,9 +139,9 @@ namespace luabind {
 			// of its advanced capability of set operations, that's why I think
 			// it's safe to use a std::vector<bool> here.
 
-			std::vector<bool> visited(m_vertices.size(),false);
+			std::vector<bool> visited(m_vertices.size(), false);
 
-			while (!q.empty())
+			while(!q.empty())
 			{
 				queue_entry const qe = q.front();
 				q.pop();
@@ -150,7 +149,7 @@ namespace luabind {
 				visited[qe.vertex_id] = true;
 				vertex const& v = m_vertices[qe.vertex_id];
 
-				if (v.id == target)
+				if(v.id == target)
 				{
 					m_cache.put(
 						src, target, dynamic_id, object_offset
@@ -160,10 +159,10 @@ namespace luabind {
 					return std::make_pair(qe.p, qe.distance);
 				}
 
-				for (auto const& e : v.edges) {
-					if (visited[e.target])
+				for(auto const& e : v.edges) {
+					if(visited[e.target])
 						continue;
-					if (void* casted = e.cast(qe.p))
+					if(void* casted = e.cast(qe.p))
 						q.push(queue_entry(casted, e.target, qe.distance + 1));
 				}
 			}
@@ -177,10 +176,10 @@ namespace luabind {
 		{
 			class_id const max_id = std::max(src, target);
 
-			if (max_id >= m_vertices.size())
+			if(max_id >= m_vertices.size())
 			{
 				m_vertices.reserve(max_id + 1);
-				for (class_id i = m_vertices.size(); i < max_id + 1; ++i)
+				for(class_id i = m_vertices.size(); i < max_id + 1; ++i)
 					m_vertices.push_back(vertex(i));
 			}
 
@@ -190,7 +189,7 @@ namespace luabind {
 				edges.begin(), edges.end(), edge(target, 0)
 			);
 
-			if (i == edges.end() || i->target != target)
+			if(i == edges.end() || i->target != target)
 			{
 				edges.insert(i, edge(target, cast));
 				m_cache.invalidate();
@@ -216,18 +215,17 @@ namespace luabind {
 
 		LUABIND_API class_id allocate_class_id(type_id const& cls)
 		{
-			typedef std::map<type_id, class_id> map_type;
+			using map_type = std::map<type_id, class_id>;
 
 			static map_type registered;
 			static class_id id = 0;
 
 			std::pair<map_type::iterator, bool> inserted = registered.insert(std::make_pair(cls, id));
-			if (inserted.second) ++id;
+			if(inserted.second) ++id;
 
 			return inserted.first->second;
 		}
 
-	}	// namespace detail
-
+	} // namespace detail
 } // namespace luabind
 

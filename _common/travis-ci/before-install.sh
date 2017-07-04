@@ -11,9 +11,9 @@ then
         sudo ln -s /home/travis /home/runner
     fi
 
-    QtCacheFolder=qtcache580
-    QtTarballName=qt-5-8-0-static-ubuntu-14-04-x64-gcc6.tar.bz2
-    QtStaticVersion=5.8.0_static
+    QtCacheFolder=qtcache590
+    QtTarballName=qt-5.9.0-static-ubuntu-14-04-x64-gcc6.tar.bz2
+    QtStaticVersion=5.9.0_static
 
     bash _Misc/dev_scripts/generate_version_files.sh
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa

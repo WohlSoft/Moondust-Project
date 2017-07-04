@@ -16,7 +16,7 @@ namespace luabind {
 			argument(from_stack const& stack_reference)
 				: m_interpreter(stack_reference.interpreter), m_index(stack_reference.index)
 			{
-				if(m_index<0) m_index = lua_gettop(m_interpreter)-m_index+1;
+				if(m_index < 0) m_index = lua_gettop(m_interpreter) - m_index + 1;
 			}
 
 			template<class T>
@@ -47,7 +47,7 @@ namespace luabind {
 	template<>
 	struct lua_proxy_traits<argument>
 	{
-		typedef std::true_type is_specialized;
+		using is_specialized = std::true_type;
 
 		static lua_State* interpreter(argument const& value)
 		{

@@ -54,6 +54,11 @@ class AppPathManager
          */
         static QString languagesDir();
         /**
+         * @brief Path to logs directory
+         * @return Path to logs directory
+         */
+        static QString logsDir();
+        /**
          * @brief Process installation (make user directory, save properties to operating system registry)
          */
         static void install();

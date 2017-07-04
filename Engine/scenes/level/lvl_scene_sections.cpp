@@ -91,12 +91,12 @@ LVL_Section *LevelScene::getSection(int sct)
 {
     if((sct >= 0) && (sct < int32_t(m_sections.size())))
     {
-        if(m_sections[sct].data.id == sct)
+        if(m_sections[sct].m_data.id == sct)
             return &m_sections[sct];
         else
         {
             for(LVL_SectionsList::iterator it = m_sections.begin(); it != m_sections.end(); it++)
-                if(it->data.id == sct)
+                if(it->m_data.id == sct)
                     return &(*it);
         }
     }

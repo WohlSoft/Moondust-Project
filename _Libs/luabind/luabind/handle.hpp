@@ -31,7 +31,7 @@ namespace luabind {
 
 	// A reference to a Lua value. Represents an entry in the
 	// registry table.
-	class handle 
+	class handle
 	{
 	public:
 		handle();
@@ -55,13 +55,13 @@ namespace luabind {
 	};
 
 	inline handle::handle()
-	  : m_interpreter(0), m_index(LUA_NOREF)
+		: m_interpreter(0), m_index(LUA_NOREF)
 	{}
 
 	inline handle::handle(handle const& other)
 		: m_interpreter(other.m_interpreter), m_index(LUA_NOREF)
 	{
-		if (m_interpreter == 0) return;
+		if(m_interpreter == 0) return;
 		lua_rawgeti(m_interpreter, LUA_REGISTRYINDEX, other.m_index);
 		m_index = luaL_ref(m_interpreter, LUA_REGISTRYINDEX);
 	}
@@ -82,7 +82,7 @@ namespace luabind {
 
 	inline handle::~handle()
 	{
-		if (m_interpreter && m_index != LUA_NOREF) luaL_unref(m_interpreter, LUA_REGISTRYINDEX, m_index);
+		if(m_interpreter && m_index != LUA_NOREF) luaL_unref(m_interpreter, LUA_REGISTRYINDEX, m_index);
 	}
 
 	inline handle& handle::operator=(handle const& other)
@@ -116,13 +116,13 @@ namespace luabind {
 	template<>
 	struct lua_proxy_traits<handle>
 	{
-		typedef std::true_type is_specialized;
+		using is_specialized = std::true_type;
 
 		static lua_State* interpreter(handle const& value)
 		{
 			return value.interpreter();
 		}
-    
+
 		static void unwrap(lua_State* interpreter, handle const& value)
 		{
 			value.push(interpreter);

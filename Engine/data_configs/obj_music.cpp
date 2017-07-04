@@ -9,8 +9,8 @@
 #include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
 
-unsigned long ConfigManager::music_custom_id;
-unsigned long ConfigManager::music_w_custom_id;
+uint64_t        ConfigManager::music_custom_id;
+uint64_t        ConfigManager::music_w_custom_id;
 PGE_DataArray<obj_music> ConfigManager::main_music_lvl;
 PGE_DataArray<obj_music> ConfigManager::main_music_wld;
 PGE_DataArray<obj_music> ConfigManager::main_music_spc;
@@ -284,7 +284,7 @@ skipLvlMusic:
     return true;
 }
 
-std::string ConfigManager::getWldMusic(unsigned long musicID, std::string customMusic)
+std::string ConfigManager::getWldMusic(uint64_t musicID, std::string customMusic)
 {
     if(musicID == 0)
         return "";
@@ -296,7 +296,7 @@ std::string ConfigManager::getWldMusic(unsigned long musicID, std::string custom
         return "";
 }
 
-std::string ConfigManager::getLvlMusic(unsigned long musicID, std::string customMusic)
+std::string ConfigManager::getLvlMusic(uint64_t musicID, std::string customMusic)
 {
     if(musicID == 0)
         return "";
@@ -308,7 +308,7 @@ std::string ConfigManager::getLvlMusic(unsigned long musicID, std::string custom
         return "";
 }
 
-std::string ConfigManager::getSpecialMusic(unsigned long musicID)
+std::string ConfigManager::getSpecialMusic(uint64_t musicID)
 {
     if(musicID == 0)
         return "";

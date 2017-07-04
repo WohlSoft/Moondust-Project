@@ -455,18 +455,16 @@ void LevelScene::update()
             cam.updatePost(uTickf);
             //! --------------DRAW HUD--------------------------------------
             LuaEngine *sceneLuaEngine = getLuaEngine();
-
             if(sceneLuaEngine)
             {
                 if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown())
                 {
                     LuaEvent drawHUDEvent = BindingCore_Events_Engine::createDrawLevelHUDEvent(sceneLuaEngine,
                                             &cam,
-                                            &m_playerStates[cam.playerID - 1]);
+                                            &m_playerStates[(size_t)(cam.playerID - 1)]);
                     sceneLuaEngine->dispatchEvent(drawHUDEvent);
                 }
             }
-
             //! ------------------------------------------------------------
         }
 
@@ -650,7 +648,6 @@ void LevelScene::render()
     }
 
 renderBlack:
-    //Scene::render();
     {
         if(!m_fader.isNull())
             GlRenderer::renderRect(0.f,

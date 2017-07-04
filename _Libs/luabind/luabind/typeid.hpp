@@ -10,45 +10,45 @@
 
 namespace luabind {
 
-class type_id
-{
-public:
-    type_id()
-      : id(&typeid(detail::null_type))
-    {}
-
-    type_id(std::type_info const& id)
-      : id(&id)
-    {}
-
-    bool operator!=(type_id const& other) const
-    {
-        return *id != *other.id;
-    }
-
-    bool operator==(type_id const& other) const
-    {
-        return *id == *other.id;
-    }
-
-    bool operator<(type_id const& other) const
-    {
-        return id->before(*other.id);
-    }
-
-	size_t hash_code() const
+	class type_id
 	{
-		return id->hash_code();
-	}
+	public:
+		type_id()
+			: id(&typeid(detail::null_type))
+		{}
 
-    char const* name() const
-    {
-        return id->name();
-    }
+		type_id(std::type_info const& id)
+			: id(&id)
+		{}
 
-private:
-    std::type_info const* id;
-};
+		bool operator!=(type_id const& other) const
+		{
+			return *id != *other.id;
+		}
+
+		bool operator==(type_id const& other) const
+		{
+			return *id == *other.id;
+		}
+
+		bool operator<(type_id const& other) const
+		{
+			return id->before(*other.id);
+		}
+
+		size_t hash_code() const
+		{
+			return id->hash_code();
+		}
+
+		char const* name() const
+		{
+			return id->name();
+		}
+
+	private:
+		std::type_info const* id;
+	};
 
 } // namespace luabind
 

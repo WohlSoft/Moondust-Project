@@ -181,114 +181,98 @@ void PGE_Rect::setBottomLeft(int l, int b)
 
 
 
-int PGE_Rect::x()
+int PGE_Rect::x() const
 {
     return m_x;
 }
 
-int PGE_Rect::y()
+int PGE_Rect::y() const
 {
     return m_y;
 }
 
-int PGE_Rect::left()
+int PGE_Rect::left() const
 {
     return m_x;
 }
 
-int PGE_Rect::top()
+int PGE_Rect::top() const
 {
     return m_y;
 }
 
-int PGE_Rect::bottom()
+int PGE_Rect::bottom() const
 {
     return m_b;
 }
 
-int PGE_Rect::right()
+int PGE_Rect::right() const
 {
     return m_r;
 }
 
-int PGE_Rect::width()
+int PGE_Rect::width() const
 {
     return m_w;
 }
 
-int PGE_Rect::height()
+int PGE_Rect::height() const
 {
     return m_h;
 }
 
-PGE_Point PGE_Rect::center()
+PGE_Point PGE_Rect::center() const
 {
     return PGE_Point(m_x + (m_w / 2), m_y + (m_h / 2));
 }
 
-PGE_Size PGE_Rect::size()
+PGE_Size PGE_Rect::size() const
 {
     return PGE_Size(m_w, m_h);
 }
 
-int PGE_Rect::centerX()
+int PGE_Rect::centerX() const
 {
     return static_cast<int>(m_x + (m_w / 2));
 }
 
-int PGE_Rect::centerY()
+int PGE_Rect::centerY() const
 {
     return static_cast<int>(m_y + (m_h / 2));
 }
 
-bool PGE_Rect::collidePoint(int x, int y)
+bool PGE_Rect::collidePoint(int x, int y) const
 {
     if(x < m_x) return false;
-
     if(y < m_y) return false;
-
     if(x > m_r) return false;
-
     if(y > m_b) return false;
-
     return true;
 }
 
-bool PGE_Rect::collideRect(int x, int y, int w, int h)
+bool PGE_Rect::collideRect(int x, int y, int w, int h) const
 {
     if((x + w) < m_x) return false;
-
     if((y + h) < m_y) return false;
-
     if(x > m_r) return false;
-
     if(y > m_b) return false;
-
     return true;
 }
 
-bool PGE_Rect::collideRect(PGE_Rect &rect)
+bool PGE_Rect::collideRect(PGE_Rect &rect) const
 {
     if(rect.m_r < m_x) return false;
-
     if(rect.m_b < m_y) return false;
-
     if(rect.m_x > m_r) return false;
-
     if(rect.m_y > m_b) return false;
-
     return true;
 }
 
-bool PGE_Rect::collideRect(PGE_RectF &rect)
+bool PGE_Rect::collideRect(PGE_RectF &rect) const
 {
     if(static_cast<int>(rect.m_r) < m_x) return false;
-
     if(static_cast<int>(rect.m_b) < m_y) return false;
-
     if(static_cast<int>(rect.m_x) > m_r) return false;
-
     if(static_cast<int>(rect.m_y) > m_b) return false;
-
     return true;
 }

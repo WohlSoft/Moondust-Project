@@ -28,31 +28,33 @@
 #include <luabind/detail/primitives.hpp>  // for null_type, etc
 #include <luabind/lua_include.hpp>
 
-namespace luabind { namespace detail 
-{
-	struct discard_converter
-	{
-		template<class T>
-		void to_lua(lua_State*, T) {}
-	};
+namespace luabind {
+	namespace detail {
 
-	struct discard_result_policy
-	{
-		struct can_only_convert_from_cpp_to_lua {};
-
-		template<class T, class Direction>
-		struct specialize
+		struct discard_converter
 		{
-			static_assert( std::is_same< Direction, cpp_to_lua >::value, "Can only convert from cpp to lua" );
-			typedef discard_converter type;
+			template<class T>
+			void to_lua(lua_State*, T) {}
 		};
-	};
 
-}}
+		struct discard_result_policy
+		{
+			struct can_only_convert_from_cpp_to_lua {};
+
+			template<class T, class Direction>
+			struct specialize
+			{
+				static_assert(std::is_same< Direction, cpp_to_lua >::value, "Can only convert from cpp to lua");
+				using type = discard_converter;
+			};
+		};
+
+	}
+}
 
 namespace luabind
 {
-   using discard_result = meta::type_list<converter_policy_injector<0,detail::discard_result_policy>>;
+	using discard_result = meta::type_list<converter_policy_injector<0, detail::discard_result_policy>>;
 }
 
 #endif // LUABIND_DISCARD_RESULT_POLICY_HPP_INCLUDED

@@ -47,11 +47,11 @@ namespace luabind
 			// pcall will pop the function and self reference
 			// and all the parameters
 
-			meta::init_order{(
+			meta::init_order{ (
 				specialized_converter_policy_n<Indices, PolicyList, typename unwrapped<Args>::type, cpp_to_lua>().to_lua(L, unwrapped<Args>::get(std::forward<Args>(args))), 0)...
 			};
 
-			if (pcall(L, sizeof...(Args) + 1, 0))
+			if(pcall(L, sizeof...(Args)+1, 0))
 			{
 				assert(lua_gettop(L) == top + 1);
 				call_error(L);
@@ -70,11 +70,11 @@ namespace luabind
 			// pcall will pop the function and self reference
 			// and all the parameters
 
-			meta::init_order{(
+			meta::init_order{ (
 				specialized_converter_policy_n<Indices, PolicyList, typename unwrapped<Args>::type, cpp_to_lua>().to_lua(L, unwrapped<Args>::get(std::forward<Args>(args))), 0)...
 			};
 
-			if (pcall(L, sizeof...(Args) +1, 1))
+			if(pcall(L, sizeof...(Args)+1, 1))
 			{
 				assert(lua_gettop(L) == top + 1);
 				call_error(L);
@@ -83,7 +83,7 @@ namespace luabind
 			stack_pop pop(L, lua_gettop(L) - top);
 
 			specialized_converter_policy_n<0, PolicyList, R, lua_to_cpp> converter;
-			if (converter.match(L, decorated_type<R>(), -1) < 0) {
+			if(converter.match(L, decorated_type<R>(), -1) < 0) {
 				cast_error<R>(L);
 			}
 
@@ -92,7 +92,7 @@ namespace luabind
 
 
 	} // detail
-	
+
 	template<class R, typename PolicyList = no_policies, typename... Args>
 	R call_member(object const& obj, const char* name, Args&&... args)
 	{
@@ -112,7 +112,7 @@ namespace luabind
 		// are on the stack. These will both
 		// be popped by pcall
 
-		return detail::call_member_impl<R,PolicyList>(obj.interpreter(), std::is_void<R>(), meta::index_range<1, sizeof...(Args)+1>(), std::forward<Args>(args)...);
+		return detail::call_member_impl<R, PolicyList>(obj.interpreter(), std::is_void<R>(), meta::index_range<1, sizeof...(Args)+1>(), std::forward<Args>(args)...);
 	}
 
 	template <class R, typename... Args>

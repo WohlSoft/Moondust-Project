@@ -48,6 +48,17 @@ struct obj_BG
     PGEColor        second_Color_lower;
     /*   OpenGL    */
 
+    struct TextureId
+    {
+        GLuint      textureId = 0;
+        PGE_Texture *image = nullptr;
+        int64_t     textureArrayId = -1;
+        int64_t     animatorId = -1;
+    };
+
+    //! Level textures bank index per every layer. -1 is not loaded, >=0 index
+    std::vector<TextureId> texturePerLayer;
+
     BgSetup setup;
 };
 

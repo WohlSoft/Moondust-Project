@@ -31,10 +31,9 @@
 #include <type_traits>	// std::aligned_storage
 #include <cstdlib>
 
-namespace luabind { 
-	
+namespace luabind {
 	namespace detail {
-		
+
 		void finalize(lua_State* L, class_rep* crep);
 
 		// this class is allocated inside lua for each pointer.
@@ -52,11 +51,10 @@ namespace luabind {
 			void set_instance(instance_holder* instance) { m_instance = instance; }
 
 			void add_dependency(lua_State* L, int index);
-			void release_dependency_refs(lua_State* L);
 
 			std::pair<void*, int> get_instance(class_id target) const
 			{
-				if (m_instance == 0)
+				if(m_instance == 0)
 					return std::pair<void*, int>(nullptr, -1);
 				return m_instance->get(m_classrep->casts(), target);
 			}
@@ -68,25 +66,27 @@ namespace luabind {
 
 			void release()
 			{
-				if (m_instance)
+				if(m_instance)
 					m_instance->release();
 			}
 
 			void* allocate(std::size_t size)
 			{
-				if (size <= 32) {
+				if(size <= 32) {
 					return &m_instance_buffer;
-				} else {
+				}
+				else {
 					return std::malloc(size);
 				}
-			
+
 			}
 
 			void deallocate(void* storage)
 			{
-				if (storage == &m_instance_buffer) {
+				if(storage == &m_instance_buffer) {
 					return;
-				} else {
+				}
+				else {
 					std::free(storage);
 				}
 			}
@@ -98,7 +98,7 @@ namespace luabind {
 			instance_holder* m_instance;
 			std::aligned_storage<32>::type m_instance_buffer;
 			class_rep* m_classrep; // the class information about this object's type
-			std::size_t m_dependency_cnt; // counts dependencies
+			detail::lua_reference m_dependency_ref; // reference to lua table holding dependency references
 		};
 
 		template<class T>

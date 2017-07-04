@@ -28,13 +28,12 @@
 #include <luabind/detail/conversion_policies/conversion_base.hpp>
 
 namespace luabind {
-
 	namespace detail {
 
 		struct enum_converter
 		{
-			typedef enum_converter type;
-			typedef std::false_type is_native;
+			using type      = enum_converter;
+			using is_native = std::false_type;
 
 			enum { consumed_args = 1 };
 
@@ -52,7 +51,7 @@ namespace luabind {
 			template<class T>
 			static int match(lua_State* L, by_value<T>, int index)
 			{
-				if (lua_isnumber(L, index)) {
+				if(lua_isnumber(L, index)) {
 					return 0;
 				}
 				else {
@@ -69,7 +68,7 @@ namespace luabind {
 			template<class T>
 			static int match(lua_State* L, by_const_reference<T>, int index)
 			{
-				if (lua_isnumber(L, index)) return 0; else return no_match;
+				if(lua_isnumber(L, index)) return 0; else return no_match;
 			}
 
 			template<class T>

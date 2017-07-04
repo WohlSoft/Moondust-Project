@@ -42,12 +42,11 @@
 #endif
 
 namespace luabind {
+	namespace adl {
 
-	namespace adl
-	{
 		// An object holds a reference to a Lua value residing
 		// in the registry.
-		class object : 
+		class object :
 			public lua_proxy_interface<object>
 		{
 		public:
@@ -88,7 +87,7 @@ namespace luabind {
 			{
 				return index_proxy<object>(
 					*this, m_handle.interpreter(), key
-				);
+					);
 			}
 
 			void swap(object& other)
@@ -122,7 +121,7 @@ namespace luabind {
 	template<>
 	struct lua_proxy_traits<object>
 	{
-		typedef std::true_type is_specialized;
+		using is_specialized = std::true_type;
 
 		static lua_State* interpreter(object const& value)
 		{
@@ -168,7 +167,7 @@ namespace luabind {
 	template<typename PolicyList, typename... Args>
 	object adl::lua_proxy_interface<ProxyType>::call(Args&&... args)
 	{
-		return call_function<object,PolicyList>(derived(), std::forward<Args>(args)...);
+		return call_function<object, PolicyList>(derived(), std::forward<Args>(args)...);
 	}
 
 	// declared in luabind/lua_proxy_interface.hpp
@@ -204,7 +203,7 @@ namespace luabind {
 		struct table : Base
 		{
 			table(from_stack const& stack_reference)
-			: Base(stack_reference)
+				: Base(stack_reference)
 			{}
 		};
 
@@ -264,7 +263,7 @@ namespace luabind {
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(table);
 
 		// TODO: Exception safe?
-    
+
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, table);
 		detail::stack_pop pop(interpreter, 1);
 		detail::push(interpreter, key);
@@ -294,7 +293,7 @@ namespace luabind {
 		);
 
 		// TODO: Exception safe?
-    
+
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, table);
 		detail::stack_pop pop(interpreter, 1);
 		detail::push(interpreter, key);
@@ -338,7 +337,7 @@ namespace luabind {
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(value);
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, value);
 		detail::stack_pop pop(interpreter, 2);
-		const char* name = lua_getupvalue(interpreter, -1, index);		
+		const char* name = lua_getupvalue(interpreter, -1, index);
 		return std::make_tuple(name, object(from_stack(interpreter, -1)));
 	}
 
@@ -374,7 +373,7 @@ namespace luabind {
 		detail::stack_pop pop(interpreter, 1);
 		return object(from_stack(interpreter, -1));
 	}
-	
+
 } // namespace luabind
 
 #if LUA_VERSION_NUM < 502

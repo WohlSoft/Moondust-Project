@@ -57,17 +57,17 @@ class PGE_PointF
             m_y = y;
         }
 
-        inline bool isNull()
+        inline bool isNull() const
         {
             return ((m_x == 0.0) && (m_y == 0.0));
         }
 
-        inline double x()
+        inline double x() const
         {
             return m_x;
         }
 
-        inline double y()
+        inline double y() const
         {
             return m_y;
         }

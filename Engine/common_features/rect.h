@@ -58,26 +58,26 @@ class PGE_Rect
         void setBottomRight(int r, int b);
         void setBottomLeft(int l, int b);
 
-        int x();
-        int y();
+        int x() const;
+        int y() const;
 
-        int left();
-        int top();
-        int bottom();
-        int right();
+        int left() const;
+        int top() const;
+        int bottom() const;
+        int right() const;
 
-        int width();
-        int height();
+        int width() const;
+        int height() const;
 
-        PGE_Point center();
-        PGE_Size size();
-        int centerX();
-        int centerY();
+        PGE_Point center() const;
+        PGE_Size size() const;
+        int centerX() const;
+        int centerY() const;
 
-        bool collidePoint(int x, int y);
-        bool collideRect(int x, int y, int w, int h);
-        bool collideRect(PGE_Rect &rect);
-        bool collideRect(PGE_RectF &rect);
+        bool collidePoint(int x, int y) const;
+        bool collideRect(int x, int y, int w, int h) const;
+        bool collideRect(PGE_Rect &rect) const;
+        bool collideRect(PGE_RectF &rect) const;
     private:
         int m_x;
         int m_y;
