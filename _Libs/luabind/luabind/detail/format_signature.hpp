@@ -138,11 +138,8 @@ namespace luabind {
 				, typename meta::pop_front<Signature>::type()
 			);
 			lua_pushstring(L, ")");
-			size_t sz = meta::size<Signature>::value;
-			size_t ncat = sz * 2 + 2;
-			if(sz == 1)
-				++ncat;
-			lua_concat(L, ncat);
+			constexpr size_t ncat = meta::size<Signature>::value * 2 + 2 + (meta::size<Signature>::value == 1 ? 1 : 0);
+			lua_concat(L, static_cast<int>(ncat));
 		}
 
 	} // namespace detail
