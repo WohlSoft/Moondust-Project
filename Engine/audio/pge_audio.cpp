@@ -59,19 +59,19 @@ int PGE_Audio::init(Uint32 sampleRate,
                     Uint32 bufferSize)
 {
     int ret = 0;
-    p_audioState.sRate = sampleRate;
+    p_audioState.sRate = int(sampleRate);
 
-    MIX_Timidity_addToPathList(std::string(ApplicationPathSTD + "/timidity/").c_str());
+    MIX_Timidity_addToPathList(std::string(ApplicationPathSTD + "timidity/").c_str());
 
     if(p_audioState.isLoaded)
         Mix_CloseAudio();
 
-    ret = Mix_OpenAudio(p_audioState.sRate, AUDIO_S16, 2, bufferSize);
+    ret = Mix_OpenAudio(p_audioState.sRate, AUDIO_S16, 2, int(bufferSize));
 
     if(ret == -1)
         return ret;
 
-    Mix_AllocateChannels(allocateChannels);
+    Mix_AllocateChannels(int(allocateChannels));
 
     // Reset the audio sample count and set the post mix callback
     if(p_audioState.sampleCountMutex == NULL)

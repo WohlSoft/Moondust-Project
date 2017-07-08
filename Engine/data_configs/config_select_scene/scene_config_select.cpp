@@ -66,7 +66,7 @@ ConfigSelectScene::ConfigSelectScene():
     themePack       = "";
     typedef std::pair<std::string, std::string > configPackPair;
     std::vector<configPackPair > config_paths;
-    std::string configPath(ApplicationPathSTD + "/configs/");
+    std::string configPath(ApplicationPathSTD + "configs/");
     DirMan  configDir(configPath);
 
     std::vector<std::string> configs;
@@ -119,7 +119,7 @@ ConfigSelectScene::ConfigSelectScene():
             guiset.endGroup();
             guiset.beginGroup("main");
             data_dir = (guiset.value("application-dir", "0").toBool() ?
-                        ApplicationPathSTD + "/" : config_dir + "data/");
+                        ApplicationPathSTD : config_dir + "data/");
             configName = guiset.value("config_name", Files::dirname(config_dir)).toString();
             description = guiset.value("config_desc", config_dir).toString();
         }

@@ -170,6 +170,8 @@ void AppPathManager::initAppPath()
             ApplicationPathSTD.erase(i, ApplicationPathSTD.size() - i);
             if(ApplicationPathSTD.compare(0, 7, "file://") == 0)
                 ApplicationPathSTD.erase(0, 7);
+            if(!ApplicationPathSTD.empty() && (ApplicationPathSTD.back() != '/'))
+                ApplicationPathSTD.push_back('/');
         }
         //CFRelease(filePathRef);
         CFRelease(appUrlRef);

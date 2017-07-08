@@ -99,8 +99,8 @@ bool ConfigManager::loadBasics()
 
     guiset.beginGroup("main");
     {
-        data_dirSTD = (guiset.value("application-dir", "0").toBool() ?
-                    ApplicationPathSTD + "/" : config_dirSTD + "data/");
+        data_dirSTD = (guiset.value("application-dir", false).toBool() ?
+                        ApplicationPathSTD : config_dirSTD + "data/");
     }
     guiset.endGroup();
     errorsList.clear();
@@ -133,8 +133,8 @@ bool ConfigManager::loadBasics()
         bool appDir = mainset.value("application-dir", false).toBool();
         data_dirSTD = (appDir ? customAppPath + "/" : config_dirSTD + "data/");
 
-        if(DirMan::exists(ApplicationPathSTD + "/" + data_dirSTD)) //Check as relative
-            data_dirSTD = ApplicationPathSTD + "/" + data_dirSTD;
+        if(DirMan::exists(ApplicationPathSTD + data_dirSTD)) //Check as relative
+            data_dirSTD = ApplicationPathSTD + data_dirSTD;
         else if(!DirMan::exists(data_dirSTD)) //Check as absolute
         {
             msgBox("Config error",
@@ -176,12 +176,21 @@ bool ConfigManager::loadBasics()
         dirs.glevel = data_dirSTD + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
         dirs.gworld = data_dirSTD + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
         dirs.gplayble = data_dirSTD + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
-        dirs.gcommon = config_dirSTD + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
+        dirs.gcommon  = config_dirSTD + "data/" + mainset.value("graphics-common", "graphics/common").toString() + "/";
         setup_Scripts.lvl_local  = mainset.value("local-script-name-lvl", "level.lua").toString();
         setup_Scripts.lvl_common = mainset.value("common-script-name-lvl", "level.lua").toString();
         setup_Scripts.wld_local  = mainset.value("local-script-name-wld", "world.lua").toString();
         setup_Scripts.wld_common = mainset.value("common-script-name-wld", "world.lua").toString();
         dirs.gcustom = data_dirSTD + mainset.value("custom-data", "data-custom").toString() + "/";
+        D_pLogDebug("=============Standard directories=============");
+        D_pLogDebug("Music:                         %s", dirs.music.c_str());
+        D_pLogDebug("SFX:                           %s", dirs.sounds.c_str());
+        D_pLogDebug("Level graphics:                %s", dirs.glevel.c_str());
+        D_pLogDebug("World map graphics:            %s", dirs.gworld.c_str());
+        D_pLogDebug("Playable characters graphics:  %s", dirs.gplayble.c_str());
+        D_pLogDebug("Common graphics:               %s", dirs.gcommon.c_str());
+        D_pLogDebug("Custom data (reserved):        %s", dirs.gcustom.c_str());
+        D_pLogDebug("==============================================");
     }
     mainset.endGroup();
     mainset.beginGroup("graphics");
