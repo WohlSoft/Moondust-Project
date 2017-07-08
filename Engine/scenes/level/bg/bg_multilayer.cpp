@@ -169,6 +169,10 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
     for(const LayerPtr &layer_ptr : layers)
     {
         Layer   &layer    = *layer_ptr;
+
+        if(layer.setup.opacity <= 0.0)
+            continue;// Don't try to draw 100% invisible layers, it's mistake!
+
         const double  sWidth    = box.width();
         const double  sHeight   = box.height();
         const double  fWidth     = static_cast<double>(layer.texture.frame_w) + layer.setup.padding_x_right + layer.setup.padding_x_left;
