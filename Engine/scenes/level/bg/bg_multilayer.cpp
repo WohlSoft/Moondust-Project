@@ -34,7 +34,7 @@ MultilayerBackground::~MultilayerBackground()
 
 void MultilayerBackground::init(const obj_BG &bg)
 {
-    if(!bg.setup.multi_layered || bg.setup.layers.empty())
+    if(bg.setup.use_legacy_bg_engine || bg.setup.layers.empty())
         return;
     if(m_isInitialized)
         return;

@@ -144,8 +144,8 @@ struct BgSetup
     /*
      *  Multi-layaring background
      */
-    //! Turn background into multi-layering mode
-    bool            multi_layered = false;
+    //! Turn on legacy background engine without multilayer support. Has exception: it is not inheritable in custom configs.
+    bool            use_legacy_bg_engine = false;
     //! Count of layers
     uint32_t        multi_layers_count = 1;
     //! Focus value

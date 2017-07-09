@@ -182,15 +182,17 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     /*
      *  Multi-layaring background
      */
-    setup->read("multi-layer", multi_layered, pMerge(multi_layered, false));
-    setup->read("multi-layer-count", multi_layers_count, pMerge(multi_layers_count, 0));
+    setup->read("legacy", use_legacy_bg_engine, false);
 
-    setup->read("multi-layer-parallax-focus", multi_parallax_focus, pMerge(multi_parallax_focus, 200.0l));
+    //Required for "nested" config file. Makes no sense in singleton configs
+    setup->read("multi-layer-count", multi_layers_count, pMerge(multi_layers_count, 0));
+    setup->read("focus", multi_parallax_focus, pMerge(multi_parallax_focus, 200.0l));
+    setup->read("multi-layer-parallax-focus", multi_parallax_focus, multi_parallax_focus);
 
     if(!merge_with)
         layers.clear();
 
-    if(multi_layered)
+    if(!use_legacy_bg_engine)
     {
         layers.clear();
         setup->endGroup();
