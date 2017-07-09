@@ -144,27 +144,12 @@ struct BgSetup
     /*
      *  Multi-layaring background
      */
-    enum MultiLayersParallaxType
-    {
-        //! Parallax coefficients will be calculated proportionally to position between 0 or min for back and 0 to max for front
-        ML_PARALLAX_AUTO = 0,
-        //! Parallax coefficients must be defined manually
-        ML_PARALLAX_MANUAL = 1
-    };
-
     //! Turn background into multi-layering mode
     bool            multi_layered = false;
     //! Count of layers
     uint32_t        multi_layers_count = 1;
-    /// Type of parallax
-    /*!
-        auto    - parallax coefficient will be calculated relative to distance between 0 to min for backgrounds,
-                  and between 0 and max for foregrounds
-        manual  - parallax coefficients can be defined
-     */
-    uint32_t        multi_parallax_type = ML_PARALLAX_AUTO;
     //! Focus value
-    long double     multi_parallax_auto_focus = 200.0l;
+    long double     multi_parallax_focus = 200.0l;
 
     struct BgLayer
     {
@@ -173,7 +158,7 @@ struct BgSetup
         //! Background image of this layer
         PGEString   image;
         //! Z index. <0 - background, >0 - foreground
-        long double z_index = -50.0l;
+        long double z_index = -100.0l;
         //! Opacity of the layer
         double      opacity = 1.0;
 
@@ -219,8 +204,8 @@ struct BgSetup
         };
         enum ReferencePointY
         {
-            R_BOTTOM = 0,
-            R_TOP = 1,
+            R_TOP = 0,
+            R_BOTTOM = 1,
         };
 
         //! Horizontal parallax mode
@@ -242,14 +227,20 @@ struct BgSetup
         double      offset_x = 0.0;
         //! Initial offset Y at top/bottop section edge (dependent on vertical reference point)
         double      offset_y = 0.0;
-        //! Horizontal padding at right between repeating tiles
-        double      padding_x_right       = 0.0;
-        //! Horizontal padding at left between repeating tiles
-        double      padding_x_left  = 0.0;
-        //! Vertical padding at bottom between repeating tiles
-        double      padding_y_bottom       = 0.0;
-        //! Vertical padding at top between repeating tiles
-        double      padding_y_top   = 0.0;
+
+        //! Horizontal margin at right of every tile
+        double      margin_x_right       = 0.0;
+        //! Horizontal margin at left of every tile
+        double      margin_x_left  = 0.0;
+        //! Vertical margin at bottom of every tile
+        double      margin_y_bottom       = 0.0;
+        //! Vertical margin at top of every tile
+        double      margin_y_top   = 0.0;
+
+        //! Horizontal padding between repeating tiles
+        double      padding_horizontal   = 0.0;
+        //! Vertical padding between repeating tiles
+        double      padding_vertical   = 0.0;
 
         //! Auto-scroll image (works when releat X is enabled)
         bool        auto_scrolling_x = false;
