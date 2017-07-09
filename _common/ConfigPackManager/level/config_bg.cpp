@@ -217,7 +217,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
 
         for(std::string &layer_section : all_layers)
         {
-            if(layer_section == section)
+            if(StdToPGEString(layer_section) == section)
                 continue;//Skip header section
 
             BgLayer lyr;
