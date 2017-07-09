@@ -59,7 +59,7 @@ private:
         uint32_t    height;
     };
 
-    bool m_isMagic = false;
+    bool m_isSegmented = false;
     std::vector<LVL_Background_strip> m_strips;
 
     PGEColor m_color;

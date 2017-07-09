@@ -197,15 +197,14 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         {
         // Proportionally move sprite with camera's position inside section
         case BgSetup::BgLayer::P_MODE_FIT:
-            //If image width less than screen or larger than section - act as Fixed
-            if((fWidth < w) || (fWidth > sWidth))
+            refPointX = box.left() - pointX;
+            if((Maths::lRound(fWidth) == Maths::lRound(w)) ||
+                (Maths::lRound(sWidth) == Maths::lRound(w)))
                 goto bgSetupFixedW;
+            else if(fWidth > w)
+                imgPos_X = refPointX / ((sWidth - w) / (fWidth - w));
             else
-            {
-                imgPos_X = (box.left() - pointX) / ((sWidth - w) / (fWidth - w));
-                if(imgPos_X > 0.0)
-                    imgPos_X = 0.0;
-            }
+                imgPos_X = std::fabs(refPointX) * ((w - fWidth) / (sWidth - w));
             break;
 
         // Scroll background with divided offset at reference point edge
@@ -262,15 +261,14 @@ bgSetupFixedW:
         {
         // Proportionally move sprite with camera's position inside section
         case BgSetup::BgLayer::P_MODE_FIT:
-            //If image width less than screen or larger than section - act as Fixed
-            if((fHeight < h) || (fHeight > sHeight))
+            refPointY = box.top() - pointY;
+            if((Maths::lRound(fHeight) == Maths::lRound(h)) ||
+                (Maths::lRound(sHeight) == Maths::lRound(h)))
                 goto bgSetupFixedH;
+            else if(fHeight > h)
+                imgPos_Y = refPointY / ((sHeight - h) / (fHeight - h));
             else
-            {
-                imgPos_Y = (box.top() - pointY) / ((sHeight - h) / (fHeight - h));
-                if(imgPos_Y > 0.0)
-                    imgPos_Y = 0.0;
-            }
+                imgPos_Y = std::fabs(refPointY) * ((h - fHeight) / (sHeight - h));
             break;
 
         // Scroll backround with divided offset at reference point edge

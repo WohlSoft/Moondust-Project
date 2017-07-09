@@ -135,13 +135,19 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     NumberLimiter::apply(display_frame, 0u);
 
     /*
-     *  Magic background
+     *  Segmented background
      */
-    setup->read("magic", magic, pMerge(magic, false));
-    setup->read("magic-strips", magic_strips, pMerge(magic_strips, 1u));
-    NumberLimiter::applyD(magic_strips, 1u, 1u);
-    setup->read("magic-splits", magic_splits_i, pMerge(magic_splits_i, PGEList<uint32_t>()));
-    setup->read("magic-speeds", magic_speeds_i, pMerge(magic_speeds_i, PGEList<double>()));
+    setup->read("segmented", segmented, pMerge(segmented, false));
+    setup->read("segmented-strips", segmented_strips, pMerge(segmented_strips, 1u));
+    setup->read("segmented-splits", segmented_splits, pMerge(segmented_splits, PGEList<uint32_t>()));
+    setup->read("segmented-speeds", segmented_speeds, pMerge(segmented_speeds, PGEList<double>()));
+
+    // Aliases to obsolete titles
+    setup->read("magic", segmented, segmented);
+    setup->read("magic-strips", segmented_strips, segmented_strips);
+    setup->read("magic-splits", segmented_splits, segmented_splits);
+    setup->read("magic-speeds", segmented_speeds, segmented_speeds);
+    NumberLimiter::applyD(segmented_strips, 1u, 1u);
 
     /*
      *  Second image
@@ -188,11 +194,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
         {"1", ML_PARALLAX_MANUAL}
     });
 
-    setup->read("multi-layer-parallax-z-min", multi_parallax_auto_distance_min, pMerge(multi_parallax_auto_distance_min, -100.0l));
-    NumberLimiter::apply(multi_parallax_auto_distance_min, std::numeric_limits<long double>::lowest(), -1.0l);
-
-    setup->read("multi-layer-parallax-z-max", multi_parallax_auto_distance_max, pMerge(multi_parallax_auto_distance_max, +100.0l));
-    NumberLimiter::apply(multi_parallax_auto_distance_max, 1.0l, std::numeric_limits<long double>::max());
+    setup->read("multi-layer-parallax-focus", multi_parallax_auto_focus, pMerge(multi_parallax_auto_focus, 200.0l));
 
     if(!merge_with)
         layers.clear();
@@ -218,7 +220,6 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("z-index",   lyr.z_index, lyr.z_index);//< Alias to z-value
                 setup->read("z-position",lyr.z_index, lyr.z_index);//< Alias to z-value
                 setup->read("priority",  lyr.z_index, lyr.z_index);//< Alias to z-value
-                NumberLimiter::apply(lyr.z_index, multi_parallax_auto_distance_min, multi_parallax_auto_distance_max);//Avoid out of range
                 setup->read("opacity",  lyr.opacity, 1.0);
                 NumberLimiter::applyD(lyr.opacity, 1.0, 0.0, 1.0);//Opacity can be between 0.0 and 1.0
                 setup->read("flip-h",  lyr.flip_h, false);
@@ -267,22 +268,25 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                     {
                         /*
                          *  TODO: Implement right auto-calculation of parallax instead of this
-                        */
-                        parallaxX = parallaxY = (lyr.z_index > 0.0l) ?
-                            static_cast<double>((1.0l + lyr.z_index)) :
-                            static_cast<double>(1.0l / std::fabs(lyr.z_index));
-
-                        if(parallaxX <= (1.0 / static_cast<double>(1.0l + multi_parallax_auto_distance_max)))
+                         */
+                        if(lyr.z_index == 0.0l)
                         {
                             lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
                             lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
+                        } else {
+                            parallaxX = parallaxY = double(-lyr.z_index / multi_parallax_auto_focus);
                         }
-                        else if(parallaxX >= (1.0 + static_cast<double>(std::fabs(multi_parallax_auto_distance_max))) )
-                        {
-                            lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
-                            lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
-                            lyr.opacity = 0.0;//Layer is invisible!
-                        }
+//                        if(parallaxX <= (1.0 / static_cast<double>(1.0l + multi_parallax_auto_distance_max)))
+//                        {
+//                            lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
+//                            lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
+//                        }
+//                        else if(parallaxX >= (1.0 + static_cast<double>(std::fabs(multi_parallax_auto_distance_max))) )
+//                        {
+//                            lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
+//                            lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
+//                            lyr.opacity = 0.0;//Layer is invisible!
+//                        }
                     }
                 }
 
@@ -299,8 +303,6 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 NumberLimiter::applyD(lyr.parallax_y, 0.0, 0.0);
                 if((lyr.parallax_mode_y == BgLayer::P_MODE_SCROLL) && (lyr.parallax_y == 0.0))
                     lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
-
-
 
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);

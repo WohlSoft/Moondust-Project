@@ -79,7 +79,7 @@ struct BgSetup
     PGEString       fill_color = "auto";
 
     /*
-     *  First image
+     *  First image (Single-row, Tiled and Double-row background)
      */
     //! Filename for first image
     PGEString       image_n;
@@ -98,7 +98,7 @@ struct BgSetup
 
 
     /*
-     *  Animation setup
+     *  Animation setup (Single-row and first row of double-row background only)
      */
     //! Is background animated
     bool            animated = false;
@@ -113,27 +113,23 @@ struct BgSetup
 
 
     /*
-     *  Magic background
+     *  Segmented background
      */
-    /// Turn on "magic" background.
+    /// Turn on "segmented" background.
     /*!
-        Magic background allow to split background image to horizontal
+        Segmented background allows to split background image to horizontal
         stripses are have different parallax coefficients
     */
-    bool            magic = false;
+    bool            segmented = false;
     //! Count of stripses
-    uint32_t        magic_strips = 1u;
-    //! Comma-separated set of Y coordinates of split lines
-    PGEString       magic_splits;
-    //! Decoded set of Y coordinates of split lines  [decoded from magic_splits]
-    PGEList<uint32_t> magic_splits_i;
-    //! Comma-separated set of parallax coefficients for every strip line
-    PGEString       magic_speeds;
-    //! Decoded set of parallax coefficients for every strip line [decoded from magic_speeds]
-    PGEList<double> magic_speeds_i;
+    uint32_t        segmented_strips = 1u;
+    //! Decoded set of Y coordinates of split lines
+    PGEList<uint32_t> segmented_splits;
+    //! Decoded set of parallax coefficients for every strip line (1/speed)
+    PGEList<double> segmented_speeds;
 
     /*
-     *  Second image
+     *  Second image (Doble-row backgrounds only)
      */
     //! Filename for second background image [Double-row only]
     PGEString       second_image_n;
@@ -167,10 +163,8 @@ struct BgSetup
         manual  - parallax coefficients can be defined
      */
     uint32_t        multi_parallax_type = ML_PARALLAX_AUTO;
-    //! Maximal background distance
-    long double     multi_parallax_auto_distance_min = -100.0l;
-    //! Maximal background distance
-    long double     multi_parallax_auto_distance_max = +100.0l;
+    //! Focus value
+    long double     multi_parallax_auto_focus = 200.0l;
 
     struct BgLayer
     {

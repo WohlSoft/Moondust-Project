@@ -454,6 +454,8 @@ void LevelScene::update()
         {
             cam.updatePost(uTickf);
             //! --------------DRAW HUD--------------------------------------
+            // TODO: Implement separated render queue for elements of HUD and provide render functions
+            // are will draw HUD elements after world has drawn.
             LuaEngine *sceneLuaEngine = getLuaEngine();
             if(sceneLuaEngine)
             {
