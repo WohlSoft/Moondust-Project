@@ -201,11 +201,11 @@ bool BlockSetup::parse(IniProcessing *setup,
         setup->readEnum("view",     view, view, zLayers);
     }
 
-    setup->read("animated",                 animated,       pMerge(animated, false));
     setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation
     setup->read("animation-bidirectional",  animation_bid,  pMerge(animation_bid, false)); //Bidirectional animation
     setup->read("frames",                   frames,         pMerge(frames, 1));
     NumberLimiter::apply(frames, 1u);
+    animated = (frames > 1u);
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
     setup->read("frame-speed", framespeed, framespeed);//Alias
     if(setup->hasKey("framespeed"))

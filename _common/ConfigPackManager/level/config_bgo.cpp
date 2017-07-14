@@ -122,9 +122,9 @@ bool BgoSetup::parse(IniProcessing *setup,
         setup->read("z-offset", zOffset,    pMerge(zOffset, 0.0l));
 
     setup->read("climbing", climbing ,  pMerge(climbing, false));
-    setup->read("animated", animated,   pMerge(animated, false));
-    setup->read("frames", frames,       pMerge(frames, 1));
+    setup->read("frames", frames,       pMerge(frames, 1u));
     NumberLimiter::apply(frames, 1u);
+    animated = (frames > 1);
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
     setup->read("frame-speed", framespeed, framespeed);//Alias
     if(setup->hasKey("framespeed"))
