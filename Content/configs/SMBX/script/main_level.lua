@@ -34,13 +34,17 @@ local gfx_coin     = Graphics.loadImage( Paths.CommonGFX().."coins.png" )
 
 function onDrawHUD(camera, state)
     if(state.characterID >=3)then
+        local hp1 = gfx_heart1;
+        local hp0 = gfx_heart0;
         for i=0,2,1
         do
-            if(state.health>=(i+1))then
-                Graphics.drawImage(gfx_heart1, camera.centerX-42+(32*i), camera.renderY+16 )
+            local hp = nil
+            if(state.health >= (i + 1))then
+                hp = hp1;
             else
-                Graphics.drawImage(gfx_heart0, camera.centerX-42+(32*i), camera.renderY+16 )
+                hp = hp0;
             end
+            Graphics.drawImage(hp, camera.centerX - 42 + (32 * i), camera.renderY + 16)
         end
     else
         Graphics.drawImage(gfx_itemslot, camera.centerX-(gfx_itemslot.w/2.0), camera.renderY+16 )
@@ -48,19 +52,19 @@ function onDrawHUD(camera, state)
 
     Graphics.drawImage(gfx_1up,  camera.centerX-165, camera.renderY+26 )
     Graphics.drawImage(gfx_x,    camera.centerX-125, camera.renderY+27 )
-    Renderer.printText(tostring(state.lives), camera.centerX-103, camera.renderY+27, 3, 15, 0xFFFFFFFF)
+    Renderer.printText(tostring(state.lives), camera.centerX - 103, camera.renderY+27, 3, 15, 0xFFFFFFFF)
     
     if( state.leeks ~= 0 ) then
-        Graphics.drawImage(gfx_x,    camera.centerX-125, camera.renderY+47 )
-        Graphics.drawImage(gfx_star, camera.centerX-149, camera.renderY+46 )
-        Renderer.printText(tostring(state.leeks), camera.centerX-103, camera.renderY+47, 3, 15, 0xFFFFFFFF)
+        Graphics.drawImage(gfx_x,    camera.centerX - 125, camera.renderY+47 )
+        Graphics.drawImage(gfx_star, camera.centerX - 149, camera.renderY+46 )
+        Renderer.printText(tostring(state.leeks), camera.centerX - 103, camera.renderY+47, 3, 15, 0xFFFFFFFF)
     end
     
     Graphics.drawImage(gfx_x,    camera.centerX+112, camera.renderY+27 )
-    Graphics.drawImage(gfx_coin, camera.centerX+88, camera.renderY+26 )
-    Renderer.printText(tostring(state.coins), camera.centerX+152, camera.renderY+27, 3, 15, 0xFFFFFFFF)
+    Graphics.drawImage(gfx_coin, camera.centerX+88, camera.renderY + 26 )
+    Renderer.printText(tostring(state.coins), camera.centerX + 152, camera.renderY + 27, 3, 15, 0xFFFFFFFF)
 
-    Renderer.printText(tostring(state.points), camera.centerX+152, camera.renderY+47, 3, 15, 0xFFFFFFFF)
+    Renderer.printText(tostring(state.points), camera.centerX + 152, camera.renderY + 47, 3, 15, 0xFFFFFFFF)
 end
 
 function onLoop(tickTime)
