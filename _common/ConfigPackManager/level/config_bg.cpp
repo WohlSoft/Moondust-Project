@@ -30,6 +30,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
 {
 #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
 #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+#define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
     /*************Buffers*********************/
@@ -229,6 +230,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
             {
                 setup->read("name",  lyr.name, lr_name);
                 setup->read("image", lyr.image, "");
+                pAlias("img", lyr.image);
 
                 long double depth = static_cast<long double>(std::numeric_limits<double>::max());
                 {
@@ -261,6 +263,8 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("in-world-draw",  lyr.inscene_draw, lyr.inscene_draw);
                 setup->read("repeat-x", lyr.repeat_x, true);
                 setup->read("repeat-y", lyr.repeat_y, false);
+                pAlias("repeatx", lyr.repeat_x);
+                pAlias("repeaty", lyr.repeat_y);
 
                 IniProcessing::StrEnumMap pMode = {
                     {"scroll", BgLayer::P_MODE_SCROLL},
@@ -330,8 +334,9 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("parallax-coefficient-x", parallaxX_1, parallaxX == 0.0 ? 0.0 : 1.0 / parallaxX);
                 setup->read("parallax-coefficient-y", parallaxY_1, parallaxY == 0.0 ? 0.0 : 1.0 / parallaxY);
                 setup->read("parallax-x", lyr.parallax_x, parallaxX_1 == 0.0 ? 0.0 : 1.0 / parallaxX_1);
-                setup->read("parallax-x", lyr.parallax_y, parallaxY_1 == 0.0 ? 0.0 : 1.0 / parallaxY_1);
-
+                setup->read("parallax-y", lyr.parallax_y, parallaxY_1 == 0.0 ? 0.0 : 1.0 / parallaxY_1);
+                pAlias("parallaxx", lyr.parallax_x);
+                pAlias("parallaxy", lyr.parallax_y);
                 NumberLimiter::applyD(lyr.parallax_x, 0.0, 0.0);
                 if((lyr.parallax_mode_x == BgLayer::P_MODE_SCROLL) && (lyr.parallax_x == 0.0))
                     lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
@@ -342,6 +347,8 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
 
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);
+                pAlias("x", lyr.offset_x);
+                pAlias("y", lyr.offset_y);
 
                 double summarMarginH = 0.0, summarMarginV = 0.0;
                 setup->read("margin-x", summarMarginH, 0.0);
@@ -359,17 +366,19 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("padding-y", lyr.padding_vertical, 0.0);
 
                 setup->read("speed-x", lyr.auto_scrolling_x_speed, 0);
-                setup->read("auto-scroll-speed-x", lyr.auto_scrolling_x_speed, lyr.auto_scrolling_x_speed);
+                pAlias("auto-scroll-speed-x", lyr.auto_scrolling_x_speed);
+                pAlias("speedx", lyr.auto_scrolling_x_speed);
                 lyr.auto_scrolling_x = (lyr.auto_scrolling_x_speed != 0);
 
                 setup->read("speed-y", lyr.auto_scrolling_y_speed, 0);
-                setup->read("auto-scroll-speed-y", lyr.auto_scrolling_y_speed, lyr.auto_scrolling_y_speed);
+                pAlias("auto-scroll-speed-y", lyr.auto_scrolling_y_speed);
+                pAlias("speedy", lyr.auto_scrolling_y_speed);
                 lyr.auto_scrolling_y = (lyr.auto_scrolling_y_speed != 0);
 
                 setup->read("frames", lyr.frames, 1);
                 lyr.animated = (lyr.frames > 1);
                 setup->read("frame-delay", lyr.framespeed, 128);
-                setup->read("framespeed", lyr.framespeed, lyr.framespeed);
+                pAlias("framespeed", lyr.framespeed);
                 setup->read("display-frame", lyr.display_frame, 0);
                 setup->read("frame-sequence", lyr.frame_sequence);
             }
@@ -387,5 +396,6 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
 
 #undef pMerge
 #undef pMergeMe
+#undef pAlias
     return true;
 }
