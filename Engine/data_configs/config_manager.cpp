@@ -223,6 +223,7 @@ bool ConfigManager::loadBasics()
         return false;
 
     /********Payable characters config should be loaded always!*******/
+    Dir_PlayerCalibrations.setCustomDirs("", "", playerCalibrationsPath);
     if(!loadPlayableCharacters()) //!< Load lvl_characters.ini file
         return false;
 

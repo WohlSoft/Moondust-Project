@@ -440,6 +440,7 @@ bool WorldScene::loadConfigs()
     ConfigManager::Dir_WldPaths.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldPaths());
     ConfigManager::Dir_WldLevel.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldLevels());
     ConfigManager::Dir_PlayerLvl.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathLevelPlayable());
+    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathLevelPlayerCalibrations());
     ConfigManager::Dir_PlayerWld.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldPlayable());
     //Load INI-files
     success = ConfigManager::loadWorldTiles();   //!< Tiles
@@ -475,7 +476,15 @@ bool WorldScene::loadConfigs()
         goto abortInit;
     }
 
-    success = ConfigManager::loadLevelEffects();
+    success = ConfigManager::loadPlayableCharacters();  //!< Playalbe Characters
+    if(!success)
+    {
+        _errorString = "Fail on playalbe characters config loading";
+        m_exitWorldCode = WldExit::EXIT_error;
+        goto abortInit;
+    }
+
+    success = ConfigManager::loadLevelEffects();  //!< Effects
     if(!success)
     {
         _errorString = "Fail on effects config loading";

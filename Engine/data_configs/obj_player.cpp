@@ -31,6 +31,7 @@ PGE_DataArray<obj_player > ConfigManager::playable_characters;
 CustomDirManager ConfigManager::Dir_PlayerWld;
 CustomDirManager ConfigManager::Dir_PlayerLvl;
 CustomDirManager ConfigManager::Dir_PlayerScript;
+CustomDirManager ConfigManager::Dir_PlayerCalibrations;
 /*****Playable Characters************/
 
 static void loadPlayerPhysicsSettings(IniProcessing &set, obj_player_physics &t, const std::string &grp)
@@ -282,7 +283,8 @@ bool ConfigManager::loadPlayableCharacters()
                         std::string sprite_settings;
                         setup.read("sprite-settings", sprite_settings, fmt::format("{1}-{0}.ini", i, splayer.sprite_folder));
 
-                        if(pstate.sprite_setup.load(config_dirSTD + "characters/" + sprite_settings))
+                        std::string ss_path = Dir_PlayerCalibrations.getCustomFile(sprite_settings);
+                        if(pstate.sprite_setup.load(ss_path))
                         {
                             pstate.width = pstate.sprite_setup.frameWidth;
                             pstate.height = pstate.sprite_setup.frameHeight;
