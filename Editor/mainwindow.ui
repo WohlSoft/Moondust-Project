@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1675</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -267,6 +267,10 @@
     <addaction name="actionBookmarkBox"/>
     <addaction name="actionTilesetBox"/>
     <addaction name="actionDebugger"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
+    <addaction name="actionZoomReset"/>
     <addaction name="separator"/>
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
