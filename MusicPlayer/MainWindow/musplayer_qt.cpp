@@ -151,6 +151,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->gme_setup->setVisible(false);
 
     ui->opn_bank->setText(setup.value("OPNMIDI-Bank", "").toString());
+    on_opn_bank_editingFinished();
 
     currentMusic = setup.value("RecentMusic", "").toString();
     m_testSfxDir = setup.value("RecentSfxDir", "").toString();
