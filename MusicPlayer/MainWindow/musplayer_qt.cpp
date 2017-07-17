@@ -150,6 +150,8 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->midi_setup->setVisible(false);
     ui->gme_setup->setVisible(false);
 
+    ui->opn_bank->setText(setup.value("OPNMIDI-Bank", "").toString());
+
     currentMusic = setup.value("RecentMusic", "").toString();
     m_testSfxDir = setup.value("RecentSfxDir", "").toString();
     restoreGeometry(setup.value("Window-Geometry").toByteArray());
@@ -174,6 +176,7 @@ MusPlayer_Qt::~MusPlayer_Qt()
     setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adlibMode->isChecked());
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->isChecked());
     setup.setValue("ADLMIDI-LogarithmicVolumes", ui->logVolumes->isChecked());
+    setup.setValue("OPNMIDI-Bank", ui->opn_bank->text());
     setup.setValue("Volume", ui->volume->value());
     setup.setValue("RecentMusic", currentMusic);
     setup.setValue("RecentSfxDir", m_testSfxDir);
@@ -697,4 +700,31 @@ void MusPlayer_Qt::on_sfx_fadeout_clicked()
     Mix_FadeOutChannel(0, ui->sfx_fadems->value());
 }
 
+void MusPlayer_Qt::on_opn_bank_browse_clicked()
+{
+    QString path = QFileDialog::getOpenFileName(this,
+                                                tr("Select WOPN bank file"),
+                                                ui->opn_bank->text(),
+                                                "OPN bank file by Wohlstand (*.wopn);;"
+                                                "All Files (*.*)");
+    if(!path.isEmpty())
+    {
+        ui->opn_bank->setText(path);
+        on_opn_bank_editingFinished();
+    }
+}
+
+void MusPlayer_Qt::on_opn_bank_editingFinished()
+{
+    QString file = ui->opn_bank->text();
+    if(!file.isEmpty() && QFile::exists(file))
+    {
+        MIX_OPNMIDI_setCustomBankFile(file.toUtf8().data());
+    } else {
+        MIX_OPNMIDI_setCustomBankFile(NULL);
+    }
+}
+
 #endif
+
+
