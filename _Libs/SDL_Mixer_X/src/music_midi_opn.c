@@ -35,7 +35,7 @@
 static int opnmidi_scalemod     = 0;
 static int opnmidi_logVolumes   = 0;
 static int opnmidi_volumeModel  = 0;
-static const char* opnmidi_customBankPath = NULL;
+static char opnmidi_customBankPath[2048] = "";
 
 int OPNMIDI_getScaleMod()
 {
@@ -154,7 +154,10 @@ void OPNMIDI_setvolume(void *music_p, int volume)
 
 void OPNMIDI_setCustomBankFile(const char *bank_wonp_path)
 {
-    opnmidi_customBankPath = bank_wonp_path;
+    if(bank_wonp_path)
+        strcpy(opnmidi_customBankPath, bank_wonp_path);
+    else
+        opnmidi_customBankPath[0] = '\0';
 }
 
 struct MUSIC_MIDIOPN *OPNMIDI_LoadSongRW(SDL_RWops *src)
@@ -195,7 +198,7 @@ struct MUSIC_MIDIOPN *OPNMIDI_LoadSongRW(SDL_RWops *src)
         }
 
         opn_midiplayer = opn2_init( mixer.freq );
-        if(opnmidi_customBankPath)
+        if(opnmidi_customBankPath[0] != '\0')
             err = opn2_openBankFile(opn_midiplayer, (char*)opnmidi_customBankPath);
         else
             err = opn2_openBankData( opn_midiplayer, g_gm_opn2_bank, sizeof(g_gm_opn2_bank) );
