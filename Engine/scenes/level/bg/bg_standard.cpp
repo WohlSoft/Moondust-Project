@@ -34,7 +34,7 @@ void StandardBackground::init(const obj_BG &bg)
     pLogDebug("BG Type %d", m_bgType);
 
     //Reset magic background parameters
-    m_isMagic = false;
+    m_isSegmented = false;
     m_strips.clear();
 
     switch(m_bgType)
@@ -55,36 +55,36 @@ void StandardBackground::init(const obj_BG &bg)
             m_isAnimated = bg.setup.animated;
             m_animator_ID = bg.animator_ID;
 
-            if(bg.setup.magic)
+            if(bg.setup.segmented)
             {
-                for(uint32_t i = 0; i < bg.setup.magic_strips; i++)
+                for(uint32_t i = 0; i < bg.setup.segmented_strips; i++)
                 {
                     LVL_Background_strip x;
 
-                    if((i > 0) && (i - 1 <  bg.setup.magic_splits_i.size()))
+                    if((i > 0) && (i - 1 <  bg.setup.segmented_splits.size()))
                     {
-                        x.top = (static_cast<double>(bg.setup.magic_splits_i[i - 1])
+                        x.top = (static_cast<double>(bg.setup.segmented_splits[i - 1])
                                  / static_cast<double>(m_txData1.frame_h));
                     }
                     else
                         x.top = 0.0;
 
-                    if(i < bg.setup.magic_splits_i.size())
-                        x.bottom = static_cast<double>(bg.setup.magic_splits_i[i]) / static_cast<double>(m_txData1.frame_h);
+                    if(i < bg.setup.segmented_splits.size())
+                        x.bottom = static_cast<double>(bg.setup.segmented_splits[i]) / static_cast<double>(m_txData1.frame_h);
                     else
                         x.bottom = 1.0;
 
                     x.height = static_cast<uint32_t>(Maths::iRound(
-                                                         (i < bg.setup.magic_splits_i.size() ?
-                                                          bg.setup.magic_splits_i[i] :
+                                                         (i < bg.setup.segmented_splits.size() ?
+                                                          bg.setup.segmented_splits[i] :
                                                           m_txData1.frame_h)
                                                          - (i == 0 ?
                                                             0.0 :
-                                                            bg.setup.magic_splits_i[i - 1])
+                                                            bg.setup.segmented_splits[i - 1])
                                                      ));
 
-                    if(i < bg.setup.magic_speeds_i.size())
-                        x.repeat_h = bg.setup.magic_speeds_i[i];
+                    if(i < bg.setup.segmented_speeds.size())
+                        x.repeat_h = bg.setup.segmented_speeds[i];
                     else
                         x.repeat_h = bg.setup.repeat_h;
 
@@ -99,7 +99,7 @@ void StandardBackground::init(const obj_BG &bg)
                     m_strips.push_back(x);
                 }
                 //qDebug() <<  bg.magic_splits_i.size() << bg.magic_speeds_i.size();
-                m_isMagic = true;
+                m_isSegmented = true;
             }
         }
     }
@@ -266,10 +266,10 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
 
         while((lenght <= w * 2) || (lenght <= m_txData1.frame_w * 2))
         {
-            size_t magicRepeat = 1;
+            size_t segmentRepeat = 1;
 
-            if(m_isMagic)
-                magicRepeat = m_strips.size();
+            if(m_isSegmented)
+                segmentRepeat = m_strips.size();
             else
                 m_backgrndG.setRect(draw_x, imgPos_Y, m_txData1.frame_w, m_txData1.frame_h);
 
@@ -277,9 +277,9 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
             double d_top    = ani_x.first;
             double d_bottom = ani_x.second;
 
-            for(size_t mg = 0; mg < magicRepeat; mg++)
+            for(size_t mg = 0; mg < segmentRepeat; mg++)
             {
-                if(m_isMagic)
+                if(m_isSegmented)
                 {
                     draw_x       = std::fmod((box.left() - x) / m_strips[mg].repeat_h, fWidth);
                     draw_x      += lenght;

@@ -153,36 +153,54 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("animation-directed-direction", ani_directed_direct, pMerge(ani_directed_direct, false));
     setup->read("animation-direction",      ani_direct,     pMerge(ani_direct, false));
     setup->read("animation-bidirectional",  ani_bidir,      pMerge(ani_bidir, false));
-    setup->read("custom-animation",         custom_animate, pMerge(custom_animate, 0));
-    setup->read("custom-animation-alg",     custom_ani_alg, pMerge(custom_ani_alg, 0));
-    setup->read("custom-animation-fl",      custom_ani_fl,  pMerge(custom_ani_fl, 0));
-    setup->read("custom-animation-el",      custom_ani_el,  pMerge(custom_ani_el, -1));
-    setup->read("custom-animation-fr",      custom_ani_fr,  pMerge(custom_ani_fr, 0));
-    setup->read("custom-animation-er",      custom_ani_er,  pMerge(custom_ani_er, -1));
+
+    // TODO: Remove those fields completely
+    custom_ani_fl = 0;
+    custom_ani_el = -1;
+    custom_ani_fr = 0;
+    custom_ani_er = -1;
+    custom_animate = false;
+    custom_ani_alg = 0;
+    // ====================================
 
     /*************Build custom animation settings***************/
-    if(setup->hasKey("custom-animation-alg"))
+    if( setup->hasKey("editor-animation-sequence") ||
+        setup->hasKey("ani-frames-cmn") ||
+        setup->hasKey("editor-animation-sequence-left") ||
+        setup->hasKey("ani-frames-left")||
+        setup->hasKey("editor-animation-sequence-right") ||
+        setup->hasKey("ani-frames-right")
+            )
     {
+        custom_animate = true;
+        custom_ani_alg = 2;
         /*
          * Avoid accidental clean-up made by custom config file
          * by checking existing of "custom-animation-alg" key
          */
         frames_left.clear();
         frames_right.clear();
-        if(custom_ani_alg == 2)
+        IntArray common;
+        setup->read("editor-animation-sequence", common, common); // Common frames list
+        setup->read("ani-frames-cmn", common, common); // Common frames list
+        setup->read("editor-animation-sequence-left", frames_left, common); //left direction
+        setup->read("ani-frames-left", frames_left, frames_left); //left direction
+        setup->read("editor-animation-sequence-right", frames_right, common); //right direction
+        setup->read("ani-frames-right", frames_right, frames_right); //right direction
+        if(!common.empty())
         {
-            IntArray common;
-            setup->read("ani-frames-cmn", common, common); // Common frames list
-            setup->read("ani-frames-left", frames_left, common); //left direction
-            setup->read("ani-frames-right", frames_right, common); //right direction
-            if(!common.empty())
-            {
-                uint32_t framesOffset = ((framestyle > 0)? 1 : 0) * frames;
-                for(pge_size_t i = 0; i < frames_right.size(); i++)
-                    frames_right[i] += framesOffset;
-            }
+            uint32_t framesOffset = ((framestyle > 0)? 1 : 0) * frames;
+            for(pge_size_t i = 0; i < frames_right.size(); i++)
+                frames_right[i] += framesOffset;
+        }
+
+        if(frames_left.size() > 0)
+        {
             custom_ani_fl = frames_left.front();
             custom_ani_el = frames_left.back();
+        }
+        if(frames_right.size() > 0)
+        {
             custom_ani_fr = frames_right.front();
             custom_ani_er = frames_right.back();
         }

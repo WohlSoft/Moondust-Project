@@ -403,6 +403,7 @@ namespace ConfigManager
     extern CustomDirManager Dir_PlayerWld;
     extern CustomDirManager Dir_PlayerLvl;
     extern CustomDirManager Dir_PlayerScript;
+    extern CustomDirManager Dir_PlayerCalibrations;
     /********Playable characters*******/
 
     /*================================Common config Data===end=====================*/
@@ -424,6 +425,7 @@ namespace ConfigManager
     std::string PathLevelEffect();
     std::string PathLevelPlayable();
     std::string PathLevelPlayerScript();
+    std::string PathLevelPlayerCalibrations();
 
     std::string PathCommonGFX();
 

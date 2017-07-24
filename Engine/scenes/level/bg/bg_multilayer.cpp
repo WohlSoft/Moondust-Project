@@ -34,7 +34,7 @@ MultilayerBackground::~MultilayerBackground()
 
 void MultilayerBackground::init(const obj_BG &bg)
 {
-    if(!bg.setup.multi_layered || bg.setup.layers.empty())
+    if(bg.setup.use_legacy_bg_engine || bg.setup.layers.empty())
         return;
     if(m_isInitialized)
         return;
@@ -121,9 +121,12 @@ void MultilayerBackground::process(double tickDelay)
         layer.autoscroll_x_offset += scroller.speed_x * (tickDelay / 1000.0);
         layer.autoscroll_y_offset += scroller.speed_y * (tickDelay / 1000.0);
 
+        double tileWidth = layer.texture.w        + layer.setup.margin_x_left + layer.setup.margin_x_right + layer.setup.padding_horizontal;
+        double tileHeight= layer.texture.frame_h  + layer.setup.margin_y_top + layer.setup.margin_y_bottom + layer.setup.padding_vertical;
+
         //Return offset to initial position with small difference when it reaches width or height of layer image
-        double w = (layer.texture.w        + layer.setup.padding_x_left + layer.setup.padding_x_right) / layer.setup.parallax_x;
-        double h = (layer.texture.frame_h  + layer.setup.padding_y_top + layer.setup.padding_y_bottom) / layer.setup.parallax_y;
+        double w = tileWidth / layer.setup.parallax_x;
+        double h = tileHeight / layer.setup.parallax_y;
 
         if(layer.autoscroll_y_offset > h)
             layer.autoscroll_y_offset -= h;
@@ -153,6 +156,7 @@ void MultilayerBackground::renderForeground(const PGE_RectF &box, double x, doub
     renderLayersList(m_layers_front, box, x, y, w, h);
 }
 
+
 void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersList &layers, const PGE_RectF &box, double x, double y, double w, double h)
 {
     if(!m_isInitialized)
@@ -169,10 +173,17 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
     for(const LayerPtr &layer_ptr : layers)
     {
         Layer   &layer    = *layer_ptr;
+
+        if(layer.setup.opacity <= 0.0)
+            continue;// Don't try to draw 100% invisible layers, it's mistake!
+
+        if(!layer.texture.inited)
+            continue;// Don't try to draw nothing
+
         const double  sWidth    = box.width();
         const double  sHeight   = box.height();
-        const double  fWidth     = static_cast<double>(layer.texture.frame_w) + layer.setup.padding_x_right + layer.setup.padding_x_left;
-        const double  fHeight    = static_cast<double>(layer.texture.frame_h) + layer.setup.padding_y_bottom + layer.setup.padding_y_top;
+        const double  fWidth     = static_cast<double>(layer.texture.frame_w) + layer.setup.margin_x_right + layer.setup.margin_x_left + layer.setup.padding_horizontal;
+        const double  fHeight    = static_cast<double>(layer.texture.frame_h) + layer.setup.margin_y_bottom + layer.setup.margin_y_top + layer.setup.padding_vertical;
 
         double      pointX = x;
         double      pointY = y;
@@ -193,15 +204,15 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
         {
         // Proportionally move sprite with camera's position inside section
         case BgSetup::BgLayer::P_MODE_FIT:
-            //If image width less than screen or larger than section - act as Fixed
-            if((fWidth < w) || (fWidth > sWidth))
+            //TODO: Allow repeating of backgrounds in "fit" mode, then fit entire tiled composition
+            refPointX = box.left() - pointX;
+            if((Maths::lRound(fWidth) == Maths::lRound(w)) ||
+                (Maths::lRound(sWidth) == Maths::lRound(w)))
                 goto bgSetupFixedW;
+            else if(fWidth > w)
+                imgPos_X = refPointX / ((sWidth - w) / (fWidth - w));
             else
-            {
-                imgPos_X = (box.left() - pointX) / ((sWidth - w) / (fWidth - w));
-                if(imgPos_X > 0.0)
-                    imgPos_X = 0.0;
-            }
+                imgPos_X = std::fabs(refPointX) * ((w - fWidth) / (sWidth - w));
             break;
 
         // Scroll background with divided offset at reference point edge
@@ -258,15 +269,14 @@ bgSetupFixedW:
         {
         // Proportionally move sprite with camera's position inside section
         case BgSetup::BgLayer::P_MODE_FIT:
-            //If image width less than screen or larger than section - act as Fixed
-            if((fHeight < h) || (fHeight > sHeight))
+            refPointY = box.top() - pointY;
+            if((Maths::lRound(fHeight) == Maths::lRound(h)) ||
+                (Maths::lRound(sHeight) == Maths::lRound(h)))
                 goto bgSetupFixedH;
+            else if(fHeight > h)
+                imgPos_Y = refPointY / ((sHeight - h) / (fHeight - h));
             else
-            {
-                imgPos_Y = (box.top() - pointY) / ((sHeight - h) / (fHeight - h));
-                if(imgPos_Y > 0.0)
-                    imgPos_Y = 0.0;
-            }
+                imgPos_Y = std::fabs(refPointY) * ((h - fHeight) / (sHeight - h));
             break;
 
         // Scroll backround with divided offset at reference point edge
@@ -368,17 +378,19 @@ bgSetupFixedH:
             double d_top    = layer.setup.flip_v ? ani_x.second : ani_x.first;
             double d_bottom = layer.setup.flip_v ? ani_x.first : ani_x.second;
 
-            double r_bottom = imgPos_Y + static_cast<double>(layer.texture.frame_h) + layer.setup.padding_y_top;
+            double r_bottom = imgPos_Y + static_cast<double>(layer.texture.frame_h) + layer.setup.margin_y_top;
             if((imgPos_Y <= h) && (r_bottom >= 0.0))//Draw row if it is visible on screen
             {
                 int hRepeats = horizontalRepeats;
                 while(hRepeats > 0)
                 {
-                    double r_right = draw_x + static_cast<double>(layer.texture.frame_w) + layer.setup.padding_x_left;
+                    double r_right = draw_x + static_cast<double>(layer.texture.frame_w) + layer.setup.margin_x_left;
                     if((draw_x <= w) && (r_right >= 0.0))//Draw cell if it is visible on screen
                     {
-                        m_backgrndG.setRect(draw_x + layer.setup.padding_x_left,
-                                            imgPos_Y + layer.setup.padding_y_top,
+                        //TODO: Make padding affect only between repeats.
+                        //      Make margins affect to complete composition of repeating layers
+                        m_backgrndG.setRect(draw_x + layer.setup.margin_x_left  + layer.setup.padding_horizontal,
+                                            imgPos_Y + layer.setup.margin_y_top + layer.setup.padding_vertical,
                                             layer.texture.frame_w,
                                             layer.texture.frame_h);
 

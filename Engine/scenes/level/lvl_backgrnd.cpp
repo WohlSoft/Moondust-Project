@@ -58,10 +58,10 @@ void LVL_Background::setBg(obj_BG &bg, LevelScene *scene)
     // Set default fill color
     m_color = bg.fill_color;
 
-    if(bg.setup.multi_layered)
-        m_bg_base.reset(new MultilayerBackground);  //Modern backgrounds model
-    else
+    if(bg.setup.use_legacy_bg_engine)
         m_bg_base.reset(new StandardBackground);    //Legacy backgrounds model, kept for compatibility with legacy engine
+    else
+        m_bg_base.reset(new MultilayerBackground);  //Modern backgrounds model
     m_bg_base->init(*m_setup);
     m_bg_base->setScene(scene);
 

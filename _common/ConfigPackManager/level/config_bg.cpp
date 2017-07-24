@@ -24,11 +24,13 @@
 #include "../../number_limiter.h"
 
 #include <sstream>
+#include <algorithm>
 
 bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaultGrid*/, BgSetup *merge_with, PGEString *error)
 {
 #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
 #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+#define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
     /*************Buffers*********************/
@@ -135,13 +137,19 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     NumberLimiter::apply(display_frame, 0u);
 
     /*
-     *  Magic background
+     *  Segmented background
      */
-    setup->read("magic", magic, pMerge(magic, false));
-    setup->read("magic-strips", magic_strips, pMerge(magic_strips, 1u));
-    NumberLimiter::applyD(magic_strips, 1u, 1u);
-    setup->read("magic-splits", magic_splits_i, pMerge(magic_splits_i, PGEList<uint32_t>()));
-    setup->read("magic-speeds", magic_speeds_i, pMerge(magic_speeds_i, PGEList<double>()));
+    setup->read("segmented", segmented, pMerge(segmented, false));
+    setup->read("segmented-strips", segmented_strips, pMerge(segmented_strips, 1u));
+    setup->read("segmented-splits", segmented_splits, pMerge(segmented_splits, PGEList<uint32_t>()));
+    setup->read("segmented-speeds", segmented_speeds, pMerge(segmented_speeds, PGEList<double>()));
+
+    // Aliases to obsolete titles
+    setup->read("magic", segmented, segmented);
+    setup->read("magic-strips", segmented_strips, segmented_strips);
+    setup->read("magic-splits", segmented_splits, segmented_splits);
+    setup->read("magic-speeds", segmented_speeds, segmented_speeds);
+    NumberLimiter::applyD(segmented_strips, 1u, 1u);
 
     /*
      *  Second image
@@ -175,50 +183,78 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
     /*
      *  Multi-layaring background
      */
-    setup->read("multi-layer", multi_layered, pMerge(multi_layered, false));
+    setup->read("legacy", use_legacy_bg_engine, false);
+
+    //Required for "nested" config file. Makes no sense in singleton configs
     setup->read("multi-layer-count", multi_layers_count, pMerge(multi_layers_count, 0));
-
-    setup->readEnum("multi-layer-parallax-type",
-                    multi_parallax_type,
-                    pMerge(multi_parallax_type, (uint32_t)ML_PARALLAX_AUTO),
-    {
-        {"auto", ML_PARALLAX_AUTO},
-        {"0", ML_PARALLAX_AUTO},
-        {"manual", ML_PARALLAX_MANUAL},
-        {"1", ML_PARALLAX_MANUAL}
-    });
-
-    setup->read("multi-layer-parallax-z-min", multi_parallax_auto_distance_min, pMerge(multi_parallax_auto_distance_min, -100.0l));
-    NumberLimiter::apply(multi_parallax_auto_distance_min, std::numeric_limits<long double>::lowest(), -1.0l);
-
-    setup->read("multi-layer-parallax-z-max", multi_parallax_auto_distance_max, pMerge(multi_parallax_auto_distance_max, +100.0l));
-    NumberLimiter::apply(multi_parallax_auto_distance_max, 1.0l, std::numeric_limits<long double>::max());
+    setup->read("focus", multi_parallax_focus, pMerge(multi_parallax_focus, 200.0l));
+    setup->read("multi-layer-parallax-focus", multi_parallax_focus, multi_parallax_focus);
 
     if(!merge_with)
         layers.clear();
 
-    if(multi_layered && (multi_layers_count > 0))
+    if(!use_legacy_bg_engine)
     {
         layers.clear();
         setup->endGroup();
 
-        for(uint32_t layer = 0; layer < multi_layers_count; layer++)
-        {
-            BgLayer lyr;
-            std::ostringstream lr_name_o;
-            lr_name_o << PGEStringToStd(section) << "-layer-" << layer;
-            std::string lr_name_s = lr_name_o.str();
-            const char *lr_name = lr_name_s.c_str();
+        std::vector<std::string> all_layers;
 
+        if((section == "General") || (section == "background2"))
+        {
+            // Process layers for singetons backgrounds
+            all_layers = setup->childGroups();
+            std::sort(all_layers.begin(), all_layers.end());//Sort alphabetically
+        }
+        else
+        {
+            // Process layers for nested background config
+            all_layers.reserve(size_t(multi_layers_count));
+            for(uint32_t l = 0; l < multi_layers_count; l++)
+            {
+                std::ostringstream lr_name_o;
+                lr_name_o << PGEStringToStd(section) << "-layer-" << l;
+                all_layers.push_back(lr_name_o.str());
+            }
+        }
+
+        for(std::string &layer_section : all_layers)
+        {
+            if(StdToPGEString(layer_section) == section)
+                continue;//Skip header section
+
+            BgLayer lyr;
+
+            const char *lr_name = layer_section.c_str();
             setup->beginGroup(lr_name);
             {
-                setup->read("name", lyr.name, lr_name);
+                setup->read("name",  lyr.name, lr_name);
                 setup->read("image", lyr.image, "");
-                setup->read("z-value",   lyr.z_index, -50.0l);
-                setup->read("z-index",   lyr.z_index, lyr.z_index);//< Alias to z-value
-                setup->read("z-position",lyr.z_index, lyr.z_index);//< Alias to z-value
-                setup->read("priority",  lyr.z_index, lyr.z_index);//< Alias to z-value
-                NumberLimiter::apply(lyr.z_index, multi_parallax_auto_distance_min, multi_parallax_auto_distance_max);//Avoid out of range
+                pAlias("img", lyr.image);
+
+                long double depth = static_cast<long double>(std::numeric_limits<double>::max());
+                {
+                    int depth_mode = 0;
+                    setup->readEnum("depth",
+                                    depth_mode,
+                                    0, {
+                                        {"INFINITE", +1},
+                                        {"MAX", +1},
+                                        {"MIN", -1}
+                                    });
+                    switch(depth_mode)
+                    {
+                    case +1:
+                        depth = static_cast<long double>(std::numeric_limits<double>::max());
+                        break;
+                    case -1:
+                        depth = -multi_parallax_focus * 0.99999999999999888977697537484l;
+                        break;
+                    default:
+                        setup->read("depth",    depth, depth);
+                        break;
+                    }
+                }
                 setup->read("opacity",  lyr.opacity, 1.0);
                 NumberLimiter::applyD(lyr.opacity, 1.0, 0.0, 1.0);//Opacity can be between 0.0 and 1.0
                 setup->read("flip-h",  lyr.flip_h, false);
@@ -227,6 +263,8 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 setup->read("in-world-draw",  lyr.inscene_draw, lyr.inscene_draw);
                 setup->read("repeat-x", lyr.repeat_x, true);
                 setup->read("repeat-y", lyr.repeat_y, false);
+                pAlias("repeatx", lyr.repeat_x);
+                pAlias("repeaty", lyr.repeat_y);
 
                 IniProcessing::StrEnumMap pMode = {
                     {"scroll", BgLayer::P_MODE_SCROLL},
@@ -256,7 +294,7 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 });
 
                 double parallaxX = 1.0, parallaxY = 1.0;
-                if((multi_parallax_type == ML_PARALLAX_AUTO) && !lyr.inscene_draw)
+                if(!lyr.inscene_draw)
                 {
                     if(lyr.z_index == 0.0l)
                     {
@@ -265,33 +303,40 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                     }
                     else
                     {
-                        /*
-                         *  TODO: Implement right auto-calculation of parallax instead of this
-                        */
-                        parallaxX = parallaxY = (lyr.z_index > 0.0l) ?
-                            static_cast<double>((1.0l + lyr.z_index)) :
-                            static_cast<double>(1.0l / std::fabs(lyr.z_index));
-
-                        if(parallaxX <= (1.0 / static_cast<double>(1.0l + multi_parallax_auto_distance_max)))
+                        if(lyr.z_index == 0.0l)
                         {
                             lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
                             lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
                         }
-                        else if(parallaxX >= (1.0 + static_cast<double>(std::fabs(multi_parallax_auto_distance_max))) )
+                        else
                         {
-                            lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
-                            lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
-                            lyr.opacity = 0.0;//Layer is invisible!
+                            long double d = depth / multi_parallax_focus;
+                            if(d <= -1.0l)
+                            {
+                                lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
+                                lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
+                                lyr.opacity = 0.0;//Layer is behind the "camera"
+                            } else {
+                                d += 1.0l;
+                                d = 1.0l / (d * d);
+                                parallaxX = parallaxY = static_cast<double>(d);
+                            }
                         }
                     }
                 }
+
+                setup->read("z-value",   lyr.z_index, -depth);
+                setup->read("z-index",   lyr.z_index, lyr.z_index);//< Alias to z-value
+                setup->read("z-position",lyr.z_index, lyr.z_index);//< Alias to z-value
+                setup->read("priority",  lyr.z_index, lyr.z_index);//< Alias to z-value
 
                 double parallaxX_1 = parallaxX, parallaxY_1 = parallaxY;
                 setup->read("parallax-coefficient-x", parallaxX_1, parallaxX == 0.0 ? 0.0 : 1.0 / parallaxX);
                 setup->read("parallax-coefficient-y", parallaxY_1, parallaxY == 0.0 ? 0.0 : 1.0 / parallaxY);
                 setup->read("parallax-x", lyr.parallax_x, parallaxX_1 == 0.0 ? 0.0 : 1.0 / parallaxX_1);
-                setup->read("parallax-x", lyr.parallax_y, parallaxY_1 == 0.0 ? 0.0 : 1.0 / parallaxX_1);
-
+                setup->read("parallax-y", lyr.parallax_y, parallaxY_1 == 0.0 ? 0.0 : 1.0 / parallaxY_1);
+                pAlias("parallaxx", lyr.parallax_x);
+                pAlias("parallaxy", lyr.parallax_y);
                 NumberLimiter::applyD(lyr.parallax_x, 0.0, 0.0);
                 if((lyr.parallax_mode_x == BgLayer::P_MODE_SCROLL) && (lyr.parallax_x == 0.0))
                     lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
@@ -300,32 +345,40 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
                 if((lyr.parallax_mode_y == BgLayer::P_MODE_SCROLL) && (lyr.parallax_y == 0.0))
                     lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
 
-
-
                 setup->read("offset-x", lyr.offset_x, 0.0);
                 setup->read("offset-y", lyr.offset_y, 0.0);
+                pAlias("x", lyr.offset_x);
+                pAlias("y", lyr.offset_y);
 
-                double paddingX = 0.0, paddingY = 0.0;
-                setup->read("padding-x", paddingX, 0.0);
-                setup->read("padding-y", paddingY, 0.0);
-                setup->read("padding-x-right", lyr.padding_x_right, paddingX);
-                NumberLimiter::applyD(lyr.padding_x_right, 0.0, 0.0);
-                setup->read("padding-x-left", lyr.padding_x_left, paddingX);
-                NumberLimiter::applyD(lyr.padding_x_left, 0.0, 0.0);
-                setup->read("padding-y-bottom", lyr.padding_y_bottom, paddingY);
-                NumberLimiter::applyD(lyr.padding_y_bottom, 0.0, 0.0);
-                setup->read("padding-y-top", lyr.padding_y_top, paddingY);
-                NumberLimiter::applyD(lyr.padding_y_top, 0.0, 0.0);
+                double summarMarginH = 0.0, summarMarginV = 0.0;
+                setup->read("margin-x", summarMarginH, 0.0);
+                setup->read("margin-y", summarMarginV, 0.0);
+                setup->read("margin-x-right", lyr.margin_x_right, summarMarginH);
+                NumberLimiter::applyD(lyr.margin_x_right, 0.0, 0.0);
+                setup->read("margin-x-left", lyr.margin_x_left, summarMarginH);
+                NumberLimiter::applyD(lyr.margin_x_left, 0.0, 0.0);
+                setup->read("margin-y-bottom", lyr.margin_y_bottom, summarMarginV);
+                NumberLimiter::applyD(lyr.margin_y_bottom, 0.0, 0.0);
+                setup->read("margin-y-top", lyr.margin_y_top, summarMarginV);
+                NumberLimiter::applyD(lyr.margin_y_top, 0.0, 0.0);
 
-                setup->read("auto-scroll-x", lyr.auto_scrolling_x, false);
-                setup->read("auto-scroll-x-speed", lyr.auto_scrolling_x_speed, 32);
-                setup->read("auto-scroll-y", lyr.auto_scrolling_y, false);
-                setup->read("auto-scroll-y-speed", lyr.auto_scrolling_y_speed, 32);
+                setup->read("padding-x", lyr.padding_horizontal, 0.0);
+                setup->read("padding-y", lyr.padding_vertical, 0.0);
 
-                setup->read("animated", lyr.animated, false);
+                setup->read("speed-x", lyr.auto_scrolling_x_speed, 0);
+                pAlias("auto-scroll-speed-x", lyr.auto_scrolling_x_speed);
+                pAlias("speedx", lyr.auto_scrolling_x_speed);
+                lyr.auto_scrolling_x = (lyr.auto_scrolling_x_speed != 0);
+
+                setup->read("speed-y", lyr.auto_scrolling_y_speed, 0);
+                pAlias("auto-scroll-speed-y", lyr.auto_scrolling_y_speed);
+                pAlias("speedy", lyr.auto_scrolling_y_speed);
+                lyr.auto_scrolling_y = (lyr.auto_scrolling_y_speed != 0);
+
                 setup->read("frames", lyr.frames, 1);
+                lyr.animated = (lyr.frames > 1);
                 setup->read("frame-delay", lyr.framespeed, 128);
-                setup->read("framespeed", lyr.framespeed, lyr.framespeed);
+                pAlias("framespeed", lyr.framespeed);
                 setup->read("display-frame", lyr.display_frame, 0);
                 setup->read("frame-sequence", lyr.frame_sequence);
             }
@@ -343,5 +396,6 @@ bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaul
 
 #undef pMerge
 #undef pMergeMe
+#undef pAlias
     return true;
 }

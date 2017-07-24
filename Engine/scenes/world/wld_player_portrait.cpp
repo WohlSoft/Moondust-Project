@@ -64,11 +64,15 @@ void WorldScene_Portrait::init(unsigned long CharacterID,
     }
     m_animator.setSize(m_setup.matrix_width, m_setup.matrix_height);
     m_isValid = m_animator.installAnimationSet(m_state_cur.sprite_setup);
-    m_animator.switchAnimation(m_animator.toEnum(ani), dir, framedelay);
+    if(m_isValid)
+        m_animator.switchAnimation(m_animator.toEnum(ani), dir, framedelay);
 }
 
 void WorldScene_Portrait::render()
 {
+    if(!m_isValid)
+        return;
+
     PGE_RectF tPos = m_animator.curFrame();
     PGE_PointF Ofs = m_animator.curOffset();
     PGE_RectF player;

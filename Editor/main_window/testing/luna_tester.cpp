@@ -1002,6 +1002,72 @@ failed:
     msg.warning("LunaTester", tr("LunaLUA tester is not started!"), QMessageBox::Ok);
 }
 
+bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
+{
+    if(m_killPreviousSession || (m_ipc_pipe_out == 0) || (m_ipc_pipe_in == 0))
+        return false;
+
+    QJsonDocument jsonOut;
+    QJsonObject jsonObj;
+    jsonObj["jsonrpc"]  = "2.0";
+    jsonObj["method"]   = "getWindowHandle";
+    QJsonObject JSONparams;
+    JSONparams["xxx"] = 0;
+    jsonObj["params"] = JSONparams;
+    jsonObj["id"] = 3;
+    jsonOut.setObject(jsonObj);
+    QByteArray outputJSON = jsonOut.toJson();
+
+    //Converting JSON data into net string
+    std::string dataToSend = outputJSON.toStdString();
+    int len = dataToSend.size();
+    std::stringstream outString;
+    outString << std::to_string(len) << ":" << dataToSend << ',';
+    dataToSend = outString.str();
+
+    DWORD writtenBytes = 0;
+    //Send data to SMBX
+    if(WriteFile(m_ipc_pipe_out,
+                 (LPCVOID)dataToSend.c_str(),
+                 (DWORD)dataToSend.size(),
+                 &writtenBytes, NULL) == TRUE)
+    {
+        std::string inMessage = ReadMsgString(m_ipc_pipe_in);
+        LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
+        QByteArray jsonData(inMessage.c_str(), inMessage.size());
+        QJsonParseError err;
+        QJsonDocument jsonOut = QJsonDocument::fromJson(jsonData, &err);
+        if(err.error == QJsonParseError::NoError)
+        {
+            QJsonObject obj = jsonOut.object();
+            if(obj["error"].isNull())
+            {
+                unsigned long smbxHwnd = ulong(obj["result"].toVariant().toULongLong());
+                HWND wSmbx = HWND(smbxHwnd);
+                //Close SMBX's window
+                PostMessage(wSmbx, WM_CLOSE, 0, 0);
+                //Wait half of second to avoid racings
+                Sleep(500);
+            }
+            else
+                msg.warning("LunaTester (closeSmbxWindow, obj[\"error\"])",
+                            "LunaLua returned error message:\n" +
+                            QString::fromStdString(inMessage),
+                            QMessageBox::Ok);
+        }
+        else
+        {
+            msg.warning("LunaTester (closeSmbxWindow)",
+                        "Error of parsing input data from LunaLua:\n" +
+                        err.errorString() +
+                        "\n\nData:\n" + QString::fromStdString(inMessage),
+                        QMessageBox::Warning);
+        }
+        return true;
+    }
+    return false;
+}
+
 bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
 {
     if((m_ipc_pipe_out == 0) || (m_ipc_pipe_in == 0))
@@ -1122,6 +1188,9 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             {
                 if(m_ipc_pipe_out != 0)
                 {
+                    //Workaround to avoid weird crash
+                    closeSmbxWindow(msg);
+                    //Then send level data to SMBX Engine
                     if(sendLevelData(in_levelData, levelPath, isUntitled))
                     {
                         //Stop music playback in the PGE Editor!

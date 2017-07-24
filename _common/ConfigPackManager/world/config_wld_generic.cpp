@@ -83,9 +83,9 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     setup->read("icon", icon_n, pMerge(icon_n, ""));
 
     setup->read("grid",         grid,       pMerge(grid, defaultGrid));
-    setup->read("animated",     animated,   pMerge(animated, 0));
-    setup->read("frames",       frames,     pMerge(frames, 1));
+    setup->read("frames",       frames,     pMerge(frames, 1u));
     NumberLimiter::apply(frames, uint32_t(1u));
+    animated = (frames > 1u);
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
     setup->read("frame-speed", framespeed, framespeed);//Alias
     if(setup->hasKey("framespeed"))

@@ -40,6 +40,7 @@ namespace ConfigManager
     extern std::string playerLvlPath;
     extern std::string playerWldPath;
     extern std::string playerScriptPath;
+    extern std::string playerCalibrationsPath;
 
     extern std::string tilePath;
     extern std::string scenePath;

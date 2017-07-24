@@ -52,8 +52,13 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg,
 
     m_errOut = merge_with ? ERR_CUSTOM : ERR_GLOBAL;
 
-    if(!openSection(setup, section.toStdString(), internal))
-        return false;
+    // BG entry must have header section
+    //if(!openSection(setup, section.toStdString(), internal))
+    //    return false;
+
+    // BG allowed to have no header section
+    if(!setup->beginGroup(section.toStdString()) && internal)
+        setup->beginGroup("General");
 
     if(sbg.setup.parse(setup, BGPath, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
         sbg.isValid = true;

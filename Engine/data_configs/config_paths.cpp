@@ -28,6 +28,7 @@ std::string ConfigManager::effectPath;
 std::string ConfigManager::playerLvlPath;
 std::string ConfigManager::playerWldPath;
 std::string ConfigManager::playerScriptPath;
+std::string ConfigManager::playerCalibrationsPath;
 
 std::string ConfigManager::tilePath;
 std::string ConfigManager::scenePath;
@@ -114,6 +115,11 @@ std::string ConfigManager::PathLevelPlayerScript()
     return playerScriptPath;
 }
 
+std::string ConfigManager::PathLevelPlayerCalibrations()
+{
+    return playerCalibrationsPath;
+}
+
 std::string ConfigManager::PathMusic()
 {
     return dirs.music;
@@ -133,6 +139,7 @@ void ConfigManager::refreshPaths()
     npcPath =   dirs.glevel +  "npc/";
     npcScriptPath = config_dirSTD +  "script/npcs/";
     playerScriptPath = config_dirSTD +  "script/player/";
+    playerCalibrationsPath = config_dirSTD + "characters/";
     effectPath= dirs.glevel +  "effect/";
     playerLvlPath = dirs.gplayble;
     playerWldPath = dirs.gworld + "player/";

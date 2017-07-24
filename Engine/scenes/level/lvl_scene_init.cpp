@@ -235,9 +235,10 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC());
     ConfigManager::Dir_NPCScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPCScript());
     ConfigManager::Dir_PlayerScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerScript());
+    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerCalibrations());
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable());
     ConfigManager::Dir_BG.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBG());
     ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect());
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable());
 
     //Load INI-files
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
@@ -263,6 +264,13 @@ bool LevelScene::loadConfigs()
     }
 
     success = ConfigManager::loadLevelBackG();  //!< Backgrounds
+    if(!success)
+    {
+        m_exitLevelCode = LvlExit::EXIT_Error;
+        goto abortInit;
+    }
+
+    success = ConfigManager::loadPlayableCharacters();  //!< Playalbe Characters
     if(!success)
     {
         m_exitLevelCode = LvlExit::EXIT_Error;

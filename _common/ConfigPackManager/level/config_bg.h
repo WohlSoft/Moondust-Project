@@ -79,7 +79,7 @@ struct BgSetup
     PGEString       fill_color = "auto";
 
     /*
-     *  First image
+     *  First image (Single-row, Tiled and Double-row background)
      */
     //! Filename for first image
     PGEString       image_n;
@@ -98,7 +98,7 @@ struct BgSetup
 
 
     /*
-     *  Animation setup
+     *  Animation setup (Single-row and first row of double-row background only)
      */
     //! Is background animated
     bool            animated = false;
@@ -113,27 +113,23 @@ struct BgSetup
 
 
     /*
-     *  Magic background
+     *  Segmented background
      */
-    /// Turn on "magic" background.
+    /// Turn on "segmented" background.
     /*!
-        Magic background allow to split background image to horizontal
+        Segmented background allows to split background image to horizontal
         stripses are have different parallax coefficients
     */
-    bool            magic = false;
+    bool            segmented = false;
     //! Count of stripses
-    uint32_t        magic_strips = 1u;
-    //! Comma-separated set of Y coordinates of split lines
-    PGEString       magic_splits;
-    //! Decoded set of Y coordinates of split lines  [decoded from magic_splits]
-    PGEList<uint32_t> magic_splits_i;
-    //! Comma-separated set of parallax coefficients for every strip line
-    PGEString       magic_speeds;
-    //! Decoded set of parallax coefficients for every strip line [decoded from magic_speeds]
-    PGEList<double> magic_speeds_i;
+    uint32_t        segmented_strips = 1u;
+    //! Decoded set of Y coordinates of split lines
+    PGEList<uint32_t> segmented_splits;
+    //! Decoded set of parallax coefficients for every strip line (1/speed)
+    PGEList<double> segmented_speeds;
 
     /*
-     *  Second image
+     *  Second image (Doble-row backgrounds only)
      */
     //! Filename for second background image [Double-row only]
     PGEString       second_image_n;
@@ -148,29 +144,12 @@ struct BgSetup
     /*
      *  Multi-layaring background
      */
-    enum MultiLayersParallaxType
-    {
-        //! Parallax coefficients will be calculated proportionally to position between 0 or min for back and 0 to max for front
-        ML_PARALLAX_AUTO = 0,
-        //! Parallax coefficients must be defined manually
-        ML_PARALLAX_MANUAL = 1
-    };
-
-    //! Turn background into multi-layering mode
-    bool            multi_layered = false;
+    //! Turn on legacy background engine without multilayer support. Has exception: it is not inheritable in custom configs.
+    bool            use_legacy_bg_engine = false;
     //! Count of layers
     uint32_t        multi_layers_count = 1;
-    /// Type of parallax
-    /*!
-        auto    - parallax coefficient will be calculated relative to distance between 0 to min for backgrounds,
-                  and between 0 and max for foregrounds
-        manual  - parallax coefficients can be defined
-     */
-    uint32_t        multi_parallax_type = ML_PARALLAX_AUTO;
-    //! Maximal background distance
-    long double     multi_parallax_auto_distance_min = -100.0l;
-    //! Maximal background distance
-    long double     multi_parallax_auto_distance_max = +100.0l;
+    //! Focus value
+    long double     multi_parallax_focus = 200.0l;
 
     struct BgLayer
     {
@@ -179,7 +158,7 @@ struct BgSetup
         //! Background image of this layer
         PGEString   image;
         //! Z index. <0 - background, >0 - foreground
-        long double z_index = -50.0l;
+        long double z_index = -100.0l;
         //! Opacity of the layer
         double      opacity = 1.0;
 
@@ -225,8 +204,8 @@ struct BgSetup
         };
         enum ReferencePointY
         {
-            R_BOTTOM = 0,
-            R_TOP = 1,
+            R_TOP = 0,
+            R_BOTTOM = 1,
         };
 
         //! Horizontal parallax mode
@@ -248,14 +227,20 @@ struct BgSetup
         double      offset_x = 0.0;
         //! Initial offset Y at top/bottop section edge (dependent on vertical reference point)
         double      offset_y = 0.0;
-        //! Horizontal padding at right between repeating tiles
-        double      padding_x_right       = 0.0;
-        //! Horizontal padding at left between repeating tiles
-        double      padding_x_left  = 0.0;
-        //! Vertical padding at bottom between repeating tiles
-        double      padding_y_bottom       = 0.0;
-        //! Vertical padding at top between repeating tiles
-        double      padding_y_top   = 0.0;
+
+        //! Horizontal margin at right of every tile
+        double      margin_x_right       = 0.0;
+        //! Horizontal margin at left of every tile
+        double      margin_x_left  = 0.0;
+        //! Vertical margin at bottom of every tile
+        double      margin_y_bottom       = 0.0;
+        //! Vertical margin at top of every tile
+        double      margin_y_top   = 0.0;
+
+        //! Horizontal padding between repeating tiles
+        double      padding_horizontal   = 0.0;
+        //! Vertical padding between repeating tiles
+        double      padding_vertical   = 0.0;
 
         //! Auto-scroll image (works when releat X is enabled)
         bool        auto_scrolling_x = false;
