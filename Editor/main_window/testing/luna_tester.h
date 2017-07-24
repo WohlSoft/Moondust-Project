@@ -132,6 +132,12 @@ private:
      */
     void lunaChkResetThread();
     /**
+     * @brief Try to close SMBX's window
+     * @param msg Safe message box interface (to spawn message boxes at main window in main thread)
+     * @return true if window successfully switched, false on failure
+     */
+    bool closeSmbxWindow(SafeMsgBoxInterface &msg);
+    /**
      * @brief Switch to active LunaLUA testing window
      * @param msg Safe message box interface (to spawn message boxes at main window in main thread)
      * @return true if window successfully switched, false on failure
