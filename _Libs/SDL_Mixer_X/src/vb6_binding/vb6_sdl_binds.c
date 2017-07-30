@@ -37,7 +37,7 @@
 #include <SDL2/SDL_rwops.h>
 
 /* Needed for ADLMIDI_getBankNames() */
-#include "music_midi_adl.h"
+#include "../codecs/music_midi_adl.h"
 
 #define SDL_INIT_AUDIO          0x00000010
 extern DECLSPEC int SDL_Init(Uint32 flags);
