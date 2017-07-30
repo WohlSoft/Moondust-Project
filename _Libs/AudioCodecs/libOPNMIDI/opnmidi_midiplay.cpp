@@ -1239,8 +1239,7 @@ void OPNMIDIplay::UpdateArpeggio(double) // amount = amount of time passed
     for(uint32_t c = 0; c < opn.NumChannels; ++c)
     {
 retry_arpeggio:
-
-        if(c > std::numeric_limits<int32_t>::max())
+        if(c > uint32_t(std::numeric_limits<int32_t>::max()))
             break;
 
         size_t n_users = ch[c].users.size();

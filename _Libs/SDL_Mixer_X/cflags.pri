@@ -9,7 +9,8 @@
         -Wno-sign-compare \
         -Wno-unused-function \
         -Wno-implicit-function-declaration \
-        -Wno-pointer-sign
+        -Wno-pointer-sign \
+        -Wno-implicit-fallthrough
 
     QMAKE_CXXFLAGS_WARN_ON += \
         -Wno-missing-field-initializers \

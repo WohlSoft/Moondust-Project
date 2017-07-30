@@ -15,7 +15,8 @@ INCLUDEPATH += $$PWD $$PWD/include
 
 !win*-msvc*:{
     QMAKE_CFLAGS_WARN_ON += \
-        -Wno-implicit-function-declaration
+        -Wno-implicit-function-declaration \
+        -Wno-implicit-fallthrough
 
 } else {
     DEFINES += _CRT_SECURE_NO_WARNINGS
@@ -25,6 +26,8 @@ INCLUDEPATH += $$PWD $$PWD/include
 
 HEADERS += \
     include/zlib.h \
+    include/zutil.h \
+	include/zconf.h \
     crc32.h \
     deflate.h \
     gzguts.h \
@@ -32,10 +35,7 @@ HEADERS += \
     inffixed.h \
     inflate.h \
     inftrees.h \
-    trees.h \
-    zconf.h \
-    zlib.h \
-    zutil.h
+    trees.h
 
 SOURCES += \
     adler32.c \

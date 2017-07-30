@@ -1,5 +1,5 @@
-
-LIBS += -lmodplug
+LIBS    += -lmodplug
+DEFINES += MODPLUG_STATIC
 
 HEADERS += \
     $$PWD/dynamic_modplug.h \

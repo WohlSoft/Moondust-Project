@@ -17,7 +17,9 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `setenv' function. */
+#ifndef _WIN32
 #define HAVE_SETENV 1
+#endif
 
 /* Define to 1 if you have the `sinf' function. */
 #define HAVE_SINF 1

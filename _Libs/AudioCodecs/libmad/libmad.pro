@@ -13,15 +13,20 @@ include($$PWD/../audio_codec_common.pri)
 DEFINES += FPM_DEFAULT HAVE_CONFIG_H
 
 win*-msvc*: {
-DEFINES += _CRT_SECURE_NO_WARNINGS
-QMAKE_CFLAGS += /wd4244 /wd4146
+    DEFINES += _CRT_SECURE_NO_WARNINGS
+    QMAKE_CFLAGS += /wd4244 /wd4146
+}
+
+!win*-msvc*:{
+    QMAKE_CFLAGS_WARN_ON  += \
+        -Wno-implicit-fallthrough
 }
 
 debug {
     DEFINES += DEBUG
 } else: release: {
     DEFINES += NDEBUG
-    QMAKE_CFLAGS += -O3
+    !win*-msvc*: QMAKE_CFLAGS += -O3
 }
 
 HEADERS +=\

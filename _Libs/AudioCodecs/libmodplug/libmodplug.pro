@@ -15,7 +15,10 @@ INCLUDEPATH += $$PWD $$PWD/include
 
 !win*-msvc*:{
     QMAKE_CFLAGS_WARN_ON    += -Wno-unused-but-set-variable
-    QMAKE_CXXFLAGS_WARN_ON  += -Wno-unused-but-set-variable
+    QMAKE_CXXFLAGS_WARN_ON  += \
+        -Wno-unused-but-set-variable \
+        -Wno-unused-parameter \
+        -Wno-implicit-fallthrough
 } else {
     DEFINES += _CRT_SECURE_NO_WARNINGS
     QMAKE_CFLAGS_WARN_ON   += /wd4100 /wd4244 /wd4005 /wd4013 /wd4047 /wd4996
@@ -23,52 +26,54 @@ INCLUDEPATH += $$PWD $$PWD/include
 }
 
 DEFINES += \
+    MODPLUG_NO_FILESAVE \
     HAVE_CONFIG_H \
     MODPLUG_STATIC \
     MODPLUG_BUILD=1 \
+    _REENTRANT \
     _USE_MATH_DEFINES
 
 HEADERS += \
-    $$PWD/include/modplug.h \
-    $$PWD/config.h \
-    $$PWD/it_defs.h \
-    $$PWD/load_pat.h \
-    $$PWD/sndfile.h \
-    $$PWD/stdafx.h \
-    $$PWD/tables.h
+    include/modplug.h \
+    config.h \
+    it_defs.h \
+    load_pat.h \
+    sndfile.h \
+    stdafx.h \
+    tables.h
 
 SOURCES += \
-    $$PWD/fastmix.cpp \
-    $$PWD/load_669.cpp \
-    $$PWD/load_abc.cpp \
-    $$PWD/load_amf.cpp \
-    $$PWD/load_ams.cpp \
-    $$PWD/load_dbm.cpp \
-    $$PWD/load_dmf.cpp \
-    $$PWD/load_dsm.cpp \
-    $$PWD/load_far.cpp \
-    $$PWD/load_it.cpp \
-    # $$PWD/load_j2b.cpp \
-    $$PWD/load_mdl.cpp \
-    $$PWD/load_med.cpp \
-    $$PWD/load_mid.cpp \
-    $$PWD/load_mod.cpp \
-    $$PWD/load_mt2.cpp \
-    $$PWD/load_mtm.cpp \
-    $$PWD/load_okt.cpp \
-    $$PWD/load_pat.cpp \
-    $$PWD/load_psm.cpp \
-    $$PWD/load_ptm.cpp \
-    $$PWD/load_s3m.cpp \
-    $$PWD/load_stm.cpp \
-    $$PWD/load_ult.cpp \
-    $$PWD/load_umx.cpp \
-    $$PWD/load_wav.cpp \
-    $$PWD/load_xm.cpp \
-    $$PWD/mmcmp.cpp \
-    $$PWD/modplug.cpp \
-    $$PWD/snd_dsp.cpp \
-    $$PWD/snd_flt.cpp \
-    $$PWD/snd_fx.cpp \
-    $$PWD/sndfile.cpp \
-    $$PWD/sndmix.cpp
+    fastmix.cpp \
+    load_669.cpp \
+    load_abc.cpp \
+    load_amf.cpp \
+    load_ams.cpp \
+    load_dbm.cpp \
+    load_dmf.cpp \
+    load_dsm.cpp \
+    load_far.cpp \
+    load_it.cpp \
+    # load_j2b.cpp \
+    load_mdl.cpp \
+    load_med.cpp \
+    load_mid.cpp \
+    load_mod.cpp \
+    load_mt2.cpp \
+    load_mtm.cpp \
+    load_okt.cpp \
+    load_pat.cpp \
+    load_psm.cpp \
+    load_ptm.cpp \
+    load_s3m.cpp \
+    load_stm.cpp \
+    load_ult.cpp \
+    load_umx.cpp \
+    load_wav.cpp \
+    load_xm.cpp \
+    mmcmp.cpp \
+    modplug.cpp \
+    snd_dsp.cpp \
+    snd_flt.cpp \
+    snd_fx.cpp \
+    sndfile.cpp \
+    sndmix.cpp

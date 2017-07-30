@@ -974,7 +974,7 @@ static void     WAVStream_seek(void *music_p, double position)
     if(!music)
         return;
     SDL_RWseek(music->src,
-               music->start + (Sint64)(position * (double)music->spec.freq * music->samplesize), SEEK_SET);
+               music->start + (Sint64)(position * (double)music->spec.freq * music->samplesize), RW_SEEK_SET);
 }
 
 static double   WAVStream_tell(void *music_p)

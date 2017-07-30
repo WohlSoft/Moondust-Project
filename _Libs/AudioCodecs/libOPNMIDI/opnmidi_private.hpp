@@ -38,6 +38,15 @@
 #ifdef _WIN32
 #undef NO_OLDNAMES
 #endif
+
+#ifdef _MSC_VER
+#ifdef _WIN64
+    typedef __int64 ssize_t;
+#else
+    typedef __int32 ssize_t;
+#endif
+#endif
+
 #include <vector>
 #include <string>
 #include <sstream>

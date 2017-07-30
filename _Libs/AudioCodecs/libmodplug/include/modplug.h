@@ -178,8 +178,8 @@ MODPLUG_EXPORT ModPlugNote* ModPlug_GetPattern(ModPlugFile* file, int pattern, u
  *
  * (Samples are signed 32-bit integers)
  */
-MODPLUG_EXPORT void ModPlug_InitMixerCallback(ModPlugFile* file,ModPlugMixerProc proc) ;
-MODPLUG_EXPORT void ModPlug_UnloadMixerCallback(ModPlugFile* file) ;
+MODPLUG_EXPORT void ModPlug_InitMixerCallback(ModPlugFile* file,ModPlugMixerProc proc);
+MODPLUG_EXPORT void ModPlug_UnloadMixerCallback(ModPlugFile* file);
 
 #ifdef __cplusplus
 } /* extern "C" */

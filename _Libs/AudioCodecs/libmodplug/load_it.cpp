@@ -627,7 +627,7 @@ BOOL CSoundFile::SaveIT(LPCSTR lpszFileName, UINT nPacking)
     dwPatNamLen = 0;
     dwChnNamLen = 0;
     header.id = 0x4D504D49; // IMPM
-    lstrcpyn((char *)header.songname, m_szNames[0], 27);
+    strncpy((char *)header.songname, m_szNames[0], 26);
     header.reserved1 = 0x1004;
     header.ordnum = 0;
     while ((header.ordnum < MAX_ORDERS) && (Order[header.ordnum] < 0xFF)) header.ordnum++;

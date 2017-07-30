@@ -13,8 +13,11 @@ include($$PWD/../audio_codec_common.pri)
 
 DEFINES     += HAVE_CONFIG_H FLAC__NO_DLL
 win*-msvc*: {
-DEFINES += _CRT_SECURE_NO_WARNINGS
-QMAKE_CFLAGS += /wd4244
+    DEFINES += _CRT_SECURE_NO_WARNINGS
+    QMAKE_CFLAGS += /wd4244
+} else {
+    QMAKE_CFLAGS_WARN_ON = \
+        -Wno-implicit-fallthrough
 }
 #win32:DEFINES += HAVE_FSEEKO
 macx: QMAKE_CFLAGS_WARN_ON = -Wall -Wno-unused-variable

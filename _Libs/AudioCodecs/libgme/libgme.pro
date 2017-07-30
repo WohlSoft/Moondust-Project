@@ -13,6 +13,15 @@ include($$PWD/../audio_codec_common.pri)
 
 INCLUDEPATH += $$PWD $$PWD/include $$PWD/../zlib/include
 
+!win*-msvc*:{
+    QMAKE_CXXFLAGS_WARN_ON  += \
+        -Wno-implicit-fallthrough
+} else {
+    DEFINES += _CRT_SECURE_NO_WARNINGS
+    QMAKE_CFLAGS_WARN_ON   += /wd4100 /wd4244 /wd4005 /wd4013 /wd4047 /wd4996
+    QMAKE_CXXFLAGS_WARN_ON += /wd4100 /wd4101 /wd4244 /wd4800 /wd4104 /wd4146
+}
+
 DEFINES += \
     SPC_MORE_ACCURACY \
     _REENTRANT \

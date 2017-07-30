@@ -601,7 +601,7 @@ BOOL CSoundFile::SaveXM(LPCSTR lpszFileName, UINT nPacking)
 	fwrite("Extended Module: ", 17, 1, f);
 	fwrite(m_szNames[0], 20, 1, f);
 	s[0] = 0x1A;
-	lstrcpy((LPSTR)&s[1], (nPacking) ? "MOD Plugin packed   " : "FastTracker v2.00   ");
+	strcpy((LPSTR)&s[1], (nPacking) ? "MOD Plugin packed   " : "FastTracker v2.00   ");
 	s[21] = 0x04;
 	s[22] = 0x01;
 	fwrite(s, 23, 1, f);

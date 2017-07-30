@@ -109,7 +109,7 @@ Sint64 id3f_seek(struct id3_file *ctx, Sint64 offset, int whence)
 void id3f_rewind(struct id3_file *ctx)
 {
     if(ctx->iorwops)
-        SDL_RWseek(ctx->iorwops, 0, SEEK_SET);
+        SDL_RWseek(ctx->iorwops, 0, RW_SEEK_SET);
     else
         rewind(ctx->iofile);
 }
@@ -126,7 +126,7 @@ int id3f_getpos(struct id3_file *ctx, id3f_pos_t *pos)
         return -1;
     if(ctx->iorwops)
     {
-        pos->rwoffset = (off_t)id3f_tell(ctx);
+        pos->rwoffset = (Sint64)id3f_tell(ctx);
         return pos->rwoffset != -1 ? 0 : -1;
     }
     return fgetpos(ctx->iofile, &pos->real_fpos);
