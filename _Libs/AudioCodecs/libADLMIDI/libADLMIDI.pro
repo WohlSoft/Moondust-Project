@@ -21,7 +21,6 @@ HEADERS += \
     adlmidi_mus2mid.h \
     adlmidi_private.hpp \
     adlmidi_xmi2mid.h \
-    dbopl.h \
     fraction.h \
     nukedopl3.h
 
@@ -32,9 +31,6 @@ SOURCES += \
     adlmidi_midiplay.cpp \
     adlmidi_opl3.cpp \
     adlmidi_private.cpp \
-    dbopl.cpp \
     adlmidi_mus2mid.c \
     adlmidi_xmi2mid.c \
     nukedopl3.c
-
-

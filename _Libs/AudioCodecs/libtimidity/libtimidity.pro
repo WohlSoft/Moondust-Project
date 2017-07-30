@@ -11,9 +11,14 @@ INSTALLINCLUDES = $$PWD/include/*
 INSTALLINCLUDESTO = timidity
 include($$PWD/../audio_codec_common.pri)
 
-LIBS += -lSDL2
+exists($$PWD/../../../_common/lib_destdir.pri):{
+    include($$PWD/../../../_common/lib_destdir.pri)
+    INCLUDEPATH += $$PWD/../../_builds/$$TARGETOS/include/
+    LIBS += -L$$PWD/../../_builds/$$TARGETOS/lib/
+}
 
 INCLUDEPATH += $$PWD $$PWD/include
+LIBS += -lSDL2
 
 HEADERS += \
     include/timidity.h \
