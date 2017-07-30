@@ -108,13 +108,13 @@ android:{
     win32:{
         DEFINES -= UNICODE _UNICODE
         enable-stdcalls: {
-            LIBS += -static -l:libSDL2.a -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
-            SOURCES += $$PWD/src/vb6_sdl_binds.c
+            LIBS += -static -l:libSDL2.a -static-libgcc -static-libstdc++ -static -lpthread -luuid
+            include($$PWD/src/vb6_binding/vb6_binding.pri)
         } else {
             !win*-msvc*:{
-                LIBS += -lSDL2main -lSDL2.dll -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a
+                LIBS += -lSDL2main -lSDL2.dll
             } else {
-                LIBS += -lSDL2main -lSDL2 -lFLAC -lvorbisfile -lvorbis -logg -lmad
+                LIBS += -lSDL2main -lSDL2
             }
         }
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32 -luser32 -lgdi32
@@ -146,18 +146,19 @@ win32: {
 
 INCLUDEPATH += $$PWD/include/
 
-contains(DEFINES, USE_ADL_MIDI):        include($$PWD/src/play_midi_adl.pri)
-contains(DEFINES, USE_OPN2_MIDI):       include($$PWD/src/play_midi_opn.pri)
-contains(DEFINES, USE_TIMIDITY_MIDI):   include($$PWD/src/timidity/timidity.pri)
-contains(DEFINES, USE_NATIVE_MIDI):     include($$PWD/src/play_midi_native.pri)
-contains(DEFINES, USE_FLUIDSYNTH_MIDI): include($$PWD/src/play_midi_fluid.pri)
-contains(DEFINES, OGG_MUSIC):           include($$PWD/src/play_ogg.pri)
-contains(DEFINES, FLAC_MUSIC):          include($$PWD/src/play_flac.pri)
-contains(DEFINES, MOD_MUSIC):           include($$PWD/src/play_mikmod.pri)
-contains(DEFINES, MODPLUG_MUSIC):       include($$PWD/src/play_modplug.pri)
-contains(DEFINES, MP3_MAD_MUSIC):       include($$PWD/src/play_mp3.pri)
-contains(DEFINES, GME_MUSIC):           include($$PWD/src/play_gme.pri)
-contains(DEFINES, CMD_MUSIC):           include($$PWD/src/play_cmdmusic.pri)
+include($$PWD/src/codecs/play_wave.pri)
+contains(DEFINES, USE_ADL_MIDI):        include($$PWD/src/codecs/play_midi_adl.pri)
+contains(DEFINES, USE_OPN2_MIDI):       include($$PWD/src/codecs/play_midi_opn.pri)
+contains(DEFINES, USE_TIMIDITY_MIDI):   include($$PWD/src/codecs/play_midi_timidity.pri)
+contains(DEFINES, USE_NATIVE_MIDI):     include($$PWD/src/codecs/play_midi_native.pri)
+contains(DEFINES, USE_FLUIDSYNTH_MIDI): include($$PWD/src/codecs/play_midi_fluid.pri)
+contains(DEFINES, OGG_MUSIC):           include($$PWD/src/codecs/play_ogg.pri)
+contains(DEFINES, FLAC_MUSIC):          include($$PWD/src/codecs/play_flac.pri)
+contains(DEFINES, MOD_MUSIC):           include($$PWD/src/codecs/play_mikmod.pri)
+contains(DEFINES, MODPLUG_MUSIC):       include($$PWD/src/codecs/play_modplug.pri)
+contains(DEFINES, MP3_MAD_MUSIC):       include($$PWD/src/codecs/play_mp3.pri)
+contains(DEFINES, GME_MUSIC):           include($$PWD/src/codecs/play_gme.pri)
+contains(DEFINES, CMD_MUSIC):           include($$PWD/src/codecs/play_cmdmusic.pri)
 
 HEADERS += \
     include/SDL_mixer_ext/SDL_mixer_ext.h \
@@ -165,9 +166,6 @@ HEADERS += \
     include/SDL_mixer_ext/close_code.h \
     src/audio_codec.h \
     src/effects_internal.h \
-    src/load_aiff.h \
-    src/load_voc.h \
-    src/wavestream.h \
     src/resample/my_resample.h \
     src/mixer.h \
 
@@ -176,10 +174,6 @@ SOURCES += \
     src/effect_position.c \
     src/effect_stereoreverse.c \
     src/effects_internal.c \
-    src/load_aiff.c \
-    src/load_voc.c \
     src/mixer.c \
     src/music.c \
-    src/wavestream.c \
     src/resample/my_resample.c
-

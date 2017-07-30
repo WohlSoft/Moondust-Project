@@ -29,19 +29,19 @@
 
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "mixer.h"
-#include "load_aiff.h"
-#include "load_voc.h"
-#include "load_mp3.h"
-#include "load_ogg.h"
-#include "load_flac.h"
-#include "dynamic_flac.h"
-#include "dynamic_fluidsynth.h"
-#include "dynamic_modplug.h"
-#include "dynamic_mod.h"
-#include "dynamic_mp3.h"
-#include "dynamic_ogg.h"
+#include "codecs/load_aiff.h"
+#include "codecs/load_voc.h"
+#include "codecs/load_mp3.h"
+#include "codecs/load_ogg.h"
+#include "codecs/load_flac.h"
+#include "codecs/dynamic_flac.h"
+#include "codecs/dynamic_fluidsynth.h"
+#include "codecs/dynamic_modplug.h"
+#include "codecs/dynamic_mod.h"
+#include "codecs/dynamic_mp3.h"
+#include "codecs/dynamic_ogg.h"
 
-#define __MIX_INTERNAL_EFFECT__
+#define MIX_INTERNAL_EFFECT__
 #include "effects_internal.h"
 
 /* Magic numbers for various audio file formats */
@@ -129,7 +129,7 @@ const char * SDLCALLCC Mix_GetChunkDecoder(int index)
 
 static void add_chunk_decoder(const char *decoder)
 {
-    void *ptr = SDL_realloc((void *)chunk_decoders, (num_decoders + 1) * sizeof (const char *));
+    void *ptr = SDL_realloc((void *)chunk_decoders, (size_t)(num_decoders + 1) * sizeof (const char *));
     if (ptr == NULL) {
         return;  /* oh well, go on without it. */
     }
@@ -283,11 +283,11 @@ static void *Mix_DoEffects(int chan, void *snd, int len)
     if (e != NULL) {    /* are there any registered effects? */
         /* if this is the postmix, we can just overwrite the original. */
         if (!posteffect) {
-            buf = SDL_malloc(len);
+            buf = SDL_malloc((size_t)len);
             if (buf == NULL) {
                 return(snd);
             }
-            SDL_memcpy(buf, snd, len);
+            SDL_memcpy(buf, snd, (size_t)len);
         }
 
         for (; e != NULL; e = e->next) {
@@ -312,7 +312,7 @@ static void mix_channels(void *udata, Uint8 *stream, int len)
 
 #if SDL_VERSION_ATLEAST(1, 3, 0)
     /* Need to initialize the stream in SDL 1.3+ */
-    SDL_memset(stream, mixer.silence, len);
+    SDL_memset(stream, mixer.silence, (size_t)len);
 #endif
 
     /* Mix the music (must be done before the channels are added) */
@@ -344,10 +344,10 @@ static void mix_channels(void *udata, Uint8 *stream, int len)
                     mix_channel[i].fading = MIX_NO_FADING;
                 } else {
                     if ( mix_channel[i].fading == MIX_FADING_OUT ) {
-                        Mix_Volume(i, (mix_channel[i].fade_volume * (mix_channel[i].fade_length-ticks))
-                                   / mix_channel[i].fade_length );
+                        Mix_Volume(i, (int)(((unsigned int)mix_channel[i].fade_volume * (mix_channel[i].fade_length - ticks))
+                                            / mix_channel[i].fade_length) );
                     } else {
-                        Mix_Volume(i, (mix_channel[i].fade_volume * ticks) / mix_channel[i].fade_length );
+                        Mix_Volume(i, (int)(((unsigned int)mix_channel[i].fade_volume * ticks) / mix_channel[i].fade_length));
                     }
                 }
             }
@@ -363,7 +363,7 @@ static void mix_channels(void *udata, Uint8 *stream, int len)
                     }
 
                     mix_input = Mix_DoEffects(i, mix_channel[i].samples, mixable);
-                    SDL_MixAudioFormat(stream+index,mix_input,mixer.format,mixable,volume);
+                    SDL_MixAudioFormat(stream+index,mix_input,mixer.format, (Uint32)mixable, volume);
                     if (mix_input != mix_channel[i].samples)
                         SDL_free(mix_input);
 
@@ -380,14 +380,14 @@ static void mix_channels(void *udata, Uint8 *stream, int len)
                 /* If looping the sample and we are at its end, make sure
                    we will still return a full buffer */
                 while ( mix_channel[i].looping && index < len ) {
-                    int alen = mix_channel[i].chunk->alen;
+                    int alen = (int)mix_channel[i].chunk->alen;
                     remaining = len - index;
                     if (remaining > alen) {
                         remaining = alen;
                     }
 
                     mix_input = Mix_DoEffects(i, mix_channel[i].chunk->abuf, remaining);
-                    SDL_MixAudioFormat(stream+index, mix_input, mixer.format, remaining, volume);
+                    SDL_MixAudioFormat(stream+index, mix_input, mixer.format, (Uint32)remaining, volume);
                     if (mix_input != mix_channel[i].chunk->abuf)
                         SDL_free(mix_input);
 
@@ -458,8 +458,8 @@ int SDLCALLCC Mix_OpenAudioDevice(int frequency, Uint16 format, int nchannels, i
     /* Set the desired format and frequency */
     desired.freq = frequency;
     desired.format = format;
-    desired.channels = nchannels;
-    desired.samples = chunksize;
+    desired.channels = (Uint8)nchannels;
+    desired.samples  = (Uint16)chunksize;
     desired.callback = mix_channels;
     desired.userdata = NULL;
 
@@ -478,7 +478,7 @@ int SDLCALLCC Mix_OpenAudioDevice(int frequency, Uint16 format, int nchannels, i
     }
 
     num_channels = MIX_CHANNELS;
-    mix_channel = (struct _Mix_Channel *) SDL_malloc(num_channels * sizeof(struct _Mix_Channel));
+    mix_channel = (struct _Mix_Channel *) SDL_malloc((size_t)num_channels * sizeof(struct _Mix_Channel));
 
     /* Clear out the audio channels */
     for ( i=0; i<num_channels; ++i ) {
@@ -542,7 +542,7 @@ int SDLCALLCC Mix_AllocateChannels(int numchans)
         }
     }
     Mix_LockAudio();
-    mix_channel = (struct _Mix_Channel *) SDL_realloc(mix_channel, numchans * sizeof(struct _Mix_Channel));
+    mix_channel = (struct _Mix_Channel *) SDL_realloc(mix_channel, (size_t)numchans * sizeof(struct _Mix_Channel));
     if ( numchans > num_channels ) {
         /* Initialize the new channels */
         int i;

@@ -64,6 +64,7 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/lib_destdir.pri)
+include($$PWD/../_Libs/SDL_Mixer_X/SDL_Mixer_X_link.pri)
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
@@ -73,17 +74,17 @@ INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
 win32: {
     RC_FILE = _resources/pge_editor.rc
-    LIBS += -lSDL2 -lSDL2_mixer_ext
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC
     LIBS += -lSDL2main
     LIBS += libversion -ldbghelp libwinmm
 }
 
 linux-g++||unix:!macx:!android: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC
     LIBS += -static-libgcc -static-libstdc++
 }
 android: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC
 }
 macx: {
     ICON = $$PWD/_resources/cat_builder.icns
@@ -99,7 +100,7 @@ macx: {
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
 }
 
 LIBS += -lfreeimagelite

@@ -1,3 +1,6 @@
+#ifndef MUSIC_GME_H
+#define MUSIC_GME_H
+
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
   Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
@@ -19,42 +22,18 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-/* $Id$ */
+/* $Id: music_gme.h Wohlstand $ */
 
-#ifndef _INCLUDE_EFFECTS_INTERNAL_H_
-#define _INCLUDE_EFFECTS_INTERNAL_H_
+#ifdef GME_MUSIC
 
-#ifndef MIX_INTERNAL_EFFECT__
-#error You should not include this file or use these functions.
-#endif
+#include "../audio_codec.h"
 
-#include <SDL_mixer_ext/SDL_mixer_ext.h>
+/* Initialize the Game Music Emulators player, with the given mixer settings
+   This function returns 0, or -1 if there was an error.
+ */
+extern int GME_init2(AudioCodec *codec, SDL_AudioSpec *mixer);
 
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-extern "C" {
-#endif
+#endif /* GME_MUSIC */
 
-extern int _Mix_effects_max_speed;
-extern void *_Eff_volume_table;
-void *_Eff_build_volume_table_u8(void);
-void *_Eff_build_volume_table_s8(void);
-
-void _Mix_InitEffects(void);
-void _Mix_DeinitEffects(void);
-void _Eff_PositionDeinit(void);
-
-int _Mix_RegisterEffect_locked(int channel, Mix_EffectFunc_t f,
-                               Mix_EffectDone_t d, void *arg);
-int _Mix_UnregisterEffect_locked(int channel, Mix_EffectFunc_t f);
-int _Mix_UnregisterAllEffects_locked(int channel);
-
-
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-}
-#endif
-
-
-#endif
+#endif /* MUSIC_GME_H */
 

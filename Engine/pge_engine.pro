@@ -54,6 +54,7 @@ INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
 DEFINES += PGE_ENGINE USE_LUA_JIT
 
 include ($$PWD/../_common/lib_destdir.pri)
+include($$PWD/../_Libs/SDL_Mixer_X/SDL_Mixer_X_link.pri)
 
 android || macx: {
     DEFINES -= USE_LUA_JIT
@@ -71,7 +72,7 @@ LIBS += -lluabind
 }
 
 android: {
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lfreeimagelite -lGLESv2 -lGLESv1_CM -ldl -landroid
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC -lfreeimagelite -lGLESv2 -lGLESv1_CM -ldl -landroid
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
                           $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
@@ -84,7 +85,7 @@ android: {
 win32: {
     RC_FILE = _resources/engine.rc
     LIBS += -lfreeimagelite  -lfreetype -lsqlite3
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC -lSDL2main
     LIBS += -lversion -lopengl32 -ldbghelp -ladvapi32 -lkernel32
 }
 macx: {
@@ -98,7 +99,7 @@ macx: {
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox \
@@ -107,8 +108,9 @@ macx: {
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
-    LIBS += -Wl,-Bstatic -lSDL2_mixer_ext -lSDL2 -Wl,-Bdynamic
-    LIBS += -lvorbisfile -lvorbis -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
+    LIBS += -Wl,-Bstatic
+    LIBS += $$SDL_MIXER_X_LIBS_STATIC -lSDL2
+    LIBS += -Wl,-Bdynamic
     LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
 }
 

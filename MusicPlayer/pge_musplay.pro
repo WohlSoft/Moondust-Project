@@ -40,6 +40,8 @@ CONFIG += thread
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 
+include($$PWD/../_Libs/SDL_Mixer_X/SDL_Mixer_X_link.pri)
+
 win32:{
     RC_FILE = _resources/musicplayer.rc
     win*-msvc*: {
@@ -51,11 +53,10 @@ win32:{
     usewinapi:{
         DEFINES += MUSPLAY_USE_WINAPI
         LIBS += -static -static-libgcc -static-libstdc++ -static -lpthread \
-                -lSDL2 -lSDL_Mixer_Xstatic -lSDL2main \
-                -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib \
+                $$SDL_MIXER_X_LIBS_STATIC -lSDL2 -lSDL2main \
                 -lwinmm -lole32 -limm32 -lversion -loleaut32 -luuid -lcomctl32 -mwindows
     } else {
-        LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32
+        LIBS += -lSDL2main -lversion $$SDL_MIXER_X_LIBS_DYNAMIC -lcomctl32
         !win*-msvc*: LIBS += -mwindows
         !win*-msvc*: static: {
             QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++ -Wl,-Bdynamic
@@ -64,18 +65,6 @@ win32:{
 }
 linux-g++||unix:!macx:!android:{
     CONFIG += unversioned_libname
-}
-android:{
-    ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
-                          $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
-                          $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
-                          $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
-                          $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
-                          #$$PWD/../_Libs/_builds/android/lib/libvorbisidec.so \
-                          $$PWD/../_Libs/_builds/android/lib/libogg.so \
-                          $$PWD/../_Libs/_builds/android/lib/libmad.so \
-                          $$PWD/../_Libs/_builds/android/lib/libmodplug.so
-
 }
 
 macx:{
@@ -88,11 +77,11 @@ macx:{
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
+    LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
 
 } else {
     !usewinapi:{
-        LIBS += -lSDL2 -lSDL2_mixer_ext
+        LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC
         debug: linux-g++: QMAKE_POST_LINK = cp $$PWD/../_Libs/_builds/linux/lib/libSDL2_mixer_ext.so $$DESTDIR
     }
 }

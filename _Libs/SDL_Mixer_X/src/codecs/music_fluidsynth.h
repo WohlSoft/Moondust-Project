@@ -17,44 +17,38 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
+
+  James Le Cuirot
+  chewi@aura-online.co.uk
 */
 
-/* $Id$ */
+#ifndef FLUIDSYNTH_H_
+#define FLUIDSYNTH_H_
 
-#ifndef _INCLUDE_EFFECTS_INTERNAL_H_
-#define _INCLUDE_EFFECTS_INTERNAL_H_
+#ifdef USE_FLUIDSYNTH_MIDI
 
-#ifndef MIX_INTERNAL_EFFECT__
-#error You should not include this file or use these functions.
-#endif
+#include "../audio_codec.h"
 
-#include <SDL_mixer_ext/SDL_mixer_ext.h>
+#include "dynamic_fluidsynth.h"
+#include <SDL2/SDL_rwops.h>
+#include <SDL2/SDL_audio.h>
 
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-extern "C" {
-#endif
+typedef struct {
+    SDL_AudioCVT convert;
+    fluid_synth_t *synth;
+    fluid_player_t* player;
+} FluidSynthMidiSong;
 
-extern int _Mix_effects_max_speed;
-extern void *_Eff_volume_table;
-void *_Eff_build_volume_table_u8(void);
-void *_Eff_build_volume_table_s8(void);
+extern int fluidsynth_init2(AudioCodec *codec, SDL_AudioSpec *mixer);
 
-void _Mix_InitEffects(void);
-void _Mix_DeinitEffects(void);
-void _Eff_PositionDeinit(void);
+void    *fluidsynth_loadsong_RW(SDL_RWops *rw, int freerw);
+void    fluidsynth_freesong(void *song_p);
+void    fluidsynth_start(void *song_p);
+void    fluidsynth_stop(void *song_p);
+int     fluidsynth_active(void *song_p);
+void    fluidsynth_setvolume(void *song_p, int volume);
+int     fluidsynth_playsome(void *song_p, void *stream, int len);
 
-int _Mix_RegisterEffect_locked(int channel, Mix_EffectFunc_t f,
-                               Mix_EffectDone_t d, void *arg);
-int _Mix_UnregisterEffect_locked(int channel, Mix_EffectFunc_t f);
-int _Mix_UnregisterAllEffects_locked(int channel);
+#endif /* USE_FLUIDSYNTH_MIDI */
 
-
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-}
-#endif
-
-
-#endif
-
+#endif /* FLUIDSYNTH_H_ */

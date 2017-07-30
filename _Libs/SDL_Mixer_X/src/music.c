@@ -33,45 +33,45 @@
 #include "mixer.h"
 
 #ifdef CMD_MUSIC
-#include "music_cmd.h"
+#include "codecs/music_cmd.h"
 #endif
 #ifdef WAV_MUSIC
-#include "wavestream.h"
+#include "codecs/music_wave.h"
 #endif
 #ifdef MODPLUG_MUSIC
-#include "music_modplug.h"
+#include "codecs/music_modplug.h"
 #endif
 #ifdef MOD_MUSIC
-#include "music_mod.h"
+#include "codecs/music_mod.h"
 #endif
 #ifdef MID_MUSIC
 #  ifdef USE_ADL_MIDI
-#    include "music_midi_adl.h"
+#    include "codecs/music_midi_adl.h"
 #  endif
 #  ifdef USE_OPN2_MIDI
-#    include "music_midi_opn.h"
+#    include "codecs/music_midi_opn.h"
 #  endif
 #  ifdef USE_TIMIDITY_MIDI
-#    include "timidity/timidity.h"
+#    include "codecs/music_midi_timidity.h"
 #  endif
 #  ifdef USE_FLUIDSYNTH_MIDI
-#    include "music_fluidsynth.h"
+#    include "codecs/music_fluidsynth.h"
 #  endif
 #  ifdef USE_NATIVE_MIDI
-#    include "native_midi/native_midi.h"
+#    include "codecs/native_midi/native_midi.h"
 #  endif
 #endif
 #ifdef OGG_MUSIC
-#include "music_ogg.h"
+#include "codecs/music_ogg.h"
 #endif
 #ifdef MP3_MUSIC
-#include "dynamic_mp3.h"
+#include "codecs/dynamic_mp3.h"
 #endif
 #ifdef MP3_MAD_MUSIC
-#include "music_mad.h"
+#include "codecs/music_mad.h"
 #endif
 #ifdef FLAC_MUSIC
-#include "music_flac.h"
+#include "codecs/music_flac.h"
 #if defined(_WIN32)
 #ifdef _MSC_VER
 typedef long _off_t;
@@ -80,10 +80,12 @@ typedef _off_t off_t;
 #endif
 #endif
 #ifdef GME_MUSIC
-#include "music_gme.h"
+#include "codecs/music_gme.h"
 #endif
 
+extern int volatile music_active;//Avoid Clang's "no previous extern declaration" warning
 int volatile music_active = 1;
+
 static int volatile music_stopped = 0;
 static int  music_loops = 0;
 static char *music_cmd = NULL;
@@ -535,7 +537,7 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
     /* WAVE files have the magic four bytes "RIFF"
        AIFF files have the magic 12 bytes "FORM" XXXX "AIFF" */
     if( ((strncmp((char *)magic, "RIFF", 4) == 0) && (strncmp((char *)(moremagic + 4), "WAVE", 4) == 0))
-        || ((strncmp((char *)magic, "FORM", 4) == 0) && (strncmp(moremagic + 4, "XDIR", 4) != 0)) ) /*Don't parse XMIDI as AIFF file*/
+        || ((strncmp((char *)magic, "FORM", 4) == 0) && (strncmp((const char *)(moremagic + 4), "XDIR", 4) != 0)) ) /*Don't parse XMIDI as AIFF file*/
         return MUS_WAV;
 
     /* Ogg Vorbis files have the magic four bytes "OggS" */

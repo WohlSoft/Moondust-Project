@@ -3,19 +3,19 @@
     QMAKE_CFLAGS += -std=c99
 
     QMAKE_CFLAGS_WARN_ON += \
-        -Wno-missing-field-initializers \
+        #-Wno-missing-field-initializers \
         -Wno-unused-variable \
-        -Wno-unused-parameter \
-        -Wno-sign-compare \
-        -Wno-unused-function \
-        -Wno-implicit-function-declaration \
-        -Wno-pointer-sign \
-        -Wno-implicit-fallthrough
+        #-Wno-unused-parameter \
+        #-Wno-sign-compare \
+        #-Wno-unused-function \
+        #-Wno-implicit-function-declaration \
+        #-Wno-pointer-sign \
+        #-Wno-implicit-fallthrough
 
     QMAKE_CXXFLAGS_WARN_ON += \
-        -Wno-missing-field-initializers \
-        -Wno-unused-variable \
-        -Wno-unused-parameter
+        #-Wno-missing-field-initializers \
+        #-Wno-unused-variable \
+        #-Wno-unused-parameter
 
     macx:{
         QMAKE_CXXFLAGS_WARN_ON += -Wno-header-guard
