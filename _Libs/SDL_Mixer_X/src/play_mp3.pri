@@ -1,5 +1,7 @@
 include($$PWD/libid3tag/libid3tag.pri)
 
+LIBS += -lmad
+
 HEADERS += \
     $$PWD/load_mp3.h \
     $$PWD/dynamic_mp3.h \

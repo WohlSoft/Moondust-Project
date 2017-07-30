@@ -30,7 +30,7 @@ typedef struct Music_Emu Music_Emu;
 
 #include "music_gme.h"
 
-#include "gme/gme.h"
+#include <gme.h>
 #include "resample/my_resample.h"
 
 #include <stdio.h>

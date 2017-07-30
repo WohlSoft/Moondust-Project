@@ -99,7 +99,7 @@ macx: {
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
 }
 
 LIBS += -lfreeimagelite

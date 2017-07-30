@@ -26,7 +26,7 @@
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "music_midi_adl.h"
 
-#include "ADLMIDI/adlmidi.h"
+#include <adlmidi.h>
 
 #include <stdio.h>
 

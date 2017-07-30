@@ -26,7 +26,7 @@
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include "music_midi_opn.h"
 
-#include "OPNMIDI/opnmidi.h"
+#include <opnmidi.h>
 #include "OPNMIDI/gm_opn_bank.h"
 
 #include <stdio.h>

@@ -50,8 +50,8 @@
 
 #ifdef HAVE_ZLIB_H
 
-#include "ZLib/zlib.h"
-#include "ZLib/zutil.h"
+#include <zlib.h>
+#include <zutil.h>
 #include <stdlib.h>
 #include <errno.h>
 

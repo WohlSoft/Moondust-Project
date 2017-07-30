@@ -1,5 +1,7 @@
 DEFINES += FLAC__NO_DLL
 
+LIBS += -lFLAC -logg
+
 HEADERS += \
     $$PWD/load_flac.h \
     $$PWD/dynamic_flac.h \

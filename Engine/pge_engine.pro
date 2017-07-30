@@ -98,7 +98,7 @@ macx: {
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox \
@@ -108,7 +108,7 @@ linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
     LIBS += -Wl,-Bstatic -lSDL2_mixer_ext -lSDL2 -Wl,-Bdynamic
-    LIBS += -lvorbisfile -lvorbis -lFLAC -logg -lmad
+    LIBS += -lvorbisfile -lvorbis -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
     LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
 }
 

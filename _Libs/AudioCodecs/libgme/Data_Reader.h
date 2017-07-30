@@ -7,7 +7,7 @@
 #include "blargg_common.h"
 
 #ifdef HAVE_ZLIB_H
-#include "ZLib/zlib.h"
+#include <zlib.h>
 #endif
 
 // Supports reading and finding out how many bytes are remaining

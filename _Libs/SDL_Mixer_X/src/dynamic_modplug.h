@@ -24,7 +24,7 @@
 #ifdef MODPLUG_HEADER
 #include MODPLUG_HEADER
 #else
-#include "modplug/modplug.h"
+#include <modplug.h>
 #endif
 
 typedef struct {

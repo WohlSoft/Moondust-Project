@@ -1,4 +1,4 @@
-include($$PWD/gme/gme.pri)
+LIBS += -lgme -lzlib
 
 HEADERS += \
     $$PWD/music_gme.h

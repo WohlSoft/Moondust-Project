@@ -1,4 +1,5 @@
-include($$PWD/modplug/modplug.pri)
+
+LIBS += -lmodplug
 
 HEADERS += \
     $$PWD/dynamic_modplug.h \

@@ -17,7 +17,7 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `setenv' function. */
-/* #undef HAVE_SETENV */
+#define HAVE_SETENV 1
 
 /* Define to 1 if you have the `sinf' function. */
 #define HAVE_SINF 1

@@ -1,3 +1,6 @@
+
+LIBS += -lvorbisfile -lvorbis -logg
+
 HEADERS += \
     $$PWD/load_ogg.h \
     $$PWD/dynamic_ogg.h \

@@ -1,4 +1,4 @@
-include($$PWD/FluidLite/FluidLite.pri)
+LIBS += -lfluidlite
 
 HEADERS += \
     $$PWD/dynamic_fluidsynth.h \

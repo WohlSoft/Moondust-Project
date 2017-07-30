@@ -1,4 +1,5 @@
-include($$PWD/OPNMIDI/OPNMIDI.pri)
+
+LIBS += -lOPNMIDI
 
 HEADERS += \
     $$PWD/music_midi_opn.h

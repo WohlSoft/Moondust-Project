@@ -21,7 +21,7 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA */
 #include "blargg_source.h"
 
 #ifdef HAVE_ZLIB_H
-#include "ZLib/zlib.h"
+#include <zlib.h>
 #include "GZipHelper.h"
 #endif
 

@@ -61,8 +61,6 @@ macx:{
     CONFIG += staticlib
 }
 
-!win32: LIBS += -lSDL2
-
 QMAKE_POST_LINK = $$COPY $$shell_path($$PWD/include/SDL_mixer_ext/SDL_mixer_ext.h) $$shell_path($$PWD/../_builds/$$TARGETOS/include/SDL2)
 
 # Codecs
@@ -85,10 +83,7 @@ DEFINES += \
 
 DEFINES += \
     main=SDL_main \
-    HAVE_SIGNAL_H \
-    HAVE_SETBUF \
     PIC \
-    SPC_MORE_ACCURACY \#NO_OLDNAMES
     _REENTRANT \
     _USE_MATH_DEFINES
 
@@ -123,13 +118,15 @@ android:{
             }
         }
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32 -luser32 -lgdi32
-    }
-    linux-g++||macx||unix:!android:{
-        macx: {
-            LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad
-        } else {
-            LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic
-        }
+    } else {
+        LIBS += -lSDL2
+#        linux-g++||macx||unix:!android:{
+#            macx: {
+#                LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad
+#            } else {
+#                LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic
+#            }
+#        }
     }
 }
 

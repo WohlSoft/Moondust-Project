@@ -4,7 +4,7 @@
 #ifndef GME_FILE_H
 #define GME_FILE_H
 
-#include "gme.h"
+#include "include/gme.h"
 #include "blargg_common.h"
 #include "Data_Reader.h"
 #include "M3u_Playlist.h"

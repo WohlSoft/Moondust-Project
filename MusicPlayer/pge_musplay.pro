@@ -52,7 +52,7 @@ win32:{
         DEFINES += MUSPLAY_USE_WINAPI
         LIBS += -static -static-libgcc -static-libstdc++ -static -lpthread \
                 -lSDL2 -lSDL_Mixer_Xstatic -lSDL2main \
-                -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a \
+                -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib \
                 -lwinmm -lole32 -limm32 -lversion -loleaut32 -luuid -lcomctl32 -mwindows
     } else {
         LIBS += -lSDL2main -lversion -lSDL2_mixer_ext -lcomctl32
@@ -88,7 +88,7 @@ macx:{
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox
-    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lvorbis -lvorbisfile -lFLAC -logg -lmad -lADLMIDI -lOPNMIDI -lmodplug -lgme -lzlib
 
 } else {
     !usewinapi:{
@@ -135,5 +135,3 @@ FORMS    += \
 
 RESOURCES += \
     _resources/musicplayer.qrc
-
-
