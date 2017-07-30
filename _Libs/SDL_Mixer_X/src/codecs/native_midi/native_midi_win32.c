@@ -174,6 +174,9 @@ static void MIDItoStream(NativeMidiSong *song, MIDIEvent *evntlist)
 void CALLBACK MidiProc( HMIDIIN hMidi, UINT uMsg, DWORD_PTR dwInstance,
                         DWORD_PTR dwParam1, DWORD_PTR dwParam2 )
 {
+    (void)hMidi;
+    (void)dwInstance;
+    (void)dwParam2;
     switch( uMsg )
     {
     case MOM_DONE:

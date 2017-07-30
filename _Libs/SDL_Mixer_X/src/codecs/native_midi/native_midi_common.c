@@ -21,7 +21,7 @@
 
 
 #include "native_midi_common.h"
-#include "../audio_codec.h"
+#include "../../audio_codec.h"
 
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 

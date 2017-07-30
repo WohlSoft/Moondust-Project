@@ -24,7 +24,7 @@
 
 #include <SDL2/SDL_rwops.h>
 
-#include "../audio_codec.h"
+#include "../../audio_codec.h"
 
 typedef struct _NativeMidiSong NativeMidiSong;
 

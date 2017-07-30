@@ -946,7 +946,7 @@ Mix_Music *SDLCALLCC Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesrc, int trackID
         SDL_free(music_args);
     music_args = (char *)SDL_malloc(sizeof(char) * 25);
     music_args[0] = '\0';
-    snprintf(music_args, 25, "%i", trackID);
+    SDL_snprintf(music_args, 25, "%i", trackID);
     return Mix_LoadMUSType_RW(src, MUS_NONE, freesrc);
 }
 

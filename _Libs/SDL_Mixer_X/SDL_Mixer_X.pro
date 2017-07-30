@@ -120,13 +120,6 @@ android:{
         LIBS += -lwinmm -lole32 -limm32 -lversion -loleaut32 -luser32 -lgdi32
     } else {
         LIBS += -lSDL2
-#        linux-g++||macx||unix:!android:{
-#            macx: {
-#                LIBS += -static -lFLAC -lvorbisfile -lvorbis -logg -lmad
-#            } else {
-#                LIBS += -Wl,-Bstatic -l:libFLAC.a -l:libvorbisfile.a -l:libvorbis.a -l:libogg.a -l:libmad.a -Wl,-Bdynamic
-#            }
-#        }
     }
 }
 

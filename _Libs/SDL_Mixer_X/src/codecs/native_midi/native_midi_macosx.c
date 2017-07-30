@@ -33,7 +33,7 @@
 
 #include <SDL_mixer_ext/SDL_mixer_ext.h>
 #include <SDL2/SDL_endian.h>
-#include "../mixer.h"
+#include "../../mixer.h"
 #include "native_midi.h"
 
 /* Native Midi song */

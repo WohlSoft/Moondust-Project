@@ -10,7 +10,9 @@
 #InstallTo = /usr/
 
 CURRENT_TARBALL=""
-CACHE_DIR="_build_cache"
+if [ "$CACHE_DIR" == "" ]; then
+	CACHE_DIR="_build_cache"
+fi
 
 OurOS="linux_defaut"
 

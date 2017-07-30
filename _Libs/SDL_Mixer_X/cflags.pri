@@ -3,14 +3,14 @@
     QMAKE_CFLAGS += -std=c99
 
     QMAKE_CFLAGS_WARN_ON += \
-        #-Wno-missing-field-initializers \
         -Wno-unused-variable \
+        -Wno-implicit-fallthrough \
+        #-Wno-missing-field-initializers \
         #-Wno-unused-parameter \
         #-Wno-sign-compare \
         #-Wno-unused-function \
         #-Wno-implicit-function-declaration \
-        #-Wno-pointer-sign \
-        #-Wno-implicit-fallthrough
+        #-Wno-pointer-sign
 
     QMAKE_CXXFLAGS_WARN_ON += \
         #-Wno-missing-field-initializers \

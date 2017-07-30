@@ -180,13 +180,22 @@ rem SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\iconengines"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\imageformats"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\platforms"
 
-IF "%DEST_TO_64%"=="TRUE" (
+IF EXIST "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll" (
 	SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll"
-) ELSE (
+)
+IF EXIST "%DeployDir%\%PgePrjSD%\libmingwex-0.dll" (
+	SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libmingwex-0.dll"
+)
+IF EXIST "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll" (
 	SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
 )
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libstdc++-6.dll"
-SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
+IF EXIST "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll" (
+	SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
+)
+IF EXIST "%DeployDir%\%PgePrjSD%\pthreadGC-3.dll" (
+	SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\pthreadGC-3.dll"
+)
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Core.dll"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Gui.dll"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Network.dll"
@@ -194,13 +203,22 @@ SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\Qt5Widgets.dll"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\imageformats"
 SET PGEMaintainer=%PGEMaintainer% "%DeployDir%\%PgePrjSD%\platforms"
 
-IF "%DEST_TO_64%"=="TRUE" (
+IF EXIST "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll" (
 	SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll"
-) ELSE (
+)
+IF EXIST "%DeployDir%\%PgePrjSD%\libmingwex-0.dll" (
+	SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libmingwex-0.dll"
+)
+IF EXIST "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll" (
 	SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
 )
+IF EXIST "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll" (
+	SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
+)
+IF EXIST "%DeployDir%\%PgePrjSD%\pthreadGC-3.dll" (
+	SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\pthreadGC-3.dll"
+)
 SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libstdc++-6.dll"
-SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
 SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Core.dll"
 SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Gui.dll"
 SET PGEMusPlay=%PGEMusPlay% "%DeployDir%\%PgePrjSD%\Qt5Network.dll"
