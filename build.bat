@@ -77,6 +77,7 @@ rem NOTE: Don't use "git submodule foreach" because broken submodule will not sh
 set SUBMODULES=_Libs\FreeImage
 set SUBMODULES=%SUBMODULES% _Libs\QtPropertyBrowser
 set SUBMODULES=%SUBMODULES% _Libs\sqlite3
+set SUBMODULES=%SUBMODULES% _Libs\AudioCodecs
 set SUBMODULES=%SUBMODULES% _common\PGE_File_Formats
 set SUBMODULES=%SUBMODULES% _common\PgeGameSave\submodule
 rem \===============================================================================
