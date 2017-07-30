@@ -56,6 +56,8 @@
 #define HAVE_DSOUND_H 1
 #define HAVE_DXGI_H 1
 #define HAVE_XINPUT_H 1
+#define HAVE_XINPUT_GAMEPAD_EX 1
+#define HAVE_XINPUT_STATE_EX 1
 
 /* Comment this if you want to build without any C library requirements */
 #define HAVE_LIBC 1
@@ -318,6 +320,7 @@
 /* #undef SDL_VIDEO_DRIVER_NACL */
 /* #undef SDL_VIDEO_DRIVER_VIVANTE */
 /* #undef SDL_VIDEO_DRIVER_VIVANTE_VDK */
+/* #undef SDL_VIDEO_DRIVER_QNX */
 
 #define SDL_VIDEO_RENDER_D3D 1
 #define SDL_VIDEO_RENDER_D3D11 1

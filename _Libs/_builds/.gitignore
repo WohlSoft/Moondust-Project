@@ -7,11 +7,13 @@ win*/include/ogg/*
 win*/include/mad.h
 win*/include/vorbis/*
 win*/lib/libFLAC.a
+win*/lib/libid3tag.a
 win*/lib/libmad.a
 win*/lib/libogg.a
 win*/lib/libvorbis*.a
 win*/lib/libADLMIDI.a
 win*/lib/libOPNMIDI.a
+win*/lib/libtimidity.a
 win*/lib/libzlib.a
 win*/lib/libgme.a
 win*/lib/libmodplug.a
