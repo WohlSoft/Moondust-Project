@@ -17,3 +17,9 @@
 [submodule "_Libs/QtPropertyBrowser"]
 	path = _Libs/QtPropertyBrowser
 	url = https://github.com/WohlSoft/QtPropertyBrowser.git
+[submodule "_Libs/AudioCodecs"]
+	path = _Libs/AudioCodecs
+	url = https://github.com/WohlSoft/AudioCodecs.git
+[submodule "_Libs/SDL_Mixer_X"]
+	path = _Libs/SDL_Mixer_X
+	url = https://github.com/WohlSoft/SDL-Mixer-X.git

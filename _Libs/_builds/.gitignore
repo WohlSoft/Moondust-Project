@@ -1,0 +1,42 @@
+# "Share" must not be tracked in GIT
+win*/share
+
+# Exclude audio codecs on Windows
+win*/include/FLAC/*
+win*/include/ogg/*
+win*/include/mad.h
+win*/include/vorbis/*
+win*/lib/libFLAC.a
+win*/lib/libid3tag.a
+win*/lib/libmad.a
+win*/lib/libogg.a
+win*/lib/libvorbis*.a
+win*/lib/libADLMIDI.a
+win*/lib/libOPNMIDI.a
+win*/lib/libtimidity.a
+win*/lib/libzlib.a
+win*/lib/libgme.a
+win*/lib/libmodplug.a
+
+# GLEW
+win*/lib/libglew*.a
+win*/include/GL/*
+win*/bin/glew32.dll
+win*/lib/pkgconfig/glew.pc
+
+# Exclude SDL Mixer X, FreeImage and some other libraries on Windows
+win*/bin/*.exe
+win*/lib/libfreeimage.a
+win*/lib/libfreeimagelite.a
+win*/lib/libluabind.a
+win*/lib/libsqlite3.a
+win*/lib/libSDL2_mixer.a
+win*/lib/libSDL2_mixer.la
+win*/lib/libSDL2_mixer_ext.*
+win*/lib/libSDL2_mixer_ext_vb6.*
+win*/lib/libSDL2MixerVB.*
+win*/lib/libSDL_Mixer_Xstatic.a
+win*/*/SDL2_mixer.dll
+win*/*/SDL2_mixer_ext.dll
+win*/*/SDL2_mixer_ext_vb6.dll
+win*/*/SDL2MixerVB.dll

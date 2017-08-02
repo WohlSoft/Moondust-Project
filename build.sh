@@ -132,8 +132,10 @@ do
             SUBMODULES="_Libs/FreeImage"
             SUBMODULES="${SUBMODULES} _Libs/QtPropertyBrowser"
             SUBMODULES="${SUBMODULES} _Libs/sqlite3"
-            SUBMODULES="$SUBMODULES _common/PGE_File_Formats"
-            SUBMODULES="$SUBMODULES _common/PgeGameSave/submodule"
+            SUBMODULES="${SUBMODULES} _common/PGE_File_Formats"
+            SUBMODULES="${SUBMODULES} _common/PgeGameSave/submodule"
+            SUBMODULES="${SUBMODULES} _Libs/AudioCodecs"
+            SUBMODULES="${SUBMODULES} _Libs/SDL_Mixer_X"
             # \===============================================================================
             for s in $SUBMODULES
             do

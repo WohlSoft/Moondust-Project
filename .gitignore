@@ -20,49 +20,6 @@ _Libs/_builds/macos/*
 _Libs/_builds/android/*
 _Libs/_builds/win*-msvc/*
 
-# Exclude audio codecs on Windows
-_Libs/_builds/win*/include/FLAC/*
-_Libs/_builds/win*/include/ogg/*
-_Libs/_builds/win*/include/mad.h
-_Libs/_builds/win*/include/vorbis/*
-_Libs/_builds/win*/lib/libFLAC.a
-_Libs/_builds/win*/lib/libmad.a
-_Libs/_builds/win*/lib/libogg.a
-_Libs/_builds/win*/lib/libvorbis*.a
-
-# GLEW
-_Libs/_builds/win*/lib/libglew*.a
-_Libs/_builds/win*/include/GL/*
-_Libs/_builds/win*/bin/glew32.dll
-_Libs/_builds/win*/lib/pkgconfig/glew.pc
-
-# Exclude SDL Mixer X, FreeImage and some other libraries on Windows
-_Libs/_builds/win*/lib/SDL2_mixer.dll
-_Libs/_builds/win*/bin/SDL2_mixer.dll
-_Libs/_builds/win*/bin/*.exe
-_Libs/_builds/win*/lib/SDL2_mixer_ext.dll
-_Libs/_builds/win*/bin/SDL2_mixer_ext.dll
-_Libs/_builds/win*/bin/SDL2_mixer_ext_vb6.dll
-_Libs/_builds/win*/lib/SDL2_mixer_ext_vb6.dll
-_Libs/_builds/win*/bin/SDL2MixerVB.dll
-_Libs/_builds/win*/lib/SDL2MixerVB.dll
-_Libs/_builds/win*/lib/libfreeimage.a
-_Libs/_builds/win*/lib/libfreeimagelite.a
-_Libs/_builds/win*/lib/libluabind.a
-_Libs/_builds/win*/lib/libSDL2_mixer.a
-_Libs/_builds/win*/lib/libSDL2_mixer.la
-_Libs/_builds/win*/lib/libSDL2_mixer_ext.a
-_Libs/_builds/win*/lib/libSDL2_mixer_ext.la
-_Libs/_builds/win*/lib/libSDL2_mixer_ext_vb6.la
-_Libs/_builds/win*/lib/libSDL2_mixer_ext_vb6.a
-_Libs/_builds/win*/lib/libSDL2MixerVB.la
-_Libs/_builds/win*/lib/libSDL2MixerVB.a
-_Libs/_builds/win*/lib/libSDL_Mixer_Xstatic.a
-_Libs/_builds/win*/lib/libsqlite3.a
-_Libs/_builds/win*/share
-
-_Libs/.qmake.stash
-
 #Mac OS's junk
 .DS_Store
 *.pbxuser
@@ -104,6 +61,7 @@ Makefile.*
 */Makefile.*
 *-build-*
 *build-*
+.qmake.stash
 /bin
 /bin-w32
 /bin-w64
@@ -127,6 +85,7 @@ Makefile.*
 #compiled translation
 editor_*.qm
 engine_*.qm
+
 #broken translation file
 qt_en.qm
 
@@ -151,11 +110,9 @@ qt_en.qm
 /_paths.bat
 /_paths.sh
 
-
 #Notepad++ Backup files
 *.bak
 
-.qmake.stash
 libSDL2_mixer.so
 libSDL2_mixer.dll
 libSDL2_mixer.dylib
@@ -173,6 +130,5 @@ libSDL2_mixer.dylib
 
 #PVS-Studio
 PVS-Studio.pri
-
 
 *.directory

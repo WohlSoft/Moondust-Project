@@ -57,6 +57,11 @@ IF EXIST .\_Libs\_sources\_build_cache\NUL (
     rmdir /s /q _Libs\_sources\_build_cache
 )
 
+IF EXIST .\_Libs\_sources\_build_cache-w64\NUL (
+    echo 'removing Dependencies build cache for 64-bit builds ...'
+    rmdir /s /q _Libs\_sources\_build_cache-w64
+)
+
 IF EXIST .\_Libs\_sources\_build_cache_msvc\NUL (
     echo 'removing Dependencies build cache for MSVC ...'
     rmdir /s /q _Libs\_sources\_build_cache_msvc
@@ -72,6 +77,8 @@ rem NOTE: Don't use "git submodule foreach" because broken submodule will not sh
 set SUBMODULES=_Libs\FreeImage
 set SUBMODULES=%SUBMODULES% _Libs\QtPropertyBrowser
 set SUBMODULES=%SUBMODULES% _Libs\sqlite3
+set SUBMODULES=%SUBMODULES% _Libs\AudioCodecs
+set SUBMODULES=%SUBMODULES% _Libs\SDL_Mixer_X
 set SUBMODULES=%SUBMODULES% _common\PGE_File_Formats
 set SUBMODULES=%SUBMODULES% _common\PgeGameSave\submodule
 rem \===============================================================================

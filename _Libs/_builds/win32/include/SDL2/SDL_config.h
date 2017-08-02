@@ -56,6 +56,8 @@
 /* #undef HAVE_DSOUND_H */
 /* #undef HAVE_DXGI_H */
 /* #undef HAVE_XINPUT_H */
+/* #undef HAVE_XINPUT_GAMEPAD_EX */
+/* #undef HAVE_XINPUT_STATE_EX */
 
 /* Comment this if you want to build without any C library requirements */
 #define HAVE_LIBC 1
@@ -94,9 +96,9 @@
 /* #undef HAVE_ALLOCA */
 #ifndef __WIN32__ /* Don't use C runtime versions of these on Windows */
 #define HAVE_GETENV 1
-/* #undef HAVE_SETENV */
+#define HAVE_SETENV 1
 #define HAVE_PUTENV 1
-/* #undef HAVE_UNSETENV */
+#define HAVE_UNSETENV 1
 #endif
 #define HAVE_QSORT 1
 #define HAVE_ABS 1
@@ -318,6 +320,7 @@
 /* #undef SDL_VIDEO_DRIVER_NACL */
 /* #undef SDL_VIDEO_DRIVER_VIVANTE */
 /* #undef SDL_VIDEO_DRIVER_VIVANTE_VDK */
+/* #undef SDL_VIDEO_DRIVER_QNX */
 
 #define SDL_VIDEO_RENDER_D3D 1
 /* #undef SDL_VIDEO_RENDER_D3D11 */
