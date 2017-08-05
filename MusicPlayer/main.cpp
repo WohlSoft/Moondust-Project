@@ -64,9 +64,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     #ifndef MUSPLAY_USE_WINAPI
     qDebug() << QString(a.applicationDirPath()+"/timidity/");
-    MIX_Timidity_addToPathList(QString(a.applicationDirPath()+"/timidity/").toLocal8Bit().data());
+    Mix_Timidity_addToPathList(QString(a.applicationDirPath()+"/timidity/").toLocal8Bit().data());
     #else
-    MIX_Timidity_addToPathList("./timidity/");
+    Mix_Timidity_addToPathList("./timidity/");
     #endif
 
     #ifndef MUSPLAY_USE_WINAPI
@@ -81,7 +81,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     Mix_AllocateChannels(16);
 
     //Disallow auto-resetting MIDI properties (to allow manipulation with MIDI settings by functions)
-    MIX_SetLockMIDIArgs(1);
+    Mix_SetLockMIDIArgs(1);
 
 #ifndef MUSPLAY_USE_WINAPI
     MusPlayer_Qt w;
