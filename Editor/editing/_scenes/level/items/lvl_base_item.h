@@ -96,6 +96,8 @@ public:
     //!
     virtual void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
 
+    virtual QPainterPath shape() const;
+
     int m_gridSize;
     int m_gridOffsetX;
     int m_gridOffsetY;

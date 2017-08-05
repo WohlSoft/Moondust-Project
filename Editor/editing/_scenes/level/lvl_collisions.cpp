@@ -163,7 +163,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
             if(!it->isVisible())
                 continue;
             if(it->data(ITEM_TYPE).isNull())
-                 continue;
+                continue;
             if(it->data(ITEM_IS_ITEM).isNull())
                 continue;
             if(it->data(ITEM_TYPE).toString()=="PlayerPoint")
@@ -305,54 +305,71 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
 QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
 {
     PGE_ItemList collisions;
-    QRectF findZoneR(item->scenePos().x()-10, item->scenePos().y()-10,
-    item->data(ITEM_WIDTH).toReal()+20, item->data(ITEM_HEIGHT).toReal()+20 );
+    double x = item->scenePos().x();
+    double y = item->scenePos().y();
+    double w = item->data(ITEM_WIDTH).toReal();
+    double h = item->data(ITEM_HEIGHT).toReal();
+    if(w < 10.0)
+    {
+        x -= 10;
+        w += 20;
+    }
+    if(h < 10.0)
+    {
+        y -= 10;
+        h += 20;
+    }
+
+    QRectF findZoneR(x, y, w, h);
     queryItems(findZoneR, &collisions);
 
-    foreach (QGraphicsItem * it, collisions) {
-            if (it == item)
-                 continue;
+    foreach (QGraphicsItem * it, collisions)
+    {
+        if (it == item)
+             continue;
 
-            //skip invisible items
-            if(!it->isVisible()) continue;
+        //skip invisible items
+        if(!it->isVisible()) continue;
 
-            //skip locked items
-            if((it->data(ITEM_TYPE).toString()=="Block"))
-            {
-                if((m_lockBlock)|| dynamic_cast<ItemBlock*>(it)->m_locked) continue;
-            }
-            else
-            if((it->data(ITEM_TYPE).toString()=="BGO"))
-            {
-                if((m_lockBgo)|| dynamic_cast<ItemBGO*>(it)->m_locked) continue;
-            }
-            else
-            if((it->data(ITEM_TYPE).toString()=="NPC"))
-            {
-                if((m_lockNpc)|| dynamic_cast<ItemNPC*>(it)->m_locked) continue;
-            }
-            else
-            if((it->data(ITEM_TYPE).toString()=="Water"))
-            {
-                if((m_lockPhysenv)|| dynamic_cast<ItemPhysEnv*>(it)->m_locked) continue;
-            }
-            else
-            if((it->data(ITEM_TYPE).toString()=="Door_enter")||(it->data(ITEM_TYPE).toString()=="Door_exit"))
-            {
-                if((m_lockDoor)|| dynamic_cast<ItemDoor*>(it)->m_locked) continue;
-            }
+        QString type = it->data(ITEM_TYPE).toString();
 
-            if( (
-                    (it->data(ITEM_TYPE).toString()=="Block")||
-                    (it->data(ITEM_TYPE).toString()=="BGO")||
-                    (it->data(ITEM_TYPE).toString()=="NPC")||
-                    (it->data(ITEM_TYPE).toString()=="Door_exit")||
-                    (it->data(ITEM_TYPE).toString()=="Door_enter")||
-                    (it->data(ITEM_TYPE).toString()=="Water")||
-                    (it->data(ITEM_TYPE).toString()=="player1")||
-                    (it->data(ITEM_TYPE).toString()=="player2")
-              )&&(it->isVisible() ) )
-                return it;
+        //skip locked items
+        if((type=="Block"))
+        {
+            if((m_lockBlock)|| dynamic_cast<ItemBlock*>(it)->m_locked) continue;
+        }
+        else
+        if((type=="BGO"))
+        {
+            if((m_lockBgo)|| dynamic_cast<ItemBGO*>(it)->m_locked) continue;
+        }
+        else
+        if((type=="NPC"))
+        {
+            if((m_lockNpc)|| dynamic_cast<ItemNPC*>(it)->m_locked) continue;
+        }
+        else
+        if((type=="Water"))
+        {
+            if((m_lockPhysenv)|| dynamic_cast<ItemPhysEnv*>(it)->m_locked) continue;
+        }
+        else
+        if((type=="Door_enter")||(type=="Door_exit"))
+        {
+            if((m_lockDoor)|| dynamic_cast<ItemDoor*>(it)->m_locked) continue;
+        }
+
+        if( (
+                (type=="Block")||
+                (type=="BGO")||
+                (type=="NPC")||
+                (type=="Door_exit")||
+                (type=="Door_enter")||
+                (type=="Water")||
+                (type=="player1")||
+                (type=="player2")
+          ) && (it->isVisible() ) )
+            return it;
     }
     return NULL;
 }
@@ -364,7 +381,8 @@ namespace LevelScene_space
         LvlScene::PGE_ItemList* list = static_cast<LvlScene::PGE_ItemList* >(arg);
         if(list)
         {
-            if(item) (*list).push_back(item);
+            if(item)
+                (*list).push_back(item);
         }
         return true;
     }
@@ -372,8 +390,8 @@ namespace LevelScene_space
 
 void LvlScene::queryItems(QRectF &zone, PGE_ItemList *resultList)
 {
-    RPoint lt={zone.left(), zone.top()};
-    RPoint rb={zone.right()+1, zone.bottom()+1};
+    RPoint lt = {zone.left(), zone.top()};
+    RPoint rb = {zone.right() + 1, zone.bottom() + 1};
     tree.Search(lt, rb, LevelScene_space::_TreeSearchCallback, (void*)resultList);
 }
 

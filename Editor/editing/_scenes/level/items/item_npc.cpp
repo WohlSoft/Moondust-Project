@@ -852,13 +852,13 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
             setZValue(m_scene->Z_npcStd);
 
         if((m_localProps.setup.container) && (m_data.contents > 0))
-            setIncludedNPC(m_data.contents, true);
+            setIncludedNPC(int(m_data.contents), true);
 
         m_data.is_star = m_localProps.setup.is_star;
 
         m_gridOffsetX = m_localProps.setup.grid_offset_x;
         m_gridOffsetY = m_localProps.setup.grid_offset_y;
-        m_gridSize =  m_localProps.setup.grid;
+        m_gridSize =  int(m_localProps.setup.grid);
     }
 
     if(animator_id)
@@ -888,10 +888,27 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
 
 QRectF ItemNPC::boundingRect() const
 {
-    if(!m_animated)
-        return QRectF(0 + m_imgOffsetX + (-((double)m_localProps.setup.gfx_offset_x) * m_direction), 0 + m_imgOffsetY, m_imageSize.width(), m_imageSize.height());
-    else
-        return QRectF(0 + m_imgOffsetX + (-((double)m_localProps.setup.gfx_offset_x) * m_direction), 0 + m_imgOffsetY, m_localProps.setup.gfx_w, m_localProps.setup.gfx_h);
+    double x, y, r, b, xP, yP, rP, bP;
+
+    x = -5.0 + m_imgOffsetX + (-((double)m_localProps.setup.gfx_offset_x) * m_direction);
+    y = -5.0 + m_imgOffsetY;
+    r = x + 10.0 + (m_animated ? (m_localProps.setup.gfx_w) : (m_imageSize.width()));
+    b = y + 10.0 + (m_animated ? (m_localProps.setup.gfx_h) : (m_imageSize.height()));
+
+    xP = -5.0;
+    yP = -5.0;
+    rP = xP + data(ITEM_WIDTH).toReal() + 10.0;
+    bP = yP + data(ITEM_HEIGHT).toReal() + 10.0;
+
+    x = std::min(x, xP);
+    y = std::min(y, yP);
+    r = std::max(r, rP);
+    b = std::max(b, bP);
+
+    QRectF rect;
+    rect.setTopLeft(QPointF(x, y));
+    rect.setBottomRight(QPointF(r, b));
+    return rect;
 }
 
 
@@ -916,17 +933,19 @@ void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
 
         if(m_scene->m_animatorsNPC.size() > m_animatorID)
             painter->drawPixmap(m_offseted,
-                                m_scene->m_animatorsNPC[m_animatorID]->wholeImage(),
-                                m_scene->m_animatorsNPC[m_animatorID]->frameRect(m_direction));
+                                m_scene->m_animatorsNPC[int(m_animatorID)]->wholeImage(),
+                                m_scene->m_animatorsNPC[int(m_animatorID)]->frameRect(m_direction));
         else
             painter->drawRect(QRect(0, 0, 32, 32));
 
         if(this->isSelected())
         {
             painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-            painter->drawRect(m_offseted.x() + 1, m_imgOffsetY + 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
+            painter->drawRect(1, 1,
+                              int(m_localProps.setup.width - 2), int(m_localProps.setup.height - 2));
             painter->setPen(QPen(QBrush(Qt::magenta), 2, Qt::DotLine));
-            painter->drawRect(m_offseted.x() + 1/*imgOffsetX+1+(offset().x()/2)*/, m_imgOffsetY + 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
+            painter->drawRect(1, 1,
+                              int(m_localProps.setup.width - 2), int(m_localProps.setup.height - 2));
         }
     }
 }
@@ -944,12 +963,12 @@ void ItemNPC::setAnimator(long aniID)
 
     if(aniID < m_scene->m_animatorsNPC.size())
     {
-        QRect frameRect = m_scene->m_animatorsNPC[aniID]->frameRect(-1);
+        QRect frameRect = m_scene->m_animatorsNPC[int(aniID)]->frameRect(-1);
         m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height());
     }
 
-    this->setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())));  //width
-    this->setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())));  //height
+    //this->setData(ITEM_WIDTH, QString::number(qRound(m_imageSize.width())));  //width
+    //this->setData(ITEM_HEIGHT, QString::number(qRound(m_imageSize.height())));  //height
 
     m_animatorID = aniID;
     m_extAnimator = true;
