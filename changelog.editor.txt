@@ -4,6 +4,7 @@ Editor 0.3.1.13
 - Custom item INI files no more requiring to have the section declaration at begin
 - Added the absolute ~/Application/PGE Project alternate folder to escape path randomizing on macOS Sierra and higher
 - Added ability to choose engine application in different folder if pge_engine does not exist in the same folder as editor
+- Use physical hitboxes instead of bounding rectangles as grabbable area per every element
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox

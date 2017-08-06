@@ -87,6 +87,15 @@ void LvlBaseItem::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     Q_UNUSED(mouseEvent);
 }
 
+QPainterPath LvlBaseItem::shape() const
+{
+    QPainterPath path;
+    path.addRect(QRectF(0.0, 0.0,
+                        this->data(ITEM_WIDTH).toReal(),
+                        this->data(ITEM_HEIGHT).toReal()));
+    return path;
+}
+
 void LvlBaseItem::setLocked(bool lock)
 {
     this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);

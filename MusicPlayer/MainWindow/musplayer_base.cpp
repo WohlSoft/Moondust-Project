@@ -30,7 +30,7 @@ void MusPlayerBase::on_mididevice_currentIndexChanged(int) {}
 
 void MusPlayerBase::on_fmbank_currentIndexChanged(int index)
 {
-    MIX_ADLMIDI_setBankID(index);
+    Mix_ADLMIDI_setBankID(index);
 
     if(Mix_PlayingMusic())
     {
@@ -44,32 +44,32 @@ void MusPlayerBase::on_fmbank_currentIndexChanged(int index)
 
 void MusPlayerBase::on_volumeModel_currentIndexChanged(int index)
 {
-    MIX_ADLMIDI_setVolumeModel(index);
+    Mix_ADLMIDI_setVolumeModel(index);
 }
 
 void MusPlayerBase::on_tremolo_clicked(bool checked)
 {
-    MIX_ADLMIDI_setTremolo((int)checked);
+    Mix_ADLMIDI_setTremolo((int)checked);
 }
 
 void MusPlayerBase::on_vibrato_clicked(bool checked)
 {
-    MIX_ADLMIDI_setVibrato((int)checked);
+    Mix_ADLMIDI_setVibrato((int)checked);
 }
 
 void MusPlayerBase::on_modulation_clicked(bool checked)
 {
-    MIX_ADLMIDI_setScaleMod((int)checked);
+    Mix_ADLMIDI_setScaleMod((int)checked);
 }
 
 void MusPlayerBase::on_adlibMode_clicked(bool checked)
 {
-    MIX_ADLMIDI_setAdLibMode((int)checked);
+    Mix_ADLMIDI_setAdLibMode((int)checked);
 }
 
 void MusPlayerBase::on_logVolumes_clicked(bool checked)
 {
-    MIX_ADLMIDI_setLogarithmicVolumes(checked);
+    Mix_ADLMIDI_setLogarithmicVolumes(checked);
 }
 
 void MusPlayerBase::on_trackID_editingFinished() {}

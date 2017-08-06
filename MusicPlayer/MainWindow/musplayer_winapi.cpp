@@ -505,8 +505,8 @@ void MusPlayer_WinAPI::initUI(HWND hWnd)
     m_adlmidi.m_bankID = CreateWindowExW(0, L"COMBOBOX", L"BankId", WS_TABSTOP|WS_VISIBLE|WS_CHILD|CBS_DROPDOWNLIST|CBS_DISABLENOSCROLL|WS_VSCROLL|CBS_NOINTEGRALHEIGHT|WS_TABSTOP,
                                               80, 17, 240, 210, m_groupADLMIDI, (HMENU)CMD_Bank, m_hInstance, NULL);
     SendMessageW(m_adlmidi.m_bankID, WM_SETFONT, (WPARAM)hFont, 0);
-    int insCount            = MIX_ADLMIDI_getTotalBanks();
-    const char*const* names = MIX_ADLMIDI_getBankNames();
+    int insCount            = Mix_ADLMIDI_getTotalBanks();
+    const char*const* names = Mix_ADLMIDI_getBankNames();
     for(int i=0; i<insCount; i++)
     {
         SendMessageA(m_adlmidi.m_bankID, CB_ADDSTRING, 0, (LPARAM)names[i]);
@@ -718,15 +718,15 @@ void MusPlayer_WinAPI::on_mididevice_currentIndexChanged(int index)
 {
     switch(index)
     {
-        case 0: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        case 0: Mix_SetMidiDevice(MIDI_ADLMIDI);
         break;
-        case 1: MIX_SetMidiDevice(MIDI_Timidity);
+        case 1: Mix_SetMidiDevice(MIDI_Timidity);
         break;
-        case 2: MIX_SetMidiDevice(MIDI_Native);
+        case 2: Mix_SetMidiDevice(MIDI_Native);
         break;
-        case 3: MIX_SetMidiDevice(MIDI_Fluidsynth);
+        case 3: Mix_SetMidiDevice(MIDI_Fluidsynth);
         break;
-        default: MIX_SetMidiDevice(MIDI_ADLMIDI);
+        default: Mix_SetMidiDevice(MIDI_ADLMIDI);
         break;
     }
     if(Mix_PlayingMusic())
