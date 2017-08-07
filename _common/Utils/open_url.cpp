@@ -27,6 +27,7 @@
     WinAPI implementation
 */
 #ifdef _WIN32
+#define OPENURL_SUPPORTED
 #include <windows.h>
 #include <shellapi.h>
 
@@ -44,6 +45,7 @@ void Utils::openUrl(const std::string &url)
     Cocoa implementation
 */
 #ifdef __APPLE__
+#define OPENURL_SUPPORTED
 #include <CoreFoundation/CFBundle.h>
 #include <ApplicationServices/ApplicationServices.h>
 
@@ -65,6 +67,7 @@ void Utils::openUrl(const std::string &url)
     Linux/FreeBSD implementation
 */
 #if defined(__unix__) && (defined(__gnu_linux__) || defined(__FreeBSD__))
+#define OPENURL_SUPPORTED
 #include <stdlib.h>
 #include <string.h>
 #include "files.h"
@@ -75,6 +78,7 @@ static const char *defaultPaths[] =
     "/usr/bin/",
     "/bin/"
 };
+
 static const char *browsers[] =
 {
     "firefox",
@@ -84,7 +88,7 @@ static const char *browsers[] =
     "opera"
 };
 
-bool findExec(std::string &exec, const std::string &target)
+static bool findExec(std::string &exec, const std::string &target)
 {
     size_t len = sizeof(defaultPaths)/sizeof(const char*);
     //Is absolute path
@@ -105,10 +109,14 @@ bool findExec(std::string &exec, const std::string &target)
     return false;
 }
 
-void execApp(const std::string &prog, const std::string &args)
+static void execApp(const std::string &prog, const std::string &args)
 {
     std::string ex = prog + " " + args + " &";
-    system(ex.c_str());
+    if(system(ex.c_str()) != 0)
+    {
+        fprintf(stderr, "Warning: Opening of URL %s finished with errors\n", args.c_str());
+        fflush(stderr);
+    }
 }
 
 void Utils::openUrl(const std::string &url)
@@ -173,10 +181,25 @@ void Utils::openUrl(const std::string &url)
     Haiku implementation
 */
 #ifdef __HAIKU__
+#define OPENURL_SUPPORTED
 void Utils::openUrl(const std::string &url)
 {
 	(void)url;
     //FIXME: Implement this!
+}
+#endif
+
+/*
+    Dummy for unsupported operating systems
+*/
+#ifndef OPENURL_SUPPORTED
+#include <stdio.h>
+
+void Utils::openUrl(const std::string &url)
+{
+	(void)url;
+    fprintf(stderr, "Warning: Opening of URLs by Utils::openUrl() is not supported on this operating system\n");
+    fflush(stderr);
 }
 #endif
 
