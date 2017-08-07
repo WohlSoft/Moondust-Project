@@ -11,6 +11,7 @@ flag_pause_on_end=true
 QMAKE_EXTRA_ARGS=""
 MAKE_EXTRA_ARGS="-r -j 4"
 flag_debugThisScript=false
+flag_debugDependencies=false
 
 for var in "$@"
 do
@@ -45,11 +46,13 @@ do
             echo ""
 
             echo "--- Disable building of components ---"
+            printf " \E[1;4mnoqt\E[0m             - Skip building of components are using Qt\n"
             printf " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment\n"
             printf " \E[1;4mnoengine\E[0m         - Skip building of PGE Engine compoment\n"
             printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment\n"
             printf " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment\n"
             printf " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment\n"
+            printf " \E[1;4nomusicplayer\E[0m        - Skip building of PGE MusPlay compoment\n"
             printf " \E[1;4mnogifs2png\E[0m       - Skip building of GIFs2PNG compoment\n"
             printf " \E[1;4mnopng2gifs\E[0m       - Skip building of PNG2GIFs compoment\n"
             printf " \E[1;4mnolazyfixtool\E[0m    - Skip building of LazyFixTool compoment\n"
@@ -159,7 +162,16 @@ do
         debugscript)
             flag_debugThisScript=true
             ;;
-
+        test)
+            flag_debugDependencies=true
+            ;;
+        noqt)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=noeditor"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nocalibrator"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomanager"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomaintainer"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomusicplayer"
+            ;;
         # Disable building of some compnents
         noeditor)
             QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
@@ -183,6 +195,9 @@ do
             QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
             ;;
         nomaintainer)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nomusicplayer)
             QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
             ;;
     esac
@@ -237,12 +252,16 @@ checkForDependencies()
     elif [[ "$OSTYPE" == "freebsd"* ]]; then
         osDir="freebsd"
         libPref="lib"
+    elif [[ "$OSTYPE" == "haiku" ]]; then
+        osDir="haiku"
+        libPref="lib"
     elif [[ "$OSTYPE" == "msys"* ]]; then
         dlibExt="a"
         osDir="win32"
         libPref="lib"
     fi
     libsDir=$SCRDIR/_Libs/_builds/$osDir/
+    #echo "$libsDir"
 
     HEADS="SDL2/SDL.h"
     HEADS="${HEADS} SDL2/SDL_mixer_ext.h"
@@ -259,8 +278,7 @@ checkForDependencies()
     HEADS="${HEADS} vorbis/vorbisenc.h"
     for head in $HEADS
     do
-        if [[ $1 == "test" ]]
-        then
+        if $flag_debugDependencies; then
             echo "Checking include ${head}..."
         fi
         if [[ ! -f ${libsDir}/include/${head} ]]

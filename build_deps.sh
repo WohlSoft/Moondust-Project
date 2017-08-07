@@ -15,6 +15,8 @@ elif [[ "$OSTYPE" == "freebsd"* ]]; then
     OurOS="freebsd"
 elif [[ "$OSTYPE" == "msys"* ]]; then
     OurOS="win32"
+elif [[ "$OSTYPE" == "haiku" ]]; then
+    OurOS="haiku"
 fi
 
 echo $OurOS
@@ -133,7 +135,7 @@ echo "Building..."
 TIME_STARTED=$(date +%s)
 make $MAKE_EXTRA_ARGS
 checkState
-if [[ $OurOS == "linux" ]]; then
+if [[ $OurOS == "linux" ||  $OurOS == "haiku" ]]; then
     cd SDL_Mixer_X
     echo "Linking static SDL Mixer X..."
     make staticlib $MAKE_EXTRA_ARGS

@@ -71,12 +71,25 @@ void PGE_Translator::init()
     CFRelease(cflocale);
 #else
     // Generic way
-    std::locale the_global_locale("");
-    defaultLocale = the_global_locale.name();
-    if(defaultLocale.size() > 2)
-        defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
-    else if(defaultLocale == "C")
-        defaultLocale = "en";
+    try
+    {
+        std::locale the_global_locale("");
+        defaultLocale = the_global_locale.name();
+        if(defaultLocale.size() > 2)
+            defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
+        else if(defaultLocale == "C")
+            defaultLocale = "en";
+    }
+    catch(const std::runtime_error &err)
+    {
+    	pLogCritical("Can't recogonize locale by std::locale: %s", err.what());
+    	defaultLocale = "en";
+    }
+    catch(...)
+    {
+    	pLogCritical("Can't recogonize locale by std::locale: Unknown error");
+    	defaultLocale = "en";
+    }    
 #endif
 
     m_langPath = AppPathManager::languagesDir();

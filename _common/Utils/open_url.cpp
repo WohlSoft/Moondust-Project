@@ -168,3 +168,15 @@ void Utils::openUrl(const std::string &url)
     }
 }
 #endif
+
+/*
+    Haiku implementation
+*/
+#ifdef __HAIKU__
+void Utils::openUrl(const std::string &url)
+{
+	(void)url;
+    //FIXME: Implement this!
+}
+#endif
+

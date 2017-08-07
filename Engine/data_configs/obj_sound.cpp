@@ -78,7 +78,7 @@ void ConfigManager::buildSoundIndex()
             if(main_sound.contains(i))
             {
                 obj_sound &snd = main_sound[i];
-#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
                 FileMapper fileMap;
 
                 if(fileMap.open_file(snd.absPath.c_str()))
@@ -89,7 +89,7 @@ void ConfigManager::buildSoundIndex()
                 }
 
 #else
-                sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
+                sound.chunk = Mix_LoadWAV(snd.absPath.c_str());
 #endif
                 sound.path = snd.absPath;
 
@@ -116,7 +116,7 @@ void ConfigManager::buildSoundIndex()
 
                 if(sound.need_reload)
                 {
-#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
                     FileMapper fileMap;
 
                     if(fileMap.open_file(snd.absPath.c_str()))
@@ -128,7 +128,7 @@ void ConfigManager::buildSoundIndex()
                     }
 
 #else
-                    sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8().data());
+                    sound.chunk = Mix_LoadWAV(snd.absPath.c_str());
 #endif
                 }
 

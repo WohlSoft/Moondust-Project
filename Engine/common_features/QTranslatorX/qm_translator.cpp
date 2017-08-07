@@ -78,7 +78,7 @@ static const uint8_t magic[MagicLength] =
 /* @} */
 
 #ifndef MACHINE_BYTEORDER
-#ifdef __linux__
+#if defined(__linux__) || defined(__HAIKU__)
 #include <endian.h>
 #define MACHINE_BYTEORDER  __BYTE_ORDER
 #else /* __linux__ */

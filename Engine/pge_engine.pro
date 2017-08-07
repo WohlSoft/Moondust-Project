@@ -105,13 +105,20 @@ macx: {
             -framework ForceFeedback -framework AudioToolbox \
             -framework OpenGL
 }
-linux-g++||unix:!macx:!android: {
+linux-g++||unix:!macx:!android:!haiku-g++: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
     LIBS += -Wl,-Bstatic
     LIBS += $$SDL_MIXER_X_LIBS_STATIC -lSDL2
     LIBS += -Wl,-Bdynamic
     LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
+}
+haiku-g++:{
+    LIBS += -lfreeimagelite -lfreetype -lsqlite3
+    LIBS += -Wl,-Bstatic
+    LIBS += $$SDL_MIXER_X_LIBS_STATIC -lSDL2
+    LIBS += -Wl,-Bdynamic
+    LIBS += -lGL -lbe -ldevice -lgame -lmedia
 }
 
 contains(DEFINES, USE_LUA_JIT): {

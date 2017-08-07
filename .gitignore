@@ -16,6 +16,7 @@
 *.dylib
 !_Libs/_builds/*/*/*.dylib
 _Libs/_builds/linux/*
+_Libs/_builds/haiku/*
 _Libs/_builds/macos/*
 _Libs/_builds/android/*
 _Libs/_builds/win*-msvc/*

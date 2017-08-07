@@ -54,7 +54,7 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     loadingTime.start();
     fReadTime.start();
 #endif
-#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
     FileMapper fileMap;
 
     if(!fileMap.open_file(file.c_str()))
@@ -75,12 +75,12 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
         return NULL;
 
 #else
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
 
     if(formato  == FIF_UNKNOWN)
         return NULL;
 
-    FIBITMAP *img = FreeImage_Load(formato, file.toUtf8().data());
+    FIBITMAP *img = FreeImage_Load(formato, file.c_str());
 
     if(!img)
         return NULL;
