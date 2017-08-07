@@ -52,7 +52,7 @@ do
             printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment\n"
             printf " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment\n"
             printf " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment\n"
-            printf " \E[1;4nomusicplayer\E[0m        - Skip building of PGE MusPlay compoment\n"
+            printf " \E[1;4mnomusicplayer\E[0m    - Skip building of PGE MusPlay compoment\n"
             printf " \E[1;4mnogifs2png\E[0m       - Skip building of GIFs2PNG compoment\n"
             printf " \E[1;4mnopng2gifs\E[0m       - Skip building of PNG2GIFs compoment\n"
             printf " \E[1;4mnolazyfixtool\E[0m    - Skip building of LazyFixTool compoment\n"
