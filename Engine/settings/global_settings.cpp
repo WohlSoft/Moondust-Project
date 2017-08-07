@@ -42,16 +42,27 @@ void GlobalSettings::initJoysticks()
 
     for(int i = 0; i < SDL_NumJoysticks(); i++)
     {
-        joysticks.push_back(SDL_JoystickOpen(i));
-        SDL_Joystick* j = joysticks.back();
-        pLogDebug("==========================");
-        pLogDebug("Josytick %s", SDL_JoystickName(j));
-        pLogDebug("--------------------------");
-        pLogDebug("Axes:    %d", SDL_JoystickNumAxes(j));
-        pLogDebug("Balls:   %d", SDL_JoystickNumBalls(j));
-        pLogDebug("Hats:    %d", SDL_JoystickNumHats(j));
-        pLogDebug("Buttons: %d", SDL_JoystickNumButtons(j));
-        pLogDebug("==========================");
+        SDL_Joystick* joy = SDL_JoystickOpen(i);
+        if(joy)
+        {
+            pLogDebug("==========================");
+            pLogDebug("Josytick %s", SDL_JoystickName(joy));
+            pLogDebug("--------------------------");
+            pLogDebug("Axes:    %d", SDL_JoystickNumAxes(joy));
+            pLogDebug("Balls:   %d", SDL_JoystickNumBalls(joy));
+            pLogDebug("Hats:    %d", SDL_JoystickNumHats(joy));
+            pLogDebug("Buttons: %d", SDL_JoystickNumButtons(joy));
+            if(SDL_IsGameController(i))
+                pLogDebug("Supported by the game controller interface!");
+            pLogDebug("==========================");
+            joysticks.push_back(joy);
+        }
+        else
+        {
+            pLogWarning("==========================");
+            pLogWarning("Can't open joystick #%d", i);
+            pLogWarning("==========================");
+        }
     }
 }
 
