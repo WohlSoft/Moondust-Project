@@ -99,7 +99,7 @@ void PGE_MusPlayer::setSampleRate(int sampleRate=44100)
     #ifdef USE_SDL_MIXER
     qDebug() << "Set sample rate to:"<<sampleRate;
 
-    MIX_Timidity_addToPathList(QString(ApplicationPath+"/timidity/").toLocal8Bit().data());
+    Mix_Timidity_addToPathList(QString(ApplicationPath+"/timidity/").toLocal8Bit().data());
     if(Mix_OpenAudio(sRate, AUDIO_S16, 2, 4096)<0)
     {
         LogWarning(QString("Can't open audio: %1").arg(Mix_GetError()));
