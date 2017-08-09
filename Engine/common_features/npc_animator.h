@@ -75,7 +75,7 @@ class AdvNpcAnimator
 
         PGE_Texture m_mainImage;
 
-        std::vector<AniPos> frames;
+        std::vector<AniPos> m_frames;
 
         double m_ticks;
         bool m_onceMode;
@@ -101,6 +101,9 @@ class AdvNpcAnimator
         int m_custom_frameER;//enf right / jump step
 
         bool m_frameSequance;
+
+        int getFrameNumL(int num);
+        int getFrameNumR(int num);
 
         std::vector<int> s_framesL;     //Current frame srquence
         std::vector<int> s_framesR;     //Current frame srquence

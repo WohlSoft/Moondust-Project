@@ -249,11 +249,12 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
-                    if((!sameID) || (((ItemNPC *) SelItem)->m_data.id == oldID))
+                    ItemNPC *sItem = (ItemNPC *)SelItem;
+                    if((!sameID) || (sItem->m_data.id == oldID))
                     {
-                        oldData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                        ((ItemNPC *) SelItem)->transformTo(transformTO);
-                        newData.npc.push_back(((ItemNPC *) SelItem)->m_data);
+                        oldData.npc.push_back(sItem->m_data);
+                        sItem->transformTo(transformTO);
+                        newData.npc.push_back(sItem->m_data);
                     }
                 }
             }

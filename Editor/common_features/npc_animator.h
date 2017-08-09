@@ -84,6 +84,9 @@ private:
 
     bool frameSequance;
 
+    int getFrameNumL(int num);
+    int getFrameNumR(int num);
+
     QList<int> frames_listL;     //Current frame srquence
     QList<int> frames_listR;     //Current frame srquence
 

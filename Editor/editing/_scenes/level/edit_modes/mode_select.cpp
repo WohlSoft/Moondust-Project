@@ -178,8 +178,8 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         setItemSourceData(selectedList.first(), selectedList.first()->data(ITEM_TYPE).toString());
         //Check first selected element is it was moved
         if((sourcePos == QPoint(
-                (long)(selectedList.first()->scenePos().x()),
-                ((long)selectedList.first()->scenePos().y())
+                (int)(selectedList.first()->scenePos().x()),
+                (int)(selectedList.first()->scenePos().y())
             )))
         {
             s->m_mouseIsMoved = false;

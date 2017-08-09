@@ -417,10 +417,12 @@ void LvlScene::registerElement(QGraphicsItem *item)
 
 void LvlScene::unregisterElement(QGraphicsItem *item)
 {
-    if(!item->data(ITEM_LAST_POS).isValid()) return;
-    if(item->data(ITEM_LAST_SIZE).isNull()) return;
+    if(!item->data(ITEM_LAST_POS).isValid())
+        return;
+    if(item->data(ITEM_LAST_SIZE).isNull())
+        return;
     QPointF pt=item->data(ITEM_LAST_POS).toPointF();
-    QSizeF pz=item->data(ITEM_LAST_POS).toSizeF();
+    QSizeF pz=item->data(ITEM_LAST_SIZE).toSizeF();
     RPoint lt={pt.x(), pt.y()};
     RPoint rb={pt.x()+pz.width(), pt.y()+pz.height()};
     if(pz.width()<=0) { rb[0]=pt.x()+1;}
