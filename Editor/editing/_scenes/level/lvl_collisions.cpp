@@ -390,8 +390,8 @@ namespace LevelScene_space
 
 void LvlScene::queryItems(QRectF &zone, PGE_ItemList *resultList)
 {
-    RPoint lt = {zone.left(), zone.top()};
-    RPoint rb = {zone.right() + 1, zone.bottom() + 1};
+    RPoint lt = {(int64_t)zone.left(), (int64_t)zone.top()};
+    RPoint rb = {(int64_t)zone.right() + 1, (int64_t)zone.bottom() + 1};
     tree.Search(lt, rb, LevelScene_space::_TreeSearchCallback, (void*)resultList);
 }
 
@@ -404,12 +404,12 @@ void LvlScene::queryItems(double x, double y, PGE_ItemList *resultList)
 
 void LvlScene::registerElement(QGraphicsItem *item)
 {
-    QPointF pt=item->scenePos();
-    QSizeF pz(item->data(ITEM_WIDTH).toInt(), item->data(ITEM_HEIGHT).toInt());
-    RPoint lt={pt.x(), pt.y()};
-    RPoint rb={pt.x()+pz.width(), pt.y()+pz.height()};
-    if(pz.width()<=0) { rb[0]=pt.x()+1;}
-    if(pz.height()<=0) { rb[1]=pt.y()+1;}
+    QPoint pt = item->scenePos().toPoint();
+    QSize pz(item->data(ITEM_WIDTH).toInt(), item->data(ITEM_HEIGHT).toInt());
+    RPoint lt={(int64_t)pt.x(), (int64_t)pt.y()};
+    RPoint rb={(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
+    if(pz.width()<=0) { rb[0]=pt.x() + 1; pz.setWidth(1); }
+    if(pz.height()<=0) { rb[1]=pt.y() + 1; pz.setHeight(1); }
     tree.Insert(lt, rb, item);
     item->setData(ITEM_LAST_POS, pt);
     item->setData(ITEM_LAST_SIZE, pz);
@@ -421,10 +421,10 @@ void LvlScene::unregisterElement(QGraphicsItem *item)
         return;
     if(item->data(ITEM_LAST_SIZE).isNull())
         return;
-    QPointF pt=item->data(ITEM_LAST_POS).toPointF();
-    QSizeF pz=item->data(ITEM_LAST_SIZE).toSizeF();
-    RPoint lt={pt.x(), pt.y()};
-    RPoint rb={pt.x()+pz.width(), pt.y()+pz.height()};
+    QPoint pt = item->data(ITEM_LAST_POS).toPoint();
+    QSize  pz = item->data(ITEM_LAST_SIZE).toSize();
+    RPoint lt={(int64_t)pt.x(), (int64_t)pt.y()};
+    RPoint rb={(int64_t)pt.x() + (int64_t)pz.width(), (int64_t)pt.y() + (int64_t)pz.height()};
     if(pz.width()<=0) { rb[0]=pt.x()+1;}
     if(pz.height()<=0) { rb[1]=pt.y()+1;}
     tree.Remove(lt, rb, item);

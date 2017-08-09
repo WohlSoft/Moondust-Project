@@ -352,8 +352,8 @@ public:
     QGraphicsItem *itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp = 0);
     QGraphicsItem *itemCollidesCursor(QGraphicsItem *item);
 
-    typedef RTree<QGraphicsItem *, double, 2, double > IndexTree;
-    typedef double RPoint[2];
+    typedef RTree<QGraphicsItem *, int64_t, 2, int64_t > IndexTree;
+    typedef int64_t RPoint[2];
     IndexTree tree;
     void queryItems(QRectF &zone, PGE_ItemList *resultList);
     void queryItems(double x, double y, PGE_ItemList *resultList);
