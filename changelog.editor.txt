@@ -5,6 +5,8 @@ Editor 0.3.1.13
 - Added the absolute ~/Application/PGE Project alternate folder to escape path randomizing on macOS Sierra and higher
 - Added ability to choose engine application in different folder if pge_engine does not exist in the same folder as editor
 - Use physical hitboxes instead of bounding rectangles as grabbable area per every element
+- Fixed crash caused by phantom R-Tree entries with dead pointer and zero size
+- Fixed wrong initial frame for right direction of NPC when animation is disabled
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
@@ -35,7 +37,7 @@ patch 1
 - Fixed a bug caused duplicated ArrayID value by physical environment zones (after copy-pasting)
 - Fixed support of tilesets with the same title name
 patch 2
-- More friendly testing menu for LunaTester users
+- More friendly file testing menu for LunaTester users
 - Fixed accidentally broken search engine
 - Fixed initial window size on OS X
 - Initial state of editor's window will be maximized
