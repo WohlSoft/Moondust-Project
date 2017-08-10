@@ -106,6 +106,8 @@ void Themes::init()
     icons_map[draw_player1] = QIcon(":/images/player1_start.png");
     icons_map[draw_player2] = QIcon(":/images/player2_start.png");
 
+    images_map[section_0_selected] = QPixmap(":/sections/sections/00.png");
+    images_map[section_0_default]  = QPixmap(":/sections/sections/00_n.png");
     images_map[section_1_selected] = QPixmap(":/sections/sections/01.png");
     images_map[section_1_default]  = QPixmap(":/sections/sections/01_n.png");
     images_map[section_2_selected] = QPixmap(":/sections/sections/02.png");
@@ -146,8 +148,8 @@ void Themes::init()
     images_map[section_19_default] = QPixmap(":/sections/sections/19_n.png");
     images_map[section_20_selected] = QPixmap(":/sections/sections/20.png");
     images_map[section_20_default] = QPixmap(":/sections/sections/20_n.png");
-    images_map[section_21_selected] = QPixmap(":/sections/sections/21.png");
-    images_map[section_21_default] = QPixmap(":/sections/sections/21_n.png");
+    //images_map[section_21_selected] = QPixmap(":/sections/sections/21.png");
+    //images_map[section_21_default] = QPixmap(":/sections/sections/21_n.png");
 
     icons_map[section_goto_left_bottom] = QIcon(":/images/goto_left_bottom.png");
     icons_map[section_goto_left_top] = QIcon(":/images/goto_left_top.png");
@@ -395,6 +397,8 @@ void Themes::loadTheme(QString themeDir)
     guiset.endGroup();
 
     guiset.beginGroup("section-numbers");
+    loadImage(guiset, "section-0-selected", section_0_selected);
+    loadImage(guiset, "section-0-default", section_0_default);
     loadImage(guiset, "section-1-selected", section_1_selected);
     loadImage(guiset, "section-1-default", section_1_default);
     loadImage(guiset, "section-2-selected", section_2_selected);
@@ -435,8 +439,8 @@ void Themes::loadTheme(QString themeDir)
     loadImage(guiset, "section-19-default", section_19_default);
     loadImage(guiset, "section-20-selected", section_20_selected);
     loadImage(guiset, "section-20-default", section_20_default);
-    loadImage(guiset, "section-21-selected", section_21_selected);
-    loadImage(guiset, "section-21-default", section_21_default);
+    //loadImage(guiset, "section-21-selected", section_21_selected);
+    //loadImage(guiset, "section-21-default", section_21_default);
     loadIcon(guiset, "section-reset-pos", section_goto_left_bottom);
     loadIcon(guiset, "section-goto-left-bottom", section_goto_left_bottom);
     loadIcon(guiset, "section-goto-left-top", section_goto_left_top);

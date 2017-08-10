@@ -302,7 +302,7 @@ void MainWindow::on_actionSCT_Delete_triggered()
             edit->scene->Debugger_updateItemList();
 
             QMessageBox::information(this, tr("Section has been removed"),
-                                     tr("Section %1 has been successfully deleted!").arg(deletedSection + 1));
+                                     tr("Section %1 has been successfully deleted!").arg(deletedSection));
         }
 
     }

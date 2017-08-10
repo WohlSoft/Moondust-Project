@@ -112,110 +112,110 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionSetFirstPlayer->setIcon(Themes::icon(Themes::draw_player1));
     ui->actionSetSecondPlayer->setIcon(Themes::icon(Themes::draw_player2));
 
+    QIcon section0;
+    section0.addPixmap(Themes::Image(Themes::section_0_selected), QIcon::Normal, QIcon::On);
+    section0.addPixmap(Themes::Image(Themes::section_0_default), QIcon::Normal, QIcon::Off);
+    ui->actionSection_1->setIcon(section0);
+
     QIcon section1;
     section1.addPixmap(Themes::Image(Themes::section_1_selected), QIcon::Normal, QIcon::On);
     section1.addPixmap(Themes::Image(Themes::section_1_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_1->setIcon(section1);
+    ui->actionSection_2->setIcon(section1);
 
     QIcon section2;
     section2.addPixmap(Themes::Image(Themes::section_2_selected), QIcon::Normal, QIcon::On);
     section2.addPixmap(Themes::Image(Themes::section_2_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_2->setIcon(section2);
+    ui->actionSection_3->setIcon(section2);
 
     QIcon section3;
     section3.addPixmap(Themes::Image(Themes::section_3_selected), QIcon::Normal, QIcon::On);
     section3.addPixmap(Themes::Image(Themes::section_3_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_3->setIcon(section3);
+    ui->actionSection_4->setIcon(section3);
 
     QIcon section4;
     section4.addPixmap(Themes::Image(Themes::section_4_selected), QIcon::Normal, QIcon::On);
     section4.addPixmap(Themes::Image(Themes::section_4_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_4->setIcon(section4);
+    ui->actionSection_5->setIcon(section4);
 
     QIcon section5;
     section5.addPixmap(Themes::Image(Themes::section_5_selected), QIcon::Normal, QIcon::On);
     section5.addPixmap(Themes::Image(Themes::section_5_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_5->setIcon(section5);
+    ui->actionSection_6->setIcon(section5);
 
     QIcon section6;
     section6.addPixmap(Themes::Image(Themes::section_6_selected), QIcon::Normal, QIcon::On);
     section6.addPixmap(Themes::Image(Themes::section_6_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_6->setIcon(section6);
+    ui->actionSection_7->setIcon(section6);
 
     QIcon section7;
     section7.addPixmap(Themes::Image(Themes::section_7_selected), QIcon::Normal, QIcon::On);
     section7.addPixmap(Themes::Image(Themes::section_7_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_7->setIcon(section7);
+    ui->actionSection_8->setIcon(section7);
 
     QIcon section8;
     section8.addPixmap(Themes::Image(Themes::section_8_selected), QIcon::Normal, QIcon::On);
     section8.addPixmap(Themes::Image(Themes::section_8_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_8->setIcon(section8);
+    ui->actionSection_9->setIcon(section8);
 
     QIcon section9;
     section9.addPixmap(Themes::Image(Themes::section_9_selected), QIcon::Normal, QIcon::On);
     section9.addPixmap(Themes::Image(Themes::section_9_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_9->setIcon(section9);
+    ui->actionSection_10->setIcon(section9);
 
     QIcon section10;
     section10.addPixmap(Themes::Image(Themes::section_10_selected), QIcon::Normal, QIcon::On);
     section10.addPixmap(Themes::Image(Themes::section_10_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_10->setIcon(section10);
+    ui->actionSection_11->setIcon(section10);
 
     QIcon section11;
     section11.addPixmap(Themes::Image(Themes::section_11_selected), QIcon::Normal, QIcon::On);
     section11.addPixmap(Themes::Image(Themes::section_11_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_11->setIcon(section11);
+    ui->actionSection_12->setIcon(section11);
 
     QIcon section12;
     section12.addPixmap(Themes::Image(Themes::section_12_selected), QIcon::Normal, QIcon::On);
     section12.addPixmap(Themes::Image(Themes::section_12_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_12->setIcon(section12);
+    ui->actionSection_13->setIcon(section12);
 
     QIcon section13;
     section13.addPixmap(Themes::Image(Themes::section_13_selected), QIcon::Normal, QIcon::On);
     section13.addPixmap(Themes::Image(Themes::section_13_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_13->setIcon(section13);
+    ui->actionSection_14->setIcon(section13);
 
     QIcon section14;
     section14.addPixmap(Themes::Image(Themes::section_14_selected), QIcon::Normal, QIcon::On);
     section14.addPixmap(Themes::Image(Themes::section_14_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_14->setIcon(section14);
+    ui->actionSection_15->setIcon(section14);
 
     QIcon section15;
     section15.addPixmap(Themes::Image(Themes::section_15_selected), QIcon::Normal, QIcon::On);
     section15.addPixmap(Themes::Image(Themes::section_15_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_15->setIcon(section15);
+    ui->actionSection_16->setIcon(section15);
 
     QIcon section16;
     section16.addPixmap(Themes::Image(Themes::section_16_selected), QIcon::Normal, QIcon::On);
     section16.addPixmap(Themes::Image(Themes::section_16_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_16->setIcon(section16);
+    ui->actionSection_17->setIcon(section16);
 
     QIcon section17;
     section17.addPixmap(Themes::Image(Themes::section_17_selected), QIcon::Normal, QIcon::On);
     section17.addPixmap(Themes::Image(Themes::section_17_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_17->setIcon(section17);
+    ui->actionSection_18->setIcon(section17);
 
     QIcon section18;
     section18.addPixmap(Themes::Image(Themes::section_18_selected), QIcon::Normal, QIcon::On);
     section18.addPixmap(Themes::Image(Themes::section_18_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_18->setIcon(section18);
+    ui->actionSection_19->setIcon(section18);
 
     QIcon section19;
     section19.addPixmap(Themes::Image(Themes::section_19_selected), QIcon::Normal, QIcon::On);
     section19.addPixmap(Themes::Image(Themes::section_19_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_19->setIcon(section19);
+    ui->actionSection_20->setIcon(section19);
 
     QIcon section20;
     section20.addPixmap(Themes::Image(Themes::section_20_selected), QIcon::Normal, QIcon::On);
     section20.addPixmap(Themes::Image(Themes::section_20_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_20->setIcon(section20);
-
-    QIcon section21;
-    section21.addPixmap(Themes::Image(Themes::section_21_selected), QIcon::Normal, QIcon::On);
-    section21.addPixmap(Themes::Image(Themes::section_21_default), QIcon::Normal, QIcon::Off);
-    ui->actionSection_21->setIcon(section21);
+    ui->actionSection_21->setIcon(section20);
 
 
     ui->actionGotoLeftBottom->setIcon(Themes::icon(Themes::section_goto_left_bottom));

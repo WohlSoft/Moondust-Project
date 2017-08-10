@@ -7,6 +7,7 @@ Editor 0.3.1.13
 - Use physical hitboxes instead of bounding rectangles as grabbable area per every element
 - Fixed crash caused by phantom R-Tree entries with dead pointer and zero size
 - Fixed wrong initial frame for right direction of NPC when animation is disabled
+- Section numbers now counting from 0 (instead of counting from 1)
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox

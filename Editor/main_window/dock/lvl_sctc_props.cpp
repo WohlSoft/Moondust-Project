@@ -226,7 +226,7 @@ void LvlSectionProps::refreshFileData()
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) {lockSctSettingsProps=false; return;}
 
-        ui->LVLProp_CurSect->setText(QString::number(edit->LvlData.CurSection+1));
+        ui->LVLProp_CurSect->setText(QString::number(edit->LvlData.CurSection));
 
         ui->LVLPropsBackImage->setCurrentIndex(0);
         for(int i=0;i<ui->LVLPropsBackImage->count();i++)

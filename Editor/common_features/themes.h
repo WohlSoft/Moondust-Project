@@ -144,6 +144,8 @@ public:
         player1,
         player2,
 
+        section_0_selected,
+        section_0_default,
         section_1_selected,
         section_1_default,
         section_2_selected,
