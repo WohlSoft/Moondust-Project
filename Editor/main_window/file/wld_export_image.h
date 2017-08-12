@@ -34,9 +34,10 @@ public:
     explicit WldSaveImage(QRect sourceRect, QSize targetSize, bool proportion, QWidget *parent = 0);
     QRect getRect;
     QSize imageSize;
-    bool saveProportion;
-    bool hidePaths;
-    bool hideMusBoxes;
+    bool m_keepAspectRatio = false;
+    bool hidePaths = false;
+    bool hideMusBoxes = false;
+    bool hideGrid = false;
 
     ~WldSaveImage();
 

@@ -108,6 +108,9 @@ bool LvlBaseItem::itemTypeIsLocked()
     return false;
 }
 
+void LvlBaseItem::setMetaSignsVisibility(bool)
+{}
+
 void LvlBaseItem::setScenePoint(LvlScene *theScene)
 {
     m_scene = theScene;

@@ -107,6 +107,12 @@ public:
     void setLocked(bool lock);
     virtual bool itemTypeIsLocked();
 
+    /**
+     * @brief Show / Hide meta-signs of this element
+     * @param visible Visibility state: true is visible, false is invisible
+     */
+    virtual void setMetaSignsVisibility(bool visible);
+
 protected:
     long        m_animatorID;
     QRectF      m_imageSize;

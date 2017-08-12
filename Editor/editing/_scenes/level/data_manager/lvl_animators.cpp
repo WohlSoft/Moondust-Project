@@ -23,7 +23,7 @@
 #include "../../../../defines.h"
 
 #include "../lvl_scene.h"
-
+#include "../items/lvl_base_item.h"
 
 ///
 /// \brief LvlScene::buildAnimators
@@ -123,14 +123,6 @@ void LvlScene::startAnimation()
     }
 
     m_animationTimer.start(32);
-    //    foreach(SimpleAnimator * bgoA, animates_BGO)
-    //    {
-    //        bgoA->start();
-    //    }
-    //    foreach(SimpleAnimator * blockA, animates_Blocks)
-    //    {
-    //        blockA->start();
-    //    }
     foreach(AdvNpcAnimator *npcA, m_animatorsNPC)
     {
         npcA->start();
@@ -141,16 +133,6 @@ void LvlScene::startAnimation()
 void LvlScene::stopAnimation()
 {
     int i = 0;
-    //    int size=animates_BGO.size();
-    //    for(i=0;i<size; i++)
-    //    {
-    //        animates_BGO[i]->stop();
-    //    }
-    //    size=animates_Blocks.size();
-    //    for(i=0;i<size; i++)
-    //    {
-    //        animates_Blocks[i]->stop();
-    //    }
     m_animationTimer.stop();
     int size = m_animatorsNPC.size();
     for(i = 0; i < size; i++)
@@ -159,4 +141,16 @@ void LvlScene::stopAnimation()
     }
     m_subWindow->stopAutoUpdateTimer();
     update();
+}
+
+void LvlScene::setMetaSignsVisibility(bool visible)
+{
+    QList<QGraphicsItem*> everything = items();
+    for(QGraphicsItem* it : everything)
+    {
+        if(it->data(ITEM_IS_ITEM).isNull())
+            continue;
+        LvlBaseItem *item = qgraphicsitem_cast<LvlBaseItem*>(it);
+        item->setMetaSignsVisibility(visible);
+    }
 }

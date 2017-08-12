@@ -441,6 +441,14 @@ bool ItemBlock::isSizable()
     return m_sizable;
 }
 
+void ItemBlock::setMetaSignsVisibility(bool visible)
+{
+    if(m_includedNPC)
+        m_includedNPC->setVisible(visible);
+    if(m_coinCounter)
+        m_coinCounter->setVisible(visible);
+}
+
 void ItemBlock::setSlippery(bool slip)
 {
     m_data.slippery = slip;

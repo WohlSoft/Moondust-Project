@@ -228,6 +228,12 @@ public:
      */
     void stopAnimation();
 
+    /**
+     * @brief Set visibility state to elements meta-signs
+     * @param visible true to show meta-signs, false to hide them
+     */
+    void setMetaSignsVisibility(bool visible);
+
     // ///////////////////Init Level/////////////////////////
     void loadUserData(QProgressDialog &progress);  //!< Load custom graphics and item settings
 

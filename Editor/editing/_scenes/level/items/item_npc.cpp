@@ -506,6 +506,14 @@ cancelRemoveSSS:
     }
 }
 
+void ItemNPC::setMetaSignsVisibility(bool visible)
+{
+    if(m_includedNPC && !m_localProps.setup.container_show_contents)
+        m_includedNPC->setVisible(visible);
+    if(m_data.generator) //Generator NPCs are meta-signs by theme selves
+        setVisible(visible);
+}
+
 //Change arrtibutes
 void ItemNPC::setFriendly(bool fri)
 {

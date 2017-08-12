@@ -51,19 +51,21 @@ void LevelEdit::ExportToImage_fn_piece()
     scene->resetResizers();
     MainWinConnect::pMainWin->on_actionSelect_triggered();
 
-    qreal zoom=1.0;
-    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    qreal zoom = 1.0;
+    if(QString(ui->graphicsView->metaObject()->className()) == "GraphicsWorkspace")
     {
         zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
     }
 
-    scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom)+10 );
-    scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)+10 );
+    scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value()) / zoom) + 10);
+    scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value()) / zoom) + 10);
     if(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Fit)
     {
-        scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width())/zoom)-20);
-        scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height())/zoom)-20);
-    } else {
+        scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width()) / zoom) - 20);
+        scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height()) / zoom) - 20);
+    }
+    else
+    {
         scene->captutedSize.setWidth(GlobalSettings::screenGrab.width);
         scene->captutedSize.setHeight(GlobalSettings::screenGrab.height);
     }
@@ -77,131 +79,154 @@ void LevelEdit::ExportingReady() //slot
     if(!sceneCreated) return;
     if(!scene) return;
 
-        long x, y, h, w, th, tw;
+    long x, y, h, w, th, tw;
 
-        bool proportion;
-        bool forceTiled=false;
-        QString inifile = AppPathManager::settingsFile();
-        QSettings settings(inifile, QSettings::IniFormat);
-        settings.beginGroup("Main");
-        m_recentExportPath = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
-        proportion = settings.value("export-proportions", true).toBool();
-        settings.endGroup();
+    bool keepAspectRatio;
+    bool forceTiled = false;
+    bool gridWasShown = false;
+    QString inifile = AppPathManager::settingsFile();
+    QSettings settings(inifile, QSettings::IniFormat);
+    settings.beginGroup("Main");
+    m_recentExportPath = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
+    keepAspectRatio = settings.value("export-keep-aspect-ratio", true).toBool();
+    keepAspectRatio = settings.value("export-proportions", keepAspectRatio).toBool();
+    settings.endGroup();
 
 
-        if(scene->m_captureFullSection)
-        {
-            x=LvlData.sections[LvlData.CurSection].size_left;
-            y=LvlData.sections[LvlData.CurSection].size_top;
-            w=LvlData.sections[LvlData.CurSection].size_right;
-            h=LvlData.sections[LvlData.CurSection].size_bottom;
-            w=labs(x-w);
-            h=labs(y-h);
-        }
-        else
-        {
-            x=qRound(scene->captutedSize.x());
-            y=qRound(scene->captutedSize.y());
-            w=qRound(scene->captutedSize.width());
-            h=qRound(scene->captutedSize.height());
-        }
+    if(scene->m_captureFullSection)
+    {
+        x = LvlData.sections[LvlData.CurSection].size_left;
+        y = LvlData.sections[LvlData.CurSection].size_top;
+        w = LvlData.sections[LvlData.CurSection].size_right;
+        h = LvlData.sections[LvlData.CurSection].size_bottom;
+        w = labs(x - w);
+        h = labs(y - h);
+    }
+    else
+    {
+        x = qRound(scene->captutedSize.x());
+        y = qRound(scene->captutedSize.y());
+        w = qRound(scene->captutedSize.width());
+        h = qRound(scene->captutedSize.height());
+    }
 
-        tw=w;
-        th=h;
-        QVector<long> imgSize;
+    tw = w;
+    th = h;
+    QVector<long> imgSize;
 
-        imgSize.push_back(th);
-        imgSize.push_back(tw);
-        imgSize.push_back((int)proportion);
+    imgSize.push_back(th);
+    imgSize.push_back(tw);
+    imgSize.push_back((int)keepAspectRatio);
 
-        ExportToImage ExportImage(imgSize, MainWinConnect::pMainWin);
-        ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
-        if(ExportImage.exec()!=QDialog::Rejected)
-            imgSize = ExportImage.imageSize;
-        else return;
+    ExportToImage imageExportDialog(imgSize, MainWinConnect::pMainWin);
+    imageExportDialog.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    imageExportDialog.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, imageExportDialog.size(), qApp->desktop()->availableGeometry()));
+    if(imageExportDialog.exec() != QDialog::Rejected)
+        imgSize = imageExportDialog.imageSize;
+    else return;
 
-        if(imgSize.size()>=3)
-            if((imgSize[0]<0)||(imgSize[1]<0))
-                return;
-
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
-            m_recentExportPath + "/" +
-            QString("%1_Section_%2%3.png").arg( QFileInfo(curFile).baseName() )
-                                                        .arg(LvlData.CurSection+1)
-                                                        .arg(scene->m_captureFullSection?"":("_"+QString::number(qrand()))),
-                                                        tr("PNG Image (*.png)"));
-        if (fileName.isEmpty())
+    if(imgSize.size() >= 3)
+        if((imgSize[0] < 0) || (imgSize[1] < 0))
             return;
 
-        forceTiled = ExportImage.TiledBackground();
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
+                       m_recentExportPath + "/" +
+                       QString("%1_Section_%2%3.png").arg(QFileInfo(curFile).baseName())
+                       .arg(LvlData.CurSection + 1)
+                       .arg(scene->m_captureFullSection ? "" : ("_" + QString::number(qrand()))),
+                       tr("PNG Image (*.png)"));
+    if(fileName.isEmpty())
+        return;
 
-        QFileInfo exported(fileName);
+    forceTiled = imageExportDialog.tiledBackground();
 
-        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, MainWinConnect::pMainWin);
-        progress.setWindowTitle(tr("Please wait..."));
-        progress.setWindowModality(Qt::WindowModal);
-        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-        progress.setFixedSize(progress.size());
-        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-        progress.setCancelButton(0);
-        progress.setMinimumDuration(0);
+    QFileInfo exported(fileName);
 
-        //progress.show();
+    QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, MainWinConnect::pMainWin);
+    progress.setWindowTitle(tr("Please wait..."));
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+    progress.setFixedSize(progress.size());
+    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setCancelButton(0);
+    progress.setMinimumDuration(0);
 
-        if(!progress.wasCanceled()) progress.setValue(0);
+    //progress.show();
 
-        qApp->processEvents();
-        scene->stopAnimation(); //Reset animation to 0 frame
-        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(false);
-        if(forceTiled) scene->setTiledBackground(true);
+    if(!progress.wasCanceled()) progress.setValue(0);
 
-        if(!progress.wasCanceled()) progress.setValue(10);
-        qApp->processEvents();
-        scene->clearSelection(); // Clear selection on export
+    qApp->processEvents();
+    scene->stopAnimation(); //Reset animation to 0 frame
+    if(imageExportDialog.hideWatersAndWarps())
+        scene->hideWarpsAndDoors(false);
+    if(imageExportDialog.hideMetaSigns())
+        scene->setMetaSignsVisibility(false);
+    if(forceTiled)
+        scene->setTiledBackground(true);
+    if(imageExportDialog.hideGrid())
+    {
+        gridWasShown = scene->m_opts.grid_show;
+        scene->m_opts.grid_show = false;
+    }
 
-        m_recentExportPath = exported.absoluteDir().path();
-        proportion = imgSize[2];
+    if(!progress.wasCanceled())
+        progress.setValue(10);
+    scene->invalidate();
+    scene->update();
+    qApp->processEvents();
+    scene->clearSelection(); // Clear selection on export
 
-        th=imgSize[0];
-        tw=imgSize[1];
+    m_recentExportPath = exported.absoluteDir().path();
+    keepAspectRatio = imgSize[2];
 
-        qApp->processEvents();
-        QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
-        img.fill(Qt::transparent);
+    th = imgSize[0];
+    tw = imgSize[1];
 
-        if(!progress.wasCanceled()) progress.setValue(20);
+    qApp->processEvents();
+    QImage img((int)tw, (int)th, QImage::Format_ARGB32_Premultiplied);
+    img.fill(Qt::transparent);
 
-        qApp->processEvents();
-        QPainter p(&img);
+    if(!progress.wasCanceled()) progress.setValue(20);
 
-        if(!progress.wasCanceled()) progress.setValue(30);
-        qApp->processEvents();
-        scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
+    qApp->processEvents();
+    QPainter p(&img);
 
-        qApp->processEvents();
-        p.end();
+    if(!progress.wasCanceled()) progress.setValue(30);
+    qApp->processEvents();
+    scene->render(&p, QRectF(0, 0, tw, th), QRectF(x, y, w, h));
 
-        if(!progress.wasCanceled()) progress.setValue(40);
-        qApp->processEvents();
-        img.save(fileName);
+    qApp->processEvents();
+    p.end();
 
-        qApp->processEvents();
-        if(!progress.wasCanceled()) progress.setValue(90);
+    if(!progress.wasCanceled()) progress.setValue(40);
+    qApp->processEvents();
+    img.save(fileName);
 
-        qApp->processEvents();
-        if(scene->m_opts.animationEnabled) scene->startAnimation(); // Restart animation
-        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
-        if(forceTiled) scene->setTiledBackground(false);
+    qApp->processEvents();
+    if(!progress.wasCanceled()) progress.setValue(90);
 
-        if(!progress.wasCanceled()) progress.setValue(100);
-        if(!progress.wasCanceled())
-            progress.close();
+    qApp->processEvents();
+    if(scene->m_opts.animationEnabled)
+        scene->startAnimation(); // Restart animation
+    if(imageExportDialog.hideWatersAndWarps())
+        scene->hideWarpsAndDoors(true);
+    if(imageExportDialog.hideMetaSigns())
+        scene->setMetaSignsVisibility(true);
+    if(forceTiled)
+        scene->setTiledBackground(false);
+    if(gridWasShown)
+        scene->m_opts.grid_show = true;
+    scene->invalidate();
+    scene->update();
 
-        settings.beginGroup("Main");
-            settings.setValue("export-path", m_recentExportPath);
-            settings.setValue("export-proportions", proportion);
-        settings.endGroup();
+    if(!progress.wasCanceled()) progress.setValue(100);
+    if(!progress.wasCanceled())
+        progress.close();
+
+    settings.beginGroup("Main");
+    settings.setValue("export-path", m_recentExportPath);
+    settings.setValue("export-keep-aspect-ratio", keepAspectRatio);
+    settings.endGroup();
 }
 
 
@@ -214,7 +239,7 @@ ExportToImage::ExportToImage(QVector<long> &imgSize, QWidget *parent) :
 {
     imageSize = imgSize;
     ui->setupUi(this);
-    if(imageSize.size()>=3)
+    if(imageSize.size() >= 3)
     {
         ui->imgHeight->setValue(imageSize[0]);
         ui->imgWidth->setValue(imageSize[1]);
@@ -228,34 +253,44 @@ ExportToImage::~ExportToImage()
     delete ui;
 }
 
-bool ExportToImage::HideWatersAndDoors()
+bool ExportToImage::hideWatersAndWarps()
 {
     return ui->HideWarpsWaters->isChecked();
 }
 
-bool ExportToImage::TiledBackground()
+bool ExportToImage::hideMetaSigns()
+{
+    return ui->hideMetaSigns->isChecked();
+}
+
+bool ExportToImage::hideGrid()
+{
+    return ui->hideGrid->isChecked();
+}
+
+bool ExportToImage::tiledBackground()
 {
     return ui->tiledBackround->isChecked();
 }
 
 void ExportToImage::on_imgHeight_valueChanged(int arg1)
 {
-    if( (ui->SaveProportion->isChecked()) && (ui->imgHeight->hasFocus()) )
-        ui->imgWidth->setValue( (int)round((float)arg1 / ((float)imageSize[0]/(float)imageSize[1])) );
+    if((ui->SaveProportion->isChecked()) && (ui->imgHeight->hasFocus()))
+        ui->imgWidth->setValue((int)round((float)arg1 / ((float)imageSize[0] / (float)imageSize[1])));
 
 }
 
 void ExportToImage::on_imgWidth_valueChanged(int arg1)
 {
-    if( (ui->SaveProportion->isChecked()) && (ui->imgWidth->hasFocus()) )
-        ui->imgHeight->setValue( (int)round((float)arg1 / ((float)imageSize[1]/(float)imageSize[0])) );
+    if((ui->SaveProportion->isChecked()) && (ui->imgWidth->hasFocus()))
+        ui->imgHeight->setValue((int)round((float)arg1 / ((float)imageSize[1] / (float)imageSize[0])));
 }
 
 void ExportToImage::on_buttonBox_accepted()
 {
-    imageSize[0]=ui->imgHeight->value();
-    imageSize[1]=ui->imgWidth->value();
-    imageSize[2]= (int)ui->SaveProportion->isChecked();
+    imageSize[0] = ui->imgHeight->value();
+    imageSize[1] = ui->imgWidth->value();
+    imageSize[2] = (int)ui->SaveProportion->isChecked();
     accept();
 }
 
@@ -263,8 +298,8 @@ void ExportToImage::on_SaveProportion_toggled(bool checked)
 {
     if(checked)
     {
-        ui->imgWidth->setValue( imageSize[1]);
-        ui->imgHeight->setValue( imageSize[0]);
+        ui->imgWidth->setValue(imageSize[1]);
+        ui->imgHeight->setValue(imageSize[0]);
     }
 }
 
@@ -275,18 +310,18 @@ void ExportToImage::on_buttonBox_rejected()
 
 void ExportToImage::on_size1x_clicked()
 {
-    ui->imgWidth->setValue( imageSize[1]);
-    ui->imgHeight->setValue( imageSize[0]);
+    ui->imgWidth->setValue(imageSize[1]);
+    ui->imgHeight->setValue(imageSize[0]);
 }
 
 void ExportToImage::on_size05x_clicked()
 {
-    ui->imgWidth->setValue( imageSize[1]/2);
-    ui->imgHeight->setValue( imageSize[0]/2);
+    ui->imgWidth->setValue(imageSize[1] / 2);
+    ui->imgHeight->setValue(imageSize[0] / 2);
 }
 
 void ExportToImage::on_size2x_clicked()
 {
-    ui->imgWidth->setValue( imageSize[1]*2);
-    ui->imgHeight->setValue( imageSize[0]*2);
+    ui->imgWidth->setValue(imageSize[1] * 2);
+    ui->imgHeight->setValue(imageSize[0] * 2);
 }

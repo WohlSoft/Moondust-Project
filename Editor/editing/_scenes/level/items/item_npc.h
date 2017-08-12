@@ -77,6 +77,8 @@ public:
     bool itemTypeIsLocked();
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
+    void setMetaSignsVisibility(bool visible);
+
 private:
     bool    m_extAnimator;
     long    m_animatorID;
