@@ -124,7 +124,7 @@ BuildSDL()
 
     #--------------Apply some patches--------------
 	# Fixes build, because of undefined REFIID type, function itself is not using because of disabld Direct X component
-	patch -t -N $LatestSDL/src/core/windows/SDL_windows.h < ../patches/SDL_window.h.patch
+	# patch -t -N $LatestSDL/src/core/windows/SDL_windows.h < ../patches/SDL_window.h.patch #FIXED
     #----------------------------------------------
 
     ###########SDL2###########
