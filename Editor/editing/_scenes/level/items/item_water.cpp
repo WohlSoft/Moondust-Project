@@ -118,22 +118,25 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     name->setEnabled(enable);\
     name->setChecked(checked_condition); typeID++;
 
-    QAction *envTypes[13];
+    QAction *envTypes[16];
     int typeID = 0;
 
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Water"),        m_data.env_type == LevelPhysEnv::ENV_WATER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                          tr("Quicksand"),    m_data.env_type == LevelPhysEnv::ENV_QUICKSAND);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                                tr("Water"),        m_data.env_type == LevelPhysEnv::ENV_WATER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                                tr("Quicksand"),    m_data.env_type == LevelPhysEnv::ENV_QUICKSAND);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Custom liquid"), m_data.env_type == LevelPhysEnv::ENV_CUSTOM_LIQUID);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Gravity Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC/Player Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC/Player Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Mouse click Event"), m_data.env_type == LevelPhysEnv::ENV_CLICK_EVENT);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Collision script"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_SCRIPT);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Mouse click Script"), m_data.env_type == LevelPhysEnv::ENV_CLICK_SCRIPT);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Collision Event"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_EVENT);
     CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Air chamber"), m_data.env_type == LevelPhysEnv::ENV_AIR);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC1);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Hurting Field"), m_data.env_type == LevelPhysEnv::ENV_NPC_HURTING_FIELD);
 
 #undef CONTEXT_MENU_ITEM_CHK
 
@@ -215,21 +218,57 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 if(selected == envTypes[i])
                 {
                     LevelData modData;
-                    foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
+                    for(QGraphicsItem *selItem : m_scene->selectedItems())
                     {
-                        if(SelItem->data(ITEM_TYPE).toString() == "Water")
+                        if(selItem->data(ITEM_TYPE).toString() == "Water")
                         {
-                            modData.physez.push_back(((ItemPhysEnv *)SelItem)->m_data);
-                            ((ItemPhysEnv *)SelItem)->setType(i);
+                            ItemPhysEnv *pe = dynamic_cast<ItemPhysEnv*>(selItem);
+                            modData.physez.push_back(pe->m_data);
+                            pe->setType(i);
+                            m_scene->invalidate(pe->boundingRect());
                         }
                     }
                     m_scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
+                    if(!m_scene->m_opts.animationEnabled)
+                        m_scene->update();
                     found = true;
                     break;
                 }
             }
         }
     }
+}
+
+QPainterPath ItemPhysEnv::shape() const
+{
+    QPainterPath path;
+    QPolygonF lineBoarder;
+    QVector<qreal> points = {0.0,
+                             0.0,
+                             this->data(ITEM_WIDTH).toReal(),
+                             this->data(ITEM_HEIGHT).toReal()};
+#define PLEFT   0
+#define PTOP    1
+#define PRIGHT  2
+#define PBOTTOM 3
+    lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP]));
+    lineBoarder.push_back(QPointF(points[PRIGHT],    points[PTOP]));
+    lineBoarder.push_back(QPointF(points[PRIGHT],    points[PBOTTOM]));
+    lineBoarder.push_back(QPointF(points[PLEFT],     points[PBOTTOM]));
+    lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP]));
+
+    lineBoarder.push_back(QPointF(points[PLEFT] + 4, points[PTOP]));
+    lineBoarder.push_back(QPointF(points[PLEFT] + 4, points[PBOTTOM] - 4));
+    lineBoarder.push_back(QPointF(points[PRIGHT] - 4,points[PBOTTOM] - 4));
+    lineBoarder.push_back(QPointF(points[PRIGHT] - 4,points[PTOP] + 4));
+    lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP] + 4));
+#undef PLEFT
+#undef PTOP
+#undef PRIGHT
+#undef PBOTTOM
+
+    path.addPolygon(lineBoarder);
+    return path;
 }
 
 ///////////////////MainArray functions/////////////////////////////
@@ -259,7 +298,7 @@ void ItemPhysEnv::arrayApply()
     if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
     {
         //Check index
-        if(m_data.meta.array_id == m_scene->m_data->physez[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->physez[(int)m_data.meta.index].meta.array_id)
             found = true;
     }
 
@@ -267,7 +306,7 @@ void ItemPhysEnv::arrayApply()
     if(found)
     {
         //directlry
-        m_scene->m_data->physez[m_data.meta.index] = m_data; //apply current bgoData
+        m_scene->m_data->physez[(int)m_data.meta.index] = m_data; //apply current bgoData
     }
     else
         for(int i = 0; i < m_scene->m_data->physez.size(); i++)
@@ -275,7 +314,7 @@ void ItemPhysEnv::arrayApply()
             //after find it into array
             if(m_scene->m_data->physez[i].meta.array_id == m_data.meta.array_id)
             {
-                m_data.meta.index = i;
+                m_data.meta.index = (unsigned int)i;
                 m_scene->m_data->physez[i] = m_data;
                 break;
             }
@@ -295,14 +334,14 @@ void ItemPhysEnv::removeFromArray()
     if(m_data.meta.index < (unsigned int)m_scene->m_data->physez.size())
     {
         //Check index
-        if(m_data.meta.array_id == m_scene->m_data->physez[m_data.meta.index].meta.array_id)
+        if(m_data.meta.array_id == m_scene->m_data->physez[(int)m_data.meta.index].meta.array_id)
             found = true;
     }
 
     if(found)
     {
         //directlry
-        m_scene->m_data->physez.removeAt(m_data.meta.index);
+        m_scene->m_data->physez.removeAt((int)m_data.meta.index);
     }
     else
         for(int i = 0; i < m_scene->m_data->physez.size(); i++)
@@ -326,7 +365,7 @@ void ItemPhysEnv::returnBack()
 
 QPoint ItemPhysEnv::sourcePos()
 {
-    return QPoint(m_data.x, m_data.y);
+    return QPoint((int)m_data.x, (int)m_data.y);
 }
 
 void ItemPhysEnv::updateColor()
@@ -373,8 +412,25 @@ void ItemPhysEnv::updateColor()
     case LevelPhysEnv::ENV_COLLISION_SCRIPT:
         m_color = QColor(Qt::darkCyan);
         break;
+    case LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1:
+        m_color = QColor(Qt::darkGray);
+        break;
+    case LevelPhysEnv::ENV_TOUCH_EVENT_NPC1:
+        m_color = QColor(Qt::gray);
+        break;
+    case LevelPhysEnv::ENV_NPC_HURTING_FIELD:
+        m_color = QColor(Qt::darkYellow);
+        break;
     }
     m_pen.setColor(m_color);
+    m_pen.setWidth(m_penWidth);
+    m_pen.setStyle(Qt::SolidLine);
+    m_pen.setCapStyle(Qt::FlatCap);
+    m_pen.setJoinStyle(Qt::MiterJoin);
+
+    QColor c(m_color);
+    c.setAlpha(25);
+    m_brush = QBrush(c);
 }
 
 bool ItemPhysEnv::itemTypeIsLocked()
@@ -388,20 +444,23 @@ void ItemPhysEnv::setType(int tp)
 {
     m_data.env_type = tp;
     updateColor();
-    //this->setPen(_pen);
     arrayApply();
 }
 
 void ItemPhysEnv::setRectSize(QRect rect)
 {
+    QRectF br = this->boundingRect();
+    br.setX((int)m_data.x);
+    br.setY((int)m_data.y);
     m_data.x = rect.x();
     m_data.y = rect.y();
     m_data.w = rect.width();
     m_data.h = rect.height();
     m_waterSize = rect.size();
     setPos(m_data.x, m_data.y);
-    drawWater();
+    refreshItemSize();
     arrayApply();
+    m_scene->invalidate(br);
 }
 
 void ItemPhysEnv::setSize(QSize sz)
@@ -409,7 +468,7 @@ void ItemPhysEnv::setSize(QSize sz)
     m_waterSize = sz;
     m_data.w = sz.width();
     m_data.h = sz.height();
-    drawWater();
+    refreshItemSize();
     arrayApply();
 }
 
@@ -417,43 +476,20 @@ void ItemPhysEnv::setSize(QSize sz)
 void ItemPhysEnv::setPhysEnvData(LevelPhysEnv inD)
 {
     m_data = inD;
-    m_waterSize = QSize(m_data.w, m_data.h);
+    m_waterSize = QSize((int)m_data.w, (int)m_data.h);
     setPos(m_data.x, m_data.y);
     setData(ITEM_ID, QString::number(0));
     setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
     updateColor();
-    drawWater();
+    refreshItemSize();
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
 }
 
-void ItemPhysEnv::drawWater()
+void ItemPhysEnv::refreshItemSize()
 {
-    //    long x, y, h, w;
-
-    //    x = 1;
-    //    y = 1;
-    //    w = waterData.w-penWidth;
-    //    h = waterData.h-penWidth;
     setData(ITEM_WIDTH, (int)m_data.w);
     setData(ITEM_HEIGHT, (int)m_data.h);
-    m_pen = QPen(m_color, m_penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
-    //setPen(_pen);
-    //    QVector<QPointF > points;
-    //    points.clear();
-
-    //    points.push_back(QPointF(x+3, y));
-    //    points.push_back(QPointF(x+w, y));
-    //    points.push_back(QPointF(x+w,y+h));
-    //    points.push_back(QPointF(x, y+h));
-    //    points.push_back(QPointF(x, y+3));
-
-    //    points.push_back(QPointF(x, y+h));
-    //    points.push_back(QPointF(x+w,y+h));
-    //    points.push_back(QPointF(x+w, y));
-    //    points.push_back(QPointF(x+3, y));
-
-    //    this->setPolygon( QPolygonF(points) );
 }
 
 QRectF ItemPhysEnv::boundingRect() const
@@ -465,19 +501,16 @@ QRectF ItemPhysEnv::boundingRect() const
 
 void ItemPhysEnv::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    painter->setPen(m_pen);
-    painter->setBrush(Qt::NoBrush);
-
     long h, w;
     w = m_data.w - m_penWidth;
     h = m_data.h - m_penWidth;
-
-    painter->drawRect(1, 1, w, h);
+    painter->setBrush(m_brush);
+    painter->setPen(m_pen);
+    painter->drawRect(1, 1, (int)w, (int)h);
     if(this->isSelected())
     {
-        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(1, 1, w, h);
+        painter->setBrush(Qt::NoBrush);
         painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
-        painter->drawRect(1, 1, w, h);
+        painter->drawRect(1, 1, (int)w, (int)h);
     }
 }
