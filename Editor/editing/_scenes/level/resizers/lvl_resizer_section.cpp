@@ -29,38 +29,37 @@
 
 void LvlScene::setSectionResizer(bool enabled, bool accept)
 {
-    if( (enabled) && (m_resizeBox==nullptr) )
+    if((enabled) && (m_resizeBox == nullptr))
     {
         m_mw->on_actionSelect_triggered(); //Reset mode
 
-        int x = m_data->sections[m_data->CurSection].size_left;
-        int y = m_data->sections[m_data->CurSection].size_top;
-        int w = m_data->sections[m_data->CurSection].size_right;
-        int h = m_data->sections[m_data->CurSection].size_bottom;
+        int l = (int)m_data->sections[m_data->CurSection].size_left;
+        int t = (int)m_data->sections[m_data->CurSection].size_top;
+        int r = (int)m_data->sections[m_data->CurSection].size_right;
+        int b = (int)m_data->sections[m_data->CurSection].size_bottom;
 
-        m_resizeBox = new ItemResizer( QSize(abs(x-w), abs(y-h)), Qt::green, 32 );
+        m_resizeBox = new ItemResizer(QSize(abs(l - r), abs(t - b)), Qt::green, 32);
         this->addItem(m_resizeBox);
-        m_resizeBox->setPos(x, y);
-        m_resizeBox->type=0;
+        m_resizeBox->setPos(l, t);
+        m_resizeBox->type = 0;
         m_resizeBox->_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        //DrawMode=true;
         SwitchEditingMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else
     {
-        if( m_resizeBox != nullptr )
+        if(m_resizeBox != nullptr)
         {
             if(accept)
             {
                 #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
-                long l = m_resizeBox->pos().x();
-                long t = m_resizeBox->pos().y();
-                long r = l+m_resizeBox->_width;
-                long b = t+m_resizeBox->_height;
+                long l = (long)m_resizeBox->pos().x();
+                long t = (long)m_resizeBox->pos().y();
+                long r = l + (long)m_resizeBox->_width;
+                long b = t + (long)m_resizeBox->_height;
                 long oldL = m_data->sections[m_data->CurSection].size_left;
                 long oldR = m_data->sections[m_data->CurSection].size_right;
                 long oldT = m_data->sections[m_data->CurSection].size_top;
@@ -72,7 +71,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
 
                 m_history->addResizeSection(m_data->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
 
-                ChangeSectionBG(m_data->sections[m_data->CurSection].background);
+                ChangeSectionBG((int)m_data->sections[m_data->CurSection].background);
                 drawSpace();
                 m_data->meta.modified = true;
             }
@@ -80,9 +79,8 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
             m_resizeBox = NULL;
             m_mw->on_actionSelect_triggered();
             m_mw->resizeToolbarVisible(false);
-            //resetResizingSection=true;
         }
-        m_busyMode=false;
+        m_busyMode = false;
     }
 }
 
