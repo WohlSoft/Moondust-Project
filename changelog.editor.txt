@@ -12,6 +12,7 @@ Editor 0.3.1.13
 - Added ability to hide enabled grid while export images
 - Added more physical environment types
 - Physical environment zones are now grabbable by border line only again
+- Fixed most of rendering artifacts are caused when animation is turned off
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
