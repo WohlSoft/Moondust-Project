@@ -33,15 +33,15 @@ NpcEdit *MainWindow::createNPCChild(QMdiSubWindow **npcWindow_out)
     npcWindow->setWidget(child);
     npcWindow->setAttribute(Qt::WA_DeleteOnClose);
 
-    QMdiSubWindow * npcWindowP = ui->centralWidget->addSubWindow(npcWindow);
+    QMdiSubWindow *npcWindowP = ui->centralWidget->addSubWindow(npcWindow);
     npcWindowP->setAttribute(Qt::WA_DeleteOnClose);
 
     npcWindowP->setWindowIcon(Themes::icon(Themes::npc_16));
 
     npcWindowP->setGeometry(
-                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
-                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
-                 1150,420);
+        (ui->centralWidget->subWindowList().size() * 20) % (ui->centralWidget->size().width() / 4),
+        (ui->centralWidget->subWindowList().size() * 20) % (ui->centralWidget->size().height() / 4),
+        1150, 420);
 
     ui->centralWidget->updateGeometry();
 
@@ -69,14 +69,14 @@ LevelEdit *MainWindow::createLvlChild(QMdiSubWindow **levelWindow_out)
 
     levelWindow->setAcceptDrops(true);
 
-    QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(levelWindow);
+    QMdiSubWindow *levelWindowP = ui->centralWidget->addSubWindow(levelWindow);
     levelWindowP->setAttribute(Qt::WA_DeleteOnClose);
     levelWindowP->setAcceptDrops(true);
 
     levelWindowP->setGeometry(
-                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
-                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
-                             860, 680);
+        (ui->centralWidget->subWindowList().size() * 20) % (ui->centralWidget->size().width() / 4),
+        (ui->centralWidget->subWindowList().size() * 20) % (ui->centralWidget->size().height() / 4),
+        860, 680);
     levelWindowP->setWindowIcon(Themes::icon(Themes::level_16));
     levelWindowP->updateGeometry();
     levelWindowP->update();
@@ -85,7 +85,7 @@ LevelEdit *MainWindow::createLvlChild(QMdiSubWindow **levelWindow_out)
     if(levelWindow_out)
         *levelWindow_out = levelWindowP;
 
-    GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
+    GraphicsWorkspace *gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
     gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
     //levelWindow->connect(levelWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
     return child;
@@ -101,13 +101,13 @@ WorldEdit *MainWindow::createWldChild(QMdiSubWindow **worldWindow_out)
     worldWindow->setWidget(child);
     worldWindow->setAttribute(Qt::WA_DeleteOnClose);
 
-    QMdiSubWindow * worldWindowP = ui->centralWidget->addSubWindow(worldWindow);
+    QMdiSubWindow *worldWindowP = ui->centralWidget->addSubWindow(worldWindow);
     worldWindowP->setAttribute(Qt::WA_DeleteOnClose);
 
     worldWindowP->setGeometry(
-                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
-                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
-                             860, 680);
+        (ui->centralWidget->subWindowList().size() * 20) % (ui->centralWidget->size().width() / 4),
+        (ui->centralWidget->subWindowList().size() * 20) % (ui->centralWidget->size().height() / 4),
+        860, 680);
     worldWindowP->setWindowIcon(Themes::icon(Themes::world_16));
     worldWindowP->updateGeometry();
     worldWindowP->update();
@@ -116,7 +116,7 @@ WorldEdit *MainWindow::createWldChild(QMdiSubWindow **worldWindow_out)
     if(worldWindow_out)
         *worldWindow_out = worldWindowP;
 
-    GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
+    GraphicsWorkspace *gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
     gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
 
     //worldWindow->connect(worldWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
@@ -138,38 +138,36 @@ int MainWindow::activeChildWindow()
 
 int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
 {
-    if(wnd==NULL)
+    if(wnd == NULL)
         return 0;
 
     if(QString(wnd->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS)
         return 1;
-    else
-    if(QString(wnd->widget()->metaObject()->className()) == NPC_EDIT_CLASS)
+    else if(QString(wnd->widget()->metaObject()->className()) == NPC_EDIT_CLASS)
         return 2;
-    else
-    if(QString(wnd->widget()->metaObject()->className()) == WORLD_EDIT_CLASS)
+    else if(QString(wnd->widget()->metaObject()->className()) == WORLD_EDIT_CLASS)
         return 3;
     else
-    return 0;
+        return 0;
 }
 
 NpcEdit *MainWindow::activeNpcEditWin()
 {
-    if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
+    if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<NpcEdit *>(activeSubWindow->widget());
     return 0;
 }
 
 NpcEdit *MainWindow::activeNpcEditWin(QMdiSubWindow *wnd)
 {
-    if (wnd)
+    if(wnd)
         return qobject_cast<NpcEdit *>(wnd->widget());
     return 0;
 }
 
 LevelEdit *MainWindow::activeLvlEditWin()
 {
-    if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
+    if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<LevelEdit *>(activeSubWindow->widget());
     return 0;
 }
@@ -183,7 +181,7 @@ LevelEdit *MainWindow::activeLvlEditWin(QMdiSubWindow *wnd)
 
 WorldEdit *MainWindow::activeWldEditWin()
 {
-    if (QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
+    if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<WorldEdit *>(activeSubWindow->widget());
     return 0;
 }
@@ -202,24 +200,24 @@ QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
     NpcEdit *ChildWindow2;
     WorldEdit *ChildWindow3;
 
-    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+    foreach(QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
-        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+        if(QString(window->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS)
         {
             ChildWindow0 = qobject_cast<LevelEdit *>(window->widget());
-            if (ChildWindow0->currentFile() == canonicalFilePath)
+            if(ChildWindow0->currentFile() == canonicalFilePath)
                 return window;
         }
-        else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
+        else if(QString(window->widget()->metaObject()->className()) == NPC_EDIT_CLASS)
         {
             ChildWindow2 = qobject_cast<NpcEdit *>(window->widget());
-            if (ChildWindow2->currentFile() == canonicalFilePath)
+            if(ChildWindow2->currentFile() == canonicalFilePath)
                 return window;
         }
-        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+        else if(QString(window->widget()->metaObject()->className()) == WORLD_EDIT_CLASS)
         {
             ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
-            if (ChildWindow3->currentFile() == canonicalFilePath)
+            if(ChildWindow3->currentFile() == canonicalFilePath)
                 return window;
         }
     }
@@ -229,7 +227,7 @@ QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
 
 void MainWindow::setActiveSubWindow(QWidget *window)
 {
-    if (!window)
+    if(!window)
         return;
     ui->centralWidget->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
 }
@@ -238,7 +236,7 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::close_sw()
 {
-    if( (ui->centralWidget->subWindowList().size() > 0) && (LastActiveSubWindow) )
+    if((ui->centralWidget->subWindowList().size() > 0) && (LastActiveSubWindow))
         LastActiveSubWindow->close();
 }
 
@@ -259,17 +257,17 @@ void MainWindow::SWCascade()
         setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->cascadeSubWindows();
 
-    foreach(QMdiSubWindow * w, ui->centralWidget->subWindowList())
+    foreach(QMdiSubWindow *w, ui->centralWidget->subWindowList())
     {
-        if( (QString(w->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)||
-            (QString(w->widget()->metaObject()->className())==WORLD_EDIT_CLASS) )
+        if((QString(w->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS) ||
+           (QString(w->widget()->metaObject()->className()) == WORLD_EDIT_CLASS))
             w->setGeometry(w->x(), w->y(), 860, 680);
     }
 }
 
 void MainWindow::SWTile()
 {
-    if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)
+    if(GlobalSettings::MainWindowView != QMdiArea::SubWindowView)
         setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->tileSubWindows();
 }
