@@ -29,6 +29,7 @@
 #include "lvl_export_image.h"
 #include "ui_lvl_export_image.h"
 #include <editing/edit_level/level_edit.h>
+#include <editing/_scenes/level/items/item_block.h>
 #include <ui_leveledit.h>
 
 //Export whole section
@@ -92,7 +93,6 @@ void LevelEdit::ExportingReady() //slot
     keepAspectRatio = settings.value("export-proportions", keepAspectRatio).toBool();
     settings.endGroup();
 
-
     if(scene->m_captureFullSection)
     {
         x = LvlData.sections[LvlData.CurSection].size_left;
@@ -152,7 +152,6 @@ void LevelEdit::ExportingReady() //slot
     progress.setMinimumDuration(0);
 
     //progress.show();
-
     if(!progress.wasCanceled()) progress.setValue(0);
 
     qApp->processEvents();
@@ -163,6 +162,25 @@ void LevelEdit::ExportingReady() //slot
         scene->setMetaSignsVisibility(false);
     if(forceTiled)
         scene->setTiledBackground(true);
+    QList<QGraphicsItem*> invisibleBlocks;
+    if(imageExportDialog.hideInvisibleBlocks())
+    {
+        QList<QGraphicsItem*> allBlocks = scene->items();
+        for(QGraphicsItem* it : allBlocks)
+        {
+            if(it->data(ITEM_TYPE).toString() != "Block")
+                continue;
+            //Exclude already hidden elements
+            if(!it->isVisible())
+                continue;
+            ItemBlock *blk = dynamic_cast<ItemBlock*>(it);
+            if(blk && blk->m_data.invisible)
+            {
+                it->setVisible(false);
+                invisibleBlocks.push_back(it);
+            }
+        }
+    }
     if(imageExportDialog.hideGrid())
     {
         gridWasShown = scene->m_opts.grid_show;
@@ -216,6 +234,11 @@ void LevelEdit::ExportingReady() //slot
         scene->setTiledBackground(false);
     if(gridWasShown)
         scene->m_opts.grid_show = true;
+    if(imageExportDialog.hideInvisibleBlocks())
+    {
+        for(QGraphicsItem *it : invisibleBlocks)
+            it->setVisible(true);
+    }
     scene->invalidate();
     scene->update();
 
@@ -241,11 +264,10 @@ ExportToImage::ExportToImage(QVector<long> &imgSize, QWidget *parent) :
     ui->setupUi(this);
     if(imageSize.size() >= 3)
     {
-        ui->imgHeight->setValue(imageSize[0]);
-        ui->imgWidth->setValue(imageSize[1]);
-        ui->SaveProportion->setChecked((bool)imageSize[2]);
+        ui->imgHeight->setValue((int)imageSize[0]);
+        ui->imgWidth->setValue((int)imageSize[1]);
+        ui->keepAspectRatio->setChecked((bool)imageSize[2]);
     }
-
 }
 
 ExportToImage::~ExportToImage()
@@ -263,6 +285,11 @@ bool ExportToImage::hideMetaSigns()
     return ui->hideMetaSigns->isChecked();
 }
 
+bool ExportToImage::hideInvisibleBlocks()
+{
+    return ui->hideInvisibleBlocks->isChecked();
+}
+
 bool ExportToImage::hideGrid()
 {
     return ui->hideGrid->isChecked();
@@ -273,16 +300,17 @@ bool ExportToImage::tiledBackground()
     return ui->tiledBackround->isChecked();
 }
 
+
 void ExportToImage::on_imgHeight_valueChanged(int arg1)
 {
-    if((ui->SaveProportion->isChecked()) && (ui->imgHeight->hasFocus()))
+    if((ui->keepAspectRatio->isChecked()) && (ui->imgHeight->hasFocus()))
         ui->imgWidth->setValue((int)round((float)arg1 / ((float)imageSize[0] / (float)imageSize[1])));
 
 }
 
 void ExportToImage::on_imgWidth_valueChanged(int arg1)
 {
-    if((ui->SaveProportion->isChecked()) && (ui->imgWidth->hasFocus()))
+    if((ui->keepAspectRatio->isChecked()) && (ui->imgWidth->hasFocus()))
         ui->imgHeight->setValue((int)round((float)arg1 / ((float)imageSize[1] / (float)imageSize[0])));
 }
 
@@ -290,7 +318,7 @@ void ExportToImage::on_buttonBox_accepted()
 {
     imageSize[0] = ui->imgHeight->value();
     imageSize[1] = ui->imgWidth->value();
-    imageSize[2] = (int)ui->SaveProportion->isChecked();
+    imageSize[2] = (int)ui->keepAspectRatio->isChecked();
     accept();
 }
 
@@ -298,8 +326,8 @@ void ExportToImage::on_SaveProportion_toggled(bool checked)
 {
     if(checked)
     {
-        ui->imgWidth->setValue(imageSize[1]);
-        ui->imgHeight->setValue(imageSize[0]);
+        ui->imgWidth->setValue((int)imageSize[1]);
+        ui->imgHeight->setValue((int)imageSize[0]);
     }
 }
 
@@ -310,18 +338,18 @@ void ExportToImage::on_buttonBox_rejected()
 
 void ExportToImage::on_size1x_clicked()
 {
-    ui->imgWidth->setValue(imageSize[1]);
-    ui->imgHeight->setValue(imageSize[0]);
+    ui->imgWidth->setValue((int)imageSize[1]);
+    ui->imgHeight->setValue((int)imageSize[0]);
 }
 
 void ExportToImage::on_size05x_clicked()
 {
-    ui->imgWidth->setValue(imageSize[1] / 2);
-    ui->imgHeight->setValue(imageSize[0] / 2);
+    ui->imgWidth->setValue((int)imageSize[1] / 2);
+    ui->imgHeight->setValue((int)imageSize[0] / 2);
 }
 
 void ExportToImage::on_size2x_clicked()
 {
-    ui->imgWidth->setValue(imageSize[1] * 2);
-    ui->imgHeight->setValue(imageSize[0] * 2);
+    ui->imgWidth->setValue((int)imageSize[1] * 2);
+    ui->imgHeight->setValue((int)imageSize[0] * 2);
 }

@@ -151,7 +151,7 @@ void WorldEdit::ExportingReady() //slot
         tw=imgSize.width();
 
         qApp->processEvents();
-        QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
+        QImage img((int)tw, (int)th, QImage::Format_ARGB32_Premultiplied);
         img.fill(Qt::black);
 
         if(!progress.wasCanceled()) progress.setValue(20);
@@ -211,9 +211,9 @@ WldSaveImage::WldSaveImage(QRect sourceRect, QSize targetSize, bool keep_aspect_
 
     ui->imgWidth->setValue(imageSize.width());
     ui->imgHeight->setValue(imageSize.height());
-    ui->SaveProportion->setChecked(m_keepAspectRatio);
+    ui->keepAspectRatio->setChecked(m_keepAspectRatio);
 
-    ui->ExportRect->setText(tr("Will be exported:\nTop:\t%1\nLeft:\t%2\nRight:\t%3\nBottom:\t%4")
+    ui->exportRect->setText(tr("Will be exported:\nTop:\t%1\nLeft:\t%2\nRight:\t%3\nBottom:\t%4")
                             .arg(getRect.top())
                             .arg(getRect.left())
                             .arg(getRect.right())
@@ -231,7 +231,7 @@ void WldSaveImage::on_imgHeight_valueChanged(int arg1)
 {
     if(WldSaveImage_lock) return;
 
-    if( (ui->SaveProportion->isChecked()) && (ui->imgHeight->hasFocus()) )
+    if( (ui->keepAspectRatio->isChecked()) && (ui->imgHeight->hasFocus()) )
         ui->imgWidth->setValue( qRound(qreal(arg1) / ( qreal(imageSize.height())/qreal(imageSize.width()) ) ) );
 }
 
@@ -239,7 +239,7 @@ void WldSaveImage::on_imgWidth_valueChanged(int arg1)
 {
     if(WldSaveImage_lock) return;
 
-    if( (ui->SaveProportion->isChecked()) && (ui->imgWidth->hasFocus()) )
+    if( (ui->keepAspectRatio->isChecked()) && (ui->imgWidth->hasFocus()) )
         ui->imgHeight->setValue( qRound(qreal(arg1) / ( qreal(imageSize.width())/qreal(imageSize.height())  )) );
 
 }
@@ -269,9 +269,9 @@ void WldSaveImage::on_buttonBox_accepted()
 {
     imageSize.setWidth(ui->imgWidth->value());
     imageSize.setHeight(ui->imgHeight->value());
-    m_keepAspectRatio = ui->SaveProportion->isChecked();
-    hideMusBoxes=ui->HideMusBoxes->isChecked();
-    hidePaths = ui->HidePaths->isChecked();
+    m_keepAspectRatio = ui->keepAspectRatio->isChecked();
+    hideMusBoxes=ui->hideMusBoxes->isChecked();
+    hidePaths = ui->hidePaths->isChecked();
     hideGrid = ui->hideGrid->isChecked();
     accept();
 }

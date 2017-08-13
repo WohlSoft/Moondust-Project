@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>312</width>
-    <height>299</height>
+    <height>325</height>
    </rect>
   </property>
   <property name="font">
@@ -26,20 +26,6 @@
    <property name="sizeConstraint">
     <enum>QLayout::SetMinimumSize</enum>
    </property>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Height</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Width</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="1">
     <widget class="QPushButton" name="size05x">
      <property name="text">
@@ -47,53 +33,24 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
-    <widget class="QPushButton" name="size1x">
+   <item row="7" column="0" colspan="4">
+    <widget class="QCheckBox" name="hideMetaSigns">
      <property name="text">
-      <string notr="true">1x</string>
+      <string>Hide editor-only meta-signs pictures</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="3">
-    <widget class="QPushButton" name="size2x">
+   <item row="10" column="0" colspan="4">
+    <widget class="QCheckBox" name="tiledBackround">
      <property name="text">
-      <string notr="true">2x</string>
+      <string>Tiled background</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1" colspan="3">
-    <widget class="QSpinBox" name="imgWidth">
-     <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="suffix">
-      <string> px</string>
-     </property>
-     <property name="maximum">
-      <number>999999999</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="3">
-    <widget class="QSpinBox" name="imgHeight">
-     <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="suffix">
-      <string> px</string>
-     </property>
-     <property name="maximum">
-      <number>999999999</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="4">
-    <widget class="QCheckBox" name="SaveProportion">
-     <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
+   <item row="9" column="0" colspan="4">
+    <widget class="QCheckBox" name="hideGrid">
      <property name="text">
-      <string>Keep original aspect ratio</string>
+      <string>Hide grid (if it is shown)</string>
      </property>
     </widget>
    </item>
@@ -135,6 +92,50 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Height</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="size1x">
+     <property name="text">
+      <string notr="true">1x</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="4">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Width</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="3">
+    <widget class="QSpinBox" name="imgWidth">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="suffix">
+      <string> px</string>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
+   </item>
    <item row="6" column="0" colspan="4">
     <widget class="QCheckBox" name="HideWarpsWaters">
      <property name="text">
@@ -142,34 +143,40 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="4">
-    <widget class="QCheckBox" name="hideMetaSigns">
+   <item row="2" column="1" colspan="3">
+    <widget class="QSpinBox" name="imgHeight">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="suffix">
+      <string> px</string>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QPushButton" name="size2x">
      <property name="text">
-      <string>Hide editor-only meta-signs pictures</string>
+      <string notr="true">2x</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="4">
+    <widget class="QCheckBox" name="keepAspectRatio">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Keep original aspect ratio</string>
      </property>
     </widget>
    </item>
    <item row="8" column="0" colspan="4">
-    <widget class="QCheckBox" name="hideGrid">
+    <widget class="QCheckBox" name="hideInvisibleBlocks">
      <property name="text">
-      <string>Hide grid (if it is shown)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0" colspan="4">
-    <widget class="QCheckBox" name="tiledBackround">
-     <property name="text">
-      <string>Tiled background</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="4">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-     <property name="centerButtons">
-      <bool>true</bool>
+      <string>Hide invisible blocks</string>
      </property>
     </widget>
    </item>

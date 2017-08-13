@@ -22,7 +22,7 @@
     <enum>QLayout::SetMinimumSize</enum>
    </property>
    <item row="1" column="0" colspan="4">
-    <widget class="QLabel" name="ExportRect">
+    <widget class="QLabel" name="exportRect">
      <property name="text">
       <string notr="true">Will be exported:
 Top:___
@@ -96,7 +96,7 @@ Bottom:____</string>
     </widget>
    </item>
    <item row="8" column="0" colspan="4">
-    <widget class="QCheckBox" name="HideMusBoxes">
+    <widget class="QCheckBox" name="hideMusBoxes">
      <property name="text">
       <string>Hide music boxes</string>
      </property>
@@ -125,7 +125,7 @@ Bottom:____</string>
     </widget>
    </item>
    <item row="10" column="0" colspan="4">
-    <widget class="QCheckBox" name="HidePaths">
+    <widget class="QCheckBox" name="hidePaths">
      <property name="text">
       <string>Hide all paths and levels like &quot;game already stated&quot;</string>
      </property>
@@ -152,7 +152,7 @@ Bottom:____</string>
     </widget>
    </item>
    <item row="7" column="0" colspan="4">
-    <widget class="QCheckBox" name="SaveProportion">
+    <widget class="QCheckBox" name="keepAspectRatio">
      <property name="whatsThis">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>

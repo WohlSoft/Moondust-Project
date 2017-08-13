@@ -10,6 +10,7 @@ Editor 0.3.1.13
 - Section numbers are now counting from 0 (instead of counting from 1)
 - Added ability to hide meta-signs shown over blocks and NPCs while export images
 - Added ability to hide enabled grid while export images
+- Added ability to hide invisible blocks while export images
 - Added more physical environment types
 - Physical environment zones are now grabbable by border line only again
 - Fixed most of rendering artifacts are caused when animation is turned off
