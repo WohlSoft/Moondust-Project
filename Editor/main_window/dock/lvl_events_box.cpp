@@ -355,14 +355,14 @@ void LvlEventsBox::setEventData(long index)
                     ui->LVLEvent_LayerMov_spY->setValue(event.layer_speed_y);
                     //Scroll section / Move Camera
                     ui->LVLEvent_Scroll_Sct->setMaximum(edit->LvlData.sections.size());
-                    ui->LVLEvent_Scroll_Sct->setValue(event.scroll_section + 1);
+                    ui->LVLEvent_Scroll_Sct->setValue((int)event.scroll_section + 1);
                     ui->LVLEvent_Scroll_spX->setValue(event.move_camera_x);
                     ui->LVLEvent_Scroll_spY->setValue(event.move_camera_y);
                     //Section Settings
                     ui->LVLEvent_Sct_list->clear();
 
                     for(int i = 0; i < edit->LvlData.sections.size(); i++)
-                        ui->LVLEvent_Sct_list->addItem(tr("Section") + QString(" ") + QString::number(i + 1), QString::number(i));
+                        ui->LVLEvent_Sct_list->addItem(QString("%1 %2").arg(tr("Section")).arg(i), QString::number(i));
 
                     for(int i = 0; i < ui->LVLEvent_Sct_list->count(); i++)
                     {
