@@ -252,11 +252,6 @@
     <property name="title">
      <string>View</string>
     </property>
-    <widget class="QMenu" name="menuSetGridSize">
-     <property name="title">
-      <string>Set align grid size</string>
-     </property>
-    </widget>
     <addaction name="actionWLDToolBox"/>
     <addaction name="actionWorld_settings"/>
     <addaction name="actionLVLToolBox"/>
@@ -278,11 +273,8 @@
     <addaction name="separator"/>
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
-    <addaction name="actionGridEn"/>
     <addaction name="actionShowGrid"/>
-    <addaction name="menuSetGridSize"/>
     <addaction name="actionAnimation"/>
-    <addaction name="actionCollisions"/>
     <addaction name="actionSemi_transparent_paths"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
@@ -339,6 +331,11 @@
     <property name="title">
      <string>Edit</string>
     </property>
+    <widget class="QMenu" name="menuSetGridSize">
+     <property name="title">
+      <string>Set align grid size</string>
+     </property>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -350,6 +347,10 @@
     <addaction name="actionSelect"/>
     <addaction name="actionSelectOnly"/>
     <addaction name="actionEriser"/>
+    <addaction name="separator"/>
+    <addaction name="actionGridEn"/>
+    <addaction name="menuSetGridSize"/>
+    <addaction name="actionCollisions"/>
     <addaction name="separator"/>
     <addaction name="actionOverwriteMode"/>
     <addaction name="actionRectFill"/>
@@ -1991,10 +1992,11 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Collisions</string>
+    <string>Anti-overlap protection</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>Enable anti-overlap protection. 
+Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn't works on duplication or pasting from clipboard.</string>
    </property>
    <property name="shortcut">
     <string notr="true">F9</string>

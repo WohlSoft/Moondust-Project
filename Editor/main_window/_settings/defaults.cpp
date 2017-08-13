@@ -436,6 +436,8 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCut, &QAction::setEnabled);
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionGridEn, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCollisions, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuSetGridSize, &QMenu::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
 
