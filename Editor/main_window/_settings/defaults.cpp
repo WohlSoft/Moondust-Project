@@ -19,6 +19,7 @@
 #include <QFont>
 #include <QDesktopWidget>
 #include <QLineEdit>
+#include <QToolButton>
 #include <QCheckBox>
 #include <QPushButton>
 #include <QLabel>
@@ -144,6 +145,20 @@ void MainWindow::setUiDefults()
     DisableFloatFeature(dock_BookmarksBox);
     #endif
     //#endif
+
+    //Add "New" tool button as menu
+    {
+        QToolButton *newAction = new QToolButton(ui->fileIoTooBar);
+        newAction->setMenu(ui->menuNew);
+        newAction->setIcon(ui->menuNew->icon());
+        newAction->setPopupMode(QToolButton::InstantPopup);
+        newAction->setToolTip(ui->menuNew->title());
+        //Automatically reset label on language switching
+        newAction->connect(this, &MainWindow::languageSwitched, [this, newAction](){
+                                newAction->setToolTip(ui->menuNew->title());
+                           });
+        ui->fileIoTooBar->insertWidget(ui->OpenFile, newAction);
+    }
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow *)), this, SLOT(updateMenus(QMdiSubWindow *)));
     //connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));

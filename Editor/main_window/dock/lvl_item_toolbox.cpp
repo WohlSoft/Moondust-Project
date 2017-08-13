@@ -101,7 +101,6 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     customLabel = MainWindow::tr("[custom]");
 
     mw()->ui->menuNew->setEnabled(false);
-    mw()->ui->actionNew->setEnabled(false);
 
     if(!setCat)
     {
@@ -436,7 +435,6 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     updateFilters();
 
     mw()->ui->menuNew->setEnabled(true);
-    mw()->ui->actionNew->setEnabled(true);
 }
 
 void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &pos)

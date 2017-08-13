@@ -312,10 +312,6 @@ public:
 
         //File menu
         /*!
-         * \brief "New" menuitem (show submenu with file type to create)
-         */
-        void on_actionNew_triggered();
-        /*!
          * \brief Show open dialog to select exist file to open
          */
         void on_OpenFile_triggered();

@@ -17,6 +17,7 @@
  */
 
 #include <QPushButton>
+#include <QToolButton>
 
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
@@ -24,6 +25,19 @@
 
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
+
+static void setToolButtonMenuIcon(QToolBar *bar, QMenu *menu, const QIcon &icon)
+{
+    QList<QToolButton *> list = bar->findChildren<QToolButton*>();
+    for(QToolButton *w : list)
+    {
+        if(w->menu() == menu)
+        {
+            w->setIcon(icon);
+            break;
+        }
+    }
+}
 
 void MainWindow::applyTheme(QString themeDir)
 {
@@ -33,7 +47,8 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionLVLToolBox->setIcon(Themes::icon(Themes::level_24));
     ui->actionWLDToolBox->setIcon(Themes::icon(Themes::world_24));
 
-    ui->actionNew->setIcon(Themes::icon(Themes::file_new));
+    ui->menuNew->setIcon(Themes::icon(Themes::file_new));
+    setToolButtonMenuIcon(ui->fileIoTooBar, ui->menuNew, Themes::icon(Themes::file_new));
     ui->actionNewLevel->setIcon(Themes::icon(Themes::level_16));
     dock_LvlItemBox->setWindowIcon(Themes::icon(Themes::level_16));
 

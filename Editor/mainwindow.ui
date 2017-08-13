@@ -108,6 +108,10 @@
      <property name="title">
       <string>New</string>
      </property>
+     <property name="icon">
+      <iconset resource="_resources/editor.qrc">
+       <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+     </property>
      <addaction name="actionNewLevel"/>
      <addaction name="actionNewWorld_map"/>
      <addaction name="actionNewNPC_config"/>
@@ -421,7 +425,7 @@
    <addaction name="menuPlugins"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="fileIoTooBar">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -455,7 +459,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew"/>
    <addaction name="OpenFile"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
@@ -2165,18 +2168,6 @@
    </property>
    <property name="text">
     <string>Current configuration status...</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionNew">
-   <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
-   </property>
-   <property name="text">
-    <string>New</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
