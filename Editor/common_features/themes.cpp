@@ -494,10 +494,10 @@ void Themes::loadTheme(QString themeDir)
 
 void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
 {
-    if(!s.value(value, "").toString().isEmpty())
+    QString val = s.value(value, "").toString();
+    if(!val.isEmpty())
     {
-        QIcon   tmpIcn;
-        tmpIcn = QIcon(theme_dir + s.value(value, "").toString());
+        QIcon   tmpIcn = QIcon(theme_dir + val);
         if(!tmpIcn.isNull())
             icons_map[icn] = tmpIcn;
     }
@@ -506,10 +506,10 @@ void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
 
 void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
 {
-    if(!s.value(value, "").toString().isEmpty())
+    QString val = s.value(value, "").toString();
+    if(!val.isEmpty())
     {
-        QPixmap tmpImg;
-        tmpImg = QPixmap(theme_dir + s.value(value, "").toString());
+        QPixmap tmpImg = QPixmap(theme_dir + val);
         if(!tmpImg.isNull())
             images_map[img] = tmpImg;
     }
@@ -517,13 +517,9 @@ void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
 
 void Themes::loadInteger(QSettings &s, QString value, Themes::Images intVal)
 {
-    if(!s.value(value, "").toString().isEmpty())
-    {
-        int tmpVal;
-        tmpVal = s.value(value, "-1").toInt();
-        if(tmpVal >= 0)
-            int_map[intVal] = tmpVal;
-    }
+    int tmpVal = s.value(value, -1).toInt();
+    if(tmpVal >= 0)
+        int_map[intVal] = tmpVal;
 }
 
 void Themes::initCursors()
