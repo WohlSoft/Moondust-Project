@@ -19,6 +19,7 @@
 #include <common_features/pge_texture.h>
 #include <common_features/version_cmp.h>
 #include <common_features/logger.h>
+#include <common_features/tr.h>
 #include "config_manager.h"
 #include "config_manager_private.h"
 #include <graphics/gl_renderer.h>
@@ -30,6 +31,7 @@
 #include <Utils/files.h>
 #include <Utils/open_url.h>
 #include <fmt/fmt_format.h>
+#include <fmt/fmt_qformat.h>
 #include <algorithm>
 
 DataFolders      ConfigManager::dirs;
@@ -108,8 +110,11 @@ bool ConfigManager::loadBasics()
     //dirs
     if(!DirMan::exists(config_dirSTD))
     {
-        msgBox("Config error",
-               fmt::format("CONFIG DIR NOT FOUND AT: {0}", config_dirSTD));
+        //% "Config pack directory error"
+        std::string title = qtTrId("ERR_CONFIG_DIR_MISSING_TTL");
+        //% "Config directory is not found at:\n%1"
+        std::string msg = qtTrId("ERR_CONFIG_DIR_MISSING");
+        msgBox(title, fmt::qformat(msg, config_dirSTD));
         return false;
     }
 
@@ -117,8 +122,11 @@ bool ConfigManager::loadBasics()
 
     if(!Files::fileExists(main_ini))
     {
-        msgBox("Config error",
-               "Can't open the 'main.ini' config file!");
+        //% "Missing main.ini"
+        std::string title = qtTrId("ERR_CONFIG_ERROR_MAININI_TTL");
+        //% "Can't open the 'main.ini' config file!"
+        std::string msg = qtTrId("ERR_CONFIG_ERROR_MAININI_MSG");
+        msgBox(title, msg);
         return false;
     }
 
@@ -137,8 +145,11 @@ bool ConfigManager::loadBasics()
             data_dirSTD = ApplicationPathSTD + data_dirSTD;
         else if(!DirMan::exists(data_dirSTD)) //Check as absolute
         {
-            msgBox("Config error",
-                   fmt::format("Config data path not exists: {0}", data_dirSTD));
+            //% "Missing config pack data directory"
+            std::string title = qtTrId("ERR_CONFIG_ERROR_DATADIR_TTL");
+            //% "Config pack data path not exists:\n%1"
+            std::string msg = qtTrId("ERR_CONFIG_ERROR_DATADIR_MSG");
+            msgBox(title, fmt::qformat(msg, data_dirSTD));
             return false;
         }
 
@@ -150,13 +161,15 @@ bool ConfigManager::loadBasics()
 
         if(ver_notify && (version != VersionCmp::compare(_LATEST_STABLE, version)))
         {
-            std::string title = "Legacy configuration package";
-            std::string msg = fmt::format("You have a legacy configuration package.\n"
-                                          "Game will be started, but you may have a some problems with gameplay.\n\n"
-                                          "Please download and install latest version of a configuration package:\n\n"
-                                          "Download: {0}\n"
-                                          "Note: most of config packs are updates togeter with PGE,\n"
-                                          "therefore you can use same link to get updated version", url);
+            //% "Legacy configuration package"
+            std::string title = qtTrId("WARNING_LEGACY_CONFIG_PACK_TTL");
+            /*% "You have a legacy configuration package.\n"
+                "Game will be started, but you may have a some problems with gameplay.\n\n"
+                "Please download and install latest version of a configuration package:\n\n"
+                "Download: %1\n\n"
+                "Note: most of config packs are updates togeter with PGE,\n"
+                "therefore you can use same link to get updated version." */
+            std::string msg = fmt::qformat(qtTrId("WARNING_LEGACY_CONFIG_PACK"), url);
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                      title.c_str(), msg.c_str(),
                                      PGE_Window::window);
@@ -201,8 +214,11 @@ bool ConfigManager::loadBasics()
 
     if(mainset.lastError() != IniProcessing::ERR_OK)
     {
-        msgBox("Config error",
-               fmt::format("ERROR LOADING main.ini N:{0}", mainset.lineWithError()));
+        //% "main.ini is invalid"
+        std::string title = qtTrId("ERROR_CONFIG_MAININI_FAILED_TTL");
+        //% "Error has occouped in main.ini in line %1."
+        std::string msg = qtTrId("ERROR_CONFIG_MAININI_FAILED_MSG");
+        msgBox(title, fmt::qformat(msg, mainset.lineWithError()));
         return false;
     }
 

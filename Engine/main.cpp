@@ -162,9 +162,11 @@ int main(int argc, char *argv[])
         {
             pLogCritical("Config packs not found");
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                                     "Config packs not found",
-                                     "Can't start game engine, because available\n"
-                                     "configuration packages are not found!",
+                                     //% "Config packs not found"
+                                     qtTrId("ERROR_NO_CONFIG_PACKS_TTL").c_str(),
+                                     /*% "Can't start game, because available\n"
+                                         "configuration packages are not found!" */
+                                     qtTrId("ERROR_NO_CONFIG_PACKS_TEXT").c_str(),
                                      PGE_Window::window);
             return 2;
         }
