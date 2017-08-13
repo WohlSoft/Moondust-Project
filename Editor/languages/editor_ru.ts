@@ -1465,7 +1465,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="141"/>
         <source>Hide warps and water markers (recommended)</source>
-        <translation>Сохранять маркеры проходов и физических сред</translation>
+        <translation>Скрывать маркеры проходов и физических сред</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="148"/>
