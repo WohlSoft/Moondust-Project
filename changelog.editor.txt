@@ -13,6 +13,8 @@ Editor 0.3.1.13
 - Added more physical environment types
 - Physical environment zones are now grabbable by border line only again
 - Fixed most of rendering artifacts are caused when animation is turned off
+- Better view of "New" toolbar drop-down menu icon
+- Fixed a retranslation of Vanilla-like toolbar
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
