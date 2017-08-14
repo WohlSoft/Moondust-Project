@@ -10,6 +10,8 @@ SET MAKE_EXTRA_ARGS=-r -s
 
 :argsloop
 if "%1"=="build-libs"       SET BuildLibs=1
+rem Workaround for weird AppVeyor's error
+if "%1"=="buildlibs"        SET BuildLibs=1
 if "%1"=="build-libs-only"  SET BuildLibs=1
 if "%1"=="build-libs-only"  SET BuildLibsOnly=1
 if "%1"=="nopause"          SET NoPause=1

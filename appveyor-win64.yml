@@ -66,7 +66,7 @@ install:
   - cmd: del temp.sh
 
 build_script:
-  - cmd: "build_deps.bat nopause build\-libs"
+  - cmd: "build_deps.bat nopause buildlibs"
   - cmd: build.bat nopause # noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
   - cmd: cd _Misc\dev_scripts\deploy\
   - cmd: deploy_windows_dynamic_x64.bat nopause
