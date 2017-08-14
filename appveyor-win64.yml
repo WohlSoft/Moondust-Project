@@ -66,11 +66,11 @@ install:
   - cmd: del temp.sh
 
 build_script:
-  - build_deps.bat nopause build-libs
-  - build.bat nopause # noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
-  - cd _Misc\dev_scripts\deploy\
-  - deploy_windows_dynamic_x64.bat nopause
-  - cd ..\..\..\
+  - cmd: build_deps.bat nopause build-libs
+  - cmd: build.bat nopause # noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
+  - cmd: cd _Misc\dev_scripts\deploy\
+  - cmd: deploy_windows_dynamic_x64.bat nopause
+  - cmd: cd ..\..\..\
 
 artifacts:
   - path: bin-w64\_packed\pge-project-dev-win64.zip
