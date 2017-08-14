@@ -6041,6 +6041,17 @@ Escolha qual da lista quer utilizar:</translation>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ativar animação de objetos&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Se o mapa tem muitos objetos, recomendamos que &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;desative&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; esta opção!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1995"/>
+        <source>Prevent overlap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1998"/>
+        <source>Prevents similar items from overlapping each other.
+Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="2146"/>
         <source>Go to the left-top of the section</source>
         <translation>Ir para o canto superior esquerdo da seção</translation>
@@ -6253,17 +6264,6 @@ Escolha qual da lista quer utilizar:</translation>
         <location filename="../mainwindow.ui" line="1381"/>
         <source>Section 20 (Alt+1)</source>
         <translation type="unfinished">Seção 21 (Alt+1) {20 ?} {1)?}</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1995"/>
-        <source>Anti-overlap protection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1998"/>
-        <source>Enable anti-overlap protection. 
-Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2272"/>

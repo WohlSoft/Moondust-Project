@@ -5494,17 +5494,6 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1995"/>
-        <source>Anti-overlap protection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1998"/>
-        <source>Enable anti-overlap protection. 
-Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2146"/>
         <source>Go to the left-top of the section</source>
         <translation type="unfinished"></translation>
@@ -6037,6 +6026,17 @@ Attempt to move selected elements over another group of elements will reject mov
     <message>
         <location filename="../mainwindow.ui" line="1984"/>
         <source>Copy selected items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1995"/>
+        <source>Prevent overlap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1998"/>
+        <source>Prevents similar items from overlapping each other.
+Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

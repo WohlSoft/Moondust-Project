@@ -7016,6 +7016,17 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation type="unfinished">Sección 21 (Alt+1) {20 ?} {1)?}</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1995"/>
+        <source>Prevent overlap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1998"/>
+        <source>Prevents similar items from overlapping each other.
+Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="2285"/>
         <source>Lock Scenery tiles</source>
         <translation>Bloquear decoraciones</translation>
@@ -8030,17 +8041,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="1856"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Habilita animación en objetos animados. Si el mapa tiene demasiados objetos, es recomendado desactivar esta opción</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1995"/>
-        <source>Anti-overlap protection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1998"/>
-        <source>Enable anti-overlap protection. 
-Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2146"/>
