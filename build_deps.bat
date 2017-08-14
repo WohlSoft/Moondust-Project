@@ -1,5 +1,9 @@
 @echo off
 
+echo.
+echo PGE Project Dependency builder for Windows
+echo.
+
 IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
 IF NOT EXIST _paths.bat goto error
 
@@ -16,9 +20,6 @@ if "%1"=="build-libs-only"  SET BuildLibs=1
 if "%1"=="build-libs-only"  SET BuildLibsOnly=1
 if "%1"=="nopause"          SET NoPause=1
 if "%1"=="--help" (
-    echo.
-    echo PGE Project Dependency builder for Windows
-    echo.
     echo Usage:
     echo.
     echo     build_deps.bat [arg1] [arg2] [arg3] ...
