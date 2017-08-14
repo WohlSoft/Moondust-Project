@@ -33,30 +33,30 @@ if "x%DebugArgs%"=="x1" echo Arg...
 if "%1"=="build-libs-only"  SET PGE_DEPS_BuildLibsOnly=1
 if "x%DebugArgs%"=="x1" echo Arg...
 if "%1"=="nopause"          SET NoPause=1
-if "x%DebugArgs%"=="x1" echo Big arg...
-
-if "%1"=="--help" (
-    if "x%DebugArgs%"=="x1" echo Inside of big arg...
-    echo Usage:
-    echo.
-    echo     build_deps.bat [arg1] [arg2] [arg3] ...
-    echo.
-    echo Arguments:
-    echo.
-    echo build-libs           - Rebuild LuaJIT, SDL2, FreeType and GLEW from scratch
-    echo build-libs-only      - Don't build QMake based libraries
-    echo nopause              - Disable pause on script completion
-    echo --help               - Print this manual
-    echo.
-    set NoPause=1
-    set OldPATH=%PATH%
-    goto quit
-)
-
+if "x%DebugArgs%"=="x1" echo Help arg...
+if "%1"=="--help" goto Usage
 if "x%DebugArgs%"=="x1" echo Shift...
 shift
 if "x%DebugArgs%"=="x1" echo Loop...
 if NOT "%1"=="" goto argsloop
+
+goto SkipUsage
+:Usage
+echo Usage:
+echo.
+echo     build_deps.bat [arg1] [arg2] [arg3] ...
+echo.
+echo Arguments:
+echo.
+echo build-libs           - Rebuild LuaJIT, SDL2, FreeType and GLEW from scratch
+echo build-libs-only      - Don't build QMake based libraries
+echo nopause              - Disable pause on script completion
+echo --help               - Print this manual
+echo.
+set NoPause=1
+set OldPATH=%PATH%
+goto quit
+:SkipUsage
 
 if "x%DebugArgs%"=="x1" echo Call "_paths.bat"...
 call _paths.bat
