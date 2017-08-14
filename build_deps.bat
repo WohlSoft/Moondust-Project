@@ -4,23 +4,35 @@ echo.
 echo PGE Project Dependency builder for Windows
 echo.
 
-IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
-IF NOT EXIST _paths.bat goto error
-
 SET DebugArgs=0
 SET NoPause=0
 SET PGE_DEPS_BuildLibs=0
 SET PGE_DEPS_BuildLibsOnly=0
+
+if "%1"=="debugscript" SET DebugArgs=1
+
+if "x%DebugArgs%"=="x1" echo Checking for _paths.bat existing...
+IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
+IF NOT EXIST _paths.bat goto error
+
 SET MAKE_EXTRA_ARGS=-r -s
 
+if "x%DebugArgs%"=="x1" echo Begin arguments parsing...
 :argsloop
+if "x%DebugArgs%"=="x1" echo Arg...
 if "%1"=="debugscript"      SET DebugArgs=1
+if "x%DebugArgs%"=="x1" echo Arg...
 if "%1"=="build-libs"       SET PGE_DEPS_BuildLibs=1
+if "x%DebugArgs%"=="x1" echo Arg...
 rem Workaround for weird AppVeyor's error
 if "%1"=="buildlibs"        SET PGE_DEPS_BuildLibs=1
+if "x%DebugArgs%"=="x1" echo Arg...
 if "%1"=="build-libs-only"  SET PGE_DEPS_BuildLibs=1
+if "x%DebugArgs%"=="x1" echo Arg...
 if "%1"=="build-libs-only"  SET PGE_DEPS_BuildLibsOnly=1
+if "x%DebugArgs%"=="x1" echo Arg...
 if "%1"=="nopause"          SET NoPause=1
+if "x%DebugArgs%"=="x1" echo Big arg...
 if "%1"=="--help" (
     echo Usage:
     echo.
