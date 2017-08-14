@@ -14,23 +14,23 @@ if "%1"=="build-libs-only"  SET BuildLibs=1
 if "%1"=="build-libs-only"  SET BuildLibsOnly=1
 if "%1"=="nopause"          SET NoPause=1
 if "%1"=="--help" (
-	echo.
-	echo PGE Project Dependency builder for Windows
-	echo.
-	echo Usage:
-	echo.
-	echo     build_deps.bat [arg1] [arg2] [arg3] ...
-	echo.
-	echo Arguments:
-	echo.
-	echo build-libs           - Rebuild LuaJIT, SDL2, FreeType and GLEW from scratch
-	echo build-libs-only      - Don't build QMake based libraries
-	echo nopause              - Disable pause on script completion
-	echo --help               - Print this manual
-	echo.
-	set NoPause=1
-	set OldPATH=%PATH%
-	goto quit
+    echo.
+    echo PGE Project Dependency builder for Windows
+    echo.
+    echo Usage:
+    echo.
+    echo     build_deps.bat [arg1] [arg2] [arg3] ...
+    echo.
+    echo Arguments:
+    echo.
+    echo build-libs           - Rebuild LuaJIT, SDL2, FreeType and GLEW from scratch
+    echo build-libs-only      - Don't build QMake based libraries
+    echo nopause              - Disable pause on script completion
+    echo --help               - Print this manual
+    echo.
+    set NoPause=1
+    set OldPATH=%PATH%
+    goto quit
 )
 shift
 if NOT "%1"=="" goto argsloop
@@ -40,7 +40,7 @@ set OldPATH=%PATH%
 PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%
 
 IF "%MINGWx64Dest%"=="yes" (
-	SET QMAKE_EXTRA_ARGS=CONFIG+=win64
+    SET QMAKE_EXTRA_ARGS=CONFIG+=win64
 )
 
 echo %PATH%
@@ -70,9 +70,9 @@ if NOT "%MINGWx64Dest%"=="yes" set BahsCmd="echo $PWD; ./build_mingw.sh"
 echo %PATH%
 bash -i -c %BahsCmd%
 if ERRORLEVEL 1 (
-	set COMSPEC=%OldCOMSPEC%
-	cd ..\..
-	goto error
+    set COMSPEC=%OldCOMSPEC%
+    cd ..\..
+    goto error
 )
 cd ..\..
 set COMSPEC=%OldCOMSPEC%
