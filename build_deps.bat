@@ -7,17 +7,19 @@ echo.
 IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
 IF NOT EXIST _paths.bat goto error
 
+SET DebugArgs=0
 SET NoPause=0
-SET BuildLibs=0
-SET BuildLibsOnly=0
+SET PGE_DEPS_BuildLibs=0
+SET PGE_DEPS_BuildLibsOnly=0
 SET MAKE_EXTRA_ARGS=-r -s
 
 :argsloop
-if "%1"=="build-libs"       SET BuildLibs=1
+if "%1"=="debugscript"      SET DebugArgs=1
+if "%1"=="build-libs"       SET PGE_DEPS_BuildLibs=1
 rem Workaround for weird AppVeyor's error
-if "%1"=="buildlibs"        SET BuildLibs=1
-if "%1"=="build-libs-only"  SET BuildLibs=1
-if "%1"=="build-libs-only"  SET BuildLibsOnly=1
+if "%1"=="buildlibs"        SET PGE_DEPS_BuildLibs=1
+if "%1"=="build-libs-only"  SET PGE_DEPS_BuildLibs=1
+if "%1"=="build-libs-only"  SET PGE_DEPS_BuildLibsOnly=1
 if "%1"=="nopause"          SET NoPause=1
 if "%1"=="--help" (
     echo Usage:
@@ -35,14 +37,19 @@ if "%1"=="--help" (
     set OldPATH=%PATH%
     goto quit
 )
+if "x%DebugArgs%"=="x1" echo Pass argument %1...
 shift
 if NOT "%1"=="" goto argsloop
 
+if "x%DebugArgs%"=="x1" echo Call "_paths.bat"...
 call _paths.bat
 set OldPATH=%PATH%
+
+if "x%DebugArgs%"=="x1" echo Change PATH...
 PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%
 
 IF "%MINGWx64Dest%"=="yes" (
+	if "x%DebugArgs%"=="x1" echo Set 64-bit build...
     SET QMAKE_EXTRA_ARGS=CONFIG+=win64
 )
 
@@ -52,7 +59,7 @@ echo Clonning missing submodules...
 "%GitDir%\git.exe" submodule update --init --recursive
 if ERRORLEVEL 1 goto error
 
-if NOT "%BuildLibs%"=="1" goto skipBuildLibs
+if NOT "%PGE_DEPS_BuildLibs%"=="1" goto skipBuildLibs
 rem Build dependent libraries
 set TempOldPATH=%PATH%
 cd _Libs\_sources
@@ -82,7 +89,7 @@ set COMSPEC=%OldCOMSPEC%
 set PATH=%TempOldPATH%
 set MSYSTEM=
 echo %PATH%
-if "%BuildLibsOnly%"=="1" goto buildCompleted
+if "%PGE_DEPS_BuildLibsOnly%"=="1" goto buildCompleted
 :skipBuildLibs
 
 cd _Libs
