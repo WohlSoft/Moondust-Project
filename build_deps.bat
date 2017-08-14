@@ -1,19 +1,11 @@
 @echo off
 
-echo.
-echo PGE Project Dependency builder for Windows
-echo.
-
 SET DebugArgs=0
 SET NoPause=0
 SET PGE_DEPS_BuildLibs=0
 SET PGE_DEPS_BuildLibsOnly=0
 
 if "%1"=="debugscript" SET DebugArgs=1
-
-if "x%DebugArgs%"=="x1" echo Checking for _paths.bat existing...
-IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
-IF NOT EXIST _paths.bat goto error
 
 SET MAKE_EXTRA_ARGS=-r -s
 
@@ -42,21 +34,31 @@ if NOT "%1"=="" goto argsloop
 
 goto SkipUsage
 :Usage
-echo Usage:
+echo.
+echo === PGE Project Dependency builder for Windows ===
+echo.
+echo SYNTAX:
 echo.
 echo     build_deps.bat [arg1] [arg2] [arg3] ...
 echo.
-echo Arguments:
+echo AVAILABLE ARGUMENTS:
 echo.
-echo build-libs           - Rebuild LuaJIT, SDL2, FreeType and GLEW from scratch
-echo build-libs-only      - Don't build QMake based libraries
-echo nopause              - Disable pause on script completion
-echo --help               - Print this manual
+echo --- Actions ---
+echo  --help              - Print this manual
+echo.
+echo --- Flags ---
+echo  build-libs          - Rebuild LuaJIT, SDL2, FreeType and GLEW from scratch
+echo  build-libs-only     - Don't build QMake based libraries
+echo  nopause             - Disable pause on script completion
 echo.
 set NoPause=1
 set OldPATH=%PATH%
 goto quit
 :SkipUsage
+
+if "x%DebugArgs%"=="x1" echo Checking for _paths.bat existing...
+IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
+IF NOT EXIST _paths.bat goto error
 
 if "x%DebugArgs%"=="x1" echo Call "_paths.bat"...
 call _paths.bat

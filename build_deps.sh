@@ -32,6 +32,40 @@ MAKE_EXTRA_ARGS="-r -j 4"
 for var in "$@"
 do
     case "$var" in
+    --help)
+            echo ""
+            printf "=== \e[44mPGE Project Dependency builder for UNIX-Like operating systems\e[0m ===\n"
+            echo ""
+            printf "\E[4mSYNTAX:\E[0m\n"
+            echo ""
+            printf "    $0 \e[90m[<arg1>] [<arg2>] [<arg2>] ...\e[0m\n"
+            echo ""
+            printf "\E[4mAVAILABLE ARGUMENTS:\E[0m\n"
+            echo ""
+
+            echo "--- Flags ---"
+            printf " \E[1;4mno-libs\E[0m          - Don't build Autotools-based libraries like SDL2, LuaJIT, FreeType, etc.\n"
+            printf " \E[1;4mlibs-only\E[0m        - Don't build QMake-based libraries\n"
+            printf " \E[1;4mno-pause\E[0m         - Don't pause script on completion'\n"
+            printf  " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
+            if [[ ! -f /usr/bin/ccache && ! -f /bin/ccache && ! -f /usr/local/bin/ccache ]]; then
+                printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
+            fi
+            printf "\n"
+            echo ""
+
+            echo "--- Special ---"
+            printf " \E[1;4mdebug-script\E[0m      - Show some extra information to debug this script\n"
+            echo ""
+
+            printf "==== \e[43mIMPORTANT!\e[0m ====\n"
+            echo "This script is designed for Linux and macOS operating systems."
+            echo "If you trying to start it under Windows, it will automatically start"
+            echo "the build_deps.bat script instead of this."
+            echo "===================="
+            echo ""
+            exit 1
+            ;;
         no-pause)
                 flag_pause_on_end=false
             ;;

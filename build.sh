@@ -18,7 +18,7 @@ do
     case "$var" in
         --help)
             echo ""
-            printf "=== \e[44mBuild script for PGE Project\e[0m ===\n"
+            printf "=== \e[44mBuild script for PGE Project for UNIX-Like operating\e[0m ===\n"
             echo ""
             printf "\E[4mSYNTAX:\E[0m\n"
             echo ""
@@ -33,7 +33,8 @@ do
             printf " \E[1;4mclean\E[0m            - Remove all object files and caches to build from scratch\n"
             printf " \E[1;4mrepair-submodules\E[0m- Repair invalid or broken submodules\n"
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
-            printf ""
+            printf " \E[1;4m--help\E[0m           - Print this manual\n"
+            echo ""
 
             echo "--- Flags ---"
             printf " \E[1;4mno-pause\E[0m         - Don't pause script on completion'\n"
@@ -59,7 +60,7 @@ do
             echo ""
 
             echo "--- Special ---"
-            printf " \E[1;4mdebugscript\E[0m      - Show some extra information to debug this script\n"
+            printf " \E[1;4mdebug-script\E[0m      - Show some extra information to debug this script\n"
             echo ""
 
             echo "--- For fun ---"
@@ -159,7 +160,7 @@ do
             ;;
 
         # Enable debuggin of this script by showing states of inernal variables with pauses
-        debugscript)
+        debug-script)
             flag_debugThisScript=true
             ;;
         test)
