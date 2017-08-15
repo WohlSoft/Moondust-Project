@@ -255,12 +255,12 @@ public:
      * @param argv Pointer to array of command line arguments
      * @return true if exit from application is requested
      */
-    static bool parseLowArgs(int argc, char **argv);
+    static bool parseLowArgs(int argc, const char *const *argv);
 
     /**
      * @brief Parse hight arguments (after initializing of some sub-systems)
      */
-    void parseHighArgs(int argc, char **argv);
+    void parseHighArgs(int argc, const char *const *argv);
 
     /**
      * @brief Create configs diretory if that is not exists

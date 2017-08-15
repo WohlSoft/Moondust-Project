@@ -36,6 +36,11 @@ LVL_Player *LuaLevelEngine::createLuaPlayer()
     {
         return luabind::call_function<LVL_Player *>(getNativeState(), "__create_luaplayer");
     }
+    catch(const luabind::cast_failed &error)
+    {
+        postLateShutdownError(error.what());
+        return nullptr;
+    }
     catch(luabind::error &error)
     {
         postLateShutdownError(error);
@@ -48,6 +53,11 @@ LVL_Npc *LuaLevelEngine::createLuaNpc(unsigned long id)
     try
     {
         return luabind::call_function<LVL_Npc *>(getNativeState(), "__create_luanpc", id);
+    }
+    catch(const luabind::cast_failed &error)
+    {
+        postLateShutdownError(error.what());
+        return nullptr;
     }
     catch(luabind::error &error)
     {
@@ -62,6 +72,11 @@ void LuaLevelEngine::destoryLuaNpc(LVL_Npc *npc)
     {
         luabind::call_function<void>(getNativeState(), "__destroy_luanpc", npc);
     }
+    catch(const luabind::cast_failed &error)
+    {
+        postLateShutdownError(error.what());
+        return;
+    }
     catch(luabind::error &error)
     {
         postLateShutdownError(error);
@@ -74,6 +89,11 @@ void LuaLevelEngine::destoryLuaPlayer(LVL_Player *plr)
     try
     {
         luabind::call_function<void>(getNativeState(), "__destroy_luaplayer", plr);
+    }
+    catch(const luabind::cast_failed &error)
+    {
+        postLateShutdownError(error.what());
+        return;
     }
     catch(luabind::error &error)
     {

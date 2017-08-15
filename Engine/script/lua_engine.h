@@ -81,7 +81,8 @@ public:
     bool shouldShutdown() const;
     void setLateShutdown(bool value);
 
-    void postLateShutdownError(luabind::error& error);
+    void postLateShutdownError(const char *what);
+    void postLateShutdownError(luabind::error &error);
 
     void runGarbageCollector();
 

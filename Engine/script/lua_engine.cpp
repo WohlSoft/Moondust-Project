@@ -23,6 +23,7 @@
 #include <Utils/files.h>
 #include <Utils/sdl_file.h>
 #include <common_features/logger.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <sstream>
 
@@ -340,21 +341,35 @@ void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
         return;
     }
 
-    luabind::object(L, toDispatchEvent).push(L);
-
-    int argsNum = 0;
-    for(luabind::object &obj : toDispatchEvent.objList)
+    try
     {
-        argsNum++;
-        obj.push(L);
-    }
+        luabind::object(L, toDispatchEvent).push(L);
 
-    if(luabind::detail::pcall(L, argsNum + 1, 0) != 0)
+        int argsNum = 0;
+        for(luabind::object &obj : toDispatchEvent.objList)
+        {
+            argsNum++;
+            obj.push(L);
+        }
+
+        if(luabind::detail::pcall(L, argsNum + 1, 0) != 0)
+            throw(std::runtime_error(lua_tostring(L, -1)));
+    }
+    catch(const std::runtime_error &e)
     {
         //Be sure to cleanup all objects
         toDispatchEvent.cleanupAllParams();
-
-        std::string runtimeErrorMsg = lua_tostring(L, -1);
+        std::string runtimeErrorMsg = e.what();
+        std::string msg1, msg2;
+        splitErrorMsg(runtimeErrorMsg, msg1, msg2);
+        m_errorReporterFunc(msg1, msg2);
+        m_lateShutdown = true;
+    }
+    catch(...)
+    {
+        //Be sure to cleanup all objects
+        toDispatchEvent.cleanupAllParams();
+        std::string runtimeErrorMsg = fmt::format_ne("Thrown unknown exception (Lua error: [{0}])", lua_tostring(L, -1));
         std::string msg1, msg2;
         splitErrorMsg(runtimeErrorMsg, msg1, msg2);
         m_errorReporterFunc(msg1, msg2);
@@ -436,13 +451,18 @@ void LuaEngine::setLateShutdown(bool value)
     m_lateShutdown = value;
 }
 
-void LuaEngine::postLateShutdownError(luabind::error &error)
+void LuaEngine::postLateShutdownError(const char *what)
 {
-    std::string runtimeErrorMsg = error.what();
+    std::string runtimeErrorMsg = what;
     std::string msg1, msg2;
     splitErrorMsg(runtimeErrorMsg, msg1, msg2);
     m_errorReporterFunc(msg1, msg2);
     m_lateShutdown = true;
+}
+
+void LuaEngine::postLateShutdownError(luabind::error &error)
+{
+    postLateShutdownError(error.what());
 }
 
 void LuaEngine::runGarbageCollector()

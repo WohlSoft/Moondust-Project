@@ -329,7 +329,7 @@ void PGEEngineApp::loadLogger()
     enable(LOGGER);
 }
 
-static void printUsage(char *arg0)
+static void printUsage(const char *arg0)
 {
     std::string arg0s(arg0);
     const char *logo =
@@ -428,12 +428,12 @@ static void printUsage(char *arg0)
     fprintf(stdout, "%s%s", logo, msg.c_str());
 }
 
-bool PGEEngineApp::parseLowArgs(int argc, char **argv)
+bool PGEEngineApp::parseLowArgs(int argc, const char *const *argv)
 {
     if(argc > 1)
     {
         //Check only first argument
-        char *arg = argv[1];
+        const char *arg = argv[1];
 
         if(strcmp(arg, "--version") == 0)
         {
@@ -520,7 +520,7 @@ static int takeIntFromArg(std::string &arg, bool &ok)
     return atoi(s);
 }
 
-void PGEEngineApp::parseHighArgs(int argc, char **argv)
+void PGEEngineApp::parseHighArgs(int argc, const char *const *argv)
 {
     /* Set defaults to global properties */
     g_Episode.character = 0;
@@ -531,7 +531,7 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
 
     for(int pi = 1; pi < argc; pi++)
     {
-        char* param_s_tmp = strdup(argv[pi]);
+        char *param_s_tmp = strdup(argv[pi]);
         std::string param_s = std::string(param_s_tmp);
         free(param_s_tmp);
         pLogDebug("Argument: [%s]", param_s.c_str());
