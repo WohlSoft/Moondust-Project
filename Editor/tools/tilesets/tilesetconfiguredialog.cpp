@@ -20,6 +20,7 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QKeyEvent>
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
@@ -595,3 +596,10 @@ void TilesetConfigureDialog::on_delete_me_clicked()
     }
 }
 
+void TilesetConfigureDialog::keyPressEvent(QKeyEvent *event)
+{
+    //Prevent Enter/Return key to spawn tileset saving dialog after resize
+    if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+        return;
+    QDialog::keyPressEvent(event);
+}
