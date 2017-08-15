@@ -21,8 +21,8 @@
 #include "config_manager_private.h"
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
+#include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
-#include <fmt/fmt_format.h>
 
 /*****World Tiles************/
 PGE_DataArray<obj_w_tile>       ConfigManager::wld_tiles;
@@ -241,12 +241,12 @@ bool ConfigManager::loadWorldTiles()
     {
         if(useDirectory)
         {
-            if(!loadWorldTile(stile, "tile", nullptr, fmt::format("{0}/tile-{1}.ini", nestDir, i)))
+            if(!loadWorldTile(stile, "tile", nullptr, fmt::format_ne("{0}/tile-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadWorldTile(stile, fmt::format("tile-{0}", i), nullptr, "", &setup))
+            if(!loadWorldTile(stile, fmt::format_ne("tile-{0}", i), nullptr, "", &setup))
                 return false;
         }
 
@@ -258,7 +258,7 @@ bool ConfigManager::loadWorldTiles()
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            std::string msg = fmt::format("ERROR LOADING wld_tiles.ini N:{0} (tile-{2})", setup.lastError(), i);
+            std::string msg = fmt::format_ne("ERROR LOADING wld_tiles.ini N:{0} (tile-{2})", setup.lastError(), i);
             addError(msg);
             PGE_MsgBox::error(msg);
             return false;
@@ -267,7 +267,7 @@ bool ConfigManager::loadWorldTiles()
 
     if(wld_tiles.stored() < tiles_total)
     {
-        std::string msg = fmt::format("Not all Tiles loaded! Total: {0}, Loaded: {1}", tiles_total, wld_tiles.size());
+        std::string msg = fmt::format_ne("Not all Tiles loaded! Total: {0}, Loaded: {1}", tiles_total, wld_tiles.size());
         addError(msg);
         PGE_MsgBox::warn(msg);
     }
@@ -325,12 +325,12 @@ bool ConfigManager::loadWorldScenery()
     {
         if(useDirectory)
         {
-            if(!loadWorldScenery(sScene, "scenery", nullptr, fmt::format("{0}/scenery-{1}.ini", nestDir, i)))
+            if(!loadWorldScenery(sScene, "scenery", nullptr, fmt::format_ne("{0}/scenery-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadWorldScenery(sScene, fmt::format("scenery-{0}", i), nullptr, "", &setup))
+            if(!loadWorldScenery(sScene, fmt::format_ne("scenery-{0}", i), nullptr, "", &setup))
                 return false;
         }
 
@@ -342,7 +342,7 @@ bool ConfigManager::loadWorldScenery()
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            std::string msg = fmt::format("ERROR LOADING wld_scenery.ini N:{0} (scene-{1})", setup.lastError(), i);
+            std::string msg = fmt::format_ne("ERROR LOADING wld_scenery.ini N:{0} (scene-{1})", setup.lastError(), i);
             addError(msg);
             PGE_MsgBox::error(msg);
             return false;
@@ -351,7 +351,7 @@ bool ConfigManager::loadWorldScenery()
 
     if(wld_scenery.stored() < scenery_total)
     {
-        std::string msg = fmt::format("Not all Sceneries loaded! Total: {0}, Loaded: {1}", scenery_total, wld_scenery.stored());
+        std::string msg = fmt::format_ne("Not all Sceneries loaded! Total: {0}, Loaded: {1}", scenery_total, wld_scenery.stored());
         addError(msg);
         PGE_MsgBox::warn(msg);
     }
@@ -410,12 +410,12 @@ bool ConfigManager::loadWorldPaths()
     {
         if(useDirectory)
         {
-            if(!loadWorldPath(sPath, "path", nullptr, fmt::format("{0}/path-{1}.ini", nestDir, i)))
+            if(!loadWorldPath(sPath, "path", nullptr, fmt::format_ne("{0}/path-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadWorldPath(sPath, fmt::format("path-{0}", i), nullptr, "", &setup))
+            if(!loadWorldPath(sPath, fmt::format_ne("path-{0}", i), nullptr, "", &setup))
                 return false;
         }
 
@@ -427,7 +427,7 @@ bool ConfigManager::loadWorldPaths()
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            std::string msg = fmt::format("ERROR LOADING wld_paths.ini N:{0} (path-{1})", setup.lastError(), i);
+            std::string msg = fmt::format_ne("ERROR LOADING wld_paths.ini N:{0} (path-{1})", setup.lastError(), i);
             addError(msg);
             PGE_MsgBox::fatal(msg);
             return false;
@@ -436,7 +436,7 @@ bool ConfigManager::loadWorldPaths()
 
     if(wld_paths.stored() < path_total)
     {
-        std::string msg = fmt::format("Not all Sceneries loaded! Total: {0}, Loaded: {1}", path_total, wld_scenery.stored());
+        std::string msg = fmt::format_ne("Not all Sceneries loaded! Total: {0}, Loaded: {1}", path_total, wld_scenery.stored());
         addError(msg);
         PGE_MsgBox::warn(msg);
     }
@@ -496,12 +496,12 @@ bool ConfigManager::loadWorldLevels()
     {
         if(useDirectory)
         {
-            if(!loadWorldLevel(slevel, "level", nullptr, fmt::format("{0}/level-{1}.ini", nestDir, i)))
+            if(!loadWorldLevel(slevel, "level", nullptr, fmt::format_ne("{0}/level-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadWorldLevel(slevel, fmt::format("level-{0}", i), nullptr, "", &setup))
+            if(!loadWorldLevel(slevel, fmt::format_ne("level-{0}", i), nullptr, "", &setup))
                 return false;
         }
 
@@ -513,7 +513,7 @@ bool ConfigManager::loadWorldLevels()
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            std::string msg = fmt::format("ERROR LOADING wld_levels.ini N:{0} (level-{1})", setup.lastError(), i);
+            std::string msg = fmt::format_ne("ERROR LOADING wld_levels.ini N:{0} (level-{1})", setup.lastError(), i);
             addError(msg);
             PGE_MsgBox::error(msg);
             return false;
@@ -522,7 +522,7 @@ bool ConfigManager::loadWorldLevels()
 
     if(wld_levels.stored() < levels_total)
     {
-        std::string msg = fmt::format("Not all Level images loaded! Total: {0}, Loaded: {1}", levels_total, wld_levels.stored());
+        std::string msg = fmt::format_ne("Not all Level images loaded! Total: {0}, Loaded: {1}", levels_total, wld_levels.stored());
         addError(msg);
         PGE_MsgBox::warn(msg);
     }

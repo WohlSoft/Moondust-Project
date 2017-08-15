@@ -439,7 +439,7 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
         {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << std::endl;
             std::cout.flush();
-            return true;
+            return false;
         }
         else if(strcmp(arg, "--install") == 0)
         {
@@ -448,12 +448,12 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
             //FIXME: Implement installing on STL-only!
             AppPathManager::install();
             AppPathManager::initAppPath();
-            return true;
+            return false;
         }
         else if(strcmp(arg, "--help") == 0)
         {
             printUsage(argv[0]);
-            return true;
+            return false;
         }
     }
 
@@ -462,7 +462,7 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
     FreeConsole();
     #endif
 
-    return false;
+    return true;
 }
 
 static void removeQuotes(char *&s, size_t &len)

@@ -50,7 +50,7 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <chrono>
 
@@ -1073,7 +1073,7 @@ int GlRenderer::makeShot_action(void *_pixels)
     else
         prevSecCounter++;
 
-    std::string saveTo = fmt::format("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}_{7}.png", ScreenshotPath,
+    std::string saveTo = fmt::format_ne("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}_{7}.png", ScreenshotPath,
                                     t->tm_year, t->tm_mon, t->tm_mday,
                                     t->tm_hour, t->tm_min, t->tm_sec, prevSecCounter);
     pLogDebug("%s %d %d", saveTo.c_str(), shoot->w, shoot->h);
@@ -1116,7 +1116,7 @@ void GlRenderer::toggleRecorder()
         std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
         tm *t = std::localtime(&in_time_t);
 
-        std::string saveTo = fmt::format("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}.gif",
+        std::string saveTo = fmt::format_ne("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}.gif",
                                          ScreenshotPath,
                                          t->tm_year, t->tm_mon, t->tm_mday,
                                          t->tm_hour, t->tm_min, t->tm_sec);

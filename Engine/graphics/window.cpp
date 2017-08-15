@@ -22,13 +22,13 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
 #include <common_features/tr.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <settings/global_settings.h>
 #include <settings/debugger.h>
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
-#include <fmt/fmt_format.h>
 
 Scene  *PGE_Window::m_currentScene      = nullptr;
 
@@ -69,7 +69,7 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 
     if(*error != '\0')
     {
-        PGE_MsgBox::warn(fmt::format("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
+        PGE_MsgBox::warn(fmt::format_ne("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
                                      error,
                                      fn,
                                      func,
@@ -83,7 +83,7 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 
 void PGE_Window::printSDLWarn(std::string info)
 {
-    PGE_MsgBox::warn(fmt::format("{0}\nSDL Error: {1}",
+    PGE_MsgBox::warn(fmt::format_ne("{0}\nSDL Error: {1}",
                                  info,
                                  SDL_GetError())
                     );
@@ -91,7 +91,7 @@ void PGE_Window::printSDLWarn(std::string info)
 
 void PGE_Window::printSDLError(std::string info)
 {
-    PGE_MsgBox::error(fmt::format("{0}\nSDL Error: {1}",
+    PGE_MsgBox::error(fmt::format_ne("{0}\nSDL Error: {1}",
                                   info,
                                   SDL_GetError()));
 }
@@ -266,7 +266,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     pLogDebug("Toggle vsync...");
     vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
     toggleVSync(vsync);
-    pLogDebug(fmt::format("V-Sync supported: {0}", vsyncIsSupported).c_str());
+    pLogDebug(fmt::format_ne("V-Sync supported: {0}", vsyncIsSupported).c_str());
     return true;
 }
 

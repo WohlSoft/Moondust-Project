@@ -45,7 +45,7 @@
 #include "obj_music.h"
 
 #include <Utils/strings.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 #include "custom_data.h"
 
@@ -161,10 +161,10 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
                      )
 {
     bool isDefault = false;
-    std::string file = dir.getCustomFile(fmt::format("{1}-{0}.ini", ID, fileName), &isDefault);
+    std::string file = dir.getCustomFile(fmt::format_ne("{1}-{0}.ini", ID, fileName), &isDefault);
 
     if(!skipTXT && isDefault /*file.empty()*/)
-        file = dir.getCustomFile(fmt::format("{1}-{0}.txt", ID, fileName), &isDefault);
+        file = dir.getCustomFile(fmt::format_ne("{1}-{0}.txt", ID, fileName), &isDefault);
 
     if(!file.empty() && !isDefault)
     {

@@ -21,7 +21,7 @@
 #include "config_manager_private.h"
 
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 CreditsScreenSetup ConfigManager::setup_CreditsScreen;
 
@@ -42,7 +42,7 @@ void CreditsScreenSetup::init(IniProcessing &engine_ini)
 
     for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(fmt::format("credits-image-{0}", i));
+        engine_ini.beginGroup(fmt::format_ne("credits-image-{0}", i));
         {
             CreditsScreenAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();

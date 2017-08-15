@@ -29,7 +29,7 @@
 
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <fmt/fmt_qformat.h>
 
 #include <gui/pge_msgbox.h>
@@ -82,7 +82,7 @@ static void macosReceiveOpenFile()
 int main(int argc, char *argv[])
 {
     // Parse --version or --install low args
-    if(PGEEngineApp::parseLowArgs(argc, argv))
+    if(!PGEEngineApp::parseLowArgs(argc, argv))
         return 0;
 
     // RAII for loaded/initialized libraries and modules
@@ -526,7 +526,7 @@ PlayLevel:
                     {
                         //SDL_Delay(50);
                         ExitCode = WldExit::EXIT_error;
-                        PGE_MsgBox msgBox(NULL, fmt::format("ERROR:\nFail to start level\n\n{0}",
+                        PGE_MsgBox msgBox(NULL, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
                                                 lScene->getLastError()),
                                                 PGE_MsgBox::msg_error);
                         msgBox.exec();
@@ -548,8 +548,8 @@ PlayLevel:
                 {
                     SDL_Delay(50);
                     PGE_MsgBox msgBox(NULL,
-                                      fmt::format("ERROR:\nFail to start level\n\n"
-                                                  "{0}", lScene->getLastError()),
+                                      fmt::format_ne("ERROR:\nFail to start level\n\n"
+                                                     "{0}", lScene->getLastError()),
                                       PGE_MsgBox::msg_error);
                     msgBox.exec();
                 }
@@ -605,7 +605,7 @@ PlayLevel:
 
                     if(lScene->m_warpToWorld)
                     {
-                        target = fmt::format("X={0}, Y={1}",
+                        target = fmt::format_ne("X={0}, Y={1}",
                                  g_GameState.game_state.worldPosX,
                                  g_GameState.game_state.worldPosY);
                     }

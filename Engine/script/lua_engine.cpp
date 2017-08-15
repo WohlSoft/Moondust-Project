@@ -167,7 +167,16 @@ void LuaEngine::init()
     {
         luabind::object _G = luabind::globals(L);
         luabind::object package = _G["package"];
-        std::string allPaths = luabind::object_cast<std::string>(package["path"]);
+        std::string allPaths;
+        try
+        {
+            allPaths = luabind::object_cast<std::string>(package["path"]);
+        }
+        catch(const luabind::cast_failed &e)
+        {
+            pLogCritical("LuaEngine fail: Exception thrown on attempt to cast 'package[\"path\"]': %s", e.what());
+            allPaths = ".";
+        }
         //allPaths += std::string(";") +  m_luaScriptPath.toStdString() + "?.lua";
         allPaths += std::string(";") +  fullPaths;
         package["path"] = allPaths;

@@ -22,7 +22,7 @@
 #include <audio/pge_audio.h>
 #include "pge_keygrab_menuitem.h"
 #include <controls/controller_joystick.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 #include "../pge_menu.h"
 
@@ -123,7 +123,7 @@ void PGE_KeyGrabMenuItem::render(int x, int y)
         if(joystick_mode)
         {
             if(targetKey->type != -1)
-                FontManager::printText(fmt::format("Key={0} ID={1} Type={2}",
+                FontManager::printText(fmt::format_ne("Key={0} ID={1} Type={2}",
                                                    targetKey->val,
                                                    targetKey->id,
                                                    targetKey->type), x + valueOffset, y, _font_id, colorLevel, colorLevel, colorLevel);

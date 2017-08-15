@@ -502,7 +502,8 @@ HEADERS  += \
     scenes/level/lvl_subtree.h \
     scenes/level/bg/bg_base.h \
     scenes/level/bg/bg_standard.h \
-    scenes/level/bg/bg_multilayer.h
+    scenes/level/bg/bg_multilayer.h \
+    common_features/fmt_format_ne.h
 
 DISTFILES += \
     ../changelog.engine.txt \

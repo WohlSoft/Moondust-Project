@@ -22,7 +22,7 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 #include <fontman/font_manager.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 LevelSetup ConfigManager::setup_Level;
 
@@ -76,7 +76,7 @@ void LevelSetup::init(IniProcessing &engine_ini)
 
     for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(fmt::format("world-image-{0}", i));
+        engine_ini.beginGroup(fmt::format_ne("world-image-{0}", i));
         {
             LevelAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();

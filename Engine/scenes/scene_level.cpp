@@ -42,7 +42,7 @@
 
 #include <script/lua_event.h>
 #include <script/bindings/core/events/luaevents_core_engine.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
 #include <Utils/elapsed_timer.h>
 
@@ -608,9 +608,9 @@ void LevelScene::render()
 
     if(PGE_Window::showDebugInfo)
     {
-        //FontManager::printText(fmt::format("Camera X={0} Y={1}", cam_x, cam_y), 200,10);
+        //FontManager::printText(fmt::format_ne("Camera X={0} Y={1}", cam_x, cam_y), 200,10);
         int dpos = 60;
-        FontManager::printText(fmt::format("Player J={0} G={1} F={2}; TICK-SUB: {3}\n"
+        FontManager::printText(fmt::format_ne("Player J={0} G={1} F={2}; TICK-SUB: {3}\n"
                                            "NPC's: {4}, Active {5}; BLOCKS: {6}",
                                            int(m_debug_player_jumping),
                                            int(m_debug_player_onground),
@@ -620,33 +620,33 @@ void LevelScene::render()
                                            m_npcActive.size(),
                                            m_itemsBlocks.size()), 10, dpos);
         dpos += 35;
-        FontManager::printText(fmt::format("Visible objects: {0}", !m_cameras.empty() ? m_cameras[0].renderObjects_count() : 0), 10, dpos);
+        FontManager::printText(fmt::format_ne("Visible objects: {0}", !m_cameras.empty() ? m_cameras[0].renderObjects_count() : 0), 10, dpos);
         dpos += 35;
-        FontManager::printText(fmt::format("Delays E={0} R={1} P={2}",
+        FontManager::printText(fmt::format_ne("Delays E={0} R={1} P={2}",
                                            m_debug_event_delay,
                                            m_debug_render_delay,
                                            m_debug_phys_delay), 10, dpos);
         dpos += 35;
-        FontManager::printText(fmt::format("Time Real:{0}\nTime Loop:{1}",
+        FontManager::printText(fmt::format_ne("Time Real:{0}\nTime Loop:{1}",
                                            debug_TimeReal.elapsed(),
                                            debug_TimeCounted), 10, dpos);
         dpos += 35;
 
         if(!m_isLevelContinues)
         {
-            FontManager::printText(fmt::format("Exit delay {0}, {1}",
+            FontManager::printText(fmt::format_ne("Exit delay {0}, {1}",
                                                m_exitLevelDelay,
                                                uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
             dpos += 35;
         }
 
         if(m_placingMode)
-            FontManager::printText(fmt::format("Placing! {0} X={1} Y={2}",
+            FontManager::printText(fmt::format_ne("Placing! {0} X={1} Y={2}",
                                                m_placingMode_item_type,
                                                m_placingMode_renderAt.x(),
                                                m_placingMode_renderAt.y()), 10, 10, 0);
         else
-            FontManager::printText(fmt::format("{0}", PGE_MusPlayer::getTitle()), 10, 10, 0);
+            FontManager::printText(fmt::format_ne("{0}", PGE_MusPlayer::getTitle()), 10, 10, 0);
     }
 
 renderBlack:

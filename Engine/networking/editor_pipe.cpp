@@ -9,7 +9,7 @@
 #include <cstdio>
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 /**************************************************************************************************************/
 
@@ -143,7 +143,7 @@ void EditorPipe::icomingData(std::string &in)
         pLogDebug("do Parse LVLX: PARSE_LVLX");
         m_doParseLevelData = true;
         FileFormats::ReadExtendedLvlFileRaw(m_acceptedRawData, m_accepted_lvl_path, m_acceptedLevel);
-        IntProc::setState(fmt::format("LVLX is valid: {0}", m_acceptedLevel.meta.ReadFileValid));
+        IntProc::setState(fmt::format_ne("LVLX is valid: {0}", m_acceptedLevel.meta.ReadFileValid));
         pLogDebug("Level data parsed, Valid: %d", m_acceptedLevel.meta.ReadFileValid);
 
         if(!m_acceptedLevel.meta.ReadFileValid)

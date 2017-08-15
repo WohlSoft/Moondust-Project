@@ -1,9 +1,9 @@
 #include "setup_wld_scene.h"
 #include "config_manager.h"
 #include "config_manager_private.h"
+#include <common_features/fmt_format_ne.h>
 #include <fontman/font_manager.h>
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
 
 WorldMapSetup ConfigManager::setup_WorldMap;
 
@@ -83,7 +83,7 @@ void WorldMapSetup::init(IniProcessing& engine_ini)
 
     for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(fmt::format("world-image-{0}", i));
+        engine_ini.beginGroup(fmt::format_ne("world-image-{0}", i));
         {
             WorldAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();

@@ -29,7 +29,7 @@
 #include <CoreServices/CoreServices.h>
 #endif
 
-#include <fmt/fmt_format.h>
+#include "fmt_format_ne.h"
 
 static PGE_Translator *g_translator = NULL;
 
@@ -107,14 +107,14 @@ void PGE_Translator::toggleLanguage(std::string lang)
 
         m_currLang = lang;
 
-        std::string langFilePath = m_langPath + fmt::format("/engine_{0}.qm", m_currLang);
+        std::string langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
 
         bool ok = m_translator.loadFile(langFilePath.c_str(),
                                         reinterpret_cast<unsigned char *>(&m_langPath[0]));
         if(!ok)
         {
             m_currLang = "en"; //set to English if no other translations are found
-            langFilePath = m_langPath + fmt::format("/engine_{0}.qm", m_currLang);
+            langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
             m_translator.loadFile(langFilePath.c_str(),
                                   reinterpret_cast<unsigned char *>(&m_langPath[0]));
         }

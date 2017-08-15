@@ -23,7 +23,7 @@
 #include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <fontman/font_manager.h>
 #include <controls/controller_joystick.h>
@@ -370,7 +370,7 @@ void TitleScene::render()
 
     if(g_AppSettings.showDebugInfo)
     {
-        FontManager::printText(fmt::format("Joystick key: val={0}, id={1}, type={2}\n"
+        FontManager::printText(fmt::format_ne("Joystick key: val={0}, id={1}, type={2}\n"
                                        "fader ratio {3} N{4} F{5} TKS-{6}\n"
                                        "TICK: {7}, Graphical engine: {8}",
                                         m_debug_joy_keyval,

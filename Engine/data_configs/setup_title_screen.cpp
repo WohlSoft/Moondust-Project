@@ -4,7 +4,7 @@
 #include "config_manager_private.h"
 
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <unordered_map>
 
 typedef std::unordered_map<std::string, TitleScreenAdditionalImage::align> TssAlignHash;
@@ -35,7 +35,7 @@ void TitleScreenSetup::init(IniProcessing &engine_ini)
 
     for(int i = 1; i <= TitleScreenImages; i++)
     {
-        engine_ini.beginGroup(fmt::format("title-image-{0}", i));
+        engine_ini.beginGroup(fmt::format_ne("title-image-{0}", i));
         {
             TitleScreenAdditionalImage img;
             img.imgFile = engine_ini.value("image", "").toString();

@@ -23,7 +23,7 @@
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
@@ -182,7 +182,7 @@ void Render_OpenGL21::initDummyTexture()
 
     if(!image)
     {
-        std::string msg = fmt::format("Can't initialize dummy texture!\n"
+        std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
                                       "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), NULL);

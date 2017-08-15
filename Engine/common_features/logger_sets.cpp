@@ -17,7 +17,7 @@
  */
 
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <fmt/fmt_printf.h>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
@@ -73,7 +73,7 @@ void LogWriter::LoadLogSettings()
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
-    std::string logFileName = fmt::format("PGE_Engine_log_{0}.txt", return_current_time_and_date());
+    std::string logFileName = fmt::format_ne("PGE_Engine_log_{0}.txt", return_current_time_and_date());
 
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();

@@ -24,7 +24,7 @@
 #include <common_features/logger.h>
 #include <common_features/number_limiter.h>
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 GlobalSettings g_AppSettings;
 
@@ -123,14 +123,14 @@ void GlobalSettings::loadJoystickSettings()
     for(int i = 0; i < SDL_NumJoysticks(); i++)
     {
         KeyMap joy1;
-        loadKeyMap(joy1, setup, fmt::format("player-1-joystick{0}", i));
-        loadJoyCtrlMapID(joy1, setup, fmt::format("player-1-joystick{0}-ctrls-id", i));
-        loadJoyCtrlMapType(joy1, setup, fmt::format("player-1-joystick{0}-ctrls-type", i));
+        loadKeyMap(joy1, setup, fmt::format_ne("player-1-joystick{0}", i));
+        loadJoyCtrlMapID(joy1, setup, fmt::format_ne("player-1-joystick{0}-ctrls-id", i));
+        loadJoyCtrlMapType(joy1, setup, fmt::format_ne("player-1-joystick{0}-ctrls-type", i));
         player1_joysticks.push_back(joy1);
         KeyMap joy2;
-        loadKeyMap(joy2, setup, fmt::format("player-2-joystick{0}", i));
-        loadJoyCtrlMapID(joy2, setup, fmt::format("player-2-joystick{0}-ctrls-id", i));
-        loadJoyCtrlMapType(joy2, setup, fmt::format("player-2-joystick{0}-ctrls-type", i));
+        loadKeyMap(joy2, setup, fmt::format_ne("player-2-joystick{0}", i));
+        loadJoyCtrlMapID(joy2, setup, fmt::format_ne("player-2-joystick{0}-ctrls-id", i));
+        loadJoyCtrlMapType(joy2, setup, fmt::format_ne("player-2-joystick{0}-ctrls-type", i));
         player2_joysticks.push_back(joy2);
     }
 }
@@ -157,12 +157,12 @@ void GlobalSettings::save()
 
     for(size_t i = 0; i < player1_joysticks.size() && i < player2_joysticks.size(); i++)
     {
-        saveKeyMap(player1_joysticks[i], setup, fmt::format("player-1-joystick{0}", i));
-        saveKeyMap(player2_joysticks[i], setup, fmt::format("player-2-joystick{0}", i));
-        saveJoyCtrlMapID(player1_joysticks[i], setup, fmt::format("player-1-joystick{0}-ctrls-id", i));
-        saveJoyCtrlMapID(player2_joysticks[i], setup, fmt::format("player-2-joystick{0}-ctrls-id", i));
-        saveJoyCtrlMapType(player1_joysticks[i], setup, fmt::format("player-1-joystick{0}-ctrls-type", i));
-        saveJoyCtrlMapType(player2_joysticks[i], setup, fmt::format("player-2-joystick{0}-ctrls-type", i));
+        saveKeyMap(player1_joysticks[i], setup, fmt::format_ne("player-1-joystick{0}", i));
+        saveKeyMap(player2_joysticks[i], setup, fmt::format_ne("player-2-joystick{0}", i));
+        saveJoyCtrlMapID(player1_joysticks[i], setup, fmt::format_ne("player-1-joystick{0}-ctrls-id", i));
+        saveJoyCtrlMapID(player2_joysticks[i], setup, fmt::format_ne("player-2-joystick{0}-ctrls-id", i));
+        saveJoyCtrlMapType(player1_joysticks[i], setup, fmt::format_ne("player-1-joystick{0}-ctrls-type", i));
+        saveJoyCtrlMapType(player2_joysticks[i], setup, fmt::format_ne("player-2-joystick{0}-ctrls-type", i));
     }
 
     setup.writeIniFile();

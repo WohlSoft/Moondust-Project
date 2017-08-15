@@ -8,7 +8,7 @@
 #include <common_features/logger.h>
 #include <FileMapper/file_mapper.h>
 
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 
@@ -255,18 +255,18 @@ bool ConfigManager::loadSound(std::string rootPath, std::string iniFile, bool is
     //Sound
     for(i = 1; i <= sound_total; i++)
     {
-        soundset.beginGroup(fmt::format("sound-{0}", i));
+        soundset.beginGroup(fmt::format_ne("sound-{0}", i));
         sound.name = soundset.value("name", "").toString();
 
         if(sound.name.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(fmt::format("Sound-{0} Item name isn't defined", i));
+                addError(fmt::format_ne("Sound-{0} Item name isn't defined", i));
                 goto skipSoundFile;
             }
             else
-                sound.name = fmt::format("sound-{0}", i);
+                sound.name = fmt::format_ne("sound-{0}", i);
         }
 
         sound.file = soundset.value("file", "").toString();
@@ -274,7 +274,7 @@ bool ConfigManager::loadSound(std::string rootPath, std::string iniFile, bool is
         if(sound.file.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("Sound-{0} Item file isn't defined", i));
+                addError(fmt::format_ne("Sound-{0} Item file isn't defined", i));
 
             goto skipSoundFile;
         }
@@ -285,7 +285,7 @@ bool ConfigManager::loadSound(std::string rootPath, std::string iniFile, bool is
         if(!Files::fileExists(sound.absPath))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("Sound-{0}: file {1} not exist", i, sound.absPath));
+                addError(fmt::format_ne("Sound-{0}: file {1} not exist", i, sound.absPath));
 
             goto skipSoundFile;
         }
@@ -308,7 +308,7 @@ skipSoundFile:
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                std::string msg = fmt::format("ERROR LOADING sounds.ini N:{0} (sound {1})", soundset.lastError(),i);
+                std::string msg = fmt::format_ne("ERROR LOADING sounds.ini N:{0} (sound {1})", soundset.lastError(),i);
                 addError(msg);
                 PGE_MsgBox::error(msg);
                 return false;
@@ -402,8 +402,8 @@ bool ConfigManager::loadSoundRolesTable()
 
     if(soundset.lastError() != IniProcessing::ERR_OK)
     {
-        addError(fmt::format("ERROR LOADING sound_roles.ini N:{0}", soundset.lineWithError()));
-        PGE_MsgBox::error(fmt::format("ERROR LOADING sound_roles.ini N:{0}", soundset.lineWithError()));
+        addError(fmt::format_ne("ERROR LOADING sound_roles.ini N:{0}", soundset.lineWithError()));
+        PGE_MsgBox::error(fmt::format_ne("ERROR LOADING sound_roles.ini N:{0}", soundset.lineWithError()));
         return false;
     }
 
