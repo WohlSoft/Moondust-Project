@@ -22,6 +22,7 @@
 #include <QInputDialog>
 
 #include <common_features/app_path.h>
+#include <common_features/util.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include "tilesetconfiguredialog.h"
@@ -397,6 +398,8 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
     if(!ok || fileName.isEmpty())
         return;
 
+    //Filter input from forbidden characters
+    fileName = util::filePath(fileName);
     lastFileName = fileName;
 
     if(!fileName.endsWith(".tileset.ini"))

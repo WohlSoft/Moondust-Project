@@ -16,6 +16,7 @@ Editor 0.3.1.13
 - Fixed most of rendering artifacts are caused when animation is turned off
 - Better view of "New" toolbar drop-down menu icon
 - Fixed a retranslation of Vanilla-like toolbar
+- Fixed inability to save tileset when forbidden file path characters are was typed
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox

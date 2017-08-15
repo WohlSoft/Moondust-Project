@@ -143,6 +143,7 @@ QString util::filePath(QString s)
     t.replace('\\', '_');
     t.replace('/', '_');
     t.replace(':', '_');
+    t.replace(';', '_');
     t.replace('*', '_');
     t.replace('?', '_');
     t.replace('\"', '_');
