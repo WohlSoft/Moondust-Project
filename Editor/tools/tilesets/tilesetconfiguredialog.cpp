@@ -77,6 +77,18 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
                 m_tileset->setRows(ui->spin_height->value());
             }
     );
+    connect(ui->spin_width, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+            [=](int newValue) {
+                if(std::abs(m_tileset->cols() - newValue) == 1)
+                    m_tileset->setCols(ui->spin_width->value());
+            }
+    );
+    connect(ui->spin_height, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+            [=](int newValue) {
+                if(std::abs(m_tileset->rows() - newValue) == 1)
+                    m_tileset->setRows(ui->spin_height->value());
+            }
+    );
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setUpItems(int)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setUpTileset(int)));
     connect(ui->TilesetName, SIGNAL(textChanged(QString)), m_tileset, SLOT(setName(QString)));
