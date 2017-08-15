@@ -66,6 +66,9 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     m_conf = conf;
     lastFileName = "";
 
+    oldWidth = ui->spin_width->value();
+    oldHeight = ui->spin_height->value();
+
     setUpItems(ItemTypes::LVL_Block);
 
     connect(ui->spin_width, &QSpinBox::editingFinished,
@@ -80,14 +83,16 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     );
     connect(ui->spin_width, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
             [=](int newValue) {
-                if(std::abs(m_tileset->cols() - newValue) == 1)
+                if(std::abs(oldWidth - newValue) == 1)
                     m_tileset->setCols(ui->spin_width->value());
+                oldWidth = newValue;
             }
     );
     connect(ui->spin_height, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
             [=](int newValue) {
-                if(std::abs(m_tileset->rows() - newValue) == 1)
+                if(std::abs(oldHeight - newValue) == 1)
                     m_tileset->setRows(ui->spin_height->value());
+                oldHeight = newValue;
             }
     );
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setUpItems(int)));

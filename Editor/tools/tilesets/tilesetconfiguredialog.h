@@ -79,6 +79,8 @@ private:
     QGraphicsScene *scn;
 
     tileset* m_tileset;
+    int oldWidth;
+    int oldHeight;
     PiecesModel* m_model;
     dataconfigs* m_conf;
     //void setUpItems(ItemTypes type);
