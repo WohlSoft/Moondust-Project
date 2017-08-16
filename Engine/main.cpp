@@ -81,8 +81,12 @@ static void macosReceiveOpenFile()
 
 int main(int argc, char *argv[])
 {
+    std::vector<std::string> args;
+    for(int i = 0; i < argc; i++)
+        args.push_back(std::string(argv[i]));
+
     // Parse --version or --install low args
-    if(!PGEEngineApp::parseLowArgs(argc, argv))
+    if(!PGEEngineApp::parseLowArgs(args))
         return 0;
 
     // RAII for loaded/initialized libraries and modules
@@ -96,7 +100,7 @@ int main(int argc, char *argv[])
     //Initialize translation sub-system
     app.loadTr();
     // Parse high arguments
-    app.parseHighArgs(argc, argv);
+    app.parseHighArgs(args);
 
     // Initalizing SDL
     if(app.initSDL())
@@ -384,7 +388,7 @@ MainMenu:
     }
 PlayWorldMap:
     {
-        int ExitCode = WldExit::EXIT_close;
+        WldExit::ExitWorldCodes wldExitCode = WldExit::EXIT_close;
         std::shared_ptr<WorldScene> wScene;
         wScene.reset(new WorldScene());
         bool sceneResult = true;
@@ -409,7 +413,7 @@ PlayWorldMap:
             {
                 //% "ERROR:\nFail to start world map\n\n%1"
                 PGE_MsgBox::error( fmt::qformat(qtTrId("ERROR_FAIL_START_WLD"), wScene->getLastError()) );
-                ExitCode = WldExit::EXIT_error;
+                wldExitCode = WldExit::EXIT_error;
             }
         }
 
@@ -420,16 +424,16 @@ PlayWorldMap:
             wScene->m_fader.setFade(10, 0.0, 0.02);
 
         if(sceneResult)
-            ExitCode = wScene->exec();
+            wldExitCode = (WldExit::ExitWorldCodes)wScene->exec();
 
         if(!sceneResult)
         {
-            ExitCode = WldExit::EXIT_error;
+            wldExitCode = WldExit::EXIT_error;
             //% "World map was closed with error.\n%1"
             PGE_MsgBox::error( fmt::qformat(qtTrId("WLD_ERROR_LVLCLOSED"), wScene->errorString()) );
         }
 
-        g_GameState._recent_ExitCode_world = ExitCode;
+        g_GameState._recent_ExitCode_world = (int)wldExitCode;
 
         if(wScene->doShutDown())
         {
@@ -439,7 +443,7 @@ PlayWorldMap:
 
         if(g_AppSettings.debugMode)
         {
-            if(ExitCode == WldExit::EXIT_beginLevel)
+            if(wldExitCode == WldExit::EXIT_beginLevel)
             {
                 std::string msg;
                 //% "Start level\n%1"
@@ -465,7 +469,7 @@ PlayWorldMap:
                 goto ExitFromApplication;
         }
 
-        switch(ExitCode)
+        switch(wldExitCode)
         {
         case WldExit::EXIT_beginLevel:
             goto PlayLevel;
@@ -507,7 +511,7 @@ PlayLevel:
                 entranceID = g_GameState.game_state.last_hub_warp;
             }
 
-            int ExitCode = 0;
+            int levelExitCode = 0;
             lScene.reset(new LevelScene());
 
             if(g_AppSettings.interprocessing)
@@ -525,7 +529,7 @@ PlayLevel:
                     if((!sceneResult) && (!lScene->isExiting()))
                     {
                         //SDL_Delay(50);
-                        ExitCode = WldExit::EXIT_error;
+                        levelExitCode = LvlExit::EXIT_Error;
                         PGE_MsgBox msgBox(NULL, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
                                                 lScene->getLastError()),
                                                 PGE_MsgBox::msg_error);
@@ -535,7 +539,7 @@ PlayLevel:
                 else
                 {
                     sceneResult = false;
-                    ExitCode = WldExit::EXIT_error;
+                    levelExitCode = LvlExit::EXIT_Error;
                     //% "No opened files"
                     PGE_MsgBox::warn(qtTrId("ERROR_NO_OPEN_FILES_MSG"));
                 }
@@ -564,14 +568,14 @@ PlayLevel:
             if(sceneResult)
             {
                 lScene->m_fader.setFade(10, 0.0, 0.02);
-                ExitCode = lScene->exec();
-                g_GameState._recent_ExitCode_level = ExitCode;
+                levelExitCode = lScene->exec();
+                g_GameState._recent_ExitCode_level = levelExitCode;
             }
 
             if(!sceneResult)
-                ExitCode = LvlExit::EXIT_Error;
+                levelExitCode = LvlExit::EXIT_Error;
 
-            switch(ExitCode)
+            switch(levelExitCode)
             {
             case LvlExit::EXIT_Warp:
             {

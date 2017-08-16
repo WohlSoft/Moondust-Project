@@ -526,7 +526,10 @@ checkRenderability:
                     list->_objects_to_render = static_cast<PGE_Phys_Object **>(realloc(list->_objects_to_render, sizeof(PGE_Phys_Object *) * static_cast<size_t>(list->_objects_to_render_max)));
 
                     if(!list->_objects_to_render)
-                        throw("Memory overflow!");
+                    {
+                        pLogFatal("PGE_LevelCamera: Memory overflow!");
+                        abort();
+                    }
                 }
                 list->_objects_to_render[list->_objects_to_render_stored] = item;
                 list->_objects_to_render_stored++;

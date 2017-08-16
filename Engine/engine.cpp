@@ -428,20 +428,20 @@ static void printUsage(const char *arg0)
     fprintf(stdout, "%s%s", logo, msg.c_str());
 }
 
-bool PGEEngineApp::parseLowArgs(int argc, const char *const *argv)
+bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
 {
-    if(argc > 1)
+    if(args.size() > 1)
     {
         //Check only first argument
-        const char *arg = argv[1];
+        const std::string &arg = args[1];
 
-        if(strcmp(arg, "--version") == 0)
+        if(arg.compare("--version") == 0)
         {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << std::endl;
             std::cout.flush();
             return false;
         }
-        else if(strcmp(arg, "--install") == 0)
+        else if(arg.compare("--install") == 0)
         {
             //PGEEngineApp  lib;
             //lib.loadQApp(argc, argv);
@@ -450,9 +450,9 @@ bool PGEEngineApp::parseLowArgs(int argc, const char *const *argv)
             AppPathManager::initAppPath();
             return false;
         }
-        else if(strcmp(arg, "--help") == 0)
+        else if(arg.compare("--help") == 0)
         {
-            printUsage(argv[0]);
+            printUsage(args[0].c_str());
             return false;
         }
     }
@@ -520,7 +520,7 @@ static int takeIntFromArg(std::string &arg, bool &ok)
     return atoi(s);
 }
 
-void PGEEngineApp::parseHighArgs(int argc, const char *const *argv)
+void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
 {
     /* Set defaults to global properties */
     g_Episode.character = 0;
@@ -529,11 +529,9 @@ void PGEEngineApp::parseHighArgs(int argc, const char *const *argv)
     g_AppSettings.debugMode         = false; //enable debug mode
     g_AppSettings.interprocessing   = false; //enable interprocessing
 
-    for(int pi = 1; pi < argc; pi++)
+    for(size_t pi = 1; pi < args.size(); pi++)
     {
-        char *param_s_tmp = strdup(argv[pi]);
-        std::string param_s = std::string(param_s_tmp);
-        free(param_s_tmp);
+        std::string param_s = args[pi];
         pLogDebug("Argument: [%s]", param_s.c_str());
         int  i = 0;
         char characterParam[8] = "\0";

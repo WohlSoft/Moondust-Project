@@ -255,12 +255,12 @@ public:
      * @param argv Pointer to array of command line arguments
      * @return true if exit from application is requested
      */
-    static bool parseLowArgs(int argc, const char *const *argv);
+    static bool parseLowArgs(const std::vector<std::string> &args);
 
     /**
      * @brief Parse hight arguments (after initializing of some sub-systems)
      */
-    void parseHighArgs(int argc, const char *const *argv);
+    void parseHighArgs(const std::vector<std::string> &args);
 
     /**
      * @brief Create configs diretory if that is not exists

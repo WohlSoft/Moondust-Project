@@ -61,7 +61,11 @@ void LevelScene::placeBlock(LevelBlock &blockData)
     LVL_Block *block;
     block = new LVL_Block(this);
     SDL_assert_release(block);
-    if(!block) throw("Out of memory [new LVL_Block place]");
+    if(!block)
+    {
+        pLogFatal("Out of memory [new LVL_Block place]");
+        abort();
+    }
 
     block->data = blockData;
     block->init();
@@ -80,7 +84,10 @@ LVL_Block *LevelScene::spawnBlock(const LevelBlock &blockData)
     block = new LVL_Block(this);
     SDL_assert_release(block);
     if(!block)
-        throw("Out of memory [new LVL_Block spawn]");
+    {
+        pLogFatal("Out of memory [new LVL_Block spawn]");
+        abort();
+    }
 
     block->data = blockData;
     block->data.meta.array_id = ++m_data.blocks_array_id;
@@ -99,7 +106,11 @@ void LevelScene::placeBGO(LevelBGO& bgoData)
     LVL_Bgo *bgo;
     bgo = new LVL_Bgo(this);
     SDL_assert_release(bgo);
-    if(!bgo) throw("Out of memory [new LVL_Bgo place]");
+    if(!bgo)
+    {
+        pLogFatal("Out of memory [new LVL_Bgo place]");
+        abort();
+    }
 
     bgo->data = bgoData;
     bgo->init();
@@ -117,7 +128,10 @@ LVL_Bgo *LevelScene::spawnBGO(const LevelBGO &bgoData)
     bgo = new LVL_Bgo(this);
     SDL_assert_release(bgo);
     if(!bgo)
-        throw("Out of memory [new LVL_Bgo] spawn");
+    {
+        pLogFatal("Out of memory [new LVL_Bgo] spawn");
+        abort();
+    }
 
     bgo->data = bgoData;
     bgo->data.meta.array_id = ++m_data.blocks_array_id;
@@ -257,7 +271,7 @@ bool LevelScene::lua_switchState(uint32_t switch_id)
 }
 
 
-void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect, bool cannon, double cannon_speed)
+bool LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect, bool cannon, double cannon_speed)
 {
     LVL_Player *player = nullptr;
 
@@ -272,7 +286,10 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
         player = new LVL_Player(this);
 
     if(!player)
-        throw(std::runtime_error("Out of memory [new LVL_Player] addPlayer"));
+    {
+        pLogFatal("Out of memory [new LVL_Player] addPlayer");
+        abort();
+    }
 
     player->m_scene = this;
 
@@ -286,8 +303,9 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     if(!sct)
     {
+        m_errorMsg = "Can't initialize playable character: Section is not found!";
         delete player;
-        return;
+        return false;
     }
 
     player->setParentSection(sct);
@@ -301,7 +319,7 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
         m_errorMsg = "Failed to initialize playable character!\nSee log file for more information!";
         m_fader.setFade(10, 1.0, 1.0);
         setExiting(0, LvlExit::EXIT_Error);
-        return;
+        return false;
     }
     m_itemsPlayers.push_back(player);
 
@@ -322,4 +340,6 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     }
     else
         player->camera->changeSection(sct, true);
+
+    return true;
 }

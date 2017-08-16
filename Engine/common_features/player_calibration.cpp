@@ -65,7 +65,13 @@ bool obj_player_calibration::load(std::string fileName)
     {
         for(y = 0; y < matrixHeight; y++)
         {
-            frameOpts &f = frame(x, y);
+            bool ok = false;
+            frameOpts &f = frame(x, y, &ok);
+            if(!ok)
+            {
+                pLogCritical("obj_player_calibration: missing frame %u x %u!", (unsigned int)x, (unsigned int)y);
+                return false;
+            }
             group = fmt::format_ne("frame-{0}-{1}", x, y);
             //sprintf(group, "frame-%lu-%lu", (unsigned long)x, (unsigned long)y);
             conf.beginGroup(group.c_str());
@@ -139,13 +145,16 @@ bool obj_player_calibration::load(std::string fileName)
     return true;
 }
 
-frameOpts &obj_player_calibration::frame(size_t x, size_t y)
+frameOpts &obj_player_calibration::frame(size_t x, size_t y, bool *ok)
 {
+    static frameOpts dummy;
     size_t get = (matrixWidth * y) + x;
-
+    if(ok)
+        *ok = false;
     if(get >= frames.size())
-        throw;
-
+        return dummy;
+    if(ok)
+        *ok = true;
     return frames[get];
 }
 
