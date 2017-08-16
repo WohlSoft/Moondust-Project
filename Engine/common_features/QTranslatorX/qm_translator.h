@@ -56,15 +56,15 @@ class QmTranslatorX
 
     // Pointers and offsets into FileData[FileLength] array, or user
     // provided data array
-    uint8_t  *messageArray;
-    uint8_t  *offsetArray;
-    uint8_t  *contextArray;
-    uint8_t  *numerusRulesArray;
-    uint32_t  messageLength;
-    uint32_t  offsetLength;
-    uint32_t  contextLength;
-    uint32_t  numerusRulesLength;
-    std::vector<QmTranslatorX *> subTranslators;
+    uint8_t  *m_messageArray;
+    uint8_t  *m_offsetArray;
+    uint8_t  *m_contextArray;
+    uint8_t  *m_numerusRulesArray;
+    uint32_t  m_messageLength;
+    uint32_t  m_offsetLength;
+    uint32_t  m_contextLength;
+    uint32_t  m_numerusRulesLength;
+    std::vector<QmTranslatorX *> m_subTranslators;
 
 public:
     QmTranslatorX();
