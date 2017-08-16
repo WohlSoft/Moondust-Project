@@ -51,6 +51,7 @@
 #include <vector>
 #include <assert.h>
 #include <stdint.h>
+#include <cstdio>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -492,7 +493,7 @@ end:
 
 
 QmTranslatorX::QmTranslatorX() :
-    FileData(nullptr), FileLength(0),
+    m_fileData(nullptr), m_fileLength(0),
     messageArray(nullptr), offsetArray(nullptr), contextArray(nullptr), numerusRulesArray(nullptr),
     messageLength(0),      offsetLength(0),      contextLength(0),      numerusRulesLength(0)
 {}
@@ -688,7 +689,7 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     size_t  fileGotLen = 0;
 
     #ifndef _WIN32
-    FILE *file = fopen(filePath, "rb");
+    FILE *file = std::fopen(filePath, "rb");
     #else
     wchar_t filePathW[MAX_PATH + 1];
     {
@@ -704,27 +705,40 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     if(!file)
         return false;//err("Can't open file!", 2);
 
-    if(fread(magicBuffer, 1, MagicLength, file) < MagicLength)
+    if(std::fread(magicBuffer, 1, MagicLength, file) < MagicLength)
     {
-        fclose(file);
+        std::fclose(file);
         return false;//err("ERROR READING MAGIC NUMBER!!!", 3);
     }
 
     if(memcmp(magicBuffer, magic, MagicLength))
     {
-        fclose(file);
+        std::fclose(file);
         return false;//err("MAGIC NUMBER DOESN'T CASE!", 4);
     }
 
-    fseek(file, 0L, SEEK_END);
-    FileLength = static_cast<size_t>(ftell(file));
-    fseek(file, 0L, SEEK_SET);
+    std::fseek(file, 0L, SEEK_END);
 
-    FileData = reinterpret_cast<uint8_t *>(malloc(FileLength));
-    fileGotLen = fread(FileData, 1, FileLength, file);
-    fclose(file);
-    FileLength = fileGotLen;
-    return loadData(FileData, FileLength, directory);
+    long fileLenth = std::ftell(file);
+    if(fileLenth < 0)
+    {
+        std::fclose(file);
+        return false;//err("FAIL TO SEEK END!", 4);
+    }
+
+    m_fileLength = static_cast<size_t>(fileLenth);
+    std::fseek(file, 0L, SEEK_SET);
+
+    m_fileData = reinterpret_cast<uint8_t *>(malloc(m_fileLength));
+    if(!m_fileData)
+    {
+        std::fclose(file);
+        return false;//err("OUT OF MEMORY!", 5);
+    }
+    fileGotLen = std::fread(m_fileData, 1, m_fileLength, file);
+    std::fclose(file);
+    m_fileLength = fileGotLen;
+    return loadData(m_fileData, m_fileLength, directory);
 }
 
 bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
@@ -781,14 +795,25 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
         }
         else if(tag == QTranslatorEntryTypes::Dependencies)
         {
-
             std::string dep;
+            uint8_t *end   = data + blockLen;
             while(blockLen != 0)
             {
                 uint8_t *begin = data;
-                while(*data != '\0')
+                while((data != end) && (*data != '\0'))
                     data++;
+
                 std::string::size_type gotLen = std::string::size_type(data - begin);
+
+                //Avoid infinite loop if got len is zero or larger than left bytes block
+                if((gotLen == 0) || (gotLen > blockLen))
+                {
+                    #ifdef QMTRANSLATPR_DEEP_DEBUG
+                    printf("Dependencies tag loop: INFINITE LOOP DETECTED!\n");
+                    #endif
+                    break;
+                }
+
                 dep = std::string(reinterpret_cast<char *>(begin), gotLen);
                 if(dep.size() > 0)
                 {
@@ -798,6 +823,7 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
                     printf("Dependency: %s\n", dep.c_str());
                     #endif
                 }
+                blockLen -= gotLen;
             }
             #ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Had deps!\n");
@@ -869,7 +895,7 @@ bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
 
 bool QmTranslatorX::isEmpty()
 {
-    return !FileData && !FileLength && !messageArray &&
+    return !m_fileData && !m_fileLength && !messageArray &&
            !offsetArray && !contextArray && subTranslators.empty();
 }
 
@@ -884,11 +910,11 @@ void QmTranslatorX::close()
     offsetLength = 0;
     numerusRulesLength = 0;
 
-    if(FileData)
-        free(FileData);
+    if(m_fileData)
+        free(m_fileData);
 
-    FileData = 0;
-    FileLength = 0;
+    m_fileData = 0;
+    m_fileLength = 0;
 
     for(QmTranslatorX *it : subTranslators)
         delete it;

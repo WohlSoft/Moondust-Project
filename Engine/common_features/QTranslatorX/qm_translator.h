@@ -51,8 +51,8 @@
 
 class QmTranslatorX
 {
-    uint8_t  *FileData;
-    size_t    FileLength;
+    uint8_t  *m_fileData;
+    size_t    m_fileLength;
 
     // Pointers and offsets into FileData[FileLength] array, or user
     // provided data array
@@ -83,7 +83,7 @@ public:
                                   const char *comment = NULL, int32_t n = -1);
 
     bool loadFile(const char *filePath, uint8_t *directory = 0);
-    bool loadData(uint8_t *data, size_t FileLength, uint8_t *directory = 0);
+    bool loadData(uint8_t *data, size_t len, uint8_t *directory = 0);
     bool isEmpty();
     void close();
 };
