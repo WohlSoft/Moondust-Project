@@ -251,7 +251,7 @@ class LevelScene : public Scene
         void placeBlock(LevelBlock& blockData);
         void placeBGO(LevelBGO &bgoData);
         void placeNPC(LevelNPC &npcData);
-        void addPlayer(PlayerPoint playerData, bool byWarp = false, int warpType = 0, int warpDirect = 0, bool cannon = false, double cannon_speed = 10.0);
+        bool addPlayer(PlayerPoint playerData, bool byWarp = false, int warpType = 0, int warpDirect = 0, bool cannon = false, double cannon_speed = 10.0);
         /*******************************************************/
 
         /*********************Dynamical*spawn*******************/

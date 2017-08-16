@@ -267,50 +267,49 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 
     for(size_t i = 0; i < calibration.AniFrames.set.size(); i++)
     {
-        MatrixAnimator::MatrixAnimates seq = toEnum(calibration.AniFrames.set[i].name);
+        AniFrameSet &fset = calibration.AniFrames.set[i];
+        MatrixAnimator::MatrixAnimates seq = toEnum(fset.name);
 
-        for(size_t j = 0; j < calibration.AniFrames.set[i].L.size(); j++)
+        for(size_t j = 0; j < fset.L.size(); j++)
         {
-            size_t x = calibration.AniFrames.set[i].L[j].x;
-            size_t y = calibration.AniFrames.set[i].L[j].y;
+            size_t x = fset.L[j].x;
+            size_t y = fset.L[j].y;
 
-            try
+            bool ok = false;
+            const frameOpts &fr = calibration.frame(x, y, &ok);
+            if(!ok)
             {
-                frameOpts &fr = calibration.frame(x, y);
-                MatrixAnimatorFrame frame;
-                frame.x = static_cast<double>(x) / m_width;
-                frame.y = static_cast<double>(y) / m_height;
-                frame.offset_x = fr.offsetX;
-                frame.offset_y = fr.offsetY;
-                s_bank_left[seq].push_back(frame);
-            }
-            catch(...)
-            {
-                //Frame is not exists, skip it
+                pLogWarning("MatrixAnimator: missing frame %u x %u in left frameset: %u (%s), frame index in sequence: %u",
+                            (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
+            MatrixAnimatorFrame frame;
+            frame.x = static_cast<double>(x) / m_width;
+            frame.y = static_cast<double>(y) / m_height;
+            frame.offset_x = fr.offsetX;
+            frame.offset_y = fr.offsetY;
+            s_bank_left[seq].push_back(frame);
         }
 
-        for(size_t j = 0; j < calibration.AniFrames.set[i].R.size(); j++)
+        for(size_t j = 0; j < fset.R.size(); j++)
         {
-            size_t x = calibration.AniFrames.set[i].R[j].x;
-            size_t y = calibration.AniFrames.set[i].R[j].y;
+            size_t x = fset.R[j].x;
+            size_t y = fset.R[j].y;
 
-            try
+            bool ok = false;
+            const frameOpts &fr = calibration.frame(x, y, &ok);
+            if(!ok)
             {
-                frameOpts &fr = calibration.frame(x, y);
-                MatrixAnimatorFrame frame;
-                frame.x = static_cast<double>(x) / m_width;
-                frame.y = static_cast<double>(y) / m_height;
-                frame.offset_x = fr.offsetX;
-                frame.offset_y = fr.offsetY;
-                s_bank_right[seq].push_back(frame);
-            }
-            catch(...)
-            {
-                //Frame is not exists, skip it
+                pLogWarning("MatrixAnimator: missing frame %u x %u in right frameset: %u (%s), frame index in sequence: %u",
+                            (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
+            MatrixAnimatorFrame frame;
+            frame.x = static_cast<double>(x) / m_width;
+            frame.y = static_cast<double>(y) / m_height;
+            frame.offset_x = fr.offsetX;
+            frame.offset_y = fr.offsetY;
+            s_bank_right[seq].push_back(frame);
         }
     }
 
