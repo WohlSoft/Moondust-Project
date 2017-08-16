@@ -529,7 +529,7 @@ PlayLevel:
                     if((!sceneResult) && (!lScene->isExiting()))
                     {
                         //SDL_Delay(50);
-                        levelExitCode = WldExit::EXIT_error;
+                        levelExitCode = LvlExit::EXIT_Error;
                         PGE_MsgBox msgBox(NULL, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
                                                 lScene->getLastError()),
                                                 PGE_MsgBox::msg_error);
@@ -539,7 +539,7 @@ PlayLevel:
                 else
                 {
                     sceneResult = false;
-                    levelExitCode = WldExit::EXIT_error;
+                    levelExitCode = LvlExit::EXIT_Error;
                     //% "No opened files"
                     PGE_MsgBox::warn(qtTrId("ERROR_NO_OPEN_FILES_MSG"));
                 }
