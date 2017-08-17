@@ -45,13 +45,13 @@ inline void destroyTempImage()
 }
 
 AdvNpcAnimator::AdvNpcAnimator():
-    timer(nullptr)
+    m_timer(nullptr)
 {
     constructTempImage();
 }
 
 AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config):
-    timer(nullptr)
+    m_timer(nullptr)
 {
     constructTempImage();
     buildAnimator(sprite, config);
@@ -59,69 +59,64 @@ AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config):
 
 AdvNpcAnimator::~AdvNpcAnimator()
 {
-    if(timer)
-        delete timer;
+    if(m_timer)
+        delete m_timer;
 
     destroyTempImage();
 }
 
 void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
 {
-    if(timer)
+    if(m_timer)
     {
-        timer->stop();
-        delete timer;
+        m_timer->stop();
+        delete m_timer;
     }
 
     //frames.clear();
-    mainImage = &sprite;
-    setup = config;
-    animated = false;
-    aniBiDirect = false;
-    curDirect = -1;
-    frameStep = 1;
-    frameHeight = 1;
-    CurrentFrameL = 0; //Real frame
-    CurrentFrameR = 0; //Real frame
-    frameCurrentL = 0; //Timer frame
-    frameCurrentR = 0; //Timer frame
-    frameFirstL =  0; //from first frame
-    frameLastL  = -1; //to unlimited frameset
-    frameFirstR =  0; //from first frame
-    frameLastR  = -1; //to unlimited frameset
-    animated = true;
-    frameSpeed = static_cast<int>(setup.setup.framespeed);
-    frameStyle = (int)setup.setup.framestyle;
-    frameStep  = 1;
-    frameSequance = false;
-    aniBiDirect  = setup.setup.ani_bidir;
-    customAniAlg = setup.setup.custom_ani_alg;
-    customAnimate = setup.setup.custom_animate;
-    custom_frameFL = setup.setup.custom_ani_fl;//first left
-    custom_frameEL = setup.setup.custom_ani_el;//end left
-    custom_frameFR = setup.setup.custom_ani_fr;//first right
-    custom_frameER = setup.setup.custom_ani_er;//enf right
+    m_mainImage = &sprite;
+    m_setup = config;
+    m_animated = false;
+    m_aniBiDirect = false;
+    m_curDirect = -1;
+    m_frameStep = 1;
+    m_frameHeight = 1;
+    m_frameCurrentRealL = 0; //Real frame
+    m_frameCurrentRealR = 0; //Real frame
+    m_frameCurrentTimerL = 0; //Timer frame
+    m_frameCurrentTimerR = 0; //Timer frame
+    m_frameFirstL =  0; //from first frame
+    m_frameLastL  = -1; //to unlimited frameset
+    m_frameFirstR =  0; //from first frame
+    m_frameLastR  = -1; //to unlimited frameset
+    m_animated = true;
+    m_frameSpeed = static_cast<int>(m_setup.setup.framespeed);
+    m_frameStyle = (int)m_setup.setup.framestyle;
+    m_frameStep  = 1;
+    m_frameSequance = false;
+    m_aniBiDirect  = m_setup.setup.ani_bidir;
+    m_customAnimate = m_setup.setup.custom_animate;
     //bool refreshFrames = updFrames;
-    frameHeight = (int)setup.setup.gfx_h; // height of one frame
-    frameWidth  = (int)setup.setup.gfx_w; //width of target image
-    spriteHeight = mainImage->height(); // Height of target image
-    framesCountOneSide = static_cast<int>(setup.setup.frames);
+    m_frameHeight = (int)m_setup.setup.gfx_h; // height of one frame
+    m_frameWidth  = (int)m_setup.setup.gfx_w; //width of target image
+    m_spriteHeight = m_mainImage->height(); // Height of target image
+    m_framesCountOneSide = static_cast<int>(m_setup.setup.frames);
     //int framesMod = spriteHeight % frameHeight;
     //int roundedSpriteHeight = (spriteHeight-framesMod) / frameHeight;
     int framesZoneHeight = 0;
-    framesCountTotal = 0;
+    m_framesCountTotal = 0;
 
     //Protectors
-    if(frameHeight <= 0) frameHeight = 1;
-    if(frameHeight > spriteHeight) frameHeight = spriteHeight;
-    if(frameWidth <= 0) frameWidth = 1;
+    if(m_frameHeight <= 0) m_frameHeight = 1;
+    if(m_frameHeight > m_spriteHeight) m_frameHeight = m_spriteHeight;
+    if(m_frameWidth <= 0) m_frameWidth = 1;
 
-    if(frameWidth > mainImage->width())
-        frameWidth = mainImage->width();
+    if(m_frameWidth > m_mainImage->width())
+        m_frameWidth = m_mainImage->width();
 
-    int frameBottomSpace = spriteHeight % frameHeight;
-    framesZoneHeight = spriteHeight + (frameBottomSpace == 0 ? 0 : frameHeight - frameBottomSpace);
-    framesCountTotal = framesZoneHeight / frameHeight;
+    int frameBottomSpace = m_spriteHeight % m_frameHeight;
+    framesZoneHeight = m_spriteHeight + (frameBottomSpace == 0 ? 0 : m_frameHeight - frameBottomSpace);
+    m_framesCountTotal = framesZoneHeight / m_frameHeight;
 
     //while(framesZoneHeight < spriteHeight)
     //{
@@ -129,58 +124,58 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
     //    framesZoneHeight += frameHeight;
     //}
 
-    if(setup.setup.ani_directed_direct)
+    if(m_setup.setup.ani_directed_direct)
     {
-        aniDirectL = (true) ^ (setup.setup.ani_direct);
-        aniDirectR = (false) ^ (setup.setup.ani_direct);
+        m_aniDirectL = (true) ^ (m_setup.setup.ani_direct);
+        m_aniDirectR = (false) ^ (m_setup.setup.ani_direct);
     }
     else
     {
-        aniDirectL = setup.setup.ani_direct;
-        aniDirectR = setup.setup.ani_direct;
+        m_aniDirectL = m_setup.setup.ani_direct;
+        m_aniDirectR = m_setup.setup.ani_direct;
     }
 
-    if(customAnimate) // User defined spriteSet (example: boss)
+    if(m_customAnimate) // User defined spriteSet (example: boss)
     {
-        frameSequance = true;
-        frames_listL = setup.setup.frames_left;
-        frames_listR = setup.setup.frames_right;
-        frameFirstL = 0;
-        frameFirstR = 0;
-        frameLastL = frames_listL.size() - 1;
-        frameLastR = frames_listR.size() - 1;
+        m_frameSequance = true;
+        m_framesListL = m_setup.setup.frames_left;
+        m_framesListR = m_setup.setup.frames_right;
+        m_frameFirstL = 0;
+        m_frameFirstR = 0;
+        m_frameLastL = m_framesListL.size() - 1;
+        m_frameLastR = m_framesListR.size() - 1;
     }
     else
     {
         //Standard animation
-        switch(frameStyle)
+        switch(m_frameStyle)
         {
         case 2: //Left-Right-upper sprite
-            framesCountOneSide = (int)setup.setup.frames * 4;
+            m_framesCountOneSide = (int)m_setup.setup.frames * 4;
             //left
-            frameFirstL = 0;
-            frameLastL = (int)(framesCountOneSide - (framesCountOneSide / 4) * 3) - 1;
+            m_frameFirstL = 0;
+            m_frameLastL = (int)(m_framesCountOneSide - (m_framesCountOneSide / 4) * 3) - 1;
             //Right
-            frameFirstR = (int)(framesCountOneSide - (framesCountOneSide / 4) * 3);
-            frameLastR = (int)(framesCountOneSide / 2) - 1;
+            m_frameFirstR = (int)(m_framesCountOneSide - (m_framesCountOneSide / 4) * 3);
+            m_frameLastR = (int)(m_framesCountOneSide / 2) - 1;
             break;
 
         case 1: //Left-Right sprite
-            framesCountOneSide = (int)setup.setup.frames * 2;
+            m_framesCountOneSide = (int)m_setup.setup.frames * 2;
             //left
-            frameFirstL = 0;
-            frameLastL = (int)(framesCountOneSide / 2) - 1;
+            m_frameFirstL = 0;
+            m_frameLastL = (int)(m_framesCountOneSide / 2) - 1;
             //Right
-            frameFirstR = (int)(framesCountOneSide / 2);
-            frameLastR = framesCountOneSide - 1;
+            m_frameFirstR = (int)(m_framesCountOneSide / 2);
+            m_frameLastR = m_framesCountOneSide - 1;
             break;
 
         case 0: //Single sprite
         default:
-            frameFirstL = 0;
-            frameLastL = framesCountOneSide - 1;
-            frameFirstR = 0;
-            frameLastR = framesCountOneSide - 1;
+            m_frameFirstL = 0;
+            m_frameLastL = m_framesCountOneSide - 1;
+            m_frameFirstR = 0;
+            m_frameLastR = m_framesCountOneSide - 1;
             break;
         }
     }
@@ -190,41 +185,41 @@ void AdvNpcAnimator::buildAnimator(QPixmap &sprite, obj_npc &config)
 #endif
     //curDirect  = dir;
     //setOffset(imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
-    timer = new QTimer(this);
-    timer->connect(
-        timer, SIGNAL(timeout()),
+    m_timer = new QTimer(this);
+    m_timer->connect(
+        m_timer, SIGNAL(timeout()),
         this,
         SLOT(nextFrame()));
-    timer->setTimerType(Qt::PreciseTimer);
+    m_timer->setTimerType(Qt::PreciseTimer);
     //createAnimationFrames();
-    setFrameL(getFrameNumL(frameFirstL));
-    setFrameR(getFrameNumR(frameFirstR));
+    setFrameL(getFrameNumL(m_frameFirstL));
+    setFrameR(getFrameNumR(m_frameFirstR));
 }
 
 QPixmap AdvNpcAnimator::image(int dir, int frame)
 {
-    if((frame < 0) || (frame >= framesCountTotal))
+    if((frame < 0) || (frame >= m_framesCountTotal))
     {
         if(dir <= 0)
-            return mainImage->copy(0, CurrentFrameL * frame, frameWidth, frameHeight); //frames[CurrentFrameL];
+            return m_mainImage->copy(0, m_frameCurrentRealL * frame, m_frameWidth, m_frameHeight); //frames[CurrentFrameL];
         else
-            return mainImage->copy(0, CurrentFrameR * frame, frameWidth, frameHeight); //frames[CurrentFrameR];
+            return m_mainImage->copy(0, m_frameCurrentRealR * frame, m_frameWidth, m_frameHeight); //frames[CurrentFrameR];
     }
     else
-        return mainImage->copy(0, frameHeight * frame, frameWidth, frameHeight);
+        return m_mainImage->copy(0, m_frameHeight * frame, m_frameWidth, m_frameHeight);
 }
 
 QPixmap &AdvNpcAnimator::wholeImage()
 {
-    return *mainImage;
+    return *m_mainImage;
 }
 
 QRect &AdvNpcAnimator::frameRect(int dir)
 {
     if(dir <= 0)
-        return frame_rect_L;
+        return m_frameRectL;
     else
-        return frame_rect_R;
+        return m_frameRectR;
 }
 
 void AdvNpcAnimator::setFrameL(int y)
@@ -232,10 +227,10 @@ void AdvNpcAnimator::setFrameL(int y)
     //if(frames.isEmpty()) return;
 
     //Out of range protection
-    if(y < frameFirstL) y = (frameLastL < 0) ? framesCountTotal - 1 : frameLastL;
-    if(y >= framesCountTotal) y = (frameFirstL < framesCountTotal) ? frameFirstL : 0;
-    CurrentFrameL = y;
-    frame_rect_L.setRect(0, frameHeight * CurrentFrameL, frameWidth, frameHeight);
+    if(y < m_frameFirstL) y = (m_frameLastL < 0) ? m_framesCountTotal - 1 : m_frameLastL;
+    if(y >= m_framesCountTotal) y = (m_frameFirstL < m_framesCountTotal) ? m_frameFirstL : 0;
+    m_frameCurrentRealL = y;
+    m_frameRectL.setRect(0, m_frameHeight * m_frameCurrentRealL, m_frameWidth, m_frameHeight);
 }
 
 void AdvNpcAnimator::setFrameR(int y)
@@ -243,116 +238,116 @@ void AdvNpcAnimator::setFrameR(int y)
     //if(frames.isEmpty()) return;
 
     //Out of range protection
-    if(y < frameFirstR) y = (frameLastR < 0) ? framesCountTotal - 1 : frameLastR;
-    if(y >= framesCountTotal) y = (frameFirstR < framesCountTotal) ? frameFirstR : 0;
-    CurrentFrameR = y;
-    frame_rect_R.setRect(0, frameHeight * CurrentFrameR, frameWidth, frameHeight);
+    if(y < m_frameFirstR) y = (m_frameLastR < 0) ? m_framesCountTotal - 1 : m_frameLastR;
+    if(y >= m_framesCountTotal) y = (m_frameFirstR < m_framesCountTotal) ? m_frameFirstR : 0;
+    m_frameCurrentRealR = y;
+    m_frameRectR.setRect(0, m_frameHeight * m_frameCurrentRealR, m_frameWidth, m_frameHeight);
 }
 
 void AdvNpcAnimator::start()
 {
-    if(!animated) return;
-    if((frameLastL > 0) && ((frameLastL - frameFirstL) <= 0)) return; //Don't start singleFrame animation
-    if((frameLastR > 0) && ((frameLastR - frameFirstR) <= 0)) return; //Don't start singleFrame animation
-    frameCurrentL = frameFirstL;
-    frameCurrentR = frameFirstR;
-    timer->start(frameSpeed);
+    if(!m_animated) return;
+    if((m_frameLastL > 0) && ((m_frameLastL - m_frameFirstL) <= 0)) return; //Don't start singleFrame animation
+    if((m_frameLastR > 0) && ((m_frameLastR - m_frameFirstR) <= 0)) return; //Don't start singleFrame animation
+    m_frameCurrentTimerL = m_frameFirstL;
+    m_frameCurrentTimerR = m_frameFirstR;
+    m_timer->start(m_frameSpeed);
 }
 
 void AdvNpcAnimator::stop()
 {
-    if(!animated) return;
+    if(!m_animated) return;
 
-    timer->stop();
-    setFrameL(getFrameNumL(frameFirstL));
-    setFrameR(getFrameNumR(frameFirstR));
+    m_timer->stop();
+    setFrameL(getFrameNumL(m_frameFirstL));
+    setFrameR(getFrameNumR(m_frameFirstR));
 }
 
 void AdvNpcAnimator::nextFrame()
 {
     //Left
-    if(!aniDirectL)
+    if(!m_aniDirectL)
     {
         //frameCurrent += frameSize * frameStep;
-        frameCurrentL += frameStep;
+        m_frameCurrentTimerL += m_frameStep;
 
-        if(((frameCurrentL >= framesCountTotal - (frameStep - 1)) && (frameLastL <= -1)) ||
-           ((frameCurrentL > frameLastL) && (frameLastL >= 0)))
+        if(((m_frameCurrentTimerL >= m_framesCountTotal - (m_frameStep - 1)) && (m_frameLastL <= -1)) ||
+           ((m_frameCurrentTimerL > m_frameLastL) && (m_frameLastL >= 0)))
         {
-            if(!aniBiDirect)
-                frameCurrentL = frameFirstL;
+            if(!m_aniBiDirect)
+                m_frameCurrentTimerL = m_frameFirstL;
             else
             {
-                frameCurrentL -= frameStep * 2;
-                aniDirectL = !aniDirectL;
+                m_frameCurrentTimerL -= m_frameStep * 2;
+                m_aniDirectL = !m_aniDirectL;
             }
         }
     }
     else
     {
         //frameCurrent -= frameSize * frameStep;
-        frameCurrentL -= frameStep;
+        m_frameCurrentTimerL -= m_frameStep;
 
-        if(frameCurrentL < frameFirstL)
+        if(m_frameCurrentTimerL < m_frameFirstL)
         {
-            if(!aniBiDirect)
-                frameCurrentL = ((frameLastL == -1) ? framesCountTotal - 1 : frameLastL);
+            if(!m_aniBiDirect)
+                m_frameCurrentTimerL = ((m_frameLastL == -1) ? m_framesCountTotal - 1 : m_frameLastL);
             else
             {
-                frameCurrentL += frameStep * 2;
-                aniDirectL = !aniDirectL;
+                m_frameCurrentTimerL += m_frameStep * 2;
+                m_aniDirectL = !m_aniDirectL;
             }
         }
     }
 
-    setFrameL(getFrameNumL(frameCurrentL));
+    setFrameL(getFrameNumL(m_frameCurrentTimerL));
 
     //Right
-    if(!aniDirectR)
+    if(!m_aniDirectR)
     {
         //frameCurrent += frameSize * frameStep;
-        frameCurrentR += frameStep;
+        m_frameCurrentTimerR += m_frameStep;
 
-        if(((frameCurrentR >= framesCountTotal - (frameStep - 1)) && (frameLastR <= -1)) ||
-           ((frameCurrentR > frameLastR) && (frameLastR >= 0)))
+        if(((m_frameCurrentTimerR >= m_framesCountTotal - (m_frameStep - 1)) && (m_frameLastR <= -1)) ||
+           ((m_frameCurrentTimerR > m_frameLastR) && (m_frameLastR >= 0)))
         {
-            if(!aniBiDirect)
-                frameCurrentR = frameFirstR;
+            if(!m_aniBiDirect)
+                m_frameCurrentTimerR = m_frameFirstR;
             else
             {
-                frameCurrentR -= frameStep * 2;
-                aniDirectR = !aniDirectR;
+                m_frameCurrentTimerR -= m_frameStep * 2;
+                m_aniDirectR = !m_aniDirectR;
             }
         }
     }
     else
     {
         //frameCurrent -= frameSize * frameStep;
-        frameCurrentR -= frameStep;
+        m_frameCurrentTimerR -= m_frameStep;
 
-        if(frameCurrentR < frameFirstR)
+        if(m_frameCurrentTimerR < m_frameFirstR)
         {
-            if(!aniBiDirect)
-                frameCurrentR = ((frameLastR == -1) ? framesCountTotal - 1 : frameLastR);
+            if(!m_aniBiDirect)
+                m_frameCurrentTimerR = ((m_frameLastR == -1) ? m_framesCountTotal - 1 : m_frameLastR);
             else
             {
-                frameCurrentR += frameStep * 2;
-                aniDirectR = !aniDirectR;
+                m_frameCurrentTimerR += m_frameStep * 2;
+                m_aniDirectR = !m_aniDirectR;
             }
         }
     }
 
-    setFrameR(getFrameNumR(frameCurrentR));
+    setFrameR(getFrameNumR(m_frameCurrentTimerR));
     emit onFrame();
 }
 
 int AdvNpcAnimator::getFrameNumL(int num)
 {
-    if(frameSequance)
+    if(m_frameSequance)
     {
-        if((num < 0) || (num >= frames_listL.size()))
+        if((num < 0) || (num >= m_framesListL.size()))
             num = 0;
-        return frames_listL[num];
+        return m_framesListL[num];
     }
     else
         return num;
@@ -360,11 +355,11 @@ int AdvNpcAnimator::getFrameNumL(int num)
 
 int AdvNpcAnimator::getFrameNumR(int num)
 {
-    if(frameSequance)
+    if(m_frameSequance)
     {
-        if((num < 0) || (num >= frames_listR.size()))
+        if((num < 0) || (num >= m_framesListR.size()))
             num = 0;
-        return frames_listR[num];
+        return m_framesListR[num];
     }
     else
         return num;

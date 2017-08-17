@@ -50,7 +50,6 @@ public:
     void start();
     void stop();
 
-    int speed;
 signals:
     void onFrame();
 
@@ -58,65 +57,59 @@ private slots:
     void nextFrame();
 
 private:
-    obj_npc setup;
+    obj_npc m_setup;
 
-    QPixmap *mainImage;
+    QPixmap *m_mainImage;
 
     //QVector<QPixmap> frames; //Whole image
     //void createAnimationFrames();
 
-    bool animated;
+    bool m_animated;
 
-    int frameSpeed;
-    int frameStyle;
+    int m_frameSpeed;
+    int m_frameStyle;
 
-    bool aniBiDirect;
+    bool m_aniBiDirect;
 
-    int curDirect;
-    int frameStep;
+    int m_curDirect;
+    int m_frameStep;
 
-    bool customAnimate;
-    int customAniAlg; //custom animation algorythm 0 - forward, 1 - frameJump
-    int custom_frameFL;//first left
-    int custom_frameEL;//end left / jump step
-    int custom_frameFR;//first right
-    int custom_frameER;//enf right / jump step
+    bool m_customAnimate;
 
-    bool frameSequance;
+    bool m_frameSequance;
 
     int getFrameNumL(int num);
     int getFrameNumR(int num);
 
-    QList<int> frames_listL;     //Current frame srquence
-    QList<int> frames_listR;     //Current frame srquence
+    QList<int> m_framesListL;     //Current frame srquence
+    QList<int> m_framesListR;     //Current frame srquence
 
-    int frameCurrent;
-    QTimer * timer;
+    int m_frameCurrent;
+    QTimer *m_timer;
 
-    int framesCountOneSide;
-    int framesCountTotal;
-    int frameHeight; // size of one frame
-    int frameWidth; // sprite width
-    int spriteHeight; //sprite height
+    int m_framesCountOneSide;
+    int m_framesCountTotal;
+    int m_frameHeight; // size of one frame
+    int m_frameWidth; // sprite width
+    int m_spriteHeight; //sprite height
 
-    //Animation alhorithm
-    bool aniDirectL;
-    bool aniDirectR;
+    bool m_aniDirectL;
+    bool m_aniDirectR;
 
-    int CurrentFrameL;
-    int CurrentFrameR;
+    int m_frameCurrentRealL;
+    int m_frameCurrentRealR;
 
-    int frameCurrentL;
-    int frameCurrentR;
+    int m_frameCurrentTimerL;
+    int m_frameCurrentTimerR;
 
-    QRect   frame_rect_L;
-    QRect   frame_rect_R;
+    QRect m_frameRectL;
+    QRect m_frameRectR;
 
-    int frameFirstL;
-    int frameLastL;
+    int m_frameFirstL;
+    int m_frameLastL;
 
-    int frameFirstR;
-    int frameLastR;
+    int m_frameFirstR;
+    int m_frameLastR;
 
 };
 
