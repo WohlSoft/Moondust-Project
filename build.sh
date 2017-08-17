@@ -140,6 +140,7 @@ do
             SUBMODULES="${SUBMODULES} _common/PgeGameSave/submodule"
             SUBMODULES="${SUBMODULES} _Libs/AudioCodecs"
             SUBMODULES="${SUBMODULES} _Libs/SDL_Mixer_X"
+            SUBMODULES="${SUBMODULES} Content/help"
             # \===============================================================================
             for s in $SUBMODULES
             do

@@ -131,6 +131,7 @@ set SUBMODULES=%SUBMODULES% _Libs\AudioCodecs
 set SUBMODULES=%SUBMODULES% _Libs\SDL_Mixer_X
 set SUBMODULES=%SUBMODULES% _common\PGE_File_Formats
 set SUBMODULES=%SUBMODULES% _common\PgeGameSave\submodule
+set SUBMODULES=%SUBMODULES% Content\help
 rem \===============================================================================
 for %%s in (%SUBMODULES%) do (
 echo Remove folder %%s ...

@@ -23,3 +23,6 @@
 [submodule "_Libs/SDL_Mixer_X"]
 	path = _Libs/SDL_Mixer_X
 	url = https://github.com/WohlSoft/SDL-Mixer-X.git
+[submodule "Content/help"]
+	path = Content/help
+	url = https://github.com/WohlSoft/PGE-Editor-Help.git
