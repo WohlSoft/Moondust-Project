@@ -87,7 +87,8 @@ public:
 
     static PGE_Point  MapToScr(PGE_Point point);
     static PGE_Point  MapToScr(int x, int y);
-    static int  alignToCenter(int x, int w);
+    static int  alignToCenterW(int x, int w);
+    static int  alignToCenterH(int y, int h);
     static void setViewport(int x, int y, int w, int h);
     static void resetViewport();
     static void setViewportSize(int w, int h);

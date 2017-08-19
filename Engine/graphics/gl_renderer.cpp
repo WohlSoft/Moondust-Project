@@ -1258,9 +1258,14 @@ PGE_Point GlRenderer::MapToScr(int x, int y)
     return g_renderer->MapToScr(x, y);
 }
 
-int GlRenderer::alignToCenter(int x, int w)
+int GlRenderer::alignToCenterW(int x, int w)
 {
-    return g_renderer->alignToCenter(x, w);
+    return g_renderer->alignToCenterW(x, w);
+}
+
+int GlRenderer::alignToCenterH(int y, int h)
+{
+    return g_renderer->alignToCenterH(y, h);
 }
 
 void GlRenderer::setViewport(int x, int y, int w, int h)

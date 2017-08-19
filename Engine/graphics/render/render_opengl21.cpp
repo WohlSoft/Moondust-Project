@@ -573,9 +573,14 @@ PGE_Point Render_OpenGL21::MapToScr(int x, int y)
            );
 }
 
-int Render_OpenGL21::alignToCenter(int x, int w)
+int Render_OpenGL21::alignToCenterW(int x, int w)
 {
     return x + (static_cast<int>(viewport_w_half) - (w / 2));
+}
+
+int Render_OpenGL21::alignToCenterH(int y, int h)
+{
+    return y + (static_cast<int>(viewport_h_half) - (h / 2));
 }
 
 #else

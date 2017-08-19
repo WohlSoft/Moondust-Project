@@ -45,6 +45,8 @@ public:
     static void drawImageToSceneWP(const PGE_Texture*texture, double xPos, double yPos, float sourceX, float sourceY, float width, float height, float opacity, long double zlayer, lua_State *L);
 
     static double alignToCenter(double x, double width);
+    static double alignToHCenter(double x, double width);
+    static double alignToVCenter(double y, double height);
 
     /*!
      * Remove all cached textures

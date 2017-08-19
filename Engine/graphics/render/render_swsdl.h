@@ -88,7 +88,8 @@ class Render_SW_SDL : public Render_Base
         SDL_Rect   scaledRectS(float left, float top, float right, float bottom);
         PGE_Point  MapToScr(PGE_Point point);
         PGE_Point  MapToScr(int x, int y);
-        int  alignToCenter(int x, int w);
+        int  alignToCenterW(int x, int w);
+        int  alignToCenterH(int y, int h);
     private:
         PGE_Texture _dummyTexture;
 
