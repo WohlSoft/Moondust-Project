@@ -540,22 +540,22 @@ long LVL_Block::lua_getID()
     return long(data.id);
 }
 
-int LVL_Block::lua_contentID_old()
+long LVL_Block::lua_contentID_old()
 {
-    return int(data.npc_id + 1000);
+    return data.npc_id + 1000;
 }
 
-void LVL_Block::lua_setContentID_old(int npcid)
+void LVL_Block::lua_setContentID_old(long npcid)
 {
     data.npc_id = npcid - 1000;
 }
 
-int LVL_Block::lua_contentID()
+long LVL_Block::lua_contentID()
 {
-    return int(data.npc_id);
+    return data.npc_id;
 }
 
-void LVL_Block::lua_setContentID(int npcid)
+void LVL_Block::lua_setContentID(long npcid)
 {
     data.npc_id = npcid;
 }

@@ -63,8 +63,8 @@ LuaEvent BindingCore_Events_Engine::createLoopEvent(LuaEngine *engine, double ti
 /***
 Event callback calling per every frame after all in-game objects are drawn (Levels Only)
 @function onDrawHUD
-@tparam LevelClasses.LevelCamera camera Camera where need to show HUD
-@tparam LevelClasses.LevelPlayerState playerState State of playable character
+@tparam LevelCommon.LevelCamera camera Camera where need to show HUD
+@tparam LevelCommon.LevelPlayerState playerState State of playable character
 
 @usage
 function onDrawHUD(camera, state)

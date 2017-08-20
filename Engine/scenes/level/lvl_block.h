@@ -95,10 +95,10 @@ class LVL_Block : public PGE_Phys_Object
 
         /************LUA-Specific functions*********/
         long lua_getID();
-        int  lua_contentID_old();
-        void lua_setContentID_old(int npcid);
-        int  lua_contentID();
-        void lua_setContentID(int npcid);
+        long lua_contentID_old();
+        void lua_setContentID_old(long npcid);
+        long lua_contentID();
+        void lua_setContentID(long npcid);
         bool lua_invisible();
         void lua_setInvisible(bool iv);
         bool lua_slippery();

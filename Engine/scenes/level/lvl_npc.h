@@ -106,7 +106,7 @@ public:
 
     int taskToTransform = 0;
     int taskToTransform_t = 0;
-    void transformTo(unsigned long id, int type = 0);
+    void transformTo(unsigned long id, int type = 1);
     void transformTo_x(unsigned long id);
     std::unique_ptr<LevelBlock> transformedFromBlockData;
     unsigned long transformedFromBlockID = 0;

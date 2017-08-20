@@ -110,8 +110,8 @@ void lua_LevelPlayerState::setHealth(int health)
 }
 
 /***
-Level specific classes
-@module LevelClasses
+Level specific functions and classes
+@module LevelCommon
 */
 
 luabind::scope lua_LevelPlayerState::bindToLua()

@@ -1,8 +1,8 @@
 #include <scenes/level/lvl_camera.h>
 
 /***
-Level specific classes
-@module LevelClasses
+Level specific functions and classes
+@module LevelCommon
 */
 
 luabind::scope PGE_LevelCamera::bindToLua()
