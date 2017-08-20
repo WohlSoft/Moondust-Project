@@ -39,20 +39,23 @@ void LVL_Npc::resetSpriteWarp()
 void LVL_Npc::setWarpSpawn(LVL_Npc::WarpingSide side)
 {
     setSpriteWarp(1.0f, side);
-    warpSpawing=true;
+    warpSpawing = true;
+    double origGravityScale = gravityScale();
     setSpeed(0.0, 0.0);
-    float pStep = 1.5f/PGE_Window::frameRate;
+    setGravityScale(0.0);
+    double pStep = 1.5 / PGE_Window::frameRate;
     EventQueueEntry<LVL_Npc >warpOut;
     warpOut.makeWaiterCond([this, pStep]()->bool{
-                            setSpriteWarp(warpSpriteOffset-pStep, (WarpingSide)warpDirectO, false);
-                              return warpSpriteOffset<=0.0f;
+                            setSpriteWarp(warpSpriteOffset - float(pStep), (WarpingSide)warpDirectO, false);
+                              return warpSpriteOffset <= 0.0f;
                           }, false, 0);
     event_queue.events.push_back(warpOut);
 
     EventQueueEntry<LVL_Npc >endWarping;
-    endWarping.makeCaller([this, side]()->void{
+    endWarping.makeCaller([this, side, origGravityScale]()->void{
                           setSpriteWarp(0.0f, side);
-                          warpSpawing=false;
+                          setGravityScale(origGravityScale);
+                          warpSpawing = false;
                           last_environment=-1;//!< Forcing to refresh physical environment
                       }, 0);
     event_queue.events.push_back(endWarping);
