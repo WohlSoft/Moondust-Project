@@ -663,7 +663,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.push_back(1);
             effect.frame_sequence.push_back(2);
             effect.frame_sequence.push_back(3);
-            effect.framespeed = 32;
+            effect.frameDelay = 32;
             m_scene->launchEffect(effect, true);
             effect.id = 11;
             effect.startX = posCenterX();
@@ -677,7 +677,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.push_back(4);
             effect.frame_sequence.push_back(5);
             effect.frame_sequence.push_back(6);
-            effect.framespeed = 125;
+            effect.frameDelay = 125;
             effect.delay = 0;
             m_scene->launchEffect(effect, true);
             //Points!
@@ -691,7 +691,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.animationLoops = 0;
             effect.frame_sequence.clear();
             effect.frame_sequence.push_back(0);
-            effect.framespeed = 125;
+            effect.frameDelay = 125;
             effect.delay = 1000;
             m_scene->launchEffect(effect, true);
         }

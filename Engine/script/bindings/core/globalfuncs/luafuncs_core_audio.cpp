@@ -2,7 +2,7 @@
 
 #include <audio/pge_audio.h>
 
-void Binding_Core_GlobalFuncs_Audio::playSound(long soundID)
+void Binding_Core_GlobalFuncs_Audio::playSound(size_t soundID)
 {
     PGE_Audio::playSound(soundID);
 }
@@ -12,12 +12,33 @@ void Binding_Core_GlobalFuncs_Audio::playSoundByRole(int role)
     PGE_Audio::playSoundByRole(static_cast<obj_sound_role::roles>(role));
 }
 
+/***
+Sound and music functions
+@module AudioFuncs
+*/
+
 luabind::scope Binding_Core_GlobalFuncs_Audio::bindToLua()
 {
     using namespace luabind;
     return
         namespace_("Audio")[
+            /***
+            Sound effect functions
+            @section SfxFuncs
+            */
+
+            /***
+            Play sound by ID of registered sound effects in the config pack
+            @function Audio.playSound
+            @tparam ulong soundID ID of sound registered in the config pack
+            */
             def("playSound", &Binding_Core_GlobalFuncs_Audio::playSound),
+
+            /***
+            Play sound by embedded role of game engine
+            @function Audio.playSoundByRole
+            @tparam SoundRoles role Role type of sound
+            */
             def("playSoundByRole", &Binding_Core_GlobalFuncs_Audio::playSoundByRole)
             ];
 }
@@ -28,10 +49,91 @@ void Binding_Core_GlobalFuncs_Audio::bindConstants(lua_State *L)
     if(luabind::type(_G["SoundRoles"]) != LUA_TNIL)
         return;
 
+    /***
+    Enums
+    @section SfxEnums
+    */
+
+    /***
+    Built-in sound roles of game engine enumeration
+    @enum SoundRoles
+
+    @field Greeting Starts on initial game loading
+
+    @field MenuDo Menu action sound
+    @field MenuScroll Menu scrolling sound
+    @field MenuMessageBox Message box pop-up sound
+    @field MenuPause Pause menu show and hide sound
+
+    @field CameraSwitch Camera mode switch sound
+
+    @field PlayerJump Player jump sound
+    @field PlayerStomp Player's stomp sound
+    @field PlayerKick Player's kick sound
+    @field PlayerShrink Player's shrink sound
+    @field PlayerHarm Player's harm sound
+    @field PlayerGrow Player's growl sound
+    @field PlayerDied Player's death sound
+    @field PlayerDropItem Player's item drop sound
+    @field PlayerTakeItem Player's item taking sound
+    @field PlayerSlide Player's sliding sound
+    @field PlayerGrab1 Player's grab sound 1
+    @field PlayerGrab2 Player's grab sound 2
+    @field PlayerSpring Spring sound
+    @field PlayerClimb Player's climbing sound
+    @field PlayerTail Player's whip sound
+    @field PlayerMagic Player's magic spell sound
+    @field PlayerWaterSwim Player's swimming sound
+
+    @field BonusCoin Coin taking sound
+    @field Bonus1up Got a new live/attempt sound
+
+    @field WeaponHammer Hammer attack sound
+    @field WeaponFire Fire shoot sound
+    @field WeaponCannon Cannon shoot sound
+    @field WeaponExplosion Explosion sound
+    @field WeaponBigFire Big fire shoot sound
+
+    @field NpcLavaBurn Lava birning sound
+    @field NpcStoneFall Stone fall sound
+    @field NpcHit NPC's standard hit sound
+    @field NpcDeath NPC's standard death sound
+
+    @field WarpPipe Pipe enter/exit sound
+    @field WarpDoor Door enter/exit sound
+    @field WarpTeleport Teleport sound
+
+    @field LevelFailed Failed level passing (all playable characters are dead)
+    @field PlayersDead Alias to LevelFailed
+
+    @field LevelCheckPoint Checkpoint save sound
+
+    @field WorldMove Moving on world map sound
+    @field WorldDeny Denied move sound
+    @field WorldOpenPath Opened path cell sound
+    @field WorldEnterLevel Level entering sound
+
+    @field LevelExit01 Level exit of code 1 sound
+    @field LevelExit02 Level exit of code 2 sound
+    @field LevelExit03 Level exit of code 3 sound
+    @field LevelExit04 Level exit of code 4 sound
+    @field LevelExit05 Level exit of code 5 sound
+    @field LevelExit06 Level exit of code 6 sound
+    @field LevelExit07 Level exit of code 7 sound
+    @field LevelExit08 Level exit of code 8 sound
+    @field LevelExit09 Level exit of code 9 sound
+    @field LevelExit10 Level exit of code 10 sound
+
+    @field GameCompleted Game completion theme sound
+
+    @field BlockHit Block hit/beat sound
+    @field BlockOpen Open contents of block
+    @field BlockSmashed Smashed/broken block sound
+    @field BlockSwitch Switch toggle sound
+    */
     luabind::object SoundRoles = luabind::newtable(L);
 
     SoundRoles["Greeting"] = obj_sound_role::Greeting;
-
     SoundRoles["MenuDo"] = obj_sound_role::MenuDo;
     SoundRoles["MenuScroll"] = obj_sound_role::MenuScroll;
     SoundRoles["MenuMessageBox"] = obj_sound_role::MenuMessageBox;
@@ -75,6 +177,7 @@ void Binding_Core_GlobalFuncs_Audio::bindConstants(lua_State *L)
     SoundRoles["WarpDoor"] = obj_sound_role::WarpDoor;
     SoundRoles["WarpTeleport"] = obj_sound_role::WarpTeleport;
 
+    SoundRoles["PlayersDead"] = obj_sound_role::LevelFailed;
     SoundRoles["LevelFailed"] = obj_sound_role::LevelFailed;
 
     SoundRoles["LevelCheckPoint"] = obj_sound_role::LevelCheckPoint;

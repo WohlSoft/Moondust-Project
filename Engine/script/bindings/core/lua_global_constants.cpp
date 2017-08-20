@@ -8,7 +8,8 @@ void Binding_Global_Constants::bindToLua(lua_State *L)
     using namespace luabind;
     object _G = globals(L);
     /***
-    Globally visible constants of engine
+    Globally visible constants of engine.<br>
+    <b>To use them you don't need use module name.</b>
     @module GlobalConstants
     */
 
@@ -203,26 +204,26 @@ void Binding_Global_Constants::bindToLua(lua_State *L)
     */
     _G["KEY_DOWN"] = ControllableObject::KEY_DOWN;
 
-    //kept for LunaLUA compatibility
+    //Aliases for LunaLUA compatibility
 
     /***
     "Drop" key, <b>[Alias for LunaLua compatibility]</b>
-    @field KEY_STR KEY_START
+    @field KEY_STR @{KEY_START}
     */
     _G["KEY_STR"] = ControllableObject::KEY_START;
     /***
     "Drop" key, <b>[Alias for LunaLua compatibility]</b>
-    @field KEY_SEL KEY_DROP
+    @field KEY_SEL @{KEY_DROP}
     */
     _G["KEY_SEL"] = ControllableObject::KEY_DROP;
     /***
     "Alt-Jump" key, <b>[Alias for LunaLua compatibility]</b>
-    @field KEY_SPINJUMP KEY_ALT_JUMP
+    @field KEY_SPINJUMP @{KEY_ALT_JUMP}
     */
     _G["KEY_SPINJUMP"] = ControllableObject::KEY_ALT_JUMP;
     /***
     "Alt-Run" key, <b>[Alias for LunaLua compatibility]</b>
-    @field KEY_X KEY_ALT_RUN
+    @field KEY_X @{KEY_ALT_RUN}
     */
     _G["KEY_X"] = ControllableObject::KEY_ALT_RUN;
 }

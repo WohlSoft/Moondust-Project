@@ -68,7 +68,7 @@ WorldScene::WorldScene()
     /*********Fader*************/
     m_fader.setFull();
     /*********Fader*************/
-    m_mapWalker.moveSpeed = 125 / PGE_Window::TicksPerSecond;
+    m_mapWalker.moveSpeed = 125 / PGE_Window::frameRate;
     m_mapWalker.moveStepsCount = 0;
     ConfigManager::setup_WorldMap.initFonts();
     m_commonSetup = ConfigManager::setup_WorldMap;

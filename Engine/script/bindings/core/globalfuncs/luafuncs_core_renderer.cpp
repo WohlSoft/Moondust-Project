@@ -2,6 +2,7 @@
 
 #include <scenes/scene.h>
 #include <fontman/font_manager.h>
+#include <graphics/window.h>
 
 #define DEFAULT_FONT_SIZE 14
 #define DEFAULT_ZORDER 3.0L
@@ -24,12 +25,12 @@ void Binding_Core_GlobalFuncs_Renderer::printText_LUNA(std::string text, int fon
     printTextWP(text, x, y, fontType, DEFAULT_FONT_SIZE, textcolor, DEFAULT_ZORDER, L);
 }
 
-void Binding_Core_GlobalFuncs_Renderer::printText(std::string text, int x, int y, int fontType, int size, lua_State *L)
+void Binding_Core_GlobalFuncs_Renderer::printText(std::string text, int x, int y, int fontType, uint32_t size, lua_State *L)
 {
     printTextWP(text, x, y, fontType, size, 0xFFFFFFFF, DEFAULT_ZORDER, L);
 }
 
-void Binding_Core_GlobalFuncs_Renderer::printText(std::string text, int x, int y, int fontType, int size, uint32_t rgba, lua_State *L)
+void Binding_Core_GlobalFuncs_Renderer::printText(std::string text, int x, int y, int fontType, uint32_t size, uint32_t rgba, lua_State *L)
 {
     printTextWP(text, x, y, fontType, size, rgba, DEFAULT_ZORDER, L);
 }
@@ -46,64 +47,241 @@ void Binding_Core_GlobalFuncs_Renderer::printTextWP(std::string text, int x, int
 
 void Binding_Core_GlobalFuncs_Renderer::printTextWP_LUNA(std::string text, int fontType, int x, int y, long double zorder, lua_State *L)
 {
-    int textcolor=0xFFFFFFFF;
-    if(fontType==2)
+    uint32_t textcolor = 0xFFFFFFFF;
+    if(fontType == 2)
         textcolor = 0x000000FF;
     printTextWP(text, x, y, fontType, DEFAULT_FONT_SIZE, textcolor, zorder, L);
 }
 
-void Binding_Core_GlobalFuncs_Renderer::printTextWP(std::string text, int x, int y, int fontType, int size, long double zorder, lua_State *L)
+void Binding_Core_GlobalFuncs_Renderer::printTextWP(std::string text, int x, int y, int fontType, uint32_t size, long double zorder, lua_State *L)
 {
     printTextWP(text, x, y, fontType, size, 0xFFFFFFFF, zorder, L);
 }
 
-void Binding_Core_GlobalFuncs_Renderer::printTextWP(std::string text, int x, int y, int fontType, int size, uint32_t rgba, long double zorder, lua_State *L)
+void Binding_Core_GlobalFuncs_Renderer::printTextWP(std::string text, int x, int y, int fontType, uint32_t size, uint32_t rgba, long double zorder, lua_State *L)
 {
-    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([=](double /*CameraX*/, double /*CameraY*/)
+    LuaGlobal::getEngine(L)->getBaseScene()->renderArrayAddFunction([ = ](double /*CameraX*/, double /*CameraY*/)
     {
         FontManager::printText(
-                    text.c_str(),
-                    x,
-                    y,
-                    fontType,
-                    float((rgba & 0xFF000000) >> 24) / 255.0f,
-                    float((rgba & 0x00FF0000) >> 16) / 255.0f,
-                    float((rgba & 0x0000FF00) >> 8) / 255.0f,
-                    float((rgba & 0x000000FF)) / 255.0f,
-                    size);
+            text.c_str(),
+            x,
+            y,
+            fontType,
+            float((rgba & 0xFF000000) >> 24) / 255.0f,
+            float((rgba & 0x00FF0000) >> 16) / 255.0f,
+            float((rgba & 0x0000FF00) >> 8) / 255.0f,
+            float((rgba & 0x000000FF)) / 255.0f,
+            size);
     }, zorder);
 }
 
-void Binding_Core_GlobalFuncs_Renderer::showMessageBox(std::string text, lua_State* L)
+void Binding_Core_GlobalFuncs_Renderer::showMessageBox(std::string text, lua_State *L)
 {
     LuaGlobal::getEngine(L)->getBaseScene()->m_messages.showMsg(text);
 }
+
+void Binding_Core_GlobalFuncs_Renderer::showExternalMessageBox(std::string text, lua_State *)
+{
+    PGE_Window::msgBoxInfo("Lua debug message", text);
+}
+
+/***
+Text printing and drawing functions
+@module TextAndRenderFuncs
+*/
 
 luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
 {
     using namespace luabind;
     return
+        /***
+        Renderer functions
+        @section RendererNamespace
+         */
         namespace_("Renderer")[
-            def("printText", (void(*)(std::string, int, int, lua_State*))&printText),
-            def("printText", (void(*)(std::string, int, int, int, lua_State*))&printText),
-            def("printText", (void(*)(std::string, int, int, int, int, lua_State*))&printText),
-            def("printText", (void(*)(std::string, int, int, int, int, uint32_t, lua_State*))&printText),
-            def("printTextWP", (void(*)(std::string, int, int, long double, lua_State*))&printTextWP),
-            def("printTextWP", (void(*)(std::string, int, int, int, long double, lua_State*))&printTextWP),
-            def("printTextWP", (void(*)(std::string, int, int, int, int, long double, lua_State*))&printTextWP),
-            def("printTextWP", (void(*)(std::string, int, int, int, int, uint32_t, long double, lua_State*))&printTextWP)
-            ];
+            /***
+            Draw a text with default capabilities
+            @function Renderer.printText
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            */
+            def("printText", (void(*)(std::string, int, int, lua_State *))&printText),
+            /***
+            Draw a text with default capabilities by specified font
+            @function Renderer.printText
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam int fontType ID of a font registered in config pack
+            */
+            def("printText", (void(*)(std::string, int, int, int, lua_State *))&printText),
+            /***
+            Draw a text by specified font and custom pixel size
+            @function Renderer.printText
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam int fontType ID of a font registered in config pack
+            @tparam uint size Pixel size of one font letter
+            */
+            def("printText", (void(*)(std::string, int, int, int, uint32_t, lua_State *))&printText),
+            /***
+            Draw a text with by specified font, pixel size, and RGBA-color
+            @function Renderer.printText
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam int fontType ID of a font registered in config pack
+            @tparam uint size Pixel size of one font letter
+            @tparam uint rgba RGBA (Red-Green-Blue-Alpha) color value in next format: 0x<span style="color:red;">RR</span><span style="color:green;">GG</span><span style="color:blue;">BB</span><span style="color:gray;">AA</span>
+            */
+            def("printText", (void(*)(std::string, int, int, int, uint32_t, uint32_t, lua_State *))&printText),
+
+            /***
+            Draw a text with default capabilities with render prioritizing
+            @function Renderer.printTextWP
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam double zValue Z Value which defines a render priority
+            */
+            def("printTextWP", (void(*)(std::string, int, int, long double, lua_State *))&printTextWP),
+            /***
+            Draw a text with default capabilities by specified font with render prioritizing
+            @function Renderer.printTextWP
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam int fontType ID of a font registered in config pack
+            @tparam double zValue Z Value which defines a render priority
+            */
+            def("printTextWP", (void(*)(std::string, int, int, int, long double, lua_State *))&printTextWP),
+            /***
+            Draw a text by specified font, custom pixel size, and render prioritizing
+            @function Renderer.printTextWP
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam int fontType ID of a font registered in config pack
+            @tparam uint size Pixel size of one font letter
+            @tparam double zValue Z Value which defines a render priority
+            */
+            def("printTextWP", (void(*)(std::string, int, int, int, uint32_t, long double, lua_State *))&printTextWP),
+            /***
+            Draw a text with by specified font, pixel size, RGBA-color, and render prioritizing
+            @function Renderer.printTextWP
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam int fontType ID of a font registered in config pack
+            @tparam uint size Pixel size of one font letter
+            @tparam uint rgba RGBA (Red-Green-Blue-Alpha) color value in next format: 0x<span style="color:red;">RR</span><span style="color:green;">GG</span><span style="color:blue;">BB</span><span style="color:gray;">AA</span>
+            @tparam double zValue Z Value which defines a render priority
+            */
+            def("printTextWP", (void(*)(std::string, int, int, int, uint32_t, uint32_t, long double, lua_State *))&printTextWP)
+        ];
 }
 
 luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaText()
 {
     using namespace luabind;
     return
+        /***
+        LunaLua text functions. Added for compatibility with LunaLua API.
+        @section TextNamespace
+         */
         namespace_("Text")[
-            def("print", (void(*)(std::string, int, int, lua_State*))&printText),
-            def("print", (void(*)(std::string, int, int, int, lua_State*))&printText_LUNA),
-            def("printWP", (void(*)(std::string, int, int, long double, lua_State*))&printTextWP),
-            def("printWP", (void(*)(std::string, int, int, int, long double, lua_State*))&printTextWP_LUNA),
+            /***
+            Writes debugText in an external message box and shows it to the user.
+            @function Text.windowDebug
+            @tparam string debugText Message text to show
+            */
+            def("windowDebug", &showExternalMessageBox),
+
+            /***
+            Draw a text with default capabilities. Same as @{Renderer.printText}.
+            @function Text.print
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            */
+            def("print", (void(*)(std::string, int, int, lua_State *))&printText),
+
+            /***
+            Draw a text with default capabilities and specified font
+            @function Text.print
+            @tparam string text Text to print
+            @tparam int fontType Fond type ID (<u>Note:</u> font #2 will be shown in black color)
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            */
+            def("print", (void(*)(std::string, int, int, int, lua_State *))&printText_LUNA),
+
+            /***
+            Draw a text with default capabilities and render prioritizing. Same as @{Renderer.printTextWP}.
+            @function Text.printWP
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam double zValue Z Value which defines a render priority
+            */
+            def("printWP", (void(*)(std::string, int, int, long double, lua_State *))&printTextWP),
+            /***
+            Draw a text with default capabilities, specified font, and render prioritizing
+            @function Text.printWP
+            @tparam string text Text to print
+            @tparam int fontType Fond type ID (<u>Note:</u> font #2 will be shown in black color)
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            @tparam double zValue Z Value which defines a render priority
+            */
+            def("printWP", (void(*)(std::string, int, int, int, long double, lua_State *))&printTextWP_LUNA),
+
+            /***
+            Displays In-Game Message Box.<br>
+            As difference to LunaLua, this message box works everywhere while in LunaLua works on levels only.
+            @function Text.showMessageBox
+            @tparam string msgText Message text
+            */
             def("showMessageBox", &showMessageBox)
             ];
+}
+
+luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaDeprecated()
+{
+    /***
+    Deprecated LunaLua functions. Added for compatibility with LunaLua API.
+    @section DeprecatedTextNamespace
+    */
+    using namespace luabind;
+    return
+            /***
+            Draw a text with default capabilities <b>[Deprecated, use @{Text.print} or @{Renderer.printText}]</b>
+            @function printText
+            @see Text.print
+            @tparam string text Text to print
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            */
+            def("printText", (void(*)(std::string, int, int, lua_State *))&printText),
+
+            /***
+            Draw a text with default capabilities and specified font <b>[Deprecated, use @{Text.print} or @{Renderer.printText}]</b>
+            @function printText
+            @see Text.print
+            @tparam string text Text to print
+            @tparam int fontType Fond type ID (<u>Note:</u> font #2 will be shown in black color)
+            @tparam int x X position on screen
+            @tparam int y Y position on screen
+            */
+            def("printText", (void(*)(std::string, int, int, int, lua_State *))&printText_LUNA),
+
+            /***
+            Writes debugText in an external message box and shows it to the user  <b>[Deprecated, use @{Text.windowDebug}]</b>
+            @function windowDebug
+            @tparam string debugText Message text to show
+            */
+            def("windowDebug", &showExternalMessageBox)
+            ;
 }

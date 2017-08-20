@@ -1235,7 +1235,7 @@ void GlRenderer::flush()
 void GlRenderer::repaint()
 {
     g_renderer->repaint();
-    GlRenderer::processRecorder(static_cast<double>(PGE_Window::TimeOfFrame));
+    GlRenderer::processRecorder(static_cast<double>(PGE_Window::frameDelay));
 }
 
 void GlRenderer::setClearColor(float r, float g, float b, float a)

@@ -35,8 +35,8 @@ Scene  *PGE_Window::m_currentScene      = nullptr;
 int     PGE_Window::Width               = 800;
 int     PGE_Window::Height              = 600;
 
-double  PGE_Window::TicksPerSecond      = 1000.0 / 15.0;
-int     PGE_Window::TimeOfFrame         = 15;
+double  PGE_Window::frameRate           = 1000.0 / 15.0;
+int     PGE_Window::frameDelay          = 15;
 bool    PGE_Window::vsync               = true;
 bool    PGE_Window::vsyncIsSupported    = true;
 
@@ -302,18 +302,18 @@ void PGE_Window::toggleVSync(bool vsync)
             //Vertical syncronization is supported
             vsyncIsSupported = true;
             if(mode.refresh_rate > 0)
-                TimeOfFrame = static_cast<int>(std::ceil(1000.0 / static_cast<double>(mode.refresh_rate)));
-            TicksPerSecond  = 1000.0 / static_cast<double>(TimeOfFrame);
-            g_AppSettings.timeOfFrame = TimeOfFrame;
-            g_AppSettings.TicksPerSecond = TicksPerSecond;
+                frameDelay = static_cast<int>(std::ceil(1000.0 / static_cast<double>(mode.refresh_rate)));
+            frameRate  = 1000.0 / static_cast<double>(frameDelay);
+            g_AppSettings.timeOfFrame = frameDelay;
+            g_AppSettings.frameRate = frameRate;
             SDL_ClearError();
         }
         else
         {
             //Vertical syncronization is NOT supported
             vsyncIsSupported = false;
-            TimeOfFrame = g_AppSettings.timeOfFrame;
-            TicksPerSecond = g_AppSettings.TicksPerSecond;
+            frameDelay = g_AppSettings.timeOfFrame;
+            frameRate = g_AppSettings.frameRate;
             //Disable vertical syncronization because unsupported
             g_AppSettings.vsync = false;
             PGE_Window::vsync = false;

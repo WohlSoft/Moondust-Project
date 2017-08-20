@@ -109,28 +109,141 @@ void lua_LevelPlayerState::setHealth(int health)
     m_health = health;
 }
 
+/***
+Level specific classes
+@module LevelClasses
+*/
+
 luabind::scope lua_LevelPlayerState::bindToLua()
 {
     using namespace luabind;
+    /***
+    Playable character state information (Level only)
+    @type LevelPlayerState
+    */
     return class_<lua_LevelPlayerState>("LevelPlayerState")
+            /***
+            Points counter (Read Only)
+            @tfield uint points
+            */
            .def_readonly("points", &lua_LevelPlayerState::countPoints)
+            /***
+            Coins counter (Read Only)
+            @tfield uint coins
+            */
            .def_readonly("coins",  &lua_LevelPlayerState::countCoins)
+            /***
+            Lives/Attempts counter (Read Only)
+            @tfield int lives
+            */
            .def_readonly("lives",  &lua_LevelPlayerState::countLives)
-           .def_readonly("stars",  &lua_LevelPlayerState::countStars)
+            /***
+            Lives/Attempts counter, alias to @{lives} (Read Only)
+            @tfield int attempts
+            */
+           .def_readonly("attempts",  &lua_LevelPlayerState::countLives)
+            /***
+            Count of stars/leeks (Read Only)
+            @tfield uint leeks
+            */
            .def_readonly("leeks",  &lua_LevelPlayerState::countStars)
+            /***
+            Count of stars/leeks, alias to @{leeks} (Read Only)
+            @tfield uint stars
+            */
+           .def_readonly("stars",  &lua_LevelPlayerState::countStars)
+
+            /***
+            Health level of player (Read Only)
+            @tfield int health
+            */
            .def_readonly("health", &lua_LevelPlayerState::m_health)
+            /***
+            ID of playable character (Read Only)
+            @tfield ulong characterID
+            */
            .def_readonly("characterID", &lua_LevelPlayerState::m_characterID)
+            /***
+            ID of playable character's state/suit/form/shape (Read Only)
+            @tfield ulong stateID
+            */
            .def_readonly("stateID", &lua_LevelPlayerState::m_stateID)
+            /***
+            Add points to player
+            @function addPoints
+            @tparam uint points Count of points to append
+            */
            .def("addPoints", &lua_LevelPlayerState::appendPoints)
+            /***
+            Add cois to player
+            @function addCoins
+            @tparam uint cois Count of cois to append
+            */
            .def("addCoins",  &lua_LevelPlayerState::appendCoins)
-           .def("addStars",  &lua_LevelPlayerState::appendStars)
+            /***
+            Add leeks/stars to player
+            @function addLeeks
+            @tparam uint leeks Count of leeks to append
+            */
            .def("addLeeks",  &lua_LevelPlayerState::appendStars)
+            /***
+            Add leeks/stars to player, alias to @{addLeeks}
+            @function addStars
+            @tparam uint stars Count of Stars to append
+            */
+           .def("addStars",  &lua_LevelPlayerState::appendStars)
+            /***
+            Add or removes lives of player
+            @function addLives
+            @tparam int lives Count of lives to add (positive) or remove (negative)
+            */
            .def("addLives",  &lua_LevelPlayerState::appendLives)
+            /***
+            Add or removes attempts of player, alias to @{addLives}
+            @function addAttempts
+            @tparam int attempts Count of attempts to add (positive) or remove (negative)
+            */
+           .def("addAttempts",  &lua_LevelPlayerState::appendLives)
+            /***
+            Set absolute value of points
+            @function setPoints
+            @tparam uint points Count of points to set
+            */
            .def("setPoints", &lua_LevelPlayerState::setPoints)
+            /***
+            Set absolute value of coins
+            @function setCoins
+            @tparam uint points Count of coins to set
+            */
            .def("setCoins",  &lua_LevelPlayerState::setCoins)
-           .def("setStars",  &lua_LevelPlayerState::setStars)
+            /***
+            Set absolute value of leeks
+            @function setLeeks
+            @tparam uint points Count of leeks to set
+            */
            .def("setLeeks",  &lua_LevelPlayerState::setStars)
+            /***
+            Set absolute value of stars, alias to @{setLeeks}
+            @function setStars
+            @tparam uint points Count of stars to set
+            */
+           .def("setStars",  &lua_LevelPlayerState::setStars)
+            /***
+            Set absolute value of lives
+            @function setLives
+            @tparam uint points Count of lives to set
+            */
            .def("setLives",  &lua_LevelPlayerState::setLives)
+            /***
+            Set absolute value of attempts, alias to @{setLives}
+            @function setAttempts
+            @tparam uint points Count of attempts to set
+            */
+           .def("setAttempts",  &lua_LevelPlayerState::setLives)
+            /***
+            ID of player (Read Only)
+            @tfield int playerID
+            */
            .def_readonly("playerID",  &lua_LevelPlayerState::m_playerID)
            ;
 }

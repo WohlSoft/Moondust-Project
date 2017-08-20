@@ -343,7 +343,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
             playSnd.makeCaller([this]()->void{PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
                                              }, 0);
             m_eventQueue.events.push_back(playSnd);
-            double pStep = 1.5 / PGE_Window::TicksPerSecond;
+            double pStep = 1.5 / PGE_Window::frameRate;
             EventQueueEntry<LVL_Player >warpOut;
             warpOut.makeWaiterCond([this, pStep]()->bool
             {
@@ -461,7 +461,7 @@ void LVL_Player::WarpTo(const LevelDoor &warp)
         break;
         }
 
-        double pStep = 1.5 / PGE_Window::TicksPerSecond;
+        double pStep = 1.5 / PGE_Window::frameRate;
         EventQueueEntry<LVL_Player >warpIn;
         warpIn.makeWaiterCond([this, pStep]()->bool
         {

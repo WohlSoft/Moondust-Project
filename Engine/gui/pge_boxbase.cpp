@@ -131,7 +131,7 @@ void PGE_BoxBase::loadTexture(std::string path)
 
 void PGE_BoxBase::updateTickValue()
 {
-    m_uTickf = PGE_Window::TimeOfFrame;//1000.0f/(float)PGE_Window::TicksPerSecond;
+    m_uTickf = PGE_Window::frameDelay;//1000.0f/(float)PGE_Window::TicksPerSecond;
     m_uTick = static_cast<int>(round(m_uTickf));
 
     if(m_uTick <= 0)    m_uTick = 1;

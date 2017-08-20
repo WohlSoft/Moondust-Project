@@ -293,10 +293,8 @@ double Binding_Core_Graphics::alignToVCenter(double y, double height)
 
 
 /***
-Global graphics functions.<br>
-While using any functions of this module you must type parent name.<br>
-For example, Graphics.drawImage(texture, x, y)
-@module Graphics
+Global graphics functions.
+@module GraphicFuncs
 */
 
 luabind::scope Binding_Core_Graphics::PGETexture_bindToLua()
@@ -306,9 +304,9 @@ luabind::scope Binding_Core_Graphics::PGETexture_bindToLua()
         /***
         The LuaImageResource refers to a PGE Engine specific type, consisting of the data of a loaded image file as OpenGL texture.
         @table LuaImageResource
-        @tfield int w Width of texture
-        @tfield int h Height of texture
-        @tfield uint texture Index of OpenGL texture
+        @tfield int w Width of texture [Read-Only]
+        @tfield int h Height of texture [Read-Only]
+        @tfield uint texture Index of OpenGL texture [Read-Only]
         */
         class_<PGE_Texture>("LuaImageResource")
         //Properties
@@ -328,7 +326,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
         namespace_("Graphics")[
             /***
             Loads a texture into the memory from image file.
-            @function loadImage
+            @function Graphics.loadImage
             @tparam string filename The filename of the image file relative to the custom folder. Can be also a absolute path.
             @treturn LuaImageResource an image descritor of LuaImageResource type (PGE_Texture internally). When returned nil, an error has occouped.
             */
@@ -341,9 +339,10 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             Drawing on screen
             @section GraphicsScreenDraw
             */
+
             /***
             Draws the texture for a frame.
-            @function drawImage
+            @function Graphics.drawImage
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -352,7 +351,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws the texture for a frame, with an opacity from 0.0 to 1.0.
-            @function drawImage
+            @function Graphics.drawImage
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -362,7 +361,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws a part of the texture for a frame. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImage
+            @function Graphics.drawImage
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -376,7 +375,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             /***
             Draws a part of the texture for a frame, with an opacity from 0.0 to 1.0.
             Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImage
+            @function Graphics.drawImage
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -392,10 +391,11 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             Drawing on screen with prioritizing
             @section GraphicsScreenDrawWP
             */
+
             /***
             Draws the texture for a frame with prioritizing.
             The rendering of the image is prioritized by <i>zValue</i> priority
-            @function drawImageWP
+            @function Graphics.drawImageWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -405,7 +405,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws the texture for a frame with prioritizing, with an opacity from 0.0 to 1.0.
-            @function drawImageWP
+            @function Graphics.drawImageWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -416,7 +416,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws a part of the texture for a frame with prioritizing. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImageWP
+            @function Graphics.drawImageWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -431,7 +431,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             /***
             Draws a part of the texture for a frame with prioritizing, with an opacity from 0.0 to 1.0.
             Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImageWP
+            @function Graphics.drawImageWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam float xPos X position on the screen coordinates
             @tparam float yPos Y position on the screen coordinates
@@ -448,9 +448,10 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             Drawing on scene
             @section GraphicsScreenDrawWP
             */
+
             /***
             Draws the texture for a frame by scene world coordinates.
-            @function drawImageToScene
+            @function Graphics.drawImageToScene
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -459,7 +460,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws the texture for a frame by scene world coordinates, with an opacity from 0.0 to 1.0.
-            @function drawImageToScene
+            @function Graphics.drawImageToScene
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -469,7 +470,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws a part of the texture for a frame by scene world coordinates. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImageToScene
+            @function Graphics.drawImageToScene
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -483,7 +484,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             /***
             Draws a part of the texture for a frame by scene world coordinates, with an opacity from 0.0 to 1.0.
             Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImageToScene
+            @function Graphics.drawImageToScene
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -499,10 +500,11 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             Drawing on scene with prioritizing
             @section GraphicsScreenDrawWP
             */
+
             /***
             Draws the texture for a frame by scene world coordinates with prioritizing.
             The rendering of the image is prioritized by <i>zValue</i> priority
-            @function drawImageToSceneWP
+            @function Graphics.drawImageToSceneWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -512,7 +514,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws the texture for a frame by scene world coordinates with prioritizing, with an opacity from 0.0 to 1.0.
-            @function drawImageToSceneWP
+            @function Graphics.drawImageToSceneWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -523,7 +525,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Draws a part of the texture for a frame by scene world coordinates with prioritizing. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImageToSceneWP
+            @function Graphics.drawImageToSceneWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -538,7 +540,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             /***
             Draws a part of the texture for a frame by scene world coordinates with prioritizing, with an opacity from 0.0 to 1.0.
             Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
-            @function drawImageToSceneWP
+            @function Graphics.drawImageToSceneWP
             @tparam LuaImageResource texture Texture resource to draw
             @tparam double xPos X position on the level or world scene coordinates
             @tparam double yPos Y position on the level or world scene coordinates
@@ -555,9 +557,10 @@ luabind::scope Binding_Core_Graphics::bindToLua()
             Alignment functions
             @section GraphicsAlign
             */
+
             /***
             Aligns horizontal position of object of <i>width</i> to center with <i>offset</i>.
-            @function alignToHCenter
+            @function Graphics.alignToHCenter
             @tparam int x X Offset of horizontal center position
             @tparam int width Width of object
             @treturn int Aligned X position of object
@@ -566,7 +569,7 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 
             /***
             Aligns vertical position of object of <i>height</i> to center with <i>offset</i>.
-            @function alignToVCenter
+            @function Graphics.alignToVCenter
             @tparam int y Y Offset of vertical center position
             @tparam int height Height of object
             @treturn int Aligned Y position of object
