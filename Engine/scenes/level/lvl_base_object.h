@@ -173,6 +173,7 @@ class PGE_Phys_Object: public PGE_physBody
         void setSpeedX(double x);
         void setSpeedY(double y);
         void setDecelX(double x);
+        void setDecelY(double y);
         void applyAccel(double x, double y);
 
         inline double  gravityScale()

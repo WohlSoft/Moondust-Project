@@ -696,6 +696,12 @@ void PGE_Phys_Object::setDecelX(double x)
     phys_setup.decelerate_x = x;
 }
 
+void PGE_Phys_Object::setDecelY(double y)
+{
+    phys_setup.decelerate_y = y;
+}
+
+
 void PGE_Phys_Object::applyAccel(double x, double y)
 {
     m_accelX = x;

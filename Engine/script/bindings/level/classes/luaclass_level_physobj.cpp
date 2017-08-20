@@ -257,15 +257,79 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
             @tfield double speedY
             */
             .property("speedY", &PGE_Phys_Object::speedY, &PGE_Phys_Object::setSpeedY)
+
+            /***
+            Minimal horizontal moving velocity in pixels per 1/65 of second units
+            @tfield double minVelX
+            */
             .property("minVelX", &PGE_Phys_Object::minVelX, &PGE_Phys_Object::setMinVelX)
+
+            /***
+            Minimal vertical moving velocity in pixels per 1/65 of second units
+            @tfield double minVelY
+            */
             .property("minVelY", &PGE_Phys_Object::minVelY, &PGE_Phys_Object::setMinVelY)
+
+            /***
+            Maximal horizontal moving velocity in pixels per 1/65 of second units
+            @tfield double maxVelX
+            */
             .property("maxVelX", &PGE_Phys_Object::maxVelX, &PGE_Phys_Object::setMaxVelX)
+
+            /***
+            Maximal vertical moving velocity in pixels per 1/65 of second units
+            @tfield double maxVelY
+            */
             .property("maxVelY", &PGE_Phys_Object::maxVelY, &PGE_Phys_Object::setMaxVelY)
+
+            /***
+            Gravity scale multiplier to global gravity force.
+            @tfield double gravity 1.0 is same as global, 0.0 is no gravity, any negative value will invert gravity
+            */
             .property("gravity", &PGE_Phys_Object::gravityScale, &PGE_Phys_Object::setGravityScale)
+
+            /***
+            Gravity acceleration
+            @tfield double gravity_accel 1.0 is same as global, 0.0 is no gravity, any negative value will invert gravity
+            */
             .property("gravity_accel", &PGE_Phys_Object::gravityAccel, &PGE_Phys_Object::setGravityAccel)
+
+            /***
+            Allow player collide with this NPC by the way
+            @tfield PhysBase.CollisionType collide_player
+            */
             .property("collide_player", &PGE_Phys_Object::collidePlayer, &PGE_Phys_Object::setCollidePlayer)
+
+            /***
+            Allow another NPCs collide with this NPC by the way
+            @tfield PhysBase.CollisionType collide_npc
+            */
             .property("collide_npc", &PGE_Phys_Object::collideNpc, &PGE_Phys_Object::setCollideNpc)
+
+            /***
+            Apply acceneration force on this frame
+            To have speed acceleration of object you must call this function every frame (for example in <b>onLoop()</b> event callback of NPC or playable character)<br>
+            Unit - one pixel per 1/65 of second in 1 / 65 of second. I.e. In one 1/65 of second interval speed will change one pixel per 1/65 of second
+            @function applyAccel
+            @tparam double x Horizontal acceleration (<0 to left, >0 to right)
+            @tparam double y Vertical acceleration (<0 to up, >0 to down)
+            */
             .def("applyAccel", &PGE_Phys_Object::applyAccel)
+
+            /***
+            Set a horizontal movement deceleration when is no acceleration applying<br>
+            Unit - one pixel per 1/65 of second in 1 / 65 of second. I.e. In one 1/65 of second interval speed will change one pixel per 1/65 of second
+            @function setDecelX
+            @tparam double x Horzontal deceleration
+            */
             .def("setDecelX", &PGE_Phys_Object::setDecelX)
+
+            /***
+            Set a vertical movement deceleration when is no acceleration or gravity applying<br>
+            Unit - one pixel per 1/65 of second in 1 / 65 of second. I.e. In one 1/65 of second interval speed will change one pixel per 1/65 of second
+            @function setDecelY
+            @tparam double y Horzontal deceleration
+            */
+            .def("setDecelY", &PGE_Phys_Object::setDecelY)
             ;
 }

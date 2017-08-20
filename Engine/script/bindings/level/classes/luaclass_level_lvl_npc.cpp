@@ -74,6 +74,37 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onActivated()
         call<void>("onActivated");
 }
 
+/***
+Event callback calling per every frame
+@function luaNPC:onLoop
+@tparam double frameDelay Frame delay in milliseconds. Use it for various timing processors.
+
+@usage
+class 'MyNPC'
+
+-- A timer value
+local timer = 0
+
+-- Play sound every one second
+function ticker(frameDelay)
+    -- Iterate a timer
+    timer = timer + frameDelay
+    -- Check if timer reaches one whole second
+    if(timer >= 1000)then
+        -- Play a tick sound
+        Audio.playSoundByRole(SoundRoles.MenuScroll)
+        -- Reset timer to zero without lost of timing accuracy
+        timer = timer - 1000
+    end
+end
+
+function MyNPC:onLoop(frameDelay)
+    ticker(frameDelay)
+end
+
+return MyNPC
+*/
+
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onLoop(double tickTime)
 {
     if(!LuaGlobal::getEngine(mself.ref(*this).state())->shouldShutdown())
@@ -117,7 +148,7 @@ luaNpcClassDef()
                   detail::null_type,
                   Binding_Level_ClassWrapper_LVL_NPC>("BaseNPC")
             /***
-            Damage reason static constants
+            Damage reasons enumeration (DamageReason)
             @section DamageReason
             */
             .enum_("DamageReason")
@@ -163,24 +194,83 @@ luaNpcClassDef()
                 */
                 value("DAMAGE_CUSTOM_REASON", LVL_Npc::DamageReason::DAMAGE_CUSTOM_REASON)
             ]
+
+            /***
+            Warping side enumeration (WarpingSide)
+            @section WarpingSide
+            */
             .enum_("WarpingSide")
             [
+                /***
+                NPC is in warping process and points top direction
+                @field BaseNPC.WARP_TOP
+                */
                 value("WARP_TOP", LVL_Npc::WarpingSide::WARP_TOP),
+                /***
+                NPC is in warping process and points left direction
+                @field BaseNPC.WARP_LEFT
+                */
                 value("WARP_LEFT", LVL_Npc::WarpingSide::WARP_LEFT),
+                /***
+                NPC is in warping process and points bottom direction
+                @field BaseNPC.WARP_BOTTOM
+                */
                 value("WARP_BOTTOM", LVL_Npc::WarpingSide::WARP_BOTTOM),
+                /***
+                NPC is in warping process and points right direction
+                @field BaseNPC.WARP_RIGHT
+                */
                 value("WARP_RIGHT", LVL_Npc::WarpingSide::WARP_RIGHT)
             ]
+
+            /***
+            Spawning algorithms enumeration (SpawnType)
+            @section SpawnType
+            */
             .enum_("SpawnType")
             [
+                /***
+                Instant appearence with no effects
+                @field BaseNPC.SPAWN_APPEAR
+                */
                 value("SPAWN_APPEAR", 0),
+                /***
+                Smooth appearence (for example, appearence from under ground)
+                @field BaseNPC.SPAWN_WARP
+                */
                 value("SPAWN_WARP", 1),
+                /***
+                Projectile shoot, NPC will appear instantly with initial speed and smoke effect
+                @field BaseNPC.SPAWN_PROJECTILE
+                */
                 value("SPAWN_PROJECTILE", 2)
             ]
+
+            /***
+            Spawning direction enumeration (SpawnDirection)
+            @section SpawnType
+            */
             .enum_("SpawnDirection")
             [
+                /***
+                Spawn NPC with left direction
+                @field BaseNPC.SPAWN_LEFT
+                */
                 value("SPAWN_LEFT", 2),
+                /***
+                Spawn NPC with right direction
+                @field BaseNPC.SPAWN_RIGHT
+                */
                 value("SPAWN_RIGHT", 4),
+                /***
+                Spawn NPC with up direction
+                @field BaseNPC.SPAWN_UP
+                */
                 value("SPAWN_UP", 1),
+                /***
+                Spawn NPC with down direction
+                @field BaseNPC.SPAWN_DOWN
+                */
                 value("SPAWN_DOWN", 3)
             ];
 }
@@ -290,11 +380,29 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             @tparam int type Type of object to transform NPC: 1 - Another NPC, 2 - Block
             */
             .def("transformTo", &LVL_Npc::transformTo)
+            /***
+            Original ID of block from which NPC was transformed (Read Only)
+            @tfield ulong transformedFromBlockID If 0, NPC was not transformed from block
+            */
             .def_readonly("transformedFromBlockID", &LVL_Npc::transformedFromBlockID)
+            /***
+            Original ID of NPC from which NPC was transformed (Read Only)
+            @tfield ulong transformedFromNpcID If 0, NPC was not transformed from another NPC
+            */
             .def_readonly("transformedFromNpcID", &LVL_Npc::transformedFromNpcID)
+            /***
+            Type of spawn algorithm originally produced this NPC (Read Only)
+            @tfield SpawnType spawnedGenType
+            */
             .def_readonly("spawnedGenType", &LVL_Npc::m_spawnedGeneratorType)
+            /***
+            Direction of NPC when it was originally spawned (Read Only)
+            @tfield SpawnDirection spawnedGenDirection
+            */
             .def_readonly("spawnedGenDirection", &LVL_Npc::m_spawnedGeneratorDirection)
+
             //Functions
+
             .def("setBodyType", &LVL_Npc::setBodyType)
             .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)
             .def("setSequenceRight", &LVL_Npc::lua_setSequenceRight)
