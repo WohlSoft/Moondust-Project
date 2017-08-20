@@ -188,7 +188,7 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
             m_momentum.velY += (G * phys_setup.gravityAccel) * accelCof;
     }
 
-    if(phys_setup.decelerate_y != 0.0)
+    if((m_accelY == 0.0) && (phys_setup.decelerate_y != 0.0))
     {
         double decY = phys_setup.decelerate_y * accelCof;
 
