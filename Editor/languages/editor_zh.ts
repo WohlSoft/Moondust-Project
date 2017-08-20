@@ -1195,6 +1195,11 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
+        <source>Force vertical background tiling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
         <source>Export current section to image</source>
         <translation type="unfinished"></translation>
@@ -1237,11 +1242,6 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="53"/>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
-        <source>Tiled background</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9164,53 +9164,53 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="96"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="115"/>
         <source>Clean tileset editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="97"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="116"/>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="394"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="413"/>
         <source>Please enter a filename!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="395"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="414"/>
         <source>Filename:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="445"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="466"/>
         <source>Open Tileset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="468"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="489"/>
         <source>Failed to load tileset!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="468"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="489"/>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="546"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="567"/>
         <source>Tileset box editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="551"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="572"/>
         <source>Don&apos;t show this message again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="553"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="574"/>
         <source>Welcome to tileset editor!
 
 This is an editor of global tilesets.
@@ -9222,22 +9222,22 @@ If you wish to create level/world specific tilesets with using of custom graphic
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="571"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="592"/>
         <source>Remove tileset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="572"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="593"/>
         <source>Do you want to remove this tileset?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="578"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="599"/>
         <source>Tileset removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="578"/>
+        <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="599"/>
         <source>Tileset has been removed!</source>
         <translation type="unfinished"></translation>
     </message>
