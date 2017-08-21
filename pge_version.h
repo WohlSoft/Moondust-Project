@@ -21,7 +21,7 @@
 
 #define V_VP1 0
 #define V_VP2 4
-#define V_VP3 0
+#define V_VP3 1
 #define V_VP4 0
 
 #define GEN_VERSION_NUMBER_2(v1,v2)     v1 "." v2
