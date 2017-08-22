@@ -129,12 +129,13 @@ void DebuggerBox::on_DEBUG_GotoPoint_clicked()
 
 void DebuggerBox::Debugger_loadCustomCounters()
 {
-    QString userDFile = AppPathManager::userAppDir() + "/" + util::filePath(ConfStatus::configName) + " counters.ini";
+    QString userDFile = AppPathManager::settingsPath() + "/" + util::filePath(ConfStatus::configName) + " counters.ini";
     QString debuggerFile = userDFile;
-    if(!QFile(debuggerFile).exists())
+    if(!QFile::exists(debuggerFile))
     {
         debuggerFile = mw()->configs.config_dir + "/counters.ini";
     }
+
 reload:
     QSettings cCounters(debuggerFile, QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
@@ -192,7 +193,7 @@ void DebuggerBox::Debugger_saveCustomCounters()
 {
     if(!isLoaded) return;
 
-    QString debuggerFile = AppPathManager::userAppDir() + "/" + util::filePath(ConfStatus::configName) + " counters.ini";
+    QString debuggerFile = AppPathManager::settingsPath() + "/" + util::filePath(ConfStatus::configName) + " counters.ini";
 
     QSettings cCounters(debuggerFile, QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");

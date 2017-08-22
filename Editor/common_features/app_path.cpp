@@ -158,6 +158,11 @@ QString AppPathManager::settingsFile()
     return m_settingsPath + "/pge_editor.ini";
 }
 
+QString AppPathManager::settingsPath()
+{
+    return m_settingsPath;
+}
+
 QString AppPathManager::userAppDir()
 {
     return m_userPath;
