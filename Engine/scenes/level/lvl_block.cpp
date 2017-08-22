@@ -228,7 +228,8 @@ void LVL_Block::transformTo_x(unsigned long id)
         animator_ID = setup->animator_ID;
     }
 
-    if(!setup->setup.sizable)
+    sizable = setup->setup.sizable;
+    if(!sizable)
     {
         data.w = texture.w;
         data.h = (unsigned(texture.h) / setup->setup.frames);
@@ -251,13 +252,15 @@ void LVL_Block::transformTo_x(unsigned long id)
         m_momentum.saveOld();
     }
 
-    sizable = setup->setup.sizable;
     //LEGACY_collide_player = COLLISION_ANY;
     m_blocked[1] = Block_ALL;
     m_blocked[2] = Block_ALL;
     m_slippery_surface = data.slippery;
 
-    if((setup->setup.sizable) || (setup->setup.collision == 2))
+    //TODO: Remove this "sizable" flag and set top collision for all sizable blocks in INI file.
+    //      this will allow to set any sizable block have any wanted collision rules than
+    //      force everyone use top-side rule only.
+    if(sizable || (setup->setup.collision == 2))
     {
         m_blocked[1] = Block_TOP;
         m_blocked[2] = Block_TOP;
@@ -266,6 +269,13 @@ void LVL_Block::transformTo_x(unsigned long id)
     {
         m_blocked[1] = Block_NONE;
         m_blocked[2] = Block_NONE;
+    }
+
+    if(sizable)
+    {
+        // Don't allow texture smaller than 3x3
+        if((texture.w < 3) || (texture.h < 3))
+            sizable = false;
     }
 
     memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
@@ -382,6 +392,7 @@ void LVL_Block::render(double camX, double camY)
         int h = int(round(m_momentum.h));
         int x, y, x2, y2, i, j;
         int hc, wc;
+
         x = Maths::iRound(double(texture.w) / 3); // Width of one piece
         y = Maths::iRound(double(texture.h) / 3); // Height of one piece
         //Double size
