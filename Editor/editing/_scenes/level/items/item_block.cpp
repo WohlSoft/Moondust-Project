@@ -792,6 +792,13 @@ void ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
 
     m_currentImage = QPixmap(w, h);
 
+    if((srcimg.width() < 3) || (srcimg.height() < 3))
+    {
+        // Too small picture for sizable block
+        m_currentImage = srcimg.scaled(w, h);
+        return;
+    }
+
     x = qRound(qreal(srcimg.width()) / 3); // Width of one piece
     y = qRound(qreal(srcimg.height()) / 3); // Height of one piece
 
