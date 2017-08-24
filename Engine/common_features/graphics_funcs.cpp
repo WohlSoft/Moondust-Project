@@ -87,7 +87,7 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
 
 #endif
 #ifdef DEBUG_BUILD
-    long long fReadTimeElapsed = static_cast<long long>(fReadTime.elapsed());
+    long long fReadTimeElapsed = static_cast<long long>(fReadTime.nanoelapsed());
     long long imgConvertElapsed = 0;
 #endif
 
@@ -105,14 +105,14 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
         FreeImage_Unload(img);
         img = temp;
 #ifdef DEBUG_BUILD
-        imgConvertElapsed = static_cast<long long>(imgConvTime.elapsed());
+        imgConvertElapsed = static_cast<long long>(imgConvTime.nanoelapsed());
 #endif
     }
 
 #ifdef DEBUG_BUILD
-    D_pLogDebug("File read of texture %s passed in %d milliseconds", file.c_str(), static_cast<int>(fReadTimeElapsed));
-    D_pLogDebug("Conv to 32-bit of %s passed in %d milliseconds", file.c_str(), static_cast<int>(imgConvertElapsed));
-    D_pLogDebug("Total Loading of image %s passed in %d milliseconds", file.c_str(), static_cast<int>(loadingTime.elapsed()));
+    D_pLogDebug("File read of texture %s passed in %d nanoseconds", file.c_str(), static_cast<int>(fReadTimeElapsed));
+    D_pLogDebug("Conv to 32-bit of %s passed in %d nanoseconds", file.c_str(), static_cast<int>(imgConvertElapsed));
+    D_pLogDebug("Total Loading of image %s passed in %d nanoseconds", file.c_str(), static_cast<int>(loadingTime.nanoelapsed()));
 #endif
     return img;
 }
