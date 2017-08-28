@@ -46,6 +46,8 @@ void closeFreeType()
 // Default dummy glyph
 const TtfFont::TheGlyph TtfFont::dummyGlyph;
 
+TtfFont::TheGlyph::TheGlyph() {}
+
 TtfFont::TtfFont() : BaseFontEngine()
 {
     SDL_assert_release(g_ft);
@@ -363,3 +365,5 @@ const TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t characte
 
     return rc->second;
 }
+
+
