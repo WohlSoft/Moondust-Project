@@ -143,6 +143,11 @@ void Render_SW_SDL::loadTexture(PGE_Texture &target, uint32_t width, uint32_t he
                                        FI_RGBA_ALPHA_MASK);
     texture = SDL_CreateTextureFromSurface(m_gRenderer, surface);
     SDL_FreeSurface(surface);
+    if(!texture)
+    {
+        pLogWarning("Render SW-SDL: Failed to load texture!");
+        return;
+    }
 checkStackAgain:
 
     if(!m_textureFreeNumbers.empty())
@@ -183,7 +188,8 @@ void Render_SW_SDL::deleteTexture(PGE_Texture &tx)
     }
 
     SDL_Texture *corpse = m_textureBank[tx.texture];
-    SDL_DestroyTexture(corpse);
+    if(corpse)
+        SDL_DestroyTexture(corpse);
 
     if(tx.texture != (m_textureBank.size() - 1))
     {
