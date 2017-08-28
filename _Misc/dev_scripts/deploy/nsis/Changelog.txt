@@ -1,3 +1,9 @@
+0.6.0
+- Install 32-bit or 64-bit assembly in dependence on running operating system
+- Added more config packs
+- ZipDLL plugin was replaced with nsUnzip
+- Fixed shortcuts creation
+
 0.5.1
 - Added removing of all PGE's registry keys on uninstall
 - Abort installation on download errors
