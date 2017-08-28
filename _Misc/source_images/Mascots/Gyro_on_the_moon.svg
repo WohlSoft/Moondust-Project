@@ -10,13 +10,16 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="386.69989mm"
+   width="413.49362mm"
    height="413.49362mm"
-   viewBox="0 0 1370.1965 1465.1349"
+   viewBox="0 0 1465.1349 1465.1349"
    id="svg4344"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="Gyro_on_the_moon.svg">
+   sodipodi:docname="Gyro_on_the_moon.svg"
+   inkscape:export-filename="/home/vitaly/Изображения/Gyro_on_the_moon.png"
+   inkscape:export-xdpi="52.582188"
+   inkscape:export-ydpi="52.582188">
   <defs
      id="defs4346">
     <filter
@@ -628,7 +631,7 @@
        x2="395.5491"
        y2="722.36603"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(-2.2503753,0,0,2.2503753,1340.2171,-478.11998)" />
+       gradientTransform="matrix(-2.2503753,0,0,2.2503753,1388.2171,-478.11998)" />
     <linearGradient
        id="linearGradient3860">
       <stop
@@ -649,8 +652,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.24748737"
-     inkscape:cx="794.93296"
-     inkscape:cy="427.26218"
+     inkscape:cx="170.65868"
+     inkscape:cy="419.18096"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -679,15 +682,15 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(270.03683,260.20526)">
+     transform="translate(270.03683,260.20524)">
     <path
        style="fill:url(#linearGradient3868);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:5.62593842;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 462.60096,-257.39229 c 13.0004,0 25.91544,0.31319 38.74853,0.98453 -248.76121,84.27943 -427.782078,319.750245 -427.782078,596.98233 0,347.99743 282.107588,630.10513 630.105048,630.10513 148.94687,0 285.82271,-51.70935 393.67494,-138.11679 -125.50563,220.68519 -362.71849,369.55379 -634.74644,369.55379 -403.037798,0 -729.82482,-326.71665 -729.82482,-729.75449 0,-403.037842 326.787022,-729.7545 729.82482,-729.7545 z"
+       d="m 510.60096,-257.39229 c 13.0004,0 25.91544,0.31319 38.74853,0.98453 -248.76121,84.27943 -427.78208,319.750245 -427.78208,596.98233 0,347.99743 282.10759,630.10513 630.10505,630.10513 148.94687,0 285.82274,-51.70935 393.67494,-138.11679 -125.5056,220.68519 -362.71849,369.55379 -634.74644,369.55379 -403.0378,0 -729.82482,-326.71665 -729.82482,-729.75449 0,-403.037842 326.78702,-729.7545 729.82482,-729.7545 z"
        id="path3839"
        inkscape:connector-curvature="0" />
     <g
        id="g5423"
-       transform="translate(502.77303,685.71428)">
+       transform="translate(550.77303,685.71428)">
       <path
          sodipodi:nodetypes="ccaaaaasaaaaaaaasacsaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaac"
          inkscape:connector-curvature="0"
