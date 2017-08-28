@@ -172,7 +172,6 @@ SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\license.txt"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\GPL*.txt"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\LICENSE.*.txt"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\SDL2_mixer_ext.License.txt"
-SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\languages"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\help"
 IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt3
 rem SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\bearer"
@@ -237,12 +236,22 @@ SET PGEEditor=
 SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\changelog.editor.txt"
 SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\pge_editor.exe"
 SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\themes"
-SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\tools"
+SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\languages"
+SET PGEEditor=%PGEEditor% -r -x!engine_*.qm
 
 SET PGEEngine=
 SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\pge_engine.exe"
+SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\SDL2.dll"
+SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\SDL2_mixer_ext.dll"
 SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\Engine.Readme.txt"
 SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\changelog.engine.txt"
+SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\languages"
+IF EXIST "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll"  SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\libgcc_s_seh-1.dll"
+IF EXIST "%DeployDir%\%PgePrjSD%\libmingwex-0.dll" 	  SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\libmingwex-0.dll"
+IF EXIST "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"  SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\libgcc_s_dw2-1.dll"
+IF EXIST "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll" SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\libwinpthread-1.dll"
+IF EXIST "%DeployDir%\%PgePrjSD%\pthreadGC-3.dll"     SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\pthreadGC-3.dll"
+SET PGEEngine=%PGEEngine% -r -x!*.png -x!editor_*.qm -x!qt_*.qm
 
 SET PGETools=
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\GIFs2PNG.exe"
@@ -253,6 +262,7 @@ SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_calibrator.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_maintainer.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\pge_musplay.exe"
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\calibrator"
+SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\tools"
 
 echo Packing of Online-Install packages data
 "%SEVENZIP%\7z" a -tzip -mx9 "install-pge-common-dev-%ARCH_CPU%.zip" %PGECommon%
