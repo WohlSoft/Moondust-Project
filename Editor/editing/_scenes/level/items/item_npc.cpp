@@ -312,8 +312,8 @@ cancelTransform:
             QString("X=%1; Y=%2; W=%3; H=%4;")
             .arg(m_data.x)
             .arg(m_data.y)
-            .arg(m_imageSize.width())
-            .arg(m_imageSize.height())
+            .arg(m_localProps.setup.width)
+            .arg(m_localProps.setup.height)
         );
         m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -323,8 +323,8 @@ cancelTransform:
             QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
             .arg(m_data.x)
             .arg(m_data.y)
-            .arg(m_data.x + m_imageSize.width())
-            .arg(m_data.y + m_imageSize.height())
+            .arg(m_data.x + m_localProps.setup.width)
+            .arg(m_data.y + m_localProps.setup.height)
         );
         m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
