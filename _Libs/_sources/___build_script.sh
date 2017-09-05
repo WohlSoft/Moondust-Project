@@ -11,7 +11,7 @@
 
 CURRENT_TARBALL=""
 if [ "$CACHE_DIR" == "" ]; then
-	CACHE_DIR="_build_cache"
+    CACHE_DIR="_build_cache"
 fi
 
 OurOS="linux_defaut"
@@ -22,6 +22,8 @@ elif [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
     OurOS="linux"
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
     OurOS="freebsd"
+elif [[ "$OSTYPE" == "msys"* ]]; then
+    OurOS="win32"
 fi
 
 if [[ "$OurOS" != "macos" ]]; then
@@ -35,7 +37,7 @@ errorofbuild()
 {
     printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
     printf "Build failed in the $CURRENT_TARBALL component\n\n"
-	exit 1
+    exit 1
 }
 #=======================================================================
 
@@ -46,9 +48,9 @@ UnArch()
 {
 # $1 - archive name
     if [ ! -d $1 ]
-	    then
+        then
         printf "tar -xf ../$1.tar.*z* ..."
-	    tar -xf ../$1.tar.*z*
+        tar -xf ../$1.tar.*z*
         if [ $? -eq 0 ];
         then
             printf "OK!\n"
@@ -123,8 +125,8 @@ BuildSDL()
     UnArch $LatestSDL
 
     #--------------Apply some patches--------------
-	# Fixes build, because of undefined REFIID type, function itself is not using because of disabld Direct X component
-	# patch -t -N $LatestSDL/src/core/windows/SDL_windows.h < ../patches/SDL_window.h.patch #FIXED
+    # Fixes build, because of undefined REFIID type, function itself is not using because of disabld Direct X component
+    # patch -t -N $LatestSDL/src/core/windows/SDL_windows.h < ../patches/SDL_window.h.patch #FIXED
     #----------------------------------------------
 
     ###########SDL2###########
@@ -133,13 +135,18 @@ BuildSDL()
         #sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
         $Sed -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL/Makefile.in
         $Sed -i 's/libSDL2-2\.0\.so\.0/libSDL2\.so/g' $LatestSDL/SDL2.spec.in
+        # $Sed -i 's/SDL_AUDIO_DRIVER_WASAPI 1/SDL_AUDIO_DRIVER_WASAPI 0/g' $LatestSDL/include/SDL_config.h
+        if [[ "$OurOS" == "win32" ]]; then
+            # Workaround: Turn off laggy-as-hell WASAPI
+            $Sed -i 's/mmdeviceapi\.h/mmdeviceapi_nothing\.h/g' $LatestSDL/configure
+        fi
         #cd $LatestSDL
         #autoreconf -vfi
         #cd ..
         #on any other OS'es build via autotools
-		if [[ "$OSTYPE" == "msys"* ]]; then
-			CFLAGS_EXRA="-DUNICDE -D_UNICODE"
-		fi
+        if [[ "$OSTYPE" == "msys"* ]]; then
+            CFLAGS_EXRA="-DUNICDE -D_UNICODE"
+        fi
         export CFLAGS="-I${InstallTo}/include ${CFLAGS_EXRA}"
         export LDFLAGS="-L${InstallTo}/lib"
         SDL_ARGS="${SDL_ARGS} --prefix=${InstallTo}"
@@ -305,7 +312,7 @@ BuildFreeType()
 # in-archives
 if [ ! -d $CACHE_DIR ]
 then
-	mkdir $CACHE_DIR
+    mkdir $CACHE_DIR
 fi
 cd $CACHE_DIR
 
