@@ -190,20 +190,25 @@ namespace PGE_MusicPlayer
     /*!
      * \brief Start playing of currently opened music track
      */
-    void MUS_playMusic()
+    bool MUS_playMusic()
     {
         if(play_mus)
         {
             if(Mix_PlayMusic(play_mus, g_playlistMode ? 0 : -1) == -1)
             {
                 error(QString("Mix_PlayMusic: ") + Mix_GetError());
+                return false;
                 // well, there's no music, but most games don't break without music...
             }
             //QString("Music is %1\n").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
         }
         else
+        {
             error(QString("Play nothing: Mix_PlayMusic: ") + Mix_GetError());
+            return false;
+        }
         //qDebug() << QString("Check Error of SDL: %1\n").arg(Mix_GetError());
+        return true;
     }
 
     /*!

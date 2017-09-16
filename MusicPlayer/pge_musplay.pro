@@ -102,8 +102,7 @@ SOURCES += main.cpp\
     SingleApplication/pge_application.cpp \
     Effects/reverb.cpp \
     MainWindow/musplayer_base.cpp \
-    Player/mus_player.cpp \
-    MainWindow/mw_qt/playlist_model.cpp
+    Player/mus_player.cpp
 
 HEADERS  += \
     SingleApplication/localserver.h \
@@ -115,8 +114,7 @@ HEADERS  += \
     Effects/reverb.h \
     defines.h \
     MainWindow/musplayer_base.h \
-    Player/mus_player.h \
-    MainWindow/mw_qt/playlist_model.h
+    Player/mus_player.h
 
 FORMS    += \
     AssocFiles/assoc_files.ui \

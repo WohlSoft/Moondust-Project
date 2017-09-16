@@ -36,7 +36,7 @@ namespace PGE_MusicPlayer
     extern const char* MUS_getMusCopy();
     #endif
     extern void setPlayListMode(bool playList);
-    extern void MUS_playMusic();
+    extern bool MUS_playMusic();
     extern void MUS_changeVolume(int volume);
     extern bool MUS_openFile(QString musFile);
     extern void startWavRecording(QString target);
