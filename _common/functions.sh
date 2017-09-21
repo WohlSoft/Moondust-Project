@@ -44,7 +44,7 @@ function printLine()
 function getCpusCount()
 {
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        echo $(hwprefs cpu_count);
+        echo $(sysctl -n hw.ncpu);
     elif [[ "$OSTYPE" == "msys"* ]]; then
         echo 4; # Windows says 'No way!'. Yet... Until we find a way to do this
     else
