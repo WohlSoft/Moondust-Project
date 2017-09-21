@@ -9,7 +9,8 @@ fi
 #flags
 flag_pause_on_end=true
 QMAKE_EXTRA_ARGS=""
-MAKE_EXTRA_ARGS="-r -j 4"
+MAKE_EXTRA_ARGS="-r"
+MAKE_CPUS_COUNT=4
 flag_debugThisScript=false
 flag_debugDependencies=false
 
@@ -231,9 +232,12 @@ fi
 PATH=$QT_PATH:$PATH
 LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
 
+MAKE_CPUS_COUNT=$(getCpusCount)
+
 if $flag_debugThisScript; then
     echo "QMAKE_EXTRA_ARGS = ${QMAKE_EXTRA_ARGS}"
     echo "MAKE_EXTRA_ARGS = ${MAKE_EXTRA_ARGS}"
+    echo "MAKE_CPUS_COUNT = ${MAKE_CPUS_COUNT}"
     pause
 fi
 
@@ -379,9 +383,9 @@ fi
 checkState
 
 #=======================================================================
-echo "Building..."
+echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
 TIME_STARTED=$(date +%s)
-make $MAKE_EXTRA_ARGS
+make ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
 checkState
 TIME_ENDED=$(date +%s)
 TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
@@ -402,3 +406,4 @@ if $flag_pause_on_end ; then
     pause
 fi
 exit 0
+

@@ -3,7 +3,7 @@
 # Prints a line with text in middle
 # Syntax:
 #   printLine <string> <color of text in ANSI format> <color of line>
-printLine()
+function printLine()
 {
     lineLenght=64
     Str=$1
@@ -41,6 +41,17 @@ printLine()
     printf "\n"
 }
 
+function getCpusCount()
+{
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo $(hwprefs cpu_count);
+    elif [[ "$OSTYPE" == "msys"* ]]; then
+        echo 4; # Windows says 'No way!'. Yet... Until we find a way to do this
+    else
+        echo $(grep -c ^processor /proc/cpuinfo);
+    fi
+}
+
 function show_time()
 {
     num=$1
@@ -63,20 +74,20 @@ function show_time()
     printLine "Passed time: ${hour}h ${min}m ${sec}s" "\E[0;36m" "\E[0;35m"
 }
 
-pause()
+function pause()
 {
     echo "Press any key to continue..."
     read -n 1
 }
 
-errorofbuild()
+function errorofbuild()
 {
     printLine "AN ERROR OCCURED!" "\E[0;41;37m" "\E[0;31m"
     cd $bak
     exit 1
 }
 
-checkState()
+function checkState()
 {
     if [ $? -eq 0 ]
     then
@@ -86,20 +97,22 @@ checkState()
     fi
 }
 
-lackOfDependency()
+function lackOfDependency()
 {
     printLine "DEPENDENCIES ARE NOT BUILT! Run ./build_deps.sh first!" "\E[0;41;37m" "\E[0;31m"
     cd $bak
     exit 1
 }
 
-osx_realpath() {
-  case "${1}" in
+function osx_realpath() 
+{
+    case "${1}" in
     [./]*)
-    echo "$(cd ${1%/*}; pwd)/${1##*/}"
+        echo "$(cd ${1%/*}; pwd)/${1##*/}"
     ;;
     *)
-    echo "${PWD}/${1}"
+        echo "${PWD}/${1}"
     ;;
-  esac
+    esac
 }
+

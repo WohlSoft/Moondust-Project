@@ -27,7 +27,8 @@ flag_nolibs=false
 flag_libsonly=false
 flag_debug_script=false
 QMAKE_EXTRA_ARGS=""
-MAKE_EXTRA_ARGS="-r -j 4"
+MAKE_EXTRA_ARGS="-r"
+MAKE_CPUS_COUNT=4
 
 for var in "$@"
 do
@@ -110,6 +111,9 @@ source ./_common/functions.sh
 TIME_STARTED_LIBS=0
 TIME_ENDED_LIBS=0
 TIME_PASSED_LIBS=0
+
+MAKE_CPUS_COUNT=$(getCpusCount)
+
 buildLibs()
 {
     TIME_STARTED_LIBS=$(date +%s)
@@ -165,14 +169,14 @@ $QMake pge_deps.pro CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT $QMAKE_EX
 checkState
 
 #=======================================================================
-echo "Building..."
+echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
 TIME_STARTED=$(date +%s)
-make $MAKE_EXTRA_ARGS
+make $MAKE_EXTRA_ARGS -j ${MAKE_CPUS_COUNT}
 checkState
 if [[ $OurOS == "linux" ||  $OurOS == "haiku" ]]; then
     cd SDL_Mixer_X
     echo "Linking static SDL Mixer X..."
-    make staticlib $MAKE_EXTRA_ARGS
+    make staticlib $MAKE_EXTRA_ARGS -j ${MAKE_CPUS_COUNT}
     checkState
     cd ..
 fi
