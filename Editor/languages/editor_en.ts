@@ -1326,12 +1326,12 @@ Please save them before doing anything else.</translation>
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="426"/>
+        <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="427"/>
+        <location filename="../main_window/dock/debugger.cpp" line="486"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>

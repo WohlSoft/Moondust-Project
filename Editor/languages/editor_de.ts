@@ -1293,12 +1293,12 @@ Bitte speichere sie sofort ab!.</translation>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="426"/>
+        <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Edit</source>
         <translation>Berarbeiten</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="427"/>
+        <location filename="../main_window/dock/debugger.cpp" line="486"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>

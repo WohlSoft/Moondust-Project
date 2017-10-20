@@ -1095,12 +1095,12 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
         <translation>Odśwież</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="426"/>
+        <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Edit</source>
         <translation>Edytuj</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="427"/>
+        <location filename="../main_window/dock/debugger.cpp" line="486"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>

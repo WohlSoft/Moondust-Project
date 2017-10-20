@@ -1309,12 +1309,12 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <translation>Refrescar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="426"/>
+        <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Edit</source>
         <translation>Edición</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/debugger.cpp" line="427"/>
+        <location filename="../main_window/dock/debugger.cpp" line="486"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
