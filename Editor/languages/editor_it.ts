@@ -1261,7 +1261,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="39"/>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi simboli visibili solo nell&apos;editor</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
@@ -1271,7 +1271,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="53"/>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi griglia (se è attiva)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
@@ -1291,7 +1291,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="179"/>
         <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi blocchi invisibili</translation>
     </message>
     <message>
         <source>Tiled background</source>
@@ -2473,12 +2473,12 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento Tocco NPC/Giocatore (Una volta)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento Tocco NPC/Giocatore (Ogni frame)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
@@ -2503,7 +2503,7 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
         <source>NPC Hurting Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Campo di danno NPC</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="145"/>
@@ -6060,13 +6060,14 @@ Seleziona la Mappa necessaria nella lista:</translation>
     <message>
         <location filename="../mainwindow.ui" line="1995"/>
         <source>Prevent overlap</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedisci sovrapposizione</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1998"/>
         <source>Prevents similar items from overlapping each other.
 Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedisci la sovrapposizione di elementi simili.
+Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si proverà a farlo l&apos;oggetto selezionato tornerà alla sua posizione iniziale. Se questa opzione è disabilitata, potrai sovrapporre gli elementi senza limitazioni. Gli oggetti piazzati non si potranno mai sovrapporre se non copiati o duplicati.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2146"/>
@@ -10741,7 +10742,7 @@ perché le configurazioni degli oggetti non sono state caricate
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="61"/>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi griglia (se è mostrata)</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="113"/>
@@ -10761,7 +10762,7 @@ perché le configurazioni degli oggetti non sono state caricate
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="160"/>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantieni proporzioni</translation>
     </message>
     <message>
         <source>Save proportion</source>
