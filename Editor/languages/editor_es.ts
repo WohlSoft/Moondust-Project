@@ -286,17 +286,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="935"/>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="941"/>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Nota: algunas de esas opciones pueden requerir reinicio del programa</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="954"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar auto escalar en pantallas High-DPI</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="799"/>
@@ -1159,7 +1159,7 @@ Ruta de archivo: %3</translation>
         <location filename="../common_features/crashhandler.cpp" line="387"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished">Crash recovery</translation>
+        <translation>Recuperación de archivo</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="388"/>
@@ -1398,7 +1398,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="277"/>
         <source>Simulates crash signal</source>
-        <translation type="unfinished"></translation>
+        <translation>Simula señal de colapso</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="282"/>
@@ -1460,7 +1460,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <location filename="../main_window/file/lvl_export_image.ui" line="132"/>
         <location filename="../main_window/file/lvl_export_image.ui" line="152"/>
         <source> px</source>
-        <translation>px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Hide door and water markers (recommended)</source>
@@ -1493,7 +1493,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="172"/>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantener proporción original</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
@@ -1503,7 +1503,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
         <source>Force vertical background tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Forzar teselación vertical</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
@@ -1513,22 +1513,22 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="142"/>
         <source>Hide warps and water markers (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocular traslados y agua (recomendado)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="179"/>
         <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar bloques invisibles</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="39"/>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar meta símbolos del editor</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="53"/>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar grilla (si es visible)</translation>
     </message>
     <message>
         <source>Tiled background</source>
@@ -2643,7 +2643,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="91"/>
         <source>Layer: </source>
-        <translation>Capa:</translation>
+        <translation>Capa: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="94"/>
@@ -2708,12 +2708,12 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Contacto PNJ/Jugador (una vez)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Contacto PNJ/Jugador (por cuadro)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
@@ -2738,7 +2738,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
         <source>NPC Hurting Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Campo de daño PNJ</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="145"/>
@@ -3561,14 +3561,16 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="527"/>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuraciones incorrectas</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="528"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Este nivel tiene algunos archivos de configuración que no se pueden cargar. Para evitar este mensaje nuevamente, por favor solucione los siguientes errores en sus archivos en la actual y personalizadas carpetas:
+
+%1</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="550"/>
@@ -3980,14 +3982,16 @@ De otra manera, estará limitado.</translation>
         <location filename="../main_window/testing/luna_tester.cpp" line="236"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar en segundo plano</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="238"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permite probar el nivel mucho más rapido despues de la primer ejecución.
+Requiere una poderosa computadora, de otra manera el motor se congelará en la siguiente ejecución.
+Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente algún problema al probar.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="244"/>
@@ -4546,7 +4550,8 @@ Por favor, seleccione otra.</translation>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="198"/>
         <source>Destination section is in use, therefore it will be overridden with removing of all it&apos;s objects.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>La sección de destino está en uso, por lo que será sobreescrita removiendo todos sus objetos.
+¿Desea continuar?</translation>
     </message>
     <message>
         <source>Destination section is used!
@@ -6129,7 +6134,7 @@ Zonas físicas de ambiente:	%6
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="135"/>
         <source>Browse...</source>
-        <translation type="unfinished">Explorar...</translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="188"/>
@@ -6917,118 +6922,119 @@ Límite: máxima longitud de 28 caracteres</translation>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <extracomment>Edit from the editor</extracomment>
-        <translation type="unfinished">Salir del programa</translation>
+        <translation>Salir del programa</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="906"/>
         <source>Section 1 (Ctrl+2)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {1 ?} {2)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {1 ?} {2)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="931"/>
         <source>Section 2 (Ctrl+3)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {2 ?} {3)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {2 ?} {3)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="956"/>
         <source>Section 3 (Ctrl+4)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {3 ?} {4)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {3 ?} {4)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="981"/>
         <source>Section 4 (Ctrl+5)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {4 ?} {5)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {4 ?} {5)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1006"/>
         <source>Section 5 (Ctrl+6)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {5 ?} {6)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {5 ?} {6)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1031"/>
         <source>Section 6 (Ctrl+7)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {6 ?} {7)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {6 ?} {7)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1056"/>
         <source>Section 7 (Ctrl+8)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {7 ?} {8)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {7 ?} {8)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1081"/>
         <source>Section 8 (Ctrl+9)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {8 ?} {9)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {8 ?} {9)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1106"/>
         <source>Section 9 (Ctrl+0)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {9 ?} {0)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {9 ?} {0)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1131"/>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1156"/>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1181"/>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1206"/>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1231"/>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1256"/>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1281"/>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1306"/>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1331"/>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1356"/>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation type="unfinished">Sección 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
+        <translation>Sección 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1381"/>
         <source>Section 20 (Alt+1)</source>
-        <translation type="unfinished">Sección 21 (Alt+1) {20 ?} {1)?}</translation>
+        <translation>Sección 21 (Alt+1) {20 ?} {1)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1995"/>
         <source>Prevent overlap</source>
-        <translation type="unfinished"></translation>
+        <translation>Prevenir superposición</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1998"/>
         <source>Prevents similar items from overlapping each other.
 Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
-        <translation type="unfinished"></translation>
+        <translation>Previene que objetos similares se superpongan entre sí.
+Los objetos no podrán ser puestos unos sobre otros, haciéndolo de otro modo resultará en que el objeto seleccionado retorne a su posición original. Si esta opción se desabilita, podrá mover elementos unos sobre otros sin limitación. Los objetos nunca podrán superponerse al colocar nuevos objetos, a menos que duplique o pegue desde el portapapeles, el cual siempre permitirá superposición.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2285"/>
@@ -7800,12 +7806,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="878"/>
         <source>Section 0</source>
-        <translation type="unfinished">Sección 0</translation>
+        <translation>Sección 0</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="881"/>
         <source>Section 0 (Ctrl+1)</source>
-        <translation type="unfinished">Sección 10 (Ctrl+10) {0 ?} {1)?}</translation>
+        <translation>Sección 10 (Ctrl+10) {0 ?} {1)?}</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="903"/>
@@ -8214,7 +8220,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="3060"/>
         <source>Test world map (Alpha)</source>
-        <translation type="unfinished"></translation>
+        <translation>Probar mapamundi (Alfa)</translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -9555,12 +9561,14 @@ Por favor, compruebe el directorio de la aplicación.</translation>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede probar, no se encuentra el motor: 
+%1
+¡Por favor elija el motor!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="165"/>
         <source>Choose the Engine application</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir el programa de Motor</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="193"/>
@@ -9579,13 +9587,14 @@ Do you want to abort current testing process?</source>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="263"/>
         <source>World map testing of saved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Prueba del mapamundi del archivo guardado</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="264"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
-        <translation type="unfinished"></translation>
+        <translation>¡El archivo no se guardó!
+¿Desea guardarlo o desea probar la copia que ya está guardada en el disco?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="334"/>
@@ -11710,13 +11719,13 @@ El máximo es %2.</translation>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="219"/>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="244"/>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdadero</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="219"/>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="244"/>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Falso</translation>
     </message>
 </context>
 <context>
@@ -11724,12 +11733,12 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="1485"/>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdadero</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="1486"/>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Falso</translation>
     </message>
 </context>
 <context>
@@ -11737,7 +11746,7 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qteditorfactory.cpp" line="1575"/>
         <source>Clear Char</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar Car</translation>
     </message>
 </context>
 <context>
@@ -11745,7 +11754,7 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qteditorfactory.cpp" line="2189"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -11753,22 +11762,22 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="6215"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Rojo</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="6223"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Verde</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="6231"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Azul</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="6239"/>
         <source>Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>Alfa</translation>
     </message>
 </context>
 <context>
@@ -11776,97 +11785,97 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="57"/>
         <source>Arrow</source>
-        <translation type="unfinished"></translation>
+        <translation>Flecha</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="58"/>
         <source>Up Arrow</source>
-        <translation type="unfinished"></translation>
+        <translation>Flecha arriba</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="59"/>
         <source>Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Cruz</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="60"/>
         <source>Wait</source>
-        <translation type="unfinished"></translation>
+        <translation>Esperar</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="61"/>
         <source>IBeam</source>
-        <translation type="unfinished"></translation>
+        <translation>IBeam</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="62"/>
         <source>Size Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño vertical</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="63"/>
         <source>Size Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño horizontal</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="64"/>
         <source>Size Backslash</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño barra hacia atrás</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="65"/>
         <source>Size Slash</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño barra hacia adelante</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="66"/>
         <source>Size All</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionar todo</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="67"/>
         <source>Blank</source>
-        <translation type="unfinished"></translation>
+        <translation>Blanco</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="68"/>
         <source>Split Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir vertical</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="69"/>
         <source>Split Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Dividir horizontal</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="70"/>
         <source>Pointing Hand</source>
-        <translation type="unfinished"></translation>
+        <translation>Mano apuntando</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="71"/>
         <source>Forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Prohibido</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="72"/>
         <source>Open Hand</source>
-        <translation type="unfinished"></translation>
+        <translation>Mano abierta</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="73"/>
         <source>Closed Hand</source>
-        <translation type="unfinished"></translation>
+        <translation>Mano cerrada</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="74"/>
         <source>What&apos;s This</source>
-        <translation type="unfinished"></translation>
+        <translation>Qué es esto</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="75"/>
         <source>Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocupado</translation>
     </message>
 </context>
 <context>
@@ -11874,12 +11883,12 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qteditorfactory.cpp" line="2398"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qteditorfactory.cpp" line="2418"/>
         <source>Select Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar fuente</translation>
     </message>
 </context>
 <context>
@@ -11887,37 +11896,37 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5889"/>
         <source>Family</source>
-        <translation type="unfinished"></translation>
+        <translation>Familia</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5902"/>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño puntual</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5910"/>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>Negrita</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5917"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Cursiva</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5924"/>
         <source>Underline</source>
-        <translation type="unfinished"></translation>
+        <translation>Subrayado</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5931"/>
         <source>Strikeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Tachado</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5938"/>
         <source>Kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>Interletraje</translation>
     </message>
 </context>
 <context>
@@ -11925,7 +11934,7 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="304"/>
         <source>Clear Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar acceso directo</translation>
     </message>
 </context>
 <context>
@@ -11933,17 +11942,17 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2405"/>
         <source>%1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1, %2</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2458"/>
         <source>Language</source>
-        <translation type="unfinished">Idioma</translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2466"/>
         <source>Country</source>
-        <translation type="unfinished"></translation>
+        <translation>País</translation>
     </message>
 </context>
 <context>
@@ -11951,17 +11960,17 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2875"/>
         <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1, %2)</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2946"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2954"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
 </context>
 <context>
@@ -11969,17 +11978,17 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2635"/>
         <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1, %2)</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2672"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="2679"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
 </context>
 <context>
@@ -11987,12 +11996,12 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="159"/>
         <source>[%1, %2, %3] (%4)</source>
-        <translation type="unfinished"></translation>
+        <translation>[%1, %2, %3] (%4)</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertybrowserutils.cpp" line="189"/>
         <source>[%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation>[%1, %2]</translation>
     </message>
 </context>
 <context>
@@ -12000,27 +12009,27 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4380"/>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
+        <translation>[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4536"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4544"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4552"/>
         <source>Width</source>
-        <translation type="unfinished">Ancho</translation>
+        <translation>Ancho</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4561"/>
         <source>Height</source>
-        <translation type="unfinished">Altura</translation>
+        <translation>Altura</translation>
     </message>
 </context>
 <context>
@@ -12028,27 +12037,27 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="3950"/>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
+        <translation>[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4070"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4077"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4084"/>
         <source>Width</source>
-        <translation type="unfinished">Ancho</translation>
+        <translation>Ancho</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="4092"/>
         <source>Height</source>
-        <translation type="unfinished">Altura</translation>
+        <translation>Altura</translation>
     </message>
 </context>
 <context>
@@ -12056,17 +12065,17 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="3558"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="3688"/>
         <source>Width</source>
-        <translation type="unfinished">Ancho</translation>
+        <translation>Ancho</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="3697"/>
         <source>Height</source>
-        <translation type="unfinished">Altura</translation>
+        <translation>Altura</translation>
     </message>
 </context>
 <context>
@@ -12075,32 +12084,32 @@ El máximo es %2.</translation>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5401"/>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5402"/>
         <source>&lt;Invalid&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Invalido&gt;</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5403"/>
         <source>[%1, %2, %3, %4]</source>
-        <translation type="unfinished"></translation>
+        <translation>[%1, %2, %3, %4]</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5448"/>
         <source>Horizontal Policy</source>
-        <translation type="unfinished"></translation>
+        <translation>Política horizontal</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5457"/>
         <source>Vertical Policy</source>
-        <translation type="unfinished"></translation>
+        <translation>Política vertical</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5466"/>
         <source>Horizontal Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Estiramiento horizontal</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="5474"/>
         <source>Vertical Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Estiramiento vertical</translation>
     </message>
 </context>
 <context>
@@ -12108,17 +12117,17 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="3194"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="3290"/>
         <source>Width</source>
-        <translation type="unfinished">Ancho</translation>
+        <translation>Ancho</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qtpropertymanager.cpp" line="3298"/>
         <source>Height</source>
-        <translation type="unfinished">Altura</translation>
+        <translation>Altura</translation>
     </message>
 </context>
 <context>
@@ -12126,12 +12135,12 @@ El máximo es %2.</translation>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qttreepropertybrowser.cpp" line="475"/>
         <source>Property</source>
-        <translation type="unfinished"></translation>
+        <translation>Propiedad</translation>
     </message>
     <message>
         <location filename="../../_Libs/QtPropertyBrowser/src/qttreepropertybrowser.cpp" line="476"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valor</translation>
     </message>
 </context>
 <context>
@@ -12269,7 +12278,7 @@ El máximo es %2.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="262"/>
         <source>Chuck Norris</source>
-        <translation>Ricky Fort</translation>
+        <translation>Chuck Norris</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="249"/>
@@ -12279,7 +12288,7 @@ El máximo es %2.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="252"/>
         <source>World freedom</source>
-        <translation>Libertad en Maiamee</translation>
+        <translation>Libertad en mundo</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="239"/>
@@ -12289,7 +12298,7 @@ El máximo es %2.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="242"/>
         <source>God mode</source>
-        <translation>Modo Gokú</translation>
+        <translation>Modo Dios</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="229"/>
@@ -12299,7 +12308,7 @@ El máximo es %2.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="14"/>
         <source>Testing settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de prueba</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="155"/>
@@ -12971,7 +12980,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="239"/>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puede poner una condición para abrir un camino en la dirección especificada (controles a cada lado de esas flechas) dependiendo del código de salida.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="383"/>
@@ -13377,7 +13386,7 @@ Por favor vea que config/SMBX realmente existe y contiene los archivos INI con o
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="61"/>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar grilla (si es visible)</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="113"/>
@@ -13397,7 +13406,7 @@ Por favor vea que config/SMBX realmente existe y contiene los archivos INI con o
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="160"/>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantener proporción original</translation>
     </message>
     <message>
         <source>Save proportion</source>
@@ -13406,7 +13415,7 @@ Por favor vea que config/SMBX realmente existe y contiene los archivos INI con o
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="51"/>
         <source>Export selected rectangle to image</source>
-        <translation></translation>
+        <translation>Exportar rectángulo seleccionado</translation>
     </message>
     <message>
         <source>2x</source>
@@ -13421,7 +13430,7 @@ Por favor vea que config/SMBX realmente existe y contiene los archivos INI con o
         <location filename="../main_window/file/wld_export_image.ui" line="78"/>
         <location filename="../main_window/file/wld_export_image.ui" line="140"/>
         <source> px</source>
-        <translation>px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="137"/>
@@ -14145,14 +14154,16 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="407"/>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuraciones incorrectas</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="408"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Este mapamundi tiene algunos archivos de configuración que no se pueden cargar. Para evitar este mensaje nuevamente, por favor solucione los siguientes errores en sus archivos en la actual y personalizadas carpetas:
+
+%1</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="433"/>
@@ -14440,7 +14451,7 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada</tr
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="198"/>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="unfinished"></translation>
+        <translation>Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="163"/>
