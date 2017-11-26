@@ -75,6 +75,7 @@ then
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
 # ==============================================================================
+    brew update
     brew install coreutils binutils gnu-sed lftp
 
     # # Thanks to St. StackOverflow if this will work http://stackoverflow.com/questions/39633159/homebrew-cant-find-lftp-formula-on-macos-sierra
