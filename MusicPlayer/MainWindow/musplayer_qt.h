@@ -78,6 +78,9 @@ private slots:
     void on_opn_bank_browse_clicked();
     void on_opn_bank_editingFinished();
 
+    void on_adl_bank_browse_clicked();
+    void on_adl_bank_editingFinished();
+
 private:
     bool playListMode = false;
     //PlayListModel playList;

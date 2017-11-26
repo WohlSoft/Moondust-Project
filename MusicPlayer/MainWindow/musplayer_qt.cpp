@@ -19,6 +19,20 @@
 #include <math.h>
 #include "../version.h"
 
+static int tristateToInt(Qt::CheckState state)
+{
+    switch(state)
+    {
+    case Qt::Checked:
+        return 1;
+    case Qt::Unchecked:
+        return 0;
+    case Qt::PartiallyChecked:
+        return -1;
+    }
+    return Qt::Unchecked;
+}
+
 MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     MusPlayerBase(),
     ui(new Ui::MainWindow)
@@ -37,6 +51,12 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
 
     for(int i = 0; i < totalBakns; i++)
         ui->fmbank->addItem(QString("%1 = %2").arg(i).arg(names[i]));
+
+    ui->tremolo->setCheckState(Qt::PartiallyChecked);
+    ui->vibrato->setCheckState(Qt::PartiallyChecked);
+    ui->modulation->setCheckState(Qt::PartiallyChecked);
+    ui->adlibMode->setCheckState(Qt::PartiallyChecked);
+    ui->logVolumes->setCheckState(Qt::PartiallyChecked);
 
     ui->centralWidget->window()->setWindowFlags(
         Qt::WindowTitleHint |
@@ -59,26 +79,29 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     {
         on_volumeModel_currentIndexChanged(x);
     });
-    connect(ui->tremolo, &QCheckBox::clicked, this, [this](int x)
+    connect(ui->tremolo, &QCheckBox::clicked, this, [this](int)
     {
-        on_tremolo_clicked(x);
+        Mix_ADLMIDI_setTremolo(tristateToInt(ui->tremolo->checkState()));
     });
-    connect(ui->vibrato, &QCheckBox::clicked, this, [this](int x)
+    connect(ui->vibrato, &QCheckBox::clicked, this, [this](int)
     {
-        on_vibrato_clicked(x);
+        Mix_ADLMIDI_setVibrato(tristateToInt(ui->vibrato->checkState()));
     });
-    connect(ui->modulation, &QCheckBox::clicked, this, [this](int x)
+    connect(ui->modulation, &QCheckBox::clicked, this, [this](int)
     {
-        on_modulation_clicked(x);
+        Mix_ADLMIDI_setScaleMod(tristateToInt(ui->modulation->checkState()));
     });
-    connect(ui->adlibMode, &QCheckBox::clicked, this, [this](int x)
+    connect(ui->adlibMode, &QCheckBox::clicked, this, [this](int)
     {
-        on_adlibMode_clicked(x);
+        Mix_ADLMIDI_setAdLibMode(tristateToInt(ui->adlibMode->checkState()));
     });
-    connect(ui->logVolumes, &QCheckBox::clicked, this, [this](int x)
+    connect(ui->logVolumes, &QCheckBox::clicked, this, [this](int)
     {
-        on_logVolumes_clicked(x);
+        Mix_ADLMIDI_setLogarithmicVolumes(tristateToInt(ui->logVolumes->checkState()));
     });
+
+    connect(ui->opn_use_custom, &QCheckBox::clicked, this, &MusPlayer_Qt::on_opn_bank_editingFinished);
+    connect(ui->adl_use_custom, &QCheckBox::clicked, this, &MusPlayer_Qt::on_adl_bank_editingFinished);
 
     //connect(ui->playListPush, &QPushButton::clicked, this, &MusPlayer_Qt::playList_pushCurrent);
     //connect(ui->playListPop, &QPushButton::clicked, this, &MusPlayer_Qt::playList_popCurrent);
@@ -126,18 +149,29 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
 
     ui->fmbank->setCurrentIndex(setup.value("ADLMIDI-Bank-ID", 58).toInt());
     Mix_ADLMIDI_setBankID(ui->fmbank->currentIndex());
+
     ui->volumeModel->setCurrentIndex(setup.value("ADLMIDI-VolumeModel", 0).toInt());
     Mix_ADLMIDI_setVolumeModel(ui->volumeModel->currentIndex());
-    ui->tremolo->setChecked(setup.value("ADLMIDI-Tremolo", true).toBool());
-    Mix_ADLMIDI_setTremolo(static_cast<int>(ui->tremolo->isChecked()));
-    ui->vibrato->setChecked(setup.value("ADLMIDI-Vibrato", true).toBool());
-    Mix_ADLMIDI_setVibrato(static_cast<int>(ui->vibrato->isChecked()));
-    ui->adlibMode->setChecked(setup.value("ADLMIDI-AdLib-Drums-Mode", false).toBool());
-    Mix_ADLMIDI_setAdLibMode(static_cast<int>(ui->adlibMode->isChecked()));
-    ui->modulation->setChecked(setup.value("ADLMIDI-Scalable-Modulation", false).toBool());
-    Mix_ADLMIDI_setScaleMod(static_cast<int>(ui->modulation->isChecked()));
-    ui->logVolumes->setChecked(setup.value("ADLMIDI-LogarithmicVolumes", false).toBool());
-    Mix_ADLMIDI_setScaleMod(static_cast<int>(ui->logVolumes->isChecked()));
+
+    ui->tremolo->setCheckState((Qt::CheckState)setup.value("ADLMIDI-Tremolo", Qt::PartiallyChecked).toInt());
+    Mix_ADLMIDI_setTremolo(tristateToInt(ui->tremolo->checkState()));
+
+    ui->vibrato->setCheckState((Qt::CheckState)setup.value("ADLMIDI-Vibrato", Qt::PartiallyChecked).toInt());
+    Mix_ADLMIDI_setVibrato(tristateToInt(ui->vibrato->checkState()));
+
+    ui->adlibMode->setCheckState((Qt::CheckState)setup.value("ADLMIDI-AdLib-Drums-Mode", Qt::Unchecked).toInt());
+    Mix_ADLMIDI_setAdLibMode(tristateToInt(ui->adlibMode->checkState()));
+
+    ui->modulation->setCheckState((Qt::CheckState)setup.value("ADLMIDI-Scalable-Modulation", Qt::Unchecked).toInt());
+    Mix_ADLMIDI_setScaleMod(tristateToInt(ui->modulation->checkState()));
+
+    ui->logVolumes->setCheckState((Qt::CheckState)setup.value("ADLMIDI-LogarithmicVolumes", Qt::Unchecked).toInt());
+    Mix_ADLMIDI_setLogarithmicVolumes(tristateToInt(ui->logVolumes->checkState()));
+
+    ui->adl_bank->setText(setup.value("ADLMIDI-Bank", "").toString());
+    ui->adl_use_custom->setChecked(setup.value("ADLMIDI-Bank-UseCustom", true).toBool());
+    on_adl_bank_editingFinished();
+
     ui->volume->setValue(setup.value("Volume", 128).toInt());
     m_prevTrackID = ui->trackID->value();
     ui->adlmidi_xtra->setVisible(false);
@@ -146,6 +180,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->gme_setup->setVisible(false);
 
     ui->opn_bank->setText(setup.value("OPNMIDI-Bank", "").toString());
+    ui->opn_use_custom->setChecked(setup.value("ADLMIDI-Bank-UseCustom", true).toBool());
     on_opn_bank_editingFinished();
 
     currentMusic = setup.value("RecentMusic", "").toString();
@@ -167,12 +202,17 @@ MusPlayer_Qt::~MusPlayer_Qt()
     setup.setValue("MIDI-Device", ui->mididevice->currentIndex());
     setup.setValue("ADLMIDI-Bank-ID", ui->fmbank->currentIndex());
     setup.setValue("ADLMIDI-VolumeModel", ui->volumeModel->currentIndex());
-    setup.setValue("ADLMIDI-Tremolo", ui->tremolo->isChecked());
-    setup.setValue("ADLMIDI-Vibrato", ui->vibrato->isChecked());
-    setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adlibMode->isChecked());
-    setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->isChecked());
-    setup.setValue("ADLMIDI-LogarithmicVolumes", ui->logVolumes->isChecked());
+    setup.setValue("ADLMIDI-Tremolo", ui->tremolo->checkState());
+    setup.setValue("ADLMIDI-Vibrato", ui->vibrato->checkState());
+    setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adlibMode->checkState());
+    setup.setValue("ADLMIDI-Scalable-Modulation", ui->modulation->checkState());
+    setup.setValue("ADLMIDI-LogarithmicVolumes", ui->logVolumes->checkState());
+    setup.setValue("ADLMIDI-Bank", ui->adl_bank->text());
+    setup.setValue("ADLMIDI-Bank-UseCustom", ui->adl_use_custom->isChecked());
+
     setup.setValue("OPNMIDI-Bank", ui->opn_bank->text());
+    setup.setValue("OPNMIDI-Bank-UseCustom", ui->opn_use_custom->isChecked());
+
     setup.setValue("Volume", ui->volume->value());
     setup.setValue("RecentMusic", currentMusic);
     setup.setValue("RecentSfxDir", m_testSfxDir);
@@ -593,11 +633,11 @@ void MusPlayer_Qt::on_resetDefaultADLMIDI_clicked()
     ui->adlibMode->setChecked(false);
     ui->modulation->setChecked(false);
     ui->logVolumes->setChecked(false);
-    Mix_ADLMIDI_setTremolo(static_cast<int>(ui->tremolo->isChecked()));
-    Mix_ADLMIDI_setVibrato(static_cast<int>(ui->vibrato->isChecked()));
-    Mix_ADLMIDI_setAdLibMode(static_cast<int>(ui->adlibMode->isChecked()));
-    Mix_ADLMIDI_setScaleMod(static_cast<int>(ui->modulation->isChecked()));
-    Mix_ADLMIDI_setLogarithmicVolumes(static_cast<int>(ui->logVolumes->isChecked()));
+    Mix_ADLMIDI_setTremolo(tristateToInt(ui->tremolo->checkState()));
+    Mix_ADLMIDI_setVibrato(tristateToInt(ui->vibrato->checkState()));
+    Mix_ADLMIDI_setAdLibMode(tristateToInt(ui->adlibMode->checkState()));
+    Mix_ADLMIDI_setScaleMod(tristateToInt(ui->modulation->checkState()));
+    Mix_ADLMIDI_setLogarithmicVolumes(tristateToInt(ui->logVolumes->checkState()));
     on_volumeModel_currentIndexChanged(ui->volumeModel->currentIndex());
     on_fmbank_currentIndexChanged(ui->fmbank->currentIndex());
 }
@@ -721,11 +761,36 @@ void MusPlayer_Qt::on_opn_bank_browse_clicked()
 void MusPlayer_Qt::on_opn_bank_editingFinished()
 {
     QString file = ui->opn_bank->text();
-    if(!file.isEmpty() && QFile::exists(file))
+    if(!file.isEmpty() && QFile::exists(file) && ui->opn_use_custom->isChecked())
     {
         Mix_OPNMIDI_setCustomBankFile(file.toUtf8().data());
     } else {
         Mix_OPNMIDI_setCustomBankFile(NULL);
+    }
+}
+
+void MusPlayer_Qt::on_adl_bank_browse_clicked()
+{
+    QString path = QFileDialog::getOpenFileName(this,
+                                                tr("Select WOPL bank file"),
+                                                ui->adl_bank->text(),
+                                                "OPL3 bank file by Wohlstand (*.wopl);;"
+                                                "All Files (*.*)");
+    if(!path.isEmpty())
+    {
+        ui->adl_bank->setText(path);
+        on_adl_bank_editingFinished();
+    }
+}
+
+void MusPlayer_Qt::on_adl_bank_editingFinished()
+{
+    QString file = ui->adl_bank->text();
+    if(!file.isEmpty() && QFile::exists(file) && ui->adl_use_custom->isChecked())
+    {
+        Mix_ADLMIDI_setCustomBankFile(file.toUtf8().data());
+    } else {
+        Mix_ADLMIDI_setCustomBankFile(NULL);
     }
 }
 
