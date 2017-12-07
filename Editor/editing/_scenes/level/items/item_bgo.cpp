@@ -115,9 +115,10 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     ZMode_fg2->setChecked(m_data.z_mode == LevelBGO::Foreground2);
     ItemMenu.addSeparator();
 
-    QAction *transform =        ItemMenu.addAction(tr("Transform into"));
-    QAction *transform_all_s =  ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BGO-%1").arg(m_data.id));
-    QAction *transform_all =    ItemMenu.addAction(tr("Transform all %1 into").arg("BGO-%1").arg(m_data.id));
+    QMenu   *transforms = ItemMenu.addMenu(tr("Transform into"));
+    QAction *transform =        transforms->addAction(tr("Transform into"));
+    QAction *transform_all_s =  transforms->addAction(tr("Transform all %1 in this section into").arg("BGO-%1").arg(m_data.id));
+    QAction *transform_all =    transforms->addAction(tr("Transform all %1 into").arg("BGO-%1").arg(m_data.id));
     ItemMenu.addSeparator();
 
     /*************Copy Preferences*******************/
@@ -285,8 +286,13 @@ cancelRemoveSSS:
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_BGO, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_mw);
+        int transformToBlock;
+        int tabType;
+        ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs,
+                                                           ItemSelectDialog::TAB_BGO|ItemSelectDialog::TAB_BLOCK,
+                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_mw);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
+        blockList->setTabsOrder({ItemSelectDialog::TAB_BGO, ItemSelectDialog::TAB_BLOCK});
         util::DialogToCenter(blockList, true);
 
         if(blockList->exec() == QDialog::Accepted)
@@ -294,6 +300,8 @@ cancelRemoveSSS:
             QList<QGraphicsItem *> our_items;
             bool sameID = false;
             transformTO = blockList->bgoID;
+            transformToBlock = blockList->blockID;
+            tabType = blockList->currentTab;
             unsigned long oldID = m_data.id;
 
             if(selected == transform)
@@ -320,16 +328,46 @@ cancelRemoveSSS:
                 sameID = true;
             }
 
-
-            foreach(QGraphicsItem *SelItem, our_items)
+            //Change ID of each BGO
+            if(tabType == ItemSelectDialog::TAB_BGO)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+                foreach(QGraphicsItem *SelItem, our_items)
                 {
-                    if((!sameID) || (((ItemBGO *) SelItem)->m_data.id == oldID))
+                    if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                     {
-                        oldData.bgo.push_back(((ItemBGO *) SelItem)->m_data);
-                        ((ItemBGO *) SelItem)->transformTo(transformTO);
-                        newData.bgo.push_back(((ItemBGO *) SelItem)->m_data);
+                        ItemBGO * item = (ItemBGO *)SelItem;
+                        if((!sameID) || (item->m_data.id == oldID))
+                        {
+                            oldData.bgo.push_back(item->m_data);
+                            item->transformTo(transformTO);
+                            newData.bgo.push_back(item->m_data);
+                        }
+                    }
+                }
+            }
+            //Transform every BGO into block
+            else if(tabType == ItemSelectDialog::TAB_BLOCK)
+            {
+                for(QGraphicsItem *SelItem : our_items)
+                {
+                    if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+                    {
+                        ItemBGO * item = (ItemBGO *)SelItem;
+                        if((!sameID) || (item->m_data.id == oldID))
+                        {
+                            oldData.bgo.push_back(item->m_data);
+                            LevelBlock block;
+                            block.id = transformToBlock;
+                            block.x = item->m_data.x;
+                            block.y = item->m_data.y;
+                            block.layer = item->m_data.layer;
+                            block.meta = item->m_data.meta;
+                            block.meta.array_id = (m_scene->m_data->blocks_array_id)++;
+                            m_scene->placeBlock(block);
+                            newData.blocks.push_back(block);
+                            item->removeFromArray();
+                            delete item;
+                        }
                     }
                 }
             }
@@ -338,7 +376,7 @@ cancelTransform:
         }
         delete blockList;
 
-        if(!newData.bgo.isEmpty())
+        if(!newData.bgo.isEmpty() || !newData.blocks.isEmpty())
             m_scene->m_history->addTransform(newData, oldData);
     }
     else if(selected == copyItemID)

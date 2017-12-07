@@ -115,9 +115,10 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     QAction *chNPC =           ItemMenu.addAction(tr("Change included NPC..."));
     ItemMenu.addSeparator();
-    QAction *transform =       ItemMenu.addAction(tr("Transform into"));
-    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(m_data.id));
-    QAction *transform_all =   ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(m_data.id));
+    QMenu   *transforms = ItemMenu.addMenu(tr("Transform into"));
+    QAction *transform =       transforms->addAction(tr("Transform into"));
+    QAction *transform_all_s = transforms->addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(m_data.id));
+    QAction *transform_all =   transforms->addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(m_data.id));
     QAction *makemsgevent =    ItemMenu.addAction(tr("Make message box..."));
     ItemMenu.addSeparator();
 
@@ -194,8 +195,12 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_BLOCK, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow);
-        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
+        int transformToBGO;
+        int tabType;
+        ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs,
+                                                           ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO,
+                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow);
+        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO);
         util::DialogToCenter(blockList, true);
 
         if(blockList->exec() == QDialog::Accepted)
@@ -203,6 +208,8 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             QList<QGraphicsItem *> our_items;
             bool sameID = false;
             transformTO = blockList->blockID;
+            transformToBGO = blockList->bgoID;
+            tabType = blockList->currentTab;
             unsigned long oldID = m_data.id;
 
             if(selected == transform)
@@ -229,15 +236,46 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 sameID = true;
             }
 
-            for(QGraphicsItem *SelItem : our_items)
+            //Change ID of each block
+            if(tabType == ItemSelectDialog::TAB_BLOCK)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                for(QGraphicsItem *SelItem : our_items)
                 {
-                    if((!sameID) || (((ItemBlock *) SelItem)->m_data.id == oldID))
+                    if(SelItem->data(ITEM_TYPE).toString() == "Block")
                     {
-                        oldData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
-                        ((ItemBlock *) SelItem)->transformTo(transformTO);
-                        newData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
+                        ItemBlock *item = (ItemBlock *)SelItem;
+                        if((!sameID) || (item->m_data.id == oldID))
+                        {
+                            oldData.blocks.push_back(item->m_data);
+                            item->transformTo(transformTO);
+                            newData.blocks.push_back(item->m_data);
+                        }
+                    }
+                }
+            }
+            //Transform every block into BGO
+            else if(tabType == ItemSelectDialog::TAB_BGO)
+            {
+                for(QGraphicsItem *SelItem : our_items)
+                {
+                    if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                    {
+                        ItemBlock *item = (ItemBlock *)SelItem;
+                        if((!sameID) || (item->m_data.id == oldID))
+                        {
+                            oldData.blocks.push_back(item->m_data);
+                            LevelBGO bgo;
+                            bgo.id = transformToBGO;
+                            bgo.x = item->m_data.x;
+                            bgo.y = item->m_data.y;
+                            bgo.layer = item->m_data.layer;
+                            bgo.meta = item->m_data.meta;
+                            bgo.meta.array_id = (m_scene->m_data->bgo_array_id)++;
+                            m_scene->placeBGO(bgo);
+                            newData.bgo.push_back(bgo);
+                            item->removeFromArray();
+                            delete item;
+                        }
                     }
                 }
             }
@@ -246,7 +284,7 @@ cancelTransform:
         }
         delete blockList;
 
-        if(!newData.blocks.isEmpty())
+        if(!newData.blocks.isEmpty() || !newData.bgo.isEmpty())
             m_scene->m_history->addTransform(newData, oldData);
     }
     else if(selected == makemsgevent)
