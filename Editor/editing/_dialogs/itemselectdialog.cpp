@@ -53,6 +53,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     this->conf = conf;
     removalFlags = 0;
+    currentTab = 0;
     ui->setupUi(this);
 
     isMultiSelect=false;
@@ -105,6 +106,15 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     ui->Sel_List_Level->insertItem(0,empLevel);
     ui->Sel_List_Music->insertItem(0,empMusic);
 
+    ui->Sel_Tab_Block->setProperty("tabType", TAB_BLOCK);
+    ui->Sel_Tab_BGO->setProperty("tabType", TAB_BGO);
+    ui->Sel_Tab_NPC->setProperty("tabType", TAB_NPC);
+    ui->Sel_Tab_Tile->setProperty("tabType", TAB_TILE);
+    ui->Sel_Tab_Scenery->setProperty("tabType", TAB_SCENERY);
+    ui->Sel_Tab_Path->setProperty("tabType", TAB_PATH);
+    ui->Sel_Tab_Level->setProperty("tabType", TAB_LEVEL);
+    ui->Sel_Tab_Music->setProperty("tabType", TAB_MUSIC);
+
     bool blockTab = tabs & TAB_BLOCK;
     bool bgoTab = tabs & TAB_BGO;
     bool npcTab = tabs & TAB_NPC;
@@ -117,28 +127,46 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(!blockTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block));
+    else
+    if(currentTab == 0)
+        currentTab = TAB_BLOCK;
 
     if(!bgoTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO));
+    else
+    if(currentTab == 0)
+        currentTab = TAB_BGO;
 
     if(!npcTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC));
+    else
+    if(currentTab == 0)
+        currentTab = TAB_NPC;
 
     if(!tileTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Tile));
+    else if(currentTab == 0)
+        currentTab = TAB_TILE;
 
     if(!sceneryTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Scenery));
+    else if(currentTab == 0)
+        currentTab = TAB_SCENERY;
 
     if(!pathTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Path));
+    else if(currentTab == 0)
+        currentTab = TAB_PATH;
 
     if(!levelTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Level));
+    else if(currentTab == 0)
+        currentTab = TAB_LEVEL;
 
     if(!musicTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Music));
-
+    else if(currentTab == 0)
+        currentTab = TAB_MUSIC;
 
     if(npcExtraData & NPCEXTRA_WITHCOINS)
     {
@@ -324,6 +352,30 @@ void ItemSelectDialog::removeEmptyEntry(int tabs)
 
     removalFlags = tabs;
 
+}
+
+void ItemSelectDialog::setTabsOrder(QVector<int> tabIds)
+{
+    QVector<QPair<QString, QWidget *>> widgets;
+    while(ui->Sel_TabCon_ItemType->count())
+    {
+        widgets.push_back({ui->Sel_TabCon_ItemType->tabText(0), ui->Sel_TabCon_ItemType->widget(0)});
+        ui->Sel_TabCon_ItemType->removeTab(0);
+    }
+
+    for(int i = 0; i < tabIds.size() && i < widgets.size(); i++)
+    {
+        int destType = tabIds[i];
+        for(int j = 0; j < widgets.size(); j++)
+        {
+            int type = widgets[j].second->property("tabType").toInt();
+            if(destType == type)
+            {
+                ui->Sel_TabCon_ItemType->addTab(widgets[j].second, widgets[j].first);
+                break;
+            }
+        }
+    }
 }
 
 void ItemSelectDialog::setMultiSelect(bool _multiselect)
@@ -1026,6 +1078,11 @@ void ItemSelectDialog::updateFilters()
 void ItemSelectDialog::on_Sel_TabCon_ItemType_currentChanged(int index)
 {
     Q_UNUSED(index)
+
+    if(ui->Sel_TabCon_ItemType->count())
+        currentTab = ui->Sel_TabCon_ItemType->currentWidget()->property("tabType").toInt();
+    else
+        currentTab = 0;
 
     checkExtraDataVis(extraBlockWid, ui->Sel_Tab_Block);
     checkExtraDataVis(extraBGOWid, ui->Sel_Tab_BGO);

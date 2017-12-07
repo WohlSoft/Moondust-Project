@@ -47,6 +47,7 @@ public:
                               int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0);
     ~ItemSelectDialog();
 
+    int currentTab;
     int blockID;    QList<int> blockIDs;
     int bgoID;      QList<int> bgoIDs;
     int npcID;      QList<int> npcIDs;
@@ -76,6 +77,8 @@ public:
     };
 
     void removeEmptyEntry(int tabs);
+
+    void setTabsOrder(QVector<int> tabIds);
 
     void setMultiSelect(bool _multiselect);
 
