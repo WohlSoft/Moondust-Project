@@ -272,6 +272,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                             bgo.meta = item->m_data.meta;
                             bgo.meta.array_id = (m_scene->m_data->bgo_array_id)++;
                             m_scene->placeBGO(bgo);
+                            m_scene->m_data->bgo.push_back(bgo);
                             newData.bgo.push_back(bgo);
                             item->removeFromArray();
                             delete item;
