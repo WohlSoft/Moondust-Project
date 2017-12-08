@@ -191,15 +191,17 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->m_mw->on_actionCopy_triggered();
     else if((selected == transform) || (selected == transform_all) || (selected == transform_all_s))
     {
+        LvlScene *scene = m_scene;
+        LevelData *ldata = scene->m_data;
         LevelData oldData;
         LevelData newData;
 
         int transformTO;
         int transformToBGO;
         int tabType;
-        ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs,
+        ItemSelectDialog *blockList = new ItemSelectDialog(scene->m_configs,
                                                            ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow);
+                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, scene->m_subWindow);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO);
         util::DialogToCenter(blockList, true);
 
@@ -213,26 +215,26 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             unsigned long oldID = m_data.id;
 
             if(selected == transform)
-                our_items = m_scene->selectedItems();
+                our_items = scene->selectedItems();
             else if(selected == transform_all)
             {
-                our_items = m_scene->items();
+                our_items = scene->items();
                 sameID = true;
             }
             else if(selected == transform_all_s)
             {
                 bool ok = false;
-                long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
+                long mg = QInputDialog::getInt(scene->m_subWindow, tr("Margin of section"),
                                                tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
-                LevelSection &s = m_scene->m_data->sections[m_scene->m_data->CurSection];
+                LevelSection &s = ldata->sections[ldata->CurSection];
                 QRectF section;
                 section.setLeft(s.size_left - mg);
                 section.setTop(s.size_top - mg);
                 section.setRight(s.size_right + mg);
                 section.setBottom(s.size_bottom + mg);
-                our_items = m_scene->items(section, Qt::IntersectsItemShape);
+                our_items = scene->items(section, Qt::IntersectsItemShape);
                 sameID = true;
             }
 
@@ -270,9 +272,9 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                             bgo.y = item->m_data.y;
                             bgo.layer = item->m_data.layer;
                             bgo.meta = item->m_data.meta;
-                            bgo.meta.array_id = (m_scene->m_data->bgo_array_id)++;
-                            m_scene->placeBGO(bgo);
-                            m_scene->m_data->bgo.push_back(bgo);
+                            bgo.meta.array_id = (ldata->bgo_array_id)++;
+                            scene->placeBGO(bgo);
+                            ldata->bgo.push_back(bgo);
                             newData.bgo.push_back(bgo);
                             item->removeFromArray();
                             delete item;
@@ -286,7 +288,7 @@ cancelTransform:
         delete blockList;
 
         if(!newData.blocks.isEmpty() || !newData.bgo.isEmpty())
-            m_scene->m_history->addTransform(newData, oldData);
+            scene->m_history->addTransform(newData, oldData);
     }
     else if(selected == makemsgevent)
     {
@@ -450,8 +452,9 @@ typeEventAgain:
 
         if(!selectedList.isEmpty())
         {
-            m_scene->removeLvlItems(selectedList);
-            m_scene->Debugger_updateItemList();
+            LvlScene *scene = m_scene;
+            scene->removeLvlItems(selectedList);
+            scene->Debugger_updateItemList();
         }
 cancelRemoveSSS:
         ;

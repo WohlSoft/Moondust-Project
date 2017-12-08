@@ -188,8 +188,9 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         }
         if(!selectedList.isEmpty())
         {
-            m_scene->removeLvlItems(selectedList);
-            m_scene->Debugger_updateItemList();
+            LvlScene    *scene = m_scene;
+            scene->removeLvlItems(selectedList);
+            scene->Debugger_updateItemList();
         }
 cancelRemoveSSS:
         ;
@@ -282,6 +283,8 @@ cancelRemoveSSS:
     }
     else if((selected == transform) || (selected == transform_all) || (selected == transform_all_s))
     {
+        LvlScene    *scene = m_scene;
+        LevelData   *ldata = scene->m_data;
         LevelData oldData;
         LevelData newData;
 
@@ -305,26 +308,26 @@ cancelRemoveSSS:
             unsigned long oldID = m_data.id;
 
             if(selected == transform)
-                our_items = m_scene->selectedItems();
+                our_items = scene->selectedItems();
             else if(selected == transform_all)
             {
-                our_items = m_scene->items();
+                our_items = scene->items();
                 sameID = true;
             }
             else if(selected == transform_all_s)
             {
                 bool ok = false;
-                long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
+                long mg = QInputDialog::getInt(scene->m_subWindow, tr("Margin of section"),
                                                tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
-                LevelSection &s = m_scene->m_data->sections[m_scene->m_data->CurSection];
+                LevelSection &s = ldata->sections[ldata->CurSection];
                 QRectF section;
                 section.setLeft(s.size_left - mg);
                 section.setTop(s.size_top - mg);
                 section.setRight(s.size_right + mg);
                 section.setBottom(s.size_bottom + mg);
-                our_items = m_scene->items(section, Qt::IntersectsItemShape);
+                our_items = scene->items(section, Qt::IntersectsItemShape);
                 sameID = true;
             }
 
@@ -362,11 +365,11 @@ cancelRemoveSSS:
                             block.y = item->m_data.y;
                             block.layer = item->m_data.layer;
                             block.meta = item->m_data.meta;
-                            block.meta.array_id = (m_scene->m_data->blocks_array_id)++;
-                            ItemBlock* blockItem = m_scene->placeBlock(block);
+                            block.meta.array_id = (ldata->blocks_array_id)++;
+                            ItemBlock* blockItem = scene->placeBlock(block);
                             block.w = blockItem->m_data.w;
                             block.h = blockItem->m_data.h;
-                            m_scene->m_data->blocks.push_back(block);
+                            ldata->blocks.push_back(block);
                             newData.blocks.push_back(block);
                             item->removeFromArray();
                             delete item;
@@ -380,7 +383,7 @@ cancelTransform:
         delete blockList;
 
         if(!newData.bgo.isEmpty() || !newData.blocks.isEmpty())
-            m_scene->m_history->addTransform(newData, oldData);
+            scene->m_history->addTransform(newData, oldData);
     }
     else if(selected == copyItemID)
     {
