@@ -363,7 +363,9 @@ cancelRemoveSSS:
                             block.layer = item->m_data.layer;
                             block.meta = item->m_data.meta;
                             block.meta.array_id = (m_scene->m_data->blocks_array_id)++;
-                            m_scene->placeBlock(block);
+                            ItemBlock* blockItem = m_scene->placeBlock(block);
+                            block.w = blockItem->m_data.w;
+                            block.h = blockItem->m_data.h;
                             m_scene->m_data->blocks.push_back(block);
                             newData.blocks.push_back(block);
                             item->removeFromArray();
