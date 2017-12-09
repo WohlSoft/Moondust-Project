@@ -180,7 +180,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->gme_setup->setVisible(false);
 
     ui->opn_bank->setText(setup.value("OPNMIDI-Bank", "").toString());
-    ui->opn_use_custom->setChecked(setup.value("ADLMIDI-Bank-UseCustom", true).toBool());
+    ui->opn_use_custom->setChecked(setup.value("OPNMIDI-Bank-UseCustom", true).toBool());
     on_opn_bank_editingFinished();
 
     currentMusic = setup.value("RecentMusic", "").toString();
