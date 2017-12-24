@@ -29,6 +29,7 @@
 
 namespace Files
 {
+    FILE *utf8_fopen(const char *filePath, const char *modes);
     bool fileExists(const std::string &path);
     bool deleteFile(const std::string &path);
     bool copyFile(const std::string &to, const std::string &from, bool override = false);
