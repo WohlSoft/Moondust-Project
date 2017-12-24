@@ -1093,7 +1093,7 @@ int GlRenderer::makeShot_action(void *_pixels)
 
 static struct gifRecord
 {
-    GifWriter   writer      = {nullptr, nullptr, true};
+    GifWriter   writer      = {NULL, NULL, true, false, NULL, 0, 0, 0, 0, false};
     SDL_Thread *worker      = nullptr;
     SDL_mutex  *mutex       = nullptr;
     uint32_t    delay       = 3;
@@ -1121,10 +1121,11 @@ void GlRenderer::toggleRecorder()
                                          t->tm_year, t->tm_mon, t->tm_mday,
                                          t->tm_hour, t->tm_min, t->tm_sec);
 
+        FILE *gifFile = Files::utf8_fopen(saveTo.data(), "wb");
         if(GifBegin(&g_gif.writer,
-                    saveTo.data(),
+                    gifFile,
                     static_cast<uint32_t>(m_viewport_w),
-                    static_cast<uint32_t>(m_viewport_h), g_gif.delay, 8, false))
+                    static_cast<uint32_t>(m_viewport_h), g_gif.delay, false))
         {
             g_gif.enabled = true;
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
