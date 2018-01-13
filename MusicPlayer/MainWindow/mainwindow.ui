@@ -283,6 +283,13 @@ QLabel
             </item>
            </widget>
           </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLineEdit" name="midiRawArgs">
+            <property name="placeholderText">
+             <string>Type raw MIDI arguments here or leave empty to use GUI setup...</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
