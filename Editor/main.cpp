@@ -79,7 +79,7 @@ static void pgeInitSDL()
         return;
     }
     LogDebugNC("Initializing SDL Mixer X...");
-    if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MODPLUG | MIX_INIT_MP3 | MIX_INIT_OGG) < 0)
+    if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MID) < 0)
         LogWarning(QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
     #endif
 

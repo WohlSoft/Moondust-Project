@@ -41,7 +41,7 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
         FileMapper fileMap;
         if( fileMap.open_file(sndFile) )
         {
-            tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(), fileMap.size()), fileMap.size());
+            tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(), (int)fileMap.size()), (int)fileMap.size());
             fileMap.close_file();
         }
         #else
@@ -58,7 +58,7 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
         tmpChunk = snd->second;
     }
 
-    Mix_ReserveChannels(chunksBuffer.size()>4 ? 4: chunksBuffer.size());
+    Mix_ReserveChannels(chunksBuffer.size()>4 ? 4 : (int)chunksBuffer.size());
 
     return tmpChunk;
 }

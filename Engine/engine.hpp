@@ -91,18 +91,18 @@ private:
         CONFIG_MANAGER  = 0x001,
         //! libSDL is initialized
         LIBSDL          = 0x002,
+        //! libSDL_mixer is initialized
+        LIBSDLMIXER     = 0x004,
         //! Audio subsystem is initialized
-        AUDIO_ENGINE    = 0x004,
+        AUDIO_ENGINE    = 0x008,
         //! Application settings are loaded
-        SETTINGS_LOADED = 0x008,
+        SETTINGS_LOADED = 0x010,
         //! Interprocess subsystem is enabled
-        INTERPROCESSOR  = 0x010,
+        INTERPROCESSOR  = 0x020,
         //! Font manager is initialized
-        FONT_MANAGER    = 0x020,
+        FONT_MANAGER    = 0x040,
         //! Game window is created
-        PGE_WINDOW      = 0x040,
-        ////! Qt Application class is constructed
-        //QAPP            = 0x080,
+        PGE_WINDOW      = 0x080,
         //! Logger is initalized
         LOGGER          = 0x100,
         //! Translation subsystem is initialized

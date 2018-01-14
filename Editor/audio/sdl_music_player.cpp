@@ -127,7 +127,7 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
     if(current==musFile)
     {
         #ifdef USE_SDL_MIXER
-        if(Mix_PlayingMusic()==1)
+        if(Mix_PlayingMusic() == 1)
                 return;
         #endif
     }
@@ -160,19 +160,20 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
         else
             current = musFile;
 
-        Mix_MusicType type=Mix_GetMusicType(play_mus);
+        Mix_MusicType type = Mix_GetMusicType(play_mus);
         qDebug() << QString("Music type: %1").arg(
-                type==MUS_NONE?"MUS_NONE":
-                type==MUS_CMD?"MUS_CMD":
-                type==MUS_WAV?"MUS_WAV":
-                /*type==MUS_MOD_MODPLUG?"MUS_MOD_MODPLUG":*/
-                type==MUS_MOD?"MUS_MOD":
-                type==MUS_MID?"MUS_MID":
-                type==MUS_OGG?"MUS_OGG":
-                type==MUS_MP3?"MUS_MP3":
-                type==MUS_MP3_MAD?"MUS_MP3_MAD":
-                type==MUS_FLAC?"MUS_FLAC":
-                type==9?"MUS_SPC":
+                type==MUS_NONE ? "MUS_NONE":
+                type==MUS_CMD ? "MUS_CMD":
+                type==MUS_WAV ?"MUS_WAV":
+                type==MUS_MOD ? "MUS_MOD" :
+                type==MUS_MID ? "MUS_MID" :
+                type==MUS_OGG ? "MUS_OGG" :
+                type==MUS_MP3 ? "MUS_MP3" :
+                type==MUS_FLAC? "MUS_FLAC" :
+                #ifdef SDL_MIXER_X
+                type==MUS_GME ? "MUS_GME" :
+                type==MUS_ADLMIDI ? "MUS_ADLMIDI" :
+                #endif
                 "Unknown");
 #endif
 }
