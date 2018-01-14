@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2018 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -76,6 +76,7 @@ extern "C" {
  *    "opengl"
  *    "opengles2"
  *    "opengles"
+ *    "metal"
  *    "software"
  *
  *  The default varies by platform, but it's the first one in the list that
@@ -220,6 +221,12 @@ extern "C" {
  *  By default SDL will allow interaction with the window frame when the cursor is hidden
  */
 #define SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN    "SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN"
+
+/**
+ * \brief A variable to specify custom icon resource id from RC file on Windows platform 
+ */
+#define SDL_HINT_WINDOWS_INTRESOURCE_ICON       "SDL_WINDOWS_INTRESOURCE_ICON"
+#define SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL "SDL_WINDOWS_INTRESOURCE_ICON_SMALL"
 
 /**
  *  \brief  A variable controlling whether the windows message loop is processed by SDL 
@@ -713,6 +720,18 @@ extern "C" {
  */
 #define SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH "SDL_ANDROID_SEPARATE_MOUSE_AND_TOUCH"
 
+ /**
+ * \brief A variable to control whether the return key on the soft keyboard
+ *        should hide the soft keyboard on Android and iOS.
+ *
+ * The variable can be set to the following values:
+ *   "0"       - The return key will be handled as a key event. This is the behaviour of SDL <= 2.0.3. (default)
+ *   "1"       - The return key will hide the keyboard.
+ *
+ * The value of this hint is used at runtime, so it can be changed at any time.
+ */
+#define SDL_HINT_RETURN_KEY_HIDES_IME "SDL_RETURN_KEY_HIDES_IME"
+
 /**
  *  \brief override the binding element for keyboard inputs for Emscripten builds
  *
@@ -792,6 +811,24 @@ extern "C" {
 #define SDL_HINT_RPI_VIDEO_LAYER           "SDL_RPI_VIDEO_LAYER"
 
 /**
+ * \brief Tell the video driver that we only want a double buffer.
+ *
+ * By default, most lowlevel 2D APIs will use a triple buffer scheme that 
+ * wastes no CPU time on waiting for vsync after issuing a flip, but
+ * introduces a frame of latency. On the other hand, using a double buffer
+ * scheme instead is recommended for cases where low latency is an important
+ * factor because we save a whole frame of latency.
+ * We do so by waiting for vsync immediately after issuing a flip, usually just
+ * after eglSwapBuffers call in the backend's *_SwapWindow function.
+ *
+ * Since it's driver-specific, it's only supported where possible and
+ * implemented. Currently supported the following drivers:
+ * - KMSDRM (kmsdrm)
+ * - Raspberry Pi (raspberrypi)
+ */
+#define SDL_HINT_VIDEO_DOUBLE_BUFFER      "SDL_VIDEO_DOUBLE_BUFFER"
+
+/**
  *  \brief  A variable controlling what driver to use for OpenGL ES contexts.
  *
  *  On some platforms, currently Windows and X11, OpenGL drivers may support
@@ -849,6 +886,19 @@ extern "C" {
 #define SDL_HINT_AUDIO_RESAMPLING_MODE   "SDL_AUDIO_RESAMPLING_MODE"
 
 /**
+ *  \brief  A variable controlling the audio category on iOS and Mac OS X
+ *
+ *  This variable can be set to the following values:
+ *
+ *    "ambient"     - Use the AVAudioSessionCategoryAmbient audio category, will be muted by the phone mute switch (default)
+ *    "playback"    - Use the AVAudioSessionCategoryPlayback category
+ *
+ *  For more information, see Apple's documentation:
+ *  https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/AudioSessionCategoriesandModes/AudioSessionCategoriesandModes.html
+ */
+#define SDL_HINT_AUDIO_CATEGORY   "SDL_AUDIO_CATEGORY"
+
+/**
  *  \brief  An enumeration of hint priorities
  */
 typedef enum
@@ -897,7 +947,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_GetHintBoolean(const char *name, SDL_bool d
 /**
  * \brief type definition of the hint callback function.
  */
-typedef void (*SDL_HintCallback)(void *userdata, const char *name, const char *oldValue, const char *newValue);
+typedef void (SDLCALL *SDL_HintCallback)(void *userdata, const char *name, const char *oldValue, const char *newValue);
 
 /**
  *  \brief Add a function to watch a particular hint

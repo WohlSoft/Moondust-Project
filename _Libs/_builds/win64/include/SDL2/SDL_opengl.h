@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2018 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -97,6 +97,13 @@
 #elif defined(__CYGWIN__) && defined(USE_OPENGL32) /* use native windows opengl32 */
 #  define GLAPI extern
 #  define GLAPIENTRY __stdcall
+#elif defined(__OS2__) || defined(__EMX__) /* native os/2 opengl */
+#  define GLAPI extern
+#  define GLAPIENTRY _System
+#  define APIENTRY _System
+#  if defined(__GNUC__) && !defined(_System)
+#    define _System
+#  endif
 #elif (defined(__GNUC__) && __GNUC__ >= 4) || (defined(__SUNPRO_C) && (__SUNPRO_C >= 0x590))
 #  define GLAPI __attribute__((visibility("default")))
 #  define GLAPIENTRY
