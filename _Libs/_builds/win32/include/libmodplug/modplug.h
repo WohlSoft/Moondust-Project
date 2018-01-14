@@ -68,7 +68,15 @@ MODPLUG_EXPORT int ModPlug_GetLength(ModPlugFile* file);
  * ModPlug_GetLength() does not report the full length. */
 MODPLUG_EXPORT void ModPlug_Seek(ModPlugFile* file, int millisecond);
 
+/* Get the absulote playing position in the song, in milliseconds. */
 MODPLUG_EXPORT int  ModPlug_Tell(ModPlugFile* file);
+/* As this function wasn't officially implemented,
+ * to be able use same code with both official and with this function,
+ * you must check for this macro and disable code
+ * which can't use ModPlug_Tell function as it wasn't implemented in offical public versions */
+#ifndef MODPLUG_HAS_TELL
+#define MODPLUG_HAS_TELL
+#endif
 
 enum _ModPlug_Flags
 {
