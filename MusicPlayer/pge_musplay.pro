@@ -74,11 +74,12 @@ macx:{
             $$PWD/_resources/file_musplay.icns
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
-    LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
-            -framework IOKit -framework CoreFoundation -framework Carbon \
-            -framework ForceFeedback -framework AudioToolbox \
-            -framework Metal
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
+    LIBS += -framework CoreAudio -framework CoreVideo \
+            -framework IOKit -framework CoreFoundation \
+            -framework ForceFeedback -framework AudioToolbox \
+            -framework Cocoa -framework Carbon \
+            -framework Metal
 
 } else {
     !usewinapi:{

@@ -100,9 +100,10 @@ macx: {
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
-    LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
-            -framework IOKit -framework CoreFoundation -framework Carbon \
+    LIBS += -framework CoreAudio -framework CoreVideo \
+            -framework IOKit -framework CoreFoundation \
             -framework ForceFeedback -framework AudioToolbox \
+            -framework Carbon -framework Cocoa \
             -framework OpenGL -framework Metal
 }
 linux-g++||unix:!macx:!android:!haiku-g++: {
