@@ -103,7 +103,7 @@ macx: {
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
             -framework ForceFeedback -framework AudioToolbox \
-            -framework OpenGL
+            -framework OpenGL -framework Metal
 }
 linux-g++||unix:!macx:!android:!haiku-g++: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64

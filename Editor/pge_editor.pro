@@ -99,7 +99,8 @@ macx: {
 
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
-            -framework ForceFeedback -framework AudioToolbox
+            -framework ForceFeedback -framework AudioToolbox \
+            -framework Metal
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
 }
 

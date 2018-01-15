@@ -120,7 +120,7 @@ bool PGE_ImageInfo::getImageSize(PGEString imagePath, uint32_t *w, uint32_t *h, 
     if(errCode)
         *errCode = ERR_OK;
 
-    std::string imgPath = std::move(PGEStringToStd(imagePath));
+    std::string imgPath = PGEStringToStd(imagePath);
 
     if(!Files::fileExists(imgPath))
     {

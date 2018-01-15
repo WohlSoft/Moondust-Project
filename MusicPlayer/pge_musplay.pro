@@ -76,7 +76,8 @@ macx:{
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
     LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
             -framework IOKit -framework CoreFoundation -framework Carbon \
-            -framework ForceFeedback -framework AudioToolbox
+            -framework ForceFeedback -framework AudioToolbox \
+            -framework Metal
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
 
 } else {
