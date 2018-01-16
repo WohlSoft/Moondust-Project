@@ -75,12 +75,10 @@ macx:{
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
-    LIBS += -framework CoreAudio -framework CoreVideo \
-            -framework IOKit -framework CoreFoundation \
-            -framework ForceFeedback -framework AudioToolbox \
-            -framework Cocoa -framework Carbon \
+    LIBS += -framework CoreAudio -framework AudioToolbox -framework AudioUnit \
+            -framework CoreVideo -framework IOKit -framework CoreFoundation \
+            -framework ForceFeedback -framework Cocoa -framework Carbon \
             -framework Metal
-
 } else {
     !usewinapi:{
         LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC
