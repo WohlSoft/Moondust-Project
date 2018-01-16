@@ -101,10 +101,10 @@ macx: {
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
     LIBS += -framework CoreAudio -framework CoreVideo \
-            -framework IOKit -framework CoreFoundation \
-            -framework ForceFeedback -framework AudioToolbox \
-            -framework Carbon -framework Cocoa \
-            -framework OpenGL -framework Metal
+            -framework AudioToolbox -framework AudioUnit \
+            -framework IOKit -framework Cocoa -framework Carbon \
+            -framework ForceFeedback -framework Metal -framework CoreFoundation \
+            -framework OpenGL
 }
 linux-g++||unix:!macx:!android:!haiku-g++: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
