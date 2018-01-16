@@ -70,15 +70,16 @@ linux-g++||unix:!macx:!android:{
 macx:{
     ICON = $$PWD/_resources/cat_musplay.icns
     QMAKE_INFO_PLIST = $$PWD/_resources/musplay.plist
+    DEFINES += DEFINE_Q_OS_MACX # Workaround for inability of MOC to see this macro
     APP_FILEICON_FILES.files = \
             $$PWD/_resources/file_musplay.icns
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
-    LIBS += -framework CoreAudio -framework AudioToolbox -framework AudioUnit \
-            -framework CoreVideo -framework IOKit -framework CoreFoundation \
-            -framework ForceFeedback -framework Cocoa -framework Carbon \
-            -framework Metal
+    LIBS += -framework CoreAudio -framework CoreVideo \
+            -framework AudioToolbox -framework AudioUnit \
+            -framework IOKit -framework Cocoa -framework Carbon \
+            -framework ForceFeedback -framework Metal -framework CoreFoundation
 } else {
     !usewinapi:{
         LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC
