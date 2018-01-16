@@ -89,6 +89,7 @@ android: {
 macx: {
     ICON = $$PWD/_resources/cat_builder.icns
     QMAKE_INFO_PLIST = $$PWD/_resources/pge_editor.plist
+    DEFINES += DEFINE_Q_OS_MACX # Workaround for inability of MOC to see this macro
     APP_FILEICON_FILES.files = \
             $$PWD/_resources/file_lvl.icns \
             $$PWD/_resources/file_lvlx.icns \
