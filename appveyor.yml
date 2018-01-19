@@ -58,7 +58,7 @@ environment:
       BIN_DIR: bin-w32
       WINXX_ARCH: win32
       COMPILER: C:\Qt\Tools\mingw530_32\bin
-      QT_DIR: C:\Qt\5.7\mingw53_32 # Qt since 5.8 no more supports Windows XP, Keep support for Windows XP yet
+      QT_DIR: C:\Qt\5.7\mingw53_32\bin # Qt since 5.8 no more supports Windows XP, Keep support for Windows XP yet
 
 install:
   - ps: if ($env:PLATFORM -eq "x64") { new-item C:\temp-d -itemtype directory }
