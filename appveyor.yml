@@ -53,7 +53,7 @@ environment:
       BIN_DIR: bin-w64
       WINXX_ARCH: win64
       COMPILER: C:\mingw-w64\x86_64-7.1.0-posix-seh-rt_v5-rev0\mingw64\bin
-      QT_DIR: C:\Qt\5.9.0-x64
+      QT_DIR: C:\Qt\5.9.0-x64\bin
     - PLATFORM: Win32
       BIN_DIR: bin-w32
       WINXX_ARCH: win32
