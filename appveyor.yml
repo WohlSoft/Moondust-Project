@@ -89,15 +89,15 @@ build_script:
   - cmd: if [%PLATFORM%]==[x64] deploy_windows_dynamic_x64.bat nopause
   - cmd: cd ..\..\..\
 
-on_success:
-  - appveyor PushArtifact %BIN_DIR%\_packed\pge-project-dev-%WINXX_ARCH%.zip
-  - appveyor PushArtifact %BIN_DIR%\_packed\install-pge-common-dev-%WINXX_ARCH%.zip
-  - appveyor PushArtifact %BIN_DIR%\_packed\install-pge-editor-dev-%WINXX_ARCH%.zip
-  - appveyor PushArtifact %BIN_DIR%\_packed\install-pge-engine-dev-%WINXX_ARCH%.zip #This archive has no built applications (engine disabled to don't excite building timeout)
-  - appveyor PushArtifact %BIN_DIR%\_packed\install-pge-tools-dev-%WINXX_ARCH%.zip  #This archive has no built applications (toosl are disabled to don't excite building timeout)
-  - appveyor PushArtifact %BIN_DIR%\_packed\pge-maintainer-dev-%WINXX_ARCH%.zip  #Standalone package of PGE Maintainer (work outside PGE)
-  - appveyor PushArtifact %BIN_DIR%\_packed\pge-musplay-dev-%WINXX_ARCH%.zip     #Standalone package of PGE MusPlay (work outside PGE)
-  - appveyor PushArtifact build_date_dev_%WINXX_ARCH%.txt
+artifacts:
+  - path: 'bin-*\_packed\pge-project-dev-*.zip'
+  - path: 'bin-*\_packed\install-pge-common-dev-*.zip'
+  - path: 'bin-*\_packed\install-pge-editor-dev-*.zip'
+  - path: 'bin-*\_packed\install-pge-engine-dev-*.zip' #This archive has no built applications (engine disabled to don't excite building timeout)
+  - path: 'bin-*\_packed\install-pge-tools-dev-*.zip'  #This archive has no built applications (toosl are disabled to don't excite building timeout)
+  - path: 'bin-*\_packed\pge-maintainer-dev-*.zip'     #Standalone package of PGE Maintainer (work outside PGE)
+  - path: 'bin-*\_packed\pge-musplay-dev-*.zip'        #Standalone package of PGE MusPlay (work outside PGE)
+  - path: 'build_date_dev_*.txt'
 
 deploy:
   - provider: Environment
