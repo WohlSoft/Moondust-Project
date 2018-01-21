@@ -79,7 +79,7 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusTitle()
     {
-        #ifdef SDL_MIXER_X
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicTitle(play_mus));
         else
@@ -93,7 +93,7 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusArtist()
     {
-        #ifdef SDL_MIXER_X
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicArtistTag(play_mus));
         else
@@ -107,7 +107,7 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusAlbum()
     {
-        #ifdef SDL_MIXER_X
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicAlbumTag(play_mus));
         else
@@ -121,7 +121,7 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusCopy()
     {
-        #ifdef SDL_MIXER_X
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicCopyrightTag(play_mus));
         else

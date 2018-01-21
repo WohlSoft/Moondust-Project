@@ -3,7 +3,15 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#ifdef USE_SDL_MIXER_X
 #include <SDL2/SDL_mixer_ext.h>
+#else
+#include <SDL2/SDL_mixer.h>
+#endif
+
+#if (SDL_MIXER_MAJOR_VERSION > 2) || (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION >= 1)
+#define SDL_MIXER_GE21
+#endif
 
 #ifdef MUSPLAY_USE_WINAPI
 #define DebugLog(msg)

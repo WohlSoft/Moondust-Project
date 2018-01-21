@@ -57,6 +57,22 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     for(int i = 0; i < totalBakns; i++)
         ui->fmbank->addItem(QString("%1 = %2").arg(i).arg(names[i]));
 
+    QString title = windowTitle();
+    /* Append library version to the title */
+    const SDL_version* mixer_ver = Mix_Linked_Version();
+    #if defined(SDL_MIXER_X)
+    title += QString(" (SDL Mixer X %1.%2.%3)")
+            .arg(mixer_ver->major)
+            .arg(mixer_ver->minor)
+            .arg(mixer_ver->patch);
+    #else
+    title += QString(" (SDL Mixer %1.%2.%3)")
+            .arg(mixer_ver->major)
+            .arg(mixer_ver->minor)
+            .arg(mixer_ver->patch);
+    #endif
+    setWindowTitle(title);
+
     ui->tremolo->setCheckState(Qt::PartiallyChecked);
     ui->vibrato->setCheckState(Qt::PartiallyChecked);
     ui->modulation->setCheckState(Qt::PartiallyChecked);
@@ -140,26 +156,34 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->opnmidi_extra->setVisible(ui->mididevice->currentIndex() == 3);
     ui->adlmidi_xtra->setVisible(ui->mididevice->currentIndex() == 0);
 
-    #ifdef SDL_MIXER_X
+    #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     switch(ui->mididevice->currentIndex())
     {
+    #ifdef SDL_MIXER_X
     case 0:
-        Mix_SetMidiDevice(MIDI_ADLMIDI);
+        Mix_SetMidiPlayer(MIDI_ADLMIDI);
         break;
+    #endif
     case 1:
-        Mix_SetMidiDevice(MIDI_Timidity);
+        Mix_SetMidiPlayer(MIDI_Timidity);
         break;
     case 2:
-        Mix_SetMidiDevice(MIDI_Native);
+        Mix_SetMidiPlayer(MIDI_Native);
         break;
+    #ifdef SDL_MIXER_X
     case 3:
-        Mix_SetMidiDevice(MIDI_OPNMIDI);
+        Mix_SetMidiPlayer(MIDI_OPNMIDI);
         break;
+    #endif
     case 4:
-        Mix_SetMidiDevice(MIDI_Fluidsynth);
+        Mix_SetMidiPlayer(MIDI_Fluidsynth);
         break;
     default:
-        Mix_SetMidiDevice(MIDI_ADLMIDI);
+        #ifdef SDL_MIXER_X
+        Mix_SetMidiPlayer(MIDI_ADLMIDI);
+        #else
+        Mix_SetMidiPlayer(MIDI_Timidity);
+        #endif
         break;
     }
     #endif
@@ -435,29 +459,37 @@ void MusPlayer_Qt::switchMidiDevice(int index)
     ui->opnmidi_extra->setVisible(false);
     ui->midi_setup->setVisible(true);
 
-#ifdef SDL_MIXER_X
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     switch(index)
     {
+    #ifdef SDL_MIXER_X
     case 0:
-        Mix_SetMidiDevice(MIDI_ADLMIDI);
+        Mix_SetMidiPlayer(MIDI_ADLMIDI);
         ui->adlmidi_xtra->setVisible(true);
         break;
+    #endif
     case 1:
-        Mix_SetMidiDevice(MIDI_Timidity);
+        Mix_SetMidiPlayer(MIDI_Timidity);
         break;
     case 2:
-        Mix_SetMidiDevice(MIDI_Native);
+        Mix_SetMidiPlayer(MIDI_Native);
         break;
+    #ifdef SDL_MIXER_X
     case 3:
-        Mix_SetMidiDevice(MIDI_OPNMIDI);
+        Mix_SetMidiPlayer(MIDI_OPNMIDI);
         ui->opnmidi_extra->setVisible(true);
         break;
+    #endif
     case 4:
-        Mix_SetMidiDevice(MIDI_Fluidsynth);
+        Mix_SetMidiPlayer(MIDI_Fluidsynth);
         break;
     default:
-        Mix_SetMidiDevice(MIDI_ADLMIDI);
+        #ifdef SDL_MIXER_X
+        Mix_SetMidiPlayer(MIDI_ADLMIDI);
         ui->adlmidi_xtra->setVisible(true);
+        #else
+        Mix_SetMidiPlayer(MIDI_Timidity);
+        #endif
         break;
     }
 #else
@@ -529,7 +561,7 @@ void MusPlayer_Qt::on_play_clicked()
     bool playSuccess = false;
 
     QString musicPath = currentMusic;
-    #ifdef SDL_MIXER_X
+    #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     if(ui->gme_setup->isVisible())
         musicPath += "|" + ui->trackID->text();
     else if(ui->midi_setup->isVisible())
@@ -562,7 +594,7 @@ void MusPlayer_Qt::on_play_clicked()
     if(playSuccess)
     {
         double total =
-            #ifdef SDL_MIXER_X
+            #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
                 Mix_GetMusicTotalTime(PGE_MusicPlayer::play_mus);
             #else
                 -1.0;
@@ -579,7 +611,7 @@ void MusPlayer_Qt::on_play_clicked()
 
 
         double loopStart =
-            #ifdef SDL_MIXER_X
+            #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
                 Mix_GetMusicLoopStartTime(PGE_MusicPlayer::play_mus);
             #else
                 -1.0;
@@ -723,7 +755,7 @@ void MusPlayer_Qt::_blink_red()
 void MusPlayer_Qt::updatePositionSlider()
 {
     double pos =
-#ifdef SDL_MIXER_X
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     Mix_GetMusicPosition(PGE_MusicPlayer::play_mus);
 #else
     -1.0;
@@ -777,7 +809,7 @@ void MusPlayer_Qt::on_sfx_play_clicked()
     if(!m_testSfx)
         return;
 
-#ifdef SDL_MIXER_X
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     if(Mix_PlayChannelTimedVolume(0,
                                   m_testSfx,
                                   ui->sfx_loops->value(),
@@ -803,7 +835,7 @@ void MusPlayer_Qt::on_sfx_fadeIn_clicked()
     if(!m_testSfx)
         return;
 
-#ifdef SDL_MIXER_X
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     if(Mix_FadeInChannelTimedVolume(0,
                                     m_testSfx,
                                     ui->sfx_loops->value(),

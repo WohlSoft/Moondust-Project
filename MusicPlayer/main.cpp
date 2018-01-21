@@ -1,6 +1,14 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#ifdef USE_SDL_MIXER_X
 #include <SDL2/SDL_mixer_ext.h>
+#else
+#include <SDL2/SDL_mixer.h>
+#endif
+
+#if (SDL_MIXER_MAJOR_VERSION > 2) || (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION >= 1)
+#define SDL_MIXER_GE21
+#endif
 
 #ifndef MUSPLAY_USE_WINAPI
 #include <QApplication>
@@ -62,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MOD | MIX_INIT_MID ) == -1)
         error(QString("Failed to initialize mixer: ") + Mix_GetError());
 
-#ifdef SDL_MIXER_X
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     #ifndef MUSPLAY_USE_WINAPI
     QString timidityPath(a.applicationDirPath() + "/timidity/");
     if(QDir(timidityPath).exists())
@@ -87,7 +95,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     Mix_AllocateChannels(16);
 
-#ifdef SDL_MIXER_X
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     //Disallow auto-resetting MIDI properties (to allow manipulation with MIDI settings by functions)
     Mix_SetLockMIDIArgs(1);
 #endif
