@@ -42,6 +42,8 @@ INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 
 include($$PWD/../_Libs/SDL_Mixer_X/SDL_Mixer_X_link.pri)
 
+DEFINES += USE_SDL_MIXER_X
+
 win32:{
     RC_FILE = _resources/musicplayer.rc
     win*-msvc*: {
