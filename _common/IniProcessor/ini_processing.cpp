@@ -1,7 +1,7 @@
 /*
 INI Processor - a small library which allows you parsing INI-files
 
-Copyright (c) 2017 Vitaliy Novichkov <admin@wohlnet.ru>
+Copyright (c) 2015-2018 Vitaly Novichkov <admin@wohlnet.ru>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -30,6 +30,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "ini_processing.h"
 #include <cstdio>
+#include <cctype>
 #include <cstring>
 #include <cstdlib>
 #include <clocale>
@@ -37,6 +38,14 @@ DEALINGS IN THE SOFTWARE.
 #include <algorithm>
 #include <assert.h>
 #ifdef _WIN32
+    #ifdef _MSC_VER
+        #ifdef _WIN64
+            typedef __int64 ssize_t;
+        #else
+            typedef __int32 ssize_t;
+        #endif
+        #define NOMINMAX //Don't override std::min and std::max
+    #endif
 #include <windows.h>
 #endif
 
@@ -407,9 +416,9 @@ bool IniProcessing::parseFile(const char *filename)
     int newSize = MultiByteToWideChar(CP_UTF8,
                                       0,
                                       filename,
-                                      dest.size(),
+                                      (int)dest.size(),
                                       (wchar_t *)dest.c_str(),
-                                      dest.size());
+                                      (int)dest.size());
     dest.resize(newSize);
     FILE *cFile = _wfopen(dest.c_str(), L"rb");
     #else

@@ -1,7 +1,7 @@
 /*
 INI Processor - a small library which allows you parsing INI-files
 
-Copyright (c) 2017 Vitaliy Novichkov <admin@wohlnet.ru>
+Copyright (c) 2015-2018 Vitaly Novichkov <admin@wohlnet.ru>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
@@ -32,6 +32,8 @@ INI Processor and target value (to be compatible with QSettings)
 
 #include <string>
 #include <cstring>
+#include <algorithm>
+#include <cctype>
 #include <cstdlib>
 #ifdef INI_PROCESSING_ALLOW_QT_TYPES
 #include <QString>
