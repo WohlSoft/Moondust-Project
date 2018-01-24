@@ -104,6 +104,23 @@ static char *fi_dirname(char *path)
     return path;
 }
 
+FILE *Files::utf8_fopen(const char *filePath, const char *modes)
+{
+    #ifndef _WIN32
+    return ::fopen(filePath, modes);
+    #else
+    wchar_t wfile[MAX_PATH + 1];
+    wchar_t wmode[21];
+    int wfile_len = (int)strlen(filePath);
+    int wmode_len = (int)strlen(modes);
+    wfile_len = MultiByteToWideChar(CP_UTF8, 0, filePath, wfile_len, wfile, MAX_PATH);
+    wmode_len = MultiByteToWideChar(CP_UTF8, 0, modes, wmode_len, wmode, 20);
+    wfile[wfile_len] = L'\0';
+    wmode[wmode_len] = L'\0';
+    return ::_wfopen(wfile, wmode);
+    #endif
+}
+
 bool Files::fileExists(const std::string &path)
 {
     #ifdef _WIN32
@@ -265,3 +282,4 @@ void Files::getGifMask(std::string& mask, const std::string& front)
     else
         mask.insert(mask.begin() + dotPos, 'm');
 }
+

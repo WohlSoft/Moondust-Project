@@ -1,6 +1,14 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#ifdef USE_SDL_MIXER_X
 #include <SDL2/SDL_mixer_ext.h>
+#else
+#include <SDL2/SDL_mixer.h>
+#endif
+
+#if (SDL_MIXER_MAJOR_VERSION > 2) || (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION >= 1)
+#define SDL_MIXER_GE21
+#endif
 
 #ifndef MUSPLAY_USE_WINAPI
 #include <QApplication>
@@ -59,18 +67,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     if(SDL_Init(SDL_INIT_AUDIO) ==-1 )
         error(QString("Failed to initialize audio: ") + SDL_GetError());
 
-    if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MODPLUG )==-1)
+    if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MOD | MIX_INIT_MID ) == -1)
         error(QString("Failed to initialize mixer: ") + Mix_GetError());
 
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     #ifndef MUSPLAY_USE_WINAPI
-    qDebug() << QString(a.applicationDirPath()+"/timidity/");
-    Mix_Timidity_addToPathList(QString(a.applicationDirPath()+"/timidity/").toLocal8Bit().data());
+    QString timidityPath(a.applicationDirPath() + "/timidity/");
+    if(QDir(timidityPath).exists())
+    {
+        qDebug() << "Timidity path is" << timidityPath;
+        QByteArray tp = timidityPath.toUtf8();
+        Mix_Timidity_addToPathList(tp.data());
+    }
     #else
-    Mix_Timidity_addToPathList("./timidity/");
+    Mix_Timidity_addToPathList("./timidity");
     #endif
+#endif
 
     #ifndef MUSPLAY_USE_WINAPI
-    Mix_SetSoundFonts(QString(a.applicationDirPath()+"/gm.sf2").toUtf8().data());
+    Mix_SetSoundFonts(QString(a.applicationDirPath() + "/gm.sf2").toUtf8().data());
     #else
     Mix_SetSoundFonts("./gm.sf2");
     #endif
@@ -80,8 +95,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     Mix_AllocateChannels(16);
 
+#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     //Disallow auto-resetting MIDI properties (to allow manipulation with MIDI settings by functions)
     Mix_SetLockMIDIArgs(1);
+#endif
 
 #ifndef MUSPLAY_USE_WINAPI
     MusPlayer_Qt w;

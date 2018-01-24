@@ -100,18 +100,26 @@ macx: {
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
-    LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
-            -framework IOKit -framework CoreFoundation -framework Carbon \
-            -framework ForceFeedback -framework AudioToolbox \
+    LIBS += -framework CoreAudio -framework CoreVideo \
+            -framework AudioToolbox -framework AudioUnit \
+            -framework IOKit -framework Cocoa -framework Carbon \
+            -framework ForceFeedback -framework Metal -framework CoreFoundation \
             -framework OpenGL
 }
-linux-g++||unix:!macx:!android: {
+linux-g++||unix:!macx:!android:!haiku-g++: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
     LIBS += -lfreeimagelite -lfreetype -lsqlite3
     LIBS += -Wl,-Bstatic
     LIBS += $$SDL_MIXER_X_LIBS_STATIC -lSDL2
     LIBS += -Wl,-Bdynamic
     LIBS += -lGL #-lglut -Wl,-Bstatic -lGLEW -Wl,-Bdynamic
+}
+haiku-g++:{
+    LIBS += -lfreeimagelite -lfreetype -lsqlite3
+    LIBS += -Wl,-Bstatic
+    LIBS += $$SDL_MIXER_X_LIBS_STATIC -lSDL2
+    LIBS += -Wl,-Bdynamic
+    LIBS += -lGL -lbe -ldevice -lgame -lmedia
 }
 
 contains(DEFINES, USE_LUA_JIT): {
@@ -231,6 +239,8 @@ SOURCES += \
     scenes/_base/gfx_effect.cpp \
     scenes/_base/msgbox_queue.cpp \
     scenes/level/base/lvl_base_physics.cpp \
+    scenes/level/bg/bg_multilayer.cpp \
+    scenes/level/bg/bg_standard.cpp \
     scenes/level/lvl_backgrnd.cpp \
     scenes/level/lvl_base_object.cpp \
     scenes/level/lvl_bgo.cpp \
@@ -243,6 +253,7 @@ SOURCES += \
     scenes/level/lvl_player.cpp \
     scenes/level/lvl_player_def.cpp \
     scenes/level/lvl_player_switch.cpp \
+    scenes/level/lvl_quad_tree.cpp \
     scenes/level/lvl_scene_files_io.cpp \
     scenes/level/lvl_scene_garbage_collecting.cpp \
     scenes/level/lvl_scene_init.cpp \
@@ -251,7 +262,9 @@ SOURCES += \
     scenes/level/lvl_scene_pausemenu.cpp \
     scenes/level/lvl_scene_sections.cpp \
     scenes/level/lvl_scene_timers.cpp \
+    scenes/level/lvl_scene_trees.cpp \
     scenes/level/lvl_section.cpp \
+    scenes/level/lvl_subtree.cpp \
     scenes/level/lvl_warp.cpp \
     scenes/level/lvl_z_constants.cpp \
     scenes/level/npc_detectors/lvl_base_detector.cpp \
@@ -321,13 +334,7 @@ SOURCES += \
     script/lua_titlescreen_engine.cpp \
     script/lua_world_engine.cpp \
     settings/debugger.cpp \
-    settings/global_settings.cpp \
-    scenes/level/lvl_scene_trees.cpp \
-    scenes/level/lvl_quad_tree.cpp \
-    scenes/level/lvl_subtree.cpp \
-    scenes/level/bg/bg_standard.cpp \
-    scenes/level/bg/bg_multilayer.cpp
-
+    settings/global_settings.cpp
 
 HEADERS  += \
     audio/pge_audio.h \
@@ -339,6 +346,7 @@ HEADERS  += \
     common_features/episode_state.h \
     common_features/event_queue.h \
     common_features/fader.h \
+    common_features/fmt_format_ne.h \
     common_features/gif-h/gif.h \
     common_features/graphics_funcs.h \
     common_features/logger.h \
@@ -426,6 +434,9 @@ HEADERS  += \
     scenes/_base/gfx_effect.h \
     scenes/_base/msgbox_queue.h \
     scenes/level/base/lvl_base_physics.h \
+    scenes/level/bg/bg_base.h \
+    scenes/level/bg/bg_multilayer.h \
+    scenes/level/bg/bg_standard.h \
     scenes/level/lvl_backgrnd.h \
     scenes/level/lvl_base_object.h \
     scenes/level/lvl_bgo.h \
@@ -438,7 +449,9 @@ HEADERS  += \
     scenes/level/lvl_player_def.h \
     scenes/level/lvl_player.h \
     scenes/level/lvl_player_switch.h \
+    scenes/level/lvl_quad_tree.h \
     scenes/level/lvl_section.h \
+    scenes/level/lvl_subtree.h \
     scenes/level/lvl_warp.h \
     scenes/level/lvl_z_constants.h \
     scenes/level/npc_detectors/lvl_base_detector.h \
@@ -490,12 +503,7 @@ HEADERS  += \
     script/lua_world_engine.h \
     settings/debugger.h \
     settings/global_settings.h \
-    version.h \
-    scenes/level/lvl_quad_tree.h \
-    scenes/level/lvl_subtree.h \
-    scenes/level/bg/bg_base.h \
-    scenes/level/bg/bg_standard.h \
-    scenes/level/bg/bg_multilayer.h
+    version.h
 
 DISTFILES += \
     ../changelog.engine.txt \

@@ -20,7 +20,7 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <scenes/scene_level.h>
 
 void LVL_Player::render(double camX, double camY)
@@ -111,7 +111,7 @@ void LVL_Player::render(double camX, double camY)
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(fmt::format(" {0} \n"
+        FontManager::printText(fmt::format_ne(" {0} \n"
                                            "{1}{2}{3}\n"
                                            " {4} {5}",
                                            l_contactT.size(),

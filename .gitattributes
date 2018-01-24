@@ -13,4 +13,4 @@ luadoc/*			linguist-vendored
 *.pri				linguist-vendored
 *.ini				linguist-vendored text eol=crlf
 *.lua				text eol=crlf
-
+*.txt				text eol=crlf

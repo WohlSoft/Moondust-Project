@@ -101,7 +101,7 @@ int LVL_Npc::lua_activate_neighbours()
     return found;
 }
 
-LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable)
+LVL_Npc *LVL_Npc::lua_spawnNPC(unsigned long npcID, int sp_type, int sp_dir, bool reSpawnable)
 {
     LevelNPC def = data;
     def.id = static_cast<unsigned long>(npcID);

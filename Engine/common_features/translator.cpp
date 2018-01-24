@@ -29,7 +29,7 @@
 #include <CoreServices/CoreServices.h>
 #endif
 
-#include <fmt/fmt_format.h>
+#include "fmt_format_ne.h"
 
 static PGE_Translator *g_translator = NULL;
 
@@ -71,12 +71,25 @@ void PGE_Translator::init()
     CFRelease(cflocale);
 #else
     // Generic way
-    std::locale the_global_locale("");
-    defaultLocale = the_global_locale.name();
-    if(defaultLocale.size() > 2)
-        defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
-    else if(defaultLocale == "C")
-        defaultLocale = "en";
+    try
+    {
+        std::locale the_global_locale("");
+        defaultLocale = the_global_locale.name();
+        if(defaultLocale.size() > 2)
+            defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
+        else if(defaultLocale == "C")
+            defaultLocale = "en";
+    }
+    catch(const std::runtime_error &err)
+    {
+    	pLogCritical("Can't recogonize locale by std::locale: %s", err.what());
+    	defaultLocale = "en";
+    }
+    catch(...)
+    {
+    	pLogCritical("Can't recogonize locale by std::locale: Unknown error");
+    	defaultLocale = "en";
+    }    
 #endif
 
     m_langPath = AppPathManager::languagesDir();
@@ -94,14 +107,14 @@ void PGE_Translator::toggleLanguage(std::string lang)
 
         m_currLang = lang;
 
-        std::string langFilePath = m_langPath + fmt::format("/engine_{0}.qm", m_currLang);
+        std::string langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
 
         bool ok = m_translator.loadFile(langFilePath.c_str(),
                                         reinterpret_cast<unsigned char *>(&m_langPath[0]));
         if(!ok)
         {
             m_currLang = "en"; //set to English if no other translations are found
-            langFilePath = m_langPath + fmt::format("/engine_{0}.qm", m_currLang);
+            langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
             m_translator.loadFile(langFilePath.c_str(),
                                   reinterpret_cast<unsigned char *>(&m_langPath[0]));
         }

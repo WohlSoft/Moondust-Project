@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2018 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -50,7 +50,7 @@ extern "C" {
  *
  *  \returns Returns 0 on success, -1 on failure.
  */
-int SDLTest_DrawCharacter( SDL_Renderer *renderer, int x, int y, char c );
+int SDLTest_DrawCharacter(SDL_Renderer *renderer, int x, int y, char c);
 
 /**
  *  \brief Draw a string in the currently set font.
@@ -62,8 +62,13 @@ int SDLTest_DrawCharacter( SDL_Renderer *renderer, int x, int y, char c );
  *
  *  \returns Returns 0 on success, -1 on failure.
  */
-int SDLTest_DrawString( SDL_Renderer * renderer, int x, int y, const char *s );
+int SDLTest_DrawString(SDL_Renderer *renderer, int x, int y, const char *s);
 
+
+/**
+ *  \brief Cleanup textures used by font drawing functions.
+ */
+void SDLTest_CleanupTextDrawing(void);
 
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus

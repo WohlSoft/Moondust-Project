@@ -22,7 +22,7 @@
 #include <gui/pge_msgbox.h>
 #include <common_features/app_path.h>
 #include <FileMapper/file_mapper.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 /***********************************PGE_Sounds********************************************/
 std::unordered_map<std::string, Mix_Chunk*> PGE_SfxPlayer::chunksBuffer;
@@ -41,7 +41,7 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
         FileMapper fileMap;
         if( fileMap.open_file(sndFile) )
         {
-            tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(), fileMap.size()), fileMap.size());
+            tmpChunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(), (int)fileMap.size()), (int)fileMap.size());
             fileMap.close_file();
         }
         #else
@@ -49,7 +49,7 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
         #endif
         if(!tmpChunk)
         {
-            PGE_MsgBox::warn(fmt::format("OpenSFX: Mix_LoadWAV: {0}\n{1}", sndFile, Mix_GetError()));
+            PGE_MsgBox::warn(fmt::format_ne("OpenSFX: Mix_LoadWAV: {0}\n{1}", sndFile, Mix_GetError()));
         }
         chunksBuffer.insert({sndFile, tmpChunk});
     }
@@ -58,7 +58,7 @@ Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
         tmpChunk = snd->second;
     }
 
-    Mix_ReserveChannels(chunksBuffer.size()>4 ? 4: chunksBuffer.size());
+    Mix_ReserveChannels(chunksBuffer.size()>4 ? 4 : (int)chunksBuffer.size());
 
     return tmpChunk;
 }
@@ -75,7 +75,7 @@ void PGE_SfxPlayer::playFile(std::string sndFile)
         sound = Mix_LoadWAV( sndFile.c_str() );
         if(!sound)
         {
-            PGE_MsgBox::warn(fmt::format("PlaySND: Mix_LoadWAV: {0}\n{1}", sndFile, Mix_GetError()));
+            PGE_MsgBox::warn(fmt::format_ne("PlaySND: Mix_LoadWAV: {0}\n{1}", sndFile, Mix_GetError()));
             return;
         }
         chunksBuffer.insert({sndFile, sound});

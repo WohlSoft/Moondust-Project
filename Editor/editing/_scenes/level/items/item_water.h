@@ -40,7 +40,7 @@ public:
     void setType(int tp);
     void setPhysEnvData(LevelPhysEnv inD);
 
-    void drawWater();
+    void refreshItemSize();
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
@@ -58,6 +58,8 @@ public:
     bool itemTypeIsLocked();
     void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
 
+    QPainterPath shape() const;
+
 private:
     void updateColor();
 
@@ -66,6 +68,7 @@ private:
 
     QPen        m_pen;
     QColor      m_color;
+    QBrush      m_brush;
 };
 
 #endif // ITEM_WATER_H

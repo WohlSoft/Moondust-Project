@@ -22,7 +22,7 @@
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <Utils/maths.h>
 #include <cmath>
 
@@ -105,7 +105,7 @@ void Render_SW_SDL::initDummyTexture()
 
     if(!image)
     {
-        std::string msg = fmt::format("Can't initialize dummy texture!\n"
+        std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
                                       "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), NULL);
@@ -143,6 +143,11 @@ void Render_SW_SDL::loadTexture(PGE_Texture &target, uint32_t width, uint32_t he
                                        FI_RGBA_ALPHA_MASK);
     texture = SDL_CreateTextureFromSurface(m_gRenderer, surface);
     SDL_FreeSurface(surface);
+    if(!texture)
+    {
+        pLogWarning("Render SW-SDL: Failed to load texture!");
+        return;
+    }
 checkStackAgain:
 
     if(!m_textureFreeNumbers.empty())
@@ -183,7 +188,8 @@ void Render_SW_SDL::deleteTexture(PGE_Texture &tx)
     }
 
     SDL_Texture *corpse = m_textureBank[tx.texture];
-    SDL_DestroyTexture(corpse);
+    if(corpse)
+        SDL_DestroyTexture(corpse);
 
     if(tx.texture != (m_textureBank.size() - 1))
     {
@@ -571,7 +577,12 @@ PGE_Point Render_SW_SDL::MapToScr(int x, int y)
            );
 }
 
-int Render_SW_SDL::alignToCenter(int x, int w)
+int Render_SW_SDL::alignToCenterW(int x, int w)
 {
     return x + (static_cast<int>(viewport_w_half) - (w / 2));
+}
+
+int Render_SW_SDL::alignToCenterH(int y, int h)
+{
+    return y + (static_cast<int>(viewport_h_half) - (h / 2));
 }

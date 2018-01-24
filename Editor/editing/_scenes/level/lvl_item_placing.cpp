@@ -120,6 +120,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             {
                 LvlPlacingItems::sizableBlock=true;
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
+                //Turn off autoscale for sizable blocks to escape a bug in SMBX-38A
+                LvlPlacingItems::blockSet.autoscale = false;
                 setRectDrawer(); return;
             }
 

@@ -28,6 +28,10 @@
 Note: Class wasn't disabled completely to avoid "Note: No relevant classes found. No output generated." warning.
 */
 
+#if defined(DEFINE_Q_OS_MACX) && !defined(Q_OS_MACX)
+#define Q_OS_MACX # Workaround for MOC
+#endif
+
 /**
  * @brief Inhereted application which provides open file event, usually needed for OS X
  */

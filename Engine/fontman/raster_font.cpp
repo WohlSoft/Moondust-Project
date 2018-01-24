@@ -18,8 +18,8 @@
 
 #include "raster_font.h"
 
-#include <fmt/fmt_format.h>
 #include <graphics/gl_renderer.h>
+#include <common_features/fmt_format_ne.h>
 #include <common_features/logger.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
@@ -39,7 +39,7 @@ RasterFont::RasterFont() : BaseFontEngine()
     m_matrixHeight   = 0;
     m_isReady        = false;
     m_ttfBorders     = false;
-    m_fontName       = fmt::format("font{0}", fontNumberCount++);
+    m_fontName       = fmt::format_ne("font{0}", fontNumberCount++);
 }
 
 RasterFont::RasterFont(const RasterFont &rf) : BaseFontEngine(rf)
@@ -93,7 +93,7 @@ void RasterFont::loadFont(std::string font_ini)
     for(size_t i = 1; i <= tables; i++)
     {
         std::string table;
-        font.read(fmt::format("table{0}", i).c_str(), table, "");
+        font.read(fmt::format_ne("table{0}", i).c_str(), table, "");
         if(!table.empty())
             tables_list.push_back(table);
     }

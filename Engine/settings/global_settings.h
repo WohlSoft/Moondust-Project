@@ -82,7 +82,7 @@ class GlobalSettings
         int  ScreenHeight;
 
         //! How much loop steps will be done per second
-        double  TicksPerSecond;
+        double  frameRate;
         //! Time of one loop step
         int    timeOfFrame;
         //! Enable vertical synchronization with monitor refresh rate (not all video cards are supports this feature)

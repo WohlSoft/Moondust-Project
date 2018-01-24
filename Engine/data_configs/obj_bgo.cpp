@@ -22,7 +22,7 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
 #include <Utils/files.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 /*****Level BGO************/
 PGE_DataArray<obj_bgo>          ConfigManager::lvl_bgo_indexes;
@@ -102,12 +102,12 @@ bool ConfigManager::loadLevelBGO()
     {
         if(useDirectory)
         {
-            if(!loadLevelBGO(sbgo, "background", nullptr, fmt::format("{0}/background-{1}.ini", nestDir, i)))
+            if(!loadLevelBGO(sbgo, "background", nullptr, fmt::format_ne("{0}/background-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadLevelBGO(sbgo, fmt::format("background-{0}", i), nullptr, "", &bgoset))
+            if(!loadLevelBGO(sbgo, fmt::format_ne("background-{0}", i), nullptr, "", &bgoset))
                 return false;
         }
 
@@ -118,12 +118,12 @@ bool ConfigManager::loadLevelBGO()
         loadCustomConfig<obj_bgo>(lvl_bgo_indexes, i, Dir_BGO, "background", "background", &loadLevelBGO);
 
         if(bgoset.lastError() != IniProcessing::ERR_OK)
-            addError(fmt::format("ERROR LOADING lvl_bgo.ini N:{0} (bgo-{1})", bgoset.lastError(), i));
+            addError(fmt::format_ne("ERROR LOADING lvl_bgo.ini N:{0} (bgo-{1})", bgoset.lastError(), i));
     }
 
     if(lvl_bgo_indexes.stored() < bgo_total)
     {
-        std::string msg = fmt::format("Not all BGOs loaded! Total: {0}, Loaded: {1}", bgo_total, lvl_bgo_indexes.stored());
+        std::string msg = fmt::format_ne("Not all BGOs loaded! Total: {0}, Loaded: {1}", bgo_total, lvl_bgo_indexes.stored());
         addError(msg);
         PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
         msgBox.exec();

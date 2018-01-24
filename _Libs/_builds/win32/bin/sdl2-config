@@ -39,7 +39,7 @@ while test $# -gt 0; do
       echo $exec_prefix
       ;;
     --version)
-      echo 2.0.5
+      echo 2.0.8
       ;;
     --cflags)
       echo -I/c/Repos/PGE-Project/_Libs/_sources/../_builds/win32/include/SDL2  -Dmain=SDL_main

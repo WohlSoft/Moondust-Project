@@ -51,6 +51,12 @@ class LevelEdit;
 class LvlHistoryManager;
 class MainWindow;
 
+class ItemBlock;
+class ItemBGO;
+class ItemNPC;
+class ItemPhysEnv;
+class ItemPlayerPoint;
+
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -228,6 +234,12 @@ public:
      */
     void stopAnimation();
 
+    /**
+     * @brief Set visibility state to elements meta-signs
+     * @param visible true to show meta-signs, false to hide them
+     */
+    void setMetaSignsVisibility(bool visible);
+
     // ///////////////////Init Level/////////////////////////
     void loadUserData(QProgressDialog &progress);  //!< Load custom graphics and item settings
 
@@ -278,11 +290,11 @@ public:
 
     long m_IncrementingNpcSpecialSpin;
 
-    void placeBlock(LevelBlock &block, bool toGrid = false);
-    void placeBGO(LevelBGO &bgo, bool toGrid = false);
-    void placeNPC(LevelNPC &npc, bool toGrid = false);
-    void placeEnvironmentZone(LevelPhysEnv &water, bool toGrid = false);
-    void placePlayerPoint(PlayerPoint plr, bool init = false);
+    ItemBlock *placeBlock(LevelBlock &block, bool toGrid = false);
+    ItemBGO *placeBGO(LevelBGO &bgo, bool toGrid = false);
+    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid = false);
+    ItemPhysEnv *placeEnvironmentZone(LevelPhysEnv &water, bool toGrid = false);
+    ItemPlayerPoint *placePlayerPoint(PlayerPoint plr, bool init = false);
 
     void placeDoor(LevelDoor &door, bool toGrid = false);
     void placeDoorEnter(LevelDoor &door, bool toGrid = false, bool init = false);
@@ -352,8 +364,8 @@ public:
     QGraphicsItem *itemCollidesWith(QGraphicsItem *item, PGE_ItemList *itemgrp = 0);
     QGraphicsItem *itemCollidesCursor(QGraphicsItem *item);
 
-    typedef RTree<QGraphicsItem *, double, 2, double > IndexTree;
-    typedef double RPoint[2];
+    typedef RTree<QGraphicsItem *, int64_t, 2, int64_t > IndexTree;
+    typedef int64_t RPoint[2];
     IndexTree tree;
     void queryItems(QRectF &zone, PGE_ItemList *resultList);
     void queryItems(double x, double y, PGE_ItemList *resultList);

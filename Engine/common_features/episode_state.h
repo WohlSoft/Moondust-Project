@@ -20,7 +20,7 @@ struct PlayEpisodeResult
 class LvlExit
 {
     public:
-        enum exitLevelCodes
+        enum ExitLevelCodes
         {
             EXIT_ReplayRequest = -5,
             EXIT_MenuExit = -3,

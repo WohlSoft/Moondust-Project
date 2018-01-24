@@ -32,7 +32,7 @@
 #define V_VF2 3
 #define V_VF3 1
 #define V_VF4 13
-#define V_FILE_RELEASE "" //"-alpha","-beta","-dev", or "" aka "release"
+#define V_FILE_RELEASE "-1" //"-alpha","-beta","-dev", or "" aka "release"
 
 #define V_VF1_s STR_VALUE(V_VF1)
 #define V_VF2_s STR_VALUE(V_VF2)

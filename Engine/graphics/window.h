@@ -43,9 +43,9 @@ extern bool     vsync;
 //! Is vertical synchronization is supported by this video driver
 extern bool     vsyncIsSupported;
 //! Framerate
-extern double   TicksPerSecond;
+extern double   frameRate;
 //! Time of one frame rounded into integers
-extern int      TimeOfFrame;
+extern int      frameDelay;
 //! Enable printing of debug information
 extern bool     showDebugInfo;
 //! Enable rendering of physical engine debug shapes

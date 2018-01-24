@@ -68,6 +68,8 @@ public:
 
     bool isSizable();
 
+    void setMetaSignsVisibility(bool visible);
+
 private:
     QGraphicsItemGroup * m_grp;
     QGraphicsItem *      m_includedNPC;

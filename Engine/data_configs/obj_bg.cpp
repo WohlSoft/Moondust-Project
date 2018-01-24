@@ -20,7 +20,7 @@
 #include "config_manager_private.h"
 #include <common_features/number_limiter.h>
 #include <common_features/util.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
 #include <graphics/gl_color.h>
 #include <graphics/gl_renderer.h>
@@ -128,7 +128,7 @@ bool ConfigManager::loadLevelBackG()
         bool valid = false;
 
         if(useDirectory)
-            valid = loadLevelBackground(sbg, "background2", nullptr, fmt::format("{0}/background2-{1}.ini", nestDir, i));
+            valid = loadLevelBackground(sbg, "background2", nullptr, fmt::format_ne("{0}/background2-{1}.ini", nestDir, i));
         else
             valid = loadLevelBackground(sbg, std::string("background2-{0}", i), 0, "", &bgset);
 
@@ -141,7 +141,7 @@ bool ConfigManager::loadLevelBackG()
         }
 
         if(bgset.lastError() != IniProcessing::ERR_OK)
-            addError(fmt::format("ERROR LOADING lvl_bgrnd.ini N:{0} (background2-{1})", bgset.lastError(), i));
+            addError(fmt::format_ne("ERROR LOADING lvl_bgrnd.ini N:{0} (background2-{1})", bgset.lastError(), i));
     }
 
     return true;

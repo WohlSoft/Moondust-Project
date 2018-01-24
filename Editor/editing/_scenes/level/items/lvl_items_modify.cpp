@@ -201,7 +201,7 @@ void LvlScene::collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item)
 
 void LvlScene::collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items)
 {
-    foreach (QGraphicsItem* item, items) {
+    for(QGraphicsItem* item : items) {
         collectDataFromItem(dataToStore, item);
     }
 }
@@ -210,7 +210,7 @@ void LvlScene::placeAll(const LevelData &data)
 {
     bool hasToUpdateDoorData = false;
 
-    foreach (LevelBlock block, data.blocks)
+    for(LevelBlock block : data.blocks)
     {
         //place them back
         m_data->blocks.push_back(block);
@@ -218,7 +218,7 @@ void LvlScene::placeAll(const LevelData &data)
 
     }
 
-    foreach (LevelBGO bgo, data.bgo)
+    for(LevelBGO bgo : data.bgo)
     {
         //place them back
         m_data->bgo.push_back(bgo);
@@ -226,7 +226,7 @@ void LvlScene::placeAll(const LevelData &data)
 
     }
 
-    foreach (LevelNPC npc, data.npc)
+    for(LevelNPC npc : data.npc)
     {
         //place them back
         m_data->npc.push_back(npc);
@@ -234,14 +234,14 @@ void LvlScene::placeAll(const LevelData &data)
 
     }
 
-    foreach (LevelPhysEnv water, data.physez)
+    for(LevelPhysEnv water : data.physez)
     {
         //place them back
         m_data->physez.push_back(water);
         placeEnvironmentZone(water);
     }
 
-    foreach (LevelDoor door, data.doors)
+    for(LevelDoor door : data.doors)
     {
         LevelDoor originalDoor;
         bool found = false;
@@ -273,7 +273,7 @@ void LvlScene::placeAll(const LevelData &data)
         hasToUpdateDoorData = true;
     }
 
-    foreach(PlayerPoint plr, data.players)
+    for(PlayerPoint plr : data.players)
     {
         placePlayerPoint(plr);
     }

@@ -43,6 +43,11 @@ class AppPathManager
          */
         static QString settingsFile();
         /**
+         * @brief Returns generic folder for saving of various settings files
+         * @return path to settings folder
+         */
+        static QString settingsPath();
+        /**
          * @brief Path to user profile application dir
          * @return Path to user profile application dir
          */

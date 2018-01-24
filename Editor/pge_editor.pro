@@ -89,6 +89,7 @@ android: {
 macx: {
     ICON = $$PWD/_resources/cat_builder.icns
     QMAKE_INFO_PLIST = $$PWD/_resources/pge_editor.plist
+    DEFINES += DEFINE_Q_OS_MACX # Workaround for inability of MOC to see this macro
     APP_FILEICON_FILES.files = \
             $$PWD/_resources/file_lvl.icns \
             $$PWD/_resources/file_lvlx.icns \
@@ -97,10 +98,11 @@ macx: {
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
 
-    LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
-            -framework IOKit -framework CoreFoundation -framework Carbon \
-            -framework ForceFeedback -framework AudioToolbox
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
+    LIBS += -framework CoreAudio -framework CoreVideo \
+            -framework AudioToolbox -framework AudioUnit \
+            -framework IOKit -framework Cocoa -framework Carbon \
+            -framework ForceFeedback -framework Metal -framework CoreFoundation
 }
 
 LIBS += -lfreeimagelite

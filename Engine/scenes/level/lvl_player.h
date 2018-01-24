@@ -289,7 +289,7 @@ public:
                                  m_direction,
                                  framespeed);
     }
-    inline long getHealth()
+    inline int getHealth()
     {
         return m_health;
     }

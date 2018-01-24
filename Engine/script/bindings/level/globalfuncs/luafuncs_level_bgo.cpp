@@ -1,11 +1,11 @@
 #include "luafuncs_level_bgo.h"
 #include <scenes/scene_level.h>
 
-int Binding_Level_GlobalFuncs_BGO::count(lua_State *L)
+unsigned long Binding_Level_GlobalFuncs_BGO::count(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
     LevelScene::LVL_BgosArray &allBGOs = scene->getBGOs();
-    return allBGOs.size();
+    return (unsigned long)allBGOs.size();
 }
 
 luabind::adl::object Binding_Level_GlobalFuncs_BGO::get(lua_State *L)
@@ -26,13 +26,33 @@ luabind::adl::object Binding_Level_GlobalFuncs_BGO::get(lua_State *L)
     return tableOfBGOs;
 }
 
+/***
+Level specific functions and classes
+@module LevelCommon
+*/
+
 luabind::scope Binding_Level_GlobalFuncs_BGO::bindToLua()
 {
     using namespace luabind;
     return
+        /***
+        BGO static functions
+        @section LevelBGOFuncs
+        */
         namespace_("BGO")
         [
+            /***
+            Count total BGOs on the level
+            @function BGO.count
+            @return ulong Total count of BGO
+            */
             def("count", &Binding_Level_GlobalFuncs_BGO::count),
+
+            /***
+            Get array of all BGOs are on the level
+            @function BGO.get
+            @return table Array of @{LevelBGOClass.BaseBGO} references
+            */
             def("get", &Binding_Level_GlobalFuncs_BGO::get)
         ];
 }

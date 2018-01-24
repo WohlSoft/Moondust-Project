@@ -20,8 +20,10 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QKeyEvent>
 
 #include <common_features/app_path.h>
+#include <common_features/util.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include "tilesetconfiguredialog.h"
@@ -64,6 +66,9 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     m_conf = conf;
     lastFileName = "";
 
+    oldWidth = ui->spin_width->value();
+    oldHeight = ui->spin_height->value();
+
     setUpItems(ItemTypes::LVL_Block);
 
     connect(ui->spin_width, &QSpinBox::editingFinished,
@@ -74,6 +79,20 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     connect(ui->spin_height, &QSpinBox::editingFinished,
             [=]() {
                 m_tileset->setRows(ui->spin_height->value());
+            }
+    );
+    connect(ui->spin_width, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+            [=](int newValue) {
+                if(std::abs(oldWidth - newValue) == 1)
+                    m_tileset->setCols(ui->spin_width->value());
+                oldWidth = newValue;
+            }
+    );
+    connect(ui->spin_height, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+            [=](int newValue) {
+                if(std::abs(oldHeight - newValue) == 1)
+                    m_tileset->setRows(ui->spin_height->value());
+                oldHeight = newValue;
             }
     );
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setUpItems(int)));
@@ -397,6 +416,8 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
     if(!ok || fileName.isEmpty())
         return;
 
+    //Filter input from forbidden characters
+    fileName = util::filePath(fileName);
     lastFileName = fileName;
 
     if(!fileName.endsWith(".tileset.ini"))
@@ -580,3 +601,10 @@ void TilesetConfigureDialog::on_delete_me_clicked()
     }
 }
 
+void TilesetConfigureDialog::keyPressEvent(QKeyEvent *event)
+{
+    //Prevent Enter/Return key to spawn tileset saving dialog after resize
+    if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+        return;
+    QDialog::keyPressEvent(event);
+}

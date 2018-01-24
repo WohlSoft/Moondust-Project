@@ -48,6 +48,7 @@ public:
 
     void openTileset(QString filePath, bool isCustom);
     void loadSimpleTileset(const SimpleTileset &tileset, bool isCustom);
+
 private slots:
     void on_clearTileset_clicked();
     void setUpItems(int type);
@@ -66,6 +67,9 @@ private slots:
 signals:
     void windowShowed();
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     QString lastFileName;
     QString lastFullPath;
@@ -75,6 +79,8 @@ private:
     QGraphicsScene *scn;
 
     tileset* m_tileset;
+    int oldWidth;
+    int oldHeight;
     PiecesModel* m_model;
     dataconfigs* m_conf;
     //void setUpItems(ItemTypes type);

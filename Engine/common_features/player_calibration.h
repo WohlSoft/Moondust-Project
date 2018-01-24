@@ -79,7 +79,7 @@ struct obj_player_calibration
     std::vector<frameOpts> frames;
     FrameSets AniFrames;               //!< Animation settings
     //! Grabber which allows take frame by X and Y
-    frameOpts &frame(size_t x, size_t y);
+    frameOpts &frame(size_t x, size_t y, bool *ok = nullptr);
     void init(size_t x, size_t y);
     bool load(std::string fileName);
 private:

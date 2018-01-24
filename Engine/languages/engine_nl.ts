@@ -405,5 +405,81 @@ Heeft u de startpositie of het startportaal te ver buiten de sectie gezet?</tran
         <source>Engine has crashed because a physical memory address error</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="ERROR_NO_CONFIG_PACKS_TTL">
+        <source>Config packs not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERROR_NO_CONFIG_PACKS_TEXT">
+        <source>Can&apos;t start game, because available
+configuration packages are not found!</source>
+        <oldsource>Can&apos;t start game engine, because available
+configuration packages are not found!</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERR_CONFIG_DIR_MISSING_TTL">
+        <source>Config pack directory error</source>
+        <oldsource>Config error</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERR_CONFIG_DIR_MISSING">
+        <source>Config directory is not found at:
+%1</source>
+        <oldsource>CONFIG DIR NOT FOUND AT:</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_MAININI_TTL">
+        <source>Missing main.ini</source>
+        <oldsource>Config error</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_MAININI_MSG">
+        <source>Can&apos;t open the &apos;main.ini&apos; config file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
+        <source>Missing config pack data directory</source>
+        <oldsource>Config error</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
+        <source>Config pack data path not exists:
+%1</source>
+        <oldsource>Config data path not exists:</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
+        <source>Legacy configuration package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WARNING_LEGACY_CONFIG_PACK">
+        <source>You have a legacy configuration package.
+Game will be started, but you may have a some problems with gameplay.
+
+Please download and install latest version of a configuration package:
+
+Download: %1
+
+Note: most of config packs are updates togeter with PGE,
+therefore you can use same link to get updated version.</source>
+        <oldsource>You have a legacy configuration package.
+Game will be started, but you may have a some problems with gameplay.
+
+Please download and install latest version of a configuration package:
+
+Download: %1
+Note: most of config packs are updates togeter with PGE,
+therefore you can use same link to get updated version.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
+        <source>main.ini is invalid</source>
+        <oldsource>Config error</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
+        <source>Error has occouped in main.ini in line %1.</source>
+        <oldsource>Error has occouped in main.ini in line {0}.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

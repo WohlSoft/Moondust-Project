@@ -1,10 +1,35 @@
+Editor 0.3.1.13-1
+- Added ability to transform blocks into BGOs and BGOs into blocks
+
 Editor 0.3.1.13
+- Fixed false alert about config pack invalidity when real error has occupied in the custom configs which are in the level custom folder
+- Added message box which notifies about possible errors in the custom configs of the level or world map
+- Added ability to override busy section while cloning
+- Fixed an inability to setup default value for special spin-box value on NPC
+- Added more detailed tooltip for elements in the item box hovered by the mouse cursor
+- Added a tool tip showing on tileset item box elements
+- Fixed the freeze caused by not killed level file digging thread
+- Added an ability to run world map test via F5 key
+- Fixed the weird bug that causes a junk placing while scrolling after double-click on the editing scene surface
 - All frame delay values in all INI files are renamed from "framespeed" and "frame-speed" into "frame-delay". Old values kept as aliases. Except "framespeed" now has 1/65 unit while others have millisecond unit.
 - Added an absolute Z-Value redefinition for BGOs in the INI configuration
 - Custom item INI files no more requiring to have the section declaration at begin
 - Added the absolute ~/Application/PGE Project alternate folder to escape path randomizing on macOS Sierra and higher
 - Added ability to choose engine application in different folder if pge_engine does not exist in the same folder as editor
 - Use physical hitboxes instead of bounding rectangles as grabbable area per every element
+- Fixed crash caused by phantom R-Tree entries with dead pointer and zero size
+- Fixed wrong initial frame for right direction of NPC when animation is disabled
+- Section numbers are now counting from 0 (instead of counting from 1)
+- Added ability to hide meta-signs shown over blocks and NPCs while export images
+- Added ability to hide enabled grid while export images
+- Added ability to hide invisible blocks while export images
+- Added more physical environment types
+- Physical environment zones are now grabbable by border line only again
+- Fixed most of rendering artifacts are caused when animation is turned off
+- Better view of "New" toolbar drop-down menu icon
+- Fixed a retranslation of Vanilla-like toolbar
+- Fixed inability to save tileset when forbidden file path characters are was typed
+- Custom counters settings now saving into "settings" subfolder as all other settings INI files
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
@@ -35,7 +60,7 @@ patch 1
 - Fixed a bug caused duplicated ArrayID value by physical environment zones (after copy-pasting)
 - Fixed support of tilesets with the same title name
 patch 2
-- More friendly testing menu for LunaTester users
+- More friendly file testing menu for LunaTester users
 - Fixed accidentally broken search engine
 - Fixed initial window size on OS X
 - Initial state of editor's window will be maximized
@@ -44,17 +69,6 @@ patch 2
 - Fixed some crashes
 - Updated built-in fixer of the lazily-made masks to be compared with new algorithm
 - Updated console tools API to support updated API of GIFs2PNG, PNG2GIFs, and LazyFixTool (which now are using "tclap" as arguments parser)
-patch 3
-- Fixed false alert about config pack invalidity when real error has occupied in the custom configs which are in the level custom folder
-- Added message box which notifies about possible errors in the custom configs of the level or world map
-- Added ability to override busy section while cloning
-patch 4
-- Fixed an inability to setup default value for special spin-box value on NPC
-- Added more detailed tooltip for elements in the item box hovered by the mouse cursor
-- Added a tool tip showing on tileset item box elements
-- Fixed the freeze caused by not killed level file digging thread
-- Added an ability to run world map test via F5 key
-- Fixed the weird bug that causes a junk placing while scrolling after double-click on the editing scene surface
 
 Editor 0.3.1.11
 - Added Polish translation of the editor

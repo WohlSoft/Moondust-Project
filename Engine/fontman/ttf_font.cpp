@@ -43,8 +43,10 @@ void closeFreeType()
     }
 }
 
+// Default dummy glyph
+const TtfFont::TheGlyph TtfFont::dummyGlyph;
 
-
+TtfFont::TheGlyph::TheGlyph() {}
 
 TtfFont::TtfFont() : BaseFontEngine()
 {
@@ -165,8 +167,8 @@ PGE_Size TtfFont::textSize(std::string &text,
         {
             if(' ' == cx)
                 lastspace = x;
-            TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(&cx));
-            widthSumm += uint32_t(glyph.advance>>6);
+            const TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(&cx));
+            widthSumm += glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (fontSize >> 2);
             if(widthSumm > widthSummMax)
                 widthSummMax = widthSumm;
             break;
@@ -235,17 +237,20 @@ void TtfFont::printText(const std::string &text,
 //            continue;
         }
 
-        TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(&cx));
-        GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
-        int32_t glyph_x = x + static_cast<int32_t>(offsetX);
-        int32_t glyph_y = y + static_cast<int32_t>(offsetY + fontSize);
-        GlRenderer::renderTexture(glyph.tx,
-                                  static_cast<float>(glyph_x + glyph.left),
-                                  static_cast<float>(glyph_y - glyph.top),
-                                  glyph.width,
-                                  glyph.height
-                                  );
-        offsetX += uint32_t(glyph.advance>>6);
+        const TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(&cx));
+        if(glyph.tx)
+        {
+            GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
+            int32_t glyph_x = x + static_cast<int32_t>(offsetX);
+            int32_t glyph_y = y + static_cast<int32_t>(offsetY + fontSize);
+            GlRenderer::renderTexture(glyph.tx,
+                                      static_cast<float>(glyph_x + glyph.left),
+                                      static_cast<float>(glyph_y - glyph.top),
+                                      glyph.width,
+                                      glyph.height
+                                      );
+        }
+        offsetX += glyph.tx ? uint32_t(glyph.advance >> 6) : (fontSize >> 2);
 
         strIt += static_cast<size_t>(trailingBytesForUTF8[ucx]);
     }
@@ -261,7 +266,7 @@ std::string TtfFont::getFontName()
     return m_fontName;
 }
 
-TtfFont::TheGlyph &TtfFont::getGlyph(uint32_t fontSize, char32_t character)
+const TtfFont::TheGlyph &TtfFont::getGlyph(uint32_t fontSize, char32_t character)
 {
     SizeCharMap::iterator fSize = m_charMap.find(fontSize);
     if(fSize != m_charMap.end())
@@ -275,7 +280,7 @@ TtfFont::TheGlyph &TtfFont::getGlyph(uint32_t fontSize, char32_t character)
     return loadGlyph(fontSize, character);
 }
 
-TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
+const TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
 {
     FT_Error     error = 0;
     TheGlyph     t_glyph;
@@ -288,12 +293,17 @@ TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
     }
 
     error = FT_Load_Char(m_face, character, FT_LOAD_RENDER);
-    SDL_assert_release(error == 0); //FIXME: return dummy glypg instead
+    if(error != 0)
+        return dummyGlyph;
+
 
     FT_GlyphSlot glyph  = m_face->glyph;
     FT_Bitmap &bitmap   = glyph->bitmap;
     uint32_t width      = bitmap.width;
     uint32_t height     = bitmap.rows;
+
+    if((width == 0) || (height == 0))
+        return dummyGlyph;
 
     uint8_t *image = new uint8_t[4 * width * height];
     if(bitmap.pitch >= 0)
@@ -336,7 +346,7 @@ TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
     t_glyph.height  = height;
     t_glyph.left    = glyph->bitmap_left;
     t_glyph.top     = glyph->bitmap_top;
-    t_glyph.advance = glyph->advance.x;
+    t_glyph.advance = int32_t(glyph->advance.x);
     t_glyph.glyph_width = glyph->advance.x;
 
     delete [] image;
@@ -355,3 +365,5 @@ TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
 
     return rc->second;
 }
+
+

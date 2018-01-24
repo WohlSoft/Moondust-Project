@@ -78,6 +78,7 @@ private:
 
     struct TheGlyph
     {
+        TheGlyph();
         PGE_Texture *tx     = nullptr;
         uint32_t width  = 0;
         uint32_t height = 0;
@@ -87,8 +88,11 @@ private:
         FT_Pos   glyph_width = 0;
     };
 
-    TheGlyph & getGlyph(uint32_t fontSize, char32_t character);
-    TheGlyph & loadGlyph(uint32_t fontSize, char32_t character);
+    //! Default dummy glyph
+    static const TheGlyph dummyGlyph;
+
+    const TheGlyph &getGlyph(uint32_t fontSize, char32_t character);
+    const TheGlyph &loadGlyph(uint32_t fontSize, char32_t character);
 
     typedef std::unordered_map<char32_t, TheGlyph> CharMap;
     typedef std::unordered_map<uint32_t, CharMap>  SizeCharMap;

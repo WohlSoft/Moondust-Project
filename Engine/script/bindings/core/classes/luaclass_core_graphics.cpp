@@ -278,13 +278,36 @@ void Binding_Core_Graphics::clearCache()
 
 double Binding_Core_Graphics::alignToCenter(double x, double width)
 {
-    return static_cast<double>(GlRenderer::alignToCenter(static_cast<int>(x), static_cast<int>(width)));
+    return alignToHCenter(x, width);
 }
+
+double Binding_Core_Graphics::alignToHCenter(double x, double width)
+{
+    return static_cast<double>(GlRenderer::alignToCenterW(static_cast<int>(x), static_cast<int>(width)));
+}
+
+double Binding_Core_Graphics::alignToVCenter(double y, double height)
+{
+    return static_cast<double>(GlRenderer::alignToCenterH(static_cast<int>(y), static_cast<int>(height)));
+}
+
+
+/***
+Global graphics functions.
+@module GraphicFuncs
+*/
 
 luabind::scope Binding_Core_Graphics::PGETexture_bindToLua()
 {
     using namespace luabind;
     return
+        /***
+        The LuaImageResource refers to a PGE Engine specific type, consisting of the data of a loaded image file as OpenGL texture.
+        @table LuaImageResource
+        @tfield int w Width of texture [Read-Only]
+        @tfield int h Height of texture [Read-Only]
+        @tfield uint texture Index of OpenGL texture [Read-Only]
+        */
         class_<PGE_Texture>("LuaImageResource")
         //Properties
         .def_readonly("w", &PGE_Texture::w)
@@ -296,25 +319,261 @@ luabind::scope Binding_Core_Graphics::bindToLua()
 {
     using namespace luabind;
     return
+        /***
+        Loading of image files
+        @section GraphicsLoad
+        */
         namespace_("Graphics")[
+            /***
+            Loads a texture into the memory from image file.
+            @function Graphics.loadImage
+            @tparam string filename The filename of the image file relative to the custom folder. Can be also a absolute path.
+            @treturn LuaImageResource an image descritor of LuaImageResource type (PGE_Texture internally). When returned nil, an error has occouped.
+            */
             def("loadImage", &loadImage),
+
+            /* WIP */
             //def("getPixelData", &getPixelData, pure_out_value(_2) + pure_out_value(_3)),
+
+            /***
+            Drawing on screen
+            @section GraphicsScreenDraw
+            */
+
+            /***
+            Draws the texture for a frame.
+            @function Graphics.drawImage
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            */
             def("drawImage", (void(*)(const PGE_Texture *, float, float, lua_State *))&drawImage),
+
+            /***
+            Draws the texture for a frame, with an opacity from 0.0 to 1.0.
+            @function Graphics.drawImage
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            */
             def("drawImage", (void(*)(const PGE_Texture *, float, float, float, lua_State *))&drawImage),
+
+            /***
+            Draws a part of the texture for a frame. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImage
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+             */
             def("drawImage", (void(*)(const PGE_Texture *, float, float, float, float, float, float, lua_State *))&drawImage),
+
+            /***
+            Draws a part of the texture for a frame, with an opacity from 0.0 to 1.0.
+            Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImage
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            */
             def("drawImage", (void(*)(const PGE_Texture *, float, float, float, float, float, float, float, lua_State *))&drawImage),
+
+            /***
+            Drawing on screen with prioritizing
+            @section GraphicsScreenDrawWP
+            */
+
+            /***
+            Draws the texture for a frame with prioritizing.
+            The rendering of the image is prioritized by <i>zValue</i> priority
+            @function Graphics.drawImageWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            @tparam double zValue A Z value, declares a render priority
+            */
             def("drawImageWP", (void(*)(const PGE_Texture *, float, float, long double, lua_State *))&drawImageWP),
+
+            /***
+            Draws the texture for a frame with prioritizing, with an opacity from 0.0 to 1.0.
+            @function Graphics.drawImageWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            @tparam double zValue A Z value, declares a render priority
+            */
             def("drawImageWP", (void(*)(const PGE_Texture *, float, float, float, long double, lua_State *))&drawImageWP),
+
+            /***
+            Draws a part of the texture for a frame with prioritizing. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImageWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+            @tparam double zValue A Z value, declares a render priority
+             */
             def("drawImageWP", (void(*)(const PGE_Texture *, float, float, float, float, float, float, long double, lua_State *))&drawImageWP),
+
+            /***
+            Draws a part of the texture for a frame with prioritizing, with an opacity from 0.0 to 1.0.
+            Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImageWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam float xPos X position on the screen coordinates
+            @tparam float yPos Y position on the screen coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            @tparam double zValue A Z value, declares a render priority
+            */
             def("drawImageWP", (void(*)(const PGE_Texture *, float, float, float, float, float, float, float, long double, lua_State *))&drawImageWP),
+
+            /***
+            Drawing on scene
+            @section GraphicsScreenDrawWP
+            */
+
+            /***
+            Draws the texture for a frame by scene world coordinates.
+            @function Graphics.drawImageToScene
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            */
             def("drawImageToScene", (void(*)(const PGE_Texture *, double, double, lua_State *))&drawImageToScene),
+
+            /***
+            Draws the texture for a frame by scene world coordinates, with an opacity from 0.0 to 1.0.
+            @function Graphics.drawImageToScene
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            */
             def("drawImageToScene", (void(*)(const PGE_Texture *, double, double, float, lua_State *))&drawImageToScene),
+
+            /***
+            Draws a part of the texture for a frame by scene world coordinates. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImageToScene
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+             */
             def("drawImageToScene", (void(*)(const PGE_Texture *, double, double, float, float, float, float, lua_State *))&drawImageToScene),
+
+            /***
+            Draws a part of the texture for a frame by scene world coordinates, with an opacity from 0.0 to 1.0.
+            Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImageToScene
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            */
             def("drawImageToScene", (void(*)(const PGE_Texture *, double, double, float, float, float, float, float, lua_State *))&drawImageToScene),
+
+            /***
+            Drawing on scene with prioritizing
+            @section GraphicsScreenDrawWP
+            */
+
+            /***
+            Draws the texture for a frame by scene world coordinates with prioritizing.
+            The rendering of the image is prioritized by <i>zValue</i> priority
+            @function Graphics.drawImageToSceneWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            @tparam double zValue A Z value, declares a render priority
+            */
             def("drawImageToSceneWP", (void(*)(const PGE_Texture *, double, double, long double, lua_State *))&drawImageToSceneWP),
+
+            /***
+            Draws the texture for a frame by scene world coordinates with prioritizing, with an opacity from 0.0 to 1.0.
+            @function Graphics.drawImageToSceneWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            @tparam double zValue A Z value, declares a render priority
+            */
             def("drawImageToSceneWP", (void(*)(const PGE_Texture *, double, double, float, long double, lua_State *))&drawImageToSceneWP),
+
+            /***
+            Draws a part of the texture for a frame by scene world coordinates with prioritizing. Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImageToSceneWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+            @tparam double zValue A Z value, declares a render priority
+            */
             def("drawImageToSceneWP", (void(*)(const PGE_Texture *, double, double, float, float, float, float, long double, lua_State *))&drawImageToSceneWP),
+
+            /***
+            Draws a part of the texture for a frame by scene world coordinates with prioritizing, with an opacity from 0.0 to 1.0.
+            Only a part of the pictures is drawn given by <i>sourceX</i> and <i>sourceY</i> with the specific width and height.
+            @function Graphics.drawImageToSceneWP
+            @tparam LuaImageResource texture Texture resource to draw
+            @tparam double xPos X position on the level or world scene coordinates
+            @tparam double yPos Y position on the level or world scene coordinates
+            @tparam float sourceX Source X position of a fragment on the texture
+            @tparam float sourceY Source Y position of a fragment on the texture
+            @tparam float width Width of a texture fragment
+            @tparam float height Height of a texture fragment
+            @tparam float opacity Opacity level (value between 1.0 [non-transparent] and 0.0 [transparent])
+            @tparam double zValue A Z value, declares a render priority
+            */
             def("drawImageToSceneWP", (void(*)(const PGE_Texture *, double, double, float, float, float, float, float, long double, lua_State *))&drawImageToSceneWP),
-            def("alignToHCenter", &alignToCenter)
+
+            /***
+            Alignment functions
+            @section GraphicsAlign
+            */
+
+            /***
+            Aligns horizontal position of object of <i>width</i> to center with <i>offset</i>.
+            @function Graphics.alignToHCenter
+            @tparam int x X Offset of horizontal center position
+            @tparam int width Width of object
+            @treturn int Aligned X position of object
+            */
+            def("alignToHCenter", &alignToHCenter),
+
+            /***
+            Aligns vertical position of object of <i>height</i> to center with <i>offset</i>.
+            @function Graphics.alignToVCenter
+            @tparam int y Y Offset of vertical center position
+            @tparam int height Height of object
+            @treturn int Aligned Y position of object
+            */
+            def("alignToVCenter", &alignToVCenter)
         ];
 }

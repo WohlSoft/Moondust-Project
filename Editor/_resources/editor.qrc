@@ -134,6 +134,8 @@
         <file>lunalua/lunalua_16.png</file>
     </qresource>
     <qresource prefix="/sections">
+        <file>sections/00.png</file>
+        <file>sections/00_n.png</file>
         <file>sections/01.png</file>
         <file>sections/01_n.png</file>
         <file>sections/02.png</file>

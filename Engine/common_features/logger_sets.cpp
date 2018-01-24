@@ -17,7 +17,7 @@
  */
 
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <fmt/fmt_printf.h>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
@@ -73,7 +73,7 @@ void LogWriter::LoadLogSettings()
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
-    std::string logFileName = fmt::format("PGE_Engine_log_{0}.txt", return_current_time_and_date());
+    std::string logFileName = fmt::format_ne("PGE_Engine_log_{0}.txt", return_current_time_and_date());
 
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();
@@ -98,7 +98,15 @@ void LogWriter::LoadLogSettings()
     }
     logSettings.endGroup();
 
-    fmt::print("LogLevel {0}, log file {1}\n\n", static_cast<int>(m_logLevel), m_logFilePath);
+    try
+    {
+        fmt::print("LogLevel {0}, log file {1}\n\n", static_cast<int>(m_logLevel), m_logFilePath);
+    }
+    catch(const fmt::FormatError &err)
+    {
+        std::fprintf(stderr, "fmt::print failed with exception: %s\n", err.what());
+        abort();
+    }
 
     if(m_enabled)
     {
@@ -109,8 +117,8 @@ void LogWriter::LoadLogSettings()
         }
         else
         {
-            fmt::fprintf(stderr, "Impossible to open %s for write, all logs are will be printed through QtDebug...\n", m_logFilePath);
-            fflush(stderr);
+            std::fprintf(stderr, "Impossible to open %s for write, all logs are will be printed through QtDebug...\n", m_logFilePath.c_str());
+            std::fflush(stderr);
         }
     }
 }
@@ -151,7 +159,7 @@ void pLogDebug(const char *format, ...)
     va_start(arg, format);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Debug: "), 1, 7);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
+    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
@@ -169,7 +177,7 @@ void pLogWarning(const char *format, ...)
     va_start(arg, format);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Warning: "), 1, 9);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
+    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
@@ -187,7 +195,7 @@ void pLogCritical(const char *format, ...)
     va_start(arg, format);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Critical: "), 1, 10);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
+    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
@@ -205,7 +213,7 @@ void pLogFatal(const char *format, ...)
     va_start(arg, format);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Fatal: "), 1, 7);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
+    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
@@ -223,7 +231,7 @@ void pLogInfo(const char *format, ...)
     va_start(arg, format);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Info: "), 1, 6);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, len);
+    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
     va_end(arg);
 }
@@ -244,26 +252,21 @@ void LogWriter::WriteToLog(PGE_LogLevel type, const std::string &msg)
         switch(type)
         {
         case PGE_LogLevel::Debug:
-            fprintf(stderr, "DEBUG: %s\n", msg.c_str());
+            std::fprintf(stderr, "DEBUG: %s\n", msg.c_str());
             break;
-
         case PGE_LogLevel::Warning:
-            fprintf(stderr, "WARNING: %s\n", msg.c_str());
+            std::fprintf(stderr, "WARNING: %s\n", msg.c_str());
             break;
-
         case PGE_LogLevel::Critical:
-            fprintf(stderr, "CRITICAL ERROR: %s\n", msg.c_str());
+            std::fprintf(stderr, "CRITICAL ERROR: %s\n", msg.c_str());
             break;
-
         case PGE_LogLevel::Fatal:
-            fprintf(stderr, "FATAL ERROR: %s\n", msg.c_str());
+            std::fprintf(stderr, "FATAL ERROR: %s\n", msg.c_str());
             break;
-
         case PGE_LogLevel::NoLog:
             break;
         }
-
-        fflush(stderr);
+        std::fflush(stderr);
         return;
     }
 
@@ -274,25 +277,21 @@ void LogWriter::WriteToLog(PGE_LogLevel type, const std::string &msg)
             return;
         pLogDebug("%s", msg.c_str());
         break;
-
     case PGE_LogLevel::Warning:
         if(m_logLevel < PGE_LogLevel::Warning)
             return;
         pLogWarning("%s", msg.c_str());
         break;
-
     case PGE_LogLevel::Critical:
         if(m_logLevel < PGE_LogLevel::Critical)
             return;
         pLogCritical("%s", msg.c_str());
         break;
-
     case PGE_LogLevel::Fatal:
         if(m_logLevel < PGE_LogLevel::Fatal)
             return;
         pLogFatal("%s", msg.c_str());
         break;
-
     case PGE_LogLevel::NoLog:
         return;
     }

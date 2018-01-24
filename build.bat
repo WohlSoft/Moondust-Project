@@ -5,7 +5,7 @@ SET BuildArgs=
 SET MAKE_EXTRA_ARGS=-r -j 4
 
 :argsloop
-if "%1"=="clean"  goto cleanX
+if "%1"=="clean" goto cleanX
 if "%1"=="repair-submodules"  goto repairSubModules
 if "%1"=="nopause"  SET NoPause=1
 if "%1"=="noeditor" SET BuildArgs=%BuildArgs% CONFIG+=noeditor
@@ -17,8 +17,51 @@ if "%1"=="nolazyfixtool" SET BuildArgs=%BuildArgs% CONFIG+=nolazyfixtool
 if "%1"=="nomanager" SET BuildArgs=%BuildArgs% CONFIG+=nomanager
 if "%1"=="nomaintainer" SET BuildArgs=%BuildArgs% CONFIG+=nomaintainer
 if "%1"=="nomusicplayer" SET BuildArgs=%BuildArgs% CONFIG+=nomusicplayer
+if "%1"=="--help" goto Usage
 shift
 if NOT "%1"=="" goto argsloop
+
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+goto SkipUsage
+:Usage
+echo.
+echo === Build script for PGE Project for Windows ===
+echo.
+echo SYNTAX:
+echo.
+echo     build.bat [arg1] [arg2] [arg3] ...
+echo.
+echo AVAILABLE ARGUMENTS:
+echo.
+echo --- Actions ---
+echo  clean                - Remove all object files and caches to build from scratch
+echo  repair-submodules    - Repair invalid or broken submodules
+echo  --help               - Print this manual
+echo.
+echo --- Flags ---
+echo  nopause              - Disable pause on script completion
+echo.
+echo --- Disable building of components ---
+echo  noeditor              - Skip building of PGE Editor compoment
+echo  noengine              - Skip building of PGE Engine compoment
+echo  nocalibrator          - Skip building of Playable Character Calibrator compoment
+echo  nomaintainer          - Skip building of PGE Maintainer compoment
+echo  nomanager             - Skip building of PGE Manager compoment
+echo  nomusicplayer         - Skip building of PGE MusPlay compoment
+echo  nogifs2png            - Skip building of GIFs2PNG compoment
+echo  nopng2gifs            - Skip building of PNG2GIFs compoment
+echo  nolazyfixtool         - Skip building of LazyFixTool compoment
+echo.
+set NoPause=1
+set OldPATH=%PATH%
+goto quit
+:SkipUsage
+
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
 
 IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
 IF NOT EXIST _paths.bat goto error
@@ -31,6 +74,9 @@ IF "%MINGWx64Dest%"=="yes" (
 	SET BuildArgs=%BuildArgs% CONFIG+=win64
 )
 
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
 goto run
 :cleanX
 echo ======== Remove all cached object files and automatically generated Makefiles ========
@@ -71,6 +117,10 @@ echo ==== Clear! ====
 exit /B 0
 goto quit;
 
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+
 :repairSubModules
 rem !!FIXME!! Implement parsing of submodules list and fill this array automatically
 rem NOTE: Don't use "git submodule foreach" because broken submodule will not shown in it's list!
@@ -81,6 +131,7 @@ set SUBMODULES=%SUBMODULES% _Libs\AudioCodecs
 set SUBMODULES=%SUBMODULES% _Libs\SDL_Mixer_X
 set SUBMODULES=%SUBMODULES% _common\PGE_File_Formats
 set SUBMODULES=%SUBMODULES% _common\PgeGameSave\submodule
+set SUBMODULES=%SUBMODULES% Content\help
 rem \===============================================================================
 for %%s in (%SUBMODULES%) do (
 echo Remove folder %%s ...
@@ -97,6 +148,9 @@ echo ==== Fixed! ====
 exit /B 0
 goto quit;
 
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
 
 :run
 cd %CD%\Editor
@@ -132,3 +186,4 @@ exit /B 1
 :quit
 PATH=%OldPATH%
 if "%NoPause%"=="0" pause
+

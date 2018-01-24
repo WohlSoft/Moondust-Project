@@ -35,9 +35,12 @@ public:
     QVector<long > imageSize;
 
     ~ExportToImage();
-    bool HideWatersAndDoors();
-    bool TiledBackground();
-    
+    bool hideWatersAndWarps();
+    bool hideMetaSigns();
+    bool hideInvisibleBlocks();
+    bool hideGrid();
+    bool tiledBackground();
+
 private slots:
     void on_imgHeight_valueChanged(int arg1);
     void on_imgWidth_valueChanged(int arg1);

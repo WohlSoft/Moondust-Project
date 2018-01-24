@@ -249,11 +249,12 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
-                    if((!sameID) || (((ItemNPC *) SelItem)->m_data.id == oldID))
+                    ItemNPC *sItem = (ItemNPC *)SelItem;
+                    if((!sameID) || (sItem->m_data.id == oldID))
                     {
-                        oldData.npc.push_back(((ItemNPC *) SelItem)->m_data);
-                        ((ItemNPC *) SelItem)->transformTo(transformTO);
-                        newData.npc.push_back(((ItemNPC *) SelItem)->m_data);
+                        oldData.npc.push_back(sItem->m_data);
+                        sItem->transformTo(transformTO);
+                        newData.npc.push_back(sItem->m_data);
                     }
                 }
             }
@@ -311,8 +312,8 @@ cancelTransform:
             QString("X=%1; Y=%2; W=%3; H=%4;")
             .arg(m_data.x)
             .arg(m_data.y)
-            .arg(m_imageSize.width())
-            .arg(m_imageSize.height())
+            .arg(m_localProps.setup.width)
+            .arg(m_localProps.setup.height)
         );
         m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -322,8 +323,8 @@ cancelTransform:
             QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
             .arg(m_data.x)
             .arg(m_data.y)
-            .arg(m_data.x + m_imageSize.width())
-            .arg(m_data.y + m_imageSize.height())
+            .arg(m_data.x + m_localProps.setup.width)
+            .arg(m_data.y + m_localProps.setup.height)
         );
         m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
@@ -503,6 +504,14 @@ cancelRemoveSSS:
             }//Find selected layer's item
         }
     }
+}
+
+void ItemNPC::setMetaSignsVisibility(bool visible)
+{
+    if(m_includedNPC && !m_localProps.setup.container_show_contents)
+        m_includedNPC->setVisible(visible);
+    if(m_data.generator) //Generator NPCs are meta-signs by theme selves
+        setVisible(visible);
 }
 
 //Change arrtibutes

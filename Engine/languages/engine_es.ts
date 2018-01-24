@@ -406,5 +406,92 @@ El software de renderizado comenzará.
         <source>Choose a game:</source>
         <translation>Elija un juego:</translation>
     </message>
+    <message id="ERROR_NO_CONFIG_PACKS_TTL">
+        <source>Config packs not found</source>
+        <translation>Paquetes de configuración no encontrados</translation>
+    </message>
+    <message id="ERROR_NO_CONFIG_PACKS_TEXT">
+        <source>Can&apos;t start game, because available
+configuration packages are not found!</source>
+        <oldsource>Can&apos;t start game engine, because available
+configuration packages are not found!</oldsource>
+        <translation>¡No se puede iniciar juego, porque los
+paquetes no se encuentran!</translation>
+    </message>
+    <message id="ERR_CONFIG_DIR_MISSING_TTL">
+        <source>Config pack directory error</source>
+        <oldsource>Config error</oldsource>
+        <translation>Error de ubicación de la configuración</translation>
+    </message>
+    <message id="ERR_CONFIG_DIR_MISSING">
+        <source>Config directory is not found at:
+%1</source>
+        <oldsource>CONFIG DIR NOT FOUND AT:</oldsource>
+        <translation>La ubicación de la configuración no se encuentra en:
+%1</translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_MAININI_TTL">
+        <source>Missing main.ini</source>
+        <oldsource>Config error</oldsource>
+        <translation>No se encuentra main.ini</translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_MAININI_MSG">
+        <source>Can&apos;t open the &apos;main.ini&apos; config file!</source>
+        <translation>¡No se puede abrir &apos;main.ini&apos;!</translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
+        <source>Missing config pack data directory</source>
+        <oldsource>Config error</oldsource>
+        <translation>No se encuentra la ubicación de datos del paquete de configuración</translation>
+    </message>
+    <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
+        <source>Config pack data path not exists:
+%1</source>
+        <oldsource>Config data path not exists:</oldsource>
+        <translation>La ubicación de datos del paquete de configuración no se encuentra:
+%1</translation>
+    </message>
+    <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
+        <source>Legacy configuration package</source>
+        <translation>Paquete de configuración antiguo</translation>
+    </message>
+    <message id="WARNING_LEGACY_CONFIG_PACK">
+        <source>You have a legacy configuration package.
+Game will be started, but you may have a some problems with gameplay.
+
+Please download and install latest version of a configuration package:
+
+Download: %1
+
+Note: most of config packs are updates togeter with PGE,
+therefore you can use same link to get updated version.</source>
+        <oldsource>You have a legacy configuration package.
+Game will be started, but you may have a some problems with gameplay.
+
+Please download and install latest version of a configuration package:
+
+Download: %1
+Note: most of config packs are updates togeter with PGE,
+therefore you can use same link to get updated version.</oldsource>
+        <translation>Tiene un paquete de configuración antiguo.
+El juego será ejecutado, pero tendrá algunos problemas con el mismo.
+
+Por favor descargue e instale la última versión del paquete:
+
+Descargar: %1
+
+Nota: la mayoría de paquetes se actualizan junto con PGE,
+sin embargo puede usar el mismo enlace para la versión actualizada.</translation>
+    </message>
+    <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
+        <source>main.ini is invalid</source>
+        <oldsource>Config error</oldsource>
+        <translation>main.ini es inválido</translation>
+    </message>
+    <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
+        <source>Error has occouped in main.ini in line %1.</source>
+        <oldsource>Error has occouped in main.ini in line {0}.</oldsource>
+        <translation>El error se halla en main.ini en la línea %1.</translation>
+    </message>
 </context>
 </TS>

@@ -22,7 +22,7 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
 #include <common_features/util.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
 
 /*****Level blocks************/
@@ -110,12 +110,12 @@ bool ConfigManager::loadLevelBlocks()
     {
         if(useDirectory)
         {
-            if(!loadLevelBlock(sblock, "block", nullptr, fmt::format("{0}/block-{1}.ini", nestDir, i)))
+            if(!loadLevelBlock(sblock, "block", nullptr, fmt::format_ne("{0}/block-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadLevelBlock(sblock, fmt::format("block-{0}", i), nullptr, "", &setup))
+            if(!loadLevelBlock(sblock, fmt::format_ne("block-{0}", i), nullptr, "", &setup))
                 return false;
         }
 
@@ -127,7 +127,7 @@ bool ConfigManager::loadLevelBlocks()
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
-            std::string msg = fmt::format("ERROR LOADING lvl_blocks.ini N:{0} (block-{1})", setup.lastError(), i);
+            std::string msg = fmt::format_ne("ERROR LOADING lvl_blocks.ini N:{0} (block-{1})", setup.lastError(), i);
             addError(msg);
             PGE_MsgBox::error(msg);
             break;
@@ -135,7 +135,7 @@ bool ConfigManager::loadLevelBlocks()
     }
 
     if(uint32_t(lvl_block_indexes.stored()) < block_total)
-        addError(fmt::format("Not all blocks loaded! Total: {0}, Loaded: {1})", block_total, lvl_block_indexes.stored()));
+        addError(fmt::format_ne("Not all blocks loaded! Total: {0}, Loaded: {1})", block_total, lvl_block_indexes.stored()));
 
     return true;
 }

@@ -106,7 +106,7 @@ public:
 
     int taskToTransform = 0;
     int taskToTransform_t = 0;
-    void transformTo(unsigned long id, int type = 0);
+    void transformTo(unsigned long id, int type = 1);
     void transformTo_x(unsigned long id);
     std::unique_ptr<LevelBlock> transformedFromBlockData;
     unsigned long transformedFromBlockID = 0;
@@ -321,7 +321,7 @@ public:
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
     int lua_activate_neighbours();
-    LVL_Npc *lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable = false);
+    LVL_Npc *lua_spawnNPC(unsigned long npcID, int sp_type, int sp_dir, bool reSpawnable = false);
 
     inline void lua_setGfxOffsetX(double x)
     {

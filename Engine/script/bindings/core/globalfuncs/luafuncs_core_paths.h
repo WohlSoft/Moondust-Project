@@ -12,7 +12,7 @@ public:
     static std::string path_level_bgo();
     static std::string path_level_npc();
     static std::string path_effect();
-    static std::string path_world_tile();
+    static std::string path_world_terrain();
     static std::string path_world_scene();
     static std::string path_world_path();
     static std::string path_world_level();

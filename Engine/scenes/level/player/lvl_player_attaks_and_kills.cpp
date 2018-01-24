@@ -86,7 +86,9 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     {
         if(!x) continue;
         if(x->m_destroyed) continue;
-        if(x->sizable && _dir == Attack_Forward)
+        if( ((x->m_blocked[m_filterID] & Block_LEFT) == 0) &&
+            ((x->m_blocked[m_filterID] & Block_RIGHT) == 0) &&
+            (_dir == Attack_Forward))
             continue;
         x->hit();
         if(!x->m_destroyed)

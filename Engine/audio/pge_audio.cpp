@@ -61,7 +61,7 @@ int PGE_Audio::init(Uint32 sampleRate,
     int ret = 0;
     p_audioState.sRate = int(sampleRate);
 
-    MIX_Timidity_addToPathList(std::string(ApplicationPathSTD + "timidity/").c_str());
+    Mix_Timidity_addToPathList(std::string(ApplicationPathSTD + "timidity/").c_str());
 
     if(p_audioState.isLoaded)
         Mix_CloseAudio();

@@ -23,38 +23,43 @@
 void LVL_Npc::setSpriteWarp(float depth, LVL_Npc::WarpingSide direction, bool resizedBody)
 {
     NumberLimiter::apply(depth, 0.0f, 1.0f);
-    isWarping=(depth>0.0f);
-    warpSpriteOffset=depth;
-    warpResizedBody=resizedBody;
-    warpDirectO=direction;
+    isWarping = (depth > 0.0f);
+    warpSpriteOffset = depth;
+    warpResizedBody = resizedBody;
+    warpDirectO = direction;
 }
 
 void LVL_Npc::resetSpriteWarp()
 {
-    warpSpriteOffset=0.0f;
-    warpResizedBody=false;
-    isWarping=false;
+    warpSpriteOffset = 0.0f;
+    warpResizedBody = false;
+    isWarping = false;
 }
 
 void LVL_Npc::setWarpSpawn(LVL_Npc::WarpingSide side)
 {
     setSpriteWarp(1.0f, side);
-    warpSpawing=true;
+    warpSpawing = true;
+    double origGravityScale = gravityScale();
     setSpeed(0.0, 0.0);
-    float pStep = 1.5f/PGE_Window::TicksPerSecond;
+    setGravityScale(0.0);
+    double pStep = 1.5 / PGE_Window::frameRate;
     EventQueueEntry<LVL_Npc >warpOut;
-    warpOut.makeWaiterCond([this, pStep]()->bool{
-                            setSpriteWarp(warpSpriteOffset-pStep, (WarpingSide)warpDirectO, false);
-                              return warpSpriteOffset<=0.0f;
-                          }, false, 0);
+    warpOut.makeWaiterCond([this, pStep]()->bool
+    {
+        setSpriteWarp(warpSpriteOffset - float(pStep), (WarpingSide)warpDirectO, false);
+        return warpSpriteOffset <= 0.0f;
+    }, false, 0);
     event_queue.events.push_back(warpOut);
 
     EventQueueEntry<LVL_Npc >endWarping;
-    endWarping.makeCaller([this, side]()->void{
-                          setSpriteWarp(0.0f, side);
-                          warpSpawing=false;
-                          last_environment=-1;//!< Forcing to refresh physical environment
-                      }, 0);
+    endWarping.makeCaller([this, side, origGravityScale]()->void
+    {
+        setSpriteWarp(0.0f, side);
+        setGravityScale(origGravityScale);
+        warpSpawing = false;
+        last_environment = -1; //!< Forcing to refresh physical environment
+    }, 0);
     event_queue.events.push_back(endWarping);
 }
 

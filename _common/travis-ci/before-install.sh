@@ -42,11 +42,11 @@ then
 elif [ $TRAVIS_OS_NAME == osx ];
 then
 
-    QT_VER=5.9.0
+    QT_VER=5.10.0
     export PATH=/Users/StaticQt/$QT_VER/bin:/Users/StaticQt/$QT_VER/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
     #source _common/travis-ci/_osx_env.sh
-    QtCacheFolder=qtcache590
-    QtTarballName=qt-5.9.0-static-macosx-10-12-5.tar.bz2
+    QtCacheFolder=qtcache5100
+    QtTarballName=qt-5.10.0-static-macosx-10-12-6.tar.bz2
 
 # Try out the caching thing (if caching is works, downloading must not be happen)
     if [ ! -d /Users/StaticQt/$QtCacheFolder ]
@@ -54,7 +54,7 @@ then
         sudo mkdir -p /Users/StaticQt/$QtCacheFolder;
         sudo chown -R travis /Users/StaticQt/;
 # ==============================================================================
-# Downloading and unpacking of pre-built static Qt 5.9.0 on OS X 10.12.5
+# Downloading and unpacking of pre-built static Qt 5.10.0 on OS X 10.12.6
 # ------------------------------------------------------------------------------
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
@@ -75,6 +75,7 @@ then
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
 # ==============================================================================
+    brew update
     brew install coreutils binutils gnu-sed lftp
 
     # # Thanks to St. StackOverflow if this will work http://stackoverflow.com/questions/39633159/homebrew-cant-find-lftp-formula-on-macos-sierra

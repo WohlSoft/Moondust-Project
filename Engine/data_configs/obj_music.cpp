@@ -7,7 +7,7 @@
 
 #include <Utils/files.h>
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 uint64_t        ConfigManager::music_custom_id;
 uint64_t        ConfigManager::music_w_custom_id;
@@ -124,7 +124,7 @@ bool ConfigManager::loadMusic(std::string rootPath, std::string iniFile, bool is
     //World music
     for(i = 1; i <= music_wld_total; i++)
     {
-        musicset.beginGroup(fmt::format("world-music-{0}", i));
+        musicset.beginGroup(fmt::format_ne("world-music-{0}", i));
         smusic_wld.id = i;
         smusic_wld.name = musicset.value("name", "").toString();
 
@@ -132,11 +132,11 @@ bool ConfigManager::loadMusic(std::string rootPath, std::string iniFile, bool is
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(fmt::format("WLD-Music-{0} Item name isn't defined", i));
+                addError(fmt::format_ne("WLD-Music-{0} Item name isn't defined", i));
                 goto skipWldMusic;
             }
             else
-                smusic_wld.name = fmt::format("world-music-{0}", i);
+                smusic_wld.name = fmt::format_ne("world-music-{0}", i);
         }
 
         smusic_wld.file = musicset.value("file", "").toString();
@@ -144,7 +144,7 @@ bool ConfigManager::loadMusic(std::string rootPath, std::string iniFile, bool is
         if(smusic_wld.file.empty() && (i != music_w_custom_id))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("WLD-Music-{0} Item file isn't defined", i));
+                addError(fmt::format_ne("WLD-Music-{0} Item file isn't defined", i));
 
             goto skipWldMusic;
         }
@@ -157,7 +157,7 @@ bool ConfigManager::loadMusic(std::string rootPath, std::string iniFile, bool is
         )
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("WLD-Music-{0}: file {1} not exist", i, smusic_wld.absPath));
+                addError(fmt::format_ne("WLD-Music-{0}: file {1} not exist", i, smusic_wld.absPath));
 
             goto skipWldMusic;
         }
@@ -169,7 +169,7 @@ skipWldMusic:
         if(musicset.lastError() != IniProcessing::ERR_OK)
         {
             if(!isCustom)
-                addError(fmt::format("ERROR LOADING music.ini N:{0} (world music {1})", musicset.lineWithError(), i));
+                addError(fmt::format_ne("ERROR LOADING music.ini N:{0} (world music {1})", musicset.lineWithError(), i));
             break;
         }
     }
@@ -177,7 +177,7 @@ skipWldMusic:
     //Special music
     for(i = 1; i <= music_spc_total; i++)
     {
-        musicset.beginGroup(fmt::format("special-music-{0}", i));
+        musicset.beginGroup(fmt::format_ne("special-music-{0}", i));
         smusic_spc.id = i;
         smusic_spc.name = musicset.value("name", "").toString();
 
@@ -185,11 +185,11 @@ skipWldMusic:
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(fmt::format("SPC-Music-{0} Item name isn't defined", i));
+                addError(fmt::format_ne("SPC-Music-{0} Item name isn't defined", i));
                 goto skipSpcMusic;
             }
             else
-                smusic_spc.name = fmt::format("special-music-{0}", i);
+                smusic_spc.name = fmt::format_ne("special-music-{0}", i);
         }
 
         smusic_spc.file = musicset.value("file", "").toString();
@@ -197,7 +197,7 @@ skipWldMusic:
         if(smusic_spc.file.empty())
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("SPC-Music-{0} Item file isn't defined", i));
+                addError(fmt::format_ne("SPC-Music-{0} Item file isn't defined", i));
 
             goto skipSpcMusic;
         }
@@ -207,7 +207,7 @@ skipWldMusic:
         if(!Files::fileExists(clearMusTrack(smusic_spc.absPath)))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("Special-Music-{0}: file {1} not exist", i, smusic_spc.absPath));
+                addError(fmt::format_ne("Special-Music-{0}: file {1} not exist", i, smusic_spc.absPath));
 
             goto skipSpcMusic;
         }
@@ -218,7 +218,7 @@ skipSpcMusic:
 
         if(musicset.lastError() != IniProcessing::ERR_OK)
         {
-            std::string msg = fmt::format("ERROR LOADING music.ini N:{0} (special music {1})", musicset.lineWithError(), i);
+            std::string msg = fmt::format_ne("ERROR LOADING music.ini N:{0} (special music {1})", musicset.lineWithError(), i);
             addError(msg);
             PGE_MsgBox::error(msg);
             break;
@@ -228,7 +228,7 @@ skipSpcMusic:
     //Level music
     for(i = 1; i <= music_lvl_total; i++)
     {
-        musicset.beginGroup(fmt::format("level-music-{0}", i));
+        musicset.beginGroup(fmt::format_ne("level-music-{0}", i));
         smusic_lvl.id = i;
         smusic_lvl.name = musicset.value("name", "").toString();
 
@@ -236,11 +236,11 @@ skipSpcMusic:
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
             {
-                addError(fmt::format("LVL-Music-{0} Item name isn't defined", i));
+                addError(fmt::format_ne("LVL-Music-{0} Item name isn't defined", i));
                 goto skipLvlMusic;
             }
             else
-                smusic_lvl.name = fmt::format("level-music-{0}", i);
+                smusic_lvl.name = fmt::format_ne("level-music-{0}", i);
         }
 
         smusic_lvl.file = musicset.value("file", "").toString();
@@ -248,7 +248,7 @@ skipSpcMusic:
         if(smusic_lvl.file.empty() && (i != music_custom_id))
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("LVL-Music-{0} Item file isn't defined", i));
+                addError(fmt::format_ne("LVL-Music-{0} Item file isn't defined", i));
 
             goto skipLvlMusic;
         }
@@ -261,7 +261,7 @@ skipSpcMusic:
         )
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
-                addError(fmt::format("LVL-Music-{0}: file {1} not exist", i, smusic_lvl.absPath));
+                addError(fmt::format_ne("LVL-Music-{0}: file {1} not exist", i, smusic_lvl.absPath));
 
             goto skipLvlMusic;
         }
@@ -274,8 +274,8 @@ skipLvlMusic:
         {
             if(!isCustom)
             {
-                addError(fmt::format("ERROR LOADING music.ini N:{0} (level-music {1})", musicset.lineWithError(), i));
-                PGE_MsgBox::error(fmt::format("ERROR LOADING music.ini N:{0} (level-music {1})", musicset.lineWithError(), i));
+                addError(fmt::format_ne("ERROR LOADING music.ini N:{0} (level-music {1})", musicset.lineWithError(), i));
+                PGE_MsgBox::error(fmt::format_ne("ERROR LOADING music.ini N:{0} (level-music {1})", musicset.lineWithError(), i));
             }
             break;
         }

@@ -436,19 +436,37 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     grid_offset_x += (local->en_gridoffsetx) ? local->gridoffsetx : 0;
     grid_offset_y += (local->en_gridoffsety) ? local->gridoffsety : 0;
 
+    // This check must go before frames will be changed
+    bool animation_differs = (local->en_frames && (local->frames != global.frames));
+
     if((framestyle == 0) && ((local->en_gfxheight) || (local->en_height)) && (!local->en_frames))
     {
         frames = Maths::uRound(static_cast<double>(captured_h) / static_cast<double>(gfx_h));
-        //merged.custom_animate = false;
+        custom_animate = false;
     }
     else
         frames = (local->en_frames) ? local->frames : global.frames;
 
-    if((local->en_frames) || (local->en_framestyle))
+    if(animation_differs || (local->en_framestyle && (local->framestyle != global.framestyle)))
     {
         ani_bidir = false; //Disable bidirectional animation
         if(local->en_frames)
             custom_animate = false; //Disable custom animation
+    }
+
+    if(custom_animate && animation_differs)
+    {
+        // Validate custom animation
+        for(int &frm : frames_left)
+        {
+            if((frm < 0) || ((uint32_t)frm > frames))
+                custom_animate = false; //Disable custom animation as missmatch of frame IDs
+        }
+        for(int &frm : frames_right)
+        {
+            if((frm < 0) || ((uint32_t)frm > frames))
+                custom_animate = false; //Disable custom animation as missmatch of frame IDs
+        }
     }
 
     // Convert out of range frames by framestyle into animation with controlable diraction

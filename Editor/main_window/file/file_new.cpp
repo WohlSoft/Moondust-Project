@@ -25,12 +25,6 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-void MainWindow::on_actionNew_triggered()
-{
-    ui->menuNew->exec( this->cursor().pos() );
-}
-
-
 ////////////////////////New files templates///////////////////////////
 
 void MainWindow::on_actionNewNPC_config_triggered()
@@ -55,7 +49,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     if(npcList->exec()==QDialog::Accepted)
     {
         NpcEdit *child = createNPCChild();
-        child->newFile( npcList->npcID );
+        child->newFile((unsigned long)npcList->npcID);
         child->show();
     }
     delete npcList;

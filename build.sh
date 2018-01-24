@@ -9,15 +9,17 @@ fi
 #flags
 flag_pause_on_end=true
 QMAKE_EXTRA_ARGS=""
-MAKE_EXTRA_ARGS="-r -j 4"
+MAKE_EXTRA_ARGS="-r"
+MAKE_CPUS_COUNT=4
 flag_debugThisScript=false
+flag_debugDependencies=false
 
 for var in "$@"
 do
     case "$var" in
         --help)
             echo ""
-            printf "=== \e[44mBuild script for PGE Project\e[0m ===\n"
+            printf "=== \e[44mBuild script for PGE Project for UNIX-Like operating\e[0m ===\n"
             echo ""
             printf "\E[4mSYNTAX:\E[0m\n"
             echo ""
@@ -32,7 +34,8 @@ do
             printf " \E[1;4mclean\E[0m            - Remove all object files and caches to build from scratch\n"
             printf " \E[1;4mrepair-submodules\E[0m- Repair invalid or broken submodules\n"
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
-            printf ""
+            printf " \E[1;4m--help\E[0m           - Print this manual\n"
+            echo ""
 
             echo "--- Flags ---"
             printf " \E[1;4mno-pause\E[0m         - Don't pause script on completion'\n"
@@ -45,18 +48,20 @@ do
             echo ""
 
             echo "--- Disable building of components ---"
+            printf " \E[1;4mnoqt\E[0m             - Skip building of components are using Qt\n"
             printf " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment\n"
             printf " \E[1;4mnoengine\E[0m         - Skip building of PGE Engine compoment\n"
             printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment\n"
             printf " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment\n"
             printf " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment\n"
+            printf " \E[1;4mnomusicplayer\E[0m    - Skip building of PGE MusPlay compoment\n"
             printf " \E[1;4mnogifs2png\E[0m       - Skip building of GIFs2PNG compoment\n"
             printf " \E[1;4mnopng2gifs\E[0m       - Skip building of PNG2GIFs compoment\n"
             printf " \E[1;4mnolazyfixtool\E[0m    - Skip building of LazyFixTool compoment\n"
             echo ""
 
             echo "--- Special ---"
-            printf " \E[1;4mdebugscript\E[0m      - Show some extra information to debug this script\n"
+            printf " \E[1;4mdebug-script\E[0m      - Show some extra information to debug this script\n"
             echo ""
 
             echo "--- For fun ---"
@@ -136,6 +141,7 @@ do
             SUBMODULES="${SUBMODULES} _common/PgeGameSave/submodule"
             SUBMODULES="${SUBMODULES} _Libs/AudioCodecs"
             SUBMODULES="${SUBMODULES} _Libs/SDL_Mixer_X"
+            SUBMODULES="${SUBMODULES} Content/help"
             # \===============================================================================
             for s in $SUBMODULES
             do
@@ -156,10 +162,19 @@ do
             ;;
 
         # Enable debuggin of this script by showing states of inernal variables with pauses
-        debugscript)
+        debug-script)
             flag_debugThisScript=true
             ;;
-
+        test)
+            flag_debugDependencies=true
+            ;;
+        noqt)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=noeditor"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nocalibrator"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomanager"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomaintainer"
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomusicplayer"
+            ;;
         # Disable building of some compnents
         noeditor)
             QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
@@ -183,6 +198,9 @@ do
             QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
             ;;
         nomaintainer)
+            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            ;;
+        nomusicplayer)
             QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
             ;;
     esac
@@ -214,9 +232,12 @@ fi
 PATH=$QT_PATH:$PATH
 LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
 
+MAKE_CPUS_COUNT=$(getCpusCount)
+
 if $flag_debugThisScript; then
     echo "QMAKE_EXTRA_ARGS = ${QMAKE_EXTRA_ARGS}"
     echo "MAKE_EXTRA_ARGS = ${MAKE_EXTRA_ARGS}"
+    echo "MAKE_CPUS_COUNT = ${MAKE_CPUS_COUNT}"
     pause
 fi
 
@@ -237,12 +258,16 @@ checkForDependencies()
     elif [[ "$OSTYPE" == "freebsd"* ]]; then
         osDir="freebsd"
         libPref="lib"
+    elif [[ "$OSTYPE" == "haiku" ]]; then
+        osDir="haiku"
+        libPref="lib"
     elif [[ "$OSTYPE" == "msys"* ]]; then
         dlibExt="a"
         osDir="win32"
         libPref="lib"
     fi
     libsDir=$SCRDIR/_Libs/_builds/$osDir/
+    #echo "$libsDir"
 
     HEADS="SDL2/SDL.h"
     HEADS="${HEADS} SDL2/SDL_mixer_ext.h"
@@ -259,8 +284,7 @@ checkForDependencies()
     HEADS="${HEADS} vorbis/vorbisenc.h"
     for head in $HEADS
     do
-        if [[ $1 == "test" ]]
-        then
+        if $flag_debugDependencies; then
             echo "Checking include ${head}..."
         fi
         if [[ ! -f ${libsDir}/include/${head} ]]
@@ -359,9 +383,9 @@ fi
 checkState
 
 #=======================================================================
-echo "Building..."
+echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
 TIME_STARTED=$(date +%s)
-make $MAKE_EXTRA_ARGS
+make ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
 checkState
 TIME_ENDED=$(date +%s)
 TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
@@ -382,3 +406,4 @@ if $flag_pause_on_end ; then
     pause
 fi
 exit 0
+

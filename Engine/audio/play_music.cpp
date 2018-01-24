@@ -20,7 +20,7 @@
 #include "play_music.h"
 
 #include <gui/pge_msgbox.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 /***********************************PGE_MusPlayer********************************************/
 static Mix_Music * p_playingMus = NULL;
@@ -161,8 +161,8 @@ void PGE_MusPlayer::openFile(std::string musFile)
         if(p_showMsgMus)
 		{
             PGE_MsgBox::warn(
-                              fmt::format("Mix_LoadMUS: {0}\n{1}",
-                                          musFile, Mix_GetError())
+                              fmt::format_ne("Mix_LoadMUS: {0}\n{1}",
+                                            musFile, Mix_GetError())
                              );
             p_showMsgMus_for = std::string(musFile);
             p_showMsgMus = false;

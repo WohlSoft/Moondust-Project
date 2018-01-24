@@ -74,7 +74,7 @@ void LvlCloneSection::on_FileList_src_currentIndexChanged(int index)
     {
         item = new QListWidgetItem(tr("Section") +
                                    QString(" %1 %2")
-                                   .arg(y.id + 1)
+                                   .arg(y.id)
                                    .arg(
                                        ( (y.size_bottom==0) && (y.size_left==0) &&
                                          (y.size_top==0) && (y.size_right==0) ) ?
@@ -99,7 +99,7 @@ void LvlCloneSection::on_FileList_dst_currentIndexChanged(int index)
 
     for(LevelSection &y : x->LvlData.sections)
     {
-        item = new QListWidgetItem(tr("Section") + QString(" %1 %2").arg(y.id+1)
+        item = new QListWidgetItem(tr("Section") + QString(" %1 %2").arg(y.id)
                                    .arg(
                                        ( (y.size_bottom==0) && (y.size_left==0) && (y.size_top==0) && (y.size_right==0))?
                                            tr(""):
@@ -114,7 +114,7 @@ void LvlCloneSection::on_FileList_dst_currentIndexChanged(int index)
 
     //Init new section
     {
-        item = new QListWidgetItem( tr("Initialize new section")+QString(" %1").arg(x->LvlData.sections.size()+1) );
+        item = new QListWidgetItem( tr("Initialize new section")+QString(" %1").arg(x->LvlData.sections.size()) );
         item->setData(3, QString::number( x->LvlData.sections.size() ) );
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         ui->SectionList_dst->addItem(item);

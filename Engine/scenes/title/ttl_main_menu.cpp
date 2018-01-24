@@ -422,7 +422,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         {
             PGE_Window::vsync = g_AppSettings.vsync;
             PGE_Window::toggleVSync(g_AppSettings.vsync);
-            g_AppSettings.timeOfFrame = PGE_Window::TimeOfFrame;
+            g_AppSettings.timeOfFrame = PGE_Window::frameDelay;
             m_menu.setEnabled("phys_step", !PGE_Window::vsync);
         },
         PGE_Window::vsyncIsSupported
@@ -434,13 +434,13 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         {
             if(!PGE_Window::vsync)
             {
-                PGE_Window::TicksPerSecond = 1000.0 / double(g_AppSettings.timeOfFrame);
-                PGE_Window::TimeOfFrame = g_AppSettings.timeOfFrame;
-                g_AppSettings.TicksPerSecond = 1000.0 / double(g_AppSettings.timeOfFrame);
+                PGE_Window::frameRate = 1000.0 / double(g_AppSettings.timeOfFrame);
+                PGE_Window::frameDelay = g_AppSettings.timeOfFrame;
+                g_AppSettings.frameRate = 1000.0 / double(g_AppSettings.timeOfFrame);
                 this->updateTickValue();
             }
             else
-                g_AppSettings.timeOfFrame = PGE_Window::TimeOfFrame;
+                g_AppSettings.timeOfFrame = PGE_Window::frameDelay;
         },
         !PGE_Window::vsync
                            );

@@ -54,7 +54,7 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     loadingTime.start();
     fReadTime.start();
 #endif
-#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
     FileMapper fileMap;
 
     if(!fileMap.open_file(file.c_str()))
@@ -75,19 +75,19 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
         return NULL;
 
 #else
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
+    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
 
     if(formato  == FIF_UNKNOWN)
         return NULL;
 
-    FIBITMAP *img = FreeImage_Load(formato, file.toUtf8().data());
+    FIBITMAP *img = FreeImage_Load(formato, file.c_str());
 
     if(!img)
         return NULL;
 
 #endif
 #ifdef DEBUG_BUILD
-    long long fReadTimeElapsed = static_cast<long long>(fReadTime.elapsed());
+    long long fReadTimeElapsed = static_cast<long long>(fReadTime.nanoelapsed());
     long long imgConvertElapsed = 0;
 #endif
 
@@ -105,14 +105,14 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
         FreeImage_Unload(img);
         img = temp;
 #ifdef DEBUG_BUILD
-        imgConvertElapsed = static_cast<long long>(imgConvTime.elapsed());
+        imgConvertElapsed = static_cast<long long>(imgConvTime.nanoelapsed());
 #endif
     }
 
 #ifdef DEBUG_BUILD
-    D_pLogDebug("File read of texture %s passed in %d milliseconds", file.c_str(), static_cast<int>(fReadTimeElapsed));
-    D_pLogDebug("Conv to 32-bit of %s passed in %d milliseconds", file.c_str(), static_cast<int>(imgConvertElapsed));
-    D_pLogDebug("Total Loading of image %s passed in %d milliseconds", file.c_str(), static_cast<int>(loadingTime.elapsed()));
+    D_pLogDebug("File read of texture %s passed in %d nanoseconds", file.c_str(), static_cast<int>(fReadTimeElapsed));
+    D_pLogDebug("Conv to 32-bit of %s passed in %d nanoseconds", file.c_str(), static_cast<int>(imgConvertElapsed));
+    D_pLogDebug("Total Loading of image %s passed in %d nanoseconds", file.c_str(), static_cast<int>(loadingTime.nanoelapsed()));
 #endif
     return img;
 }

@@ -60,26 +60,29 @@ void WorldEdit::ExportingReady() //slot
 {
         long th, tw;
 
-        bool proportion;
-        bool hideMusic;
-        bool hidePathLevels;
+        bool keepAspectRatio = false;
+        bool hideMusic = false;
+        bool hidePathLevels = false;
+        bool hideGrid = false;
+        bool gridWasShown = false;
         QString inifile = AppPathManager::settingsFile();
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
         latest_export_path = settings.value("export-path", QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)).toString();
-        proportion = settings.value("export-proportions", true).toBool();
+        keepAspectRatio = settings.value("export-keep-aspect-ratio", true).toBool();
+        keepAspectRatio = settings.value("export-proportions", keepAspectRatio).toBool();
         settings.endGroup();
 
         QSize imgSize;
-        WldSaveImage ExportImage(scene->captutedSize.toRect(),
+        WldSaveImage imageExportDialog(scene->captutedSize.toRect(),
                                  scene->captutedSize.size().toSize(),
-                                 proportion, MainWinConnect::pMainWin);
-        ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
-        if(ExportImage.exec()!=QDialog::Rejected)
+                                 keepAspectRatio, MainWinConnect::pMainWin);
+        imageExportDialog.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        imageExportDialog.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, imageExportDialog.size(), qApp->desktop()->availableGeometry()));
+        if(imageExportDialog.exec()!=QDialog::Rejected)
         {
             LogDebug("ImageExport -> accepted");
-            imgSize = ExportImage.imageSize;
+            imgSize = imageExportDialog.imageSize;
             LogDebug(QString("ImageExport -> Image size %1x%2").arg(imgSize.width()).arg(imgSize.height()));
         }
         else {
@@ -87,9 +90,10 @@ void WorldEdit::ExportingReady() //slot
             return;
         }
 
-        proportion = ExportImage.saveProportion;
-        hideMusic =  ExportImage.hideMusBoxes;
-        hidePathLevels =  ExportImage.hidePaths;
+        keepAspectRatio = imageExportDialog.m_keepAspectRatio;
+        hideMusic       = imageExportDialog.hideMusBoxes;
+        hidePathLevels  = imageExportDialog.hidePaths;
+        hideGrid        = imageExportDialog.hideGrid;
 
         if((imgSize.width()<0)||(imgSize.height()<0))
             return;
@@ -124,10 +128,20 @@ void WorldEdit::ExportingReady() //slot
 
         qApp->processEvents();
         scene->stopAnimation(); //Reset animation to 0 frame
-        if(hideMusic) scene->hideMusicBoxes(false);
-        if(hidePathLevels) scene->hidePathAndLevels(false);
+        if(hideMusic)
+            scene->hideMusicBoxes(false);
+        if(hidePathLevels)
+            scene->hidePathAndLevels(false);
+        if(hideGrid)
+        {
+            gridWasShown = scene->m_opts.grid_show;
+            scene->m_opts.grid_show = false;
+        }
 
-        if(!progress.wasCanceled()) progress.setValue(10);
+        if(!progress.wasCanceled())
+            progress.setValue(10);
+        scene->invalidate();
+        scene->update();
         qApp->processEvents();
         scene->clearSelection(); // Clear selection on export
 
@@ -137,7 +151,7 @@ void WorldEdit::ExportingReady() //slot
         tw=imgSize.width();
 
         qApp->processEvents();
-        QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
+        QImage img((int)tw, (int)th, QImage::Format_ARGB32_Premultiplied);
         img.fill(Qt::black);
 
         if(!progress.wasCanceled()) progress.setValue(20);
@@ -160,11 +174,16 @@ void WorldEdit::ExportingReady() //slot
         if(!progress.wasCanceled()) progress.setValue(90);
 
         qApp->processEvents();
-        if(hideMusic) scene->hideMusicBoxes(true);
-        if(hidePathLevels) scene->hidePathAndLevels(true);
-
-        if(scene->m_opts.animationEnabled) scene->startAnimation(); // Restart animation
-
+        if(scene->m_opts.animationEnabled)
+            scene->startAnimation(); // Restart animation
+        if(hideMusic)
+            scene->hideMusicBoxes(true);
+        if(hidePathLevels)
+            scene->hidePathAndLevels(true);
+        if(gridWasShown)
+            scene->m_opts.grid_show = true;
+        scene->invalidate();
+        scene->update();
 
         if(!progress.wasCanceled()) progress.setValue(100);
         if(!progress.wasCanceled())
@@ -172,19 +191,19 @@ void WorldEdit::ExportingReady() //slot
 
         settings.beginGroup("Main");
             settings.setValue("export-path", latest_export_path);
-            settings.setValue("export-proportions", proportion);
+            settings.setValue("export-keep-aspect-ratio", keepAspectRatio);
         settings.endGroup();
 }
 
 
-WldSaveImage::WldSaveImage(QRect sourceRect, QSize targetSize, bool proportion, QWidget *parent) :
+WldSaveImage::WldSaveImage(QRect sourceRect, QSize targetSize, bool keep_aspect_ratio, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WldSaveImage)
 {
     WldSaveImage_lock=false;
     getRect = sourceRect;
     imageSize = targetSize;
-    saveProportion = proportion;
+    m_keepAspectRatio = keep_aspect_ratio;
     hideMusBoxes = false;
     ui->setupUi(this);
 
@@ -192,9 +211,9 @@ WldSaveImage::WldSaveImage(QRect sourceRect, QSize targetSize, bool proportion, 
 
     ui->imgWidth->setValue(imageSize.width());
     ui->imgHeight->setValue(imageSize.height());
-    ui->SaveProportion->setChecked(saveProportion);
+    ui->keepAspectRatio->setChecked(m_keepAspectRatio);
 
-    ui->ExportRect->setText(tr("Will be exported:\nTop:\t%1\nLeft:\t%2\nRight:\t%3\nBottom:\t%4")
+    ui->exportRect->setText(tr("Will be exported:\nTop:\t%1\nLeft:\t%2\nRight:\t%3\nBottom:\t%4")
                             .arg(getRect.top())
                             .arg(getRect.left())
                             .arg(getRect.right())
@@ -212,7 +231,7 @@ void WldSaveImage::on_imgHeight_valueChanged(int arg1)
 {
     if(WldSaveImage_lock) return;
 
-    if( (ui->SaveProportion->isChecked()) && (ui->imgHeight->hasFocus()) )
+    if( (ui->keepAspectRatio->isChecked()) && (ui->imgHeight->hasFocus()) )
         ui->imgWidth->setValue( qRound(qreal(arg1) / ( qreal(imageSize.height())/qreal(imageSize.width()) ) ) );
 }
 
@@ -220,7 +239,7 @@ void WldSaveImage::on_imgWidth_valueChanged(int arg1)
 {
     if(WldSaveImage_lock) return;
 
-    if( (ui->SaveProportion->isChecked()) && (ui->imgWidth->hasFocus()) )
+    if( (ui->keepAspectRatio->isChecked()) && (ui->imgWidth->hasFocus()) )
         ui->imgHeight->setValue( qRound(qreal(arg1) / ( qreal(imageSize.width())/qreal(imageSize.height())  )) );
 
 }
@@ -250,9 +269,10 @@ void WldSaveImage::on_buttonBox_accepted()
 {
     imageSize.setWidth(ui->imgWidth->value());
     imageSize.setHeight(ui->imgHeight->value());
-    saveProportion = ui->SaveProportion->isChecked();
-    hideMusBoxes=ui->HideMusBoxes->isChecked();
-    hidePaths = ui->HidePaths->isChecked();
+    m_keepAspectRatio = ui->keepAspectRatio->isChecked();
+    hideMusBoxes=ui->hideMusBoxes->isChecked();
+    hidePaths = ui->hidePaths->isChecked();
+    hideGrid = ui->hideGrid->isChecked();
     accept();
 }
 

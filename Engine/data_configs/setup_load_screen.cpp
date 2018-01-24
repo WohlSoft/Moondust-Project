@@ -20,7 +20,7 @@
 #include "config_manager.h"
 #include "config_manager_private.h"
 
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 LoadingScreenSetup  ConfigManager::setup_LoadingScreen;
 
@@ -41,7 +41,7 @@ void LoadingScreenSetup::init(IniProcessing &engine_ini)
     AdditionalImages.clear();
     for(int i = 1; i <= LoadScreenImages; i++)
     {
-        engine_ini.beginGroup(fmt::format("loading-image-{0}", i));
+        engine_ini.beginGroup(fmt::format_ne("loading-image-{0}", i));
         {
             LoadingScreenAdditionalImage img;
 

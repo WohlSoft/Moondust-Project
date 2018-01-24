@@ -26,29 +26,27 @@
 #include "../lvl_history_manager.h"
 #include "../lvl_item_placing.h"
 
-static long eventID=0;
+static long eventID = 0;
 void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
 {
     if(event >= 0)
         eventID = event;
 
-    if( (enabled) && (m_resizeBox==nullptr) )
+    if((enabled) && (m_resizeBox == nullptr))
     {
         m_mw->on_actionSelect_triggered(); //Reset mode
 
-        int x = m_data->events[eventID].sets[m_data->CurSection].position_left;
-        int y = m_data->events[eventID].sets[m_data->CurSection].position_top;
-        int w = m_data->events[eventID].sets[m_data->CurSection].position_right;
-        int h = m_data->events[eventID].sets[m_data->CurSection].position_bottom;
+        int l = (int)m_data->events[(int)eventID].sets[m_data->CurSection].position_left;
+        int t = (int)m_data->events[(int)eventID].sets[m_data->CurSection].position_top;
+        int r = (int)m_data->events[(int)eventID].sets[m_data->CurSection].position_right;
+        int b = (int)m_data->events[(int)eventID].sets[m_data->CurSection].position_bottom;
 
-        m_resizeBox = new ItemResizer( QSize(abs(x-w), abs(y-h)), Qt::yellow, 32 );
+        m_resizeBox = new ItemResizer(QSize(abs(l - r), abs(t - b)), Qt::yellow, 32);
         this->addItem(m_resizeBox);
-        m_resizeBox->setPos(x, y);
-        m_resizeBox->type=1;
+        m_resizeBox->setPos(l, t);
+        m_resizeBox->type = 1;
         m_resizeBox->_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        //DrawMode=true;
-        //MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
         SwitchEditingMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
@@ -61,35 +59,28 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
                 #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
-                long l = m_resizeBox->pos().x();
-                long t = m_resizeBox->pos().y();
-                long r = l + m_resizeBox->_width;
-                long b = t + m_resizeBox->_height;
-                //long oldL = LvlData->events[eventID].sets[LvlData->CurSection].position_left;
-                //long oldR = LvlData->events[eventID].sets[LvlData->CurSection].position_right;
-                //long oldT = LvlData->events[eventID].sets[LvlData->CurSection].position_top;
-                //long oldB = LvlData->events[eventID].sets[LvlData->CurSection].position_bottom;
+                long l = (long)m_resizeBox->pos().x();
+                long t = (long)m_resizeBox->pos().y();
+                long r = l + (long)m_resizeBox->_width;
+                long b = t + (long)m_resizeBox->_height;
+
                 QList<QVariant> sizeData;
                 sizeData.push_back((qlonglong)m_data->CurSection);
-                sizeData.push_back((qlonglong)m_data->events[eventID].sets[m_data->CurSection].position_top);
-                sizeData.push_back((qlonglong)m_data->events[eventID].sets[m_data->CurSection].position_right);
-                sizeData.push_back((qlonglong)m_data->events[eventID].sets[m_data->CurSection].position_bottom);
-                sizeData.push_back((qlonglong)m_data->events[eventID].sets[m_data->CurSection].position_left);
+                sizeData.push_back((qlonglong)m_data->events[(int)eventID].sets[m_data->CurSection].position_top);
+                sizeData.push_back((qlonglong)m_data->events[(int)eventID].sets[m_data->CurSection].position_right);
+                sizeData.push_back((qlonglong)m_data->events[(int)eventID].sets[m_data->CurSection].position_bottom);
+                sizeData.push_back((qlonglong)m_data->events[(int)eventID].sets[m_data->CurSection].position_left);
                 sizeData.push_back((qlonglong)t);
                 sizeData.push_back((qlonglong)r);
                 sizeData.push_back((qlonglong)b);
                 sizeData.push_back((qlonglong)l);
-                m_history->addChangeEventSettings(m_data->events[eventID].meta.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
+                m_history->addChangeEventSettings((int)m_data->events[(int)eventID].meta.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
-                m_data->events[eventID].sets[m_data->CurSection].position_left = l;
-                m_data->events[eventID].sets[m_data->CurSection].position_right = r;
-                m_data->events[eventID].sets[m_data->CurSection].position_top = t;
-                m_data->events[eventID].sets[m_data->CurSection].position_bottom = b;
+                m_data->events[(int)eventID].sets[m_data->CurSection].position_left = l;
+                m_data->events[(int)eventID].sets[m_data->CurSection].position_right = r;
+                m_data->events[(int)eventID].sets[m_data->CurSection].position_top = t;
+                m_data->events[(int)eventID].sets[m_data->CurSection].position_bottom = b;
 
-                //addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
-
-                //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
-                //drawSpace();
                 m_data->meta.modified = true;
                 m_mw->dock_LvlEvents->eventSectionSettingsSync();
             }
@@ -98,8 +89,6 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
             m_mw->on_actionSelect_triggered();
             m_mw->resizeToolbarVisible(false);
         }
-        m_busyMode=false;
+        m_busyMode = false;
     }
 }
-
-

@@ -29,31 +29,29 @@
 
 void LvlScene::setScreenshotSelector()
 {
-    m_captureFullSection=true;
+    m_captureFullSection = true;
     emit screenshotSizeCaptured();
 }
 
 void LvlScene::setScreenshotSelector(bool enabled, bool accept)
 {
-    bool do_signal=false;
-    if( (enabled) && (m_resizeBox==nullptr) )
+    bool do_signal = false;
+    if((enabled) && (m_resizeBox == nullptr))
     {
         m_mw->on_actionSelect_triggered(); //Reset mode
 
-        m_resizeBox = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 2 );
+        m_resizeBox = new ItemResizer(QSize((int)captutedSize.width(), (int)captutedSize.height()), Qt::yellow, 2);
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(captutedSize.x(), captutedSize.y());
-        m_resizeBox->type=4;
+        m_resizeBox->type = 4;
         m_resizeBox->_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        //DrawMode=true;
-        //m_mw->activeLvlEditWin()->changeCursor(WorldEdit::MODE_Resizing);
         SwitchEditingMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else
     {
-        if( m_resizeBox != nullptr )
+        if(m_resizeBox != nullptr)
         {
             if(accept)
             {
@@ -61,21 +59,20 @@ void LvlScene::setScreenshotSelector(bool enabled, bool accept)
                 WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
 
-                captutedSize = QRectF( m_resizeBox->pos().x(),
-                                       m_resizeBox->pos().y(),
-                                       m_resizeBox->_width,
-                                       m_resizeBox->_height);
-                do_signal=true;
+                captutedSize = QRectF(m_resizeBox->pos().x(),
+                                      m_resizeBox->pos().y(),
+                                      m_resizeBox->_width,
+                                      m_resizeBox->_height);
+                do_signal = true;
             }
             delete m_resizeBox;
             m_resizeBox = nullptr;
             m_mw->on_actionSelect_triggered();
             m_mw->resizeToolbarVisible(false);
-            //resetResizingSection=true;
         }
-        m_busyMode=false;
+        m_busyMode = false;
     }
-    m_captureFullSection=false;
+    m_captureFullSection = false;
 
     if(do_signal) emit screenshotSizeCaptured();
 }

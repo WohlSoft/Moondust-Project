@@ -20,7 +20,7 @@
 #include "config_manager_private.h"
 #include "../gui/pge_msgbox.h"
 
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
 #include <IniProcessor/ini_processing.h>
 
@@ -68,12 +68,12 @@ bool ConfigManager::loadLevelEffects()
         seffect.isInit = false;
         seffect.image = NULL;
         seffect.textureArrayId = 0;
-        effectset.beginGroup(fmt::format("effect-{0}", i));
+        effectset.beginGroup(fmt::format_ne("effect-{0}", i));
         seffect.name = effectset.value("name", "").toString();
 
         if(seffect.name == "")
         {
-            addError(fmt::format("EFFECT-{0} Item name isn't defined", i));
+            addError(fmt::format_ne("EFFECT-{0} Item name isn't defined", i));
             goto skipEffect;
         }
 
@@ -86,7 +86,7 @@ bool ConfigManager::loadLevelEffects()
         }
         else
         {
-            addError(fmt::format("EFFECT-{0} Image filename isn't defined", i));
+            addError(fmt::format_ne("EFFECT-{0} Image filename isn't defined", i));
             goto skipEffect;
         }
 
@@ -102,13 +102,13 @@ skipEffect:
         effectset.endGroup();
 
         if(effectset.lastError() != IniProcessing::ERR_OK)
-            addError(fmt::format("ERROR LOADING lvl_bgo.ini N:{0} (bgo-{1})", effectset.lineWithError(), i));
+            addError(fmt::format_ne("ERROR LOADING lvl_bgo.ini N:{0} (bgo-{1})", effectset.lineWithError(), i));
     }
 
     if(lvl_effects_indexes.stored() < effects_total)
     {
-        addError(fmt::format("Not all Effects loaded! Total: {0}, Loaded: {1}", effects_total, lvl_effects_indexes.stored()));
-        PGE_MsgBox msgBox(NULL, fmt::format("Not all Effectss loaded! Total: {0}, Loaded: {1}", effects_total, lvl_effects_indexes.stored()),
+        addError(fmt::format_ne("Not all Effects loaded! Total: {0}, Loaded: {1}", effects_total, lvl_effects_indexes.stored()));
+        PGE_MsgBox msgBox(NULL, fmt::format_ne("Not all Effectss loaded! Total: {0}, Loaded: {1}", effects_total, lvl_effects_indexes.stored()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     }

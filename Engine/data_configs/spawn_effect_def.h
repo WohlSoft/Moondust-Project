@@ -27,7 +27,7 @@ public:
     double startY;
     int animationLoops;
     int delay;
-    int framespeed;
+    int frameDelay;
     std::vector<int> frame_sequence;
     double velocityX;
     double velocityY;

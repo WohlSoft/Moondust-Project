@@ -172,6 +172,8 @@ elif $OPEN_GEDIT ; then
           pico _paths.sh
       elif [ -f /usr/bin/emacs ]; then
           emacs _paths.sh
+      elif [ -f /bin/nano ]; then
+          nano _paths.sh
       else
           echo "================CAN'T FIND A TEXT EDITOR=================="
           echo "Please check the just generated _paths.sh file in any text editor for corrected paths before execute build scripts!"

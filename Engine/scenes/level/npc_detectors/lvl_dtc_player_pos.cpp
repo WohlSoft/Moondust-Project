@@ -4,22 +4,22 @@
 PlayerPosDetector::PlayerPosDetector(LVL_Npc *parent):
     BasicDetector(parent)
 {
-    _directedTo=0.0;
-    _playersDirection=0;
-    _plrptr=NULL;
-    _plr_id=0;
-    _plr_state=0;
+    m_directedTo = 0.0;
+    m_playersDirection = 0;
+    m_playerPtr = NULL;
+    m_playerId = 0;
+    m_playerState = 0;
 }
 
 PlayerPosDetector::PlayerPosDetector(const PlayerPosDetector &dtc):
     BasicDetector(dtc)
 {
-    pos = dtc.pos;
-    _directedTo=dtc._directedTo;
-    _playersDirection=dtc._playersDirection;
-    _plrptr=dtc._plrptr;
-    _plr_id=dtc._plr_id;
-    _plr_state=dtc._plr_state;
+    m_pos = dtc.m_pos;
+    m_directedTo = dtc.m_directedTo;
+    m_playersDirection = dtc.m_playersDirection;
+    m_playerPtr = dtc.m_playerPtr;
+    m_playerId = dtc.m_playerId;
+    m_playerState = dtc.m_playerState;
 }
 
 PlayerPosDetector::~PlayerPosDetector()
@@ -38,16 +38,15 @@ void PlayerPosDetector::processDetector()
         if((d1 < d) || (i == 0))
         {
             d = d1;
-            pos.setPoint(p->m_momentum.centerX(), p->m_momentum.centerY());
-            _playersDirection=p->direction();
-            if(_parentNPC->posCenterX() < pos.x())
-                _directedTo = 1;
-            else
-            if(_parentNPC->posCenterX() > pos.x())
-                _directedTo = -1;
-            _plrptr = p;
-            _plr_id = p->characterID;
-            _plr_state = p->stateID;
+            m_pos.setPoint(p->m_momentum.centerX(), p->m_momentum.centerY());
+            m_playersDirection = p->direction();
+            if(_parentNPC->posCenterX() < m_pos.x())
+                m_directedTo = 1;
+            else if(_parentNPC->posCenterX() > m_pos.x())
+                m_directedTo = -1;
+            m_playerPtr = p;
+            m_playerId = p->characterID;
+            m_playerState = p->stateID;
         }
     }
 
@@ -55,49 +54,49 @@ void PlayerPosDetector::processDetector()
 
 int PlayerPosDetector::directedTo()
 {
-    return _directedTo;
+    return m_directedTo;
 }
 
 int PlayerPosDetector::playersDirection()
 {
-    return _playersDirection;
+    return m_playersDirection;
 }
 
 PGE_PointF PlayerPosDetector::position()
 {
-    return pos;
+    return m_pos;
 }
 
-float PlayerPosDetector::positionX()
+double PlayerPosDetector::positionX()
 {
-    return pos.x();
+    return m_pos.x();
 }
 
-float PlayerPosDetector::positionY()
+double PlayerPosDetector::positionY()
 {
-    return pos.y();
+    return m_pos.y();
 }
 
-int PlayerPosDetector::playersCharID()
+unsigned long PlayerPosDetector::playersCharID()
 {
-    return _plr_id;
+    return m_playerId;
 }
 
-int PlayerPosDetector::playersStateID()
+unsigned long PlayerPosDetector::playersStateID()
 {
-    return _plr_state;
+    return m_playerState;
 }
 
 LVL_Player *PlayerPosDetector::playerPtr()
 {
-    return _plrptr;
+    return m_playerPtr;
 }
 
 double PlayerPosDetector::distance(LVL_Player *plr)
 {
     //distance between player and parent NPC
-    return sqrt(pow(_parentNPC->posCenterX()-plr->posCenterX(), 2.0)+
-    pow(_parentNPC->posCenterY()-plr->posCenterY(), 2.0));
+    return sqrt(pow(_parentNPC->posCenterX() - plr->posCenterX(), 2.0) +
+                pow(_parentNPC->posCenterY() - plr->posCenterY(), 2.0));
 }
 
 

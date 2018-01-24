@@ -33,14 +33,16 @@ namespace PGE_MusicPlayer
                    type == MUS_NONE ? "No Music" :
                    type == MUS_CMD ? "CMD" :
                    type == MUS_WAV ? "PCM Wave" :
-                   type == MUS_MOD ? "MikMod" :
-                   type == MUS_MODPLUG ? "ModPlug" :
-                   type == MUS_MID ? "MIDI/IMF" :
+                   type == MUS_MOD ? "Tracker music" :
+                   type == MUS_MID ? "MIDI" :
                    type == MUS_OGG ? "OGG" :
-                   type == MUS_MP3 ? "MP3 (SMPEG)" :
-                   type == MUS_MP3_MAD ? "MP3 (LibMAD)" :
+                   type == MUS_MP3 ? "MP3" :
                    type == MUS_FLAC ? "FLAC" :
-                   type == MUS_GME ? "Game Music Emulator" : "<Unknown>");
+                   #ifdef SDL_MIXER_X
+                   type == MUS_ADLMIDI ? "IMF/MUS/XMI" :
+                   type == MUS_GME ? "Game Music Emulator" :
+                   #endif
+                   "<Unknown>");
     }
     QString musicType()
     {
@@ -77,9 +79,11 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusTitle()
     {
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicTitle(play_mus));
         else
+        #endif
             return QString("[No music]");
     }
 
@@ -89,9 +93,11 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusArtist()
     {
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicArtistTag(play_mus));
         else
+        #endif
             return QString("[Unknown Artist]");
     }
 
@@ -101,9 +107,11 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusAlbum()
     {
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicAlbumTag(play_mus));
         else
+        #endif
             return QString("[Unknown Album]");
     }
 
@@ -113,9 +121,11 @@ namespace PGE_MusicPlayer
      */
     QString MUS_getMusCopy()
     {
+        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
         if(play_mus)
             return QString(Mix_GetMusicCopyrightTag(play_mus));
         else
+        #endif
             return QString("");
     }
     #else
@@ -190,20 +200,25 @@ namespace PGE_MusicPlayer
     /*!
      * \brief Start playing of currently opened music track
      */
-    void MUS_playMusic()
+    bool MUS_playMusic()
     {
         if(play_mus)
         {
             if(Mix_PlayMusic(play_mus, g_playlistMode ? 0 : -1) == -1)
             {
                 error(QString("Mix_PlayMusic: ") + Mix_GetError());
+                return false;
                 // well, there's no music, but most games don't break without music...
             }
             //QString("Music is %1\n").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
         }
         else
+        {
             error(QString("Play nothing: Mix_PlayMusic: ") + Mix_GetError());
+            return false;
+        }
         //qDebug() << QString("Check Error of SDL: %1\n").arg(Mix_GetError());
+        return true;
     }
 
     /*!
@@ -229,8 +244,10 @@ namespace PGE_MusicPlayer
             Mix_FreeMusic(play_mus);
             play_mus = NULL;
         }
+
         #ifndef MUSPLAY_USE_WINAPI
-        play_mus = Mix_LoadMUS(musFile.toUtf8().data());
+        QByteArray p = musFile.toUtf8();
+        play_mus = Mix_LoadMUS(p.data());
         #else
         play_mus = Mix_LoadMUS(musFile.c_str());
         #endif

@@ -2,6 +2,10 @@ linux-g++||unix:!macx:!android: {
     TARGETOS=linux
 }
 
+haiku-g++:{
+    TARGETOS=haiku
+}
+
 win32: {
     !win*-msvc*:{
         win64:{

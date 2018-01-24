@@ -31,9 +31,9 @@ http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
 
 
 ## CI Build status
-Linux | Mac OS X | Windows (32 bit) | Windows (64 bit)
------------- | ------------- | ------------- | -------------
-[![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project) | [![Build status](https://ci.appveyor.com/api/projects/status/bnj1vtsqow81v980?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project-2a51q)
+Linux | Mac OS X | Windows
+------------ | ------------- | -------------
+[![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project)
 
 Get a most fresh assemblies you can get here: [![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)!
 

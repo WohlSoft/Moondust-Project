@@ -151,6 +151,12 @@ void PGEEngineApp::unloadAll()
         disable(PGE_WINDOW);
     }
 
+    if(enabled(LIBSDLMIXER))
+    {
+        Mix_Quit();
+        disable(LIBSDLMIXER);
+    }
+
     if(enabled(LIBSDL))
     {
         SDL_Quit();
@@ -165,17 +171,6 @@ void PGEEngineApp::unloadAll()
     }
 
     pLogDebug("<Application closed>");
-
-    //if(enabled(QAPP))
-    //{
-    //    #ifdef PGE_ENGINE_QAPP
-    //    m_qApp->quit();
-    //    m_qApp->exit();
-    //    delete m_qApp;
-    //    m_qApp = nullptr;
-    //    #endif
-    //    disable(QAPP);
-    //}
 
     if(enabled(LOGGER))
     {
@@ -234,6 +229,7 @@ bool PGEEngineApp::initSDL()
     bool res = false;
     pLogDebug("Initialization of SDL...");
     Uint32 sdlInitFlags = 0;
+    int sdlMixerInitFlags = 0;
     // Prepare flags for SDL initialization
     sdlInitFlags |= SDL_INIT_TIMER;
     sdlInitFlags |= SDL_INIT_AUDIO;
@@ -243,6 +239,13 @@ bool PGEEngineApp::initSDL()
     //(Cool thing, but is not needed yet)
     //sdlInitFlags |= SDL_INIT_HAPTIC;
     sdlInitFlags |= SDL_INIT_GAMECONTROLLER;
+
+    sdlMixerInitFlags |= MIX_INIT_FLAC;
+    sdlMixerInitFlags |= MIX_INIT_MOD;
+    sdlMixerInitFlags |= MIX_INIT_MP3;
+    sdlMixerInitFlags |= MIX_INIT_OGG;
+    sdlMixerInitFlags |= MIX_INIT_MID;
+
     // Initialize SDL
     res = (SDL_Init(sdlInitFlags) < 0);
 
@@ -252,6 +255,16 @@ bool PGEEngineApp::initSDL()
     const char *error = SDL_GetError();
     if(*error != '\0')
         pLogWarning("Error while SDL Initialization: %s", error);
+    SDL_ClearError();
+
+    // Initialize SDL Mixer
+    res = (Mix_Init(sdlMixerInitFlags) < 0);
+    if(!res)
+        enable(LIBSDLMIXER);
+
+    error = SDL_GetError();
+    if(*error != '\0')
+        pLogWarning("Error while SDL Mixer Initialization: %s", error);
     SDL_ClearError();
 
     return res;
@@ -329,7 +342,7 @@ void PGEEngineApp::loadLogger()
     enable(LOGGER);
 }
 
-static void printUsage(char *arg0)
+static void printUsage(const char *arg0)
 {
     std::string arg0s(arg0);
     const char *logo =
@@ -428,32 +441,32 @@ static void printUsage(char *arg0)
     fprintf(stdout, "%s%s", logo, msg.c_str());
 }
 
-bool PGEEngineApp::parseLowArgs(int argc, char **argv)
+bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
 {
-    if(argc > 1)
+    if(args.size() > 1)
     {
         //Check only first argument
-        char *arg = argv[1];
+        const std::string &arg = args[1];
 
-        if(strcmp(arg, "--version") == 0)
+        if(arg.compare("--version") == 0)
         {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << std::endl;
             std::cout.flush();
-            return true;
+            return false;
         }
-        else if(strcmp(arg, "--install") == 0)
+        else if(arg.compare("--install") == 0)
         {
             //PGEEngineApp  lib;
             //lib.loadQApp(argc, argv);
             //FIXME: Implement installing on STL-only!
             AppPathManager::install();
             AppPathManager::initAppPath();
-            return true;
+            return false;
         }
-        else if(strcmp(arg, "--help") == 0)
+        else if(arg.compare("--help") == 0)
         {
-            printUsage(argv[0]);
-            return true;
+            printUsage(args[0].c_str());
+            return false;
         }
     }
 
@@ -462,7 +475,7 @@ bool PGEEngineApp::parseLowArgs(int argc, char **argv)
     FreeConsole();
     #endif
 
-    return false;
+    return true;
 }
 
 static void removeQuotes(char *&s, size_t &len)
@@ -520,7 +533,7 @@ static int takeIntFromArg(std::string &arg, bool &ok)
     return atoi(s);
 }
 
-void PGEEngineApp::parseHighArgs(int argc, char **argv)
+void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
 {
     /* Set defaults to global properties */
     g_Episode.character = 0;
@@ -529,11 +542,9 @@ void PGEEngineApp::parseHighArgs(int argc, char **argv)
     g_AppSettings.debugMode         = false; //enable debug mode
     g_AppSettings.interprocessing   = false; //enable interprocessing
 
-    for(int pi = 1; pi < argc; pi++)
+    for(size_t pi = 1; pi < args.size(); pi++)
     {
-        char* param_s_tmp = strdup(argv[pi]);
-        std::string param_s = std::string(param_s_tmp);
-        free(param_s_tmp);
+        std::string param_s = args[pi];
         pLogDebug("Argument: [%s]", param_s.c_str());
         int  i = 0;
         char characterParam[8] = "\0";

@@ -23,7 +23,7 @@
 #include <common_features/number_limiter.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
 
 /*****Level NPC************/
@@ -131,12 +131,12 @@ bool ConfigManager::loadLevelNPC()
     {
         if(useDirectory)
         {
-            if(!loadLevelNPC(snpc, "npc", nullptr, fmt::format("{0}/npc-{1}.ini", nestDir, i)))
+            if(!loadLevelNPC(snpc, "npc", nullptr, fmt::format_ne("{0}/npc-{1}.ini", nestDir, i)))
                 return false;
         }
         else
         {
-            if(!loadLevelNPC(snpc, fmt::format("npc-{0}", i), nullptr, "", &npcset))
+            if(!loadLevelNPC(snpc, fmt::format_ne("npc-{0}", i), nullptr, "", &npcset))
                 return false;
         }
 
@@ -149,13 +149,13 @@ bool ConfigManager::loadLevelNPC()
 
         if(npcset.lastError() != IniProcessing::ERR_OK)
         {
-            PGE_MsgBox::fatal(fmt::format("ERROR LOADING lvl_npc.ini N:{0} (npc-{1})", npcset.lastError(), i));
+            PGE_MsgBox::fatal(fmt::format_ne("ERROR LOADING lvl_npc.ini N:{0} (npc-{1})", npcset.lastError(), i));
             return false;
         }
     }
 
     if(lvl_npc_indexes.stored() < npc_total)
-        PGE_MsgBox::warn(fmt::format("Not all NPCs loaded! Total: {0}, Loaded: {1})", npc_total, lvl_npc_indexes.stored()));
+        PGE_MsgBox::warn(fmt::format_ne("Not all NPCs loaded! Total: {0}, Loaded: {1})", npc_total, lvl_npc_indexes.stored()));
 
     return true;
 }
@@ -169,7 +169,7 @@ void ConfigManager::loadNpcTxtConfig(unsigned long npcID)
         return;
 
     obj_npc *npcSetup = &lvl_npc_indexes[npcID];
-    PGESTRING file = Dir_NPC.getCustomFile(fmt::format("npc-{0}.txt", npcID));
+    PGESTRING file = Dir_NPC.getCustomFile(fmt::format_ne("npc-{0}.txt", npcID));
 
     if(file.empty())
         return;

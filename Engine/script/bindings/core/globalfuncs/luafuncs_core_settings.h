@@ -7,17 +7,18 @@
 class Binding_Core_GlobalFuncs_Settings
 {
 public:
-    static bool isFullscreenActive();
-    static int getScreenWidth();
-    static int getScreenHeight();
-    //static int getMaxFPS();
-    static int getTicksPerSecond();
-    static bool useFrameSkip();
-    static int getSoundVolume();
-    static int getMusicVolume();
+    static bool     isFullscreenActive();
+    static int      getScreenWidth();
+    static int      getScreenHeight();
+    //static int    getMaxFPS();
+    static double   getFrameRate();
+    static double   getFrameDelay();
+    static bool     useFrameSkip();
+    static int      getSoundVolume();
+    static int      getMusicVolume();
 
-    static bool isDebugInfoShown();
-    static void setDebugInfoShown(bool debugInfoShown);
+    static bool     isDebugInfoShown();
+    static void     setDebugInfoShown(bool debugInfoShown);
 
     static luabind::scope bindToLua();
 };

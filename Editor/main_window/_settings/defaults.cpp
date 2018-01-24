@@ -19,6 +19,7 @@
 #include <QFont>
 #include <QDesktopWidget>
 #include <QLineEdit>
+#include <QToolButton>
 #include <QCheckBox>
 #include <QPushButton>
 #include <QLabel>
@@ -145,6 +146,20 @@ void MainWindow::setUiDefults()
     #endif
     //#endif
 
+    //Add "New" tool button as menu
+    {
+        QToolButton *newAction = new QToolButton(ui->fileIoTooBar);
+        newAction->setMenu(ui->menuNew);
+        newAction->setIcon(ui->menuNew->icon());
+        newAction->setPopupMode(QToolButton::InstantPopup);
+        newAction->setToolTip(ui->menuNew->title());
+        //Automatically reset label on language switching
+        newAction->connect(this, &MainWindow::languageSwitched, [this, newAction](){
+                                newAction->setToolTip(ui->menuNew->title());
+                           });
+        ui->fileIoTooBar->insertWidget(ui->OpenFile, newAction);
+    }
+
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow *)), this, SLOT(updateMenus(QMdiSubWindow *)));
     //connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
     connect(&engine_proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(testingFinished()));
@@ -209,6 +224,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *select = new QPushButton(m_toolbarVanilla);
         select->setText(tr("Select", "Vanilla-like toolbar"));
+        select->connect(this, &MainWindow::languageSwitched, [this, select](){
+                                select->setText(tr("Select", "Vanilla-like toolbar"));
+                           });
         select->setCheckable(true);
         select->setChecked(ui->actionSelect->isChecked());
         connect(ui->actionSelect, &QAction::toggled, select, &QPushButton::setChecked);
@@ -219,6 +237,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *erase  = new QPushButton(m_toolbarVanilla);
         erase->setText(tr("Erase", "Vanilla-like toolbar"));
+        erase->connect(this, &MainWindow::languageSwitched, [this, erase](){
+                                erase->setText(tr("Erase", "Vanilla-like toolbar"));
+                           });
         erase->setCheckable(true);
         erase->setChecked(ui->actionEriser->isChecked());
         connect(ui->actionEriser, &QAction::toggled, erase, &QPushButton::setChecked);
@@ -229,6 +250,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *items  = new QPushButton(m_toolbarVanilla);
         items->setText(tr("Items", "Vanilla-like toolbar"));
+        items->connect(this, &MainWindow::languageSwitched, [this, items](){
+                                items->setText(tr("Items", "Vanilla-like toolbar"));
+                           });
         items->setCheckable(true);
         items->setChecked(ui->actionTilesetBox->isChecked());
         connect(ui->actionTilesetBox, &QAction::toggled, items , &QPushButton::setChecked);
@@ -239,6 +263,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *player  = new QPushButton(m_toolbarVanilla);
         player->setText(tr("Player", "Vanilla-like toolbar"));
+        player->connect(this, &MainWindow::languageSwitched, [this, player]() {
+                                player->setText(tr("Player", "Vanilla-like toolbar"));
+                           });
         connect(player, &QPushButton::clicked, [ = ](bool)
         {
             QMenu menu;
@@ -252,6 +279,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *section  = new QPushButton(m_toolbarVanilla);
         section->setText(tr("Section", "Vanilla-like toolbar"));
+        section->connect(this, &MainWindow::languageSwitched, [this, section](){
+                                section->setText(tr("Section", "Vanilla-like toolbar"));
+                           });
         section->setCheckable(true);
         section->setChecked(ui->actionSection_Settings->isChecked());
         connect(ui->actionSection_Settings, &QAction::toggled, section , &QPushButton::setChecked);
@@ -261,6 +291,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *wldProps  = new QPushButton(m_toolbarVanilla);
         wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
+        wldProps->connect(this, &MainWindow::languageSwitched, [this, wldProps](){
+                                wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
+                           });
         wldProps->setCheckable(true);
         wldProps->setChecked(ui->actionWorld_settings->isChecked());
         connect(ui->actionWorld_settings, &QAction::toggled, wldProps , &QPushButton::setChecked);
@@ -270,6 +303,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *doors  = new QPushButton(m_toolbarVanilla);
         doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
+        doors->connect(this, &MainWindow::languageSwitched, [this, doors](){
+                                doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
+                           });
         doors->setCheckable(true);
         doors->setChecked(ui->actionWarpsAndDoors->isChecked());
         connect(ui->actionWarpsAndDoors, &QAction::toggled, doors , &QPushButton::setChecked);
@@ -279,6 +315,9 @@ void MainWindow::setUiDefults()
 
         QPushButton *water  = new QPushButton(m_toolbarVanilla);
         water->setText(tr("Water", "Vanilla-like toolbar"));
+        water->connect(this, &MainWindow::languageSwitched, [this, water](){
+                                water->setText(tr("Water", "Vanilla-like toolbar"));
+                           });
         connect(water, &QPushButton::clicked, [ = ](bool)
         {
             QMenu menu;
@@ -290,22 +329,27 @@ void MainWindow::setUiDefults()
         QAction *waterA = m_toolbarVanilla->insertWidget(nullptr, water);
         connect(this, &MainWindow::windowActiveLevel, waterA, &QAction::setVisible);
 
-        QLabel *options = new QLabel(m_toolbarVanilla);
-        options->setText(QString("<a href=\"x\">%1</a>").arg(tr("Options")));
-        options->setTextFormat(Qt::RichText);
-        connect(options, &QLabel::linkActivated, [ = ](const QString &)
         {
-            QMenu menu;
-            menu.insertAction(nullptr, ui->actionGridEn);
-            menu.insertAction(nullptr, ui->actionShowGrid);
-            menu.addMenu(ui->menuSetGridSize);
-            menu.addSeparator();
-            menu.insertAction(nullptr, ui->actionAnimation);
-            menu.insertAction(nullptr, ui->actionCollisions);
-            menu.insertAction(nullptr, ui->actionSemi_transparent_paths);
-            menu.exec(QCursor::pos());
-        });
-        m_toolbarVanilla->insertWidget(nullptr, options);
+            QToolButton *options = new QToolButton(m_toolbarVanilla);
+            QMenu *menu = new QMenu(options);
+
+            menu->insertAction(nullptr, ui->actionGridEn);
+            menu->insertAction(nullptr, ui->actionShowGrid);
+            menu->addMenu(ui->menuSetGridSize);
+            menu->addSeparator();
+            menu->insertAction(nullptr, ui->actionAnimation);
+            menu->insertAction(nullptr, ui->actionCollisions);
+            menu->insertAction(nullptr, ui->actionSemi_transparent_paths);
+
+            options->setMenu(menu);
+            options->setText(tr("Options"));
+            options->connect(this, &MainWindow::languageSwitched, [this, options](){
+                                    options->setText(tr("Options"));
+                               });
+            options->setPopupMode(QToolButton::InstantPopup);
+            options->setToolButtonStyle(Qt::ToolButtonTextOnly);
+            m_toolbarVanilla->insertWidget(nullptr, options);
+        }
         addToolBar(Qt::BottomToolBarArea, m_toolbarVanilla);
 
         m_toolbarVanilla->setVisible(false);
@@ -392,6 +436,8 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCut, &QAction::setEnabled);
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionGridEn, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCollisions, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuSetGridSize, &QMenu::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
 

@@ -228,7 +228,8 @@ void LVL_Block::transformTo_x(unsigned long id)
         animator_ID = setup->animator_ID;
     }
 
-    if(!setup->setup.sizable)
+    sizable = setup->setup.sizable;
+    if(!sizable)
     {
         data.w = texture.w;
         data.h = (unsigned(texture.h) / setup->setup.frames);
@@ -251,13 +252,15 @@ void LVL_Block::transformTo_x(unsigned long id)
         m_momentum.saveOld();
     }
 
-    sizable = setup->setup.sizable;
     //LEGACY_collide_player = COLLISION_ANY;
     m_blocked[1] = Block_ALL;
     m_blocked[2] = Block_ALL;
     m_slippery_surface = data.slippery;
 
-    if((setup->setup.sizable) || (setup->setup.collision == 2))
+    //TODO: Remove this "sizable" flag and set top collision for all sizable blocks in INI file.
+    //      this will allow to set any sizable block have any wanted collision rules than
+    //      force everyone use top-side rule only.
+    if(sizable || (setup->setup.collision == 2))
     {
         m_blocked[1] = Block_TOP;
         m_blocked[2] = Block_TOP;
@@ -266,6 +269,13 @@ void LVL_Block::transformTo_x(unsigned long id)
     {
         m_blocked[1] = Block_NONE;
         m_blocked[2] = Block_NONE;
+    }
+
+    if(sizable)
+    {
+        // Don't allow texture smaller than 3x3
+        if((texture.w < 3) || (texture.h < 3))
+            sizable = false;
     }
 
     memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
@@ -382,6 +392,7 @@ void LVL_Block::render(double camX, double camY)
         int h = int(round(m_momentum.h));
         int x, y, x2, y2, i, j;
         int hc, wc;
+
         x = Maths::iRound(double(texture.w) / 3); // Width of one piece
         y = Maths::iRound(double(texture.h) / 3); // Height of one piece
         //Double size
@@ -540,22 +551,22 @@ long LVL_Block::lua_getID()
     return long(data.id);
 }
 
-int LVL_Block::lua_contentID_old()
+long LVL_Block::lua_contentID_old()
 {
-    return int(data.npc_id + 1000);
+    return data.npc_id + 1000;
 }
 
-void LVL_Block::lua_setContentID_old(int npcid)
+void LVL_Block::lua_setContentID_old(long npcid)
 {
     data.npc_id = npcid - 1000;
 }
 
-int LVL_Block::lua_contentID()
+long LVL_Block::lua_contentID()
 {
-    return int(data.npc_id);
+    return data.npc_id;
 }
 
-void LVL_Block::lua_setContentID(int npcid)
+void LVL_Block::lua_setContentID(long npcid)
 {
     data.npc_id = npcid;
 }
@@ -663,7 +674,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.push_back(1);
             effect.frame_sequence.push_back(2);
             effect.frame_sequence.push_back(3);
-            effect.framespeed = 32;
+            effect.frameDelay = 32;
             m_scene->launchEffect(effect, true);
             effect.id = 11;
             effect.startX = posCenterX();
@@ -677,7 +688,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.frame_sequence.push_back(4);
             effect.frame_sequence.push_back(5);
             effect.frame_sequence.push_back(6);
-            effect.framespeed = 125;
+            effect.frameDelay = 125;
             effect.delay = 0;
             m_scene->launchEffect(effect, true);
             //Points!
@@ -691,7 +702,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
             effect.animationLoops = 0;
             effect.frame_sequence.clear();
             effect.frame_sequence.push_back(0);
-            effect.framespeed = 125;
+            effect.frameDelay = 125;
             effect.delay = 1000;
             m_scene->launchEffect(effect, true);
         }

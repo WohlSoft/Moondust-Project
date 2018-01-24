@@ -104,7 +104,6 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     customWLabel = MainWindow::tr("[custom]");
 
     mw()->ui->menuNew->setEnabled(false);
-    mw()->ui->actionNew->setEnabled(false);
 
     if(!setCat)
     {
@@ -291,7 +290,6 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     lock_Wcat=false;
 
     mw()->ui->menuNew->setEnabled(true);
-    mw()->ui->actionNew->setEnabled(true);
     LogDebugQD("WorldTools -> done");
 }
 

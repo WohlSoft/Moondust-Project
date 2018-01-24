@@ -25,65 +25,62 @@
 #include "../lvl_history_manager.h"
 #include "../lvl_item_placing.h"
 
-void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept)
+void LvlScene::setPhysEnvResizer(QGraphicsItem *targetRect, bool enabled, bool accept)
 {
-    if( (enabled) && (m_resizeBox==nullptr) )
+    if((enabled) && (m_resizeBox == nullptr))
     {
         m_mw->on_actionSelect_triggered(); //Reset mode
+        ItemPhysEnv *env = dynamic_cast<ItemPhysEnv *>(targetRect);
 
-        int x = ((ItemPhysEnv *)targetRect)->m_data.x;
-        int y = ((ItemPhysEnv *)targetRect)->m_data.y;
-        int w = ((ItemPhysEnv *)targetRect)->m_data.w;
-        int h = ((ItemPhysEnv *)targetRect)->m_data.h;
+        int x = (int)env->m_data.x;
+        int y = (int)env->m_data.y;
+        int w = (int)env->m_data.w;
+        int h = (int)env->m_data.h;
 
-        m_resizeBox = new ItemResizer( QSize(w, h), Qt::darkYellow, 16 );
+        m_resizeBox = new ItemResizer(QSize(w, h), Qt::darkYellow, 16);
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(x, y);
-        m_resizeBox->type=3;
+        m_resizeBox->type = 3;
         m_resizeBox->targetItem = targetRect;
         m_resizeBox->_minSize = QSizeF(16, 16);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        //DrawMode=true;
-        //MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+
         SwitchEditingMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
     }
     else
     {
-        if( m_resizeBox != nullptr )
+        if(m_resizeBox != nullptr)
         {
             if(accept)
             {
+                ItemPhysEnv *env = dynamic_cast<ItemPhysEnv *>(m_resizeBox->targetItem);
                 #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("Water RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
-                long x = m_resizeBox->pos().x();
-                long y = m_resizeBox->pos().y();
-                long w = m_resizeBox->_width;
-                long h = m_resizeBox->_height;
-                long oldX = ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.x;
-                long oldY = ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.y;
-                long oldW = ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.w;
-                long oldH = ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.h;
-                ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.x = x;
-                ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.y = y;
-                ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.w = w;
-                ((ItemPhysEnv *)m_resizeBox->targetItem)->m_data.h = h;
+                long x = (long)m_resizeBox->pos().x();
+                long y = (long)m_resizeBox->pos().y();
+                long w = (long)m_resizeBox->_width;
+                long h = (long)m_resizeBox->_height;
+                long oldX = env->m_data.x;
+                long oldY = env->m_data.y;
+                long oldW = env->m_data.w;
+                long oldH = env->m_data.h;
+                env->m_data.x = x;
+                env->m_data.y = y;
+                env->m_data.w = w;
+                env->m_data.h = h;
 
-                ((ItemPhysEnv *)m_resizeBox->targetItem)->setRectSize( QRect(x,y,w,h) );
+                env->setRectSize(QRect((int)x, (int)y, (int)w, (int)h));
                 m_data->meta.modified = true;
 
-                m_history->addResizePhysEnv(((ItemPhysEnv *)m_resizeBox->targetItem)->m_data, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
-
-                //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
-                //drawSpace();
+                m_history->addResizePhysEnv(env->m_data, oldX, oldY, oldX + oldW, oldY + oldH, x, y, x + w, y + h);
             }
             delete m_resizeBox;
             m_resizeBox = nullptr;
             m_mw->on_actionSelect_triggered();
             m_mw->resizeToolbarVisible(false);
-            //resetResizingSection=true;
         }
-        m_busyMode=false;
+        m_busyMode = false;
     }
 }

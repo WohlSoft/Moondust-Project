@@ -284,13 +284,13 @@ void MainWindow::on_actionSectionMore_triggered()
     if(activeChildWindow() != 1) return;
     LevelEdit* edit = activeLvlEditWin();
     QMenu section;
-    for(int i=21; i<edit->LvlData.sections.size(); i++)
+    for(int i = 21; i < edit->LvlData.sections.size(); i++)
     {
-        QAction *item=section.addAction(tr("Section %1").arg(i+1));
+        QAction *item=section.addAction(tr("Section %1").arg(i));
         if(edit->LvlData.CurSection==i) { item->setCheckable(true); item->setChecked(true); }
         item->setData(i);
     }
-    QAction *newSection = section.addAction(tr("Initialize section %1...").arg(edit->LvlData.sections.size()+1));
+    QAction *newSection = section.addAction(tr("Initialize section %1...").arg(edit->LvlData.sections.size()));
     newSection->setData(edit->LvlData.sections.size());
     QAction *answer = section.exec(QCursor::pos());
     if(!answer) return;

@@ -22,21 +22,21 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
 #include <common_features/tr.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <settings/global_settings.h>
 #include <settings/debugger.h>
 #include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
-#include <fmt/fmt_format.h>
 
 Scene  *PGE_Window::m_currentScene      = nullptr;
 
 int     PGE_Window::Width               = 800;
 int     PGE_Window::Height              = 600;
 
-double  PGE_Window::TicksPerSecond      = 1000.0 / 15.0;
-int     PGE_Window::TimeOfFrame         = 15;
+double  PGE_Window::frameRate           = 1000.0 / 15.0;
+int     PGE_Window::frameDelay          = 15;
 bool    PGE_Window::vsync               = true;
 bool    PGE_Window::vsyncIsSupported    = true;
 
@@ -69,7 +69,7 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 
     if(*error != '\0')
     {
-        PGE_MsgBox::warn(fmt::format("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
+        PGE_MsgBox::warn(fmt::format_ne("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
                                      error,
                                      fn,
                                      func,
@@ -83,7 +83,7 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 
 void PGE_Window::printSDLWarn(std::string info)
 {
-    PGE_MsgBox::warn(fmt::format("{0}\nSDL Error: {1}",
+    PGE_MsgBox::warn(fmt::format_ne("{0}\nSDL Error: {1}",
                                  info,
                                  SDL_GetError())
                     );
@@ -91,7 +91,7 @@ void PGE_Window::printSDLWarn(std::string info)
 
 void PGE_Window::printSDLError(std::string info)
 {
-    PGE_MsgBox::error(fmt::format("{0}\nSDL Error: {1}",
+    PGE_MsgBox::error(fmt::format_ne("{0}\nSDL Error: {1}",
                                   info,
                                   SDL_GetError()));
 }
@@ -266,7 +266,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     pLogDebug("Toggle vsync...");
     vsyncIsSupported = (SDL_GL_SetSwapInterval(1) == 0);
     toggleVSync(vsync);
-    pLogDebug(fmt::format("V-Sync supported: {0}", vsyncIsSupported).c_str());
+    pLogDebug(fmt::format_ne("V-Sync supported: {0}", vsyncIsSupported).c_str());
     return true;
 }
 
@@ -302,18 +302,18 @@ void PGE_Window::toggleVSync(bool vsync)
             //Vertical syncronization is supported
             vsyncIsSupported = true;
             if(mode.refresh_rate > 0)
-                TimeOfFrame = static_cast<int>(std::ceil(1000.0 / static_cast<double>(mode.refresh_rate)));
-            TicksPerSecond  = 1000.0 / static_cast<double>(TimeOfFrame);
-            g_AppSettings.timeOfFrame = TimeOfFrame;
-            g_AppSettings.TicksPerSecond = TicksPerSecond;
+                frameDelay = static_cast<int>(std::ceil(1000.0 / static_cast<double>(mode.refresh_rate)));
+            frameRate  = 1000.0 / static_cast<double>(frameDelay);
+            g_AppSettings.timeOfFrame = frameDelay;
+            g_AppSettings.frameRate = frameRate;
             SDL_ClearError();
         }
         else
         {
             //Vertical syncronization is NOT supported
             vsyncIsSupported = false;
-            TimeOfFrame = g_AppSettings.timeOfFrame;
-            TicksPerSecond = g_AppSettings.TicksPerSecond;
+            frameDelay = g_AppSettings.timeOfFrame;
+            frameRate = g_AppSettings.frameRate;
             //Disable vertical syncronization because unsupported
             g_AppSettings.vsync = false;
             PGE_Window::vsync = false;

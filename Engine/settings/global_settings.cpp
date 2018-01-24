@@ -24,7 +24,7 @@
 #include <common_features/logger.h>
 #include <common_features/number_limiter.h>
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 GlobalSettings g_AppSettings;
 
@@ -42,16 +42,27 @@ void GlobalSettings::initJoysticks()
 
     for(int i = 0; i < SDL_NumJoysticks(); i++)
     {
-        joysticks.push_back(SDL_JoystickOpen(i));
-        SDL_Joystick* j = joysticks.back();
-        pLogDebug("==========================");
-        pLogDebug("Josytick %s", SDL_JoystickName(j));
-        pLogDebug("--------------------------");
-        pLogDebug("Axes:    %d", SDL_JoystickNumAxes(j));
-        pLogDebug("Balls:   %d", SDL_JoystickNumBalls(j));
-        pLogDebug("Hats:    %d", SDL_JoystickNumHats(j));
-        pLogDebug("Buttons: %d", SDL_JoystickNumButtons(j));
-        pLogDebug("==========================");
+        SDL_Joystick* joy = SDL_JoystickOpen(i);
+        if(joy)
+        {
+            pLogDebug("==========================");
+            pLogDebug("Josytick %s", SDL_JoystickName(joy));
+            pLogDebug("--------------------------");
+            pLogDebug("Axes:    %d", SDL_JoystickNumAxes(joy));
+            pLogDebug("Balls:   %d", SDL_JoystickNumBalls(joy));
+            pLogDebug("Hats:    %d", SDL_JoystickNumHats(joy));
+            pLogDebug("Buttons: %d", SDL_JoystickNumButtons(joy));
+            if(SDL_IsGameController(i))
+                pLogDebug("Supported by the game controller interface!");
+            pLogDebug("==========================");
+            joysticks.push_back(joy);
+        }
+        else
+        {
+            pLogWarning("==========================");
+            pLogWarning("Can't open joystick #%d", i);
+            pLogWarning("==========================");
+        }
     }
 }
 
@@ -69,9 +80,9 @@ void GlobalSettings::load()
     {
         //TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
         //    NumberLimiter::apply(TicksPerSecond, 65, 180);
-        setup.read("phys-step-time", timeOfFrame, static_cast<int>(TicksPerSecond));
+        setup.read("phys-step-time", timeOfFrame, static_cast<int>(frameRate));
         NumberLimiter::apply(timeOfFrame, 2, 15);
-        TicksPerSecond = 1000.0 / g_AppSettings.timeOfFrame;
+        frameRate = 1000.0 / g_AppSettings.timeOfFrame;
 
         setup.read("show-debug-info", showDebugInfo, showDebugInfo);
         setup.read("full-screen", fullScreen, fullScreen);
@@ -112,14 +123,14 @@ void GlobalSettings::loadJoystickSettings()
     for(int i = 0; i < SDL_NumJoysticks(); i++)
     {
         KeyMap joy1;
-        loadKeyMap(joy1, setup, fmt::format("player-1-joystick{0}", i));
-        loadJoyCtrlMapID(joy1, setup, fmt::format("player-1-joystick{0}-ctrls-id", i));
-        loadJoyCtrlMapType(joy1, setup, fmt::format("player-1-joystick{0}-ctrls-type", i));
+        loadKeyMap(joy1, setup, fmt::format_ne("player-1-joystick{0}", i));
+        loadJoyCtrlMapID(joy1, setup, fmt::format_ne("player-1-joystick{0}-ctrls-id", i));
+        loadJoyCtrlMapType(joy1, setup, fmt::format_ne("player-1-joystick{0}-ctrls-type", i));
         player1_joysticks.push_back(joy1);
         KeyMap joy2;
-        loadKeyMap(joy2, setup, fmt::format("player-2-joystick{0}", i));
-        loadJoyCtrlMapID(joy2, setup, fmt::format("player-2-joystick{0}-ctrls-id", i));
-        loadJoyCtrlMapType(joy2, setup, fmt::format("player-2-joystick{0}-ctrls-type", i));
+        loadKeyMap(joy2, setup, fmt::format_ne("player-2-joystick{0}", i));
+        loadJoyCtrlMapID(joy2, setup, fmt::format_ne("player-2-joystick{0}-ctrls-id", i));
+        loadJoyCtrlMapType(joy2, setup, fmt::format_ne("player-2-joystick{0}-ctrls-type", i));
         player2_joysticks.push_back(joy2);
     }
 }
@@ -129,7 +140,7 @@ void GlobalSettings::save()
     IniProcessing setup(AppPathManager::settingsFileSTD());
     setup.beginGroup("Main");
     {
-        setup.setValue("phys-step", TicksPerSecond);
+        setup.setValue("phys-step", frameRate);
         setup.setValue("phys-step-time", timeOfFrame);
         setup.setValue("show-debug-info", showDebugInfo);
         setup.setValue("frame-skip", frameSkip);
@@ -146,12 +157,12 @@ void GlobalSettings::save()
 
     for(size_t i = 0; i < player1_joysticks.size() && i < player2_joysticks.size(); i++)
     {
-        saveKeyMap(player1_joysticks[i], setup, fmt::format("player-1-joystick{0}", i));
-        saveKeyMap(player2_joysticks[i], setup, fmt::format("player-2-joystick{0}", i));
-        saveJoyCtrlMapID(player1_joysticks[i], setup, fmt::format("player-1-joystick{0}-ctrls-id", i));
-        saveJoyCtrlMapID(player2_joysticks[i], setup, fmt::format("player-2-joystick{0}-ctrls-id", i));
-        saveJoyCtrlMapType(player1_joysticks[i], setup, fmt::format("player-1-joystick{0}-ctrls-type", i));
-        saveJoyCtrlMapType(player2_joysticks[i], setup, fmt::format("player-2-joystick{0}-ctrls-type", i));
+        saveKeyMap(player1_joysticks[i], setup, fmt::format_ne("player-1-joystick{0}", i));
+        saveKeyMap(player2_joysticks[i], setup, fmt::format_ne("player-2-joystick{0}", i));
+        saveJoyCtrlMapID(player1_joysticks[i], setup, fmt::format_ne("player-1-joystick{0}-ctrls-id", i));
+        saveJoyCtrlMapID(player2_joysticks[i], setup, fmt::format_ne("player-2-joystick{0}-ctrls-id", i));
+        saveJoyCtrlMapType(player1_joysticks[i], setup, fmt::format_ne("player-1-joystick{0}-ctrls-type", i));
+        saveJoyCtrlMapType(player2_joysticks[i], setup, fmt::format_ne("player-2-joystick{0}-ctrls-type", i));
     }
 
     setup.writeIniFile();
@@ -163,7 +174,7 @@ void GlobalSettings::resetDefaults()
     interprocessing = false;
     ScreenWidth = 800;
     ScreenHeight = 600;
-    TicksPerSecond = 65;
+    frameRate = 65;
     timeOfFrame = 15;
     vsync = true;
     showDebugInfo = false;
@@ -188,11 +199,11 @@ void GlobalSettings::resetDefaults()
 
 void GlobalSettings::apply()
 {
-    PGE_Window::TicksPerSecond = 1000.0 / timeOfFrame;
+    PGE_Window::frameRate = 1000.0 / timeOfFrame;
     PGE_Window::Width = ScreenWidth;
     PGE_Window::Height = ScreenHeight;
     PGE_Window::showDebugInfo = showDebugInfo;
-    PGE_Window::TimeOfFrame = timeOfFrame;
+    PGE_Window::frameDelay = timeOfFrame;
     PGE_Window::vsync = vsync;
 }
 

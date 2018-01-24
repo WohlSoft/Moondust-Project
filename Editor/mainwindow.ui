@@ -108,6 +108,10 @@
      <property name="title">
       <string>New</string>
      </property>
+     <property name="icon">
+      <iconset resource="_resources/editor.qrc">
+       <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+     </property>
      <addaction name="actionNewLevel"/>
      <addaction name="actionNewWorld_map"/>
      <addaction name="actionNewNPC_config"/>
@@ -248,11 +252,6 @@
     <property name="title">
      <string>View</string>
     </property>
-    <widget class="QMenu" name="menuSetGridSize">
-     <property name="title">
-      <string>Set align grid size</string>
-     </property>
-    </widget>
     <addaction name="actionWLDToolBox"/>
     <addaction name="actionWorld_settings"/>
     <addaction name="actionLVLToolBox"/>
@@ -274,11 +273,8 @@
     <addaction name="separator"/>
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
-    <addaction name="actionGridEn"/>
     <addaction name="actionShowGrid"/>
-    <addaction name="menuSetGridSize"/>
     <addaction name="actionAnimation"/>
-    <addaction name="actionCollisions"/>
     <addaction name="actionSemi_transparent_paths"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
@@ -335,6 +331,11 @@
     <property name="title">
      <string>Edit</string>
     </property>
+    <widget class="QMenu" name="menuSetGridSize">
+     <property name="title">
+      <string>Set align grid size</string>
+     </property>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -346,6 +347,10 @@
     <addaction name="actionSelect"/>
     <addaction name="actionSelectOnly"/>
     <addaction name="actionEriser"/>
+    <addaction name="separator"/>
+    <addaction name="actionGridEn"/>
+    <addaction name="menuSetGridSize"/>
+    <addaction name="actionCollisions"/>
     <addaction name="separator"/>
     <addaction name="actionOverwriteMode"/>
     <addaction name="actionRectFill"/>
@@ -421,7 +426,7 @@
    <addaction name="menuPlugins"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="fileIoTooBar">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -455,7 +460,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew"/>
    <addaction name="OpenFile"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
@@ -867,14 +871,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/01_n.png</normaloff>
-     <normalon>:/sections/sections/01.png</normalon>:/sections/sections/01_n.png</iconset>
+     <normaloff>:/sections/sections/00_n.png</normaloff>
+     <normalon>:/sections/sections/00.png</normalon>:/sections/sections/00_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 1</string>
+    <string>Section 0</string>
    </property>
    <property name="toolTip">
-    <string>Section 1 (Ctrl+1)</string>
+    <string>Section 0 (Ctrl+1)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+1</string>
@@ -892,14 +896,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/02_n.png</normaloff>
-     <normalon>:/sections/sections/02.png</normalon>:/sections/sections/02_n.png</iconset>
+     <normaloff>:/sections/sections/01_n.png</normaloff>
+     <normalon>:/sections/sections/01.png</normalon>:/sections/sections/01_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 2</string>
+    <string>Section 1</string>
    </property>
    <property name="toolTip">
-    <string>Section 2 (Ctrl+2)</string>
+    <string>Section 1 (Ctrl+2)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+2</string>
@@ -917,14 +921,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/03_n.png</normaloff>
-     <normalon>:/sections/sections/03.png</normalon>:/sections/sections/03_n.png</iconset>
+     <normaloff>:/sections/sections/02_n.png</normaloff>
+     <normalon>:/sections/sections/02.png</normalon>:/sections/sections/02_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 3</string>
+    <string>Section 2</string>
    </property>
    <property name="toolTip">
-    <string>Section 3 (Ctrl+3)</string>
+    <string>Section 2 (Ctrl+3)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+3</string>
@@ -942,14 +946,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/04_n.png</normaloff>
-     <normalon>:/sections/sections/04.png</normalon>:/sections/sections/04_n.png</iconset>
+     <normaloff>:/sections/sections/03_n.png</normaloff>
+     <normalon>:/sections/sections/03.png</normalon>:/sections/sections/03_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 4</string>
+    <string>Section 3</string>
    </property>
    <property name="toolTip">
-    <string>Section 4 (Ctrl+4)</string>
+    <string>Section 3 (Ctrl+4)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+4</string>
@@ -967,14 +971,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/05_n.png</normaloff>
-     <normalon>:/sections/sections/05.png</normalon>:/sections/sections/05_n.png</iconset>
+     <normaloff>:/sections/sections/04_n.png</normaloff>
+     <normalon>:/sections/sections/04.png</normalon>:/sections/sections/04_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 5</string>
+    <string>Section 4</string>
    </property>
    <property name="toolTip">
-    <string>Section 5 (Ctrl+5)</string>
+    <string>Section 4 (Ctrl+5)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+5</string>
@@ -992,14 +996,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/06_n.png</normaloff>
-     <normalon>:/sections/sections/06.png</normalon>:/sections/sections/06_n.png</iconset>
+     <normaloff>:/sections/sections/05_n.png</normaloff>
+     <normalon>:/sections/sections/05.png</normalon>:/sections/sections/05_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 6</string>
+    <string>Section 5</string>
    </property>
    <property name="toolTip">
-    <string>Section 6 (Ctrl+6)</string>
+    <string>Section 5 (Ctrl+6)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+6</string>
@@ -1017,14 +1021,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/07_n.png</normaloff>
-     <normalon>:/sections/sections/07.png</normalon>:/sections/sections/07_n.png</iconset>
+     <normaloff>:/sections/sections/06_n.png</normaloff>
+     <normalon>:/sections/sections/06.png</normalon>:/sections/sections/06_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 7</string>
+    <string>Section 6</string>
    </property>
    <property name="toolTip">
-    <string>Section 7 (Ctrl+7)</string>
+    <string>Section 6 (Ctrl+7)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+7</string>
@@ -1042,14 +1046,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/08_n.png</normaloff>
-     <normalon>:/sections/sections/08.png</normalon>:/sections/sections/08_n.png</iconset>
+     <normaloff>:/sections/sections/07_n.png</normaloff>
+     <normalon>:/sections/sections/07.png</normalon>:/sections/sections/07_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 8</string>
+    <string>Section 7</string>
    </property>
    <property name="toolTip">
-    <string>Section 8 (Ctrl+8)</string>
+    <string>Section 7 (Ctrl+8)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+8</string>
@@ -1067,14 +1071,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/09_n.png</normaloff>
-     <normalon>:/sections/sections/09.png</normalon>:/sections/sections/09_n.png</iconset>
+     <normaloff>:/sections/sections/08_n.png</normaloff>
+     <normalon>:/sections/sections/08.png</normalon>:/sections/sections/08_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 9</string>
+    <string>Section 8</string>
    </property>
    <property name="toolTip">
-    <string>Section 9 (Ctrl+9)</string>
+    <string>Section 8 (Ctrl+9)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+9</string>
@@ -1092,14 +1096,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/10_n.png</normaloff>
-     <normalon>:/sections/sections/10.png</normalon>:/sections/sections/10_n.png</iconset>
+     <normaloff>:/sections/sections/09_n.png</normaloff>
+     <normalon>:/sections/sections/09.png</normalon>:/sections/sections/09_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 10</string>
+    <string>Section 9</string>
    </property>
    <property name="toolTip">
-    <string>Section 10 (Ctrl+0)</string>
+    <string>Section 9 (Ctrl+0)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+0</string>
@@ -1117,14 +1121,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/11_n.png</normaloff>
-     <normalon>:/sections/sections/11.png</normalon>:/sections/sections/11_n.png</iconset>
+     <normaloff>:/sections/sections/10_n.png</normaloff>
+     <normalon>:/sections/sections/10.png</normalon>:/sections/sections/10_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 11</string>
+    <string>Section 10</string>
    </property>
    <property name="toolTip">
-    <string>Section 11 (Ctrl+Alt+1)</string>
+    <string>Section 10 (Ctrl+Alt+1)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+1</string>
@@ -1142,14 +1146,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/12_n.png</normaloff>
-     <normalon>:/sections/sections/12.png</normalon>:/sections/sections/12_n.png</iconset>
+     <normaloff>:/sections/sections/11_n.png</normaloff>
+     <normalon>:/sections/sections/11.png</normalon>:/sections/sections/11_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 12</string>
+    <string>Section 11</string>
    </property>
    <property name="toolTip">
-    <string>Section 12 (Ctrl+Alt+2)</string>
+    <string>Section 11 (Ctrl+Alt+2)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+2</string>
@@ -1167,14 +1171,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/13_n.png</normaloff>
-     <normalon>:/sections/sections/13.png</normalon>:/sections/sections/13_n.png</iconset>
+     <normaloff>:/sections/sections/12_n.png</normaloff>
+     <normalon>:/sections/sections/12.png</normalon>:/sections/sections/12_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 13</string>
+    <string>Section 12</string>
    </property>
    <property name="toolTip">
-    <string>Section 13 (Ctrl+Alt+3)</string>
+    <string>Section 12 (Ctrl+Alt+3)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+3</string>
@@ -1192,14 +1196,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/14_n.png</normaloff>
-     <normalon>:/sections/sections/14.png</normalon>:/sections/sections/14_n.png</iconset>
+     <normaloff>:/sections/sections/13_n.png</normaloff>
+     <normalon>:/sections/sections/13.png</normalon>:/sections/sections/13_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 14</string>
+    <string>Section 13</string>
    </property>
    <property name="toolTip">
-    <string>Section 14 (Ctrl+Alt+4)</string>
+    <string>Section 13 (Ctrl+Alt+4)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+4</string>
@@ -1217,14 +1221,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/15_n.png</normaloff>
-     <normalon>:/sections/sections/15.png</normalon>:/sections/sections/15_n.png</iconset>
+     <normaloff>:/sections/sections/14_n.png</normaloff>
+     <normalon>:/sections/sections/14.png</normalon>:/sections/sections/14_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 15</string>
+    <string>Section 14</string>
    </property>
    <property name="toolTip">
-    <string>Section 15 (Ctrl+Alt+5)</string>
+    <string>Section 14 (Ctrl+Alt+5)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+5</string>
@@ -1242,14 +1246,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/16_n.png</normaloff>
-     <normalon>:/sections/sections/16.png</normalon>:/sections/sections/16_n.png</iconset>
+     <normaloff>:/sections/sections/15_n.png</normaloff>
+     <normalon>:/sections/sections/15.png</normalon>:/sections/sections/15_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 16</string>
+    <string>Section 15</string>
    </property>
    <property name="toolTip">
-    <string>Section 16 (Ctrl+Alt+6)</string>
+    <string>Section 15 (Ctrl+Alt+6)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+6</string>
@@ -1267,14 +1271,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/17_n.png</normaloff>
-     <normalon>:/sections/sections/17.png</normalon>:/sections/sections/17_n.png</iconset>
+     <normaloff>:/sections/sections/16_n.png</normaloff>
+     <normalon>:/sections/sections/16.png</normalon>:/sections/sections/16_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 17</string>
+    <string>Section 16</string>
    </property>
    <property name="toolTip">
-    <string>Section 17 (Ctrl+Alt+7)</string>
+    <string>Section 16 (Ctrl+Alt+7)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+7</string>
@@ -1292,14 +1296,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/18_n.png</normaloff>
-     <normalon>:/sections/sections/18.png</normalon>:/sections/sections/18_n.png</iconset>
+     <normaloff>:/sections/sections/17_n.png</normaloff>
+     <normalon>:/sections/sections/17.png</normalon>:/sections/sections/17_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 18</string>
+    <string>Section 17</string>
    </property>
    <property name="toolTip">
-    <string>Section 18 (Ctrl+Alt+8)</string>
+    <string>Section 17 (Ctrl+Alt+8)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+8</string>
@@ -1317,14 +1321,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/19_n.png</normaloff>
-     <normalon>:/sections/sections/19.png</normalon>:/sections/sections/19_n.png</iconset>
+     <normaloff>:/sections/sections/18_n.png</normaloff>
+     <normalon>:/sections/sections/18.png</normalon>:/sections/sections/18_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 19</string>
+    <string>Section 18</string>
    </property>
    <property name="toolTip">
-    <string>Section 19 (Ctrl+Alt+9)</string>
+    <string>Section 18 (Ctrl+Alt+9)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+9</string>
@@ -1342,14 +1346,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/20_n.png</normaloff>
-     <normalon>:/sections/sections/20.png</normalon>:/sections/sections/20_n.png</iconset>
+     <normaloff>:/sections/sections/19_n.png</normaloff>
+     <normalon>:/sections/sections/19.png</normalon>:/sections/sections/19_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 20</string>
+    <string>Section 19</string>
    </property>
    <property name="toolTip">
-    <string>Section 20 (Ctrl+Alt+0)</string>
+    <string>Section 19 (Ctrl+Alt+0)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+0</string>
@@ -1367,14 +1371,14 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/sections/sections/21_n.png</normaloff>
-     <normalon>:/sections/sections/21.png</normalon>:/sections/sections/21_n.png</iconset>
+     <normaloff>:/sections/sections/20_n.png</normaloff>
+     <normalon>:/sections/sections/20.png</normalon>:/sections/sections/20_n.png</iconset>
    </property>
    <property name="text">
-    <string>Section 21</string>
+    <string>Section 20</string>
    </property>
    <property name="toolTip">
-    <string>Section 21 (Alt+1)</string>
+    <string>Section 20 (Alt+1)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Alt+1</string>
@@ -1988,10 +1992,11 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Collisions</string>
+    <string>Prevent overlap</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>Prevents similar items from overlapping each other.
+Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</string>
    </property>
    <property name="shortcut">
     <string notr="true">F9</string>
@@ -2165,18 +2170,6 @@
    </property>
    <property name="text">
     <string>Current configuration status...</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionNew">
-   <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
-   </property>
-   <property name="text">
-    <string>New</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>

@@ -42,6 +42,8 @@ INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
 
 include($$PWD/../_Libs/SDL_Mixer_X/SDL_Mixer_X_link.pri)
 
+DEFINES += USE_SDL_MIXER_X
+
 win32:{
     RC_FILE = _resources/musicplayer.rc
     win*-msvc*: {
@@ -70,15 +72,16 @@ linux-g++||unix:!macx:!android:{
 macx:{
     ICON = $$PWD/_resources/cat_musplay.icns
     QMAKE_INFO_PLIST = $$PWD/_resources/musplay.plist
+    DEFINES += DEFINE_Q_OS_MACX # Workaround for inability of MOC to see this macro
     APP_FILEICON_FILES.files = \
             $$PWD/_resources/file_musplay.icns
     APP_FILEICON_FILES.path  = Contents/Resources
     QMAKE_BUNDLE_DATA += APP_FILEICON_FILES
-    LIBS += -framework CoreAudio -framework CoreVideo -framework Cocoa \
-            -framework IOKit -framework CoreFoundation -framework Carbon \
-            -framework ForceFeedback -framework AudioToolbox
     LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_STATIC
-
+    LIBS += -framework CoreAudio -framework CoreVideo \
+            -framework AudioToolbox -framework AudioUnit \
+            -framework IOKit -framework Cocoa -framework Carbon \
+            -framework ForceFeedback -framework Metal -framework CoreFoundation
 } else {
     !usewinapi:{
         LIBS += -lSDL2 $$SDL_MIXER_X_LIBS_DYNAMIC
@@ -102,8 +105,7 @@ SOURCES += main.cpp\
     SingleApplication/pge_application.cpp \
     Effects/reverb.cpp \
     MainWindow/musplayer_base.cpp \
-    Player/mus_player.cpp \
-    MainWindow/mw_qt/playlist_model.cpp
+    Player/mus_player.cpp
 
 HEADERS  += \
     SingleApplication/localserver.h \
@@ -115,8 +117,7 @@ HEADERS  += \
     Effects/reverb.h \
     defines.h \
     MainWindow/musplayer_base.h \
-    Player/mus_player.h \
-    MainWindow/mw_qt/playlist_model.h
+    Player/mus_player.h
 
 FORMS    += \
     AssocFiles/assoc_files.ui \

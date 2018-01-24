@@ -31,7 +31,7 @@
 #include <Utils/open_url.h>
 #include <DirManager/dirman.h>
 #include <IniProcessor/ini_processing.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
@@ -374,7 +374,7 @@ void ConfigSelectScene::render()
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(fmt::format("Graphical engine: {0}", GlRenderer::engineName()),
+        FontManager::printText(fmt::format_ne("Graphical engine: {0}", GlRenderer::engineName()),
                                500, 30, -2, 1.0, 1.0, 1.0, 0.5, 18);
     }
 

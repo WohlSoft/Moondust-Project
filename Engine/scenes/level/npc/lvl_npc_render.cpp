@@ -22,7 +22,7 @@
 #include <data_configs/config_manager.h>
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 void LVL_Npc::render(double camX, double camY)
 {
@@ -165,7 +165,7 @@ void LVL_Npc::render(double camX, double camY)
             case WARP_BOTTOM:   warpingInfo="BOTTOM"; break;
             }
         }
-        FontManager::printText(fmt::format(  " {0} \n"
+        FontManager::printText(fmt::format_ne(  " {0} \n"
                                            "{1}{2}{3}\n"
                                              " {4}  {5} {6}",
                                         l_contactT.size(),

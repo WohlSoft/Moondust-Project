@@ -11,7 +11,7 @@ SpawnEffectDef::SpawnEffectDef()
     startY = 0.0;
     animationLoops = 1;
     delay = 0;
-    framespeed = 64;
+    frameDelay = 64;
     velocityX = 0.0;
     velocityY = 0.0;
     zIndex = -5.0L;
@@ -33,7 +33,7 @@ SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
     startY = c.startY;
     animationLoops = c.animationLoops;
     delay = c.delay;
-    framespeed = c.framespeed;
+    frameDelay = c.frameDelay;
     frame_sequence = c.frame_sequence;
     velocityX = c.velocityX;
     velocityY = c.velocityY;
@@ -60,8 +60,8 @@ void SpawnEffectDef::fill(const std::string &prefix, IniProcessing *setup)
     setup->read((prefix + "-effect-start-y").c_str(), startY, 0.0);
     setup->read((prefix + "-effect-animation-loops").c_str(), animationLoops, 1);
     setup->read((prefix + "-effect-delay").c_str(), delay, 0);
-    setup->read((prefix + "-effect-frame-delay").c_str(), framespeed, 0);
-    setup->read((prefix + "-effect-framespeed").c_str(), framespeed, framespeed);
+    setup->read((prefix + "-effect-frame-delay").c_str(), frameDelay, 0);
+    setup->read((prefix + "-effect-framespeed").c_str(), frameDelay, frameDelay);
     setup->read((prefix + "-effect-velocity-x").c_str(), velocityX, 0.0);
     setup->read((prefix + "-effect-velocity-y").c_str(), velocityY, 0.0);
     setup->read((prefix + "-effect-z-index").c_str(), zIndex, -5.0l);

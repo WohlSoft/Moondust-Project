@@ -115,9 +115,10 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     QAction *chNPC =           ItemMenu.addAction(tr("Change included NPC..."));
     ItemMenu.addSeparator();
-    QAction *transform =       ItemMenu.addAction(tr("Transform into"));
-    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(m_data.id));
-    QAction *transform_all =   ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(m_data.id));
+    QMenu   *transforms = ItemMenu.addMenu(tr("Transform into"));
+    QAction *transform =       transforms->addAction(tr("Transform into"));
+    QAction *transform_all_s = transforms->addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(m_data.id));
+    QAction *transform_all =   transforms->addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(m_data.id));
     QAction *makemsgevent =    ItemMenu.addAction(tr("Make message box..."));
     ItemMenu.addSeparator();
 
@@ -190,12 +191,18 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->m_mw->on_actionCopy_triggered();
     else if((selected == transform) || (selected == transform_all) || (selected == transform_all_s))
     {
+        LvlScene *scene = m_scene;
+        LevelData *ldata = scene->m_data;
         LevelData oldData;
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_BLOCK, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow);
-        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
+        int transformToBGO;
+        int tabType;
+        ItemSelectDialog *blockList = new ItemSelectDialog(scene->m_configs,
+                                                           ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO,
+                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, scene->m_subWindow);
+        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO);
         util::DialogToCenter(blockList, true);
 
         if(blockList->exec() == QDialog::Accepted)
@@ -203,41 +210,75 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             QList<QGraphicsItem *> our_items;
             bool sameID = false;
             transformTO = blockList->blockID;
+            transformToBGO = blockList->bgoID;
+            tabType = blockList->currentTab;
             unsigned long oldID = m_data.id;
 
             if(selected == transform)
-                our_items = m_scene->selectedItems();
+                our_items = scene->selectedItems();
             else if(selected == transform_all)
             {
-                our_items = m_scene->items();
+                our_items = scene->items();
                 sameID = true;
             }
             else if(selected == transform_all_s)
             {
                 bool ok = false;
-                long mg = QInputDialog::getInt(m_scene->m_subWindow, tr("Margin of section"),
+                long mg = QInputDialog::getInt(scene->m_subWindow, tr("Margin of section"),
                                                tr("Please select how far items can travel beyond the section boundaries (in pixels) before they are removed."),
                                                32, 0, 214948, 1, &ok);
                 if(!ok) goto cancelTransform;
-                LevelSection &s = m_scene->m_data->sections[m_scene->m_data->CurSection];
+                LevelSection &s = ldata->sections[ldata->CurSection];
                 QRectF section;
                 section.setLeft(s.size_left - mg);
                 section.setTop(s.size_top - mg);
                 section.setRight(s.size_right + mg);
                 section.setBottom(s.size_bottom + mg);
-                our_items = m_scene->items(section, Qt::IntersectsItemShape);
+                our_items = scene->items(section, Qt::IntersectsItemShape);
                 sameID = true;
             }
 
-            for(QGraphicsItem *SelItem : our_items)
+            //Change ID of each block
+            if(tabType == ItemSelectDialog::TAB_BLOCK)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                for(QGraphicsItem *SelItem : our_items)
                 {
-                    if((!sameID) || (((ItemBlock *) SelItem)->m_data.id == oldID))
+                    if(SelItem->data(ITEM_TYPE).toString() == "Block")
                     {
-                        oldData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
-                        ((ItemBlock *) SelItem)->transformTo(transformTO);
-                        newData.blocks.push_back(((ItemBlock *) SelItem)->m_data);
+                        ItemBlock *item = (ItemBlock *)SelItem;
+                        if((!sameID) || (item->m_data.id == oldID))
+                        {
+                            oldData.blocks.push_back(item->m_data);
+                            item->transformTo(transformTO);
+                            newData.blocks.push_back(item->m_data);
+                        }
+                    }
+                }
+            }
+            //Transform every block into BGO
+            else if(tabType == ItemSelectDialog::TAB_BGO)
+            {
+                for(QGraphicsItem *SelItem : our_items)
+                {
+                    if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                    {
+                        ItemBlock *item = (ItemBlock *)SelItem;
+                        if((!sameID) || (item->m_data.id == oldID))
+                        {
+                            oldData.blocks.push_back(item->m_data);
+                            LevelBGO bgo;
+                            bgo.id = transformToBGO;
+                            bgo.x = item->m_data.x;
+                            bgo.y = item->m_data.y;
+                            bgo.layer = item->m_data.layer;
+                            bgo.meta = item->m_data.meta;
+                            bgo.meta.array_id = (ldata->bgo_array_id)++;
+                            scene->placeBGO(bgo);
+                            ldata->bgo.push_back(bgo);
+                            newData.bgo.push_back(bgo);
+                            item->removeFromArray();
+                            delete item;
+                        }
                     }
                 }
             }
@@ -246,8 +287,8 @@ cancelTransform:
         }
         delete blockList;
 
-        if(!newData.blocks.isEmpty())
-            m_scene->m_history->addTransform(newData, oldData);
+        if(!newData.blocks.isEmpty() || !newData.bgo.isEmpty())
+            scene->m_history->addTransform(newData, oldData);
     }
     else if(selected == makemsgevent)
     {
@@ -411,8 +452,9 @@ typeEventAgain:
 
         if(!selectedList.isEmpty())
         {
-            m_scene->removeLvlItems(selectedList);
-            m_scene->Debugger_updateItemList();
+            LvlScene *scene = m_scene;
+            scene->removeLvlItems(selectedList);
+            scene->Debugger_updateItemList();
         }
 cancelRemoveSSS:
         ;
@@ -439,6 +481,14 @@ cancelRemoveSSS:
 bool ItemBlock::isSizable()
 {
     return m_sizable;
+}
+
+void ItemBlock::setMetaSignsVisibility(bool visible)
+{
+    if(m_includedNPC)
+        m_includedNPC->setVisible(visible);
+    if(m_coinCounter)
+        m_coinCounter->setVisible(visible);
 }
 
 void ItemBlock::setSlippery(bool slip)
@@ -783,6 +833,13 @@ void ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     int hc, wc;
 
     m_currentImage = QPixmap(w, h);
+
+    if((srcimg.width() < 3) || (srcimg.height() < 3))
+    {
+        // Too small picture for sizable block
+        m_currentImage = srcimg.scaled(w, h);
+        return;
+    }
 
     x = qRound(qreal(srcimg.width()) / 3); // Width of one piece
     y = qRound(qreal(srcimg.height()) / 3); // Height of one piece

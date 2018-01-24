@@ -77,7 +77,8 @@ class Render_OpenGL31 : public Render_Base
 
         PGE_Point MapToScr(PGE_Point point);
         PGE_Point MapToScr(int x, int y);
-        int  alignToCenter(int x, int w);
+        int  alignToCenterW(int x, int w);
+        int  alignToCenterH(int y, int h);
     private:
         PGE_Texture _dummyTexture;
 

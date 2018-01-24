@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2017 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2018 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -76,6 +76,7 @@ extern "C" {
  *    "opengl"
  *    "opengles2"
  *    "opengles"
+ *    "metal"
  *    "software"
  *
  *  The default varies by platform, but it's the first one in the list that
@@ -222,6 +223,12 @@ extern "C" {
 #define SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN    "SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN"
 
 /**
+ * \brief A variable to specify custom icon resource id from RC file on Windows platform 
+ */
+#define SDL_HINT_WINDOWS_INTRESOURCE_ICON       "SDL_WINDOWS_INTRESOURCE_ICON"
+#define SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL "SDL_WINDOWS_INTRESOURCE_ICON_SMALL"
+
+/**
  *  \brief  A variable controlling whether the windows message loop is processed by SDL 
  *
  *  This variable can be set to the following values:
@@ -274,6 +281,17 @@ extern "C" {
  *  By default SDL will ignore mouse clicks that activate a window
  */
 #define SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH "SDL_MOUSE_FOCUS_CLICKTHROUGH"
+
+/**
+ *  \brief  A variable controlling whether touch events should generate synthetic mouse events
+ *
+ *  This variable can be set to the following values:
+ *    "0"       - Touch events will not generate mouse events
+ *    "1"       - Touch events will generate mouse events
+ *
+ *  By default SDL will generate mouse events for touch events
+ */
+#define SDL_HINT_TOUCH_MOUSE_EVENTS    "SDL_TOUCH_MOUSE_EVENTS"
 
 /**
  *  \brief Minimize your SDL_Window if it loses key focus when in fullscreen mode. Defaults to true.
@@ -348,7 +366,6 @@ extern "C" {
  */
 #define SDL_HINT_ACCELEROMETER_AS_JOYSTICK "SDL_ACCELEROMETER_AS_JOYSTICK"
 
-
 /**
  *  \brief  A variable that lets you disable the detection and use of Xinput gamepad devices
  *
@@ -357,7 +374,6 @@ extern "C" {
  *    "1"       - Enable XInput detection (the default)
  */
 #define SDL_HINT_XINPUT_ENABLED "SDL_XINPUT_ENABLED"
-
 
 /**
  *  \brief  A variable that causes SDL to use the old axis and button mapping for XInput devices.
@@ -368,9 +384,8 @@ extern "C" {
  */
 #define SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING "SDL_XINPUT_USE_OLD_JOYSTICK_MAPPING"
 
-
 /**
- *  \brief  A variable that lets you manually hint extra gamecontroller db entries
+ *  \brief  A variable that lets you manually hint extra gamecontroller db entries.
  *
  *  The variable should be newline delimited rows of gamecontroller config data, see SDL_gamecontroller.h
  *
@@ -379,6 +394,31 @@ extern "C" {
  */
 #define SDL_HINT_GAMECONTROLLERCONFIG "SDL_GAMECONTROLLERCONFIG"
 
+/**
+ *  \brief  A variable containing a list of devices to skip when scanning for game controllers.
+ *
+ *  The format of the string is a comma separated list of USB VID/PID pairs
+ *  in hexadecimal form, e.g.
+ *
+ *      0xAAAA/0xBBBB,0xCCCC/0xDDDD
+ *
+ *  The variable can also take the form of @file, in which case the named
+ *  file will be loaded and interpreted as the value of the variable.
+ */
+#define SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES "SDL_GAMECONTROLLER_IGNORE_DEVICES"
+
+/**
+ *  \brief  If set, all devices will be skipped when scanning for game controllers except for the ones listed in this variable.
+ *
+ *  The format of the string is a comma separated list of USB VID/PID pairs
+ *  in hexadecimal form, e.g.
+ *
+ *      0xAAAA/0xBBBB,0xCCCC/0xDDDD
+ *
+ *  The variable can also take the form of @file, in which case the named
+ *  file will be loaded and interpreted as the value of the variable.
+ */
+#define SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT "SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT"
 
 /**
  *  \brief  A variable that lets you enable joystick (and gamecontroller) events even when your app is in the background.
@@ -393,7 +433,6 @@ extern "C" {
  */
 #define SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS "SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS"
 
-
 /**
  *  \brief If set to "0" then never set the top most bit on a SDL Window, even if the video mode expects it.
  *      This is a debugging aid for developers and not expected to be used by end users. The default is "1"
@@ -403,7 +442,6 @@ extern "C" {
  *    "1"       - allow topmost
  */
 #define SDL_HINT_ALLOW_TOPMOST "SDL_ALLOW_TOPMOST"
-
 
 /**
  *  \brief A variable that controls the timer resolution, in milliseconds.
@@ -682,6 +720,18 @@ extern "C" {
  */
 #define SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH "SDL_ANDROID_SEPARATE_MOUSE_AND_TOUCH"
 
+ /**
+ * \brief A variable to control whether the return key on the soft keyboard
+ *        should hide the soft keyboard on Android and iOS.
+ *
+ * The variable can be set to the following values:
+ *   "0"       - The return key will be handled as a key event. This is the behaviour of SDL <= 2.0.3. (default)
+ *   "1"       - The return key will hide the keyboard.
+ *
+ * The value of this hint is used at runtime, so it can be changed at any time.
+ */
+#define SDL_HINT_RETURN_KEY_HIDES_IME "SDL_RETURN_KEY_HIDES_IME"
+
 /**
  *  \brief override the binding element for keyboard inputs for Emscripten builds
  *
@@ -761,6 +811,24 @@ extern "C" {
 #define SDL_HINT_RPI_VIDEO_LAYER           "SDL_RPI_VIDEO_LAYER"
 
 /**
+ * \brief Tell the video driver that we only want a double buffer.
+ *
+ * By default, most lowlevel 2D APIs will use a triple buffer scheme that 
+ * wastes no CPU time on waiting for vsync after issuing a flip, but
+ * introduces a frame of latency. On the other hand, using a double buffer
+ * scheme instead is recommended for cases where low latency is an important
+ * factor because we save a whole frame of latency.
+ * We do so by waiting for vsync immediately after issuing a flip, usually just
+ * after eglSwapBuffers call in the backend's *_SwapWindow function.
+ *
+ * Since it's driver-specific, it's only supported where possible and
+ * implemented. Currently supported the following drivers:
+ * - KMSDRM (kmsdrm)
+ * - Raspberry Pi (raspberrypi)
+ */
+#define SDL_HINT_VIDEO_DOUBLE_BUFFER      "SDL_VIDEO_DOUBLE_BUFFER"
+
+/**
  *  \brief  A variable controlling what driver to use for OpenGL ES contexts.
  *
  *  On some platforms, currently Windows and X11, OpenGL drivers may support
@@ -818,6 +886,19 @@ extern "C" {
 #define SDL_HINT_AUDIO_RESAMPLING_MODE   "SDL_AUDIO_RESAMPLING_MODE"
 
 /**
+ *  \brief  A variable controlling the audio category on iOS and Mac OS X
+ *
+ *  This variable can be set to the following values:
+ *
+ *    "ambient"     - Use the AVAudioSessionCategoryAmbient audio category, will be muted by the phone mute switch (default)
+ *    "playback"    - Use the AVAudioSessionCategoryPlayback category
+ *
+ *  For more information, see Apple's documentation:
+ *  https://developer.apple.com/library/content/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/AudioSessionCategoriesandModes/AudioSessionCategoriesandModes.html
+ */
+#define SDL_HINT_AUDIO_CATEGORY   "SDL_AUDIO_CATEGORY"
+
+/**
  *  \brief  An enumeration of hint priorities
  */
 typedef enum
@@ -866,7 +947,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_GetHintBoolean(const char *name, SDL_bool d
 /**
  * \brief type definition of the hint callback function.
  */
-typedef void (*SDL_HintCallback)(void *userdata, const char *name, const char *oldValue, const char *newValue);
+typedef void (SDLCALL *SDL_HintCallback)(void *userdata, const char *name, const char *oldValue, const char *newValue);
 
 /**
  *  \brief Add a function to watch a particular hint

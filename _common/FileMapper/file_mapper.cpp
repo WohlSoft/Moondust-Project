@@ -21,7 +21,7 @@
  */
 
 #include "file_mapper.h"
-#if defined(__unix__) || defined(__APPLE__)
+#if defined(__unix__) || defined(__APPLE__) || defined(__HAIKU__)
 #define FileMapper_POSIX
 #elif _WIN32
 #define FileMapper_Windows

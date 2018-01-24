@@ -31,7 +31,7 @@
 
 
 
-void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
+ItemBlock *LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
     obj_block &mergedSet = m_localConfigBlocks[block.id];
     long animator = mergedSet.animator_id;
@@ -55,9 +55,10 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     BlockImage->setBlockData(block, &mergedSet, &animator);
 
     if(m_pastingMode) BlockImage->setSelected(true);
+    return BlockImage;
 }
 
-void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
+ItemBGO *LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
     obj_bgo &mergedSet = m_localConfigBGOs[bgo.id];
     long animator = mergedSet.animator_id;
@@ -82,9 +83,10 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     BGOItem->setBGOData(bgo, &mergedSet, &animator);
 
     if(m_pastingMode) BGOItem->setSelected(true);
+    return BGOItem;
 }
 
-void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
+ItemNPC *LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
     obj_npc &mergedSet = m_localConfigNPCs[npc.id];
     long animator = mergedSet.animator_id;
@@ -110,9 +112,10 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setNpcData(npc, &mergedSet, &animator);
 
     if(m_pastingMode) NPCItem->setSelected(true);
+    return NPCItem;
 }
 
-void LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
+ItemPhysEnv *LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
 {
     QPoint newPos = QPoint(water.x, water.y);
     if(toGrid)
@@ -127,10 +130,11 @@ void LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
     PhysEnvItem->setPhysEnvData(water);
 
     if(m_pastingMode) PhysEnvItem->setSelected(true);
+    return PhysEnvItem;
 }
 
 
-void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
+ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
     ItemPlayerPoint * player = NULL;
     bool found = false;
@@ -165,6 +169,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
         }
     }
 
+    return player;
 }
 
 

@@ -24,7 +24,7 @@
 #include <common_features/logger.h>
 #include <scenes/level/lvl_physenv.h>
 #include <Utils/files.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 /*****Playable Characters************/
 PGE_DataArray<obj_player > ConfigManager::playable_characters;
@@ -170,16 +170,16 @@ bool ConfigManager::loadPlayableCharacters()
             splayer.frame_width = 100;
             splayer.frame_height = 100;
             unsigned long total_states = 0;
-            setup.beginGroup(fmt::format("character-{0}", i));
-            setup.read("name", splayer.name, fmt::format("player {0}", i));
+            setup.beginGroup(fmt::format_ne("character-{0}", i));
+            setup.read("name", splayer.name, fmt::format_ne("player {0}", i));
 
             if(splayer.name.empty())
             {
-                addError(fmt::format("Player-{0} Item name isn't defined", i));
+                addError(fmt::format_ne("Player-{0} Item name isn't defined", i));
                 goto skipPLAYER;
             }
 
-            setup.read("sprite-folder", splayer.sprite_folder, fmt::format("player-{0}", i));
+            setup.read("sprite-folder", splayer.sprite_folder, fmt::format_ne("player-{0}", i));
             setup.read("sprite-folder", splayer.state_type, 0);
             setup.read("matrix-width",  splayer.matrix_width, 10);
             setup.read("matrix-height", splayer.matrix_height, 10);
@@ -188,7 +188,7 @@ bool ConfigManager::loadPlayableCharacters()
 
             if(total_states == 0)
             {
-                addError(fmt::format("player-{0} has no states!", i));
+                addError(fmt::format_ne("player-{0} has no states!", i));
                 goto skipPLAYER;
             }
 
@@ -200,7 +200,7 @@ bool ConfigManager::loadPlayableCharacters()
                 bool default_duck = false;
                 int floating_max_time = 1500;
                 double floating_amplutude = 0.8;
-                setup.beginGroup(fmt::format("character-{0}-physics-common", i));
+                setup.beginGroup(fmt::format_ne("character-{0}-physics-common", i));
                 {
                     setup.read("duck-allow", default_duck, false);
                     setup.read("allow-floating", splayer.allowFloating, false);
@@ -216,11 +216,11 @@ bool ConfigManager::loadPlayableCharacters()
                 splayer.phys_default.storeElement(LVL_PhysEnv::Env_Air, physicsDef);
                 splayer.phys_default.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
                 splayer.phys_default.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
-                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Air], fmt::format("character-{0}-env-common-air", i));
-                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Water], fmt::format("character-{0}-env-common-water", i));
-                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], fmt::format("character-{0}-env-common-quicksand", i));
+                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Air], fmt::format_ne("character-{0}-env-common-air", i));
+                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Water], fmt::format_ne("character-{0}-env-common-water", i));
+                loadPlayerPhysicsSettings(setup, splayer.phys_default[LVL_PhysEnv::Env_Quicksand], fmt::format_ne("character-{0}-env-common-quicksand", i));
 
-                setup.beginGroup(fmt::format("character-{0}-world", i));
+                setup.beginGroup(fmt::format_ne("character-{0}-world", i));
                 setup.read("sprite-name", imgFile, "");
                 splayer.image_wld_n = imgFile;
                 {
@@ -228,7 +228,7 @@ bool ConfigManager::loadPlayableCharacters()
                     GraphicsHelps::getMaskedImageInfo(playerWldPath, splayer.image_wld_n, splayer.mask_wld_n, err);
                     if(imgFile.empty())
                     {
-                        addError(fmt::format("Character-{0} Wld Image filename isn't defined", i));
+                        addError(fmt::format_ne("Character-{0} Wld Image filename isn't defined", i));
                         goto skipPLAYER;
                     }
                 }
@@ -257,9 +257,9 @@ bool ConfigManager::loadPlayableCharacters()
                     pstate.image = NULL;
                     pstate.textureArrayId = 0;
                     pstate.animator_ID = 0;
-                    setup.beginGroup(fmt::format("character-{0}-state-{1}", i, j));
+                    setup.beginGroup(fmt::format_ne("character-{0}-state-{1}", i, j));
                     {
-                        setup.read("name", pstate.name, fmt::format("State {0}", j));
+                        setup.read("name", pstate.name, fmt::format_ne("State {0}", j));
                         setup.read("sprite-name", imgFile, "");
                         pstate.image_n = imgFile;
                         {
@@ -267,7 +267,7 @@ bool ConfigManager::loadPlayableCharacters()
                             GraphicsHelps::getMaskedImageInfo(playerLvlPath + splayer.sprite_folder + "/", imgFile, pstate.mask_n, err);
                             if(imgFile.empty())
                             {
-                                addError(fmt::format("Character-{0} state-{1} Image filename isn't defined", i, j));
+                                addError(fmt::format_ne("Character-{0} state-{1} Image filename isn't defined", i, j));
                                 goto skipPLAYER;
                             }
                         }
@@ -278,10 +278,10 @@ bool ConfigManager::loadPlayableCharacters()
                         setup.read("default-duck-height", pstate.duck_height, 30);
                         setup.read("default-height", pstate.height, 54);
                         setup.read("default-width", pstate.width, 24);
-                        setup.read("events", pstate.event_script, fmt::format("script/player/{1}-{0}.lua", i, splayer.sprite_folder));
+                        setup.read("events", pstate.event_script, fmt::format_ne("script/player/{1}-{0}.lua", i, splayer.sprite_folder));
 
                         std::string sprite_settings;
-                        setup.read("sprite-settings", sprite_settings, fmt::format("{1}-{0}.ini", i, splayer.sprite_folder));
+                        setup.read("sprite-settings", sprite_settings, fmt::format_ne("{1}-{0}.ini", i, splayer.sprite_folder));
 
                         std::string ss_path = Dir_PlayerCalibrations.getCustomFile(sprite_settings);
                         if(pstate.sprite_setup.load(ss_path))
@@ -297,9 +297,9 @@ bool ConfigManager::loadPlayableCharacters()
                     pstate.phys.storeElement(LVL_PhysEnv::Env_Air, physicsDef);
                     pstate.phys.storeElement(LVL_PhysEnv::Env_Water, physicsDef);
                     pstate.phys.storeElement(LVL_PhysEnv::Env_Quicksand, physicsDef);
-                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Air], fmt::format("character-{0}-env-{1}-air", i, j));
-                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Water], fmt::format("character-{0}-env-{1}-water", i, j));
-                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Quicksand], fmt::format("character-{0}-env-{1}-quicksand", i, j));
+                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Air], fmt::format_ne("character-{0}-env-{1}-air", i, j));
+                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Water], fmt::format_ne("character-{0}-env-{1}-water", i, j));
+                    loadPlayerPhysicsSettings(setup, pstate.phys[LVL_PhysEnv::Env_Quicksand], fmt::format_ne("character-{0}-env-{1}-quicksand", i, j));
                     splayer.states.storeElement(j, pstate);
                 }
             }//States
@@ -310,7 +310,7 @@ bool ConfigManager::loadPlayableCharacters()
 
             if(setup.lastError() != IniProcessing::ERR_OK)
             {
-                std::string msg = fmt::format("ERROR LOADING lvl_characters.ini:{0} N:{1} (character-{2})",
+                std::string msg = fmt::format_ne("ERROR LOADING lvl_characters.ini:{0} N:{1} (character-{2})",
                                               setup.lineWithError(),
                                               setup.lastError(), i);
                 addError(msg);
@@ -322,7 +322,7 @@ bool ConfigManager::loadPlayableCharacters()
 
         if(playable_characters.stored() < players_total)
         {
-            std::string msg = fmt::format("Not all characters are loaded! Total: {0}, Loaded: {1})",
+            std::string msg = fmt::format_ne("Not all characters are loaded! Total: {0}, Loaded: {1})",
                                           players_total,
                                           playable_characters.stored());
             addError(msg);

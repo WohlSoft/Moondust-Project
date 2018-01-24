@@ -10,8 +10,8 @@
 class Binding_Core_GlobalFuncs_Effect
 {
 public:
-    static void runStaticEffect(long effectID, float startX, float startY, lua_State *L);
-    static void runStaticEffectCentered(long effectID, float startX, float startY, lua_State *L);
+    static void runStaticEffect(unsigned long effectID, double startX, double startY, lua_State *L);
+    static void runStaticEffectCentered(unsigned long effectID, double startX, double startY, lua_State *L);
 
     static void runEffect(SpawnEffectDef &effectDef, bool centered, lua_State *L);
 

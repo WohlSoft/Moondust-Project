@@ -35,7 +35,7 @@
 #include <settings/debugger.h>
 
 #include <Utils/files.h>
-#include <fmt/fmt_format.h>
+#include <common_features/fmt_format_ne.h>
 
 #include <vector>
 #include <unordered_map>
@@ -68,7 +68,7 @@ WorldScene::WorldScene()
     /*********Fader*************/
     m_fader.setFull();
     /*********Fader*************/
-    m_mapWalker.moveSpeed = 125 / PGE_Window::TicksPerSecond;
+    m_mapWalker.moveSpeed = 125 / PGE_Window::frameRate;
     m_mapWalker.moveStepsCount = 0;
     ConfigManager::setup_WorldMap.initFonts();
     m_commonSetup = ConfigManager::setup_WorldMap;
@@ -250,7 +250,7 @@ bool WorldScene::init()
         pLogWarning("Error Message: %s", errorMessage.data());
         pLogWarning("Stacktrace: \n%s", stacktrace.data());
         PGE_MsgBox msgBox(this,
-                          fmt::format("A lua error has been thrown: \n{0}"
+                          fmt::format_ne("A lua error has been thrown: \n{0}"
                                       "\n\n"
                                       "More details in the log!",
                                         errorMessage),
@@ -1274,7 +1274,7 @@ void WorldScene::render()
     //FIXME: implement "always-visible" flag to show this counter without comparison to zero
     if(m_commonSetup.points_en && (m_counters.points > 0))
     {
-        FontManager::printText(fmt::format("{0}", m_counters.points),
+        FontManager::printText(fmt::format_ne("{0}", m_counters.points),
                                m_commonSetup.points_x,
                                m_commonSetup.points_y,
                                m_commonSetup.points_fontID,
@@ -1287,7 +1287,7 @@ void WorldScene::render()
     //FIXME: implement "always-visible" flag to show this counter without comparison to zero
     if(m_commonSetup.health_en)
     {
-        FontManager::printText(fmt::format("{0}", m_counters.health),
+        FontManager::printText(fmt::format_ne("{0}", m_counters.health),
                                m_commonSetup.health_x,
                                m_commonSetup.health_y,
                                m_commonSetup.health_fontID,
@@ -1299,7 +1299,7 @@ void WorldScene::render()
 
     if(m_commonSetup.lives_en)
     {
-        FontManager::printText(fmt::format("{0}", m_counters.lives),
+        FontManager::printText(fmt::format_ne("{0}", m_counters.lives),
                                m_commonSetup.lives_x,
                                m_commonSetup.lives_y,
                                m_commonSetup.lives_fontID,
@@ -1311,7 +1311,7 @@ void WorldScene::render()
 
     if(m_commonSetup.coin_en)
     {
-        FontManager::printText(fmt::format("{0}", m_counters.coins),
+        FontManager::printText(fmt::format_ne("{0}", m_counters.coins),
                                m_commonSetup.coin_x,
                                m_commonSetup.coin_y,
                                m_commonSetup.coin_fontID,
@@ -1324,7 +1324,7 @@ void WorldScene::render()
     //FIXME: implement "always-visible" flag to show this counter without comparison to zero
     if(m_commonSetup.star_en)
     {
-        FontManager::printText(fmt::format("{0}", m_counters.stars),
+        FontManager::printText(fmt::format_ne("{0}", m_counters.stars),
                                m_commonSetup.star_x,
                                m_commonSetup.star_y,
                                m_commonSetup.star_fontID,
@@ -1334,7 +1334,7 @@ void WorldScene::render()
                                m_commonSetup.star_rgba.Alpha());
     }
 
-    FontManager::printText(fmt::format("{0}", m_levelTitle),
+    FontManager::printText(fmt::format_ne("{0}", m_levelTitle),
                            m_commonSetup.title_x,
                            m_commonSetup.title_y,
                            m_commonSetup.title_fontID,
@@ -1346,20 +1346,20 @@ void WorldScene::render()
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(fmt::format("X={0} Y={1}", m_mapWalker.posX, m_mapWalker.posY), 300, 10);
+        FontManager::printText(fmt::format_ne("X={0} Y={1}", m_mapWalker.posX, m_mapWalker.posY), 300, 10);
         {
             PGE_Point grid = m_indexTable.applyGrid(Maths::lRound(m_mapWalker.posX), Maths::lRound(m_mapWalker.posY));
-            FontManager::printText(fmt::format("TILE X={0} Y={1}", grid.x(), grid.y()), 300, 45);
+            FontManager::printText(fmt::format_ne("TILE X={0} Y={1}", grid.x(), grid.y()), 300, 45);
         }
-        FontManager::printText(fmt::format("TICK-SUB: {0}, Visible items={1};", uTickf, m_itemsToRender.size()), 10, 100);
-        FontManager::printText(fmt::format("Delays E={0} R={1} P={2} [{3}]",
+        FontManager::printText(fmt::format_ne("TICK-SUB: {0}, Visible items={1};", uTickf, m_itemsToRender.size()), 10, 100);
+        FontManager::printText(fmt::format_ne("Delays E={0} R={1} P={2} [{3}]",
                                             debug_event_delay,
                                             debug_render_delay,
                                             debug_phys_delay,
                                             debug_total_delay), 10, 120);
 
         if(m_doExit)
-            FontManager::printText(fmt::format("Exit delay {0}, {1}",
+            FontManager::printText(fmt::format_ne("Exit delay {0}, {1}",
                                                 m_exitWorldDelay,
                                                 uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
     }
