@@ -1,0 +1,275 @@
+cmake_minimum_required (VERSION 2.8.11)
+project(MoondustEngine C)
+
+set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${DEPENDENCIES_INSTALL_DIR}/include
+    ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
+    ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
+)
+link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
+
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+    # Turn on warnings and legacy C/C++ standards to support more compilers
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+endif()
+
+set(CMAKE_CXX_STANDARD 14)
+
+# include shared code modules
+include(../_common/PGE_File_Formats/pge_file_library.cmake)
+include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
+include(../_common/DirManager/dirman.cmake)
+include(../_common/FileMapper/FileMapper.cmake)
+include(../_common/fmt/fmt.cmake)
+include(../_common/IniProcessor/IniProcessor.cmake)
+include(../_common/PgeGameSave/submodule/pge_gamesave.cmake)
+include(../_common/StackWalker/StackWalker.cmake)
+include(../_common/tclap/tclap.cmake)
+include(../_common/Utf8Main/utf8main.cmake)
+include(../_common/Utils/Utils.cmake)
+include(../_common/Utils/UtilsSDL.cmake)
+include(../_common/Utils/openUrl.cmake)
+
+
+set(PGE_ENGINE_SRCS)
+
+list(APPEND PGE_ENGINE_SRCS
+    audio/pge_audio.cpp
+    audio/play_music.cpp
+    audio/play_sfx.cpp
+    common_features/app_path.cpp
+    common_features/crash_handler.cpp
+    common_features/episode_state.cpp
+    common_features/event_queue.cpp
+    common_features/fader.cpp
+    common_features/graphics_funcs.cpp
+    common_features/logger_sets.cpp
+    common_features/matrix_animator.cpp
+    common_features/md5.cpp
+    common_features/npc_animator.cpp
+    common_features/number_limiter.cpp
+    common_features/player_calibration.cpp
+    common_features/point.cpp
+    common_features/pointf.cpp
+    common_features/point_mover.cpp
+    common_features/QTranslatorX/ConvertUTF.c
+    common_features/QTranslatorX/qm_translator.cpp
+    common_features/rect.cpp
+    common_features/rectf.cpp
+    common_features/simple_animator.cpp
+    common_features/size.cpp
+    common_features/sizef.cpp
+    common_features/translator.cpp
+    common_features/util.cpp
+    common_features/version_cmp.cpp
+    controls/control_keys.cpp
+    controls/controllable_object.cpp
+    controls/controller.cpp
+    controls/controller_joystick.cpp
+    controls/controller_keyboard.cpp
+    data_configs/config_engine.cpp
+    data_configs/config_manager.cpp
+    data_configs/config_paths.cpp
+    data_configs/config_select_scene/scene_config_select.cpp
+    data_configs/config_textures.cpp
+    data_configs/custom_data.cpp
+    data_configs/obj_bg.cpp
+    data_configs/obj_bgo.cpp
+    data_configs/obj_block.cpp
+    data_configs/obj_effect.cpp
+    data_configs/obj_music.cpp
+    data_configs/obj_npc.cpp
+    data_configs/obj_player.cpp
+    data_configs/obj_sound.cpp
+    data_configs/obj_wld_items.cpp
+    data_configs/setup_credits_screen.cpp
+    data_configs/setup_load_screen.cpp
+    data_configs/setup_lvl_scene.cpp
+    data_configs/setup_title_screen.cpp
+    data_configs/setup_wld_scene.cpp
+    data_configs/spawn_effect_def.cpp
+    engine.cpp
+    fontman/font_manager.cpp
+    fontman/font_manager_private.cpp
+    fontman/raster_font.cpp
+    fontman/ttf_font.cpp
+    fontman/utf8_helpers.cpp
+    graphics/gl_color.cpp
+    graphics/gl_renderer.cpp
+    graphics/graphics.cpp
+    graphics/render/render_base.cpp
+    graphics/render/render_opengl21.cpp
+    graphics/render/render_opengl31.cpp
+    graphics/render/render_swsdl.cpp
+    graphics/window.cpp
+    gui/menu/pge_bool_menuitem.cpp
+    gui/menu/pge_int_menuitem.cpp
+    gui/menu/pge_int_named_menuitem.cpp
+    gui/menu/pge_keygrab_menuitem.cpp
+    gui/menu/_pge_menuitem.cpp
+    gui/pge_boxbase.cpp
+    gui/pge_menuboxbase.cpp
+    gui/pge_menubox.cpp
+    gui/pge_menu.cpp
+    gui/pge_msgbox.cpp
+    gui/pge_questionbox.cpp
+    gui/pge_textinputbox.cpp
+    main.cpp
+    networking/editor_pipe.cpp
+    networking/intproc.cpp
+    _resources/resource.cpp
+    scenes/_base/gfx_effect.cpp
+    scenes/_base/msgbox_queue.cpp
+    scenes/level/base/lvl_base_physics.cpp
+    scenes/level/bg/bg_multilayer.cpp
+    scenes/level/bg/bg_standard.cpp
+    scenes/level/lvl_backgrnd.cpp
+    scenes/level/lvl_base_object.cpp
+    scenes/level/lvl_bgo.cpp
+    scenes/level/lvl_block.cpp
+    scenes/level/lvl_camera.cpp
+    scenes/level/lvl_event_engine.cpp
+    scenes/level/lvl_layer_engine.cpp
+    scenes/level/lvl_npc.cpp
+    scenes/level/lvl_physenv.cpp
+    scenes/level/lvl_player.cpp
+    scenes/level/lvl_player_def.cpp
+    scenes/level/lvl_player_switch.cpp
+    scenes/level/lvl_quad_tree.cpp
+    scenes/level/lvl_scene_files_io.cpp
+    scenes/level/lvl_scene_garbage_collecting.cpp
+    scenes/level/lvl_scene_init.cpp
+    scenes/level/lvl_scene_interprocess.cpp
+    scenes/level/lvl_scene_items.cpp
+    scenes/level/lvl_scene_pausemenu.cpp
+    scenes/level/lvl_scene_sections.cpp
+    scenes/level/lvl_scene_timers.cpp
+    scenes/level/lvl_scene_trees.cpp
+    scenes/level/lvl_section.cpp
+    scenes/level/lvl_subtree.cpp
+    scenes/level/lvl_warp.cpp
+    scenes/level/lvl_z_constants.cpp
+    scenes/level/npc_detectors/lvl_base_detector.cpp
+    scenes/level/npc_detectors/lvl_dtc_contact.cpp
+    scenes/level/npc_detectors/lvl_dtc_inarea.cpp
+    scenes/level/npc_detectors/lvl_dtc_player_pos.cpp
+    scenes/level/npc/lvl_npc_activate.cpp
+    scenes/level/npc/lvl_npc_generator.cpp
+    scenes/level/npc/lvl_npc_groups.cpp
+    scenes/level/npc/lvl_npc_kill.cpp
+    scenes/level/npc/lvl_npc_lua.cpp
+    scenes/level/npc/lvl_npc_physics.cpp
+    scenes/level/npc/lvl_npc_render.cpp
+    scenes/level/npc/lvl_npc_setup.cpp
+    scenes/level/npc/lvl_npc_spritewarp.cpp
+    scenes/level/npc/lvl_npc_throwned_by.cpp
+    scenes/level/npc/lvl_npc_update.cpp
+    scenes/level/player/lvl_player_animation.cpp
+    scenes/level/player/lvl_player_attaks_and_kills.cpp
+    scenes/level/player/lvl_player_physics.cpp
+    scenes/level/player/lvl_player_render.cpp
+    scenes/level/player/lvl_player_setup.cpp
+    scenes/level/player/lvl_player_update.cpp
+    scenes/level/player/lvl_player_warps_and_teleports.cpp
+    scenes/scene.cpp
+    scenes/scene_credits.cpp
+    scenes/scene_gameover.cpp
+    scenes/scene_level.cpp
+    scenes/scene_loading.cpp
+    scenes/scene_title.cpp
+    scenes/scene_world.cpp
+    scenes/title/ttl_main_menu.cpp
+    scenes/world/wld_pathopener.cpp
+    scenes/world/wld_player_portrait.cpp
+    scenes/world/wld_tilebox.cpp
+    script/bindings/core/classes/luaclass_core_graphics.cpp
+    script/bindings/core/classes/luaclass_core_scene_effects.cpp
+    script/bindings/core/classes/luaclass_core_simpleevent.cpp
+    script/bindings/core/events/luaevents_core_engine.cpp
+    script/bindings/core/globalfuncs/luafuncs_core_audio.cpp
+    script/bindings/core/globalfuncs/luafuncs_core_effect.cpp
+    script/bindings/core/globalfuncs/luafuncs_core_logger.cpp
+    script/bindings/core/globalfuncs/luafuncs_core_paths.cpp
+    script/bindings/core/globalfuncs/luafuncs_core_renderer.cpp
+    script/bindings/core/globalfuncs/luafuncs_core_settings.cpp
+    script/bindings/core/lua_global_constants.cpp
+    script/bindings/level/classes/luaclass_level_camera.cpp
+    script/bindings/level/classes/luaclass_level_contact_detector.cpp
+    script/bindings/level/classes/luaclass_level_inareadetector.cpp
+    script/bindings/level/classes/luaclass_level_lvl_npc.cpp
+    script/bindings/level/classes/luaclass_level_lvl_player.cpp
+    script/bindings/level/classes/luaclass_level_physobj.cpp
+    script/bindings/level/classes/luaclass_level_playerposdetector.cpp
+    script/bindings/level/classes/luaclass_level_playerstate.cpp
+    script/bindings/level/classes/luaclass_lvl_bgo.cpp
+    script/bindings/level/classes/luaclass_lvl_block.cpp
+    script/bindings/level/globalfuncs/luafuncs_level_bgo.cpp
+    script/bindings/level/globalfuncs/luafuncs_level_blocks.cpp
+    script/bindings/level/globalfuncs/luafuncs_level.cpp
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.cpp
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_player.cpp
+    script/lua_credits_engine.cpp
+    script/lua_engine.cpp
+    script/lua_event.cpp
+    script/lua_global.cpp
+    script/lua_level_engine.cpp
+    script/lua_titlescreen_engine.cpp
+    script/lua_world_engine.cpp
+    settings/debugger.cpp
+    settings/global_settings.cpp
+)
+
+add_executable(pge_engine
+    ${PGE_ENGINE_SRCS}
+    ${CONFIG_PACK_MANAGER_SRCS}
+    ${DIRMANAGER_SRCS}
+    ${FILEMAPPER_SRCS}
+    ${FMT_SRCS}
+    ${INIPROCESSOR_SRCS}
+    ${PGE_FILE_LIBRARY_SRCS}
+    ${PGE_GAMESAVE_SRCS}
+    ${STACK_WALKER_SRCS}
+    ${UTF8MAIN_SRCS}
+    ${OPENURL_SRCS}
+    ${UTILS_SRCS}
+    ${UTILS_SDL_SRCS}
+)
+
+# add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
+target_compile_definitions(pge_engine PRIVATE -DPGE_ENGINE)
+
+add_dependencies(pge_engine
+    SDLMixerX_Local
+    SDL2_Local
+    LuaBind_Local
+    FreeImage_Local
+    SQLite_Local
+    FREETYPE_Local
+)
+
+target_link_libraries(pge_engine
+    ${UTILS_LIBS}
+    FreeImageLite$<$<CONFIG:Debug>:d>
+    luabind$<$<CONFIG:Debug>:d>
+    freetype$<$<CONFIG:Debug>:d>
+    sqlite3$<$<CONFIG:Debug>:d>
+    SDL2_mixer_ext$<$<CONFIG:Debug>:d>
+    FLAC$<$<CONFIG:Debug>:d>
+    vorbisfile$<$<CONFIG:Debug>:d>
+    vorbis$<$<CONFIG:Debug>:d>
+    ogg$<$<CONFIG:Debug>:d>
+    mad$<$<CONFIG:Debug>:d>
+    id3tag$<$<CONFIG:Debug>:d>
+    modplug$<$<CONFIG:Debug>:d>
+    ADLMIDI$<$<CONFIG:Debug>:d>
+    OPNMIDI$<$<CONFIG:Debug>:d>
+    timidity$<$<CONFIG:Debug>:d>
+    gme$<$<CONFIG:Debug>:d>
+    zlib$<$<CONFIG:Debug>:d>
+    SDL2$<$<CONFIG:Debug>:d>
+    GL dl pthread
+)
