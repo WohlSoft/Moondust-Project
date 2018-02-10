@@ -14,5 +14,5 @@ INCLUDEPATH += $$PWD/../ $$PWD/../../ $$PWD/../../_builds/$$TARGETOS/include \
 include($$PWD/luabind_common.pri)
 
 HEADERS += \
-    ../lua_inclues/lua.hpp
+    ../lua_includes/lua.hpp
 

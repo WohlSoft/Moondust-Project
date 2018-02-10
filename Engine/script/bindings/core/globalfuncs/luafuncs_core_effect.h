@@ -2,7 +2,7 @@
 #define BINDING_CORE_GLOBALFUNCS_EFFECT_H
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 #include <script/lua_global.h>
 #include <data_configs/spawn_effect_def.h>

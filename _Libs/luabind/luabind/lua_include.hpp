@@ -24,7 +24,7 @@
 #define LUA_INCLUDE_HPP_INCLUDED
 
 #ifndef LUABIND_CPLUSPLUS_LUA
-#include "../lua_inclues/lua.hpp"
+#include "../lua_includes/lua.hpp"
 //extern "C"
 //{
 //#endif

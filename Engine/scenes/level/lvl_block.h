@@ -26,7 +26,7 @@
 #include "lvl_player.h"
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 class LVL_Block : public PGE_Phys_Object
 {

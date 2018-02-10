@@ -44,7 +44,7 @@ std::string to_string(T value)
 
 #ifdef USE_LUA_JIT
 extern "C" {
-#include <lua_inclues/luajit.h>
+#include <lua_includes/luajit.h>
 }
 #endif
 

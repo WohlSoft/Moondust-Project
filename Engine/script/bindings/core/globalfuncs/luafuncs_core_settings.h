@@ -2,7 +2,7 @@
 #define LUAFUNCS_CORE_SETTINGS_H
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 class Binding_Core_GlobalFuncs_Settings
 {
