@@ -53,6 +53,8 @@ pge_deps.xcodeproj
 *.pro.user.*
 *.qbs.user
 *.qbs.user.*
+*.txt.user
+*.txt.user.*
 *.error
 moc_*.cpp
 ui_*.h
