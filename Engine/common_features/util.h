@@ -44,7 +44,7 @@ namespace util
     void base64_encode(std::string &ret, const unsigned char *bytes_to_encode, size_t in_len);
     void base64_decode(std::string &ret, std::string const &encoded_string);
 
-};
+}
 
 namespace varadic_util
 {

@@ -19,6 +19,7 @@
 #ifndef LVL_LAYER_H
 #define LVL_LAYER_H
 
+#include <string> // on Emscripten: Must be here, or "type does not provide a call operator" error will appear
 #include <unordered_set>
 #include <unordered_map>
 #include "lvl_base_object.h"

@@ -20,8 +20,10 @@
 #define RENDER_OPENGL31_H
 
 #include "render_base.h"
+#include "render_platform_support.h"
 #include <common_features/rectf.h>
 
+#ifdef RENDER_SUPORT_OPENGL3
 class Render_OpenGL31 : public Render_Base
 {
     public:
@@ -117,5 +119,16 @@ class Render_OpenGL31 : public Render_Base
         //Texture render color levels
         float color_binded_texture[16];
 };
+
+#else //RENDER_SUPORT_OPENGL3
+
+class Render_OpenGL31 : public Render_dummy
+{
+    public:
+        virtual bool init();
+        virtual bool uninit();
+};
+
+#endif //RENDER_SUPORT_OPENGL3
 
 #endif // RENDER_OPENGL31_H

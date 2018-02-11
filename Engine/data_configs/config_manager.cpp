@@ -195,7 +195,7 @@ bool ConfigManager::loadBasics()
         setup_Scripts.wld_local  = mainset.value("local-script-name-wld", "world.lua").toString();
         setup_Scripts.wld_common = mainset.value("common-script-name-wld", "world.lua").toString();
         dirs.gcustom = data_dirSTD + mainset.value("custom-data", "data-custom").toString() + "/";
-        D_pLogDebug("=============Standard directories=============");
+        D_pLogDebugNA("=============Standard directories=============");
         D_pLogDebug("Music:                         %s", dirs.music.c_str());
         D_pLogDebug("SFX:                           %s", dirs.sounds.c_str());
         D_pLogDebug("Level graphics:                %s", dirs.glevel.c_str());
@@ -203,7 +203,7 @@ bool ConfigManager::loadBasics()
         D_pLogDebug("Playable characters graphics:  %s", dirs.gplayble.c_str());
         D_pLogDebug("Common graphics:               %s", dirs.gcommon.c_str());
         D_pLogDebug("Custom data (reserved):        %s", dirs.gcustom.c_str());
-        D_pLogDebug("==============================================");
+        D_pLogDebugNA("==============================================");
     }
     mainset.endGroup();
     mainset.beginGroup("graphics");

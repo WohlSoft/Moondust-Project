@@ -176,9 +176,9 @@ bool TitleScene::init()
         PGE_MsgBox msgBox(this, std::string("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
         msgBox.exec();
     });
-    D_pLogDebug("Attempt to init...");
+    D_pLogDebugNA("Attempt to init...");
     m_luaEngine.init();
-    D_pLogDebug("done!");
+    D_pLogDebugNA("done!");
     return true;
 }
 

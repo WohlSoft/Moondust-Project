@@ -80,7 +80,11 @@ bool Render_SW_SDL::init()
     //Initialize clear color
     setClearColor(0.f, 0.f, 0.f, 1.f);
     //Create renderer for window
+    #ifdef __ENSCRIPTEN__
+    m_gRenderer = SDL_CreateRenderer(PGE_Window::window, -1, SDL_RENDERER_ACCELERATED);
+    #else
     m_gRenderer = SDL_CreateRenderer(PGE_Window::window, -1, SDL_RENDERER_SOFTWARE);
+    #endif
 
     if(!m_gRenderer)
     {

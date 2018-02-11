@@ -44,10 +44,10 @@
 #include <script/bindings/core/events/luaevents_core_engine.h>
 #include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
-#include <Utils/elapsed_timer.h>
 
-static ElapsedTimer     debug_TimeReal;
-static int              debug_TimeCounted = 0;
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 LevelScene::LevelScene()
     : Scene(Level),
@@ -181,16 +181,16 @@ LevelScene::~LevelScene()
     GlRenderer::clearScreen();
     //destroy textures
     size_t i = 0;
-    D_pLogDebug("clear level textures");
+    D_pLogDebugNA("clear level textures");
 
     for(i = 0; i < m_texturesBank.size(); i++)
         GlRenderer::deleteTexture(m_texturesBank[i]);
 
     m_texturesBank.clear();
-    D_pLogDebug("Destroy cameras");
+    D_pLogDebugNA("Destroy cameras");
     m_cameras.clear();
 
-    D_pLogDebug("Destroy players");
+    D_pLogDebugNA("Destroy players");
     for(i = 0; i < m_itemsPlayers.size(); i++)
     {
         LVL_Player *tmp = m_itemsPlayers[i];
@@ -206,7 +206,7 @@ LevelScene::~LevelScene()
         }
     }
 
-    D_pLogDebug("Destroy blocks");
+    D_pLogDebugNA("Destroy blocks");
     for(LVL_BlocksArray::iterator i = m_itemsBlocks.begin(); i != m_itemsBlocks.end(); ++i)
     {
         LVL_Block *tmp = *i;
@@ -219,7 +219,7 @@ LevelScene::~LevelScene()
     }
     m_itemsBlocks.clear();
 
-    D_pLogDebug("Destroy BGO");
+    D_pLogDebugNA("Destroy BGO");
     for(LVL_BgosArray::iterator i = m_itemsBgo.begin(); i != m_itemsBgo.end(); ++i)
     {
         LVL_Bgo *tmp = *i;
@@ -232,7 +232,7 @@ LevelScene::~LevelScene()
     }
     m_itemsBlocks.clear();
 
-    D_pLogDebug("Destroy NPC");
+    D_pLogDebugNA("Destroy NPC");
     for(LVL_NpcsArray::iterator i = m_itemsNpc.begin(); i != m_itemsNpc.end(); ++i)
     {
         LVL_Npc *tmp = *i;
@@ -245,7 +245,7 @@ LevelScene::~LevelScene()
     }
     m_itemsNpc.clear();
 
-    D_pLogDebug("Destroy Warps");
+    D_pLogDebugNA("Destroy Warps");
     for(LVL_WarpsArray::iterator i = m_itemsWarps.begin(); i != m_itemsWarps.end(); ++i)
     {
         LVL_Warp *tmp = *i;
@@ -258,7 +258,7 @@ LevelScene::~LevelScene()
     }
     m_itemsWarps.clear();
 
-    D_pLogDebug("Destroy Physical Environment zones");
+    D_pLogDebugNA("Destroy Physical Environment zones");
     for(LVL_PhysEnvsArray::iterator i = m_itemsPhysEnvs.begin(); i != m_itemsPhysEnvs.end(); ++i)
     {
         LVL_PhysEnv *tmp = *i;
@@ -275,7 +275,7 @@ LevelScene::~LevelScene()
     m_layers.clear();
     m_switchBlocks.clear();
 
-    D_pLogDebug("Destroy sections");
+    D_pLogDebugNA("Destroy sections");
     m_sections.clear();
     m_luaEngine.shutdown();
     destroyLoaderTexture();
@@ -390,7 +390,7 @@ void LevelScene::update()
             {
                 m_debug_player_jumping    = plr->m_jumpPressed;
                 m_debug_player_onground   = plr->onGround();
-                m_debug_player_foots      = plr->l_contactB.size();
+                m_debug_player_foots      = (int)plr->l_contactB.size();
             }
         }
 
@@ -398,7 +398,7 @@ void LevelScene::update()
         {
             if(m_blocksInFade[i]->tickFader(uTickf))
             {
-                m_blocksInFade.erase(m_blocksInFade.begin() + i);
+                m_blocksInFade.erase(m_blocksInFade.begin() + (int)i);
                 i--;
             }
         }
@@ -670,10 +670,6 @@ renderBlack:
     m_blinkStateFlag = !m_blinkStateFlag;
 }
 
-static bool slowTimeMode = false;
-static bool OneStepMode = false;
-static bool OneStepMode_doStep = false;
-
 void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
     if(m_doExit || isExit()) return;
@@ -805,23 +801,23 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
             case SDLK_F6:
             {
                 PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
-                slowTimeMode = !slowTimeMode;
+                m_debug_slowTimeMode = !m_debug_slowTimeMode;
                 break;
             }
 
             case SDLK_F7:
             {
                 PGE_Audio::playSoundByRole(obj_sound_role::WorldOpenPath);
-                OneStepMode = !OneStepMode;
+                m_debug_oneStepMode = !m_debug_oneStepMode;
                 break;
             }
 
             case SDLK_F8:
             {
-                if(OneStepMode)
+                if(m_debug_oneStepMode)
                 {
                     PGE_Audio::playSoundByRole(obj_sound_role::WorldMove);
-                    OneStepMode_doStep = true;
+                    m_debug_oneStepMode_doStep = true;
                 }
 
                 break;
@@ -839,12 +835,88 @@ LuaEngine *LevelScene::getLuaEngine()
     return &m_luaEngine;
 }
 
+
+void levelSceneLoopStep(void *scene)
+{
+    LevelScene* s = reinterpret_cast<LevelScene*>(scene);
+    s->times.start_common = SDL_GetTicks();
+    s->debug_TimeCounted += s->uTickf;
+
+    if(PGE_Window::showDebugInfo)
+        s->times.start_events = SDL_GetTicks();
+
+    /**********************Update common events and controllers******************/
+    s->processEvents();
+
+    /****************************************************************************/
+    if(PGE_Window::showDebugInfo)
+        s->times.stop_events = SDL_GetTicks();
+
+    if(PGE_Window::showDebugInfo)
+        s->m_debug_event_delay = static_cast<int>(s->times.stop_events - s->times.start_events);
+
+    s->times.start_physics = SDL_GetTicks();
+
+    /**********************Update physics and game progess***********************/
+    if(!s->m_debug_oneStepMode || s->m_debug_oneStepMode_doStep)
+    {
+        s->update();
+        s->m_debug_oneStepMode_doStep = false;
+    }
+
+    /****************************************************************************/
+    s->times.stop_physics = SDL_GetTicks();
+
+    if(PGE_Window::showDebugInfo)
+        s->m_debug_phys_delay  = static_cast<int>(s->times.stop_physics - s->times.start_physics);
+
+    s->times.stop_render = 0;
+    s->times.start_render = 0;
+
+    /**********************Process rendering of stuff****************************/
+    if((PGE_Window::vsync) || (s->times.doUpdate_render <= 0.0))
+    {
+        s->times.start_render = SDL_GetTicks();
+        /**********************Render everything***********************/
+        s->render();
+        GlRenderer::flush();
+        GlRenderer::repaint();
+        s->times.stop_render = SDL_GetTicks();
+        s->times.doUpdate_render = s->m_frameSkip ? s->uTickf + (s->times.stop_render - s->times.start_render) : 0;
+
+        if(PGE_Window::showDebugInfo)
+            s->m_debug_render_delay = static_cast<int>(s->times.stop_render - s->times.start_render);
+    }
+
+    s->times.doUpdate_render -= s->uTickf;
+
+    if(s->times.stop_render < s->times.start_render)
+    {
+        s->times.stop_render = 0;
+        s->times.start_render = 0;
+    }
+
+    /****************************************************************************/
+    #ifndef __EMSCRIPTEN__
+    if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
+    {
+        if(!s->m_debug_slowTimeMode)
+            SDL_Delay(s->uTick - s->times.passedCommonTime());
+        else
+            SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
+    }
+    else if(s->m_debug_slowTimeMode) {
+        SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
+    }
+    #endif
+}
+
 int LevelScene::exec()
 {
     m_isLevelContinues = true;
     m_doExit = false;
     m_isRunning = true;
-    LoopTiming times;
+    times.init();
     times.start_common = SDL_GetTicks();
     //Set black color clearer
     GlRenderer::setClearColor(0.f, 0.f, 0.f, 1.0f);
@@ -863,80 +935,19 @@ int LevelScene::exec()
     m_player1Controller->resetControls();
     m_player2Controller->resetControls();
 
-    if(m_isRunning) update();
+    if(m_isRunning)
+        update();
 
     debug_TimeCounted = 0;
     debug_TimeReal.restart();
     /*****************************************************/
 
+    #ifndef __EMSCRIPTEN__
     while(m_isRunning)
-    {
-        times.start_common = SDL_GetTicks();
-        debug_TimeCounted += uTickf;
-
-        if(PGE_Window::showDebugInfo) times.start_events = SDL_GetTicks();
-
-        /**********************Update common events and controllers******************/
-        processEvents();
-
-        /****************************************************************************/
-        if(PGE_Window::showDebugInfo) times.stop_events = SDL_GetTicks();
-
-        if(PGE_Window::showDebugInfo)
-            m_debug_event_delay = static_cast<int>(times.stop_events - times.start_events);
-
-        times.start_physics = SDL_GetTicks();
-
-        /**********************Update physics and game progess***********************/
-        if(!OneStepMode || OneStepMode_doStep)
-        {
-            update();
-            OneStepMode_doStep = false;
-        }
-
-        /****************************************************************************/
-        times.stop_physics = SDL_GetTicks();
-
-        if(PGE_Window::showDebugInfo)
-            m_debug_phys_delay  = static_cast<int>(times.stop_physics - times.start_physics);
-
-        times.stop_render = 0;
-        times.start_render = 0;
-
-        /**********************Process rendering of stuff****************************/
-        if((PGE_Window::vsync) || (times.doUpdate_render <= 0.0))
-        {
-            times.start_render = SDL_GetTicks();
-            /**********************Render everything***********************/
-            render();
-            GlRenderer::flush();
-            GlRenderer::repaint();
-            times.stop_render = SDL_GetTicks();
-            times.doUpdate_render = m_frameSkip ? uTickf + (times.stop_render - times.start_render) : 0;
-
-            if(PGE_Window::showDebugInfo)
-                m_debug_render_delay = static_cast<int>(times.stop_render - times.start_render);
-        }
-
-        times.doUpdate_render -= uTickf;
-
-        if(times.stop_render < times.start_render)
-        {
-            times.stop_render = 0;
-            times.start_render = 0;
-        }
-
-        /****************************************************************************/
-
-        if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))
-        {
-            if(!slowTimeMode)
-                SDL_Delay(uTick - times.passedCommonTime());
-            else
-                SDL_Delay(uTick - times.passedCommonTime() + 300);
-        }
-        else if(slowTimeMode) SDL_Delay(uTick - times.passedCommonTime() + 300);
-    }
+        levelSceneLoopStep(this);
+    #else
+    emscripten_set_main_loop_arg(levelSceneLoopStep, this, (int)PGE_Window::frameRate, 1);
+    #endif
 
     return m_exitLevelCode;
 }

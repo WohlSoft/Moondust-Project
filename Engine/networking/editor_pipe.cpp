@@ -36,8 +36,10 @@ int EditorPipe::run(void *self)
 void EditorPipe::start()
 {
     std::cin.sync_with_stdio(false);
+    #ifndef PGE_NO_THREADING
     m_thread_isAlive = true;
     m_thread = SDL_CreateThread(&run, "EditorPipe_std", this);
+    #endif
 }
 
 void EditorPipe::stop()
@@ -163,7 +165,7 @@ void EditorPipe::icomingData(std::string &in)
     }
     else if(in.compare(0, 11, "PLACEITEM: ") == 0)
     {
-        D_pLogDebug("Accepted Placing item!");
+        D_pLogDebugNA("Accepted Placing item!");
         IntProc::storeCommand(in.c_str() + 11, in.size() - 11, IntProc::PlaceItem);
     }
     else if(in.compare(0, 8, "MSGBOX: ") == 0)
@@ -178,7 +180,7 @@ void EditorPipe::icomingData(std::string &in)
     }
     else if(in.compare("PING") == 0)
     {
-        D_pLogDebug("IN: >> PING");
+        D_pLogDebugNA("IN: >> PING");
         sendMessage("PONG\n\n");
         pLogDebug("Ping-Pong!");
     }

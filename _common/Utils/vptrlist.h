@@ -30,7 +30,11 @@ DEALINGS IN THE SOFTWARE.
 #include <memory>
 #include <assert.h>
 
-#ifdef _MSC_VER
+#if defined(__EMSCRIPTEN__)
+#include <sys/types.h>
+#endif
+
+#if defined(_MSC_VER)
 #ifdef _WIN64
 typedef long long ssize_t;
 #else

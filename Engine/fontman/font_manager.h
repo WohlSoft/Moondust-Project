@@ -122,6 +122,6 @@ void           optimizeText(std::string &text,
  */
 std::string     cropText(std::string text, size_t max_symbols);
 
-};
+} //namespace FontManager
 
 #endif // FONT_MANAGER_H

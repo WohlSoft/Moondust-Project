@@ -26,6 +26,10 @@
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 LoadingScene_misc_img::LoadingScene_misc_img()
 {
     x = 0;
@@ -133,7 +137,7 @@ void LoadingScene::onMousePressed(SDL_MouseButtonEvent &)
 {
     if(m_doExit) return;
 
-    D_pLogDebug("LoadingScene: Mouse pressed");
+    D_pLogDebugNA("LoadingScene: Mouse pressed");
     exitFromScene();
 }
 
@@ -185,47 +189,64 @@ void LoadingScene::render()
     Scene::render();
 }
 
+void loadingSceneLoopStep(void *scene)
+{
+    LoadingScene* s = reinterpret_cast<LoadingScene*>(scene);
+    s->times.start_common = SDL_GetTicks();
+    s->processEvents();
+    s->update();
+    s->times.stop_render = 0;
+    s->times.start_render = 0;
+
+    /**********************Process rendering of stuff****************************/
+    if((PGE_Window::vsync) || (s->times.doUpdate_render <= 0.0))
+    {
+        s->times.start_render = SDL_GetTicks();
+        /**********************Render everything***********************/
+        s->render();
+        GlRenderer::flush();
+        GlRenderer::repaint();
+        s->times.stop_render = SDL_GetTicks();
+        s->times.doUpdate_render = s->m_gfx_frameSkip ? s->uTickf + (s->times.stop_render - s->times.start_render) : 0;
+    }
+
+    s->times.doUpdate_render -= s->uTickf;
+
+    if(s->times.stop_render < s->times.start_render)
+    {
+        s->times.stop_render = 0;
+        s->times.start_render = 0;
+    }
+
+    /****************************************************************************/
+    #ifndef __EMSCRIPTEN__
+    if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
+        SDL_Delay(s->uTick - s->times.passedCommonTime());
+    #else
+    if(!s->m_isRunning)
+    {
+        emscripten_cancel_main_loop();
+        pLogDebug("Exit from loop triggered");
+    }
+    #endif
+}
+
 int LoadingScene::exec()
 {
     m_doExit = false;
-    LoopTiming times;
+    times.init();
     times.start_common = SDL_GetTicks();
-    bool frameSkip = g_AppSettings.frameSkip;
+    m_gfx_frameSkip = g_AppSettings.frameSkip;
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
 
+    #ifndef __EMSCRIPTEN__
     while(m_isRunning)
-    {
-        times.start_common = SDL_GetTicks();
-        processEvents();
-        update();
-        times.stop_render = 0;
-        times.start_render = 0;
-
-        /**********************Process rendering of stuff****************************/
-        if((PGE_Window::vsync) || (times.doUpdate_render <= 0.0))
-        {
-            times.start_render = SDL_GetTicks();
-            /**********************Render everything***********************/
-            render();
-            GlRenderer::flush();
-            GlRenderer::repaint();
-            times.stop_render = SDL_GetTicks();
-            times.doUpdate_render = frameSkip ? uTickf + (times.stop_render - times.start_render) : 0;
-        }
-
-        times.doUpdate_render -= uTickf;
-
-        if(times.stop_render < times.start_render)
-        {
-            times.stop_render = 0;
-            times.start_render = 0;
-        }
-
-        /****************************************************************************/
-
-        if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))
-            SDL_Delay(uTick - times.passedCommonTime());
-    }
+        loadingSceneLoopStep(this);
+    #else
+    pLogDebug("Main loop started");
+    emscripten_set_main_loop_arg(loadingSceneLoopStep, this, -1, 1);
+    pLogDebug("Main loop finished");
+    #endif
 
     return 0;
 }

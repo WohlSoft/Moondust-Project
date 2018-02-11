@@ -30,6 +30,10 @@
 #include "../scenes/scene_world.h"
 #include "../scenes/scene_gameover.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, std::string _title, msgType _type,
                                  PGE_Point boxCenterPos, double _padding, std::string texture)
     : PGE_BoxBase(_parentScene), _menu(alignment, gapSpace)
@@ -340,7 +344,13 @@ void PGE_MenuBoxBase::exec()
         GlRenderer::repaint();
 
         if((!PGE_Window::vsync) && (m_uTick > static_cast<Sint32>(SDL_GetTicks() - start_render)))
+        {
+            #ifndef __EMSCRIPTEN__
             SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render));
+            #else
+            emscripten_sleep(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render));
+            #endif
+        }
     }
 }
 

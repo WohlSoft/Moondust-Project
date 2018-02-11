@@ -59,6 +59,7 @@ namespace IntProc
     std::string getCMD();
 
     extern EditorPipe *editor;
-};
+
+}// namespace IntProc
 
 #endif // INTPROC_H

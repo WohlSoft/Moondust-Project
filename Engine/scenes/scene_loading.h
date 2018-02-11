@@ -40,6 +40,7 @@ class LoadingScene_misc_img
 
 class LoadingScene : public Scene
 {
+        friend void loadingSceneLoopStep(void *scene);
     public:
         LoadingScene();
         ~LoadingScene();
@@ -57,6 +58,8 @@ class LoadingScene : public Scene
 
     private:
         float _waitTimer;
+
+        bool m_gfx_frameSkip = false;
 
         PGE_Texture background;
         PGEColor    bgcolor;

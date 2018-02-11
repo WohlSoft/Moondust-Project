@@ -20,9 +20,10 @@
 #define RENDER_OPENGL21_H
 
 #include "render_base.h"
+#include "render_platform_support.h"
 #include <common_features/rectf.h>
 
-#ifndef __ANDROID__
+#ifdef RENDER_SUPORT_OPENGL2
 class Render_OpenGL21 : public Render_Base
 {
     public:
@@ -118,15 +119,15 @@ class Render_OpenGL21 : public Render_Base
         float color_binded_texture[4];
 };
 
-#else
+#else //RENDER_SUPORT_OPENGL2
 
-class Render_OpenGL21 : public Render_Base
+class Render_OpenGL21 : public Render_dummy
 {
     public:
         virtual bool init();
         virtual bool uninit();
-}
+};
 
-#endif
+#endif //RENDER_SUPORT_OPENGL2
 
 #endif // RENDER_OPENGL21_H

@@ -27,6 +27,7 @@
 
 class ConfigSelectScene : public Scene
 {
+    friend void configSelectSceneLoopStep(void *scene);
 public:
     ConfigSelectScene();
     ~ConfigSelectScene();
@@ -66,6 +67,7 @@ private:
         std::string path;
     };
     int32_t ret;//!< Exit code
+    bool m_gfx_frameSkip = false;
     std::string m_label;
     std::string m_waterMark;
     PGE_Rect m_waterMarkRect;

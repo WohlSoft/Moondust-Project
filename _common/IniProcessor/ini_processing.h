@@ -25,11 +25,11 @@ DEALINGS IN THE SOFTWARE.
 #ifndef INIPROCESSING_H
 #define INIPROCESSING_H
 
+#include <unordered_map>
 #include <string>
 #include <cstring>
 #include <cstdlib>
 #include <vector>
-#include <unordered_map>
 #ifdef INI_PROCESSING_ALLOW_QT_TYPES
 #include <QString>
 #include <QList>

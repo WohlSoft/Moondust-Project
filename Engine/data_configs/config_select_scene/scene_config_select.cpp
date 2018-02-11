@@ -43,6 +43,9 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/tr.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 ConfigSelectScene::ConfigSelectScene():
     Scene(ConfigSelect)
@@ -389,6 +392,50 @@ void ConfigSelectScene::renderMouse()
     GlRenderer::renderTexture(&cursor, posX, posY);
 }
 
+void configSelectSceneLoopStep(void *scene)
+{
+    ConfigSelectScene* s = reinterpret_cast<ConfigSelectScene*>(scene);
+    s->times.start_common = SDL_GetTicks();
+    s->processEvents();
+    s->processMenu();
+    s->update();
+    s->times.stop_render  = 0;
+    s->times.start_render = 0;
+
+    /**********************Process rendering of stuff****************************/
+    if((PGE_Window::vsync) || (s->times.doUpdate_render <= 0.0))
+    {
+        s->times.start_render = SDL_GetTicks();
+        /**********************Render everything***********************/
+        s->render();
+
+        if(!s->m_doExit)
+            s->renderMouse();
+
+        GlRenderer::flush();
+        GlRenderer::repaint();
+        s->times.stop_render = SDL_GetTicks();
+        s->times.doUpdate_render = s->m_gfx_frameSkip ? s->uTickf + (s->times.stop_render - s->times.start_render) : 0;
+    }
+
+    s->times.doUpdate_render -= s->uTickf;
+
+    if(s->times.stop_render < s->times.start_render)
+    {
+        s->times.stop_render = 0;
+        s->times.start_render = 0;
+    }
+
+    /****************************************************************************/
+    #ifndef __EMSCRIPTEN__
+    if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
+        SDL_Delay(s->uTick - s->times.passedCommonTime());
+    #else
+    if(!s->m_isRunning)
+        emscripten_cancel_main_loop();
+    #endif
+}
+
 int32_t ConfigSelectScene::exec()
 {
     m_doExit = false;
@@ -404,48 +451,20 @@ int32_t ConfigSelectScene::exec()
         menu.addMenuItem(std::to_string(i), m_availablePacks[i].fullname);
 
     //continueOrQuit.exec();
-    LoopTiming times;
+    times.init();
     times.start_common = SDL_GetTicks();
-    bool frameSkip = g_AppSettings.frameSkip;
+    m_gfx_frameSkip = g_AppSettings.frameSkip;
     //Hide mouse cursor
     PGE_Window::setCursorVisibly(false);
 
+    #ifndef __EMSCRIPTEN__
     while(m_isRunning)
-    {
-        times.start_common = SDL_GetTicks();
-        processEvents();
-        processMenu();
-        update();
-        times.stop_render  = 0;
-        times.start_render = 0;
-
-        /**********************Process rendering of stuff****************************/
-        if((PGE_Window::vsync) || (times.doUpdate_render <= 0.0))
-        {
-            times.start_render = SDL_GetTicks();
-            /**********************Render everything***********************/
-            render();
-
-            if(!m_doExit) renderMouse();
-
-            GlRenderer::flush();
-            GlRenderer::repaint();
-            times.stop_render = SDL_GetTicks();
-            times.doUpdate_render = frameSkip ? uTickf + (times.stop_render - times.start_render) : 0;
-        }
-
-        times.doUpdate_render -= uTickf;
-
-        if(times.stop_render < times.start_render)
-        {
-            times.stop_render = 0;
-            times.start_render = 0;
-        }
-
-        /****************************************************************************/
-        if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))
-            SDL_Delay(uTick - times.passedCommonTime());
-    }
+        configSelectSceneLoopStep(this);
+    #else
+    pLogDebug("Main loop started");
+    emscripten_set_main_loop_arg(configSelectSceneLoopStep, this, 65, 1);
+    pLogDebug("Main loop finished");
+    #endif
 
     PGE_Window::setCursorVisibly(true);
     return ret;

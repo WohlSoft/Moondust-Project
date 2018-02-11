@@ -31,6 +31,11 @@
 #include "app_path.h"
 #include "logger_sets.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/trace.h>
+#define LOG_CHANNEL "Application"
+#endif
+
 static std::mutex g_lockLocker;
 #define OUT_BUFFER_SIZE 10240
 static char       g_outputBuffer[OUT_BUFFER_SIZE];
@@ -57,6 +62,7 @@ bool            LogWriter::m_enabled;
 bool  LogWriter::m_logIsOpened = false;
 SDL_RWops *LogWriter::m_logout = nullptr;
 
+#ifndef __EMSCRIPTEN__
 static std::string return_current_time_and_date()
 {
     auto now = std::chrono::system_clock::now();
@@ -68,11 +74,18 @@ static std::string return_current_time_and_date()
     else
         return "0000_00_00_00_00_00";
 }
+#endif//__EMSCRIPTEN__
 
 void LogWriter::LoadLogSettings()
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
+#ifdef __EMSCRIPTEN__
+    m_logLevel = PGE_LogLevel::Debug;
+    m_logIsOpened = false;
+    m_enabled = true;
+    std::fprintf(stdout, "Emscripten logs stdout.\n");
+#else
     std::string logFileName = fmt::format_ne("PGE_Engine_log_{0}.txt", return_current_time_and_date());
 
     m_logLevel = PGE_LogLevel::Debug;
@@ -121,6 +134,7 @@ void LogWriter::LoadLogSettings()
             std::fflush(stderr);
         }
     }
+#endif
 }
 
 void LoadLogSettings()
@@ -130,12 +144,14 @@ void LoadLogSettings()
 
 void CloseLog()
 {
+#ifndef __EMSCRIPTEN__
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
     SDL_RWclose(LogWriter::m_logout);
     LogWriter::m_logout = nullptr;
     //LogWriter::m_out_stream.reset();
     LogWriter::m_logIsOpened = false;
+#endif
 }
 
 #ifdef _WIN32
@@ -149,90 +165,130 @@ void CloseLog()
 void pLogDebug(const char *format, ...)
 {
     va_list arg;
+#ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
+#endif
     if(LogWriter::m_logLevel < PGE_LogLevel::Debug)
         return;
 
     MutexLocker mutex(&g_lockLocker);
     ((void)mutex);
     va_start(arg, format);
+#ifdef __EMSCRIPTEN__
+    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
+    std::fprintf(stdout, "Debug: %s\n", g_outputBuffer);
+    std::fflush(stdout);
+#else
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Debug: "), 1, 7);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
+#endif
     va_end(arg);
 }
 
 void pLogWarning(const char *format, ...)
 {
     va_list arg;
+#ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
+#endif
     if(LogWriter::m_logLevel < PGE_LogLevel::Warning)
         return;
 
     MutexLocker mutex(&g_lockLocker);
     ((void)mutex);
     va_start(arg, format);
+#ifdef __EMSCRIPTEN__
+    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
+    std::fprintf(stdout, "Warning: %s\n", g_outputBuffer);
+    std::fflush(stdout);
+#else
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Warning: "), 1, 9);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
+#endif
     va_end(arg);
 }
 
 void pLogCritical(const char *format, ...)
 {
     va_list arg;
+#ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
+#endif
     if(LogWriter::m_logLevel < PGE_LogLevel::Critical)
         return;
 
     MutexLocker mutex(&g_lockLocker);
     ((void)mutex);
     va_start(arg, format);
+#ifdef __EMSCRIPTEN__
+    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
+    std::fprintf(stdout, "Critical: %s\n", g_outputBuffer);
+    std::fflush(stdout);
+#else
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Critical: "), 1, 10);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
+#endif
     va_end(arg);
 }
 
 void pLogFatal(const char *format, ...)
 {
     va_list arg;
+#ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
+#endif
     if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
         return;
 
     MutexLocker mutex(&g_lockLocker);
     ((void)mutex);
     va_start(arg, format);
+#ifdef __EMSCRIPTEN__
+    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
+    std::fprintf(stdout, "Fatal: %s\n", g_outputBuffer);
+    std::fflush(stdout);
+#else
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Fatal: "), 1, 7);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
+#endif
     va_end(arg);
 }
 
 void pLogInfo(const char *format, ...)
 {
     va_list arg;
+#ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
+#endif
     if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
         return;
 
     MutexLocker mutex(&g_lockLocker);
     ((void)mutex);
     va_start(arg, format);
+#ifdef __EMSCRIPTEN__
+    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
+    std::fprintf(stdout, "Info: %s\n", g_outputBuffer);
+    std::fflush(stdout);
+#else
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Info: "), 1, 6);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
+#endif
     va_end(arg);
 }
 

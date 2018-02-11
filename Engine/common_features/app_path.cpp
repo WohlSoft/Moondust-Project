@@ -93,7 +93,7 @@ static std::string getPgeUserDirectory()
         path.append(pw->pw_dir);
     }
 #endif
-    return path.empty() ? std::string() : (path + UserDirName);
+    return path.empty() ? std::string(".") : (path + UserDirName);
 }
 
 
@@ -155,7 +155,7 @@ void AppPathManager::initAppPath()
     ApplicationPath =   QString::fromStdString(ApplicationPathSTD);
     ApplicationPath_x = ApplicationPath;
     */
-    #ifdef __APPLE__
+#ifdef __APPLE__
     {
         CFURLRef appUrlRef;
         appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
@@ -176,14 +176,14 @@ void AppPathManager::initAppPath()
         //CFRelease(filePathRef);
         CFRelease(appUrlRef);
     }
-    #else
+#else //__APPLE__
     char* path = SDL_GetBasePath();//DirMan(Files::dirname(argv0)).absolutePath();
     ApplicationPathSTD = std::string(path);
-    #ifdef _WIN32
+#   if defined(_WIN32)
     std::replace(ApplicationPathSTD.begin(), ApplicationPathSTD.end(), '\\', '/');
-    #endif
+#   endif
     SDL_free(path);
-    #endif
+#endif
 
 //#if defined(__ANDROID__)
 //    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
@@ -201,7 +201,7 @@ void AppPathManager::initAppPath()
 #if defined(__ANDROID__) || defined(__APPLE__)
     userDir = true;
 #else
-    #if defined(__gnu_linux__)
+#   if defined(__gnu_linux__)
     {
         passwd* pw = getpwuid(getuid());
         std::string path(pw->pw_dir);
@@ -213,13 +213,13 @@ void AppPathManager::initAppPath()
         userDir = setup.value("EnableUserDir", false).toBool();
         setup.endGroup();
     }
-    #elif defined(_WIN32)
+#   elif defined(_WIN32)
     {
         userDir = winReg_isUserDir();
     }
-    #else
+#   else
     userDir = false;
-    #endif
+#   endif
 #endif
 
     if(userDir)
@@ -248,6 +248,11 @@ void AppPathManager::initAppPath()
 defaultSettingsPath:
     m_userPath = ApplicationPathSTD;
     _initSettingsPath();
+#ifdef __EMSCRIPTEN__
+    printf("== App Path is %s\n", ApplicationPathSTD.c_str());
+    printf("== User Path is %s\n", m_userPath.c_str());
+    fflush(stdout);
+#endif
 }
 
 std::string AppPathManager::settingsFileSTD()

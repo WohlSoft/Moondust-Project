@@ -115,6 +115,6 @@ namespace Maths
     {
         return (T(0) < val) - (val < T(0));
     }
-};
+} // namespace Maths
 
 #endif // MATHS_H

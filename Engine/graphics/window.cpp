@@ -98,51 +98,50 @@ void PGE_Window::printSDLError(std::string info)
 
 int PGE_Window::msgBoxInfo(std::string title, std::string text)
 {
-    #ifdef PGE_ENGINE_DEBUG
+#ifdef PGE_ENGINE_DEBUG
     if(PGE_Debugger::isDebuggerPresent())
     {
         pLogDebug("MESSAGEBOX: %s: %s", title.c_str(), text.c_str());
         return 0;
     }
-    #endif
+#endif
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
                                     title.c_str(), text.c_str(), window);
-
 }
 
 int PGE_Window::msgBoxWarning(std::string title, std::string text)
 {
-    #ifdef PGE_ENGINE_DEBUG
+#ifdef PGE_ENGINE_DEBUG
     if(PGE_Debugger::isDebuggerPresent())
     {
         pLogWarning("MESSAGEBOX: %s: %s", title.c_str(), text.c_str());
         return 0;
     }
-    #endif
+#endif
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                     title.c_str(), text.c_str(), window);
 }
 
 int PGE_Window::msgBoxCritical(std::string title, std::string text)
 {
-    #ifdef PGE_ENGINE_DEBUG
+#ifdef PGE_ENGINE_DEBUG
     if(PGE_Debugger::isDebuggerPresent())
     {
         pLogCritical("MESSAGEBOX: %s: %s", title.c_str(), text.c_str());
         return 0;
     }
-    #endif
+#endif
     return SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
                                     title.c_str(), text.c_str(), window);
 }
 
 bool PGE_Window::init(std::string WindowTitle, int renderType)
 {
-    #if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
+#if 0 //For testing! Change 0 to 1 and unommend one of GL Renderers to debug one specific renderer!
     GlRenderer::setup_SW_SDL();
     //GlRenderer::setup_OpenGL21();
     //GlRenderer::setup_OpenGL31();
-    #else
+#else
     //Detect renderer
     GlRenderer::RenderEngineType rtype = GlRenderer::setRenderer(static_cast<GlRenderer::RenderEngineType>(renderType));
 
@@ -174,13 +173,17 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
         printSDLError(qtTrId("NO_RENDERER_ERROR"));
         return false;
     }
+#endif //0
 
-    #endif
     GlRenderer::setViewportSize(Width, Height);
     window = SDL_CreateWindow(WindowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
+                          #ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
+                              Width / 2, Height / 2,
+                          #else
                               Width, Height,
+                          #endif //__EMSCRIPTEN__
                               SDL_WINDOW_RESIZABLE |
                               SDL_WINDOW_HIDDEN |
                               SDL_WINDOW_ALLOW_HIGHDPI |
@@ -202,10 +205,16 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
         return false;
     }
 
+#ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
+    SDL_SetWindowMinimumSize(window, Width / 2, Height / 2);
+#else
     SDL_SetWindowMinimumSize(window, Width, Height);
+#endif //__EMSCRIPTEN__
+
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     GraphicsHelps::initFreeImage();
-    #ifdef _WIN32
+
+#ifdef _WIN32
     FIBITMAP *img[2];
     img[0] = GraphicsHelps::loadImageRC("cat_16.png");
     img[1] = GraphicsHelps::loadImageRC("cat_32.png");
@@ -226,13 +235,14 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     GraphicsHelps::closeImage(img[0]);
     GraphicsHelps::closeImage(img[1]);
-    #else//IF _WIN32
+#else//IF _WIN32
+
     FIBITMAP *img;
-    #ifdef __APPLE__
+#   ifdef __APPLE__
     img = GraphicsHelps::loadImageRC("cat_256.png");
-    #else
+#   else
     img = GraphicsHelps::loadImageRC("cat_32.png");
-    #endif
+#   endif //__APPLE__
 
     if(img)
     {
@@ -248,8 +258,8 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
             SDL_ClearError();
         }
     }
+#endif//IF _WIN32 #else
 
-    #endif//IF _WIN32 #else
     g_isRenderInit = true;
     //Init OpenGL (to work with textures, OpenGL should be load)
     pLogDebug("Init OpenGL settings...");

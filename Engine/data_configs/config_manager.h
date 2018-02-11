@@ -441,7 +441,7 @@ namespace ConfigManager
     std::string PathSound();
 
     std::string clearMusTrack(std::string path);
-};
+}
 
 
 #endif // CONFIG_MANAGER_H

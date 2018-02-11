@@ -18,9 +18,12 @@
 
 #include "render_opengl31.h"
 
+#include <common_features/logger.h>
+
+#ifdef RENDER_SUPORT_OPENGL3
+
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
 #include <common_features/fmt_format_ne.h>
 
 #include <SDL2/SDL.h> // SDL 2 Library
@@ -594,3 +597,19 @@ int Render_OpenGL31::alignToCenterH(int y, int h)
 {
     return y + (static_cast<int>(viewport_h_half) - (h / 2));
 }
+
+#else //RENDER_SUPORT_OPENGL3
+
+bool Render_OpenGL31::init()
+{
+    pLogWarning("GL 3.1: this renderer is not supported!");
+    return false;
+}
+
+bool Render_OpenGL31::uninit()
+{
+    pLogWarning("GL 3.1: this renderer is not supported!");
+    return false;
+}
+
+#endif //RENDER_SUPORT_OPENGL3

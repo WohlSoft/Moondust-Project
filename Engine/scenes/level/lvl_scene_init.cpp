@@ -161,7 +161,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
         }
 
         point.direction = 1;
-        point.id = playerID;
+        point.id = static_cast<unsigned int>(playerID);
         return point;
     }
 
@@ -178,13 +178,13 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
 
     if(playerID <= int32_t(m_data.players.size()))
     {
-        PlayerPoint p = m_data.players[playerID - 1];
+        PlayerPoint p = m_data.players[static_cast<size_t>(playerID) - 1];
 
         //Return spawn point by array index if not out of range [Not null]
         if((p.w != 0) && (p.h != 0))
         {
-            p.id = playerID;
-            return m_data.players[playerID - 1];
+            p.id = static_cast<unsigned int>(playerID);
+            return m_data.players[static_cast<size_t>(playerID) - 1];
         }
     }
 
@@ -193,7 +193,7 @@ PlayerPoint LevelScene::getStartLocation(int playerID)
         //Return first not null point
         if((p.w != 0) && (p.h != 0))
         {
-            p.id = playerID;
+            p.id = static_cast<unsigned int>(playerID);
             return p;
         }
     }
@@ -363,7 +363,7 @@ bool LevelScene::init_items()
     }
 
     m_zCounter = 0.0L;
-    D_pLogDebug("Build sections");
+    D_pLogDebugNA("Build sections");
 
     for(size_t i = 0; i < m_data.sections.size(); i++)
     {
@@ -374,7 +374,7 @@ bool LevelScene::init_items()
         m_sections.back().setMusicRoot(m_data.meta.path);
     }
 
-    D_pLogDebug("Create cameras");
+    D_pLogDebugNA("Create cameras");
 
     //quit from game if window was closed
     if(!m_isLevelContinues) return false;
@@ -553,7 +553,7 @@ place_door_again:
         return false;
     }
 
-    D_pLogDebug("Apply layers");
+    D_pLogDebugNA("Apply layers");
 
     for(size_t i = 0; i < m_data.layers.size(); i++)
     {
@@ -561,7 +561,7 @@ place_door_again:
             m_layers.hide(m_data.layers[i].name, false);
     }
 
-    D_pLogDebug("Apply Events");
+    D_pLogDebugNA("Apply Events");
 
     for(size_t i = 0; i < m_data.events.size(); i++)
         m_events.addSMBX64Event(m_data.events[i]);

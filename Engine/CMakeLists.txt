@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8.11)
-project(MoondustEngine C)
+project(MoondustEngine C CXX)
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -11,13 +11,33 @@ include_directories(
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
-if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-    # Turn on warnings and legacy C/C++ standards to support more compilers
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+#if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+#    # Turn on warnings and legacy C/C++ standards to support more compilers
+#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+#endif()
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+    message("== Using default build configuration which is a Release!")
+endif()
+
+if(NOT GIT_COMMIT_HASH)
+    add_definitions(-DGIT_VERSION="CMakeUnknown")
+else()
+    add_definitions(-DGIT_VERSION="${GIT_COMMIT_HASH}")
+endif()
+
+if(NOT GIT_BRANCH)
+    add_definitions(-DGIT_BRANCH="unknown")
+else()
+    add_definitions(-DGIT_BRANCH="${GIT_BRANCH}")
 endif()
 
 set(CMAKE_CXX_STANDARD 14)
+
+# Common building properties and optimization flags
+include(../_common/build_pros.cmake)
 
 # include shared code modules
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
@@ -223,6 +243,33 @@ list(APPEND PGE_ENGINE_SRCS
     settings/global_settings.cpp
 )
 
+if(EMSCRIPTEN)
+    message("Is EMSCRIPTEN!")
+    set(PGE_PRELOAD_CONFIG_PACK "/home/vitaly/_git_repos/PGE-Project/bin/configs/A2XT" CACHE STRING "Path to config pack to pack")
+    set(PGE_PRELOAD_CONFIG_PACK_NAME "A2XT" CACHE STRING "Name of folder of embedded config pack")
+    set(PGE_PRELOAD_EPISODE "/home/vitaly/_git_repos/PGE-Project/bin/worlds/Lowsers Conquest Demo v 2.1" CACHE STRING "Path to episode to pack")
+    set(PGE_PRELOAD_EPISODE_NAME "lcd" CACHE STRING "Name of folder of episode")
+    set(PGE_RUN_SINGLE_LEVEL "worlds/lcd/Sky Tower.lvl" CACHE STRING "Full path to level which must be ran")
+    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2")
+    # -DIS_CXX -s USE_PTHREADS=1
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s WASM=1 -s 'BINARYEN_METHOD=\"native-wasm\"'")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1  -s 'EMTERPRETIFY_FILE=\"pge_engine.binary\"'")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s ASSERTIONS=1")
+    # -s \"EMTERPRETIFY_WHITELIST=['_main']\"
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s 'BINARYEN_TRAP_MODE=\"clamp\"'")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s TOTAL_MEMORY=83886080 --no-heap-copy -s ALLOW_MEMORY_GROWTH=1 -msse -msse2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s \"EXTRA_EXPORTED_RUNTIME_METHODS=['Pointer_stringify']\"")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --embed-file \"${CMAKE_CURRENT_SOURCE_DIR}/languages/\"@\"languages/\"")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file \"${PGE_PRELOAD_CONFIG_PACK}\"@\"configs/${PGE_PRELOAD_CONFIG_PACK_NAME}/\"")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file \"${PGE_PRELOAD_EPISODE}\"@\"worlds/${PGE_PRELOAD_EPISODE_NAME}/\"")
+    # set(LINK_FLAGS "${LINK_FLAGS} -DIS_LINK -s USE_PTHREADS=1 -s FORCE_FILESYSTEM=1 --embed-file '${CMAKE_CURRENT_SOURCE_DIR}/@languages'")
+endif()
+
+if(WIN32)
+    list(APPEND PGE_ENGINE_SRCS _resources/engine.rc)
+endif()
+
 add_executable(pge_engine
     ${PGE_ENGINE_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
@@ -239,8 +286,28 @@ add_executable(pge_engine
     ${UTILS_SDL_SRCS}
 )
 
-# add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
-target_compile_definitions(pge_engine PRIVATE -DPGE_ENGINE)
+target_compile_definitions(pge_engine
+    PRIVATE
+    -DPGE_ENGINE
+)
+
+if(EMSCRIPTEN)
+    # add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
+    target_compile_definitions(pge_engine
+        PRIVATE
+        -DPGE_NO_THREADING
+        -DLUA_USE_LINUX
+        -DPGE_RUN_SINGLE_LEVEL=\"${PGE_RUN_SINGLE_LEVEL}\"
+    )
+endif()
+
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
+    target_compile_definitions(pge_engine
+        PRIVATE
+        -DDEBUG_BUILD
+    )
+endif()
 
 add_dependencies(pge_engine
     SDLMixerX_Local
@@ -251,14 +318,24 @@ add_dependencies(pge_engine
     FREETYPE_Local
 )
 
-target_link_libraries(pge_engine
+set(PGE_ENGINE_LINK_LIBS)
+
+list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
     luabind$<$<CONFIG:Debug>:d>
     freetype$<$<CONFIG:Debug>:d>
     sqlite3$<$<CONFIG:Debug>:d>
     SDL2_mixer_ext$<$<CONFIG:Debug>:d>
-    FLAC$<$<CONFIG:Debug>:d>
+)
+
+if(NOT EMSCRIPTEN)
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        FLAC$<$<CONFIG:Debug>:d>
+    )
+endif()
+
+list(APPEND PGE_ENGINE_LINK_LIBS
     vorbisfile$<$<CONFIG:Debug>:d>
     vorbis$<$<CONFIG:Debug>:d>
     ogg$<$<CONFIG:Debug>:d>
@@ -271,5 +348,31 @@ target_link_libraries(pge_engine
     gme$<$<CONFIG:Debug>:d>
     zlib$<$<CONFIG:Debug>:d>
     SDL2$<$<CONFIG:Debug>:d>
-    GL dl pthread
+)
+
+if(WIN32 AND NOT EMSCRIPTEN)
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        SDL2main
+        version
+        opengl32
+        dbghelp
+        advapi32
+        kernel32
+    )
+endif()
+
+if(NOT WIN32 AND NOT EMSCRIPTEN)
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        GL dl
+    )
+endif()
+
+if(NOT EMSCRIPTEN)
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        pthread
+    )
+endif()
+
+target_link_libraries(pge_engine
+    ${PGE_ENGINE_LINK_LIBS}
 )
