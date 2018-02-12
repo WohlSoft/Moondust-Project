@@ -302,6 +302,14 @@ if(EMSCRIPTEN)
     )
 endif()
 
+if(WIN32 AND NOT EMSCRIPTEN)
+    target_compile_definitions(pge_engine
+        PUBLIC
+        -DUNICODE
+        -D_UNICODE
+    )
+endif()
+
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
     target_compile_definitions(pge_engine
