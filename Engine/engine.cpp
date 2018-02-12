@@ -246,6 +246,11 @@ bool PGEEngineApp::initSDL()
     sdlMixerInitFlags |= MIX_INIT_OGG;
     sdlMixerInitFlags |= MIX_INIT_MID;
 
+    #ifdef _WIN32
+    // WORKAROUND: Avoid usage of glitchy WASAPI driver
+    SDL_setenv("SDL_AUDIODRIVER", "directsound", 1);
+    #endif
+
     // Initialize SDL
     res = (SDL_Init(sdlInitFlags) < 0);
 
