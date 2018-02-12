@@ -361,12 +361,14 @@ list(APPEND PGE_ENGINE_LINK_LIBS
 
 if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_ENGINE_LINK_LIBS
-        SDL2main
+        SDL2main$<$<CONFIG:Debug>:d>
         version
         opengl32
         dbghelp
         advapi32
         kernel32
+        winmm
+        imm32
     )
 endif()
 
@@ -383,7 +385,11 @@ if(NOT APPLE)
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
-    list(APPEND PGE_ENGINE_LINK_LIBS pthread)
+    if(WIN32)
+        set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static -lpthread")
+    else()
+        list(APPEND PGE_ENGINE_LINK_LIBS pthread)
+    endif()
 endif()
 
 if(APPLE)
