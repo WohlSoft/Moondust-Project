@@ -271,6 +271,7 @@ if(WIN32)
 endif()
 
 add_executable(pge_engine
+    MACOSX_BUNDLE
     ${PGE_ENGINE_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
     ${DIRMANAGER_SRCS}
@@ -361,16 +362,54 @@ if(WIN32 AND NOT EMSCRIPTEN)
     )
 endif()
 
-if(NOT WIN32 AND NOT EMSCRIPTEN)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        GL dl
-    )
+if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE)
+    list(APPEND PGE_ENGINE_LINK_LIBS GL dl)
 endif()
 
-if(NOT EMSCRIPTEN)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        pthread
+if(HAIKU)
+    list(APPEND PGE_ENGINE_LINK_LIBS be device game media)
+endif()
+
+if(NOT APPLE)
+    set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+endif()
+
+if(NOT EMSCRIPTEN AND NOT MSVC)
+    list(APPEND PGE_ENGINE_LINK_LIBS pthread)
+endif()
+
+if(APPLE)
+    set_target_properties(pge_engine PROPERTIES
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/_resources/pge_engine.plist.in"
+        MACOSX_BUNDLE_EXECUTABLE_NAME "pge_engine"
+        MACOSX_BUNDLE_ICON_FILE "cat.icns"
+        MACOSX_BUNDLE_BUNDLE_NAME "PGE Engine"
+        MACOSX_BUNDLE_INFO_STRING "Platform Game Engine by Wohlstand"
     )
+    set_source_files_properties("${CMAKE_SOURCE_DIR}/_resources/cat.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
+    find_library(COREAUDIO_LIBRARY CoreAudio)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${COREAUDIO_LIBRARY})
+    find_library(COREVIDEO_LIBRARY CoreVideo)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${COREVIDEO_LIBRARY})
+    find_library(IOKIT_LIBRARY IOKit)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${IOKIT_LIBRARY})
+    find_library(CARBON_LIBRARY Carbon)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${CARBON_LIBRARY})
+    find_library(COCOA_LIBRARY Cocoa)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${COCOA_LIBRARY})
+    find_library(FORCEFEEDBAK_LIBRARY ForceFeedback)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${FORCEFEEDBAK_LIBRARY})
+    find_library(METAL_LIBRARY Metal)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${METAL_LIBRARY})
+    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${COREFOUNDATION_LIBRARY})
+    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${AUDIOTOOLBOX_LIBRARY})
+    find_library(AUDIOUNIT_LIBRARY AudioUnit)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${AUDIOUNIT_LIBRARY})
+    find_library(OPENGL_LIBRARY OpenGL)
+    list(APPEND PGE_ENGINE_LINK_LIBS ${OPENGL_LIBRARY})
 endif()
 
 target_link_libraries(pge_engine
