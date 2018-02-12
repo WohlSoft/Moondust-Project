@@ -48,7 +48,7 @@
 #define V_VERSION V_PROJECT_VERSION_NUM
 #define V_RELEASE "" //Developing state (for release this field must be empty)
 
-#define V_COPYRIGHT "2014-2017 by Wohlstand"
+#define V_COPYRIGHT "2014-2018 by Wohlstand"
 
 #define V_COMPANY "PGE Team"
 
