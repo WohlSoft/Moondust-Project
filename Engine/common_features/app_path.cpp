@@ -76,7 +76,7 @@ static std::string getPgeUserDirectory()
 #elif defined(_WIN32)
     {
         wchar_t pathW[MAX_PATH];
-        DWORD path_len = GetEnvironmentVariable(L"UserProfile", pathW, MAX_PATH);
+        DWORD path_len = GetEnvironmentVariableW(L"UserProfile", pathW, MAX_PATH);
         assert(path_len);
         path.resize(path_len * 2);
         path_len = WideCharToMultiByte(CP_UTF8, 0,
