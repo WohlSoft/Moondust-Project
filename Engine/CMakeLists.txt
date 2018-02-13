@@ -61,6 +61,8 @@ include(../_common/Utils/Utils.cmake)
 include(../_common/Utils/UtilsSDL.cmake)
 include(../_common/Utils/openUrl.cmake)
 
+set(PGE_LANG_BIN_FILES)
+FILE(GLOB PGE_LANG_BIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.qm")
 
 set(PGE_ENGINE_SRCS)
 
@@ -250,6 +252,16 @@ list(APPEND PGE_ENGINE_SRCS
     settings/global_settings.cpp
 )
 
+if(APPLE)
+    FILE(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_icons/*.icns")
+    list(APPEND PGE_ENGINE_SRCS
+        common_features/apple/app_path_macosx.m
+        _resources/cat.icns
+        ${PGE_LANG_BIN_FILES}
+        ${PGE_FILE_ICONS}
+    )
+endif()
+
 if(EMSCRIPTEN)
     message("Is EMSCRIPTEN!")
     set(PGE_PRELOAD_CONFIG_PACK "/home/vitaly/_git_repos/PGE-Project/bin/configs/A2XT" CACHE STRING "Path to config pack to pack")
@@ -273,12 +285,11 @@ if(EMSCRIPTEN)
     # set(LINK_FLAGS "${LINK_FLAGS} -DIS_LINK -s USE_PTHREADS=1 -s FORCE_FILESYSTEM=1 --embed-file '${CMAKE_CURRENT_SOURCE_DIR}/@languages'")
 endif()
 
-if(WIN32)
+if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_ENGINE_SRCS _resources/engine.rc)
 endif()
 
 add_executable(pge_engine
-    MACOSX_BUNDLE
     ${PGE_ENGINE_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
     ${DIRMANAGER_SRCS}
@@ -402,13 +413,19 @@ endif()
 
 if(APPLE)
     set_target_properties(pge_engine PROPERTIES
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/_resources/pge_engine.plist.in"
+        OUTPUT_NAME "PGE Engine"
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_engine.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_engine"
         MACOSX_BUNDLE_ICON_FILE "cat.icns"
-        MACOSX_BUNDLE_BUNDLE_NAME "PGE Engine"
+        CPACK_BUNDLE_NAME "PGE Engine"
         MACOSX_BUNDLE_INFO_STRING "Platform Game Engine by Wohlstand"
     )
-    set_source_files_properties("${CMAKE_SOURCE_DIR}/_resources/cat.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
+    set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
+    list(APPEND PGE_ENGINE_LINK_LIBS iconv)
 
     find_library(COREAUDIO_LIBRARY CoreAudio)
     list(APPEND PGE_ENGINE_LINK_LIBS ${COREAUDIO_LIBRARY})

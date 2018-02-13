@@ -29,6 +29,7 @@ macx:{
         $$PWD/languages/engine_de.qm \
         $$PWD/languages/engine_en.qm \
         $$PWD/languages/engine_es.qm \
+        $$PWD/languages/engine_it.qm \
         $$PWD/languages/engine_pl.qm \
         $$PWD/languages/engine_pt.qm \
         $$PWD/languages/engine_ru.qm \
