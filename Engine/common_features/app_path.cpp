@@ -178,6 +178,12 @@ void AppPathManager::initAppPath()
     }
 #else //__APPLE__
     char* path = SDL_GetBasePath();//DirMan(Files::dirname(argv0)).absolutePath();
+    if(!path)
+    {
+    	std::fprintf(stderr, "== Failed to recogonize application path by using of SDL_GetBasePath! Using current working directory \"./\" instead.\n");
+    	std::fflush(stderr);
+    	path = SDL_strdup("./");
+    }
     ApplicationPathSTD = std::string(path);
 #   if defined(_WIN32)
     std::replace(ApplicationPathSTD.begin(), ApplicationPathSTD.end(), '\\', '/');

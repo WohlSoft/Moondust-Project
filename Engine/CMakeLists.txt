@@ -399,7 +399,10 @@ if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE)
 endif()
 
 if(HAIKU)
-    list(APPEND PGE_ENGINE_LINK_LIBS be device game media)
+    list(APPEND PGE_ENGINE_LINK_LIBS 
+        SDL2main$<$<CONFIG:Debug>:d>
+        be device game media
+    )
 endif()
 
 if(NOT APPLE)
