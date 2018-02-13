@@ -22,18 +22,6 @@ if(NOT CMAKE_BUILD_TYPE)
     message("== Using default build configuration which is a Release!")
 endif()
 
-if(NOT GIT_COMMIT_HASH)
-    add_definitions(-DGIT_VERSION="CMakeUnknown")
-else()
-    add_definitions(-DGIT_VERSION="${GIT_COMMIT_HASH}")
-endif()
-
-if(NOT GIT_BRANCH)
-    add_definitions(-DGIT_BRANCH="unknown")
-else()
-    add_definitions(-DGIT_BRANCH="${GIT_BRANCH}")
-endif()
-
 set(CMAKE_CXX_STANDARD 14)
 if(MSVC)
     if(MSVC_VERSION GREATER_EQUAL "1900")
@@ -45,6 +33,8 @@ if(MSVC)
     endif()
 endif()
 
+# Default GIT version
+include(../_common/git_version.cmake)
 # Common building properties and optimization flags
 include(../_common/build_pros.cmake)
 
@@ -65,6 +55,10 @@ include(../_common/Utils/openUrl.cmake)
 
 set(PGE_LANG_BIN_FILES)
 FILE(GLOB PGE_LANG_BIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.qm")
+if(NOT APPLE AND NOT EMSCRIPTEN)
+    file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "Moondust/languages")
+endif()
 
 set(PGE_ENGINE_SRCS)
 
@@ -349,6 +343,7 @@ add_dependencies(pge_engine
 )
 
 set(PGE_ENGINE_LINK_LIBS)
+set(PGE_ENGINE_INSTALLS)
 
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
@@ -357,6 +352,10 @@ list(APPEND PGE_ENGINE_LINK_LIBS
     freetype$<$<CONFIG:Debug>:d>
     sqlite3$<$<CONFIG:Debug>:d>
     SDL2_mixer_ext$<$<CONFIG:Debug>:d>
+)
+
+list(APPEND PGE_ENGINE_INSTALLS
+    pge_engine
 )
 
 if(NOT EMSCRIPTEN)
@@ -425,6 +424,9 @@ if(APPLE)
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_engine.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_engine"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-engine"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "0.3-alpha"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "0.3-alpha"
         MACOSX_BUNDLE_ICON_FILE "cat.icns"
         CPACK_BUNDLE_NAME "PGE Engine"
         MACOSX_BUNDLE_INFO_STRING "Platform Game Engine by Wohlstand"
@@ -462,3 +464,14 @@ endif()
 target_link_libraries(pge_engine
     ${PGE_ENGINE_LINK_LIBS}
 )
+
+install(TARGETS ${PGE_ENGINE_INSTALLS}
+    RUNTIME DESTINATION "Moondust"
+)
+
+# Append changelog file
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../changelog.engine.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/")
+
+# Append changelog file
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.mit" RENAME "pge_engine.license.mit.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/")
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.gpl3" RENAME "pge_engine.license.gpl3.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/")

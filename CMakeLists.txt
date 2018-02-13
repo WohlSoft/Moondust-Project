@@ -10,6 +10,8 @@ set(CMAKE_DEBUG_POSTFIX "d")
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
+set(PGE_INSTALL_DIRECTORY "Moondust")
+
 # Get the current working branch
 execute_process(
     COMMAND git rev-parse --abbrev-ref HEAD
@@ -39,6 +41,22 @@ include_directories(
     ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
+
+set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT ON)
+if(HAIKU OR EMSCRIPTEN OR ANDROID)
+    set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT OFF)
+    message("== Qt-dependent components are not supported for this platform")
+endif()
+
+if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
+    find_package(Qt5 COMPONENTS Core)
+    if(Qt5_FOUND)
+        option(PGE_ENABLE_QT "Enable build of Qt-dependent components" ${PGE_ENABLE_QT_ENABLED_BY_DEFAULT})
+        message("== Qt 5 has been found in ${Qt5_DIR}")
+    else()
+        message("== Qt 5 NOT FOUND! Qt-dependent components will be disabled!")
+    endif()
+endif()
 
 # FreeType to render TTF fonts
 ExternalProject_Add(
@@ -121,6 +139,14 @@ ExternalProject_Add(
     DEPENDS SDL2_Local
 )
 
+install(FILES "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libFLAC/COPYING.Xiph" RENAME "License.FLAC.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses/")
+install(FILES "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libogg/COPYING" RENAME "License.OGG.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses/")
+install(FILES "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libvorbis/COPYING" RENAME "License.Vorbis.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses/")
+install(FILES "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libtimidity/COPYING" RENAME "License.Timidity.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses/")
+install(FILES "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libmad/COPYING" RENAME "License.libMAD.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses/")
+install(FILES "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libid3tag/COPYING" RENAME "License.libID3Tag.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses/")
+
+
 # SDL Mixer X - an audio library, fork of SDL Mixer
 ExternalProject_Add(
     SDLMixerX_Local
@@ -138,4 +164,37 @@ ExternalProject_Add(
     DEPENDS AudioCodecs_Local SDL2_Local
 )
 
-add_subdirectory(Engine)
+# Append licenses of libraries
+install(FILES "${CMAKE_SOURCE_DIR}/_Libs/SDL_Mixer_X/COPYING.txt" RENAME "License.SDL2_mixer_ext.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses/")
+
+option(PGE_BUILD_ENGINE "Build the PGE Engine component" ON)
+if(PGE_BUILD_ENGINE)
+    add_subdirectory(Engine)
+endif()
+
+if(NOT EMSCRIPTEN)
+    option(PGE_BUILD_GIFS2PNG "Build the GIFs2PNG utility component" ON)
+    if(PGE_BUILD_GIFS2PNG)
+        add_subdirectory(GIFs2PNG)
+    endif()
+
+    option(PGE_BUILD_PNG2GIFS "Build the GIFs2PNG utility component" ON)
+    if(PGE_BUILD_PNG2GIFS)
+        add_subdirectory(PNG2GIFs)
+    endif()
+
+    option(PGE_BUILD_LAZYFIXTOOL "Build the LazyFixTool utility component" ON)
+    if(PGE_BUILD_LAZYFIXTOOL)
+        add_subdirectory(LazyFixTool)
+    endif()
+endif()
+
+if(PGE_ENABLE_QT)
+    option(PGE_BUILD_MUSICPLAYER "Build the SDL Mixer X Music Player component (Qt5 required)" ON)
+    if(PGE_BUILD_MUSICPLAYER)
+        add_subdirectory(MusicPlayer)
+    endif()
+endif()
+
+# Append Project License file
+install(FILES "${CMAKE_SOURCE_DIR}/LICENSE" RENAME "LICENSE.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/")
