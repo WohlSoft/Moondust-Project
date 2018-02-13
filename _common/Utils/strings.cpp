@@ -23,6 +23,10 @@
 
 #include "strings.h"
 #include <algorithm>
+#include <functional>
+#include <string>
+#include <cstring>
+#include <cctype>
 #include <locale>
 
 bool Strings::endsWith(const std::string& str, char what)
@@ -42,13 +46,15 @@ bool Strings::endsWith(const std::string& str, const std::string& what)
 // trim from start (in place)
 static inline void ltrim(std::string &s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-            std::not1(std::ptr_fun<int, int>(std::isspace))));
+        [](int c) {return !std::isspace(c); }
+    ));
 }
 
 // trim from end (in place)
 static inline void rtrim(std::string &s) {
     s.erase(std::find_if(s.rbegin(), s.rend(),
-            std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+        [](int c) {return !std::isspace(c); }
+    ).base(), s.end());
 }
 
 std::string Strings::trim(std::string str)

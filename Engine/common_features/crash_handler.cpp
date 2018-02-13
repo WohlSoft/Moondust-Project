@@ -178,7 +178,7 @@ static void msgBox(std::string title, std::string text)
 #ifdef __GNUC__
 #define LLVM_ATTRIBUTE_NORETURN __attribute__((noreturn))
 #elif defined(_MSC_VER)
-#define LLVM_ATTRIBUTE_NORETURN __declspec(noreturn)
+#define LLVM_ATTRIBUTE_NORETURN //__declspec(noreturn)
 #else
 #define LLVM_ATTRIBUTE_NORETURN
 #endif

@@ -52,6 +52,7 @@
 #include <Utils/files.h>
 #include <common_features/fmt_format_ne.h>
 
+#include <ctime>
 #include <chrono>
 
 #ifdef DEBUG_BUILD
