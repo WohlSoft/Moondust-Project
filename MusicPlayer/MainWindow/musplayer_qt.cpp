@@ -60,6 +60,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     QString title = windowTitle();
     /* Append library version to the title */
     const SDL_version* mixer_ver = Mix_Linked_Version();
+    title += QString(" v%1").arg(V_FILE_VERSION_NUM);
     #if defined(SDL_MIXER_X)
     title += QString(" (SDL Mixer X %1.%2.%3)")
             .arg(mixer_ver->major)
