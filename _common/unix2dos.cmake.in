@@ -1,0 +1,20 @@
+set(CMAKE_INSTALL_PREFIX @CMAKE_INSTALL_PREFIX@)
+set(PGE_INSTALL_DIRECTORY @PGE_INSTALL_DIRECTORY@)
+set(CMAKE_BINARY_DIR @CMAKE_BINARY_DIR@)
+set(UNIX2DOS_LIST @UNIX2DOS_LIST@)
+
+file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY})
+
+foreach(TextFile ${UNIX2DOS_LIST})
+    string(REPLACE "?" ";" TextFileList ${TextFile})
+    list(GET TextFileList 0 TEXT_INFILE)
+    list(GET TextFileList 1 TEXT_OUTPATH)
+    list(GET TextFileList 2 TEXT_OUTFILE)
+    file(MAKE_DIRECTORY ${TEXT_OUTPATH})
+    execute_process(COMMAND "unix2dos_custom"
+        "-n"
+        "${TEXT_INFILE}"
+        "${TEXT_OUTPATH}/${TEXT_OUTFILE}"
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    )
+endforeach()
