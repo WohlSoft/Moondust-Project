@@ -1,4 +1,6 @@
-set(UNIX2DOS_LIST PARENT_SCOPE)
+if(WIN32)
+    set(UNIX2DOS_LIST PARENT_SCOPE)
+endif()
 
 function(InstallTextFile)
     cmake_parse_arguments(_installfile
