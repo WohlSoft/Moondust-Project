@@ -144,6 +144,10 @@ if(WIN32)
         SDL2main$<$<CONFIG:Debug>:d>
         comctl32
         version
+        advapi32
+        kernel32
+        winmm
+        imm32
     )
 else()
     list(APPEND PGE_MUSPLAY_LINK_LIBS
