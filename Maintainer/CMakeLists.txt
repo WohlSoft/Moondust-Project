@@ -25,11 +25,6 @@ include(../_common/PGE_File_Formats/pge_file_library.cmake)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 
-link_directories(
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Concurrent_LIBRARIES}
-)
-
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} ${Qt5Concurrent_EXECUTABLE_COMPILE_FLAGS}")
@@ -58,6 +53,7 @@ list(APPEND PGE_MAINTAINER_SRCS
 )
 
 if(APPLE)
+    add_definitions(-DQ_OS_MACX) # Workaround for MOC
     list(APPEND PGE_MAINTAINER_SRCS
         _resources/maintainer.icns
     )
@@ -123,39 +119,17 @@ if(APPLE)
         MACOSX_BUNDLE_LONG_VERSION_STRING "0.0.1"
         MACOSX_BUNDLE_ICON_FILE "maintainer.icns"
         CPACK_BUNDLE_NAME "PGE Maintainer"
-        MACOSX_BUNDLE_INFO_STRING "A simple looped music player working on SDL Mixer X"
+        MACOSX_BUNDLE_INFO_STRING "Game data maintaining utility"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-    list(APPEND PGE_MAINTAINER_LINK_LIBS iconv)
-
-    find_library(COREAUDIO_LIBRARY CoreAudio)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${COREAUDIO_LIBRARY})
-    find_library(COREVIDEO_LIBRARY CoreVideo)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${COREVIDEO_LIBRARY})
-    find_library(IOKIT_LIBRARY IOKit)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${IOKIT_LIBRARY})
-    find_library(CARBON_LIBRARY Carbon)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${CARBON_LIBRARY})
-    find_library(COCOA_LIBRARY Cocoa)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${COCOA_LIBRARY})
-    find_library(FORCEFEEDBAK_LIBRARY ForceFeedback)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${FORCEFEEDBAK_LIBRARY})
-    find_library(METAL_LIBRARY Metal)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${METAL_LIBRARY})
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_MAINTAINER_LINK_LIBS ${COREFOUNDATION_LIBRARY})
-    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${AUDIOTOOLBOX_LIBRARY})
-    find_library(AUDIOUNIT_LIBRARY AudioUnit)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${AUDIOUNIT_LIBRARY})
-    find_library(OPENGL_LIBRARY OpenGL)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${OPENGL_LIBRARY})
 endif()
 
 list(APPEND PGE_MAINTAINER_LINK_LIBS
-    Qt5::Widgets
-    Qt5::Concurrent
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Concurrent_LIBRARIES}
 )
 
 target_link_libraries(pge_maintainer
@@ -164,4 +138,5 @@ target_link_libraries(pge_maintainer
 
 install(TARGETS ${PGE_MAINTAINER_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
 )

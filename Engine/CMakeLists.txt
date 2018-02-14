@@ -466,7 +466,8 @@ target_link_libraries(pge_engine
 )
 
 install(TARGETS ${PGE_ENGINE_INSTALLS}
-    RUNTIME DESTINATION "Moondust"
+    RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}/"
 )
 
 # Append changelog file

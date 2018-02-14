@@ -24,11 +24,6 @@ include(../_common/build_pros.cmake)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 
-link_directories(
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Network_LIBRARIES}
-)
-
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} ${Qt5Network_EXECUTABLE_COMPILE_FLAGS}")
@@ -59,6 +54,7 @@ list(APPEND SDLMixer_MusPlay_SRC
 )
 
 if(APPLE)
+    add_definitions(-DQ_OS_MACX) # Workaround for MOC
     set(PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_musplay.icns")
     list(APPEND SDLMixer_MusPlay_SRC
         _resources/cat_musplay.icns
@@ -209,8 +205,8 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_MUSPLAY_LINK_LIBS
-    Qt5::Widgets
-    Qt5::Network
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Network_LIBRARIES}
 )
 
 target_link_libraries(pge_musplay
@@ -221,4 +217,5 @@ target_link_libraries(pge_musplay
 
 install(TARGETS ${PGE_MUSPLAY_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
+    BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
 )
