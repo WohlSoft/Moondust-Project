@@ -57,17 +57,21 @@
 #define V_PRODUCT_NAME "Platformer Game Engine"
 
 #if defined(_WIN64)
-	#define OPERATION_SYSTEM "Windows x64"
+    #define OPERATION_SYSTEM "Windows x64"
 #elif defined(_WIN32)
-	#define OPERATION_SYSTEM "Windows"
+    #define OPERATION_SYSTEM "Windows"
 #elif defined __APPLE__
-	#define OPERATION_SYSTEM "MacOSX"
+    #define OPERATION_SYSTEM "macOS"
 #elif defined __FreeBSD__
-	#define OPERATION_SYSTEM "FreeBSD"
+    #define OPERATION_SYSTEM "FreeBSD"
 #elif defined __gnu_linux__
-	#define OPERATION_SYSTEM "GNU/Linux"
+    #define OPERATION_SYSTEM "GNU/Linux"
+#elif defined __HAIKU__
+    #define OPERATION_SYSTEM "Haiku"
+#elif defined __EMSCRIPTEN__
+    #define OPERATION_SYSTEM "Emscripten"
 #else
-	#define OPERATION_SYSTEM "Other"
+    #define OPERATION_SYSTEM "Other"
 #endif
 
 
