@@ -75,8 +75,8 @@ add_executable(pge_calibrator
 
 target_include_directories(pge_calibrator
     PRIVATE
-    ${Qt5Widgets_INCLUDES}
-    ${Qt5Concurrent_INCLUDES}
+    ${Qt5Widgets_INCLUDE_DIRS}
+    ${Qt5Concurrent_INCLUDE_DIRS}
 )
 
 add_dependencies(pge_calibrator

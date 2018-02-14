@@ -80,8 +80,8 @@ add_dependencies(pge_musplay
 # dependencies QtCore and QtGui
 target_include_directories(pge_musplay
     PRIVATE
-    ${Qt5Widgets_INCLUDES}
-    ${Qt5Network_INCLUDES}
+    ${Qt5Widgets_INCLUDE_DIRS}
+    ${Qt5Network_INCLUDE_DIRS}
     ${USE_SDL_MIXER_X_PREFIX}/include)
 
 if(APPLE) # To use XCode-built SDL Mixer X

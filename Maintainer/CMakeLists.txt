@@ -72,8 +72,8 @@ add_executable(pge_maintainer
 # dependencies QtCore and QtGui
 target_include_directories(pge_maintainer
     PRIVATE
-    ${Qt5Widgets_INCLUDES}
-    ${Qt5Concurrent_INCLUDES}
+    ${Qt5Widgets_INCLUDE_DIRS}
+    ${Qt5Concurrent_INCLUDES_DIRS}
 )
 
 set(PGE_MAINTAINER_LINK_LIBS)

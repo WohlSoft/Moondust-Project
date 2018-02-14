@@ -11,12 +11,6 @@ include_directories(
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
-#if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-#    # Turn on warnings and legacy C/C++ standards to support more compilers
-#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
-#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-#endif()
-
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
     message("== Using default build configuration which is a Release!")
@@ -395,12 +389,6 @@ list(APPEND PGE_ENGINE_LINK_LIBS
 list(APPEND PGE_ENGINE_LINK_LIBS
     SDL2$<$<CONFIG:Debug>:d>
 )
-
-if(NOT EMSCRIPTEN)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        FLAC$<$<CONFIG:Debug>:d>
-    )
-endif()
 
 if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_ENGINE_LINK_LIBS
