@@ -111,6 +111,33 @@ ExternalProject_Add(
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
 )
 
+set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT ON)
+if(APPLE OR ANDROID OR EMSCRIPTEN OR MSVC)
+    # Disable LuaJIT for unsupported platforms
+    set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT OFF)
+endif()
+
+option(PGE_USE_LUAJIT "Use LuaJIT lua engine" ${PGE_USE_LUAJIT_ENABLED_BY_DEFAULT})
+
+if(PGE_USE_LUAJIT)
+    if(WIN32)
+        set(MAKECMD "mingw32-make")
+    else()
+        set(MAKECMD "make")
+    endif()
+    set(LUAJIT_LIBNAME libluajit$<$<CONFIG:Debug>:d>.a)
+    ExternalProject_Add(
+        LuaJIT_local
+        PREFIX ${CMAKE_BINARY_DIR}/external/luajit
+        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz
+        UPDATE_COMMAND ""
+        CONFIGURE_COMMAND ""
+        BUILD_IN_SOURCE 1
+        BUILD_COMMAND ${MAKECMD} -s "BUILDMODE=static" "PREFIX=${CMAKE_BINARY_DIR}/"
+        INSTALL_COMMAND ${MAKECMD} -s install "INSTALL_ANAME=${LUAJIT_LIBNAME}" "BUILDMODE=static" "PREFIX=${CMAKE_BINARY_DIR}/"
+    )
+endif()
+
 # LuaBind is a powerful lua binding library for C++
 ExternalProject_Add(
     LuaBind_Local
@@ -122,7 +149,11 @@ ExternalProject_Add(
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
         "-DCMAKE_DEBUG_POSTFIX=d"
+        $<$<BOOL:PGE_USE_LUAJIT>:-DUSE_LUAJIT=ON>
 )
+if(PGE_USE_LUAJIT)
+    add_dependencies(LuaBind_Local LuaJIT_local)
+endif()
 
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
 ExternalProject_Add(
@@ -212,6 +243,11 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
 endif()
 
 if(PGE_ENABLE_QT AND NOT ANDROID)
+    option(PGE_BUILD_PLAYERCALIBRATOR "Build the Player Calibrator utility component (Qt5 required)" ON)
+    if(PGE_BUILD_PLAYERCALIBRATOR)
+        add_subdirectory(PlayableCalibrator)
+    endif()
+
     option(PGE_BUILD_MUSICPLAYER "Build the SDL Mixer X Music Player component (Qt5 required)" ON)
     if(PGE_BUILD_MUSICPLAYER)
         add_subdirectory(MusicPlayer)

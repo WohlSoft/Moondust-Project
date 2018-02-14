@@ -371,33 +371,31 @@ void TitleScene::render()
     if(g_AppSettings.showDebugInfo)
     {
         FontManager::printText(fmt::format_ne("Joystick key: val={0}, id={1}, type={2}\n"
-                                       "fader ratio {3} N{4} F{5} TKS-{6}\n"
-                                       "TICK: {7}, Graphical engine: {8}",
-                                        m_debug_joy_keyval,
-                                        m_debug_joy_keyid,
-                                        m_debug_joy_keytype,
-                                        m_fader.fadeRatio(),
-                                        m_fader.isNull(),
-                                        m_fader.isFull(),
-                                        m_fader.ticksLeft(),
-                                        uTickf, GlRenderer::engineName())
+                                       "Fader ratio {3} N-{4} F-{5} TKS-{6}\n"
+                                       "Tick delay: {7} ms\n"
+                                       "GFX Engine: {8}\n"
+                                       "Lua engine: {9}\n",
+                                        m_debug_joy_keyval, m_debug_joy_keyid, m_debug_joy_keytype,
+                                        m_fader.fadeRatio(), m_fader.isNull(), m_fader.isFull(), m_fader.ticksLeft(),
+                                        uTickf, GlRenderer::engineName(),
+                                        LuaEngine::getEngineInfo())
                                , 10, 10, FontManager::DefaultRaster, 1.0, 1.0, 1.0, 0.5);
         //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
         //                               "abcdefghijklmnopqrstuvwxyz\n"
         //                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
         //                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
         //                               "Ich bin glücklich!",10, 60, 2, 1.0, 1.0, 1.0, 1.0);
-        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
-                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
-                               "{|}\\¡¢£€¥Š§š©ª«¬®¯°±²³Žµ¶·ž¹º»ŒŸ¿\n"
-                               "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×\n"
-                               "˘Ł¤ĽŚ§¨ŠŞŤŹŽŻ°ą˛ł´ľśˇ¸šşťź˝žżŔÁÂĂÄ\n"
-                               "ĹĆÇČÉĘËĚÍÎĎĐŃŇÓÔŐÖ×ŘŮÚŰÜÝŢßŕáâăäĺć\n"
-                               "çčéęëěíîďđńňóôőö÷řůúűüýţ˙\n"
-                               "ØÙÚÛÜÝÞß÷ © ®\n\n"
-                               "Ich bin glücklich!\n\n"
-                               "Как хорошо, что всё работает!\n"
-                               "Живіть всі дружно!", 10, 100, 0, 0.75f, 0.5f, 0.7f, 1.0f);
+        //FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+        //                       "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+        //                       "{|}\\¡¢£€¥Š§š©ª«¬®¯°±²³Žµ¶·ž¹º»ŒŸ¿\n"
+        //                       "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×\n"
+        //                       "˘Ł¤ĽŚ§¨ŠŞŤŹŽŻ°ą˛ł´ľśˇ¸šşťź˝žżŔÁÂĂÄ\n"
+        //                       "ĹĆÇČÉĘËĚÍÎĎĐŃŇÓÔŐÖ×ŘŮÚŰÜÝŢßŕáâăäĺć\n"
+        //                       "çčéęëěíîďđńňóôőö÷řůúűüýţ˙\n"
+        //                       "ØÙÚÛÜÝÞß÷ © ®\n\n"
+        //                       "Ich bin glücklich!\n\n"
+        //                       "Как хорошо, что всё работает!\n"
+        //                       "Живіть всі дружно!", 10, 100, 0, 0.75f, 0.5f, 0.7f, 1.0f);
         //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
         //        FontManager::printText("0123456789\n"
         //                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"

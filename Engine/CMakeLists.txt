@@ -306,8 +306,18 @@ target_compile_definitions(pge_engine
     -DPGE_ENGINE
 )
 
+# add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
+if(PGE_USE_LUAJIT)
+    message("== Engine will be built with LuaJIT support")
+    target_compile_definitions(pge_engine
+        PUBLIC
+        -DUSE_LUA_JIT
+    )
+else()
+    message("== Engine will be built with PUC-Rio Lua support")
+endif()
+
 if(EMSCRIPTEN)
-    # add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
     target_compile_definitions(pge_engine
         PRIVATE
         -DPGE_NO_THREADING
@@ -345,17 +355,21 @@ add_dependencies(pge_engine
 set(PGE_ENGINE_LINK_LIBS)
 set(PGE_ENGINE_INSTALLS)
 
+list(APPEND PGE_ENGINE_INSTALLS
+    pge_engine
+)
+
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
     luabind$<$<CONFIG:Debug>:d>
+    $<$<BOOL:PGE_USE_LUAJIT>:luajit$<$<CONFIG:Debug>:d>>
     freetype$<$<CONFIG:Debug>:d>
     sqlite3$<$<CONFIG:Debug>:d>
-    SDL2_mixer_ext$<$<CONFIG:Debug>:d>
 )
 
-list(APPEND PGE_ENGINE_INSTALLS
-    pge_engine
+list(APPEND PGE_ENGINE_LINK_LIBS
+    SDL2_mixer_ext$<$<CONFIG:Debug>:d>
 )
 
 if(NOT EMSCRIPTEN)
@@ -376,8 +390,17 @@ list(APPEND PGE_ENGINE_LINK_LIBS
     timidity$<$<CONFIG:Debug>:d>
     gme$<$<CONFIG:Debug>:d>
     zlib$<$<CONFIG:Debug>:d>
+)
+
+list(APPEND PGE_ENGINE_LINK_LIBS
     SDL2$<$<CONFIG:Debug>:d>
 )
+
+if(NOT EMSCRIPTEN)
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        FLAC$<$<CONFIG:Debug>:d>
+    )
+endif()
 
 if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_ENGINE_LINK_LIBS

@@ -63,6 +63,15 @@ LuaEngine::~LuaEngine()
         shutdown();
 }
 
+const char *LuaEngine::getEngineInfo()
+{
+#ifdef USE_LUA_JIT
+    return LUAJIT_VERSION;
+#else
+    return "PUC-Rio " LUA_RELEASE;
+#endif
+}
+
 static void splitErrorMsg(const std::string &inMsg, std::string &msg1, std::string &msg2)
 {
     std::string::size_type lp = inMsg.find('\n');
