@@ -1,10 +1,6 @@
 #!/bin/bash
 
-TYPE="${PWD##*/}"
-if [[ "$TYPE" == "" ]]; then
-echo "Error: empty name!"
-exit 1
-fi
+TYPE="maintainer"
 
 mkdir $TYPE".iconset"
 cp $TYPE"16.png" $TYPE".iconset/icon_16x16.png"
