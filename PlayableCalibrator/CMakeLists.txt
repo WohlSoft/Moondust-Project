@@ -150,3 +150,11 @@ install(TARGETS ${PGE_CALIBRATOR_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
     BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"
 )
+
+# Calibrator's default properties
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${CMAKE_BINARY_DIR}/bin/")
+
+# Calibrator's stuff
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator"
+    DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+)

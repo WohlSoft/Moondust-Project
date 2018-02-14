@@ -223,22 +223,26 @@ if(PGE_BUILD_ENGINE)
     # Append license files
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/Engine/LICENSE.mit" RENAME "pge_engine.license.mit.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
     InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/Engine/LICENSE.gpl3" RENAME "pge_engine.license.gpl3.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+    InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/Content/readmes/Engine.Readme.txt" RENAME "pge_engine.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT ANDROID)
     option(PGE_BUILD_GIFS2PNG "Build the GIFs2PNG utility component" ON)
     if(PGE_BUILD_GIFS2PNG)
         add_subdirectory(GIFs2PNG)
+        InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/Content/readmes/GIFs2PNG_Readme.txt" RENAME "GIFs2PNG.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
     endif()
 
     option(PGE_BUILD_PNG2GIFS "Build the GIFs2PNG utility component" ON)
     if(PGE_BUILD_PNG2GIFS)
         add_subdirectory(PNG2GIFs)
+        InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/Content/readmes/PNG2GIFs_Readme.txt" RENAME "PNG2GIFs.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
     endif()
 
     option(PGE_BUILD_LAZYFIXTOOL "Build the LazyFixTool utility component" ON)
     if(PGE_BUILD_LAZYFIXTOOL)
         add_subdirectory(LazyFixTool)
+        InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/Content/readmes/LazyFixTool_Readme.txt" RENAME "LazyFixTool.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
     endif()
 endif()
 
