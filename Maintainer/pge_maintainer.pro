@@ -40,7 +40,11 @@ debug: DEFINES += DEBUG_BUILD
     QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
 }
 
-macx: LIBS += -framework Cocoa
+macx: {
+    LIBS += -framework Cocoa
+}
+
+win32: RC_FILE += _resources/maintainer.rc
 
 include($$PWD/../_common/strip_garbage.pri)
 include($$PWD/../_common/PGE_File_Formats/File_FormatsQT.pri)
@@ -66,3 +70,5 @@ FORMS    += main_window.ui \
     Music/audiocvt_sox_gui.ui \
     EpisodeCvt/episode_converter.ui
 
+RESOURCES += \
+    _resources/maintainer.qrc

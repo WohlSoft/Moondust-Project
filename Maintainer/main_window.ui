@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Maintainer Main Menu</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="_resources/maintainer.qrc">
+    <normaloff>:/maintainer.ico</normaloff>:/maintainer.ico</iconset>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
@@ -155,6 +159,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="_resources/maintainer.qrc"/>
+ </resources>
  <connections/>
 </ui>

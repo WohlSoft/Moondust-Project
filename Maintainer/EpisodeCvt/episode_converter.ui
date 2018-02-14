@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
+    <width>480</width>
     <height>273</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Episode conversion tool</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../_resources/maintainer.qrc">
+    <normaloff>:/maintainer.ico</normaloff>:/maintainer.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="6">
@@ -134,6 +138,8 @@ Supported formats:
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../_resources/maintainer.qrc"/>
+ </resources>
  <connections/>
 </ui>

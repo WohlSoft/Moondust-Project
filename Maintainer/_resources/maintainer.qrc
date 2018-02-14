@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>maintainer.ico</file>
+        <file>maintainer.rc</file>
+        <file>icon/maintainer16.png</file>
+        <file>icon/maintainer32.png</file>
+        <file>icon/maintainer48.png</file>
+        <file>icon/maintainer256.png</file>
+    </qresource>
+</RCC>
+
