@@ -39,15 +39,15 @@ CONFIG   += static
 CONFIG   += c++14
 
 macx {
-    ICON = _resourses/calibrator.icns
-    QMAKE_INFO_PLIST = $$PWD/_resourses/calibrator.plist
+    ICON = _resources/calibrator.icns
+    QMAKE_INFO_PLIST = $$PWD/_resources/calibrator.plist
 }
 !macx: {
     QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
     QMAKE_LFLAGS_RELEASE += -static-libgcc -static-libstdc++
 }
 
-RC_FILE = _resourses/caltool.rc
+RC_FILE = _resources/caltool.rc
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
@@ -102,11 +102,11 @@ FORMS    += \
     image_calibration/image_calibrator.ui
 
 RESOURCES += \
-    _resourses/images.qrc
+    _resources/images.qrc
 
 OTHER_FILES += \
     caltool.rc \
     calibrator.ico \
-    _resourses/caltool.rc
+    _resources/caltool.rc
 
 

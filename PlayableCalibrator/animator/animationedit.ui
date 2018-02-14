@@ -20,7 +20,7 @@
    <string>AnimationEdit</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../_resourses/images.qrc">
+   <iconset resource="../_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="0,40,0,0,0,10,0,0" columnstretch="40,0,0,0,0,0,0,10">
@@ -77,7 +77,7 @@
        <string notr="true"/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../_resourses/images.qrc">:/images/NoAni.png</pixmap>
+       <pixmap resource="../_resources/images.qrc">:/images/NoAni.png</pixmap>
       </property>
      </widget>
     </widget>
@@ -253,7 +253,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../_resourses/images.qrc"/>
+  <include location="../_resources/images.qrc"/>
  </resources>
  <connections/>
 </ui>

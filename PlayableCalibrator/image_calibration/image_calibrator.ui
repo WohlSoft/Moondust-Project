@@ -20,7 +20,7 @@
    <string>Image Calibrating</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../_resourses/images.qrc">
+   <iconset resource="../_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
@@ -262,7 +262,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../_resourses/images.qrc"/>
+  <include location="../_resources/images.qrc"/>
  </resources>
  <connections/>
 </ui>
