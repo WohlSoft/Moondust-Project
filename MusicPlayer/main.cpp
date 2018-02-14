@@ -64,6 +64,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     #endif
 #endif
 
+    #ifdef _WIN32
+    // WORKAROUND: Avoid usage of glitchy WASAPI driver
+    SDL_setenv("SDL_AUDIODRIVER", "directsound", 1);
+    #endif
+
     if(SDL_Init(SDL_INIT_AUDIO) ==-1 )
         error(QString("Failed to initialize audio: ") + SDL_GetError());
 

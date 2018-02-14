@@ -73,6 +73,11 @@ static void pgeInitSDL()
     #endif
     #ifdef USE_SDL_MIXER
     LogDebugNC("Initializing SDL Audio...");
+
+    #ifdef _WIN32
+    // WORKAROUND: Avoid usage of glitchy WASAPI driver
+    SDL_setenv("SDL_AUDIODRIVER", "directsound", 1);
+    #endif
     if(SDL_Init(SDL_INIT_AUDIO) < 0)
     {
         LogWarning(QString("Error of loading SDL: %1").arg(SDL_GetError()));
