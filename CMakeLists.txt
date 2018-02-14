@@ -243,6 +243,13 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
 endif()
 
 if(PGE_ENABLE_QT AND NOT ANDROID)
+    option(PGE_BUILD_EDITOR "Build the PGE Editor component (Qt5 required)" ON)
+    if(PGE_BUILD_EDITOR)
+        add_subdirectory(Editor)
+        # Append changelog file
+        InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/changelog.editor.txt" RENAME "changelog.editor.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+    endif()
+
     option(PGE_BUILD_PLAYERCALIBRATOR "Build the Player Calibrator utility component (Qt5 required)" ON)
     if(PGE_BUILD_PLAYERCALIBRATOR)
         add_subdirectory(PlayableCalibrator)
