@@ -32,8 +32,28 @@ then
     if [ ! -d /home/runner/Qt/$QtCacheFolder ]; then
         mkdir -p /home/runner/Qt/$QtCacheFolder
     fi
-    wget http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /home/runner/Qt/$QtCacheFolder/$QtTarballName
+
+    printf "Downloading $QtTarballName..."
+    wget --quiet http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /home/runner/Qt/$QtCacheFolder/$QtTarballName
+    if [ $? -eq 0 ]
+    then
+        printf " \E[37;42mOK!\E[0m\n"
+    else
+        printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+        echo "Can't download ${QtTarballName}!"
+        exit 1
+    fi
+
     tar -xf /home/runner/Qt/$QtCacheFolder/$QtTarballName -C /home/runner/Qt
+    if [ $? -eq 0 ]
+    then
+        printf " \E[37;42mOK!\E[0m\n"
+    else
+        printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+        echo "Can't extract ${QtCacheFolder}/${QtTarballName}!"
+        exit 1
+    fi
+
     export PATH=/home/runner/Qt/$QtStaticVersion/bin:$PATH
     /home/runner/Qt/$QtStaticVersion/bin/qmake --version
     chmod u+x generate_paths.sh
@@ -59,7 +79,16 @@ then
 # Static Qt is dependent to absolute build path, so,
 # we are re-making same tree which was on previous machine where this build of Qt was built
 # ==============================================================================
-        wget http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
+        printf "Downloading $QtTarballName..."
+        wget --quiet http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
+        if [ $? -eq 0 ]
+        then
+            printf " \E[37;42mOK!\E[0m\n"
+        else
+            printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+            echo "Can't download ${QtTarballName}!"
+            exit 1
+        fi
     fi
     printf "Unpacking $QtTarballName..."
     tar -xf /Users/StaticQt/$QtCacheFolder/$QtTarballName -C /Users/StaticQt;
@@ -75,7 +104,10 @@ then
 # ==============================================================================
 # Installing of required for building process tools via homebrew toolset
 # ==============================================================================
-    brew update
+    printf "Running brew update...\n"
+    brew update > /dev/null 2>&1
+
+    printf "Installing of necessary utilities...\n"
     brew install coreutils binutils gnu-sed lftp
 
     # # Thanks to St. StackOverflow if this will work http://stackoverflow.com/questions/39633159/homebrew-cant-find-lftp-formula-on-macos-sierra

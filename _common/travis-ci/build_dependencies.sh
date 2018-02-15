@@ -6,6 +6,8 @@ then
     if [ ! -d _Libs/_builds/linux/lib ];
     then
         bash ./build_deps.sh no-pause use-ccache
+    else
+        echo "Pre-built dependencies are already cached! Do nothing!"
     fi
     sudo cp -a _Libs/_builds/linux/lib/*.so /usr/lib
 
@@ -16,6 +18,8 @@ then
     if [ ! -d _Libs/_builds/macos/lib ];
     then
         bash ./build_deps.sh no-pause
+    else
+        echo "Pre-built dependencies are already cached! Do nothing!"
     fi
 fi
 
