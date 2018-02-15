@@ -41,6 +41,8 @@ debug: DEFINES += DEBUG_BUILD
 }
 
 macx: {
+    ICON = $$PWD/_resources/maintainer.icns
+    QMAKE_INFO_PLIST = $$PWD/_resources/maintainer.plist
     LIBS += -framework Cocoa
 }
 
