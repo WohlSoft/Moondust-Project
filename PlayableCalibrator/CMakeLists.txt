@@ -152,9 +152,9 @@ install(TARGETS ${PGE_CALIBRATOR_INSTALLS}
 )
 
 # Calibrator's default properties
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${CMAKE_BINARY_DIR}/bin/")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator" DESTINATION "${CMAKE_BINARY_DIR}/bin")
 
 # Calibrator's stuff
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Content/calibrator"
-    DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+    DESTINATION "${PGE_INSTALL_DIRECTORY}"
 )
