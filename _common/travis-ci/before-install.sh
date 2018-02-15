@@ -44,6 +44,7 @@ then
         exit 1
     fi
 
+    printf "Unpacking $QtTarballName..."
     tar -xf /home/runner/Qt/$QtCacheFolder/$QtTarballName -C /home/runner/Qt
     if [ $? -eq 0 ]
     then
