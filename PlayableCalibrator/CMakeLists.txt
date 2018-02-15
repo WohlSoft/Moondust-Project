@@ -123,7 +123,7 @@ if(APPLE)
     set_target_properties(pge_calibrator PROPERTIES
         OUTPUT_NAME "PGE Player Calibrator"
         MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.plist.in"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/calibrator.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_calibrator"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-calibrator"
         MACOSX_BUNDLE_SHORT_VERSION_STRING "2.1.1"

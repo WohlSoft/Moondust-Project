@@ -552,10 +552,10 @@ endif()
 
 
 if(APPLE)
-    set_target_properties(pge_engine PROPERTIES
+    set_target_properties(pge_editor PROPERTIES
         OUTPUT_NAME "PGE Editor"
         MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_engine.plist.in"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_editor.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_editor"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-editor"
         MACOSX_BUNDLE_SHORT_VERSION_STRING "0.3.1.11-1"
@@ -608,7 +608,7 @@ target_link_libraries(pge_editor
     ${PGE_EDITOR_LINK_LIBS}
 )
 
-install(TARGETS ${PGE_ENGINE_INSTALLS}
+install(TARGETS ${PGE_EDITOR_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
     BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}/"
 )
