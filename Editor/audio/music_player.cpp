@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef Q_OS_MACX
+#undef Q_OS_MACX //Workaroud for an AUTOMOC
+#endif
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
