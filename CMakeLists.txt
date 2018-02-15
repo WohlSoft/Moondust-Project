@@ -126,6 +126,11 @@ if(PGE_USE_LUAJIT)
         set(MAKECMD "make")
     endif()
     set(LUAJIT_LIBNAME libluajit$<$<CONFIG:Debug>:d>.a)
+    string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+    if(${CMAKE_BUILD_TYPE_LOWER} STREQUAL "debug")
+        message("== LuaJIT will be built in debug mode")
+        set(BUILD_FLAGS "CCDEBUG=-g -O0")
+    endif()
     ExternalProject_Add(
         LuaJIT_local
         PREFIX ${CMAKE_BINARY_DIR}/external/luajit
@@ -133,7 +138,7 @@ if(PGE_USE_LUAJIT)
         UPDATE_COMMAND ""
         CONFIGURE_COMMAND ""
         BUILD_IN_SOURCE 1
-        BUILD_COMMAND ${MAKECMD} -s "BUILDMODE=static" "PREFIX=${CMAKE_BINARY_DIR}/"
+        BUILD_COMMAND ${MAKECMD} -s "BUILDMODE=static" "PREFIX=${CMAKE_BINARY_DIR}/" ${BUILD_FLAGS}
         INSTALL_COMMAND ${MAKECMD} -s install "INSTALL_ANAME=${LUAJIT_LIBNAME}" "BUILDMODE=static" "PREFIX=${CMAKE_BINARY_DIR}/"
     )
 endif()
