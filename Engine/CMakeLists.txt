@@ -447,6 +447,13 @@ if(APPLE)
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     list(APPEND PGE_ENGINE_LINK_LIBS iconv)
+    if(PGE_USE_LUAJIT)
+        # Required to link on 64-bit macOS
+        # See: http://luajit.org/install.html
+        set_target_properties(pge_engine PROPERTIES
+            LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
+        )
+    endif()
 
     find_library(COREAUDIO_LIBRARY CoreAudio)
     list(APPEND PGE_ENGINE_LINK_LIBS ${COREAUDIO_LIBRARY})

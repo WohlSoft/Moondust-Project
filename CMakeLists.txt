@@ -112,7 +112,7 @@ ExternalProject_Add(
 )
 
 set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT ON)
-if(APPLE OR ANDROID OR EMSCRIPTEN OR MSVC)
+if(ANDROID OR EMSCRIPTEN OR MSVC)
     # Disable LuaJIT for unsupported platforms
     set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT OFF)
 endif()
