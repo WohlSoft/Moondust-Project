@@ -91,6 +91,8 @@ Makefile.*
 #compiled translation
 editor_*.qm
 engine_*.qm
+# Keep pre-compiled English translation to allow build without of Qt
+!engine_en.qm
 
 #broken translation file
 qt_en.qm

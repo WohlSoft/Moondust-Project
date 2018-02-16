@@ -55,9 +55,38 @@ if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
 
+set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
+if(_QT_LRELEASE_PROGRAM)
+    set(_LANGAUGES_TEMP_FOLDER "${CMAKE_BINARY_DIR}/Editor_langs")
+
+    file(MAKE_DIRECTORY ${_LANGAUGES_TEMP_FOLDER})
+    FILE(GLOB _QT_LANG_BIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/qt_*.qm")
+    foreach(LangQtFile ${_QT_LANG_BIN_FILES})
+        get_filename_component(LangFileName "${LangQtFile}" NAME)
+        configure_file("${LangQtFile}" "${_LANGAUGES_TEMP_FOLDER}/${LangFileName}" COPYONLY)
+    endforeach()
+
+    set(PGE_LANG_SRC_FILES)
+    FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
+    message("-- Compiling Editor's locales...")
+    foreach(LangSrcFile ${PGE_LANG_SRC_FILES})
+        get_filename_component(LangBaseFile "${LangSrcFile}" NAME_WE)
+        # message("-- Compiling locale ${LangSrcFile} into ${LangBaseFile}.qm")
+        execute_process(COMMAND ${_QT_LRELEASE_PROGRAM}
+            "${LangSrcFile}"
+            -qm
+            "${_LANGAUGES_TEMP_FOLDER}/${LangBaseFile}.qm"
+        )
+    endforeach()
+endif()
+
 set(PGE_LANG_BIN_FILES)
-FILE(GLOB PGE_LANG_BIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.qm")
+FILE(GLOB PGE_LANG_BIN_FILES "${_LANGAUGES_TEMP_FOLDER}/*.qm")
 FILE(GLOB PGE_LANG_ICON_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.png")
+#foreach(LangBinFile ${PGE_LANG_BIN_FILES})
+#    message("-- locale ${LangBinFile} will be installed")
+#endforeach()
+
 if(NOT APPLE AND NOT EMSCRIPTEN)
     file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
     file(COPY ${PGE_LANG_ICON_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
