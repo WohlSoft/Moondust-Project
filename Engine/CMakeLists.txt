@@ -3,6 +3,8 @@ project(MoondustEngine C CXX)
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
+SET(BUILD_SHARED_LIBRARIES OFF)
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -31,6 +33,8 @@ endif()
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
 include(../_common/build_pros.cmake)
+# Build properties for executable projects
+include(../_common/executable_build_props.cmake)
 
 # include shared code modules
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
@@ -418,15 +422,18 @@ if(HAIKU)
 endif()
 
 if(NOT APPLE)
-    set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        "-static-libgcc"
+        "-static-libstdc++"
+    )
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static -lpthread")
-    else()
-        list(APPEND PGE_ENGINE_LINK_LIBS pthread)
+        set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-mconsole")
+        list(APPEND PGE_ENGINE_LINK_LIBS "-static")
     endif()
+    list(APPEND PGE_ENGINE_LINK_LIBS pthread)
 endif()
 
 if(APPLE)

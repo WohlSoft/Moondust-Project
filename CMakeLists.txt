@@ -131,16 +131,72 @@ if(PGE_USE_LUAJIT)
         message("== LuaJIT will be built in debug mode")
         set(BUILD_FLAGS "CCDEBUG=-g -O0")
     endif()
+
+    if(WIN32)
+        set(LUAJIT_INSTALL_COMMAND "")
+    else()
+        set(LUAJIT_INSTALL_COMMAND
+            ${MAKECMD}
+            install
+            "INSTALL_ANAME=${LUAJIT_LIBNAME}"
+            "BUILDMODE=static"
+            "PREFIX=${CMAKE_BINARY_DIR}"
+        )
+    endif()
+
+    set(LUAJIT_INSTALL_DIR ${CMAKE_BINARY_DIR})
+    set(LUAJIT_LOCAL_SOURCE_DIR ${CMAKE_BINARY_DIR}/external/luajit/LuaJIT-src)
+
     ExternalProject_Add(
         LuaJIT_local
         PREFIX ${CMAKE_BINARY_DIR}/external/luajit
         URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz
         UPDATE_COMMAND ""
         CONFIGURE_COMMAND ""
+        SOURCE_DIR ${LUAJIT_LOCAL_SOURCE_DIR}
         BUILD_IN_SOURCE 1
-        BUILD_COMMAND ${MAKECMD} -s "BUILDMODE=static" "PREFIX=${CMAKE_BINARY_DIR}/" ${BUILD_FLAGS}
-        INSTALL_COMMAND ${MAKECMD} -s install "INSTALL_ANAME=${LUAJIT_LIBNAME}" "BUILDMODE=static" "PREFIX=${CMAKE_BINARY_DIR}/"
+        BUILD_COMMAND
+            ${MAKECMD} -s
+            "BUILDMODE=static"
+            "PREFIX=${CMAKE_BINARY_DIR}"
+            "CCWARN+=-Wno-unused-function"
+            ${BUILD_FLAGS}
+        INSTALL_COMMAND "${LUAJIT_INSTALL_COMMAND}"
     )
+    if(WIN32)
+        set(LUAJIT_BINARY_FILES "luajit.exe")
+
+        ExternalProject_Add_Step(
+            LuaJIT_local CreateLuaJitInstallFolder
+            COMMAND ${CMAKE_COMMAND} -E make_directory ${LUAJIT_INSTALL_DIR}/include/luajit-2.1 ${LUAJIT_INSTALL_DIR}/lib ${LUAJIT_INSTALL_DIR}/bin
+            COMMENT "Creating install folder"
+            DEPENDEES BUILD
+        )
+
+        ExternalProject_Add_Step(
+            LuaJIT_local InstallLuaJitHeaders
+            COMMAND ${CMAKE_COMMAND} -E copy lua.h lua.hpp luaconf.h luajit.h lualib.h lauxlib.h ${LUAJIT_INSTALL_DIR}/include/luajit-2.1
+            WORKING_DIRECTORY ${LUAJIT_LOCAL_SOURCE_DIR}/src
+            COMMENT "Installing luajit headers"
+            DEPENDEES BUILD CreateLuaJitInstallFolder
+        )
+
+        ExternalProject_Add_Step(
+            LuaJIT_local InstallLuaJitLib
+            COMMAND ${CMAKE_COMMAND} -E copy libluajit.a "${LUAJIT_INSTALL_DIR}/lib/${LUAJIT_LIBNAME}"
+            WORKING_DIRECTORY ${LUAJIT_LOCAL_SOURCE_DIR}/src
+            COMMENT "Installing luajit lib"
+            DEPENDEES BUILD CreateLuaJitInstallFolder
+        )
+
+        ExternalProject_Add_Step(
+            LuaJIT_local InstallLuaJitDLL
+            COMMAND ${CMAKE_COMMAND} -E copy ${LUAJIT_BINARY_FILES} ${LUAJIT_INSTALL_DIR}/bin
+            WORKING_DIRECTORY ${LUAJIT_LOCAL_SOURCE_DIR}/src
+            COMMENT "Installing luajit shared library"
+            DEPENDEES BUILD CreateLuaJitInstallFolder
+        )
+    endif() #NOT WIN32
 endif()
 
 # LuaBind is a powerful lua binding library for C++
@@ -160,12 +216,19 @@ if(PGE_USE_LUAJIT)
     add_dependencies(LuaBind_Local LuaJIT_local)
 endif()
 
+if(NOT WIN32)
+    set(PATCH_CMD "patch")
+else()
+    # Use one from Git Bash toolchain, otherwise one from MinGW toolchain will crash
+    set(PATCH_CMD "C:/Program Files/Git/usr/bin/patch.exe")
+endif()
+
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
 ExternalProject_Add(
     SDL2_Local
     PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
     URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
-    PATCH_COMMAND patch -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_cmake_no_wasapi.patch"
+    PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_cmake_no_wasapi.patch"
     CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"

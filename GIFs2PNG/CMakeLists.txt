@@ -27,6 +27,8 @@ endif()
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
 include(../_common/build_pros.cmake)
+# Build properties for executable projects
+include(../_common/executable_build_props.cmake)
 
 include(../_common/tclap/tclap.cmake)
 include(../_common/DirManager/dirman.cmake)
@@ -96,10 +98,10 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(GIFs2PNG PROPERTIES LINK_FLAGS "-static -lpthread")
-    else()
-        list(APPEND GIFs2PNG_LINK_LIBS pthread)
+        set_target_properties(GIFs2PNG PROPERTIES LINK_FLAGS "-mconsole")
+        list(APPEND GIFs2PNG_LINK_LIBS "-static")
     endif()
+    list(APPEND GIFs2PNG_LINK_LIBS pthread)
 endif()
 
 target_link_libraries(GIFs2PNG

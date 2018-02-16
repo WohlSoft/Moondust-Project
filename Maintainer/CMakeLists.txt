@@ -18,6 +18,8 @@ link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
 include(../_common/build_pros.cmake)
+# Build properties for executable projects
+include(../_common/executable_build_props.cmake)
 
 add_definitions(-DPGE_FILES_QT)
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
@@ -102,10 +104,10 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_maintainer PROPERTIES LINK_FLAGS "-static -lpthread")
-    else()
-        list(APPEND PGE_MAINTAINER_LINK_LIBS pthread)
+        set_target_properties(pge_maintainer PROPERTIES LINK_FLAGS "-mwindows")
+        list(APPEND PGE_MAINTAINER_LINK_LIBS "-static")
     endif()
+    list(APPEND PGE_MAINTAINER_LINK_LIBS pthread)
 endif()
 
 if(APPLE)

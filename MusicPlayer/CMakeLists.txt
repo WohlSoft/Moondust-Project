@@ -20,6 +20,18 @@ link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
 include(../_common/build_pros.cmake)
+# Build properties for executable projects
+include(../_common/executable_build_props.cmake)
+
+# WORKAROUND: Avoid ImpLib file creation on a non-library project
+if(CYGWIN OR MINGW)
+    # Prune --out-implib from executables. It doesn't make sense even
+    # with --export-all-symbols.
+    string(REGEX REPLACE "-Wl,--out-implib,[^ ]+ " " "
+        CMAKE_C_LINK_EXECUTABLE "${CMAKE_C_LINK_EXECUTABLE}")
+    string(REGEX REPLACE "-Wl,--out-implib,[^ ]+ " " "
+        CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE}")
+endif()
 
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
@@ -84,17 +96,6 @@ target_include_directories(pge_musplay
     ${Qt5Network_INCLUDE_DIRS}
     ${USE_SDL_MIXER_X_PREFIX}/include)
 
-if(APPLE) # To use XCode-built SDL Mixer X
-    string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_lower)
-    if(CMAKE_BUILD_TYPE_lower STREQUAL "release")
-        link_directories(
-            ${USE_SDL_MIXER_X_PREFIX}/lib/Release)
-    else()
-        link_directories(
-            ${USE_SDL_MIXER_X_PREFIX}/lib/Debug)
-    endif()
-endif()
-
 
 set(PGE_MUSPLAY_LINK_LIBS)
 set(PGE_MUSPLAY_INSTALLS)
@@ -158,12 +159,16 @@ else()
     endif()
 endif()
 
+if(NOT APPLE)
+    set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+endif()
+
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-static -lpthread")
-    else()
-        list(APPEND PGE_MUSPLAY_LINK_LIBS pthread)
+        set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-mwindows")
+        list(APPEND PGE_MUSPLAY_LINK_LIBS "-static")
     endif()
+    list(APPEND PGE_MUSPLAY_LINK_LIBS pthread)
 endif()
 
 if(APPLE)
@@ -216,8 +221,6 @@ list(APPEND PGE_MUSPLAY_LINK_LIBS
 target_link_libraries(pge_musplay
     ${PGE_MUSPLAY_LINK_LIBS}
 )
-
-# qt5_use_modules(pge_musplay Widgets Network)
 
 install(TARGETS ${PGE_MUSPLAY_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"

@@ -37,6 +37,8 @@ endif()
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
 include(../_common/build_pros.cmake)
+# Build properties for executable projects
+include(../_common/executable_build_props.cmake)
 
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
@@ -67,6 +69,9 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 find_package(Qt5Qml REQUIRED)
+if(WIN32)
+    find_package(Qt5WinExtras REQUIRED)
+endif()
 
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
@@ -76,6 +81,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Network_EXECUTABLE_COMPILE_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Concurrent_EXECUTABLE_COMPILE_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Qml_EXECUTABLE_COMPILE_FLAGS}")
+if(WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5WinExtras_EXECUTABLE_COMPILE_FLAGS}")
+endif()
 
 qt5_wrap_ui(UIS_HDRS
     common_features/crashhandler.ui
@@ -442,6 +450,12 @@ target_compile_definitions(pge_editor
     ${Qt5Concurrent_DEFINITIONS}
     ${Qt5Qml_DEFINITIONS}
 )
+if(WIN32)
+    target_compile_definitions(pge_editor
+        PRIVATE
+        ${Qt5WinExtras_DEFINITIONS}
+    )
+endif()
 
 target_include_directories(pge_editor
     PRIVATE
@@ -452,6 +466,12 @@ target_include_directories(pge_editor
     ${Qt5Concurrent_INCLUDE_DIRS}
     ${Qt5Qml_INCLUDE_DIRS}
 )
+if(WIN32)
+    target_include_directories(pge_editor
+        PRIVATE
+        ${Qt5WinExtras_INCLUDE_DIRS}
+    )
+endif()
 
 target_compile_definitions(pge_editor
     PRIVATE
@@ -544,10 +564,10 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static -lpthread")
-    else()
-        list(APPEND PGE_EDITOR_LINK_LIBS pthread)
+        set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-mwindows")
+        list(APPEND PGE_EDITOR_LINK_LIBS "-static")
     endif()
+    list(APPEND PGE_EDITOR_LINK_LIBS pthread)
 endif()
 
 
@@ -603,6 +623,11 @@ list(APPEND PGE_EDITOR_LINK_LIBS
     ${Qt5Concurrent_LIBRARIES}
     ${Qt5Qml_LIBRARIES}
 )
+if(WIN32)
+    list(APPEND PGE_EDITOR_LINK_LIBS
+        ${Qt5WinExtras_LIBRARIES}
+    )
+endif()
 
 target_link_libraries(pge_editor
     ${PGE_EDITOR_LINK_LIBS}
