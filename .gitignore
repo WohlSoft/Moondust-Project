@@ -47,6 +47,10 @@ pge_deps.xcodeproj
 .vscode/
 .vs/
 
+# CMake
+CMakeCache.txt
+CMakeFiles
+
 # Qt-es
 
 *.pro.user
