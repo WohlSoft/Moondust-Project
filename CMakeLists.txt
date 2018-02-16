@@ -5,8 +5,7 @@ string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" insource)
 if(insource)
     message(FATAL_ERROR "
 ==== Build in source directory is not allowed! ====
-Please run cmake configure from another directory, for example, create a 'build'
-sub-directory, and run 'cmake ..' from it."
+Please run cmake configure from another directory, for example, create a 'build' sub-directory, and run 'cmake ..' from it."
 )
 endif()
 
