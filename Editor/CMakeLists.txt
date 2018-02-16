@@ -76,6 +76,7 @@ if(_QT_LRELEASE_PROGRAM)
             "${LangSrcFile}"
             -qm
             "${_LANGAUGES_TEMP_FOLDER}/${LangBaseFile}.qm"
+            -silent
         )
     endforeach()
 endif()
