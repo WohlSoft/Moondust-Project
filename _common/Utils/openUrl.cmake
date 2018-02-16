@@ -1,4 +1,4 @@
-message("Path to openUrl is [${CMAKE_CURRENT_LIST_DIR}]")
+# message("Path to openUrl is [${CMAKE_CURRENT_LIST_DIR}]")
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../)
 
 set(OPENURL_SRCS)

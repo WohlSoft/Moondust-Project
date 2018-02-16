@@ -1,4 +1,4 @@
-message("Path to UTF8-Main is [${CMAKE_CURRENT_LIST_DIR}]")
+# message("Path to UTF8-Main is [${CMAKE_CURRENT_LIST_DIR}]")
 include_directories(${CMAKE_CURRENT_LIST_DIR}/)
 
 set(UTF8MAIN_SRCS)

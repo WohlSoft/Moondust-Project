@@ -1,4 +1,4 @@
-message("Path to DirManager is [${CMAKE_CURRENT_LIST_DIR}]")
+# message("Path to DirManager is [${CMAKE_CURRENT_LIST_DIR}]")
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 set(DIRMANAGER_SRCS)

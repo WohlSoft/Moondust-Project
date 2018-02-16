@@ -1,4 +1,4 @@
-message("Path to ConfigPackManager is [${CMAKE_CURRENT_LIST_DIR}]")
+# message("Path to ConfigPackManager is [${CMAKE_CURRENT_LIST_DIR}]")
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../)
 
 set(CONFIG_PACK_MANAGER_SRCS)

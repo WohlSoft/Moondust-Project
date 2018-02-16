@@ -1,4 +1,4 @@
-message("Path to StackWalker is [${CMAKE_CURRENT_LIST_DIR}]")
+# message("Path to StackWalker is [${CMAKE_CURRENT_LIST_DIR}]")
 include_directories(${CMAKE_CURRENT_LIST_DIR}/)
 
 set(STACK_WALKER_SRCS)

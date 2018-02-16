@@ -1,4 +1,4 @@
-message("Path to FMT is [${CMAKE_CURRENT_LIST_DIR}]")
+# message("Path to FMT is [${CMAKE_CURRENT_LIST_DIR}]")
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 set(FMT_SRCS)
