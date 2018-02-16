@@ -42,6 +42,17 @@ include_directories(
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
+if(APPLE)
+    # Prevent "directory not exists" warnings when building XCode as project
+    file(MAKE_DIRECTORY ${DEPENDENCIES_INSTALL_DIR}/lib/Debug)
+    file(MAKE_DIRECTORY ${DEPENDENCIES_INSTALL_DIR}/lib/Release)
+    # Don't store built executables into "Debug" and "Release" folders
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
+    set(CMAKE_BUNDLE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
+    set(CMAKE_BUNDLE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
+endif()
+
 set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT ON)
 if(HAIKU OR EMSCRIPTEN OR ANDROID)
     set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT OFF)
