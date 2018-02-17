@@ -7,6 +7,9 @@ include_directories(. luabind lua)
 
 option(USE_LUAJIT "Use LuaJIT lua engine" OFF)
 
+set(LIBRARY_PROJECT 1 BOOLEAN)
+include(build_props.cmake)
+
 set(LUA_SRCS)
 
 if(NOT USE_LUAJIT)
