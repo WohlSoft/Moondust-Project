@@ -79,6 +79,7 @@ namespace luabind {
 			void push(lua_State* interpreter)
 			{
 				assert(interpreter == m_interpreter);
+				(void)interpreter; // Avoid unusege warning in release build
 				lua_pushvalue(m_interpreter, m_key_index);
 				AccessPolicy::get(m_interpreter, m_table_index);
 			}

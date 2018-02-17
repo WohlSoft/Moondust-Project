@@ -102,6 +102,7 @@ namespace luabind {
 		inline void index_proxy<Next>::push(lua_State* interpreter)
 		{
 			assert(interpreter == m_interpreter);
+			(void)interpreter; // Avoid unusege warning in release build
 
 			lua_proxy_traits<Next>::unwrap(m_interpreter, m_next);
 
