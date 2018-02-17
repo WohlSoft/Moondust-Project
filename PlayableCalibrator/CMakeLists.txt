@@ -17,7 +17,7 @@ link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
-include(../_common/build_pros.cmake)
+include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
 

@@ -32,7 +32,7 @@ endif()
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
-include(../_common/build_pros.cmake)
+include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
 
@@ -443,7 +443,7 @@ if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE)
 endif()
 
 if(HAIKU)
-    list(APPEND PGE_ENGINE_LINK_LIBS 
+    list(APPEND PGE_ENGINE_LINK_LIBS
         SDL2main$<$<CONFIG:Debug>:d>
         be device game media
     )
