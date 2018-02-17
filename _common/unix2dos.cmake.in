@@ -10,7 +10,7 @@ foreach(TextFile ${UNIX2DOS_LIST})
     list(GET TextFileList 0 TEXT_INFILE)
     list(GET TextFileList 1 TEXT_OUTPATH)
     list(GET TextFileList 2 TEXT_OUTFILE)
-    file(MAKE_DIRECTORY ${TEXT_OUTPATH})
+    file(MAKE_DIRECTORY "${TEXT_OUTPATH}")
     execute_process(COMMAND "unix2dos_custom"
         "-n"
         "${TEXT_INFILE}"

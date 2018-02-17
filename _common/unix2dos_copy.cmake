@@ -1,7 +1,5 @@
 # A small function to pass text files through UNIX2DOS utiltiy on Windows or install them by the regular way
 # Requires a custom build of UNIX2DOS utility!
-
-
 function(InstallTextFile)
     cmake_parse_arguments(_installfile
         ""
@@ -16,7 +14,7 @@ function(InstallTextFile)
 
     if(WIN32)
         message("File ${_installfile_FILE} will be UNIX2DOS-ed")
-        set(UNIX2DOS_ELEMENT ${_installfile_FILE}?${CMAKE_INSTALL_PREFIX}/${_installfile_DESTINATION}?${_installfile_RENAME})
+        set(UNIX2DOS_ELEMENT "${_installfile_FILE}?${CMAKE_INSTALL_PREFIX}/${_installfile_DESTINATION}?${_installfile_RENAME}")
         if(UNIX2DOS_LIST)
             # Add next elements as first element is already added
             set(UNIX2DOS_LIST "${UNIX2DOS_LIST};${UNIX2DOS_ELEMENT}" PARENT_SCOPE)
