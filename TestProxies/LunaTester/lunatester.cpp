@@ -39,8 +39,8 @@ static FILE * utf8_open(const char *path, const char *mode)
 {
     wchar_t pathw[MAX_PATH + 1];
     wchar_t modew[MAX_PATH + 1];
-    int path_len = strlen(path);
-    int mode_len = strlen(mode);
+    int path_len = (int)strlen(path);
+    int mode_len = (int)strlen(mode);
     int pathw_len = MultiByteToWideChar(CP_UTF8, 0, (LPCCH)path, path_len, pathw, MAX_PATH);
     int modew_len = MultiByteToWideChar(CP_UTF8, 0, (LPCCH)mode, mode_len, modew, MAX_PATH);
     pathw[pathw_len] = L'\0';
