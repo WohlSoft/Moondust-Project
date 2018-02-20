@@ -40,6 +40,7 @@ struct WldGenericSetup
     PGEString   icon_n;
 
     uint32_t    grid = 0;
+    PGEString   name;
     PGEString   group    = "_NoGroup";
     PGEString   category = "_Other";
     PGEString   description = "";
