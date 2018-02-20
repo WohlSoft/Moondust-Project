@@ -41,6 +41,11 @@ add_executable(LunaTester
     ${UTF8MAIN_SRCS}
 )
 
+if(NOT CMAKE_SIZEOF_VOID_P EQUAL 4)
+    message("== LunaTester: Non-32-bit compiler has been detected! Forcing 32-bit build...")
+    set_target_properties(LunaTester PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+endif()
+
 install(TARGETS LunaTester
     RUNTIME DESTINATION "bin/testers"
 )
