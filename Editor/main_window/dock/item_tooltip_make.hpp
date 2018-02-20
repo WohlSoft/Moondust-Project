@@ -32,7 +32,7 @@ QString makeToolTipSimple(const QString &title, SetupStruct &setup)
                         "<tr><th style=\"text-align:left;\">ID:</th><td>%2</td></tr>"
                         "</table>"
                    )
-                   .arg(title)
+                   .arg(setup.name.isEmpty() ? title : setup.name)
                    .arg(setup.id);
 
     if(!setup.description.isEmpty())
