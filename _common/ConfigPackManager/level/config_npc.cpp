@@ -391,10 +391,13 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     gfx_offset_x =      (local->en_gfxoffsetx) ? local->gfxoffsetx : global.gfx_offset_x;
     gfx_offset_y =      (local->en_gfxoffsety) ? local->gfxoffsety : global.gfx_offset_y;
     width =             (local->en_width) ? local->width : global.width;
+    NumberLimiter::apply(width, 1u);
     height =            (local->en_height) ? local->height : global.height;
+    NumberLimiter::apply(height, 1u);
     foreground =        (local->en_foreground) ? local->foreground : global.foreground;
     framespeed =        (local->en_framespeed) ? ((local->framespeed * 1000) / 65) : global.framespeed;
     framestyle =        (local->en_framestyle) ? static_cast<uint32_t>(local->framestyle) : global.framestyle;
+    NumberLimiter::apply(framestyle, 0u, 4u);
 
     //Copy physical size to GFX size
     if((local->en_width) && (custom_physics_to_gfx))
@@ -416,9 +419,12 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
         gfx_w = captured_w;
     else
         gfx_w = (local->en_gfxwidth) ? (local->gfxwidth > 0 ? (local->gfxwidth) : 1) : gfx_w;
+    NumberLimiter::apply(gfx_w, 1u);
 
     gfx_h =     (local->en_gfxheight) ? (local->gfxheight > 0 ? (local->gfxheight) : 1) : gfx_h;
+    NumberLimiter::apply(gfx_h, 1u);
     grid =      (local->en_grid) ? local->grid : global.grid;
+    NumberLimiter::apply(grid, 1u);
 
     if(width >= grid)
         grid_offset_x = -1 * Maths::iRound(static_cast<double>((width % grid) / 2));
@@ -443,6 +449,7 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     }
     else
         frames = (local->en_frames) ? local->frames : global.frames;
+    NumberLimiter::apply(frames, 1u);
 
     if(animation_differs || (local->en_framestyle && (local->framestyle != global.framestyle)))
     {
