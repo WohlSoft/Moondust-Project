@@ -20,6 +20,7 @@
 
 bool Themes::isLoaded = false;
 QString Themes::currentThemeDir = "";
+QString Themes::styleSheet = "";
 
 QMap<Themes::Icons, QIcon > Themes::icons_map;
 
@@ -33,9 +34,7 @@ QString Themes::theme_dir = "";
 
 
 Themes::Themes()
-{
-
-}
+{}
 
 void Themes::init()
 {
@@ -210,7 +209,8 @@ void Themes::init()
     images_map[dummy_terrain] = QPixmap(":/dummies/dummies/unknown_tile.png");
     images_map[dummy_wlevel] = QPixmap(":/dummies/dummies/unknown_wlvl.png");
 
-    currentThemeDir = "";
+    currentThemeDir.clear();
+    styleSheet.clear();
     //initCursors();
 
     isLoaded = true;
@@ -273,6 +273,7 @@ void Themes::loadTheme(QString themeDir)
 
     guiset.beginGroup("main");
     loadImage(guiset, "default-splash", splash);
+    loadStyleSheet(guiset, "style-sheet");
     guiset.endGroup();
 
     guiset.beginGroup("file-icons");
@@ -491,6 +492,18 @@ void Themes::loadTheme(QString themeDir)
     initCursors();
 }
 
+void Themes::loadStyleSheet(QSettings &s, QString value)
+{
+    QString val = s.value(value, "").toString();
+    if(!val.isEmpty())
+    {
+        QFile ss(theme_dir + val);
+        if(!ss.open(QIODevice::ReadOnly|QIODevice::Text))
+            return;
+        QByteArray arr = ss.readAll();
+        styleSheet = QString::fromUtf8(arr);
+    }
+}
 
 void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
 {
@@ -501,7 +514,6 @@ void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
         if(!tmpIcn.isNull())
             icons_map[icn] = tmpIcn;
     }
-
 }
 
 void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
@@ -614,3 +626,10 @@ QCursor Themes::Cursor(Themes::Images intval)
     else
         return QCursor(Qt::ArrowCursor);
 }
+
+const QString &Themes::StyleSheet()
+{
+    return styleSheet;
+}
+
+
