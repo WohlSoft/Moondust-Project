@@ -232,15 +232,20 @@ public:
     static int Integer(Images intval);
     static QCursor Cursor(Images intval);
 
+    static const QString &StyleSheet();
+
 private:
     static bool isLoaded;
     static QString currentThemeDir;
+
+    static QString styleSheet;
 
     static QMap<Icons, QIcon > icons_map;
     static QMap<Images, QPixmap > images_map;
     static QMap<Images, int> int_map;
     static QMap<Images, QCursor> cursor_map;
 
+    static void loadStyleSheet(QSettings &s, QString value);
     static void loadIcon(QSettings &s, QString value, Icons icn);
     static void loadImage(QSettings &s, QString value, Images img);
     static void loadInteger(QSettings &s, QString value, Images intVal);
