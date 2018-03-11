@@ -27,18 +27,17 @@
 
 class DevConsole;
 
-class LogWriterSignal :public QObject
+class LogWriterSignal: public QObject
 {
     Q_OBJECT
 
     friend class LogWriter;
     friend void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole);
-    LogWriterSignal(QObject *parent=0);
+    LogWriterSignal(QObject *parent = 0);
     LogWriterSignal(DevConsole *console, QObject *parent=0);
-    void setup(DevConsole*console);
     virtual ~LogWriterSignal();
+    void setup(DevConsole*console);
     void log(QString msg, QString chan);
-
 signals:
     void logToConsole(QString msg, QString chan);//!<msg, channel
 };

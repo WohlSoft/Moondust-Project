@@ -24,7 +24,7 @@
 #include <PGE_File_Formats/file_formats.h>
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 class LVL_Bgo : public PGE_Phys_Object
 {

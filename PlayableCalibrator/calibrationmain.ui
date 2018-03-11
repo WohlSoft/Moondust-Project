@@ -20,7 +20,7 @@
    <string>Playable Character Sprite Calibrator</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="_resourses/images.qrc">
+   <iconset resource="_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="10,5,5,40,40">
@@ -166,7 +166,7 @@
       <string>Save config</string>
      </property>
      <property name="icon">
-      <iconset resource="_resourses/images.qrc">
+      <iconset resource="_resources/images.qrc">
        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
      </property>
     </widget>
@@ -266,7 +266,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       <string>Open sprite</string>
      </property>
      <property name="icon">
-      <iconset resource="_resourses/images.qrc">
+      <iconset resource="_resources/images.qrc">
        <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
      </property>
     </widget>
@@ -580,7 +580,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="_resourses/images.qrc"/>
+  <include location="_resources/images.qrc"/>
  </resources>
  <connections/>
 </ui>

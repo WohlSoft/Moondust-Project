@@ -612,8 +612,13 @@ union luai_Cast { double l_d; long l_l; };
 
 #elif defined(LUA_USE_ULONGJMP)
 /* in Unix, try _longjmp/_setjmp (more efficient) */
-#define LUAI_THROW(L,c)	_longjmp((c)->b, 1)
-#define LUAI_TRY(L,c,a)	if (_setjmp((c)->b) == 0) { a }
+#ifdef __EMSCRIPTEN__
+#   define LUAI_THROW(L,c)	longjmp((c)->b, 1)
+#   define LUAI_TRY(L,c,a)	if (setjmp((c)->b) == 0) { a }
+#else
+#   define LUAI_THROW(L,c)	_longjmp((c)->b, 1)
+#   define LUAI_TRY(L,c,a)	if (_setjmp((c)->b) == 0) { a }
+#endif
 #define luai_jmpbuf	jmp_buf
 
 #else

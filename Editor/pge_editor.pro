@@ -138,7 +138,7 @@ SOURCES += \
     common_features/installer.cpp \
     common_features/item_rectangles.cpp \
     common_features/items.cpp \
-    common_features/logger.cpp \
+    common_features/logger_sets.cpp \
     common_features/main_window_ptr.cpp \
     common_features/npc_animator.cpp \
     common_features/proxystyle.cpp \

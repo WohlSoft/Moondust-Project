@@ -46,8 +46,8 @@ Q_DECLARE_INTERFACE(IHistoryElement, "IHistoryElement")
 
 class {Name} : public QObject, public IHistoryElement
 {
-    Q_OBJECT
-    Q_INTERFACES(IHistoryElement)
+    Q_OBJ___ECT
+    Q_INTERFA____CES(IHistoryElement)
 
 public:
     explicit {Name}(const LevelData &oldData, const LevelData &newData, QObject *parent = 0);

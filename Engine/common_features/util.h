@@ -24,7 +24,7 @@
 #include <vector>
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 #ifdef Q_CC_GNU
 #define gcc_force_inline __attribute__((always_inline, gnu_inline))
@@ -44,7 +44,7 @@ namespace util
     void base64_encode(std::string &ret, const unsigned char *bytes_to_encode, size_t in_len);
     void base64_decode(std::string &ret, std::string const &encoded_string);
 
-};
+}
 
 namespace varadic_util
 {

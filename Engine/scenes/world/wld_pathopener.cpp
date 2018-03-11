@@ -279,7 +279,7 @@ void WldPathOpener::initFetcher()
     lx = Maths::lRound(_current_pos.x() + m_s->m_indexTable.grid_half());
     ly = Maths::lRound(_current_pos.y() + m_s->m_indexTable.grid_half());
 
-    D_pLogDebug("Initialization of the path opener....");
+    D_pLogDebugNA("Initialization of the path opener....");
     m_s->m_indexTable.query(lx, ly, lvlnodes);
 
     for(WorldNode *n : lvlnodes)
@@ -329,7 +329,7 @@ void WldPathOpener::initFetcher()
                     pLogDebug("Left side skipped");
                 #endif
 
-                D_pLogDebug("FETCH RIGHT");
+                D_pLogDebugNA("FETCH RIGHT");
                 if(isAllowedSide(wl->data.right_exit, exitCode))
                 {
                     //Right
@@ -355,7 +355,7 @@ void WldPathOpener::initFetcher()
                     LogDebug("Right side skipped");
 
                 #endif
-                D_pLogDebug("FETCH TOP");
+                D_pLogDebugNA("FETCH TOP");
 
                 if(isAllowedSide(wl->data.top_exit, exitCode))
                 {
@@ -367,22 +367,22 @@ void WldPathOpener::initFetcher()
                     m_s->m_indexTable.query(Maths::lRound(x), Maths::lRound(y), nodes);
                     #ifdef DEBUG_BUILD
                     if(nodes.empty())
-                        D_pLogDebug("No nodes at top");
+                        D_pLogDebugNA("No nodes at top");
                     #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();
 
                     #ifdef DEBUG_BUILD
                     if(found)
-                        D_pLogDebug("Objects are been detected at top");
+                        D_pLogDebugNA("Objects are been detected at top");
                     #endif
                 }
 
                 #ifdef DEBUG_BUILD
                 else
-                    D_pLogDebug("Top side skipped");
+                    D_pLogDebugNA("Top side skipped");
                 #endif
-                D_pLogDebug("FETCH BOTTOM");
+                D_pLogDebugNA("FETCH BOTTOM");
 
                 if(isAllowedSide(wl->data.bottom_exit, exitCode))
                 {
@@ -395,7 +395,7 @@ void WldPathOpener::initFetcher()
 
                     #ifdef DEBUG_BUILD
                     if(nodes.empty())
-                        D_pLogDebug("No nodes at bottom");
+                        D_pLogDebugNA("No nodes at bottom");
                     #endif
                     fetchSideNodes(found, nodes, x, y);
                     nodes.clear();

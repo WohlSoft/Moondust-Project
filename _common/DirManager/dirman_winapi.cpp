@@ -177,7 +177,7 @@ bool DirMan::rmAbsDir(const std::string &dirPath)
 
 bool DirMan::mkAbsPath(const std::string &dirPath)
 {
-    wchar_t tmp[PATH_MAX];
+    wchar_t tmp[MAX_PATH];
     wchar_t *p = NULL;
     size_t len;
     wcscpy(tmp, Str2WStr(dirPath).c_str());

@@ -24,6 +24,9 @@
 #include <Utils/vptrlist.h>
 #include <common_features/pge_texture.h>
 
+#ifdef HAVE_STDINT_H
+#undef HAVE_STDINT_H //Avoid a warning about HAVE_STDINT_H's redefinition
+#endif
 #include <freetype2/ft2build.h>
 #include <freetype2/freetype/freetype.h>
 #include <freetype2/freetype/ftglyph.h>

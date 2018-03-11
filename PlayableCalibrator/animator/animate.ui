@@ -14,7 +14,7 @@
    <string>Animator</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../_resourses/images.qrc">
+   <iconset resource="../_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1,80,10" columnstretch="80,0,0,0">
@@ -139,7 +139,7 @@
   <tabstop>AnimateView</tabstop>
  </tabstops>
  <resources>
-  <include location="../_resourses/images.qrc"/>
+  <include location="../_resources/images.qrc"/>
  </resources>
  <connections/>
 </ui>

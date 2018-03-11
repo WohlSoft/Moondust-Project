@@ -46,7 +46,9 @@ SdlFile::SdlFile(const std::string &fileName)
     p = new SdlFile_private;
     SDL_assert(p);
     p->m_fileName = fileName;
+    #ifdef SDL_FILE_RESOURCES_SUPPORT
     p->m_isMem    = res2mem(fileName, p->m_memory, p->m_memsize);
+    #endif
 }
 
 SdlFile::SdlFile(const SdlFile &f)

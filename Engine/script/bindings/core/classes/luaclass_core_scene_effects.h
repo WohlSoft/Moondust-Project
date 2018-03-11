@@ -2,7 +2,7 @@
 #define BINDING_CORE_SCENE_EFFECTS_H
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 class Binding_Core_Scene_Effects
 {

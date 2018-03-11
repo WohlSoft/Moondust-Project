@@ -56,7 +56,7 @@ DEFINES += PGE_ENGINE USE_LUA_JIT
 include ($$PWD/../_common/lib_destdir.pri)
 include($$PWD/../_Libs/SDL_Mixer_X/SDL_Mixer_X_link.pri)
 
-android || macx: {
+android: {
     DEFINES -= USE_LUA_JIT
 }
 
@@ -105,6 +105,7 @@ macx: {
             -framework IOKit -framework Cocoa -framework Carbon \
             -framework ForceFeedback -framework Metal -framework CoreFoundation \
             -framework OpenGL
+    contains(DEFINES, USE_LUA_JIT): QMAKE_LFLAGS += -pagezero_size 10000 -image_base 100000000
 }
 linux-g++||unix:!macx:!android:!haiku-g++: {
     LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib64
@@ -123,12 +124,8 @@ haiku-g++:{
 }
 
 contains(DEFINES, USE_LUA_JIT): {
-    macx: {
-        LIBS += -lluajit
-    } else {
-        LIBS += -lluajit-5.1
-        linux-g++: LIBS += -ldl
-    }
+    LIBS += -lluajit
+    linux-g++: LIBS += -ldl
 }
 unix:{
     CONFIG(debug, debug|release):||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl

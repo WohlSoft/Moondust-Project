@@ -159,14 +159,14 @@ BuildSDL()
     else
         #on Mac OS X build via X-Code
         cd $LatestSDL
-            UNIVERSAL_OUTPUTFOLDER=$InstallTo/lib
+            UNIVERSAL_OUTPUTFOLDER=$InstallTo/lib-build
             if [ -d $UNIVERSAL_OUTPUTFOLDER ]; then
                 #Deletion of old builds
                 rm -Rf $UNIVERSAL_OUTPUTFOLDER
             fi
             mkdir -p -- "$UNIVERSAL_OUTPUTFOLDER"
 
-            xcodebuild -target "Static Library" -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/lib"
+            xcodebuild -target "Static Library" -project Xcode/SDL/SDL.xcodeproj -configuration Release BUILD_DIR="${InstallTo}/lib-build"
 
             if [ ! $? -eq 0 ]
             then
@@ -174,13 +174,13 @@ BuildSDL()
             fi
 
             #move out built library from "Release" folder
-            mv -f "${InstallTo}/lib/Release/libSDL2.a" "${InstallTo}/lib/"
+            mv -f "${InstallTo}/lib-build/Release/libSDL2.a" "${InstallTo}/lib/"
             if [ ! -d "${InstallTo}/include/SDL2" ];
             then
                 mkdir "${InstallTo}/include/SDL2"
             fi
-            mv -f "${InstallTo}/lib/Release/usr/local/include/"* "${InstallTo}/include/SDL2"
-            rm -Rf $InstallTo/lib/Release
+            mv -f "${InstallTo}/lib-build/Release/usr/local/include/"* "${InstallTo}/include/SDL2"
+            rm -Rf $InstallTo/lib-build
         cd ..
     fi
 }
@@ -230,7 +230,7 @@ BuildLUAJIT()
     fi
 
     echo "Installing..."
-    make -s install PREFIX="${InstallTo}" BUILDMODE=static
+    make -s install INSTALL_ANAME=libluajit.a PREFIX="${InstallTo}" BUILDMODE=static
     if [ $? -eq 0 ]
     then
         echo "[good]"
@@ -240,7 +240,6 @@ BuildLUAJIT()
 
     if [[ "$OurOS" == "macos" ]]; then
         cp -a ./src/libluajit.a "${InstallTo}/lib/libluajit.a"
-        cp -a ./src/libluajit.a "${InstallTo}/lib/libluajit-5.1.a"
     fi
     cd ..
 }

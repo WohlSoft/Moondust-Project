@@ -2,7 +2,7 @@
 #define BINDING_LEVEL_CLASS_PLAYERPOSDETECTOR_H
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 class Binding_Level_Class_PlayerPosDetector
 {
 public:

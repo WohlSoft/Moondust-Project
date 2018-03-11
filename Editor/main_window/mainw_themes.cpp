@@ -44,6 +44,8 @@ void MainWindow::applyTheme(QString themeDir)
     if(!themeDir.isEmpty())
         Themes::loadTheme(themeDir);
 
+    this->setStyleSheet( Themes::StyleSheet() );
+
     ui->actionLVLToolBox->setIcon(Themes::icon(Themes::level_24));
     ui->actionWLDToolBox->setIcon(Themes::icon(Themes::world_24));
 

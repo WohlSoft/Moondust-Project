@@ -52,6 +52,7 @@
 #include <Utils/files.h>
 #include <common_features/fmt_format_ne.h>
 
+#include <ctime>
 #include <chrono>
 
 #ifdef DEBUG_BUILD
@@ -84,7 +85,7 @@ static bool isGlExtensionSupported(const char *ext, const unsigned char *exts)
     return (strstr(reinterpret_cast<const char *>(exts), ext) != NULL);
 }
 
-#ifndef __ANDROID__
+#ifdef RENDER_SUPORT_OPENGL2
 static bool detectOpenGL2()
 {
     const char *errorPlace = "";
@@ -683,29 +684,37 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
 {
     if(rtype == RENDER_AUTO)
     {
-        #ifndef __APPLE__
+#ifdef RENDER_SUPORT_OPENGL3
         if(detectOpenGL3())
         {
             rtype = RENDER_OPENGL_3_1;
             pLogDebug("OpenGL 3.1 detected!");
         }
         else
-        #endif
-        #ifndef __ANDROID__
-            if(detectOpenGL2())
-            {
-                rtype = RENDER_OPENGL_2_1;
-                pLogDebug("OpenGL 2.1 detected!");
-            }//RENDER_SDL2
-            else
-        #endif
-            {
-                rtype = RENDER_INVALID;
-                pLogCritical("OpenGL not detected!");
-            }
+#endif
+
+#ifdef RENDER_SUPORT_OPENGL2
+        if(detectOpenGL2())
+        {
+            rtype = RENDER_OPENGL_2_1;
+            pLogDebug("OpenGL 2.1 detected!");
+        }//RENDER_SDL2
+        else
+#endif
+#if !defined(RENDER_SUPORT_OPENGL3) && !defined(RENDER_SUPORT_OPENGL2)
+        {
+            rtype = RENDER_SW_SDL;
+            pLogDebug("SW SDL detected");
+        }
+#else
+        {
+            rtype = RENDER_INVALID;
+            pLogCritical("OpenGL not detected!");
+        }
+#endif
     }
 
-    #ifndef __APPLE__
+    #ifdef RENDER_SUPORT_OPENGL3
     else if(rtype == RENDER_OPENGL_3_1)
     {
         if(detectOpenGL3())
@@ -718,7 +727,7 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
     }
     #endif
 
-    #ifndef __ANDROID__
+    #ifdef RENDER_SUPORT_OPENGL2
     else if(rtype == RENDER_OPENGL_2_1)
     {
         if(detectOpenGL2())
@@ -1005,7 +1014,11 @@ void GlRenderer::makeShot()
     shoot->pixels = pixels;
     shoot->w = w;
     shoot->h = h;
+    #ifndef PGE_NO_THREADING
     m_screenshot_thread = SDL_CreateThread(makeShot_action, "scrn_maker", reinterpret_cast<void *>(shoot));
+    #else
+    makeShot_action(reinterpret_cast<void *>(shoot));
+    #endif
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTakeItem);
 }
 
@@ -1133,9 +1146,11 @@ void GlRenderer::toggleRecorder()
     }
     else
     {
+        #ifndef PGE_NO_THREADING
         if(g_gif.worker)
             SDL_WaitThread(g_gif.worker, NULL);
         g_gif.worker = nullptr;
+        #endif
         //if(g_gif.mutex)
         //    SDL_DestroyMutex(g_gif.mutex);
         //g_gif.mutex = nullptr;
@@ -1174,9 +1189,13 @@ void GlRenderer::processRecorder(double ticktime)
         shoot->pixels = pixels;
         shoot->w = w;
         shoot->h = h;
+        #ifndef PGE_NO_THREADING
         if(g_gif.worker)
             SDL_WaitThread(g_gif.worker, NULL);
         g_gif.worker = SDL_CreateThread(processRecorder_action, "gif_recorder", reinterpret_cast<void *>(shoot));
+        #else
+        processRecorder_action(reinterpret_cast<void *>(shoot));
+        #endif
     }
 }
 

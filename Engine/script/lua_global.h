@@ -3,7 +3,7 @@
 
 #include <map>
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 #include "lua_engine.h"
 #include "lua_titlescreen_engine.h"
 #include "lua_level_engine.h"

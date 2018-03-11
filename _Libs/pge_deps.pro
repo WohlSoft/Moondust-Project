@@ -28,7 +28,7 @@ SQLite3.file = libSQLite3.pro
 # SUBDIRS += PGEServerAPI
 # PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
 
-!android:!macx:{
+!android:{
     # ========== LuaBind (Lua-JIT) ==========
     DEFINES += USE_LUA_JIT
     SUBDIRS += LuaBind

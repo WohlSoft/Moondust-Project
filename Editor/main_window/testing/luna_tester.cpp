@@ -471,7 +471,7 @@ static void patch(FILE *f, unsigned int at, void *data, unsigned int size)
 
 static void patchAStr(FILE *f, unsigned int at, char *str, unsigned int maxlen)
 {
-    char data[maxlen];
+    char *data = (char*)malloc(maxlen);
     memset(data, 0, maxlen);
     unsigned int i;
     unsigned int len = strlen(str);
@@ -479,11 +479,12 @@ static void patchAStr(FILE *f, unsigned int at, char *str, unsigned int maxlen)
         data[i] = str[i];
     fseek(f, at, SEEK_SET);
     fwrite(data, 1, maxlen, f);
+    free(data);
 }
 
 static void patchUStr(FILE *f, unsigned int at, char *str, unsigned int maxlen)
 {
-    char data[maxlen];
+    char *data = (char*)malloc(maxlen);
     memset(data, 0, maxlen);
     unsigned int i, j;
     unsigned int len = strlen(str);
@@ -494,6 +495,7 @@ static void patchUStr(FILE *f, unsigned int at, char *str, unsigned int maxlen)
     }
     fseek(f, at, SEEK_SET);
     fwrite(data, 1, maxlen, f);
+    free(data);
 }
 
 static unsigned char lunaPatch[132] =

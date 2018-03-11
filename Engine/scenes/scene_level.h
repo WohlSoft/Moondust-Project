@@ -58,6 +58,8 @@
 #include <script/lua_level_engine.h>
 #include <script/bindings/level/classes/luaclass_level_playerstate.h>
 
+#include <Utils/elapsed_timer.h>
+
 #include <PGE_File_Formats/file_formats.h>
 #include <vector>
 #include <deque>
@@ -80,6 +82,7 @@ class LevelScene : public Scene
         friend class PGE_LevelCamera;
         friend class CharacterSwitcherEngine;
         friend class Binding_Level_CommonFuncs;
+        friend void  levelSceneLoopStep(void *scene);
     public:
         LevelScene();
         ~LevelScene();
@@ -391,6 +394,12 @@ class LevelScene : public Scene
         int  m_debug_render_delay   = 0;
         int  m_debug_phys_delay     = 0;
         int  m_debug_event_delay    = 0;
+
+        ElapsedTimer debug_TimeReal;
+        int          debug_TimeCounted  = 0;
+        bool m_debug_slowTimeMode       = false;
+        bool m_debug_oneStepMode        = false;
+        bool m_debug_oneStepMode_doStep = false;
 
     public:
         double m_globalGravity = 1.0;

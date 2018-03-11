@@ -38,6 +38,11 @@ struct LoopTiming
 {
     inline LoopTiming()
     {
+        init();
+    }
+
+    inline void init()
+    {
         start_render    = 0;
         stop_render     = 0;
         doUpdate_render = 0.0;
@@ -181,6 +186,7 @@ class Scene
         bool        m_doExit;
         uint32_t    uTick;
         double      uTickf;
+        LoopTiming  times;
 
         std::string _errorString;
     private:

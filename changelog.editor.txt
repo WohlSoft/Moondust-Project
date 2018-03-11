@@ -1,3 +1,8 @@
+Editor 0.3.1.13-2-dev
+- Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)
+- World map elements now supports "name" INI field
+- Added ability to pass CSS file by theme to stylize UI of Editor (CSS Reference is here: http://doc.qt.io/Qt-5/stylesheet-reference.html)
+
 Editor 0.3.1.13-1
 - Added ability to transform blocks into BGOs and BGOs into blocks
 

@@ -69,6 +69,8 @@ void PGE_Translator::init()
     }
     free(buffer);
     CFRelease(cflocale);
+#elif defined(__EMSCRIPTEN__)
+    defaultLocale = "en";
 #else
     // Generic way
     try
@@ -96,6 +98,10 @@ void PGE_Translator::init()
     pLogDebug("Initializing translator in the path: %s", m_langPath.c_str());
     toggleLanguage(defaultLocale);
     pLogDebug("Locale detected: %s", m_currLang.c_str());
+#ifdef __EMSCRIPTEN__
+    printf("Using English language file %s\n", m_langPath.c_str());
+    fflush(stdout);
+#endif
 }
 
 void PGE_Translator::toggleLanguage(std::string lang)
@@ -117,6 +123,10 @@ void PGE_Translator::toggleLanguage(std::string lang)
             langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
             m_translator.loadFile(langFilePath.c_str(),
                                   reinterpret_cast<unsigned char *>(&m_langPath[0]));
+            #ifdef __EMSCRIPTEN__
+                printf("Loading language file %s\n", langFilePath.c_str());
+                fflush(stdout);
+            #endif
         }
         m_isInit = true;
     }

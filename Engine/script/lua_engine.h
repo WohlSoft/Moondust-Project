@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 class Scene;
 class LuaEvent;
@@ -32,6 +32,8 @@ public:
     LuaEngine();
     LuaEngine(Scene* scene);
     virtual ~LuaEngine();
+
+    static const char *getEngineInfo();
 
     ///
     /// \brief Init a new lua engine. The lua engine must be in a invalid state.

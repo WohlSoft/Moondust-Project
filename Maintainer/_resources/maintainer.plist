@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>@EXECUTABLE@</string>
+	<key>CFBundleIconFile</key>
+	<string>@ICON@</string>
+	<key>CFBundleIdentifier</key>
+	<string>ru.wohlsoft.pge-maintainer</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.0.1</string>
+	<key>CFBundleVersion</key>
+	<string>0.0.1</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.developer-tools</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.7</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>NSPrincipalClass</key>
+	<string>PGEMaintainerApplication</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Game data maintaining utility</string>
+</dict>
+</plist>

@@ -1,7 +1,7 @@
 #ifndef LUACLASS_CORE_LVL_PLAYER_H
 #define LUACLASS_CORE_LVL_PLAYER_H
 
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 #include <luabind/luabind.hpp>
 #include <luabind/function.hpp>
 #include <luabind/class.hpp>

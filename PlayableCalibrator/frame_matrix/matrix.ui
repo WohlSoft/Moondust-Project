@@ -20,7 +20,7 @@
    <string>Sprite matrix</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../_resourses/images.qrc">
+   <iconset resource="../_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <property name="sizeGripEnabled">
@@ -2887,7 +2887,7 @@
   <tabstop>SpriteMatrix</tabstop>
  </tabstops>
  <resources>
-  <include location="../_resourses/images.qrc"/>
+  <include location="../_resources/images.qrc"/>
  </resources>
  <connections/>
 </ui>

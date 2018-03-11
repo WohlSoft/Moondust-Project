@@ -50,6 +50,7 @@
 
 #include <networking/intproc.h>
 
+
 #ifdef __APPLE__
 /**
  * @brief Receive an opened file from the Finder (Must be created at least one window!)
@@ -80,11 +81,16 @@ static void macosReceiveOpenFile()
 }
 #endif
 
+
 int main(int argc, char *argv[])
 {
     std::vector<std::string> args;
     for(int i = 0; i < argc; i++)
         args.push_back(std::string(argv[i]));
+
+    #ifdef __EMSCRIPTEN__
+    args.push_back(PGE_RUN_SINGLE_LEVEL);
+    #endif
 
     // Parse --version or --install low args
     if(!PGEEngineApp::parseLowArgs(args))

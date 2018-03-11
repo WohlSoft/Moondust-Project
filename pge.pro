@@ -8,10 +8,6 @@ android: {
     DEFINES -= USE_LUA_JIT
 }
 
-macx:{
-    DEFINES -= USE_LUA_JIT
-}
-
 useccache: {
     #To speed-up building process http://www.ysbl.york.ac.uk/~lohkamp/speedup_compilation.html
     QMAKE_CC = ccache gcc

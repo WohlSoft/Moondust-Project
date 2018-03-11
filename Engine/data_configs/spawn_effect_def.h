@@ -6,7 +6,7 @@
 #include <vector>
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 class SpawnEffectDef
 {

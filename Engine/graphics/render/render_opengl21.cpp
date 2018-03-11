@@ -18,11 +18,12 @@
 
 #include "render_opengl21.h"
 
-#ifndef __ANDROID__
+#include <common_features/logger.h>
+
+#ifdef RENDER_SUPORT_OPENGL2
 
 #include "../window.h"
 #include <common_features/graphics_funcs.h>
-#include <common_features/logger.h>
 #include <common_features/fmt_format_ne.h>
 
 #include <SDL2/SDL.h> // SDL 2 Library
@@ -583,7 +584,7 @@ int Render_OpenGL21::alignToCenterH(int y, int h)
     return y + (static_cast<int>(viewport_h_half) - (h / 2));
 }
 
-#else
+#else //RENDER_SUPORT_OPENGL2
 
 bool Render_OpenGL21::init()
 {
@@ -596,4 +597,4 @@ bool Render_OpenGL21::uninit()
     pLogWarning("GL 2.1: this renderer is not supported!");
     return false;
 }
-#endif
+#endif //RENDER_SUPORT_OPENGL2

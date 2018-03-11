@@ -17,7 +17,7 @@
    <string>About Playable Calibration tool</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../_resourses/images.qrc">
+   <iconset resource="../_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <property name="locale">
@@ -91,7 +91,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources>
-  <include location="../_resourses/images.qrc"/>
+  <include location="../_resources/images.qrc"/>
  </resources>
  <connections/>
 </ui>

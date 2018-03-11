@@ -17,6 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef Q_OS_MACX
+#undef Q_OS_MACX // Workaround for AutoMOC
+#endif
+
 #include <QtWidgets/QApplication>
 #include <QDesktopWidget>
 #include "calibrationmain.h"

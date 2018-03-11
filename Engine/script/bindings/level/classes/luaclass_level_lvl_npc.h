@@ -4,7 +4,7 @@
 #include <scenes/level/lvl_npc.h>
 
 #include <luabind/luabind.hpp>
-#include <lua_inclues/lua.hpp>
+#include <lua_includes/lua.hpp>
 
 class Binding_Level_ClassWrapper_LVL_NPC : public LVL_Npc, public luabind::wrap_base
 {

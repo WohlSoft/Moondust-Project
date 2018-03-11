@@ -50,6 +50,7 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     }
 
     section     = StdToPGEString(setup->group());
+    setup->read("name",     name,       pMerge(name, ""));
     setup->read("group",    group,      pMergeMe(group));
     setup->read("category", category,   pMergeMe(category));
     setup->read("description", description, pMerge(description, ""));

@@ -117,13 +117,13 @@ static std::string getStacktrace()
     void  *array[400];
     int size;
     char **strings;
-    D_pLogDebug("Requesting backtrace...");
+    D_pLogDebugNA("Requesting backtrace...");
     size = backtrace(array, 400);
-    D_pLogDebug("Converting...");
+    D_pLogDebugNA("Converting...");
     strings = backtrace_symbols(array, size);
-    D_pLogDebug("Initializing std::string...");
+    D_pLogDebugNA("Initializing std::string...");
     std::string bkTrace("");
-    D_pLogDebug("Filling std::string...");
+    D_pLogDebugNA("Filling std::string...");
 
     for(int j = 0; j < size; j++)
     {
@@ -131,7 +131,7 @@ static std::string getStacktrace()
         bkTrace.push_back('\n');
     }
 
-    D_pLogDebug("DONE!");
+    D_pLogDebugNA("DONE!");
     return bkTrace;
 #else
     return std::string("<Stack trace not supported for this platform!>");
@@ -178,7 +178,7 @@ static void msgBox(std::string title, std::string text)
 #ifdef __GNUC__
 #define LLVM_ATTRIBUTE_NORETURN __attribute__((noreturn))
 #elif defined(_MSC_VER)
-#define LLVM_ATTRIBUTE_NORETURN __declspec(noreturn)
+#define LLVM_ATTRIBUTE_NORETURN //__declspec(noreturn)
 #else
 #define LLVM_ATTRIBUTE_NORETURN
 #endif
@@ -413,12 +413,12 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
 
     case SIGSEGV:
     {
-        D_pLogDebug("\n===========================================================\n"
-                    "Attempt to take a backtrace..."
-                    "(if log ends before \"DONE\" will be shown, seems also trouble in the backtracing function too...)");
+        D_pLogDebugNA("\n===========================================================\n"
+                      "Attempt to take a backtrace..."
+                      "(if log ends before \"DONE\" will be shown, seems also trouble in the backtracing function too...)");
         std::string stack = getStacktrace();
-#ifndef _WIN32  //Unsupported signals by Windows
 
+#ifndef _WIN32  //Unsupported signals by Windows
         if(siginfo)
         {
             switch(siginfo->si_code)
@@ -443,7 +443,7 @@ static void handle_signal(int signal, siginfo_t *siginfo, void * /*context*/)
             }
         }
         else
-#endif
+#endif// _WIN32
         {
             pLogFatal("<Segmentation fault crash!>\n"
                       STACK_FORMAT,

@@ -47,12 +47,18 @@ pge_deps.xcodeproj
 .vscode/
 .vs/
 
+# CMake
+CMakeCache.txt
+CMakeFiles
+
 # Qt-es
 
 *.pro.user
 *.pro.user.*
 *.qbs.user
 *.qbs.user.*
+*.txt.user
+*.txt.user.*
 *.error
 moc_*.cpp
 ui_*.h
@@ -89,6 +95,8 @@ Makefile.*
 #compiled translation
 editor_*.qm
 engine_*.qm
+# Keep pre-compiled English translation to allow build without of Qt
+!engine_en.qm
 
 #broken translation file
 qt_en.qm

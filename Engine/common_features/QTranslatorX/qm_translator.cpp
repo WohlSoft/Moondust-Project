@@ -79,20 +79,22 @@ static const uint8_t magic[MagicLength] =
 /* @} */
 
 #ifndef MACHINE_BYTEORDER
-#if defined(__linux__) || defined(__HAIKU__)
-#include <endian.h>
-#define MACHINE_BYTEORDER  __BYTE_ORDER
-#else /* __linux__ */
-#if defined(__hppa__) || \
-defined(__m68k__) || defined(mc68000) || defined(_M_M68K) || \
-(defined(__MIPS__) && defined(__MISPEB__)) || \
-defined(__ppc__) || defined(__POWERPC__) || defined(_M_PPC) || \
-defined(__sparc__)
-#define MACHINE_BYTEORDER   MACHINE_BIG_ENDIAN
-#else
-#define MACHINE_BYTEORDER   MACHINE_LITTLE_ENDIAN
-#endif
-#endif /* __linux__ */
+#   if defined(__EMSCRIPTEN__)
+#       define MACHINE_BYTEORDER   MACHINE_LITTLE_ENDIAN
+#   elif defined(__linux__) || defined(__HAIKU__)
+#       include <endian.h>
+#       define MACHINE_BYTEORDER  __BYTE_ORDER
+#   else /* __linux__ */
+#       if defined(__hppa__) || \
+        defined(__m68k__) || defined(mc68000) || defined(_M_M68K) || \
+        (defined(__MIPS__) && defined(__MISPEB__)) || \
+        defined(__ppc__) || defined(__POWERPC__) || defined(_M_PPC) || \
+        defined(__sparc__)
+#           define MACHINE_BYTEORDER   MACHINE_BIG_ENDIAN
+#       else
+#           define MACHINE_BYTEORDER   MACHINE_LITTLE_ENDIAN
+#       endif
+#   endif /* __linux__ */
 #endif /* !SDL_BYTEORDER */
 
 enum

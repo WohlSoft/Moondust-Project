@@ -44,7 +44,7 @@ std::string to_string(T value)
 
 #ifdef USE_LUA_JIT
 extern "C" {
-#include <lua_inclues/luajit.h>
+#include <lua_includes/luajit.h>
 }
 #endif
 
@@ -61,6 +61,15 @@ LuaEngine::~LuaEngine()
 
     if(isValid())
         shutdown();
+}
+
+const char *LuaEngine::getEngineInfo()
+{
+#ifdef USE_LUA_JIT
+    return LUAJIT_VERSION;
+#else
+    return "PUC-Rio " LUA_RELEASE;
+#endif
 }
 
 static void splitErrorMsg(const std::string &inMsg, std::string &msg1, std::string &msg2)
@@ -88,8 +97,27 @@ void LuaEngine::init()
         return;
     }
 
+    //Add error reporter
+    if(!m_errorReporterFunc)
+    {
+        m_errorReporterFunc = [this](const std::string & errMsg, const std::string & stacktrace)
+        {
+            pLogWarning("Lua-Error: ");
+            pLogWarning("Error Message: %s", errMsg.c_str());
+            if(!stacktrace.empty())
+                pLogWarning("Stacktrace: \n%s", stacktrace.c_str());
+        };
+    }
+    
     //Create our new lua state
     L = luaL_newstate();
+    if(!L)
+    {
+        m_errorReporterFunc("Failed to initialize Lua Engine!", "");
+        m_lateShutdown = true;
+        shutdown();
+        return;
+    }
 
     //Add it as global
     LuaGlobal::add(L, this);
@@ -181,17 +209,6 @@ void LuaEngine::init()
         //allPaths += std::string(";") +  m_luaScriptPath.toStdString() + "?.lua";
         allPaths += std::string(";") +  fullPaths;
         package["path"] = allPaths;
-    }
-
-    //Add error reporter
-    if(!m_errorReporterFunc)
-    {
-        m_errorReporterFunc = [this](const std::string & errMsg, const std::string & stacktrace)
-        {
-            pLogWarning("Lua-Error: ");
-            pLogWarning("Error Message: %s", errMsg.c_str());
-            pLogWarning("Stacktrace: \n%s", stacktrace.c_str());
-        };
     }
 
     //Now let's bind our functions

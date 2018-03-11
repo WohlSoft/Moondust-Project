@@ -545,7 +545,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
+        #ifndef PGE_NO_THREADING
         m_filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", NULL);
+        #else
+        findEpisodes(NULL);
+        #endif
     }
     break;
     case menu_playepisode:
@@ -571,7 +575,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
+        #ifndef PGE_NO_THREADING
         m_filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", NULL);
+        #else
+        findLevels(NULL);
+        #endif
     }
     break;
     case menu_playlevel:

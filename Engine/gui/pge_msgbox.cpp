@@ -29,6 +29,10 @@
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
 {
@@ -221,8 +225,12 @@ void PGE_MsgBox::exec()
         GlRenderer::flush();
         GlRenderer::repaint();
 
+        #ifndef __EMSCRIPTEN__
         if((!PGE_Window::vsync) && (m_uTick > static_cast<Sint32>(SDL_GetTicks() - start_render)))
             SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render) );
+        #else
+        emscripten_sleep(1);
+        #endif
     }
 }
 
