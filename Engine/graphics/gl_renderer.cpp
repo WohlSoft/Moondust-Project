@@ -1022,6 +1022,40 @@ void GlRenderer::makeShot()
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTakeItem);
 }
 
+static std::string shoot_getTimedString(std::string path, const char *ext = "png")
+{
+    auto now = std::chrono::system_clock::now();
+    std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
+    tm *t = std::localtime(&in_time_t);
+    static int prevSec = 0;
+    static int prevSecCounter = 0;
+    if(prevSec != t->tm_sec)
+    {
+        prevSec = t->tm_sec;
+        prevSecCounter = 0;
+    }
+    else
+        prevSecCounter++;
+
+    if(!prevSecCounter)
+    {
+        return fmt::sprintf_ne("%sScr_%04d-%02d-%02d_%02d-%02d-%02d.%s",
+                                             path,
+                                             (1900 + t->tm_year), (1 + t->tm_mon), t->tm_mday,
+                                             t->tm_hour, t->tm_min, t->tm_sec,
+                                             ext);
+    }
+    else
+    {
+        return fmt::sprintf_ne("%sScr_%04d-%02d-%02d_%02d-%02d-%02d_(%d).%s",
+                                             path,
+                                             (1900 + t->tm_year), (1 + t->tm_mon), t->tm_mday,
+                                             t->tm_hour, t->tm_min, t->tm_sec,
+                                             prevSecCounter,
+                                             ext);
+    }
+}
+
 int GlRenderer::makeShot_action(void *_pixels)
 {
     PGE_GL_shoot *shoot = reinterpret_cast<PGE_GL_shoot *>(_pixels);
@@ -1072,23 +1106,7 @@ int GlRenderer::makeShot_action(void *_pixels)
     if(!DirMan::exists(ScreenshotPath))
         DirMan::mkAbsDir(ScreenshotPath);
 
-
-    auto now = std::chrono::system_clock::now();
-    std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
-    tm *t = std::localtime(&in_time_t);
-    static int prevSec = 0;
-    static int prevSecCounter = 0;
-    if(prevSec != t->tm_sec)
-    {
-        prevSec = t->tm_sec;
-        prevSecCounter = 0;
-    }
-    else
-        prevSecCounter++;
-
-    std::string saveTo = fmt::format_ne("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}_{7}.png", ScreenshotPath,
-                                    t->tm_year, t->tm_mon, t->tm_mday,
-                                    t->tm_hour, t->tm_min, t->tm_sec, prevSecCounter);
+    std::string saveTo = shoot_getTimedString(ScreenshotPath, "png");
     pLogDebug("%s %d %d", saveTo.c_str(), shoot->w, shoot->h);
 
     if(FreeImage_HasPixels(shotImg) == FALSE)
@@ -1124,15 +1142,10 @@ void GlRenderer::toggleRecorder()
 {
     if(!g_gif.enabled)
     {
-        //g_gif.mutex = SDL_CreateMutex();
-        auto now = std::chrono::system_clock::now();
-        std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
-        tm *t = std::localtime(&in_time_t);
+        if(!DirMan::exists(ScreenshotPath))
+            DirMan::mkAbsDir(ScreenshotPath);
 
-        std::string saveTo = fmt::format_ne("{0}Scr_{1}_{2}_{3}_{4}_{5}_{6}.gif",
-                                         ScreenshotPath,
-                                         t->tm_year, t->tm_mon, t->tm_mday,
-                                         t->tm_hour, t->tm_min, t->tm_sec);
+        std::string saveTo = shoot_getTimedString(ScreenshotPath, "gif");
 
         FILE *gifFile = Files::utf8_fopen(saveTo.data(), "wb");
         if(GifBegin(&g_gif.writer,
