@@ -51,6 +51,7 @@
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 #include <common_features/fmt_format_ne.h>
+#include <fmt/fmt_time.h>
 
 #include <ctime>
 #include <chrono>
@@ -1026,12 +1027,12 @@ static std::string shoot_getTimedString(std::string path, const char *ext = "png
 {
     auto now = std::chrono::system_clock::now();
     std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
-    tm *t = std::localtime(&in_time_t);
+    std::tm t = fmt::localtime(in_time_t);
     static int prevSec = 0;
     static int prevSecCounter = 0;
-    if(prevSec != t->tm_sec)
+    if(prevSec != t.tm_sec)
     {
-        prevSec = t->tm_sec;
+        prevSec = t.tm_sec;
         prevSecCounter = 0;
     }
     else
@@ -1041,16 +1042,16 @@ static std::string shoot_getTimedString(std::string path, const char *ext = "png
     {
         return fmt::sprintf_ne("%sScr_%04d-%02d-%02d_%02d-%02d-%02d.%s",
                                              path,
-                                             (1900 + t->tm_year), (1 + t->tm_mon), t->tm_mday,
-                                             t->tm_hour, t->tm_min, t->tm_sec,
+                                             (1900 + t.tm_year), (1 + t.tm_mon), t.tm_mday,
+                                             t.tm_hour, t.tm_min, t.tm_sec,
                                              ext);
     }
     else
     {
         return fmt::sprintf_ne("%sScr_%04d-%02d-%02d_%02d-%02d-%02d_(%d).%s",
                                              path,
-                                             (1900 + t->tm_year), (1 + t->tm_mon), t->tm_mday,
-                                             t->tm_hour, t->tm_min, t->tm_sec,
+                                             (1900 + t.tm_year), (1 + t.tm_mon), t.tm_mday,
+                                             t.tm_hour, t.tm_min, t.tm_sec,
                                              prevSecCounter,
                                              ext);
     }
