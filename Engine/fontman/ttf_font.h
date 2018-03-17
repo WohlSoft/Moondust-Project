@@ -73,6 +73,7 @@ public:
      * @param x X position to draw
      * @param y Y position do draw
      * @param fontSize Size of font
+     * @param scaleSize Scale rendered texture
      * @param Red Red color level from 0.0 to 1.0
      * @param Green Green color level from 0.0 to 1.0
      * @param Blue Blue color level from 0.0 to 1.0
@@ -80,7 +81,7 @@ public:
      * @return Width of the glypth
      */
     uint32_t drawGlyph(const char* u8char,
-                       int32_t x, int32_t y, uint32_t fontSize,
+                       int32_t x, int32_t y, uint32_t fontSize, double scaleSize = 1.0,
                        float Red = 1.f, float Green = 1.f, float Blue = 1.f, float Alpha = 1.f);
 
     struct TheGlyphInfo

@@ -69,13 +69,9 @@ struct DataFolders
 /*****************Fonts********************/
 struct FontsSetup
 {
-    FontsSetup() :
-        double_pixled(false)
-    {}
-    bool double_pixled;
+    bool double_pixled = false;
     std::string fontname;
     std::vector<std::string> ttfFonts;
-    std::string rasterFontsFile;
 };
 /******************************************/
 

@@ -20,6 +20,7 @@
 #include <SDL2/SDL_assert.h>
 #include <graphics/gl_renderer.h>
 #include <common_features/logger.h>
+#include <data_configs/config_manager.h>
 #include <unordered_set>
 #include <mutex>
 
@@ -86,7 +87,7 @@ bool TtfFont::loadFont(const std::string &path)
     SDL_assert(error == 0);
     if(error)
         return false;
-    error = FT_Select_Charmap(m_face, ft_encoding_unicode);
+    error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
     SDL_assert(error == 0);
     if(error)
         return false;
@@ -114,7 +115,7 @@ bool TtfFont::loadFont(const char *mem, size_t size)
     SDL_assert(error == 0);
     if(error)
         return false;
-    error = FT_Select_Charmap(m_face, ft_encoding_unicode);
+    error = FT_Select_Charmap(m_face, FT_ENCODING_UNICODE);
     SDL_assert(error == 0);
     if(error)
         return false;
@@ -135,9 +136,12 @@ PGE_Size TtfFont::textSize(std::string &text,
     if(text.empty())
         return PGE_Size(0, 0);
 
-    size_t lastspace = 0; //!< index of last found space character
-    size_t count     = 1; //!< Count of lines
-    uint32_t maxWidth     = 0; //!< detected maximal width of message
+    //! index of last found space character
+    size_t lastspace = 0;
+    //! Count of lines
+    size_t count     = 1;
+    //! detected maximal width of message
+    uint32_t maxWidth     = 0;
 
     uint32_t widthSumm    = 0;
     uint32_t widthSummMax = 0;
@@ -232,6 +236,7 @@ void TtfFont::printText(const std::string &text,
 
     uint32_t offsetX = 0;
     uint32_t offsetY = 0;
+    bool    doublePixel = ConfigManager::setup_fonts.double_pixled;
 
     const char *strIt  = text.c_str();
     const char *strEnd = strIt + text.size();
@@ -256,7 +261,7 @@ void TtfFont::printText(const std::string &text,
 //            continue;
         }
 
-        const TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(&cx));
+        const TheGlyph &glyph = getGlyph(doublePixel ? (fontSize / 2) : fontSize, get_utf8_char(&cx));
         if(glyph.tx)
         {
             GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
@@ -265,8 +270,8 @@ void TtfFont::printText(const std::string &text,
             GlRenderer::renderTexture(glyph.tx,
                                       static_cast<float>(glyph_x + glyph.left),
                                       static_cast<float>(glyph_y - glyph.top),
-                                      glyph.width,
-                                      glyph.height
+                                      (doublePixel ? (glyph.width * 2) : glyph.width),
+                                      (doublePixel ? (glyph.height * 2) : glyph.height)
                                       );
         }
         offsetX += glyph.tx ? uint32_t(glyph.advance >> 6) : (fontSize >> 2);
@@ -286,7 +291,7 @@ std::string TtfFont::getFontName()
 }
 
 uint32_t TtfFont::drawGlyph(const char *u8char,
-                           int32_t x, int32_t y, uint32_t fontSize,
+                           int32_t x, int32_t y, uint32_t fontSize, double scaleSize,
                            float Red, float Green, float Blue, float Alpha)
 {
     const TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(u8char));
@@ -298,8 +303,8 @@ uint32_t TtfFont::drawGlyph(const char *u8char,
         GlRenderer::renderTexture(glyph.tx,
                                   static_cast<float>(glyph_x + glyph.left),
                                   static_cast<float>(glyph_y - glyph.top),
-                                  glyph.width,
-                                  glyph.height
+                                  glyph.width * static_cast<float>(scaleSize),
+                                  glyph.height * static_cast<float>(scaleSize)
                                   );
         return glyph.width;
     }

@@ -24,6 +24,7 @@
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
+#include <data_configs/config_manager.h>
 
 #include "ttf_font.h"
 #include "font_manager_private.h"
@@ -381,6 +382,7 @@ void RasterFont::printText(const std::string &text,
     uint32_t offsetY = 0;
     uint32_t w = m_letterWidth;
     uint32_t h = m_letterHeight;
+    bool    doublePixel = ConfigManager::setup_fonts.double_pixled;
 
     const char *strIt  = text.c_str();
     const char *strEnd = strIt + text.size();
@@ -429,7 +431,8 @@ void RasterFont::printText(const std::string &text,
                 font->drawGlyph(&cx,
                                 x + static_cast<int32_t>(offsetX),
                                 y + static_cast<int32_t>(offsetY),
-                                w,
+                                (doublePixel ? (w / 2) : w),
+                                (doublePixel ? 2.0 : 1.0),
                                 Red, Green, Blue, Alpha);
                 offsetX += w + m_interLetterSpace;
             } else {

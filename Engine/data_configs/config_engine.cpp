@@ -47,9 +47,11 @@ bool ConfigManager::loadEngineSettings()
         std::string ttfFontFile;
 
         engineset.read("ttf-font-default", setup_fonts.fontname, "");
+        engineset.read("ttf-double-pixel", setup_fonts.double_pixled, false);
+        //DEPRECATIONS
         engineset.read("font-file", setup_fonts.fontname, setup_fonts.fontname);//DEPRECATED
-        engineset.read("double-pixled", setup_fonts.double_pixled, false);
-        engineset.read("raster-fonts", setup_fonts.rasterFontsFile, "");
+        engineset.read("double-pixled", setup_fonts.double_pixled, setup_fonts.double_pixled);//DEPRECATED
+        //DEPRECATIONS END
 
         engineset.read("ttf-fonts-count", ttfFontsCount, 0);
         setup_fonts.ttfFonts.clear();
