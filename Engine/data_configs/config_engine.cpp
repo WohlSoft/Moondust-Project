@@ -43,9 +43,23 @@ bool ConfigManager::loadEngineSettings()
 
     engineset.beginGroup("fonts");
     {
-        engineset.read("font-file", setup_fonts.fontname, "");
+        size_t ttfFontsCount = 0;
+        std::string ttfFontFile;
+
+        engineset.read("ttf-font-default", setup_fonts.fontname, "");
+        engineset.read("font-file", setup_fonts.fontname, setup_fonts.fontname);//DEPRECATED
         engineset.read("double-pixled", setup_fonts.double_pixled, false);
         engineset.read("raster-fonts", setup_fonts.rasterFontsFile, "");
+
+        engineset.read("ttf-fonts-count", ttfFontsCount, 0);
+        setup_fonts.ttfFonts.clear();
+        setup_fonts.ttfFonts.reserve(ttfFontsCount);
+        for(size_t i = 0; i < ttfFontsCount; i++)
+        {
+            engineset.read(fmt::format_ne("ttf-font-{0}", i).c_str(), ttfFontFile, "");
+            if(!ttfFontFile.empty())
+                setup_fonts.ttfFonts.push_back(ttfFontFile);
+        }
     }
     engineset.endGroup();
     engineset.beginGroup("common");

@@ -2,6 +2,8 @@
 - LuaJIT now is working on macOS!
 - Using of updated SDL Mixer X
 - Fixed the date filenames generation for screenshots and recorded GIF movies
+- Repaired TTF fallback support
+- Added support for more than one TTF font loaded in one time
 
 0.3.0
 - Fixed some NPC-AI API properties

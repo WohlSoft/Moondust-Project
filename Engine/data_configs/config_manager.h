@@ -74,6 +74,7 @@ struct FontsSetup
     {}
     bool double_pixled;
     std::string fontname;
+    std::vector<std::string> ttfFonts;
     std::string rasterFontsFile;
 };
 /******************************************/

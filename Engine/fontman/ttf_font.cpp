@@ -20,12 +20,17 @@
 #include <SDL2/SDL_assert.h>
 #include <graphics/gl_renderer.h>
 #include <common_features/logger.h>
+#include <unordered_set>
+#include <mutex>
 
 #include "font_manager_private.h"
 
 //! FreeType library descriptor
 FT_Library  g_ft = nullptr;
 
+//! Loaded TTF fonts set used as fallback for missing glyphs
+static std::unordered_set<TtfFont*> g_loadedFaces;
+static std::mutex                   g_loadedFaces_mutex;
 
 bool initializeFreeType()
 {
@@ -59,8 +64,13 @@ TtfFont::~TtfFont()
         GlRenderer::deleteTexture(t);
     m_texturesBank.clear();
 
+    g_loadedFaces_mutex.lock();
     if(m_face)
+    {
+        g_loadedFaces.erase(this);
         FT_Done_Face(m_face);
+    }
+    g_loadedFaces_mutex.unlock();
 
     m_face = nullptr;
 }
@@ -80,6 +90,10 @@ bool TtfFont::loadFont(const std::string &path)
     SDL_assert(error == 0);
     if(error)
         return false;
+
+    g_loadedFaces_mutex.lock();
+    g_loadedFaces.insert(this);
+    g_loadedFaces_mutex.unlock();
 
     m_fontName.append(m_face->family_name);
     m_fontName.push_back(' ');
@@ -104,6 +118,11 @@ bool TtfFont::loadFont(const char *mem, size_t size)
     SDL_assert(error == 0);
     if(error)
         return false;
+
+    g_loadedFaces_mutex.lock();
+    g_loadedFaces.insert(this);
+    g_loadedFaces_mutex.unlock();
+
     m_isReady = true;
     return true;
 }
@@ -266,6 +285,40 @@ std::string TtfFont::getFontName()
     return m_fontName;
 }
 
+uint32_t TtfFont::drawGlyph(const char *u8char,
+                           int32_t x, int32_t y, uint32_t fontSize,
+                           float Red, float Green, float Blue, float Alpha)
+{
+    const TheGlyph &glyph = getGlyph(fontSize, get_utf8_char(u8char));
+    if(glyph.tx)
+    {
+        GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
+        int32_t glyph_x = x;
+        int32_t glyph_y = y + static_cast<int32_t>(fontSize);
+        GlRenderer::renderTexture(glyph.tx,
+                                  static_cast<float>(glyph_x + glyph.left),
+                                  static_cast<float>(glyph_y - glyph.top),
+                                  glyph.width,
+                                  glyph.height
+                                  );
+        return glyph.width;
+    }
+    return fontSize;
+}
+
+TtfFont::TheGlyphInfo TtfFont::getGlyphInfo(const char *u8char, uint32_t fontSize)
+{
+    TheGlyph glyph = getGlyph(fontSize, get_utf8_char(u8char));
+    TheGlyphInfo info;
+    info.width = glyph.width;
+    info.height = glyph.height;
+    info.left = glyph.left;
+    info.top = glyph.top;
+    info.advance = glyph.advance;
+    info.glyph_width = glyph.glyph_width;
+    return info;
+}
+
 const TtfFont::TheGlyph &TtfFont::getGlyph(uint32_t fontSize, char32_t character)
 {
     SizeCharMap::iterator fSize = m_charMap.find(fontSize);
@@ -283,21 +336,47 @@ const TtfFont::TheGlyph &TtfFont::getGlyph(uint32_t fontSize, char32_t character
 const TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t character)
 {
     FT_Error     error = 0;
+    FT_UInt      t_glyphIndex = 0;
     TheGlyph     t_glyph;
+    FT_Face      cur_font = m_face;
 
     if(m_recentPixelSize != fontSize)
     {
-        error = FT_Set_Pixel_Sizes(m_face, 0, fontSize);
+        error = FT_Set_Pixel_Sizes(cur_font, 0, fontSize);
         SDL_assert_release(error == 0);
         m_recentPixelSize = fontSize;
     }
 
-    error = FT_Load_Char(m_face, character, FT_LOAD_RENDER);
+    t_glyphIndex = FT_Get_Char_Index(cur_font, character);
+    if(t_glyphIndex == 0)//Attempt to find a fallback
+    {
+        g_loadedFaces_mutex.lock();
+        for(TtfFont *fb_font : g_loadedFaces)
+        {
+            if(fb_font->m_recentPixelSize != fontSize)
+            {
+                error = FT_Set_Pixel_Sizes(fb_font->m_face, 0, fontSize);
+                SDL_assert_release(error == 0);
+                fb_font->m_recentPixelSize = fontSize;
+            }
+
+            t_glyphIndex = FT_Get_Char_Index(fb_font->m_face, character);
+            if(t_glyphIndex != 0)
+            {
+                // Fallback has been found!
+                cur_font = fb_font->m_face;
+                break;
+            }
+        }
+        g_loadedFaces_mutex.unlock();
+    }
+
+    error = FT_Load_Glyph(cur_font, t_glyphIndex, FT_LOAD_RENDER);
     if(error != 0)
         return dummyGlyph;
 
 
-    FT_GlyphSlot glyph  = m_face->glyph;
+    FT_GlyphSlot glyph  = cur_font->glyph;
     FT_Bitmap &bitmap   = glyph->bitmap;
     uint32_t width      = bitmap.width;
     uint32_t height     = bitmap.rows;
