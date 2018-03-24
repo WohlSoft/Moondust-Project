@@ -542,7 +542,7 @@ Por favor defínala primero</translation>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="150"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="416"/>
         <source>Nothing to do.</source>
-        <translation>Nada para hacer</translation>
+        <translation>Nada para hacer.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="151"/>
@@ -1199,7 +1199,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="91"/>
         <source>Counter name:</source>
-        <translation>Nombre del contador</translation>
+        <translation>Nombre del contador:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
@@ -1545,7 +1545,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="39"/>
         <source>Choose the workspace layout you want to use:</source>
-        <translation>Elija el diseño de área de trabajo que desee usar</translation>
+        <translation>Elija el diseño de área de trabajo que desee usar:</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
@@ -1565,7 +1565,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation>Interfaz clásica similar al editor para el motor clásico</translation>
+        <translation>Interfaz clásica similar al editor para el motor clásico.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
@@ -1769,7 +1769,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="73"/>
         <source>Layer: </source>
-        <translation>Capa:</translation>
+        <translation>Capa: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="76"/>
@@ -1906,7 +1906,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="169"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="310"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles).</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="347"/>
@@ -1922,7 +1922,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="83"/>
         <source>Layer: </source>
-        <translation>Capa:</translation>
+        <translation>Capa: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="86"/>
@@ -2016,7 +2016,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="219"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="391"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles).</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="262"/>
@@ -2106,7 +2106,7 @@ Límites: longitud máxima de 27 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="88"/>
         <source>Layer: </source>
-        <translation>Capa:</translation>
+        <translation>Capa: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="92"/>
@@ -2405,7 +2405,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="100"/>
         <source>Layer: </source>
-        <translation>Capa:</translation>
+        <translation>Capa: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="103"/>
@@ -2512,7 +2512,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="235"/>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="463"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles).</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="298"/>
@@ -3373,7 +3373,7 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="100"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="554"/>
         <source>Level title: </source>
-        <translation>Título:</translation>
+        <translation>Título: </translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="101"/>
@@ -3582,7 +3582,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="552"/>
         <source> not saved</source>
-        <translation>No guardado</translation>
+        <translation> no guardado</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="38"/>
@@ -4960,7 +4960,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="317"/>
         <source>Destroyed: </source>
-        <translation>Destruído:</translation>
+        <translation>Destruído: </translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="146"/>
@@ -6422,7 +6422,7 @@ Unidad es píxel por 1/65 segundos.</translation>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1526"/>
         <source>The direction in which the player will exit the warp.</source>
-        <translation>Cuando el jugador salga, será disparado en una dirección definida</translation>
+        <translation>Cuando el jugador salga, será disparado en una dirección definida.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1529"/>
@@ -6484,7 +6484,7 @@ Unidad es píxel por 1/65 segundos.</translation>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
         <translation>Coordenadas finales del jugador en el mapamundi
-cuando salga de un nivel a través de este traslado</translation>
+cuando salga de un nivel a través de este traslado.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="820"/>
@@ -6601,7 +6601,7 @@ a otro nivel a través de este traslado.</translation>
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
         <translation>Crear nueva instancia de traslado.
-Cada par de puntos requiere una instancia</translation>
+Cada par de puntos requiere una instancia.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="160"/>
@@ -6651,7 +6651,7 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1089"/>
         <source>Can&apos;t open the file!</source>
-        <translation>No se puede abrir archivo.</translation>
+        <translation>¡No se puede abrir archivo!</translation>
     </message>
 </context>
 <context>
@@ -8338,7 +8338,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="2536"/>
         <location filename="../mainwindow.ui" line="2539"/>
         <source>Testing options...</source>
-        <translation>Opciones de prueba</translation>
+        <translation>Opciones de prueba...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2846"/>
@@ -8384,7 +8384,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="2902"/>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Abrir carpeta personalizada: una carpeta con el mismo nombre del nivel actual</translation>
+        <translation>Abrir carpeta personalizada: una carpeta con el mismo nombre del nivel actual.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2910"/>
@@ -9319,7 +9319,7 @@ El paquete de configuración se cargó con errores.</translation>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="48"/>
         <source>Create new NPC.txt configuration file</source>
-        <translation>Crear nuevo NPC.txt </translation>
+        <translation>Crear nuevo NPC.txt</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="67"/>
@@ -9746,7 +9746,7 @@ Do you want to clone another section?</source>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="269"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles).</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="304"/>
@@ -9764,12 +9764,12 @@ Do you want to clone another section?</source>
         <location filename="../main_window/level/level_sections_mods.cpp" line="406"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="434"/>
         <source>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor seleccione cuántos objetos fuera de la sección deberían ser rotados (en píxeles)</translation>
+        <translation>Por favor seleccione cuántos objetos fuera de la sección deberían ser rotados (en píxeles).</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="54"/>
         <source>Select directory with custom data to import.</source>
-        <translation>Seleccione un directorio con datos personalizados para importar</translation>
+        <translation>Seleccione un directorio con datos personalizados para importar.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="343"/>
@@ -9788,7 +9788,7 @@ Do you want to clone another section?</source>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="393"/>
         <source>Nothing to do.</source>
-        <translation>Nada para hacer</translation>
+        <translation>Nada para hacer.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="394"/>
@@ -9926,7 +9926,7 @@ Por favor vea el Estado de Configuración para obtener más información.</trans
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
         <source>NPC garbage clean-up</source>
-        <translation>Limpieza de residuos </translation>
+        <translation>Limpieza de residuos</translation>
     </message>
     <message>
         <source>Everything is fine, level has no NPC gargabe!</source>
@@ -9942,7 +9942,7 @@ Por favor vea el Estado de Configuración para obtener más información.</trans
         <source>Found %1 junk NPC&apos;s. Do you want to remove them?
 Press &quot;Help&quot; to show info about the junk NPCs we found.</source>
         <translation>%1 PNJs residuales encontrados. ¿Desea removerlos?
-Presionar el botón de ayuda para ver los PNJs encontrados</translation>
+Presionar el botón de ayuda para ver los PNJs encontrados.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
@@ -9977,7 +9977,7 @@ Esta operación puede ser deshecha con Ctrl+Z o Editar/Deshacer.</translation>
         <source>Impossible to open/create script file.
 Please save the file first.</source>
         <translation>Imposible abrir/crear script.
-Por favor guarde primero</translation>
+Por favor guarde primero.</translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="194"/>
@@ -10164,7 +10164,7 @@ Do you want to continue?</source>
         <location filename="../editing/edit_npc/npcedit.ui" line="626"/>
         <location filename="../editing/edit_npc/npcedit.ui" line="652"/>
         <source> px</source>
-        <translation>px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="142"/>
@@ -10432,7 +10432,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="161"/>
         <source> not saved</source>
-        <translation>No guardado</translation>
+        <translation> no guardado</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="162"/>
@@ -12703,7 +12703,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/tileset_item_box.ui" line="146"/>
         <source>Search: </source>
-        <translation>Buscar:</translation>
+        <translation>Buscar: </translation>
     </message>
     <message>
         <location filename="../main_window/dock/tileset_item_box.ui" line="159"/>
@@ -14135,7 +14135,7 @@ LunaLUA parcialmente extiende esos límites.</translation>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="110"/>
         <source>Episode Title: </source>
-        <translation>Título:</translation>
+        <translation>Título: </translation>
     </message>
     <message>
         <source>Cannot open level file %1:
@@ -14187,7 +14187,7 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="431"/>
         <source> not saved</source>
-        <translation>No guardado</translation>
+        <translation> no guardado</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="429"/>
