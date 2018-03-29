@@ -72,6 +72,7 @@ Makefile.*
 /bin
 /bin-w32
 /bin-w64
+/bin-cmake*
 /ServerLib/bin
 /android-build
 /Editor/app_process

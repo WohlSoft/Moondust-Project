@@ -20,6 +20,15 @@ set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
 
+# Destinition bitness of the build
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set(PGE_ARCHITECTURE_BITS "32")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(PGE_ARCHITECTURE_BITS "64")
+else()
+    set(PGE_ARCHITECTURE_BITS "unk")
+endif()
+
 # Allow install into space-containing paths
 string(REPLACE " " "\\ " CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 string(REPLACE "(" "\\(" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
@@ -376,3 +385,53 @@ InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/LICENSE" RENAME "LICENSE.txt" DESTINAT
 
 # Process UNIX2DOS if needed
 InstallTextFiles()
+
+# =============== Deployment stuff ===============
+set(PGE_FILE_STANDALONE_EDITOR_MANUAL
+    "<html><head><meta http-equiv=\\\"refresh\\\" content=\\\"0; url=http://pgehelp.wohlsoft.ru/manual_editor.html\\\"/></head><body></body></html>")
+file(WRITE "${CMAKE_BINARY_DIR}/install_online_help.cmake" "
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/help/manual_editor.htm\"
+        \"${PGE_FILE_STANDALONE_EDITOR_MANUAL}\")
+")
+
+add_custom_target(put_online_help
+    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+    COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/help"
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/help"
+    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/install_online_help.cmake"
+)
+
+if(WIN32)
+    set(PGE_FILE_PORTABLE_APP_INI
+        "[Main]\r\nforce-portable=true\r\n\r\n")
+else()
+    set(PGE_FILE_PORTABLE_APP_INI
+        "[Main]\nforce-portable=true\n\n")
+endif()
+
+file(WRITE "${CMAKE_BINARY_DIR}/install_portable.cmake" "
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/pge_editor.ini\"
+        \"${PGE_FILE_PORTABLE_APP_INI}\")
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/pge_engine.ini\"
+        \"${PGE_FILE_PORTABLE_APP_INI}\")
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/pge_calibrator.ini\"
+        \"${PGE_FILE_PORTABLE_APP_INI}\")
+")
+
+add_custom_target(enable_portable
+    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/install_portable.cmake"
+)
+
+if(UNIX AND NOT APPLE)
+    string(TOLOWER ${CMAKE_SYSTEM_NAME} CMAKE_SYSTEM_NAME_LOWER)
+    add_custom_target(create_tar
+        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+        COMMAND ${CMAKE_COMMAND} -E tar "-cjvf" "pge_project-${CMAKE_SYSTEM_NAME_LOWER}-${PGE_ARCHITECTURE_BITS}.tar.bz2" "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}"
+    )
+endif()
+
