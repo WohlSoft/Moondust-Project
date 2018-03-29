@@ -13,6 +13,9 @@ MAKE_EXTRA_ARGS="-r"
 MAKE_CPUS_COUNT=4
 flag_debugThisScript=false
 flag_debugDependencies=false
+flag_cmake_it=false
+flag_cmake_deploy=false
+flag_debug_build=false
 
 for var in "$@"
 do
@@ -35,12 +38,15 @@ do
             printf " \E[1;4mrepair-submodules\E[0m- Repair invalid or broken submodules\n"
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
             printf " \E[1;4m--help\E[0m           - Print this manual\n"
+            printf " \E[1;4mcmake-it\E[0m         - Run build through experimental alternative build on CMake\n"
             echo ""
 
             echo "--- Flags ---"
             printf " \E[1;4mno-pause\E[0m         - Don't pause script on completion'\n"
             printf " \E[1;4msilent-make\E[0m      - Don't print build commands for each building file\n"
-            printf  " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
+            printf " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
+            printf " \E[1;4mdebug\E[0m            - Run build in debug configuration'\n"
+            printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed (CMake only build)'\n"
             if [[ ! -f /usr/bin/ccache && ! -f /bin/ccache && ! -f /usr/local/bin/ccache ]]; then
                 printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
             fi
@@ -82,6 +88,12 @@ do
             ;;
         silent-make)
                 MAKE_EXTRA_ARGS="${MAKE_EXTRA_ARGS} -s"
+            ;;
+        cmake-it)
+                flag_cmake_it=true
+            ;;
+        deploy)
+                flag_cmake_deploy=true
             ;;
         colors)
             for((i=0;i<=1;i++))
@@ -164,6 +176,9 @@ do
         # Enable debuggin of this script by showing states of inernal variables with pauses
         debug-script)
             flag_debugThisScript=true
+            ;;
+        debug)
+            flag_debug_build=true
             ;;
         test)
             flag_debugDependencies=true
@@ -360,6 +375,89 @@ do
     esac
 done
 
+if $flag_debug_build ; then
+    echo "==DEBUG BUILD!=="
+    BUILD_DIR_SUFFUX="-debug"
+    CONFIG_QMAKE="CONFIG-=release CONFIG+=debug"
+    CONFIG_CMAKE="Debug"
+else
+    echo "==RELEASE BUILD!=="
+    BUILD_DIR_SUFFUX="-release"
+    CONFIG_QMAKE="CONFIG+=release CONFIG-=debug"
+    CONFIG_CMAKE="Release"
+fi
+
+# Alternative building through CMake
+if $flag_cmake_it ; then
+    echo "==== Alternative build via CMake will be ran ===="
+    echo "It's experimental build yet which will replace"
+    echo "this clunky build system soon."
+    echo "I hope you will like it ;3"
+    echo ""
+    echo "Wohlstand."
+    echo "================================================="
+    echo ""
+
+    BUILD_DIR="${SCRDIR}/build-pge-cmake${BUILD_DIR_SUFFUX}"
+    INSTALL_DIR="${SCRDIR}/bin-cmake${BUILD_DIR_SUFFUX}"
+
+    if [ ! -d "${BUILD_DIR}" ]; then
+        mkdir -p "${BUILD_DIR}"
+    fi
+
+    cd "${BUILD_DIR}"
+
+    #=======================================================================
+    cmake \
+        -G "Unix Makefiles" \
+        -DCMAKE_PREFIX_PATH=$(realpath "${QT_PATH}/../") \
+        -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
+        -DCMAKE_BUILD_TYPE=$CONFIG_CMAKE \
+        -DPGE_INSTALL_DIRECTORY="PGE_Project" \
+        "${SCRDIR}"
+        # -DQT_QMAKE_EXECUTABLE="$QMake"
+    checkState
+
+    #=======================================================================
+    echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
+    TIME_STARTED=$(date +%s)
+    make ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
+    checkState
+    TIME_ENDED=$(date +%s)
+    TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
+    #=======================================================================
+    # copy data and configs into the build directory
+
+    echo "Installing..."
+    make -s install
+    checkState
+
+    if $flag_cmake_deploy ; then
+        echo "Deploying..."
+        make -s put_online_help
+        checkState
+        make -s enable_portable
+        checkState
+        make -s create_tar
+        checkState
+    fi
+
+    cd "${SCRDIR}"
+
+    #=======================================================================
+    echo ""
+
+    show_time $TIME_PASSED
+    printLine "BUILT!" "\E[0;42;37m" "\E[0;32m"
+
+    cd $bak
+    if $flag_pause_on_end ; then
+        pause
+    fi
+
+    exit 0;
+fi
+
 # Validate built dependencies!
 checkForDependencies
 
@@ -376,9 +474,9 @@ checkForDependencies
 # build all components
 echo "Running $QMake..."
 if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
-    $QMake CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb QMAKE_TARGET.arch=$(uname -m) $QMAKE_EXTRA_ARGS
+    $QMake $CONFIG_QMAKE QTPLUGIN.platforms=qxcb QMAKE_TARGET.arch=$(uname -m) $QMAKE_EXTRA_ARGS
 else
-    $QMake CONFIG+=release CONFIG-=debug $QMAKE_EXTRA_ARGS
+    $QMake $CONFIG_QMAKE $QMAKE_EXTRA_ARGS
 fi
 checkState
 

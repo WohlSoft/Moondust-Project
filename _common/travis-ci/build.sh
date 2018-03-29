@@ -10,7 +10,7 @@ then
     if [[ $(whoami) != "travis" ]];
     then
         TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > /home/runner/build_date_dev_linux.txt
-        bash build.sh no-pause use-ccache
+        bash build.sh no-pause use-ccache cmake-it deploy
     fi
 elif [ $TRAVIS_OS_NAME == osx ];
 then
