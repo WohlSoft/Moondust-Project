@@ -1,6 +1,6 @@
 Platform Game Engine by Wohlstand
 ===========
-a free and open source game engine and toolkit which gives the ability to create games of the platform genre.
+Platform Game Engine (PGE) is a free and open source game engine and toolkit, giving developers the ability to create platform games.
 
 ------
 
@@ -35,8 +35,6 @@ Linux | Mac OS X | Windows
 ------------ | ------------- | -------------
 [![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project)
 
-Get a most fresh assemblies you can get here: [![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)!
-
 # Components
 A list of components are included with PGE Project
 
@@ -44,11 +42,11 @@ A list of components are included with PGE Project
 
 ![PGE Engine](https://github.com/WohlSoft/PGE-Project/blob/master/Engine/_resources/icon/cat_256.png)
 
-Is the main part of PGE Project which allows users to play levels and episodes.
+The PGE Engine is the main part of the PGE Project, allowing users to play levels and episodes.
 
 Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (when used configuration packages which are following [SMBX64 Standard](http://wohlsoft.ru/pgewiki/SMBX64)).
 
-:point_up: **Note** This component is experimental and has not completed base implementation, but can be used for various tests around.
+:point_up: **Note** This component is experimental and has not completed base implementation, but can be used for various testing.
 
 [More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/PGE_Engine)
 
@@ -57,7 +55,7 @@ Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (wh
 
 ![PGE Editor](https://github.com/WohlSoft/PGE-Project/blob/master/Editor/_resources/images/cat_builder/cat_builder_256.png)
 
-The main development tool which allows a creating and editing levels, world map, NPC configurations and providing some maintenance utilities.
+The PGE Editor is the main development tool, allowing the creation and editing of levels, world maps, and NPC configurations. Maintenance utilities are also provided.
 
 Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (when used configuration packages which are following [SMBX64 Standard](http://wohlsoft.ru/pgewiki/SMBX64)).
 
@@ -67,7 +65,7 @@ Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (wh
 
 ![PGE Calibrator](https://github.com/WohlSoft/PGE-Project/blob/master/PlayableCalibrator/_resourses/icon/calibrator_256.png)
 
-It's a PGE development tool intended for game creators. It allows the user to define a hit (collision) box for each respective frame of a playable character, and also allows developers to calibrate any incorrect positions of the frames in an SMBX64 playable character sprite.
+The Playable Character Calibrator allows the developer to define a collision box for each respective frame of a playable character, and calibrate any incorrect positions of the frames in an SMBX64 playable character sprite.
 
 [More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/Playable_character_Calibrator)
 
@@ -76,23 +74,23 @@ It's a PGE development tool intended for game creators. It allows the user to de
 
 ![PGE MusPlay](https://github.com/WohlSoft/PGE-Project/blob/master/MusicPlayer/_resources/cat_musplay/cat_musplay_256x256.png)
 
-Light-weight music player based on [SDL Mixer X audio library](http://wohlsoft.ru/pgewiki/SDL_Mixer_X) which allows to test music files (include [OGG files with a loop tags](http://wohlsoft.ru/pgewiki/How_To:_Looping_music_files))
+PGE MusPlay is a light-weight music player based on [SDL Mixer X audio library](http://wohlsoft.ru/pgewiki/SDL_Mixer_X) to test music files (include [OGG files with a loop tags](http://wohlsoft.ru/pgewiki/How_To:_Looping_music_files))
 
 ## GIFs to PNG Converter
 
-A small console utility which merges bit-mask based GIF pairs used in the legacy engine into PNG format with alpha channel (semi-transparency) support.
+This small console utility merges bit-mask based GIF pairs used in the legacy engine into PNG format with alpha channel (semi-transparency) support.
 
 ## PNG to GIFs Converter
 
-A small console utility which converts PNG image into pair of GIF files ready for bit-mask algorithm rendering. Allows creating graphics for legacy engine easier.
+This small console utility converts PNG image into a pair of GIF files for bit-mask algorithm rendering, simplifying the creation of graphics for the legacy engine.
 
 ## LazyFix tool
 
-A small console utility which fixes wrong lazily-made mask images into valid black&white mask images.
+This small console utility fixes incorrect mask images into valid black&white mask images.
 
 ## PGE Maintainer
 
-A small utility which provides a toolset to convert and fix various data: musics and levels.
+This small utility converts and fixes music files and levels.
 
 
 # License
