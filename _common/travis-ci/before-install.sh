@@ -15,7 +15,12 @@ then
     QtTarballName=qt-5.9.0-static-ubuntu-14-04-x64-gcc6.tar.bz2
     QtStaticVersion=5.9.0_static
 
-    bash _Misc/dev_scripts/generate_version_files.sh
+    if [[ $(whoami) == "travis" ]]; then
+        bash _common/travis-ci/generate_version_files.sh
+    else
+        bash _common/travis-ci/generate_version_files.sh "bin-cmake-release/versions"
+    fi
+
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
     sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test;
     sudo add-apt-repository --yes ppa:george-edison55/cmake-3.x

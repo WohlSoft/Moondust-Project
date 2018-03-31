@@ -10,7 +10,7 @@ if [[ "$1" == "" ]]; then
 else
     VERDIR=$1
 fi
-CPPTOBUILD=_Misc/dev_scripts/version_gen.c
+CPPTOBUILD=_common/travis-ci/version_gen.c
 TEMPELF=35hb13h51.tmp
 
 mkdir -p $VERDIR
