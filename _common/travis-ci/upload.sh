@@ -6,10 +6,13 @@ then
     #Skip deploy on Travis-CI, since it done on Semaphore-CI
     if [[ $(whoami) != "travis" ]];
     then
-        if [ -d /home/runner/PGE-Project/bin/_packed -or -d /home/runner/PGE-Project/bin/bin-cmake-release ];
+        if [ -d /home/runner/PGE-Project/bin/_packed -o -d /home/runner/PGE-Project/bin/bin-cmake-release ];
         then
             cd /home/runner/PGE-Project/Content/configs
             zip -9 -r /home/runner/PGE-Project/bin/_packed/SMBX-Config-Patch.zip SMBX
+        else
+            echo "Nothing built! Therefore is nothing to upload!"
+            exit 1
         fi
 
         if [ -d /home/runner/PGE-Project/bin/_packed ];
@@ -30,6 +33,13 @@ then
 # ==============================================================================
 # Upload created DMG file to the server
 # ==============================================================================
-    lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; put -O ./_versions/ /Users/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
+    if [ -f bin/_packed/pge-project-dev-macosx.dmg ];
+    then
+        lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; put -O ./_versions/ /Users/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
+    else
+        echo "Built DMG was not found! Therefore is nothing to upload!"
+        exit 1
+    fi
 
 fi
+
