@@ -5,7 +5,11 @@ then
     exit 1
 fi
 GIT_REVISION=$(git --git-dir .git --work-tree . describe --always)
-VERDIR=bin/versions
+if [[ "$1" == "" ]]; then
+    VERDIR=bin/versions
+else
+    VERDIR=$1
+fi
 CPPTOBUILD=_Misc/dev_scripts/version_gen.c
 TEMPELF=35hb13h51.tmp
 
@@ -24,7 +28,7 @@ then
 fi
 
 gcc -DGIT_VERSION=\"$GIT_REVISION\" -DENGINE -DVER_FULL $CPPTOBUILD -o $TEMPELF
-if [ -f ./35hb13h51.tmp ]
+if [ -f ./$TEMPELF ]
 then
     ./$TEMPELF > $VERDIR/engine.txt
 fi
