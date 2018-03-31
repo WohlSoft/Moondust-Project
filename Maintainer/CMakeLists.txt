@@ -20,10 +20,14 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
+# Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
+include(../_common/static_qt.cmake)
 
 add_definitions(-DPGE_FILES_QT)
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
 
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 
@@ -74,6 +78,8 @@ add_executable(pge_maintainer
 # dependencies QtCore and QtGui
 target_include_directories(pge_maintainer
     PRIVATE
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Concurrent_INCLUDES_DIRS}
 )
@@ -88,6 +94,8 @@ list(APPEND PGE_MAINTAINER_INSTALLS
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(pge_maintainer
     PRIVATE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
     ${Qt5Widgets_DEFINITIONS}
     ${Qt5Concurrent_DEFINITIONS}
 )
@@ -130,9 +138,15 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_MAINTAINER_LINK_LIBS
-    ${Qt5Widgets_LIBRARIES}
     ${Qt5Concurrent_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
 )
+if(QT_PTHREAD)
+    list(APPEND PGE_MAINTAINER_LINK_LIBS ${QT_PTHREAD})
+endif()
 
 target_link_libraries(pge_maintainer
     ${PGE_MAINTAINER_LINK_LIBS}

@@ -22,6 +22,8 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
+# Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
+include(../_common/static_qt.cmake)
 
 # WORKAROUND: Avoid ImpLib file creation on a non-library project
 if(CYGWIN OR MINGW)
@@ -33,6 +35,8 @@ if(CYGWIN OR MINGW)
         CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE}")
 endif()
 
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 
@@ -92,6 +96,8 @@ add_dependencies(pge_musplay
 # dependencies QtCore and QtGui
 target_include_directories(pge_musplay
     PRIVATE
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Network_INCLUDE_DIRS}
     ${USE_SDL_MIXER_X_PREFIX}/include)
@@ -107,6 +113,8 @@ list(APPEND PGE_MUSPLAY_INSTALLS
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(pge_musplay
     PRIVATE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
     ${Qt5Widgets_DEFINITIONS}
     ${Qt5Network_DEFINITIONS}
 )
@@ -216,6 +224,9 @@ endif()
 list(APPEND PGE_MUSPLAY_LINK_LIBS
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Network_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
 )
 
 target_link_libraries(pge_musplay
