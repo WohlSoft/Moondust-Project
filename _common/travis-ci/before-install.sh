@@ -16,6 +16,7 @@ then
     QtStaticVersion=5.9.0_static
 
     if [ ! -d /home/runner ];
+    then
         bash _common/travis-ci/generate_version_files.sh
     else
         bash _common/travis-ci/generate_version_files.sh "bin-cmake-release/versions"
