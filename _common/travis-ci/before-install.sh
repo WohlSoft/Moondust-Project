@@ -17,9 +17,9 @@ then
 
     if [ ! -d /home/runner ];
     then
-        bash _common/travis-ci/generate_version_files.sh
+        bash _common/travis-ci/_generate_version_files.sh
     else
-        bash _common/travis-ci/generate_version_files.sh "bin-cmake-release/versions"
+        bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
     fi
 
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
@@ -41,7 +41,7 @@ then
     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 60
     echo "================================================"
     /usr/bin/g++ --version
-    /usr/bin/cmane --version
+    /usr/bin/cmake --version
     echo "================================================"
 
 
