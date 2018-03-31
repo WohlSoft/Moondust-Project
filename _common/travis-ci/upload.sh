@@ -11,9 +11,9 @@ then
         then
             cd ${PROJECT_ROOT}/Content/configs
             if [ -d ${PROJECT_ROOT}/bin-cmake-release ]; then
-                zip -9 -r ${PROJECT_ROOT}/bin/_packed/SMBX-Config-Patch.zip SMBX
-            else
                 zip -9 -r ${PROJECT_ROOT}/bin-cmake-release/SMBX-Config-Patch.zip SMBX
+            else
+                zip -9 -r ${PROJECT_ROOT}/bin/_packed/SMBX-Config-Patch.zip SMBX
             fi
         else
             echo "Nothing built! Therefore is nothing to upload!"
