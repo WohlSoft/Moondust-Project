@@ -15,7 +15,7 @@ then
     QtTarballName=qt-5.9.0-static-ubuntu-14-04-x64-gcc6.tar.bz2
     QtStaticVersion=5.9.0_static
 
-    if [[ $(whoami) == "travis" ]]; then
+    if [ ! -d /home/runner ];
         bash _common/travis-ci/generate_version_files.sh
     else
         bash _common/travis-ci/generate_version_files.sh "bin-cmake-release/versions"

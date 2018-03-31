@@ -6,7 +6,7 @@ then
     #Skip deploy on Travis-CI, since it done on Semaphore-CI
     if [[ $(whoami) != "travis" ]];
     then
-        PROJECT_ROOT=/home/runner/PGE-Project/
+        PROJECT_ROOT=/home/runner/PGE-Project
         if [ -d ${PROJECT_ROOT}/bin/_packed -o -d ${PROJECT_ROOT}/bin-cmake-release ];
         then
             cd ${PROJECT_ROOT}/Content/configs
@@ -28,7 +28,7 @@ then
 
         if [ -d ${PROJECT_ROOT}/bin-cmake-release ];
         then
-            lftp -e "put -O ./ubuntu-14-04/ ${PROJECT_ROOT}/bin-cmake-release/pge_project-linux-64.tar.bz2; put -O ./_common/ ${PROJECT_ROOT}/bin/_packed/SMBX-Config-Patch.zip; exit" -u $FTP_USER,$FTP_PASSWORD $FTP_SERVER
+            lftp -e "put -O ./ubuntu-14-04/ ${PROJECT_ROOT}/bin-cmake-release/pge_project-linux-64.tar.bz2; put -O ./_common/ ${PROJECT_ROOT}/bin-cmake-release/SMBX-Config-Patch.zip; exit" -u $FTP_USER,$FTP_PASSWORD $FTP_SERVER
             lftp -e "put -O ./_versions/ /home/runner/build_date_dev_linux.txt; put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor.txt; put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_stable.txt; put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine.txt; put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_stable.txt; exit" -u $FTP_USER,$FTP_PASSWORD $FTP_SERVER
         fi
     fi

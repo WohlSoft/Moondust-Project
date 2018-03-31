@@ -13,6 +13,8 @@ fi
 CPPTOBUILD=_common/travis-ci/version_gen.c
 TEMPELF=35hb13h51.tmp
 
+echo "== Generating version files into ${VERDIR}... =="
+
 mkdir -p $VERDIR
 
 gcc -DGIT_VERSION=\"$GIT_REVISION\" -DEDITOR -DVER_FULL $CPPTOBUILD -o $TEMPELF
