@@ -6,7 +6,7 @@ then
     #Skip deploy on Travis-CI, since it done on Semaphore-CI
     if [[ $(whoami) != "travis" ]];
     then
-        if [ -d /home/runner/PGE-Project/bin/_packed -or -d /home/runner/PGE-Project/bin/bin-cmake-release];
+        if [ -d /home/runner/PGE-Project/bin/_packed -or -d /home/runner/PGE-Project/bin/bin-cmake-release ];
         then
             cd /home/runner/PGE-Project/Content/configs
             zip -9 -r /home/runner/PGE-Project/bin/_packed/SMBX-Config-Patch.zip SMBX
