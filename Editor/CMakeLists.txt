@@ -39,6 +39,8 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
+# Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
+include(../_common/static_qt.cmake)
 
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
@@ -648,12 +650,13 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_EDITOR_LINK_LIBS
-    ${Qt5Core_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
+    ${Qt5Qml_LIBRARIES}
+    ${Qt5Concurrent_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Network_LIBRARIES}
-    ${Qt5Concurrent_LIBRARIES}
-    ${Qt5Qml_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
 )
 if(WIN32)
     list(APPEND PGE_EDITOR_LINK_LIBS
