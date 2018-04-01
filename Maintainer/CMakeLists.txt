@@ -44,6 +44,13 @@ qt5_wrap_ui(UIS_HDRS
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
 
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_maintainer_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
+
 set(PGE_MAINTAINER_SRCS)
 
 list(APPEND PGE_MAINTAINER_SRCS
@@ -56,6 +63,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     EpisodeCvt/episode_converter.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
 )
 
 if(APPLE)
