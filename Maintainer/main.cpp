@@ -6,6 +6,9 @@
 #include <QFileInfo>
 #include <QDir>
 
+#include <QtDebug>
+#include <QStyleFactory>
+
 int main(int argc, char *argv[])
 {
 

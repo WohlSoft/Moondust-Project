@@ -175,6 +175,13 @@ qt5_wrap_ui(UIS_HDRS
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/editor.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
 
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_editor_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
+
 set(PGE_EDITOR_SRCS)
 
 list(APPEND PGE_EDITOR_SRCS
@@ -436,6 +443,7 @@ list(APPEND PGE_EDITOR_SRCS
     tools/tilesets/tilesetitembutton.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
 )
 
 if(WIN32)
@@ -650,6 +658,7 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_EDITOR_LINK_LIBS
+    ${QT_EXTRA_LIBS_PRE}
     ${Qt5Qml_LIBRARIES}
     ${Qt5Concurrent_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}

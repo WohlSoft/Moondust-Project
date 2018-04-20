@@ -1,4 +1,5 @@
 set(QT_EXTRA_LIBS)
+set(QT_EXTRA_LIBS_PRE)
 
 # TODO: Make more accurate detection of Static Qt build than
 # based on detection of Qt-side built third-part libraries
@@ -53,11 +54,11 @@ if(PGE_QT_STATIC_DETECTED)
             Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)"
         )
     elseif("${CMAKE_SYSTEM}" MATCHES "Linux")
-       # set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-       #     Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
-       #     Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)"
-       # )
-#Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
+       set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+           Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
+           Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)
+           Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)"
+       )
     endif()
 
     set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
@@ -66,66 +67,177 @@ if(PGE_QT_STATIC_DETECTED)
         Q_IMPORT_PLUGIN(QICOPlugin)"
     )
 
-    #if("${CMAKE_SYSTEM}" MATCHES "Linux")
-    #    set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-    #        Q_IMPORT_PLUGIN(QEglFSEmulatorIntegrationPlugin)
-    #        Q_IMPORT_PLUGIN(QEglFSX11IntegrationPlugin)"
-    #    )
-    #endif()
+    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+            /* Q_IMPORT_PLUGIN(QEglFSEmulatorIntegrationPlugin) */
+            Q_IMPORT_PLUGIN(QEglFSX11IntegrationPlugin)"
+        )
+        set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+            Q_IMPORT_PLUGIN(QGtk3ThemePlugin)"
+        )
+    endif()
 
     # message("Plugins:\n\n${QT_IMPORT_PLUGINS_MODULE}\n\n\n")
     
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        find_package(PkgConfig)
+
         find_library(QT_QEGLFS  qeglfs PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
-        list(APPEND QT_EXTRA_LIBS ${QT_QEGLFS})
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_QEGLFS})
         find_library(QT_LINUXFB qlinuxfb PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
-        list(APPEND QT_EXTRA_LIBS ${QT_LINUXFB})
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_LINUXFB})
 
-        #find_library(QT_EGLEMU  qeglfs-emu-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations)
-        #list(APPEND QT_EXTRA_LIBS ${QT_EGLEMU})
-        #find_library(QT_EGLX11  qeglfs-x11-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations)
-        #list(APPEND QT_EXTRA_LIBS ${QT_EGLX11})
-
-        # find_library(QT_EGLINT  qxcb-egl-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
-        # list(APPEND QT_EXTRA_LIBS ${QT_EGLINT})
-        # find_library(QT_GLXINT  qxcb-glx-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
-        # list(APPEND QT_EXTRA_LIBS ${QT_GLXINT})
+        # find_library(QT_EGLEMU  qeglfs-emu-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations)
+        # list(APPEND QT_EXTRA_LIBS_PRE ${QT_EGLEMU})
+        find_library(QT_EGLX11  qeglfs-x11-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations)
+        if(QT_EGLX11)
+            list(APPEND QT_EXTRA_LIBS_PRE ${QT_EGLX11})
+        else()
+            message("!!! QT_EGLX11 NOT FOUND!!!")
+        endif()
 
         find_library(QT_QXCB    qxcb PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
-        list(APPEND QT_EXTRA_LIBS ${QT_QXCB})
+        if(QT_QXCB)
+            list(APPEND QT_EXTRA_LIBS_PRE ${QT_QXCB})
+        endif()
 
-        find_package(X11 REQUIRED)
-        list(APPEND QT_EXTRA_LIBS ${X11_LIBRARIES})
+        # GTK3
+        find_library(QT_GTK3 qgtk3 PATHS ${CMAKE_PREFIX_PATH}/plugins/platformthemes)
+        if(QT_GTK3)
+            list(APPEND QT_EXTRA_LIBS_PRE ${QT_GTK3})
+            pkg_check_modules(GTK "gtk+-3.0")
+            if(GTK_FOUND)
+                list(APPEND QT_EXTRA_LIBS ${GTK_LIBRARIES})
+            endif()
+        endif()
+
+
+
+        find_library(QT_EGLINT  qxcb-egl-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_EGLINT})
+
+        find_library(QT_Qt5EglFSDeviceIntegration  Qt5EglFSDeviceIntegration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5EglFSDeviceIntegration})
+
+        find_library(QT_Qt5EventDispatcherSupport  Qt5EventDispatcherSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5EventDispatcherSupport})
+
+        find_library(QT_Qt5ServiceSupport   Qt5ServiceSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5ServiceSupport})
+
+        find_library(QT_Qt5ThemeSupport    Qt5ThemeSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5ThemeSupport})
+
+        find_library(QT_Qt5FbSupport    Qt5FbSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5FbSupport})
+
+        find_library(QT_Qt5EglSupport    Qt5EglSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5EglSupport})
+
+        find_library(QT_GLXINT  qxcb-glx-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_GLXINT})
+
+        find_library(QT_Qt5PlatformCompositorSupport    Qt5PlatformCompositorSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5PlatformCompositorSupport})
+
+        find_library(QT_QXCBQPA    Qt5XcbQpa)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_QXCBQPA})
+
+        find_library(QT_Qt5LinuxAccessibilitySupport    Qt5LinuxAccessibilitySupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5LinuxAccessibilitySupport})
+
+        find_library(QT_Qt5AccessibilitySupport    Qt5AccessibilitySupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5AccessibilitySupport})
+
+        find_library(QT_Qt5FontDatabaseSupport    Qt5FontDatabaseSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5FontDatabaseSupport})
+
+        find_library(QT_Qt5GlxSupport    Qt5GlxSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5GlxSupport})
+
+
+        find_library(QT_Qt5InputSupport    Qt5InputSupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5InputSupport})
+
+        find_library(QT_Qt5DeviceDiscoverySupport    Qt5DeviceDiscoverySupport)
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5DeviceDiscoverySupport})
 
         find_library(QT_QGIF    qgif PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
-        list(APPEND QT_EXTRA_LIBS ${QT_QGIF})
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_QGIF})
         find_library(QT_ICNS    qicns PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
-        list(APPEND QT_EXTRA_LIBS ${QT_ICNS})
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_ICNS})
         find_library(QT_ICO     qico PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
-        list(APPEND QT_EXTRA_LIBS ${QT_ICO})
-    endif()
+        list(APPEND QT_EXTRA_LIBS_PRE ${QT_ICO})
 
-    if("${CMAKE_SYSTEM}" MATCHES "Linux")
-	find_library(QT_GLIB glib NAMES glib glib-2.0)
+        if(NOT QT_PRCE2)
+            find_library(QT_PRCESYS pcre)
+            if(QT_PRCESYS)
+                message("== SYS-pcre detected! (${QT_PRCESYS})==")
+                list(APPEND QT_EXTRA_LIBS ${QT_PRCESYS})
+            endif()
+            find_library(QT_PRCE16SYS pcre16)
+            if(QT_PRCE16SYS)
+                message("== SYS-pcre16 detected! (${QT_PRCE16SYS})==")
+                list(APPEND QT_EXTRA_LIBS ${QT_PRCE16SYS})
+            endif()
+        endif()
+
+        find_library(QT_GLIB glib NAMES glib glib-2.0)
         if(QT_GLIB)
             # message("==GLib detected! (${QT_GLIB})==")
             list(APPEND QT_EXTRA_LIBS ${QT_GLIB})
         endif()
+
         find_library(QT_XCB xcb-static)
         if(QT_XCB)
             # message("==XCB detected! (${QT_XCB})==")
             list(APPEND QT_EXTRA_LIBS ${QT_XCB})
+        else()
+
+            foreach(xxlib
+                    Xext
+                    xcb-xinerama Xrender xcb-xkb xcb-sync xcb-xfixes xcb-randr
+                    xcb-image xcb-shm xcb-keysyms xcb-icccm xcb-shape xcb-glx
+                    Xi SM ICE
+                    xcb-render-util
+                    xcb-render
+                    xcb X11 X11-xcb
+                    )
+                unset(QT_XXLIB)
+                find_library(QT_${xxlib} ${xxlib})
+                if(QT_${xxlib})
+                    message("-- Found ${QT_${xxlib}}!")
+                    list(APPEND QT_EXTRA_LIBS ${QT_${xxlib}})
+                endif()
+            endforeach()
         endif()
-        #find_library(QT_xcb2 xcb)
-        #if(QT_xcb2)
-        #    # message("==X11 detected! (${QT_xcb2})==")
-        #    list(APPEND QT_EXTRA_LIBS ${QT_xcb2})
-        #endif()
-        #find_library(QT_X11 X11)
-        #if(QT_X11)
-        #    # message("==X11 detected! (${QT_X11})==")
-        #    list(APPEND QT_EXTRA_LIBS ${QT_X11})
-        #endif()
+
+        find_library(QT_fontconfig fontconfig)
+        list(APPEND QT_EXTRA_LIBS ${QT_fontconfig})
+
+        if(NOT QT_FREETYPE)
+        #     find_library(QT_freetype freetype)
+            list(APPEND QT_EXTRA_LIBS freetype$<$<CONFIG:Debug>:d>)
+        endif()
+
+        foreach(xxlib Qt5DBus dbus-1)
+            unset(QT_XXLIB)
+            find_library(QT_${xxlib} ${xxlib})
+            if(QT_${xxlib})
+                message("-- Found ${QT_${xxlib}}!")
+                list(APPEND QT_EXTRA_LIBS_PRE ${QT_${xxlib}})
+            endif()
+        endforeach()
+
+        find_library(QT_EGL EGL)
+        list(APPEND QT_EXTRA_LIBS ${QT_EGL})
+
+        find_library(QT_udev udev)
+        list(APPEND QT_EXTRA_LIBS ${QT_udev})
+
+        find_library(QT_GL GL)
+        list(APPEND QT_EXTRA_LIBS ${QT_GL})
+
         find_library(QT_DL glib NAMES dl)
         if(QT_DL)
             # message("==DL detected! (${QT_DL})==")

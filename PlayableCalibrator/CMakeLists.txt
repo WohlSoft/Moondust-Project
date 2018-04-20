@@ -41,6 +41,13 @@ qt5_wrap_ui(UIS_HDRS
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/images.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
 
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_calibrator_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
+
 set(PGE_CALIBRATOR_SRCS)
 
 list(APPEND PGE_CALIBRATOR_SRCS
@@ -60,6 +67,7 @@ list(APPEND PGE_CALIBRATOR_SRCS
     main/app_path.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
 )
 
 if(APPLE)
@@ -146,6 +154,7 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_CALIBRATOR_LINK_LIBS
+    ${QT_EXTRA_LIBS_PRE}
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Gui_LIBRARIES}
     ${Qt5Core_LIBRARIES}

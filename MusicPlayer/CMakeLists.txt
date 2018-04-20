@@ -52,6 +52,13 @@ qt5_wrap_ui(UIS_HDRS
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/musicplayer.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
 
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_musplay_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
+
 set(SDLMixer_MusPlay_SRC)
 
 list(APPEND SDLMixer_MusPlay_SRC
@@ -67,6 +74,7 @@ list(APPEND SDLMixer_MusPlay_SRC
     wave_writer.c
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
 )
 
 if(APPLE)
@@ -222,6 +230,7 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_MUSPLAY_LINK_LIBS
+    ${QT_EXTRA_LIBS_PRE}
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Network_LIBRARIES}
     ${Qt5Gui_LIBRARIES}

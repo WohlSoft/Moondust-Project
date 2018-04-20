@@ -146,6 +146,7 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_MAINTAINER_LINK_LIBS
+    ${QT_EXTRA_LIBS_PRE}
     ${Qt5Concurrent_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Gui_LIBRARIES}
