@@ -72,15 +72,19 @@ if(PGE_QT_STATIC_DETECTED)
             /* Q_IMPORT_PLUGIN(QEglFSEmulatorIntegrationPlugin) */
             Q_IMPORT_PLUGIN(QEglFSX11IntegrationPlugin)"
         )
-        set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-            Q_IMPORT_PLUGIN(QGtk3ThemePlugin)"
-        )
+
+        find_package(PkgConfig)
+        pkg_check_modules(GTK "gtk+-3.0")
+        if(GTK_FOUND)
+            set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                Q_IMPORT_PLUGIN(QGtk3ThemePlugin)"
+            )
+        endif()
     endif()
 
     # message("Plugins:\n\n${QT_IMPORT_PLUGINS_MODULE}\n\n\n")
     
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
-        find_package(PkgConfig)
 
         find_library(QT_QEGLFS  qeglfs PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
         list(APPEND QT_EXTRA_LIBS_PRE ${QT_QEGLFS})
@@ -102,16 +106,13 @@ if(PGE_QT_STATIC_DETECTED)
         endif()
 
         # GTK3
-        find_library(QT_GTK3 qgtk3 PATHS ${CMAKE_PREFIX_PATH}/plugins/platformthemes)
-        if(QT_GTK3)
-            list(APPEND QT_EXTRA_LIBS_PRE ${QT_GTK3})
-            pkg_check_modules(GTK "gtk+-3.0")
-            if(GTK_FOUND)
+        if(GTK_FOUND)
+            find_library(QT_GTK3 qgtk3 PATHS ${CMAKE_PREFIX_PATH}/plugins/platformthemes)
+            if(QT_GTK3)
+                list(APPEND QT_EXTRA_LIBS_PRE ${QT_GTK3})
                 list(APPEND QT_EXTRA_LIBS ${GTK_LIBRARIES})
             endif()
         endif()
-
-
 
         find_library(QT_EGLINT  qxcb-egl-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
         list(APPEND QT_EXTRA_LIBS_PRE ${QT_EGLINT})
