@@ -22,7 +22,7 @@ endif()
 
 find_library(QT_FREETYPE qtfreetype)
 if(QT_FREETYPE)
-    # message("==Qt-FreeType detected! (${QT_FREETYPE})==")
+    message("==Qt-FreeType detected! (${QT_FREETYPE})==")
     list(APPEND QT_EXTRA_LIBS ${QT_FREETYPE})
     set(PGE_QT_STATIC_DETECTED TRUE)
 endif()
@@ -120,48 +120,31 @@ if(PGE_QT_STATIC_DETECTED)
         find_library(QT_Qt5EglFSDeviceIntegration  Qt5EglFSDeviceIntegration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
         list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5EglFSDeviceIntegration})
 
-        find_library(QT_Qt5EventDispatcherSupport  Qt5EventDispatcherSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5EventDispatcherSupport})
+        foreach(qqlib
+                Qt5EventDispatcherSupport Qt5ServiceSupport
+                Qt5ThemeSupport Qt5FontDatabaseSupport Qt5PlatformCompositorSupport)
+            find_library(QT_${qqlib} ${qqlib})
+            if(QT_${qqlib})
+                message("-- Found ${QT_${qqlib}}!")
+                list(APPEND QT_EXTRA_LIBS_PRE ${QT_${qqlib}})
+            endif()
+        endforeach()
 
-        find_library(QT_Qt5ServiceSupport   Qt5ServiceSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5ServiceSupport})
-
-        find_library(QT_Qt5ThemeSupport    Qt5ThemeSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5ThemeSupport})
-
-        find_library(QT_Qt5FbSupport    Qt5FbSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5FbSupport})
-
-        find_library(QT_Qt5EglSupport    Qt5EglSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5EglSupport})
+        foreach(qqlib
+                    Qt5LinuxAccessibilitySupport
+                    Qt5AccessibilitySupport
+                    Qt5InputSupport
+                    Qt5FbSupport Qt5EglSupport Qt5GlxSupport Qt5XcbQpa
+                    Qt5EdidSupport Qt5DeviceDiscoverySupport)
+            find_library(QT_${qqlib} ${qqlib})
+            if(QT_${qqlib})
+                message("-- Found ${QT_${qqlib}}!")
+                list(APPEND QT_EXTRA_LIBS ${QT_${qqlib}})
+            endif()
+        endforeach()
 
         find_library(QT_GLXINT  qxcb-glx-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
         list(APPEND QT_EXTRA_LIBS_PRE ${QT_GLXINT})
-
-        find_library(QT_Qt5PlatformCompositorSupport    Qt5PlatformCompositorSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5PlatformCompositorSupport})
-
-        find_library(QT_QXCBQPA    Qt5XcbQpa)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_QXCBQPA})
-
-        find_library(QT_Qt5LinuxAccessibilitySupport    Qt5LinuxAccessibilitySupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5LinuxAccessibilitySupport})
-
-        find_library(QT_Qt5AccessibilitySupport    Qt5AccessibilitySupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5AccessibilitySupport})
-
-        find_library(QT_Qt5FontDatabaseSupport    Qt5FontDatabaseSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5FontDatabaseSupport})
-
-        find_library(QT_Qt5GlxSupport    Qt5GlxSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5GlxSupport})
-
-
-        find_library(QT_Qt5InputSupport    Qt5InputSupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5InputSupport})
-
-        find_library(QT_Qt5DeviceDiscoverySupport    Qt5DeviceDiscoverySupport)
-        list(APPEND QT_EXTRA_LIBS_PRE ${QT_Qt5DeviceDiscoverySupport})
 
         find_library(QT_QGIF    qgif PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
         list(APPEND QT_EXTRA_LIBS_PRE ${QT_QGIF})
@@ -191,27 +174,34 @@ if(PGE_QT_STATIC_DETECTED)
 
         find_library(QT_XCB xcb-static)
         if(QT_XCB)
-            # message("==XCB detected! (${QT_XCB})==")
+            message("==XCB-Static detected! (${QT_XCB})==")
             list(APPEND QT_EXTRA_LIBS ${QT_XCB})
-        else()
-
-            foreach(xxlib
-                    Xext
-                    xcb-xinerama Xrender xcb-xkb xcb-sync xcb-xfixes xcb-randr
-                    xcb-image xcb-shm xcb-keysyms xcb-icccm xcb-shape xcb-glx
-                    Xi SM ICE
-                    xcb-render-util
-                    xcb-render
-                    xcb X11 X11-xcb
-                    )
-                unset(QT_XXLIB)
-                find_library(QT_${xxlib} ${xxlib})
-                if(QT_${xxlib})
-                    message("-- Found ${QT_${xxlib}}!")
-                    list(APPEND QT_EXTRA_LIBS ${QT_${xxlib}})
-                endif()
-            endforeach()
+#            foreach(xxlib Xext Xrender Xi Xau Xdmcp SM ICE X11)
+#                unset(QT_XXLIB)
+#                find_library(QT_${xxlib} ${xxlib})
+#                if(QT_${xxlib})
+#                    message("-- Found ${QT_${xxlib}}!")
+#                    list(APPEND QT_EXTRA_LIBS ${QT_${xxlib}})
+#                endif()
+#            endforeach()
         endif()
+
+        foreach(xxlib
+                Xext
+                xcb-xinerama Xrender xcb-xkb xcb-sync xcb-xfixes xcb-randr
+                xcb-image xcb-shm xcb-keysyms xcb-icccm xcb-shape xcb-glx
+                Xi Xau Xdmcp SM ICE
+                xcb-render-util
+                xcb-render
+                xcb X11 X11-xcb
+                )
+            unset(QT_XXLIB)
+            find_library(QT_${xxlib} ${xxlib})
+            if(QT_${xxlib})
+                message("-- Found ${QT_${xxlib}}!")
+                list(APPEND QT_EXTRA_LIBS ${QT_${xxlib}})
+            endif()
+        endforeach()
 
         find_library(QT_fontconfig fontconfig)
         list(APPEND QT_EXTRA_LIBS ${QT_fontconfig})
