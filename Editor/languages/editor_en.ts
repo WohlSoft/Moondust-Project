@@ -3535,10 +3535,10 @@ the file version must be less than or equal to that SMBX version code.)</transla
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation>Do you want to save file anyway?
-Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
+        <translation>Do you want to save the file anyway?
+Exceeding the SMBX64 limits may crash SMBX with a &apos;Subscript out of range&apos; error.
 
-Installed LunaLUA partially extends than limits.</translation>
+Installing LunaLUA partially extends theese limits.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 blocks
