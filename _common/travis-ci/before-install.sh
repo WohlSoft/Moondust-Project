@@ -11,9 +11,9 @@ then
         sudo ln -s /home/travis /home/runner
     fi
 
-    QtCacheFolder=qtcache590
-    QtTarballName=qt-5.9.0-static-ubuntu-14-04-x64-gcc6.tar.bz2
-    QtStaticVersion=5.9.0_static
+    QtCacheFolder=qtcache5100
+    QtTarballName=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+    QtStaticVersion=5.10.1_static
 
     if [ ! -d /home/runner ];
     then
