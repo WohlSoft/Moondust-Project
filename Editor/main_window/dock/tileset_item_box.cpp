@@ -20,6 +20,8 @@
 #include <QGroupBox>
 #include <QMessageBox>
 #include <QScrollArea>
+#include <QTabBar>
+#include <QToolButton>
 #include <QDesktopWidget>
 
 #include <common_features/logger.h>
@@ -133,7 +135,9 @@ void TilesetItemBox::setTileSetBox(bool force)
     //QDir grpDir = configs.config_dir + "group_tilesets/";
     //QStringList entries;
     //entries = grpDir.entryList(filters, QDir::Files);
-    foreach(SimpleTilesetGroup grp, mw()->configs.main_tilesets_grp)
+    QList<SimpleTilesetGroup > t_groups = mw()->configs.main_tilesets_grp;
+    qSort(t_groups);//Sort alphabetically by group name
+    for(SimpleTilesetGroup &grp : t_groups)
         prepareTilesetGroup(grp);
 
     makeAllTilesets();
@@ -264,15 +268,15 @@ QScrollArea *TilesetItemBox::getFrameTilesetOfTab(QWidget *catTab)
         if(QString(f->metaObject()->className()) == "QScrollArea")
             return f;
     }
-    return 0;
+    return nullptr;
 }
 
-QComboBox *TilesetItemBox::getGroupComboboxOfTab(QWidget *catTab)
+QTabBar *TilesetItemBox::getGroupComboboxOfTab(QWidget *catTab)
 {
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "TilesetBox -> findCombobox");
     #endif
-    QComboBox *comboxes = catTab->findChild<QComboBox *>();
+    QTabBar *comboxes = catTab->findChild<QTabBar *>();
     return comboxes;
 }
 
@@ -287,7 +291,7 @@ QWidget *TilesetItemBox::findTabWidget(const QString &categoryItem)
         if(cat->tabText(i) == categoryItem)
             return cat->widget(i);
     }
-    return 0;
+    return nullptr;
 }
 
 QWidget *TilesetItemBox::makeCategory(const QString &categoryItem)
@@ -297,8 +301,10 @@ QWidget *TilesetItemBox::makeCategory(const QString &categoryItem)
     QWidget *scrollWid;
     QGridLayout *catLayout;
     QLabel *grpLabel;
-    QComboBox *tilesetGroup;
-    QSpacerItem *spItem;
+    QTabBar *tilesetGroup;
+    QToolButton *menuButton;
+    QMenu       *menuGroups;
+    //QSpacerItem *spItem;
     QScrollArea *TileSets;
     FlowLayout *theLayOut;
 
@@ -312,12 +318,26 @@ QWidget *TilesetItemBox::makeCategory(const QString &categoryItem)
     grpLabel->setText(tr("Group:"));
     catLayout->addWidget(grpLabel, 0, 0, 1, 1);
 
-    tilesetGroup = new QComboBox(catWid);
+    tilesetGroup = new QTabBar(catWid);
+    tilesetGroup->setExpanding(false);
 
     catLayout->addWidget(tilesetGroup, 0, 1, 1, 1);
-    tilesetGroup->setInsertPolicy(QComboBox::InsertAlphabetically);
-    spItem = new QSpacerItem(1283, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    catLayout->addItem(spItem, 0, 2, 1, 1);
+    //tilesetGroup->setInsertPolicy(QTabBar::InsertAlphabetically);
+    //spItem = new QSpacerItem(500, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+    //catLayout->addItem(spItem, 0, 2, 1, 1);
+    catLayout->setColumnStretch(0, 0);
+    catLayout->setColumnStretch(1, 100);
+
+    menuButton = new QToolButton(catWid);
+    menuButton->setText("▼");
+    menuGroups = new QMenu(menuButton);
+    menuButton->setMenu(menuGroups);
+    menuButton->setPopupMode(QToolButton::InstantPopup);
+    catLayout->addWidget(menuButton, 0, 2, 1, 1);
+
+    tilesetGroup->setProperty("menuButton", qVariantFromValue(menuButton));
+    tilesetGroup->setProperty("menu", qVariantFromValue(menuGroups));
+
     TileSets = new QScrollArea(catWid);
     TileSets->setWidget(scrollWid);
     TileSets->setWidgetResizable(true);
@@ -344,15 +364,28 @@ void TilesetItemBox::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups
     QWidget *t = findTabWidget(tilesetGroups.groupCat);
     if(!t)
         t = makeCategory(tilesetGroups.groupCat);
-    QComboBox *c = getGroupComboboxOfTab(t);
+    QTabBar *c = getGroupComboboxOfTab(t);
     if(!c)
         return;
-    c->setInsertPolicy(QComboBox::InsertAlphabetically);
+    //QToolButton *cbutton = qvariant_cast<QToolButton*>(c->property("menuButton"));
+    QMenu *cmenu = qvariant_cast<QMenu*>(c->property("menu"));
+//            tilesetGroup->setProperty("menuButton", qVariantFromValue(menuButton));
+//            tilesetGroup->setProperty("menu", qVariantFromValue(menuInButton));
+    //c->setInsertPolicy(QComboBox::InsertAlphabetically);
     if(!util::contains(c, tilesetGroups.groupName))
-        c->addItem(tilesetGroups.groupName);
-    c->model()->sort(0);
+    {
+        QString g = tilesetGroups.groupName;
+        g.replace("&", "&&");
+        int tabIndex = c->addTab(g);//Escaped ampersands
+        QAction *a = cmenu->addAction(g);
+        a->setData(tabIndex);
+        c->connect(a, reinterpret_cast<void(QAction::*)(void)>(&QAction::triggered),
+                   [c,a](){ c->setCurrentIndex(a->data().toInt()); }
+        );
+    }
+    //c->model()->sort(0);
     c->setCurrentIndex(0);
-    connect(c, SIGNAL(currentIndexChanged(int)), this, SLOT(on_tilesetGroup_currentIndexChanged(int)));
+    c->connect(c, SIGNAL(currentChanged(int)), this, SLOT(on_tilesetGroup_currentIndexChanged(int)));
 }
 
 void TilesetItemBox::clearTilesetGroups()
@@ -384,7 +417,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
     if(lockTilesetBox)
         return;
 
-    QGraphicsScene *scene = NULL;
+    QGraphicsScene *scene = nullptr;
 
     LevelEdit *lvlEdit = mw()->activeLvlEditWin();
     WorldEdit *wldEdit = mw()->activeWldEditWin();
@@ -408,7 +441,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
         #endif
 
         QScrollArea *currentFrame   = getFrameTilesetOfTab(current);
-        QComboBox   *currentCombo   = getGroupComboboxOfTab(current);
+        QTabBar     *currentCombo   = getGroupComboboxOfTab(current);
         if(!currentFrame || !currentCombo)
             return;
 
@@ -418,7 +451,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
 
         qDeleteAll(scrollWid->findChildren<QGroupBox *>());
 
-        if(scrollWid->layout() == 0)
+        if(scrollWid->layout() == nullptr)
             scrollWid->setLayout(new FlowLayout());
 
         currentFrame->setWidgetResizable(true);
@@ -430,7 +463,8 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
                         , "Debug");
         #endif
 
-        QString currentGroup = currentCombo->currentText();
+        QString currentGroup = currentCombo->tabText(currentCombo->currentIndex());
+        currentGroup.replace("&&", "&");//Restore non-escaped ampersands
         for(int i = 0; i < mw()->configs.main_tilesets_grp.size(); i++)
         {
             if((mw()->configs.main_tilesets_grp[i].groupCat == category)
@@ -489,7 +523,7 @@ void TilesetItemBox::makeSelectedTileset(int tabIndex)
 
         qDeleteAll(scrollWid->findChildren<QGroupBox *>());
 
-        if(scrollWid->layout() == 0)
+        if(scrollWid->layout() == nullptr)
             scrollWid->setLayout(new FlowLayout());
 
         currentFrame->setWidgetResizable(true);

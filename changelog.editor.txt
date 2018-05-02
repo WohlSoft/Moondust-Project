@@ -1,3 +1,7 @@
+Editor 0.3.1.14-1-dev
+- Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
+- Added weight order factor for tileset groups
+
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)
 - World map elements now supports "name" INI field

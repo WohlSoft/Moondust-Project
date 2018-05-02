@@ -29,6 +29,7 @@
 class MainWindow;
 class QScrollArea;
 class QComboBox;
+class QTabBar;
 
 namespace Ui {
 class TilesetItemBox;
@@ -56,7 +57,7 @@ public slots:
 
     void editSelectedTileset();
     QScrollArea *getFrameTilesetOfTab(QWidget *catTab);
-    QComboBox *getGroupComboboxOfTab(QWidget *catTab);
+    QTabBar *getGroupComboboxOfTab(QWidget *catTab);
     QWidget *findTabWidget(const QString &categoryItem);
     QWidget *makeCategory(const QString &categoryItem);
     void prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups);

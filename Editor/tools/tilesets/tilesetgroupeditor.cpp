@@ -80,6 +80,7 @@ SimpleTilesetGroup TilesetGroupEditor::toSimpleTilesetGroup()
     SimpleTilesetGroup s;
     s.groupName = ui->tilesetGroupName->text();
     s.groupCat = ui->category->text();
+    s.groupWeight = ui->orderWeight->value();
     for(int i = 0; i < tilesets.size(); ++i)
         s.tilesets << tilesets[i].first;
     return s;
@@ -96,6 +97,7 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Simpl
     simpleTilesetGroupINI.beginGroup("tileset-group"); //HEADER
     simpleTilesetGroupINI.setValue("category", tilesetGroup.groupCat);
     simpleTilesetGroupINI.setValue("name", tilesetGroup.groupName);
+    simpleTilesetGroupINI.setValue("weight", tilesetGroup.groupWeight);
     simpleTilesetGroupINI.setValue("tilesets-count", tilesetGroup.tilesets.size());
     simpleTilesetGroupINI.endGroup();
     simpleTilesetGroupINI.beginGroup("tilesets");
@@ -116,6 +118,7 @@ bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, SimpleTiles
 
     tilesetGroup.groupName = simpleTilesetINI.value("name", "").toString();
     tilesetGroup.groupCat = simpleTilesetINI.value("category", "").toString();
+    tilesetGroup.groupWeight = simpleTilesetINI.value("weight", -1).toInt();
     int tc = simpleTilesetINI.value("tilesets-count", 0).toInt() + 1;
     simpleTilesetINI.endGroup();
     simpleTilesetINI.beginGroup("tilesets");
@@ -218,6 +221,7 @@ void TilesetGroupEditor::on_Open_clicked()
         tilesets.clear();
         ui->tilesetGroupName->setText(t.groupName);
         ui->category->setText(t.groupCat);
+        ui->orderWeight->setValue(t.groupWeight);
         for(QString &tarName : t.tilesets)
         {
             QString rootTilesetDir = m_configs->config_dir + "tilesets/";

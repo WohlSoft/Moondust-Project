@@ -27,6 +27,7 @@ class QLineEdit;
 class QListWidget;
 class QTableWidget;
 class QComboBox;
+class QTabBar;
 
 class util
 {
@@ -60,6 +61,13 @@ public:
      * \return true if requested string has been found, false if not found
      */
     static bool contains(const QComboBox* b, const QString &s);
+    /*!
+     * \brief Check if QTabBar has specific item
+     * \param b Pointer to ComboBox to check
+     * \param s String of the label to check if contains in the combobox
+     * \return true if requested string has been found, false if not found
+     */
+    static bool contains(const QTabBar* b, const QString &s);
     /*!
      * \brief Clears string from invalid file path characters
      * \param s source file path string

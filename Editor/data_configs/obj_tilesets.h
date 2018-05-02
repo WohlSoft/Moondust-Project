@@ -40,7 +40,24 @@ struct SimpleTileset{
 struct SimpleTilesetGroup{
     QString groupName;
     QString groupCat;
+    int     groupWeight;
     QStringList tilesets;
+    bool operator<(const SimpleTilesetGroup& other) const
+    {
+        if(groupCat != other.groupCat)
+            return groupCat.compare(other.groupCat, Qt::CaseInsensitive) < 0;
+        if((groupWeight < 0) || (other.groupWeight < 0) || (groupWeight == other.groupWeight))
+            return groupName.compare(other.groupName, Qt::CaseInsensitive) < 0;
+        return groupWeight < other.groupWeight;
+    }
+    bool operator>(const SimpleTilesetGroup& other) const
+    {
+        if(groupCat != other.groupCat)
+            return groupCat.compare(other.groupCat, Qt::CaseInsensitive) > 0;
+        if((groupWeight < 0) || (other.groupWeight < 0) || (groupWeight == other.groupWeight))
+            return groupName.compare(other.groupName, Qt::CaseInsensitive) > 0;
+        return groupWeight > other.groupWeight;
+    }
 };
 
 #endif // OBJ_TILESETS_H
