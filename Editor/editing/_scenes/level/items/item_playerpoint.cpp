@@ -37,7 +37,7 @@ ItemPlayerPoint::ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent)
 
 void ItemPlayerPoint::construct()
 {
-    m_gridSize = 4;
+    m_gridSize = 16;
     m_offset_x = 0;
     m_offset_y = 0;
     setData(ITEM_TYPE, "playerPoint");
@@ -180,10 +180,12 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
             m_scene->m_data->players[q]=m_data;
     }
 
-    if(((int)m_data.w>=(int)m_gridSize))
-        m_gridOffsetX = -1 * qRound( qreal((int)m_data.w % m_gridSize)/2 );
+    if(((int)m_data.w >= (int)m_gridSize))
+        m_gridOffsetX = -1 * qRound( qreal((int)m_data.w % m_gridSize) / 2 );
     else
-        m_gridOffsetX = qRound( qreal( m_gridSize - (int)m_data.w )/2 ) + (m_gridSize/2);
+        m_gridOffsetX = qRound( qreal( m_gridSize - (int)m_data.w ) / 2 );
+    m_gridOffsetX += (m_gridSize / 2);
+
     m_gridOffsetY = -m_data.h % m_gridSize;
 
     this->setPos(m_data.x, m_data.y);
