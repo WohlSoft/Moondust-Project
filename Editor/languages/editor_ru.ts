@@ -135,7 +135,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="354"/>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation>Не показывать окно свойсвт при размещении</translation>
+        <translation>Не показывать окно свойств при размещении</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="377"/>
