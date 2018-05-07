@@ -1,6 +1,8 @@
 Editor 0.3.1.14-1-dev
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
 - Added weight order factor for tileset groups
+- Player start points now aligning with 16x16 grid size
+- Support for Legacy Editor level test run has been removed due to troubles produced by this very outdated thing
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)

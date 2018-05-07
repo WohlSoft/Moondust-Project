@@ -65,7 +65,6 @@ public:
     }
 };
 
-static bool SMBXEditorIsStarted();
 static std::string ReadMsgString(HANDLE hInputRead);
 
 LunaTester::LunaTester() :
@@ -373,28 +372,6 @@ void LunaTester::killFrozenThread()
 
 
 /*****************************************Private functions*************************************************/
-
-
-static bool SMBXEditorIsStarted()
-{
-    HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
-
-    if(smbxWind == 0)
-        return false;
-
-    wchar_t szName[] = L"LunaDLL_LevelFileName_834727238";
-    HANDLE  hMapFile;
-    hMapFile = OpenFileMappingW(
-                   FILE_MAP_ALL_ACCESS,   // read/write access
-                   FALSE,                 // do not inherit the name
-                   szName);               // name of mapping object
-
-    if(hMapFile == NULL)
-        return false;
-
-    CloseHandle(hMapFile);
-    return (smbxWind);
-}
 
 static std::string ReadMsgString(HANDLE hInputRead)
 {
@@ -1169,9 +1146,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             return;
     }
 
-    // Is SMBX Editor already running. If running,
-    // do old method - send path to already running editor
-    if(!SMBXEditorIsStarted())
+    // Launch LunaLoader
     {
         QString smbxPath = ConfStatus::configDataPath;
         if(!QFile(smbxPath + ConfStatus::SmbxEXE_Name).exists())
@@ -1475,162 +1450,6 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                             QMessageBox::Ok);
             }
         }//Do LunaLUA direct testing launch
-    }
-    else //Attempt to attach into running SMBX Editor
-    {
-        /**********************************************
-         ******Do LunaLUA in-editor test launch!*******
-         **********************************************/
-        if(isUntitled)
-        {
-            msg.warning(LunaTester::tr("Save file first"),
-                        LunaTester::tr("To run testing via SMBX file must be saved into disk first!"),
-                        QMessageBox::Ok);
-            return;
-        }
-        QString fullPathToLevel = levelPath;
-        if(!in_levelData.meta.smbx64strict)
-        {
-            int ret = msg.warning(LunaTester::tr("Incompatible file format"),
-                                  LunaTester::tr("To take able to test level in the SMBX, file should be saved into SMBX64 format!\n"
-                                                 "Will be created a temporary file. Do you want to continue?"),
-                                  QMessageBox::Yes | QMessageBox::Abort);
-
-            if(ret == QMessageBox::Abort)
-                return;
-
-            //Double point will be unique and will don't overwrite your lvl file, but will use same custom folder
-            QString newPath = in_levelData.meta.path + "/" + in_levelData.meta.filename + "..lvl";
-            if(!FileFormats::WriteSMBX64LvlFileF(newPath, in_levelData, 64))
-            {
-                msg.warning(LunaTester::tr("Error"),
-                            LunaTester::tr("Fail to create temp file %1").arg(newPath),
-                            QMessageBox::Ok);
-                return;
-            }
-            fullPathToLevel = newPath;
-        }
-
-
-        COPYDATASTRUCT *cds = new COPYDATASTRUCT;
-        cds->cbData = 1;
-        cds->dwData = (ULONG_PTR)0xDEADC0DE;
-        cds->lpData = NULL;
-
-        HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
-        if(smbxWind)
-        {
-            fullPathToLevel.replace('/', '\\');
-
-            if(in_levelData.meta.modified)
-            {
-                int ret = msg.question(
-                              LunaTester::tr("LunaLUA Level test"),
-                              LunaTester::tr("Do you wanna to save file before start testing?\n"),
-                              QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-                if(ret == QMessageBox::Cancel)
-                    return;
-                else if(ret == QMessageBox::Yes)
-                    QMetaObject::invokeMethod(m_mw->activeLvlEditWin(), "doSave", Qt::BlockingQueuedConnection);
-            }
-
-            /****************Write file path into shared memory**************************/
-
-            //Connect to Shared memory and send data
-            typedef wchar_t *wchar_p;
-            wchar_t szName[] = L"LunaDLL_LevelFileName_834727238";
-            HANDLE  hMapFile;
-            wchar_p pBuf;
-            hMapFile = OpenFileMappingW(
-                           FILE_MAP_ALL_ACCESS,   // read/write access
-                           FALSE,                 // do not inherit the name
-                           szName);               // name of mapping object
-
-            if(hMapFile == NULL)
-            {
-                switch(GetLastError())
-                {
-                case ERROR_FILE_NOT_FOUND:
-                    msg.warning(LunaTester::tr("Error"),
-                                LunaTester::tr("SMBX with LunaDLL is not running!"),
-                                QMessageBox::Ok);
-                    break;
-                default:
-                    DWORD   dwLastError = GetLastError();
-                    wchar_t lpBuffer[256] = L"?";
-                    if(dwLastError != 0)    // Don't want to see a "operation done successfully" error ;-)
-                        FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM,                 // It´s a system error
-                                       NULL,                                       // No string to be formatted needed
-                                       dwLastError,                                // Hey Windows: Please explain this error!
-                                       MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),  // Do it in the standard language
-                                       lpBuffer,                // Put the message here
-                                       255,                     // Number of bytes to store the message
-                                       NULL);
-                    msg.warning(LunaTester::tr("Error"),
-                                LunaTester::tr("Fail to send file patth into LunaDLL: (%1)").arg(QString::fromWCharArray(lpBuffer)),
-                                QMessageBox::Ok);
-                }
-                return;
-            }
-
-            pBuf = wchar_p(MapViewOfFile(hMapFile,   // handle to map object
-                                         FILE_MAP_ALL_ACCESS, // read/write permission
-                                         0,
-                                         0,
-                                         15360));
-
-            if(pBuf == NULL)
-            {
-                msg.warning(LunaTester::tr("Error"),
-                            LunaTester::tr("Could not map view of LunaLUA shared memory (%1).").arg(GetLastError()),
-                            QMessageBox::Ok);
-                CloseHandle(hMapFile);
-                return;
-            }
-
-            if(fullPathToLevel.size()*sizeof(wchar_t) > 15360)
-            {
-                msg.warning(LunaTester::tr("Error"),
-                            LunaTester::tr("Too long path: ").arg(fullPathToLevel),
-                            QMessageBox::Ok);
-                UnmapViewOfFile(pBuf);
-                CloseHandle(hMapFile);
-                return;
-            }
-
-            LogDebugQD("Attempt to start testing of " + fullPathToLevel + "via SMBX");
-
-            std::wstring str = fullPathToLevel.toStdWString();
-            ZeroMemory((PVOID)pBuf, 15360);
-            CopyMemory((PVOID)pBuf, str.c_str(), str.size()*sizeof(wchar_t));
-
-            UnmapViewOfFile(pBuf);
-            CloseHandle(hMapFile);
-            /****************Write file path into shared memory****end*******************/
-
-            LogDebugQD("Sent Message (Hopefully it worked)");
-
-            //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
-            //Stop music playback in the PGE Editor!
-            QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-            QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-
-            //Minimize PGE Editor
-            if(qApp->desktop()->screenCount() == 1) // Minimize editor window if alone screen was found
-                QMetaObject::invokeMethod(m_mw, "showMinimized", Qt::QueuedConnection);
-
-            //Send command and restore window
-            SetForegroundWindow(smbxWind);
-            ShowWindow(smbxWind, SW_MAXIMIZE);
-            SetFocus(smbxWind);
-            SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)m_mw->winId(), (LPARAM)cds);
-        }
-        else
-        {
-            msg.warning(LunaTester::tr("Error"),
-                        LunaTester::tr("Failed to find SMBX Window"),
-                        QMessageBox::Ok);
-        }
     }
 }
 
