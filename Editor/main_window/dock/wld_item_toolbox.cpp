@@ -54,6 +54,7 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
 
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionWLDToolBox, SLOT(setChecked(bool)));
 
     m_lastVisibilityState = isVisible();
     mw()->docks_world.
@@ -73,12 +74,6 @@ QTabWidget *WorldItemBox::tabWidget()
 void WorldItemBox::re_translate()
 {
     ui->retranslateUi(this);
-}
-
-// World tool box show/hide
-void WorldItemBox::on_WorldItemBox_visibilityChanged(bool visible)
-{
-    mw()->ui->actionWLDToolBox->setChecked(visible);
 }
 
 void MainWindow::on_actionWLDToolBox_triggered(bool checked)
