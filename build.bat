@@ -6,6 +6,7 @@ SET MAKE_EXTRA_ARGS=-r -j 4
 
 :argsloop
 if "%1"=="clean" goto cleanX
+if "%1"=="update-submodules"  goto updateSubModules
 if "%1"=="repair-submodules"  goto repairSubModules
 if "%1"=="nopause"  SET NoPause=1
 if "%1"=="noeditor" SET BuildArgs=%BuildArgs% CONFIG+=noeditor
@@ -37,6 +38,7 @@ echo AVAILABLE ARGUMENTS:
 echo.
 echo --- Actions ---
 echo  clean                - Remove all object files and caches to build from scratch
+echo  update-submodules    - Pull all submodules up to their latest states
 echo  repair-submodules    - Repair invalid or broken submodules
 echo  --help               - Print this manual
 echo.
@@ -116,6 +118,18 @@ IF EXIST .\_Libs\_sources\_build_cache_msvc\NUL (
 echo ==== Clear! ====
 exit /B 0
 goto quit;
+
+
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+rem ------------------------------------------------------------
+
+:updateSubModules
+git submodule foreach git checkout master
+git submodule foreach git pull origin master
+exit /B 0
+goto quit;
+
 
 rem ------------------------------------------------------------
 rem ------------------------------------------------------------

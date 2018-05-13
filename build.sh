@@ -35,6 +35,7 @@ do
             printf " \E[1;4mlupdate\E[0m          - Update the translations\n"
             printf " \E[1;4mlrelease\E[0m         - Compile the translations\n"
             printf " \E[1;4mclean\E[0m            - Remove all object files and caches to build from scratch\n"
+            printf " \E[1;4mupdate-submodules\E[0m- Pull all submodules up to their latest states\n"
             printf " \E[1;4mrepair-submodules\E[0m- Repair invalid or broken submodules\n"
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
             printf " \E[1;4m--help\E[0m           - Print this manual\n"
@@ -142,7 +143,11 @@ do
                 echo "==== Clear! ===="
                 exit 0;
             ;;
-
+        update-submodules)
+            git submodule foreach git checkout master
+            git submodule foreach git pull origin master
+            exit 0
+            ;;
         repair-submodules)
             #!!FIXME!! Implement parsing of submodules list and fill this array automatically
             #NOTE: Don't use "git submodule foreach" because broken submodule will not shown in it's list!
