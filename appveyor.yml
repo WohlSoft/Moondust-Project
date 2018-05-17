@@ -49,12 +49,14 @@ environment:
   global:
     PLATFORMTOOLSET: "v140"
   matrix:
-    - PLATFORM: x64
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+      PLATFORM: x64
       BIN_DIR: bin-w64
       WINXX_ARCH: win64
       COMPILER: C:\mingw-w64\x86_64-7.1.0-posix-seh-rt_v5-rev0\mingw64\bin
       QT_DIR: C:\Qt\5.9.0-x64\bin
-    - PLATFORM: Win32
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2013"
+      PLATFORM: Win32
       BIN_DIR: bin-w32
       WINXX_ARCH: win32
       COMPILER: C:\Qt\Tools\mingw530_32\bin
