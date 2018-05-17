@@ -3930,7 +3930,7 @@ Para que funcione, LunaLUA debe estar actualizado.
 De otra manera será muy limitado.</translation>
     </message>
     <message>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <translation type="vanished">Terminar proceso congelado</translation>
     </message>
     <message>
@@ -3945,7 +3945,7 @@ De otra manera será muy limitado.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="344"/>
-        <source>Are you really want to termitate loader thread?</source>
+        <source>Are you really want to terminate loader thread?</source>
         <translation>¿De verdad quiere finalizar el proceso?</translation>
     </message>
     <message>
@@ -3995,7 +3995,7 @@ Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente al
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="244"/>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
         <translation>Terminar proceso congelado</translation>
     </message>

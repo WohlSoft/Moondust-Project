@@ -4012,7 +4012,7 @@ Otherwise it will be very limited.</source>
 Иначе, эта возможность будет работать очень ограниченно.</translation>
     </message>
     <message>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <translation type="vanished">Прервать зависший загрузчик</translation>
     </message>
     <message>
@@ -4027,7 +4027,7 @@ Otherwise it will be very limited.</source>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="344"/>
-        <source>Are you really want to termitate loader thread?</source>
+        <source>Are you really want to terminate loader thread?</source>
         <translation>Действительно ли вы хотите прервать поток загрузчика?</translation>
     </message>
     <message>
@@ -4077,7 +4077,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="244"/>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
         <translation>Прервать зависший загрузчик</translation>
     </message>

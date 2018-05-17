@@ -3510,7 +3510,7 @@ Vuoi salvare i cambiamenti?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="344"/>
-        <source>Are you really want to termitate loader thread?</source>
+        <source>Are you really want to terminate loader thread?</source>
         <translation>Vuoi davvero terminare il caricamento?</translation>
     </message>
     <message>
@@ -3556,7 +3556,7 @@ E&apos; consigliato disattivare questa funzione su sistemi lenti o se si riscont
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="244"/>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
         <translation>Termina il caricamento</translation>
     </message>

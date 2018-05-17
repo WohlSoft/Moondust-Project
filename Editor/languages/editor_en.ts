@@ -4068,8 +4068,8 @@ To have this feature work, latest LunaLUA must be installed.
 Otherwise it will be very limited.</translation>
     </message>
     <message>
-        <source>Termitate frozen loader</source>
-        <translation type="vanished">Termitate frozen loader</translation>
+        <source>Terminate frozen loader</source>
+        <translation type="vanished">Terminate frozen loader</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="246"/>
@@ -4083,8 +4083,8 @@ Otherwise it will be very limited.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="344"/>
-        <source>Are you really want to termitate loader thread?</source>
-        <translation>Are you sure you want to termitate the loader thread?</translation>
+        <source>Are you really want to terminate loader thread?</source>
+        <translation>Are you sure you want to terminate the loader thread?</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
@@ -4132,9 +4132,9 @@ It is suggested to disable this feature on slow machines or if any trouble happe
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="244"/>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation>Termitate frozen loader</translation>
+        <translation>Terminate frozen loader</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="250"/>

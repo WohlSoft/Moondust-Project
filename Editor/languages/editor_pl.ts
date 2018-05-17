@@ -3564,7 +3564,7 @@ Aby to działało, najnowsza wersja LunaLua musi być zainstalowana.
 W innym wypadku testowanie będzie bardzo ograniczone.</translation>
     </message>
     <message>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <translation type="vanished">Zakończ zamrożony loader</translation>
     </message>
     <message>
@@ -3579,7 +3579,7 @@ W innym wypadku testowanie będzie bardzo ograniczone.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="344"/>
-        <source>Are you really want to termitate loader thread?</source>
+        <source>Are you really want to terminate loader thread?</source>
         <translation>Czy na pewno chcesz zakończyć proces loadera?</translation>
     </message>
     <message>
@@ -3625,7 +3625,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="244"/>
-        <source>Termitate frozen loader</source>
+        <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
         <translation type="unfinished">Zakończ zamrożony loader</translation>
     </message>

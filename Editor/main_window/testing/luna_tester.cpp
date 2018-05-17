@@ -155,7 +155,7 @@ void LunaTester::initLunaMenu(MainWindow *mw,
         m_menuItems[menuItemId++] = enableKeepingInBackground;
     }
     {
-        QAction *KillFrozenThread = lunaMenu->addAction("Termitate frozen loader");
+        QAction *KillFrozenThread = lunaMenu->addAction("Terminate frozen loader");
         mw->connect(KillFrozenThread,   &QAction::triggered,
                     this,               &LunaTester::killFrozenThread,
                     Qt::QueuedConnection);
@@ -240,7 +240,7 @@ void LunaTester::retranslateMenu()
     }
     {
         QAction *KillFrozenThread = m_menuItems[menuItemId++];
-        KillFrozenThread->setText(tr("Termitate frozen loader",
+        KillFrozenThread->setText(tr("Terminate frozen loader",
                                      "Terminite frozen LunaTester on the attempt to send any command to LunaLua."));
         KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
     }
@@ -340,7 +340,7 @@ void LunaTester::killFrozenThread()
     {
         QMessageBox::StandardButton reply = QMessageBox::warning(m_mw,
                                             "LunaTester",
-                                            tr("Are you really want to termitate loader thread?"),
+                                            tr("Are you really want to terminate loader thread?"),
                                             QMessageBox::Yes | QMessageBox::No);
         if(reply == QMessageBox::Yes)
         {
