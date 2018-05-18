@@ -49,7 +49,7 @@ environment:
   global:
     PLATFORMTOOLSET: "v140"
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2017"
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
       PLATFORM: x64
       BIN_DIR: bin-w64
       WINXX_ARCH: win64
