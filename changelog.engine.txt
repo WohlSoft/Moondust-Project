@@ -4,6 +4,7 @@
 - Fixed the date filenames generation for screenshots and recorded GIF movies
 - Repaired TTF fallback support
 - Added support for more than one TTF font loaded in one time
+- Fixed inability to use hot-placing from the Editor's IPC
 
 0.3.0
 - Fixed some NPC-AI API properties
