@@ -5034,6 +5034,11 @@ Physikalische Umgebungen:	%6</translation>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
     </message>
+    <message>
+        <source>Default screen fill color</source>
+        <comment>A comment in the template if Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>

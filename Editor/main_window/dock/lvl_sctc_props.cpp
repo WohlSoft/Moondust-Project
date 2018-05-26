@@ -461,8 +461,13 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
               << "; " << tr("Custom background name which will be shown in the editor",
                             "A comment in the template if Background2 INI file.")
               << "\n"
-              << QString("name = \"%1\"\n\n").arg(bg.setup.name)
+              << QString("name = \"%1\"\n").arg(bg.setup.name)
 
+              << "; " << tr("Default screen fill color",
+                            "A comment in the template if Background2 INI file.") << "\n"
+              << QString("fill-color = \"#000000\"\n")
+
+              << "\n\n"
               << "; " << tr("Create your background layers setup here...",
                             "A comment in the template if Background2 INI file.")
               << "\n\n";

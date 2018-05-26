@@ -5132,6 +5132,11 @@ Zonas físicas de ambiente:	%6
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
     </message>
+    <message>
+        <source>Default screen fill color</source>
+        <comment>A comment in the template if Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>

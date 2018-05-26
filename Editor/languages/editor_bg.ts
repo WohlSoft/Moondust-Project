@@ -3709,6 +3709,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Default screen fill color</source>
+        <comment>A comment in the template if Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>

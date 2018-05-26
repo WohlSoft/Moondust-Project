@@ -4117,6 +4117,11 @@ Woda, ruchome piaski itp.:	%6</translation>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Proszę zapisz plik, jeżeli chcesz wybrać własną muzykę.</translation>
     </message>
+    <message>
+        <source>Default screen fill color</source>
+        <comment>A comment in the template if Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>

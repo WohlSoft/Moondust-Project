@@ -4162,6 +4162,11 @@ Sone di Ambiente Fisico:	%6
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Salva prima il file, se vuoi selezionare il file musicale personalizzato.</translation>
     </message>
+    <message>
+        <source>Default screen fill color</source>
+        <comment>A comment in the template if Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>

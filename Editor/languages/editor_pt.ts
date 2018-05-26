@@ -4379,6 +4379,11 @@ para trás)</translation>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Salve o arquivo primeiro caso deseje utilizar uma música personalizada.</translation>
     </message>
+    <message>
+        <source>Default screen fill color</source>
+        <comment>A comment in the template if Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>
