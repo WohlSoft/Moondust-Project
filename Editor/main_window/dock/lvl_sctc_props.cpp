@@ -199,7 +199,12 @@ void LvlSectionProps::initDefaults()
         bgThumb = bgThumb.copy(0, ((bgThumb.height()/2)-(25/2)), bgThumb.width(), 25);
         #endif
 
-        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), (isCustom?"* ":"")+bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
+        ui->LVLPropsBackImage->addItem(QIcon(bgThumb),
+                                       QString("%1: %2%3")
+                                       .arg(bgD.setup.id) //Background ID
+                                       .arg(isCustom ? "* " : "") //Show a star over customized background
+                                       .arg(bgTitle), //Background title
+                                       QVariant::fromValue<unsigned long>(bgD.setup.id));
         mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
     }
 
