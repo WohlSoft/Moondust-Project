@@ -153,6 +153,26 @@ bool dataconfigs::loadBasics()
     }
     guiset.endGroup();
 
+    guiset.beginGroup("widgets-default-visibility");
+    {
+        guiset.read("lvl-itembox", editor.default_visibility.lvl_itembox, true);
+        guiset.read("lvl-section-props", editor.default_visibility.lvl_section_props, false);
+        guiset.read("lvl-warp-props", editor.default_visibility.lvl_warp_props, true);
+        guiset.read("lvl-layers", editor.default_visibility.lvl_layers, true);
+        guiset.read("lvl-events", editor.default_visibility.lvl_events, true);
+        guiset.read("lvl-search", editor.default_visibility.lvl_search, false);
+
+        guiset.read("wld-itembox", editor.default_visibility.wld_itembox, true);
+        guiset.read("wld-settings", editor.default_visibility.wld_settings, false);
+        guiset.read("wld-search", editor.default_visibility.wld_search, false);
+
+        guiset.read("tilesets-box", editor.default_visibility.tilesets_box, true);
+        guiset.read("debugger-box", editor.default_visibility.debugger_box, false);
+        guiset.read("bookmarks-box", editor.default_visibility.bookmarks_box, false);
+        guiset.read("variables-box", editor.default_visibility.variables_box, false);
+    }
+    guiset.endGroup();
+
     if(!openSection(&guiset, "main"))
         return false;
 

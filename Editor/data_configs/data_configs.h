@@ -56,6 +56,28 @@ struct DataFolders
     PGEString gcustom;
 };
 
+struct EditorSetup
+{
+    struct WidgetVisiblity
+    {
+        bool lvl_itembox = true;
+        bool lvl_section_props = false;
+        bool lvl_warp_props = true;
+        bool lvl_layers = true;
+        bool lvl_events = true;
+        bool lvl_search = false;
+
+        bool wld_itembox = true;
+        bool wld_settings = false;
+        bool wld_search = false;
+
+        bool tilesets_box = true;
+        bool debugger_box = false;
+        bool bookmarks_box = false;
+        bool variables_box = false;
+    } default_visibility;
+};
+
 struct EngineSetup
 {
     int screen_w;
@@ -122,6 +144,7 @@ public:
     QString splash_logo;
     QList<obj_splash_ani > animations;
 
+    EditorSetup editor;
     EngineSetup engine;
 
     //Playable Characters
