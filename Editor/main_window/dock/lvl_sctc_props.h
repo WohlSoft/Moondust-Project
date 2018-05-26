@@ -6,6 +6,7 @@
 #include "mwdock_base.h"
 
 class MainWindow;
+class QPushButton;
 
 namespace Ui {
 class LvlSectionProps;
@@ -21,6 +22,7 @@ private:
     ~LvlSectionProps();
 public:
     bool lockSctSettingsProps;
+    QPushButton *getEditBackground2IniButton();
 
 public slots:
     void setSMBX64Strict(bool en);
@@ -36,6 +38,7 @@ public slots:
 
     void on_LVLPropsMusicCustom_editingFinished();
     void on_LVLPropsBackImage_currentIndexChanged(int index);
+    void on_editBackground2Ini_clicked();
 
     void switchResizeMode(bool mode);
 
@@ -52,7 +55,6 @@ private slots:
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
 
-    void on_editBackground2Ini_clicked();
 
 protected:
     virtual void focusInEvent(QFocusEvent * ev);

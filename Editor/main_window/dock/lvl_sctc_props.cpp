@@ -24,6 +24,9 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include <QDesktopServices>
+#include <QTextStream>
+
 #include "lvl_sctc_props.h"
 #include "ui_lvl_sctc_props.h"
 
@@ -87,6 +90,11 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 LvlSectionProps::~LvlSectionProps()
 {
     delete ui;
+}
+
+QPushButton *LvlSectionProps::getEditBackground2IniButton()
+{
+    return ui->editBackground2Ini;
 }
 
 void LvlSectionProps::setSMBX64Strict(bool en)
@@ -168,7 +176,7 @@ void LvlSectionProps::initDefaults()
             }
 
     PGE_DataArray<obj_BG > &main_bg = mw()->configs.main_bg;
-    for(int i = 0; i < main_bg.size(); i++)
+    for(int i = 1; i < main_bg.size(); i++)
     {
         const obj_BG &bgD = main_bg[i];
         QPixmap bgThumb(100,BkgIconHeight); bgThumb.fill(QColor(Qt::white));
@@ -387,7 +395,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     //if(ui->LVLPropsBackImage->hasFocus())
     //{
     ui->LVLPropsBackImage->setEnabled(false);
-    LogDebug("Change BG to "+QString::number(index));
+    LogDebug("Change BG to " + QString::number(index));
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
@@ -405,7 +413,63 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 
 void LvlSectionProps::on_editBackground2Ini_clicked()
 {
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
 
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    if(edit->isUntitled)
+    {
+        QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to manage custom background config files."), QMessageBox::Ok);
+        return;
+    }
+
+    int backgroundId = ui->LVLPropsBackImage->currentData().toInt();
+    if(backgroundId <= 0)
+    {
+        QMessageBox::information(this,
+                                 tr("Choose a background first"),
+                                 tr("Please, choose the background image first."),
+                                 QMessageBox::Ok);
+        return;
+    }
+
+    QString fileName = QString("background2-%3.ini").arg(backgroundId);
+    QString dirPath  = QString("%1/%2")
+                        .arg(edit->LvlData.meta.path)
+                        .arg(edit->LvlData.meta.filename);
+    QString fullPath = QString("%1/%2")
+                        .arg(dirPath)
+                        .arg(fileName);
+
+    if(!QFile::exists(fullPath))
+    {
+        QDir dir;
+        dir.mkpath(dirPath);
+        QFile f(fullPath);
+        f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+
+        PGE_DataArray<obj_BG > &main_bg = mw()->configs.main_bg;
+        if(backgroundId < main_bg.size())
+        {
+            const obj_BG &bg = main_bg[backgroundId];
+            QTextStream o(&f);
+            o << "[background2]\n"
+
+              << "; " << tr("Custom background name which will be shown in the editor",
+                            "A comment in the template if Background2 INI file.")
+              << "\n"
+              << QString("name = \"%1\"\n\n").arg(bg.setup.name)
+
+              << "; " << tr("Create your background layers setup here...",
+                            "A comment in the template if Background2 INI file.")
+              << "\n\n";
+        }
+    }
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fullPath));
 }
 
 void LvlSectionProps::switchResizeMode(bool mode)
@@ -420,7 +484,8 @@ void LvlSectionProps::loadMusic()
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
-        if(!edit) return;
+        if(!edit)
+            return;
 
         LvlMusPlay::setMusic(LvlMusPlay::LevelMusic,
                     edit->LvlData.sections[edit->LvlData.CurSection].music_id,
