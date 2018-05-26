@@ -121,8 +121,7 @@ void LvlSectionProps::initDefaults()
     lockSctSettingsProps=true;
     mw()->dock_LvlEvents->setEventToolsLocked(true);
 
-    int i;
-        LogDebug(QString("Set level Section Data"));
+    LogDebug(QString("Set level Section Data"));
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
@@ -168,10 +167,10 @@ void LvlSectionProps::initDefaults()
                 listVw->setUniformItemSizes(true);
             }
 
-
-    for(int i=1; i<mw()->configs.main_bg.size(); i++)
+    PGE_DataArray<obj_BG > &main_bg = mw()->configs.main_bg;
+    for(int i = 0; i < main_bg.size(); i++)
     {
-        obj_BG &bgD=mw()->configs.main_bg[i];
+        const obj_BG &bgD = main_bg[i];
         QPixmap bgThumb(100,BkgIconHeight); bgThumb.fill(QColor(Qt::white));
         QPainter xx(&bgThumb); bool isCustom=false; QString bgTitle=bgD.setup.name;
         QPixmap tmp = bgD.image.scaledToHeight(70);
@@ -208,10 +207,13 @@ void LvlSectionProps::initDefaults()
         mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
     }
 
-    for(i=1; i< mw()->configs.main_music_lvl.size(); i++)
+    PGE_DataArray<obj_music > &main_music_lvl = mw()->configs.main_music_lvl;
+    QComboBox *musicList_events = mw()->dock_LvlEvents->cbox_sct_mus();
+    for(int i = 1; i < main_music_lvl.size(); i++)
     {
-        ui->LVLPropsMusicNumber->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
-        mw()->dock_LvlEvents->cbox_sct_mus()->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
+        const obj_music &mus = main_music_lvl[i];
+        ui->LVLPropsMusicNumber->addItem(mus.name, QString::number(mus.id));
+        musicList_events->addItem(mus.name, QString::number(mus.id));
     }
 
     mw()->dock_LvlEvents->setEventToolsLocked(false);
@@ -226,7 +228,7 @@ void LvlSectionProps::refreshFileData()
 {
     lockSctSettingsProps=true;
     //Set current data
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) {lockSctSettingsProps=false; return;}
@@ -274,7 +276,7 @@ void LvlSectionProps::refreshFileData()
 // Level Section Settings
 void LvlSectionProps::on_LVLPropsWrapHorizontal_clicked(bool checked)
 {
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -286,7 +288,7 @@ void LvlSectionProps::on_LVLPropsWrapHorizontal_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsWrapVertical_clicked(bool checked)
 {
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -298,7 +300,7 @@ void LvlSectionProps::on_LVLPropsWrapVertical_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -310,7 +312,7 @@ void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -322,7 +324,7 @@ void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -337,7 +339,7 @@ void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
 ///////////////////////////////////////Resize section/////////////////////////////////////
 void LvlSectionProps::on_ResizeSection_clicked()
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -352,7 +354,7 @@ void LvlSectionProps::on_ResizeSection_clicked()
 
 void LvlSectionProps::on_applyResize_clicked()
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -362,7 +364,7 @@ void LvlSectionProps::on_applyResize_clicked()
 
 void LvlSectionProps::on_cancelResize_clicked()
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -386,7 +388,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     //{
     ui->LVLPropsBackImage->setEnabled(false);
     LogDebug("Change BG to "+QString::number(index));
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -401,6 +403,11 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     ui->LVLPropsBackImage->setEnabled(true);
 }
 
+void LvlSectionProps::on_editBackground2Ini_clicked()
+{
+
+}
+
 void LvlSectionProps::switchResizeMode(bool mode)
 {
     ui->applyResize->setVisible(mode);
@@ -410,7 +417,7 @@ void LvlSectionProps::switchResizeMode(bool mode)
 
 void LvlSectionProps::loadMusic()
 {
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -430,7 +437,7 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     unsigned int test = index;
     ui->LVLPropsMusicCustomEn->setChecked(  test == mw()->configs.music_custom_id );
 
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -454,7 +461,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
         if(checked)
         {
             ui->LVLPropsMusicNumber->setCurrentIndex( mw()->configs.music_custom_id );
-            if(mw()->activeChildWindow()==1)
+            if(mw()->activeChildWindow() == MainWindow::WND_Level)
             {
                 LevelEdit * edit = mw()->activeLvlEditWin();
                 if(!edit) return;
@@ -473,7 +480,8 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
 void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
 {
     QString dirPath;
-    if(mw()->activeChildWindow()!=1) return;
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
 
     LevelEdit * edit = mw()->activeLvlEditWin();
     if(!edit) return;
@@ -502,7 +510,7 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
     if(!ui->LVLPropsMusicCustom->isModified()) return;
     ui->LVLPropsMusicCustom->setModified(false);
 
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;

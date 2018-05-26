@@ -52,6 +52,8 @@ private slots:
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
 
+    void on_editBackground2Ini_clicked();
+
 protected:
     virtual void focusInEvent(QFocusEvent * ev);
 

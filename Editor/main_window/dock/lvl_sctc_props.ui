@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>264</width>
-    <height>438</height>
+    <width>289</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -238,7 +238,7 @@
       <property name="flat">
        <bool>false</bool>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QGridLayout" name="gridLayout" columnstretch="100,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -264,7 +264,24 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="editBackground2Ini">
+         <property name="toolTip">
+          <string>Edit a custom background config...</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../_resources/editor.qrc">
+           <normaloff>:/images/pencil_16x16.png</normaloff>:/images/pencil_16x16.png</iconset>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
         <widget class="QComboBox" name="LVLPropsBackImage">
          <property name="minimumSize">
           <size>
