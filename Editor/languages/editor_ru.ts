@@ -5151,7 +5151,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Edit a custom background config...</source>
-        <translation type="unfinished"></translation>
+        <translation>Править пользоватьский конфиг фона...</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5192,25 +5192,25 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл нужно сохранить, чтобы можно было работать с пользовательскими конфигами фонов.</translation>
     </message>
     <message>
         <source>Choose a background first</source>
-        <translation type="unfinished"></translation>
+        <translation>Сначала нужно выберать фоновую картинку</translation>
     </message>
     <message>
         <source>Please, choose the background image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, выберите фоновую картинку.</translation>
     </message>
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Имя пользовательского фона, который будет показан в редакторе</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Делайте слои фоновой композиции здесь...</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5219,7 +5219,7 @@ Physical env. zones:	%6
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Цвет заливки экрана по-умолчанию</translation>
     </message>
 </context>
 <context>

@@ -5230,7 +5230,7 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Edit a custom background config...</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit a custom background config...</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5271,25 +5271,25 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Please, save file first, if you want to manage custom background config files.</translation>
     </message>
     <message>
         <source>Choose a background first</source>
-        <translation type="unfinished"></translation>
+        <translation>Choose a background first</translation>
     </message>
     <message>
         <source>Please, choose the background image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Please, choose the background image first.</translation>
     </message>
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Custom background name which will be shown in the editor</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Create your background layers setup here...</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5298,7 +5298,7 @@ Physical env. zones:	 %6
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Default screen fill color</translation>
     </message>
 </context>
 <context>
