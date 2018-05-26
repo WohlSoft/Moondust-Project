@@ -356,10 +356,10 @@ do
             echo "Running translation refreshing...";
 
             printLine "Editor" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/lupdate Editor/pge_editor.pro
+            ${QT_PATH}/lupdate -locations none -no-ui-lines Editor/pge_editor.pro
 
             printLine "Engine" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/lupdate Engine/pge_engine.pro
+            ${QT_PATH}/lupdate -locations none Engine/pge_engine.pro
 
             printLine "Done!" "\E[0;42;37m" "\E[0;32m"
             exit 0;
