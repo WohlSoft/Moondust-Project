@@ -378,6 +378,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Error</source>
         <translation type="vanished">Error</translation>
     </message>
+    <message>
+        <source>Environment</source>
+        <translation>Environment</translation>
+    </message>
+    <message>
+        <source>Default zoom:</source>
+        <translation>Default zoom:</translation>
+    </message>
+    <message>
+        <source>Default zoom which will be installed on file opening or file creation.</source>
+        <translation>Default zoom which will be installed on file opening or file creation.</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>

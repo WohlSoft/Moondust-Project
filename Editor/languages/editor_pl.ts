@@ -322,6 +322,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Debug</source>
         <translation type="vanished">Debug</translation>
     </message>
+    <message>
+        <source>Environment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default zoom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default zoom which will be installed on file opening or file creation.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>

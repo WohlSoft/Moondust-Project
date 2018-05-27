@@ -7,6 +7,7 @@ Editor 0.3.1.14-1-dev
 - Added an ability to declare default visibility of toolboxes visibility in the config pack main.ini
 - Added showing of Background-ID in the level section backgrounds list
 - Added the button into The Level Section Properties toolbox to open custom background config file
+- Added ability to set default zoom on file open or create (In the Application Settings and Editor tab).
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)

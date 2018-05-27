@@ -379,6 +379,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Error</source>
         <translation type="vanished">Ошибка</translation>
     </message>
+    <message>
+        <source>Environment</source>
+        <translation>Среда</translation>
+    </message>
+    <message>
+        <source>Default zoom:</source>
+        <translation>Масштаб по-умолчанию:</translation>
+    </message>
+    <message>
+        <source>Default zoom which will be installed on file opening or file creation.</source>
+        <translation>Стандартный масштаб, устанавливаемый при открытии или создании файла.</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
