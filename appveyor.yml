@@ -94,7 +94,7 @@ build_script:
   - cmd: build_deps.bat buildlibs nopause
   - cmd: build.bat nopause # noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
   - cmd: cd _Misc\dev_scripts\deploy\
-  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic.bat nopause
+  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic_32_w64.bat nopause
   - cmd: if [%PLATFORM%]==[x64] deploy_windows_dynamic_x64.bat nopause
   - cmd: cd ..\..\..\
 

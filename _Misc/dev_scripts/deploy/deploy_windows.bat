@@ -54,15 +54,25 @@ copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %QtDir%\windeployqt %DeployFlags% LazyFixTool.exe
 %QtDir%\windeployqt %DeployFlags% pge_manager.exe
 %QtDir%\windeployqt %DeployFlags% pge_maintainer.exe
-IF "%DEST_TO_64%"=="TRUE" (
+set NEED_COPY_MISSING_DLLS=NO
+if "%DEST_TO_64%"=="TRUE" set NEED_COPY_MISSING_DLLS=YES
+if "%DEST_TO_32w64%"=="TRUE" set NEED_COPY_MISSING_DLLS=YES
+
+IF "%NEED_COPY_MISSING_DLLS%"=="YES" (
 	rem Copy missing DLLS are wasn't copied by windeployqt
-	if not exist "platforms\*" md "platforms"
-	if not exist "imageformats\*" md "imageformats"
-	copy "%QtDir%\..\plugins\platforms\qwindows.dll" platforms\
-	copy "%QtDir%\..\plugins\imageformats\qgif.dll" imageformats\
-	copy "%QtDir%\..\plugins\imageformats\qicns.dll" imageformats\
-	copy "%QtDir%\..\plugins\imageformats\qico.dll" imageformats\
-	copy "%QtDir%\..\plugins\imageformats\qsvg.dll" imageformats\
+    if not exist "platforms\*" md "platforms"
+    if not exist "imageformats\*" md "imageformats"
+    IF EXIST "%QtDir%\libgcc_s_seh-1.dll"  copy "%QtDir%\libgcc_s_seh-1.dll" .
+    IF EXIST "%QtDir%\libmingwex-0.dll"    copy "%QtDir%\libmingwex-0.dll" .
+    IF EXIST "%QtDir%\libgcc_s_dw2-1.dll"  copy "%QtDir%\libgcc_s_dw2-1.dll" .
+    IF EXIST "%QtDir%\libwinpthread-1.dll" copy "%QtDir%\libwinpthread-1.dll" .
+    IF EXIST "%QtDir%\pthreadGC-3.dll"     copy "%QtDir%\pthreadGC-3.dll" .
+
+    IF NOT EXIST platforms\qwindows.dll copy "%QtDir%\..\plugins\platforms\qwindows.dll" platforms\
+    IF NOT EXIST imageformats\qgif.dll  copy "%QtDir%\..\plugins\imageformats\qgif.dll" imageformats\
+    IF NOT EXIST imageformats\qicns.dll copy "%QtDir%\..\plugins\imageformats\qicns.dll" imageformats\
+    IF NOT EXIST imageformats\qico.dll  copy "%QtDir%\..\plugins\imageformats\qico.dll" imageformats\
+    IF NOT EXIST imageformats\qsvg.dll  copy "%QtDir%\..\plugins\imageformats\qsvg.dll" imageformats\
 )
 
 rem Delete junk translation file causes German Ok/Cancel translations in the dialogs
