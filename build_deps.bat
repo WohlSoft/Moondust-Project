@@ -97,9 +97,9 @@ set COMSPEC=%WINDIR%\SysWOW64\cmd.exe
 
 if NOT "%MINGWx64Dest%"=="yes" if NOT "%MINGWx32Dest%"=="yes" set PATH=C:\MinGW\bin;%PATH%
 if NOT "%MINGWx64Dest%"=="yes" if NOT "%MINGWx32Dest%"=="yes" set BahsCmd="echo $PWD; ./build_mingw.sh"
-if "%MINGWx64Dest%"=="yes" set PATH=C:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;%PATH%
+if "%MINGWx64Dest%"=="yes" set PATH=%MinGW%;%PATH%
 if "%MINGWx64Dest%"=="yes" set BahsCmd="./build_mingw-w64.sh"
-if "%MINGWx32Dest%"=="yes" set PATH=C:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;%PATH%
+if "%MINGWx32Dest%"=="yes" set PATH=%MinGW%;%PATH%
 if "%MINGWx32Dest%"=="yes" set BahsCmd="./build_mingw-w64-32.sh"
 
 echo %PATH%
