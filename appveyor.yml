@@ -48,41 +48,53 @@ clone_depth:  2  # clone entire repository history if not defined
 environment:
   global:
     PLATFORMTOOLSET: "v140"
-    APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
   matrix:
-    - PLATFORM: x64
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
+      PLATFORM: x64
       BIN_DIR: bin-w64
       WINXX_ARCH: win64
-      COMPILER: C:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
-      QT_DIR: C:\Qt\5.9.6-x64\bin
-    - PLATFORM: Win32
+      COMPILER: C:\mingw-w64\x86_64-7.1.0-posix-seh-rt_v5-rev0\mingw64\bin
+      QT_DIR: C:\Qt\5.9.0-x64\bin
+#      COMPILER: C:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
+#      QT_DIR: C:\Qt\5.9.6-x64\bin
+    - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2013"
+      PLATFORM: Win32
       BIN_DIR: bin-w32
       WINXX_ARCH: win32
-      COMPILER: C:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin
-      QT_DIR: C:\Qt\5.6.3-i686\bin # Qt since 5.8 no more supports Windows XP, Keep support for Windows XP yet
+      COMPILER: C:\Qt\Tools\mingw530_32\bin
+      QT_DIR: C:\Qt\5.7\mingw53_32\bin
+#      COMPILER: C:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin
+#      QT_DIR: C:\Qt\5.6.3-i686\bin # Qt since 5.8 no more supports Windows XP, Keep support for Windows XP yet
 
 install:
   - ps: new-item C:\temp-d -itemtype directory
-  - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/MinGW/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z', 'C:\temp-d\x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z'); }
-  - ps: if ($env:PLATFORM -eq "Win32") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/MinGW/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z', 'C:\temp-d\i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z'); }
-  - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.9.6-x64-mingw-w64-8.1.0-shared-release.7z', 'C:\temp-d\Qt-5.9.6-x64-mingw-w64-8.1.0-shared-release.7z'); }
-  - ps: if ($env:PLATFORM -eq "Win32") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z', 'C:\temp-d\Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z'); }
+  - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z', 'C:\temp-d\MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z'); }
+  - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z', 'C:\temp-d\Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z'); }
   - ps: |
       if ($env:PLATFORM -eq "x64") {
       Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
-      sevenzip x C:\temp-d\x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -oC:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0;
-      sevenzip x C:\temp-d\Qt-5.9.6-x64-mingw-w64-8.1.0-shared-release.7z -oC:\Qt; }
-  - ps: |
-      if ($env:PLATFORM -eq "Win32") {
-      Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
-      sevenzip x C:\temp-d\i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z -oC:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0;
-      sevenzip x C:\temp-d\Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z -oC:\Qt; }
+      sevenzip x C:\temp-d\MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z -oC:\MinGW-w64;
+      sevenzip x C:\temp-d\Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z -oC:\Qt; }
+#  - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/MinGW/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z', 'C:\temp-d\x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z'); }
+#  - ps: if ($env:PLATFORM -eq "Win32") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/MinGW/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z', 'C:\temp-d\i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z'); }
+#  - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.9.6-x64-mingw-w64-8.1.0-shared-release.7z', 'C:\temp-d\Qt-5.9.6-x64-mingw-w64-8.1.0-shared-release.7z'); }
+#  - ps: if ($env:PLATFORM -eq "Win32") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z', 'C:\temp-d\Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z'); }
+#  - ps: |
+#      if ($env:PLATFORM -eq "x64") {
+#      Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
+#      sevenzip x C:\temp-d\x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -oC:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0;
+#      sevenzip x C:\temp-d\Qt-5.9.6-x64-mingw-w64-8.1.0-shared-release.7z -oC:\Qt; }
+#  - ps: |
+#      if ($env:PLATFORM -eq "Win32") {
+#      Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
+#      sevenzip x C:\temp-d\i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z -oC:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0;
+#      sevenzip x C:\temp-d\Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z -oC:\Qt; }
   - cmd: git submodule init
   - cmd: git submodule update
   - cmd: echo set QtDir=%QT_DIR%>> _paths.bat
   - cmd: echo set MinGW=%COMPILER%>> _paths.bat
   - cmd: if [%PLATFORM%]==[x64] echo set MINGWx64Dest=yes>> _paths.bat
-  - cmd: if [%PLATFORM%]==[Win32] echo set MINGWx32Dest=yes>> _paths.bat
+#  - cmd: if [%PLATFORM%]==[Win32] echo set MINGWx32Dest=yes>> _paths.bat
   - cmd: echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
   - cmd: echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
   - cmd: type temp.sh
@@ -94,7 +106,8 @@ build_script:
   - cmd: build_deps.bat buildlibs nopause
   - cmd: build.bat nopause # noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
   - cmd: cd _Misc\dev_scripts\deploy\
-  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic_32_w64.bat nopause
+  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic.bat nopause
+#  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic_32_w64.bat nopause
   - cmd: if [%PLATFORM%]==[x64] deploy_windows_dynamic_x64.bat nopause
   - cmd: cd ..\..\..\
 
