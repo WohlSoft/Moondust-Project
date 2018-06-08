@@ -1,6 +1,6 @@
 #!/bin/bash
 InstallTo=~0/../_builds/win64
-MINGW_W64_ROOT=/c/mingw-w64/x86_64-7.1.0-posix-seh-rt_v5-rev0/mingw64
+MINGW_W64_ROOT=/c/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64
 CACHE_DIR="_build_cache-w64"
 PATH=$MINGW_W64_ROOT/bin:$PATH
 echo $InstallTo

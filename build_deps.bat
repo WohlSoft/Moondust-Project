@@ -71,6 +71,10 @@ IF "%MINGWx64Dest%"=="yes" (
 	if "x%DebugArgs%"=="x1" echo Set 64-bit build...
     SET QMAKE_EXTRA_ARGS=CONFIG+=win64
 )
+IF "%MINGWx32Dest%"=="yes" (
+	if "x%DebugArgs%"=="x1" echo Set 32-bit MinGW-w64 build...
+    SET QMAKE_EXTRA_ARGS=CONFIG+=win32-mingw-w64
+)
 
 echo %PATH%
 
@@ -91,10 +95,12 @@ set OldCOMSPEC=%COMSPEC%
 set COMSPEC=%WINDIR%\SysWOW64\cmd.exe
 :_NotX64
 
-if "%MINGWx64Dest%"=="yes" set PATH=C:\MinGW-w64\x86_64-7.1.0-posix-seh-rt_v5-rev0\mingw64\bin;%PATH%
+if NOT "%MINGWx64Dest%"=="yes" if NOT "%MINGWx32Dest%"=="yes" set PATH=C:\MinGW\bin;%PATH%
+if NOT "%MINGWx64Dest%"=="yes" if NOT "%MINGWx32Dest%"=="yes" set BahsCmd="echo $PWD; ./build_mingw.sh"
+if "%MINGWx64Dest%"=="yes" set PATH=C:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;%PATH%
 if "%MINGWx64Dest%"=="yes" set BahsCmd="./build_mingw-w64.sh"
-if NOT "%MINGWx64Dest%"=="yes" set PATH=C:\MinGW\bin;%PATH%
-if NOT "%MINGWx64Dest%"=="yes" set BahsCmd="echo $PWD; ./build_mingw.sh"
+if "%MINGWx32Dest%"=="yes" set PATH=C:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;%PATH%
+if "%MINGWx32Dest%"=="yes" set BahsCmd="./build_mingw-w64-32.sh"
 
 echo %PATH%
 bash -i -c %BahsCmd%

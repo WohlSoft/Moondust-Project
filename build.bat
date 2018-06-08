@@ -75,6 +75,9 @@ PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;
 IF "%MINGWx64Dest%"=="yes" (
 	SET BuildArgs=%BuildArgs% CONFIG+=win64
 )
+IF "%MINGWx32Dest%"=="yes" (
+	SET BuildArgs=%BuildArgs% CONFIG+=win32-mingw-w64
+)
 
 rem ------------------------------------------------------------
 rem ------------------------------------------------------------
