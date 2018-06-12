@@ -205,7 +205,7 @@ void LVL_Block::transformTo_x(unsigned long id)
     }
     else
     {
-        if(setup->setup.view == 1)
+        if(setup->setup.z_layer == 1)
             z_index = LevelScene::zOrder.blockFront1;
         else
             z_index = LevelScene::zOrder.blockBack1;

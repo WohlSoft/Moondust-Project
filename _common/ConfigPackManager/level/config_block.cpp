@@ -28,11 +28,11 @@
 bool BlockSetup::parse(IniProcessing *setup,
                        PGEString blockImgPath,
                        uint32_t defaultGrid,
-                       BlockSetup *merge_with,
+                       const BlockSetup *merge_with,
                        PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
-    #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString   section;
@@ -195,8 +195,8 @@ bool BlockSetup::parse(IniProcessing *setup,
             {"foreground", 1},
             {"foreground1", 1}
         };
-        setup->readEnum("z-layer",  view, pMerge(view, 0), zLayers);
-        setup->readEnum("view",     view, view, zLayers);
+        setup->readEnum("z-layer",  z_layer, pMerge(z_layer, 0), zLayers);
+        setup->readEnum("view",     z_layer, z_layer, zLayers);
     }
 
     setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation

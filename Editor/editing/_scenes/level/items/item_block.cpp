@@ -720,7 +720,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
         }
         else
         {
-            if(m_localProps.setup.view == 1)
+            if(m_localProps.setup.z_layer == 1)
                 setZValue(m_scene->Z_BlockFore); // applay lava block Z
             else
                 setZValue(m_scene->Z_Block); // applay standart block Z

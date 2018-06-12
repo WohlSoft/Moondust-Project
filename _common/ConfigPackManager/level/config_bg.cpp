@@ -26,10 +26,14 @@
 #include <sstream>
 #include <algorithm>
 
-bool BgSetup::parse(IniProcessing *setup, PGEString bgImgPath, uint32_t /*defaultGrid*/, BgSetup *merge_with, PGEString *error)
+bool BgSetup::parse(IniProcessing *setup,
+                    PGEString bgImgPath,
+                    uint32_t /*defaultGrid*/,
+                    const BgSetup *merge_with,
+                    PGEString *error)
 {
-#define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
-#define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+#define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+#define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;

@@ -21,33 +21,44 @@
 
 #include "PGEString.h"
 
-class PGE_ImageInfo
+/**
+ * @brief Basic image information misc. functions
+ */
+namespace PGE_ImageInfo
 {
-public:
-    enum ErrCodes
-    {
-        ERR_OK,
-        ERR_UNSUPPORTED_FILETYPE,
-        ERR_NOT_EXISTS,
-        ERR_CANT_OPEN
-    };
 
-    /**
-     * @brief Quickly get image size (width and height) from image file.
-     * @param imagePath Path to image file
-     * @param [out] w Width of image
-     * @param [out] h Height of image
-     * @param [out] errCode Error code
-     * @return true if successfully finished, false if error occouped
-     */
-    static bool getImageSize(PGEString imagePath, uint32_t *w, uint32_t *h, int *errCode=nullptr);
-
-    /**
-     * @brief Returns filename of masked image
-     * @param imageFileName foreground image file-name
-     * @return masked image filename
-     */
-    static PGEString getMaskName(PGEString imageFileName);
+/**
+ * @brief Error codes of image information retrieving
+ */
+enum ErrCodes
+{
+    //! No errors, everything is OK
+    ERR_OK,
+    //! Image file type is not supported
+    ERR_UNSUPPORTED_FILETYPE,
+    //! File not exists
+    ERR_NOT_EXISTS,
+    //! Can't open the file
+    ERR_CANT_OPEN
 };
+
+/**
+ * @brief Quickly get image size (width and height) from image file.
+ * @param [in] imagePath Path to image file
+ * @param [out] w Width of image
+ * @param [out] h Height of image
+ * @param [out] errCode Error code
+ * @return true if successfully finished, false if error occouped
+ */
+bool getImageSize(PGEString imagePath, uint32_t *w, uint32_t *h, int *errCode=nullptr);
+
+/**
+ * @brief Returns filename of masked image
+ * @param [in] imageFileName foreground image file-name
+ * @return masked image filename
+ */
+PGEString getMaskName(PGEString imageFileName);
+
+}//PGE_ImageInfo
 
 #endif // IMAGESIZE_H
