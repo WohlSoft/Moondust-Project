@@ -132,8 +132,12 @@ bool BgoSetup::parse(IniProcessing *setup,
         setup->read("framespeed",  framespeed, framespeed);//Alias
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
-    NumberLimiter::apply(frame_h, 0u);
+
+    frame_sequence.clear();
+    setup->read("frame-sequence", pMergeMe(frame_sequence));
+
     frame_h =   animated ? Maths::uRound(double(h) / double(frames)) : h;
+    NumberLimiter::apply(frame_h, 0u);
     setup->read("display-frame", display_frame, pMerge(display_frame, 0));
     NumberLimiter::apply(display_frame, 0u);
 

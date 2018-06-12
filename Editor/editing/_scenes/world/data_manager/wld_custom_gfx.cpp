@@ -147,6 +147,10 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_tile.setup.frames,
                               t_tile.setup.framespeed
                               );
+
+        if(!t_tile.setup.frame_sequence.isEmpty())
+            aniTile->setFrameSequance(t_tile.setup.frame_sequence);
+
         m_animatorsTerrain.push_back( aniTile );
         m_animationTimer.registerAnimation( aniTile );
         t_tile.animator_id = m_animatorsTerrain.size()-1;
@@ -209,7 +213,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom=true;
         }
 
-        SimpleAnimator * aniTile = new SimpleAnimator(
+        SimpleAnimator * aniScene = new SimpleAnimator(
                             ((t_scenery.cur_image->isNull())?
                             m_dummySceneryImg : *t_scenery.cur_image
                                ),
@@ -217,8 +221,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_scenery.setup.frames,
                               t_scenery.setup.framespeed
                               );
-        m_animatorsScenery.push_back( aniTile );
-        m_animationTimer.registerAnimation( aniTile );
+
+        if(!t_scenery.setup.frame_sequence.isEmpty())
+            aniScene->setFrameSequance(t_scenery.setup.frame_sequence);
+
+        m_animatorsScenery.push_back( aniScene );
+        m_animationTimer.registerAnimation( aniScene );
         t_scenery.animator_id = m_animatorsScenery.size()-1;
         m_localConfigScenery.storeElement(i, t_scenery);
         if(custom)
@@ -278,7 +286,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom=true;
         }
 
-        SimpleAnimator * aniTile = new SimpleAnimator(
+        SimpleAnimator * aniPath = new SimpleAnimator(
                             ((t_path.cur_image->isNull())?
                             m_dummyPathImg : *t_path.cur_image
                                ),
@@ -286,8 +294,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_path.setup.frames,
                               t_path.setup.framespeed
                               );
-        m_animatorsPaths.push_back( aniTile );
-        m_animationTimer.registerAnimation( aniTile );
+
+        if(!t_path.setup.frame_sequence.isEmpty())
+            aniPath->setFrameSequance(t_path.setup.frame_sequence);
+
+        m_animatorsPaths.push_back( aniPath );
+        m_animationTimer.registerAnimation( aniPath );
         t_path.animator_id = m_animatorsPaths.size()-1;
         m_localConfigPaths.storeElement(i, t_path);
         if(custom)
@@ -348,7 +360,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom=true;
         }
 
-        SimpleAnimator * aniTile = new SimpleAnimator(
+        SimpleAnimator * aniLevel = new SimpleAnimator(
                             ((t_level.cur_image->isNull())?
                             m_dummyLevelImg : *t_level.cur_image
                                ),
@@ -356,8 +368,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
                               t_level.setup.frames,
                               t_level.setup.framespeed
                               );
-        m_animatorsLevels.push_back( aniTile );
-        m_animationTimer.registerAnimation( aniTile );
+
+        if(!t_level.setup.frame_sequence.isEmpty())
+            aniLevel->setFrameSequance(t_level.setup.frame_sequence);
+
+        m_animatorsLevels.push_back( aniLevel );
+        m_animationTimer.registerAnimation( aniLevel );
         t_level.animator_id = m_animatorsLevels.size()-1;
         m_localConfigLevels.storeElement(i, t_level);
         if(custom)

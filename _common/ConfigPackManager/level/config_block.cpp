@@ -168,10 +168,9 @@ bool BlockSetup::parse(IniProcessing *setup,
     if(plSwitch_Button)
     {
         setup->read("player-switch-frames-true", plSwitch_frames_true,
-                    merge_with ? merge_with->plSwitch_frames_true : plSwitch_frames_true);
+                    pMergeMe(plSwitch_frames_true));
         setup->read("player-switch-frames-false", plSwitch_frames_false,
-                    merge_with ? merge_with->plSwitch_frames_false : plSwitch_frames_false);
-
+                    pMergeMe(plSwitch_frames_false));
         frame_sequence = plSwitch_frames_false;
     }
 
@@ -183,10 +182,9 @@ bool BlockSetup::parse(IniProcessing *setup,
     if(plFilter_Block)
     {
         setup->read("player-filter-frames-true", plFilter_frames_true,
-                    pMerge(plFilter_frames_true, plFilter_frames_true));
+                    pMergeMe(plFilter_frames_true));
         setup->read("player-filter-frames-false", plFilter_frames_false,
-                    pMerge(plFilter_frames_false, plFilter_frames_false));
-
+                    pMergeMe(plFilter_frames_false));
         frame_sequence = plFilter_frames_false;
     }
 
@@ -220,11 +218,10 @@ bool BlockSetup::parse(IniProcessing *setup,
     NumberLimiter::apply(destroy_sound_id, 0u);
     frame_h = (animated ? (h / frames) : h);
 
-    //Retreiving frame sequence from playable character switch/filter blocks
+    //Custom frame sequence for regular blocks
     if(!plSwitch_Button && !plFilter_Block)
     {
-        setup->read("frame-sequence", frame_sequence,
-                    merge_with ? merge_with->frame_sequence : frame_sequence);
+        setup->read("frame-sequence", frame_sequence, pMergeMe(frame_sequence));
     }
 
     setup->read("display-frame", display_frame, 0);

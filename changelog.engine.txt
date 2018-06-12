@@ -5,6 +5,7 @@
 - Repaired TTF fallback support
 - Added support for more than one TTF font loaded in one time
 - Fixed inability to use hot-placing from the Editor's IPC
+- Added support for custom config side animation sequence for BGO, Terrain tiles, Sceneries, Paths and level entrance points
 
 0.3.0
 - Fixed some NPC-AI API properties

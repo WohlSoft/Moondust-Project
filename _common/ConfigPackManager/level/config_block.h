@@ -140,7 +140,8 @@ struct BlockSetup
 
     uint32_t        frame_h = 0; //Hegth of the frame. Calculating automatically
 
-    IntArray        frame_sequence;//Custom editor specific frame sequence
+    //!Custom editor specific frame sequence
+    IntArray        frame_sequence;
 
     uint32_t        display_frame = 0;
 

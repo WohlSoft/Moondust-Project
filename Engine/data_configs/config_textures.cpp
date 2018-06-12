@@ -79,6 +79,10 @@ int  ConfigManager::getBlockTexture(unsigned long blockID)
                 blkSetup->setup.animation_rev,
                 blkSetup->setup.animation_bid
             );
+
+            if(!blkSetup->setup.frame_sequence.empty())
+                animator.setFrameSequance(blkSetup->setup.frame_sequence);
+
             Animator_Blocks.push_back(animator);
             blkSetup->animator_ID = Animator_Blocks.size() - 1;
         }
@@ -144,6 +148,10 @@ int  ConfigManager::getBgoTexture(unsigned long bgoID)
                 false,
                 false
             );
+
+            if(!bgoSetup->setup.frame_sequence.empty())
+                animator.setFrameSequance(bgoSetup->setup.frame_sequence);
+
             Animator_BGO.push_back(animator);
             bgoSetup->animator_ID = Animator_BGO.size() - 1;
         }
@@ -576,6 +584,10 @@ int  ConfigManager::getTileTexture(unsigned long tileID)
                 false,
                 false
             );
+
+            if(!tileSetup->setup.frame_sequence.empty())
+                animator.setFrameSequance(tileSetup->setup.frame_sequence);
+
             Animator_Tiles.push_back(animator);
             tileSetup->animator_ID = Animator_Tiles.size() - 1;
         }
@@ -635,6 +647,10 @@ int  ConfigManager::getSceneryTexture(unsigned long sceneryID)
                 false,
                 false
             );
+
+            if(!scenerySetup->setup.frame_sequence.empty())
+                animator.setFrameSequance(scenerySetup->setup.frame_sequence);
+
             Animator_Scenery.push_back(animator);
             scenerySetup->animator_ID = Animator_Scenery.size() - 1;
         }
@@ -694,6 +710,10 @@ int  ConfigManager::getWldPathTexture(unsigned long pathID)
                 false,
                 false
             );
+
+            if(!pathSetup->setup.frame_sequence.empty())
+                animator.setFrameSequance(pathSetup->setup.frame_sequence);
+
             Animator_WldPaths.push_back(animator);
             pathSetup->animator_ID = Animator_WldPaths.size() - 1;
         }
@@ -754,6 +774,10 @@ int  ConfigManager::getWldLevelTexture(unsigned long levelID)
                 false,
                 false
             );
+
+            if(!lvlSetup->setup.frame_sequence.empty())
+                animator.setFrameSequance(lvlSetup->setup.frame_sequence);
+
             Animator_WldLevel.push_back(animator);
             lvlSetup->animator_ID = Animator_WldLevel.size() - 1;
         }

@@ -44,6 +44,9 @@ void WldScene::buildAnimators()
                             t_tile.setup.framespeed
                            );
 
+        if(!t_tile.setup.frame_sequence.isEmpty())
+            aniTile->setFrameSequance(t_tile.setup.frame_sequence);
+
         m_animatorsTerrain.push_back( aniTile );
         m_animationTimer.registerAnimation( aniTile );
         t_tile.animator_id = m_animatorsTerrain.size()-1;
@@ -67,6 +70,9 @@ void WldScene::buildAnimators()
                                 t_scene.setup.framespeed
                               );
 
+        if(!t_scene.setup.frame_sequence.isEmpty())
+            aniScene->setFrameSequance(t_scene.setup.frame_sequence);
+
         m_animatorsScenery.push_back( aniScene );
         m_animationTimer.registerAnimation( aniScene );
         t_scene.animator_id = m_animatorsScenery.size()-1;
@@ -81,7 +87,7 @@ void WldScene::buildAnimators()
         obj_w_path & objPath = m_configs->main_wpaths[i];
         obj_w_path t_path;
         objPath.copyTo(t_path);
-        SimpleAnimator * aniScene = new SimpleAnimator(
+        SimpleAnimator * aniPath = new SimpleAnimator(
                          ((t_path.cur_image->isNull())?
                                 m_dummySceneryImg:
                                *t_path.cur_image),
@@ -90,8 +96,11 @@ void WldScene::buildAnimators()
                                 t_path.setup.framespeed
                               );
 
-        m_animatorsPaths.push_back( aniScene );
-        m_animationTimer.registerAnimation( aniScene );
+        if(!t_path.setup.frame_sequence.isEmpty())
+            aniPath->setFrameSequance(t_path.setup.frame_sequence);
+
+        m_animatorsPaths.push_back( aniPath );
+        m_animationTimer.registerAnimation( aniPath );
         t_path.animator_id = m_animatorsPaths.size()-1;
         m_localConfigPaths.storeElement(i, t_path);
     }
@@ -104,7 +113,7 @@ void WldScene::buildAnimators()
         obj_w_level& objLevel = m_configs->main_wlevels[i];
         obj_w_level  t_level;
         objLevel.copyTo(t_level);
-        SimpleAnimator * aniScene = new SimpleAnimator(
+        SimpleAnimator * aniLevel = new SimpleAnimator(
                          ((t_level.cur_image->isNull())?
                                 m_dummySceneryImg:
                                *t_level.cur_image),
@@ -113,8 +122,11 @@ void WldScene::buildAnimators()
                                 t_level.setup.framespeed
                               );
 
-        m_animatorsLevels.push_back( aniScene );
-        m_animationTimer.registerAnimation( aniScene );
+        if(!t_level.setup.frame_sequence.isEmpty())
+            aniLevel->setFrameSequance(t_level.setup.frame_sequence);
+
+        m_animatorsLevels.push_back( aniLevel );
+        m_animationTimer.registerAnimation( aniLevel );
         t_level.animator_id = m_animatorsLevels.size()-1;
         m_localConfigLevels.storeElement(i, t_level);
     }

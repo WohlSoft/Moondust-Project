@@ -95,6 +95,10 @@ bool WldGenericSetup::parse(IniProcessing *setup,
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
     NumberLimiter::apply(framespeed, uint32_t(1u));
+
+    frame_sequence.clear();
+    setup->read("frame-sequence", pMergeMe(frame_sequence));
+
     frame_h = animated ? Maths::uRound(double(h) / double(frames)) : h;
     NumberLimiter::apply(frame_h, uint32_t(0u));
 

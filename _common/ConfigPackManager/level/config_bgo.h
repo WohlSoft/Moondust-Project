@@ -67,6 +67,9 @@ struct BgoSetup
     uint32_t    framespeed = 128;
 
     uint32_t    display_frame = 0;
+
+    //! Custom animation sequence
+    PGEList<int32_t> frame_sequence;
 };
 
 #endif // CONFIG_BGO_H
