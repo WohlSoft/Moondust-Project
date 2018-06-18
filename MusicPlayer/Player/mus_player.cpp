@@ -38,10 +38,13 @@ namespace PGE_MusicPlayer
                    type == MUS_OGG ? "OGG" :
                    type == MUS_MP3 ? "MP3" :
                    type == MUS_FLAC ? "FLAC" :
-                   #ifdef SDL_MIXER_X
+#ifdef SDL_MIXER_X
+#   if SDL_MIXER_MAJOR_VERSION > 2 || (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION >= 2)
+                   type == MUS_OPUS ? "OPUS" :
+#   endif
                    type == MUS_ADLMIDI ? "IMF/MUS/XMI" :
                    type == MUS_GME ? "Game Music Emulator" :
-                   #endif
+#endif
                    "<Unknown>");
     }
     QString musicType()
