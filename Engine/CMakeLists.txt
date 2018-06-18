@@ -405,6 +405,8 @@ if(NOT EMSCRIPTEN)
 endif()
 
 list(APPEND PGE_ENGINE_LINK_LIBS
+    opusfile$<$<CONFIG:Debug>:d>
+    opus$<$<CONFIG:Debug>:d>
     vorbisfile$<$<CONFIG:Debug>:d>
     vorbis$<$<CONFIG:Debug>:d>
     ogg$<$<CONFIG:Debug>:d>

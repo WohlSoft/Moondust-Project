@@ -145,6 +145,8 @@ endif()
 list(APPEND PGE_MUSPLAY_LINK_LIBS
     ${SDL_MIXER_X_LIB}
     FLAC$<$<CONFIG:Debug>:d>
+    opusfile$<$<CONFIG:Debug>:d>
+    opus$<$<CONFIG:Debug>:d>
     vorbisfile$<$<CONFIG:Debug>:d>
     vorbis$<$<CONFIG:Debug>:d>
     ogg$<$<CONFIG:Debug>:d>

@@ -547,6 +547,8 @@ list(APPEND PGE_EDITOR_LINK_LIBS
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     FLAC$<$<CONFIG:Debug>:d>
+    opusfile$<$<CONFIG:Debug>:d>
+    opus$<$<CONFIG:Debug>:d>
     vorbisfile$<$<CONFIG:Debug>:d>
     vorbis$<$<CONFIG:Debug>:d>
     ogg$<$<CONFIG:Debug>:d>
