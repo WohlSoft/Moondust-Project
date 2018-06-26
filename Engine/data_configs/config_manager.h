@@ -147,6 +147,26 @@ struct ScriptsSetup
     std::string wld_common;
 };
 
+/**
+ * @brief Global setup of default grid size, used for hot-placing while running debug in the editor
+ */
+struct obj_gridSizes
+{
+    uint32_t general;
+    uint32_t block;
+    uint32_t bgo;
+    uint32_t npc;
+    uint32_t terrain;
+    uint32_t scenery;
+    uint32_t paths;
+    uint32_t levels;
+};
+
+struct obj_blockGlobalSetup
+{
+    int32_t sizable_block_border_size = -1;
+};
+
 template<class obj_T>
 void loadCustomConfig(PGE_DataArray<obj_T> &container,
                       unsigned long ID,
@@ -284,6 +304,7 @@ namespace ConfigManager
     bool loadLevelBlock(obj_block &sblock, std::string section, obj_block *merge_with = 0, std::string iniFile = "", IniProcessing *setup = nullptr);
     int  getBlockTexture(unsigned long blockID);
     /*****************************/
+    extern obj_blockGlobalSetup       lvl_block_global_setup;
     extern PGE_DataArray<obj_block>   lvl_block_indexes;
     extern CustomDirManager Dir_Blocks;
     extern AnimatorsArray Animator_Blocks;

@@ -64,6 +64,17 @@ struct BlockSetup
 
     //! Is block allowed to have any size?
     bool            sizable = false;
+    //! Width of the border of sizable block texture (common)
+    int32_t         sizable_border_width = -1;
+    //! Width of the border of sizable block texture (left side)
+    int32_t         sizable_border_width_left = -1;
+    //! Width of the border of sizable block texture (top side)
+    int32_t         sizable_border_width_top = -1;
+    //! Width of the border of sizable block texture (right side)
+    int32_t         sizable_border_width_right = -1;
+    //! Width of the border of sizable block texture (bottom side)
+    int32_t         sizable_border_width_bottom = -1;
+
     //! [Gameplay] Define sides are will be harmful for playable character on touching of the block
     int             danger = 0;
     //! [Physics] Sides are collidable to everything

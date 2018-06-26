@@ -105,7 +105,9 @@ void dataconfigs::loadLevelBlocks()
     {
         setup.read("total", block_total, 0);
         setup.read("grid", defaultGrid.block, defaultGrid.block);
+        setup.read("default-sizable-border-width", defaultBlock.sizable_block_border_size, -1);
         total_data += block_total;
+
         setup.read("config-dir", nestDir, "");
         if(!nestDir.isEmpty())
         {

@@ -80,48 +80,56 @@ struct EditorSetup
 
 struct EngineSetup
 {
-    int screen_w;
-    int screen_h;
-    int wld_viewport_w;
-    int wld_viewport_h;
+    uint32_t screen_w;
+    uint32_t screen_h;
+    uint32_t wld_viewport_w;
+    uint32_t wld_viewport_h;
 };
 
 struct obj_splash_ani
 {
     QPixmap      img;
-    unsigned int frames;
-    unsigned int speed;
-    unsigned int x;
-    unsigned int y;
+    uint32_t frames;
+    uint32_t speed;
+    uint32_t x;
+    uint32_t y;
 };
 
 
 ////////////////////Common items///////////////////////////
 struct obj_music
 {
-    unsigned long id;
+    uint64_t id;
     QString name;
     QString file;
 };
 
 struct obj_sound
 {
-    unsigned long id;
+    uint64_t id;
     QString name;
     QString file;
     bool hidden;
 };
 
+/**
+ * @brief Global setup of default grid size
+ */
 struct obj_gridSizes
 {
-    unsigned int general;
-    unsigned int block;
-    unsigned int bgo;
-    unsigned int npc;
-    unsigned int terrain;
-    unsigned int scenery;
-    unsigned int paths;
-    unsigned int levels;
+    uint32_t general;
+    uint32_t block;
+    uint32_t bgo;
+    uint32_t npc;
+    uint32_t terrain;
+    uint32_t scenery;
+    uint32_t paths;
+    uint32_t levels;
+};
+
+struct obj_blockGlobalSetup
+{
+    int32_t sizable_block_border_size = -1;
 };
 
 class dataconfigs : public QObject
@@ -151,22 +159,34 @@ public:
     QList<obj_player > main_characters;
 
     //Level map items
+    //! Global level background image types setup
     PGE_DataArray<obj_BG > main_bg;
+    //! Global Background object types setup list
     PGE_DataArray<obj_bgo > main_bgo;
+    //! Global setup for all blocks
+    obj_blockGlobalSetup defaultBlock;
+    //! Global block types setup list
     PGE_DataArray<obj_block > main_block;
+    //! Global non-playable character types setup list
     PGE_DataArray<obj_npc > main_npc;
+    //! Special NPC element types
     npc_Markers marker_npc;
 
     //World map items
+    //! Global terrain tile types setup list
     PGE_DataArray<obj_w_tile > main_wtiles;
+    //! Global path cell types setup list
     PGE_DataArray<obj_w_path > main_wpaths;
+    //! Global scenery types setup list
     PGE_DataArray<obj_w_scenery > main_wscene;
+    //! Global level entrance types setup list
     PGE_DataArray<obj_w_level > main_wlevels;
+    //! Special level entrance element types
     wld_levels_Markers marker_wlvl;
 
     //Common items
-    unsigned long music_custom_id;
-    unsigned long music_w_custom_id;
+    uint64_t music_custom_id;
+    uint64_t music_w_custom_id;
     PGE_DataArray<obj_music > main_music_lvl;
     PGE_DataArray<obj_music > main_music_wld;
     PGE_DataArray<obj_music > main_music_spc;

@@ -92,7 +92,13 @@ bool BlockSetup::parse(IniProcessing *setup,
 
     setup->read("icon", icon_n, pMerge(icon_n, ""));
 
-    setup->read("sizable",                  sizable,                pMerge(sizable, false));
+    setup->read("sizable",                      sizable,                    pMerge(sizable, false));
+    setup->read("sizable-border-width",         sizable_border_width,       pMerge(sizable_border_width, -1));
+    setup->read("sizable-border-width-left",    sizable_border_width_left,  pMerge(sizable_border_width_left, -1));
+    setup->read("sizable-border-width-top",     sizable_border_width_top,   pMerge(sizable_border_width_top, -1));
+    setup->read("sizable-border-width-right",   sizable_border_width_right, pMerge(sizable_border_width_right, -1));
+    setup->read("sizable-border-width-bottom",  sizable_border_width_bottom,pMerge(sizable_border_width_bottom, -1));
+
     setup->read("danger",                   danger,                 pMerge(danger, 0));
     setup->read("collision",                collision,              pMerge(collision, 1));
     setup->read("slope-slide",              slopeslide,             pMerge(slopeslide, 0));

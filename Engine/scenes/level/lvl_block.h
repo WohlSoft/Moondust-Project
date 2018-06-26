@@ -41,7 +41,17 @@ class LVL_Block : public PGE_Phys_Object
         LevelBlock  dataInitial; //Initial settings
 
         bool animated;
-        bool sizable;
+
+        bool m_sizable;
+        struct SizableBlockBorder
+        {
+            int32_t g;
+            int32_t l;
+            int32_t t;
+            int32_t r;
+            int32_t b;
+        } sizable_border;
+
         long animator_ID;
         double offset_x;
         double offset_y;
@@ -65,6 +75,8 @@ class LVL_Block : public PGE_Phys_Object
         int taskToTransform_t;
         void transformTo(unsigned long id, int type = 2);
         void transformTo_x(unsigned long id);
+
+        void setSizable(bool m_sizable);
 
         unsigned long transformedFromBlockID;
         unsigned long transformedFromNpcID;
