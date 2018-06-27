@@ -10,6 +10,7 @@ Editor 0.3.1.14-1-dev
 - Added ability to set default zoom on file open or create (In the Application Settings and Editor tab).
 - Allow opening of multiple files by the file dialog executed from the "File -> Open" menu
 - Added support for custom config side animation sequence for BGO, Terrain tiles, Sceneries, Paths and level entrance points
+- Improved sizable blocks rendering algorithm: now it supports customizable fixed-size border width (both common and for each side indididually)
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)

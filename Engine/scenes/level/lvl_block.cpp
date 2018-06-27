@@ -422,9 +422,14 @@ void LVL_Block::render(double camX, double camY)
     if(m_sizable)
     {
         //! Width of body
-        int32_t wB = Maths::iRound(m_momentum.w);
+        const int32_t wB = Maths::iRound(m_momentum.w);
         //! Height of body
-        int32_t hB = Maths::iRound(m_momentum.h);
+        const int32_t hB = Maths::iRound(m_momentum.h);
+
+        //! Width of texture
+        const int32_t wT = texture.w;
+        //! Height of texture
+        const int32_t hT = texture.h;
 
         //! Left border size
         const int32_t xbL = sizable_border.l;
@@ -439,9 +444,9 @@ void LVL_Block::render(double camX, double camY)
         //! Summary of top and bottom bottom sizes
         const int32_t yB2 = ybT + ybB;
         //! Width of center piece
-        const int32_t pWidth = texture.w - xB2;
+        const int32_t pWidth = wT - xB2;
         //! Height of center piece
-        const int32_t pHeight = texture.h - yB2;
+        const int32_t pHeight = hT - yB2;
 
         //! Iterator 1
         int32_t i;
@@ -518,16 +523,16 @@ void LVL_Block::render(double camX, double camY)
 
             for(i = 0; i < totalW; i++)
             {
-                drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY,        pWidth, ybB - dY),
-                                  PGE_RectF(xbL,        texture.h - ybB + dY, pWidth, ybB - dY));
+                drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY, pWidth, ybB - dY),
+                                  PGE_RectF(xbL,        hT - ybB + dY, pWidth, ybB - dY));
                 hc += pWidth;
             }
 
             fLnt = (wB - (xB2)) % pWidth;
 
             if(fLnt != 0)
-                drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY,        fLnt, ybB - dY),
-                                  PGE_RectF(xbL,        texture.h - ybB + dY, fLnt, ybB - dY));
+                drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY, fLnt, ybB - dY),
+                                  PGE_RectF(xbL,        hT - ybB + dY, fLnt, ybB - dY));
         }
 
         //R Draw right border
@@ -537,16 +542,16 @@ void LVL_Block::render(double camX, double camY)
 
             for(i = 0; i < totalH; i++)
             {
-                drawPiece(blockG, PGE_RectF(wB - xbR + dX,        ybT + hc, xbR - dX, pHeight),
-                                  PGE_RectF(texture.w - xbR + dX, ybT,      xbR - dX, pHeight));
+                drawPiece(blockG, PGE_RectF(wB - xbR + dX,      ybT + hc, xbR - dX, pHeight),
+                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, pHeight));
                 hc += pHeight;
             }
 
             fLnt = (hB - yB2) % pHeight;
 
             if(fLnt != 0)
-                drawPiece(blockG, PGE_RectF(wB - xbR + dX,        ybT + hc, xbR - dX, fLnt),
-                                  PGE_RectF(texture.w - xbR + dX, ybT,      xbR - dX, fLnt));
+                drawPiece(blockG, PGE_RectF(wB - xbR + dX,      ybT + hc, xbR - dX, fLnt),
+                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, fLnt));
         }
 
         //C Draw center
@@ -601,14 +606,14 @@ void LVL_Block::render(double camX, double camY)
         drawPiece(blockG, PGE_RectF(0, 0, xbL - dX, ybT - dY),
                           PGE_RectF(0, 0, xbL - dX, ybT - dY));
         //2 Right-top
-        drawPiece(blockG, PGE_RectF(wB - xbR + dX,        0, xbR - dX, ybT - dY),
-                          PGE_RectF(texture.w - xbR + dX, 0, xbR - dX, ybT - dY));
+        drawPiece(blockG, PGE_RectF(wB - xbR + dX, 0, xbR - dX, ybT - dY),
+                          PGE_RectF(wT - xbR + dX, 0, xbR - dX, ybT - dY));
         //3 Right-bottom
-        drawPiece(blockG, PGE_RectF(wB - xbR + dX,        hB - ybB + dY,        xbR - dX, ybB - dY),
-                          PGE_RectF(texture.w - xbR + dX, texture.h - ybB + dY, xbR - dX, ybB - dY));
+        drawPiece(blockG, PGE_RectF(wB - xbR + dX, hB - ybB + dY, xbR - dX, ybB - dY),
+                          PGE_RectF(wT - xbR + dX, hT - ybB + dY, xbR - dX, ybB - dY));
         //4 Left-bottom
-        drawPiece(blockG, PGE_RectF(0, hB - ybB + dY,        xbL - dX, ybB - dY),
-                          PGE_RectF(0, texture.h - ybB + dY, xbL - dX, ybB - dY));
+        drawPiece(blockG, PGE_RectF(0, hB - ybB + dY, xbL - dX, ybB - dY),
+                          PGE_RectF(0, hT - ybB + dY, xbL - dX, ybB - dY));
     }
     else
     { // Draw regular block texture
