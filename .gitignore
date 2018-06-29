@@ -52,6 +52,9 @@ pge_deps.xcodeproj
 CMakeCache.txt
 CMakeFiles
 
+# Visual Studio 2017'th
+CMakeSettings.json
+
 # Qt-es
 
 *.pro.user
