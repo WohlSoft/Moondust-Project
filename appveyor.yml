@@ -48,8 +48,8 @@ clone_depth:  2  # clone entire repository history if not defined
 environment:
   global:
     PLATFORMTOOLSET: "v140"
-    GIT_DIR: "C:\\Program Files\\Git\\cmd"
-    CMAKE_DIR: "C:\\Program Files\\CMake\\bin"
+    GIT_BINARY_DIR: "C:\\Program Files\\Git\\cmd"
+    CMAKE_BINARY_DIR: "C:\\Program Files\\CMake\\bin"
 
   matrix:
   # 64 bit build
@@ -102,8 +102,8 @@ install:
   - cmd: echo set MinGW=%COMPILER%>> _paths.bat
   - cmd: if [%PLATFORM%]==[x64] echo set MINGWx64Dest=yes>> _paths.bat
 #  - cmd: if [%PLATFORM%]==[Win32] echo set MINGWx32Dest=yes>> _paths.bat
-  - cmd: echo set GitDir=%GIT_DIR%>> _paths.bat
-  - cmd: echo set CMakeDir=%CMAKE_DIR%>> _paths.bat
+  - cmd: echo set GitDir=%GIT_BINARY_DIR%>> _paths.bat
+  - cmd: echo set CMakeDir=%CMAKE_BINARY_DIR%>> _paths.bat
   - cmd: echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
   - cmd: type temp.sh
   - cmd: "\"C:\\Program Files\\Git\\bin\\bash.exe\" temp.sh > build_date_dev_%WINXX_ARCH%.txt"
