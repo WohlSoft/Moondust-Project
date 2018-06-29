@@ -48,6 +48,8 @@ clone_depth:  2  # clone entire repository history if not defined
 environment:
   global:
     PLATFORMTOOLSET: "v140"
+    GIT_DIR: "C:\Program Files\Git\cmd"
+    CMAKE_DIR: "C:\Program Files\CMake\bin"
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
       PLATFORM: x64
@@ -68,6 +70,7 @@ environment:
 
 install:
   - ps: new-item C:\temp-d -itemtype directory
+  - ps: (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip', 'C:\temp-d\ninja-win.zip');
   - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z', 'C:\temp-d\MinGW-w64-x86_64-7.1.0-posix-seh-rt_v5-rev0.7z'); }
   - ps: if ($env:PLATFORM -eq "x64") { (new-object net.webclient).DownloadFile('http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z', 'C:\temp-d\Qt-5.9.0-x64-shared-mingw-w64-posix-seh-7-1-0.7z'); }
   - ps: |
@@ -89,13 +92,15 @@ install:
 #      Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
 #      sevenzip x C:\temp-d\i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z -oC:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0;
 #      sevenzip x C:\temp-d\Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z -oC:\Qt; }
+  - cmd: "C:\Program Files\7-Zip\7z.exe" x C:\temp-d\ninja-win.zip -o%COMPILER%
   - cmd: git submodule init
   - cmd: git submodule update
   - cmd: echo set QtDir=%QT_DIR%>> _paths.bat
   - cmd: echo set MinGW=%COMPILER%>> _paths.bat
   - cmd: if [%PLATFORM%]==[x64] echo set MINGWx64Dest=yes>> _paths.bat
 #  - cmd: if [%PLATFORM%]==[Win32] echo set MINGWx32Dest=yes>> _paths.bat
-  - cmd: echo set GitDir=C:\Program Files\Git\cmd>> _paths.bat
+  - cmd: echo set GitDir=%GIT_DIR%>> _paths.bat
+  - cmd: echo set CMakeDir=%CMAKE_DIR%>> _paths.bat
   - cmd: echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
   - cmd: type temp.sh
   - cmd: "\"C:\\Program Files\\Git\\bin\\bash.exe\" temp.sh > build_date_dev_%WINXX_ARCH%.txt"
@@ -103,20 +108,24 @@ install:
   - cmd: del temp.sh
 
 build_script:
-  - cmd: build_deps.bat buildlibs nopause
-  - cmd: build.bat nopause # noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
-  - cmd: cd _Misc\dev_scripts\deploy\
-  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic.bat nopause
+#  - cmd: build_deps.bat buildlibs nopause
+#  - cmd: build.bat nopause # noengine nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer
+#  - cmd: cd _Misc\dev_scripts\deploy\
+#  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic.bat nopause
 #  - cmd: if [%PLATFORM%]==[Win32] deploy_windows_dynamic_32_w64.bat nopause
-  - cmd: if [%PLATFORM%]==[x64] deploy_windows_dynamic_x64.bat nopause
-  - cmd: cd ..\..\..\
+#  - cmd: if [%PLATFORM%]==[x64] deploy_windows_dynamic_x64.bat nopause
+#  - cmd: cd ..\..\..\
+  - cmd: build.bat nopause cmake-it ninja deploy
+  - md %BIN_DIR%
+  - md %BIN_DIR%\_packed
+  - move bin-cmake-release\_packed\*.zip %BIN_DIR%\_packed
 
 artifacts:
   - path: '$(BIN_DIR)\_packed\pge-project-dev-$(WINXX_ARCH).zip'
   - path: '$(BIN_DIR)\_packed\install-pge-common-dev-$(WINXX_ARCH).zip'
   - path: '$(BIN_DIR)\_packed\install-pge-editor-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\install-pge-engine-dev-$(WINXX_ARCH).zip' #This archive has no built applications (engine disabled to don't excite building timeout)
-  - path: '$(BIN_DIR)\_packed\install-pge-tools-dev-$(WINXX_ARCH).zip'  #This archive has no built applications (toosl are disabled to don't excite building timeout)
+  - path: '$(BIN_DIR)\_packed\install-pge-engine-dev-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\install-pge-tools-dev-$(WINXX_ARCH).zip'
   - path: '$(BIN_DIR)\_packed\pge-maintainer-dev-$(WINXX_ARCH).zip'     #Standalone package of PGE Maintainer (work outside PGE)
   - path: '$(BIN_DIR)\_packed\pge-musplay-dev-$(WINXX_ARCH).zip'        #Standalone package of PGE MusPlay (work outside PGE)
   - path: 'build_date_dev_$(WINXX_ARCH).txt'
@@ -124,4 +133,3 @@ artifacts:
 deploy:
   - provider: Environment
     name: WohlnetFTP
-

@@ -27,6 +27,8 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
+# Find the SDL Mixer X library and it's dependencies
+include(../_common/find_sdl_mixer_x.cmake)
 
 # WORKAROUND: Avoid ImpLib file creation on a non-library project
 if(CYGWIN OR MINGW)
@@ -135,59 +137,38 @@ option(USE_OFFICIAL_SDL_MIXER "Compile player in compatibility with official SDL
 if(USE_OFFICIAL_SDL_MIXER)
     set(SDL_MIXER_X_LIB SDL2_mixer)
 else()
+    set(MIXER_LIBS)
+
     target_compile_definitions(pge_musplay
         PRIVATE
         -DUSE_SDL_MIXER_X
     )
-    set(SDL_MIXER_X_LIB SDL2_mixer_ext$<$<CONFIG:Debug>:d>)
-endif()
 
-list(APPEND PGE_MUSPLAY_LINK_LIBS
-    ${SDL_MIXER_X_LIB}
-    FLAC$<$<CONFIG:Debug>:d>
-    opusfile$<$<CONFIG:Debug>:d>
-    opus$<$<CONFIG:Debug>:d>
-    vorbisfile$<$<CONFIG:Debug>:d>
-    vorbis$<$<CONFIG:Debug>:d>
-    ogg$<$<CONFIG:Debug>:d>
-    mad$<$<CONFIG:Debug>:d>
-    id3tag$<$<CONFIG:Debug>:d>
-    modplug$<$<CONFIG:Debug>:d>
-    ADLMIDI$<$<CONFIG:Debug>:d>
-    OPNMIDI$<$<CONFIG:Debug>:d>
-    timidity$<$<CONFIG:Debug>:d>
-    gme$<$<CONFIG:Debug>:d>
-    zlib$<$<CONFIG:Debug>:d>
-)
-
-if(WIN32)
-    list(APPEND PGE_MUSPLAY_LINK_LIBS
-        SDL2$<$<CONFIG:Debug>:d>
-        SDL2main$<$<CONFIG:Debug>:d>
-        comctl32
-        version
-        advapi32
-        kernel32
-        winmm
-        imm32
-    )
-else()
-    list(APPEND PGE_MUSPLAY_LINK_LIBS
-        SDL2$<$<CONFIG:Debug>:d>
-    )
-    if(UNIX AND NOT APPLE)
-        list(APPEND PGE_MUSPLAY_LINK_LIBS dl)
+    if(PGE_STATIC_SDLMIXER)
+        find_mixer_x(TARGET MIXER_LIBS
+                    STATIC
+                    SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
+        )
+    else()
+        find_mixer_x(TARGET MIXER_LIBS
+                    SHARED
+                    SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
+        )
     endif()
+
+    list(APPEND PGE_MUSPLAY_LINK_LIBS ${MIXER_LIBS})
 endif()
 
-if(NOT APPLE)
+if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
     set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
         set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-mwindows")
-        list(APPEND PGE_MUSPLAY_LINK_LIBS "-static")
+        if(NOT PGE_ENABLE_STATIC_QT)
+            list(APPEND PGE_MUSPLAY_LINK_LIBS "-static")
+        endif()
     endif()
     list(APPEND PGE_MUSPLAY_LINK_LIBS pthread)
 endif()

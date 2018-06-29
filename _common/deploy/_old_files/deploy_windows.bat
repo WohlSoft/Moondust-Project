@@ -1,8 +1,9 @@
 @echo off
 set InitDir=%CD%
-cd ..
 call _paths.bat
 set CurDir=%CD%
+
+SET SOURCEDIR=%CD%\..
 
 IF NOT EXIST "%SEVENZIP%\7z.exe" GOTO ErrorNo7z
 
@@ -14,8 +15,8 @@ IF "%DEST_TO_64%"=="TRUE" (
 	set ARCH_CPU=win32
 )
 
-set COMPRESS_DLL=%CurDir%\upx.exe -9
-set COMPRESS_EXE=%CurDir%\upx.exe -9 --compress-icons=0
+rem set COMPRESS_DLL=%CurDir%\upx.exe -9
+rem set COMPRESS_EXE=%CurDir%\upx.exe -9 --compress-icons=0
 
 call "%SOURCEDIR%\_paths.bat"
 set OldPATH=%PATH%
@@ -47,7 +48,11 @@ copy "%QtDir%\libstdc++-6.dll" ".\libstdc++-6.dll"
 copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 
 %QtDir%\windeployqt --force --no-quick-import %DeployFlags% pge_editor.exe
+%QtDir%\windeployqt %DeployFlags% pge_engine.exe
 %QtDir%\windeployqt %DeployFlags% pge_calibrator.exe
+%QtDir%\windeployqt %DeployFlags% GIFs2PNG.exe
+%QtDir%\windeployqt %DeployFlags% PNG2GIFs.exe
+%QtDir%\windeployqt %DeployFlags% LazyFixTool.exe
 %QtDir%\windeployqt %DeployFlags% pge_manager.exe
 %QtDir%\windeployqt %DeployFlags% pge_maintainer.exe
 set NEED_COPY_MISSING_DLLS=NO
@@ -76,7 +81,7 @@ if exist %SOURCEDIR%\%BINDIR%\languages\qt_en.qm del /Q %SOURCEDIR%\%BINDIR%\lan
 if exist %SOURCEDIR%\%BINDIR%\translations\qt_en.qm del /Q %SOURCEDIR%\%BINDIR%\translations\qt_en.qm
 
 rem Remove possible temporary files of UPX
-if exist %SOURCEDIR%\%BINDIR%\*.upx del /Q "%SOURCEDIR%\%BINDIR%\*.upx"
+rem if exist %SOURCEDIR%\%BINDIR%\*.upx del /Q "%SOURCEDIR%\%BINDIR%\*.upx"
 
 REM rem %COMPRESS_DLL% D3Dcompiler_*.dll
 REM %COMPRESS_DLL% libEGL.dll

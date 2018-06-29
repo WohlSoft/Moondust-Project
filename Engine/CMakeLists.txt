@@ -35,6 +35,8 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
+# Find the SDL Mixer X library and it's dependencies
+include(../_common/find_sdl_mixer_x.cmake)
 
 # include shared code modules
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
@@ -394,62 +396,21 @@ list(APPEND PGE_ENGINE_LINK_LIBS
     sqlite3$<$<CONFIG:Debug>:d>
 )
 
-list(APPEND PGE_ENGINE_LINK_LIBS
-    SDL2_mixer_ext$<$<CONFIG:Debug>:d>
-)
+set(MIXER_LIBS)
 
-if(NOT EMSCRIPTEN)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        FLAC$<$<CONFIG:Debug>:d>
+if(PGE_STATIC_SDLMIXER)
+    find_mixer_x(TARGET MIXER_LIBS
+                STATIC
+                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
+    )
+else()
+    find_mixer_x(TARGET MIXER_LIBS
+                SHARED
+                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
     )
 endif()
 
-list(APPEND PGE_ENGINE_LINK_LIBS
-    opusfile$<$<CONFIG:Debug>:d>
-    opus$<$<CONFIG:Debug>:d>
-    vorbisfile$<$<CONFIG:Debug>:d>
-    vorbis$<$<CONFIG:Debug>:d>
-    ogg$<$<CONFIG:Debug>:d>
-    mad$<$<CONFIG:Debug>:d>
-    id3tag$<$<CONFIG:Debug>:d>
-    modplug$<$<CONFIG:Debug>:d>
-    ADLMIDI$<$<CONFIG:Debug>:d>
-    OPNMIDI$<$<CONFIG:Debug>:d>
-    timidity$<$<CONFIG:Debug>:d>
-    gme$<$<CONFIG:Debug>:d>
-    zlib$<$<CONFIG:Debug>:d>
-)
-
-list(APPEND PGE_ENGINE_LINK_LIBS
-    SDL2$<$<CONFIG:Debug>:d>
-)
-
-if(WIN32 AND NOT EMSCRIPTEN)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        SDL2main$<$<CONFIG:Debug>:d>
-        version
-        opengl32
-        dbghelp
-        advapi32
-        kernel32
-        winmm
-        imm32
-    )
-endif()
-
-if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE)
-    list(APPEND PGE_ENGINE_LINK_LIBS GL)
-    if(NOT HAIKU)
-        list(APPEND PGE_ENGINE_LINK_LIBS dl)
-    endif()
-endif()
-
-if(HAIKU)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        SDL2main$<$<CONFIG:Debug>:d>
-        be device game media
-    )
-endif()
+list(APPEND PGE_ENGINE_LINK_LIBS ${MIXER_LIBS})
 
 if(NOT APPLE)
     list(APPEND PGE_ENGINE_LINK_LIBS
