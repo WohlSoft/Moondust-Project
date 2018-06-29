@@ -52,7 +52,6 @@ environment:
     CMAKE_DIR: "C:\\Program Files\\CMake\\bin"
 
     matrix:
-    # 64 bit build
       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
         PLATFORM: x64
         BIN_DIR: bin-w64
@@ -61,7 +60,6 @@ environment:
         QT_DIR: C:\Qt\5.9.0-x64\bin
 #       COMPILER: C:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
 #       QT_DIR: C:\Qt\5.9.6-x64\bin
-    # 32 bit build with Windows XP support
       - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2013"
         PLATFORM: Win32
         BIN_DIR: bin-w32
