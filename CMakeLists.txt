@@ -23,10 +23,6 @@ if(POLICY CMP0058) # Dependencies
     cmake_policy(SET CMP0058 NEW)
 endif()
 
-if(POLICY CMP0071) # Automoc
-    cmake_policy(SET CMP0071 NEW)
-endif()
-
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
@@ -300,6 +296,7 @@ ExternalProject_Add(
     PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
     URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
     PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_cmake_no_wasapi.patch"
+          COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_remove_lib_prefix_on_windows.patch"
     CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
@@ -589,8 +586,8 @@ if(WIN32) # Deployment for Windows
 
     if(PGE_SHARED_SDLMIXER)
         install(FILES
-            "${CMAKE_BINARY_DIR}/bin/libSDL2${PGE_DLL_SUFFIX}.dll"
-            "${CMAKE_BINARY_DIR}/bin/libSDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
+            "${CMAKE_BINARY_DIR}/bin/SDL2${PGE_DLL_SUFFIX}.dll"
+            "${CMAKE_BINARY_DIR}/bin/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
             DESTINATION "${PGE_INSTALL_DIRECTORY}/"
         )
     endif()
@@ -642,8 +639,8 @@ if(WIN32) # Deployment for Windows
 
         set(PGE_MusPlayFiles
             ${PGE_CommonQtFiles}
-            "${ZIP_SRC_DIR}/libSDL2${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/libSDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/SDL2${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
             "${ZIP_SRC_DIR}/pge_musplay.exe"
         )
 
