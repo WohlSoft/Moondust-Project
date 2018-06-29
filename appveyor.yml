@@ -48,8 +48,8 @@ clone_depth:  2  # clone entire repository history if not defined
 environment:
   global:
     PLATFORMTOOLSET: "v140"
-    GIT_DIR: C:\Program Files\Git\cmd
-    CMAKE_DIR: C:\Program Files\CMake\bin
+    GIT_DIR: "C:\\Program Files\\Git\\cmd"
+    CMAKE_DIR: "C:\\Program Files\\CMake\\bin"
 
     matrix:
     # 64 bit build
@@ -95,7 +95,7 @@ install:
 #      Set-Alias sevenzip "C:\Program Files\7-Zip\7z.exe"
 #      sevenzip x C:\temp-d\i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z -oC:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0;
 #      sevenzip x C:\temp-d\Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z -oC:\Qt; }
-  - cmd: "C:\Program Files\7-Zip\7z.exe" x C:\temp-d\ninja-win.zip -o%COMPILER%
+  - cmd: "\"C:\\Program Files\\7-Zip\\7z.exe\" x C:\\temp-d\\ninja-win.zip -o%COMPILER%"
   - cmd: git submodule init
   - cmd: git submodule update
   - cmd: echo set QtDir=%QT_DIR%>> _paths.bat
