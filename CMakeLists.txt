@@ -598,6 +598,7 @@ if(WIN32) # Deployment for Windows
     find_program(SevenZipProgram 7z
             PATHS
             "$ENV{ProgramFiles}/7-zip/"
+            "C:/Program Files/7-zip/"
             "C:/Program Files (x86)/7-zip/"
     )
     if(SevenZipProgram)
@@ -714,5 +715,7 @@ if(WIN32) # Deployment for Windows
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing ZIP archive..."
         )
+    else()
+        message("!! 7Zip not found! Deployment will be inavailable!")
     endif()
 endif()
