@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 3.1.0)
 project(MoondustMaintainer C CXX)
 
+if(POLICY CMP0071) # Automoc
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
 
