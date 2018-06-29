@@ -15,6 +15,7 @@ flag_debugThisScript=false
 flag_debugDependencies=false
 flag_cmake_it=false
 flag_cmake_deploy=false
+flag_cmake_static_qt=false
 flag_debug_build=false
 
 for var in "$@"
@@ -95,6 +96,9 @@ do
             ;;
         deploy)
                 flag_cmake_deploy=true
+            ;;
+        static-qt)
+                flag_cmake_static_qt=true
             ;;
         colors)
             for((i=0;i<=1;i++))
@@ -412,6 +416,11 @@ if $flag_cmake_it ; then
 
     cd "${BUILD_DIR}"
 
+    CMAKE_STATIC_QT=""
+    if $flag_cmake_static_qt; then
+        CMAKE_STATIC_QT="-DPGE_ENABLE_STATIC_QT=ON"
+    fi
+
     #=======================================================================
     cmake \
         -G "Unix Makefiles" \
@@ -419,7 +428,8 @@ if $flag_cmake_it ; then
         -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
         -DCMAKE_BUILD_TYPE=$CONFIG_CMAKE \
         -DPGE_INSTALL_DIRECTORY="PGE_Project" \
-        "${SCRDIR}"
+        "${SCRDIR}" \
+        ${CMAKE_STATIC_QT}
         # -DQT_QMAKE_EXECUTABLE="$QMake"
     checkState
 
