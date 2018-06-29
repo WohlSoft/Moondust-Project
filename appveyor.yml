@@ -48,8 +48,8 @@ clone_depth:  2  # clone entire repository history if not defined
 environment:
   global:
     PLATFORMTOOLSET: "v140"
-    GIT_DIR: "C:\Program Files\Git\cmd"
-    CMAKE_DIR: "C:\Program Files\CMake\bin"
+    GIT_DIR: C:\Program Files\Git\cmd
+    CMAKE_DIR: C:\Program Files\CMake\bin
 
     matrix:
     # 64 bit build
