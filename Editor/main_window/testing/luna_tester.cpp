@@ -1021,7 +1021,7 @@ bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
             {
-                unsigned long smbxHwnd = ulong(obj["result"].toVariant().toULongLong());
+                uintptr_t smbxHwnd = uintptr_t(obj["result"].toVariant().toULongLong());
                 HWND wSmbx = HWND(smbxHwnd);
                 //Close SMBX's window
                 PostMessage(wSmbx, WM_CLOSE, 0, 0);
@@ -1087,7 +1087,7 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
             {
-                unsigned long smbxHwnd = ulong(obj["result"].toVariant().toULongLong());
+                uintptr_t smbxHwnd = uintptr_t(obj["result"].toVariant().toULongLong());
                 HWND wSmbx = HWND(smbxHwnd);
                 //msg.warning("Test2", QString("Received: %1, from: %2").arg(smbxHwnd).arg(QString::fromStdString(inMessage)), QMessageBox::Ok);
                 //wchar_t title[MAX_PATH];
@@ -1271,7 +1271,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 hKernel32 = LoadLibraryW(L"KERNEL32.DLL");
                 if(hKernel32)
                 {
-                    fCreateSymbolicLink = (FUNK_OF_SYMLINKS)GetProcAddress(hKernel32, "CreateSymbolicLinkW");
+                    fCreateSymbolicLink = (FUNK_OF_SYMLINKS)(void*)GetProcAddress(hKernel32, "CreateSymbolicLinkW");
                     if(fCreateSymbolicLink) //Try to make a symblic link
                     {
                         QString newPath = dst_Episode + "templevel/";

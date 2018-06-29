@@ -17,7 +17,7 @@ std::string format_ne(CStringRef format_str, const Args & ... args)
     {
         return format(format_str, std::forward<const Args&>(args)...);
     }
-    catch(FormatError e)
+    catch(const FormatError &e)
     {
         std::string out;
         pLogWarning("fmt::format error: Thrown exception [%s] on attempt to process string [%s]",
@@ -43,7 +43,7 @@ std::string sprintf_ne(CStringRef format_str, const Args & ... args)
     {
         return sprintf(format_str, std::forward<const Args&>(args)...);
     }
-    catch(FormatError e)
+    catch(const FormatError &e)
     {
         std::string out;
         pLogWarning("fmt::sprintf error: Thrown exception [%s] on attempt to process string [%s]",

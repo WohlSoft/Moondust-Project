@@ -383,7 +383,7 @@ bool LevelScene::init_items()
     {
         int width  = PGE_Window::Width;
         int height = PGE_Window::Height / m_numberOfPlayers;
-        LVL_PlayerDef d = player_defs[static_cast<const unsigned int>(i + 1)];
+        LVL_PlayerDef d = player_defs[static_cast<unsigned int>(i + 1)];
 
         if(m_isWarpEntrance)
         {

@@ -165,8 +165,8 @@ void g_AppSettings::loadSettings()
 
     switch(GlobalSettings::LvlItemDefaults.npc_generator_type)
     {
-        case 1:ui->defaults_npc_generator_type->setCurrentIndex(0);
-        case 2:ui->defaults_npc_generator_type->setCurrentIndex(1);
+        case 1:ui->defaults_npc_generator_type->setCurrentIndex(0);break;
+        case 2:ui->defaults_npc_generator_type->setCurrentIndex(1);break;
     }
 
     ui->defaults_npc_generator_delay->setValue(((float)GlobalSettings::LvlItemDefaults.npc_generator_delay)/10.0);

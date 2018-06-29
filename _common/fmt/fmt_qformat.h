@@ -52,7 +52,7 @@ std::string qformat(CStringRef format_str, const Args & ... args)
     {
         out = format(fmt, std::forward<const Args&>(args)...);
     }
-    catch(FormatError e)
+    catch(const FormatError &e)
     {
         out.append(e.what());
         out.append(" [");

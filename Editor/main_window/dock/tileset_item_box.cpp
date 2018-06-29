@@ -379,8 +379,8 @@ void TilesetItemBox::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups
         int tabIndex = c->addTab(g);//Escaped ampersands
         QAction *a = cmenu->addAction(g);
         a->setData(tabIndex);
-        c->connect(a, reinterpret_cast<void(QAction::*)(void)>(&QAction::triggered),
-                   [c,a](){ c->setCurrentIndex(a->data().toInt()); }
+        c->connect(a, reinterpret_cast<void(QAction::*)(bool)>(&QAction::triggered),
+                   [c,a](bool){ c->setCurrentIndex(a->data().toInt()); }
         );
     }
     //c->model()->sort(0);

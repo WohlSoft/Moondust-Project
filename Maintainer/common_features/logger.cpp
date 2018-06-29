@@ -88,11 +88,11 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
     switch (type)
     {
     case QtDebugMsg:
-        if(logLevel==QtFatalMsg) return;
+        if(logLevel==QtFatalMsg) return;/*fallthrough*/
     case QtWarningMsg:
-        if(logLevel==QtCriticalMsg) return;
+        if(logLevel==QtCriticalMsg) return;/*fallthrough*/
     case QtCriticalMsg:
-        if(logLevel==QtWarningMsg) return;
+        if(logLevel==QtWarningMsg) return;/*fallthrough*/
     case QtFatalMsg:
         break;
     default: break;
@@ -130,11 +130,11 @@ void LogWriter::logMessageHandler(QtMsgType type,
     switch (type)
     {
         case QtDebugMsg:
-            if(logLevel==QtWarningMsg) return;
+            if(logLevel==QtWarningMsg) return;/*fallthrough*/
         case QtWarningMsg:
-            if(logLevel==QtCriticalMsg) return;
+            if(logLevel==QtCriticalMsg) return;/*fallthrough*/
         case QtCriticalMsg:
-            if(logLevel==QtFatalMsg) return;
+            if(logLevel==QtFatalMsg) return;/*fallthrough*/
         case QtFatalMsg:
             break;
         default: break;
