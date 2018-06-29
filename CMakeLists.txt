@@ -19,8 +19,12 @@ if(WIN32)
     set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
 
-if(POLICY CMP0058)
+if(POLICY CMP0058) # Dependencies
     cmake_policy(SET CMP0058 NEW)
+endif()
+
+if(POLICY CMP0071) # Automoc
+    cmake_policy(SET CMP0071 NEW)
 endif()
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
