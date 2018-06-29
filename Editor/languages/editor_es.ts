@@ -20,7 +20,7 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation>Opciones</translation>
+        <translation type="unfinished">Opciones</translation>
     </message>
     <message>
         <source>Main</source>
@@ -380,15 +380,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambiente</translation>
     </message>
     <message>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom predeterminado:</translation>
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom predeterminado que se instalará al abrir o crear un archivo.</translation>
     </message>
 </context>
 <context>
@@ -5079,7 +5079,7 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <source>Edit a custom background config...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar configuración de fondo personalizada...</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5120,25 +5120,25 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, primero guarde el archivo, si quiere organizar archivos de configuración de fondos.</translation>
     </message>
     <message>
         <source>Choose a background first</source>
-        <translation type="unfinished"></translation>
+        <translation>Elija un fondo primero</translation>
     </message>
     <message>
         <source>Please, choose the background image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, elija una imagen de fondo primero.</translation>
     </message>
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nombre personalizado que figurará en el editor</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cree su organización de capas de fondo aquí...</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5147,7 +5147,7 @@ Zonas físicas de ambiente:	%6
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Color de relleno predeterminado</translation>
     </message>
 </context>
 <context>
@@ -10607,7 +10607,7 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     </message>
     <message>
         <source>Order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar peso</translation>
     </message>
     <message>
         <source>Tileset group name:</source>
@@ -10615,7 +10615,7 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     </message>
     <message>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>EtiquetadeTexto</translation>
     </message>
     <message>
         <source>Category:</source>
@@ -10623,7 +10623,7 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Define la prioridad de orden personalizada. Si los valores de peso son iguales entre los diferentes grupos o igual a -1, los grupos de tileset se van a ordenar alfabéticamente.</translation>
     </message>
     <message>
         <source>Open</source>
