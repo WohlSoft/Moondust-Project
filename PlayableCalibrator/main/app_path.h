@@ -39,7 +39,7 @@ private:
         /**
          * @brief Makes settings path if not exists
          */
-        static void _initSettingsPath();
+        static void initSettingsPath();
         //! Full path to settings INI file
         static QString m_settingsPath;
         static QString m_userPath;

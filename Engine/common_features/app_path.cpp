@@ -97,54 +97,6 @@ static std::string getPgeUserDirectory()
 }
 
 
-#ifdef _WIN32
-
-#define PGE_ENGINE_KEY L"Software\\Wohlhabend Networks\\PGE Engine"
-
-/**
- * @brief Retreive the state from Windows System Registry is PGE Engine set to use User Directory instead of application directory
- * @return true if registry key exist and has "true" string value
- */
-static bool winReg_isUserDir()
-{
-    HKEY    pge_key;
-    wchar_t enable_user_dir[1024];
-    std::wstring output;
-    DWORD   DRlen = sizeof(wchar_t) * 1024;
-
-    LONG res = RegOpenKeyExW(HKEY_CURRENT_USER, PGE_ENGINE_KEY, 0, KEY_READ, &pge_key);
-    if(res == ERROR_SUCCESS)
-    {
-        if(RegQueryValueExW(pge_key, L"EnableUserDir", 0, NULL, (LPBYTE)enable_user_dir, &DRlen) == ERROR_SUCCESS)
-            output.append(enable_user_dir);
-        RegCloseKey(pge_key);
-    }
-    return (output == L"true");
-}
-
-/**
- * @brief Creates the key and sets the "true" value in the Windows System Registry
- * @return true if operation was success
- */
-static bool winReg_setUserDir()
-{
-    HKEY    pge_key;
-    bool ret = false;
-    DWORD   lpdwDisp;
-    LONG res = RegCreateKeyExW(HKEY_CURRENT_USER, PGE_ENGINE_KEY, 0,
-                               NULL, REG_OPTION_NON_VOLATILE,
-                               KEY_WRITE, NULL, &pge_key, &lpdwDisp);
-    if(res == ERROR_SUCCESS)
-    {
-        if(RegSetValueExW(pge_key, L"EnableUserDir", 0, REG_SZ, (LPBYTE)L"true", sizeof(wchar_t) * 5) == ERROR_SUCCESS)
-            ret = true;
-        RegCloseKey(pge_key);
-    }
-    return ret;
-}
-#endif
-
-
 void AppPathManager::initAppPath()
 {
     //PGE_Application::setOrganizationName(V_COMPANY);
@@ -180,9 +132,9 @@ void AppPathManager::initAppPath()
     char* path = SDL_GetBasePath();//DirMan(Files::dirname(argv0)).absolutePath();
     if(!path)
     {
-    	std::fprintf(stderr, "== Failed to recogonize application path by using of SDL_GetBasePath! Using current working directory \"./\" instead.\n");
-    	std::fflush(stderr);
-    	path = SDL_strdup("./");
+        std::fprintf(stderr, "== Failed to recogonize application path by using of SDL_GetBasePath! Using current working directory \"./\" instead.\n");
+        std::fflush(stderr);
+        path = SDL_strdup("./");
     }
     ApplicationPathSTD = std::string(path);
 #   if defined(_WIN32)
@@ -191,69 +143,32 @@ void AppPathManager::initAppPath()
     SDL_free(path);
 #endif
 
-//#if defined(__ANDROID__)
-//    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
-//    QDir appPath(ApplicationPath);
-
-//    if(!appPath.exists())
-//        appPath.mkpath(ApplicationPath);
-
-//#endif
-
     if(isPortable())
         return;
 
-    bool userDir;
-#if defined(__ANDROID__) || defined(__APPLE__)
-    userDir = true;
-#else
-#   if defined(__gnu_linux__)
+    std::string userDirPath = getPgeUserDirectory();
+    if(!userDirPath.empty())
     {
-        passwd* pw = getpwuid(getuid());
-        std::string path(pw->pw_dir);
-        DirMan configDir(path + "/.config/Wohlhabend Networks/");
-        if(!configDir.exists())
-            configDir.mkpath(".");
-        IniProcessing setup(configDir.absolutePath() + "/PGE Engine.conf");
-        setup.beginGroup("General");
-        userDir = setup.value("EnableUserDir", false).toBool();
-        setup.endGroup();
-    }
-#   elif defined(_WIN32)
-    {
-        userDir = winReg_isUserDir();
-    }
-#   else
-    userDir = false;
-#   endif
-#endif
-
-    if(userDir)
-    {
-        std::string path = getPgeUserDirectory();
-        if(!path.empty())
-        {
-            DirMan appDir(path);
-            if(!appDir.exists() && !appDir.mkpath(path))
-                goto defaultSettingsPath;
-#ifdef __APPLE__
-            if(!DirMan::exists(ApplicationPathSTD + "/Data directory"))
-                symlink((path).c_str(), (ApplicationPathSTD + "/Data directory").c_str());
-#endif
-            m_userPath = appDir.absolutePath();
-            m_userPath.push_back('/');
-            _initSettingsPath();
-        }
-        else
+        DirMan appDir(userDirPath);
+        if(!appDir.exists() && !appDir.mkpath(userDirPath))
             goto defaultSettingsPath;
+#ifdef __APPLE__
+        if(!DirMan::exists(ApplicationPathSTD + "/Data directory"))
+            symlink((userDirPath).c_str(), (ApplicationPathSTD + "/Data directory").c_str());
+#endif
+        m_userPath = appDir.absolutePath();
+        m_userPath.push_back('/');
+        initSettingsPath();
     }
     else
+    {
         goto defaultSettingsPath;
+    }
 
     return;
 defaultSettingsPath:
     m_userPath = ApplicationPathSTD;
-    _initSettingsPath();
+    initSettingsPath();
 #ifdef __EMSCRIPTEN__
     printf("== App Path is %s\n", ApplicationPathSTD.c_str());
     printf("== User Path is %s\n", m_userPath.c_str());
@@ -312,23 +227,8 @@ void AppPathManager::install()
     if(!path.empty())
     {
         DirMan appDir(path);
-        if(!appDir.exists() && !appDir.mkpath(path))
-            return;
-
-    #ifdef _WIN32
-        winReg_setUserDir();
-    #endif
-
-    #ifdef __gnu_linux__
-        DirMan configDir(path + "/.config/Wohlhabend Networks/");
-        if(!configDir.exists())
-            configDir.mkpath(".");
-        IniProcessing setup(configDir.absolutePath() + "/PGE Engine.conf");
-        setup.beginGroup("General");
-        setup.setValue("EnableUserDir", true);
-        setup.endGroup();
-        setup.writeIniFile();
-    #endif
+        if(!appDir.exists())
+            appDir.mkpath(path);
     }
 }
 
@@ -351,7 +251,7 @@ bool AppPathManager::isPortable()
     checkForPort.endGroup();
 
     if(forcePortable)
-        _initSettingsPath();
+        initSettingsPath();
 
     return forcePortable;
 }
@@ -362,7 +262,7 @@ bool AppPathManager::userDirIsAvailable()
 }
 
 
-void AppPathManager::_initSettingsPath()
+void AppPathManager::initSettingsPath()
 {
     m_settingsPath = m_userPath + "settings/";
 

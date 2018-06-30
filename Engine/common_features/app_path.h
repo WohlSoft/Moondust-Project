@@ -39,7 +39,7 @@ private:
         /**
          * @brief Makes settings path if not exists
          */
-        static void _initSettingsPath();
+        static void initSettingsPath();
         //! Full path to settings INI file
         static std::string m_settingsPath;
         static std::string m_userPath;
