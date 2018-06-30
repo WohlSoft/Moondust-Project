@@ -4,7 +4,7 @@ local deb_i = 0
 function onLoop()
     if(Settings.isDebugInfoShown())then
         deb_i = deb_i + 1
-        Renderer.printText("Ticks passed: "..deb_i, 100, 130, 0, 15, 0xFFFF0055)
+        Renderer.printText("Ticks passed: "..deb_i, 100, 130, FontType.DefaultRaster, 15, 0xFFFF0055)
     end
 end
 
@@ -16,5 +16,4 @@ function __native_event(eventObj, ...)
         _G[eventFuncToFind](...)
     end
 end
-
 

@@ -353,11 +353,11 @@ void ConfigSelectScene::render()
             w = 200;
         }
         GlRenderer::renderTexture(&item.image, 30, 30, w, h);
-        FontManager::printText(item.description, 30, 170, -2, 1.0, 1.0, 1.0, 1.0, 18);
+        FontManager::printText(item.description, 30, 170, FontManager::DefaultTTF_Font, 1.0, 1.0, 1.0, 1.0, 18);
     }
-    FontManager::printText(m_label, 240, 80, -2, 1.0, 1.0, 1.0, 1.0, 48);
+    FontManager::printText(m_label, 240, 80, FontManager::DefaultTTF_Font, 1.0, 1.0, 1.0, 1.0, 48);
     FontManager::printText(m_waterMark,
-                           m_waterMarkRect.x(), m_waterMarkRect.y(), -2,
+                           m_waterMarkRect.x(), m_waterMarkRect.y(), FontManager::DefaultTTF_Font,
                            m_waterMarkColor.Red(),
                            m_waterMarkColor.Green(),
                            m_waterMarkColor.Blue(),
@@ -378,7 +378,7 @@ void ConfigSelectScene::render()
     if(PGE_Window::showDebugInfo)
     {
         FontManager::printText(fmt::format_ne("Graphical engine: {0}", GlRenderer::engineName()),
-                               500, 30, -2, 1.0, 1.0, 1.0, 0.5, 18);
+                               500, 30, FontManager::DefaultTTF_Font, 1.0, 1.0, 1.0, 0.5, 18);
     }
 
     Scene::render();

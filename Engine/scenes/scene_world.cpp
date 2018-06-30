@@ -1361,7 +1361,7 @@ void WorldScene::render()
         if(m_doExit)
             FontManager::printText(fmt::format_ne("Exit delay {0}, {1}",
                                                 m_exitWorldDelay,
-                                                uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
+                                                uTickf), 10, 140, FontManager::DefaultRaster, 1.0, 0, 0, 1.0);
     }
 
 renderBlack:

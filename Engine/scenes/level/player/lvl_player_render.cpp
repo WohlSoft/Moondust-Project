@@ -119,7 +119,7 @@ void LVL_Player::render(double camX, double camY)
                                            l_contactB.size(), (m_slopeFloor.has ? "slope!" : ""))
                                //.arg(m_speedAddingTopElements.size())
                                //.arg(m_speedAddingBottomElements.size())
-                               , int(round(20 + posX() - camX)), -50 + int(round(posY() - camY)), 3);
+                               , int(round(20 + posX() - camX)), -50 + int(round(posY() - camY)), FontManager::DefaultRaster);
     }
 
 }

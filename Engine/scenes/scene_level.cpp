@@ -636,7 +636,7 @@ void LevelScene::render()
         {
             FontManager::printText(fmt::format_ne("Exit delay {0}, {1}",
                                                m_exitLevelDelay,
-                                               uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
+                                               uTickf), 10, dpos, FontManager::DefaultRaster, 1.0, 0, 0, 1.0);
             dpos += 35;
         }
 
@@ -644,9 +644,9 @@ void LevelScene::render()
             FontManager::printText(fmt::format_ne("Placing! {0} X={1} Y={2}",
                                                m_placingMode_item_type,
                                                m_placingMode_renderAt.x(),
-                                               m_placingMode_renderAt.y()), 10, 10, 0);
+                                               m_placingMode_renderAt.y()), 10, 10, FontManager::DefaultRaster);
         else
-            FontManager::printText(fmt::format_ne("{0}", PGE_MusPlayer::getTitle()), 10, 10, 0);
+            FontManager::printText(fmt::format_ne("{0}", PGE_MusPlayer::getTitle()), 10, 10, FontManager::DefaultRaster);
     }
 
 renderBlack:
