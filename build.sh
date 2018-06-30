@@ -40,6 +40,7 @@ do
             printf " \E[1;4mrepair-submodules\E[0m- Repair invalid or broken submodules\n"
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
             printf " \E[1;4m--help\E[0m           - Print this manual\n"
+            printf " \E[1;4mldoc\E[0m             - Make lua documentation\n"
             printf " \E[1;4mcmake-it\E[0m         - Run build through experimental alternative build on CMake\n"
             echo ""
 
@@ -113,6 +114,13 @@ do
                 printf "=\n"
             done
             exit 0
+            ;;
+        ldoc)
+            cd Engine/doc
+            ../../build-pge-cmake-release/bin/luajit-2.1.0-beta3 ../../../LDoc/ldoc.lua .
+            cd ../..
+            printf "\n==== Done! ====\n\n"
+            exit 0;
             ;;
         use-ccache)
                 if [[ "$OSTYPE" == "linux-gnu" ]]; then
