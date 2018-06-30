@@ -225,8 +225,19 @@ void FontManager::printText(std::string text,
         }
     }
 
-    if(g_defaultTtfFont->isLoaded())
-        g_defaultTtfFont->printText(text, x, y, Red, Green, Blue, Alpha, ttf_FontSize);
+    switch(font)
+    {
+    case DefaultRaster:
+        if(g_defaultRasterFont && g_defaultRasterFont->isLoaded())
+        {
+            g_defaultRasterFont->printText(text, x, y, Red, Green, Blue, Alpha, ttf_FontSize);
+            break;
+        } /*fallthrough*/
+    case DefaultTTF_Font:
+    default:
+        if(g_defaultTtfFont->isLoaded())
+            g_defaultTtfFont->printText(text, x, y, Red, Green, Blue, Alpha, ttf_FontSize);
+    }
 }
 
 
