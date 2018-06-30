@@ -462,11 +462,21 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
             )
         endforeach()
 
-        add_custom_target(cleanup_dirs_windeploy
-            COMMAND cmake -E remove_directory "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/bearer"
-            COMMAND cmake -E remove_directory "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/iconengines"
-            DEPENDS pge_windeploy
+        set(JUNK_DIRS)
+        list(APPEND JUNK_DIRS
+            "bearer"
+            "iconengines"
+            "qmltooling"
+            "platforminputcontexts"
+            "scenegraph"
         )
+        add_custom_target(cleanup_dirs_windeploy DEPENDS pge_windeploy)
+        foreach(JunkDir ${JUNK_DIRS})
+            add_custom_command(TARGET cleanup_dirs_windeploy POST_BUILD
+                               COMMAND ${CMAKE_COMMAND} -E remove_directory
+                                "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/${JunkDir}"
+            )
+        endforeach()
 
         set(MINGW_DLLS)
         if(EXISTS "${QT_BINLIB_DIR}/bin/libgcc_s_dw2-1.dll")
