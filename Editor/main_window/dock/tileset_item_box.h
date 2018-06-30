@@ -60,6 +60,7 @@ public slots:
     QTabBar *getGroupComboboxOfTab(QWidget *catTab);
     QWidget *findTabWidget(const QString &categoryItem);
     QWidget *makeCategory(const QString &categoryItem);
+    void prepareCategoriesAndGroups();
     void prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups);
     void clearTilesetGroups();
     void makeSelectedTileset(int tabIndex);

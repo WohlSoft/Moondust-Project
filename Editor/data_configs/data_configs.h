@@ -185,31 +185,58 @@ public:
     wld_levels_Markers marker_wlvl;
 
     //Common items
+    //! Music ID which will be reserved for custom music on levels
     uint64_t music_custom_id;
+    //! Music ID which will be reserved for custom music on world maps
     uint64_t music_w_custom_id;
+    //! Available config pack standard level music set
     PGE_DataArray<obj_music > main_music_lvl;
+    //! Available config pack standard world map music set
     PGE_DataArray<obj_music > main_music_wld;
+    //! Available config pack standard special-use music set
     PGE_DataArray<obj_music > main_music_spc;
 
+    //! Available config pack standard SFX set
     PGE_DataArray<obj_sound > main_sound;
 
     //Tilesets
+    //! Full set of config-pack standard tilesets
     QList<SimpleTileset >      main_tilesets;
+    //! Full set of config-pack standard tileset groups are holds tilesets
     QList<SimpleTilesetGroup > main_tilesets_grp;
+    //! Full set of config-pack standard tileset categories, generated from tileset groups
+    QList<SimpleTilesetCachedCategory> main_tileset_categogies;
 
     QList<obj_rotation_table > main_rotation_table;
 
-    bool check(); //Returns true, if something config entry is not initialized
-    bool checkCustom(); //Returns true, if some of custom config has failed
+    /**
+     * @brief Verify config pack is valid (Standard configs only)
+     * @return Returns true if something config entry is not initialized
+     */
+    bool check();
+
+    /**
+     * @brief Verify custom-loaded config files are valid (are not a part of config pack)
+     * @return Returns true if some of custom config has failed
+     */
+    bool checkCustom();
 
     //Graphics
+
+    //! Default alignment grid size for everything
     obj_gridSizes defaultGrid;
 
+    /**
+     * @brief Category of config pack errors
+     */
     enum ErrorListType
     {
+        //! Errors of standard config pack parts
         ERR_GLOBAL = 0,
+        //! Errors of custom out of pack outside parts
         ERR_CUSTOM = 1
     };
+
     //! Errors of config pack loading
     QStringList errorsList[2];
 
