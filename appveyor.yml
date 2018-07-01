@@ -131,6 +131,10 @@ artifacts:
   - path: '$(BIN_DIR)\_packed\install-pge-tools-dev-$(WINXX_ARCH).zip'
   - path: '$(BIN_DIR)\_packed\pge-maintainer-dev-$(WINXX_ARCH).zip'     #Standalone package of PGE Maintainer (work outside PGE)
   - path: '$(BIN_DIR)\_packed\pge-musplay-dev-$(WINXX_ARCH).zip'        #Standalone package of PGE MusPlay (work outside PGE)
+  - path: '$(BIN_DIR)\_packed\pge-calibrator-dev-$(WINXX_ARCH).zip'     #Standalone package of Playable Character calibration tool (work outside PGE)
+  - path: '$(BIN_DIR)\_packed\GIFs2PNG-dev-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\PNG2GIFs-dev-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\LazyFixTool-dev-$(WINXX_ARCH).zip'
   - path: 'build_date_dev_$(WINXX_ARCH).txt'
 
 deploy:
