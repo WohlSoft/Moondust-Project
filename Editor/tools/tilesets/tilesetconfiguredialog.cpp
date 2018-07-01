@@ -105,28 +105,28 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     connect(ui->spin_height, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
 
     {
-        QAction *searchByName = m_searchSetup.addAction(tr("Search by Name"));
+        QAction *searchByName = m_searchSetup.addAction(tr("Search by Name", "Element search criteria"));
         searchByName->setCheckable(true);
         searchByName->setChecked(true);
 
-        QAction *searchById = m_searchSetup.addAction(tr("Search by ID"));
+        QAction *searchById = m_searchSetup.addAction(tr("Search by ID", "Element search criteria"));
         searchById->setCheckable(true);
 
-        QAction *searchByIdContained = m_searchSetup.addAction(tr("Search by ID (Contained)"));
+        QAction *searchByIdContained = m_searchSetup.addAction(tr("Search by ID (Contained)", "Element search criteria"));
         searchByIdContained->setCheckable(true);
 
         m_searchSetup.addSeparator();
-        QMenu   *sortBy = m_searchSetup.addMenu("Sort by");
+        QMenu   *sortBy = m_searchSetup.addMenu(tr("Sort by", "Search settings pop-up menu, sort submenu"));
 
-        QAction *sortByName = sortBy->addAction(tr("Search by Name"));
+        QAction *sortByName = sortBy->addAction(tr("Name", "Sort by name"));
         sortByName->setCheckable(true);
         sortByName->setChecked(true);
 
-        QAction *sortById   = sortBy->addAction(tr("Search by ID"));
+        QAction *sortById   = sortBy->addAction(tr("ID", "Sort by ID"));
         sortById->setCheckable(true);
 
         sortBy->addSeparator();
-        QAction *sortBackward = sortBy->addAction(tr("Backward"));
+        QAction *sortBackward = sortBy->addAction(tr("Backward", "Backward sorting order"));
         sortBackward->setCheckable(true);
 
         m_searchSetup.connect(searchByName, &QAction::triggered,
