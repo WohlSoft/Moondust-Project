@@ -644,6 +644,7 @@ if(WIN32) # Deployment for Windows
 
         set(PGE_MaintainerFiles
             ${PGE_CommonQtFiles}
+            "${ZIP_SRC_DIR}/tools"
             "${ZIP_SRC_DIR}/pge_maintainer.exe"
         )
 
@@ -652,6 +653,27 @@ if(WIN32) # Deployment for Windows
             "${ZIP_SRC_DIR}/SDL2${PGE_DLL_SUFFIX}.dll"
             "${ZIP_SRC_DIR}/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
             "${ZIP_SRC_DIR}/pge_musplay.exe"
+        )
+
+        set(PGE_CalibratorFiles
+            ${PGE_CommonQtFiles}
+            "${ZIP_SRC_DIR}/calibrator"
+            "${ZIP_SRC_DIR}/pge_calibrator.exe"
+        )
+
+        set(PGE_Gifs2PngFiles
+            "${ZIP_SRC_DIR}/GIFs2PNG.exe"
+            "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
+        )
+
+        set(PGE_Png2GifsFiles
+            "${ZIP_SRC_DIR}/PNG2GIFs.exe"
+            "${ZIP_SRC_DIR}/PNG2GIFs.readme.txt"
+        )
+
+        set(PGE_LazyFixToolFiles
+            "${ZIP_SRC_DIR}/LazyFixTool.exe"
+            "${ZIP_SRC_DIR}/LazyFixTool.readme.txt"
         )
 
         set(PGE_InstallCommonFiles
@@ -710,6 +732,18 @@ if(WIN32) # Deployment for Windows
             COMMAND ${SevenZipProgram} a -tzip -mx9
                 "${ZIP_PACK_DIR}/pge-maintainer-dev-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_MaintainerFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/pge-calibrator-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_CalibratorFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/GIFs2PNG-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_Gifs2PngFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/PNG2GIFs-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_Png2GifsFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/LazyFixTool-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_LazyFixToolFiles}
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing tools into ZIP archive..."
         )
