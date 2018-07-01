@@ -208,15 +208,16 @@
     <widget class="QPushButton" name="searchSetup">
      <property name="maximumSize">
       <size>
-       <width>27</width>
+       <width>35</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
       <string>Search settings</string>
      </property>
-     <property name="text">
-      <string notr="true">🔧</string>
+     <property name="icon">
+      <iconset resource="../../_resources/editor.qrc">
+       <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
      </property>
     </widget>
    </item>

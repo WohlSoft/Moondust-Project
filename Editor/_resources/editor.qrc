@@ -133,6 +133,7 @@
         <file>pge_oldui.png</file>
         <file>lunalua/lunalua_16.png</file>
         <file>constributors/AndrewPixel.png</file>
+        <file>images/wrench_16x16.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>
