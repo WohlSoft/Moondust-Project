@@ -18,122 +18,235 @@
 
 #include <QIcon>
 #include <QMimeData>
+#include <functional>
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/items.h>
 
 #include "piecesmodel.h"
 
-PiecesModel::PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize, QGraphicsScene *scene, QObject *parent)
+ElementsListModel::ElementsListModel(dataconfigs* conf, ElementType pieceType, int pieceSize, QGraphicsScene *scene, QObject *parent)
     : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf), m_type(pieceType)
 {
     mode = GFX_Staff;
-    scn = scene;
-    if(scn != nullptr)
+    m_scene = scene;
+    if(m_scene != nullptr)
     {
-        if(QString(scn->metaObject()->className())=="LvlScene") mode = GFX_Level;
-        else
-        if(QString(scn->metaObject()->className())=="WldScene") mode = GFX_World;
+        if(QString(m_scene->metaObject()->className()) == "LvlScene")
+            mode = GFX_Level;
+        else if(QString(m_scene->metaObject()->className()) == "WldScene")
+            mode = GFX_World;
     }
 }
 
-QVariant PiecesModel::data(const QModelIndex &index, int role) const
+QVariant ElementsListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
+    if(index.row() >= m_elementsVisibleMap.size())
+        return QVariant(); // Gone out of range!
+
+    int id = m_elementsVisibleMap[index.row()];
+    const Element &e = m_elements[id];
+
     if (role == Qt::DecorationRole)
-        return QIcon(pixmaps.value(index.row()).scaled(m_PieceSize, m_PieceSize,
-                         Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        return QIcon(e.pixmap.scaled(m_PieceSize, m_PieceSize,
+                        Qt::KeepAspectRatio, Qt::SmoothTransformation));
     else if (role == Qt::DisplayRole)
-        return pixmapNames.value(index.row());
+        return e.name;
+    else if (role == Qt::ToolTipRole)
+        return e.description;
     else if (role == Qt::UserRole)
-        return pixmaps.value(index.row());
+        return e.pixmap;
     else if (role == Qt::UserRole + 1)
-        return pixmapId.value(index.row());
+        return static_cast<qulonglong>(e.elementId);
 
     return QVariant();
 }
 
-void PiecesModel::addPiece(const int &index)
+void ElementsListModel::setScene(QGraphicsScene *scene)
 {
-    beginInsertRows(QModelIndex(), pixmaps.size(), pixmaps.size());
-    LvlScene * scene_lvl = dynamic_cast<LvlScene*>(scn);
-    WldScene * scene_wld = dynamic_cast<WldScene*>(scn);
-
-    if(m_type==LEVELPIECE_BLOCK)
-    {
-        obj_block& block = scene_lvl ? scene_lvl->m_localConfigBlocks[index] : m_conf->main_block[index];
-        pixmapNames.insert(pixmaps.size(), block.setup.name);
-        QPixmap img;
-        Items::getItemGFX(&block, img, false, QSize(32,32));
-        pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), block.setup.id);
-    }
-    else
-    if(m_type==LEVELPIECE_BGO)
-    {
-        obj_bgo& bgo = scene_lvl ? scene_lvl->m_localConfigBGOs[index] : m_conf->main_bgo[index];
-        pixmapNames.insert(pixmaps.size(), bgo.setup.name);
-        QPixmap img;
-        Items::getItemGFX(&bgo, img, false, QSize(32,32));
-        pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), bgo.setup.id);
-    }
-    else
-    if(m_type==LEVELPIECE_NPC)
-    {
-        obj_npc& npc = scene_lvl ? scene_lvl->m_localConfigNPCs[index] : m_conf->main_npc[index];
-        pixmapNames.insert(pixmaps.size(), npc.setup.name);
-        QPixmap img;
-        Items::getItemGFX(&npc, img, false, QSize(32,32));
-        pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), npc.setup.id);
-    }
-    else
-    if(m_type==WORLDPIECE_TILE)
-    {
-        obj_w_tile& tile = scene_wld ? scene_wld->m_localConfigTerrain[index] : m_conf->main_wtiles[index];
-        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        QPixmap img;
-        Items::getItemGFX(&tile, img, false, QSize(32,32));
-        pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), tile.setup.id);
-    }
-    else
-    if(m_type==WORLDPIECE_SCENERY)
-    {
-        obj_w_scenery& scenery = scene_wld ? scene_wld->m_localConfigScenery[index] : m_conf->main_wscene[index];
-        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        QPixmap img;
-        Items::getItemGFX(&scenery, img, false, QSize(32,32));
-        pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), scenery.setup.id);
-    }
-    else
-    if(m_type==WORLDPIECE_PATH)
-    {
-        obj_w_path& wpath = scene_wld ? scene_wld->m_localConfigPaths[index] : m_conf->main_wpaths[index];
-        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        QPixmap img;
-        Items::getItemGFX(&wpath, img, false, QSize(32,32));
-        pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), wpath.setup.id);
-    }
-    else
-    if(m_type==WORLDPIECE_LEVEL)
-    {
-        obj_w_level& wlevel = scene_wld ? scene_wld->m_localConfigLevels[index] : m_conf->main_wlevels[index];
-        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
-        QPixmap img;
-        Items::getItemGFX(&wlevel, img, false, QSize(32,32));
-        pixmaps.insert(pixmaps.size(), img);
-        pixmapId.insert(pixmaps.size(), wlevel.setup.id);
-    }
-    endInsertRows();
+    m_scene = scene;
 }
 
-QString PiecesModel::getMimeType() const
+void ElementsListModel::setElementsType(ElementsListModel::ElementType elementType)
+{
+    clear();
+    m_type = elementType;
+}
+
+void ElementsListModel::clear()
+{
+    beginRemoveRows(QModelIndex(), 0, m_elements.size());
+    m_elementsVisibleMap.clear();
+    m_elements.clear();
+    endRemoveRows();
+}
+
+void ElementsListModel::addElementsBegin()
+{
+    beginInsertRows(QModelIndex(), m_elements.size(), m_elements.size());
+}
+
+void ElementsListModel::addElementsEnd()
+{
+    endInsertRows();
+    updateVisibilityMap();
+    updateSort();
+}
+
+void ElementsListModel::addElement(const int &index)
+{
+    LvlScene * scene_lvl = dynamic_cast<LvlScene*>(m_scene);
+    WldScene * scene_wld = dynamic_cast<WldScene*>(m_scene);
+
+    Element element;
+
+    if(m_type == LEVELPIECE_BLOCK)
+    {
+        obj_block& block = scene_lvl ? scene_lvl->m_localConfigBlocks[index] : m_conf->main_block[index];
+        element.elementId = static_cast<qulonglong>(block.setup.id);
+        element.name      = block.setup.name.isEmpty() ? QString("%1").arg(index) : block.setup.name;
+        element.description = Items::getTilesetToolTip(m_type, element.elementId, m_scene);
+        Items::getItemGFX(&block, element.pixmap, false, QSize(32,32));
+        element.isValid = true;
+        element.isVisible = true;
+    }
+    else
+    if(m_type == LEVELPIECE_BGO)
+    {
+        obj_bgo& bgo = scene_lvl ? scene_lvl->m_localConfigBGOs[index] : m_conf->main_bgo[index];
+        element.elementId = static_cast<qulonglong>(bgo.setup.id);
+        element.name      = bgo.setup.name.isEmpty() ? QString("%1").arg(index) : bgo.setup.name;
+        element.description = Items::getTilesetToolTip(m_type, element.elementId, m_scene);
+        Items::getItemGFX(&bgo, element.pixmap, false, QSize(32,32));
+        element.isValid = true;
+        element.isVisible = true;
+    }
+    else
+    if(m_type == LEVELPIECE_NPC)
+    {
+        obj_npc& npc = scene_lvl ? scene_lvl->m_localConfigNPCs[index] : m_conf->main_npc[index];
+        element.elementId = static_cast<qulonglong>(npc.setup.id);
+        element.name      = npc.setup.name.isEmpty() ? QString("%1").arg(index) : npc.setup.name;
+        element.description = Items::getTilesetToolTip(m_type, element.elementId, m_scene);
+        Items::getItemGFX(&npc, element.pixmap, false, QSize(32,32));
+        element.isValid = true;
+        element.isVisible = true;
+    }
+    else
+    if(m_type == WORLDPIECE_TILE)
+    {
+        obj_w_tile& tile = scene_wld ? scene_wld->m_localConfigTerrain[index] : m_conf->main_wtiles[index];
+        element.elementId = static_cast<qulonglong>(tile.setup.id);
+        element.name      = tile.setup.name.isEmpty() ? QString("%1").arg(index) : tile.setup.name;
+        element.description = Items::getTilesetToolTip(m_type, element.elementId, m_scene);
+        Items::getItemGFX(&tile, element.pixmap, false, QSize(32,32));
+        element.isValid = true;
+        element.isVisible = true;
+    }
+    else
+    if(m_type == WORLDPIECE_SCENERY)
+    {
+        obj_w_scenery& scenery = scene_wld ? scene_wld->m_localConfigScenery[index] : m_conf->main_wscene[index];
+        element.elementId = static_cast<qulonglong>(scenery.setup.id);
+        element.name      = scenery.setup.name.isEmpty() ? QString("%1").arg(index) : scenery.setup.name;
+        element.description = Items::getTilesetToolTip(m_type, element.elementId, m_scene);
+        Items::getItemGFX(&scenery, element.pixmap, false, QSize(32,32));
+        element.isValid = true;
+        element.isVisible = true;
+    }
+    else
+    if(m_type == WORLDPIECE_PATH)
+    {
+        obj_w_path& wpath = scene_wld ? scene_wld->m_localConfigPaths[index] : m_conf->main_wpaths[index];
+        element.elementId = static_cast<qulonglong>(wpath.setup.id);
+        element.name      = wpath.setup.name.isEmpty() ? QString("%1").arg(index) : wpath.setup.name;
+        element.description = Items::getTilesetToolTip(m_type, element.elementId, m_scene);
+        Items::getItemGFX(&wpath, element.pixmap, false, QSize(32,32));
+        element.isValid = true;
+        element.isVisible = true;
+    }
+    else
+    if(m_type == WORLDPIECE_LEVEL)
+    {
+        obj_w_level& wlevel = scene_wld ? scene_wld->m_localConfigLevels[index] : m_conf->main_wlevels[index];
+        element.elementId = static_cast<qulonglong>(wlevel.setup.id);
+        element.name      = wlevel.setup.name.isEmpty() ? QString("%1").arg(index) : wlevel.setup.name;
+        element.description = Items::getTilesetToolTip(m_type, element.elementId, m_scene);
+        Items::getItemGFX(&wlevel, element.pixmap, false, QSize(32,32));
+        element.isValid = true;
+        element.isVisible = true;
+    }
+
+    if(element.isValid)
+        m_elements.push_back(element);
+}
+
+void ElementsListModel::setFilter(const QString &criteria, int searchType)
+{
+    if(criteria.isEmpty())
+    {
+        for(Element &e : m_elements)
+            e.isVisible = true;
+        beginInsertRows(QModelIndex(), m_elementsVisibleMap.size() - 1, m_elements.size() - 1);
+        updateVisibilityMap();
+        endInsertRows();
+        return;
+    }
+
+    int oldVisiblesCount = m_elementsVisibleMap.size();
+    int newVisiblesCount = 0;
+
+    for(int i = 0; i < m_elements.size(); ++i)
+    {
+        Element &e = m_elements[i];
+        switch(searchType)
+        {
+        default:
+        case Search_ByName:
+            e.isVisible = e.name.contains(criteria, Qt::CaseInsensitive);
+            break;
+        case Search_ById:
+            e.isVisible = e.elementId == criteria.toULongLong();
+            break;
+        case Search_ByIdContained:
+            e.isVisible = QString("%1").arg(e.elementId).contains(criteria);
+            break;
+        }
+        if(e.isVisible)
+            ++newVisiblesCount;
+    }
+
+    if(oldVisiblesCount < newVisiblesCount)
+    {
+        beginRemoveRows(QModelIndex(), newVisiblesCount - 1, oldVisiblesCount - 1);
+        updateVisibilityMap();
+        endRemoveRows();
+    }
+    else if(oldVisiblesCount > newVisiblesCount)
+    {
+        beginInsertRows(QModelIndex(), newVisiblesCount - 1, oldVisiblesCount - 1);
+        updateVisibilityMap();
+        endInsertRows();
+    }
+    else
+    {
+        beginResetModel();
+        updateVisibilityMap();
+        endResetModel();
+    }
+}
+
+void ElementsListModel::setSort(int sortType, bool backward)
+{
+    m_sortType = sortType;
+    m_sortBackward = backward;
+    updateSort();
+}
+
+QString ElementsListModel::getMimeType() const
 {
     switch (m_type)
     {
@@ -149,20 +262,80 @@ QString PiecesModel::getMimeType() const
     return QString("image/x-pge-piece");
 }
 
-Qt::ItemFlags PiecesModel::flags(const QModelIndex &index) const
+void ElementsListModel::updateVisibilityMap()
+{
+    m_elementsVisibleMap.clear();
+    m_elementsVisibleMap.reserve(m_elements.size());
+    for(int i = 0; i < m_elements.size(); ++i)
+    {
+        if(m_elements[i].isVisible)
+            m_elementsVisibleMap.push_back(i);
+    }
+}
+
+void ElementsListModel::updateSort()
+{
+    beginResetModel();
+    switch(m_sortType)
+    {
+    default:
+    case Sort_ByName:
+        if(m_sortBackward)
+        {
+            std::sort(m_elements.begin(), m_elements.end(),
+            [](const Element &a, const Element &b)
+            {
+                return a.name.compare(b.name, Qt::CaseInsensitive) > 0;
+            });
+        }
+        else
+        {
+            std::sort(m_elements.begin(), m_elements.end(),
+            [](const Element &a, const Element &b)
+            {
+                return a.name.compare(b.name, Qt::CaseInsensitive) < 0;
+            });
+        }
+        break;
+
+    case Sort_ById:
+        if(m_sortBackward)
+        {
+            std::sort(m_elements.begin(), m_elements.end(),
+            [](const Element &a, const Element &b)
+            {
+                return a.elementId > b.elementId;
+            });
+        }
+        else
+        {
+            std::sort(m_elements.begin(), m_elements.end(),
+            [](const Element &a, const Element &b)
+            {
+                return a.elementId < b.elementId;
+            });
+        }
+        break;
+    }
+
+    // Also update visibility map to keep matching
+    updateVisibilityMap();
+    endResetModel();
+}
+
+Qt::ItemFlags ElementsListModel::flags(const QModelIndex &index) const
 {
     if (index.isValid())
         return (QAbstractListModel::flags(index)|Qt::ItemIsDragEnabled);
-
     return Qt::ItemIsDropEnabled;
 }
 
-bool PiecesModel::removeRows(int row, int count, const QModelIndex &parent)
+bool ElementsListModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (parent.isValid())
         return false;
 
-    if (row >= pixmaps.size() || row + count <= 0)
+    if (row >= m_elementsVisibleMap.size() || row + count <= 0)
         return false;
 
 //    int beginRow = qMax(0, row);
@@ -180,14 +353,14 @@ bool PiecesModel::removeRows(int row, int count, const QModelIndex &parent)
     return false;
 }
 
-QStringList PiecesModel::mimeTypes() const
+QStringList ElementsListModel::mimeTypes() const
 {
     QStringList types;
     types << getMimeType().toStdString().c_str();
     return types;
 }
 
-QMimeData *PiecesModel::mimeData(const QModelIndexList &indexes) const
+QMimeData *ElementsListModel::mimeData(const QModelIndexList &indexes) const
 {
     QMimeData *mimeData = new QMimeData();
     QByteArray encodedData;
@@ -205,7 +378,7 @@ QMimeData *PiecesModel::mimeData(const QModelIndexList &indexes) const
     return mimeData;
 }
 
-bool PiecesModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
+bool ElementsListModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                                int /*row*/, int column, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
@@ -248,17 +421,15 @@ bool PiecesModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     return false;
 }
 
-int PiecesModel::rowCount(const QModelIndex &parent) const
+int ElementsListModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
     else
-        return pixmaps.size();
+        return m_elementsVisibleMap.size();
 }
 
-Qt::DropActions PiecesModel::supportedDropActions() const
+Qt::DropActions ElementsListModel::supportedDropActions() const
 {
     return Qt::CopyAction | Qt::MoveAction;
 }
-
-

@@ -29,11 +29,10 @@
 
 #include "util.h"
 
-void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
+void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int searchType)
 {
     QString toSearch;
     toSearch = searchEdit->text();
-    int searchType = typeBox->currentIndex();
     for(int i = 0; i < itemList->count(); i++)
     {
         QListWidgetItem *item = itemList->item(i);

@@ -38,7 +38,7 @@ public:
      * \param itemList Pointer to QListWidget with elements where find
      * \param typeBox ComboBox contains type of search (by contained string in a name or ID number of the element)
      */
-    static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
+    static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, int searchType);
     /*!
      * \brief Removes all entries of QListWidget (with deletion!)
      * \param wid Pointer to QListWidget

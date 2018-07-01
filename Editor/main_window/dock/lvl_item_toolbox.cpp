@@ -647,11 +647,11 @@ void LevelItemBox::updateFilters()
 {
     int current = ui->LevelToolBoxTabs->currentIndex();
     if(current == 0)
-        util::updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType);
+        util::updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType->currentIndex());
     else if(current == 1)
-        util::updateFilter(ui->BGOFilterField, ui->BGOItemsList, ui->BGOFilterType);
+        util::updateFilter(ui->BGOFilterField, ui->BGOItemsList, ui->BGOFilterType->currentIndex());
     else if(current == 2)
-        util::updateFilter(ui->NPCFilterField, ui->NPCItemsList, ui->NPCFilterType);
+        util::updateFilter(ui->NPCFilterField, ui->NPCItemsList, ui->NPCFilterType->currentIndex());
 }
 
 void LevelItemBox::clearFilter()
@@ -664,9 +664,8 @@ void LevelItemBox::clearFilter()
 
 void LevelItemBox::on_BlockFilterField_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     updateFilters();
-
-    if(arg1.isEmpty()) return; //Dummy
 }
 
 void LevelItemBox::on_BlockFilterType_currentIndexChanged(int /*index*/)
@@ -676,9 +675,8 @@ void LevelItemBox::on_BlockFilterType_currentIndexChanged(int /*index*/)
 
 void LevelItemBox::on_BGOFilterField_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     updateFilters();
-
-    if(arg1.isEmpty()) return; //Dummy
 }
 
 void LevelItemBox::on_BGOFilterType_currentIndexChanged(int /*index*/)
@@ -688,8 +686,8 @@ void LevelItemBox::on_BGOFilterType_currentIndexChanged(int /*index*/)
 
 void LevelItemBox::on_NPCFilterField_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     updateFilters();
-    if(arg1.isEmpty()) return; //Dummy
 }
 
 void LevelItemBox::on_NPCFilterType_currentIndexChanged(int /*index*/)
