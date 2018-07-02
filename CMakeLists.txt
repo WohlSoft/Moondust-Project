@@ -295,14 +295,14 @@ ExternalProject_Add(
     SDL2_Local
     PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
     URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
-    PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_cmake_no_wasapi.patch"
+    PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_S32_to_F32_fix.patch"
           COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_remove_lib_prefix_on_windows.patch"
     CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
         -DSDL_SHARED=${PGE_SHARED_SDLMIXER}
-        $<$<BOOL:WIN32>:-DENABLE_WASAPI_SUPPORT=OFF>
+        $<$<BOOL:WIN32>:-DWASAPI=OFF>
         $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
         $<$<BOOL:LINUX>:-DSNDIO=OFF>
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DEXTRA_CFLAGS=-s USE_PTHREADS=1>
