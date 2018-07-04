@@ -126,7 +126,7 @@ BuildSDL()
 
     #--------------Apply some patches--------------
     # Fixes the PCM-Signed-Int32 to Float32 audio conversion for the SSE2 based implementation
-    patch -t -N $LatestSDL/src/audio/SDL_audiotypecvt.h < ../patches/SDL2_S32_to_F32_fix.patch
+    # patch -t -N $LatestSDL/src/audio/SDL_audiotypecvt.h < ../patches/SDL2_S32_to_F32_fix.patch #FIXED
     #----------------------------------------------
 
     ###########SDL2###########
