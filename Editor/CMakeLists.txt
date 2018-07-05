@@ -348,6 +348,7 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/dock/bookmarks_box.cpp
     main_window/dock/debugger.cpp
     main_window/dock/_dock_vizman.cpp
+    main_window/dock/itembox_list_model.cpp
     main_window/dock/lvl_events_box.cpp
     main_window/dock/lvl_item_properties.cpp
     main_window/dock/lvl_item_toolbox.cpp

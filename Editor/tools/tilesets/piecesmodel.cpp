@@ -186,6 +186,11 @@ void ElementsListModel::addElement(const int &index)
 
 void ElementsListModel::setFilter(const QString &criteria, int searchType)
 {
+    if(m_filterCriteria != criteria)
+        m_filterCriteria = criteria;
+    if(m_filterSearchType != searchType)
+        m_filterSearchType = searchType;
+
     if(criteria.isEmpty())
     {
         for(Element &e : m_elements)
@@ -328,29 +333,6 @@ Qt::ItemFlags ElementsListModel::flags(const QModelIndex &index) const
     if (index.isValid())
         return (QAbstractListModel::flags(index)|Qt::ItemIsDragEnabled);
     return Qt::ItemIsDropEnabled;
-}
-
-bool ElementsListModel::removeRows(int row, int count, const QModelIndex &parent)
-{
-    if (parent.isValid())
-        return false;
-
-    if (row >= m_elementsVisibleMap.size() || row + count <= 0)
-        return false;
-
-//    int beginRow = qMax(0, row);
-//    int endRow = qMin(row + count - 1, pixmaps.size() - 1);
-
-//    beginRemoveRows(parent, beginRow, endRow);
-
-//    while (beginRow <= endRow) {
-//        pixmaps.removeAt(beginRow);
-//        pixmapNames.removeAt(beginRow);
-//        ++beginRow;
-//    }
-
-//    endRemoveRows();
-    return false;
 }
 
 QStringList ElementsListModel::mimeTypes() const

@@ -31,6 +31,8 @@
 
 #include "item_tooltip_make.hpp"
 
+#include "itembox_list_model.h"
+
 LevelItemBox::LevelItemBox(QWidget *parent) :
     QDockWidget(parent),
     MWDock_Base(parent),
@@ -40,6 +42,10 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+
+    m_blockModel = new ItemBoxListModel(ui->BlockItemsList);
+    ui->BlockItemsList->setModel(m_blockModel);
+    connect(ui->BlockItemsList, &QListView::clicked, this, &LevelItemBox::on_BlockItemsList_itemClicked);
 
     allLabel = "[all]";
     customLabel = "[custom]";
@@ -119,8 +125,9 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
     LogDebug("LevelTools -> Clear current");
 
+    m_blockModel->clear();
     util::memclear(ui->BGOItemsList);
-    util::memclear(ui->BlockItemsList);
+    /*util::memclear(ui->BlockItemsList);*/
     util::memclear(ui->NPCItemsList);
 
     LogDebug("LevelTools -> Declare new");
@@ -134,6 +141,8 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
     tmpGrpList.clear();
 
     LogDebug("LevelTools -> List ob blocks");
+
+#if 0
     //set custom Block items from loaded level
     if((ui->BlockCatList->currentText() == customLabel) && (setCat) && (setGrp))
     {
@@ -151,83 +160,44 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
         }
     }
     else
-        //set Block item box from global configs
-        for(int i = 1; i < scene->m_localConfigBlocks.size(); i++)
-        {
-            obj_block &blockItem =  scene->m_localConfigBlocks[i];
+#endif
+    //set Block item box from global configs
 
-            //Add Group
-            needToAdd = true;
-            if(blockItem.setup.group.isEmpty())
-                needToAdd = false; //Skip empty values
-            else if(!tmpList.isEmpty())
-            {
-                foreach(QString grp, tmpGrpList)
-                {
-                    if(blockItem.setup.group == grp)
-                    {
-                        needToAdd = false;
-                        break;
-                    }
-                }
-            }
-            if(needToAdd)
-                tmpGrpList.push_back(blockItem.setup.group);
+    QSet<uint64_t> blockCustomId;
+    for(int i = 0; i < edit->scene->m_customBlocks.size(); i++)
+    {
+        obj_block &block = *scene->m_customBlocks[i];
+        blockCustomId.insert(block.setup.id);
+    }
 
-            //Add category
-            needToAdd = true;
-            if((blockItem.setup.group != grp_blocks) && (grp_blocks != allLabel))
-                needToAdd = false;
-            else if(!tmpList.isEmpty())
-            {
-                foreach(QString cat, tmpList)
-                {
-                    if(blockItem.setup.category == cat)
-                    {
-                        needToAdd = false;
-                        break;
-                    }
-                }
-            }
+    m_blockModel->addElementsBegin();
+    for(int i = 1; i < scene->m_localConfigBlocks.size(); i++)
+    {
+        obj_block &blockItem =  scene->m_localConfigBlocks[i];
 
-            if(needToAdd)
-                tmpList.push_back(blockItem.setup.category);
-
-            if(
-                ((blockItem.setup.group == grp_blocks) || (grp_blocks == allLabel) || (grp_blocks == "")) &&
-                ((blockItem.setup.category == cat_blocks) || (cat_blocks == allLabel))
-            )
-            {
-                Items::getItemGFX(&blockItem, tmpI, false, QSize(48, 48));
-                item = new QListWidgetItem(blockItem.setup.name);
-                item->setIcon(QIcon(tmpI));
-                item->setToolTip(makeToolTip("block", blockItem.setup));
-                item->setData(Qt::UserRole, int(blockItem.setup.id));
-                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-                ui->BlockItemsList->addItem(item);
-            }
-
-        }
-
-    tmpList.sort();
-    tmpList.push_front(customLabel);
-    tmpList.push_front(allLabel);
-    tmpGrpList.sort();
-    tmpGrpList.push_front(allLabel);
+        ItemBoxListModel::Element e;
+        Items::getItemGFX(&blockItem, e.pixmap, false, QSize(48, 48));
+        e.name = blockItem.setup.name;
+        e.description = makeToolTip("block", blockItem.setup);
+        e.elementId = blockItem.setup.id;
+        e.isCustom = blockCustomId.contains(blockItem.setup.id);
+        e.isValid = true;
+        m_blockModel->addElement(e, blockItem.setup.group, blockItem.setup.category);
+    }
+    m_blockModel->addElementsEnd();
 
     //apply group list
     if(!setGrp)
     {
         ui->BlockGroupList->clear();
-        ui->BlockGroupList->addItems(tmpGrpList);
+        ui->BlockGroupList->addItems(m_blockModel->getGroupsList(allLabel));
     }
 
     //apply category list
     if(!setCat)
     {
         ui->BlockCatList->clear();
-        ui->BlockCatList->addItems(tmpList);
+        ui->BlockCatList->addItems(m_blockModel->getCategoriesList(allLabel, customLabel));
     }
 
     tmpList.clear();
@@ -439,17 +409,18 @@ void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
 
 void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &pos)
 {
-    if(ui->BlockItemsList->selectedItems().isEmpty())
+#if 0
+    if(ui->BlockItemsList->selectedIndexes().isEmpty())
         return;
 
     LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit)
         return;
 
-    QListWidgetItem *item = ui->BlockItemsList->selectedItems()[0];
+    QModelIndex item_i = ui->BlockItemsList->selectedIndexes()[0];
     QString episodeDir = edit->LvlData.meta.path;
     QString customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
-    int itemID = item->data(Qt::UserRole).toInt();
+    int itemID = m_blockModel->data(item_i, ItemBoxListModel::ItemBox_ItemId).toInt();
 
     obj_block &block = mw()->configs.main_block[itemID];
     QString newImg = block.setup.image_n;
@@ -472,6 +443,7 @@ void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &po
         if(!QFile::exists(episodeDir + "/" + newImg))
             orig.save(episodeDir + "/" + newImg, "PNG");
     }
+#endif
 }
 
 void LevelItemBox::on_BGOItemsList_customContextMenuRequested(const QPoint &pos)
@@ -553,8 +525,17 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
 void LevelItemBox::on_BlockGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
-    grp_blocks = arg1;
-    setLvlItemBoxes(true);
+    //grp_blocks = arg1;
+    //setLvlItemBoxes(true);
+    if(arg1 == allLabel)
+        m_blockModel->setGroupFilter("");
+    else
+        m_blockModel->setGroupFilter(arg1);
+
+    lock_grp = true;
+    ui->BlockCatList->clear();
+    ui->BlockCatList->addItems(m_blockModel->getCategoriesList(allLabel, customLabel));
+    lock_grp = false;
 }
 
 void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
@@ -575,8 +556,12 @@ void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 void LevelItemBox::on_BlockCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
-    cat_blocks = arg1;
-    setLvlItemBoxes(true, true);
+    //cat_blocks = arg1;
+    //setLvlItemBoxes(true, true);
+    if(arg1 == allLabel)
+        m_blockModel->setCategoryFilter("");
+    else
+        m_blockModel->setCategoryFilter(arg1);
 }
 
 
@@ -609,7 +594,7 @@ void LevelItemBox::on_BGOUniform_clicked(bool checked)
 void LevelItemBox::on_BlockUniform_clicked(bool checked)
 {
     ui->BlockItemsList->setUniformItemSizes(checked);
-    setLvlItemBoxes(true, true);
+    ui->BlockItemsList->update();
 }
 
 
@@ -622,11 +607,14 @@ void LevelItemBox::on_NPCUniform_clicked(bool checked)
 
 // ///////////////////////////////////
 
-void LevelItemBox::on_BlockItemsList_itemClicked(QListWidgetItem *item)
+void LevelItemBox::on_BlockItemsList_itemClicked(const QModelIndex &item)
 {
     //placeBlock
     if((mw()->activeChildWindow() == 1) && (ui->BlockItemsList->hasFocus()))
-        mw()->SwitchPlacingItem(ItemTypes::LVL_Block, item->data(Qt::UserRole).toInt());
+    {
+        int id = m_blockModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        mw()->SwitchPlacingItem(ItemTypes::LVL_Block, id);
+    }
 }
 
 void LevelItemBox::on_BGOItemsList_itemClicked(QListWidgetItem *item)
@@ -646,9 +634,10 @@ void LevelItemBox::on_NPCItemsList_itemClicked(QListWidgetItem *item)
 void LevelItemBox::updateFilters()
 {
     int current = ui->LevelToolBoxTabs->currentIndex();
-    if(current == 0)
-        util::updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType->currentIndex());
-    else if(current == 1)
+//    if(current == 0)
+//        util::updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType->currentIndex());
+    /*else */
+    if(current == 1)
         util::updateFilter(ui->BGOFilterField, ui->BGOItemsList, ui->BGOFilterType->currentIndex());
     else if(current == 2)
         util::updateFilter(ui->NPCFilterField, ui->NPCItemsList, ui->NPCFilterType->currentIndex());
@@ -657,6 +646,7 @@ void LevelItemBox::updateFilters()
 void LevelItemBox::clearFilter()
 {
     ui->BlockFilterField->setText("");
+    m_blockModel->setFilter("", ui->BlockFilterType->currentIndex());
     ui->BGOFilterField->setText("");
     ui->NPCFilterField->setText("");
     updateFilters();
@@ -664,13 +654,14 @@ void LevelItemBox::clearFilter()
 
 void LevelItemBox::on_BlockFilterField_textChanged(const QString &arg1)
 {
-    Q_UNUSED(arg1);
-    updateFilters();
+    //Q_UNUSED(arg1);
+    //updateFilters();
+    m_blockModel->setFilter(arg1, ui->BlockFilterType->currentIndex());
 }
 
-void LevelItemBox::on_BlockFilterType_currentIndexChanged(int /*index*/)
+void LevelItemBox::on_BlockFilterType_currentIndexChanged(int index)
 {
-    updateFilters();
+    m_blockModel->setFilter(ui->BlockFilterField->text(), index);
 }
 
 void LevelItemBox::on_BGOFilterField_textChanged(const QString &arg1)

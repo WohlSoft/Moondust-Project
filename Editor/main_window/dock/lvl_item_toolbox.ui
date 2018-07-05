@@ -73,7 +73,7 @@
       </widget>
      </item>
      <item row="4" column="0" colspan="4">
-      <widget class="QListWidget" name="BlockItemsList">
+      <widget class="QListView" name="BlockItemsList">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
@@ -116,6 +116,9 @@
        <property name="textElideMode">
         <enum>Qt::ElideNone</enum>
        </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerItem</enum>
+       </property>
        <property name="movement">
         <enum>QListView::Snap</enum>
        </property>
@@ -137,21 +140,9 @@
        <property name="wordWrap">
         <bool>true</bool>
        </property>
-       <property name="sortingEnabled">
+       <property name="sortingEnabled" stdset="0">
         <bool>true</bool>
        </property>
-       <item>
-        <property name="text">
-         <string notr="true">The test Icon for blocks</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../_resources/editor.qrc">
-          <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
-        </property>
-        <property name="flags">
-         <set>ItemIsSelectable|ItemIsEnabled</set>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="3" column="0">

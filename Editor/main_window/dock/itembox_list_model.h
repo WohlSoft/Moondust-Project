@@ -1,0 +1,119 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef ITEMBOXLISTMODEL_H
+#define ITEMBOXLISTMODEL_H
+
+#include <QAbstractListModel>
+#include <QMap>
+#include <QSet>
+#include <QStringList>
+
+class ItemBoxListModel : public QAbstractListModel
+{
+    Q_OBJECT
+
+public:
+    enum SearchType
+    {
+        Search_ByName = 0,
+        Search_ById,
+        Search_ByIdContained
+    };
+
+    enum SortType
+    {
+        Sort_ByName,
+        Sort_ById
+    };
+
+    enum
+    {
+        ItemBox_ItemId     = Qt::UserRole + 1,
+        ItemBox_ItemPixmap = Qt::UserRole,
+    };
+
+    struct Element
+    {
+        bool isValid = false;
+        qulonglong elementId = 0;
+        QString name;
+        QString description;
+        QPixmap pixmap;
+        bool isVisible = false;
+        bool isCustom = false;
+        int categoryId = -1;
+        int groupId = -1;
+    };
+
+    explicit ItemBoxListModel(QObject *parent = nullptr);
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+
+    void clear();
+
+    void addElementsBegin();
+    void addElement(const Element &element, const QString &group, const QString &category);
+    void addElementsEnd();
+
+    QStringList getCategoriesList(const QString &allField, const QString &customField);
+    QStringList getGroupsList(const QString &allField);
+
+    void setCategoryFilter(const QString &category);
+    void setGroupFilter(const QString &group);
+    void setOriginsOnlyFilter(bool origs);
+    void setCustomOnlyFilter(bool custom);
+
+    void setFilter(const QString &criteria, int searchType = 0);
+
+    void setSort(int sortType = 0, bool backward = false);
+
+    int  getGroup(const QString &group);
+    int  getCategory(const QString &category);
+
+private:
+    QList<Element>  m_elements;
+    QList<int>      m_elementsVisibleMap;
+
+    typedef QMap<QString, int> SIMap;
+    SIMap m_categoriesMap;
+    SIMap m_groupsMap;
+    QMap<QString, QSet<QString > > m_groupCategories;
+
+    QString m_filterCriteria;
+    int     m_filterSearchType = Search_ByName;
+    int     m_filterCategory = -1;
+    int     m_filterGroup = -1;
+    bool    m_filterCustomOnly = false;
+    bool    m_filterOriginsOnly = false;
+    void    updateFilter();
+
+    void    updateVisibilityMap();
+
+    int     m_sortType = Sort_ByName;
+    bool    m_sortBackward = false;
+    void    updateSort();
+
+    int     m_itemSize = 48;
+};
+
+#endif // ITEMBOXLISTMODEL_H

@@ -7,6 +7,7 @@
 
 class QTabWidget;
 class QListWidgetItem;
+class ItemBoxListModel;
 
 class MainWindow;
 
@@ -60,7 +61,7 @@ private slots:
     void on_NPCFilterType_currentIndexChanged(int index);
 
     //Item was clicked
-    void on_BlockItemsList_itemClicked(QListWidgetItem *item);
+    void on_BlockItemsList_itemClicked(const QModelIndex &item);
     void on_BGOItemsList_itemClicked(QListWidgetItem *item);
     void on_NPCItemsList_itemClicked(QListWidgetItem *item);
 
@@ -72,6 +73,8 @@ private:
 
 private:
     Ui::LevelItemBox *ui;
+
+    ItemBoxListModel *m_blockModel;
 
     QString allLabel;
     QString customLabel;
