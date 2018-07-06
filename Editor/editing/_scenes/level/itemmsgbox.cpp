@@ -19,6 +19,7 @@
 #include <QFontDatabase>
 #include <QFontMetrics>
 #include <QScrollBar>
+#include <QStyle>
 
 #include "itemmsgbox.h"
 #include <ui_itemmsgbox.h>
