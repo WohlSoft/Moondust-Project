@@ -7,7 +7,6 @@
 #include "mwdock_base.h"
 
 class QTabWidget;
-class QListWidgetItem;
 class ItemBoxListModel;
 
 class MainWindow;

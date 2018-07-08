@@ -23,7 +23,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>0</number>
+        <number>7</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -69,25 +69,6 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypeBlock">
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">ID</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID (contents)</string>
-            </property>
-           </item>
-          </widget>
-         </item>
          <item row="1" column="1" colspan="2">
           <widget class="QComboBox" name="Sel_Combo_CategoryBlock">
            <property name="maxVisibleItems">
@@ -114,6 +95,17 @@
          </item>
          <item row="3" column="0" colspan="3">
           <widget class="QListWidget" name="Sel_List_Block"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupBlock">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -185,27 +177,19 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_FilterBGO"/>
          </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypeBGO">
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">ID</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID (contents)</string>
-            </property>
-           </item>
-          </widget>
-         </item>
          <item row="3" column="0" colspan="3">
           <widget class="QListWidget" name="Sel_List_BGO"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupBGO">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -277,27 +261,19 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_NPC"/>
          </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypeNPC">
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">ID</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID (contents)</string>
-            </property>
-           </item>
-          </widget>
-         </item>
          <item row="3" column="0" colspan="3">
           <widget class="QListWidget" name="Sel_List_NPC"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupNPC">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -353,25 +329,8 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_Tile">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypeTile">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="1" column="1" colspan="2">
@@ -431,6 +390,17 @@
            <attribute name="verticalHeaderMinimumSectionSize">
             <number>32</number>
            </attribute>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupTerrain">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
           </widget>
          </item>
         </layout>
@@ -509,25 +479,8 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_Scenery">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypeScenery">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
@@ -558,6 +511,17 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupScenery">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="Sel_Tab_Path">
@@ -580,23 +544,6 @@
          <property name="spacing">
           <number>0</number>
          </property>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypePath">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID</string>
-            </property>
-           </item>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="Sel_Label_FilterPath">
            <property name="text">
@@ -651,7 +598,7 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_Path">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -690,6 +637,17 @@
            <attribute name="verticalHeaderMinimumSectionSize">
             <number>32</number>
            </attribute>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupPath">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
           </widget>
          </item>
         </layout>
@@ -768,25 +726,8 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_Level">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypeLevel">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
@@ -817,6 +758,17 @@
            </property>
            <property name="sortingEnabled">
             <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupLevel">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
           </widget>
          </item>
@@ -896,29 +848,23 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_Music">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="Sel_Combo_FiltertypeMusic">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Text</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>ID</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
           <widget class="QListWidget" name="Sel_List_Music"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupMusicBox">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
