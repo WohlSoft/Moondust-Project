@@ -277,6 +277,6 @@ void MainWindow::updateWindowMenu()
 
 void MainWindow::UpdateCustomItems()
 {
-    dock_LvlItemBox->setLvlItemBoxes(true, true);
+    dock_LvlItemBox->initItemLists();
     dock_WldItemBox->setWldItemBoxes(true, true);
 }

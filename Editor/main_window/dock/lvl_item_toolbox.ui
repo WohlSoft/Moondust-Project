@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>286</width>
-    <height>542</height>
+    <width>279</width>
+    <height>543</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -37,7 +37,7 @@
     <attribute name="title">
      <string>Blocks</string>
     </attribute>
-    <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,9,1" columnminimumwidth="50,0,15,0">
+    <layout class="QGridLayout" name="BlocksG" rowstretch="0,0,0,0,0" columnstretch="0,90,9,0" columnminimumwidth="50,0,15,0">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -53,6 +53,39 @@
      <property name="spacing">
       <number>0</number>
      </property>
+     <item row="1" column="0">
+      <widget class="QLabel" name="BlockCatLabel">
+       <property name="text">
+        <string>Category:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="BlockFilterLabel">
+       <property name="text">
+        <string>Filter:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="BlockFilterField"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="BlockGroupLabel">
+       <property name="text">
+        <string>Group:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QComboBox" name="BlockGroupList">
+       <item>
+        <property name="text">
+         <string notr="true">[all]</string>
+        </property>
+       </item>
+      </widget>
+     </item>
      <item row="1" column="1" colspan="2">
       <widget class="QComboBox" name="BlockCatList">
        <property name="maxVisibleItems">
@@ -65,14 +98,18 @@
        </item>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="BlockCatLabel">
+     <item row="3" column="2">
+      <widget class="QPushButton" name="BlockFilterSetup">
        <property name="text">
-        <string>Category:</string>
+        <string notr="true"/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../_resources/editor.qrc">
+         <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
        </property>
       </widget>
      </item>
-     <item row="4" column="0" colspan="4">
+     <item row="4" column="0" colspan="3">
       <widget class="QListView" name="BlockItemsList">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
@@ -145,83 +182,13 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="BlockFilterLabel">
-       <property name="text">
-        <string>Filter:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="BlockFilterField"/>
-     </item>
-     <item row="3" column="2" colspan="2">
-      <widget class="QComboBox" name="BlockFilterType">
-       <item>
-        <property name="text">
-         <string>Text</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">ID</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>ID (contents)</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QCheckBox" name="BlockUniform">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>15</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Uniform icon size</string>
-       </property>
-       <property name="text">
-        <string notr="true"/>
-       </property>
-       <property name="tristate">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="BlockGroupLabel">
-       <property name="text">
-        <string>Group:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1" colspan="3">
-      <widget class="QComboBox" name="BlockGroupList">
-       <item>
-        <property name="text">
-         <string notr="true">[all]</string>
-        </property>
-       </item>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="BGOs">
     <attribute name="title">
      <string>BGO</string>
     </attribute>
-    <layout class="QGridLayout" name="BGOsG" columnstretch="0,90,9,1" columnminimumwidth="50,0,15,0">
+    <layout class="QGridLayout" name="BGOsG" columnstretch="0,90,9,0" columnminimumwidth="50,0,15,0">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -244,8 +211,46 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="4">
-      <widget class="QListWidget" name="BGOItemsList">
+     <item row="0" column="0">
+      <widget class="QLabel" name="BGOGroupLabel">
+       <property name="text">
+        <string>Group:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="BGOFilterLabel">
+       <property name="text">
+        <string>Filter:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="BGOFilterField"/>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QComboBox" name="BGOCatList">
+       <property name="maxVisibleItems">
+        <number>30</number>
+       </property>
+       <item>
+        <property name="text">
+         <string notr="true">[all]</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QComboBox" name="BGOGroupList">
+       <item>
+        <property name="text">
+         <string notr="true">[all]</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="3">
+      <widget class="QListView" name="BGOItemsList">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
@@ -312,94 +317,20 @@
        <property name="wordWrap">
         <bool>true</bool>
        </property>
-       <property name="sortingEnabled">
+       <property name="sortingEnabled" stdset="0">
         <bool>true</bool>
        </property>
-       <item>
-        <property name="text">
-         <string notr="true">The test Icon for backgrounds</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../_resources/editor.qrc">
-          <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
-        </property>
-        <property name="flags">
-         <set>ItemIsSelectable|ItemIsEnabled</set>
-        </property>
-       </item>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="BGOGroupLabel">
+     <item row="2" column="2">
+      <widget class="QPushButton" name="BGOFilterSetup">
        <property name="text">
-        <string>Group:</string>
+        <string notr="true"/>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="BGOFilterLabel">
-       <property name="text">
-        <string>Filter:</string>
+       <property name="icon">
+        <iconset resource="../../_resources/editor.qrc">
+         <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="BGOFilterField"/>
-     </item>
-     <item row="1" column="3">
-      <widget class="QCheckBox" name="BGOUniform">
-       <property name="maximumSize">
-        <size>
-         <width>15</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Uniform icon size</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QComboBox" name="BGOCatList">
-       <property name="maxVisibleItems">
-        <number>30</number>
-       </property>
-       <item>
-        <property name="text">
-         <string notr="true">[all]</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="2" column="2" colspan="2">
-      <widget class="QComboBox" name="BGOFilterType">
-       <item>
-        <property name="text">
-         <string>Text</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">ID</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>ID (contents)</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="0" column="1" colspan="3">
-      <widget class="QComboBox" name="BGOGroupList">
-       <item>
-        <property name="text">
-         <string notr="true">[all]</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
@@ -408,7 +339,7 @@
     <attribute name="title">
      <string>NPC</string>
     </attribute>
-    <layout class="QGridLayout" name="NPCsG" columnstretch="0,90,9,1" columnminimumwidth="50,0,15,0">
+    <layout class="QGridLayout" name="NPCsG" columnstretch="0,90,9,0" columnminimumwidth="50,0,15,0">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -441,8 +372,36 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="4">
-      <widget class="QListWidget" name="NPCItemsList">
+     <item row="1" column="1" colspan="2">
+      <widget class="QComboBox" name="NPCCatList">
+       <property name="maxVisibleItems">
+        <number>30</number>
+       </property>
+       <item>
+        <property name="text">
+         <string notr="true">[all]</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_26">
+       <property name="text">
+        <string>Group:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QComboBox" name="NPCGroupList">
+       <item>
+        <property name="text">
+         <string notr="true">[all]</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="3">
+      <widget class="QListView" name="NPCItemsList">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
@@ -509,84 +468,20 @@
        <property name="wordWrap">
         <bool>true</bool>
        </property>
-       <property name="sortingEnabled">
+       <property name="sortingEnabled" stdset="0">
         <bool>true</bool>
        </property>
-       <item>
-        <property name="text">
-         <string notr="true">The test Icon for NPCs</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../_resources/editor.qrc">
-          <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
-        </property>
-        <property name="flags">
-         <set>ItemIsSelectable|ItemIsEnabled</set>
-        </property>
-       </item>
       </widget>
      </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QComboBox" name="NPCCatList">
-       <property name="maxVisibleItems">
-        <number>30</number>
-       </property>
-       <item>
-        <property name="text">
-         <string notr="true">[all]</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QCheckBox" name="NPCUniform">
-       <property name="maximumSize">
-        <size>
-         <width>15</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Uniform icon size</string>
-       </property>
+     <item row="2" column="2">
+      <widget class="QPushButton" name="NPCFilterSetup">
        <property name="text">
-        <string/>
+        <string notr="true"/>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="2" colspan="2">
-      <widget class="QComboBox" name="NPCFilterType">
-       <item>
-        <property name="text">
-         <string>Text</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">ID</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>ID (contents)</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_26">
-       <property name="text">
-        <string>Group:</string>
+       <property name="icon">
+        <iconset resource="../../_resources/editor.qrc">
+         <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
        </property>
-      </widget>
-     </item>
-     <item row="0" column="1" colspan="3">
-      <widget class="QComboBox" name="NPCGroupList">
-       <item>
-        <property name="text">
-         <string notr="true">[all]</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>

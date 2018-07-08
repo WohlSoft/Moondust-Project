@@ -19,7 +19,131 @@
 #include <QIcon>
 #include <functional>
 
+#include <QLineEdit>
+#include <QListView>
+#include <QMenu>
+
 #include "itembox_list_model.h"
+
+void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search, QListView *view, bool hasUniformView)
+{
+    QAction *searchByName = menu.addAction(ItemBoxListModel::tr("Search by Name", "Element search criteria"));
+    searchByName->setCheckable(true);
+    searchByName->setChecked(true);
+
+    QAction *searchById = menu.addAction(ItemBoxListModel::tr("Search by ID", "Element search criteria"));
+    searchById->setCheckable(true);
+
+    QAction *searchByIdContained = menu.addAction(ItemBoxListModel::tr("Search by ID (Contained)", "Element search criteria"));
+    searchByIdContained->setCheckable(true);
+
+    menu.addSeparator();
+    QMenu   *sortBy = menu.addMenu(ItemBoxListModel::tr("Sort by", "Search settings pop-up menu, sort submenu"));
+
+    QAction *sortByName = sortBy->addAction(ItemBoxListModel::tr("Name", "Sort by name"));
+    sortByName->setCheckable(true);
+    sortByName->setChecked(true);
+
+    QAction *sortById   = sortBy->addAction(ItemBoxListModel::tr("ID", "Sort by ID"));
+    sortById->setCheckable(true);
+
+    sortBy->addSeparator();
+    QAction *sortBackward = sortBy->addAction(ItemBoxListModel::tr("Backward", "Backward sorting order"));
+    sortBackward->setCheckable(true);
+
+    QAction *uniformView = nullptr;
+    if(hasUniformView && view)
+    {
+        menu.addSeparator();
+        uniformView = menu.addAction(ItemBoxListModel::tr("Uniform item sizes view", "Align elements inside of Item Box list in uniform view"));
+        uniformView->setCheckable(true);
+    }
+
+    QAction *showCustomOnly = menu.addAction(ItemBoxListModel::tr("Show custom elements", "Show custom elements only in Item Box List"));
+    showCustomOnly->setCheckable(true);
+
+    QAction *showOriginOnly = menu.addAction(ItemBoxListModel::tr("Show standard elements", "Show standard elements only in Item Box List"));
+    showOriginOnly->setCheckable(true);
+
+    menu.connect(searchByName, &QAction::triggered,
+    [=](bool)
+    {
+        searchByName->setChecked(true);
+        searchById->setChecked(false);
+        searchByIdContained->setChecked(false);
+        model->setFilterSearchType(ItemBoxListModel::Search_ByName);
+        search->clear();
+    });
+
+    menu.connect(searchById, &QAction::triggered,
+    [=](bool)
+    {
+        searchByName->setChecked(false);
+        searchById->setChecked(true);
+        searchByIdContained->setChecked(false);
+        model->setFilterSearchType(ItemBoxListModel::Search_ById);
+        search->clear();
+    });
+
+    menu.connect(searchByIdContained, &QAction::triggered,
+    [=](bool)
+    {
+        searchByName->setChecked(false);
+        searchById->setChecked(false);
+        searchByIdContained->setChecked(true);
+        model->setFilterSearchType(ItemBoxListModel::Search_ByIdContained);
+        search->clear();
+    });
+
+    menu.connect(sortByName, &QAction::triggered,
+    [=](bool)
+    {
+        sortByName->setChecked(true);
+        sortById->setChecked(false);
+        model->setSort(ItemBoxListModel::Sort_ByName, sortBackward->isChecked());
+    });
+
+    menu.connect(sortById, &QAction::triggered,
+    [=](bool)
+    {
+        sortByName->setChecked(false);
+        sortById->setChecked(true);
+        model->setSort(ItemBoxListModel::Sort_ById, sortBackward->isChecked());
+    });
+
+    menu.connect(sortBackward, &QAction::triggered,
+    [=](bool)
+    {
+        model->setSort(sortByName->isChecked() ?
+                             ItemBoxListModel::Sort_ByName :
+                             ItemBoxListModel::Sort_ById,
+                         sortBackward->isChecked());
+    });
+
+    if(hasUniformView && view)
+    {
+        menu.connect(uniformView, &QAction::triggered,
+        [=](bool uniformView)
+        {
+            view->setUniformItemSizes(uniformView);
+            view->adjustSize();
+        });
+    }
+
+    menu.connect(showCustomOnly, &QAction::triggered,
+    [=](bool filter)
+    {
+        showOriginOnly->setChecked(false);
+        model->setCustomOnlyFilter(filter);
+    });
+
+    menu.connect(showOriginOnly, &QAction::triggered,
+    [=](bool filter)
+    {
+        showCustomOnly->setChecked(false);
+        model->setOriginsOnlyFilter(filter);
+    });
+}
 
 
 ItemBoxListModel::ItemBoxListModel(QObject *parent)
@@ -80,9 +204,19 @@ void ItemBoxListModel::clear()
     endRemoveRows();
 }
 
-void ItemBoxListModel::addElementsBegin()
+void ItemBoxListModel::resetFilters()
 {
-    beginInsertRows(QModelIndex(), m_elements.size(), m_elements.size());
+    m_filterCriteria.clear();
+    m_filterCustomOnly = false;
+    m_filterOriginsOnly = false;
+    m_filterCategory = -1;
+    m_filterGroup = -1;
+    updateFilter();
+}
+
+void ItemBoxListModel::addElementsBegin(int allocate)
+{
+    beginInsertRows(QModelIndex(), m_elements.size(), m_elements.size() + allocate);
 }
 
 void ItemBoxListModel::addElementsEnd()
@@ -92,11 +226,10 @@ void ItemBoxListModel::addElementsEnd()
     updateSort();
 }
 
-QStringList ItemBoxListModel::getCategoriesList(const QString &allField, const QString &customField)
+QStringList ItemBoxListModel::getCategoriesList(const QString &allField)
 {
     QStringList items;
     items.push_back(allField);
-    items.push_back(customField);
 
     if(m_filterGroup == -1)
     {
@@ -123,21 +256,31 @@ QStringList ItemBoxListModel::getGroupsList(const QString &allField)
 
 void ItemBoxListModel::setCategoryFilter(const QString &category)
 {
-    if(category.isEmpty())
+    if(category.isEmpty() || (m_filterCategoryAllKey == category))
         m_filterCategory = -1;
     else
         m_filterCategory = getCategory(category);
     updateFilter();
 }
 
+void ItemBoxListModel::setCategoryAllKey(const QString &category)
+{
+    m_filterCategoryAllKey = category;
+}
+
 void ItemBoxListModel::setGroupFilter(const QString &group)
 {
-    if(group.isEmpty())
+    if(group.isEmpty() || (m_filterGroupAllKey == group))
         m_filterGroup = -1;
     else
         m_filterGroup = getGroup(group);
     m_filterCategory = -1;
     updateFilter();
+}
+
+void ItemBoxListModel::setGroupAllKey(const QString &group)
+{
+    m_filterGroupAllKey = group;
 }
 
 void ItemBoxListModel::setOriginsOnlyFilter(bool origs)
@@ -171,8 +314,9 @@ void ItemBoxListModel::addElement(const ItemBoxListModel::Element &element, cons
             if(!l.contains(category))
                 l.insert(category);
         }
+        e.isVisible = isElementVisible(e);
 
-        m_elements.push_back(element);
+        m_elements.push_back(e);
     }
 }
 
@@ -180,6 +324,20 @@ void ItemBoxListModel::setFilter(const QString &criteria, int searchType)
 {
     if(m_filterCriteria != criteria)
         m_filterCriteria = criteria;
+    if(m_filterSearchType != searchType)
+        m_filterSearchType = searchType;
+    updateFilter();
+}
+
+void ItemBoxListModel::setFilterCriteria(const QString &criteria)
+{
+    if(m_filterCriteria != criteria)
+        m_filterCriteria = criteria;
+    updateFilter();
+}
+
+void ItemBoxListModel::setFilterSearchType(int searchType)
+{
     if(m_filterSearchType != searchType)
         m_filterSearchType = searchType;
     updateFilter();
@@ -232,43 +390,7 @@ void ItemBoxListModel::updateFilter()
     for(int i = 0; i < m_elements.size(); ++i)
     {
         Element &e = m_elements[i];
-
-        e.isVisible = true;
-        if(!m_filterCriteria.isEmpty())
-        {
-            switch(m_filterSearchType)
-            {
-            default:
-            case Search_ByName:
-                e.isVisible = e.name.contains(m_filterCriteria, Qt::CaseInsensitive);
-                break;
-            case Search_ById:
-                e.isVisible = e.elementId == m_filterCriteria.toULongLong();
-                break;
-            case Search_ByIdContained:
-                e.isVisible = QString("%1").arg(e.elementId).contains(m_filterCriteria);
-                break;
-            }
-        }
-
-        if(e.isVisible)
-        {
-            if((m_filterCategory >= 0) && (m_filterGroup >= 0))
-                e.isVisible = (e.categoryId == m_filterCategory) && (e.groupId == m_filterGroup);
-            else if(m_filterCategory >= 0)
-                e.isVisible = (e.categoryId == m_filterCategory);
-            else if(m_filterGroup >= 0)
-                e.isVisible = (e.groupId == m_filterGroup);
-        }
-
-        if(e.isVisible)
-        {
-            if(m_filterCustomOnly)
-                e.isVisible = e.isCustom;
-            if(m_filterOriginsOnly)
-                e.isVisible = !e.isCustom;
-        }
-
+        e.isVisible = isElementVisible(e);
         if(e.isVisible)
             ++newVisiblesCount;
     }
@@ -291,6 +413,48 @@ void ItemBoxListModel::updateFilter()
         updateVisibilityMap();
         endResetModel();
     }
+}
+
+bool ItemBoxListModel::isElementVisible(const ItemBoxListModel::Element &e)
+{
+    bool visible = true;
+
+    if(!m_filterCriteria.isEmpty())
+    {
+        switch(m_filterSearchType)
+        {
+        default:
+        case Search_ByName:
+            visible = e.name.contains(m_filterCriteria, Qt::CaseInsensitive);
+            break;
+        case Search_ById:
+            visible = e.elementId == m_filterCriteria.toULongLong();
+            break;
+        case Search_ByIdContained:
+            visible = QString("%1").arg(e.elementId).contains(m_filterCriteria);
+            break;
+        }
+    }
+
+    if(visible)
+    {
+        if((m_filterCategory >= 0) && (m_filterGroup >= 0))
+            visible = (e.groupId == m_filterGroup) && (e.categoryId == m_filterCategory);
+        else if(m_filterCategory >= 0)
+            visible = (e.categoryId == m_filterCategory);
+        else if(m_filterGroup >= 0)
+            visible = (e.groupId == m_filterGroup);
+    }
+
+    if(visible)
+    {
+        if(m_filterCustomOnly)
+            visible = e.isCustom;
+        if(m_filterOriginsOnly)
+            visible = !e.isCustom;
+    }
+
+    return visible;
 }
 
 void ItemBoxListModel::updateVisibilityMap()

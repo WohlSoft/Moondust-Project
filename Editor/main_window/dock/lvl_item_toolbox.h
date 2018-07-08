@@ -3,6 +3,7 @@
 #define LVL_ITEM_TOOLBOX_H
 
 #include <QDockWidget>
+#include <QMenu>
 #include "mwdock_base.h"
 
 class QTabWidget;
@@ -30,19 +31,14 @@ public:
 public slots:
     void re_translate();
 
-    void setLvlItemBoxes(bool setGrp=false, bool setCat=false);
+    void initItemLists();
 
-    void updateFilters();
     void clearFilter();
 
 private slots:
     void on_BlockItemsList_customContextMenuRequested(const QPoint &pos);
     void on_BGOItemsList_customContextMenuRequested(const QPoint &pos);
     void on_NPCItemsList_customContextMenuRequested(const QPoint &pos);
-
-    void on_BlockUniform_clicked(bool checked);
-    void on_BGOUniform_clicked(bool checked);
-    void on_NPCUniform_clicked(bool checked);
 
     void on_BlockGroupList_currentIndexChanged(const QString &arg1);
     void on_BGOGroupList_currentIndexChanged(const QString &arg1);
@@ -56,35 +52,27 @@ private slots:
     void on_BGOFilterField_textChanged(const QString &arg1);
     void on_NPCFilterField_textChanged(const QString &arg1);
 
-    void on_BlockFilterType_currentIndexChanged(int index);
-    void on_BGOFilterType_currentIndexChanged(int index);
-    void on_NPCFilterType_currentIndexChanged(int index);
-
     //Item was clicked
-    void on_BlockItemsList_itemClicked(const QModelIndex &item);
-    void on_BGOItemsList_itemClicked(QListWidgetItem *item);
-    void on_NPCItemsList_itemClicked(QListWidgetItem *item);
+    void BlockList_itemClicked(const QModelIndex &item);
+    void BGOList_itemClicked(const QModelIndex &item);
+    void NPCList_itemClicked(const QModelIndex &item);
 
 
 private:
-    QString cat_blocks; //!< Category
-    QString cat_bgos;
-    QString cat_npcs;
+    Ui::LevelItemBox *ui = nullptr;
 
-private:
-    Ui::LevelItemBox *ui;
+    ItemBoxListModel *m_blockModel = nullptr;
+    ItemBoxListModel *m_bgoModel = nullptr;
+    ItemBoxListModel *m_npcModel = nullptr;
 
-    ItemBoxListModel *m_blockModel;
+    QMenu   m_blockFilterSetup;
+    QMenu   m_bgoFilterSetup;
+    QMenu   m_npcFilterSetup;
 
-    QString allLabel;
-    QString customLabel;
+    QString m_allLabel = "[all]";
 
-    bool lock_grp;
-    bool lock_cat;
-
-    QString grp_blocks;
-    QString grp_bgo;
-    QString grp_npc;
+    bool lock_grp = false;
+    bool lock_cat = false;
 };
 
 #endif // LVL_ITEM_TOOLBOX_H

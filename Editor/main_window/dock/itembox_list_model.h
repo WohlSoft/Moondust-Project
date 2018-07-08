@@ -24,6 +24,25 @@
 #include <QSet>
 #include <QStringList>
 
+#include <QMenu>
+
+class QLineEdit;
+class QListView;
+class ItemBoxListModel;
+/**
+ * @brief Create the filter setup menu
+ * @param menu Destinition menu
+ * @param model Elements container model
+ * @param search Filter search field
+ * @param view Elements view box
+ * @param hasUniformView Also add the "Uniform grid view" menu item
+ */
+extern void makeFilterSetupMenu(QMenu &menu,
+                                ItemBoxListModel *model,
+                                QLineEdit *search,
+                                QListView *view = nullptr,
+                                bool hasUniformView = false);
+
 class ItemBoxListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -70,20 +89,25 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
     void clear();
+    void resetFilters();
 
-    void addElementsBegin();
+    void addElementsBegin(int allocate);
     void addElement(const Element &element, const QString &group, const QString &category);
     void addElementsEnd();
 
-    QStringList getCategoriesList(const QString &allField, const QString &customField);
+    QStringList getCategoriesList(const QString &allField);
     QStringList getGroupsList(const QString &allField);
 
     void setCategoryFilter(const QString &category);
+    void setCategoryAllKey(const QString &category);
     void setGroupFilter(const QString &group);
+    void setGroupAllKey(const QString &group);
     void setOriginsOnlyFilter(bool origs);
     void setCustomOnlyFilter(bool custom);
 
     void setFilter(const QString &criteria, int searchType = 0);
+    void setFilterCriteria(const QString &criteria);
+    void setFilterSearchType(int searchType);
 
     void setSort(int sortType = 0, bool backward = false);
 
@@ -102,10 +126,13 @@ private:
     QString m_filterCriteria;
     int     m_filterSearchType = Search_ByName;
     int     m_filterCategory = -1;
+    QString m_filterCategoryAllKey;
     int     m_filterGroup = -1;
+    QString m_filterGroupAllKey;
     bool    m_filterCustomOnly = false;
     bool    m_filterOriginsOnly = false;
     void    updateFilter();
+    bool    isElementVisible(const Element &e);
 
     void    updateVisibilityMap();
 

@@ -13,6 +13,7 @@ Editor 0.3.1.14-1-dev
 - Improved sizable blocks rendering algorithm: now it supports customizable fixed-size border width (both common and for each side indididually)
 - Added weight order factor for tileset categories
 - Added search and configurable sort into The Tileset Editor
+- Reworked filtering system on Level Item-Box
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)
