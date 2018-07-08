@@ -67,6 +67,35 @@ public:
 
     std::string getFontName();
 
+    /**
+     * @brief Draw a single glyph
+     * @param u8char Pointer to UTF8 multi-byte character
+     * @param x X position to draw
+     * @param y Y position do draw
+     * @param fontSize Size of font
+     * @param scaleSize Scale rendered texture
+     * @param Red Red color level from 0.0 to 1.0
+     * @param Green Green color level from 0.0 to 1.0
+     * @param Blue Blue color level from 0.0 to 1.0
+     * @param Alpha Transparency level from 0.0 to 1.0
+     * @return Width of the glypth
+     */
+    uint32_t drawGlyph(const char* u8char,
+                       int32_t x, int32_t y, uint32_t fontSize, double scaleSize = 1.0,
+                       float Red = 1.f, float Green = 1.f, float Blue = 1.f, float Alpha = 1.f);
+
+    struct TheGlyphInfo
+    {
+        uint32_t width  = 0;
+        uint32_t height = 0;
+        int32_t  left   = 0;
+        int32_t  top    = 0;
+        int32_t  advance = 0;
+        FT_Pos   glyph_width = 0;
+    };
+
+    TheGlyphInfo getGlyphInfo(const char *u8char, uint32_t fontSize);
+
 private:
     //! font is fine
     bool m_isReady = false;

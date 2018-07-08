@@ -28,7 +28,7 @@
 
 #include "font_engine_base.h"
 
-class RasterFont : BaseFontEngine
+class RasterFont : public BaseFontEngine
 {
 public:
     RasterFont();

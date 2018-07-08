@@ -12,11 +12,11 @@ local function temp_count(t) local i = 0 for _,__ in pairs(t) do i = i + 1 end r
 function onLoop()
     if(Settings.isDebugInfoShown())then
         deb_i = deb_i + 1
-        Renderer.printText("Ticks passed: "..deb_i, 100, 130, 0, 15, 0xFFFF0055)
+        Renderer.printText("Ticks passed: "..deb_i, 100, 130, FontType.DefaultRaster, 15, 0xFFFF0055)
         if(npc_class_table)then
-            Renderer.printText(temp_count(npc_class_table).." Npc registered!", 100, 160, 0, 15, 0xFFFF0055)	
+            Renderer.printText(temp_count(npc_class_table).." Npc registered!", 100, 160, FontType.DefaultRaster, 15, 0xFFFF0055)
         else
-            Renderer.printText("No Npc registered!", 100, 160, 0, 15, 0xFFFF0055)
+            Renderer.printText("No Npc registered!", 100, 160, FontType.DefaultRaster, 15, 0xFFFF0055)
         end
     end
 end
@@ -48,7 +48,4 @@ end
 function __destroy_luaplayer(thePlayer)
     __refs.players[thePlayer] = nil --Let the garbage collector destory our object
 end
-
-
-
 

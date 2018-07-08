@@ -57,11 +57,15 @@ void initFull();
 //! De-Initialize font manager and clear memory
 void quit();
 
+/**
+ * @brief Automatical font choice
+ */
 enum DefaultFont
 {
-    TTF_Font        = -2,
-    DefaultTTF_Font = -1,
-    DefaultRaster   = 0
+    //! Using default TTF font
+    DefaultTTF_Font = -2,
+    //! Using default raster font
+    DefaultRaster   = -1
 };
 
 /**

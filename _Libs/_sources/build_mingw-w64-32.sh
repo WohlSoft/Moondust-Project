@@ -1,6 +1,6 @@
 #!/bin/bash
 InstallTo=~0/../_builds/win32-mingw-w64
-MINGW_W64_ROOT=/c/mingw-w64/i686-7.1.0-posix-dwarf-rt_v5-rev0/mingw32
+MINGW_W64_ROOT=/c/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32
 PATH=$MINGW_W64_ROOT/bin:$PATH
 echo $InstallTo
 #read -n 1

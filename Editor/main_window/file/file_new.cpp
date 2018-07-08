@@ -77,7 +77,7 @@ void MainWindow::on_actionNewLevel_triggered()
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        dock_LvlItemBox->setLvlItemBoxes(false, false);
+        dock_LvlItemBox->initItemLists();
         SetCurrentLevelSection(0);
         on_actionSelect_triggered();
         dock_LvlWarpProps->init();

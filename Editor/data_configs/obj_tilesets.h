@@ -24,11 +24,19 @@
 
 #include "../defines.h"
 
-struct SimpleTilesetItem{
-    unsigned int row,col,id;
+/**
+ * @brief Tileset cell
+ */
+struct SimpleTilesetItem
+{
+    unsigned int row, col, id;
 };
 
-struct SimpleTileset{
+/**
+ * @brief Tileset block
+ */
+struct SimpleTileset
+{
     unsigned int rows, cols;
     QString tileSetName;
     QString fileName;
@@ -37,10 +45,75 @@ struct SimpleTileset{
     QList<SimpleTilesetItem> items;
 };
 
-struct SimpleTilesetGroup{
+/**
+ * @brief Tileset group, holds tilesets, child of category tabs
+ */
+struct SimpleTilesetGroup
+{
+    //! Name of tileset group
     QString groupName;
     QString groupCat;
+    int     groupWeight;
     QStringList tilesets;
+
+    bool operator<(const SimpleTilesetGroup& other) const
+    {
+        if(groupCat != other.groupCat)
+            return groupCat.compare(other.groupCat, Qt::CaseInsensitive) < 0;
+        if((groupWeight < 0) && (other.groupWeight >= 0))
+            return false;
+        if((groupWeight >= 0) && (other.groupWeight < 0))
+            return true;
+        if((groupWeight < 0) || (other.groupWeight < 0) || (groupWeight == other.groupWeight))
+            return groupName.compare(other.groupName, Qt::CaseInsensitive) < 0;
+        return groupWeight < other.groupWeight;
+    }
+
+    bool operator>(const SimpleTilesetGroup& other) const
+    {
+        if(groupCat != other.groupCat)
+            return groupCat.compare(other.groupCat, Qt::CaseInsensitive) > 0;
+        if((groupWeight < 0) && (other.groupWeight >= 0))
+            return true;
+        if((groupWeight >= 0) && (other.groupWeight < 0))
+            return false;
+        if((groupWeight < 0) || (other.groupWeight < 0) || (groupWeight == other.groupWeight))
+            return groupName.compare(other.groupName, Qt::CaseInsensitive) > 0;
+        return groupWeight > other.groupWeight;
+    }
+};
+
+/**
+ * @brief Cached category entry auto-created from the list of groups
+ */
+struct SimpleTilesetCachedCategory
+{
+    //! Name of category
+    QString name;
+    //! Order weight of category
+    int     weight;
+
+    bool operator<(const SimpleTilesetCachedCategory& other) const
+    {
+        if((weight < 0) && (other.weight >= 0))
+            return false;
+        if((weight >= 0) && (other.weight < 0))
+            return true;
+        if((weight < 0) || (other.weight < 0) || (weight == other.weight))
+            return name.compare(other.name, Qt::CaseInsensitive) < 0;
+        return weight < other.weight;
+    }
+
+    bool operator>(const SimpleTilesetCachedCategory& other) const
+    {
+        if((weight < 0) && (other.weight >= 0))
+            return true;
+        if((weight >= 0) && (other.weight < 0))
+            return false;
+        if((weight < 0) || (other.weight < 0) || (weight == other.weight))
+            return name.compare(other.name, Qt::CaseInsensitive) > 0;
+        return weight > other.weight;
+    }
 };
 
 #endif // OBJ_TILESETS_H

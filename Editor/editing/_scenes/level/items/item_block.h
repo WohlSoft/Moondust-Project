@@ -76,7 +76,16 @@ private:
     QGraphicsPixmapItem* m_coinCounter;
     QPixmap              m_currentImage;
     bool                 m_sizable;
-    void drawSizableBlock(int w, int h, QPixmap srcimg);
+    struct SizableBlockBorder
+    {
+        int32_t g;
+        int32_t l;
+        int32_t t;
+        int32_t r;
+        int32_t b;
+    } sizable_border;
+    void updateSizableBorder(const QPixmap &srcimg);
+    void drawSizableBlock(int w, int h, const QPixmap &srcimg);
 };
 
 #endif // ITEM_BLOCK_H

@@ -31,9 +31,22 @@
    <item row="1" column="4" rowspan="5" colspan="2">
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="3" column="0">
-      <widget class="QLineEdit" name="category"/>
+      <widget class="QSpinBox" name="orderWeight">
+       <property name="toolTip">
+        <string>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</string>
+       </property>
+       <property name="minimum">
+        <number>-1</number>
+       </property>
+       <property name="maximum">
+        <number>99999999</number>
+       </property>
+       <property name="value">
+        <number>-1</number>
+       </property>
+      </widget>
      </item>
-     <item row="4" column="0">
+     <item row="9" column="0">
       <spacer name="verticalSpacer_3">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -46,20 +59,67 @@
        </property>
       </spacer>
      </item>
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="tilesetGroupName"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="categoryLabel">
+       <property name="text">
+        <string>Category:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QComboBox" name="category">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>46</width>
+         <height>10</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="orderWeightLabel">
+       <property name="text">
+        <string>Order weight</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="groupTitleLabel">
        <property name="text">
         <string>Tileset group name:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="tilesetGroupName"/>
+     <item row="7" column="0">
+      <widget class="QSpinBox" name="categoryWeight">
+       <property name="minimum">
+        <number>-1</number>
+       </property>
+       <property name="maximum">
+        <number>99999999</number>
+       </property>
+       <property name="value">
+        <number>-1</number>
+       </property>
+      </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="categoryLabel">
+     <item row="6" column="0">
+      <widget class="QLabel" name="categoryWeightLabel">
        <property name="text">
-        <string>Category:</string>
+        <string>Category order weight</string>
        </property>
       </widget>
      </item>
@@ -71,19 +131,6 @@
       <string>Open</string>
      </property>
     </widget>
-   </item>
-   <item row="5" column="5">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="1" column="6">
     <widget class="QPushButton" name="Close">

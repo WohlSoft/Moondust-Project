@@ -9,6 +9,8 @@
 class Binding_Core_GlobalFuncs_Renderer
 {
 public:
+    static int  getFontID(std::string fontName, lua_State* L);
+
     static void printText(std::string text, int x, int y, lua_State* L);
     static void printText(std::string text, int x, int y, int fontType, lua_State* L);
     static void printText_LUNA(std::string text, int fontType, int x, int y, lua_State *L);
@@ -25,6 +27,8 @@ public:
 
     static void showExternalMessageBox(std::string text, lua_State *L);
 
+    static void bindConstants(lua_State* L);
+    static luabind::scope bindToLuaFont();
     static luabind::scope bindToLuaRenderer();
     static luabind::scope bindToLuaText();
 

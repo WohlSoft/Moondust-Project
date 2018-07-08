@@ -59,7 +59,7 @@ bool Installer::associateFiles()
 {
     bool success = true;
 
-    #ifdef _WIN32
+#ifdef _WIN32
     //QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
     QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
 
@@ -150,7 +150,7 @@ bool Installer::associateFiles()
     // User variable(s)
     registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QString(ApplicationPath).replace("/", "\\") + "\"");
 
-    #elif defined __APPLE__
+#elif defined __APPLE__
     // only useful when other apps have taken precedence over our file extensions and you want to reset it
     //Need write correct strings for allow associations for Mac OS:
 
@@ -182,7 +182,7 @@ bool Installer::associateFiles()
     #elif defined Q_OS_ANDROID
     //Is not supported yet :P
     success = false;
-    #else
+#else
 
     // Here need correctly associate too
     if(success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/mime/packages");
@@ -237,7 +237,7 @@ bool Installer::associateFiles()
     if(success) success = system("xdg-mime default pge_editor.desktop application/x-pgex-world") == 0;
     if(success) success = system(QString("update-desktop-database " + QDir::home().absolutePath() + "/.local/share/applications").toLocal8Bit().constData()) == 0;
     if(success) success = system(QString("update-mime-database " + QDir::home().absolutePath() + "/.local/share/mime").toLocal8Bit().constData()) == 0;
+#endif
 
-    #endif
     return success;
 }

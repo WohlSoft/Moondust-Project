@@ -25,14 +25,14 @@
 #include <QListWidget>
 #include <QTableWidget>
 #include <QComboBox>
+#include <QTabBar>
 
 #include "util.h"
 
-void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
+void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int searchType)
 {
     QString toSearch;
     toSearch = searchEdit->text();
-    int searchType = typeBox->currentIndex();
     for(int i = 0; i < itemList->count(); i++)
     {
         QListWidgetItem *item = itemList->item(i);
@@ -112,7 +112,7 @@ void util::memclear(QTableWidget *wid)
 void util::clearLayoutItems(QLayout *layout)
 {
     QLayoutItem *child;
-    while((child = layout->takeAt(0)) != 0)
+    while((child = layout->takeAt(0)) != nullptr)
     {
         QWidgetItem *i = dynamic_cast<QWidgetItem *>(child);
         if(i)
@@ -127,6 +127,16 @@ bool util::contains(const QComboBox *b, const QString &s)
     for(int i = 0; i < b->count(); ++i)
     {
         if(b->itemText(i) == s)
+            return true;
+    }
+    return false;
+}
+
+bool util::contains(const QTabBar *b, const QString &s)
+{
+    for(int i = 0; i < b->count(); ++i)
+    {
+        if(b->tabText(i) == s)
             return true;
     }
     return false;

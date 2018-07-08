@@ -28,11 +28,11 @@
 bool BgoSetup::parse(IniProcessing *setup,
                      PGEString bgoImgPath,
                      uint32_t defaultGrid,
-                     BgoSetup *merge_with,
+                     const BgoSetup *merge_with,
                      PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
-    #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
@@ -61,8 +61,10 @@ bool BgoSetup::parse(IniProcessing *setup,
     setup->read("category", category, pMergeMe(category));
     setup->read("description", description, pMerge(description, ""));
     setup->read("grid",     grid, pMerge(grid, defaultGrid));
-    setup->read("offset-x", offsetX, pMerge(offsetX, 0));
-    setup->read("offset-y", offsetY, pMerge(offsetY, 0));
+    setup->read("grid-offset-x", grid_offset_x, pMerge(grid_offset_x, 0));
+    setup->read("grid-offset-y", grid_offset_y, pMerge(grid_offset_y, 0));
+    setup->read("offset-x", grid_offset_x, pMergeMe(grid_offset_x));//DEPRECATED
+    setup->read("offset-y", grid_offset_y, pMergeMe(grid_offset_y));//DEPRECATED
 
     setup->read("image",    image_n, pMerge(image_n, ""));
     if(!merge_with && !PGE_ImageInfo::getImageSize(bgoImgPath + image_n, &w, &h, &errCode))
@@ -132,8 +134,12 @@ bool BgoSetup::parse(IniProcessing *setup,
         setup->read("framespeed",  framespeed, framespeed);//Alias
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
-    NumberLimiter::apply(frame_h, 0u);
+
+    frame_sequence.clear();
+    setup->read("frame-sequence", frame_sequence, pMergeMe(frame_sequence));
+
     frame_h =   animated ? Maths::uRound(double(h) / double(frames)) : h;
+    NumberLimiter::apply(frame_h, 0u);
     setup->read("display-frame", display_frame, pMerge(display_frame, 0));
     NumberLimiter::apply(display_frame, 0u);
 

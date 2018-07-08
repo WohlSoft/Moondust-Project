@@ -1,12 +1,19 @@
 cmake_minimum_required (VERSION 3.1.0)
 project(MoondustEditor C CXX)
 
+if(POLICY CMP0071) # Automoc
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
 
 # As moc files are generated in the binary dir, tell CMake
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_INSTALL_RPATH ".")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -39,6 +46,10 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
+# Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
+include(../_common/static_qt.cmake)
+# Find the SDL Mixer X library and it's dependencies
+include(../_common/find_sdl_mixer_x.cmake)
 
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
@@ -55,55 +66,35 @@ if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
 
-set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
-if(_QT_LRELEASE_PROGRAM)
-    set(_LANGAUGES_TEMP_FOLDER "${CMAKE_BINARY_DIR}/Editor_langs")
-
-    file(MAKE_DIRECTORY ${_LANGAUGES_TEMP_FOLDER})
-    FILE(GLOB _QT_LANG_BIN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/qt_*.qm")
-    foreach(LangQtFile ${_QT_LANG_BIN_FILES})
-        get_filename_component(LangFileName "${LangQtFile}" NAME)
-        configure_file("${LangQtFile}" "${_LANGAUGES_TEMP_FOLDER}/${LangFileName}" COPYONLY)
-    endforeach()
-
-    set(PGE_LANG_SRC_FILES)
-    FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
-    message("-- Compiling Editor's locales...")
-    foreach(LangSrcFile ${PGE_LANG_SRC_FILES})
-        get_filename_component(LangBaseFile "${LangSrcFile}" NAME_WE)
-        # message("-- Compiling locale ${LangSrcFile} into ${LangBaseFile}.qm")
-        execute_process(COMMAND ${_QT_LRELEASE_PROGRAM}
-            "${LangSrcFile}"
-            -qm
-            "${_LANGAUGES_TEMP_FOLDER}/${LangBaseFile}.qm"
-            -silent
-        )
-    endforeach()
-endif()
-
-set(PGE_LANG_BIN_FILES)
-FILE(GLOB PGE_LANG_BIN_FILES "${_LANGAUGES_TEMP_FOLDER}/*.qm")
-FILE(GLOB PGE_LANG_ICON_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.png")
-#foreach(LangBinFile ${PGE_LANG_BIN_FILES})
-#    message("-- locale ${LangBinFile} will be installed")
-#endforeach()
-
-if(NOT APPLE AND NOT EMSCRIPTEN)
-    file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
-    file(COPY ${PGE_LANG_ICON_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
-    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
-    install(FILES ${PGE_LANG_ICON_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
-endif()
-
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 find_package(Qt5Qml REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
 if(WIN32)
     find_package(Qt5WinExtras REQUIRED)
 endif()
+
+# =============== Translations ===============
+set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
+set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
+
+FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
+FILE(GLOB PGE_LANG_ICON_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.png")
+
+set_source_files_properties(${PGE_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${PGE_LANG_OUTPUT_DIR})
+set(PGE_LANG_BIN_FILES)
+qt5_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
+add_custom_target(editor_translations DEPENDS ${PGE_LANG_BIN_FILES})
+
+if(NOT APPLE AND NOT EMSCRIPTEN)
+    file(COPY ${PGE_LANG_ICON_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+    install(FILES ${PGE_LANG_ICON_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+endif()
+# ===========================================
 
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
@@ -172,6 +163,13 @@ qt5_wrap_ui(UIS_HDRS
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/editor.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
+
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_editor_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
 
 set(PGE_EDITOR_SRCS)
 
@@ -350,6 +348,7 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/dock/bookmarks_box.cpp
     main_window/dock/debugger.cpp
     main_window/dock/_dock_vizman.cpp
+    main_window/dock/itembox_list_model.cpp
     main_window/dock/lvl_events_box.cpp
     main_window/dock/lvl_item_properties.cpp
     main_window/dock/lvl_item_toolbox.cpp
@@ -434,6 +433,7 @@ list(APPEND PGE_EDITOR_SRCS
     tools/tilesets/tilesetitembutton.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
 )
 
 if(WIN32)
@@ -532,6 +532,7 @@ add_dependencies(pge_editor
     SDLMixerX_Local
     SDL2_Local
     FreeImage_Local
+    editor_translations
 )
 
 set(PGE_EDITOR_LINK_LIBS)
@@ -547,57 +548,32 @@ list(APPEND PGE_EDITOR_LINK_LIBS
     FreeImageLite$<$<CONFIG:Debug>:d>
 )
 
-list(APPEND PGE_EDITOR_LINK_LIBS
-    SDL2_mixer_ext$<$<CONFIG:Debug>:d>
-)
+set(MIXER_LIBS)
 
-list(APPEND PGE_EDITOR_LINK_LIBS
-    FLAC$<$<CONFIG:Debug>:d>
-    vorbisfile$<$<CONFIG:Debug>:d>
-    vorbis$<$<CONFIG:Debug>:d>
-    ogg$<$<CONFIG:Debug>:d>
-    mad$<$<CONFIG:Debug>:d>
-    id3tag$<$<CONFIG:Debug>:d>
-    modplug$<$<CONFIG:Debug>:d>
-    ADLMIDI$<$<CONFIG:Debug>:d>
-    OPNMIDI$<$<CONFIG:Debug>:d>
-    timidity$<$<CONFIG:Debug>:d>
-    gme$<$<CONFIG:Debug>:d>
-    zlib$<$<CONFIG:Debug>:d>
-)
-
-list(APPEND PGE_EDITOR_LINK_LIBS
-    SDL2$<$<CONFIG:Debug>:d>
-)
-
-if(WIN32 AND NOT EMSCRIPTEN)
-    list(APPEND PGE_EDITOR_LINK_LIBS
-        SDL2main$<$<CONFIG:Debug>:d>
-        version
-        opengl32
-        dbghelp
-        advapi32
-        kernel32
-        winmm
-        imm32
+if(PGE_STATIC_SDLMIXER)
+    find_mixer_x(TARGET MIXER_LIBS
+                STATIC
+                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
+    )
+else()
+    find_mixer_x(TARGET MIXER_LIBS
+                SHARED
+                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
     )
 endif()
 
-if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE)
-    list(APPEND PGE_EDITOR_LINK_LIBS GL)
-    if(NOT HAIKU)
-        list(APPEND PGE_EDITOR_LINK_LIBS dl)
-    endif()
-endif()
+list(APPEND PGE_EDITOR_LINK_LIBS ${MIXER_LIBS})
 
-if(NOT APPLE)
+if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
     set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
         set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-mwindows")
-        list(APPEND PGE_EDITOR_LINK_LIBS "-static")
+        if(NOT PGE_ENABLE_STATIC_QT)
+            list(APPEND PGE_EDITOR_LINK_LIBS "-static")
+        endif()
     endif()
     list(APPEND PGE_EDITOR_LINK_LIBS pthread)
 endif()
@@ -648,12 +624,14 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_EDITOR_LINK_LIBS
-    ${Qt5Core_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
+    ${QT_EXTRA_LIBS_PRE}
+    ${Qt5Qml_LIBRARIES}
+    ${Qt5Concurrent_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Network_LIBRARIES}
-    ${Qt5Concurrent_LIBRARIES}
-    ${Qt5Qml_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
 )
 if(WIN32)
     list(APPEND PGE_EDITOR_LINK_LIBS

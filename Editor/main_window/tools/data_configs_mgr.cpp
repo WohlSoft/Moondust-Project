@@ -117,7 +117,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     LogDebug("Configuration feloading is finished, re-initializing toolboxes...");
     dock_TilesetBox->lockTilesetBox = false;
-    dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
+    dock_LvlItemBox->initItemLists(); //Apply item boxes from reloaded configs
     dock_WldItemBox->setWldItemBoxes(false);
     dock_LvlSectionProps->initDefaults();
     dock_LvlEvents->reloadSoundsList();

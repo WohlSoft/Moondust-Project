@@ -1,12 +1,19 @@
 cmake_minimum_required (VERSION 3.1.0)
 project(SDLMixerMusPlayer C CXX)
 
+if(POLICY CMP0071) # Automoc
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
 
 # As moc files are generated in the binary dir, tell CMake
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_INSTALL_RPATH ".")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -22,6 +29,10 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
+# Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
+include(../_common/static_qt.cmake)
+# Find the SDL Mixer X library and it's dependencies
+include(../_common/find_sdl_mixer_x.cmake)
 
 # WORKAROUND: Avoid ImpLib file creation on a non-library project
 if(CYGWIN OR MINGW)
@@ -33,6 +44,8 @@ if(CYGWIN OR MINGW)
         CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE}")
 endif()
 
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 
@@ -47,6 +60,13 @@ qt5_wrap_ui(UIS_HDRS
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/musicplayer.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
+
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_musplay_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
 
 set(SDLMixer_MusPlay_SRC)
 
@@ -63,6 +83,7 @@ list(APPEND SDLMixer_MusPlay_SRC
     wave_writer.c
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
 )
 
 if(APPLE)
@@ -92,6 +113,8 @@ add_dependencies(pge_musplay
 # dependencies QtCore and QtGui
 target_include_directories(pge_musplay
     PRIVATE
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Network_INCLUDE_DIRS}
     ${USE_SDL_MIXER_X_PREFIX}/include)
@@ -107,6 +130,8 @@ list(APPEND PGE_MUSPLAY_INSTALLS
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(pge_musplay
     PRIVATE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
     ${Qt5Widgets_DEFINITIONS}
     ${Qt5Network_DEFINITIONS}
 )
@@ -116,57 +141,38 @@ option(USE_OFFICIAL_SDL_MIXER "Compile player in compatibility with official SDL
 if(USE_OFFICIAL_SDL_MIXER)
     set(SDL_MIXER_X_LIB SDL2_mixer)
 else()
+    set(MIXER_LIBS)
+
     target_compile_definitions(pge_musplay
         PRIVATE
         -DUSE_SDL_MIXER_X
     )
-    set(SDL_MIXER_X_LIB SDL2_mixer_ext$<$<CONFIG:Debug>:d>)
-endif()
 
-list(APPEND PGE_MUSPLAY_LINK_LIBS
-    ${SDL_MIXER_X_LIB}
-    FLAC$<$<CONFIG:Debug>:d>
-    vorbisfile$<$<CONFIG:Debug>:d>
-    vorbis$<$<CONFIG:Debug>:d>
-    ogg$<$<CONFIG:Debug>:d>
-    mad$<$<CONFIG:Debug>:d>
-    id3tag$<$<CONFIG:Debug>:d>
-    modplug$<$<CONFIG:Debug>:d>
-    ADLMIDI$<$<CONFIG:Debug>:d>
-    OPNMIDI$<$<CONFIG:Debug>:d>
-    timidity$<$<CONFIG:Debug>:d>
-    gme$<$<CONFIG:Debug>:d>
-    zlib$<$<CONFIG:Debug>:d>
-)
-
-if(WIN32)
-    list(APPEND PGE_MUSPLAY_LINK_LIBS
-        SDL2$<$<CONFIG:Debug>:d>
-        SDL2main$<$<CONFIG:Debug>:d>
-        comctl32
-        version
-        advapi32
-        kernel32
-        winmm
-        imm32
-    )
-else()
-    list(APPEND PGE_MUSPLAY_LINK_LIBS
-        SDL2$<$<CONFIG:Debug>:d>
-    )
-    if(UNIX AND NOT APPLE)
-        list(APPEND PGE_MUSPLAY_LINK_LIBS dl)
+    if(PGE_STATIC_SDLMIXER)
+        find_mixer_x(TARGET MIXER_LIBS
+                    STATIC
+                    SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
+        )
+    else()
+        find_mixer_x(TARGET MIXER_LIBS
+                    SHARED
+                    SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
+        )
     endif()
+
+    list(APPEND PGE_MUSPLAY_LINK_LIBS ${MIXER_LIBS})
 endif()
 
-if(NOT APPLE)
+if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
     set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
         set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-mwindows")
-        list(APPEND PGE_MUSPLAY_LINK_LIBS "-static")
+        if(NOT PGE_ENABLE_STATIC_QT)
+            list(APPEND PGE_MUSPLAY_LINK_LIBS "-static")
+        endif()
     endif()
     list(APPEND PGE_MUSPLAY_LINK_LIBS pthread)
 endif()
@@ -214,8 +220,12 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_MUSPLAY_LINK_LIBS
+    ${QT_EXTRA_LIBS_PRE}
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Network_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
 )
 
 target_link_libraries(pge_musplay

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>294</width>
-    <height>683</height>
+    <width>296</width>
+    <height>710</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -53,8 +53,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>294</width>
-      <height>661</height>
+      <width>296</width>
+      <height>691</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_6">

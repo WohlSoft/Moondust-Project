@@ -134,8 +134,9 @@ void MainWindow::on_OpenFile_triggered()
         return;
     }
 
-     QString fileName_DATA = QFileDialog::getOpenFileName(this,
-        trUtf8("Open file"),GlobalSettings::openPath,
+     QStringList fileName_DATA = QFileDialog::getOpenFileNames(this,
+        trUtf8("Open file"),
+        GlobalSettings::openPath,
         QString("All supported formats (*.lvlx *.wldx *.lvl *.wld npc-*.txt *.sav);;"
         "All SMBX files (*.lvl *.wld npc-*.txt);;"
         "All PGE files (*.lvlx *.wldx npc-*.txt);;"
@@ -147,9 +148,11 @@ void MainWindow::on_OpenFile_triggered()
         "SMBX Game Save file (*.sav);;"
         "All Files (*.*)"),0);
 
-        if(fileName_DATA==NULL) return;
+    if(fileName_DATA.isEmpty())
+        return;
 
-        OpenFile(fileName_DATA);
+    for(const QString &file : fileName_DATA)
+        OpenFile(file, true);
 }
 
 void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
@@ -194,7 +197,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 
     GlobalSettings::openPath = in_1.absoluteDir().absolutePath();
 
-    if((in_1.suffix().toLower() == "lvl")||(in_1.suffix().toLower() == "lvlx"))
+    if((in_1.suffix().toLower() == "lvl") || (in_1.suffix().toLower() == "lvlx"))
     {
         LevelData FileData;
 
@@ -218,7 +221,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             updateMenus(newSubWin, true);
             child->updateGeometry();
             child->ResetPosition();
-            dock_LvlItemBox->setLvlItemBoxes(false, false);
+            dock_LvlItemBox->initItemLists();
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             SetCurrentLevelSection(0);
             dock_LvlWarpProps->init();
@@ -236,7 +239,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         }
     }
     else
-    if((in_1.suffix().toLower() == "wld")||(in_1.suffix().toLower() == "wldx"))
+    if((in_1.suffix().toLower() == "wld") || (in_1.suffix().toLower() == "wldx"))
     {
         WorldData FileData;
         if( !FileFormats::OpenWorldFile( FilePath, FileData ) )

@@ -63,7 +63,7 @@ void LevelScene::process_InterprocessCommands()
                                           PGE_Window::Height + m_placingMode_drawSize.y() + 16);
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrab2);
 
-            if(raw.compare(0, 11, "BLOCK_PLACE"))
+            if(raw.compare(0, 11, "BLOCK_PLACE") == 0)
             {
                 if(got.blocks.empty())
                     break;
@@ -81,7 +81,7 @@ void LevelScene::process_InterprocessCommands()
                     m_placingMode_drawSize.setY(m_placingMode_texture.h / static_cast<int>(bl.setup.frames));
                 }
             }
-            else if(raw.compare(0, 9, "BGO_PLACE"))
+            else if(raw.compare(0, 9, "BGO_PLACE") == 0)
             {
                 if(got.bgo.empty())
                     break;
@@ -99,7 +99,7 @@ void LevelScene::process_InterprocessCommands()
                     m_placingMode_drawSize.setY(m_placingMode_texture.h);
                 }
             }
-            else if(raw.compare(0, 9, "NPC_PLACE"))
+            else if(raw.compare(0, 9, "NPC_PLACE") == 0)
             {
                 if(got.npc.empty())
                     break;

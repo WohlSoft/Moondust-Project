@@ -308,6 +308,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             t_bgo.setup.framespeed
         );
 
+        if(!t_bgo.setup.frame_sequence.isEmpty())
+            aniBGO->setFrameSequance(t_bgo.setup.frame_sequence);
+
         t_bgo.animator_id = m_animatorsBGO.size();
         m_animatorsBGO.push_back(aniBGO);
         m_animationTimer.registerAnimation(aniBGO);

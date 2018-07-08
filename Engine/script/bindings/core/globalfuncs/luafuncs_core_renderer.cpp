@@ -7,6 +7,11 @@
 #define DEFAULT_FONT_SIZE 14
 #define DEFAULT_ZORDER 3.0L
 
+int Binding_Core_GlobalFuncs_Renderer::getFontID(std::string fontName, lua_State *)
+{
+    return FontManager::getFontID(fontName);
+}
+
 void Binding_Core_GlobalFuncs_Renderer::printText(std::string text, int x, int y, lua_State *L)
 {
     printTextWP(text, x, y, FontManager::DefaultRaster, DEFAULT_ZORDER, L);
@@ -85,10 +90,55 @@ void Binding_Core_GlobalFuncs_Renderer::showExternalMessageBox(std::string text,
     PGE_Window::msgBoxInfo("Lua debug message", text);
 }
 
+
+
 /***
 Text printing and drawing functions
 @module TextAndRenderFuncs
 */
+
+void Binding_Core_GlobalFuncs_Renderer::bindConstants(lua_State *L)
+{
+    luabind::object _G = luabind::globals(L);
+    if(luabind::type(_G["FontType"]) != LUA_TNIL)
+        return;
+    /***
+    Enums
+    @section FontType
+    */
+
+    /***
+    Built-in font types are can be passed as font ID for built-in fonts
+    @enum FontType
+
+    @field DefaultRaster Use default raster font
+    @field DefaultTTF Use default TTF font
+    */
+
+    luabind::object fontTypes = luabind::newtable(L);
+    fontTypes["DefaultRaster"] = FontManager::DefaultRaster;
+    fontTypes["DefaultTTF"] = FontManager::DefaultTTF_Font;
+    _G["FontType"] = fontTypes;
+}
+
+luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaFont()
+{
+    using namespace luabind;
+    return
+        /***
+        Font manager functions
+        @section FontNamespace
+         */
+        namespace_("Font")[
+            /***
+            Get ID of the font by name
+            @function Font.getId
+            @tparam string text Textual name of the font
+            @treturn int ID of the font which can be used in print functions
+            */
+            def("getId", &getFontID)
+        ];
+}
 
 luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
 {
@@ -113,7 +163,7 @@ luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
             @tparam string text Text to print
             @tparam int x X position on screen
             @tparam int y Y position on screen
-            @tparam int fontType ID of a font registered in config pack
+            @tparam int fontType ID of a font registered in config pack. @{FontType} enum also can be used here.
             */
             def("printText", (void(*)(std::string, int, int, int, lua_State *))&printText),
             /***
@@ -122,7 +172,7 @@ luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
             @tparam string text Text to print
             @tparam int x X position on screen
             @tparam int y Y position on screen
-            @tparam int fontType ID of a font registered in config pack
+            @tparam int fontType ID of a font registered in config pack. @{FontType} enum also can be used here.
             @tparam uint size Pixel size of one font letter
             */
             def("printText", (void(*)(std::string, int, int, int, uint32_t, lua_State *))&printText),
@@ -132,7 +182,7 @@ luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
             @tparam string text Text to print
             @tparam int x X position on screen
             @tparam int y Y position on screen
-            @tparam int fontType ID of a font registered in config pack
+            @tparam int fontType ID of a font registered in config pack. @{FontType} enum also can be used here.
             @tparam uint size Pixel size of one font letter
             @tparam uint rgba RGBA (Red-Green-Blue-Alpha) color value in next format: 0x<span style="color:red;">RR</span><span style="color:green;">GG</span><span style="color:blue;">BB</span><span style="color:gray;">AA</span>
             */
@@ -153,7 +203,7 @@ luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
             @tparam string text Text to print
             @tparam int x X position on screen
             @tparam int y Y position on screen
-            @tparam int fontType ID of a font registered in config pack
+            @tparam int fontType ID of a font registered in config pack. @{FontType} enum also can be used here.
             @tparam double zValue Z Value which defines a render priority
             */
             def("printTextWP", (void(*)(std::string, int, int, int, long double, lua_State *))&printTextWP),
@@ -163,7 +213,7 @@ luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
             @tparam string text Text to print
             @tparam int x X position on screen
             @tparam int y Y position on screen
-            @tparam int fontType ID of a font registered in config pack
+            @tparam int fontType ID of a font registered in config pack. @{FontType} enum also can be used here.
             @tparam uint size Pixel size of one font letter
             @tparam double zValue Z Value which defines a render priority
             */
@@ -174,7 +224,7 @@ luabind::scope Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer()
             @tparam string text Text to print
             @tparam int x X position on screen
             @tparam int y Y position on screen
-            @tparam int fontType ID of a font registered in config pack
+            @tparam int fontType ID of a font registered in config pack. @{FontType} enum also can be used here.
             @tparam uint size Pixel size of one font letter
             @tparam uint rgba RGBA (Red-Green-Blue-Alpha) color value in next format: 0x<span style="color:red;">RR</span><span style="color:green;">GG</span><span style="color:blue;">BB</span><span style="color:gray;">AA</span>
             @tparam double zValue Z Value which defines a render priority

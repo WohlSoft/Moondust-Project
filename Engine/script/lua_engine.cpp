@@ -409,6 +409,7 @@ void LuaEngine::bindCore()
     if(m_baseScene)
     {
         luabind::module(L)[
+            Binding_Core_GlobalFuncs_Renderer::bindToLuaFont(),
             Binding_Core_GlobalFuncs_Renderer::bindToLuaRenderer(),
             Binding_Core_GlobalFuncs_Renderer::bindToLuaText(),
             Binding_Core_Graphics::PGETexture_bindToLua(),
@@ -418,6 +419,7 @@ void LuaEngine::bindCore()
     }
 
     //Bind constants
+    Binding_Core_GlobalFuncs_Renderer::bindConstants(L);
     Binding_Core_GlobalFuncs_Audio::bindConstants(L);
 }
 

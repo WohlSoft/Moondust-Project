@@ -61,7 +61,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
     ui->listView->setDragEnabled(true);
-    ui->listView->setModel(m_model = (new PiecesModel(conf, PiecesModel::LEVELPIECE_BLOCK)));
+    ui->listView->setModel(m_model = (new ElementsListModel(conf, ElementsListModel::LEVELPIECE_BLOCK)));
 
     m_conf = conf;
     lastFileName = "";
@@ -103,6 +103,89 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
     connect(ui->spin_width, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
     connect(ui->spin_height, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
+
+    {
+        QAction *searchByName = m_searchSetup.addAction(tr("Search by Name", "Element search criteria"));
+        searchByName->setCheckable(true);
+        searchByName->setChecked(true);
+
+        QAction *searchById = m_searchSetup.addAction(tr("Search by ID", "Element search criteria"));
+        searchById->setCheckable(true);
+
+        QAction *searchByIdContained = m_searchSetup.addAction(tr("Search by ID (Contained)", "Element search criteria"));
+        searchByIdContained->setCheckable(true);
+
+        m_searchSetup.addSeparator();
+        QMenu   *sortBy = m_searchSetup.addMenu(tr("Sort by", "Search settings pop-up menu, sort submenu"));
+
+        QAction *sortByName = sortBy->addAction(tr("Name", "Sort by name"));
+        sortByName->setCheckable(true);
+        sortByName->setChecked(true);
+
+        QAction *sortById   = sortBy->addAction(tr("ID", "Sort by ID"));
+        sortById->setCheckable(true);
+
+        sortBy->addSeparator();
+        QAction *sortBackward = sortBy->addAction(tr("Backward", "Backward sorting order"));
+        sortBackward->setCheckable(true);
+
+        m_searchSetup.connect(searchByName, &QAction::triggered,
+        [=](bool)
+        {
+            searchByName->setChecked(true);
+            searchById->setChecked(false);
+            searchByIdContained->setChecked(false);
+            m_searchBy = ElementsListModel::Search_ByName;
+            ui->search->clear();
+        });
+
+        m_searchSetup.connect(searchById, &QAction::triggered,
+        [=](bool)
+        {
+            searchByName->setChecked(false);
+            searchById->setChecked(true);
+            searchByIdContained->setChecked(false);
+            m_searchBy = ElementsListModel::Search_ById;
+            ui->search->clear();
+        });
+
+        m_searchSetup.connect(searchByIdContained, &QAction::triggered,
+        [=](bool)
+        {
+            searchByName->setChecked(false);
+            searchById->setChecked(false);
+            searchByIdContained->setChecked(true);
+            m_searchBy = ElementsListModel::Search_ByIdContained;
+            ui->search->clear();
+        });
+
+        m_searchSetup.connect(sortByName, &QAction::triggered,
+        [=](bool)
+        {
+            sortByName->setChecked(true);
+            sortById->setChecked(false);
+            m_model->setSort(ElementsListModel::Sort_ByName, sortBackward->isChecked());
+        });
+
+        m_searchSetup.connect(sortById, &QAction::triggered,
+        [=](bool)
+        {
+            sortByName->setChecked(false);
+            sortById->setChecked(true);
+            m_model->setSort(ElementsListModel::Sort_ById, sortBackward->isChecked());
+        });
+
+        m_searchSetup.connect(sortBackward, &QAction::triggered,
+        [=](bool)
+        {
+            m_model->setSort(sortByName->isChecked() ?
+                                 ElementsListModel::Sort_ByName :
+                                 ElementsListModel::Sort_ById,
+                             sortBackward->isChecked());
+        });
+
+        ui->searchSetup->setMenu(&m_searchSetup);
+    }
 }
 
 TilesetConfigureDialog::~TilesetConfigureDialog()
@@ -125,11 +208,6 @@ void TilesetConfigureDialog::on_clearTileset_clicked()
     }
 }
 
-//void TilesetConfigureDialog::setUpItems(int type)
-//{
-//    setUpItems(type);
-//}
-
 void TilesetConfigureDialog::setUpTileset(int type)
 {
     m_tileset->clear();
@@ -141,10 +219,15 @@ void TilesetConfigureDialog::setUpItems(int type)
     bool custom = ((mode != GFX_Staff) && (ui->customOnly->isChecked()));
     bool defstuff = ((mode != GFX_Staff) && (ui->defaultOnly->isChecked()));
 
-    delete m_model;
-    ui->listView->setModel(m_model = (new PiecesModel(m_conf, toPieceType(type), 32, scn)));
     LvlScene *lvl_scene = dynamic_cast<LvlScene *>(scn);
     WldScene *wld_scene = dynamic_cast<WldScene *>(scn);
+
+    m_model->clear();
+    m_model->setElementsType(toElementType(type));
+
+    m_model->setScene(scn);
+
+    m_model->addElementsBegin();
 
     switch(type)
     {
@@ -157,7 +240,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             {
                 for(int i = 0; i < lvl_scene->m_customBlocks.size(); ++i)
                 {
-                    m_model->addPiece(lvl_scene->m_customBlocks[i]->setup.id);
+                    m_model->addElement(lvl_scene->m_customBlocks[i]->setup.id);
                 }
             }
         }
@@ -174,13 +257,13 @@ void TilesetConfigureDialog::setUpItems(int type)
             for(int i = 1; i < m_conf->main_block.size(); ++i)
             {
                 if(!customElements.contains(i))
-                    m_model->addPiece(i);
+                    m_model->addElement(i);
             }
         }
         else
             for(int i = 1; i < m_conf->main_block.size(); ++i)
             {
-                m_model->addPiece(i);
+                m_model->addElement(i);
             }
         break;
     }
@@ -193,7 +276,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             {
                 for(int i = 0; i < lvl_scene->m_customBGOs.size(); ++i)
                 {
-                    m_model->addPiece(lvl_scene->m_customBGOs[i]->setup.id);
+                    m_model->addElement(lvl_scene->m_customBGOs[i]->setup.id);
                 }
             }
         }
@@ -210,13 +293,13 @@ void TilesetConfigureDialog::setUpItems(int type)
             for(int i = 1; i < m_conf->main_bgo.size(); ++i)
             {
                 if(!customElements.contains(i))
-                    m_model->addPiece(i);
+                    m_model->addElement(i);
             }
         }
         else
             for(int i = 1; i < m_conf->main_bgo.size(); i++)
             {
-                m_model->addPiece(i);
+                m_model->addElement(i);
             }
         break;
     }
@@ -229,7 +312,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             {
                 for(int i = 0; i < lvl_scene->m_customNPCs.size(); ++i)
                 {
-                    m_model->addPiece(lvl_scene->m_customNPCs[i]->setup.id);
+                    m_model->addElement(lvl_scene->m_customNPCs[i]->setup.id);
                 }
             }
         }
@@ -246,13 +329,13 @@ void TilesetConfigureDialog::setUpItems(int type)
             for(int i = 1; i < m_conf->main_npc.size(); ++i)
             {
                 if(!customElements.contains(i))
-                    m_model->addPiece(i);
+                    m_model->addElement(i);
             }
         }
         else
             for(int i = 1; i < m_conf->main_npc.size(); ++i)
             {
-                m_model->addPiece(i);
+                m_model->addElement(i);
             }
         break;
     }
@@ -265,7 +348,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             {
                 for(int i = 0; i < wld_scene->m_customTerrain.size(); ++i)
                 {
-                    m_model->addPiece(wld_scene->m_customTerrain[i]->setup.id);
+                    m_model->addElement(wld_scene->m_customTerrain[i]->setup.id);
                 }
             }
         }
@@ -282,13 +365,13 @@ void TilesetConfigureDialog::setUpItems(int type)
             for(int i = 1; i < m_conf->main_wtiles.size(); ++i)
             {
                 if(!customElements.contains(i))
-                    m_model->addPiece(i);
+                    m_model->addElement(i);
             }
         }
         else
             for(int i = 1; i < m_conf->main_wtiles.size(); ++i)
             {
-                m_model->addPiece(i);
+                m_model->addElement(i);
             }
         break;
     }
@@ -300,7 +383,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             {
                 for(int i = 0; i < wld_scene->m_customSceneries.size(); ++i)
                 {
-                    m_model->addPiece(wld_scene->m_customSceneries[i]->setup.id);
+                    m_model->addElement(wld_scene->m_customSceneries[i]->setup.id);
                 }
             }
         }
@@ -317,13 +400,13 @@ void TilesetConfigureDialog::setUpItems(int type)
             for(int i = 1; i < m_conf->main_wscene.size(); ++i)
             {
                 if(!customElements.contains(i))
-                    m_model->addPiece(i);
+                    m_model->addElement(i);
             }
         }
         else
             for(int i = 1; i < m_conf->main_wscene.size(); ++i)
             {
-                m_model->addPiece(i);
+                m_model->addElement(i);
             }
         break;
     case ItemTypes::WLD_Path:
@@ -334,7 +417,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             {
                 for(int i = 0; i < wld_scene->m_customPaths.size(); ++i)
                 {
-                    m_model->addPiece(wld_scene->m_customPaths[i]->setup.id);
+                    m_model->addElement(wld_scene->m_customPaths[i]->setup.id);
                 }
             }
         }
@@ -351,13 +434,13 @@ void TilesetConfigureDialog::setUpItems(int type)
             for(int i = 1; i < m_conf->main_wpaths.size(); ++i)
             {
                 if(!customElements.contains(i))
-                    m_model->addPiece(i);
+                    m_model->addElement(i);
             }
         }
         else
             for(int i = 1; i < m_conf->main_wpaths.size(); ++i)
             {
-                m_model->addPiece(i);
+                m_model->addElement(i);
             }
         break;
     case ItemTypes::WLD_Level:
@@ -368,7 +451,7 @@ void TilesetConfigureDialog::setUpItems(int type)
             {
                 for(int i = 0; i < wld_scene->m_customLevels.size(); ++i)
                 {
-                    m_model->addPiece(wld_scene->m_customLevels[i]->setup.id);
+                    m_model->addElement(wld_scene->m_customLevels[i]->setup.id);
                 }
             }
         }
@@ -385,24 +468,25 @@ void TilesetConfigureDialog::setUpItems(int type)
             for(int i = 0; i < m_conf->main_wlevels.size(); ++i)
             {
                 if(!customElements.contains(i))
-                    m_model->addPiece(i);
+                    m_model->addElement(i);
             }
         }
         else
             for(int i = 0; i < m_conf->main_wlevels.size(); ++i)
             {
-                m_model->addPiece(i);
+                m_model->addElement(i);
             }
         break;
     default:
         break;
     }
 
+    m_model->addElementsEnd();
 }
 
-PiecesModel::PieceType TilesetConfigureDialog::toPieceType(int type)
+ElementsListModel::ElementType TilesetConfigureDialog::toElementType(int type)
 {
-    return static_cast<PiecesModel::PieceType>(type);
+    return static_cast<ElementsListModel::ElementType>(type);
 }
 
 void TilesetConfigureDialog::on_SaveTileset_clicked()
@@ -536,14 +620,15 @@ void TilesetConfigureDialog::on_customOnly_clicked()
 {
     if(mode == GFX_Staff) return;
     ui->defaultOnly->setChecked(false);
+    ui->search->clear();
     setUpItems(ui->comboBox->currentIndex());
-
 }
 
 void TilesetConfigureDialog::on_defaultOnly_clicked()
 {
     if(mode == GFX_Staff) return;
     ui->customOnly->setChecked(false);
+    ui->search->clear();
     setUpItems(ui->comboBox->currentIndex());
 }
 
@@ -607,4 +692,9 @@ void TilesetConfigureDialog::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
         return;
     QDialog::keyPressEvent(event);
+}
+
+void TilesetConfigureDialog::on_search_textChanged(const QString &arg1)
+{
+    m_model->setFilter(arg1, m_searchBy);
 }

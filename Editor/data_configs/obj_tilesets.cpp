@@ -26,12 +26,16 @@ void dataconfigs::loadTilesets()
 {
     main_tilesets.clear();
     main_tilesets_grp.clear();
+    main_tileset_categogies.clear();
 
-    QString tileset_dir = config_dir + "tilesets/";
-    QString tileset_grp_dir = config_dir + "group_tilesets/";
+    QString tilesetDirPath = config_dir + "tilesets/";
+    QString tilesetGrpDirPath = config_dir + "group_tilesets/";
     QStringList filters;
 
-    if(QDir(tileset_dir).exists())
+    QSet<QString> tilesetCategoryNames;
+    QSettings categories(tilesetGrpDirPath + "/categories.ini", QSettings::IniFormat);
+
+    if(QDir(tilesetDirPath).exists())
     {
         emit progressPartNumber(10);
         emit progressMax(100);
@@ -40,24 +44,25 @@ void dataconfigs::loadTilesets()
 
         filters.clear();
         filters << "*.tileset.ini";
-        QDir tilesetDir(tileset_dir);
+        QDir tilesetDir(tilesetDirPath);
         tilesetDir.setSorting(QDir::Name);
         tilesetDir.setNameFilters(filters);
         QStringList files = tilesetDir.entryList(filters);
 
         emit progressMax(files.size());
-        for(int i=0;i<files.size(); i++)
+        main_tilesets.reserve(files.size());
+        for(int i = 0; i < files.size(); i++)
         {
             emit progressValue(i);
             SimpleTileset xxx;
-            if(tileset::OpenSimpleTileset(tileset_dir + files[i], xxx))
+            if(tileset::OpenSimpleTileset(tilesetDirPath + files[i], xxx))
             {
                 main_tilesets.push_back(xxx);
             }
         }
     }
 
-    if(QDir(tileset_grp_dir).exists())
+    if(QDir(tilesetGrpDirPath).exists())
     {
         emit progressPartNumber(11);
         emit progressMax(100);
@@ -66,21 +71,41 @@ void dataconfigs::loadTilesets()
 
         filters.clear();
         filters << "*.tsgrp.ini";
-        QDir tilesetDir(tileset_grp_dir);
+        QDir tilesetDir(tilesetGrpDirPath);
         tilesetDir.setSorting(QDir::Name);
         tilesetDir.setNameFilters(filters);
 
         QStringList files = tilesetDir.entryList(filters);
         emit progressMax(files.size());
-        for(int i=0;i<files.size(); i++)
+        main_tilesets_grp.reserve(files.size());
+        for(int i = 0; i < files.size(); i++)
         {
             emit progressValue(i);
             SimpleTilesetGroup xxx;
-            if(TilesetGroupEditor::OpenSimpleTilesetGroup(tileset_grp_dir + files[i], xxx))
+            if(TilesetGroupEditor::OpenSimpleTilesetGroup(tilesetGrpDirPath + files[i], xxx))
             {
+                tilesetCategoryNames.insert(xxx.groupCat);
                 main_tilesets_grp.push_back(xxx);
             }
         }
     }
+
+    // Sort all groups in the list
+    qSort(main_tilesets_grp);
+
+    emit progressTitle(QObject::tr("Initializing tileset categories..."));
+    main_tileset_categogies.reserve(tilesetCategoryNames.size());
+    for(const QString &cat : tilesetCategoryNames)
+    {
+        SimpleTilesetCachedCategory category;
+        categories.beginGroup(TilesetGroupEditor::categoryName(cat));
+        category.name = cat;
+        category.weight = categories.value("weight", -1).toInt();
+        categories.endGroup();
+        main_tileset_categogies.push_back(category);
+    }
+
+    // Sort all categories in the list
+    qSort(main_tileset_categogies);
 }
 

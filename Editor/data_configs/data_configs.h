@@ -57,50 +57,80 @@ struct DataFolders
     PGEString gcustom;
 };
 
+struct EditorSetup
+{
+    struct WidgetVisiblity
+    {
+        bool lvl_itembox = true;
+        bool lvl_section_props = false;
+        bool lvl_warp_props = true;
+        bool lvl_layers = true;
+        bool lvl_events = true;
+        bool lvl_search = false;
+
+        bool wld_itembox = true;
+        bool wld_settings = false;
+        bool wld_search = false;
+
+        bool tilesets_box = true;
+        bool debugger_box = false;
+        bool bookmarks_box = false;
+        bool variables_box = false;
+    } default_visibility;
+};
+
 struct EngineSetup
 {
-    int screen_w;
-    int screen_h;
-    int wld_viewport_w;
-    int wld_viewport_h;
+    uint32_t screen_w;
+    uint32_t screen_h;
+    uint32_t wld_viewport_w;
+    uint32_t wld_viewport_h;
 };
 
 struct obj_splash_ani
 {
     QPixmap      img;
-    unsigned int frames;
-    unsigned int speed;
-    unsigned int x;
-    unsigned int y;
+    uint32_t frames;
+    uint32_t speed;
+    uint32_t x;
+    uint32_t y;
 };
 
 
 ////////////////////Common items///////////////////////////
 struct obj_music
 {
-    unsigned long id;
+    uint64_t id;
     QString name;
     QString file;
 };
 
 struct obj_sound
 {
-    unsigned long id;
+    uint64_t id;
     QString name;
     QString file;
     bool hidden;
 };
 
+/**
+ * @brief Global setup of default grid size
+ */
 struct obj_gridSizes
 {
-    unsigned int general;
-    unsigned int block;
-    unsigned int bgo;
-    unsigned int npc;
-    unsigned int terrain;
-    unsigned int scenery;
-    unsigned int paths;
-    unsigned int levels;
+    uint32_t general;
+    uint32_t block;
+    uint32_t bgo;
+    uint32_t npc;
+    uint32_t terrain;
+    uint32_t scenery;
+    uint32_t paths;
+    uint32_t levels;
+};
+
+struct obj_blockGlobalSetup
+{
+    int32_t sizable_block_border_size = -1;
 };
 
 class dataconfigs : public QObject
@@ -123,54 +153,94 @@ public:
     QString splash_logo;
     QList<obj_splash_ani > animations;
 
+    EditorSetup editor;
     EngineSetup engine;
 
     //Playable Characters
     QList<obj_player > main_characters;
 
     //Level map items
+    //! Global level background image types setup
     PGE_DataArray<obj_BG > main_bg;
+    //! Global Background object types setup list
     PGE_DataArray<obj_bgo > main_bgo;
+    //! Global setup for all blocks
+    obj_blockGlobalSetup defaultBlock;
+    //! Global block types setup list
     PGE_DataArray<obj_block > main_block;
+    //! Global non-playable character types setup list
     PGE_DataArray<obj_npc > main_npc;
+    //! Special NPC element types
     npc_Markers marker_npc;
 
     //World map items
+    //! Global terrain tile types setup list
     PGE_DataArray<obj_w_tile > main_wtiles;
+    //! Global path cell types setup list
     PGE_DataArray<obj_w_path > main_wpaths;
+    //! Global scenery types setup list
     PGE_DataArray<obj_w_scenery > main_wscene;
+    //! Global level entrance types setup list
     PGE_DataArray<obj_w_level > main_wlevels;
+    //! Special level entrance element types
     wld_levels_Markers marker_wlvl;
 
     //Common items
-    unsigned long music_custom_id;
-    unsigned long music_w_custom_id;
+    //! Music ID which will be reserved for custom music on levels
+    uint64_t music_custom_id;
+    //! Music ID which will be reserved for custom music on world maps
+    uint64_t music_w_custom_id;
+    //! Available config pack standard level music set
     PGE_DataArray<obj_music > main_music_lvl;
+    //! Available config pack standard world map music set
     PGE_DataArray<obj_music > main_music_wld;
+    //! Available config pack standard special-use music set
     PGE_DataArray<obj_music > main_music_spc;
 
+    //! Available config pack standard SFX set
     PGE_DataArray<obj_sound > main_sound;
 
     //Tilesets
+    //! Full set of config-pack standard tilesets
     QList<SimpleTileset >      main_tilesets;
+    //! Full set of config-pack standard tileset groups are holds tilesets
     QList<SimpleTilesetGroup > main_tilesets_grp;
+    //! Full set of config-pack standard tileset categories, generated from tileset groups
+    QList<SimpleTilesetCachedCategory> main_tileset_categogies;
 
     // Custom properties
     QList<obj_custom_property> main_custom_properties;
 
     QList<obj_rotation_table > main_rotation_table;
 
-    bool check(); //Returns true, if something config entry is not initialized
-    bool checkCustom(); //Returns true, if some of custom config has failed
+    /**
+     * @brief Verify config pack is valid (Standard configs only)
+     * @return Returns true if something config entry is not initialized
+     */
+    bool check();
+
+    /**
+     * @brief Verify custom-loaded config files are valid (are not a part of config pack)
+     * @return Returns true if some of custom config has failed
+     */
+    bool checkCustom();
 
     //Graphics
+
+    //! Default alignment grid size for everything
     obj_gridSizes defaultGrid;
 
+    /**
+     * @brief Category of config pack errors
+     */
     enum ErrorListType
     {
+        //! Errors of standard config pack parts
         ERR_GLOBAL = 0,
+        //! Errors of custom out of pack outside parts
         ERR_CUSTOM = 1
     };
+
     //! Errors of config pack loading
     QStringList errorsList[2];
 

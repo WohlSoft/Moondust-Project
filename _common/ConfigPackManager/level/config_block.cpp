@@ -28,11 +28,11 @@
 bool BlockSetup::parse(IniProcessing *setup,
                        PGEString blockImgPath,
                        uint32_t defaultGrid,
-                       BlockSetup *merge_with,
+                       const BlockSetup *merge_with,
                        PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
-    #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString   section;
@@ -92,7 +92,13 @@ bool BlockSetup::parse(IniProcessing *setup,
 
     setup->read("icon", icon_n, pMerge(icon_n, ""));
 
-    setup->read("sizable",                  sizable,                pMerge(sizable, false));
+    setup->read("sizable",                      sizable,                    pMerge(sizable, false));
+    setup->read("sizable-border-width",         sizable_border_width,       pMerge(sizable_border_width, -1));
+    setup->read("sizable-border-width-left",    sizable_border_width_left,  pMerge(sizable_border_width_left, -1));
+    setup->read("sizable-border-width-top",     sizable_border_width_top,   pMerge(sizable_border_width_top, -1));
+    setup->read("sizable-border-width-right",   sizable_border_width_right, pMerge(sizable_border_width_right, -1));
+    setup->read("sizable-border-width-bottom",  sizable_border_width_bottom,pMerge(sizable_border_width_bottom, -1));
+
     setup->read("danger",                   danger,                 pMerge(danger, 0));
     setup->read("collision",                collision,              pMerge(collision, 1));
     setup->read("slope-slide",              slopeslide,             pMerge(slopeslide, 0));
@@ -168,10 +174,9 @@ bool BlockSetup::parse(IniProcessing *setup,
     if(plSwitch_Button)
     {
         setup->read("player-switch-frames-true", plSwitch_frames_true,
-                    merge_with ? merge_with->plSwitch_frames_true : plSwitch_frames_true);
+                    pMergeMe(plSwitch_frames_true));
         setup->read("player-switch-frames-false", plSwitch_frames_false,
-                    merge_with ? merge_with->plSwitch_frames_false : plSwitch_frames_false);
-
+                    pMergeMe(plSwitch_frames_false));
         frame_sequence = plSwitch_frames_false;
     }
 
@@ -183,10 +188,9 @@ bool BlockSetup::parse(IniProcessing *setup,
     if(plFilter_Block)
     {
         setup->read("player-filter-frames-true", plFilter_frames_true,
-                    pMerge(plFilter_frames_true, plFilter_frames_true));
+                    pMergeMe(plFilter_frames_true));
         setup->read("player-filter-frames-false", plFilter_frames_false,
-                    pMerge(plFilter_frames_false, plFilter_frames_false));
-
+                    pMergeMe(plFilter_frames_false));
         frame_sequence = plFilter_frames_false;
     }
 
@@ -197,8 +201,8 @@ bool BlockSetup::parse(IniProcessing *setup,
             {"foreground", 1},
             {"foreground1", 1}
         };
-        setup->readEnum("z-layer",  view, pMerge(view, 0), zLayers);
-        setup->readEnum("view",     view, view, zLayers);
+        setup->readEnum("z-layer",  z_layer, pMerge(z_layer, 0), zLayers);
+        setup->readEnum("view",     z_layer, z_layer, zLayers);
     }
 
     setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation
@@ -220,11 +224,10 @@ bool BlockSetup::parse(IniProcessing *setup,
     NumberLimiter::apply(destroy_sound_id, 0u);
     frame_h = (animated ? (h / frames) : h);
 
-    //Retreiving frame sequence from playable character switch/filter blocks
+    //Custom frame sequence for regular blocks
     if(!plSwitch_Button && !plFilter_Block)
     {
-        setup->read("frame-sequence", frame_sequence,
-                    merge_with ? merge_with->frame_sequence : frame_sequence);
+        setup->read("frame-sequence", frame_sequence, pMergeMe(frame_sequence));
     }
 
     setup->read("display-frame", display_frame, 0);

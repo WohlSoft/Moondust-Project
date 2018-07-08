@@ -35,9 +35,9 @@ QString AppPathManager::m_settingsPath;
 QString AppPathManager::m_userPath;
 
 #if __ANDROID__ || __APPLE__
-#define UserDirName "/PGE Project"
+#   define UserDirName "/PGE Project"
 #else
-#define UserDirName "/.PGE_Project"
+#   define UserDirName "/.PGE_Project"
 #endif
 
 void AppPathManager::initAppPath()
@@ -79,35 +79,20 @@ void AppPathManager::initAppPath()
     if(isPortable())
         return;
 
-    bool userDir;
-    #if __ANDROID__ || __APPLE__
-    userDir = true;
-    #else
-    QSettings setup;
-    userDir = setup.value("EnableUserDir", false).toBool();
-    #endif
-
-    if(userDir)
+#if defined(__ANDROID__) || defined(__APPLE__)
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+#else
+    QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
+    if(!path.isEmpty())
     {
-        #if __ANDROID__||__APPLE__
-        QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-        #else
-        QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-        #endif
-        if(!path.isEmpty())
-        {
-            QDir appDir(path+UserDirName);
-            if(!appDir.exists())
-                if(!appDir.mkpath(path+UserDirName))
-                    goto defaultSettingsPath;
+        QDir appDir(path+UserDirName);
+        if(!appDir.exists())
+            if(!appDir.mkpath(path+UserDirName))
+                goto defaultSettingsPath;
 
-            m_userPath = appDir.absolutePath();
-            _initSettingsPath();
-        }
-        else
-        {
-            goto defaultSettingsPath;
-        }
+        m_userPath = appDir.absolutePath();
+        initSettingsPath();
     }
     else
     {
@@ -117,7 +102,7 @@ void AppPathManager::initAppPath()
     return;
 defaultSettingsPath:
     m_userPath = ApplicationPath;
-    _initSettingsPath();
+    initSettingsPath();
 }
 
 QString AppPathManager::settingsFile()
@@ -132,20 +117,16 @@ QString AppPathManager::userAppDir()
 
 void AppPathManager::install()
 {
-    #if __ANDROID__||__APPLE__
+#if defined(__ANDROID__) || defined(__APPLE__)
     QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-    #else
+#else
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    #endif
+#endif
     if(!path.isEmpty())
     {
         QDir appDir(path+UserDirName);
         if(!appDir.exists())
-            if(!appDir.mkpath(path+UserDirName))
-                return;
-
-        QSettings setup;
-        setup.setValue("EnableUserDir", true);
+            appDir.mkpath(path+UserDirName);
     }
 }
 
@@ -163,7 +144,7 @@ bool AppPathManager::isPortable()
     checkForPort.endGroup();
 
     if(forcePortable)
-        _initSettingsPath();
+        initSettingsPath();
 
     return forcePortable;
 }
@@ -173,7 +154,7 @@ bool AppPathManager::userDirIsAvailable()
     return (m_userPath != ApplicationPath);
 }
 
-void AppPathManager::_initSettingsPath()
+void AppPathManager::initSettingsPath()
 {
     m_settingsPath = m_userPath + "/settings";
     if(QFileInfo(m_settingsPath).isFile())

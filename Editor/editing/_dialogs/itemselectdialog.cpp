@@ -1067,11 +1067,11 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
 void ItemSelectDialog::updateFilters()
 {
     if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_Block){
-        util::updateFilter(ui->Sel_Text_FilterBlock, ui->Sel_List_Block, ui->Sel_Combo_FiltertypeBlock);
+        util::updateFilter(ui->Sel_Text_FilterBlock, ui->Sel_List_Block, ui->Sel_Combo_FiltertypeBlock->currentIndex());
     }else if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_BGO){
-        util::updateFilter(ui->Sel_Text_FilterBGO, ui->Sel_List_BGO, ui->Sel_Combo_FiltertypeBGO);
+        util::updateFilter(ui->Sel_Text_FilterBGO, ui->Sel_List_BGO, ui->Sel_Combo_FiltertypeBGO->currentIndex());
     }else if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_NPC){
-        util::updateFilter(ui->Sel_Text_NPC, ui->Sel_List_NPC, ui->Sel_Combo_FiltertypeNPC);
+        util::updateFilter(ui->Sel_Text_NPC, ui->Sel_List_NPC, ui->Sel_Combo_FiltertypeNPC->currentIndex());
     }
 }
 

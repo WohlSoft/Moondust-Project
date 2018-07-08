@@ -33,6 +33,7 @@ struct EditingSettings
     bool grid_override = false;
     QSize customGrid;
     bool grid_show = false;
+    unsigned int default_zoom = 100;
     //World map only
     bool semiTransparentPaths = false;
 };

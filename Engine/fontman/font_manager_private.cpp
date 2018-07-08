@@ -56,12 +56,12 @@ char32_t get_utf8_char(const char *str)
 
     switch (extraBytesToRead)
     {
-    case 5: ch += *source++; ch <<= 6; /* remember, illegal UTF-8 */
-    case 4: ch += *source++; ch <<= 6; /* remember, illegal UTF-8 */
-    case 3: ch += *source++; ch <<= 6;
-    case 2: ch += *source++; ch <<= 6;
-    case 1: ch += *source++; ch <<= 6;
-    case 0: ch += *source++;
+    case 5: ch += *source++; ch <<= 6; /*fallthrough*/ /* remember, illegal UTF-8 */
+    case 4: ch += *source++; ch <<= 6; /*fallthrough*/ /* remember, illegal UTF-8 */
+    case 3: ch += *source++; ch <<= 6; /*fallthrough*/
+    case 2: ch += *source++; ch <<= 6; /*fallthrough*/
+    case 1: ch += *source++; ch <<= 6; /*fallthrough*/
+    case 0: ch += *source++; /*fallthrough*/
     }
     ch -= offsetsFromUTF8[extraBytesToRead];
     return static_cast<char32_t>(ch);

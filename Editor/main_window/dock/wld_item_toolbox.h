@@ -48,8 +48,6 @@ public slots:
     void setWldItemBoxes(bool setGrp=false, bool setCat=false);
 
 private slots:
-    void on_WorldItemBox_visibilityChanged(bool visible);
-
     void on_WLD_TilesList_itemClicked(QTableWidgetItem *item);
     void on_WLD_SceneList_itemClicked(QListWidgetItem *item);
     void on_WLD_PathsList_itemClicked(QTableWidgetItem *item);

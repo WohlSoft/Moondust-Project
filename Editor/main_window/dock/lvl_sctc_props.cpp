@@ -24,6 +24,9 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include <QDesktopServices>
+#include <QTextStream>
+
 #include "lvl_sctc_props.h"
 #include "ui_lvl_sctc_props.h"
 
@@ -89,6 +92,11 @@ LvlSectionProps::~LvlSectionProps()
     delete ui;
 }
 
+QPushButton *LvlSectionProps::getEditBackground2IniButton()
+{
+    return ui->editBackground2Ini;
+}
+
 void LvlSectionProps::setSMBX64Strict(bool en)
 {
     ui->LVLPropsWrapVertical->setEnabled(!en);
@@ -121,8 +129,7 @@ void LvlSectionProps::initDefaults()
     lockSctSettingsProps=true;
     mw()->dock_LvlEvents->setEventToolsLocked(true);
 
-    int i;
-        LogDebug(QString("Set level Section Data"));
+    LogDebug(QString("Set level Section Data"));
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
@@ -168,10 +175,10 @@ void LvlSectionProps::initDefaults()
                 listVw->setUniformItemSizes(true);
             }
 
-
-    for(int i=1; i<mw()->configs.main_bg.size(); i++)
+    PGE_DataArray<obj_BG > &main_bg = mw()->configs.main_bg;
+    for(int i = 1; i < main_bg.size(); i++)
     {
-        obj_BG &bgD=mw()->configs.main_bg[i];
+        const obj_BG &bgD = main_bg[i];
         QPixmap bgThumb(100,BkgIconHeight); bgThumb.fill(QColor(Qt::white));
         QPainter xx(&bgThumb); bool isCustom=false; QString bgTitle=bgD.setup.name;
         QPixmap tmp = bgD.image.scaledToHeight(70);
@@ -199,14 +206,22 @@ void LvlSectionProps::initDefaults()
         bgThumb = bgThumb.copy(0, ((bgThumb.height()/2)-(25/2)), bgThumb.width(), 25);
         #endif
 
-        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), (isCustom?"* ":"")+bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
+        ui->LVLPropsBackImage->addItem(QIcon(bgThumb),
+                                       QString("%1: %2%3")
+                                       .arg(bgD.setup.id) //Background ID
+                                       .arg(isCustom ? "* " : "") //Show a star over customized background
+                                       .arg(bgTitle), //Background title
+                                       QVariant::fromValue<unsigned long>(bgD.setup.id));
         mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
     }
 
-    for(i=1; i< mw()->configs.main_music_lvl.size(); i++)
+    PGE_DataArray<obj_music > &main_music_lvl = mw()->configs.main_music_lvl;
+    QComboBox *musicList_events = mw()->dock_LvlEvents->cbox_sct_mus();
+    for(int i = 1; i < main_music_lvl.size(); i++)
     {
-        ui->LVLPropsMusicNumber->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
-        mw()->dock_LvlEvents->cbox_sct_mus()->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
+        const obj_music &mus = main_music_lvl[i];
+        ui->LVLPropsMusicNumber->addItem(mus.name, QString::number(mus.id));
+        musicList_events->addItem(mus.name, QString::number(mus.id));
     }
 
     mw()->dock_LvlEvents->setEventToolsLocked(false);
@@ -221,7 +236,7 @@ void LvlSectionProps::refreshFileData()
 {
     lockSctSettingsProps=true;
     //Set current data
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) {lockSctSettingsProps=false; return;}
@@ -269,7 +284,7 @@ void LvlSectionProps::refreshFileData()
 // Level Section Settings
 void LvlSectionProps::on_LVLPropsWrapHorizontal_clicked(bool checked)
 {
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -281,7 +296,7 @@ void LvlSectionProps::on_LVLPropsWrapHorizontal_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsWrapVertical_clicked(bool checked)
 {
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -293,7 +308,7 @@ void LvlSectionProps::on_LVLPropsWrapVertical_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -305,7 +320,7 @@ void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -317,7 +332,7 @@ void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
 
 void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -332,7 +347,7 @@ void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
 ///////////////////////////////////////Resize section/////////////////////////////////////
 void LvlSectionProps::on_ResizeSection_clicked()
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -347,7 +362,7 @@ void LvlSectionProps::on_ResizeSection_clicked()
 
 void LvlSectionProps::on_applyResize_clicked()
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -357,7 +372,7 @@ void LvlSectionProps::on_applyResize_clicked()
 
 void LvlSectionProps::on_cancelResize_clicked()
 {
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -380,8 +395,8 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     //if(ui->LVLPropsBackImage->hasFocus())
     //{
     ui->LVLPropsBackImage->setEnabled(false);
-    LogDebug("Change BG to "+QString::number(index));
-    if(mw()->activeChildWindow()==1)
+    LogDebug("Change BG to " + QString::number(index));
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -396,6 +411,72 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     ui->LVLPropsBackImage->setEnabled(true);
 }
 
+void LvlSectionProps::on_editBackground2Ini_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    if(edit->isUntitled)
+    {
+        QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to manage custom background config files."), QMessageBox::Ok);
+        return;
+    }
+
+    int backgroundId = ui->LVLPropsBackImage->currentData().toInt();
+    if(backgroundId <= 0)
+    {
+        QMessageBox::information(this,
+                                 tr("Choose a background first"),
+                                 tr("Please, choose the background image first."),
+                                 QMessageBox::Ok);
+        return;
+    }
+
+    QString fileName = QString("background2-%3.ini").arg(backgroundId);
+    QString dirPath  = QString("%1/%2")
+                        .arg(edit->LvlData.meta.path)
+                        .arg(edit->LvlData.meta.filename);
+    QString fullPath = QString("%1/%2")
+                        .arg(dirPath)
+                        .arg(fileName);
+
+    if(!QFile::exists(fullPath))
+    {
+        QDir dir;
+        dir.mkpath(dirPath);
+        QFile f(fullPath);
+        f.open(QIODevice::WriteOnly | QIODevice::Truncate);
+
+        PGE_DataArray<obj_BG > &main_bg = mw()->configs.main_bg;
+        if(backgroundId < main_bg.size())
+        {
+            const obj_BG &bg = main_bg[backgroundId];
+            QTextStream o(&f);
+            o << "[background2]\n"
+
+              << "; " << tr("Custom background name which will be shown in the editor",
+                            "A comment in the template if Background2 INI file.")
+              << "\n"
+              << QString("name = \"%1\"\n").arg(bg.setup.name)
+
+              << "; " << tr("Default screen fill color",
+                            "A comment in the template if Background2 INI file.") << "\n"
+              << QString("fill-color = \"#000000\"\n")
+
+              << "\n\n"
+              << "; " << tr("Create your background layers setup here...",
+                            "A comment in the template if Background2 INI file.")
+              << "\n\n";
+        }
+    }
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(fullPath));
+}
+
 void LvlSectionProps::switchResizeMode(bool mode)
 {
     ui->applyResize->setVisible(mode);
@@ -405,10 +486,11 @@ void LvlSectionProps::switchResizeMode(bool mode)
 
 void LvlSectionProps::loadMusic()
 {
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
-        if(!edit) return;
+        if(!edit)
+            return;
 
         LvlMusPlay::setMusic(LvlMusPlay::LevelMusic,
                     edit->LvlData.sections[edit->LvlData.CurSection].music_id,
@@ -425,7 +507,7 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     unsigned int test = index;
     ui->LVLPropsMusicCustomEn->setChecked(  test == mw()->configs.music_custom_id );
 
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
@@ -449,7 +531,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
         if(checked)
         {
             ui->LVLPropsMusicNumber->setCurrentIndex( mw()->configs.music_custom_id );
-            if(mw()->activeChildWindow()==1)
+            if(mw()->activeChildWindow() == MainWindow::WND_Level)
             {
                 LevelEdit * edit = mw()->activeLvlEditWin();
                 if(!edit) return;
@@ -468,7 +550,8 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
 void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
 {
     QString dirPath;
-    if(mw()->activeChildWindow()!=1) return;
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
 
     LevelEdit * edit = mw()->activeLvlEditWin();
     if(!edit) return;
@@ -497,7 +580,7 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
     if(!ui->LVLPropsMusicCustom->isModified()) return;
     ui->LVLPropsMusicCustom->setModified(false);
 
-    if(mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;

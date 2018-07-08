@@ -29,7 +29,7 @@ void LVL_Block::construct()
     m_blocked[1] = Block_ALL;
     m_blocked[2] = Block_ALL;
     animated = false;
-    sizable = false;
+    m_sizable = false;
     animator_ID = 0;
     m_isHidden = false;
     m_destroyed = false;
@@ -205,7 +205,7 @@ void LVL_Block::transformTo_x(unsigned long id)
     }
     else
     {
-        if(setup->setup.view == 1)
+        if(setup->setup.z_layer == 1)
             z_index = LevelScene::zOrder.blockFront1;
         else
             z_index = LevelScene::zOrder.blockBack1;
@@ -228,12 +228,7 @@ void LVL_Block::transformTo_x(unsigned long id)
         animator_ID = setup->animator_ID;
     }
 
-    sizable = setup->setup.sizable;
-    if(!sizable)
-    {
-        data.w = texture.w;
-        data.h = (unsigned(texture.h) / setup->setup.frames);
-    }
+    setSizable(setup->setup.sizable);
 
     if(!m_isInited)
     {
@@ -260,7 +255,7 @@ void LVL_Block::transformTo_x(unsigned long id)
     //TODO: Remove this "sizable" flag and set top collision for all sizable blocks in INI file.
     //      this will allow to set any sizable block have any wanted collision rules than
     //      force everyone use top-side rule only.
-    if(sizable || (setup->setup.collision == 2))
+    if(setup->setup.sizable || (setup->setup.collision == 2))
     {
         m_blocked[1] = Block_TOP;
         m_blocked[2] = Block_TOP;
@@ -269,13 +264,6 @@ void LVL_Block::transformTo_x(unsigned long id)
     {
         m_blocked[1] = Block_NONE;
         m_blocked[2] = Block_NONE;
-    }
-
-    if(sizable)
-    {
-        // Don't allow texture smaller than 3x3
-        if((texture.w < 3) || (texture.h < 3))
-            sizable = false;
     }
 
     memcpy(m_blockedOrigin, m_blocked, sizeof(int)*BLOCK_FILTER_COUNT);
@@ -365,6 +353,51 @@ void LVL_Block::transformTo_x(unsigned long id)
         m_scene->m_characterSwitchers.buildBrick(*setup);
 }
 
+void LVL_Block::setSizable(bool sizable)
+{
+    m_sizable = sizable;
+
+    if(m_sizable)
+    {
+        // Don't allow texture smaller than 3x3
+        if((texture.w < 3) || (texture.h < 3))
+            m_sizable = false;
+    }
+
+    if(!m_sizable)
+    {
+        data.w = texture.w;
+        data.h = (unsigned(texture.h) / setup->setup.frames);
+        return;
+    }
+
+    sizable_border.g = setup->setup.sizable_border_width < 0 ?
+                ConfigManager::lvl_block_global_setup.sizable_block_border_size :
+                setup->setup.sizable_border_width;
+    sizable_border.l = setup->setup.sizable_border_width_left;
+    sizable_border.t = setup->setup.sizable_border_width_top;
+    sizable_border.r = setup->setup.sizable_border_width_right;
+    sizable_border.b = setup->setup.sizable_border_width_bottom;
+
+    if(sizable_border.l <= 0)
+        sizable_border.l = sizable_border.g;
+    if(sizable_border.r <= 0)
+        sizable_border.r = sizable_border.g;
+    if(sizable_border.t <= 0)
+        sizable_border.t = sizable_border.g;
+    if(sizable_border.b <= 0)
+        sizable_border.b = sizable_border.g;
+
+    if((sizable_border.l <= 0) && (sizable_border.g <= 0))
+        sizable_border.l = Maths::iRound(double(texture.w) / 3);
+    if((sizable_border.r <= 0) && (sizable_border.g <= 0))
+        sizable_border.r = Maths::iRound(double(texture.w) / 3);
+    if((sizable_border.b <= 0) && (sizable_border.g <= 0))
+        sizable_border.b = Maths::iRound(double(texture.h) / 3);
+    if((sizable_border.t <= 0) && (sizable_border.g <= 0))
+        sizable_border.t = Maths::iRound(double(texture.h) / 3);
+}
+
 
 void LVL_Block::render(double camX, double camY)
 {
@@ -386,104 +419,143 @@ void LVL_Block::render(double camX, double camY)
     GlRenderer::BindTexture(&texture);
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-    if(sizable)
+    if(m_sizable)
     {
-        int w = int(round(m_momentum.w));
-        int h = int(round(m_momentum.h));
-        int x, y, x2, y2, i, j;
-        int hc, wc;
+        //! Width of body
+        const int32_t wB = Maths::iRound(m_momentum.w);
+        //! Height of body
+        const int32_t hB = Maths::iRound(m_momentum.h);
 
-        x = Maths::iRound(double(texture.w) / 3); // Width of one piece
-        y = Maths::iRound(double(texture.h) / 3); // Height of one piece
-        //Double size
-        x2 = x << 1;
-        y2 = y << 1;
-        int pWidth = texture.w - x2; //Width of center piece
-        int pHeight = texture.h - y2; //Height of center piece
-        int fLnt = 0; // Free Lenght
-        int fWdt = 0; // Free Width
-        int dX = 0; //Draw Offset. This need for crop junk on small sizes
-        int dY = 0;
+        //! Width of texture
+        const int32_t wT = texture.w;
+        //! Height of texture
+        const int32_t hT = texture.h;
 
-        if(w < x2) dX = (x2 - w) >> 1;
+        //! Left border size
+        const int32_t xbL = sizable_border.l;
+        //! Top border size
+        const int32_t ybT = sizable_border.t;
+        //! Right border size
+        const int32_t xbR = sizable_border.r;
+        //! Bottom border size
+        const int32_t ybB = sizable_border.b;
+        //! Summary of left and right bottom sizes
+        const int32_t xB2 = xbL + xbR;
+        //! Summary of top and bottom bottom sizes
+        const int32_t yB2 = ybT + ybB;
+        //! Width of center piece
+        const int32_t pWidth = wT - xB2;
+        //! Height of center piece
+        const int32_t pHeight = hT - yB2;
+
+        //! Iterator 1
+        int32_t i;
+        //! Iterator 2
+        int32_t j;
+
+        //! Horizontal offset cursor
+        int32_t hc;
+        //! Vertical offset cursor
+        int32_t wc;
+
+        //! Lenght left
+        int32_t fLnt = 0;
+        //! Width left
+        int32_t fWdt = 0;
+        //! Draw Offset X. This need for crop junk on small sizes
+        int32_t dX = 0;
+        //! Draw Offset Y. This need for crop junk on small sizes
+        int32_t dY = 0;
+
+        if(wB < xB2)
+            dX = (xB2 - wB) >> 1;
         else dX = 0;
 
-        if(h < y2) dY = (y2 - h) >> 1;
+        if(hB < yB2)
+            dY = (yB2 - hB) >> 1;
         else dY = 0;
 
-        int totalW = ((w - x2) / pWidth);
-        int totalH = ((h - y2) / pHeight);
+        int32_t totalW = ((wB - xB2) / pWidth);
+        int32_t totalH = ((hB - yB2) / pHeight);
 
         //L Draw left border
-        if(h > (y2))
+        if(hB > (yB2))
         {
             hc = 0;
 
             for(i = 0; i < totalH; i++)
             {
-                drawPiece(blockG, PGE_RectF(0, x + hc, x - dX, pHeight), PGE_RectF(0, y, x - dX, pHeight));
+                drawPiece(blockG, PGE_RectF(0, ybT + hc, xbL - dX, pHeight),
+                                  PGE_RectF(0, ybT,      xbL - dX, pHeight));
                 hc += pHeight;
             }
 
-            fLnt = (h - y2) % pHeight;
+            fLnt = (hB - yB2) % pHeight;
 
             if(fLnt != 0)
-                drawPiece(blockG, PGE_RectF(0, x + hc, x - dX, fLnt), PGE_RectF(0, y, x - dX, fLnt));
+                drawPiece(blockG, PGE_RectF(0, ybT + hc, xbL - dX, fLnt),
+                                  PGE_RectF(0, ybT,      xbL - dX, fLnt));
         }
 
         //T Draw top border
-        if(w > (x2))
+        if(wB > (xB2))
         {
             hc = 0;
 
             for(i = 0; i < totalW; i++)
             {
-                drawPiece(blockG, PGE_RectF(x + hc, 0, pWidth, y - dY), PGE_RectF(x, 0, pWidth, y - dY));
+                drawPiece(blockG, PGE_RectF(xbL + hc,   0, pWidth, ybT - dY),
+                                  PGE_RectF(xbL,        0, pWidth, ybT - dY));
                 hc += pWidth;
             }
 
-            fLnt = (w - (x2)) % pWidth;
+            fLnt = (wB - (xB2)) % pWidth;
 
             if(fLnt != 0)
-                drawPiece(blockG, PGE_RectF(x + hc, 0, fLnt, y - dY), PGE_RectF(x, 0, fLnt, y - dY));
+                drawPiece(blockG, PGE_RectF(xbL + hc, 0, fLnt, ybT - dY),
+                                  PGE_RectF(xbL,      0, fLnt, ybT - dY));
         }
 
         //B Draw bottom border
-        if(w > (x2))
+        if(wB > (xB2))
         {
             hc = 0;
 
             for(i = 0; i < totalW; i++)
             {
-                drawPiece(blockG, PGE_RectF(x + hc, h - y + dY, pWidth, y - dY), PGE_RectF(x, texture.h - y + dY, pWidth, y - dY));
+                drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY, pWidth, ybB - dY),
+                                  PGE_RectF(xbL,        hT - ybB + dY, pWidth, ybB - dY));
                 hc += pWidth;
             }
 
-            fLnt = (w - (x2)) % pWidth;
+            fLnt = (wB - (xB2)) % pWidth;
 
             if(fLnt != 0)
-                drawPiece(blockG, PGE_RectF(x + hc, h - y + dY, fLnt, y - dY), PGE_RectF(x, texture.h - y + dY, fLnt, y - dY));
+                drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY, fLnt, ybB - dY),
+                                  PGE_RectF(xbL,        hT - ybB + dY, fLnt, ybB - dY));
         }
 
         //R Draw right border
-        if(h > (y2))
+        if(hB > (yB2))
         {
             hc = 0;
 
             for(i = 0; i < totalH; i++)
             {
-                drawPiece(blockG, PGE_RectF(w - x + dX, y + hc, x - dX, pHeight), PGE_RectF(texture.w - x + dX, y, x - dX, pHeight));
+                drawPiece(blockG, PGE_RectF(wB - xbR + dX,      ybT + hc, xbR - dX, pHeight),
+                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, pHeight));
                 hc += pHeight;
             }
 
-            fLnt = (h - y2) % pHeight;
+            fLnt = (hB - yB2) % pHeight;
 
             if(fLnt != 0)
-                drawPiece(blockG, PGE_RectF(w - x + dX, y + hc, x - dX, fLnt), PGE_RectF(texture.w - x + dX, y, x - dX, fLnt));
+                drawPiece(blockG, PGE_RectF(wB - xbR + dX,      ybT + hc, xbR - dX, fLnt),
+                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, fLnt));
         }
 
         //C Draw center
-        if((w > (x2)) && (h > (y2)))
+        if((wB > (xB2)) && (hB > (yB2)))
         {
             hc = 0;
             wc = 0;
@@ -494,19 +566,21 @@ void LVL_Block::render(double camX, double camY)
 
                 for(j = 0; j < totalW; j++)
                 {
-                    drawPiece(blockG, PGE_RectF(x + hc, y + wc, pWidth, pHeight), PGE_RectF(x, y, pWidth, pHeight));
+                    drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, pWidth, pHeight),
+                                      PGE_RectF(xbL,      ybT,      pWidth, pHeight));
                     hc += pWidth;
                 }
 
-                fLnt = (w - x2) % pWidth;
+                fLnt = (wB - xB2) % pWidth;
 
                 if(fLnt != 0)
-                    drawPiece(blockG, PGE_RectF(x + hc, y + wc, fLnt, pHeight), PGE_RectF(x, y, fLnt, pHeight));
+                    drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, fLnt, pHeight),
+                                      PGE_RectF(xbL,      ybT,      fLnt, pHeight));
 
                 wc += pHeight;
             }
 
-            fWdt = (h - y2) % pHeight;
+            fWdt = (hB - yB2) % pHeight;
 
             if(fWdt != 0)
             {
@@ -514,29 +588,42 @@ void LVL_Block::render(double camX, double camY)
 
                 for(j = 0; j < totalW; j++)
                 {
-                    drawPiece(blockG, PGE_RectF(x + hc, y + wc, pWidth, fWdt), PGE_RectF(x, y, pWidth, fWdt));
+                    drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, pWidth, fWdt),
+                                      PGE_RectF(xbL,      ybT,      pWidth, fWdt));
                     hc += pWidth;
                 }
 
-                fLnt = (w - x2) % pWidth;
+                fLnt = (wB - xB2) % pWidth;
 
                 if(fLnt != 0)
-                    drawPiece(blockG, PGE_RectF(x + hc, y + wc, fLnt, fWdt), PGE_RectF(x, y, fLnt, fWdt));
+                    drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, fLnt, fWdt),
+                                      PGE_RectF(xbL,      ybT,      fLnt, fWdt));
             }
         }
 
         //Draw corners
         //1 Left-top
-        drawPiece(blockG, PGE_RectF(0, 0, x - dX, y - dY), PGE_RectF(0, 0, x - dX, y - dY));
+        drawPiece(blockG, PGE_RectF(0, 0, xbL - dX, ybT - dY),
+                          PGE_RectF(0, 0, xbL - dX, ybT - dY));
         //2 Right-top
-        drawPiece(blockG, PGE_RectF(w - x + dX, 0, x - dX, y - dY), PGE_RectF(texture.w - x + dX, 0, x - dX, y - dY));
+        drawPiece(blockG, PGE_RectF(wB - xbR + dX, 0, xbR - dX, ybT - dY),
+                          PGE_RectF(wT - xbR + dX, 0, xbR - dX, ybT - dY));
         //3 Right-bottom
-        drawPiece(blockG, PGE_RectF(w - x + dX, h - y + dY, x - dX, y - dY), PGE_RectF(texture.w - x + dX, texture.h - y + dY, x - dX, y - dY));
+        drawPiece(blockG, PGE_RectF(wB - xbR + dX, hB - ybB + dY, xbR - dX, ybB - dY),
+                          PGE_RectF(wT - xbR + dX, hT - ybB + dY, xbR - dX, ybB - dY));
         //4 Left-bottom
-        drawPiece(blockG, PGE_RectF(0, h - y + dY, x - dX, y - dY), PGE_RectF(0, texture.h - y + dY, x - dX, y - dY));
+        drawPiece(blockG, PGE_RectF(0, hB - ybB + dY, xbL - dX, ybB - dY),
+                          PGE_RectF(0, hT - ybB + dY, xbL - dX, ybB - dY));
     }
     else
-        GlRenderer::renderTextureCur(float(blockG.left()), float(blockG.top()), float(blockG.width()), float(blockG.height()), float(x.first), float(x.second));
+    { // Draw regular block texture
+        GlRenderer::renderTextureCur(float(blockG.left()),
+                                     float(blockG.top()),
+                                     float(blockG.width()),
+                                     float(blockG.height()),
+                                     float(x.first),
+                                     float(x.second));
+    }
 
     GlRenderer::UnBindTexture();
 }

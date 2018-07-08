@@ -49,6 +49,9 @@ void LvlScene::buildAnimators()
             t_bgo.setup.framespeed
         );
 
+        if(!t_bgo.setup.frame_sequence.isEmpty())
+            aniBGO->setFrameSequance(t_bgo.setup.frame_sequence);
+
         m_animatorsBGO.push_back(aniBGO);
         m_animationTimer.registerAnimation(aniBGO);
         t_bgo.animator_id = m_animatorsBGO.size() - 1;

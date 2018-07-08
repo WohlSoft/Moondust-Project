@@ -62,6 +62,9 @@ LevelEdit::LevelEdit(MainWindow* mw, QWidget *parent) :
     ui->graphicsView->verticalScrollBar()->setSingleStep(32);
     ui->graphicsView->verticalScrollBar()->setTracking(true);
 
+    if(GlobalSettings::LvlOpts.default_zoom != 100)
+        setZoom(GlobalSettings::LvlOpts.default_zoom);
+
     #ifdef Q_OS_ANDROID
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

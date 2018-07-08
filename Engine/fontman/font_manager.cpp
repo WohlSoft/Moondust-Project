@@ -42,6 +42,7 @@ BaseFontEngine::~BaseFontEngine()
 //! Complete array of available raster fonts
 static VPtrList<RasterFont> g_rasterFonts;
 static VPtrList<TtfFont>    g_ttfFonts;
+static VPtrList<BaseFontEngine*>    g_anyFonts;
 
 //! Default raster font to render text
 static RasterFont      *g_defaultRasterFont = nullptr;
@@ -57,6 +58,17 @@ typedef std::unordered_map<std::string, int> FontsHash;
 static FontsHash        g_fontNameToId;
 
 static bool             g_double_pixled = false;
+
+static void registerFont(BaseFontEngine* font)
+{
+    g_anyFonts.push_back(font);
+    g_fontNameToId.insert({font->getFontName(), g_anyFonts.size() - 1});
+}
+
+void *FontManager::getDefaultTtfFont()
+{
+    return reinterpret_cast<void*>(g_defaultTtfFont);
+}
 
 void FontManager::initBasic()
 {
@@ -74,6 +86,7 @@ void FontManager::initBasic()
     ok = mainFont.loadFont(reinterpret_cast<const char*>(memory), fileSize);
     SDL_assert_release(ok);
     g_defaultTtfFont = &mainFont;
+    registerFont(g_defaultTtfFont);
 
     g_double_pixled = false;
     g_fontManagerIsInit = true;
@@ -101,16 +114,44 @@ void FontManager::initFull()
         if(!rf.isLoaded())   //Pop broken font from array
             g_rasterFonts.pop_back();
         else   //Register font name in a table
-            g_fontNameToId.insert({rf.getFontName(), g_rasterFonts.size() - 1});
+            registerFont(&rf);
     }
 
     if(!g_rasterFonts.empty())
         g_defaultRasterFont = &g_rasterFonts.front();
+
+    /***************Load TTF font support****************/
+    if(!ConfigManager::setup_fonts.fontname.empty())
+    {
+        g_ttfFonts.emplace_back();
+        TtfFont& tf = g_ttfFonts.back();
+        tf.loadFont(fontsDir.absolutePath() + "/" + ConfigManager::setup_fonts.fontname);
+        if(!tf.isLoaded())   //Pop broken font from array
+            g_ttfFonts.pop_back();
+        else   //Register font name in a table
+        {
+            registerFont(&tf);
+            // Override default TTF font
+            g_defaultTtfFont = &tf;
+        }
+    }
+
+    for(std::string &fontFile : ConfigManager::setup_fonts.ttfFonts)
+    {
+        g_ttfFonts.emplace_back();
+        TtfFont& tf = g_ttfFonts.back();
+        tf.loadFont(fontsDir.absolutePath() + "/" + fontFile);
+        if(!tf.isLoaded())   //Pop broken font from array
+            g_ttfFonts.pop_back();
+        else   //Register font name in a table
+            registerFont(&tf);
+    }
 }
 
 void FontManager::quit()
 {
     g_fontNameToId.clear();
+    g_anyFonts.clear();
     g_ttfFonts.clear();
     g_rasterFonts.clear();
     closeFreeType();
@@ -140,11 +181,11 @@ PGE_Size FontManager::textSize(std::string &text, int fontID,
             text.erase(i, text.size() - i);
     }
 
-    //Use Raster font
-    if((fontID >= 0) && (static_cast<size_t>(fontID) < g_rasterFonts.size()))
+    //Use one of loaded fonts
+    if((fontID >= 0) && (static_cast<size_t>(fontID) < g_anyFonts.size()))
     {
-        if(g_rasterFonts[fontID].isLoaded())
-            return g_rasterFonts[fontID].textSize(text, max_line_lenght);
+        if(g_anyFonts[fontID]->isLoaded())
+            return g_anyFonts[fontID]->textSize(text, max_line_lenght);
     }
 
     if(g_defaultTtfFont->isLoaded())
@@ -175,17 +216,28 @@ void FontManager::printText(std::string text,
     if(text.empty())
         return;
 
-    if((font >= 0) && (static_cast<size_t>(font) < g_rasterFonts.size()))
+    if((font >= 0) && (static_cast<size_t>(font) < g_anyFonts.size()))
     {
-        if(g_rasterFonts[font].isLoaded())
+        if(g_anyFonts[font]->isLoaded())
         {
-            g_rasterFonts[font].printText(text, x, y, Red, Green, Blue, Alpha);
+            g_anyFonts[font]->printText(text, x, y, Red, Green, Blue, Alpha);
             return;
         }
     }
 
-    if(g_defaultTtfFont->isLoaded())
-        g_defaultTtfFont->printText(text, x, y, Red, Green, Blue, Alpha, ttf_FontSize);
+    switch(font)
+    {
+    case DefaultRaster:
+        if(g_defaultRasterFont && g_defaultRasterFont->isLoaded())
+        {
+            g_defaultRasterFont->printText(text, x, y, Red, Green, Blue, Alpha, ttf_FontSize);
+            break;
+        } /*fallthrough*/
+    case DefaultTTF_Font:
+    default:
+        if(g_defaultTtfFont->isLoaded())
+            g_defaultTtfFont->printText(text, x, y, Red, Green, Blue, Alpha, ttf_FontSize);
+    }
 }
 
 

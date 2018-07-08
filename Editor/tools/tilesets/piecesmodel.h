@@ -33,34 +33,45 @@ QT_BEGIN_NAMESPACE
 class QMimeData;
 QT_END_NAMESPACE
 
-class PiecesModel : public QAbstractListModel
+class ElementsListModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    enum PieceType{
-        LEVELPIECE_BLOCK = 0,
-        LEVELPIECE_BGO,
-        LEVELPIECE_NPC,
-        WORLDPIECE_TILE,
-        WORLDPIECE_SCENERY,
-        WORLDPIECE_PATH,
-        WORLDPIECE_LEVEL
+    enum ElementType{
+        LEVELPIECE_BLOCK = ItemTypes::LVL_Block,
+        LEVELPIECE_BGO = ItemTypes::LVL_BGO,
+        LEVELPIECE_NPC = ItemTypes::LVL_NPC,
+        WORLDPIECE_TILE = ItemTypes::WLD_Tile,
+        WORLDPIECE_SCENERY = ItemTypes::WLD_Scenery,
+        WORLDPIECE_PATH = ItemTypes::WLD_Path,
+        WORLDPIECE_LEVEL = ItemTypes::WLD_Level
     };
 
     enum GFXMode
     {
-        GFX_Staff=0,
+        GFX_Staff = 0,
         GFX_Level,
         GFX_World
     };
 
+    enum SearchType
+    {
+        Search_ByName = 0,
+        Search_ById,
+        Search_ByIdContained
+    };
 
-    explicit PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize = 32, QGraphicsScene *scene=0, QObject *parent = 0);
+    enum SortType
+    {
+        Sort_ByName,
+        Sort_ById
+    };
+
+    explicit ElementsListModel(dataconfigs* conf, ElementType pieceType, int pieceSize = 32, QGraphicsScene *scene=0, QObject *parent = 0);
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
-    bool removeRows(int row, int count, const QModelIndex &parent);
 
     bool dropMimeData(const QMimeData *data, Qt::DropAction action,
                       int row, int column, const QModelIndex &parent);
@@ -69,21 +80,47 @@ public:
     int rowCount(const QModelIndex &parent) const;
     Qt::DropActions supportedDropActions() const;
 
-    void addPiece(const int &id);
+    void setScene(QGraphicsScene *scene);
+    void setElementsType(ElementType elementType);
 
+    void clear();
+
+    void addElementsBegin();
+    void addElement(const int &id);
+    void addElementsEnd();
+
+    void setFilter(const QString &criteria, int searchType = 0);
+    void setSort(int sortType = 0, bool backward = false);
 
 private:
-
     GFXMode mode;
-    QGraphicsScene *scn;
+    QGraphicsScene *m_scene;
 
     QString getMimeType() const;
-    QList<QPixmap> pixmaps;
-    QList<QString> pixmapNames;
-    QList<int> pixmapId;
+    struct Element
+    {
+        bool isValid = false;
+        qulonglong elementId = 0;
+        QString name;
+        QString description;
+        QPixmap pixmap;
+        bool isVisible = false;
+    };
+
+    QList<Element>  m_elements;
+    QList<int>      m_elementsVisibleMap;
+
+    QString m_filterCriteria;
+    int     m_filterSearchType = Search_ByName;
+    void    updateVisibilityMap();
+
+    int     m_sortType = Sort_ByName;
+    bool    m_sortBackward = false;
+    void    updateSort();
+
     int m_PieceSize;
     dataconfigs* m_conf;
-    PieceType m_type;
+    ElementType m_type;
 };
 
 #endif // PIECESLIST_H

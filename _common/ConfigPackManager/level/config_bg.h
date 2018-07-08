@@ -26,12 +26,24 @@ class IniProcessing;
 
 struct BgSetup
 {
+    /**
+     * @brief Read data from the external INI file and fill the config
+     * @param setup [_in] Instance of opened INI file processor
+     * @param bgImgPath [_in] Folder path where images are stored
+     * @param defaultGrid [_in] Default grid size
+     * @param merge_with [_in] Another element config to use as source of default values
+     * @param error [_out] Output string for error messages writing
+     * @return
+     */
     bool parse(IniProcessing *setup,
                PGEString bgImgPath,
                uint32_t defaultGrid,
-               BgSetup *merge_with = nullptr,
+               const BgSetup *merge_with = nullptr,
                PGEString *error = nullptr);
 
+    /**
+     * @brief Legacy BG: background type
+     */
     enum BgType
     {
         //! Single-row background
@@ -42,27 +54,46 @@ struct BgSetup
         BG_TYPE_Tiled = 2
     };
 
+    /**
+     * @brief Legacy BG: Vertical repeating algorithm
+     */
     enum BgReleatVertical
     {
+        //! Don't repeat vertically, turn on parallax
         BG_REPEAT_V_NR_NoRepeat = 0,
+        //! Don't repeat vertically, turn off parallax
         BG_REPEAT_V_ZR_NoRepeatNoParallax = 1,
+        //! Repeat vertically with parallax
         BG_REPEAT_V_RP_RepeatParallax,
+        //! Repeat vertically without parallax
         BG_REPEAT_V_RZ_RepeatNoParallax
     };
 
+    /**
+     * @brief Legacy BG: Vertical side attach
+     */
     enum BgAttach
     {
+        //! Attach background picture to bottom of the section
         BG_ATTACH_TO_BOTTOM = 0,
+        //! Attach background picture to top of the section
         BG_ATTACH_TO_TOP = 1
     };
 
+    /**
+     * @brief Legacy BG: Second image vertical side attach (double-row only)
+     */
     enum BgAttachSecond
     {
+        //! Attach second background image to top of the first image
         BG_ATTACH_2_TO_TOP_OF_FIRST = 0,
+        //! Attach second background image to bottom of the section
         BG_ATTACH_2_TO_BOTTOM = 1,
+        //! Attach second background image to top of the section
         BG_ATTACH_2_TO_TOP = 2
     };
 
+    //! Integer array
     typedef PGEList<int32_t> IntArray;
 
     /*
@@ -266,6 +297,7 @@ struct BgSetup
         IntArray        frame_sequence;
     };
 
+    //! Multi-layer background layers
     PGEList<BgLayer> layers;
 };
 

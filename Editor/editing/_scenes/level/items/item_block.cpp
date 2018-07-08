@@ -491,6 +491,35 @@ void ItemBlock::setMetaSignsVisibility(bool visible)
         m_coinCounter->setVisible(visible);
 }
 
+void ItemBlock::updateSizableBorder(const QPixmap &srcimg)
+{
+    sizable_border.g = m_localProps.setup.sizable_border_width < 0 ?
+                m_scene->m_configs->defaultBlock.sizable_block_border_size :
+                m_localProps.setup.sizable_border_width;
+    sizable_border.l = m_localProps.setup.sizable_border_width_left;
+    sizable_border.t = m_localProps.setup.sizable_border_width_top;
+    sizable_border.r = m_localProps.setup.sizable_border_width_right;
+    sizable_border.b = m_localProps.setup.sizable_border_width_bottom;
+
+    if(sizable_border.l <= 0)
+        sizable_border.l = sizable_border.g;
+    if(sizable_border.r <= 0)
+        sizable_border.r = sizable_border.g;
+    if(sizable_border.t <= 0)
+        sizable_border.t = sizable_border.g;
+    if(sizable_border.b <= 0)
+        sizable_border.b = sizable_border.g;
+
+    if((sizable_border.l <= 0) && (sizable_border.g <= 0))
+        sizable_border.l = qRound(double(srcimg.width()) / 3);
+    if((sizable_border.r <= 0) && (sizable_border.g <= 0))
+        sizable_border.r = qRound(double(srcimg.width()) / 3);
+    if((sizable_border.b <= 0) && (sizable_border.g <= 0))
+        sizable_border.b = qRound(double(srcimg.height()) / 3);
+    if((sizable_border.t <= 0) && (sizable_border.g <= 0))
+        sizable_border.t = qRound(double(srcimg.height()) / 3);
+}
+
 void ItemBlock::setSlippery(bool slip)
 {
     m_data.slippery = slip;
@@ -674,7 +703,9 @@ void ItemBlock::setMainPixmap() // Init Sizable block
 {
     if(m_sizable)
     {
-        drawSizableBlock(m_data.w, m_data.h, m_scene->m_animatorsBlocks[m_animatorID]->wholeImage());
+        const QPixmap &texture = m_scene->m_animatorsBlocks[m_animatorID]->wholeImage();
+        updateSizableBorder(texture);
+        drawSizableBlock(m_data.w, m_data.h, texture);
         m_imageSize = QRectF(0, 0, m_data.w, m_data.h);
     }
 }
@@ -683,11 +714,13 @@ void ItemBlock::setBlockSize(QRect rect)
 {
     if(m_sizable)
     {
+        const QPixmap &texture = m_scene->m_animatorsBlocks[m_animatorID]->wholeImage();
         m_data.x = rect.x();
         m_data.y = rect.y();
         m_data.w = rect.width();
         m_data.h = rect.height();
-        drawSizableBlock(m_data.w, m_data.h, m_scene->m_animatorsBlocks[m_animatorID]->wholeImage());
+        updateSizableBorder(texture);
+        drawSizableBlock(m_data.w, m_data.h, texture);
         this->setPos(m_data.x, m_data.y);
     }
     m_imageSize = QRectF(0, 0, m_data.w, m_data.h);
@@ -720,7 +753,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
         }
         else
         {
-            if(m_localProps.setup.view == 1)
+            if(m_localProps.setup.z_layer == 1)
                 setZValue(m_scene->Z_BlockFore); // applay lava block Z
             else
                 setZValue(m_scene->Z_Block); // applay standart block Z
@@ -827,11 +860,8 @@ bool ItemBlock::itemTypeIsLocked()
 }
 
 //sizable Block formula
-void ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
+void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
 {
-    int x, y, i, j;
-    int hc, wc;
-
     m_currentImage = QPixmap(w, h);
 
     if((srcimg.width() < 3) || (srcimg.height() < 3))
@@ -841,125 +871,202 @@ void ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
         return;
     }
 
-    x = qRound(qreal(srcimg.width()) / 3); // Width of one piece
-    y = qRound(qreal(srcimg.height()) / 3); // Height of one piece
+    //! Width of body
+    const int32_t wB = w;
+    //! Height of body
+    const int32_t hB = h;
 
-    int x2 = x << 1; // 2*x
-    int y2 = y << 1; // 2*y
+    //! Width of texture
+    const int32_t wT = srcimg.width();
+    //! Height of texture
+    const int32_t hT = srcimg.height();
 
-    int pWidth = srcimg.width() - x2; //Width of center piece
-    int pHeight = srcimg.height() - y2; //Height of center piece
+    //! Left border size
+    const int32_t xbL = sizable_border.l;
+    //! Top border size
+    const int32_t ybT = sizable_border.t;
+    //! Right border size
+    const int32_t xbR = sizable_border.r;
+    //! Bottom border size
+    const int32_t ybB = sizable_border.b;
+    //! Summary of left and right bottom sizes
+    const int32_t xB2 = xbL + xbR;
+    //! Summary of top and bottom bottom sizes
+    const int32_t yB2 = ybT + ybB;
+    //! Width of center piece
+    const int32_t pWidth = wT - xB2;
+    //! Height of center piece
+    const int32_t pHeight = hT - yB2;
+
+    //! Iterator 1
+    int32_t i;
+    //! Iterator 2
+    int32_t j;
+
+    //! Horizontal offset cursor
+    int32_t hc;
+    //! Vertical offset cursor
+    int32_t wc;
+
+    //! Lenght left
+    int32_t fLnt = 0;
+    //! Width left
+    int32_t fWdt = 0;
+    //! Draw Offset X. This need for crop junk on small sizes
+    int32_t dX = 0;
+    //! Draw Offset Y. This need for crop junk on small sizes
+    int32_t dY = 0;
+
+    if(wB < xB2)
+        dX = (xB2 - wB) >> 1;
+    else dX = 0;
+
+    if(hB < yB2)
+        dY = (yB2 - hB) >> 1;
+    else dY = 0;
+
+    int32_t totalW = ((wB - xB2) / pWidth);
+    int32_t totalH = ((hB - yB2) / pHeight);
 
     m_currentImage.fill(Qt::transparent);
     QPainter szblock(&m_currentImage);
 
-    int fLnt = 0; // Free Lenght
-    int fWdt = 0; // Free Width
-
-    int dX = 0; //Draw Offset. This need for crop junk on small sizes
-    int dY = 0;
-
-    if(w < x2) dX = (x2 - w) / 2;
-    else dX = 0;
-    if(h < y2) dY = (y2 - h) / 2;
-    else dY = 0;
-
-    int totalW = ((w - x2) / x);
-    int totalH = ((h - y2) / y);
     //L Draw left border
-    if(h > y2)
+    if(hB > yB2)
     {
+        const QPixmap piece = srcimg.copy(0, ybT,      xbL - dX, pHeight);
         hc = 0;
+
         for(i = 0; i < totalH; i++)
         {
-            szblock.drawPixmap(0, x + hc, x - dX, pHeight, srcimg.copy(0, y, x - dX, pHeight));
+            szblock.drawPixmap(0, ybT + hc, xbL - dX, pHeight, piece);
             hc += pHeight;
         }
-        fLnt = (h - y2) % pHeight;
-        if(fLnt != 0) szblock.drawPixmap(0, x + hc, x - dX, fLnt, srcimg.copy(0, y, x - dX, fLnt));
+
+        fLnt = (hB - yB2) % pHeight;
+
+        if(fLnt != 0)
+            szblock.drawPixmap(0, ybT + hc, xbL - dX, fLnt,
+                   srcimg.copy(0, ybT,      xbL - dX, fLnt));
     }
 
     //T Draw top border
-    if(w > x2)
+    if(wB > xB2)
     {
+        const QPixmap piece = srcimg.copy(xbL,      0, pWidth, ybT - dY);
         hc = 0;
+
         for(i = 0; i < totalW; i++)
         {
-            szblock.drawPixmap(x + hc, 0, pWidth, y - dY, srcimg.copy(x, 0, pWidth, y - dY));
+            szblock.drawPixmap(xbL + hc,   0, pWidth, ybT - dY, piece);
             hc += pWidth;
         }
-        fLnt = (w - x2) % pWidth;
-        if(fLnt != 0) szblock.drawPixmap(x + hc, 0, fLnt, y - dY, srcimg.copy(x, 0, fLnt, y - dY));
+
+        fLnt = (wB - xB2) % pWidth;
+
+        if(fLnt != 0)
+            szblock.drawPixmap(xbL + hc, 0, fLnt, ybT - dY,
+                   srcimg.copy(xbL,      0, fLnt, ybT - dY));
     }
 
     //B Draw bottom border
-    if(w > x2)
+    if(wB > xB2)
     {
+        const QPixmap piece = srcimg.copy(xbL,        hT - ybB + dY, pWidth, ybB - dY);
         hc = 0;
+
         for(i = 0; i < totalW; i++)
         {
-            szblock.drawPixmap(x + hc, h - y + dY, pWidth, y - dY, srcimg.copy(x, srcimg.height() - y + dY, pWidth, y - dY));
+            szblock.drawPixmap(xbL + hc,   hB - ybB + dY, pWidth, ybB - dY, piece);
             hc += pWidth;
         }
-        fLnt = (w - x2) % pWidth;
-        if(fLnt != 0) szblock.drawPixmap(x + hc, h - y + dY, fLnt, y - dY, srcimg.copy(x, srcimg.height() - y + dY, fLnt, y - dY));
+
+        fLnt = (wB - xB2) % pWidth;
+
+        if(fLnt != 0)
+            szblock.drawPixmap(xbL + hc,   hB - ybB + dY, fLnt, ybB - dY,
+                   srcimg.copy(xbL,        hT - ybB + dY, fLnt, ybB - dY));
     }
 
     //R Draw right border
-    if(h > y2)
+    if(hB > yB2)
     {
+        const QPixmap piece = srcimg.copy(wT - xbR + dX, ybT, xbR - dX, pHeight);
         hc = 0;
+
         for(i = 0; i < totalH; i++)
         {
-            szblock.drawPixmap(w - x + dX, y + hc, x - dX, pHeight, srcimg.copy(srcimg.width() - x + dX, y, x - dX, pHeight));
+            szblock.drawPixmap(wB - xbR + dX,      ybT + hc, xbR - dX, pHeight, piece);
             hc += pHeight;
         }
-        fLnt = (h - y2) % pHeight;
-        if(fLnt != 0) szblock.drawPixmap(w - x + dX, y + hc, x - dX, fLnt, srcimg.copy(srcimg.width() - x + dX, y, x - dX, fLnt));
+
+        fLnt = (hB - yB2) % pHeight;
+
+        if(fLnt != 0)
+            szblock.drawPixmap(wB - xbR + dX,      ybT + hc, xbR - dX, fLnt,
+                   srcimg.copy(wT - xbR + dX, ybT, xbR - dX, fLnt));
     }
 
     //C Draw center
-    if(w > x2 && h > y2)
+    if((wB > (xB2)) && (hB > (yB2)))
     {
+        const QPixmap piece = srcimg.copy(xbL,      ybT,      pWidth, pHeight);
         hc = 0;
         wc = 0;
+
         for(i = 0; i < totalH; i++)
         {
             hc = 0;
+
             for(j = 0; j < totalW; j++)
             {
-                szblock.drawPixmap(x + hc, y + wc, pWidth, pHeight, srcimg.copy(x, y, pWidth, pHeight));
+                szblock.drawPixmap(xbL + hc, ybT + wc, pWidth, pHeight, piece);
                 hc += pWidth;
             }
-            fLnt = (w - x2) % pWidth;
-            if(fLnt != 0) szblock.drawPixmap(x + hc, y + wc, fLnt, pHeight, srcimg.copy(x, y, fLnt, pHeight));
-            wc += y;
+
+            fLnt = (wB - xB2) % pWidth;
+
+            if(fLnt != 0)
+                szblock.drawPixmap(xbL + hc, ybT + wc, fLnt, pHeight,
+                       srcimg.copy(xbL,      ybT,      fLnt, pHeight));
+
+            wc += pHeight;
         }
 
-        fWdt = (h - y2) % pHeight;
+        fWdt = (hB - yB2) % pHeight;
+
         if(fWdt != 0)
         {
+            const QPixmap piece2 = srcimg.copy(xbL,      ybT,      pWidth, fWdt);
             hc = 0;
+
             for(j = 0; j < totalW; j++)
             {
-                szblock.drawPixmap(x + hc, y + wc, pWidth, fWdt, srcimg.copy(x, y, pWidth, fWdt));
+                szblock.drawPixmap(xbL + hc, ybT + wc, pWidth, fWdt, piece2);
                 hc += pWidth;
             }
-            fLnt = (w - x2) % pWidth;
-            if(fLnt != 0) szblock.drawPixmap(x + hc, y + wc, fLnt, fWdt, srcimg.copy(x, y, fLnt, fWdt));
 
+            fLnt = (wB - xB2) % pWidth;
+
+            if(fLnt != 0)
+                szblock.drawPixmap(xbL + hc, ybT + wc, fLnt, fWdt,
+                       srcimg.copy(xbL,      ybT,      fLnt, fWdt));
         }
     }
 
     //Draw corners
     //1 Left-top
-    szblock.drawPixmap(0, 0, x - dX, y - dY, srcimg.copy(QRect(0, 0, x - dX, y - dY)));
+    szblock.drawPixmap(0, 0, xbL - dX, ybT - dY,
+     srcimg.copy(QRect(0, 0, xbL - dX, ybT - dY)));
     //2 Right-top
-    szblock.drawPixmap(w - x + dX, 0, x - dX, y - dY, srcimg.copy(QRect(srcimg.width() - x + dX, 0, x - dX, y - dY)));
+    szblock.drawPixmap(wB - xbR + dX, 0, xbR - dX, ybT - dY,
+     srcimg.copy(QRect(wT - xbR + dX, 0, xbR - dX, ybT - dY)));
     //3 Right-bottom
-    szblock.drawPixmap(w - x + dX, h - y + dY, x - dX, y - dY, srcimg.copy(QRect(srcimg.width() - x + dX, srcimg.height() - y + dY, x - dX, y - dY)));
+    szblock.drawPixmap(wB - xbR + dX, hB - ybB + dY, xbR - dX, ybB - dY,
+     srcimg.copy(QRect(wT - xbR + dX, hT - ybB + dY, xbR - dX, ybB - dY)));
     //4 Left-bottom
-    szblock.drawPixmap(0, h - y + dY, x - dX, y - dY, srcimg.copy(QRect(0, srcimg.height() - y + dY, x - dX, y - dY)));
+    szblock.drawPixmap(0, hB - ybB + dY, xbL - dX, ybB - dY,
+     srcimg.copy(QRect(0, hT - ybB + dY, xbL - dX, ybB - dY)));
 
     szblock.end();
 }

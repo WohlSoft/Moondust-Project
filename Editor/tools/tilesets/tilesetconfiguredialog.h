@@ -21,6 +21,7 @@
 #define TILESETCONFIGUREDIALOG_H
 
 #include <QDialog>
+#include <QMenu>
 
 #include <data_configs/data_configs.h>
 
@@ -62,7 +63,7 @@ private slots:
     void showEvent( QShowEvent * event );
     void showNotify();
     void on_delete_me_clicked();
-
+    void on_search_textChanged(const QString &arg1);
 
 signals:
     void windowShowed();
@@ -75,16 +76,19 @@ private:
     QString lastFullPath;
     Ui::TilesetConfigureDialog *ui;
 
+    QMenu   m_searchSetup;
+    int     m_searchBy = 0;
+
     GFXMode mode;
     QGraphicsScene *scn;
 
     tileset* m_tileset;
     int oldWidth;
     int oldHeight;
-    PiecesModel* m_model;
+    ElementsListModel* m_model;
     dataconfigs* m_conf;
     //void setUpItems(ItemTypes type);
-    PiecesModel::PieceType toPieceType(int type);
+    ElementsListModel::ElementType toElementType(int type);
 };
 
 #endif // TILESETCONFIGUREDIALOG_H

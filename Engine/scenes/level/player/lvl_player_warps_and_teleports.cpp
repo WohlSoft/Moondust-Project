@@ -363,7 +363,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
     break;
 
     case LevelDoor::WARP_INSTANT:
-        setSpeed(0, (speedY() < 0 ? speedY() : 0)); //zero X speed!
+        setSpeed(0, (speedY() < 0 ? speedY() : 0)); /*fallthrough*/ //zero X speed!
 
     case LevelDoor::WARP_PORTAL:
         teleport(x + 16 - (m_momentum.w/2.0),

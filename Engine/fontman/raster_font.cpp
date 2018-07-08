@@ -24,7 +24,9 @@
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
 #include <DirManager/dirman.h>
+#include <data_configs/config_manager.h>
 
+#include "ttf_font.h"
 #include "font_manager_private.h"
 
 RasterFont::RasterFont() : BaseFontEngine()
@@ -313,7 +315,21 @@ PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool 
             if(rc != m_charMap.end())
             {
                 RasChar &rch = rc->second;
-                widthSumm += (m_letterWidth - rch.padding_left - rch.padding_right + m_interLetterSpace);
+                if(rch.valid)
+                {
+                    widthSumm += (m_letterWidth - rch.padding_left - rch.padding_right + m_interLetterSpace);
+                }
+                else
+                {
+                    TtfFont *font = reinterpret_cast<TtfFont*>(FontManager::getDefaultTtfFont());
+                    if(font)
+                    {
+                        TtfFont::TheGlyphInfo glyph = font->getGlyphInfo(&cx, m_letterWidth);
+                        widthSumm += glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (m_letterWidth >> 2);
+                    } else {
+                        widthSumm += m_letterWidth + m_interLetterSpace;
+                    }
+                }
                 if(widthSumm > widthSummMax)
                     widthSummMax = widthSumm;
             }
@@ -354,7 +370,6 @@ PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool 
     return PGE_Size(static_cast<int32_t>(widthSummMax), static_cast<int32_t>(m_newlineOffset * count));
 }
 
-
 void RasterFont::printText(const std::string &text,
                            int32_t x, int32_t y,
                            float Red, float Green, float Blue, float Alpha,
@@ -367,6 +382,7 @@ void RasterFont::printText(const std::string &text,
     uint32_t offsetY = 0;
     uint32_t w = m_letterWidth;
     uint32_t h = m_letterHeight;
+    bool    doublePixel = ConfigManager::setup_fonts.double_pixled;
 
     const char *strIt  = text.c_str();
     const char *strEnd = strIt + text.size();
@@ -409,18 +425,19 @@ void RasterFont::printText(const std::string &text,
         }
         else
         {
-            #ifdef PGE_TTF
-            PGE_Texture c;
-            if(ttf_borders)
-                FontManager::getChar2(cx, letter_width, c);
-            else
-                FontManager::getChar1(cx, letter_width, c);
-            GlRenderer::setTextureColor(Red, Green, Blue, Alpha);
-            GlRenderer::renderTexture(&c, x + offsetX, y + offsetY);
-            offsetX += c.w + interletter_space;
-            #else
-            offsetX += m_interLetterSpace;
-            #endif
+            TtfFont *font = reinterpret_cast<TtfFont*>(FontManager::getDefaultTtfFont());
+            if(font)
+            {
+                font->drawGlyph(&cx,
+                                x + static_cast<int32_t>(offsetX),
+                                y + static_cast<int32_t>(offsetY),
+                                (doublePixel ? (w / 2) : w),
+                                (doublePixel ? 2.0 : 1.0),
+                                Red, Green, Blue, Alpha);
+                offsetX += w + m_interLetterSpace;
+            } else {
+                offsetX += m_interLetterSpace;
+            }
         }
         strIt += static_cast<size_t>(trailingBytesForUTF8[ucx]);
     }

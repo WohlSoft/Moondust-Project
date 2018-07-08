@@ -36,8 +36,8 @@
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
 {
-    width=0;
-    height=0;
+    width = 0;
+    height = 0;
     m_message = "Message box works fine!";
     construct(m_message, m_type);
 }
@@ -50,7 +50,7 @@ PGE_MsgBox::PGE_MsgBox(Scene *_parentScene,
                        std::string texture)
     : PGE_BoxBase(_parentScene)
 {
-    construct(msg,_type, boxCenterPos, _padding, texture);
+    construct(msg, _type, boxCenterPos, _padding, texture);
 }
 
 PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
@@ -59,18 +59,18 @@ PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
     m_page   = mb.m_page;
     m_running = mb.m_running;
     fontID  = mb.fontID;
-    fontRgba= mb.fontRgba;
+    fontRgba = mb.fontRgba;
 
     keys    = mb.keys;
     m_exitKeyLock = mb.m_exitKeyLock;
 
     m_type    = mb.m_type;
-    m_sizeRect=mb.m_sizeRect;
+    m_sizeRect = mb.m_sizeRect;
     m_message = mb.m_message;
     width   = mb.width;
     height  = mb.height;
     padding = mb.padding;
-    bg_color= mb.bg_color;
+    bg_color = mb.bg_color;
 }
 
 
@@ -110,22 +110,22 @@ void PGE_MsgBox::construct(std::string msg,
     FontManager::optimizeText(m_message, 27);
     /****************Word wrap*end*****************/
     PGE_Size boxSize = FontManager::textSize(m_message, fontID, 27);
-    setBoxSize(boxSize.w()/2, boxSize.h()/2, _padding);
+    setBoxSize(boxSize.w() / 2, boxSize.h() / 2, _padding);
 
     if((pos.x() == -1) && (pos.y() == -1))
     {
-        m_sizeRect.setLeft(static_cast<int>(PGE_Window::Width/2 - width-padding));
-        m_sizeRect.setTop(static_cast<int>(PGE_Window::Height/3 - height-padding));
-        m_sizeRect.setRight(static_cast<int>(PGE_Window::Width/2 + width + padding));
-        m_sizeRect.setBottom(static_cast<int>(PGE_Window::Height/3 + height + padding));
+        m_sizeRect.setLeft(static_cast<int>(PGE_Window::Width / 2 - width - padding));
+        m_sizeRect.setTop(static_cast<int>(PGE_Window::Height / 3 - height - padding));
+        m_sizeRect.setRight(static_cast<int>(PGE_Window::Width / 2 + width + padding));
+        m_sizeRect.setBottom(static_cast<int>(PGE_Window::Height / 3 + height + padding));
 
         if(m_sizeRect.top() < padding)
             m_sizeRect.setY(static_cast<int>(padding));
     }
     else
     {
-        m_sizeRect.setLeft(static_cast<int>(pos.x() - width-padding));
-        m_sizeRect.setTop(static_cast<int>(pos.y() - height-padding));
+        m_sizeRect.setLeft(static_cast<int>(pos.x() - width - padding));
+        m_sizeRect.setTop(static_cast<int>(pos.y() - height - padding));
         m_sizeRect.setRight(static_cast<int>(pos.x() + width + padding));
         m_sizeRect.setBottom(static_cast<int>(pos.y() + height + padding));
     }
@@ -156,7 +156,7 @@ void PGE_MsgBox::update(double ticks)
 
 void PGE_MsgBox::render()
 {
-    if(m_page==2)
+    if(m_page == 2)
     {
         if(m_textureUsed)
         {
@@ -168,33 +168,32 @@ void PGE_MsgBox::render()
                                    m_sizeRect.width(), m_sizeRect.height(),
                                    bg_color.Red(), bg_color.Green(), bg_color.Blue(), static_cast<float>(m_faderOpacity));
         }
-        FontManager::printText(m_message, m_sizeRect.left() + padding, m_sizeRect.top()+padding, fontID,
+        FontManager::printText(m_message,
+                               static_cast<int>(m_sizeRect.left() + padding),
+                               static_cast<int>(m_sizeRect.top() + padding), fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
-//        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
-//                                         _sizeRect.top()+padding,
-//                                         &textTexture);
     }
     else
     {
         if(m_textureUsed)
         {
-            drawTexture(m_sizeRect.center().x()-(width + padding)*m_faderOpacity,
-                        m_sizeRect.center().y()-(height + padding)*m_faderOpacity,
-                        m_sizeRect.center().x()+(width + padding)*m_faderOpacity,
-                        m_sizeRect.center().y()+(height + padding)*m_faderOpacity,
+            drawTexture(static_cast<int>(m_sizeRect.center().x() - (width + padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().y() - (height + padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().x() + (width + padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().y() + (height + padding) * m_faderOpacity),
                         32,
                         static_cast<float>(m_faderOpacity));
         }
         else
         {
-            GlRenderer::renderRectBR(m_sizeRect.center().x() - (width+padding)*m_faderOpacity ,
-                                     m_sizeRect.center().y() - (height+padding)*m_faderOpacity,
-                                     m_sizeRect.center().x() + (width+padding)*m_faderOpacity,
-                                     m_sizeRect.center().y() + (height+padding)*m_faderOpacity,
-                                    bg_color.Red(),
-                                    bg_color.Green(),
-                                    bg_color.Blue(),
-                                    static_cast<float>(m_faderOpacity));
+            GlRenderer::renderRectBR(m_sizeRect.center().x() - (width + padding) * m_faderOpacity ,
+                                     m_sizeRect.center().y() - (height + padding) * m_faderOpacity,
+                                     m_sizeRect.center().x() + (width + padding) * m_faderOpacity,
+                                     m_sizeRect.center().y() + (height + padding) * m_faderOpacity,
+                                     bg_color.Red(),
+                                     bg_color.Green(),
+                                     bg_color.Blue(),
+                                     static_cast<float>(m_faderOpacity));
         }
     }
 }
@@ -217,7 +216,7 @@ void PGE_MsgBox::exec()
     restart();
     while(m_running)
     {
-        Uint32 start_render=SDL_GetTicks();
+        Uint32 start_render = SDL_GetTicks();
 
         update(m_uTickf);
         PGE_BoxBase::render();
@@ -227,7 +226,7 @@ void PGE_MsgBox::exec()
 
         #ifndef __EMSCRIPTEN__
         if((!PGE_Window::vsync) && (m_uTick > static_cast<Sint32>(SDL_GetTicks() - start_render)))
-            SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render) );
+            SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render));
         #else
         emscripten_sleep(1);
         #endif
@@ -237,73 +236,76 @@ void PGE_MsgBox::exec()
 void PGE_MsgBox::processLoader(double ticks)
 {
     SDL_Event event;
-    while ( SDL_PollEvent(&event) ) {
+    while(SDL_PollEvent(&event))
+    {
         PGE_Window::processEvents(event);
-        if(event.type==SDL_QUIT)
-            m_faderOpacity=1.0;
+        if(event.type == SDL_QUIT)
+            m_faderOpacity = 1.0;
     }
     updateControllers();
     tickFader(ticks);
 
-    if(m_faderOpacity>=1.0) m_page++;
+    if(m_faderOpacity >= 1.0) m_page++;
 }
 
 void PGE_MsgBox::processBox(double)
 {
-//    #ifndef __APPLE__
-//    if(g_AppSettings.interprocessing)
-//        qApp->processEvents();
-//    #endif
+    //    #ifndef __APPLE__
+    //    if(g_AppSettings.interprocessing)
+    //        qApp->processEvents();
+    //    #endif
     updateControllers();
 
     if(m_exitKeyLock && !keys.jump && !keys.run && !keys.alt_run)
-        m_exitKeyLock=false;
+        m_exitKeyLock = false;
 
-    if((!m_exitKeyLock)&&(keys.jump || keys.run || keys.alt_run))
+    if((!m_exitKeyLock) && (keys.jump || keys.run || keys.alt_run))
     {
         m_page++;
-        setFade(10, 0.0f, 0.05f);
+        setFade(10, 0.0, 0.05);
         return;
     }
 
     SDL_Event event;
-    while ( SDL_PollEvent(&event) )
+    while(SDL_PollEvent(&event))
     {
         PGE_Window::processEvents(event);
         switch(event.type)
         {
-            case SDL_QUIT:
-                m_page++; setFade(10, 0.0, 0.05);
+        case SDL_QUIT:
+            m_page++;
+            setFade(10, 0.0, 0.05);
             break;
-            case SDL_KEYDOWN: // If pressed key
-                switch(event.key.keysym.sym)
-                { // Check which
-                case SDLK_ESCAPE: // ESC
-                case SDLK_RETURN:// Enter
-                case SDLK_KP_ENTER:
-                {
-                    m_page++;
-                    setFade(10, 0.0, 0.05);
-                }
-                break;
+        case SDL_KEYDOWN: // If pressed key
+            switch(event.key.keysym.sym)
+            {
+            // Check which
+            case SDLK_ESCAPE: // ESC
+            case SDLK_RETURN:// Enter
+            case SDLK_KP_ENTER:
+            {
+                m_page++;
+                setFade(10, 0.0, 0.05);
+            }
+            break;
 
-                default:
-                break;
-                }
-            break;
-            case SDL_MOUSEBUTTONDOWN:
-                switch(event.button.button)
-                {
-                    case SDL_BUTTON_LEFT:
-                    {
-                        m_page++;
-                        setFade(10, 0.0, 0.05);
-                    }
-                    break;
-                }
-            break;
             default:
-              break;
+                break;
+            }
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            switch(event.button.button)
+            {
+            case SDL_BUTTON_LEFT:
+            {
+                m_page++;
+                setFade(10, 0.0, 0.05);
+            }
+            break;
+            }
+            break;
+        default:
+            break;
         }
     }
 
@@ -314,7 +316,7 @@ void PGE_MsgBox::processBox(double)
 void PGE_MsgBox::processUnLoader(double ticks)
 {
     SDL_Event event;
-    while ( SDL_PollEvent(&event) )
+    while(SDL_PollEvent(&event))
     {
         PGE_Window::processEvents(event);
         if(event.type == SDL_QUIT)
@@ -333,7 +335,7 @@ void PGE_MsgBox::updateControllers()
     {
         if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene * s = dynamic_cast<LevelScene *>(m_parentScene);
+            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
             if(s)
             {
                 s->tickAnimations(m_uTickf);
@@ -342,19 +344,19 @@ void PGE_MsgBox::updateControllers()
                 s->m_player1Controller->sendControls();
                 s->m_player2Controller->update();
                 s->m_player2Controller->sendControls();
-                keys=s->m_player1Controller->keys;
+                keys = s->m_player1Controller->keys;
             }
         }
         else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene * s = dynamic_cast<WorldScene *>(m_parentScene);
+            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
             if(s)
             {
                 s->tickAnimations(m_uTickf);
                 s->m_fader.tickFader(m_uTickf);
                 s->m_player1Controller->update();
                 s->m_player1Controller->sendControls();
-                keys=s->m_player1Controller->keys;
+                keys = s->m_player1Controller->keys;
             }
         }
     }
@@ -372,7 +374,7 @@ void PGE_MsgBox::info(std::string msg)
     }
     else
     {
-                                 //% "Information"
+        //% "Information"
         PGE_Window::msgBoxInfo(qtTrId("MSGBOX_INFO"), msg);
     }
 }
@@ -387,7 +389,7 @@ void PGE_MsgBox::warn(std::string msg)
     }
     else
     {
-                                   //% "Warning"
+        //% "Warning"
         PGE_Window::msgBoxWarning(qtTrId("MSGBOX_WARN"), msg);
     }
 }
@@ -402,7 +404,7 @@ void PGE_MsgBox::error(std::string msg)
     }
     else
     {
-                                    //% "Error"
+        //% "Error"
         PGE_Window::msgBoxCritical(qtTrId("MSGBOX_ERROR"), msg);
     }
 }
@@ -417,7 +419,7 @@ void PGE_MsgBox::fatal(std::string msg)
     }
     else
     {
-                                    //% "Fatal error"
+        //% "Fatal error"
         PGE_Window::msgBoxCritical(qtTrId("MSGBOX_FATAL"), msg);
     }
 }

@@ -79,6 +79,7 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", true).toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
         GlobalSettings::LvlOpts.grid_show = settings.value("grid-show", false).toBool();
+        GlobalSettings::LvlOpts.default_zoom = settings.value("default-zoom", 100).toUInt();
 
         GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-directuin", -1).toInt();
         GlobalSettings::LvlItemDefaults.npc_generator_type = settings.value("defaults-npc-gen-type", 1).toInt();
@@ -127,23 +128,23 @@ void MainWindow::loadSettings()
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
         //                         toolbox parameter prefix             pointer to toolbox      saved visibility state flag   defaults: vis.    flaoting
-        loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        true,   false);
+        loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        configs.editor.default_visibility.lvl_itembox,   false);
         loadToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps,     false,  true);
-        loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   true,   true);
-        loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      false,  true);
-        loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         true,   true);
-        loadToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         true,   true);
-        loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   configs.editor.default_visibility.lvl_section_props,   true);
+        loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      configs.editor.default_visibility.lvl_warp_props,  true);
+        loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         configs.editor.default_visibility.lvl_layers,   true);
+        loadToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         configs.editor.default_visibility.lvl_events,   true);
+        loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      configs.editor.default_visibility.lvl_search,  true);
 
-        loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        true,   false);
-        loadToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox,    false,  true);
+        loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        configs.editor.default_visibility.wld_itembox,   false);
+        loadToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox,    configs.editor.default_visibility.wld_settings,  true);
         loadToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps,     false,  false);
-        loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      configs.editor.default_visibility.wld_search,  true);
 
-        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        true,   true);
-        loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       false,  true);
-        loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      false,  true);
-        loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      false,  true);
+        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        configs.editor.default_visibility.tilesets_box,   true);
+        loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       configs.editor.default_visibility.debugger_box,  true);
+        loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      configs.editor.default_visibility.bookmarks_box,  true);
+        loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      configs.editor.default_visibility.variables_box,  true);
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
@@ -285,6 +286,7 @@ void MainWindow::saveSettings()
         settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
         settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
         settings.setValue("grid-show", GlobalSettings::LvlOpts.grid_show);
+        settings.setValue("default-zoom", GlobalSettings::LvlOpts.default_zoom);
         settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
         settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);

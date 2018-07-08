@@ -15,12 +15,29 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_DEBUG_POSTFIX "d")
+if(WIN32)
+    set(CMAKE_SHARED_LIBRARY_PREFIX "")
+endif()
+
+if(POLICY CMP0058) # Dependencies
+    cmake_policy(SET CMP0058 NEW)
+endif()
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
 
+# Destinition bitness of the build
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    set(PGE_ARCHITECTURE_BITS "32")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(PGE_ARCHITECTURE_BITS "64")
+else()
+    set(PGE_ARCHITECTURE_BITS "unk")
+endif()
+
 # Allow install into space-containing paths
+set(CMAKE_INSTALL_PREFIX_ORIG ${CMAKE_INSTALL_PREFIX})
 string(REPLACE " " "\\ " CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 string(REPLACE "(" "\\(" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 string(REPLACE ")" "\\)" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
@@ -72,10 +89,25 @@ if(HAIKU OR EMSCRIPTEN OR ANDROID)
     message("== Qt-dependent components are not supported for this platform")
 endif()
 
+if(WIN32)
+    set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)
+else()
+    set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT ON)
+endif()
+
+option(PGE_STATIC_SDLMIXER "Prefer static assembly of SDL Mixer X and libraries" ${PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT})
+
+if(PGE_STATIC_SDLMIXER)
+    set(PGE_SHARED_SDLMIXER OFF)
+else()
+    set(PGE_SHARED_SDLMIXER ON)
+endif()
+
 if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
     find_package(Qt5 COMPONENTS Core)
     if(Qt5_FOUND)
         option(PGE_ENABLE_QT "Enable build of Qt-dependent components" ${PGE_ENABLE_QT_ENABLED_BY_DEFAULT})
+        option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
         message("== Qt 5 has been found in ${Qt5_DIR}")
         get_filename_component(QT5_BINARY_DIR "${Qt5_DIR}/../../bin" ABSOLUTE)
         find_program(_QT_LRELEASE_PROGRAM lrelease PATHS ${QT5_BINARY_DIR}/bin/)
@@ -83,6 +115,10 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
             message(STATUS "Found ${_QT_LRELEASE_PROGRAM}, locales will be compiled!")
         else()
             message(WARNING "Unable to find lrelease, locales will NOT be built!")
+        endif()
+        # Shared deploymend on Windows platforms
+        if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
+            include(_common/WinDeployQt.cmake)
         endif()
     else()
         message("== Qt 5 NOT FOUND! Qt-dependent components will be disabled!")
@@ -259,13 +295,14 @@ ExternalProject_Add(
     SDL2_Local
     PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
     URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
-    PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_cmake_no_wasapi.patch"
+    PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_remove_lib_prefix_on_windows.patch"
     CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
-        -DSDL_SHARED=OFF
-        $<$<BOOL:WIN32>:-DENABLE_WASAPI_SUPPORT=OFF>
+        -DSDL_SHARED=${PGE_SHARED_SDLMIXER}
+        $<$<BOOL:WIN32>:-DWASAPI=OFF>
+        $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
         $<$<BOOL:LINUX>:-DSNDIO=OFF>
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DEXTRA_CFLAGS=-s USE_PTHREADS=1>
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS=ON>
@@ -305,16 +342,27 @@ ExternalProject_Add(
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
-        "-DAUDIO_CODECS_REPO_PATH=${DEPENDENCIES_INSTALL_DIR}"
+        "-DAUDIO_CODECS_INSTALL_PATH=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_DEBUG_POSTFIX=d"
-        "-DSDL_MIXER_X_SHARED=OFF"
+        "-DSDL_MIXER_X_SHARED=${PGE_SHARED_SDLMIXER}"
+        $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DUSE_FLAC=OFF>
     DEPENDS AudioCodecs_Local SDL2_Local
 )
 
+# Build dependent libraries only. Workaround for Ninja
+add_custom_target(libs
+    DEPENDS
+    SDLMixerX_Local
+    SDL2_Local
+    LuaBind_Local
+    FreeImage_Local
+    SQLite_Local
+    FREETYPE_Local
+)
+
 # Append licenses of libraries
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/SDL_Mixer_X/COPYING.txt" RENAME "License.SDL2_mixer_ext.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses")
-
 
 option(PGE_BUILD_ENGINE "Build the PGE Engine component" ON)
 if(PGE_BUILD_ENGINE)
@@ -348,26 +396,134 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
 endif()
 
 if(PGE_ENABLE_QT AND NOT ANDROID)
+
+    set(WINDEPLOY_LIST)
+
     option(PGE_BUILD_EDITOR "Build the PGE Editor component (Qt5 required)" ON)
     if(PGE_BUILD_EDITOR)
         add_subdirectory(Editor)
         # Append changelog file
         InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/changelog.editor.txt" RENAME "changelog.editor.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        # Deployment list
+        list(APPEND WINDEPLOY_LIST pge_editor)
     endif()
 
     option(PGE_BUILD_PLAYERCALIBRATOR "Build the Player Calibrator utility component (Qt5 required)" ON)
     if(PGE_BUILD_PLAYERCALIBRATOR)
         add_subdirectory(PlayableCalibrator)
+        list(APPEND WINDEPLOY_LIST pge_calibrator)
     endif()
 
     option(PGE_BUILD_MUSICPLAYER "Build the SDL Mixer X Music Player component (Qt5 required)" ON)
     if(PGE_BUILD_MUSICPLAYER)
         add_subdirectory(MusicPlayer)
+        list(APPEND WINDEPLOY_LIST pge_musplay)
     endif()
 
     option(PGE_BUILD_MAINTAINER "Build the Maintainer utility component (Qt5 required)" ON)
     if(PGE_BUILD_MAINTAINER)
         add_subdirectory(Maintainer)
+        list(APPEND WINDEPLOY_LIST pge_maintainer)
+    endif()
+
+    # Shared deployment on Windows
+    if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
+        string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        add_custom_target(windeploy)
+        WinDeployQt(pge_windeploy TARGETS ${WINDEPLOY_LIST} NOSWGL NOANGLE NOD3DCOMPILER)
+
+        set(JUNK_DLLS)
+        list(APPEND JUNK_DLLS
+            "languages/qt_en.qm"
+            "translations/qt_en.qm"
+            "imageformats/qjpeg.dll"
+            "imageformats/qjpegd.dll"
+            "imageformats/qsvg.dll"
+            "imageformats/qsvgd.dll"
+            "imageformats/qtga.dll"
+            "imageformats/qtgad.dll"
+            "imageformats/qtiff.dll"
+            "imageformats/qtiffd.dll"
+            "imageformats/qwbmp.dll"
+            "imageformats/qwbmpd.dll"
+            "imageformats/qwebp.dll"
+            "imageformats/qwebpd.dll"
+            "opengl32sw.dll"
+            "libEGL.dll"
+            "libGLESV2.dll"
+            "D3Dcompiler_47.dll"
+        )
+        add_custom_target(cleanup_files_windeploy DEPENDS pge_windeploy)
+        foreach(JunkFile ${JUNK_DLLS})
+            add_custom_command(TARGET cleanup_files_windeploy POST_BUILD
+                               COMMAND ${CMAKE_COMMAND} -E remove
+                                "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/${JunkFile}"
+            )
+        endforeach()
+
+        set(JUNK_DIRS)
+        list(APPEND JUNK_DIRS
+            "bearer"
+            "iconengines"
+            "qmltooling"
+            "platforminputcontexts"
+            "scenegraph"
+        )
+        add_custom_target(cleanup_dirs_windeploy DEPENDS pge_windeploy)
+        foreach(JunkDir ${JUNK_DIRS})
+            add_custom_command(TARGET cleanup_dirs_windeploy POST_BUILD
+                               COMMAND ${CMAKE_COMMAND} -E remove_directory
+                                "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/${JunkDir}"
+            )
+        endforeach()
+
+        set(MINGW_DLLS)
+        if(EXISTS "${QT_BINLIB_DIR}/bin/libgcc_s_dw2-1.dll")
+            list(APPEND MINGW_DLLS "${QT_BINLIB_DIR}/bin/libgcc_s_dw2-1.dll")
+        endif()
+        if(EXISTS "${QT_BINLIB_DIR}/bin/libgcc_s_seh-1.dll")
+            list(APPEND MINGW_DLLS "${QT_BINLIB_DIR}/bin/libgcc_s_seh-1.dll")
+        endif()
+        if(EXISTS "${QT_BINLIB_DIR}/bin/libmingwex-0.dll")
+            list(APPEND MINGW_DLLS "${QT_BINLIB_DIR}/bin/libmingwex-0.dll")
+        endif()
+        if(EXISTS "${QT_BINLIB_DIR}/bin/libwinpthread-1.dll")
+            list(APPEND MINGW_DLLS "${QT_BINLIB_DIR}/bin/libwinpthread-1.dll")
+        endif()
+        if(EXISTS "${QT_BINLIB_DIR}/bin/pthreadGC-3.dll")
+            list(APPEND MINGW_DLLS "${QT_BINLIB_DIR}/bin/pthreadGC-3.dll")
+        endif()
+        if(EXISTS "${QT_BINLIB_DIR}/bin/libstdc++-6.dll")
+            list(APPEND MINGW_DLLS "${QT_BINLIB_DIR}/bin/libstdc++-6.dll")
+        endif()
+        install(FILES
+            ${MINGW_DLLS}
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+        )
+
+        add_custom_target(copy_mingw_dlls DEPENDS pge_windeploy)
+        foreach(MingwRuntimeDll ${MINGW_DLLS})
+            add_custom_command(TARGET copy_mingw_dlls POST_BUILD
+                               COMMAND ${CMAKE_COMMAND} -E
+                               copy ${MingwRuntimeDll} "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}"
+            )
+        endforeach()
+    endif()
+
+    if(WIN32)# Also deploy tools
+        add_custom_target(mkdir_tools_windeploy
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/tools"
+        )
+        add_custom_target(install_tools_windeploy
+            WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/tools"
+            COMMAND ${CMAKE_COMMAND} -E tar "-xjvf"
+                "${CMAKE_SOURCE_DIR}/_Misc/tools/sox-win32.tar.gz" -C "tools"
+            DEPENDS mkdir_tools_windeploy
+        )
+        if(NOT PGE_ENABLE_STATIC_QT)
+            add_dependencies(windeploy pge_windeploy cleanup_files_windeploy cleanup_dirs_windeploy)
+        endif()
+        add_dependencies(windeploy install_tools_windeploy)
     endif()
 endif()
 
@@ -376,3 +532,230 @@ InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/LICENSE" RENAME "LICENSE.txt" DESTINAT
 
 # Process UNIX2DOS if needed
 InstallTextFiles()
+
+# =============== Deployment stuff ===============
+set(PGE_FILE_STANDALONE_EDITOR_MANUAL
+    "<html><head><meta http-equiv=\\\"refresh\\\" content=\\\"0; url=http://pgehelp.wohlsoft.ru/manual_editor.html\\\"/></head><body></body></html>")
+file(WRITE "${CMAKE_BINARY_DIR}/install_online_help.cmake" "
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/help/manual_editor.htm\"
+        \"${PGE_FILE_STANDALONE_EDITOR_MANUAL}\")
+")
+
+add_custom_target(put_online_help
+    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX_ORIG}"
+    COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/help"
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/help"
+    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/install_online_help.cmake"
+)
+
+if(WIN32)
+    set(PGE_FILE_PORTABLE_APP_INI
+        "[Main]\r\nforce-portable=true\r\n\r\n")
+else()
+    set(PGE_FILE_PORTABLE_APP_INI
+        "[Main]\nforce-portable=true\n\n")
+endif()
+
+file(WRITE "${CMAKE_BINARY_DIR}/install_portable.cmake" "
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/pge_editor.ini\"
+        \"${PGE_FILE_PORTABLE_APP_INI}\")
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/pge_engine.ini\"
+        \"${PGE_FILE_PORTABLE_APP_INI}\")
+file(WRITE
+        \"${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/pge_calibrator.ini\"
+        \"${PGE_FILE_PORTABLE_APP_INI}\")
+")
+
+add_custom_target(enable_portable
+    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX_ORIG}"
+    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/install_portable.cmake"
+)
+
+if(UNIX AND NOT APPLE) # Deployment for UNIX-like operating system except macOS
+    string(TOLOWER ${CMAKE_SYSTEM_NAME} CMAKE_SYSTEM_NAME_LOWER)
+    add_custom_target(create_tar
+        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+        COMMAND ${CMAKE_COMMAND} -E tar "-cjvf"
+            "pge_project-${CMAKE_SYSTEM_NAME_LOWER}-${PGE_ARCHITECTURE_BITS}.tar.bz2"
+            "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}"
+            COMMENT "Packing tarball..."
+    )
+endif()
+
+if(WIN32) # Deployment for Windows
+
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        set(PGE_DLL_SUFFIX "d")
+    else()
+        set(PGE_DLL_SUFFIX "")
+    endif()
+
+    if(PGE_SHARED_SDLMIXER)
+        install(FILES
+            "${CMAKE_BINARY_DIR}/bin/SDL2${PGE_DLL_SUFFIX}.dll"
+            "${CMAKE_BINARY_DIR}/bin/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+        )
+    endif()
+
+    find_program(SevenZipProgram 7z
+            PATHS
+            "$ENV{ProgramFiles}/7-zip/"
+            "C:/Program Files/7-zip/"
+            "C:/Program Files (x86)/7-zip/"
+    )
+    if(SevenZipProgram)
+        message("Detected 7Zip installed: ${SevenZipProgram}. Deployment is possible!")
+        string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+
+        set(ZIP_PACK_DIR "${CMAKE_INSTALL_PREFIX_ORIG}/_packed")
+        set(ZIP_SRC_DIR "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}")
+
+        add_custom_target(mkdir_packed_create_zip
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${ZIP_PACK_DIR}"
+        )
+
+        set(PGE_CommonQtFiles
+            "${ZIP_SRC_DIR}/Qt5Core${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/Qt5Gui${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/Qt5Network${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/Qt5Widgets${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/imageformats/"
+            "${ZIP_SRC_DIR}/platforms/"
+            ${MINGW_DLLS}
+        )
+
+        set(PGE_CommonFiles
+            "${ZIP_SRC_DIR}/*.dll"
+            "${ZIP_SRC_DIR}/licenses/"
+            "${ZIP_SRC_DIR}/imageformats/"
+            "${ZIP_SRC_DIR}/platforms/"
+            "${ZIP_SRC_DIR}/help/"
+        )
+
+        if(EXISTS "${QT_BINLIB_DIR}/plugins/styles")
+            list(APPEND PGE_CommonFiles "${ZIP_SRC_DIR}/styles/")
+            list(APPEND PGE_CommonQtFiles "${ZIP_SRC_DIR}/styles/")
+        endif()
+
+        set(PGE_MaintainerFiles
+            ${PGE_CommonQtFiles}
+            "${ZIP_SRC_DIR}/tools"
+            "${ZIP_SRC_DIR}/pge_maintainer.exe"
+        )
+
+        set(PGE_MusPlayFiles
+            ${PGE_CommonQtFiles}
+            "${ZIP_SRC_DIR}/SDL2${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
+            "${ZIP_SRC_DIR}/pge_musplay.exe"
+        )
+
+        set(PGE_CalibratorFiles
+            ${PGE_CommonQtFiles}
+            "${ZIP_SRC_DIR}/calibrator"
+            "${ZIP_SRC_DIR}/pge_calibrator.exe"
+        )
+
+        set(PGE_Gifs2PngFiles
+            "${ZIP_SRC_DIR}/GIFs2PNG.exe"
+            "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
+        )
+
+        set(PGE_Png2GifsFiles
+            "${ZIP_SRC_DIR}/PNG2GIFs.exe"
+            "${ZIP_SRC_DIR}/PNG2GIFs.readme.txt"
+        )
+
+        set(PGE_LazyFixToolFiles
+            "${ZIP_SRC_DIR}/LazyFixTool.exe"
+            "${ZIP_SRC_DIR}/LazyFixTool.readme.txt"
+        )
+
+        set(PGE_InstallCommonFiles
+            ${PGE_CommonFiles}
+            "${ZIP_SRC_DIR}/tools"
+        )
+        set(PGE_InstallEditorFiles
+            "${ZIP_SRC_DIR}/changelog.editor.txt"
+            "${ZIP_SRC_DIR}/pge_editor.exe"
+            "${ZIP_SRC_DIR}/themes"
+            "${ZIP_SRC_DIR}/languages"
+            -r "-x!engine_*.qm"
+        )
+        set(PGE_InstallEngineFiles
+            "${ZIP_SRC_DIR}/pge_engine.exe"
+            "${ZIP_SRC_DIR}/languages"
+            "${ZIP_SRC_DIR}/pge_engine.*.txt"
+            "${ZIP_SRC_DIR}/changelog.engine.txt"
+            -r "-x!*.png" "-x!editor_*.qm" "-x!qt_*.qm"
+        )
+        set(PGE_InstallToolsFiles
+            "${ZIP_SRC_DIR}/GIFs2PNG.exe"
+            "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
+            "${ZIP_SRC_DIR}/PNG2GIFs.exe"
+            "${ZIP_SRC_DIR}/PNG2GIFs.readme.txt"
+            "${ZIP_SRC_DIR}/LazyFixTool.exe"
+            "${ZIP_SRC_DIR}/LazyFixTool.readme.txt"
+            "${ZIP_SRC_DIR}/pge_musplay.exe"
+            "${ZIP_SRC_DIR}/pge_calibrator.exe"
+            "${ZIP_SRC_DIR}/pge_maintainer.exe"
+            "${ZIP_SRC_DIR}/calibrator"
+            "${ZIP_SRC_DIR}/tools"
+        )
+
+        add_custom_target(create_zip_install
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/install-pge-common-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_InstallCommonFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/install-pge-editor-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_InstallEditorFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/install-pge-engine-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_InstallEngineFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/install-pge-tools-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_InstallToolsFiles}
+            DEPENDS mkdir_packed_create_zip
+            COMMENT "Packing common install files into ZIP archive..."
+        )
+
+        add_custom_target(create_zip_tools
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/pge-musplay-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_MusPlayFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/pge-maintainer-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_MaintainerFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/pge-calibrator-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_CalibratorFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/GIFs2PNG-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_Gifs2PngFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/PNG2GIFs-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_Png2GifsFiles}
+            COMMAND ${SevenZipProgram} a -tzip -mx9
+                "${ZIP_PACK_DIR}/LazyFixTool-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                ${PGE_LazyFixToolFiles}
+            DEPENDS mkdir_packed_create_zip
+            COMMENT "Packing tools into ZIP archive..."
+        )
+
+        add_custom_target(create_zip
+            ${SevenZipProgram}
+            a -tzip -mx9
+            "${ZIP_PACK_DIR}/pge-project-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+            "${ZIP_SRC_DIR}/"
+            DEPENDS mkdir_packed_create_zip
+            COMMENT "Packing ZIP archive..."
+        )
+    else()
+        message("!! 7Zip not found! Deployment will be inavailable!")
+    endif()
+endif()

@@ -90,7 +90,7 @@ int PGE_ProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption *option
 
                 view->setFixedWidth(width);
             }
-        }
+        } /*fallthrough*/
         //Combobox fix end
 
         case QStyle::SH_MenuBar_AltKeyNavigation:

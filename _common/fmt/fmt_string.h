@@ -7,6 +7,10 @@
  For the license information refer to format.h.
  */
 
+#ifdef FMT_INCLUDE
+# error "Add the fmt's parent directory and not fmt itself to includes."
+#endif
+
 #ifndef FMT_STRING_H_
 #define FMT_STRING_H_
 
@@ -118,6 +122,24 @@ typedef BasicStringWriter<wchar_t> WStringWriter;
 template <typename T>
 std::string to_string(const T &value) {
   fmt::MemoryWriter w;
+  w << value;
+  return w.str();
+}
+
+/**
+  \rst
+  Converts *value* to ``std::wstring`` using the default format for type *T*.
+
+  **Example**::
+
+    #include "fmt/string.h"
+
+    std::wstring answer = fmt::to_wstring(42);
+  \endrst
+ */
+template <typename T>
+std::wstring to_wstring(const T &value) {
+  fmt::WMemoryWriter w;
   w << value;
   return w.str();
 }

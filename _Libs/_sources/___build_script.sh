@@ -125,8 +125,8 @@ BuildSDL()
     UnArch $LatestSDL
 
     #--------------Apply some patches--------------
-    # Fixes build, because of undefined REFIID type, function itself is not using because of disabld Direct X component
-    # patch -t -N $LatestSDL/src/core/windows/SDL_windows.h < ../patches/SDL_window.h.patch #FIXED
+    # Fixes the PCM-Signed-Int32 to Float32 audio conversion for the SSE2 based implementation
+    # patch -t -N $LatestSDL/src/audio/SDL_audiotypecvt.h < ../patches/SDL2_S32_to_F32_fix.patch #FIXED
     #----------------------------------------------
 
     ###########SDL2###########

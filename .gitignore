@@ -20,6 +20,7 @@ _Libs/_builds/haiku/*
 _Libs/_builds/macos/*
 _Libs/_builds/android/*
 _Libs/_builds/win*-msvc/*
+_Libs/object_script*
 
 #Mac OS's junk
 .DS_Store
@@ -51,6 +52,9 @@ pge_deps.xcodeproj
 CMakeCache.txt
 CMakeFiles
 
+# Visual Studio 2017'th
+CMakeSettings.json
+
 # Qt-es
 
 *.pro.user
@@ -72,6 +76,7 @@ Makefile.*
 /bin
 /bin-w32
 /bin-w64
+/bin-cmake*
 /ServerLib/bin
 /android-build
 /Editor/app_process

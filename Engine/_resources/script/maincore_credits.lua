@@ -20,19 +20,19 @@ function onLoop()
     if(0 >= curY)then
         doDown = true
     end
-    
+
     if(doDown)then
         curY = curY + 1
     else
         curY = curY - 1
     end
-    
+
     if(doRight)then
         curX = curX + 1
     else
         curX = curX - 1
     end
-    Renderer.printText("Engine by Wohlstand & Kevsoft", curX, curY, 1, 15, 0xFFFF0077)
+    Renderer.printText("Engine by Wohlstand & Kevsoft", curX, curY, FontType.DefaultRaster, 15, 0xFFFF0077)
 end
 
 
@@ -43,5 +43,4 @@ function __native_event(eventObj, ...)
         _G[eventFuncToFind](...)
     end
 end
-
 

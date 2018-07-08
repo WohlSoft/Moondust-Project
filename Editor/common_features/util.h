@@ -27,6 +27,7 @@ class QLineEdit;
 class QListWidget;
 class QTableWidget;
 class QComboBox;
+class QTabBar;
 
 class util
 {
@@ -37,7 +38,7 @@ public:
      * \param itemList Pointer to QListWidget with elements where find
      * \param typeBox ComboBox contains type of search (by contained string in a name or ID number of the element)
      */
-    static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
+    static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, int searchType);
     /*!
      * \brief Removes all entries of QListWidget (with deletion!)
      * \param wid Pointer to QListWidget
@@ -60,6 +61,13 @@ public:
      * \return true if requested string has been found, false if not found
      */
     static bool contains(const QComboBox* b, const QString &s);
+    /*!
+     * \brief Check if QTabBar has specific item
+     * \param b Pointer to ComboBox to check
+     * \param s String of the label to check if contains in the combobox
+     * \return true if requested string has been found, false if not found
+     */
+    static bool contains(const QTabBar* b, const QString &s);
     /*!
      * \brief Clears string from invalid file path characters
      * \param s source file path string

@@ -197,7 +197,7 @@ namespace luabind {
 			template<class T>
 			T& to_cpp(lua_State*, by_reference<T>, int)
 			{
-				storage_.template construct<T>();
+				storage_.decltype(storage_)::template construct<T>();
 				return storage_.template get<T>();
 			}
 
@@ -218,7 +218,7 @@ namespace luabind {
 			template<class T>
 			T* to_cpp(lua_State*, by_pointer<T>, int)
 			{
-				storage_.template construct<T>();
+				storage_.decltype(storage_)::template construct<T>();
 				return &storage_.template get<T>();
 			}
 

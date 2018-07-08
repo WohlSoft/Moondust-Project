@@ -1,12 +1,19 @@
 cmake_minimum_required (VERSION 3.1.0)
 project(MoondustMaintainer C CXX)
 
+if(POLICY CMP0071) # Automoc
+    cmake_policy(SET CMP0071 NEW)
+endif()
+
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
 
 # As moc files are generated in the binary dir, tell CMake
 # to always look for includes there:
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_INSTALL_RPATH ".")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -20,10 +27,14 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
+# Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
+include(../_common/static_qt.cmake)
 
 add_definitions(-DPGE_FILES_QT)
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
 
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 
@@ -40,6 +51,13 @@ qt5_wrap_ui(UIS_HDRS
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
 
+if(QT_IMPORT_PLUGINS_MODULE)
+    set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_maintainer_plugins.cpp")
+    file(WRITE
+            "${QT_PLUGINS_CPP}"
+            "${QT_IMPORT_PLUGINS_MODULE}")
+endif()
+
 set(PGE_MAINTAINER_SRCS)
 
 list(APPEND PGE_MAINTAINER_SRCS
@@ -52,6 +70,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     EpisodeCvt/episode_converter.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
 )
 
 if(APPLE)
@@ -74,6 +93,8 @@ add_executable(pge_maintainer
 # dependencies QtCore and QtGui
 target_include_directories(pge_maintainer
     PRIVATE
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Concurrent_INCLUDES_DIRS}
 )
@@ -88,6 +109,8 @@ list(APPEND PGE_MAINTAINER_INSTALLS
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(pge_maintainer
     PRIVATE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
     ${Qt5Widgets_DEFINITIONS}
     ${Qt5Concurrent_DEFINITIONS}
 )
@@ -105,7 +128,9 @@ endif()
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
         set_target_properties(pge_maintainer PROPERTIES LINK_FLAGS "-mwindows")
-        list(APPEND PGE_MAINTAINER_LINK_LIBS "-static")
+        if(NOT PGE_ENABLE_STATIC_QT)
+            list(APPEND PGE_MAINTAINER_LINK_LIBS "-static")
+        endif()
     endif()
     list(APPEND PGE_MAINTAINER_LINK_LIBS pthread)
 endif()
@@ -130,9 +155,16 @@ if(APPLE)
 endif()
 
 list(APPEND PGE_MAINTAINER_LINK_LIBS
-    ${Qt5Widgets_LIBRARIES}
+    ${QT_EXTRA_LIBS_PRE}
     ${Qt5Concurrent_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
 )
+if(QT_PTHREAD)
+    list(APPEND PGE_MAINTAINER_LINK_LIBS ${QT_PTHREAD})
+endif()
 
 target_link_libraries(pge_maintainer
     ${PGE_MAINTAINER_LINK_LIBS}

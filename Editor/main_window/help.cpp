@@ -81,16 +81,17 @@ void MainWindow::on_actionSMBX_like_GUI_triggered()
     setSubView();
 
     int win = activeChildWindow();
-    if(win==WND_Level)
+    if(win == WND_Level)
         on_actionLVLToolBox_triggered(false);
-    if(win==WND_World)
+    if(win == WND_World)
         on_actionWLDToolBox_triggered(false);
-    if((win==WND_Level) || (win==WND_World))
+    if(((win == WND_Level) || (win == WND_World)) && configs.editor.default_visibility.tilesets_box)
         on_actionTilesetBox_triggered(true);
 
     dock_LvlItemBox->m_lastVisibilityState = false;
     dock_WldItemBox->m_lastVisibilityState = false;
-    dock_TilesetBox->m_lastVisibilityState = true;
+    if(configs.editor.default_visibility.tilesets_box)
+        dock_TilesetBox->m_lastVisibilityState = true;
     m_toolbarVanilla->setVisible(true);
 }
 
@@ -100,15 +101,17 @@ void MainWindow::on_actionModern_GUI_triggered()
     setTabView();
 
     int win = activeChildWindow();
-    if(win==WND_Level)
+    if((win == WND_Level) && configs.editor.default_visibility.lvl_itembox)
         on_actionLVLToolBox_triggered(true);
-    if(win==WND_World)
+    if((win == WND_World) && configs.editor.default_visibility.wld_itembox)
         on_actionWLDToolBox_triggered(true);
     //if((win==WND_Level) || (win==WND_World))
     //    on_actionTilesetBox_triggered(false);
 
-    dock_LvlItemBox->m_lastVisibilityState = true;
-    dock_WldItemBox->m_lastVisibilityState = true;
+    if(configs.editor.default_visibility.lvl_itembox)
+        dock_LvlItemBox->m_lastVisibilityState = true;
+    if(configs.editor.default_visibility.wld_itembox)
+        dock_WldItemBox->m_lastVisibilityState = true;
     //dock_TilesetBox->m_lastVisibilityState = false;
     m_toolbarVanilla->setVisible(false);
 }

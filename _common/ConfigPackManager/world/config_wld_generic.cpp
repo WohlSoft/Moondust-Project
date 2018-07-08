@@ -28,11 +28,11 @@
 bool WldGenericSetup::parse(IniProcessing *setup,
                             PGEString imgPath,
                             uint32_t defaultGrid,
-                            WldGenericSetup *merge_with,
+                            const WldGenericSetup *merge_with,
                             PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
-    #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
@@ -95,6 +95,10 @@ bool WldGenericSetup::parse(IniProcessing *setup,
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
     NumberLimiter::apply(framespeed, uint32_t(1u));
+
+    frame_sequence.clear();
+    setup->read("frame-sequence", frame_sequence, pMergeMe(frame_sequence));
+
     frame_h = animated ? Maths::uRound(double(h) / double(frames)) : h;
     NumberLimiter::apply(frame_h, uint32_t(0u));
 

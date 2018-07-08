@@ -30,11 +30,11 @@
 bool NpcSetup::parse(IniProcessing *setup,
                      PGEString npcImgPath,
                      uint32_t defaultGrid,
-                     NpcSetup *merge_with,
+                     const NpcSetup *merge_with,
                      PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? (merge_with->param) : (def))
-    #define pMergeMe(param) (merge_with ? (merge_with->param) : (param))
+    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;

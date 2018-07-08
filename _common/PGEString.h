@@ -1,6 +1,9 @@
 /*
  * Used for compatibiltiy of common code with both QString and std::string
  */
+#ifndef PGEString_HHH
+#define PGEString_HHH
+#pragma once
 
 #ifdef PGE_EDITOR
 #include <QString>
@@ -24,3 +27,11 @@ typedef std::vector<std::string>    PGEStringList;
 #define PGEStringLit(str)
 typedef size_t pge_size_t;
 #endif
+
+template <class T>
+inline const T &pgeConstReference(const T &t)
+{
+    return t;
+}
+
+#endif /*PGEString_HHH*/

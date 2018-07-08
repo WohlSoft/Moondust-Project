@@ -26,6 +26,7 @@
 #include <Utils/files.h>
 
 /*****Level blocks************/
+obj_blockGlobalSetup            ConfigManager::lvl_block_global_setup;
 PGE_DataArray<obj_block>        ConfigManager::lvl_block_indexes;
 CustomDirManager                ConfigManager::Dir_Blocks;
 ConfigManager::AnimatorsArray   ConfigManager::Animator_Blocks;
@@ -87,6 +88,8 @@ bool ConfigManager::loadLevelBlocks()
     setup.beginGroup("blocks-main");
     {
         setup.read("total",      block_total,   0);
+        setup.read("default-sizable-border-width", lvl_block_global_setup.sizable_block_border_size, -1);
+
         setup.read("config-dir", nestDir,       "");
         if(!nestDir.empty())
         {

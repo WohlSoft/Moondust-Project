@@ -181,7 +181,7 @@ void LVL_Npc::render(double camX, double camY)
                                     )
                                //.arg(LEGACY_m_speedAddingTopElements.size())
                                //.arg(LEGACY_m_speedAddingBottomElements.size())
-                               , int(round(20+posX()-camX)), -50+int(round(posY()-camY)), 3);
+                               , int(round(20+posX()-camX)), -50+int(round(posY()-camY)), FontManager::DefaultRaster);
     }
 }
 
