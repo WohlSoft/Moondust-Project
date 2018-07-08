@@ -33,7 +33,7 @@ void dataconfigs::loadTilesets()
     QStringList filters;
 
     QSet<QString> tilesetCategoryNames;
-    QSettings categories(tilesetGrpDirPath + "/categories.ini", QSettings::IniFormat, this);
+    QSettings categories(tilesetGrpDirPath + "/categories.ini", QSettings::IniFormat);
 
     if(QDir(tilesetDirPath).exists())
     {
