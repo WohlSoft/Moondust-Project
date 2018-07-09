@@ -293,8 +293,8 @@ cancelRemoveSSS:
         int tabType;
         ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs,
                                                            ItemSelectDialog::TAB_BGO|ItemSelectDialog::TAB_BLOCK,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_mw);
-        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
+                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_mw,
+                                                           ItemSelectDialog::TAB_BGO);
         blockList->setTabsOrder({ItemSelectDialog::TAB_BGO, ItemSelectDialog::TAB_BLOCK});
         util::DialogToCenter(blockList, true);
 

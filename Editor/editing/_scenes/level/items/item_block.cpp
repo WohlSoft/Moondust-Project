@@ -201,8 +201,8 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         int tabType;
         ItemSelectDialog *blockList = new ItemSelectDialog(scene->m_configs,
                                                            ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, scene->m_subWindow);
-        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO);
+                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, scene->m_subWindow,
+                                                           ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO);
         util::DialogToCenter(blockList, true);
 
         if(blockList->exec() == QDialog::Accepted)

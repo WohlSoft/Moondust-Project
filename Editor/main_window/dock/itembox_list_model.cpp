@@ -153,21 +153,44 @@ ItemBoxListModel::ItemBoxListModel(QObject *parent)
 
 int ItemBoxListModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if(parent.isValid())
         return 0;
+    if(m_isTable)
+        return m_tableHeight;
     else
         return m_elementsVisibleMap.size();
+}
+
+int ItemBoxListModel::columnCount(const QModelIndex &parent) const
+{
+    if(parent.isValid() || !m_isTable)
+        return 1;
+    return m_tableWidth;
 }
 
 QVariant ItemBoxListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
+    int idx = 0;
+    if(m_isTable)
+    {
+        if(index.row() >= m_tableWidth)
+            return QVariant();
+        if(index.column() >= m_tableHeight)
+            return QVariant();
+        idx = tableCordToIdx(index.row(), index.column());
+        if(idx >= m_elementsVisibleMap.size())
+            return QVariant(); // Gone out of range!
+    }
+    else
+    {
+        idx = index.row();
+        if(idx >= m_elementsVisibleMap.size())
+            return QVariant(); // Gone out of range!
+    }
 
-    if(index.row() >= m_elementsVisibleMap.size())
-        return QVariant(); // Gone out of range!
-
-    int id = m_elementsVisibleMap[index.row()];
+    int id = m_elementsVisibleMap[idx];
     const Element &e = m_elements[id];
 
     if (role == Qt::DecorationRole)
@@ -214,9 +237,18 @@ void ItemBoxListModel::resetFilters()
     updateFilter();
 }
 
+void ItemBoxListModel::setTableMode(bool isTable, int w, int h)
+{
+    m_isTable = isTable;
+    m_tableWidth = w;
+    m_tableHeight = h;
+}
+
 void ItemBoxListModel::addElementsBegin(int allocate)
 {
     beginInsertRows(QModelIndex(), m_elements.size(), m_elements.size() + allocate);
+    if(allocate < 0)
+        m_elements.reserve(allocate);
 }
 
 void ItemBoxListModel::addElementsEnd()
@@ -225,6 +257,7 @@ void ItemBoxListModel::addElementsEnd()
     updateVisibilityMap();
     updateSort();
 }
+
 
 QStringList ItemBoxListModel::getCategoriesList(const QString &allField)
 {
@@ -320,6 +353,30 @@ void ItemBoxListModel::addElement(const ItemBoxListModel::Element &element, cons
     }
 }
 
+void ItemBoxListModel::addElementCell(int x, int y, const ItemBoxListModel::Element &element, const QString &group, const QString &category)
+{
+    Element e = element;
+    if(element.isValid)
+    {
+        int idx = tableCordToIdx(x, y);
+        if(idx >= m_elements.size())
+            m_elements.resize(idx);
+
+        if(!group.isEmpty())
+            e.groupId = getGroup(group);
+        if(!category.isEmpty())
+            e.categoryId = getCategory(category);
+        if(!group.isEmpty() && !category.isEmpty())
+        {
+            QSet<QString> &l = m_groupCategories[group];
+            if(!l.contains(category))
+                l.insert(category);
+        }
+        e.isVisible = isElementVisible(e);
+        m_elements[idx] = e;
+    }
+}
+
 void ItemBoxListModel::setFilter(const QString &criteria, int searchType)
 {
     if(m_filterCriteria != criteria)
@@ -366,6 +423,11 @@ int ItemBoxListModel::getCategory(const QString &category)
     int ret = m_categoriesMap.size();
     m_categoriesMap.insert(category, ret);
     return ret;
+}
+
+int ItemBoxListModel::tableCordToIdx(int x, int y) const
+{
+    return y * m_tableWidth + x;
 }
 
 void ItemBoxListModel::updateFilter()

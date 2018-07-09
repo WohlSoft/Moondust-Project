@@ -23,7 +23,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>7</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -93,9 +93,6 @@
            </item>
           </widget>
          </item>
-         <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_Block"/>
-         </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupBlock">
            <property name="text">
@@ -106,6 +103,9 @@
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
           </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListView" name="Sel_List_Block"/>
          </item>
         </layout>
        </widget>
@@ -177,9 +177,6 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_FilterBGO"/>
          </item>
-         <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_BGO"/>
-         </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupBGO">
            <property name="text">
@@ -190,6 +187,9 @@
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
           </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListView" name="Sel_List_BGO"/>
          </item>
         </layout>
        </widget>
@@ -261,9 +261,6 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_NPC"/>
          </item>
-         <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_NPC"/>
-         </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupNPC">
            <property name="text">
@@ -274,6 +271,9 @@
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
           </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListView" name="Sel_List_NPC"/>
          </item>
         </layout>
        </widget>
@@ -355,43 +355,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0" colspan="3">
-          <widget class="QTableWidget" name="Sel_List_Tile">
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>32</number>
-           </attribute>
-           <attribute name="horizontalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="horizontalHeaderMinimumSectionSize">
-            <number>32</number>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>32</number>
-           </attribute>
-           <attribute name="verticalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderMinimumSectionSize">
-            <number>32</number>
-           </attribute>
-          </widget>
-         </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupTerrain">
            <property name="text">
@@ -400,6 +363,19 @@
            <property name="icon">
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListView" name="Sel_List_Tile">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -483,8 +459,19 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupScenery">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
+         </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_Scenery">
+          <widget class="QListView" name="Sel_List_Scenery">
            <property name="iconSize">
             <size>
              <width>32</width>
@@ -505,20 +492,6 @@
            </property>
            <property name="wordWrap">
             <bool>true</bool>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="Sel_FilterSetupScenery">
-           <property name="text">
-            <string notr="true"/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../_resources/editor.qrc">
-             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
           </widget>
          </item>
@@ -602,43 +575,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0" colspan="3">
-          <widget class="QTableWidget" name="Sel_List_Path">
-           <property name="selectionMode">
-            <enum>QAbstractItemView::SingleSelection</enum>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>32</width>
-             <height>32</height>
-            </size>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>32</number>
-           </attribute>
-           <attribute name="horizontalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="horizontalHeaderMinimumSectionSize">
-            <number>32</number>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>32</number>
-           </attribute>
-           <attribute name="verticalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderMinimumSectionSize">
-            <number>32</number>
-           </attribute>
-          </widget>
-         </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupPath">
            <property name="text">
@@ -647,6 +583,19 @@
            <property name="icon">
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListView" name="Sel_List_Path">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -730,8 +679,19 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Sel_FilterSetupLevel">
+           <property name="text">
+            <string notr="true"/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../_resources/editor.qrc">
+             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+          </widget>
+         </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_Level">
+          <widget class="QListView" name="Sel_List_Level">
            <property name="iconSize">
             <size>
              <width>32</width>
@@ -755,20 +715,6 @@
            </property>
            <property name="wordWrap">
             <bool>true</bool>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="Sel_FilterSetupLevel">
-           <property name="text">
-            <string notr="true"/>
-           </property>
-           <property name="icon">
-            <iconset resource="../../_resources/editor.qrc">
-             <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
           </widget>
          </item>
@@ -852,9 +798,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_Music"/>
-         </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupMusicBox">
            <property name="text">
@@ -865,6 +808,9 @@
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
           </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListView" name="Sel_List_Music"/>
          </item>
         </layout>
        </widget>

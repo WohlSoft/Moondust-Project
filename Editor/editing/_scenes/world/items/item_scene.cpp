@@ -153,8 +153,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow);
-        itemList->removeEmptyEntry(ItemSelectDialog::TAB_SCENERY);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow,ItemSelectDialog::TAB_SCENERY);
         util::DialogToCenter(itemList, true);
 
         if(itemList->exec()==QDialog::Accepted)

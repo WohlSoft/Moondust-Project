@@ -83,6 +83,7 @@ public:
     explicit ItemBoxListModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
@@ -91,9 +92,13 @@ public:
     void clear();
     void resetFilters();
 
-    void addElementsBegin(int allocate);
-    void addElement(const Element &element, const QString &group, const QString &category);
+    void setTableMode(bool isTable, int w = 0, int h = 0);
+
+    void addElementsBegin(int allocate = 0);
+    void addElement(const Element &element, const QString &group = "", const QString &category = "");
     void addElementsEnd();
+
+    void addElementCell(int x, int y, const Element &element, const QString &group = "", const QString &category = "");
 
     QStringList getCategoriesList(const QString &allField);
     QStringList getGroupsList(const QString &allField);
@@ -115,8 +120,14 @@ public:
     int  getCategory(const QString &category);
 
 private:
-    QList<Element>  m_elements;
-    QList<int>      m_elementsVisibleMap;
+    bool m_isTable = false;
+    int  m_tableWidth  = 0;
+    int  m_tableHeight = 0;
+
+    int  tableCordToIdx(int x, int y) const;
+
+    QVector<Element>  m_elements;
+    QVector<int>      m_elementsVisibleMap;
 
     typedef QMap<QString, int> SIMap;
     SIMap m_categoriesMap;

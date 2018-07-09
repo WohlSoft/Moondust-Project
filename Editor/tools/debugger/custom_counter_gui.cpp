@@ -353,8 +353,10 @@ void CustomCounterGUI::on_AddItem_clicked()
     {
     case ItemTypes::LVL_Block:
         {
-        ItemSelectDialog* selBlock = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_BLOCK,0,0,0,0,0,0,0,0,0,this);
-        selBlock->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
+        ItemSelectDialog* selBlock = new ItemSelectDialog(m_configs,
+                                                          ItemSelectDialog::TAB_BLOCK,
+                                                          0,0,0,0,0,0,0,0,0,this,
+                                                          ItemSelectDialog::TAB_BLOCK);
         selBlock->setMultiSelect(true);
         if(selBlock->exec()==QDialog::Accepted){
             foreach(int selected, selBlock->blockIDs)
@@ -365,8 +367,10 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::LVL_BGO:
         {
-        ItemSelectDialog* selBgo = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_BGO,0,0,0,0,0,0,0,0,0,this);
-        selBgo->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
+        ItemSelectDialog* selBgo = new ItemSelectDialog(m_configs,
+                                                        ItemSelectDialog::TAB_BGO,
+                                                        0,0,0,0,0,0,0,0,0,this,
+                                                        ItemSelectDialog::TAB_BGO);
         selBgo->setMultiSelect(true);
         if(selBgo->exec()==QDialog::Accepted){
             foreach(int selected, selBgo->bgoIDs)
@@ -377,8 +381,10 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::LVL_NPC:
         {
-        ItemSelectDialog* selNpc = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,this);
-        selNpc->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
+        ItemSelectDialog* selNpc = new ItemSelectDialog(m_configs,
+                                                        ItemSelectDialog::TAB_NPC,
+                                                        0,0,0,0,0,0,0,0,0,this,
+                                                        ItemSelectDialog::TAB_NPC);
         selNpc->setMultiSelect(true);
         if(selNpc->exec()==QDialog::Accepted){
             foreach(int selected, selNpc->npcIDs)
@@ -389,8 +395,10 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Tile:
         {
-            ItemSelectDialog* selTile = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0,this);
-            selTile->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
+            ItemSelectDialog* selTile = new ItemSelectDialog(m_configs,
+                                                             ItemSelectDialog::TAB_TILE,
+                                                             0,0,0,0,0,0,0,0,0,this,
+                                                             ItemSelectDialog::TAB_TILE);
             selTile->setMultiSelect(true);
             if(selTile->exec()==QDialog::Accepted)
             {
@@ -402,8 +410,10 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Scenery:
         {
-            ItemSelectDialog* selScene = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,0,0,0,0,this);
-            selScene->removeEmptyEntry(ItemSelectDialog::TAB_SCENERY);
+            ItemSelectDialog* selScene = new ItemSelectDialog(m_configs,
+                                                              ItemSelectDialog::TAB_SCENERY,
+                                                              0,0,0,0,0,0,0,0,0,this,
+                                                              ItemSelectDialog::TAB_SCENERY);
             selScene->setMultiSelect(true);
             if(selScene->exec()==QDialog::Accepted) {
                 foreach(int selected, selScene->sceneryIDs)
@@ -413,8 +423,10 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Path:
         {
-            ItemSelectDialog* selPath = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,0,0,0,this);
-            selPath->removeEmptyEntry(ItemSelectDialog::TAB_PATH);
+            ItemSelectDialog* selPath = new ItemSelectDialog(m_configs,
+                                                             ItemSelectDialog::TAB_PATH,
+                                                             0,0,0,0,0,0,0,0,0,this,
+                                                             ItemSelectDialog::TAB_PATH);
             selPath->setMultiSelect(true);
             if(selPath->exec()==QDialog::Accepted){
                 foreach(int selected, selPath->pathIDs)
@@ -424,8 +436,10 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_Level:
         {
-            ItemSelectDialog* selLevel = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,0,0,this);
-            selLevel->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
+            ItemSelectDialog* selLevel = new ItemSelectDialog(m_configs,
+                                                              ItemSelectDialog::TAB_LEVEL,
+                                                              0,0,0,0,0,0,0,0,0,this,
+                                                              ItemSelectDialog::TAB_LEVEL);
             selLevel->setMultiSelect(true);
             if(selLevel->exec()==QDialog::Accepted){
                 foreach(int selected, selLevel->levelIDs)
@@ -435,8 +449,10 @@ void CustomCounterGUI::on_AddItem_clicked()
         break;
     case ItemTypes::WLD_MusicBox:
         {
-            ItemSelectDialog* selMusicbox = new ItemSelectDialog(m_configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,0,this);
-            selMusicbox->removeEmptyEntry(ItemSelectDialog::TAB_MUSIC);
+            ItemSelectDialog* selMusicbox = new ItemSelectDialog(m_configs,
+                                                                 ItemSelectDialog::TAB_MUSIC,
+                                                                 0,0,0,0,0,0,0,0,0,this,
+                                                                 ItemSelectDialog::TAB_MUSIC);
             selMusicbox->setMultiSelect(true);
             if(selMusicbox->exec()==QDialog::Accepted){
                 foreach(int selected, selMusicbox->musicIDs)

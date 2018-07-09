@@ -241,7 +241,6 @@ void LevelItemBox::initItemLists()
     for(int i = 1; i < scene->m_localConfigNPCs.size(); i++)
     {
         obj_npc &npcItem =  scene->m_localConfigNPCs[i];
-
         ItemBoxListModel::Element e;
         Items::getItemGFX(&npcItem, e.pixmap, false, QSize(48, 48));
         e.name = npcItem.setup.name.isEmpty() ? QString("npc-%1").arg(npcItem.setup.id) : npcItem.setup.name;

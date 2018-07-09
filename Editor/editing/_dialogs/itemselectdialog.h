@@ -48,7 +48,8 @@ public:
     explicit ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData = 0,
                               int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0,
                               int curSelIDTile = 0, int curSelIDScenery = 0, int curSelIDPath = 0,
-                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0);
+                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0,
+                              int noEmptyTypes = 0);
     ~ItemSelectDialog();
 
     int currentTab;
@@ -82,8 +83,6 @@ public:
         NPCEXTRA_ISCOINSELECTED = 1 << 1
     };
 
-    void removeEmptyEntry(int tabs);
-
     void setTabsOrder(QVector<int> tabIds);
 
     void setMultiSelect(bool _multiselect);
@@ -106,36 +105,32 @@ private slots:
     void on_Sel_Text_FilterBGO_textChanged(const QString &arg1);
     void on_Sel_Text_NPC_textChanged(const QString &arg1);
 
-    void on_Sel_List_NPC_itemDoubleClicked(QListWidgetItem *);
-    void on_Sel_List_Block_itemDoubleClicked(QListWidgetItem *);
-    void on_Sel_List_BGO_itemDoubleClicked(QListWidgetItem *);
-    void on_Sel_List_Tile_itemDoubleClicked(QTableWidgetItem *);
-    void on_Sel_List_Scenery_itemDoubleClicked(QListWidgetItem *);
-    void on_Sel_List_Path_itemDoubleClicked(QTableWidgetItem *);
-    void on_Sel_List_Level_itemDoubleClicked(QListWidgetItem *);
-    void on_Sel_List_Music_itemDoubleClicked(QListWidgetItem *);
+    void SelListNPC_itemDoubleClicked(const QModelIndex &);
+    void SelListBlock_itemDoubleClicked(const QModelIndex &);
+    void SelListBGO_itemDoubleClicked(const QModelIndex &);
+    void SelListTile_itemDoubleClicked(const QModelIndex &);
+    void SelListScenery_itemDoubleClicked(const QModelIndex &);
+    void SelListPath_itemDoubleClicked(const QModelIndex &);
+    void SelListLevel_itemDoubleClicked(const QModelIndex &);
+    void SelListMusic_itemDoubleClicked(const QModelIndex &);
 
 private:
-    void selectListItem(QListWidget *w, int array_id);
+    void selectListItem(QListView *w, int array_id);
     void selectListItem(QTableWidget *w, int array_id);
-
-    void makeEmptyItem(QListWidget *wid, int rmflag);
 
     void checkExtraDataVis(QList<QWidget *> &l, QWidget *t);
     bool updateLabelVis(QList<QWidget *> &l, QWidget *t);
 
-    int extractID(QListWidget *w);
-    int extractID(QTableWidget *w);
-    QList<int> extractIDs(QListWidget *w);
-    QList<int> extractIDs(QTableWidget *w);
+    int extractID(QListView *w);
+    int extractID(QTableView *w);
+    QList<int> extractIDs(QListView *w);
+    QList<int> extractIDs(QTableView *w);
 
     bool isMultiSelect;
 
     QRadioButton *npcFromList;
     QRadioButton *npcCoins;
-    QSpinBox *npcCoinsSel;
-
-    int removalFlags;
+    QSpinBox     *npcCoinsSel;
 
     void addExtraDataControl(QWidget *control);
 
@@ -156,6 +151,16 @@ private:
     ItemBoxListModel *m_pathModel = nullptr;
     ItemBoxListModel *m_levelModel = nullptr;
     ItemBoxListModel *m_musboxModel = nullptr;
+
+    QMenu   m_blockFilterSetup;
+    QMenu   m_bgoFilterSetup;
+    QMenu   m_npcFilterSetup;
+
+    QMenu   m_tilesFilterSetup;
+    QMenu   m_sceneFilterSetup;
+    QMenu   m_pathFilterSetup;
+    QMenu   m_levelFilterSetup;
+    QMenu   m_musicFilterSetup;
 
     QList<QWidget *> extraBlockWid;
     QList<QWidget *> extraBGOWid;

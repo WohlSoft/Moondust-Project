@@ -210,8 +210,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog *npcList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow);
-        npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
+        ItemSelectDialog *npcList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow,ItemSelectDialog::TAB_NPC);
         util::DialogToCenter(npcList, true);
 
         if(npcList->exec() == QDialog::Accepted)

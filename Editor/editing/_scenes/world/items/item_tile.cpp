@@ -140,8 +140,7 @@ void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow);
-        itemList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
+        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_TILE,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow,ItemSelectDialog::TAB_TILE);
         util::DialogToCenter(itemList, true);
 
         if(itemList->exec()==QDialog::Accepted)
