@@ -89,6 +89,8 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
+    QModelIndex findVisibleItemById(qulonglong id) const;
+
     void clear();
     void resetFilters();
 
@@ -115,6 +117,7 @@ public:
     void setFilterSearchType(int searchType);
 
     void setSort(int sortType = 0, bool backward = false);
+    void setSortSkipFirst(bool e);
 
     int  getGroup(const QString &group);
     int  getCategory(const QString &category);
@@ -149,9 +152,8 @@ private:
 
     int     m_sortType = Sort_ByName;
     bool    m_sortBackward = false;
+    bool    m_sortSkipFirst = false;
     void    updateSort();
-
-    int     m_itemSize = 48;
 };
 
 #endif // ITEMBOXLISTMODEL_H

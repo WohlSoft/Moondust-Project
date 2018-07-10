@@ -101,9 +101,6 @@ private slots:
     void on_Sel_Combo_CategoryBGO_currentIndexChanged(int index);
     void on_Sel_Combo_GroupsNPC_currentIndexChanged(int index);
     void on_Sel_Combo_CategoryNPC_currentIndexChanged(int index);
-    void on_Sel_Text_FilterBlock_textChanged(const QString &arg1);
-    void on_Sel_Text_FilterBGO_textChanged(const QString &arg1);
-    void on_Sel_Text_NPC_textChanged(const QString &arg1);
 
     void SelListNPC_itemDoubleClicked(const QModelIndex &);
     void SelListBlock_itemDoubleClicked(const QModelIndex &);
@@ -115,6 +112,7 @@ private slots:
     void SelListMusic_itemDoubleClicked(const QModelIndex &);
 
 private:
+    void selectListItem(QListView *w, ItemBoxListModel *m, int itemId);
     void selectListItem(QListView *w, int array_id);
     void selectListItem(QTableWidget *w, int array_id);
 
@@ -151,6 +149,8 @@ private:
     ItemBoxListModel *m_pathModel = nullptr;
     ItemBoxListModel *m_levelModel = nullptr;
     ItemBoxListModel *m_musboxModel = nullptr;
+
+    QString m_allLabel = "[all]";
 
     QMenu   m_blockFilterSetup;
     QMenu   m_bgoFilterSetup;

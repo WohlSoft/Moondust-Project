@@ -430,10 +430,10 @@ void LevelItemBox::on_BlockGroupList_currentIndexChanged(const QString &arg1)
     if(lock_grp)
         return;
     m_blockModel->setGroupFilter(arg1);
-    lock_grp = true;
+    lock_cat = true;
     ui->BlockCatList->clear();
     ui->BlockCatList->addItems(m_blockModel->getCategoriesList(m_allLabel));
-    lock_grp = false;
+    lock_cat = false;
 }
 
 void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
@@ -443,10 +443,10 @@ void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
 
     m_bgoModel->setGroupFilter(arg1);
 
-    lock_grp = true;
+    lock_cat = true;
     ui->BGOCatList->clear();
     ui->BGOCatList->addItems(m_bgoModel->getCategoriesList(m_allLabel));
-    lock_grp = false;
+    lock_cat = false;
 }
 
 void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
@@ -456,10 +456,10 @@ void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 
     m_npcModel->setGroupFilter(arg1);
 
-    lock_grp = true;
+    lock_cat = true;
     ui->NPCCatList->clear();
     ui->NPCCatList->addItems(m_npcModel->getCategoriesList(m_allLabel));
-    lock_grp = false;
+    lock_cat = false;
 }
 
 // ///////////////////////////////////
@@ -525,19 +525,4 @@ void LevelItemBox::clearFilter()
     m_bgoModel->setFilterCriteria("");
     ui->NPCFilterField->setText("");
     m_npcModel->setFilterCriteria("");
-}
-
-void LevelItemBox::on_BlockFilterField_textChanged(const QString &arg1)
-{
-    m_blockModel->setFilterCriteria(arg1);
-}
-
-void LevelItemBox::on_BGOFilterField_textChanged(const QString &arg1)
-{
-    m_bgoModel->setFilterCriteria(arg1);
-}
-
-void LevelItemBox::on_NPCFilterField_textChanged(const QString &arg1)
-{
-    m_npcModel->setFilterCriteria(arg1);
 }

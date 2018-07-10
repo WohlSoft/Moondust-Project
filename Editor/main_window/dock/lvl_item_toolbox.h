@@ -47,10 +47,6 @@ private slots:
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
 
-    void on_BlockFilterField_textChanged(const QString &arg1);
-    void on_BGOFilterField_textChanged(const QString &arg1);
-    void on_NPCFilterField_textChanged(const QString &arg1);
-
     //Item was clicked
     void BlockList_itemClicked(const QModelIndex &item);
     void BGOList_itemClicked(const QModelIndex &item);

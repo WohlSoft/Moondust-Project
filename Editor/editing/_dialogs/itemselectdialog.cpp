@@ -52,7 +52,7 @@ static QPixmap emptyPixmap(QSize size)
     img.fill(Qt::transparent);
     QPainter e(&img);
     QFont t = e.font();
-    t.setPointSize(14);
+    t.setPixelSize(size.width() - 4);
     e.setFont(t);
     e.drawText(6, 2, size.width() - 6, size.height() - 2, Qt::TextSingleLine, "E");
     return QPixmap::fromImage(img);
@@ -72,7 +72,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     currentTab = 0;
     ui->setupUi(this);
 
-    QString allLabel = MainWindow::tr("[all]");
+    m_allLabel = MainWindow::tr("[all]");
 
     isMultiSelect = false;
 
@@ -90,50 +90,50 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     }
 
     m_blockModel = new ItemBoxListModel(ui->Sel_List_Block);
-    m_blockModel->setCategoryAllKey(allLabel);
-    m_blockModel->setGroupAllKey(allLabel);
+    m_blockModel->setCategoryAllKey(m_allLabel);
+    m_blockModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Block->setModel(m_blockModel);
     connect(ui->Sel_List_Block, &QListView::doubleClicked, this, &ItemSelectDialog::SelListBlock_itemDoubleClicked);
 
     m_bgoModel = new ItemBoxListModel(ui->Sel_List_BGO);
-    m_bgoModel->setCategoryAllKey(allLabel);
-    m_bgoModel->setGroupAllKey(allLabel);
+    m_bgoModel->setCategoryAllKey(m_allLabel);
+    m_bgoModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_BGO->setModel(m_bgoModel);
     connect(ui->Sel_List_BGO, &QListView::doubleClicked, this, &ItemSelectDialog::SelListBGO_itemDoubleClicked);
 
     m_npcModel = new ItemBoxListModel(ui->Sel_List_NPC);
-    m_npcModel->setCategoryAllKey(allLabel);
-    m_npcModel->setGroupAllKey(allLabel);
+    m_npcModel->setCategoryAllKey(m_allLabel);
+    m_npcModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_NPC->setModel(m_npcModel);
     connect(ui->Sel_List_NPC, &QListView::doubleClicked, this, &ItemSelectDialog::SelListNPC_itemDoubleClicked);
 
     m_tileModel = new ItemBoxListModel(ui->Sel_List_Tile);
-    m_tileModel->setCategoryAllKey(allLabel);
-    m_tileModel->setGroupAllKey(allLabel);
+    m_tileModel->setCategoryAllKey(m_allLabel);
+    m_tileModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Tile->setModel(m_tileModel);
     connect(ui->Sel_List_Tile, &QListView::doubleClicked, this, &ItemSelectDialog::SelListTile_itemDoubleClicked);
 
     m_sceneModel = new ItemBoxListModel(ui->Sel_List_Scenery);
-    m_sceneModel->setCategoryAllKey(allLabel);
-    m_sceneModel->setGroupAllKey(allLabel);
+    m_sceneModel->setCategoryAllKey(m_allLabel);
+    m_sceneModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Scenery->setModel(m_sceneModel);
     connect(ui->Sel_List_Scenery, &QListView::doubleClicked, this, &ItemSelectDialog::SelListScenery_itemDoubleClicked);
 
     m_pathModel = new ItemBoxListModel(ui->Sel_List_Path);
-    m_pathModel->setCategoryAllKey(allLabel);
-    m_pathModel->setGroupAllKey(allLabel);
+    m_pathModel->setCategoryAllKey(m_allLabel);
+    m_pathModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Path->setModel(m_pathModel);
     connect(ui->Sel_List_Path, &QListView::doubleClicked, this, &ItemSelectDialog::SelListPath_itemDoubleClicked);
 
     m_levelModel = new ItemBoxListModel(ui->Sel_List_Level);
-    m_levelModel->setCategoryAllKey(allLabel);
-    m_levelModel->setGroupAllKey(allLabel);
+    m_levelModel->setCategoryAllKey(m_allLabel);
+    m_levelModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Level->setModel(m_levelModel);
     connect(ui->Sel_List_Level, &QListView::doubleClicked, this, &ItemSelectDialog::SelListLevel_itemDoubleClicked);
 
     m_musboxModel = new ItemBoxListModel(ui->Sel_List_Music);
-    m_musboxModel->setCategoryAllKey(allLabel);
-    m_musboxModel->setGroupAllKey(allLabel);
+    m_musboxModel->setCategoryAllKey(m_allLabel);
+    m_musboxModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Music->setModel(m_musboxModel);
     connect(ui->Sel_List_Music, &QListView::doubleClicked, this, &ItemSelectDialog::SelListMusic_itemDoubleClicked);
 
@@ -282,6 +282,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             empBlock.isValid = true;
             empBlock.pixmap = emptyPixmap(QSize(16, 16));
             empBlock.description = "Empty element";
+            m_blockModel->setSortSkipFirst(true);
             m_blockModel->addElement(empBlock);
         }
 
@@ -312,10 +313,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
         //apply group list
         ui->Sel_Combo_GroupsBlock->clear();
-        ui->Sel_Combo_GroupsBlock->addItems(m_blockModel->getGroupsList(allLabel));
+        ui->Sel_Combo_GroupsBlock->addItems(m_blockModel->getGroupsList(m_allLabel));
         //apply category list
         ui->Sel_Combo_CategoryBlock->clear();
-        ui->Sel_Combo_CategoryBlock->addItems(m_blockModel->getCategoriesList(allLabel));
+        ui->Sel_Combo_CategoryBlock->addItems(m_blockModel->getCategoriesList(m_allLabel));
 
         m_blockModel->addElementsEnd();
     }
@@ -330,6 +331,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             empBGO.isValid = true;
             empBGO.pixmap = emptyPixmap(QSize(16, 16));
             empBGO.description = "Empty element";
+            m_bgoModel->setSortSkipFirst(true);
             m_bgoModel->addElement(empBGO);
         }
 
@@ -360,10 +362,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
         //apply group list
         ui->Sel_Combo_GroupsBGO->clear();
-        ui->Sel_Combo_GroupsBGO->addItems(m_bgoModel->getGroupsList(allLabel));
+        ui->Sel_Combo_GroupsBGO->addItems(m_bgoModel->getGroupsList(m_allLabel));
         //apply category list
         ui->Sel_Combo_CategoryBGO->clear();
-        ui->Sel_Combo_CategoryBGO->addItems(m_bgoModel->getCategoriesList(allLabel));
+        ui->Sel_Combo_CategoryBGO->addItems(m_bgoModel->getCategoriesList(m_allLabel));
 
         m_bgoModel->addElementsEnd();
     }
@@ -378,6 +380,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             empNPC.isValid = true;
             empNPC.pixmap = emptyPixmap(QSize(16, 16));
             empNPC.description = "Empty element";
+            m_npcModel->setSortSkipFirst(true);
             m_npcModel->addElement(empNPC);
         }
 
@@ -396,7 +399,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_npc &npcItem = (*array)[i];
             ItemBoxListModel::Element e;
-            Items::getItemGFX(&npcItem, e.pixmap, false, QSize(48, 48));
+            Items::getItemGFX(&npcItem, e.pixmap, false, QSize(16, 16));
             e.name = npcItem.setup.name.isEmpty() ? QString("npc-%1").arg(npcItem.setup.id) : npcItem.setup.name;
             e.description = makeToolTip("npc", npcItem.setup);
             e.elementId = npcItem.setup.id;
@@ -407,10 +410,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
         //apply group list
         ui->Sel_Combo_GroupsNPC->clear();
-        ui->Sel_Combo_GroupsNPC->addItems(m_npcModel->getGroupsList(allLabel));
+        ui->Sel_Combo_GroupsNPC->addItems(m_npcModel->getGroupsList(m_allLabel));
         //apply category list
         ui->Sel_Combo_CategoryNPC->clear();
-        ui->Sel_Combo_CategoryNPC->addItems(m_npcModel->getCategoriesList(allLabel));
+        ui->Sel_Combo_CategoryNPC->addItems(m_npcModel->getCategoriesList(m_allLabel));
 
         m_npcModel->addElementsEnd();
     }
@@ -423,8 +426,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element empTerrain;
             empTerrain.name = emTxt;
             empTerrain.isValid = true;
-            empTerrain.pixmap = emptyPixmap(QSize(32, 32));
+            empTerrain.pixmap = emptyPixmap(QSize(16, 16));
             empTerrain.description = "Empty element";
+            m_tileModel->setSortSkipFirst(true);
             m_tileModel->addElement(empTerrain);
         }
 
@@ -443,7 +447,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_tile &tileItem = (*array)[i];
             ItemBoxListModel::Element e;
-            Items::getItemGFX(&tileItem, e.pixmap, false, QSize(48, 48));
+            Items::getItemGFX(&tileItem, e.pixmap, false, QSize(16, 16));
             e.name = tileItem.setup.name.isEmpty() ? QString("tile-%1").arg(tileItem.setup.id) : tileItem.setup.name;
             e.description = makeToolTip("tile", tileItem.setup);
             e.elementId = tileItem.setup.id;
@@ -454,10 +458,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
         //apply group list
         ui->Sel_Combo_GroupsTile->clear();
-        ui->Sel_Combo_GroupsTile->addItems(m_tileModel->getGroupsList(allLabel));
+        ui->Sel_Combo_GroupsTile->addItems(m_tileModel->getGroupsList(m_allLabel));
         //apply category list
         ui->Sel_Combo_CategoryTile->clear();
-        ui->Sel_Combo_CategoryTile->addItems(m_tileModel->getCategoriesList(allLabel));
+        ui->Sel_Combo_CategoryTile->addItems(m_tileModel->getCategoriesList(m_allLabel));
 
         m_tileModel->addElementsEnd();
     }
@@ -470,8 +474,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element empPath;
             empPath.name = emTxt;
             empPath.isValid = true;
-            empPath.pixmap = emptyPixmap(QSize(32, 32));
+            empPath.pixmap = emptyPixmap(QSize(16, 16));
             empPath.description = "Empty element";
+            m_pathModel->setSortSkipFirst(true);
             m_pathModel->addElement(empPath);
         }
 
@@ -490,7 +495,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_path &pathItem = (*array)[i];
             ItemBoxListModel::Element e;
-            Items::getItemGFX(&pathItem, e.pixmap, false, QSize(48, 48));
+            Items::getItemGFX(&pathItem, e.pixmap, false, QSize(16, 16));
             e.name = pathItem.setup.name.isEmpty() ? QString("path-%1").arg(pathItem.setup.id) : pathItem.setup.name;
             e.description = makeToolTip("path", pathItem.setup);
             e.elementId = pathItem.setup.id;
@@ -501,10 +506,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
         //apply group list
         ui->Sel_Combo_GroupsPath->clear();
-        ui->Sel_Combo_GroupsPath->addItems(m_pathModel->getGroupsList(allLabel));
+        ui->Sel_Combo_GroupsPath->addItems(m_pathModel->getGroupsList(m_allLabel));
         //apply category list
         ui->Sel_Combo_CategoryPath->clear();
-        ui->Sel_Combo_CategoryPath->addItems(m_pathModel->getCategoriesList(allLabel));
+        ui->Sel_Combo_CategoryPath->addItems(m_pathModel->getCategoriesList(m_allLabel));
 
         m_pathModel->addElementsEnd();
     }
@@ -517,8 +522,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element empScenery;
             empScenery.name = emTxt;
             empScenery.isValid = true;
-            empScenery.pixmap = emptyPixmap(QSize(32, 32));
+            empScenery.pixmap = emptyPixmap(QSize(16, 16));
             empScenery.description = "Empty element";
+            m_sceneModel->setSortSkipFirst(true);
             m_sceneModel->addElement(empScenery);
         }
 
@@ -537,7 +543,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_scenery &sceneryItem = (*array)[i];
             ItemBoxListModel::Element e;
-            Items::getItemGFX(&sceneryItem, e.pixmap, false, QSize(48, 48));
+            Items::getItemGFX(&sceneryItem, e.pixmap, false, QSize(16, 16));
             e.name = sceneryItem.setup.name.isEmpty() ? QString("scene-%1").arg(sceneryItem.setup.id) : sceneryItem.setup.name;
             e.description = makeToolTip("npc", sceneryItem.setup);
             e.elementId = sceneryItem.setup.id;
@@ -548,10 +554,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
         //apply group list
         ui->Sel_Combo_GroupsScenery->clear();
-        ui->Sel_Combo_GroupsScenery->addItems(m_sceneModel->getGroupsList(allLabel));
+        ui->Sel_Combo_GroupsScenery->addItems(m_sceneModel->getGroupsList(m_allLabel));
         //apply category list
         ui->Sel_Combo_CategoryScenery->clear();
-        ui->Sel_Combo_CategoryScenery->addItems(m_sceneModel->getCategoriesList(allLabel));
+        ui->Sel_Combo_CategoryScenery->addItems(m_sceneModel->getCategoriesList(m_allLabel));
 
         m_sceneModel->addElementsEnd();
     }
@@ -564,8 +570,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element empLevel;
             empLevel.name = emTxt;
             empLevel.isValid = true;
-            empLevel.pixmap = emptyPixmap(QSize(32, 32));
+            empLevel.pixmap = emptyPixmap(QSize(16, 16));
             empLevel.description = "Empty element";
+            m_levelModel->setSortSkipFirst(true);
             m_levelModel->addElement(empLevel);
         }
 
@@ -584,7 +591,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_level &levelItem = (*array)[i];
             ItemBoxListModel::Element e;
-            Items::getItemGFX(&levelItem, e.pixmap, false, QSize(48, 48));
+            Items::getItemGFX(&levelItem, e.pixmap, false, QSize(16, 16));
             e.name = levelItem.setup.name.isEmpty() ? QString("level-%1").arg(levelItem.setup.id) : levelItem.setup.name;
             e.description = makeToolTip("npc", levelItem.setup);
             e.elementId = levelItem.setup.id;
@@ -595,10 +602,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
         //apply group list
         ui->Sel_Combo_GroupsLevel->clear();
-        ui->Sel_Combo_GroupsLevel->addItems(m_levelModel->getGroupsList(allLabel));
+        ui->Sel_Combo_GroupsLevel->addItems(m_levelModel->getGroupsList(m_allLabel));
         //apply category list
         ui->Sel_Combo_CategoryLevel->clear();
-        ui->Sel_Combo_CategoryLevel->addItems(m_levelModel->getCategoriesList(allLabel));
+        ui->Sel_Combo_CategoryLevel->addItems(m_levelModel->getCategoriesList(m_allLabel));
 
         m_levelModel->addElementsEnd();
     }
@@ -611,8 +618,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element empMusic;
             empMusic.name = emTxt;
             empMusic.isValid = true;
-            empMusic.pixmap = emptyPixmap(QSize(16, 16));
+            empMusic.pixmap = emptyPixmap(QSize(24, 24));
             empMusic.description = "Empty element";
+            m_musboxModel->setSortSkipFirst(true);
             m_musboxModel->addElement(empMusic);
         }
 
@@ -631,22 +639,19 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         m_musboxModel->addElementsEnd();
     }
 
-    updateBoxes();
-    setWldItemBoxes();
-
     on_Sel_TabCon_ItemType_currentChanged(ui->Sel_TabCon_ItemType->currentIndex());
 
-    selectListItem(ui->Sel_List_Block, curSelIDBlock);
-    selectListItem(ui->Sel_List_BGO, curSelIDBGO);
-    selectListItem(ui->Sel_List_Scenery, curSelIDScenery);
-    selectListItem(ui->Sel_List_Level, curSelIDLevel);
-    selectListItem(ui->Sel_List_Music, curSelIDMusic);
+    selectListItem(ui->Sel_List_Block, m_blockModel, curSelIDBlock);
+    selectListItem(ui->Sel_List_BGO, m_bgoModel, curSelIDBGO);
+    selectListItem(ui->Sel_List_Scenery, m_sceneModel, curSelIDScenery);
+    selectListItem(ui->Sel_List_Level, m_levelModel, curSelIDLevel);
+    selectListItem(ui->Sel_List_Music, m_musboxModel, curSelIDMusic);
 
-    selectListItem(ui->Sel_List_Tile, curSelIDTile);
-    selectListItem(ui->Sel_List_Path, curSelIDPath);
+    selectListItem(ui->Sel_List_Tile, m_tileModel, curSelIDTile);
+    selectListItem(ui->Sel_List_Path, m_pathModel, curSelIDPath);
 
     if(!isCoinSel)
-        selectListItem(ui->Sel_List_NPC, curSelIDNPC);
+        selectListItem(ui->Sel_List_NPC, m_npcModel, curSelIDNPC);
 }
 
 ItemSelectDialog::~ItemSelectDialog()
@@ -1470,7 +1475,6 @@ void ItemSelectDialog::SelListMusic_itemDoubleClicked(const QModelIndex &)
     on_Sel_DiaButtonBox_accepted();
 }
 
-
 void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
 {
     blockID = 0;
@@ -1546,6 +1550,10 @@ void ItemSelectDialog::on_Sel_Combo_GroupsBlock_currentIndexChanged(int index)
 {
     if(lock_grp) return;
     m_blockModel->setGroupFilter(ui->Sel_Combo_GroupsBlock->itemText(index));
+    lock_cat = true;
+    ui->Sel_Combo_CategoryBlock->clear();
+    ui->Sel_Combo_CategoryBlock->addItems(m_blockModel->getCategoriesList(m_allLabel));
+    lock_cat = false;
 }
 
 void ItemSelectDialog::on_Sel_Combo_CategoryBlock_currentIndexChanged(int index)
@@ -1558,6 +1566,10 @@ void ItemSelectDialog::on_Sel_Combo_GroupsBGO_currentIndexChanged(int index)
 {
     if(lock_grp) return;
     m_bgoModel->setGroupFilter(ui->Sel_Combo_GroupsBGO->itemText(index));
+    lock_cat = true;
+    ui->Sel_Combo_CategoryBGO->clear();
+    ui->Sel_Combo_CategoryBGO->addItems(m_bgoModel->getCategoriesList(m_allLabel));
+    lock_cat = false;
 }
 
 void ItemSelectDialog::on_Sel_Combo_CategoryBGO_currentIndexChanged(int index)
@@ -1569,7 +1581,11 @@ void ItemSelectDialog::on_Sel_Combo_CategoryBGO_currentIndexChanged(int index)
 void ItemSelectDialog::on_Sel_Combo_GroupsNPC_currentIndexChanged(int index)
 {
     if(lock_grp) return;
-    m_npcModel->setCategoryFilter(ui->Sel_Combo_GroupsNPC->itemText(index));
+    m_npcModel->setGroupFilter(ui->Sel_Combo_GroupsNPC->itemText(index));
+    lock_cat = true;
+    ui->Sel_Combo_CategoryNPC->clear();
+    ui->Sel_Combo_CategoryNPC->addItems(m_npcModel->getCategoriesList(m_allLabel));
+    lock_cat = false;
 }
 
 void ItemSelectDialog::on_Sel_Combo_CategoryNPC_currentIndexChanged(int index)
@@ -1578,19 +1594,14 @@ void ItemSelectDialog::on_Sel_Combo_CategoryNPC_currentIndexChanged(int index)
     m_npcModel->setCategoryFilter(ui->Sel_Combo_CategoryNPC->itemText(index));
 }
 
-void ItemSelectDialog::on_Sel_Text_FilterBlock_textChanged(const QString &arg1)
+void ItemSelectDialog::selectListItem(QListView *w, ItemBoxListModel *m, int itemId)
 {
-    m_blockModel->setFilterCriteria(arg1);
-}
-
-void ItemSelectDialog::on_Sel_Text_FilterBGO_textChanged(const QString &arg1)
-{
-    m_bgoModel->setFilterCriteria(arg1);
-}
-
-void ItemSelectDialog::on_Sel_Text_NPC_textChanged(const QString &arg1)
-{
-    m_npcModel->setFilterCriteria(arg1);
+    QModelIndex index = m->findVisibleItemById(itemId);
+    if(index.isValid())
+    {
+        w->selectionModel()->select(index, QItemSelectionModel::Select);
+        w->scrollTo(index, QAbstractItemView::PositionAtCenter);
+    }
 }
 
 void ItemSelectDialog::selectListItem(QListView *w, int array_id)

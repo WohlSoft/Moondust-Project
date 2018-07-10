@@ -408,7 +408,7 @@ void GraphicsHelps::squareImageR(QPixmap &imageInOut, QSize targetSize)
     QPixmap source;
 
     if((targetSize.width() < imageInOut.width()) || (targetSize.height() < imageInOut.height()))
-        source = imageInOut.scaled(targetSize, Qt::KeepAspectRatio);
+        source = imageInOut.scaled(targetSize, Qt::KeepAspectRatio, Qt::FastTransformation);
     else
         source = imageInOut;
 

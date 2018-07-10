@@ -360,59 +360,55 @@ void LvlSearchBox::on_FindStartNPC_clicked()
 
 void LvlSearchBox::on_Find_Button_TypeBlock_clicked()
 {
-    ItemSelectDialog *selBlock = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_BLOCK, 0, curBlock.data.id, 0, 0, 0, 0, 0, 0, 0, this);
-    if(selBlock->exec() == QDialog::Accepted)
+    ItemSelectDialog selBlock(&(mw()->configs), ItemSelectDialog::TAB_BLOCK, 0, curBlock.data.id, 0, 0, 0, 0, 0, 0, 0, this);
+    if(selBlock.exec() == QDialog::Accepted)
     {
-        int selected = selBlock->blockID;
+        int selected = selBlock.blockID;
         curBlock.data.id = selected;
         ui->Find_Button_TypeBlock->setText(((selected > 0) ? QString("Block-%1").arg(selected) : tr("[empty]")));
     }
-    delete selBlock;
 }
 
 void LvlSearchBox::on_Find_Button_ContainsNPCBlock_clicked()
 {
-    ItemSelectDialog *npcList = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_NPC,
+    ItemSelectDialog npcList(&(mw()->configs), ItemSelectDialog::TAB_NPC,
             ItemSelectDialog::NPCEXTRA_WITHCOINS | (curBlock.data.npc_id < 0 && curBlock.data.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0), 0, 0,
             (curBlock.data.npc_id < 0 && curBlock.data.npc_id != 0 ? curBlock.data.npc_id * (-1) : curBlock.data.npc_id), 0, 0, 0, 0, 0, this);
-    if(npcList->exec() == QDialog::Accepted)
+    if(npcList.exec() == QDialog::Accepted)
     {
         int selected = 0;
-        if(npcList->npcID != 0)
+        if(npcList.npcID != 0)
         {
-            if(npcList->isCoin)
-                selected = npcList->npcID * (-1);
+            if(npcList.isCoin)
+                selected = npcList.npcID * (-1);
             else
-                selected = npcList->npcID;
+                selected = npcList.npcID;
         }
         curBlock.data.npc_id = selected;
         ui->Find_Button_ContainsNPCBlock->setText(NPC_Name(selected));
     }
-    delete npcList;
 }
 
 void LvlSearchBox::on_Find_Button_TypeBGO_clicked()
 {
-    ItemSelectDialog *selBgo = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_BGO, 0, 0, curBgo.data.id, 0, 0, 0, 0, 0, 0, this);
-    if(selBgo->exec() == QDialog::Accepted)
+    ItemSelectDialog selBgo(&(mw()->configs), ItemSelectDialog::TAB_BGO, 0, 0, curBgo.data.id, 0, 0, 0, 0, 0, 0, this);
+    if(selBgo.exec() == QDialog::Accepted)
     {
-        int selected = selBgo->bgoID;
+        int selected = selBgo.bgoID;
         curBgo.data.id = selected;
         ui->Find_Button_TypeBGO->setText(((selected > 0) ? QString("BGO-%1").arg(selected) : tr("[empty]")));
     }
-    delete selBgo;
 }
 
 void LvlSearchBox::on_Find_Button_TypeNPC_clicked()
 {
-    ItemSelectDialog *selNpc = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_NPC, 0, 0, 0, curNpc.data.id, 0, 0, 0, 0, 0, this);
-    if(selNpc->exec() == QDialog::Accepted)
+    ItemSelectDialog selNpc(&(mw()->configs), ItemSelectDialog::TAB_NPC, 0, 0, 0, curNpc.data.id, 0, 0, 0, 0, 0, this);
+    if(selNpc.exec() == QDialog::Accepted)
     {
-        int selected = selNpc->npcID;
+        int selected = selNpc.npcID;
         curNpc.data.id = selected;
         ui->Find_Button_TypeNPC->setText(NPC_Name(selected));
     }
-    delete selNpc;
 }
 
 void LvlSearchBox::on_Find_Button_ResetBlock_clicked()

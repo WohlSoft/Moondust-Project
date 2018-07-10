@@ -143,6 +143,15 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
         showCustomOnly->setChecked(false);
         model->setOriginsOnlyFilter(filter);
     });
+
+    if(search)
+    {
+        search->connect(search, &QLineEdit::textChanged,
+        [=](const QString &arg)
+        {
+            model->setFilterCriteria(arg);
+        });
+    }
 }
 
 
@@ -194,7 +203,7 @@ QVariant ItemBoxListModel::data(const QModelIndex &index, int role) const
     const Element &e = m_elements[id];
 
     if (role == Qt::DecorationRole)
-        return QIcon(e.pixmap.scaled(m_itemSize, m_itemSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        return QIcon(e.pixmap);
     else if (role == Qt::DisplayRole)
         return e.name;
     else if (role == Qt::ToolTipRole)
@@ -212,6 +221,21 @@ Qt::ItemFlags ItemBoxListModel::flags(const QModelIndex &index) const
     if (index.isValid())
         return (QAbstractListModel::flags(index)|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
     return Qt::ItemIsEnabled|Qt::ItemIsSelectable;
+}
+
+QModelIndex ItemBoxListModel::findVisibleItemById(qulonglong id) const
+{
+    for(int i = 0; i < m_elementsVisibleMap.size(); i++)
+    {
+        const Element &e = m_elements[m_elementsVisibleMap[i]];
+        if(e.elementId == id)
+        {
+            if(m_isTable)
+                return createIndex(i % m_tableWidth, (i / m_tableWidth), nullptr);
+            return createIndex(i, 0, nullptr);
+        }
+    }
+    return QModelIndex();
 }
 
 void ItemBoxListModel::clear()
@@ -407,6 +431,11 @@ void ItemBoxListModel::setSort(int sortType, bool backward)
     updateSort();
 }
 
+void ItemBoxListModel::setSortSkipFirst(bool e)
+{
+    m_sortSkipFirst = e;
+}
+
 int ItemBoxListModel::getGroup(const QString &group)
 {
     if(m_groupsMap.contains(group))
@@ -539,7 +568,7 @@ void ItemBoxListModel::updateSort()
     case Sort_ByName:
         if(m_sortBackward)
         {
-            std::sort(m_elements.begin(), m_elements.end(),
+            std::sort(m_elements.begin() + (m_sortSkipFirst ? 1 : 0), m_elements.end(),
             [](const Element &a, const Element &b)
             {
                 return a.name.compare(b.name, Qt::CaseInsensitive) > 0;
@@ -547,7 +576,7 @@ void ItemBoxListModel::updateSort()
         }
         else
         {
-            std::sort(m_elements.begin(), m_elements.end(),
+            std::sort(m_elements.begin() + (m_sortSkipFirst ? 1 : 0), m_elements.end(),
             [](const Element &a, const Element &b)
             {
                 return a.name.compare(b.name, Qt::CaseInsensitive) < 0;
@@ -558,7 +587,7 @@ void ItemBoxListModel::updateSort()
     case Sort_ById:
         if(m_sortBackward)
         {
-            std::sort(m_elements.begin(), m_elements.end(),
+            std::sort(m_elements.begin() + (m_sortSkipFirst ? 1 : 0), m_elements.end(),
             [](const Element &a, const Element &b)
             {
                 return a.elementId > b.elementId;
@@ -566,7 +595,7 @@ void ItemBoxListModel::updateSort()
         }
         else
         {
-            std::sort(m_elements.begin(), m_elements.end(),
+            std::sort(m_elements.begin() + (m_sortSkipFirst ? 1 : 0), m_elements.end(),
             [](const Element &a, const Element &b)
             {
                 return a.elementId < b.elementId;
