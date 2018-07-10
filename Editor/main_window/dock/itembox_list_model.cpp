@@ -48,8 +48,8 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
     sortById->setCheckable(true);
 
     sortBy->addSeparator();
-    QAction *sortBackward = sortBy->addAction(ItemBoxListModel::tr("Backward", "Backward sorting order"));
-    sortBackward->setCheckable(true);
+    QAction *sortDesc = sortBy->addAction(ItemBoxListModel::tr("Descending", "Descending sorting order"));
+    sortDesc->setCheckable(true);
 
     QAction *uniformView = nullptr;
     if(hasUniformView && view)
@@ -100,7 +100,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
     {
         sortByName->setChecked(true);
         sortById->setChecked(false);
-        model->setSort(ItemBoxListModel::Sort_ByName, sortBackward->isChecked());
+        model->setSort(ItemBoxListModel::Sort_ByName, sortDesc->isChecked());
     });
 
     menu.connect(sortById, &QAction::triggered,
@@ -108,16 +108,16 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
     {
         sortByName->setChecked(false);
         sortById->setChecked(true);
-        model->setSort(ItemBoxListModel::Sort_ById, sortBackward->isChecked());
+        model->setSort(ItemBoxListModel::Sort_ById, sortDesc->isChecked());
     });
 
-    menu.connect(sortBackward, &QAction::triggered,
+    menu.connect(sortDesc, &QAction::triggered,
     [=](bool)
     {
         model->setSort(sortByName->isChecked() ?
                              ItemBoxListModel::Sort_ByName :
                              ItemBoxListModel::Sort_ById,
-                         sortBackward->isChecked());
+                         sortDesc->isChecked());
     });
 
     if(hasUniformView && view)
