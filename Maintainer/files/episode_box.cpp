@@ -95,12 +95,12 @@ bool EpisodeBox_level::open(QString filePath)
     {
         PGESTRING firstLine = file.read(8);
         file.close();
-        if( PGE_StartsWith( firstLine, "SMBXFile" ) )
+        if( firstLine.startsWith("SMBXFile") )
         {
             ftype = F_LVL38A;
             FileFormats::ReadSMBX38ALvlFileF(filePath, d);
         }
-        else if( PGE_DetectSMBXFile( firstLine ) )
+        else if( PGE_FileFormats_misc::PGE_DetectSMBXFile( firstLine ) )
         {
             ftype = F_LVL;
             FileFormats::ReadSMBX64LvlFileF(filePath, d);
