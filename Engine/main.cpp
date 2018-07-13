@@ -465,7 +465,7 @@ PlayWorldMap:
                 g_GameState._recent_ExitCode_level  = LvlExit::EXIT_Neutral;
 
                 if(PGEFile::IsIntS(text.inputText()))
-                    g_GameState._recent_ExitCode_level = toInt(text.inputText());
+                    g_GameState._recent_ExitCode_level = SDL_atoi(text.inputText().c_str());
 
                 if(g_GameState.isHubLevel)
                     goto ExitFromApplication;

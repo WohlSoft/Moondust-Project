@@ -184,7 +184,7 @@ void PGE_Debugger::executeCommand(Scene *parent)
                 {
                     try
                     {
-                        int exitcode = toInt(input.substr(dim + 1, input.size() - (dim + 1)));
+                        int exitcode = SDL_atoi(input.substr(dim + 1, input.size() - (dim + 1)).c_str());
                         LevelScene *s = static_cast<LevelScene *>(parent);
                         if(s)
                         {
