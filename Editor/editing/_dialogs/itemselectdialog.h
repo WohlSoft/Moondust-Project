@@ -22,7 +22,6 @@
 
 #include <QList>
 #include <QDialog>
-#include <QMenu>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QListWidget>
@@ -33,12 +32,9 @@
 
 #include <data_configs/data_configs.h>
 
-namespace Ui
-{
-    class ItemSelectDialog;
+namespace Ui {
+class ItemSelectDialog;
 }
-
-class ItemBoxListModel;
 
 class ItemSelectDialog : public QDialog
 {
@@ -64,8 +60,7 @@ public:
 
     bool isCoin;
 
-    enum Tabs
-    {
+    enum Tabs{
         TAB_BLOCK = 1 << 0,
         TAB_BGO = 1 << 1,
         TAB_NPC = 1 << 2,
@@ -76,8 +71,7 @@ public:
         TAB_MUSIC = 1 << 7
     };
 
-    enum NpcExtraFlags
-    {
+    enum NpcExtraFlags{
         NPCEXTRA_WITHCOINS = 1 << 0,
         NPCEXTRA_ISCOINSELECTED = 1 << 1
     };
@@ -105,6 +99,9 @@ private slots:
     void on_Sel_Text_FilterBlock_textChanged(const QString &arg1);
     void on_Sel_Text_FilterBGO_textChanged(const QString &arg1);
     void on_Sel_Text_NPC_textChanged(const QString &arg1);
+    void on_Sel_Combo_FiltertypeBlock_currentIndexChanged(int index);
+    void on_Sel_Combo_FiltertypeBGO_currentIndexChanged(int index);
+    void on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int index);
 
     void on_Sel_List_NPC_itemDoubleClicked(QListWidgetItem *);
     void on_Sel_List_Block_itemDoubleClicked(QListWidgetItem *);
@@ -119,25 +116,25 @@ private:
     void selectListItem(QListWidget *w, int array_id);
     void selectListItem(QTableWidget *w, int array_id);
 
-    void makeEmptyItem(QListWidget *wid, int rmflag);
+    void makeEmptyItem(QListWidget* wid, int rmflag);
 
-    void checkExtraDataVis(QList<QWidget *> &l, QWidget *t);
-    bool updateLabelVis(QList<QWidget *> &l, QWidget *t);
+    void checkExtraDataVis(QList<QWidget*> &l, QWidget *t);
+    bool updateLabelVis(QList<QWidget*> &l, QWidget *t);
 
-    int extractID(QListWidget *w);
-    int extractID(QTableWidget *w);
+    int extractID(QListWidget * w);
+    int extractID(QTableWidget * w);
     QList<int> extractIDs(QListWidget *w);
     QList<int> extractIDs(QTableWidget *w);
 
     bool isMultiSelect;
 
-    QRadioButton *npcFromList;
-    QRadioButton *npcCoins;
-    QSpinBox *npcCoinsSel;
+    QRadioButton* npcFromList;
+    QRadioButton* npcCoins;
+    QSpinBox* npcCoinsSel;
 
     int removalFlags;
 
-    void addExtraDataControl(QWidget *control);
+    void addExtraDataControl(QWidget* control);
 
     void updateBoxes(bool setGrp = false, bool setCat = false);
     void setWldItemBoxes(bool setGrp = false, bool setCat = false);
@@ -147,39 +144,25 @@ private:
 
     void updateFilters();
 
-    ItemBoxListModel *m_blockModel = nullptr;
-    ItemBoxListModel *m_bgoModel = nullptr;
-    ItemBoxListModel *m_npcModel = nullptr;
-
-    ItemBoxListModel *m_tileModel = nullptr;
-    ItemBoxListModel *m_sceneModel = nullptr;
-    ItemBoxListModel *m_pathModel = nullptr;
-    ItemBoxListModel *m_levelModel = nullptr;
-    ItemBoxListModel *m_musboxModel = nullptr;
-
-    QList<QWidget *> extraBlockWid;
-    QList<QWidget *> extraBGOWid;
-    QList<QWidget *> extraNPCWid;
-    QList<QWidget *> extraTileWid;
-    QList<QWidget *> extraSceneryWid;
-    QList<QWidget *> extraPathWid;
-    QList<QWidget *> extraLevelWid;
-    QList<QWidget *> extraMusicWid;
+    QList<QWidget*> extraBlockWid;
+    QList<QWidget*> extraBGOWid;
+    QList<QWidget*> extraNPCWid;
+    QList<QWidget*> extraTileWid;
+    QList<QWidget*> extraSceneryWid;
+    QList<QWidget*> extraPathWid;
+    QList<QWidget*> extraLevelWid;
+    QList<QWidget*> extraMusicWid;
 
     QString worldMapRoot;
 
-    dataconfigs *conf;
+    dataconfigs* conf;
     Ui::ItemSelectDialog *ui;
 };
 
 inline ItemSelectDialog::Tabs operator|(ItemSelectDialog::Tabs a, ItemSelectDialog::Tabs b)
-{
-    return static_cast<ItemSelectDialog::Tabs>(static_cast<int>(a) | static_cast<int>(b));
-}
+{return static_cast<ItemSelectDialog::Tabs>(static_cast<int>(a) | static_cast<int>(b));}
 
 inline ItemSelectDialog::NpcExtraFlags operator|(ItemSelectDialog::NpcExtraFlags a, ItemSelectDialog::NpcExtraFlags b)
-{
-    return static_cast<ItemSelectDialog::NpcExtraFlags>(static_cast<int>(a) | static_cast<int>(b));
-}
+{return static_cast<ItemSelectDialog::NpcExtraFlags>(static_cast<int>(a) | static_cast<int>(b));}
 
 #endif // ITEMSELECTDIALOG_H
