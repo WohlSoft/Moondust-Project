@@ -25,7 +25,7 @@
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
-#include <PGE_File_Formats/pge_file_lib_globs.h>
+#include <PGE_File_Formats/pge_file_lib_private.h>//It's only exception for macOS here to get URL-Decode. Never include this!
 #include "apple/app_path_macosx.h"
 #endif
 
