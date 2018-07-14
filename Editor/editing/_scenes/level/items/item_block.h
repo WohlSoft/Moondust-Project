@@ -71,11 +71,12 @@ public:
     void setMetaSignsVisibility(bool visible);
 
 private:
-    QGraphicsItemGroup * m_grp;
-    QGraphicsItem *      m_includedNPC;
-    QGraphicsPixmapItem* m_coinCounter;
+    QGraphicsItemGroup * m_grp = nullptr;
+    QGraphicsItem *      m_includedNPC = nullptr;
+    QGraphicsPixmapItem* m_coinCounter = nullptr;
     QPixmap              m_currentImage;
-    bool                 m_sizable;
+    bool                 m_sizable = false;
+    int                  m_sizablePrevFrame = 0;
     struct SizableBlockBorder
     {
         int32_t g;

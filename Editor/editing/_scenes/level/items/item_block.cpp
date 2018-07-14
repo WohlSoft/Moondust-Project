@@ -703,7 +703,7 @@ void ItemBlock::setMainPixmap() // Init Sizable block
 {
     if(m_sizable)
     {
-        const QPixmap &texture = m_scene->m_animatorsBlocks[m_animatorID]->wholeImage();
+        const QPixmap &texture = m_scene->m_animatorsBlocks[m_animatorID]->image();
         updateSizableBorder(texture);
         drawSizableBlock(m_data.w, m_data.h, texture);
         m_imageSize = QRectF(0, 0, m_data.w, m_data.h);
@@ -714,7 +714,7 @@ void ItemBlock::setBlockSize(QRect rect)
 {
     if(m_sizable)
     {
-        const QPixmap &texture = m_scene->m_animatorsBlocks[m_animatorID]->wholeImage();
+        const QPixmap &texture = m_scene->m_animatorsBlocks[m_animatorID]->image();
         m_data.x = rect.x();
         m_data.y = rect.y();
         m_data.w = rect.width();
@@ -801,16 +801,24 @@ void ItemBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem */*optio
 
     if(m_scene->m_animatorsBlocks.size() > m_animatorID)
     {
+        const QPixmap &image = m_scene->m_animatorsBlocks[m_animatorID]->wholeImage();
+        QRect rect = m_scene->m_animatorsBlocks[m_animatorID]->frameRect();
+        int frame = m_scene->m_animatorsBlocks[m_animatorID]->frame();
         if(m_sizable)
         {
+            if(m_sizablePrevFrame != frame)
+            {
+                m_sizablePrevFrame = m_scene->m_animatorsBlocks[m_animatorID]->frame();
+                drawSizableBlock(m_data.w, m_data.h, m_scene->m_animatorsBlocks[m_animatorID]->image(m_sizablePrevFrame));
+            }
             painter->drawPixmap(m_imageSize,
                                 m_currentImage,
                                 m_imageSize);
         }
         else
             painter->drawPixmap(m_imageSize,
-                                m_scene->m_animatorsBlocks[m_animatorID]->wholeImage(),
-                                m_scene->m_animatorsBlocks[m_animatorID]->frameRect());
+                                image,
+                                rect);
     }
     else
         painter->drawRect(QRect(0, 0, 32, 32));
@@ -830,6 +838,7 @@ void ItemBlock::setAnimator(long aniID)
     if(aniID < m_scene->m_animatorsBlocks.size())
     {
         QRect frameRect = m_scene->m_animatorsBlocks[aniID]->frameRect();
+        m_sizablePrevFrame = m_scene->m_animatorsBlocks[aniID]->frame();
         m_imageSize = QRectF(0, 0, frameRect.width(), frameRect.height());
     }
     if(!m_sizable)
