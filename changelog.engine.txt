@@ -8,6 +8,7 @@
 - Added support for custom config side animation sequence for BGO, Terrain tiles, Sceneries, Paths and level entrance points
 - Improved sizable blocks rendering algorithm: now it supports customizable fixed-size border width (both common and for each side indididually)
 - Fixed font manager font ID processing
+- Sizable blocks now supports an animated textures
 
 0.3.0
 - Fixed some NPC-AI API properties

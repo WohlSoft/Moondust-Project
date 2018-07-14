@@ -35,6 +35,7 @@ bool NpcSetup::parse(IniProcessing *setup,
 {
     #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
     #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
+    #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
@@ -128,7 +129,9 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("gfx-offset-y",     gfx_offset_y,   pMerge(gfx_offset_y, 0));
     setup->read("frame-style",      framestyle,     pMerge(framestyle, 0));
     NumberLimiter::apply(framestyle, 0u, 4u);
-    setup->read("frames",       frames,         pMerge(frames, 1));
+    setup->read("frames",       frames,         pMerge(frames, 1));//Real
+    pAlias("framecount",        frames);//Alias
+    pAlias("frame-count",       frames);//Alias
     NumberLimiter::apply(frames, 1u);
     /****************Calculating of default frame height******************/
     defGFX_h = gfx_h / (frames * static_cast<unsigned int>(std::pow(2.0, static_cast<double>(framestyle))));
@@ -140,10 +143,10 @@ bool NpcSetup::parse(IniProcessing *setup,
     NumberLimiter::apply(gfx_w, 1u);
 
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
-    setup->read("frame-speed", framespeed, framespeed);//Alias
+    pAlias("frame-speed", framespeed);//Alias
     if(setup->hasKey("framespeed"))
     {
-        setup->read("framespeed",  framespeed, framespeed);//Alias
+        pAlias("framespeed", framespeed);//Alias
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
     setup->read("display-frame",            display_frame,  pMerge(display_frame, false));
@@ -294,7 +297,7 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("shared-animation",     shared_ani,             pMerge(shared_ani, 0));
     setup->read("immortal",             immortal,               pMerge(immortal, 0));
     setup->read("can-be-eaten",         can_be_eaten,           pMerge(can_be_eaten, 0));
-    setup->read("yoshicaneat",          can_be_eaten,           can_be_eaten);//Alias. LEGACY! Update all config packs and remove this!
+    pAlias("yoshicaneat",               can_be_eaten);//Alias. DEPRECATED! Update all config packs and remove this!
     setup->read("takable",              takable,                pMerge(takable, 0));
     setup->read("takable-sound-id",     takable_snd,            pMerge(takable_snd, 0));
     setup->read("grab-side",            grab_side,              pMerge(grab_side, 0));
@@ -307,9 +310,9 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("hurtnpc",              hurt_npc,               pMerge(hurt_npc, 0));
 
     //Damage level on attacks types
-    setup->read("damage-sensitive-stomp", damage_stomp, merge_with ? merge_with->damage_stomp : 0);
-    setup->read("damage-sensitive-spinstomp", damage_spinstomp, merge_with ? merge_with->damage_spinstomp : 0);
-    setup->read("damage-sensitive-itemkick", damage_itemkick, merge_with ? merge_with->damage_itemkick : 0);
+    setup->read("damage-sensitive-stomp", damage_stomp, pMerge(damage_stomp, 0));
+    setup->read("damage-sensitive-spinstomp", damage_spinstomp, pMerge(damage_spinstomp, 0));
+    setup->read("damage-sensitive-itemkick", damage_itemkick, pMerge(damage_itemkick, 0));
 
     //Sound effects
     setup->read("hit-sound-id", hit_sound_id, merge_with ? merge_with->hit_sound_id : 0);
@@ -370,6 +373,7 @@ bool NpcSetup::parse(IniProcessing *setup,
 
     #undef pMerge
     #undef pMergeMe
+    #undef pAlias
     return true;
 }
 

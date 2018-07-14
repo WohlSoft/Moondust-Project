@@ -360,14 +360,14 @@ void LVL_Block::setSizable(bool sizable)
     if(m_sizable)
     {
         // Don't allow texture smaller than 3x3
-        if((texture.w < 3) || (texture.h < 3))
+        if((texture.frame_w < 3) || (texture.frame_h < 3))
             m_sizable = false;
     }
 
     if(!m_sizable)
     {
-        data.w = texture.w;
-        data.h = (unsigned(texture.h) / setup->setup.frames);
+        data.w = texture.frame_w;
+        data.h = texture.frame_h;
         return;
     }
 
@@ -389,15 +389,41 @@ void LVL_Block::setSizable(bool sizable)
         sizable_border.b = sizable_border.g;
 
     if((sizable_border.l <= 0) && (sizable_border.g <= 0))
-        sizable_border.l = Maths::iRound(double(texture.w) / 3);
+        sizable_border.l = Maths::iRound(double(texture.frame_w) / 3);
     if((sizable_border.r <= 0) && (sizable_border.g <= 0))
-        sizable_border.r = Maths::iRound(double(texture.w) / 3);
+        sizable_border.r = Maths::iRound(double(texture.frame_w) / 3);
     if((sizable_border.b <= 0) && (sizable_border.g <= 0))
-        sizable_border.b = Maths::iRound(double(texture.h) / 3);
+        sizable_border.b = Maths::iRound(double(texture.frame_h) / 3);
     if((sizable_border.t <= 0) && (sizable_border.g <= 0))
-        sizable_border.t = Maths::iRound(double(texture.h) / 3);
+        sizable_border.t = Maths::iRound(double(texture.frame_h) / 3);
 }
 
+void LVL_Block::drawPiece(PGE_RectF basePos,
+                          PGE_RectF piecePos,
+                          PGE_RectF texturePos,
+                          int32_t textureFullW,
+                          int32_t textureFullH,
+                          AniPos ani)
+{
+    PGE_RectF tx;
+    tx.setLeft(texturePos.left() / double(textureFullW));
+    tx.setRight(texturePos.right() / double(textureFullW));
+    tx.setTop(ani.first + (texturePos.top() / double(textureFullH)));
+    tx.setBottom(ani.first + (texturePos.bottom() / double(textureFullH)));
+    PGE_RectF renderPos;
+    renderPos.setX(basePos.x() + piecePos.x());
+    renderPos.setY(basePos.y() + piecePos.y());
+    renderPos.setRight(basePos.x() + piecePos.x() + piecePos.width());
+    renderPos.setBottom(basePos.y() + piecePos.y() + piecePos.height());
+    GlRenderer::renderTextureCur(float(renderPos.left()),
+                                 float(renderPos.top()),
+                                 float(renderPos.width()),
+                                 float(renderPos.height()),
+                                 float(tx.top()),
+                                 float(tx.bottom()),
+                                 float(tx.left()),
+                                 float(tx.right()));
+}
 
 void LVL_Block::render(double camX, double camY)
 {
@@ -411,10 +437,10 @@ void LVL_Block::render(double camX, double camY)
                    posY() - camY + offset_y,
                    m_momentum.w,
                    m_momentum.h);
-    AniPos x(0, 1);
+    AniPos ani(0.0, 1.0);
 
     if(animated) //Get current animated frame
-        x = ConfigManager::Animator_Blocks[size_t(animator_ID)].image();
+        ani = ConfigManager::Animator_Blocks[size_t(animator_ID)].image();
 
     GlRenderer::BindTexture(&texture);
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -427,9 +453,11 @@ void LVL_Block::render(double camX, double camY)
         const int32_t hB = Maths::iRound(m_momentum.h);
 
         //! Width of texture
-        const int32_t wT = texture.w;
+        const int32_t wT = texture.frame_w;
         //! Height of texture
-        const int32_t hT = texture.h;
+        const int32_t hTfull = texture.h;
+        //! Height of frame
+        const int32_t hT = texture.frame_h;
 
         //! Left border size
         const int32_t xbL = sizable_border.l;
@@ -486,7 +514,7 @@ void LVL_Block::render(double camX, double camY)
             for(i = 0; i < totalH; i++)
             {
                 drawPiece(blockG, PGE_RectF(0, ybT + hc, xbL - dX, pHeight),
-                                  PGE_RectF(0, ybT,      xbL - dX, pHeight));
+                                  PGE_RectF(0, ybT,      xbL - dX, pHeight), wT, hTfull, ani);
                 hc += pHeight;
             }
 
@@ -494,7 +522,7 @@ void LVL_Block::render(double camX, double camY)
 
             if(fLnt != 0)
                 drawPiece(blockG, PGE_RectF(0, ybT + hc, xbL - dX, fLnt),
-                                  PGE_RectF(0, ybT,      xbL - dX, fLnt));
+                                  PGE_RectF(0, ybT,      xbL - dX, fLnt), wT, hTfull, ani);
         }
 
         //T Draw top border
@@ -505,7 +533,7 @@ void LVL_Block::render(double camX, double camY)
             for(i = 0; i < totalW; i++)
             {
                 drawPiece(blockG, PGE_RectF(xbL + hc,   0, pWidth, ybT - dY),
-                                  PGE_RectF(xbL,        0, pWidth, ybT - dY));
+                                  PGE_RectF(xbL,        0, pWidth, ybT - dY), wT, hTfull, ani);
                 hc += pWidth;
             }
 
@@ -513,7 +541,7 @@ void LVL_Block::render(double camX, double camY)
 
             if(fLnt != 0)
                 drawPiece(blockG, PGE_RectF(xbL + hc, 0, fLnt, ybT - dY),
-                                  PGE_RectF(xbL,      0, fLnt, ybT - dY));
+                                  PGE_RectF(xbL,      0, fLnt, ybT - dY), wT, hTfull, ani);
         }
 
         //B Draw bottom border
@@ -524,7 +552,7 @@ void LVL_Block::render(double camX, double camY)
             for(i = 0; i < totalW; i++)
             {
                 drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY, pWidth, ybB - dY),
-                                  PGE_RectF(xbL,        hT - ybB + dY, pWidth, ybB - dY));
+                                  PGE_RectF(xbL,        hT - ybB + dY, pWidth, ybB - dY), wT, hTfull, ani);
                 hc += pWidth;
             }
 
@@ -532,7 +560,7 @@ void LVL_Block::render(double camX, double camY)
 
             if(fLnt != 0)
                 drawPiece(blockG, PGE_RectF(xbL + hc,   hB - ybB + dY, fLnt, ybB - dY),
-                                  PGE_RectF(xbL,        hT - ybB + dY, fLnt, ybB - dY));
+                                  PGE_RectF(xbL,        hT - ybB + dY, fLnt, ybB - dY), wT, hTfull, ani);
         }
 
         //R Draw right border
@@ -543,7 +571,7 @@ void LVL_Block::render(double camX, double camY)
             for(i = 0; i < totalH; i++)
             {
                 drawPiece(blockG, PGE_RectF(wB - xbR + dX,      ybT + hc, xbR - dX, pHeight),
-                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, pHeight));
+                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, pHeight), wT, hTfull, ani);
                 hc += pHeight;
             }
 
@@ -551,7 +579,7 @@ void LVL_Block::render(double camX, double camY)
 
             if(fLnt != 0)
                 drawPiece(blockG, PGE_RectF(wB - xbR + dX,      ybT + hc, xbR - dX, fLnt),
-                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, fLnt));
+                                  PGE_RectF(wT - xbR + dX, ybT, xbR - dX, fLnt), wT, hTfull, ani);
         }
 
         //C Draw center
@@ -567,7 +595,7 @@ void LVL_Block::render(double camX, double camY)
                 for(j = 0; j < totalW; j++)
                 {
                     drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, pWidth, pHeight),
-                                      PGE_RectF(xbL,      ybT,      pWidth, pHeight));
+                                      PGE_RectF(xbL,      ybT,      pWidth, pHeight), wT, hTfull, ani);
                     hc += pWidth;
                 }
 
@@ -575,7 +603,7 @@ void LVL_Block::render(double camX, double camY)
 
                 if(fLnt != 0)
                     drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, fLnt, pHeight),
-                                      PGE_RectF(xbL,      ybT,      fLnt, pHeight));
+                                      PGE_RectF(xbL,      ybT,      fLnt, pHeight), wT, hTfull, ani);
 
                 wc += pHeight;
             }
@@ -589,7 +617,7 @@ void LVL_Block::render(double camX, double camY)
                 for(j = 0; j < totalW; j++)
                 {
                     drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, pWidth, fWdt),
-                                      PGE_RectF(xbL,      ybT,      pWidth, fWdt));
+                                      PGE_RectF(xbL,      ybT,      pWidth, fWdt), wT, hTfull, ani);
                     hc += pWidth;
                 }
 
@@ -597,23 +625,23 @@ void LVL_Block::render(double camX, double camY)
 
                 if(fLnt != 0)
                     drawPiece(blockG, PGE_RectF(xbL + hc, ybT + wc, fLnt, fWdt),
-                                      PGE_RectF(xbL,      ybT,      fLnt, fWdt));
+                                      PGE_RectF(xbL,      ybT,      fLnt, fWdt), wT, hTfull, ani);
             }
         }
 
         //Draw corners
         //1 Left-top
         drawPiece(blockG, PGE_RectF(0, 0, xbL - dX, ybT - dY),
-                          PGE_RectF(0, 0, xbL - dX, ybT - dY));
+                          PGE_RectF(0, 0, xbL - dX, ybT - dY), wT, hTfull, ani);
         //2 Right-top
         drawPiece(blockG, PGE_RectF(wB - xbR + dX, 0, xbR - dX, ybT - dY),
-                          PGE_RectF(wT - xbR + dX, 0, xbR - dX, ybT - dY));
+                          PGE_RectF(wT - xbR + dX, 0, xbR - dX, ybT - dY), wT, hTfull, ani);
         //3 Right-bottom
         drawPiece(blockG, PGE_RectF(wB - xbR + dX, hB - ybB + dY, xbR - dX, ybB - dY),
-                          PGE_RectF(wT - xbR + dX, hT - ybB + dY, xbR - dX, ybB - dY));
+                          PGE_RectF(wT - xbR + dX, hT - ybB + dY, xbR - dX, ybB - dY), wT, hTfull, ani);
         //4 Left-bottom
         drawPiece(blockG, PGE_RectF(0, hB - ybB + dY, xbL - dX, ybB - dY),
-                          PGE_RectF(0, hT - ybB + dY, xbL - dX, ybB - dY));
+                          PGE_RectF(0, hT - ybB + dY, xbL - dX, ybB - dY), wT, hTfull, ani);
     }
     else
     { // Draw regular block texture
@@ -621,8 +649,8 @@ void LVL_Block::render(double camX, double camY)
                                      float(blockG.top()),
                                      float(blockG.width()),
                                      float(blockG.height()),
-                                     float(x.first),
-                                     float(x.second));
+                                     float(ani.first),
+                                     float(ani.second));
     }
 
     GlRenderer::UnBindTexture();
@@ -691,24 +719,6 @@ bool LVL_Block::lua_isSolid()
 {
     return (m_blocked[2] == Block_ALL);
 }
-
-void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
-{
-    PGE_RectF tx;
-    tx.setLeft(texture.left() / this->texture.w);
-    tx.setRight(texture.right() / this->texture.w);
-    tx.setTop(texture.top() / this->texture.h);
-    tx.setBottom(texture.bottom() / this->texture.h);
-    PGE_RectF blockG;
-    blockG.setX(target.x() + block.x());
-    blockG.setY(target.y() + block.y());
-    blockG.setRight(target.x() + block.x() + block.width());
-    blockG.setBottom(target.y() + block.y() + block.height());
-    GlRenderer::renderTextureCur(float(blockG.left()), float(blockG.top()), float(blockG.width()), float(blockG.height()), float(tx.top()), float(tx.bottom()), float(tx.left()), float(tx.right()));
-}
-
-
-
 
 void LVL_Block::hit(LVL_Block::directions _dir)
 {

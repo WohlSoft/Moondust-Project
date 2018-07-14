@@ -127,7 +127,9 @@ bool BgSetup::parse(IniProcessing *setup,
      */
     setup->read("animated", animated, pMerge(animated, false));
 
-    setup->read("frames", frames, pMerge(frames, 1));
+    setup->read("frames",       frames, pMerge(frames, 1));//Real
+    pAlias("framecount",        frames);
+    pAlias("frame-count",       frames);
     NumberLimiter::apply(frames, 1u);
 
     setup->read("frame-delay", framespeed, pMerge(framespeed, 128));
@@ -379,7 +381,9 @@ bool BgSetup::parse(IniProcessing *setup,
                 pAlias("speedy", lyr.auto_scrolling_y_speed);
                 lyr.auto_scrolling_y = (lyr.auto_scrolling_y_speed != 0);
 
-                setup->read("frames", lyr.frames, 1);
+                setup->read("frames", lyr.frames, 1);//Real
+                pAlias("framecount",    frames);
+                pAlias("frame-count",   frames);
                 lyr.animated = (lyr.frames > 1);
                 setup->read("frame-delay", lyr.framespeed, 128);
                 pAlias("framespeed", lyr.framespeed);

@@ -33,6 +33,7 @@ bool BlockSetup::parse(IniProcessing *setup,
 {
     #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
     #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
+    #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString   section;
@@ -207,14 +208,16 @@ bool BlockSetup::parse(IniProcessing *setup,
 
     setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation
     setup->read("animation-bidirectional",  animation_bid,  pMerge(animation_bid, false)); //Bidirectional animation
-    setup->read("frames",                   frames,         pMerge(frames, 1));
+    setup->read("frames",                   frames,         pMerge(frames, 1));//Real
+    pAlias("framecount",    frames);//Alias
+    pAlias("frame-count",   frames);//Alias
     NumberLimiter::apply(frames, 1u);
     animated = (frames > 1u);
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
-    setup->read("frame-speed", framespeed, framespeed);//Alias
+    pAlias("frame-speed", framespeed);//Alias
     if(setup->hasKey("framespeed"))
     {
-        setup->read("framespeed",  framespeed, framespeed);//Alias
+        pAlias("framespeed",  framespeed);//Alias
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
     NumberLimiter::apply(framespeed, 1u);
@@ -247,5 +250,6 @@ bool BlockSetup::parse(IniProcessing *setup,
 
     #undef pMerge
     #undef pMergeMe
+    #undef pAlias
     return true;
 }
