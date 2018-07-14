@@ -69,6 +69,18 @@ tryBackup:
     return target;
 }
 
+QStringList CustomDirManager::getCustomFiles(QString nameBase, QStringList extensions, bool ignoreDefaultDirectory)
+{
+    QStringList ret;
+    for(QString &e : extensions)
+    {
+        QString file = getCustomFile(nameBase + e, ignoreDefaultDirectory);
+        if(!file.isEmpty())
+            ret.push_back(file);
+    }
+    return ret;
+}
+
 void CustomDirManager::setCustomDirs(QString path, QString name)
 {
     dirCustom = path + "/" + name;

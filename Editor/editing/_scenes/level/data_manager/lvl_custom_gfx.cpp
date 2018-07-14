@@ -104,12 +104,12 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         obj_BG *bgD = &m_configs->main_bg[i];
         UserBGs uBG;
 
-        QString CustomTxt = uLVL.getCustomFile("background2-" + QString::number(bgD->setup.id) + ".ini", true);
-        if(!CustomTxt.isEmpty())
+        QString customINI = uLVL.getCustomFile("background2-" + QString::number(bgD->setup.id) + ".ini", true);
+        if(!customINI.isEmpty())
         {
             m_localConfigBackgrounds[bgD->setup.id] = *bgD;
             obj_BG &bgN = m_localConfigBackgrounds[bgD->setup.id];
-            m_configs->loadLevelBackground(bgN, "background2", bgD, CustomTxt);
+            m_configs->loadLevelBackground(bgN, "background2", bgD, customINI);
             bgD = &bgN;
         }
 
@@ -192,10 +192,11 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         bool custom = false;
 
-        QString CustomTxt = uLVL.getCustomFile("block-" + QString::number(blockD->setup.id) + ".ini", true);
-        if(!CustomTxt.isEmpty())
+        QStringList customINIs;
+        customINIs = uLVL.getCustomFiles("block-" + QString::number(blockD->setup.id), {".ini", ".txt"}, true);
+        for(QString &iniFile : customINIs)
         {
-            m_configs->loadLevelBlock(t_block, "block", blockD, CustomTxt);
+            m_configs->loadLevelBlock(t_block, "block", &t_block, iniFile);
             custom = true;
         }
 
@@ -270,12 +271,11 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
         bgoD->copyTo(t_bgo);//init configs
 
-        QString CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id) + ".ini", true);
-        if(CustomTxt.isEmpty())
-            CustomTxt = uLVL.getCustomFile("background-" + QString::number(bgoD->setup.id) + ".txt", true);
-        if(!CustomTxt.isEmpty())
+        QStringList customINIs;
+        customINIs = uLVL.getCustomFiles("background-" + QString::number(bgoD->setup.id), {".ini", ".txt"}, true);
+        for(QString &iniFile : customINIs)
         {
-            m_configs->loadLevelBGO(t_bgo, "background", bgoD, CustomTxt);
+            m_configs->loadLevelBGO(t_bgo, "background", &t_bgo, iniFile);
             custom = true;
         }
 
@@ -359,23 +359,23 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             capturedS = t_npc.cur_image->size();
 
         // NPC.INI and NPC.TXT are has different format. Therefore parse both of them
-        QString CustomTxt = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".ini", true);
-        if(!CustomTxt.isEmpty())
+        QString customINI = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".ini", true);
+        if(!customINI.isEmpty())
         {
-            m_configs->loadLevelNPC(t_npc, "npc", npcD, CustomTxt);
+            m_configs->loadLevelNPC(t_npc, "npc", npcD, customINI);
             custom = true;
         }
 
         // /////////////////////// Looking for user's NPC.txt ////////////////////////////
         // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
-        CustomTxt = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".txt", true);
-        if(!CustomTxt.isEmpty())
+        customINI = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".txt", true);
+        if(!customINI.isEmpty())
         {
-            QFile file(CustomTxt);
+            QFile file(customINI);
             if(file.open(QIODevice::ReadOnly))
             {
                 file.close();
-                FileFormats::ReadNpcTXTFileF(CustomTxt, sets, true);
+                FileFormats::ReadNpcTXTFileF(customINI, sets, true);
                 npctxt = true;
                 custom = true;
             }
