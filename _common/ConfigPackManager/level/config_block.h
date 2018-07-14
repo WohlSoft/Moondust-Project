@@ -177,8 +177,8 @@ struct BlockSetup
     uint32_t        effect = 0;
     //! [Gameplay] Is block bouncing
     bool            bounce = false;
-    //! [Gameplay] Block can react on attacks
-    bool            hitable = false;
+    //! [Gameplay] Block can react on bumps and attacks
+    bool            bumpable = false;
     //! [Gameplay] Transform block into on attempt to attack it
     uint32_t        transfororm_on_hit_into = 0;
 

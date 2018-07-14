@@ -857,7 +857,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         m_scene->toggleSwitch(setup->setup.switch_ID);
     }
 
-    if(setup->setup.hitable)
+    if(setup->setup.bumpable)
     {
         triggerEvent = true;
         transformTo(setup->setup.spawn_obj_id, setup->setup.spawn_obj);
