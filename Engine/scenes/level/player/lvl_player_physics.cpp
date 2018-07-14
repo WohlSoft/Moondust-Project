@@ -422,7 +422,7 @@ void LVL_Player::processContacts()
             long npcid = candidate->data.npc_id;
             candidate->hit(LVL_Block::down);
 
-            if(candidate->setup->setup.hitable || (npcid != 0) ||
+            if(candidate->setup->setup.bumpable || (npcid != 0) ||
                (candidate->m_destroyed) || candidate->setup->setup.bounce)
             {
                 if(m_momentum.bottom() >= candidate->m_momentum.top())
@@ -522,7 +522,7 @@ void LVL_Player::collisionHitBlockTop(std::vector<PGE_Phys_Object *> &blocksHit)
             long npcid = nearest->data.npc_id;
             nearest->hit(LVL_Block::up, this, 1);
 
-            if(nearest->setup->setup.hitable ||
+            if(nearest->setup->setup.bumpable ||
                (npcid != 0) ||
                (nearest->m_destroyed) ||
                (nearest->setup->setup.bounce))

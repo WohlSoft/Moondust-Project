@@ -24,7 +24,7 @@ SimpleAnimator::SimpleAnimator(QObject *parent)
 {
     frame_delay = 0;
     ticks_left  = 0.0f;
-    CurrentFrame = 0;
+    m_currentFrame = 0;
     QPixmap dummy(2, 2);
     dummy.fill(Qt::white);
     setSettings(dummy, false, 1, 64, 0, -1, false, false);
@@ -33,22 +33,22 @@ SimpleAnimator::SimpleAnimator(QObject *parent)
 SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
     QObject(parent), TimedAnimation(a)
 {
-    mainImage = a.mainImage;
-    animated = a.animated;
-    frameFirst = a.frameFirst;
-    frameLast = a.frameLast;
-    frame_sequance_enabled=a.frame_sequance_enabled;
-    frame_sequance = a.frame_sequance;
-    frame_sequance_cur = a.frame_sequance_cur;
-    frame_rect = a.frame_rect;
-    CurrentFrame = a.CurrentFrame;
-    bidirectional = a.bidirectional;
-    reverce = a.reverce;
-    frameDelay = a.frameDelay;
-    framesCount = a.framesCount;
-    frameWidth = a.frameWidth;
-    frameHeight = a.frameHeight;
-    frameHeight = a.frameHeight;
+    m_texture = a.m_texture;
+    m_animated = a.m_animated;
+    m_frameFirst = a.m_frameFirst;
+    m_frameLast = a.m_frameLast;
+    m_frame_sequance_enabled=a.m_frame_sequance_enabled;
+    m_frame_sequance = a.m_frame_sequance;
+    m_frame_sequance_cur = a.m_frame_sequance_cur;
+    m_frame_rect = a.m_frame_rect;
+    m_currentFrame = a.m_currentFrame;
+    m_bidirectional = a.m_bidirectional;
+    m_reverce = a.m_reverce;
+    m_frameDelay = a.m_frameDelay;
+    m_framesCount = a.m_framesCount;
+    m_frameWidth = a.m_frameWidth;
+    m_frameHeight = a.m_frameHeight;
+    m_frameHeight = a.m_frameHeight;
     //Inherets!
     frame_delay = a.frame_delay;
     ticks_left  = a.ticks_left;
@@ -56,22 +56,22 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
 
 SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
 {
-    mainImage = a.mainImage;
-    animated = a.animated;
-    frameFirst = a.frameFirst;
-    frameLast = a.frameLast;
-    CurrentFrame = a.CurrentFrame;
-    frame_sequance_enabled = a.frame_sequance_enabled;
-    frame_sequance = a.frame_sequance;
-    frame_sequance_cur = a.frame_sequance_cur;
-    frame_rect = a.frame_rect;
-    bidirectional = a.bidirectional;
-    reverce = a.reverce;
-    frameDelay = a.frameDelay;
-    framesCount = a.framesCount;
-    frameWidth = a.frameWidth;
-    frameHeight = a.frameHeight;
-    frameHeight = a.frameHeight;
+    m_texture = a.m_texture;
+    m_animated = a.m_animated;
+    m_frameFirst = a.m_frameFirst;
+    m_frameLast = a.m_frameLast;
+    m_currentFrame = a.m_currentFrame;
+    m_frame_sequance_enabled = a.m_frame_sequance_enabled;
+    m_frame_sequance = a.m_frame_sequance;
+    m_frame_sequance_cur = a.m_frame_sequance_cur;
+    m_frame_rect = a.m_frame_rect;
+    m_bidirectional = a.m_bidirectional;
+    m_reverce = a.m_reverce;
+    m_frameDelay = a.m_frameDelay;
+    m_framesCount = a.m_framesCount;
+    m_frameWidth = a.m_frameWidth;
+    m_frameHeight = a.m_frameHeight;
+    m_frameHeight = a.m_frameHeight;
     //frames = a.frames;
 
     //Inherets!
@@ -90,7 +90,7 @@ SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
 SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid, QObject *parent)
     : QObject(parent), TimedAnimation()
 {
-    CurrentFrame = 0;
+    m_currentFrame = 0;
     setSettings(sprite, enables, framesq, fspeed, First, Last, rev, bid);
 }
 
@@ -99,45 +99,45 @@ SimpleAnimator::~SimpleAnimator()
 
 void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
 {
-    mainImage = &sprite;
-    animated = enables;
-    frameFirst = First;
-    frameLast = Last;
-    CurrentFrame = 0;
+    m_texture = &sprite;
+    m_animated = enables;
+    m_frameFirst = First;
+    m_frameLast = Last;
+    m_currentFrame = 0;
     ticks_left = 0.0f;
 
-    frame_sequance_enabled=false;
-    frame_sequance_cur=0;
+    m_frame_sequance_enabled=false;
+    m_frame_sequance_cur=0;
 
-    bidirectional = bid;
-    reverce = rev;
+    m_bidirectional = bid;
+    m_reverce = rev;
 
-    frameDelay = fspeed;
+    m_frameDelay = fspeed;
     frame_delay = fspeed;
-    framesCount = framesq;
+    m_framesCount = framesq;
 
-    if(mainImage->isNull())
+    if(m_texture->isNull())
     {
-        animated=false;
+        m_animated=false;
         LogWarning("SimpleAnimator can't work with null images");
         return;
     }
 
-    frameWidth = mainImage->width();
-    spriteHeight = mainImage->height();
+    m_frameWidth = m_texture->width();
+    m_spriteHeight = m_texture->height();
 
     // Frame must not be less than 1 pixel
-    if( framesCount > spriteHeight)
-        framesCount = frameHeight;
+    if( m_framesCount > m_spriteHeight)
+        m_framesCount = m_frameHeight;
 
-    if(framesCount <= 0) //Avoid SIGFPE if so small image while so much frames
-        framesCount = 1;
+    if(m_framesCount <= 0) //Avoid SIGFPE if so small image while so much frames
+        m_framesCount = 1;
 
-    if(animated)
-        frameHeight = qRound(qreal(spriteHeight/framesCount));
+    if(m_animated)
+        m_frameHeight = qRound(qreal(m_spriteHeight/m_framesCount));
     else
-        frameHeight = spriteHeight;
-    framePos = QPoint(0,0);
+        m_frameHeight = m_spriteHeight;
+    m_framePos = QPoint(0,0);
 
     //createAnimationFrames();
 
@@ -154,13 +154,13 @@ void SimpleAnimator::setFrameSequance(QList<int> sequance)
 {
     if(sequance.isEmpty())
         return;
-    frame_sequance=sequance;
-    frame_sequance_enabled=true;
-    frame_sequance_cur = 0;
-    CurrentFrame = frame_sequance[frame_sequance_cur];
-    frame_rect.setRect(0, frameHeight*CurrentFrame, frameWidth, frameHeight);
-    if( frame_sequance.size() <=1 )
-        animated=false;
+    m_frame_sequance=sequance;
+    m_frame_sequance_enabled=true;
+    m_frame_sequance_cur = 0;
+    m_currentFrame = m_frame_sequance[m_frame_sequance_cur];
+    m_frame_rect.setRect(0, m_frameHeight*m_currentFrame, m_frameWidth, m_frameHeight);
+    if( m_frame_sequance.size() <=1 )
+        m_animated=false;
 }
 
 
@@ -174,132 +174,132 @@ QPixmap SimpleAnimator::image(int frame)
 //        tmp.fill(QColor(Qt::red));
 //        return tmp;
 //    }
-    if( frame<0 || frame >= framesCount)
-        frame = CurrentFrame;
+    if( frame<0 || frame >= m_framesCount)
+        frame = m_currentFrame;
 //    if((frame<0)||(frame>=frames.size()))
 //        return frames[CurrentFrame];//mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
 //    else
 //        return frames[frame];//mainImage.copy(QRect(framePos.x(), frameSize*frame, frameWidth, frameSize ));
-    return mainImage->copy(QRect(0, frame * frameHeight, frameWidth, frameHeight ));
+    return m_texture->copy(QRect(0, frame * m_frameHeight, m_frameWidth, m_frameHeight ));
 }
 
 QRect &SimpleAnimator::frameRect()
 {
-    return frame_rect;
+    return m_frame_rect;
 }
 
 QRectF SimpleAnimator::frameRectF()
 {
-    return QRectF(frame_rect);
+    return QRectF(m_frame_rect);
 }
 
 QPixmap &SimpleAnimator::wholeImage()
 {
-    return *mainImage;
+    return *m_texture;
 }
 
 
 //Animation process
 void SimpleAnimator::nextFrame()
 {
-    if(frame_sequance_enabled)
+    if(m_frame_sequance_enabled)
     {
-        if(reverce)
+        if(m_reverce)
         {
-            frame_sequance_cur--;
-            if(frame_sequance_cur < 0)
+            m_frame_sequance_cur--;
+            if(m_frame_sequance_cur < 0)
             {
-                if(bidirectional)
+                if(m_bidirectional)
                 {
-                    reverce = !reverce; // change direction on first frame
-                    frame_sequance_cur+=2;
-                    if(frame_sequance_cur >= frame_sequance.size())
-                        frame_sequance_cur = frame_sequance.size()-1;
+                    m_reverce = !m_reverce; // change direction on first frame
+                    m_frame_sequance_cur+=2;
+                    if(m_frame_sequance_cur >= m_frame_sequance.size())
+                        m_frame_sequance_cur = m_frame_sequance.size()-1;
                 }
                 else
                 {
-                    frame_sequance_cur = frame_sequance.size()-1;
+                    m_frame_sequance_cur = m_frame_sequance.size()-1;
                 }
             }
         }
         else
         {
-            frame_sequance_cur++;
-            if(frame_sequance_cur < 0)
-                frame_sequance_cur = 0;
-            if(frame_sequance_cur >= frame_sequance.size())
+            m_frame_sequance_cur++;
+            if(m_frame_sequance_cur < 0)
+                m_frame_sequance_cur = 0;
+            if(m_frame_sequance_cur >= m_frame_sequance.size())
             {
-                if(bidirectional)
+                if(m_bidirectional)
                 {
-                    reverce=!reverce; // change direction on last frame
-                    frame_sequance_cur -= 2;
-                    if(frame_sequance_cur < 0)
-                        frame_sequance_cur = 0;
+                    m_reverce=!m_reverce; // change direction on last frame
+                    m_frame_sequance_cur -= 2;
+                    if(m_frame_sequance_cur < 0)
+                        m_frame_sequance_cur = 0;
                 }
                 else
                 {
-                    frame_sequance_cur = 0; // Return to first frame;
+                    m_frame_sequance_cur = 0; // Return to first frame;
                 }
             }
         }
-        if( (!frame_sequance.isEmpty()) && (frame_sequance_cur<frame_sequance.size()) )
-            CurrentFrame = frame_sequance[frame_sequance_cur];
-        if(CurrentFrame<0 || CurrentFrame >= framesCount)
-            CurrentFrame = frameFirst;
+        if( (!m_frame_sequance.isEmpty()) && (m_frame_sequance_cur<m_frame_sequance.size()) )
+            m_currentFrame = m_frame_sequance[m_frame_sequance_cur];
+        if(m_currentFrame<0 || m_currentFrame >= m_framesCount)
+            m_currentFrame = m_frameFirst;
     }
     else
     {
-        if(reverce)
+        if(m_reverce)
         { // Reverce animation
-            CurrentFrame--;
-            if(CurrentFrame<frameFirst)
+            m_currentFrame--;
+            if(m_currentFrame<m_frameFirst)
             {
-                if(bidirectional)
+                if(m_bidirectional)
                 {
-                    reverce=!reverce; // change direction on first frame
-                    CurrentFrame+=2;
+                    m_reverce=!m_reverce; // change direction on first frame
+                    m_currentFrame+=2;
 
-                    if( ((CurrentFrame>=framesCount)&&(frameLast<0)) ||
-                        ((CurrentFrame>frameLast)&&(frameLast>=0)) )
+                    if( ((m_currentFrame>=m_framesCount)&&(m_frameLast<0)) ||
+                        ((m_currentFrame>m_frameLast)&&(m_frameLast>=0)) )
                     {
                         // Return to last frame;
-                        if(frameLast<0)
-                            CurrentFrame=framesCount-1;
+                        if(m_frameLast<0)
+                            m_currentFrame=m_framesCount-1;
                         else
-                            CurrentFrame=frameLast;
+                            m_currentFrame=m_frameLast;
                     }
                 }
                 else
                 {
                     // Return to last frame;
-                    if(frameLast<0)
-                        CurrentFrame=framesCount-1;
+                    if(m_frameLast<0)
+                        m_currentFrame=m_framesCount-1;
                     else
-                        CurrentFrame=frameLast;
+                        m_currentFrame=m_frameLast;
                 }
             }
         }
         else
         { // Direct animation
-            CurrentFrame++;
-            if(((CurrentFrame>=framesCount)&&(frameLast<0))||
-                    ((CurrentFrame>frameLast)&&(frameLast>=0)))
+            m_currentFrame++;
+            if(((m_currentFrame>=m_framesCount)&&(m_frameLast<0))||
+                    ((m_currentFrame>m_frameLast)&&(m_frameLast>=0)))
             {
-                if(bidirectional)
+                if(m_bidirectional)
                 {
-                    reverce=!reverce; // change direction on last frame
-                    CurrentFrame-=2;
-                    if( CurrentFrame < 0 )
-                        CurrentFrame = 0;
+                    m_reverce=!m_reverce; // change direction on last frame
+                    m_currentFrame-=2;
+                    if( m_currentFrame < 0 )
+                        m_currentFrame = 0;
                 }
                 else
                 {
-                    CurrentFrame=frameFirst; // Return to first frame;
+                    m_currentFrame=m_frameFirst; // Return to first frame;
                 }
             }
         }
     }
-    frame_rect.setRect(0, frameHeight*CurrentFrame, frameWidth, frameHeight);
+    m_frame_rect.setRect(0, m_frameHeight*m_currentFrame, m_frameWidth, m_frameHeight);
 }
 
 //void SimpleAnimator::createAnimationFrames()
@@ -311,41 +311,50 @@ void SimpleAnimator::nextFrame()
 //}
 
 
-void SimpleAnimator::setFrame(int y)
+void SimpleAnimator::setFrame(int fnum)
 {
-    if(frame_sequance_enabled)
+    if(m_frame_sequance_enabled)
     {
-        if(y<0) y = 0;
-        if(!frame_sequance.isEmpty())
+        if(fnum<0)
+            fnum = 0;
+        if(!m_frame_sequance.isEmpty())
         {
-            if(y >= frame_sequance.size()) y = 0;
-            frame_sequance_cur = y;
-            y = frame_sequance[y];
+            if(fnum >= m_frame_sequance.size())
+                fnum = 0;
+            m_frame_sequance_cur = fnum;
+            fnum = m_frame_sequance[fnum];
         }
     }
     //if(y>=frames.size()) y= frameFirst;
-    if(y>=framesCount) y = frameFirst;
+    if(fnum>=m_framesCount)
+        fnum = m_frameFirst;
     //if(y<frameFirst) y = (frameLast<0)? frames.size()-1 : frameLast;
-    if(y<frameFirst) y = (frameLast<0)? framesCount-1 : frameLast;
-    CurrentFrame = y;
-    frame_rect.setRect(0, frameHeight*y, frameWidth, frameHeight);
+    if(fnum<m_frameFirst)
+        fnum = (m_frameLast<0)? m_framesCount-1 : m_frameLast;
+    m_currentFrame = fnum;
+    m_frame_rect.setRect(0, m_frameHeight*fnum, m_frameWidth, m_frameHeight);
+}
+
+int SimpleAnimator::frame()
+{
+    return m_currentFrame;
 }
 
 void SimpleAnimator::start()
 {
-    if(!animated) return;
-    if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
+    if(!m_animated) return;
+    if((m_frameLast>0)&&((m_frameLast-m_frameFirst)<=1)) return; //Don't start singleFrame animation
 }
 
 void SimpleAnimator::stop()
 {
-    if(!animated) return;
+    if(!m_animated) return;
     resetFrame();
 }
 
 void SimpleAnimator::resetFrame()
 {
-    setFrame(frameFirst);
+    setFrame(m_frameFirst);
     ticks_left = 0.0f;
 }
 

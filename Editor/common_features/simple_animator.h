@@ -48,50 +48,64 @@ public:
 
     void setFrameSequance(QList<int> sequance);
 
-    void setFrame(int y);
+    /**
+     * @brief Set current frame number
+     * @param y frame number to set
+     */
+    void setFrame(int fnum);
+
+    /**
+     * @brief Returns current frame number
+     * @return Current frame number
+     */
+    int  frame();
 
     void start();
     void stop();
 
     void resetFrame();
-
-    int frameDelay;
-
     void nextFrame();
 
 private:
-    QMutex	mutex;
+    QMutex  m_mutex;
 
-    QPixmap *mainImage; //Whole image
+    //! Animation frame delay
+    int m_frameDelay;
+
+    QPixmap *m_texture; //Whole image
     //QVector<QPixmap> frames; //Whole image
 
-    bool       frame_sequance_enabled;
-    QList<int> frame_sequance;
-    int        frame_sequance_cur;
+    bool       m_frame_sequance_enabled;
+    QList<int> m_frame_sequance;
+    int        m_frame_sequance_cur;
 
-    QRect      frame_rect;
+    QRect      m_frame_rect;
 
-    //void createAnimationFrames();
-    int CurrentFrame;
+    //! Current frame index
+    int m_currentFrame;
 
-    bool animated;
+    //! Is animation enabled
+    bool m_animated;
 
-    bool bidirectional;
-    bool reverce;
+    //! Is anination is bidirectional
+    bool m_bidirectional;
+    //! Is reversive animation
+    bool m_reverce;
 
-    QPoint framePos;
+    //! Frame top and bottom points position on the texture
+    QPoint m_framePos;
     //! Number of pre-defined frames
-    int framesCount;
+    int m_framesCount;
     //! Height of one frame
-    int frameHeight;
+    int m_frameHeight;
     //! Width of one frame
-    int frameWidth; // sprite width
+    int m_frameWidth; // sprite width
     //! Height of entire sprite
-    int spriteHeight; //sprite height
+    int m_spriteHeight; //sprite height
 
     //Animation alhorithm
-    int frameFirst;
-    int frameLast;
+    int m_frameFirst;
+    int m_frameLast;
 
 };
 
