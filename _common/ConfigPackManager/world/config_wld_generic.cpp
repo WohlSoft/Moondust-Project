@@ -33,6 +33,7 @@ bool WldGenericSetup::parse(IniProcessing *setup,
 {
     #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
     #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
+    #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
@@ -84,14 +85,16 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     setup->read("icon", icon_n, pMerge(icon_n, ""));
 
     setup->read("grid",         grid,       pMerge(grid, defaultGrid));
-    setup->read("frames",       frames,     pMerge(frames, 1u));
+    setup->read("frames",       frames,     pMerge(frames, 1u));//Real
+    pAlias("framecount",        frames);//Alias
+    pAlias("frame-count",       frames);//Alias
     NumberLimiter::apply(frames, uint32_t(1u));
     animated = (frames > 1u);
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
-    setup->read("frame-speed", framespeed, framespeed);//Alias
+    pAlias("frame-speed", framespeed);//Alias
     if(setup->hasKey("framespeed"))
     {
-        setup->read("framespeed",  framespeed, framespeed);//Alias
+        pAlias("framespeed",  framespeed);//Alias
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
     NumberLimiter::apply(framespeed, uint32_t(1u));
@@ -112,5 +115,6 @@ bool WldGenericSetup::parse(IniProcessing *setup,
 
     #undef pMerge
     #undef pMergeMe
+    #undef pAlias
     return true;
 }

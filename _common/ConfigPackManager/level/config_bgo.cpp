@@ -33,6 +33,7 @@ bool BgoSetup::parse(IniProcessing *setup,
 {
     #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
     #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
+    #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
@@ -116,7 +117,7 @@ bool BgoSetup::parse(IniProcessing *setup,
 
     zValueOverride = setup->hasKey("z-value") || setup->hasKey("priority");
     setup->read("z-value",  zValue,    pMerge(zValue, 0.0l));
-    setup->read("priority", zValue,    zValue);//Alias
+    pAlias("priority", zValue);//Alias
 
     if(merge_with && zValueOverride)
         setup->read("z-offset", zOffset,    0.0l);
@@ -124,11 +125,13 @@ bool BgoSetup::parse(IniProcessing *setup,
         setup->read("z-offset", zOffset,    pMerge(zOffset, 0.0l));
 
     setup->read("climbing", climbing ,  pMerge(climbing, false));
-    setup->read("frames", frames,       pMerge(frames, 1u));
+    setup->read("frames", frames,       pMerge(frames, 1u));//Real
+    pAlias("framecount",           frames);
+    pAlias("frame-count",          frames);
     NumberLimiter::apply(frames, 1u);
     animated = (frames > 1);
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
-    setup->read("frame-speed", framespeed, framespeed);//Alias
+    pAlias("frame-speed", framespeed);//Alias
     if(setup->hasKey("framespeed"))
     {
         setup->read("framespeed",  framespeed, framespeed);//Alias
@@ -145,5 +148,6 @@ bool BgoSetup::parse(IniProcessing *setup,
 
     #undef pMerge
     #undef pMergeMe
+    #undef pAlias
     return true;
 }
