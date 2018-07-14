@@ -157,7 +157,8 @@ bool BlockSetup::parse(IniProcessing *setup,
 
     setup->read("destroy-effect",   effect,  pMerge(effect, 1u));
     setup->read("bounce",           bounce,  pMerge(bounce, false));
-    setup->read("hitable",          hitable, pMerge(hitable, false));
+    setup->read("bumpable",         hitable, pMerge(hitable, false));
+    pAlias("hitable",               hitable);
     setup->read("transform-onhit-into", transfororm_on_hit_into, pMerge(transfororm_on_hit_into, 2u));
 
     static unsigned int switchID = 0;
