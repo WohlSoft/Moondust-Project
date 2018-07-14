@@ -70,6 +70,12 @@ int  ConfigManager::getBlockTexture(unsigned long blockID)
             //        break;
             //    }
             //}
+            //calculate height of frame
+            blkSetup->setup.frame_h =
+                static_cast<unsigned int>(round(static_cast<double>(level_textures[id].h)
+                                                / static_cast<double>(blkSetup->setup.frames)));
+            //store animated texture value back
+            level_textures[id].frame_h = static_cast<int>(blkSetup->setup.frame_h);
             SimpleAnimator animator(
                 true,
                 static_cast<int>(blkSetup->setup.frames),
