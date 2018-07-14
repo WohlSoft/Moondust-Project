@@ -120,7 +120,20 @@ class LVL_Block : public PGE_Phys_Object
         /*******************************************/
 
     private:
-        void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
+        /**
+         * @brief Render piece of texture, used in Sizable block rendering process
+         * @param basePos Destination screen area where to render the base block
+         * @param piecePos Block piece coordinates relative to the base coordinates
+         * @param texture Texture coordinates of a fragment to render (relative to single frame)
+         * @param textureFullW Full width of texture
+         * @param textureFullH Full height of texture
+         * @param ani Vertical sprite animation position context
+         */
+        void drawPiece(PGE_RectF basePos,
+                       PGE_RectF piecePos,
+                       PGE_RectF texturePos,
+                       int32_t textureFullW, int32_t textureFullH,
+                       AniPos ani);
         bool m_isInited = false;
 };
 
