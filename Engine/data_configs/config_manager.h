@@ -178,17 +178,28 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
                      )
 {
     bool isDefault = false;
-    std::string file = dir.getCustomFile(fmt::format_ne("{1}-{0}.ini", ID, fileName), &isDefault);
+    std::vector<std::string> files;
+    std::string file;
 
-    if(!skipTXT && isDefault /*file.empty()*/)
-        file = dir.getCustomFile(fmt::format_ne("{1}-{0}.txt", ID, fileName), &isDefault);
+    file = dir.getCustomFile(fmt::format_ne("{1}-{0}.ini", ID, fileName), &isDefault);
+    if(!file.empty())
+        files.push_back(file);
 
-    if(!file.empty() && !isDefault)
+    if(!skipTXT && !isDefault)
     {
-        obj_T &sceneSetup = container[ID];
+        file = dir.getCustomFile(fmt::format_ne("{1}-{0}.txt", ID, fileName), &isDefault);
+        if(!file.empty())
+            files.push_back(file);
+    }
 
-        if(loaderFunk)
-            loaderFunk(sceneSetup, section, &sceneSetup, file, nullptr);
+    if(!files.empty() && !isDefault)
+    {
+        for(const std::string &f : files)
+        {
+            obj_T &sceneSetup = container[ID];
+            if(loaderFunk)
+                loaderFunk(sceneSetup, section, &sceneSetup, f, nullptr);
+        }
     }
 }
 

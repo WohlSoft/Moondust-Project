@@ -254,7 +254,7 @@ bool ConfigManager::loadWorldTiles()
         //Store loaded config
         wld_tiles.storeElement(stile.setup.id, stile);
         //Load custom config if possible
-        loadCustomConfig<obj_w_tile>(wld_tiles, i, Dir_Tiles, "tile", "tile", &loadWorldTile, true);
+        loadCustomConfig<obj_w_tile>(wld_tiles, i, Dir_Tiles, "tile", "tile", &loadWorldTile);
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
@@ -338,7 +338,7 @@ bool ConfigManager::loadWorldScenery()
         //Store loaded config
         wld_scenery.storeElement(sScene.setup.id, sScene);
         //Load custom config if possible
-        loadCustomConfig<obj_w_scenery>(wld_scenery, i, Dir_Scenery, "scene", "scenery", &loadWorldScenery, true);
+        loadCustomConfig<obj_w_scenery>(wld_scenery, i, Dir_Scenery, "scene", "scenery", &loadWorldScenery);
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
@@ -423,7 +423,7 @@ bool ConfigManager::loadWorldPaths()
         //Store loaded config
         wld_paths.storeElement(sPath.setup.id, sPath);
         //Load custom config if possible
-        loadCustomConfig<obj_w_path>(wld_paths, i, Dir_WldPaths, "path", "path", &loadWorldPath, true);
+        loadCustomConfig<obj_w_path>(wld_paths, i, Dir_WldPaths, "path", "path", &loadWorldPath);
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {
@@ -509,7 +509,7 @@ bool ConfigManager::loadWorldLevels()
         //Store loaded config
         wld_levels.storeElement(slevel.setup.id, slevel);
         //Load custom config if possible
-        loadCustomConfig<obj_w_level>(wld_levels, i, Dir_WldLevel, "level", "level", &loadWorldLevel, true);
+        loadCustomConfig<obj_w_level>(wld_levels, i, Dir_WldLevel, "level", "level", &loadWorldLevel);
 
         if(setup.lastError() != IniProcessing::ERR_OK)
         {

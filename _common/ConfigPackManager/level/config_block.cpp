@@ -203,7 +203,7 @@ bool BlockSetup::parse(IniProcessing *setup,
             {"foreground1", 1}
         };
         setup->readEnum("z-layer",  z_layer, pMerge(z_layer, 0), zLayers);
-        setup->readEnum("view",     z_layer, z_layer, zLayers);
+        setup->readEnum("view",     z_layer, z_layer, zLayers);//DEPRECATED
     }
 
     setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation

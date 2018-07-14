@@ -67,6 +67,7 @@ public:
     /// \return empty string if not exist
     ///
     QString getCustomFile(QString name, bool ignoreDefaultDirectory=false);
+    QStringList getCustomFiles(QString nameBase, QStringList extensions, bool ignoreDefaultDirectory = false);
     void setCustomDirs(QString path, QString name);
     void setDefaultDir(QString dPath);
     void createDirIfNotExsist();

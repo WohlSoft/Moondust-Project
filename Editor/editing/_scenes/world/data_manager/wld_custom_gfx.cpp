@@ -112,11 +112,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
         tileD.copyTo(t_tile);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("tile-" + QString::number(t_tile.setup.id)+".ini", true);
-        if(!CustomTxt.isEmpty())
+        QStringList customINIs;
+        customINIs = uWLD.getCustomFiles("tile-" + QString::number(t_tile.setup.id), {".ini", ".txt"}, true);
+        for(QString &iniFile : customINIs)
         {
-            m_configs->loadWorldTerrain(t_tile, "tile", &tileD, CustomTxt);
-            custom=true;
+            m_configs->loadWorldTerrain(t_tile, "tile", &t_tile, iniFile);
+            custom = true;
         }
 
         QString CustomImage = uWLD.getCustomFile(t_tile.setup.image_n, true);
@@ -186,11 +187,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
         sceneryD.copyTo(t_scenery);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("scene-" + QString::number(t_scenery.setup.id)+".ini", true);
-        if(!CustomTxt.isEmpty())
+        QStringList customINIs;
+        customINIs = uWLD.getCustomFiles("scene-" + QString::number(t_scenery.setup.id), {".ini", ".txt"}, true);
+        for(QString &iniFile : customINIs)
         {
-            m_configs->loadWorldScene(t_scenery, "scenery", &sceneryD, CustomTxt);
-            custom=true;
+            m_configs->loadWorldScene(t_scenery, "scenery", &t_scenery, iniFile);
+            custom = true;
         }
 
         QString CustomImage = uWLD.getCustomFile(t_scenery.setup.image_n, true);
@@ -259,11 +261,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
         pathD.copyTo(t_path);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("path-" + QString::number(t_path.setup.id)+".ini", true);
-        if(!CustomTxt.isEmpty())
+        QStringList customINIs;
+        customINIs = uWLD.getCustomFiles("path-" + QString::number(t_path.setup.id), {".ini", ".txt"}, true);
+        for(QString &iniFile : customINIs)
         {
-            m_configs->loadWorldPath(t_path, "path", &pathD, CustomTxt);
-            custom=true;
+            m_configs->loadWorldPath(t_path, "path", &t_path, iniFile);
+            custom = true;
         }
 
         QString CustomImage = uWLD.getCustomFile(t_path.setup.image_n, true);
@@ -333,11 +336,12 @@ void WldScene::loadUserData(QProgressDialog &progress)
         levelD.copyTo(t_level);
         bool custom=false;
 
-        QString CustomTxt = uWLD.getCustomFile("level-" + QString::number(t_level.setup.id)+".ini", true);
-        if(!CustomTxt.isEmpty())
+        QStringList customINIs;
+        customINIs = uWLD.getCustomFiles("level-" + QString::number(t_level.setup.id), {".ini", ".txt"}, true);
+        for(QString &iniFile : customINIs)
         {
-            m_configs->loadWorldLevel(t_level, "level", &levelD, CustomTxt);
-            custom=true;
+            m_configs->loadWorldLevel(t_level, "level", &t_level, iniFile);
+            custom = true;
         }
 
         QString CustomImage = uWLD.getCustomFile(t_level.setup.image_n, true);
