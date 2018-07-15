@@ -113,6 +113,7 @@ private slots:
 
 private:
     void selectListItem(QListView *w, ItemBoxListModel *m, int itemId);
+    void selectListItem(QTableView *w, ItemBoxListModel *m, int itemId);
     void selectListItem(QListView *w, int array_id);
     void selectListItem(QTableWidget *w, int array_id);
 

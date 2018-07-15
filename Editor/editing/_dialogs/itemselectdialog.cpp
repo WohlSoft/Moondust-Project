@@ -421,6 +421,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     if(tileTab)
     {
         m_tileModel->addElementsBegin();
+        m_tileModel->setTableMode(true, 1, 1);
+        bool hasEmpty = false;
+
         if((noEmptyTypes & TAB_TILE) == 0)
         {
             ItemBoxListModel::Element empTerrain;
@@ -429,7 +432,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             empTerrain.pixmap = emptyPixmap(QSize(16, 16));
             empTerrain.description = "Empty element";
             m_tileModel->setSortSkipFirst(true);
-            m_tileModel->addElement(empTerrain);
+            m_tileModel->addElementCell(0, 0, empTerrain);
+            hasEmpty = true;
         }
 
         QSet<uint64_t> tilesCustomId;
@@ -443,6 +447,19 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         }
 
         PGE_DataArray<obj_w_tile> *array = scene_wld ? &scene_wld->m_localConfigTerrain : &conf->main_wtiles;
+        uint32_t rows = 0;
+        uint32_t cols = 0;
+        for(int i = 1; i < array->size(); i++)
+        {
+            obj_w_tile &tileItem = (*array)[i];
+            if(rows < tileItem.setup.row)
+                rows = tileItem.setup.row;
+            if(cols < tileItem.setup.col)
+                cols = tileItem.setup.col;
+        }
+
+        m_tileModel->setTableMode(true, cols, rows + (hasEmpty ? 1 : 0));
+
         for(int i = 1; i < array->size(); i++)
         {
             obj_w_tile &tileItem = (*array)[i];
@@ -453,7 +470,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             e.elementId = tileItem.setup.id;
             e.isCustom = tilesCustomId.contains(tileItem.setup.id);
             e.isValid = true;
-            m_tileModel->addElement(e, tileItem.setup.group, tileItem.setup.category);
+            m_tileModel->addElementCell(tileItem.setup.col, tileItem.setup.row + (hasEmpty ? 1 : 0), e, tileItem.setup.group, tileItem.setup.category);
         }
 
         //apply group list
@@ -469,6 +486,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     if(pathTab)
     {
         m_pathModel->addElementsBegin();
+        m_tileModel->setTableMode(true, 1, 1);
+        bool hasEmpty = false;
+
         if((noEmptyTypes & TAB_PATH) == 0)
         {
             ItemBoxListModel::Element empPath;
@@ -477,7 +497,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             empPath.pixmap = emptyPixmap(QSize(16, 16));
             empPath.description = "Empty element";
             m_pathModel->setSortSkipFirst(true);
-            m_pathModel->addElement(empPath);
+            m_pathModel->addElementCell(0, 0, empPath);
+            hasEmpty = true;
         }
 
         QSet<uint64_t> pathCustomId;
@@ -491,6 +512,19 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         }
 
         PGE_DataArray<obj_w_path> *array = scene_wld ? &scene_wld->m_localConfigPaths : &conf->main_wpaths;
+        uint32_t rows = 0;
+        uint32_t cols = 0;
+        for(int i = 1; i < array->size(); i++)
+        {
+            obj_w_path &pathItem = (*array)[i];
+            if(rows < pathItem.setup.row)
+                rows = pathItem.setup.row;
+            if(cols < pathItem.setup.col)
+                cols = pathItem.setup.col;
+        }
+
+        m_pathModel->setTableMode(true, cols, rows + (hasEmpty ? 1 : 0));
+
         for(int i = 1; i < array->size(); i++)
         {
             obj_w_path &pathItem = (*array)[i];
@@ -501,7 +535,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             e.elementId = pathItem.setup.id;
             e.isCustom = pathCustomId.contains(pathItem.setup.id);
             e.isValid = true;
-            m_pathModel->addElement(e, pathItem.setup.group, pathItem.setup.category);
+            m_pathModel->addElementCell(pathItem.setup.col, pathItem.setup.row + (hasEmpty ? 1 : 0), e, pathItem.setup.group, pathItem.setup.category);
         }
 
         //apply group list
@@ -612,7 +646,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(musicTab)
     {
-        m_musboxModel-> addElementsBegin();
+        m_musboxModel->addElementsBegin();
         if((noEmptyTypes & TAB_MUSIC) == 0)
         {
             ItemBoxListModel::Element empMusic;
@@ -1595,6 +1629,16 @@ void ItemSelectDialog::on_Sel_Combo_CategoryNPC_currentIndexChanged(int index)
 }
 
 void ItemSelectDialog::selectListItem(QListView *w, ItemBoxListModel *m, int itemId)
+{
+    QModelIndex index = m->findVisibleItemById(itemId);
+    if(index.isValid())
+    {
+        w->selectionModel()->select(index, QItemSelectionModel::Select);
+        w->scrollTo(index, QAbstractItemView::PositionAtCenter);
+    }
+}
+
+void ItemSelectDialog::selectListItem(QTableView *w, ItemBoxListModel *m, int itemId)
 {
     QModelIndex index = m->findVisibleItemById(itemId);
     if(index.isValid())

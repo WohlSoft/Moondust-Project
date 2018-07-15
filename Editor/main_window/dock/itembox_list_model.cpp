@@ -184,9 +184,9 @@ QVariant ItemBoxListModel::data(const QModelIndex &index, int role) const
     int idx = 0;
     if(m_isTable)
     {
-        if(index.row() >= m_tableWidth)
+        if(index.row() >= m_tableHeight)
             return QVariant();
-        if(index.column() >= m_tableHeight)
+        if(index.column() >= m_tableWidth)
             return QVariant();
         idx = tableCordToIdx(index.row(), index.column());
         if(idx >= m_elementsVisibleMap.size())
@@ -278,7 +278,9 @@ void ItemBoxListModel::addElementsBegin(int allocate)
 void ItemBoxListModel::addElementsEnd()
 {
     endInsertRows();
+    beginResetModel();
     updateVisibilityMap();
+    endResetModel();
     updateSort();
 }
 
@@ -384,7 +386,7 @@ void ItemBoxListModel::addElementCell(int x, int y, const ItemBoxListModel::Elem
     {
         int idx = tableCordToIdx(x, y);
         if(idx >= m_elements.size())
-            m_elements.resize(idx);
+            m_elements.resize(idx + 1);
 
         if(!group.isEmpty())
             e.groupId = getGroup(group);
@@ -456,7 +458,7 @@ int ItemBoxListModel::getCategory(const QString &category)
 
 int ItemBoxListModel::tableCordToIdx(int x, int y) const
 {
-    return y * m_tableWidth + x;
+    return (y * m_tableWidth) + x;
 }
 
 void ItemBoxListModel::updateFilter()
@@ -510,6 +512,9 @@ bool ItemBoxListModel::isElementVisible(const ItemBoxListModel::Element &e)
 {
     bool visible = true;
 
+    if(m_isTable)
+        return true; //In table mode is always visible!
+
     if(!m_filterCriteria.isEmpty())
     {
         switch(m_filterSearchType)
@@ -554,13 +559,16 @@ void ItemBoxListModel::updateVisibilityMap()
     m_elementsVisibleMap.reserve(m_elements.size());
     for(int i = 0; i < m_elements.size(); ++i)
     {
-        if(m_elements[i].isVisible)
+        if(m_elements[i].isVisible || m_isTable)
             m_elementsVisibleMap.push_back(i);
     }
 }
 
 void ItemBoxListModel::updateSort()
 {
+    if(m_isTable)
+        return;//Avoid resorting in table mode
+
     beginResetModel();
     switch(m_sortType)
     {

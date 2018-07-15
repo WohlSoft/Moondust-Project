@@ -367,7 +367,7 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListView" name="Sel_List_Tile">
+          <widget class="QTableView" name="Sel_List_Tile">
            <property name="selectionMode">
             <enum>QAbstractItemView::SingleSelection</enum>
            </property>
@@ -587,7 +587,7 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListView" name="Sel_List_Path">
+          <widget class="QTableView" name="Sel_List_Path">
            <property name="selectionMode">
             <enum>QAbstractItemView::SingleSelection</enum>
            </property>
