@@ -23,7 +23,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -329,7 +329,7 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_Tile">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -357,6 +357,9 @@
          </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupTerrain">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string notr="true"/>
            </property>
@@ -380,8 +383,14 @@
            <attribute name="horizontalHeaderVisible">
             <bool>false</bool>
            </attribute>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>34</number>
+           </attribute>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>34</number>
            </attribute>
           </widget>
          </item>
@@ -478,6 +487,15 @@
          </item>
          <item row="3" column="0" colspan="3">
           <widget class="QListView" name="Sel_List_Scenery">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
            <property name="iconSize">
             <size>
              <width>32</width>
@@ -489,6 +507,12 @@
            </property>
            <property name="movement">
             <enum>QListView::Snap</enum>
+           </property>
+           <property name="resizeMode">
+            <enum>QListView::Adjust</enum>
+           </property>
+           <property name="layoutMode">
+            <enum>QListView::Batched</enum>
            </property>
            <property name="viewMode">
             <enum>QListView::IconMode</enum>
@@ -577,12 +601,15 @@
          <item row="2" column="1">
           <widget class="QLineEdit" name="Sel_Text_Path">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
          <item row="2" column="2">
           <widget class="QPushButton" name="Sel_FilterSetupPath">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string notr="true"/>
            </property>
@@ -603,11 +630,20 @@
              <height>32</height>
             </size>
            </property>
+           <property name="textElideMode">
+            <enum>Qt::ElideNone</enum>
+           </property>
            <attribute name="horizontalHeaderVisible">
             <bool>false</bool>
            </attribute>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>34</number>
+           </attribute>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>34</number>
            </attribute>
           </widget>
          </item>
@@ -704,6 +740,12 @@
          </item>
          <item row="3" column="0" colspan="3">
           <widget class="QListView" name="Sel_List_Level">
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
            <property name="iconSize">
             <size>
              <width>32</width>
@@ -718,6 +760,12 @@
            </property>
            <property name="isWrapping" stdset="0">
             <bool>true</bool>
+           </property>
+           <property name="resizeMode">
+            <enum>QListView::Adjust</enum>
+           </property>
+           <property name="layoutMode">
+            <enum>QListView::Batched</enum>
            </property>
            <property name="viewMode">
             <enum>QListView::IconMode</enum>

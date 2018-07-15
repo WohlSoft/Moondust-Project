@@ -122,10 +122,13 @@ public:
     int  getGroup(const QString &group);
     int  getCategory(const QString &category);
 
+    void setShowLabels(bool show);
+
 private:
     bool m_isTable = false;
     int  m_tableWidth  = 0;
     int  m_tableHeight = 0;
+    bool m_showLabels = true;
 
     int  tableCordToIdx(int x, int y) const;
 

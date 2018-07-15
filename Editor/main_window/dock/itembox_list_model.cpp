@@ -204,7 +204,7 @@ QVariant ItemBoxListModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DecorationRole)
         return QIcon(e.pixmap);
-    else if (role == Qt::DisplayRole)
+    else if (m_showLabels && (role == Qt::DisplayRole))
         return e.name;
     else if (role == Qt::ToolTipRole)
         return e.description;
@@ -454,6 +454,11 @@ int ItemBoxListModel::getCategory(const QString &category)
     int ret = m_categoriesMap.size();
     m_categoriesMap.insert(category, ret);
     return ret;
+}
+
+void ItemBoxListModel::setShowLabels(bool show)
+{
+    m_showLabels = show;
 }
 
 int ItemBoxListModel::tableCordToIdx(int x, int y) const

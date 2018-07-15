@@ -422,6 +422,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     {
         m_tileModel->addElementsBegin();
         m_tileModel->setTableMode(true, 1, 1);
+        m_tileModel->setShowLabels(false);
         bool hasEmpty = false;
 
         if((noEmptyTypes & TAB_TILE) == 0)
@@ -429,7 +430,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element empTerrain;
             empTerrain.name = emTxt;
             empTerrain.isValid = true;
-            empTerrain.pixmap = emptyPixmap(QSize(16, 16));
+            empTerrain.pixmap = emptyPixmap(QSize(32, 32));
             empTerrain.description = "Empty element";
             m_tileModel->setSortSkipFirst(true);
             m_tileModel->addElementCell(0, 0, empTerrain);
@@ -464,9 +465,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_tile &tileItem = (*array)[i];
             ItemBoxListModel::Element e;
-            Items::getItemGFX(&tileItem, e.pixmap, false, QSize(16, 16));
+            Items::getItemGFX(&tileItem, e.pixmap, false, QSize(32, 32));
             e.name = tileItem.setup.name.isEmpty() ? QString("tile-%1").arg(tileItem.setup.id) : tileItem.setup.name;
-            e.description = makeToolTip("tile", tileItem.setup);
+            e.description = makeToolTipSimple("Terrain tile", tileItem.setup);
             e.elementId = tileItem.setup.id;
             e.isCustom = tilesCustomId.contains(tileItem.setup.id);
             e.isValid = true;
@@ -487,6 +488,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     {
         m_pathModel->addElementsBegin();
         m_pathModel->setTableMode(true, 1, 1);
+        m_pathModel->setShowLabels(false);
         bool hasEmpty = false;
 
         if((noEmptyTypes & TAB_PATH) == 0)
@@ -494,7 +496,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element empPath;
             empPath.name = emTxt;
             empPath.isValid = true;
-            empPath.pixmap = emptyPixmap(QSize(16, 16));
+            empPath.pixmap = emptyPixmap(QSize(32, 32));
             empPath.description = "Empty element";
             m_pathModel->setSortSkipFirst(true);
             m_pathModel->addElementCell(0, 0, empPath);
@@ -529,9 +531,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         {
             obj_w_path &pathItem = (*array)[i];
             ItemBoxListModel::Element e;
-            Items::getItemGFX(&pathItem, e.pixmap, false, QSize(16, 16));
+            Items::getItemGFX(&pathItem, e.pixmap, false, QSize(32, 32));
             e.name = pathItem.setup.name.isEmpty() ? QString("path-%1").arg(pathItem.setup.id) : pathItem.setup.name;
-            e.description = makeToolTip("path", pathItem.setup);
+            e.description = makeToolTipSimple("Path cell", pathItem.setup);
             e.elementId = pathItem.setup.id;
             e.isCustom = pathCustomId.contains(pathItem.setup.id);
             e.isValid = true;
@@ -579,7 +581,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element e;
             Items::getItemGFX(&sceneryItem, e.pixmap, false, QSize(16, 16));
             e.name = sceneryItem.setup.name.isEmpty() ? QString("scene-%1").arg(sceneryItem.setup.id) : sceneryItem.setup.name;
-            e.description = makeToolTip("npc", sceneryItem.setup);
+            e.description = makeToolTipSimple("Scenery", sceneryItem.setup);
             e.elementId = sceneryItem.setup.id;
             e.isCustom = sceneryCustomId.contains(sceneryItem.setup.id);
             e.isValid = true;
@@ -627,7 +629,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element e;
             Items::getItemGFX(&levelItem, e.pixmap, false, QSize(16, 16));
             e.name = levelItem.setup.name.isEmpty() ? QString("level-%1").arg(levelItem.setup.id) : levelItem.setup.name;
-            e.description = makeToolTip("npc", levelItem.setup);
+            e.description = makeToolTipSimple("Level entry point", levelItem.setup);
             e.elementId = levelItem.setup.id;
             e.isCustom = levelCustomId.contains(levelItem.setup.id);
             e.isValid = true;
@@ -664,7 +666,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ItemBoxListModel::Element e;
             e.pixmap = QPixmap(":/images/playmusic.png");
             e.name = musicItem.name.isEmpty() ? QString("musicbox-%1").arg(musicItem.id) : musicItem.name;
-            e.description = QString("musicbox-%1").arg(musicItem.id);
+            e.description = QString("ID: %1").arg(musicItem.id);
             e.elementId = musicItem.id;
             e.isCustom = false;
             e.isValid = true;
