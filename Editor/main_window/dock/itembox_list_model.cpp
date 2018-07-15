@@ -188,7 +188,7 @@ QVariant ItemBoxListModel::data(const QModelIndex &index, int role) const
             return QVariant();
         if(index.column() >= m_tableWidth)
             return QVariant();
-        idx = tableCordToIdx(index.row(), index.column());
+        idx = tableCordToIdx(index.column(), index.row());
         if(idx >= m_elementsVisibleMap.size())
             return QVariant(); // Gone out of range!
     }

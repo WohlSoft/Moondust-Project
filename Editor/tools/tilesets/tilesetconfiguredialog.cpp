@@ -190,6 +190,9 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
 
 TilesetConfigureDialog::~TilesetConfigureDialog()
 {
+    clearFocus();
+    ui->listView->setModel(NULL);
+    delete m_model;
     delete ui;
 }
 

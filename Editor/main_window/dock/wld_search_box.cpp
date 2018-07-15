@@ -248,58 +248,54 @@ void WldSearchBox::on_Find_Button_ResetTile_clicked()
 
 void WldSearchBox::on_Find_Button_TypeLevel_clicked()
 {
-    ItemSelectDialog *selLevel = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_LEVEL, 0, 0, 0, 0, 0, 0, 0, curLevel.data.id, 0, this);
-    if(selLevel->exec() == QDialog::Accepted)
+    ItemSelectDialog selLevel(&(mw()->configs), ItemSelectDialog::TAB_LEVEL, 0, 0, 0, 0, 0, 0, 0, curLevel.data.id, 0, this);
+    if(selLevel.exec() == QDialog::Accepted)
     {
-        int selected = selLevel->levelID;
+        int selected = selLevel.levelID;
         curLevel.data.id = selected;
         ui->Find_Button_TypeLevel->setText(((selected > 0) ? QString("Level-%1").arg(selected) : tr("[empty]")));
     }
-    delete selLevel;
 }
 
 void WldSearchBox::on_Find_Button_TypeTile_clicked()
 {
-    ItemSelectDialog *selTile = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_TILE, 0, 0, 0, 0, curTerrain.data.id, 0, 0, 0, 0, this);
-    if(selTile->exec() == QDialog::Accepted)
+    ItemSelectDialog selTile(&(mw()->configs), ItemSelectDialog::TAB_TILE, 0, 0, 0, 0, curTerrain.data.id, 0, 0, 0, 0, this);
+    if(selTile.exec() == QDialog::Accepted)
     {
-        int selected = selTile->tileID;
+        int selected = selTile.tileID;
         curTerrain.data.id = selected;
         ui->Find_Button_TypeTile->setText(((selected > 0) ? QString("Tile-%1").arg(selected) : tr("[empty]")));
     }
-    delete selTile;
 }
 
 void WldSearchBox::on_Find_Button_TypeScenery_clicked()
 {
-    ItemSelectDialog *selScenery = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_SCENERY, 0, 0, 0, 0, 0, curScenery.data.id, 0, 0, 0, this);
-    if(selScenery->exec() == QDialog::Accepted)
+    ItemSelectDialog selScenery(&(mw()->configs), ItemSelectDialog::TAB_SCENERY, 0, 0, 0, 0, 0, curScenery.data.id, 0, 0, 0, this);
+    if(selScenery.exec() == QDialog::Accepted)
     {
-        int selected = selScenery->sceneryID;
+        int selected = selScenery.sceneryID;
         curScenery.data.id = selected;
         ui->Find_Button_TypeScenery->setText(((selected > 0) ? QString("Scenery-%1").arg(selected) : tr("[empty]")));
     }
-    delete selScenery;
 }
 
 void WldSearchBox::on_Find_Button_TypePath_clicked()
 {
-    ItemSelectDialog *selPath = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_PATH, 0, 0, 0, 0, 0, 0, curPath.data.id, 0, 0, this);
-    if(selPath->exec() == QDialog::Accepted)
+    ItemSelectDialog selPath(&(mw()->configs), ItemSelectDialog::TAB_PATH, 0, 0, 0, 0, 0, 0, curPath.data.id, 0, 0, this);
+    if(selPath.exec() == QDialog::Accepted)
     {
-        int selected = selPath->pathID;
+        int selected = selPath.pathID;
         curPath.data.id = selected;
         ui->Find_Button_TypePath->setText(((selected > 0) ? QString("Path-%1").arg(selected) : tr("[empty]")));
     }
-    delete selPath;
 }
 
 void WldSearchBox::on_Find_Button_TypeMusic_clicked()
 {
-    ItemSelectDialog *selMusic = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_MUSIC, 0, 0, 0, 0, 0, 0, 0, 0, curMusicBox.data.id, this);
-    if(selMusic->exec() == QDialog::Accepted)
+    ItemSelectDialog selMusic(&(mw()->configs), ItemSelectDialog::TAB_MUSIC, 0, 0, 0, 0, 0, 0, 0, 0, curMusicBox.data.id, this);
+    if(selMusic.exec() == QDialog::Accepted)
     {
-        int selected = selMusic->musicID;
+        int selected = selMusic.musicID;
         curMusicBox.data.id = selected;
         int index = mw()->configs.getMusWldI(selected);
         if(index != -1)
@@ -307,7 +303,6 @@ void WldSearchBox::on_Find_Button_TypeMusic_clicked()
         else
             ui->Find_Button_TypeMusic->setText(((selected > 0) ? QString("Music-%1").arg(selected) : tr("[empty]")));
     }
-    delete selMusic;
 }
 
 
