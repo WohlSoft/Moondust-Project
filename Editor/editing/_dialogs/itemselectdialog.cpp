@@ -89,49 +89,49 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         scene_wld = edit_wld->sceneCreated ? edit_wld->scene : 0;
     }
 
-    m_blockModel = new ItemBoxListModel();
+    m_blockModel = new ItemBoxListModel(ui->Sel_List_Block);
     m_blockModel->setCategoryAllKey(m_allLabel);
     m_blockModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Block->setModel(m_blockModel);
     connect(ui->Sel_List_Block, &QListView::doubleClicked, this, &ItemSelectDialog::SelListBlock_itemDoubleClicked);
 
-    m_bgoModel = new ItemBoxListModel();
+    m_bgoModel = new ItemBoxListModel(ui->Sel_List_BGO);
     m_bgoModel->setCategoryAllKey(m_allLabel);
     m_bgoModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_BGO->setModel(m_bgoModel);
     connect(ui->Sel_List_BGO, &QListView::doubleClicked, this, &ItemSelectDialog::SelListBGO_itemDoubleClicked);
 
-    m_npcModel = new ItemBoxListModel();
+    m_npcModel = new ItemBoxListModel(ui->Sel_List_NPC);
     m_npcModel->setCategoryAllKey(m_allLabel);
     m_npcModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_NPC->setModel(m_npcModel);
     connect(ui->Sel_List_NPC, &QListView::doubleClicked, this, &ItemSelectDialog::SelListNPC_itemDoubleClicked);
 
-    m_tileModel = new ItemBoxListModel();
+    m_tileModel = new ItemBoxListModel(ui->Sel_List_Tile);
     m_tileModel->setCategoryAllKey(m_allLabel);
     m_tileModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Tile->setModel(m_tileModel);
     connect(ui->Sel_List_Tile, &QListView::doubleClicked, this, &ItemSelectDialog::SelListTile_itemDoubleClicked);
 
-    m_sceneModel = new ItemBoxListModel();
+    m_sceneModel = new ItemBoxListModel(ui->Sel_List_Scenery);
     m_sceneModel->setCategoryAllKey(m_allLabel);
     m_sceneModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Scenery->setModel(m_sceneModel);
     connect(ui->Sel_List_Scenery, &QListView::doubleClicked, this, &ItemSelectDialog::SelListScenery_itemDoubleClicked);
 
-    m_pathModel = new ItemBoxListModel();
+    m_pathModel = new ItemBoxListModel(ui->Sel_List_Path);
     m_pathModel->setCategoryAllKey(m_allLabel);
     m_pathModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Path->setModel(m_pathModel);
     connect(ui->Sel_List_Path, &QListView::doubleClicked, this, &ItemSelectDialog::SelListPath_itemDoubleClicked);
 
-    m_levelModel = new ItemBoxListModel();
+    m_levelModel = new ItemBoxListModel(ui->Sel_List_Level);
     m_levelModel->setCategoryAllKey(m_allLabel);
     m_levelModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Level->setModel(m_levelModel);
     connect(ui->Sel_List_Level, &QListView::doubleClicked, this, &ItemSelectDialog::SelListLevel_itemDoubleClicked);
 
-    m_musboxModel = new ItemBoxListModel();
+    m_musboxModel = new ItemBoxListModel(ui->Sel_List_Music);
     m_musboxModel->setCategoryAllKey(m_allLabel);
     m_musboxModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Music->setModel(m_musboxModel);
@@ -693,26 +693,6 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 ItemSelectDialog::~ItemSelectDialog()
 {
     clearFocus();
-    ui->Sel_List_Block->setModel(NULL);
-    ui->Sel_List_BGO->setModel(NULL);
-    ui->Sel_List_NPC->setModel(NULL);
-
-    ui->Sel_List_Tile->setModel(NULL);
-    ui->Sel_List_Scenery->setModel(NULL);
-    ui->Sel_List_Path->setModel(NULL);
-    ui->Sel_List_Level->setModel(NULL);
-    ui->Sel_List_Music->setModel(NULL);
-
-    delete m_blockModel;
-    delete m_bgoModel;
-    delete m_npcModel;
-
-    delete m_tileModel;
-    delete m_sceneModel;
-    delete m_levelModel;
-    delete m_pathModel;
-    delete m_musboxModel;
-
     delete ui;
 }
 
@@ -1599,6 +1579,15 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
             }
         }
     }
+
+    ui->Sel_Text_FilterBlock->disconnect();
+    ui->Sel_Text_FilterBGO->disconnect();
+    ui->Sel_Text_NPC->disconnect();
+    ui->Sel_Text_Tile->disconnect();
+    ui->Sel_Text_Scenery->disconnect();
+    ui->Sel_Text_Path->disconnect();
+    ui->Sel_Text_Level->disconnect();
+    ui->Sel_Text_Music->disconnect();
 
     this->accept();
 }

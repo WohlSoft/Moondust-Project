@@ -65,7 +65,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
     QAction *showOriginOnly = menu.addAction(ItemBoxListModel::tr("Show standard elements", "Show standard elements only in Item Box List"));
     showOriginOnly->setCheckable(true);
 
-    menu.connect(searchByName, &QAction::triggered,
+    searchByName->connect(searchByName, &QAction::triggered,
     [=](bool)
     {
         searchByName->setChecked(true);
@@ -75,7 +75,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
         search->clear();
     });
 
-    menu.connect(searchById, &QAction::triggered,
+    searchById->connect(searchById, &QAction::triggered,
     [=](bool)
     {
         searchByName->setChecked(false);
@@ -85,7 +85,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
         search->clear();
     });
 
-    menu.connect(searchByIdContained, &QAction::triggered,
+    searchByIdContained->connect(searchByIdContained, &QAction::triggered,
     [=](bool)
     {
         searchByName->setChecked(false);
@@ -95,7 +95,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
         search->clear();
     });
 
-    menu.connect(sortByName, &QAction::triggered,
+    sortByName->connect(sortByName, &QAction::triggered,
     [=](bool)
     {
         sortByName->setChecked(true);
@@ -103,7 +103,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
         model->setSort(ItemBoxListModel::Sort_ByName, sortDesc->isChecked());
     });
 
-    menu.connect(sortById, &QAction::triggered,
+    sortById->connect(sortById, &QAction::triggered,
     [=](bool)
     {
         sortByName->setChecked(false);
@@ -111,7 +111,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
         model->setSort(ItemBoxListModel::Sort_ById, sortDesc->isChecked());
     });
 
-    menu.connect(sortDesc, &QAction::triggered,
+    sortDesc->connect(sortDesc, &QAction::triggered,
     [=](bool)
     {
         model->setSort(sortByName->isChecked() ?
@@ -122,7 +122,7 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
 
     if(hasUniformView && view)
     {
-        menu.connect(uniformView, &QAction::triggered,
+        uniformView->connect(uniformView, &QAction::triggered,
         [=](bool uniformView)
         {
             view->setUniformItemSizes(uniformView);
@@ -130,14 +130,14 @@ void makeFilterSetupMenu(QMenu &menu, ItemBoxListModel *model, QLineEdit *search
         });
     }
 
-    menu.connect(showCustomOnly, &QAction::triggered,
+    showCustomOnly->connect(showCustomOnly, &QAction::triggered,
     [=](bool filter)
     {
         showOriginOnly->setChecked(false);
         model->setCustomOnlyFilter(filter);
     });
 
-    menu.connect(showOriginOnly, &QAction::triggered,
+    showOriginOnly->connect(showOriginOnly, &QAction::triggered,
     [=](bool filter)
     {
         showCustomOnly->setChecked(false);
