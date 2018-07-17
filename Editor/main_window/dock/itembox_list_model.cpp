@@ -159,6 +159,11 @@ ItemBoxListModel::ItemBoxListModel(QObject *parent)
     : QAbstractListModel(parent)
 {}
 
+ItemBoxListModel::~ItemBoxListModel()
+{
+    clear();
+}
+
 
 int ItemBoxListModel::rowCount(const QModelIndex &parent) const
 {

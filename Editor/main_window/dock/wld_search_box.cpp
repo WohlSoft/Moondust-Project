@@ -248,10 +248,10 @@ void WldSearchBox::on_Find_Button_ResetTile_clicked()
 
 void WldSearchBox::on_Find_Button_TypeLevel_clicked()
 {
-    ItemSelectDialog selLevel(&(mw()->configs), ItemSelectDialog::TAB_LEVEL, 0, 0, 0, 0, 0, 0, 0, curLevel.data.id, 0, this);
-    if(selLevel.exec() == QDialog::Accepted)
+    std::unique_ptr<ItemSelectDialog> selLevel(new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_LEVEL, 0, 0, 0, 0, 0, 0, 0, curLevel.data.id, 0, this));
+    if(selLevel->exec() == QDialog::Accepted)
     {
-        int selected = selLevel.levelID;
+        int selected = selLevel->levelID;
         curLevel.data.id = selected;
         ui->Find_Button_TypeLevel->setText(((selected > 0) ? QString("Level-%1").arg(selected) : tr("[empty]")));
     }

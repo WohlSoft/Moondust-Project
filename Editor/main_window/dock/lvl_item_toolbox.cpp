@@ -43,15 +43,15 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
     ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
-    m_blockModel = new ItemBoxListModel();
+    m_blockModel = new ItemBoxListModel(ui->BlockItemsList);
     ui->BlockItemsList->setModel(m_blockModel);
     connect(ui->BlockItemsList, &QListView::clicked, this, &LevelItemBox::BlockList_itemClicked);
 
-    m_bgoModel = new ItemBoxListModel();
+    m_bgoModel = new ItemBoxListModel(ui->BGOItemsList);
     ui->BGOItemsList->setModel(m_bgoModel);
     connect(ui->BGOItemsList, &QListView::clicked, this, &LevelItemBox::BGOList_itemClicked);
 
-    m_npcModel = new ItemBoxListModel();
+    m_npcModel = new ItemBoxListModel(ui->NPCItemsList);
     ui->NPCItemsList->setModel(m_npcModel);
     connect(ui->NPCItemsList, &QListView::clicked, this, &LevelItemBox::NPCList_itemClicked);
 
@@ -75,14 +75,6 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
 
 LevelItemBox::~LevelItemBox()
 {
-    ui->BlockItemsList->setModel(NULL);
-    ui->BGOItemsList->setModel(NULL);
-    ui->NPCItemsList->setModel(NULL);
-
-    delete m_blockModel;
-    delete m_bgoModel;
-    delete m_npcModel;
-
     delete ui;
 }
 

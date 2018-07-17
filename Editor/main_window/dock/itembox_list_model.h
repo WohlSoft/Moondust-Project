@@ -81,6 +81,7 @@ public:
     };
 
     explicit ItemBoxListModel(QObject *parent = nullptr);
+    virtual ~ItemBoxListModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;

@@ -61,7 +61,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
     ui->listView->setDragEnabled(true);
-    ui->listView->setModel(m_model = (new ElementsListModel(conf, ElementsListModel::LEVELPIECE_BLOCK)));
+    ui->listView->setModel(m_model = (new ElementsListModel(conf, ElementsListModel::LEVELPIECE_BLOCK, 32, nullptr, ui->listView)));
 
     m_conf = conf;
     lastFileName = "";
@@ -191,8 +191,6 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
 TilesetConfigureDialog::~TilesetConfigureDialog()
 {
     clearFocus();
-    ui->listView->setModel(NULL);
-    delete m_model;
     delete ui;
 }
 
