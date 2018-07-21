@@ -11,9 +11,11 @@ flag_pause_on_end=true
 QMAKE_EXTRA_ARGS=""
 MAKE_EXTRA_ARGS="-r"
 MAKE_CPUS_COUNT=4
+CMAKE_GENERATOR="Unix Makefiles"
 flag_debugThisScript=false
 flag_debugDependencies=false
 flag_cmake_it=false
+flag_cmake_it_ninja=false
 flag_cmake_deploy=false
 flag_cmake_static_qt=false
 flag_debug_build=false
@@ -49,6 +51,7 @@ do
             printf " \E[1;4msilent-make\E[0m      - Don't print build commands for each building file\n"
             printf " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
             printf " \E[1;4mdebug\E[0m            - Run build in debug configuration'\n"
+            printf " \E[1;4mninja\E[0m            - Use Ninja build system (CMake only build)'\n"
             printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed (CMake only build)'\n"
             if [[ ! -f /usr/bin/ccache && ! -f /bin/ccache && ! -f /usr/local/bin/ccache ]]; then
                 printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
@@ -94,6 +97,11 @@ do
             ;;
         cmake-it)
                 flag_cmake_it=true
+            ;;
+        ninja)
+                CMAKE_GENERATOR="Ninja"
+                flag_cmake_it_ninja=true
+                MAKE_EXTRA_ARGS=""
             ;;
         deploy)
                 flag_cmake_deploy=true
@@ -431,7 +439,7 @@ if $flag_cmake_it ; then
 
     #=======================================================================
     cmake \
-        -G "Unix Makefiles" \
+        -G "${CMAKE_GENERATOR}" \
         -DCMAKE_PREFIX_PATH=$(realpath "${QT_PATH}/../") \
         -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
         -DCMAKE_BUILD_TYPE=$CONFIG_CMAKE \
@@ -444,7 +452,12 @@ if $flag_cmake_it ; then
     #=======================================================================
     echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
     TIME_STARTED=$(date +%s)
-    make ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
+    if $flag_cmake_it_ninja; then
+        # ==== WORKAROUND for Ninja that won't allow refer not built yet libraries ====
+        cmake --build . --target libs -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
+        checkState
+    fi
+    cmake --build . --target all -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
     checkState
     TIME_ENDED=$(date +%s)
     TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
