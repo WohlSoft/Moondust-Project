@@ -131,6 +131,8 @@ if(PGE_ENABLE_STATIC_QT)
                 CoreText
                 ImageIO
                 Cocoa
+                SystemConfiguration
+                Security
             )
 
             foreach(LIB ${MAC_LIBS_TO_FIND})
