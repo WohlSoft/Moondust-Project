@@ -102,39 +102,43 @@ if(PGE_ENABLE_STATIC_QT)
         list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICO})
 
         if(APPLE)
-            find_library(QT_COCOA    qcocoa PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_COCOA})
             find_library(QT_MACSTYLE qmacstyle PATHS ${CMAKE_PREFIX_PATH}/plugins/styles)
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_MACSTYLE})
+            find_library(QT_COCOA    qcocoa PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
+            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_COCOA})
 
             list(APPEND QT_FOUND_EXTRA_LIBS cups)
 
-            find_library(CORETEXT_LIBRARY CoreText)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${CORETEXT_LIBRARY})
-            find_library(CORESERVICES_LIBRARY CoreServices)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${CORESERVICES_LIBRARY})
-            find_library(Foundation_LIBRARY CoreFoundation)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${Foundation_LIBRARY})
-            find_library(AppKit_LIBRARY AppKit)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${AppKit_LIBRARY})
-            find_library(ApplicationServices_LIBRARY ApplicationServices)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${ApplicationServices_LIBRARY})
-            find_library(DiskArbitration_LIBRARY DiskArbitration)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${DiskArbitration_LIBRARY})
-            find_library(COREGRAPHICS_LIBRARY CoreGraphics)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${COREGRAPHICS_LIBRARY})
-            find_library(COREIMAGE_LIBRARY CoreImage)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${COREIMAGE_LIBRARY})
-            find_library(QUARTZCORE_LIBRARY QuartzCore)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${QUARTZCORE_LIBRARY})
-            find_library(OPENGL_LIBRARY OpenGL)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${OPENGL_LIBRARY})
-            find_library(IOKIT_LIBRARY IOKit)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${IOKIT_LIBRARY})
-            find_library(CARBON_LIBRARY Carbon)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${CARBON_LIBRARY})
-            find_library(COCOA_LIBRARY Cocoa)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${COCOA_LIBRARY})
+            set(MAC_LIBS_TO_FIND
+                Qt5AccessibilitySupport
+                Qt5ThemeSupport
+                Qt5FontDatabaseSupport
+                Qt5GraphicsSupport
+                Qt5ClipboardSupport
+                Qt5PrintSupport
+                DiskArbitration
+                IOKit
+                Foundation
+                CoreServices
+                AppKit
+                ApplicationServices
+                CoreFoundation
+                CoreGraphics
+                OpenGL
+                AGL
+                Carbon
+                QuartzCore
+                CoreText
+                ImageIO
+                Cocoa
+            )
+
+            foreach(LIB ${MAC_LIBS_TO_FIND})
+                    find_library(FOUND_LIB_${LIB} ${LIB})
+                    list(APPEND QT_FOUND_EXTRA_LIBS ${FOUND_LIB_${LIB}})
+                    message("Lib: ${LIB}")
+                    message("Found Lib: ${FOUND_LIB_${LIB}}")
+            endforeach()
         endif()
 
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
