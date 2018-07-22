@@ -465,16 +465,16 @@ if $flag_cmake_it ; then
     # copy data and configs into the build directory
 
     echo "Installing..."
-    make -s install
+    cmake --build . --target install
     checkState
 
     if $flag_cmake_deploy ; then
         echo "Deploying..."
-        make -s put_online_help
+        cmake --build . --target put_online_help
         checkState
-        make -s enable_portable
+        cmake --build . --target enable_portable
         checkState
-        make -s create_tar
+        cmake --build . --target create_tar
         checkState
     fi
 
