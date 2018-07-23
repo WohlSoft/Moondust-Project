@@ -286,12 +286,14 @@ checkForDependencies()
     libPref="lib"
     dlibExt="so"
     slibExt="a"
+    deployTarget="create_tar"
     osDir="linux_default"
     if [[ "$OSTYPE" == "darwin"* ]]; then
         dlibExt="dylib"
         slibExt="a"
         libPref="lib"
         osDir="macos"
+        deployTarget="create_dmg"
     elif [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
         osDir="linux"
         libPref="lib"
@@ -472,9 +474,11 @@ if $flag_cmake_it ; then
         echo "Deploying..."
         cmake --build . --target put_online_help
         checkState
-        cmake --build . --target enable_portable
-        checkState
-        cmake --build . --target create_tar
+        if [[ "$OSTYPE" != "darwin"* ]]; then
+            cmake --build . --target enable_portable
+            checkState
+        fi
+        cmake --build . --target $deployTarget
         checkState
     fi
 
