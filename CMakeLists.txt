@@ -601,7 +601,7 @@ if(APPLE)
             --window-size 800 600
             --app-drop-link 450 320
             --subfolder
-            "${CMAKE_INSTALL_PREFIX}/pge_project-${CMAKE_SYSTEM_NAME_LOWER}-${PGE_ARCHITECTURE_BITS}.dmg"
+            "${CMAKE_INSTALL_PREFIX}/pge-project-dev-macosx.dmg"
             "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/"
             COMMENT "Packing DMG..."
     )
