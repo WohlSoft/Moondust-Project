@@ -125,7 +125,7 @@ then
     brew update > /dev/null 2>&1
 
     printf "Installing of necessary utilities...\n"
-    brew install coreutils binutils gnu-sed lftp
+    brew install coreutils binutils gnu-sed lftp cmake ninja
 
     # # Thanks to St. StackOverflow if this will work http://stackoverflow.com/questions/39633159/homebrew-cant-find-lftp-formula-on-macos-sierra
     # [[recently FIXED, lftp successfully installs by old way!]]
