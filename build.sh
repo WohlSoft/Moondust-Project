@@ -286,14 +286,12 @@ checkForDependencies()
     libPref="lib"
     dlibExt="so"
     slibExt="a"
-    deployTarget="create_tar"
     osDir="linux_default"
     if [[ "$OSTYPE" == "darwin"* ]]; then
         dlibExt="dylib"
         slibExt="a"
         libPref="lib"
         osDir="macos"
-        deployTarget="create_dmg"
     elif [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
         osDir="linux"
         libPref="lib"
@@ -424,6 +422,11 @@ if $flag_cmake_it ; then
     echo "Wohlstand."
     echo "================================================="
     echo ""
+
+    deployTarget="create_tar"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        deployTarget="create_dmg"
+    fi
 
     BUILD_DIR="${SCRDIR}/build-pge-cmake${BUILD_DIR_SUFFUX}"
     INSTALL_DIR="${SCRDIR}/bin-cmake${BUILD_DIR_SUFFUX}"
