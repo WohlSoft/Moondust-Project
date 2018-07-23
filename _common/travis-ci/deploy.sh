@@ -18,7 +18,7 @@ then
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then
-    if [ -d "bin-cmake-release" ]; then
+    if [ ! -d "bin-cmake-release" ]; then
         source _common/travis-ci/_osx_env.sh
 
         cd _Misc/dev_scripts/deploy
