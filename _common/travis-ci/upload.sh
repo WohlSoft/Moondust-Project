@@ -41,7 +41,7 @@ then
     if [ -f bin/_packed/pge-project-dev-macosx.dmg ];
     then
         lftp -e "put -O ./macosx/ ./bin/_packed/pge-project-dev-macosx.dmg; put -O ./_versions/ /Users/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
-    elif [ -f bin-cmake-release/ ];
+    elif [ -f bin-cmake-release/pge-project-dev-macosx.dmg ];
     then
         lftp -e "put -O ./macosx/ ./bin-cmake-release/pge-project-dev-macosx.dmg; put -O ./_versions/ /Users/travis/build_date_dev_osx.txt; exit" -u $FTPUser,$FTPPassword $FTPServer
     else
