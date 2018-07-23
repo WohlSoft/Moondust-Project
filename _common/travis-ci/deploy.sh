@@ -18,11 +18,14 @@ then
 
 elif [ $TRAVIS_OS_NAME == osx ];
 then
-    source _common/travis-ci/_osx_env.sh
+    if [ -d "bin-cmake-release" ]; then
+        source _common/travis-ci/_osx_env.sh
 
-    cd _Misc/dev_scripts/deploy
-    bash deploy_osx.sh nopause
-    cd ../../..
-
+        cd _Misc/dev_scripts/deploy
+        bash deploy_osx.sh nopause
+        cd ../../..
+    else
+        echo "CMake-made deployment detected! Nothing to do!"
+    fi
 fi
 

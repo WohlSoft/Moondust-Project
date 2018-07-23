@@ -5,7 +5,7 @@
 set -e;
 
 function pure_version() {
-  echo '1.0.0.2'
+  echo '1.0.1.0'
 }
 
 function version() {
@@ -42,6 +42,8 @@ function usage() {
   echo "      attach a license file to the dmg"
   echo "  --no-internet-enable"
   echo "      disable automatic mount&copy"
+  echo "  --subfolder"
+  echo "      put all content of source folder into sub-folder"
   echo "  --version         show tool version number"
   echo "  -h, --help        display this help"
   exit 0
@@ -101,6 +103,9 @@ while test "${1:0:1}" = "-"; do
     --no-internet-enable)
       NOINTERNET=1
       shift;;
+    --subfolder)
+      DOSUBFOLDER=1
+      shift;;
     -*)
       echo "Unknown option $1. Run with --help for help."
       exit 1;;
@@ -126,6 +131,15 @@ test -d "$AUX_PATH" || {
   echo "Cannot find support directory: $AUX_PATH"
   exit 1
 }
+
+if [[ $DOSUBFOLDER == 1 ]]; then
+    SRC_FOLDER_TEMP="${SRC_FOLDER}_tmp/"
+    SRC_FOLDER_SF="${SRC_FOLDER}_tmp/${SRC_FOLDER##*/}"
+    echo "Generating subfolder $SRC_FOLDER_SF..."
+    mkdir -p "$SRC_FOLDER_SF"
+    cp -a "$SRC_FOLDER" "$SRC_FOLDER_SF"
+    SRC_FOLDER="$SRC_FOLDER_SF"
+fi
 
 if [ -f "$SRC_FOLDER/.DS_Store" ]; then
     echo "Deleting any .DS_Store in source folder"
@@ -215,6 +229,11 @@ if [ ! -z "${NOINTERNET}" -a "${NOINTERNET}" == 1 ]; then
         echo "not setting 'internet-enable' on the dmg"
 else
         hdiutil internet-enable -yes "${DMG_DIR}/${DMG_NAME}"
+fi
+
+# Removing temporary folder
+if [[ $DOSUBFOLDER == 1 ]]; then
+    rm -Rf ${SRC_FOLDER_TEMP}
 fi
 
 echo "Disk image done"

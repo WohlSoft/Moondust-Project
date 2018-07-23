@@ -58,6 +58,11 @@ if(PGE_ENABLE_STATIC_QT)
             set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
                 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)"
             )
+        elseif(APPLE)
+            set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                Q_IMPORT_PLUGIN(QMacStylePlugin)
+                Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)"
+            )
         elseif("${CMAKE_SYSTEM}" MATCHES "Linux")
            set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
                Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
@@ -88,6 +93,55 @@ if(PGE_ENABLE_STATIC_QT)
         endif()
 
         # message("Plugins:\n\n${QT_IMPORT_PLUGINS_MODULE}\n\n\n")
+
+        find_library(QT_QGIF    qgif PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
+        list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QGIF})
+        find_library(QT_ICNS    qicns PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
+        list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICNS})
+        find_library(QT_ICO     qico PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
+        list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICO})
+
+        if(APPLE)
+            find_library(QT_MACSTYLE qmacstyle PATHS ${CMAKE_PREFIX_PATH}/plugins/styles)
+            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_MACSTYLE})
+            find_library(QT_COCOA    qcocoa PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
+            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_COCOA})
+
+            list(APPEND QT_FOUND_EXTRA_LIBS cups)
+
+            set(MAC_LIBS_TO_FIND
+                Qt5AccessibilitySupport
+                Qt5ThemeSupport
+                Qt5FontDatabaseSupport
+                Qt5GraphicsSupport
+                Qt5ClipboardSupport
+                Qt5PrintSupport
+                DiskArbitration
+                IOKit
+                Foundation
+                CoreServices
+                AppKit
+                ApplicationServices
+                CoreFoundation
+                CoreGraphics
+                OpenGL
+                AGL
+                Carbon
+                QuartzCore
+                CoreText
+                ImageIO
+                Cocoa
+                SystemConfiguration
+                Security
+            )
+
+            foreach(LIB ${MAC_LIBS_TO_FIND})
+                    find_library(FOUND_LIB_${LIB} ${LIB})
+                    list(APPEND QT_FOUND_EXTRA_LIBS ${FOUND_LIB_${LIB}})
+                    message("Lib: ${LIB}")
+                    message("Found Lib: ${FOUND_LIB_${LIB}}")
+            endforeach()
+        endif()
 
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
 
@@ -150,13 +204,6 @@ if(PGE_ENABLE_STATIC_QT)
 
             find_library(QT_GLXINT  qxcb-glx-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GLXINT})
-
-            find_library(QT_QGIF    qgif PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QGIF})
-            find_library(QT_ICNS    qicns PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICNS})
-            find_library(QT_ICO     qico PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICO})
 
             if(NOT QT_PRCE2)
                 find_library(QT_PRCESYS pcre)
