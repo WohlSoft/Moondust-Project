@@ -75,6 +75,7 @@ void PGE_MenuBoxBase::construct(std::string _title, PGE_MenuBoxBase::msgType _ty
     _ctrl1 = nullptr;
     _ctrl2 = nullptr;
     fontRgba.setRgba(1.0, 1.0, 1.0, 1.0);
+    m_borderWidth = ConfigManager::setup_menu_box.borderWidth;
     updateTickValue();
     _page = 0;
     running = false;
@@ -272,7 +273,7 @@ void PGE_MenuBoxBase::render()
     if(_page == 2)
     {
         if(m_textureUsed)
-            drawTexture(_sizeRect, 32, static_cast<float>(m_faderOpacity));
+            drawTexture(_sizeRect, m_borderWidth, static_cast<float>(m_faderOpacity));
         else
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
@@ -301,7 +302,7 @@ void PGE_MenuBoxBase::render()
                         _sizeRect.center().y() - static_cast<int>((height + padding)*m_faderOpacity),
                         _sizeRect.center().x() + static_cast<int>((width + padding)*m_faderOpacity),
                         _sizeRect.center().y() + static_cast<int>((height + padding)*m_faderOpacity),
-                        32, static_cast<float>(m_faderOpacity));
+                        m_borderWidth, static_cast<float>(m_faderOpacity));
         }
         else
         {

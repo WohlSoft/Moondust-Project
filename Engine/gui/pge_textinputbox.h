@@ -64,6 +64,7 @@ private:
     bool    running = false;
     int     fontID = 0;
     GlColor fontRgba;
+    int     m_borderWidth = 32;
 
     std::string _inputText_src;
     std::string _inputText;

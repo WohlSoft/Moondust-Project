@@ -91,6 +91,7 @@ class PGE_MenuBoxBase : public PGE_BoxBase
         bool    running = false;
         int     fontID = 0;
         GlColor fontRgba;
+        int     m_borderWidth = 32;
         size_t  _answer_id = 0;
 
         size_t  reject_snd = 0;
