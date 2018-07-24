@@ -95,6 +95,7 @@ void PGE_MsgBox::construct(std::string msg,
     fontRgba = ConfigManager::setup_message_box.font_rgba;
     if(_padding < 0)
         _padding = ConfigManager::setup_message_box.box_padding;
+    m_borderWidth = ConfigManager::setup_message_box.borderWidth;
 
     switch(m_type)
     {
@@ -160,7 +161,7 @@ void PGE_MsgBox::render()
     {
         if(m_textureUsed)
         {
-            drawTexture(m_sizeRect, 32, static_cast<float>(m_faderOpacity));
+            drawTexture(m_sizeRect, m_borderWidth, static_cast<float>(m_faderOpacity));
         }
         else
         {
@@ -181,7 +182,7 @@ void PGE_MsgBox::render()
                         static_cast<int>(m_sizeRect.center().y() - (height + padding) * m_faderOpacity),
                         static_cast<int>(m_sizeRect.center().x() + (width + padding) * m_faderOpacity),
                         static_cast<int>(m_sizeRect.center().y() + (height + padding) * m_faderOpacity),
-                        32,
+                        m_borderWidth,
                         static_cast<float>(m_faderOpacity));
         }
         else

@@ -74,6 +74,7 @@ private:
     bool    m_running;
     int     fontID;
     GlColor fontRgba;
+    int     m_borderWidth = 32;
 
     controller_keys keys;
     bool   m_exitKeyLock; //Don't close message box if exiting key already holden (for example, 'Run' key)

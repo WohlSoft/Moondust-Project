@@ -9,6 +9,7 @@
 - Improved sizable blocks rendering algorithm: now it supports customizable fixed-size border width (both common and for each side indididually)
 - Fixed font manager font ID processing
 - Sizable blocks now supports an animated textures
+- Fixed message box texture border width support
 
 0.3.0
 - Fixed some NPC-AI API properties

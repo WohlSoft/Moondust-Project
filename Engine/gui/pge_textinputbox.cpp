@@ -84,6 +84,7 @@ void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _typ
     keys = Controller::noKeys();
     fontID   = FontManager::getFontID(ConfigManager::setup_message_box.font_name);
     fontRgba = ConfigManager::setup_message_box.font_rgba;
+    m_borderWidth = ConfigManager::setup_message_box.borderWidth;
 
     if(_padding < 0)
         _padding = ConfigManager::setup_message_box.box_padding;
@@ -192,7 +193,7 @@ void PGE_TextInputBox::render()
     if(_page == 2)
     {
         if(m_textureUsed)
-            drawTexture(_sizeRect, 32, static_cast<float>(m_faderOpacity));
+            drawTexture(_sizeRect, m_borderWidth, static_cast<float>(m_faderOpacity));
         else
         {
             GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
@@ -213,7 +214,7 @@ void PGE_TextInputBox::render()
                         _sizeRect.center().y() - (height + padding)*m_faderOpacity,
                         _sizeRect.center().x() + (width + padding)*m_faderOpacity,
                         _sizeRect.center().y() + (height + padding)*m_faderOpacity,
-                        32, static_cast<float>(m_faderOpacity));
+                        m_borderWidth, static_cast<float>(m_faderOpacity));
         }
         else
         {
