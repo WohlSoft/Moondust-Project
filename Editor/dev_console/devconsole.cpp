@@ -39,6 +39,7 @@
 
 #ifdef ENABLE_CRASH_TESTS
 #include <common_features/crashhandler.h>
+#include <editing/_dialogs/itemselectdialog.h>
 #endif
 
 #include "../version.h"
@@ -278,6 +279,7 @@ void DevConsole::registerCommands()
     registerCommand("flood",    &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv",  &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
+    registerCommand("itemdialogmemleak",  &DevConsole::doMemLeakResearch, tr("Creates and deletes ItemSelectDialog to analyze memory leaking"));
     #endif
     registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} tests if the file is in the PGE-X file format"));
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
@@ -412,12 +414,49 @@ void DevConsole::doThrowUnhandledException(QStringList /*args*/)
 
 void DevConsole::doSegmentationViolation(QStringList)
 {
-    #ifndef _MSC_VER //Unfortunately MSVC swearing with hard erros on detecting this
+#ifndef _MSC_VER //Unfortunately MSVC swearing with hard erros on detecting this
     int *my_nullptr = 0;
     *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
-    #else
+#else
     log("-> This test isn't available in assembly built by MSVC! Please rebuild Editor in the another compiler (like MinGW or Intel C++ compiler)!", ui->tabWidget->tabText(0));
-    #endif
+#endif
+}
+
+void DevConsole::doMemLeakResearch(QStringList args)
+{
+    if(args.empty())
+    {
+        log("-> No arguments set!", ui->tabWidget->tabText(0));
+        return;
+    }
+    bool okk = false;
+    unsigned int cycles = args[0].toUInt(&okk);
+    if(!okk)
+    {
+        log("-> Invalid arguments!", ui->tabWidget->tabText(0));
+        return;
+    }
+
+    log("-> Begin spam...", ui->tabWidget->tabText(0));
+    for(unsigned int i = 0; i < cycles; i++)
+    {
+        ItemSelectDialog *ddd = new ItemSelectDialog(&MainWinConnect::pMainWin->configs,
+                                                     ItemSelectDialog::TAB_BLOCK|
+                                                     ItemSelectDialog::TAB_BGO|
+                                                     ItemSelectDialog::TAB_NPC|
+                                                     ItemSelectDialog::TAB_TILE|
+                                                     ItemSelectDialog::TAB_SCENERY|
+                                                     ItemSelectDialog::TAB_PATH|
+                                                     ItemSelectDialog::TAB_LEVEL|
+                                                     ItemSelectDialog::TAB_MUSIC,
+                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, MainWinConnect::pMainWin, 0);
+        //ddd->show();
+        qApp->processEvents();
+        //ddd->hide();
+        ddd->close();
+        delete ddd;
+    }
+    log("-> Spam completed!", ui->tabWidget->tabText(0));
 }
 #endif //DEBUG_BUILD
 

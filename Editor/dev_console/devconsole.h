@@ -66,6 +66,7 @@ private:
     void doFlood(QStringList args);
     void doThrowUnhandledException(QStringList);
     void doSegmentationViolation(QStringList);
+    void doMemLeakResearch(QStringList args);
     #endif
     void doHelp(QStringList args);
     void doTest(QStringList args);
