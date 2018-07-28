@@ -89,49 +89,49 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         scene_wld = edit_wld->sceneCreated ? edit_wld->scene : 0;
     }
 
-    m_blockModel = new ItemBoxListModel(ui->Sel_List_Block);
+    m_blockModel = new ItemBoxListModel(this);
     m_blockModel->setCategoryAllKey(m_allLabel);
     m_blockModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Block->setModel(m_blockModel);
     connect(ui->Sel_List_Block, &QListView::doubleClicked, this, &ItemSelectDialog::SelListBlock_itemDoubleClicked);
 
-    m_bgoModel = new ItemBoxListModel(ui->Sel_List_BGO);
+    m_bgoModel = new ItemBoxListModel(this);
     m_bgoModel->setCategoryAllKey(m_allLabel);
     m_bgoModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_BGO->setModel(m_bgoModel);
     connect(ui->Sel_List_BGO, &QListView::doubleClicked, this, &ItemSelectDialog::SelListBGO_itemDoubleClicked);
 
-    m_npcModel = new ItemBoxListModel(ui->Sel_List_NPC);
+    m_npcModel = new ItemBoxListModel(this);
     m_npcModel->setCategoryAllKey(m_allLabel);
     m_npcModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_NPC->setModel(m_npcModel);
     connect(ui->Sel_List_NPC, &QListView::doubleClicked, this, &ItemSelectDialog::SelListNPC_itemDoubleClicked);
 
-    m_tileModel = new ItemBoxListModel(ui->Sel_List_Tile);
+    m_tileModel = new ItemBoxListModel(this);
     m_tileModel->setCategoryAllKey(m_allLabel);
     m_tileModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Tile->setModel(m_tileModel);
     connect(ui->Sel_List_Tile, &QListView::doubleClicked, this, &ItemSelectDialog::SelListTile_itemDoubleClicked);
 
-    m_sceneModel = new ItemBoxListModel(ui->Sel_List_Scenery);
+    m_sceneModel = new ItemBoxListModel(this);
     m_sceneModel->setCategoryAllKey(m_allLabel);
     m_sceneModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Scenery->setModel(m_sceneModel);
     connect(ui->Sel_List_Scenery, &QListView::doubleClicked, this, &ItemSelectDialog::SelListScenery_itemDoubleClicked);
 
-    m_pathModel = new ItemBoxListModel(ui->Sel_List_Path);
+    m_pathModel = new ItemBoxListModel(this);
     m_pathModel->setCategoryAllKey(m_allLabel);
     m_pathModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Path->setModel(m_pathModel);
     connect(ui->Sel_List_Path, &QListView::doubleClicked, this, &ItemSelectDialog::SelListPath_itemDoubleClicked);
 
-    m_levelModel = new ItemBoxListModel(ui->Sel_List_Level);
+    m_levelModel = new ItemBoxListModel(this);
     m_levelModel->setCategoryAllKey(m_allLabel);
     m_levelModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Level->setModel(m_levelModel);
     connect(ui->Sel_List_Level, &QListView::doubleClicked, this, &ItemSelectDialog::SelListLevel_itemDoubleClicked);
 
-    m_musboxModel = new ItemBoxListModel(ui->Sel_List_Music);
+    m_musboxModel = new ItemBoxListModel(this);
     m_musboxModel->setCategoryAllKey(m_allLabel);
     m_musboxModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Music->setModel(m_musboxModel);
