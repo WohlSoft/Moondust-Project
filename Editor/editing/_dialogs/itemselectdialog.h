@@ -102,14 +102,14 @@ private slots:
     void on_Sel_Combo_GroupsNPC_currentIndexChanged(int index);
     void on_Sel_Combo_CategoryNPC_currentIndexChanged(int index);
 
-    void SelListNPC_itemDoubleClicked(const QModelIndex &);
-    void SelListBlock_itemDoubleClicked(const QModelIndex &);
-    void SelListBGO_itemDoubleClicked(const QModelIndex &);
-    void SelListTile_itemDoubleClicked(const QModelIndex &);
-    void SelListScenery_itemDoubleClicked(const QModelIndex &);
-    void SelListPath_itemDoubleClicked(const QModelIndex &);
-    void SelListLevel_itemDoubleClicked(const QModelIndex &);
-    void SelListMusic_itemDoubleClicked(const QModelIndex &);
+    void SelListNPC_itemDoubleClicked(const QModelIndex &index);
+    void SelListBlock_itemDoubleClicked(const QModelIndex &index);
+    void SelListBGO_itemDoubleClicked(const QModelIndex &index);
+    void SelListTile_itemDoubleClicked(const QModelIndex &index);
+    void SelListScenery_itemDoubleClicked(const QModelIndex &index);
+    void SelListPath_itemDoubleClicked(const QModelIndex &index);
+    void SelListLevel_itemDoubleClicked(const QModelIndex &index);
+    void SelListMusic_itemDoubleClicked(const QModelIndex &index);
 
 private:
     void selectListItem(QListView *w, ItemBoxListModel *m, int itemId);

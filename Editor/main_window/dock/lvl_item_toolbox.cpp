@@ -30,7 +30,6 @@
 #include "ui_lvl_item_toolbox.h"
 
 #include "item_tooltip_make.hpp"
-
 #include "itembox_list_model.h"
 
 LevelItemBox::LevelItemBox(QWidget *parent) :
@@ -184,7 +183,7 @@ void LevelItemBox::initItemLists()
 
 
 
-    LogDebug("LevelTools -> Fill list ob BGOs");
+    LogDebug("LevelTools -> Fill list of BGOs");
 
     //set Block item box from global configs
     QSet<uint64_t> bgoCustomId;
@@ -288,6 +287,8 @@ void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &po
     QModelIndex item_i = list[0];
     QString episodeDir = edit->LvlData.meta.path;
     QString customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
+    if(!m_blockModel->data(item_i, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     int itemID = m_blockModel->data(item_i, ItemBoxListModel::ItemBox_ItemId).toInt();
 
     obj_block &block = mw()->configs.main_block[itemID];
@@ -337,6 +338,8 @@ void LevelItemBox::on_BGOItemsList_customContextMenuRequested(const QPoint &pos)
     QModelIndex item_i = list[0];
     QString episodeDir = edit->LvlData.meta.path;
     QString customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
+    if(!m_bgoModel->data(item_i, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     int itemID = m_bgoModel->data(item_i, ItemBoxListModel::ItemBox_ItemId).toInt();
 
     obj_bgo &bgo = mw()->configs.main_bgo[itemID];
@@ -386,6 +389,8 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
     QModelIndex item_i = list[0];
     QString episodeDir = edit->LvlData.meta.path;
     QString customDir  = edit->LvlData.meta.path + "/" + edit->LvlData.meta.filename;
+    if(!m_npcModel->data(item_i, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     int itemID = m_npcModel->data(item_i, ItemBoxListModel::ItemBox_ItemId).toInt();
 
     obj_npc &npc = mw()->configs.main_npc[itemID];
@@ -492,6 +497,8 @@ void LevelItemBox::BlockList_itemClicked(const QModelIndex &item)
     //placeBlock
     if((mw()->activeChildWindow() == MainWindow::WND_Level) && (ui->BlockItemsList->hasFocus()))
     {
+        if(!m_blockModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
         int id = m_blockModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
         mw()->SwitchPlacingItem(ItemTypes::LVL_Block, id);
     }
@@ -502,6 +509,8 @@ void LevelItemBox::BGOList_itemClicked(const QModelIndex &item)
     //placeBGO
     if((mw()->activeChildWindow() == MainWindow::WND_Level) && (ui->BGOItemsList->hasFocus()))
     {
+        if(!m_bgoModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
         int id = m_bgoModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
         mw()->SwitchPlacingItem(ItemTypes::LVL_BGO, id);
     }
@@ -512,6 +521,8 @@ void LevelItemBox::NPCList_itemClicked(const QModelIndex &item)
     //placeNPC
     if((mw()->activeChildWindow() == MainWindow::WND_Level) && (ui->NPCItemsList->hasFocus()))
     {
+        if(!m_npcModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
         int id = m_npcModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
         mw()->SwitchPlacingItem(ItemTypes::LVL_NPC, id);
     }

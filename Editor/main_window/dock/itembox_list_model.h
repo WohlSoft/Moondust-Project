@@ -63,8 +63,9 @@ public:
 
     enum
     {
-        ItemBox_ItemId     = Qt::UserRole + 1,
         ItemBox_ItemPixmap = Qt::UserRole,
+        ItemBox_ItemId     = Qt::UserRole + 1,
+        ItemBox_ItemIsValid = Qt::UserRole + 2,
     };
 
     struct Element

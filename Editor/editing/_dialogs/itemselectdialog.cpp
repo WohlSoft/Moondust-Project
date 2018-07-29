@@ -112,6 +112,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     m_tileModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Tile->setModel(m_tileModel);
     connect(ui->Sel_List_Tile, &QListView::doubleClicked, this, &ItemSelectDialog::SelListTile_itemDoubleClicked);
+    ui->Sel_List_Tile->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->Sel_List_Tile->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     m_sceneModel = new ItemBoxListModel(this);
     m_sceneModel->setCategoryAllKey(m_allLabel);
@@ -124,6 +126,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     m_pathModel->setGroupAllKey(m_allLabel);
     ui->Sel_List_Path->setModel(m_pathModel);
     connect(ui->Sel_List_Path, &QListView::doubleClicked, this, &ItemSelectDialog::SelListPath_itemDoubleClicked);
+    ui->Sel_List_Path->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->Sel_List_Path->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     m_levelModel = new ItemBoxListModel(this);
     m_levelModel->setCategoryAllKey(m_allLabel);
@@ -812,44 +816,60 @@ void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
 
 
 
-void ItemSelectDialog::SelListBlock_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListBlock_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_blockModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 
-void ItemSelectDialog::SelListBGO_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListBGO_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_bgoModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 
-void ItemSelectDialog::SelListNPC_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListNPC_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_npcModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 
 
-void ItemSelectDialog::SelListTile_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListTile_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_tileModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 
-void ItemSelectDialog::SelListScenery_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListScenery_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_sceneModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 
-void ItemSelectDialog::SelListPath_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListPath_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_pathModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 
-void ItemSelectDialog::SelListLevel_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListLevel_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_levelModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 
-void ItemSelectDialog::SelListMusic_itemDoubleClicked(const QModelIndex &)
+void ItemSelectDialog::SelListMusic_itemDoubleClicked(const QModelIndex &index)
 {
+    if(!m_musboxModel->data(index, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        return;
     on_Sel_DiaButtonBox_accepted();
 }
 

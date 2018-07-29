@@ -184,7 +184,7 @@ int ItemBoxListModel::columnCount(const QModelIndex &parent) const
 
 QVariant ItemBoxListModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if(!index.isValid())
         return QVariant();
     int idx = 0;
     if(m_isTable)
@@ -207,15 +207,21 @@ QVariant ItemBoxListModel::data(const QModelIndex &index, int role) const
     int id = m_elementsVisibleMap[idx];
     const Element &e = m_elements[id];
 
-    if (role == Qt::DecorationRole)
+    if(role == ItemBox_ItemIsValid)
+        return e.isValid;
+
+    if(!e.isValid)
+        return QVariant(); // Got an invalid element
+
+    if(role == Qt::DecorationRole)
         return QIcon(e.pixmap);
-    else if (m_showLabels && (role == Qt::DisplayRole))
+    else if(m_showLabels && (role == Qt::DisplayRole))
         return e.name;
-    else if (role == Qt::ToolTipRole)
+    else if(role == Qt::ToolTipRole)
         return e.description;
-    else if (role == ItemBox_ItemPixmap)
+    else if(role == ItemBox_ItemPixmap)
         return e.pixmap;
-    else if (role == ItemBox_ItemId)
+    else if(role == ItemBox_ItemId)
         return static_cast<qulonglong>(e.elementId);
 
     return QVariant();
