@@ -133,14 +133,6 @@ private:
 
     void addExtraDataControl(QWidget *control);
 
-    void updateBoxes(bool setGrp = false, bool setCat = false);
-    void setWldItemBoxes(bool setGrp = false, bool setCat = false);
-    QString cat_blocks;
-    QString cat_bgos;
-    QString cat_npcs;
-
-    void updateFilters();
-
     ItemBoxListModel *m_blockModel = nullptr;
     ItemBoxListModel *m_bgoModel = nullptr;
     ItemBoxListModel *m_npcModel = nullptr;
