@@ -161,9 +161,9 @@ void TilesetItemBox::on_newTileset_clicked()
     //QMessageBox::information(this, "test", "test", QMessageBox::Ok);
 
     bool untitled = false;
-    if(mw()->activeChildWindow() == 1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
         untitled = mw()->activeLvlEditWin()->isUntitled;
-    else if(mw()->activeChildWindow() == 3)
+    else if(mw()->activeChildWindow() == MainWindow::WND_World)
         untitled = mw()->activeWldEditWin()->isUntitled;
 
     if(untitled)
@@ -175,12 +175,12 @@ void TilesetItemBox::on_newTileset_clicked()
 
     TilesetEditor *tilesetConfDia;
 
-    if(mw()->activeChildWindow() == 1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
         tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeLvlEditWin()->scene, mw());
-    else if(mw()->activeChildWindow() == 3)
+    else if(mw()->activeChildWindow() == MainWindow::WND_World)
         tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeWldEditWin()->scene, mw());
     else
-        tilesetConfDia = new TilesetEditor(&mw()->configs, NULL, mw());
+        tilesetConfDia = new TilesetEditor(&mw()->configs, nullptr, mw());
 
     util::DialogToCenter(tilesetConfDia);
 
