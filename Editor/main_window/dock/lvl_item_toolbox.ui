@@ -37,7 +37,7 @@
     <attribute name="title">
      <string>Blocks</string>
     </attribute>
-    <layout class="QGridLayout" name="BlocksG" rowstretch="0,0,0,0,0" columnstretch="0,90,9,0" columnminimumwidth="50,0,15,0">
+    <layout class="QGridLayout" name="BlocksG" rowstretch="0,0,0,0,0" columnstretch="0,90,9" columnminimumwidth="50,0,15">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -59,16 +59,6 @@
         <string>Category:</string>
        </property>
       </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="BlockFilterLabel">
-       <property name="text">
-        <string>Filter:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="BlockFilterField"/>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="BlockGroupLabel">
@@ -182,13 +172,23 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="0" colspan="2">
+      <widget class="QLineEdit" name="BlockFilterField">
+       <property name="placeholderText">
+        <string>Search</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="BGOs">
     <attribute name="title">
      <string>BGO</string>
     </attribute>
-    <layout class="QGridLayout" name="BGOsG" columnstretch="0,90,9,0" columnminimumwidth="50,0,15,0">
+    <layout class="QGridLayout" name="BGOsG" columnstretch="0,90,9" columnminimumwidth="50,0,15">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -217,16 +217,6 @@
         <string>Group:</string>
        </property>
       </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="BGOFilterLabel">
-       <property name="text">
-        <string>Filter:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="BGOFilterField"/>
      </item>
      <item row="1" column="1" colspan="2">
       <widget class="QComboBox" name="BGOCatList">
@@ -333,13 +323,23 @@
        </property>
       </widget>
      </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QLineEdit" name="BGOFilterField">
+       <property name="placeholderText">
+        <string>Search</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="NPCs">
     <attribute name="title">
      <string>NPC</string>
     </attribute>
-    <layout class="QGridLayout" name="NPCsG" columnstretch="0,90,9,0" columnminimumwidth="50,0,15,0">
+    <layout class="QGridLayout" name="NPCsG" columnstretch="0,90,9" columnminimumwidth="50,0,15">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -355,16 +355,6 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <item row="2" column="0">
-      <widget class="QLabel" name="NPCFilterLabel">
-       <property name="text">
-        <string>Filter:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="NPCFilterField"/>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="NPCCatLabel">
        <property name="text">
@@ -481,6 +471,16 @@
        <property name="icon">
         <iconset resource="../../_resources/editor.qrc">
          <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QLineEdit" name="NPCFilterField">
+       <property name="placeholderText">
+        <string>Search</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

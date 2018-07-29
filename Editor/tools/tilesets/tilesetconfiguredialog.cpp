@@ -61,7 +61,8 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
     ui->listView->setDragEnabled(true);
-    ui->listView->setModel(m_model = (new ElementsListModel(conf, ElementsListModel::LEVELPIECE_BLOCK, 32, nullptr, ui->listView)));
+    m_model = new ElementsListModel(conf, ElementsListModel::LEVELPIECE_BLOCK, 32, nullptr, this);
+    ui->listView->setModel(m_model);
 
     m_conf = conf;
     lastFileName = "";
@@ -126,7 +127,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
         sortById->setCheckable(true);
 
         sortBy->addSeparator();
-        QAction *sortBackward = sortBy->addAction(tr("Backward", "Backward sorting order"));
+        QAction *sortBackward = sortBy->addAction(tr("Descending", "Descending sorting order"));
         sortBackward->setCheckable(true);
 
         m_searchSetup.connect(searchByName, &QAction::triggered,
