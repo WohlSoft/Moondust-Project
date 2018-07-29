@@ -157,7 +157,7 @@ qt5_wrap_ui(UIS_HDRS
     tools/external_tools/lazyfixtool_gui.ui
     tools/external_tools/png2gifs_gui.ui
     tools/math/blocksperseconddialog.ui
-    tools/tilesets/tilesetconfiguredialog.ui
+    tools/tilesets/tileset_editor.ui
     tools/tilesets/tilesetgroupeditor.ui
 )
 
@@ -427,7 +427,7 @@ list(APPEND PGE_EDITOR_SRCS
     tools/math/blocksperseconddialog.cpp
     tools/smart_import/smartimporter.cpp
     tools/tilesets/piecesmodel.cpp
-    tools/tilesets/tilesetconfiguredialog.cpp
+    tools/tilesets/tileset_editor.cpp
     tools/tilesets/tileset.cpp
     tools/tilesets/tilesetgroupeditor.cpp
     tools/tilesets/tilesetitembutton.cpp

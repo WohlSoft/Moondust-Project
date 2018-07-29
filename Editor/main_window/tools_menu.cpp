@@ -17,7 +17,7 @@
  */
 
 #include <common_features/util.h>
-#include <tools/tilesets/tilesetconfiguredialog.h>
+#include <tools/tilesets/tileset_editor.h>
 #include <tools/tilesets/tilesetgroupeditor.h>
 #include <tools/external_tools/lazyfixtool_gui.h>
 #include <tools/external_tools/gifs2png_gui.h>
@@ -32,7 +32,7 @@
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
-    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL, this);
+    TilesetEditor* tilesetConfDia = new TilesetEditor(&configs, NULL, this);
     util::DialogToCenter(tilesetConfDia);
     tilesetConfDia->exec();
     delete tilesetConfDia;

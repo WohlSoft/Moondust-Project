@@ -26,12 +26,12 @@
 #include <common_features/util.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
-#include "tilesetconfiguredialog.h"
-#include <ui_tilesetconfiguredialog.h>
+#include "tileset_editor.h"
+#include <ui_tileset_editor.h>
 
-TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene *scene, QWidget *parent) :
+TilesetEditor::TilesetEditor(dataconfigs *conf, QGraphicsScene *scene, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::TilesetConfigureDialog)
+    ui(new Ui::TilesetEditor)
 {
     ui->setupUi(this);
 
@@ -189,13 +189,13 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs *conf, QGraphicsScene
     }
 }
 
-TilesetConfigureDialog::~TilesetConfigureDialog()
+TilesetEditor::~TilesetEditor()
 {
     clearFocus();
     delete ui;
 }
 
-void TilesetConfigureDialog::on_clearTileset_clicked()
+void TilesetEditor::on_clearTileset_clicked()
 {
     int x = QMessageBox::question(this, tr("Clean tileset editor"),
                                   tr("Do you want to clean tileset editor to create a new tileset?"),
@@ -210,13 +210,13 @@ void TilesetConfigureDialog::on_clearTileset_clicked()
     }
 }
 
-void TilesetConfigureDialog::setUpTileset(int type)
+void TilesetEditor::setUpTileset(int type)
 {
     m_tileset->clear();
     m_tileset->setType(type);
 }
 
-void TilesetConfigureDialog::setUpItems(int type)
+void TilesetEditor::setUpItems(int type)
 {
     bool custom = ((mode != GFX_Staff) && (ui->customOnly->isChecked()));
     bool defstuff = ((mode != GFX_Staff) && (ui->defaultOnly->isChecked()));
@@ -486,12 +486,12 @@ void TilesetConfigureDialog::setUpItems(int type)
     m_model->addElementsEnd();
 }
 
-ElementsListModel::ElementType TilesetConfigureDialog::toElementType(int type)
+ElementsListModel::ElementType TilesetEditor::toElementType(int type)
 {
     return static_cast<ElementsListModel::ElementType>(type);
 }
 
-void TilesetConfigureDialog::on_SaveTileset_clicked()
+void TilesetEditor::on_SaveTileset_clicked()
 {
     QDir(m_conf->config_dir).mkpath("tilesets/");
 
@@ -533,7 +533,7 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
     ui->delete_me->setVisible(true);
 }
 
-void TilesetConfigureDialog::on_OpenTileset_clicked()
+void TilesetEditor::on_OpenTileset_clicked()
 {
 
     QString openPath;
@@ -558,7 +558,7 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
 
 }
 
-void TilesetConfigureDialog::openTileset(QString filePath, bool isCustom)
+void TilesetEditor::openTileset(QString filePath, bool isCustom)
 {
     if(filePath.isEmpty())
         return;
@@ -588,7 +588,7 @@ void TilesetConfigureDialog::openTileset(QString filePath, bool isCustom)
     ui->delete_me->setVisible(true);
 }
 
-void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, bool isCustom)
+void TilesetEditor::loadSimpleTileset(const SimpleTileset &tileset, bool isCustom)
 {
     ui->TilesetName->setText(tileset.tileSetName);
     ui->spin_width->setValue(tileset.cols);
@@ -618,7 +618,7 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
 }
 
 
-void TilesetConfigureDialog::on_customOnly_clicked()
+void TilesetEditor::on_customOnly_clicked()
 {
     if(mode == GFX_Staff) return;
     ui->defaultOnly->setChecked(false);
@@ -626,7 +626,7 @@ void TilesetConfigureDialog::on_customOnly_clicked()
     setUpItems(ui->comboBox->currentIndex());
 }
 
-void TilesetConfigureDialog::on_defaultOnly_clicked()
+void TilesetEditor::on_defaultOnly_clicked()
 {
     if(mode == GFX_Staff) return;
     ui->customOnly->setChecked(false);
@@ -635,14 +635,14 @@ void TilesetConfigureDialog::on_defaultOnly_clicked()
 }
 
 
-void TilesetConfigureDialog::showEvent(QShowEvent *event)
+void TilesetEditor::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
     qApp->processEvents();
     emit windowShowed();
 }
 
-void TilesetConfigureDialog::showNotify()
+void TilesetEditor::showNotify()
 {
     QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
@@ -673,7 +673,7 @@ void TilesetConfigureDialog::showNotify()
     cCounters.endGroup();
 }
 
-void TilesetConfigureDialog::on_delete_me_clicked()
+void TilesetEditor::on_delete_me_clicked()
 {
     \
     int x = QMessageBox::question(this, tr("Remove tileset"),
@@ -688,7 +688,7 @@ void TilesetConfigureDialog::on_delete_me_clicked()
     }
 }
 
-void TilesetConfigureDialog::keyPressEvent(QKeyEvent *event)
+void TilesetEditor::keyPressEvent(QKeyEvent *event)
 {
     //Prevent Enter/Return key to spawn tileset saving dialog after resize
     if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
@@ -696,7 +696,7 @@ void TilesetConfigureDialog::keyPressEvent(QKeyEvent *event)
     QDialog::keyPressEvent(event);
 }
 
-void TilesetConfigureDialog::on_search_textChanged(const QString &arg1)
+void TilesetEditor::on_search_textChanged(const QString &arg1)
 {
     m_model->setFilter(arg1, m_searchBy);
 }

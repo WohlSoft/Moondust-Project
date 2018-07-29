@@ -29,7 +29,7 @@
 #include <common_features/util.h>
 #include <tools/tilesets/tileset.h>
 #include <tools/tilesets/tilesetitembutton.h>
-#include <tools/tilesets/tilesetconfiguredialog.h>
+#include <tools/tilesets/tileset_editor.h>
 #include <data_configs/obj_tilesets.h>
 #include <data_configs/data_configs.h>
 #include <dev_console/devconsole.h>
@@ -173,14 +173,14 @@ void TilesetItemBox::on_newTileset_clicked()
         return;
     }
 
-    TilesetConfigureDialog *tilesetConfDia;
+    TilesetEditor *tilesetConfDia;
 
     if(mw()->activeChildWindow() == 1)
-        tilesetConfDia = new TilesetConfigureDialog(&mw()->configs, mw()->activeLvlEditWin()->scene, mw());
+        tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeLvlEditWin()->scene, mw());
     else if(mw()->activeChildWindow() == 3)
-        tilesetConfDia = new TilesetConfigureDialog(&mw()->configs, mw()->activeWldEditWin()->scene, mw());
+        tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeWldEditWin()->scene, mw());
     else
-        tilesetConfDia = new TilesetConfigureDialog(&mw()->configs, NULL, mw());
+        tilesetConfDia = new TilesetEditor(&mw()->configs, NULL, mw());
 
     util::DialogToCenter(tilesetConfDia);
 
@@ -198,14 +198,14 @@ void TilesetItemBox::setTabPosition(QTabWidget::TabPosition pos)
 
 void TilesetItemBox::editSelectedTileset()
 {
-    TilesetConfigureDialog *tilesetConfDia;
+    TilesetEditor *tilesetConfDia;
 
     if(mw()->activeChildWindow() == 1)
-        tilesetConfDia = new TilesetConfigureDialog(&mw()->configs, mw()->activeLvlEditWin()->scene, mw());
+        tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeLvlEditWin()->scene, mw());
     else if(mw()->activeChildWindow() == 3)
-        tilesetConfDia = new TilesetConfigureDialog(&mw()->configs, mw()->activeWldEditWin()->scene, mw());
+        tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeWldEditWin()->scene, mw());
     else
-        tilesetConfDia = new TilesetConfigureDialog(&mw()->configs, NULL, mw());
+        tilesetConfDia = new TilesetEditor(&mw()->configs, NULL, mw());
 
     util::DialogToCenter(tilesetConfDia);
 

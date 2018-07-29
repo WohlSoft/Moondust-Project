@@ -17,8 +17,8 @@
  */
 
 #pragma once
-#ifndef TILESETCONFIGUREDIALOG_H
-#define TILESETCONFIGUREDIALOG_H
+#ifndef TILESET_EDITOR_H
+#define TILESET_EDITOR_H
 
 #include <QDialog>
 #include <QMenu>
@@ -30,16 +30,16 @@
 
 
 namespace Ui {
-class TilesetConfigureDialog;
+class TilesetEditor;
 }
 
-class TilesetConfigureDialog : public QDialog
+class TilesetEditor : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene *scene=0, QWidget *parent = 0);
-    ~TilesetConfigureDialog();
+    explicit TilesetEditor(dataconfigs* conf, QGraphicsScene *scene=0, QWidget *parent = 0);
+    ~TilesetEditor();
     enum GFXMode
     {
         GFX_Staff=0,
@@ -74,7 +74,7 @@ protected:
 private:
     QString lastFileName;
     QString lastFullPath;
-    Ui::TilesetConfigureDialog *ui;
+    Ui::TilesetEditor *ui;
 
     QMenu   m_searchSetup;
     int     m_searchBy = 0;
@@ -91,4 +91,4 @@ private:
     ElementsListModel::ElementType toElementType(int type);
 };
 
-#endif // TILESETCONFIGUREDIALOG_H
+#endif // TILESET_EDITOR_H
