@@ -236,7 +236,7 @@ QModelIndex ItemBoxListModel::findVisibleItemById(qulonglong id) const
         if(e.elementId == id)
         {
             if(m_isTable)
-                return createIndex(i % m_tableWidth, (i / m_tableWidth), nullptr);
+                return createIndex((i / m_tableWidth), i % m_tableWidth, nullptr);
             return createIndex(i, 0, nullptr);
         }
     }
