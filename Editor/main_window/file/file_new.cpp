@@ -112,7 +112,7 @@ void MainWindow::on_actionNewWorld_map_triggered()
         child->show();
         child->updateGeometry();
         child->ResetPosition();
-        dock_WldItemBox->setWldItemBoxes(false, false);
+        dock_WldItemBox->initItemLists();
         on_actionSelect_triggered();
     } else {
         if( activeWldEditWin(SubWindow) )

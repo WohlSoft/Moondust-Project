@@ -24,9 +24,7 @@
 #include "mwdock_base.h"
 
 class MainWindow;
-class QTabWidget;
-class QTableWidgetItem;
-class QListWidgetItem;
+class ItemBoxListModel;
 
 namespace Ui {
 class WorldItemBox;
@@ -45,27 +43,26 @@ public:
 
 public slots:
     void re_translate();
-    void setWldItemBoxes(bool setGrp=false, bool setCat=false);
+    /**
+     * @brief Initialize the item box
+     */
+    void initItemLists();
 
 private slots:
-    void on_WLD_TilesList_itemClicked(QTableWidgetItem *item);
-    void on_WLD_SceneList_itemClicked(QListWidgetItem *item);
-    void on_WLD_PathsList_itemClicked(QTableWidgetItem *item);
-    void on_WLD_LevelList_itemClicked(QListWidgetItem *item);
-    void on_WLD_MusicList_itemClicked(QListWidgetItem *item);
+    void TerrainTilesTable_itemClicked(const QModelIndex &item);
+    void SceneList_itemClicked(const QModelIndex &item);
+    void PathsTable_itemClicked(const QModelIndex &item);
+    void LevelList_itemClicked(const QModelIndex &item);
+    void MusicList_itemClicked(const QModelIndex &item);
 
 private:
     Ui::WorldItemBox *ui;
 
-    QString allWLabel;
-    QString customWLabel;
-
-    bool lock_Wgrp;
-    bool lock_Wcat;
-
-    QString grp_tiles;
-    QString grp_paths;
-    QString grp_scenes;
+    ItemBoxListModel *m_terrainModel = nullptr;
+    ItemBoxListModel *m_sceneryModel = nullptr;
+    ItemBoxListModel *m_pathsModel = nullptr;
+    ItemBoxListModel *m_levelsModel = nullptr;
+    ItemBoxListModel *m_musicboxModel = nullptr;
 };
 
 #endif // WLD_ITEM_TOOLBOX_H

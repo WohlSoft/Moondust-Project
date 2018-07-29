@@ -255,7 +255,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             updateMenus(newSubWin, true);
             child->updateGeometry();
             child->ResetPosition();
-            dock_WldItemBox->setWldItemBoxes(false, false);
+            dock_WldItemBox->initItemLists();
             dock_WldSettingsBox->setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {

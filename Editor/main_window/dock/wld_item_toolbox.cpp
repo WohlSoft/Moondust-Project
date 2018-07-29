@@ -32,6 +32,7 @@
 #include "ui_wld_item_toolbox.h"
 
 #include "item_tooltip_make.hpp"
+#include "itembox_list_model.h"
 
 WorldItemBox::WorldItemBox(QWidget *parent) :
     QDockWidget(parent),
@@ -41,16 +42,34 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
     setVisible(false);
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
-    allWLabel = "[all]";
-    customWLabel = "[custom]";
+    m_terrainModel = new ItemBoxListModel(this);
+    ui->WLD_TilesList->setModel(m_terrainModel);
+    connect(ui->WLD_TilesList, &QTableView::clicked, this, &WorldItemBox::TerrainTilesTable_itemClicked);
+    ui->WLD_TilesList->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->WLD_TilesList->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    lock_Wgrp=false;
-    lock_Wcat=false;
+    m_sceneryModel = new ItemBoxListModel(this);
+    ui->WLD_SceneList->setModel(m_sceneryModel);
+    connect(ui->WLD_SceneList, &QListView::clicked, this, &WorldItemBox::SceneList_itemClicked);
+    m_sceneryModel->setSort(ItemBoxListModel::Sort_ById, false);
 
-    grp_tiles = "";
-    grp_paths = "";
-    grp_scenes = "";
+    m_pathsModel = new ItemBoxListModel(this);
+    ui->WLD_PathsList->setModel(m_pathsModel);
+    connect(ui->WLD_PathsList, &QTableView::clicked, this, &WorldItemBox::PathsTable_itemClicked);
+    ui->WLD_PathsList->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->WLD_PathsList->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    m_levelsModel = new ItemBoxListModel(this);
+    ui->WLD_LevelList->setModel(m_levelsModel);
+    connect(ui->WLD_LevelList, &QListView::clicked, this, &WorldItemBox::LevelList_itemClicked);
+    m_levelsModel->setSort(ItemBoxListModel::Sort_ById, false);
+
+    m_musicboxModel = new ItemBoxListModel(this);
+    ui->WLD_MusicList->setModel(m_musicboxModel);
+    connect(ui->WLD_MusicList, &QListView::clicked, this, &WorldItemBox::MusicList_itemClicked);
+    m_musicboxModel->setSort(ItemBoxListModel::Sort_ById, false);
 
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
@@ -84,205 +103,187 @@ void MainWindow::on_actionWLDToolBox_triggered(bool checked)
 
 
 
-void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
+void WorldItemBox::initItemLists()
 {
-    if( (setGrp) && (mw()->activeChildWindow() !=3) )
+    if(mw()->activeChildWindow() != MainWindow::WND_World)
         return;
+
     WorldEdit *edit = mw()->activeWldEditWin();
-    if( (edit==NULL) || (!edit->sceneCreated) )
+    if((edit==NULL) || (!edit->sceneCreated))
         return;
+
     WldScene* scene = edit->scene;
     if(!scene)
         return;
 
-    allWLabel    = MainWindow::tr("[all]");
-    customWLabel = MainWindow::tr("[custom]");
-
     mw()->ui->menuNew->setEnabled(false);
-
-    if(!setCat)
-    {
-        lock_Wcat=true;
-        if(!setGrp)
-        {
-            lock_Wgrp=true;
-            grp_tiles = allWLabel;
-            grp_paths = allWLabel;
-            grp_scenes = allWLabel;
-        }
-    }
 
     LogDebugQD("WorldTools -> Clear current");
 
-    ui->WLD_TilesList->clear();
-    util::memclear(ui->WLD_SceneList);
-    util::memclear(ui->WLD_LevelList);
-    ui->WLD_PathsList->clear();
-    util::memclear(ui->WLD_MusicList);
-
-    //util::memclear(ui->BlockItemsList);
-    //util::memclear(ui->NPCItemsList);
+    m_terrainModel->clear();
+    m_sceneryModel->clear();
+    m_pathsModel->clear();
+    m_levelsModel->clear();
+    m_musicboxModel->clear();
 
     LogDebugQD("WorldTools -> Declare new");
-    QListWidgetItem * item;
-    QPixmap tmpI;
 
-    QStringList tmpList, tmpGrpList;
-    //bool found = false;
 
-    tmpList.clear();
-    tmpGrpList.clear();
-
-    unsigned int tableRows=0;
-    unsigned int tableCols=0;
-
-    LogDebugQD("WorldTools -> Table size");
-    //get Table size
-    for(int i=1; i < scene->m_localConfigTerrain.size(); i++)
+    LogDebug("LevelTools -> Fill list of Terrain tiles");
     {
-        obj_w_tile &tileItem = scene->m_localConfigTerrain[i];
-        if( tableRows < (tileItem.setup.row+1) ) tableRows = tileItem.setup.row + 1;
-        if( tableCols < (tileItem.setup.col+1) ) tableCols = tileItem.setup.col + 1;
-    }
-
-    LogDebugQD("WorldTools -> set size");
-    ui->WLD_TilesList->setRowCount(tableRows);
-    ui->WLD_TilesList->setColumnCount(tableCols);
-    ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
-
-    LogDebugQD("WorldTools -> Table of tiles");
-    for(int i=1; i < scene->m_localConfigTerrain.size(); i++)
-    {
-        obj_w_tile &tileItem = scene->m_localConfigTerrain[i];
-        Items::getItemGFX(&tileItem, tmpI, false, QSize(32,32));
-
-        QTableWidgetItem * item = ui->WLD_TilesList->item(tileItem.setup.row, tileItem.setup.col);
-
-        if ( (!item) || ( (item!=NULL)&&(item->text().isEmpty())) )
+        QSet<uint64_t> tilesCustomId;
+        for(int i = 0; i < scene->m_customTerrain.size(); i++)
         {
-            item = new QTableWidgetItem();
-            item->setIcon( QIcon( tmpI ) );
-            item->setText( NULL );
-            item->setSizeHint(QSize(32,32));
-            item->setData(Qt::UserRole, int(tileItem.setup.id) );
-            item->setToolTip(makeToolTipSimple("Terrain tile", tileItem.setup));
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
-
-            ui->WLD_TilesList->setRowHeight(tileItem.setup.row, 34);
-            ui->WLD_TilesList->setColumnWidth(tileItem.setup.col, 34);
-
-            ui->WLD_TilesList->setItem(tileItem.setup.row,tileItem.setup.col, item);
+            obj_w_tile &tiles = *scene->m_customTerrain[i];
+            tilesCustomId.insert(tiles.setup.id);
         }
-    }
 
-    LogDebugQD("WorldTools -> List of sceneries");
-    for(int i=1; i<scene->m_localConfigScenery.size(); i++)
-    {
-            obj_w_scenery &sceneItem = scene->m_localConfigScenery[i];
-            Items::getItemGFX(&sceneItem, tmpI, false, QSize(32,32));
-
-            item = new QListWidgetItem();
-            item->setIcon( QIcon( tmpI ) );
-            item->setText( NULL );
-            item->setData(Qt::UserRole, int(sceneItem.setup.id) );
-            item->setToolTip(makeToolTipSimple("Scenery", sceneItem.setup));
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-            ui->WLD_SceneList->addItem( item );
-    }
-
-    tableRows=0;
-    tableCols=0;
-
-    LogDebugQD("WorldTools -> Table of paths size");
-    //get Table size
-    for(int i=1; i < scene->m_localConfigPaths.size(); i++ )
-    {
-        obj_w_path &pathItem = scene->m_localConfigPaths[i];
-        if( tableRows < (pathItem.setup.row+1) ) tableRows=pathItem.setup.row + 1;
-        if( tableCols < (pathItem.setup.col+1) ) tableCols=pathItem.setup.col + 1;
-    }
-
-    LogDebugQD("WorldTools -> Table of paths size define");
-    ui->WLD_PathsList->setRowCount(tableRows);
-    ui->WLD_PathsList->setColumnCount(tableCols);
-    ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
-
-    LogDebugQD("WorldTools -> Table of paths");
-    for(int i=1; i < scene->m_localConfigPaths.size(); i++ )
-    {
-        obj_w_path &pathItem = scene->m_localConfigPaths[i];
-        Items::getItemGFX(&pathItem, tmpI, false, QSize(32,32));
-
-        QTableWidgetItem * item = ui->WLD_PathsList->item(pathItem.setup.row, pathItem.setup.col);
-
-        if ( (!item) || ( (item!=NULL)&&(item->text().isEmpty())) )
+        m_terrainModel->addElementsBegin();
+        m_terrainModel->setShowLabels(false);
+        PGE_DataArray<obj_w_tile> *array = &scene->m_localConfigTerrain;
         {
-            item = new QTableWidgetItem();
-            item->setIcon( QIcon( tmpI ) );
-            item->setText( NULL );
-            item->setSizeHint(QSize(32,32));
-            item->setData(Qt::UserRole, int(pathItem.setup.id) );
-            item->setToolTip(makeToolTipSimple("Path cell", pathItem.setup));
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
-
-            ui->WLD_PathsList->setRowHeight(pathItem.setup.row, 34);
-            ui->WLD_PathsList->setColumnWidth(pathItem.setup.col, 34);
-
-            ui->WLD_PathsList->setItem(pathItem.setup.row,pathItem.setup.col, item);
+            uint32_t rows = 0;
+            uint32_t cols = 0;
+            for(int i = 1; i < array->size(); i++)
+            {
+                obj_w_tile &tileItem = (*array)[i];
+                if(rows < tileItem.setup.row)
+                    rows = tileItem.setup.row;
+                if(cols < tileItem.setup.col)
+                    cols = tileItem.setup.col;
+            }
+            m_terrainModel->setTableMode(true, cols + 1, rows + 1);
         }
+
+        for(int i = 1; i < array->size(); i++)
+        {
+            obj_w_tile &tileItem = (*array)[i];
+            ItemBoxListModel::Element e;
+            Items::getItemGFX(&tileItem, e.pixmap, false, QSize(32, 32));
+            e.name = tileItem.setup.name.isEmpty() ? QString("tile-%1").arg(tileItem.setup.id) : tileItem.setup.name;
+            e.description = makeToolTipSimple("Terrain tile", tileItem.setup);
+            e.elementId = tileItem.setup.id;
+            e.isCustom = tilesCustomId.contains(tileItem.setup.id);
+            e.isValid = true;
+            m_terrainModel->addElementCell(tileItem.setup.col, tileItem.setup.row, e, tileItem.setup.group, tileItem.setup.category);
+        }
+        m_terrainModel->addElementsEnd();
     }
 
-    LogDebugQD("WorldTools -> List of levels");
-    for(int i=0; i < scene->m_localConfigLevels.size(); i++)
+
+    LogDebug("LevelTools -> Fill list of Sceneries");
     {
-        obj_w_level& levelItem = scene->m_localConfigLevels[i];
+        QSet<uint64_t> sceneryCustomId;
+        for(int i = 0; i < scene->m_customSceneries.size(); i++)
+        {
+            obj_w_scenery &scenery = *scene->m_customSceneries[i];
+            sceneryCustomId.insert(scenery.setup.id);
+        }
+        m_sceneryModel->addElementsBegin();
+        m_sceneryModel->setShowLabels(false);
 
-        if((mw()->configs.marker_wlvl.path==levelItem.setup.id)||
-           (mw()->configs.marker_wlvl.bigpath==levelItem.setup.id))
-            continue;
-
-        Items::getItemGFX(&levelItem, tmpI, false, QSize(32,32));
-
-        item = new QListWidgetItem();
-        item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-        item->setText( NULL );
-        item->setData(Qt::UserRole, int(levelItem.setup.id) );
-        item->setToolTip(makeToolTipSimple("Level entry point", levelItem.setup));
-        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-        ui->WLD_LevelList->addItem( item );
+        PGE_DataArray<obj_w_scenery> *array = &scene->m_localConfigScenery;
+        for(int i = 1; i < array->size(); i++)
+        {
+            obj_w_scenery &sceneryItem = (*array)[i];
+            ItemBoxListModel::Element e;
+            Items::getItemGFX(&sceneryItem, e.pixmap, false, QSize(32, 32));
+            e.name = sceneryItem.setup.name.isEmpty() ? QString("scene-%1").arg(sceneryItem.setup.id) : sceneryItem.setup.name;
+            e.description = makeToolTipSimple("Scenery", sceneryItem.setup);
+            e.elementId = sceneryItem.setup.id;
+            e.isCustom = sceneryCustomId.contains(sceneryItem.setup.id);
+            e.isValid = true;
+            m_sceneryModel->addElement(e, sceneryItem.setup.group, sceneryItem.setup.category);
+        }
+        m_sceneryModel->addElementsEnd();
     }
 
-    LogDebugQD("WorldTools -> List of musics");
-    {//Place zero music item <Silence>
-        item = new QListWidgetItem();
-        item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-        item->setText( tr("[Silence]") );
-        item->setData(Qt::UserRole, 0 );
-        item->setToolTip("Empty element" );
-        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-        ui->WLD_MusicList->addItem( item );
-    };
-
-    for(int i=1;i<mw()->configs.main_music_wld.size(); i++)
+    LogDebug("LevelTools -> Fill list of Path cells");
     {
-        obj_music &musicItem = mw()->configs.main_music_wld[i];
-        item = new QListWidgetItem();
-        item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-        item->setText( (musicItem.id==mw()->configs.music_w_custom_id)? customWLabel : musicItem.name );
-        item->setData(Qt::UserRole, int(musicItem.id) );
-        item->setToolTip(QString("ID: %1").arg(musicItem.id));
-        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        QSet<uint64_t> pathCustomId;
+        for(int i = 0; i < scene->m_customPaths.size(); i++)
+        {
+            obj_w_path &paths = *scene->m_customPaths[i];
+            pathCustomId.insert(paths.setup.id);
+        }
 
-        ui->WLD_MusicList->addItem( item );
+        m_pathsModel->addElementsBegin();
+        m_pathsModel->setShowLabels(false);
+        PGE_DataArray<obj_w_path> *array = &scene->m_localConfigPaths;
+        {
+            uint32_t rows = 0;
+            uint32_t cols = 0;
+            for(int i = 1; i < array->size(); i++)
+            {
+                obj_w_path &pathItem = (*array)[i];
+                if(rows < pathItem.setup.row)
+                    rows = pathItem.setup.row;
+                if(cols < pathItem.setup.col)
+                    cols = pathItem.setup.col;
+            }
+            m_pathsModel->setTableMode(true, cols + 1, rows + 1);
+        }
+
+        for(int i = 1; i < array->size(); i++)
+        {
+            obj_w_path &pathItem = (*array)[i];
+            ItemBoxListModel::Element e;
+            Items::getItemGFX(&pathItem, e.pixmap, false, QSize(32, 32));
+            e.name = pathItem.setup.name.isEmpty() ? QString("path-%1").arg(pathItem.setup.id) : pathItem.setup.name;
+            e.description = makeToolTipSimple("Path cell", pathItem.setup);
+            e.elementId = pathItem.setup.id;
+            e.isCustom = pathCustomId.contains(pathItem.setup.id);
+            e.isValid = true;
+            m_pathsModel->addElementCell(pathItem.setup.col, pathItem.setup.row, e, pathItem.setup.group, pathItem.setup.category);
+        }
+        m_pathsModel->addElementsEnd();
     }
 
-    tmpList.clear();
-    tmpGrpList.clear();
+    LogDebug("LevelTools -> Fill list of Level cells");
+    {
+        QSet<uint64_t> levelCustomId;
+        for(int i = 0; i < scene->m_customLevels.size(); i++)
+        {
+            obj_w_scenery &scenery = *scene->m_customLevels[i];
+            levelCustomId.insert(scenery.setup.id);
+        }
 
-    lock_Wgrp=false;
-    lock_Wcat=false;
+        m_levelsModel->addElementsBegin();
+        m_levelsModel->setShowLabels(false);
+
+        PGE_DataArray<obj_w_level> *array = &scene->m_localConfigLevels;
+        for(int i = 0; i < array->size(); i++)
+        {
+            obj_w_level &levelItem = (*array)[i];
+            ItemBoxListModel::Element e;
+            Items::getItemGFX(&levelItem, e.pixmap, false, QSize(32, 32));
+            e.name = levelItem.setup.name.isEmpty() ? QString("level-%1").arg(levelItem.setup.id) : levelItem.setup.name;
+            e.description = makeToolTipSimple("Level entry point", levelItem.setup);
+            e.elementId = levelItem.setup.id;
+            e.isCustom = levelCustomId.contains(levelItem.setup.id);
+            e.isValid = true;
+            m_levelsModel->addElement(e, levelItem.setup.group, levelItem.setup.category);
+        }
+        m_levelsModel->addElementsEnd();
+    }
+
+    LogDebug("LevelTools -> Fill list of Music Boxes");
+    {
+        m_musicboxModel->addElementsBegin();
+        for(int i = 1; i < mw()->configs.main_music_wld.size(); i++)
+        {
+            obj_music &musicItem = mw()->configs.main_music_wld[i];
+            ItemBoxListModel::Element e;
+            e.pixmap = QPixmap(":/images/playmusic.png");
+            e.name = musicItem.name.isEmpty() ? QString("musicbox-%1").arg(musicItem.id) : musicItem.name;
+            e.description = QString("ID: %1").arg(musicItem.id);
+            e.elementId = musicItem.id;
+            e.isCustom = false;
+            e.isValid = true;
+            m_musicboxModel->addElement(e);
+        }
+        m_musicboxModel->addElementsEnd();
+    }
 
     mw()->ui->menuNew->setEnabled(true);
     LogDebugQD("WorldTools -> done");
@@ -290,80 +291,103 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 
 
 
-void WorldItemBox::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
+void WorldItemBox::TerrainTilesTable_itemClicked(const QModelIndex &item)
 {
+    if(!item.isValid())
+        return;//Ignore invalid
     //placeTile
-    if ((mw()->activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
+    if((mw()->activeChildWindow() == MainWindow::WND_World) && (ui->WLD_TilesList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Tile, item->data(Qt::UserRole).toInt());
+        if(!m_terrainModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
+        int id = m_terrainModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Tile, id);
     }
 }
 
 
-void WorldItemBox::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::SceneList_itemClicked(const QModelIndex &item)
 {
+    if(!item.isValid())
+        return;//Ignore invalid
     //placeScenery
-    if ((mw()->activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
+    if((mw()->activeChildWindow() == MainWindow::WND_World) && (ui->WLD_SceneList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Scenery, item->data(Qt::UserRole).toInt());
+        if(!m_sceneryModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
+        int id = m_sceneryModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Scenery, id);
     }
 }
 
-void WorldItemBox::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
+void WorldItemBox::PathsTable_itemClicked(const QModelIndex &item)
 {
+    if(!item.isValid())
+        return;//Ignore invalid
     //placePath
-    if ((mw()->activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
+    if ((mw()->activeChildWindow() == MainWindow::WND_World) && (ui->WLD_PathsList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Path, item->data(Qt::UserRole).toInt());
+        if(!m_pathsModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
+        int id = m_pathsModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Path, id);
     }
 }
 
-void WorldItemBox::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::LevelList_itemClicked(const QModelIndex &item)
 {
+    if(!item.isValid())
+        return;//Ignore invalid
     //placeLevel
-    if ((mw()->activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
+    if ((mw()->activeChildWindow() == MainWindow::WND_World) && (ui->WLD_LevelList->hasFocus()))
     {
-        mw()->SwitchPlacingItem(ItemTypes::WLD_Level, item->data(Qt::UserRole).toInt());
+        if(!m_levelsModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
+        int id = m_levelsModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Level, id);
     }
 }
 
-void WorldItemBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
 {
+    if(!item.isValid())
+        return;//Ignore invalid
     //placeLevel
-    if ((mw()->activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
+    if ((mw()->activeChildWindow() == MainWindow::WND_World) && (ui->WLD_MusicList->hasFocus()))
     {
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit)
+            return;
+        if(!m_musicboxModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+            return;
+        int id = m_musicboxModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
 
         QString customMusicFile;
-        if((unsigned)item->data(Qt::UserRole).toInt()==mw()->configs.music_w_custom_id)
+        if((uint64_t)id == mw()->configs.music_w_custom_id)
         {
-            QString dirPath;
-            WorldEdit * edit = mw()->activeWldEditWin();
-            if(!edit) return;
-
-            dirPath = edit->WldData.meta.path;
-
             if(edit->isUntitled)
             {
                 QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
                 return;
             }
 
-            MusicFileList musicList( dirPath, "" );
-            if( musicList.exec() == QDialog::Accepted )
+            QString dirPath = edit->WldData.meta.path;
+            MusicFileList musicList(dirPath, "");
+            if(musicList.exec() == QDialog::Accepted)
                 customMusicFile = musicList.SelectedFile;
             else
                 return;
         }
 
         WldPlacingItems::MusicSet.music_file = customMusicFile;
-        mw()->SwitchPlacingItem(ItemTypes::WLD_MusicBox, item->data(Qt::UserRole).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_MusicBox, id);
 
         //Play selected music
-        mw()->activeWldEditWin()->currentMusic = item->data(Qt::UserRole).toInt();
-        mw()->activeWldEditWin()->currentCustomMusic = customMusicFile;
+        edit->currentMusic = id;
+        edit->currentCustomMusic = customMusicFile;
         LvlMusPlay::setMusic(LvlMusPlay::WorldMusic,
-                             mw()->activeWldEditWin()->currentMusic,
-                             mw()->activeWldEditWin()->currentCustomMusic);
+                             edit->currentMusic,
+                             edit->currentCustomMusic);
         mw()->setMusic();
     }
 }
