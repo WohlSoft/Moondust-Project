@@ -35,15 +35,15 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, Dialo
     }
     else
     {
-        #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
         this->setWindowIcon(QIcon(":/cat_builder.icns"));
-        #endif
-        #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
         this->setWindowIcon(QIcon(":/cat_builder.ico"));
-        #endif
+#endif
     }
 
-    #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
     {
         if(QtWin::isCompositionEnabled())
@@ -57,14 +57,14 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, Dialo
             QtWin::resetExtendedFrame(this);
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
-
-        switch(dType)
-        {
-            case D_WARN:       PlaySound(L"SystemAsterisk", NULL, SND_ASYNC);break;
-            case D_QUESTION:   PlaySound(L"SystemQuestion", NULL, SND_ASYNC);break;
-        }
     }
-    #endif
+
+    switch(dType)
+    {
+        case D_WARN:       PlaySoundW(L"SystemAsterisk", NULL, SND_ASYNC|SND_NODEFAULT); break;
+        case D_QUESTION:   PlaySoundW(L"SystemQuestion", NULL, SND_ASYNC|SND_NODEFAULT); break;
+    }
+#endif
     switch(dType)
     {
         case D_WARN:       ui->icon->setPixmap(QPixmap(":/warn.png"));break;
