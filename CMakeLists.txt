@@ -283,19 +283,21 @@ if(PGE_USE_LUAJIT)
     add_dependencies(LuaBind_Local LuaJIT_local)
 endif()
 
-if(NOT WIN32)
-    set(PATCH_CMD "patch")
-else()
-    # Use one from Git Bash toolchain, otherwise one from MinGW toolchain will crash
-    set(PATCH_CMD "C:/Program Files/Git/usr/bin/patch.exe")
-endif()
+# Not needed for now
+#if(NOT WIN32)
+#    set(PATCH_CMD "patch")
+#else()
+#    # Use one from Git Bash toolchain, otherwise one from MinGW toolchain will crash
+#    set(PATCH_CMD "C:/Program Files/Git/usr/bin/patch.exe")
+#endif()
 
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
 ExternalProject_Add(
     SDL2_Local
     PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
     URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
-    PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_remove_lib_prefix_on_windows.patch"
+    # This issue has been fixed. Kept commented as example for future neccerity to patch futher SDL2 updates
+    # PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_remove_lib_prefix_on_windows.patch"
     CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
