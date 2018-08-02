@@ -125,7 +125,8 @@ void ConfigPackMiniManager::appendDirList(const std::string& dir)
 
 std::string ConfigPackMiniManager::getFile(const std::string &file, std::string customPath, bool *isReadonly)
 {
-    addSlashToTail(customPath);
+    if(!customPath.empty())
+        addSlashToTail(customPath);
 
     if(!m_is_using)
     {
@@ -134,7 +135,7 @@ std::string ConfigPackMiniManager::getFile(const std::string &file, std::string 
         return customPath + file;
     }
 
-    if(Files::fileExists(customPath + file))
+    if(!customPath.empty() && Files::fileExists(customPath + file))
     {
         if(isReadonly)
             *isReadonly = false;

@@ -74,15 +74,15 @@ static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
     return img;
 }
 
-static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
+static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, FIBITMAP *extMask = nullptr)
 {
     if(!image)
         return;
 
-    if(!Files::fileExists(pathToMask))
+    if(!Files::fileExists(pathToMask) && !extMask)
         return; //Nothing to do
 
-    FIBITMAP *mask = loadImage(pathToMask);
+    FIBITMAP *mask = extMask ? extMask : loadImage(pathToMask);
 
     if(!mask)
         return;//Nothing to do
@@ -126,7 +126,45 @@ static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
             FreeImage_SetPixelColor(image, x, y, &Npix);
         }
     }
-    FreeImage_Unload(mask);
+
+    if(!extMask)
+        FreeImage_Unload(mask);
+}
+
+/**
+ * @brief Generate mask from off RGBA source
+ * @param image [in] Source Image
+ * @param mask [out] Target image to write a mask
+ */
+static void getMaskFromRGBA(FIBITMAP*&image, FIBITMAP *&mask)
+{
+    unsigned int img_w   = FreeImage_GetWidth(image);
+    unsigned int img_h   = FreeImage_GetHeight(image);
+
+    mask = FreeImage_AllocateT(FIT_BITMAP,
+                               img_w, img_h,
+                               FreeImage_GetBPP(image),
+                               FreeImage_GetRedMask(image),
+                               FreeImage_GetGreenMask(image),
+                               FreeImage_GetBlueMask(image));
+
+    RGBQUAD Fpix;
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
+
+    for(unsigned int y = 0; (y < img_h); y++)
+    {
+        for(unsigned int x = 0; (x < img_w); x++)
+        {
+            FreeImage_GetPixelColor(image, x, y, &Fpix);
+
+            uint8_t grey = (255 - Fpix.rgbReserved);
+            Npix.rgbRed  = grey;
+            Npix.rgbGreen = grey;
+            Npix.rgbBlue = grey;
+            Npix.rgbReserved = 0xFF;
+            FreeImage_SetPixelColor(mask,  x, y, &Npix);
+        }
+    }
 }
 
 struct GIFs2PNG_Setup
@@ -221,8 +259,31 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     bool isFail = false;
     bool maskIsExists = Files::fileExists(maskPathIn);
 
-    if(maskIsExists)
+    if(maskIsExists) /* When mask exists, use it */
         mergeBitBltToRGBA(image, maskPathIn);
+    else /* Try to find the PNG as source of the mask */
+    {
+        maskFileIn = Files::changeSuffix(imgFileIn, ".png");
+        maskPathIn = cnf.getFile(maskFileIn);
+        std::cout << ".chkPNG.";
+        if(Files::fileExists(maskPathIn))
+        {
+            FIBITMAP *front = loadImage(maskPathIn);
+            if(front)
+            {
+                FIBITMAP *mask = nullptr;
+                std::cout << ".PNG-AS-MASK.";
+                getMaskFromRGBA(front, mask);
+                FreeImage_Unload(front);
+                mergeBitBltToRGBA(image, "", mask);
+                FreeImage_Unload(mask);
+            }
+            else
+            {
+                std::cout << ".NO-MASK.";
+            }
+        }
+    }
 
     if(image)
     {
