@@ -206,7 +206,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_block.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask);
+                GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask, &blockD->image);
             }
             else
                 GraphicsHelps::loadQImage(tempImg, CustomFile);
@@ -285,7 +285,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_bgo.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &bgoD->image);
             }
             else
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
@@ -392,7 +392,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_npc.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &npcD->image);
             }
             else
                 GraphicsHelps::loadQImage(tempImg, CustomImage);

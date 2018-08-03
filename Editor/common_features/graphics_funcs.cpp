@@ -86,14 +86,16 @@ FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
     return img;
 }
 
-void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask)
+void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *maskFallback)
 {
     if(!image) return;
 
-    if(!QFile::exists(pathToMask))
+    if(!QFile::exists(pathToMask) && !maskFallback)
         return; //Nothing to do.
 
     FIBITMAP *mask = loadImage(pathToMask, true);
+    if(!mask && maskFallback)
+        getMaskFromRGBA(*maskFallback, mask);
 
     if(!mask) return;//Nothing to do.
 
@@ -185,6 +187,55 @@ void GraphicsHelps::mergeToRGBA(QPixmap &img, QImage &mask, QString path, QStrin
     mask = loadQImage(maskpath);
     mergeToRGBA_BitWise(target, mask);
     img.convertFromImage(target);
+}
+
+void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, QImage &mask)
+{
+    unsigned int img_w   = srcimage.width();
+    unsigned int img_h   = srcimage.height();
+
+    QImage image = srcimage.toImage();
+    mask = QImage(img_w, img_h, QImage::Format_ARGB32);
+    QRgb Fpix;
+    for(unsigned int y = 0; (y < img_h); y++)
+    {
+        for(unsigned int x = 0; (x < img_w); x++)
+        {
+            Fpix = image.pixel(x, y);
+            uint32_t grey = (255 - qAlpha(Fpix));
+            mask.setPixel(x, y, qRgba(grey, grey, grey, 0xFF));
+        }
+    }
+}
+
+void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask)
+{
+    unsigned int img_w   = srcimage.width();
+    unsigned int img_h   = srcimage.height();
+
+    QImage image = srcimage.toImage();
+
+    mask = FreeImage_AllocateT(FIT_BITMAP,
+                               img_w, img_h,
+                               32,
+                               FI_RGBA_RED_MASK,
+                               FI_RGBA_GREEN_MASK,
+                               FI_RGBA_BLUE_MASK);
+
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
+
+    for(unsigned int y = 0; (y < img_h); y++)
+    {
+        for(unsigned int x = 0; (x < img_w); x++)
+        {
+            uint8_t grey = (255 - qAlpha(image.pixel(x, ((img_h - 1) - y))));
+            Npix.rgbRed  = grey;
+            Npix.rgbGreen = grey;
+            Npix.rgbBlue = grey;
+            Npix.rgbReserved = 0xFF;
+            FreeImage_SetPixelColor(mask,  x, y, &Npix);
+        }
+    }
 }
 
 //Implementation of Bitwise merging of bit-mask to RGBA image
@@ -346,7 +397,7 @@ QImage GraphicsHelps::loadQImage(QString file)
     }
 }
 
-void GraphicsHelps::loadQImage(QImage &target, QString file, QString maskPath)
+void GraphicsHelps::loadQImage(QImage &target, QString file, QString maskPath, QPixmap *fallbackMask)
 {
     if(file.startsWith(':'))
     {
@@ -360,7 +411,7 @@ void GraphicsHelps::loadQImage(QImage &target, QString file, QString maskPath)
 
         if(img)
         {
-            mergeWithMask(img, maskPath);
+            mergeWithMask(img, maskPath, fallbackMask);
             BYTE *bits = FreeImage_GetBits(img);
             int width  = int(FreeImage_GetWidth(img));
             int height = int(FreeImage_GetHeight(img));

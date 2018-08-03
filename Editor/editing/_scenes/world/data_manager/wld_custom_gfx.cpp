@@ -126,7 +126,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_tile.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &tileD.image);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
@@ -201,7 +201,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_scenery.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &sceneryD.image);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
@@ -275,7 +275,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_path.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &pathD.image);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
@@ -350,7 +350,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_level.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
+                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &levelD.image);
             } else {
                 GraphicsHelps::loadQImage(tempImg, CustomImage);
             }
