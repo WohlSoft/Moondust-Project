@@ -155,6 +155,37 @@ void GraphicsHelps::closeImage(FIBITMAP *img)
     FreeImage_Unload(img);
 }
 
+void GraphicsHelps::getMaskFromRGBA(FIBITMAP *&image, FIBITMAP *&mask)
+{
+    unsigned int img_w   = FreeImage_GetWidth(image);
+    unsigned int img_h   = FreeImage_GetHeight(image);
+
+    mask = FreeImage_AllocateT(FIT_BITMAP,
+                               img_w, img_h,
+                               FreeImage_GetBPP(image),
+                               FreeImage_GetRedMask(image),
+                               FreeImage_GetGreenMask(image),
+                               FreeImage_GetBlueMask(image));
+
+    RGBQUAD Fpix;
+    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
+
+    for(unsigned int y = 0; (y < img_h); y++)
+    {
+        for(unsigned int x = 0; (x < img_w); x++)
+        {
+            FreeImage_GetPixelColor(image, x, y, &Fpix);
+
+            uint8_t grey = (255 - Fpix.rgbReserved);
+            Npix.rgbRed  = grey;
+            Npix.rgbGreen = grey;
+            Npix.rgbBlue = grey;
+            Npix.rgbReserved = 0xFF;
+            FreeImage_SetPixelColor(mask,  x, y, &Npix);
+        }
+    }
+}
+
 SDL_Surface *GraphicsHelps::fi2sdl(FIBITMAP *img)
 {
     int h = static_cast<int>(FreeImage_GetHeight(img));
@@ -165,15 +196,21 @@ SDL_Surface *GraphicsHelps::fi2sdl(FIBITMAP *img)
     return surf;
 }
 
-void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask)
+void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::string pathToMaskFallback)
 {
     if(!image)
         return;
 
-    if(!Files::fileExists(pathToMask))
+    if(!Files::fileExists(pathToMask) && pathToMaskFallback.empty())
         return; //Nothing to do
 
     FIBITMAP *mask = loadImage(pathToMask, true);
+    if(!mask)
+    {
+        FIBITMAP *front = loadImage(pathToMaskFallback, true);
+        getMaskFromRGBA(front, mask);
+        closeImage(front);
+    }
 
     if(!mask)
         return;//Nothing to do

@@ -803,7 +803,7 @@ PGE_Texture GlRenderer::loadTexture(std::string path, std::string maskPath)
     return target;
 }
 
-void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string maskPath)
+void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string maskPath, std::string maskFallbackPath)
 {
     //SDL_Surface * sourceImage;
     FIBITMAP *sourceImage;
@@ -854,6 +854,16 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
         maskMergingTime.start();
         #endif
         GraphicsHelps::mergeWithMask(sourceImage, maskPath);
+        #ifdef DEBUG_BUILD
+        maskElapsed = maskMergingTime.nanoelapsed();
+        #endif
+    }
+    else if(!maskFallbackPath.empty())
+    {
+        #ifdef DEBUG_BUILD
+        maskMergingTime.start();
+        #endif
+        GraphicsHelps::mergeWithMask(sourceImage, "", maskFallbackPath);
         #ifdef DEBUG_BUILD
         maskElapsed = maskMergingTime.nanoelapsed();
         #endif

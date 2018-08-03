@@ -75,6 +75,13 @@ class GraphicsHelps
          */
         static void closeImage(FIBITMAP *img);
 
+        /**
+         * @brief Generate mask from off RGBA source
+         * @param image [in] Source Image
+         * @param mask [out] Target image to write a mask
+         */
+        static void getMaskFromRGBA(FIBITMAP*&image, FIBITMAP *&mask);
+
         /*!
          * \brief Merges mask and foreground image with bit blitting algorithm
          * 1) draw mask over grey-filled image with bitwise AND per each pixel (white pixels are will not change background)
@@ -83,8 +90,9 @@ class GraphicsHelps
          *    white on the mask is a full transparency, black - is a solid pixels area.
          * \param image
          * \param pathToMask
+         * \param pathToMaskFallback
          */
-        static void mergeWithMask(FIBITMAP *image, std::string pathToMask);
+        static void mergeWithMask(FIBITMAP *image, std::string pathToMask, std::string pathToMaskFallback = "");
         /*!
          * \brief Gets metric from image file
          * \param [__in] imageFile Path to image file
