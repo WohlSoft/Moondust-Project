@@ -38,8 +38,8 @@ std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
     if(Files::hasSuffix(name, ".gif"))
     {
         backupName = srcName;
-        Files::changeSuffix(backupName, ".png");
-        backupName.replace(backupName.size() - 3, 3, "png");
+        backupName = Files::changeSuffix(backupName, ".png");
+        //backupName.replace(backupName.size() - 3, 3, "png");
         //find PNG's first!
         std::string tmp = backupName;
         backupName = srcName;
@@ -48,7 +48,7 @@ std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
     else if(Files::hasSuffix(name, ".png"))
     {
         backupName = srcName;
-        Files::changeSuffix(backupName, ".gif");
+        backupName = Files::changeSuffix(backupName, ".gif");
         //backupName.replace(backupName.size()-3, 3, "gif");
     }
 
