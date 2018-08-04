@@ -204,8 +204,8 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
     if(!Files::fileExists(pathToMask) && pathToMaskFallback.empty())
         return; //Nothing to do
 
-    FIBITMAP *mask = loadImage(pathToMask, true);
-    if(!mask)
+    FIBITMAP *mask = pathToMask.empty() ? nullptr : loadImage(pathToMask, true);
+    if(!mask && !pathToMaskFallback.empty())
     {
         FIBITMAP *front = loadImage(pathToMaskFallback, true);
         getMaskFromRGBA(front, mask);

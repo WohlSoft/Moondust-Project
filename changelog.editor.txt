@@ -15,6 +15,7 @@ Editor 0.3.1.14-1-dev
 - Added search and configurable sort into The Tileset Editor
 - Reworked filtering system on Level Item-Box
 - Sizable blocks now supports an animated textures
+- Added support for bitblit mask fallback (using default PNG to regenerate the missing mask)
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)

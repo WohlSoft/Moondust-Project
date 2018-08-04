@@ -80,6 +80,22 @@ tryBackup:
     return target;
 }
 
+std::string CustomDirManager::getDefaultFile(std::string name)
+{
+    std::string target;
+    target = m_mainStuffFullPath + name;
+    if(!Files::fileExists(target))
+        return std::string();
+    return target;
+}
+
+std::string CustomDirManager::getMaskFallbackFile(std::string name)
+{
+    if(Files::hasSuffix(name, ".png"))
+        return getDefaultFile(name);
+    return std::string();
+}
+
 void CustomDirManager::setCustomDirs(std::string path, std::string name, std::string stuffPath)
 {
     m_dirCustom = path + "/" + name;

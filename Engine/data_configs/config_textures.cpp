@@ -38,13 +38,15 @@ int  ConfigManager::getBlockTexture(unsigned long blockID)
     {
         std::string imgFile = Dir_Blocks.getCustomFile(blkSetup->setup.image_n);
         std::string maskFile = Dir_Blocks.getCustomFile(blkSetup->setup.mask_n);
+        std::string maskFallback = Dir_Blocks.getMaskFallbackFile(blkSetup->setup.image_n);
         int id = level_textures.size();
         blkSetup->textureArrayId = id;
         PGE_Texture texture;
         level_textures.push_back(texture);
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         blkSetup->image = &(level_textures[id]);
         blkSetup->textureID = level_textures[id].texture;
@@ -122,13 +124,15 @@ int  ConfigManager::getBgoTexture(unsigned long bgoID)
     {
         std::string imgFile = Dir_BGO.getCustomFile(bgoSetup->setup.image_n);
         std::string maskFile = Dir_BGO.getCustomFile(bgoSetup->setup.mask_n);
+        std::string maskFallback = Dir_BGO.getMaskFallbackFile(bgoSetup->setup.image_n);
         int id = level_textures.size();
         PGE_Texture texture;
         bgoSetup->textureArrayId = id;
         level_textures.push_back(texture);
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         bgoSetup->image = &(level_textures[id]);
         bgoSetup->textureID = level_textures[id].texture;
@@ -185,13 +189,15 @@ int  ConfigManager::getNpcTexture(unsigned long npcID)
     {
         std::string imgFile  = Dir_NPC.getCustomFile(npcSetup->setup.image_n);
         std::string maskFile = Dir_NPC.getCustomFile(npcSetup->setup.mask_n);
+        std::string maskFallback = Dir_NPC.getMaskFallbackFile(npcSetup->setup.image_n);
         int id = level_textures.size();
         npcSetup->textureArrayId = id;
         PGE_Texture texture;
         level_textures.push_back(texture);
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         npcSetup->image = &(level_textures[id]);
         npcSetup->textureID = level_textures[id].texture;
@@ -231,13 +237,15 @@ int ConfigManager::getEffectTexture(unsigned long effectID)
     {
         std::string imgFile = Dir_EFFECT.getCustomFile(effSetup->image_n);
         std::string maskFile = Dir_EFFECT.getCustomFile(effSetup->mask_n);
+        std::string maskFallback = Dir_EFFECT.getMaskFallbackFile(effSetup->image_n);
         int id = level_textures.size();
         effSetup->textureArrayId = id;
         PGE_Texture texture;
         level_textures.push_back(texture);
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         effSetup->image = &(level_textures[id]);
         effSetup->textureID = level_textures[id].texture;
@@ -303,6 +311,7 @@ int  ConfigManager::getLvlPlayerTexture(unsigned long playerID, unsigned long st
             imgFile = playerLvlPath + plr.sprite_folder + "/" + state.image_n;
 
         std::string maskFile = Dir_PlayerLvl.getCustomFile(state.mask_n, &isDefault);
+        std::string maskFallback = Dir_PlayerLvl.getMaskFallbackFile(state.image_n);
 
         if(isDefault)
             maskFile  = playerLvlPath + plr.sprite_folder + "/" + state.mask_n;
@@ -313,7 +322,8 @@ int  ConfigManager::getLvlPlayerTexture(unsigned long playerID, unsigned long st
         level_textures.push_back(texture);
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         state.image = &(level_textures[id]);
         state.textureID = level_textures[id].texture;
@@ -352,6 +362,7 @@ int  ConfigManager::getWldPlayerTexture(unsigned long playerID, unsigned long st
             imgFile = playerWldPath + plr.image_wld_n;
 
         std::string maskFile = Dir_PlayerWld.getCustomFile(plr.mask_wld_n, &isDefault);
+        std::string maskFallback = Dir_NPC.getMaskFallbackFile(plr.image_wld_n);
 
         if(isDefault)
             maskFile  = playerWldPath + plr.mask_wld_n;
@@ -362,7 +373,8 @@ int  ConfigManager::getWldPlayerTexture(unsigned long playerID, unsigned long st
         world_textures.push_back(texture);
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         plr.image_wld = &(world_textures[id]);
         plr.textureID_wld = world_textures[id].texture;
@@ -558,13 +570,15 @@ int  ConfigManager::getTileTexture(unsigned long tileID)
     {
         std::string imgFile = Dir_Tiles.getCustomFile(tileSetup->setup.image_n);
         std::string maskFile = Dir_Tiles.getCustomFile(tileSetup->setup.mask_n);
+        std::string maskFallback = Dir_Tiles.getMaskFallbackFile(tileSetup->setup.image_n);
         int id = world_textures.size();
         tileSetup->textureArrayId = id;
         PGE_Texture texture;
         world_textures.push_back(texture);
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         tileSetup->image        = &(world_textures[id]);
         tileSetup->textureID    = world_textures[id].texture;
@@ -621,13 +635,15 @@ int  ConfigManager::getSceneryTexture(unsigned long sceneryID)
     {
         std::string imgFile = Dir_Scenery.getCustomFile(scenerySetup->setup.image_n);
         std::string maskFile = Dir_Scenery.getCustomFile(scenerySetup->setup.mask_n);
+        std::string maskFallback = Dir_Scenery.getMaskFallbackFile(scenerySetup->setup.image_n);
         int id = world_textures.size();
         scenerySetup->textureArrayId = id;
         PGE_Texture texture;
         world_textures.push_back(texture);
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         scenerySetup->image = &(world_textures[id]);
         scenerySetup->textureID = world_textures[id].texture;
@@ -684,13 +700,15 @@ int  ConfigManager::getWldPathTexture(unsigned long pathID)
     {
         std::string imgFile     = Dir_WldPaths.getCustomFile(pathSetup->setup.image_n);
         std::string maskFile    = Dir_WldPaths.getCustomFile(pathSetup->setup.mask_n);
+        std::string maskFallback = Dir_WldPaths.getMaskFallbackFile(pathSetup->setup.image_n);
         int id = world_textures.size();
         pathSetup->textureArrayId = id;
         PGE_Texture texture;
         world_textures.push_back(texture);
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         pathSetup->image = &(world_textures[id]);
         pathSetup->textureID = world_textures[id].texture;
@@ -748,13 +766,15 @@ int  ConfigManager::getWldLevelTexture(unsigned long levelID)
     {
         std::string imgFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.image_n);
         std::string maskFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.mask_n);
+        std::string maskFallback = Dir_WldLevel.getMaskFallbackFile(lvlSetup->setup.image_n);
         int id = world_textures.size();
         lvlSetup->textureArrayId = id;
         PGE_Texture texture;
         world_textures.push_back(texture);
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
-                                 maskFile
+                                 maskFile,
+                                 maskFallback
                                 );
         lvlSetup->image = &(world_textures[id]);
         lvlSetup->textureID = world_textures[id].texture;

@@ -10,6 +10,7 @@
 - Fixed font manager font ID processing
 - Sizable blocks now supports an animated textures
 - Fixed message box texture border width support
+- Added support for bitblit mask fallback (using default PNG to regenerate the missing mask)
 
 0.3.0
 - Fixed some NPC-AI API properties

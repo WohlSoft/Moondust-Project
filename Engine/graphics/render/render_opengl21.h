@@ -46,7 +46,7 @@ class Render_OpenGL21 : public Render_Base
         virtual void resetViewport();
         virtual void setViewportSize(int w, int h);
         virtual void setViewportSize(float w, float h);
-        virtual void setWindowSize(int w, int h);
+        virtual void setVirtualSurfaceSize(int w, int h);
 
         virtual void flush();
         virtual void repaint();

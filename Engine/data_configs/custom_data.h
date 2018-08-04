@@ -40,10 +40,22 @@ public:
     CustomDirManager(std::string path, std::string name, std::string stuffPath);
     /*!
      * \brief Get custom file path if exist.
-     * \param name Target file name which need to found
+     * \param name Target file name which need to find
      * \return empty string if not exist
      */
     std::string getCustomFile(std::string name, bool *isDefault=0);
+    /**
+     * @brief Get the file from default storage of config pack
+     * @param name Target file name which need to find
+     * @return empty string if not exist
+     */
+    std::string getDefaultFile(std::string name);
+    /**
+     * @brief Get the mask fallback file if default is PNG
+     * @param name Target file name which need to find
+     * @return empty string if not exist
+     */
+    std::string getMaskFallbackFile(std::string name);
     /*!
      * \brief Sets paths where look for a requested files
      * \param path Full path to episode directory

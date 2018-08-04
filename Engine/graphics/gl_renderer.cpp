@@ -76,6 +76,14 @@ int     GlRenderer::m_viewport_h    = 600;
 float   GlRenderer::m_offset_x  = 0.0f;
 float   GlRenderer::m_offset_y  = 0.0f;
 
+static std::string g_ScreenshotPath = std::string();
+
+struct PGE_GL_shoot
+{
+    uint8_t *pixels;
+    GLsizei w, h;
+};
+
 static bool isGL_Error()
 {
     return glGetError() != GL_NO_ERROR;
@@ -779,7 +787,7 @@ bool GlRenderer::init()
     if(!PGE_Window::isReady())
         return false;
 
-    ScreenshotPath = AppPathManager::screenshotsDir() + "/";
+    g_ScreenshotPath = AppPathManager::screenshotsDir() + "/";
     m_isReady = g_renderer->init();
 
     if(m_isReady)
@@ -796,14 +804,17 @@ bool GlRenderer::uninit()
     return g_renderer->uninit();
 }
 
-PGE_Texture GlRenderer::loadTexture(std::string path, std::string maskPath)
+PGE_Texture GlRenderer::loadTexture(std::string path, std::string maskPath, std::string maskFallbackPath)
 {
     PGE_Texture target;
-    loadTextureP(target, path, maskPath);
+    loadTextureP(target, path, maskPath, maskFallbackPath);
     return target;
 }
 
-void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string maskPath, std::string maskFallbackPath)
+void GlRenderer::loadTextureP(PGE_Texture& target,
+                              std::string path,
+                              std::string maskPath,
+                              std::string maskFallbackPath)
 {
     //SDL_Surface * sourceImage;
     FIBITMAP *sourceImage;
@@ -823,7 +834,10 @@ void GlRenderer::loadTextureP(PGE_Texture& target, std::string path, std::string
 
     //Don't load mask if PNG image is used
     if(Files::hasSuffix(path, ".png"))
+    {
         maskPath.clear();
+        maskFallbackPath.clear();
+    }
 
     if(!sourceImage)
     {
@@ -990,13 +1004,6 @@ void GlRenderer::getPixelData(const PGE_Texture *tx, unsigned char *pixelData)
     g_renderer->getPixelData(tx, pixelData);
 }
 
-std::string GlRenderer::ScreenshotPath = "";
-
-struct PGE_GL_shoot
-{
-    uint8_t *pixels;
-    GLsizei w, h;
-};
 
 void GlRenderer::makeShot()
 {
@@ -1114,10 +1121,10 @@ int GlRenderer::makeShot_action(void *_pixels)
         shotImg = temp;
     }
 
-    if(!DirMan::exists(ScreenshotPath))
-        DirMan::mkAbsDir(ScreenshotPath);
+    if(!DirMan::exists(g_ScreenshotPath))
+        DirMan::mkAbsDir(g_ScreenshotPath);
 
-    std::string saveTo = shoot_getTimedString(ScreenshotPath, "png");
+    std::string saveTo = shoot_getTimedString(g_ScreenshotPath, "png");
     pLogDebug("%s %d %d", saveTo.c_str(), shoot->w, shoot->h);
 
     if(FreeImage_HasPixels(shotImg) == FALSE)
@@ -1153,10 +1160,10 @@ void GlRenderer::toggleRecorder()
 {
     if(!g_gif.enabled)
     {
-        if(!DirMan::exists(ScreenshotPath))
-            DirMan::mkAbsDir(ScreenshotPath);
+        if(!DirMan::exists(g_ScreenshotPath))
+            DirMan::mkAbsDir(g_ScreenshotPath);
 
-        std::string saveTo = shoot_getTimedString(ScreenshotPath, "gif");
+        std::string saveTo = shoot_getTimedString(g_ScreenshotPath, "gif");
 
         FILE *gifFile = Files::utf8_fopen(saveTo.data(), "wb");
         if(GifBegin(&g_gif.writer,
@@ -1327,17 +1334,20 @@ void GlRenderer::setViewportSize(int w, int h)
     g_renderer->setViewportSize(w, h);
 }
 
-void GlRenderer::setWindowSize(int w, int h)
+void GlRenderer::setVirtualSurfaceSize(int w, int h)
 {
-    g_renderer->setWindowSize(w, h);
+    g_renderer->setVirtualSurfaceSize(w, h);
 }
 
-void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
+void GlRenderer::renderRect(float x, float y, float w, float h,
+                            GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha,
+                            bool filled)
 {
     g_renderer->renderRect(x, y, w, h, red, green, blue, alpha, filled);
 }
 
-void GlRenderer::renderRectBR(double _left, double _top, double _right, double _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+void GlRenderer::renderRectBR(double _left, double _top, double _right, double _bottom,
+                              GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
     g_renderer->renderRectBR(static_cast<float>(_left),
                              static_cast<float>(_top),

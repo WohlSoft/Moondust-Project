@@ -175,6 +175,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     }
 #endif //0
 
+    GlRenderer::setVirtualSurfaceSize(Width, Height);
     GlRenderer::setViewportSize(Width, Height);
     window = SDL_CreateWindow(WindowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,

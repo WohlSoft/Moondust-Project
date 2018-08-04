@@ -351,11 +351,10 @@ void Render_OpenGL21::setViewportSize(float w, float h)
     viewport_h_half = h / 2.0f;
 }
 
-void Render_OpenGL21::setWindowSize(int w, int h)
+void Render_OpenGL21::setVirtualSurfaceSize(int w, int h)
 {
     window_w = w;
     window_h = h;
-    resetViewport();
 }
 
 void Render_OpenGL21::flush()

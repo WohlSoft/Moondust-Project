@@ -117,7 +117,7 @@ public:
      */
     virtual void resetViewport() = 0;
     virtual void setViewportSize(int w, int h) = 0;
-    virtual void setWindowSize(int w, int h) = 0;
+    virtual void setVirtualSurfaceSize(int w, int h) = 0;
 
     virtual void flush() = 0;
     virtual void repaint() = 0;
@@ -195,7 +195,7 @@ public:
     virtual void setViewport(int, int, int, int) {}
     virtual void resetViewport() {}
     virtual void setViewportSize(int, int) {}
-    virtual void setWindowSize(int, int) {}
+    virtual void setVirtualSurfaceSize(int, int) {}
     virtual void flush() {}
     virtual void repaint() {}
     virtual void setClearColor(float, float, float, float) {}

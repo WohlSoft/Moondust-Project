@@ -315,11 +315,10 @@ void Render_SW_SDL::setViewportSize(float w, float h)
     viewport_h_half = h / 2.0f;
 }
 
-void Render_SW_SDL::setWindowSize(int w, int h)
+void Render_SW_SDL::setVirtualSurfaceSize(int w, int h)
 {
     window_w = w;
     window_h = h;
-    resetViewport();
 }
 
 void Render_SW_SDL::flush()
