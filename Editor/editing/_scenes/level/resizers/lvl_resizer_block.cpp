@@ -37,7 +37,7 @@ void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool ac
         int w = (int)blk->m_data.w;
         int h = (int)blk->m_data.h;
 
-        m_resizeBox = new ItemResizer(QSize(w, h), Qt::blue, 32);
+        m_resizeBox = new ItemResizer(QSize(w, h), Qt::blue, blk->m_localProps.setup.grid);
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(x, y);
         m_resizeBox->type = 2;
