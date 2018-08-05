@@ -36,13 +36,17 @@ void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool ac
         int y = (int)blk->m_data.y;
         int w = (int)blk->m_data.w;
         int h = (int)blk->m_data.h;
+        int gridSize = blk->m_localProps.setup.grid;
 
-        m_resizeBox = new ItemResizer(QSize(w, h), Qt::blue, blk->m_localProps.setup.grid);
+        if(m_opts.grid_override)
+            gridSize = m_opts.customGrid.width();
+
+        m_resizeBox = new ItemResizer(QSize(w, h), Qt::blue, gridSize);
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(x, y);
-        m_resizeBox->type = 2;
-        m_resizeBox->targetItem = targetBlock;
-        m_resizeBox->_minSize = QSizeF(64, 64);
+        m_resizeBox->m_resizerType = ItemResizer::Resizer_Item;
+        m_resizeBox->m_targetItem = targetBlock;
+        m_resizeBox->m_minSize = QSizeF(64, 64);
         this->setFocus(Qt::ActiveWindowFocusReason);
         SwitchEditingMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
@@ -56,11 +60,11 @@ void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool ac
                 #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("BLOCK RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
-                ItemBlock *blk = dynamic_cast<ItemBlock *>(m_resizeBox->targetItem);
+                ItemBlock *blk = dynamic_cast<ItemBlock *>(m_resizeBox->m_targetItem);
                 long x = (long)m_resizeBox->pos().x();
                 long y = (long)m_resizeBox->pos().y();
-                long w = (long)m_resizeBox->_width;
-                long h = (long)m_resizeBox->_height;
+                long w = (long)m_resizeBox->m_width;
+                long h = (long)m_resizeBox->m_height;
                 long oldX = blk->m_data.x;
                 long oldY = blk->m_data.y;
                 long oldW = blk->m_data.w;

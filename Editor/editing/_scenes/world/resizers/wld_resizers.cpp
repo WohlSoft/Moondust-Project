@@ -30,9 +30,9 @@ void WldScene::applyResizers()
 {
     if(m_resizeBox!=NULL )
     {
-        switch(m_resizeBox->type)
+        switch(m_resizeBox->m_resizerType)
         {
-        case 0:
+        case ItemResizer::Resizer_Capturer:
             setScreenshotSelector(false, true);
             break;
         default:
@@ -46,9 +46,9 @@ void WldScene::resetResizers()
 {
     if(m_resizeBox!=NULL )
     {
-        switch(m_resizeBox->type)
+        switch(m_resizeBox->m_resizerType)
         {
-        case 0:
+        case ItemResizer::Resizer_Capturer:
             setScreenshotSelector(false, false);
             break;
         default:

@@ -29,23 +29,23 @@
 
 void LvlScene::applyResizers()
 {
-    if(m_resizeBox!=NULL )
+    if(m_resizeBox != nullptr)
     {
-        switch(m_resizeBox->type)
+        switch(m_resizeBox->m_resizerType)
         {
-        case 4:
+        case ItemResizer::Resizer_Capturer:
             setScreenshotSelector(false, true);
             break;
-        case 3:
+        case ItemResizer::Resizer_PhyzEnvZone:
             setPhysEnvResizer(NULL, false, true);
             break;
-        case 2:
+        case ItemResizer::Resizer_Item:
             setBlockResizer(NULL, false, true);
             break;
-        case 1:
+        case ItemResizer::Resizer_InEventSection:
             setEventSctSizeResizer(-1, false, true);
             break;
-        case 0:
+        case ItemResizer::Resizer_Section:
         default:
             setSectionResizer(false, true);
         }
@@ -55,23 +55,23 @@ void LvlScene::applyResizers()
 
 void LvlScene::resetResizers()
 {
-    if(m_resizeBox!=NULL )
+    if(m_resizeBox != nullptr)
     {
-        switch(m_resizeBox->type)
+        switch(m_resizeBox->m_resizerType)
         {
-        case 4:
+        case ItemResizer::Resizer_Capturer:
             setScreenshotSelector(false, false);
             break;
-        case 3:
+        case ItemResizer::Resizer_PhyzEnvZone:
             setPhysEnvResizer(NULL, false, false);
             break;
-        case 2:
+        case ItemResizer::Resizer_Item:
             setBlockResizer(NULL, false, false);
             break;
-        case 1:
+        case ItemResizer::Resizer_InEventSection:
             setEventSctSizeResizer(-1, false, false);
             break;
-        case 0:
+        case ItemResizer::Resizer_Section:
         default:
             setSectionResizer(false, false);
         }

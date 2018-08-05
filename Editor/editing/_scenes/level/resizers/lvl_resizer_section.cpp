@@ -37,12 +37,16 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         int t = (int)m_data->sections[m_data->CurSection].size_top;
         int r = (int)m_data->sections[m_data->CurSection].size_right;
         int b = (int)m_data->sections[m_data->CurSection].size_bottom;
+        int gridSize = 32;
 
-        m_resizeBox = new ItemResizer(QSize(abs(l - r), abs(t - b)), Qt::green, 32);
+        if(m_opts.grid_override)
+            gridSize = m_opts.customGrid.width();
+
+        m_resizeBox = new ItemResizer(QSize(abs(l - r), abs(t - b)), Qt::green, gridSize);
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(l, t);
-        m_resizeBox->type = 0;
-        m_resizeBox->_minSize = QSizeF(800, 600);
+        m_resizeBox->m_resizerType = ItemResizer::Resizer_Section;
+        m_resizeBox->m_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
         SwitchEditingMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
@@ -58,8 +62,8 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
                 #endif
                 long l = (long)m_resizeBox->pos().x();
                 long t = (long)m_resizeBox->pos().y();
-                long r = l + (long)m_resizeBox->_width;
-                long b = t + (long)m_resizeBox->_height;
+                long r = l + (long)m_resizeBox->m_width;
+                long b = t + (long)m_resizeBox->m_height;
                 long oldL = m_data->sections[m_data->CurSection].size_left;
                 long oldR = m_data->sections[m_data->CurSection].size_right;
                 long oldT = m_data->sections[m_data->CurSection].size_top;

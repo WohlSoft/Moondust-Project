@@ -34,8 +34,8 @@ void WldScene::setScreenshotSelector(bool enabled, bool accept)
         m_resizeBox = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 32 );
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(captutedSize.x(), captutedSize.y());
-        m_resizeBox->type=0;
-        m_resizeBox->_minSize = QSizeF(320, 200);
+        m_resizeBox->m_resizerType = ItemResizer::Resizer_Capturer;
+        m_resizeBox->m_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         m_subWindow->changeCursor(WorldEdit::MODE_Resizing);
@@ -53,8 +53,8 @@ void WldScene::setScreenshotSelector(bool enabled, bool accept)
 
                 captutedSize = QRectF( m_resizeBox->pos().x(),
                                        m_resizeBox->pos().y(),
-                                       m_resizeBox->_width,
-                                       m_resizeBox->_height);
+                                       m_resizeBox->m_width,
+                                       m_resizeBox->m_height);
                 do_signal=true;
             }
             delete m_resizeBox;

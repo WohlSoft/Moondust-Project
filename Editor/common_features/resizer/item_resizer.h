@@ -35,16 +35,29 @@
 class ItemResizer : public QGraphicsRectItem
 {
 public:
-    ItemResizer(QSize size, QColor color = Qt::green, int grid=32);
-    qreal   _width;
-    qreal   _height;
+    ItemResizer(QSize size, QColor color = Qt::green, int grid = 32);
 
-    int type; //Resizer Type: 0 - Section, 1 - selecting of position, 2 - item size
-    QSizeF _minSize;
-    QSizeF _minSize_backup;
-    QGraphicsItem * targetItem;
+    qreal   m_width = 32.0;
+    qreal   m_height = 32.0;
 
-    private:
+    enum ResizerType
+    {
+        Resizer_Section = 0,
+        Resizer_InEventSection = 1,
+        Resizer_Item = 2,
+        Resizer_PhyzEnvZone = 3,
+        Resizer_Capturer = 4,
+    };
+
+    //!Resizer Type: 0 - Section, 1 - selecting of position, 2 - item size
+    int m_resizerType = Resizer_Section;
+
+    QSizeF m_minSize;
+    QGraphicsItem *m_targetItem = nullptr;
+
+    void setGridSize(int gridSize);
+
+private:
 
     virtual QRectF boundingRect() const; ///< must be re-implemented in this class to provide the diminsions of the box to the QGraphicsView
     //virtual void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); ///< must be re-implemented here to pain the box on the paint-event
@@ -61,32 +74,30 @@ public:
 
     void setCornerPositions();
 
-    QPointF _location;
+    QPointF m_location;
 
-    int _grid;
-    int _grid_backup;
+    int m_grid = 1;
 
-    bool _no_grid;
-    bool _no_limit;
+    bool m_no_grid = false;
+    bool m_no_limit = false;
 
-    QPointF _dragStart;
+    QPointF m_dragStart;
 
-    QColor  _resizerColor;
+    QColor  m_resizerColor;
 
-    QPointF _cornerDragStart;
+    QPointF m_cornerDragStart;
 
-    qreal   _drawingWidth;
-    qreal   _drawingHeight;
-    qreal   _drawingOrigenX;
-    qreal   _drawingOrigenY;
+    qreal   m_drawingWidth = 0.0;
+    qreal   m_drawingHeight = 0.0;
+    qreal   m_drawingOrigenX = 0.0;
+    qreal   m_drawingOrigenY = 0.0;
 
-    QPointF ____lastLocation;
-    QPointF ____lastCurLocation;
-    QPointF ____offset;
+    QPointF m____lastLocation;
+    QPointF m____lastCurLocation;
+    QPointF m____offset;
 
-    CornerGrabber*  _corners[8];// 0,1,2,3  - starting at x=0,y=0 and moving clockwise around the box
-
-
+    //! 0,1,2,3  - starting at x=0,y=0 and moving clockwise around the box
+    CornerGrabber *m_corners[8];
 };
 
 #endif // ItemResizer_H

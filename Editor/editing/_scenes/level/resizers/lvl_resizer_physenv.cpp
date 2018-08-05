@@ -36,13 +36,17 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem *targetRect, bool enabled, bool a
         int y = (int)env->m_data.y;
         int w = (int)env->m_data.w;
         int h = (int)env->m_data.h;
+        int gridSize = 16;
 
-        m_resizeBox = new ItemResizer(QSize(w, h), Qt::darkYellow, 16);
+        if(m_opts.grid_override)
+            gridSize = m_opts.customGrid.width();
+
+        m_resizeBox = new ItemResizer(QSize(w, h), Qt::darkYellow, gridSize);
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(x, y);
-        m_resizeBox->type = 3;
-        m_resizeBox->targetItem = targetRect;
-        m_resizeBox->_minSize = QSizeF(16, 16);
+        m_resizeBox->m_resizerType = ItemResizer::Resizer_PhyzEnvZone;
+        m_resizeBox->m_targetItem = targetRect;
+        m_resizeBox->m_minSize = QSizeF(16, 16);
         this->setFocus(Qt::ActiveWindowFocusReason);
 
         SwitchEditingMode(MODE_Resizing);
@@ -54,14 +58,14 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem *targetRect, bool enabled, bool a
         {
             if(accept)
             {
-                ItemPhysEnv *env = dynamic_cast<ItemPhysEnv *>(m_resizeBox->targetItem);
+                ItemPhysEnv *env = dynamic_cast<ItemPhysEnv *>(m_resizeBox->m_targetItem);
                 #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("Water RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
                 long x = (long)m_resizeBox->pos().x();
                 long y = (long)m_resizeBox->pos().y();
-                long w = (long)m_resizeBox->_width;
-                long h = (long)m_resizeBox->_height;
+                long w = (long)m_resizeBox->m_width;
+                long h = (long)m_resizeBox->m_height;
                 long oldX = env->m_data.x;
                 long oldY = env->m_data.y;
                 long oldW = env->m_data.w;

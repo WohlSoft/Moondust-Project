@@ -26,14 +26,14 @@
 // //////////////////////////////////////////////////////////////
 void MainWindow::on_actionGridEn_triggered(bool checked)
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *e = activeLvlEditWin();
         assert(e);
         e->scene->m_opts.grid_snap = checked;
     }
     else
-    if (activeChildWindow()==3)
+    if(activeChildWindow() == WND_World)
     {
         WorldEdit *e = activeWldEditWin();
         assert(e);
@@ -45,7 +45,7 @@ void MainWindow::on_actionGridEn_triggered(bool checked)
 void MainWindow::on_actionShowGrid_triggered(bool checked)
 {
     GlobalSettings::LvlOpts.grid_show = checked;
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *e = activeLvlEditWin();
         assert(e);
@@ -53,7 +53,7 @@ void MainWindow::on_actionShowGrid_triggered(bool checked)
         e->scene->update();
     }
     else
-    if (activeChildWindow()==3)
+    if(activeChildWindow() == WND_World)
     {
         WorldEdit *e = activeWldEditWin();
         assert(e);
@@ -83,7 +83,7 @@ void MainWindow::customGrid(bool)
         GlobalSettings::LvlOpts.customGrid.setHeight(gridSize);
     }
 
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *e = activeLvlEditWin();
         assert(e);
@@ -91,7 +91,7 @@ void MainWindow::customGrid(bool)
         e->scene->m_opts.customGrid = GlobalSettings::LvlOpts.customGrid;
     }
     else
-    if (activeChildWindow()==3)
+    if(activeChildWindow() == WND_World)
     {
         WorldEdit *e = activeWldEditWin();
         assert(e);
@@ -104,7 +104,7 @@ void MainWindow::customGrid(bool)
 void MainWindow::on_actionAnimation_triggered(bool checked)
 {
     GlobalSettings::LvlOpts.animationEnabled = checked;
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *e=activeLvlEditWin(); if(!e) return;
         LvlScene  *s=e->scene; if(!s) return;
@@ -115,7 +115,7 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
         s->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
     }
     else
-    if(activeChildWindow() == 3)
+    if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->m_opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
         if(GlobalSettings::LvlOpts.animationEnabled)
@@ -131,16 +131,15 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
 void MainWindow::on_actionCollisions_triggered(bool checked)
 {
     GlobalSettings::LvlOpts.collisionsEnabled = checked;
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->m_opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
     }
     else
-    if (activeChildWindow()==3)
+    if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->m_opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
     }
-
 }
 
 // //////////////////////////////////////////////////////////////

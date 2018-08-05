@@ -106,11 +106,11 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
     GlobalSettings::lastWinType =   WinType;
 
-    if(WinType==WND_Level)
+    if(WinType == WND_Level)
     {
         emit setSMBX64Strict(lvlWin->LvlData.meta.smbx64strict);
 
-        if( configs.check() )
+        if(configs.check())
         {
             LogCritical("*.INI Configs not loaded");
             return;
@@ -119,8 +119,9 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         if(lvlWin->sceneCreated)
         {
             dock_LvlSectionProps->switchResizeMode(
-                 (lvlWin->scene->m_resizeBox != nullptr)&&(lvlWin->scene->m_resizeBox->type==0)
-                        );
+                 (lvlWin->scene->m_resizeBox != nullptr)&&
+                 (lvlWin->scene->m_resizeBox->m_resizerType == ItemResizer::Resizer_Section)
+            );
         }
 
         zoom->setText(QString::number(lvlWin->getZoom()));
