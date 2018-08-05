@@ -91,6 +91,7 @@ void LvlWarpBox::setSMBX64Strict(bool en)
     // Disalbe/Hide all non-supported in SMBX 1.3 parameters
     ui->WarpTwoWay->setVisible(shown);
     ui->WarpNeedAStarsMsg->setVisible(shown);
+    ui->WarpNeedAStarsMsg_label->setVisible(shown);
     ui->WarpHideStars->setVisible(shown);
     ui->WarpBombNeed->setVisible(shown);
     ui->WarpHideLevelEnterScreen->setVisible(shown);
