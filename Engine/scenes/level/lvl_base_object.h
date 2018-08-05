@@ -319,6 +319,20 @@ class PGE_Phys_Object: public PGE_physBody
             LVLSubTree
         };
 
+        enum FlagTypes
+        {
+            F_LVLUnknown    = (1<<0),
+            F_LVLBlock      = (1<<1),
+            F_LVLBGO        = (1<<2),
+            F_LVLNPC        = (1<<3),
+            F_LVLPlayer     = (1<<4),
+            F_LVLEffect     = (1<<5),
+            F_LVLWarp       = (1<<6),
+            F_LVLSpecial    = (1<<7),
+            F_LVLPhysEnv    = (1<<8),
+            F_LVLSubTree    = (1<<9)
+        };
+
         virtual void update();
         virtual void update(double ticks);
         virtual void render(double x, double y)

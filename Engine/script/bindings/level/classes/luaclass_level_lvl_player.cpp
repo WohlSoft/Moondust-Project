@@ -355,6 +355,47 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
         @tparam bool enableSpriteBlinking Blink sprite of playable character while invincibility is active
         */
         .def("setInvincible", &LVL_Player::setInvincible)
+
+        /***
+        Attack type (AttackType)
+        @section AttackType
+        */
+        .enum_("AttackType")
+        [
+            /***
+            Regular hit attack
+            @field BasePlayer.AttackType_Hit
+            */
+            value("AttackType_Hit", LVL_Player::AttackType::AttackType_Hit),
+            /***
+            Force-destroy found objects, used by "Chunk Norris" cheat attack
+            @field BasePlayer.AttackType_ForceDestroy
+            */
+            value("AttackType_ForceDestroy", LVL_Player::AttackType::AttackType_ForceDestroy),
+            /***
+            User defined types (base value, greater values than AttackType_User are also user values!)
+            @field BasePlayer.AttackType_User
+            */
+            value("AttackType_User", LVL_Player::AttackType::AttackType_User)
+        ]
+        /***
+        Attack objects in the given area
+        @function attackArea
+        @tparam double left Left position relative to player's center
+        @tparam double top Top position relative to player's bottom
+        @tparam double right Right position relative to player's center
+        @tparam double bottom Bottom position relative to player's bottom
+        @tparam int action Attack action (see AttackType enum)
+        @tparam int action Attack type
+        @tparam table filters Array of integers are identifying object types needed to attack:<br>
+        <ul>
+            <li>1 - blocks</li>
+            <li>2 - BGOs</li>
+            <li>3 - NPCs</li>
+            <li>4 - Playable characters</li>
+        </ul>
+        */
+        .def("attackArea", &LVL_Player::lua_attackArea)
         ;
 }
 

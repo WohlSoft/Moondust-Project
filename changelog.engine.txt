@@ -11,6 +11,7 @@
 - Sizable blocks now supports an animated textures
 - Fixed message box texture border width support
 - Added support for bitblit mask fallback (using default PNG to regenerate the missing mask)
+- Added attackArea lua function to playable character which allows players to have melee attacks
 
 0.3.0
 - Fixed some NPC-AI API properties

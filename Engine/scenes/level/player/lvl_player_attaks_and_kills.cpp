@@ -32,30 +32,49 @@ LVL_Player_harm_event::LVL_Player_harm_event() :
 {}
 
 
-void LVL_Player::attack(LVL_Player::AttackDirection _dir)
+void LVL_Player::attackCN(LVL_Player::AttackDirection _dir)
 {
     PGE_RectF attackZone;
 
     switch(_dir)
     {
     case Attack_Up:
-        attackZone.setRect(posCenterX() - 5, top() - 17, 10, 5);
+        attackZone.setRect(25, -17, 10, 5);
         break;
     case Attack_Down:
-        attackZone.setRect(posCenterX() - 5, bottom(), 10, 5);
+        attackZone.setRect(25, 0, 10, 5);
         break;
     case Attack_Forward:
-        if(m_direction >= 0)
-            attackZone.setRect(right(), bottom() - 32, 10, 10);
-        else
-            attackZone.setRect(left() - 10, bottom() - 32, 10, 10);
+        attackZone.setRect(width() / 2, -32, 10, 10);
         break;
     }
+    attackArea(attackZone, AttackType_ForceDestroy, LVL_Npc::DAMAGE_BY_PLAYER_ATTACK, F_LVLBlock|F_LVLNPC);
+}
 
-
+void LVL_Player::attackArea(PGE_RectF area, int action, int type, int filters)
+{
     std::vector<PGE_Phys_Object *> bodies;
-    m_scene->queryItems(attackZone, &bodies);
+    if(m_direction >= 0)
+    {
+        area.setLeft(posCenterX() + area.left());
+        area.setRight(posCenterX() + area.right());
+        area.setTop(bottom() + area.top());
+        area.setBottom(bottom() + area.bottom());
+    }
+    else
+    {
+        double oldLeft = area.left(), oldRight = area.right();
+        area.setLeft(posCenterX() - oldRight);
+        area.setRight(posCenterX() - oldLeft);
+        area.setTop(bottom() + area.top());
+        area.setBottom(bottom() + area.bottom());
+    }
+
+    m_scene->queryItems(area, &bodies);
     int contacts = 0;
+    bool findBlocks = (filters & (F_LVLBlock)) != 0;
+    //bool findBGOs = (filters & (LVLBGO << 1)) != 0;
+    bool findNPCs = (filters & (F_LVLNPC)) != 0;
 
     std::vector<LVL_Block *>    target_blocks;
     std::vector<LVL_Npc *>      target_npcs;
@@ -71,10 +90,12 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         switch(visibleBody->type)
         {
         case PGE_Phys_Object::LVLBlock:
-            target_blocks.push_back(static_cast<LVL_Block *>(visibleBody));
+            if(findBlocks)
+                target_blocks.push_back(static_cast<LVL_Block *>(visibleBody));
             break;
         case PGE_Phys_Object::LVLNPC:
-            target_npcs.push_back(static_cast<LVL_Npc *>(visibleBody));
+            if(findNPCs)
+                target_npcs.push_back(static_cast<LVL_Npc *>(visibleBody));
             break;
         case PGE_Phys_Object::LVLPlayer:
         default:
@@ -87,27 +108,86 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         if(!x) continue;
         if(x->m_destroyed) continue;
         if( ((x->m_blocked[m_filterID] & Block_LEFT) == 0) &&
-            ((x->m_blocked[m_filterID] & Block_RIGHT) == 0) &&
-            (_dir == Attack_Forward))
-            continue;
-        x->hit();
-        if(!x->m_destroyed)
+            ((x->m_blocked[m_filterID] & Block_RIGHT) == 0)/* &&
+            (_dir == Attack_Forward)*/)
+            continue; // Skip non-solid blocks
+        switch(action)
         {
-            m_scene->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
-            PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
+        case AttackType_Hit:
+            x->hit();
+            break;
+        case AttackType_ForceDestroy:
+            x->hit();
+            if(!x->m_destroyed)
+            {
+                m_scene->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
+                PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
+            }
+            x->setDestroyed(true);
+            break;
+        default:
+            break;
         }
-        x->setDestroyed(true);
     }
+
     for(LVL_Npc *x : target_npcs)
     {
         if(!x) continue;
         if(x->isPaused()) continue; //Don't attack NPC with paused physics!
-        if(x->isKilled()) continue;
-        if(x->m_isGenerator) continue;
-        x->doHarm(LVL_Npc::DAMAGE_BY_PLAYER_ATTACK, this);
-        m_scene->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
-        kill_npc(x, NPC_Kicked);
+        if(x->isKilled()) continue; //Also, don't attack dead NPCs, we are not hunting for zombies!
+        if(x->m_isGenerator) continue;//Generator is a saint Pagan God, don't touch it!
+        switch(action)
+        {
+        case AttackType_Hit:
+            x->doHarm(type, this);
+            //TODO: Play this effect via scripts!
+            //m_scene->launchStaticEffectC(75, area.center().x(), area.center().y(), 1, 0, 0, 0, 0);
+            break;
+        case AttackType_ForceDestroy:
+            kill_npc(x, NPC_Kicked);
+            break;
+        }
     }
+}
+
+void LVL_Player::lua_attackArea(double left, double top, double right, double bottom, int action, int type, luabind::adl::object filters)
+{
+    int ltype = luabind::type(filters);
+    std::vector<int> x_filters;
+    int tfilters = F_LVLBlock|F_LVLNPC;
+    if(ltype != LUA_TNIL)
+    {
+        if(ltype != LUA_TTABLE)
+        {
+            luaL_error(filters.interpreter(), "installPlayerInAreaDetector exptected int-array, got %s", lua_typename(filters.interpreter(), ltype));
+            return;
+        }
+        x_filters = luabind_utils::convArrayTo<int>(filters);
+        for(int &filter : x_filters)
+        {
+            switch(filter)
+            {
+            case 1:
+                tfilters |= F_LVLBlock;
+                break;
+            case 2:
+                tfilters |= F_LVLBGO;
+                break;
+            case 3:
+                tfilters |= F_LVLNPC;
+                break;
+            case 4:
+                tfilters |= F_LVLPlayer;
+                break;
+            }
+        }
+    }
+    PGE_RectF r;
+    r.setLeft(left);
+    r.setTop(top);
+    r.setRight(right);
+    r.setBottom(bottom);
+    attackArea(r, action, type, tfilters);
 }
 
 

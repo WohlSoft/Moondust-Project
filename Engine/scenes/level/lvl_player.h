@@ -211,7 +211,29 @@ public:
     };
     bool    m_attackEnabled;
     bool    m_attackPressed;
-    void    attack(AttackDirection _dir);
+    enum AttackType
+    {
+        //! Regular hit
+        AttackType_Hit = 0,
+        //! Force-destroy found objects, used by "Chunk Norris" cheat attack
+        AttackType_ForceDestroy,
+        //! User-defined types (must be last in the list!)
+        AttackType_User
+    };
+
+    /**
+     * @brief "Chuck Norris" Attack [cheat code]
+     * @param _dir Direction of attack (Enum AttackDirection)
+     */
+    void    attackCN(AttackDirection _dir);
+
+    /**
+     * @brief Attack the given area relative to playable character
+     * @param area area relative to playable character's face
+     * @param type Type of attack (AttackType Enum)
+     */
+    void    attackArea(PGE_RectF area, int action, int type = LVL_Npc::DAMAGE_BY_PLAYER_ATTACK, int filters = F_LVLBlock|F_LVLNPC);
+    void    lua_attackArea(double left, double top, double right, double bottom, int action, int type, luabind::adl::object filters);
     /******************Attack*******************/
 
     /************************************************

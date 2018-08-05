@@ -207,12 +207,12 @@ void LVL_Player::update(double tickTime)
                 m_attackPressed = true;
 
                 if(keys.up)
-                    attack(Attack_Up);
+                    attackCN(Attack_Up);
                 else if(keys.down)
-                    attack(Attack_Down);
+                    attackCN(Attack_Down);
                 else
                 {
-                    attack(Attack_Forward);
+                    attackCN(Attack_Forward);
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
                     m_animator.playOnce(MatrixAnimator::RacoonTail, m_direction, 75, true, true, 1);
                 }
