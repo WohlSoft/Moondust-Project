@@ -315,7 +315,8 @@ bool LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     player->setPlayerPointInfo(playerData);
     if(!player->init())
     {
-        delete player;
+        if(!player->m_isLuaPlayer)
+            delete player;//Don't delete lua player
         m_errorMsg = "Failed to initialize playable character!\nSee log file for more information!";
         m_fader.setFade(10, 1.0, 1.0);
         setExiting(0, LvlExit::EXIT_Error);
