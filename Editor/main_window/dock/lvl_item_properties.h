@@ -79,8 +79,6 @@ public slots:
                       bool dontShowToolbox=false);
 
     void refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem=false, bool dont_reset_props=false);
-    void refreshSecondNpcSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false, bool dont_reset_props=false);
-
 
 private slots:
     //Blocks
@@ -115,8 +113,6 @@ private slots:
     void on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked);
     void on_PROPS_NPCSpecialNPC_clicked();
     void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
-    void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
-    void on_PROPS_NPCSpecial2Box_currentIndexChanged(int index);
     void on_PROPS_NpcGenerator_clicked(bool checked);
     void on_PROPS_NPCGenType_currentIndexChanged(int index);
     void on_PROPS_NPCGenTime_valueChanged(double arg1);

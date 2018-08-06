@@ -183,25 +183,6 @@ struct NpcSetup
     //! Special option Spinbox: spining value step
     int32_t         special_spin_value_offset = 0;
 
-    //! Has second special option
-    bool            special_option_2 = false;
-    //! NPC IDs of first special value condition to show second special option as spinbox
-    LongArray       special_2_npc_spin_required;
-    //! NPC IDs of first special value condition to show second special option as spinbox
-    LongArray       special_2_npc_box_required;
-    //! Title of second special option
-    PGEString       special_2_name;
-    //! Type of second special option: 0 combobox, 1 - spin
-    int32_t         special_2_type = 0;
-    //! Second special option combobox entries
-    PGEStringList   special_2_combobox_opts;
-    //! Secodn special option Spinbox: minimal value
-    int32_t         special_2_spin_min = 0;
-    //! Secodn special option Spinbox: maximal value
-    int32_t         special_2_spin_max = 0;
-    //! Second special option Spinbox: spining value step
-    int32_t         special_2_spin_value_offset = 0;
-
     //;game process
     //! [Gameplay] Scores code are will be added to player on beating this NPC
     uint32_t        score = 0;

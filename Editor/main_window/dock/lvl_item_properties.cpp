@@ -479,11 +479,6 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         ui->line_6->hide();
 
-        ui->PROPS_NpcSpecial2title->hide();
-        ui->PROPS_NPCSpecial2Spin->hide();
-        ui->PROPS_NPCSpecial2Box->hide();
-        ui->Line_Special2_sep->hide();
-
         if((npcPtr < 0) && (!dontResetProps))
         {
             LvlPlacingItems::npcSet.msg = "";
@@ -561,8 +556,6 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         //refresh special option 1
         refreshFirstNpcSpecialOption(npc, isPlacingNew, dontResetProps);
-        //refresh special option 2
-        refreshSecondNpcSpecialOption(npc.id, npc.special_data, npc.special_data2, isPlacingNew, dontResetProps);
 
         QString npcmsg = (npc.msg.isEmpty() ? tr("[none]") : npc.msg);
         if(npcmsg.size() > 20)
@@ -1372,85 +1365,6 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
     }
 }
 
-void LvlItemProperties::refreshSecondNpcSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem, bool dont_reset_props)
-{
-    obj_npc &t_npc = mw()->configs.main_npc[npcID];
-
-    ui->PROPS_NpcSpecial2title->hide();
-    ui->PROPS_NPCSpecial2Spin->hide();
-    ui->PROPS_NPCSpecial2Box->hide();
-    ui->Line_Special2_sep->hide();
-
-    if((t_npc.setup.special_option_2) &&
-       ((t_npc.setup.special_2_npc_spin_required.isEmpty()) ||
-        (t_npc.setup.special_2_npc_box_required.isEmpty()) ||
-        (t_npc.setup.special_2_npc_spin_required.contains(spcOpts)) ||
-        (t_npc.setup.special_2_npc_box_required.contains(spcOpts)))
-      )
-    {
-        if(
-            ((t_npc.setup.special_2_npc_box_required.isEmpty()) &&
-             (t_npc.setup.special_2_type == 0))
-            ||
-            (t_npc.setup.special_2_npc_box_required.contains(spcOpts))
-        )
-        {
-            ui->Line_Special2_sep->show();
-            ui->PROPS_NpcSpecial2title->show();
-            ui->PROPS_NpcSpecial2title->setText(t_npc.setup.special_2_name);
-
-            ui->PROPS_NPCSpecial2Box->show();
-            if((newItem) && (!dont_reset_props))
-            {
-                //Reset value to min, if it out of range
-                if((spcOpts2 >= t_npc.setup.special_2_combobox_opts.size()) ||
-                   (spcOpts2 < 0))
-                {
-                    LvlPlacingItems::npcSet.special_data2 = 0;
-                    spcOpts2 = 0;
-                }
-            }
-
-            ui->PROPS_NPCSpecial2Box->clear();
-            for(int i = 0; i < t_npc.setup.special_2_combobox_opts.size(); i++)
-            {
-                ui->PROPS_NPCSpecial2Box->addItem(t_npc.setup.special_2_combobox_opts[i]);
-                if(i == spcOpts2) ui->PROPS_NPCSpecial2Box->setCurrentIndex(i);
-            }
-        }
-        else if(
-            ((t_npc.setup.special_2_npc_spin_required.isEmpty())
-             && (t_npc.setup.special_2_type == 1)) ||
-            (t_npc.setup.special_2_npc_spin_required.contains(spcOpts))
-        )
-        {
-            ui->Line_Special2_sep->show();
-            ui->PROPS_NpcSpecial2title->show();
-            ui->PROPS_NpcSpecial2title->setText(t_npc.setup.special_2_name);
-
-            ui->PROPS_NPCSpecial2Spin->show();
-            if((newItem) && (!dont_reset_props))
-            {
-                //Reset value to min, if it out of range
-                if((spcOpts2 > t_npc.setup.special_2_spin_max) ||
-                   (spcOpts2 < t_npc.setup.special_2_spin_max))
-                {
-                    LvlPlacingItems::npcSet.special_data2 = t_npc.setup.special_2_spin_min;
-                    spcOpts2 = t_npc.setup.special_2_spin_min;
-                }
-            }
-
-            npcSpecSpinOffset_2 = t_npc.setup.special_2_spin_value_offset;
-
-            ui->PROPS_NPCSpecial2Spin->setMinimum(t_npc.setup.special_2_spin_min + npcSpecSpinOffset_2);
-            ui->PROPS_NPCSpecial2Spin->setMaximum(t_npc.setup.special_2_spin_max + npcSpecSpinOffset_2);
-
-            ui->PROPS_NPCSpecial2Spin->setValue(spcOpts2 + npcSpecSpinOffset_2);
-        }
-    }
-    //npc_refreshMinHeight();
-}
-
 void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
 {
     if(LvlItemPropsLock) return;
@@ -1769,25 +1683,19 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked)
 void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
 {
     int npcID = 0;
-    int contID = 0;
-    int spcData2 = 0;
 
     if(npcPtr < 0)
     {
         npcID = LvlPlacingItems::npcSet.contents;
-        contID = LvlPlacingItems::npcSet.id;
-        spcData2 = LvlPlacingItems::npcSet.special_data2;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
-        foreach(QGraphicsItem *targetItem, items1)
+        for(QGraphicsItem *targetItem : items1)
         {
             if((targetItem->data(ITEM_TYPE).toString() == "NPC") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == npcPtr)))
             {
-                contID = ((ItemNPC *)targetItem)->m_data.id;
                 npcID = ((ItemNPC *)targetItem)->m_data.contents;
-                spcData2 = ((ItemNPC *)targetItem)->m_data.special_data2;
                 break;
             }
         }
@@ -1810,14 +1718,12 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
                 LvlPlacingItems::npcSet.contents = selected_npc;
                 LockItemProps = true;
                 refreshFirstNpcSpecialOption(LvlPlacingItems::npcSet);
+                LockItemProps = false;
             }
             else if(ui->PROPS_NPCSpecialNPC == btn)
                 LvlPlacingItems::npcSet.special_data = selected_npc;
-            LockItemProps = true;
-            refreshSecondNpcSpecialOption(contID, selected_npc, spcData2);
-            LockItemProps = false;
         }
-        else if(mw()->activeChildWindow() == 1)
+        else if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelData selData;
             LevelNPC npc;
@@ -1844,10 +1750,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
                     QVariant(selected_npc));
             LockItemProps = true;
             if(items.size() > 0)
-            {
                 refreshFirstNpcSpecialOption(npc);
-                refreshSecondNpcSpecialOption(contID, selected_npc, spcData2);
-            }
             LockItemProps = false;
         }
     }
@@ -1902,79 +1805,6 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
         }
         edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_SPECIAL_DATA, QVariant(index));
     }
-}
-
-void LvlItemProperties::on_PROPS_NPCSpecial2Spin_valueChanged(int arg1)
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
-
-    if(npcPtr < 0)
-        LvlPlacingItems::npcSet.special_data2 = arg1 - npcSpecSpinOffset_2;
-    else if(mw()->activeChildWindow() == 1)
-    {
-        LevelData selData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                LevelNPC npc = ((ItemNPC *)item)->m_data;
-
-                //Inherit preferences from contained NPC if this NPC a container
-                obj_npc &t_npc = getNpcProps(npc, mw());
-
-                if(t_npc.setup.special_2_type != 1) //wrong type, go to next one
-                    continue;
-
-                if(t_npc.setup.special_2_spin_value_offset != npcSpecSpinOffset_2) //wrong offset, go to next one
-                    continue;
-
-                selData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->m_data.special_data2 = arg1 - npcSpecSpinOffset_2;
-                ((ItemNPC *)item)->arrayApply();
-            }
-        }
-        //edit->scene->m_history->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset_2));
-    }
-}
-
-void LvlItemProperties::on_PROPS_NPCSpecial2Box_currentIndexChanged(int index)
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
-
-    if(npcPtr < 0)
-        LvlPlacingItems::npcSet.special_data2 = index;
-    else if(mw()->activeChildWindow() == 1)
-    {
-        LevelData selData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                LevelNPC npc = ((ItemNPC *)item)->m_data;
-
-                //Inherit preferences from contained NPC if this NPC a container
-                obj_npc &t_npc = getNpcProps(npc, mw());
-
-                if(t_npc.setup.special_2_type != 0) //wrong type, go to next one
-                    continue;
-
-                selData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->m_data.special_data2 = index;
-                ((ItemNPC *)item)->arrayApply();
-            }
-        }
-        //edit->scene->m_history->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(index));
-    }
-
-
 }
 
 void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)

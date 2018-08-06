@@ -234,11 +234,20 @@ bool NpcSetup::parse(IniProcessing *setup,
     /*************Manual redefinition of the grid offset if not set******************/
 
     /***************GRID And snap***end***************************/
-    setup->read("have-special", special_option, pMerge(special_option, false));
-    setup->read("special-name", special_name,   pMerge(special_name, "Special option value"));
-    setup->read("special-type", special_type,   pMerge(special_type, 1));
 
-    setup->read("special-combobox-size", combobox_size, 0);
+
+    setup->read("custom-value-enabled", special_option, pMerge(special_option, false));
+    pAlias("have-special", special_option);//Old name
+
+    setup->read("custom-value-name", special_name,   pMerge(special_name, "Special option value"));
+    pAlias("special-name", special_name);//Old name
+
+    setup->read("custom-value-type", special_type,   pMerge(special_type, 1));
+    pAlias("special-type", special_type);//Old name
+
+    setup->read("custom-value-combobox-size", combobox_size, 0);
+    pAlias("special-combobox-size", combobox_size);//Old name
+
     if((combobox_size <= 0) && merge_with)
         special_combobox_opts = merge_with->special_combobox_opts;
     else
@@ -248,43 +257,24 @@ bool NpcSetup::parse(IniProcessing *setup,
 
         for(int j = 0; j < combobox_size; j++)
         {
-            std::string key = "special-option-" + std::to_string(j);
+            std::string key = "custom-value-option-" + std::to_string(j);
+            std::string key_oldname = "special-option-" + std::to_string(j);//Old name
             std::string value;
             setup->read(key.c_str(), value, "");
+            pAlias(key_oldname.c_str(), value);//old name
             special_combobox_opts.push_back(StdToPGEString(value));
         }
     }
 
-    setup->read("special-spin-min", special_spin_min, pMerge(special_spin_min, 0));
-    setup->read("special-spin-max", special_spin_max, pMerge(special_spin_max, 1));
-    setup->read("special-spin-value-offset", special_spin_value_offset, pMerge(special_spin_value_offset, 0));
+    setup->read("custom-value-spin-min", special_spin_min, pMerge(special_spin_min, 0));
+    pAlias("special-spin-min", special_spin_min);//Old name
 
-    /**LEGACY, REMOVE THIS LATER!!!***/
-    setup->read("have-special-2", special_option_2, pMerge(special_option_2, 0));
-    setup->read("special-2-name", special_2_name, pMerge(special_2_name, "Special option value"));
+    setup->read("custom-value-spin-max", special_spin_max, pMerge(special_spin_max, 1));
+    pAlias("special-spin-max", special_spin_max);//Old name
 
-    if(special_option_2)
-    {
-        setup->read("special-2-npc-spin-required",
-                    special_2_npc_spin_required,
-                    pMerge(special_2_npc_spin_required, special_2_npc_spin_required));
-        setup->read("special-2-npc-box-required",
-                    special_2_npc_box_required,
-                    pMerge(special_2_npc_box_required, special_2_npc_box_required));
-    }
+    setup->read("custom-value-spin-value-offset", special_spin_value_offset, pMerge(special_spin_value_offset, 0));
+    pAlias("special-spin-value-offset", special_spin_value_offset);//Old name
 
-    setup->read("special-2-type", special_2_type, 1);
-    setup->read("special-2-combobox-size", combobox_size, 0);
-    for(int j = 0; j < combobox_size; j++)
-    {
-        PGEString value;
-        setup->read(("special-2-option-" + std::to_string(j)).c_str(), value, "0");
-        special_2_combobox_opts.push_back(value);
-    }
-
-    setup->read("special-2-spin-min", special_2_spin_min, 0);
-    setup->read("special-2-spin-max", special_2_spin_max, 1);
-    setup->read("special-2-spin-value-offset", special_2_spin_value_offset, 0);
 
     /*************Build special value combobox***end*****/
     setup->read("score",                score,                  pMerge(score, 0));
