@@ -46,7 +46,7 @@ static void postMixCallback(void *udata,
         p_audioState.sCount += len/4;
 
         // (Approximate) sample count for only when music is playing
-        if( (Mix_PlayingMusic() == 1) && (Mix_PausedMusic() == 0) )
+        if(PGE_MusPlayer::isPlaying() && !PGE_MusPlayer::isPaused())
         {
             p_audioState.musSCount += len/4;
         }

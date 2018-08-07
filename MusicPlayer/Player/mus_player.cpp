@@ -71,7 +71,7 @@ namespace PGE_MusicPlayer
     void MUS_stopMusic()
     {
         g_skipPlayList = true;
-        Mix_HaltMusic();
+        Mix_HaltMusicStream(play_mus);
         g_skipPlayList = false;
     }
 
@@ -230,7 +230,7 @@ namespace PGE_MusicPlayer
      */
     void MUS_changeVolume(int volume)
     {
-        Mix_VolumeMusic(volume);
+        Mix_VolumeMusicStream(play_mus, volume);
         DebugLog(QString("Mix_VolumeMusic: %1\n").arg(volume));
     }
 

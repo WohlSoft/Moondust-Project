@@ -34,7 +34,7 @@ void MusPlayerBase::on_fmbank_currentIndexChanged(int index)
     Mix_ADLMIDI_setBankID(index);
 #endif
 
-    if(Mix_PlayingMusic())
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
     {
         if(PGE_MusicPlayer::type == MUS_MID)
         {

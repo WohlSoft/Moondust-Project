@@ -536,18 +536,18 @@ void MusPlayer_Qt::on_stop_clicked()
 
 void MusPlayer_Qt::on_play_clicked()
 {
-    if(Mix_PlayingMusic())
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
     {
-        if(Mix_PausedMusic())
+        if(Mix_PausedMusicStream(PGE_MusicPlayer::play_mus))
         {
-            Mix_ResumeMusic();
+            Mix_ResumeMusicStream(PGE_MusicPlayer::play_mus);
             ui->play->setToolTip(tr("Pause"));
             ui->play->setIcon(QIcon(":/buttons/pause.png"));
             return;
         }
         else
         {
-            Mix_PauseMusic();
+            Mix_PauseMusicStream(PGE_MusicPlayer::play_mus);
             ui->play->setToolTip(tr("Resume"));
             ui->play->setIcon(QIcon(":/buttons/play.png"));
             return;
@@ -668,7 +668,7 @@ void MusPlayer_Qt::on_mididevice_currentIndexChanged(int index)
     switchMidiDevice(index);
     adjustSize();
 
-    if(Mix_PlayingMusic())
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
     {
         if(PGE_MusicPlayer::type == MUS_MID)
         {
@@ -681,7 +681,7 @@ void MusPlayer_Qt::on_mididevice_currentIndexChanged(int index)
 void MusPlayer_Qt::on_trackID_editingFinished()
 {
     #ifdef SDL_MIXER_X
-    if(Mix_PlayingMusic())
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
     {
         if((PGE_MusicPlayer::type == MUS_GME) && (m_prevTrackID != ui->trackID->value()))
         {
@@ -771,9 +771,9 @@ void MusPlayer_Qt::on_musicPosition_valueChanged(int value)
 {
     if(m_positionWatcherLock)
         return;
-    if(Mix_PlayingMusic())
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
     {
-        Mix_SetMusicPosition((double)value);
+        Mix_SetMusicStreamPosition(PGE_MusicPlayer::play_mus, (double)value);
         ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)value).toUTC().toString("hh:mm:ss"));
     }
 }
