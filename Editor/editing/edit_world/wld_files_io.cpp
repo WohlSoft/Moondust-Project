@@ -339,6 +339,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
         modifystate                 = WldData.metaData.crash.modifyed;
         untitledstate               = WldData.metaData.crash.untitled;
         isUntitled                  = WldData.metaData.crash.untitled;
+        WldData.meta.smbx64strict   = WldData.metaData.crash.strictModeSMBX64;
         WldData.meta.RecentFormat        = WldData.metaData.crash.fmtID;
         WldData.meta.RecentFormatVersion = WldData.metaData.crash.fmtVer;
         WldData.meta.filename            = WldData.metaData.crash.filename;
@@ -375,7 +376,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     progress.setMinimumDuration(0);
     progress.setAutoClose(false);
 
-    if(! DrawObjects(progress))
+    if(!DrawObjects(progress))
     {
         WldData.meta.modified = false;
         this->close();

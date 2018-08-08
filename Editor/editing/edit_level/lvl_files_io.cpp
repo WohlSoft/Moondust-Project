@@ -451,6 +451,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
         LvlData.meta.RecentFormat        = LvlData.metaData.crash.fmtID;
         LvlData.meta.RecentFormatVersion = LvlData.metaData.crash.fmtVer;
         isUntitled                  = LvlData.metaData.crash.untitled;
+        LvlData.meta.smbx64strict   = LvlData.metaData.crash.strictModeSMBX64;
         LvlData.meta.filename            = LvlData.metaData.crash.filename;
         LvlData.meta.path                = LvlData.metaData.crash.path;
         curFName                    = LvlData.metaData.crash.fullPath;

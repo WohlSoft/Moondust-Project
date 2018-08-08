@@ -294,6 +294,7 @@ void CrashHandler::attemptCrashsave()
             lvl.metaData.crash.used = true;
             lvl.metaData.crash.untitled = lvl.meta.untitled;
             lvl.metaData.crash.modifyed = lvl.meta.modified;
+            lvl.metaData.crash.strictModeSMBX64 = lvl.meta.smbx64strict;
             lvl.metaData.crash.fmtID    = lvl.meta.RecentFormat;
             lvl.metaData.crash.fmtVer   = lvl.meta.RecentFormatVersion;
             lvl.metaData.crash.filename = lvl.meta.filename;
@@ -337,6 +338,7 @@ void CrashHandler::attemptCrashsave()
             wld.metaData.crash.used = true;
             wld.metaData.crash.untitled = wld.meta.untitled;
             wld.metaData.crash.modifyed = wld.meta.modified;
+            wld.metaData.crash.strictModeSMBX64 = wld.meta.smbx64strict;
             wld.metaData.crash.fmtID    = wld.meta.RecentFormat;
             wld.metaData.crash.fmtVer   = wld.meta.RecentFormatVersion;
             wld.metaData.crash.filename = wld.meta.filename;
