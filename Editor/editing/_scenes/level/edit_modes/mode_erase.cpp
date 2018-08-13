@@ -104,13 +104,18 @@ void LVL_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(!s->m_overwritedItems.blocks.isEmpty()||
         !s->m_overwritedItems.bgo.isEmpty()||
-        !s->m_overwritedItems.npc.isEmpty() )
+        !s->m_overwritedItems.npc.isEmpty()||
+        !s->m_overwritedItems.physez.isEmpty()||
+        !s->m_overwritedItems.doors.isEmpty() )
     {
         s->m_history->addRemove(s->m_overwritedItems);
         s->m_overwritedItems.blocks.clear();
         s->m_overwritedItems.bgo.clear();
         s->m_overwritedItems.npc.clear();
+        s->m_overwritedItems.physez.clear();
+        s->m_overwritedItems.doors.clear();
     }
+
     QList<QGraphicsItem*> selectedList = s->selectedItems();
 
     // check for grid snap
