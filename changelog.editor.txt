@@ -19,6 +19,7 @@ Editor 0.3.1.14-1-dev
 - Resize box's grid size is now affecting by the grid override feature.
 - Strict SMBX64 mode will be kept when restoring files after crash
 - Fixed the spam of physical environment zones caused by history undo and redo
+- Added support for grid offset for blocks
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)

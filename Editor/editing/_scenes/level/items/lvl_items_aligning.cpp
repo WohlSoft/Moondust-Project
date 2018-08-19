@@ -70,6 +70,8 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
             ItemBlock* item = dynamic_cast<ItemBlock *>(it);
             sourcePos = QPoint(  item->m_data.x, item->m_data.y);
             gridSize  = item->m_gridSize;
+            offsetX =  item->m_gridOffsetX;
+            offsetY =  item->m_gridOffsetY;
         }
         else
         if( ObjType == "BGO")

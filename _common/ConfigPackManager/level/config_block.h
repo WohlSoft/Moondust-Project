@@ -54,7 +54,11 @@ struct BlockSetup
     //! Understandible name of element
     PGEString       name;
     //! Alignment grid size
-    unsigned int    grid = 32;
+    uint32_t        grid = 32;
+    //! Alignment grid offset X in pixels
+    int32_t         grid_offset_x = 0;
+    //! Alignment grid offset Y in pixels
+    int32_t         grid_offset_y = 0;
     //! Filter group name
     PGEString       group = "_NoGroup";
     //! Filter category name

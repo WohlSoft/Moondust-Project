@@ -103,7 +103,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             }
 
             LvlPlacingItems::gridSz = blockC.setup.grid;
-            LvlPlacingItems::gridOffset = QPoint(0, 0);
+            LvlPlacingItems::gridOffset = QPoint(blockC.setup.grid_offset_x,
+                                                 blockC.setup.grid_offset_y);
 
             if( (itemID != LvlPlacingItems::blockSet.id) || (m_placingItemType!=PLC_Block) )
                 LvlPlacingItems::blockSet.layer = "Default";

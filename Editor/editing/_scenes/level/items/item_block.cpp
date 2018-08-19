@@ -743,6 +743,8 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
         m_localProps = (*mergedSet);
         m_sizable = m_localProps.setup.sizable;
         m_gridSize = m_localProps.setup.grid;
+        m_gridOffsetX = m_localProps.setup.grid_offset_x;
+        m_gridOffsetY = m_localProps.setup.grid_offset_y;
 
         if(m_localProps.setup.sizable)
         {

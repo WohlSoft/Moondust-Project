@@ -383,6 +383,8 @@ void LVL_ModeSelect::setItemSourceData(QGraphicsItem *it, QString ObjType)
     {
         sourcePos = QPoint(dynamic_cast<ItemBlock *>(it)->m_data.x, dynamic_cast<ItemBlock *>(it)->m_data.y);
         gridSize = dynamic_cast<ItemBlock *>(it)->m_gridSize;
+        offsetX = dynamic_cast<ItemBlock *>(it)->m_gridOffsetX;
+        offsetY = dynamic_cast<ItemBlock *>(it)->m_gridOffsetY;
         //WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
     }
     else if(ObjType == "BGO")
