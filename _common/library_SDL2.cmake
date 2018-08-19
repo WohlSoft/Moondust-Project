@@ -1,7 +1,7 @@
+set(SDL2_VIA_AUTOTOOLS 0)
 
 if(HAIKU OR ANDROID)
     set(SDL2_VIA_AUTOTOOLS 1)
-    message("== SDL2 will be built through Autotools!")
 endif()
 
 # Not needed for now
@@ -17,6 +17,7 @@ if(SDL2_VIA_AUTOTOOLS)
     # ============================================================
     # Autotools build of SDL2 on platforms where CMake build is incomplete or not supported
     # ============================================================
+    message("== SDL2 will be built through Autotools!")
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-AM

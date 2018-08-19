@@ -1,20 +1,6 @@
 
 # Note: You must also include "library_AudioCodecs.cmake" too!
 
-if(WIN32)
-    set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)
-else()
-    set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT ON)
-endif()
-
-option(PGE_STATIC_SDLMIXER "Prefer static assembly of SDL Mixer X and libraries" ${PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT})
-
-if(PGE_STATIC_SDLMIXER)
-    set(PGE_SHARED_SDLMIXER OFF)
-else()
-    set(PGE_SHARED_SDLMIXER ON)
-endif()
-
 # SDL Mixer X - an audio library, fork of SDL Mixer
 ExternalProject_Add(
     SDLMixerX_Local

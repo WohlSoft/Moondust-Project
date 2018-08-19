@@ -125,6 +125,21 @@ include(_common/library_luajit.cmake)
 include(_common/library_luabind.cmake)
 include(_common/library_SDL2.cmake)
 include(_common/library_AudioCodecs.cmake)
+
+if(WIN32)
+    set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)
+else()
+    set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT ON)
+endif()
+
+option(PGE_STATIC_SDLMIXER "Prefer static assembly of SDL Mixer X and libraries" ${PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT})
+
+if(PGE_STATIC_SDLMIXER)
+    set(PGE_SHARED_SDLMIXER OFF)
+else()
+    set(PGE_SHARED_SDLMIXER ON)
+endif()
+
 include(_common/library_SDLMixerX.cmake)
 
 # Build dependent libraries only. Workaround for Ninja
