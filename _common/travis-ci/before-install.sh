@@ -79,11 +79,11 @@ then
 elif [ $TRAVIS_OS_NAME == osx ];
 then
 
-    QT_VER=5.10.0
+    QT_VER=5.11.1
     export PATH=/Users/StaticQt/$QT_VER/bin:/Users/StaticQt/$QT_VER/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
     #source _common/travis-ci/_osx_env.sh
-    QtCacheFolder=qtcache5100
-    QtTarballName=qt-5.10.0-static-macosx-10-12-6.tar.bz2
+    QtCacheFolder=qtcache5111
+    QtTarballName=qt-5-11-1-static-macosx-10-13-6.tar.bz2
 
 # Try out the caching thing (if caching is works, downloading must not be happen)
     if [ ! -d /Users/StaticQt/$QtCacheFolder ]
