@@ -117,15 +117,6 @@ endif()
 # Unix2Dos utility to converyt and install text files for Windows platform
 include(_common/tool_unix2dos.cmake)
 
-# Dependent libraries
-include(_common/library_FreeImage.cmake)
-include(_common/library_FreeType.cmake)
-include(_common/library_sqlite.cmake)
-include(_common/library_luajit.cmake)
-include(_common/library_luabind.cmake)
-include(_common/library_SDL2.cmake)
-include(_common/library_AudioCodecs.cmake)
-
 if(WIN32)
     set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)
 else()
@@ -140,6 +131,14 @@ else()
     set(PGE_SHARED_SDLMIXER ON)
 endif()
 
+# Dependent libraries
+include(_common/library_FreeImage.cmake)
+include(_common/library_FreeType.cmake)
+include(_common/library_sqlite.cmake)
+include(_common/library_luajit.cmake)
+include(_common/library_luabind.cmake)
+include(_common/library_SDL2.cmake)
+include(_common/library_AudioCodecs.cmake)
 include(_common/library_SDLMixerX.cmake)
 
 # Build dependent libraries only. Workaround for Ninja
