@@ -14,6 +14,7 @@ MAKE_CPUS_COUNT=4
 CMAKE_GENERATOR="Unix Makefiles"
 flag_debugThisScript=false
 flag_debugDependencies=false
+flag_pack_src=false
 flag_cmake_it=false
 flag_cmake_it_ninja=false
 flag_cmake_deploy=false
@@ -44,15 +45,16 @@ do
             printf " \E[1;4m--help\E[0m           - Print this manual\n"
             printf " \E[1;4mldoc\E[0m             - Make lua documentation\n"
             printf " \E[1;4mcmake-it\E[0m         - Run build through experimental alternative build on CMake\n"
+            printf " \E[1;4mpack-src\E[0m         - Create the source code archive (git-archive-all is required!)'\n"
             echo ""
 
             echo "--- Flags ---"
             printf " \E[1;4mno-pause\E[0m         - Don't pause script on completion'\n"
             printf " \E[1;4msilent-make\E[0m      - Don't print build commands for each building file\n"
-            printf " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
             printf " \E[1;4mdebug\E[0m            - Run build in debug configuration'\n"
             printf " \E[1;4mninja\E[0m            - Use Ninja build system (CMake only build)'\n"
             printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed (CMake only build)'\n"
+            printf " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
             if [[ ! -f /usr/bin/ccache && ! -f /bin/ccache && ! -f /usr/local/bin/ccache ]]; then
                 printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
             fi
@@ -94,6 +96,9 @@ do
             ;;
         silent-make)
                 MAKE_EXTRA_ARGS="${MAKE_EXTRA_ARGS} -s"
+            ;;
+        pack-src)
+                flag_pack_src=true
             ;;
         cmake-it)
                 flag_cmake_it=true
@@ -399,6 +404,28 @@ do
             ;;
     esac
 done
+
+# ===== Source code packer =====
+if $flag_pack_src ; then
+    if [ ! -d bin-archives ]; then
+        mkdir bin-archives
+    fi
+
+    echo "Packing source code..."
+    git archive-all -v --force-submodules bin-archives/pge-project-full-src.tar.bz2
+    checkState
+
+    printLine "Packed!" "\E[0;42;37m" "\E[0;32m"
+    cd $bak
+    if $flag_pause_on_end ; then
+        pause
+    fi
+
+    exit 0;
+fi
+
+
+# ===== Build project =====
 
 if $flag_debug_build ; then
     echo "==DEBUG BUILD!=="
