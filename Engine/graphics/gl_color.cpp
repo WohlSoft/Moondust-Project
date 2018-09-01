@@ -16,24 +16,47 @@ struct gl_RGBA
 typedef std::unordered_map<std::string, gl_RGBA> ColorNamesHash;
 static const ColorNamesHash s_ColorNames =
 {
-    {"transparent", {0.0, 0.0, 0.0, 1.0}},
+    {"transparent", {0.0, 0.0, 0.0, 0.0}},
+    {"alphablack",  {0.0, 0.0, 0.0, 0.0}},
+    
     {"white",       {1.0, 1.0, 1.0, 1.0}},
     {"black",       {0.0, 0.0, 0.0, 1.0}},
     {"red",         {1.0, 0.0, 0.0, 1.0}},
-    {"darkred",     {0.5, 0.0, 0.0, 1.0}},
     {"green",       {0.0, 1.0, 0.0, 1.0}},
-    {"darkgreen",   {0.0, 0.5, 0.0, 1.0}},
     {"blue",        {0.0, 0.0, 1.0, 1.0}},
-    {"darkblue",    {0.0, 0.0, 0.5, 1.0}},
     {"cyan",        {0.0, 1.0, 1.0, 1.0}},
-    {"darkcyan",    {0.0, 0.5, 0.5, 1.0}},
     {"magenta",     {1.0, 0.0, 1.0, 1.0}},
-    {"darkmagenta", {0.5, 0.0, 0.5, 1.0}},
+
     {"yellow",      {1.0, 1.0, 0.0, 1.0}},
-    {"darkyellow",  {0.5, 0.5, 0.0, 1.0}},
     {"gray",        {0.625, 0.625, 0.625, 1.0}},
+    {"grey",        {1.0, 0.95,0.4, 1.0}},
+    {"pink",        {1.0, 0.45,0.67, 1.0}},
+    {"canary",      {1.0, 0.45,0.67, 1.0}},    
+    {"purple",      {0.67,0.4, 0.67, 1.0}},
+    {"orange",      {1.0, 0.55,0.33, 1.0}},
+    {"teal",        {0.0, 0.67,0.6,  1.0}},
+    {"maroon",      {0.45,0.0, 0.0,  1.0}},
+    {"brown",       {0.5, 0.3, 0.0,  1.0}},
+
+    {"darkred",     {0.5, 0.0, 0.0, 1.0}},
+    {"darkcyan",    {0.0, 0.5, 0.5, 1.0}},
+    {"darkmagenta", {0.5, 0.0, 0.5, 1.0}},
+    {"darkyellow",  {0.5, 0.5, 0.0, 1.0}},
     {"darkgray",    {0.5, 0.5, 0.5, 1.0}},
-    {"lightgray",   {0.75, 0.75, 0.75, 1.0}}
+    {"darkgrey",    {0.5, 0.5, 0.5, 1.0}},
+    {"darkblue",    {0.0, 0.0, 0.5, 1.0}},
+    {"darkgreen",   {0.0, 0.5, 0.0, 1.0}},
+    {"darkbrown",   {0.3, 0.25,0.25,1.0}},
+
+    {"lightred",    {1.0, 0.5, 0.5, 1.0}},
+    {"lightcyan",   {0.5, 1.0, 1.0, 1.0}},
+    {"lightmagenta",{1.0, 0.5, 1.0, 1.0}},
+    {"lightyellow", {1.0, 1.0, 0.5, 1.0}},
+    {"lightgray",   {0.75, 0.75, 0.75, 1.0}},
+    {"lightgrey",   {0.75, 0.75, 0.75, 1.0}},
+    {"lightblue",   {0.2, 0.8, 1.0, 1.0}},
+    {"lightgreen",  {0.5, 0.8, 0.6, 1.0}},
+    {"lightbrown",  {0.5, 0.3, 0.0, 1.0}}
 };
 
 GlColor::GlColor()
@@ -112,16 +135,17 @@ void GlColor::setRgba(std::string rgba)
         if(rgba[0] == '#')
         {
             m_a = 1.0;
+
             if(rgba.size() == 4)
             {
                 // 0 123
-                m_r = static_cast<double>(std::strtol( rgba.substr(1, 1).c_str(), NULL, 16)) / 255.0;
-                m_g = static_cast<double>(std::strtol( rgba.substr(2, 1).c_str(), NULL, 16)) / 255.0;
-                m_b = static_cast<double>(std::strtol( rgba.substr(3, 1).c_str(), NULL, 16)) / 255.0;
+                m_r = static_cast<double>(std::strtol( rgba.substr(1, 1).c_str(), NULL, 16)) / 15.0;
+                m_g = static_cast<double>(std::strtol( rgba.substr(2, 1).c_str(), NULL, 16)) / 15.0;
+                m_b = static_cast<double>(std::strtol( rgba.substr(3, 1).c_str(), NULL, 16)) / 15.0;
                 return;
             }
 
-            if(rgba.size() == 9)//case 9:
+            if(rgba.size() == 9)
             {
                 // 0 12 34 56 78
                 m_a = static_cast<double>(std::strtol( rgba.substr(7, 2).c_str(), NULL, 16)) / 255.0;
@@ -133,6 +157,28 @@ void GlColor::setRgba(std::string rgba)
                 m_r = static_cast<double>(std::strtol( rgba.substr(1, 2).c_str(), NULL, 16)) / 255.0;
                 m_g = static_cast<double>(std::strtol( rgba.substr(3, 2).c_str(), NULL, 16)) / 255.0;
                 m_b = static_cast<double>(std::strtol( rgba.substr(5, 2).c_str(), NULL, 16)) / 255.0;
+                return;
+            }
+
+            setRgba(0.0, 0.0, 0.0, 1.0);
+            return;
+        }
+        else if((rgba.size() > 2) && (rgba[0] == '0') && (rgba[1] == 'x'))
+        {
+            m_a = 1.0;
+
+            if(rgba.size() == 10)
+            {
+                // 01 23 45 67 89
+                m_a = static_cast<double>(std::strtol( rgba.substr(8, 2).c_str(), NULL, 16)) / 255.0;
+            }
+            
+            if((rgba.size() == 8) || (rgba.size() == 10))
+            {
+                // 01 23 45 67
+                m_r = static_cast<double>(std::strtol( rgba.substr(2, 2).c_str(), NULL, 16)) / 255.0;
+                m_g = static_cast<double>(std::strtol( rgba.substr(4, 2).c_str(), NULL, 16)) / 255.0;
+                m_b = static_cast<double>(std::strtol( rgba.substr(6, 2).c_str(), NULL, 16)) / 255.0;
                 return;
             }
 

@@ -40,6 +40,7 @@ else()
     # ============================================================
     # CMake build of SDL2 is a best choice for most of platforms
     # ============================================================
+    message("== SDL2 shared: ${PGE_SHARED_SDLMIXER}")
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
