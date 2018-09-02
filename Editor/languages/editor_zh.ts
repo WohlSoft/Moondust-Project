@@ -949,6 +949,10 @@ Please save them before doing anything else.</source>
         <source>Does a segmentation violation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportToImage</name>
@@ -1459,6 +1463,59 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemBoxListModel</name>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uniform item sizes view</source>
+        <comment>Align elements inside of Item Box list in uniform view</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show custom elements</source>
+        <comment>Show custom elements only in Item Box List</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show standard elements</source>
+        <comment>Show standard elements only in Item Box List</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2081,19 +2138,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>[all]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2455,22 +2500,6 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uniform icon size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Group:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2488,6 +2517,14 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5076,10 +5113,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>[custom]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6534,6 +6567,10 @@ The maximum number of Music Boxes is %2.</source>
         <source>Debug</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Initializing tileset categories...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtBoolEdit</name>
@@ -7059,7 +7096,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
 </context>
 <context>
-    <name>TilesetConfigureDialog</name>
+    <name>TilesetEditor</name>
     <message>
         <source>Tileset Editor</source>
         <translation type="unfinished"></translation>
@@ -7138,6 +7175,49 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Show default only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7224,10 +7304,6 @@ If you wish to create level/world specific tilesets with using of custom graphic
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Category:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7304,6 +7380,10 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Filename:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category order weight</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8193,10 +8273,6 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Music Box</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

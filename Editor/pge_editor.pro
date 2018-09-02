@@ -375,7 +375,7 @@ SOURCES += \
     tools/math/blocksperseconddialog.cpp \
     tools/smart_import/smartimporter.cpp \
     tools/tilesets/piecesmodel.cpp \
-    tools/tilesets/tilesetconfiguredialog.cpp \
+    tools/tilesets/tileset_editor.cpp \
     tools/tilesets/tileset.cpp \
     tools/tilesets/tilesetgroupeditor.cpp \
     tools/tilesets/tilesetitembutton.cpp
@@ -563,7 +563,7 @@ HEADERS  += \
     tools/math/blocksperseconddialog.h \
     tools/smart_import/smartimporter.h \
     tools/tilesets/piecesmodel.h \
-    tools/tilesets/tilesetconfiguredialog.h \
+    tools/tilesets/tileset_editor.h \
     tools/tilesets/tilesetgroupeditor.h \
     tools/tilesets/tileset.h \
     tools/tilesets/tilesetitembutton.h \
@@ -619,7 +619,7 @@ FORMS    += \
     tools/external_tools/lazyfixtool_gui.ui \
     tools/external_tools/png2gifs_gui.ui \
     tools/math/blocksperseconddialog.ui \
-    tools/tilesets/tilesetconfiguredialog.ui \
+    tools/tilesets/tileset_editor.ui \
     tools/tilesets/tilesetgroupeditor.ui
 
 RESOURCES += \

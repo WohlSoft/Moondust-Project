@@ -1183,6 +1183,10 @@ Please save them first before doing anything else.</source>
         <source>Does a segmentation violation</source>
         <translation>Спровоцировать нарушение сегментации</translation>
     </message>
+    <message>
+        <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
+        <translation>Создаёт и удаляет объект ItemSelectDialog для анализа утечки памяти</translation>
+    </message>
 </context>
 <context>
     <name>ExportToImage</name>
@@ -1726,6 +1730,59 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Properties...</source>
         <translation>Свойства...</translation>
+    </message>
+</context>
+<context>
+    <name>ItemBoxListModel</name>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation>Поиск по имени</translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation>Поиск по ID</translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation>Поиск по ID (Содержит)</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation>Сортировать по</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation>Имени</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation>Обратный порядок</translation>
+    </message>
+    <message>
+        <source>Uniform item sizes view</source>
+        <comment>Align elements inside of Item Box list in uniform view</comment>
+        <translation>Единый размер элементов</translation>
+    </message>
+    <message>
+        <source>Show custom elements</source>
+        <comment>Show custom elements only in Item Box List</comment>
+        <translation>Показать пользовательские элементы</translation>
+    </message>
+    <message>
+        <source>Show standard elements</source>
+        <comment>Show standard elements only in Item Box List</comment>
+        <translation>Показать стандартные элементы</translation>
     </message>
 </context>
 <context>
@@ -2384,15 +2441,15 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Text</source>
-        <translation>Текст</translation>
+        <translation type="vanished">Текст</translation>
     </message>
     <message>
         <source>ID (contents)</source>
-        <translation>ID (содержит)</translation>
+        <translation type="vanished">ID (содержит)</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="vanished">ID</translation>
     </message>
     <message>
         <source>[all]</source>
@@ -3054,15 +3111,15 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Filter:</source>
-        <translation>Фильтр:</translation>
+        <translation type="vanished">Фильтр:</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Текст</translation>
+        <translation type="vanished">Текст</translation>
     </message>
     <message>
         <source>ID (contents)</source>
-        <translation>ID (содержит)</translation>
+        <translation type="vanished">ID (содержит)</translation>
     </message>
     <message>
         <source>ID</source>
@@ -3070,7 +3127,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Uniform icon size</source>
-        <translation>Равномерный размер значков</translation>
+        <translation type="vanished">Равномерный размер значков</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -3091,6 +3148,14 @@ Do you want to save your changes?</source>
     <message>
         <source>Copy graphic to episode folder</source>
         <translation>Скопировать картинку в папку эпизода</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Поиск</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation>&lt;Сперва сохрание файл&gt;</translation>
     </message>
 </context>
 <context>
@@ -5699,7 +5764,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>[custom]</source>
-        <translation>[пользовательские]</translation>
+        <translation type="vanished">[пользовательские]</translation>
     </message>
     <message>
         <source>Backgrounds</source>
@@ -10089,6 +10154,10 @@ The maximum number of Music Boxes is %2.</source>
         <source>Debug</source>
         <translation>Отладка</translation>
     </message>
+    <message>
+        <source>Initializing tileset categories...</source>
+        <translation>Инициализация категорий элементых наборов...</translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>
@@ -10806,19 +10875,19 @@ Those preferences will makes no effect on a testing process before it will be fi
     <name>TilesetConfigureDialog</name>
     <message>
         <source>Tileset name:</source>
-        <translation>Имя набора плиток:</translation>
+        <translation type="vanished">Имя набора плиток:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation>Высота:</translation>
+        <translation type="vanished">Высота:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Ширина:</translation>
+        <translation type="vanished">Ширина:</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="vanished">Сохранить</translation>
     </message>
     <message>
         <source>Terrian tile</source>
@@ -10826,27 +10895,170 @@ Those preferences will makes no effect on a testing process before it will be fi
     </message>
     <message>
         <source>Open</source>
-        <translation>Открыть</translation>
+        <translation type="vanished">Открыть</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Очистить</translation>
+        <translation type="vanished">Очистить</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation>Ландшафтная плитка</translation>
+        <translation type="vanished">Ландшафтная плитка</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation type="vanished">Тип:</translation>
+    </message>
+    <message>
+        <source>Block</source>
+        <translation type="vanished">Блок</translation>
+    </message>
+    <message>
+        <source>Tileset Editor</source>
+        <translation type="vanished">Редактор наборов элементов</translation>
+    </message>
+    <message>
+        <source>BGO</source>
+        <translation type="vanished">Ф.Об</translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <translation type="vanished">НИП</translation>
+    </message>
+    <message>
+        <source>Show default only</source>
+        <translation type="vanished">Показать только исходные</translation>
+    </message>
+    <message>
+        <source>Tile</source>
+        <translation type="vanished">Плитка</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="vanished">Путь</translation>
+    </message>
+    <message>
+        <source>Show custom only</source>
+        <translation type="vanished">Показать только изменённые</translation>
+    </message>
+    <message>
+        <source>Current Level/World specific</source>
+        <translation type="vanished">Только для текущего Уровня/Мира</translation>
+    </message>
+    <message>
+        <source>Delete this tileset</source>
+        <translation type="vanished">Удалить этот набор</translation>
+    </message>
+    <message>
+        <source>Detele this tileset</source>
+        <translation type="vanished">Удалить этот набор</translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="vanished">Декорации</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="vanished">Уровень</translation>
+    </message>
+    <message>
+        <source>Tiles</source>
+        <translation type="obsolete">Плитки</translation>
+    </message>
+    <message>
+        <source>Items</source>
+        <translation type="vanished">Элементы</translation>
+    </message>
+    <message>
+        <source>Save Tileset</source>
+        <translation type="vanished">Сохранить набор плиток</translation>
+    </message>
+    <message>
+        <source>Clean tileset editor</source>
+        <translation type="vanished">Очистить редактор набора элементов</translation>
+    </message>
+    <message>
+        <source>Do you want to clean tileset editor to create a new tileset?</source>
+        <translation type="vanished">Вы уверены, что хотите очистить набор элементов и создать новый?</translation>
+    </message>
+    <message>
+        <source>Please enter a filename!</source>
+        <translation type="vanished">Пожалкйста, введите имя файла!</translation>
+    </message>
+    <message>
+        <source>Filename:</source>
+        <translation type="vanished">Имя файла:</translation>
+    </message>
+    <message>
+        <source>Open Tileset</source>
+        <translation type="vanished">Открыть набор плиток</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!</source>
+        <translation type="vanished">Загрузка набора плиток не удалась!</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!
+Data may be corrupted!</source>
+        <translation type="vanished">Неудалось загрузить набор плиток!
+Данные могут быть повреждены!</translation>
+    </message>
+    <message>
+        <source>Tileset box editor</source>
+        <translation type="vanished">Редактор наборов плиток</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show this message again.</source>
+        <translation type="vanished">Больше не показывать это сообщение.</translation>
+    </message>
+    <message>
+        <source>Welcome to tileset editor!
+
+This is an editor of global tilesets.
+All tilesets which made here will be saved in this folder:
+%1
+I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
+
+If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
+        <translation type="vanished">Добро пожаловать в редактор наборов элементов!
+
+Это редактор глобальных наборов.
+Все наборы элементов, сделанные здесь, будут сохранены в этой папке:
+%1
+Т.е. все сохранённые наборы будут глобальны для конфируационного пакета и могут быть использованы в групповых наборах.
+
+Если вы желаете создать локальный набор для уровеня/мира с использованием собственной графики, пожалуйста, откройте &quot;Набор элементов&quot; и найдите кнопку &quot;Новый набор&quot; во вкладке &quot;Custom&quot;.</translation>
+    </message>
+    <message>
+        <source>Remove tileset</source>
+        <translation type="vanished">Удалить набор</translation>
+    </message>
+    <message>
+        <source>Do you want to remove this tileset?</source>
+        <translation type="vanished">Вы уверены, что хотите удалить этот набор?</translation>
+    </message>
+    <message>
+        <source>Tileset removed</source>
+        <translation type="vanished">Набор удалён</translation>
+    </message>
+    <message>
+        <source>Tileset has been removed!</source>
+        <translation type="vanished">Набор удалён!</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetEditor</name>
+    <message>
+        <source>Tileset Editor</source>
+        <translation>Редактор наборов элементов</translation>
+    </message>
+    <message>
+        <source>Items</source>
+        <translation>Элементы</translation>
     </message>
     <message>
         <source>Block</source>
         <translation>Блок</translation>
-    </message>
-    <message>
-        <source>Tileset Editor</source>
-        <translation>Редактор наборов элементов</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -10857,16 +11069,48 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation>НИП</translation>
     </message>
     <message>
-        <source>Show default only</source>
-        <translation>Показать только исходные</translation>
+        <source>Terrain tile</source>
+        <translation>Ландшафтная плитка</translation>
     </message>
     <message>
-        <source>Tile</source>
-        <translation type="vanished">Плитка</translation>
+        <source>Scenery</source>
+        <translation>Декорации</translation>
     </message>
     <message>
         <source>Path</source>
         <translation>Путь</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation>Уровень</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Тип:</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Очистить</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Tileset name:</source>
+        <translation>Имя набора плиток:</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Открыть</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Высота:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <source>Show custom only</source>
@@ -10881,28 +11125,51 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation>Удалить этот набор</translation>
     </message>
     <message>
-        <source>Detele this tileset</source>
-        <translation type="vanished">Удалить этот набор</translation>
+        <source>Show default only</source>
+        <translation>Показать только исходные</translation>
     </message>
     <message>
-        <source>Scenery</source>
-        <translation>Декорации</translation>
+        <source>Search</source>
+        <translation>Поиск</translation>
     </message>
     <message>
-        <source>Level</source>
-        <translation>Уровень</translation>
+        <source>Search settings</source>
+        <translation>Настройки поиска</translation>
     </message>
     <message>
-        <source>Tiles</source>
-        <translation type="obsolete">Плитки</translation>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation>Поиск по имени</translation>
     </message>
     <message>
-        <source>Items</source>
-        <translation>Элементы</translation>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation>Поиск по ID</translation>
     </message>
     <message>
-        <source>Save Tileset</source>
-        <translation type="vanished">Сохранить набор плиток</translation>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation>Поиск по ID (Содержит)</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation>Сортировать по</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation>Имени</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation>Обратный порядок</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
@@ -10910,7 +11177,7 @@ Those preferences will makes no effect on a testing process before it will be fi
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation>Вы уверены, что хотите очистить набор элементов и создать новый?</translation>
+        <translation>Вы уверены, что хотите очистить набор элементов и создать новый? Несохранённые правки будут утеряны.</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
@@ -10989,15 +11256,11 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортировочный вес</translation>
     </message>
     <message>
         <source>Tileset group name:</source>
         <translation>Имя группы:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Category:</source>
@@ -11005,7 +11268,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Позволяет определить свой порядок сортировки. Если значения веса равны между различными группами палитр или равны -1, то группы будут сортированы по алфавиту.</translation>
     </message>
     <message>
         <source>Open</source>
@@ -11080,6 +11343,10 @@ Data may be corrupted!</source>
     <message>
         <source>Filename:</source>
         <translation>Имя файла:</translation>
+    </message>
+    <message>
+        <source>Category order weight</source>
+        <translation>Сортировочный вес категории</translation>
     </message>
 </context>
 <context>
@@ -12333,7 +12600,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>[Silence]</source>
-        <translation>[Тишина]</translation>
+        <translation type="vanished">[Тишина]</translation>
     </message>
     <message>
         <source>Please, save file</source>

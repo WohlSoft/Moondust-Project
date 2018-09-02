@@ -1211,6 +1211,10 @@ Bitte speichere sie sofort ab!.</translation>
         <source>Does a segmentation violation</source>
         <translation>Macht eine Arbeitsspeicherveletzung</translation>
     </message>
+    <message>
+        <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportToImage</name>
@@ -1747,6 +1751,59 @@ Maximal 27 Zeichen pro Zeile</translation>
     <message>
         <source>Properties...</source>
         <translation>Einstellungen...</translation>
+    </message>
+</context>
+<context>
+    <name>ItemBoxListModel</name>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uniform item sizes view</source>
+        <comment>Align elements inside of Item Box list in uniform view</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show custom elements</source>
+        <comment>Show custom elements only in Item Box List</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show standard elements</source>
+        <comment>Show standard elements only in Item Box List</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2398,15 +2455,11 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Text</translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Text</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="vanished">ID</translation>
     </message>
     <message>
         <source>[all]</source>
@@ -2997,15 +3050,11 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <source>Filter:</source>
-        <translation>Filter:</translation>
+        <translation type="vanished">Filter:</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Text</translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Text</translation>
     </message>
     <message>
         <source>ID</source>
@@ -3013,7 +3062,7 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <source>Uniform icon size</source>
-        <translation>Einheitliche Icon Größe</translation>
+        <translation type="vanished">Einheitliche Icon Größe</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -3033,6 +3082,14 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">Suche</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7808,7 +7865,7 @@ Konfigurationspacket hat Fehler.</translation>
     </message>
     <message>
         <source>[custom]</source>
-        <translation>[benutzerdefiniert]</translation>
+        <translation type="vanished">[benutzerdefiniert]</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
@@ -9538,6 +9595,10 @@ The maximum number of Music Boxes is %2.</source>
         <source>Debug</source>
         <translation type="unfinished">Debug</translation>
     </message>
+    <message>
+        <source>Initializing tileset categories...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>
@@ -10140,55 +10201,47 @@ Datei: %1
     </message>
     <message>
         <source>Tileset name:</source>
-        <translation>Tilesetnamen:</translation>
+        <translation type="vanished">Tilesetnamen:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation>Höhe:</translation>
+        <translation type="vanished">Höhe:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Breite:</translation>
+        <translation type="vanished">Breite:</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation type="vanished">Speichern</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Öffnen</translation>
+        <translation type="vanished">Öffnen</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Neu</translation>
-    </message>
-    <message>
-        <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Neu</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Typ:</translation>
+        <translation type="vanished">Typ:</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation>Blöck</translation>
+        <translation type="vanished">Blöck</translation>
     </message>
     <message>
         <source>Tileset Editor</source>
-        <translation>Tileset Editor</translation>
+        <translation type="vanished">Tileset Editor</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation>BGO</translation>
+        <translation type="vanished">BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation>NPC</translation>
-    </message>
-    <message>
-        <source>Show default only</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">NPC</translation>
     </message>
     <message>
         <source>Tile</source>
@@ -10196,19 +10249,19 @@ Datei: %1
     </message>
     <message>
         <source>Path</source>
-        <translation>Pfad</translation>
+        <translation type="vanished">Pfad</translation>
     </message>
     <message>
         <source>Show custom only</source>
-        <translation>Nur Benutzerdefinierte</translation>
+        <translation type="vanished">Nur Benutzerdefinierte</translation>
     </message>
     <message>
         <source>Current Level/World specific</source>
-        <translation>Nur Level-/Weltspezifisch</translation>
+        <translation type="vanished">Nur Level-/Weltspezifisch</translation>
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation>Lösche Tileset</translation>
+        <translation type="vanished">Lösche Tileset</translation>
     </message>
     <message>
         <source>Detele this tileset</source>
@@ -10216,11 +10269,11 @@ Datei: %1
     </message>
     <message>
         <source>Scenery</source>
-        <translation>Umgebung</translation>
+        <translation type="vanished">Umgebung</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>Level</translation>
+        <translation type="vanished">Level</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -10228,7 +10281,7 @@ Datei: %1
     </message>
     <message>
         <source>Items</source>
-        <translation>Items</translation>
+        <translation type="vanished">Items</translation>
     </message>
     <message>
         <source>Save Tileset</source>
@@ -10236,41 +10289,41 @@ Datei: %1
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation>Lösche Tileset</translation>
+        <translation type="vanished">Lösche Tileset</translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation>Willst du wirklich diese Tileset löschen?</translation>
+        <translation type="vanished">Willst du wirklich diese Tileset löschen?</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation>Bitte gib einen Dateinamen ein!</translation>
+        <translation type="vanished">Bitte gib einen Dateinamen ein!</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation>Dateinamen:</translation>
+        <translation type="vanished">Dateinamen:</translation>
     </message>
     <message>
         <source>Open Tileset</source>
-        <translation>Öffne Tileset</translation>
+        <translation type="vanished">Öffne Tileset</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation>Tileset konnte nicht geladen werden!</translation>
+        <translation type="vanished">Tileset konnte nicht geladen werden!</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation>Tileset konnte nicht geladen werden!
+        <translation type="vanished">Tileset konnte nicht geladen werden!
 Daten könnten fehlerhaft sein!</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation>Tileset box editor</translation>
+        <translation type="vanished">Tileset box editor</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
-        <translation>Diese Nachricht nicht mehr anzeigen.</translation>
+        <translation type="vanished">Diese Nachricht nicht mehr anzeigen.</translation>
     </message>
     <message>
         <source>Welcome to tileset editor!
@@ -10281,7 +10334,7 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation>Willkommen im Tileset editor!
+        <translation type="vanished">Willkommen im Tileset editor!
 
 Dies ist ein Editor für globale tilesets.
 Alle tilesets, die hier gemacht werden, werden in diesem Ordner gespeichert werden:
@@ -10290,19 +10343,215 @@ Das heißt die Tileset werden global gespeichert. Möchtest du lokal für ein Le
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation>Lösche Tileset</translation>
+        <translation type="vanished">Lösche Tileset</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation>Möchtest du wirklich dieses Tileset löschen?</translation>
+        <translation type="vanished">Möchtest du wirklich dieses Tileset löschen?</translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation>Tileset gelöscht</translation>
+        <translation type="vanished">Tileset gelöscht</translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation>Tileset wurde gelöscht!</translation>
+        <translation type="vanished">Tileset wurde gelöscht!</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetEditor</name>
+    <message>
+        <source>Tileset Editor</source>
+        <translation type="unfinished">Tileset Editor</translation>
+    </message>
+    <message>
+        <source>Items</source>
+        <translation type="unfinished">Items</translation>
+    </message>
+    <message>
+        <source>Block</source>
+        <translation type="unfinished">Blöck</translation>
+    </message>
+    <message>
+        <source>BGO</source>
+        <translation type="unfinished">BGO</translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <translation type="unfinished">NPC</translation>
+    </message>
+    <message>
+        <source>Terrain tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished">Umgebung</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished">Pfad</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished">Level</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Typ:</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Neu</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Speichern</translation>
+    </message>
+    <message>
+        <source>Tileset name:</source>
+        <translation type="unfinished">Tilesetnamen:</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">Öffnen</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation type="unfinished">Höhe:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished">Breite:</translation>
+    </message>
+    <message>
+        <source>Show custom only</source>
+        <translation type="unfinished">Nur Benutzerdefinierte</translation>
+    </message>
+    <message>
+        <source>Current Level/World specific</source>
+        <translation type="unfinished">Nur Level-/Weltspezifisch</translation>
+    </message>
+    <message>
+        <source>Delete this tileset</source>
+        <translation type="unfinished">Lösche Tileset</translation>
+    </message>
+    <message>
+        <source>Show default only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">Suche</translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clean tileset editor</source>
+        <translation type="unfinished">Lösche Tileset</translation>
+    </message>
+    <message>
+        <source>Do you want to clean tileset editor to create a new tileset?</source>
+        <translation type="unfinished">Willst du wirklich diese Tileset löschen?</translation>
+    </message>
+    <message>
+        <source>Please enter a filename!</source>
+        <translation type="unfinished">Bitte gib einen Dateinamen ein!</translation>
+    </message>
+    <message>
+        <source>Filename:</source>
+        <translation type="unfinished">Dateinamen:</translation>
+    </message>
+    <message>
+        <source>Open Tileset</source>
+        <translation type="unfinished">Öffne Tileset</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!</source>
+        <translation type="unfinished">Tileset konnte nicht geladen werden!</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!
+Data may be corrupted!</source>
+        <translation type="unfinished">Tileset konnte nicht geladen werden!
+Daten könnten fehlerhaft sein!</translation>
+    </message>
+    <message>
+        <source>Tileset box editor</source>
+        <translation type="unfinished">Tileset box editor</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show this message again.</source>
+        <translation type="unfinished">Diese Nachricht nicht mehr anzeigen.</translation>
+    </message>
+    <message>
+        <source>Welcome to tileset editor!
+
+This is an editor of global tilesets.
+All tilesets which made here will be saved in this folder:
+%1
+I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
+
+If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
+        <translation type="unfinished">Willkommen im Tileset editor!
+
+Dies ist ein Editor für globale tilesets.
+Alle tilesets, die hier gemacht werden, werden in diesem Ordner gespeichert werden:
+%1
+Das heißt die Tileset werden global gespeichert. Möchtest du lokal für ein Level ein tileset erstellen, so klick bitte in der Tileset Item Box auf &quot;New Tileset&quot; im &quot;Custom&quot; tab.</translation>
+    </message>
+    <message>
+        <source>Remove tileset</source>
+        <translation type="unfinished">Lösche Tileset</translation>
+    </message>
+    <message>
+        <source>Do you want to remove this tileset?</source>
+        <translation type="unfinished">Möchtest du wirklich dieses Tileset löschen?</translation>
+    </message>
+    <message>
+        <source>Tileset removed</source>
+        <translation type="unfinished">Tileset gelöscht</translation>
+    </message>
+    <message>
+        <source>Tileset has been removed!</source>
+        <translation type="unfinished">Tileset wurde gelöscht!</translation>
     </message>
 </context>
 <context>
@@ -10322,10 +10571,6 @@ Das heißt die Tileset werden global gespeichert. Möchtest du lokal für ein Le
     <message>
         <source>Tileset group name:</source>
         <translation>Tileset Gruppennamen:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Category:</source>
@@ -10420,6 +10665,10 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <source>Filename:</source>
         <translation>Dateinamen:</translation>
+    </message>
+    <message>
+        <source>Category order weight</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11637,7 +11886,7 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <source>[Silence]</source>
-        <translation>[Still]</translation>
+        <translation type="vanished">[Still]</translation>
     </message>
     <message>
         <source>Please, save file</source>

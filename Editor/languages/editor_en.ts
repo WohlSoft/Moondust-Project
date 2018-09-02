@@ -1244,6 +1244,10 @@ Please save them before doing anything else.</translation>
         <source>Does a segmentation violation</source>
         <translation>Causes a segmentation fault, for crash-testing purposes</translation>
     </message>
+    <message>
+        <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
+        <translation>Creates and deletes ItemSelectDialog to analyze memory leaking</translation>
+    </message>
 </context>
 <context>
     <name>ExportToImage</name>
@@ -1785,6 +1789,59 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Properties...</source>
         <translation>Properties...</translation>
+    </message>
+</context>
+<context>
+    <name>ItemBoxListModel</name>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation>Search by Name</translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation>Search by ID</translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation>Search by ID (Contained)</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation>Sort by</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation>Descending</translation>
+    </message>
+    <message>
+        <source>Uniform item sizes view</source>
+        <comment>Align elements inside of Item Box list in uniform view</comment>
+        <translation>Uniform item sizes view</translation>
+    </message>
+    <message>
+        <source>Show custom elements</source>
+        <comment>Show custom elements only in Item Box List</comment>
+        <translation>Show custom elements</translation>
+    </message>
+    <message>
+        <source>Show standard elements</source>
+        <comment>Show standard elements only in Item Box List</comment>
+        <translation>Show standard elements</translation>
     </message>
 </context>
 <context>
@@ -2440,15 +2497,15 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation type="vanished">Text</translation>
     </message>
     <message>
         <source>ID (contents)</source>
-        <translation>ID (contents)</translation>
+        <translation type="vanished">ID (contents)</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="vanished">ID</translation>
     </message>
     <message>
         <source>[all]</source>
@@ -3110,15 +3167,15 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Filter:</source>
-        <translation>Filter:</translation>
+        <translation type="vanished">Filter:</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation type="vanished">Text</translation>
     </message>
     <message>
         <source>ID (contents)</source>
-        <translation>ID (contents)</translation>
+        <translation type="vanished">ID (contents)</translation>
     </message>
     <message>
         <source>ID</source>
@@ -3126,7 +3183,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Uniform icon size</source>
-        <translation>Standard icon size</translation>
+        <translation type="vanished">Standard icon size</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -3147,6 +3204,14 @@ Do you want to save your changes?</translation>
     <message>
         <source>Copy graphic to episode folder</source>
         <translation>Copy graphics to episode folder</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Search</translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation>&lt;Save file first&gt;</translation>
     </message>
 </context>
 <context>
@@ -5779,7 +5844,7 @@ Please select the map you want to use:</translation>
     </message>
     <message>
         <source>[custom]</source>
-        <translation>[custom]</translation>
+        <translation type="vanished">[custom]</translation>
     </message>
     <message>
         <source>Backgrounds</source>
@@ -10187,6 +10252,10 @@ The maximum number of Music boxes is %2.</translation>
         <source>Debug</source>
         <translation>Debug</translation>
     </message>
+    <message>
+        <source>Initializing tileset categories...</source>
+        <translation>Initializing tileset categories...</translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>
@@ -10902,19 +10971,19 @@ Those preferences will makes no effect on a testing process before it will be fi
     <name>TilesetConfigureDialog</name>
     <message>
         <source>Tileset name:</source>
-        <translation>Tileset name:</translation>
+        <translation type="vanished">Tileset name:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation>Height:</translation>
+        <translation type="vanished">Height:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>Width:</translation>
+        <translation type="vanished">Width:</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation type="vanished">Save</translation>
     </message>
     <message>
         <source>Terrian tile</source>
@@ -10922,27 +10991,169 @@ Those preferences will makes no effect on a testing process before it will be fi
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation type="vanished">Clear</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation>Terrain tile</translation>
+        <translation type="vanished">Terrain tile</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation type="vanished">Type:</translation>
+    </message>
+    <message>
+        <source>Block</source>
+        <translation type="vanished">Block</translation>
+    </message>
+    <message>
+        <source>Tileset Editor</source>
+        <translation type="vanished">Tileset Editor</translation>
+    </message>
+    <message>
+        <source>BGO</source>
+        <translation type="vanished">BGO</translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <translation type="vanished">NPC</translation>
+    </message>
+    <message>
+        <source>Show default only</source>
+        <translation type="vanished">Show default only</translation>
+    </message>
+    <message>
+        <source>Tile</source>
+        <translation type="vanished">Tile</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="vanished">Path</translation>
+    </message>
+    <message>
+        <source>Show custom only</source>
+        <translation type="vanished">Show custom only</translation>
+    </message>
+    <message>
+        <source>Current Level/World specific</source>
+        <translation type="vanished">Current Level/World specific</translation>
+    </message>
+    <message>
+        <source>Delete this tileset</source>
+        <translation type="vanished">Delete this tileset</translation>
+    </message>
+    <message>
+        <source>Detele this tileset</source>
+        <translation type="vanished">Detele this tileset</translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="vanished">Scenery</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="vanished">Level</translation>
+    </message>
+    <message>
+        <source>Tiles</source>
+        <translation type="obsolete">Tiles</translation>
+    </message>
+    <message>
+        <source>Items</source>
+        <translation type="vanished">Items</translation>
+    </message>
+    <message>
+        <source>Save Tileset</source>
+        <translation type="vanished">Save Tileset</translation>
+    </message>
+    <message>
+        <source>Clean tileset editor</source>
+        <translation type="vanished">Clean tileset editor</translation>
+    </message>
+    <message>
+        <source>Do you want to clean tileset editor to create a new tileset?</source>
+        <translation type="vanished">Clear the tileset editor and create a new tileset? Unsaved changes will be lost.</translation>
+    </message>
+    <message>
+        <source>Please enter a filename!</source>
+        <translation type="vanished">Please enter a filename!</translation>
+    </message>
+    <message>
+        <source>Filename:</source>
+        <translation type="vanished">Filename:</translation>
+    </message>
+    <message>
+        <source>Open Tileset</source>
+        <translation type="vanished">Open Tileset</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!</source>
+        <translation type="vanished">Failed to load tileset!</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!
+Data may be corrupted!</source>
+        <translation type="vanished">Failed to load tileset!
+Data may be corrupted!</translation>
+    </message>
+    <message>
+        <source>Tileset box editor</source>
+        <translation type="vanished">Tileset box editor</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show this message again.</source>
+        <translation type="vanished">Don&apos;t show this message again.</translation>
+    </message>
+    <message>
+        <source>Welcome to tileset editor!
+
+This is an editor of global tilesets.
+All tilesets which made here will be saved in this folder:
+%1
+I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
+
+If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
+        <translation type="vanished">Welcome to the tileset editor!
+
+You can use this create custom tilesets, which will be saved in this folder:
+%1
+I.e. They will be globally available for this configuration package and can be used in the groups of tilesets.
+
+If you wish to create level/world-specific tilesets with custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</translation>
+    </message>
+    <message>
+        <source>Remove tileset</source>
+        <translation type="vanished">Remove tileset</translation>
+    </message>
+    <message>
+        <source>Do you want to remove this tileset?</source>
+        <translation type="vanished">Do you want to remove this tileset?</translation>
+    </message>
+    <message>
+        <source>Tileset removed</source>
+        <translation type="vanished">Tileset removed</translation>
+    </message>
+    <message>
+        <source>Tileset has been removed!</source>
+        <translation type="vanished">Tileset has been removed!</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetEditor</name>
+    <message>
+        <source>Tileset Editor</source>
+        <translation>Tileset Editor</translation>
+    </message>
+    <message>
+        <source>Items</source>
+        <translation>Items</translation>
     </message>
     <message>
         <source>Block</source>
         <translation>Block</translation>
-    </message>
-    <message>
-        <source>Tileset Editor</source>
-        <translation>Tileset Editor</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -10953,16 +11164,48 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation>NPC</translation>
     </message>
     <message>
-        <source>Show default only</source>
-        <translation>Show default only</translation>
+        <source>Terrain tile</source>
+        <translation>Terrain tile</translation>
     </message>
     <message>
-        <source>Tile</source>
-        <translation type="vanished">Tile</translation>
+        <source>Scenery</source>
+        <translation>Scenery</translation>
     </message>
     <message>
         <source>Path</source>
         <translation>Path</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation>Level</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Type:</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Clear</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Save</translation>
+    </message>
+    <message>
+        <source>Tileset name:</source>
+        <translation>Tileset name:</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Open</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Height:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Width:</translation>
     </message>
     <message>
         <source>Show custom only</source>
@@ -10977,28 +11220,51 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation>Delete this tileset</translation>
     </message>
     <message>
-        <source>Detele this tileset</source>
-        <translation type="vanished">Detele this tileset</translation>
+        <source>Show default only</source>
+        <translation>Show default only</translation>
     </message>
     <message>
-        <source>Scenery</source>
-        <translation>Scenery</translation>
+        <source>Search</source>
+        <translation>Search</translation>
     </message>
     <message>
-        <source>Level</source>
-        <translation>Level</translation>
+        <source>Search settings</source>
+        <translation>Search settings</translation>
     </message>
     <message>
-        <source>Tiles</source>
-        <translation type="obsolete">Tiles</translation>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation>Search by Name</translation>
     </message>
     <message>
-        <source>Items</source>
-        <translation>Items</translation>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation>Search by ID</translation>
     </message>
     <message>
-        <source>Save Tileset</source>
-        <translation type="vanished">Save Tileset</translation>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation>Search by ID (Contained)</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation>Sort by</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation>Descending</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
@@ -11084,15 +11350,11 @@ If you wish to create level/world-specific tilesets with custom graphics, please
     </message>
     <message>
         <source>Order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Order weight</translation>
     </message>
     <message>
         <source>Tileset group name:</source>
         <translation>Tileset group name:</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Category:</source>
@@ -11100,7 +11362,7 @@ If you wish to create level/world-specific tilesets with custom graphics, please
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</translation>
     </message>
     <message>
         <source>Open</source>
@@ -11175,6 +11437,10 @@ Data may be corrupted!</translation>
     <message>
         <source>Filename:</source>
         <translation>Filename:</translation>
+    </message>
+    <message>
+        <source>Category order weight</source>
+        <translation>Category order weight</translation>
     </message>
 </context>
 <context>
@@ -12430,7 +12696,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>[Silence]</source>
-        <translation>[Silence]</translation>
+        <translation type="vanished">[Silence]</translation>
     </message>
     <message>
         <source>Please, save file</source>
