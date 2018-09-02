@@ -14,6 +14,7 @@ TRANSLATIONS += \
     $$PWD/languages/engine_de.ts \
     $$PWD/languages/engine_en.ts \
     $$PWD/languages/engine_es.ts \
+    $$PWD/languages/engine_he-IL.ts \
     $$PWD/languages/engine_it.ts \
     $$PWD/languages/engine_jp.ts \
     $$PWD/languages/engine_nl.ts \

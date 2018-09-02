@@ -17,6 +17,7 @@ TRANSLATIONS += \
     $$PWD/languages/editor_en.ts \
     $$PWD/languages/editor_es.ts \
     $$PWD/languages/editor_fr.ts \
+    $$PWD/languages/editor_he-IL.ts \
     $$PWD/languages/editor_id.ts \
     $$PWD/languages/editor_it.ts \
     $$PWD/languages/editor_ja.ts \

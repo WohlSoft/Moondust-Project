@@ -4,6 +4,7 @@ set(EDITOR_LANGUAGES
     editor_en.ts
     editor_es.ts
     editor_fr.ts
+    editor_he-IL.ts
     editor_id.ts
     editor_it.ts
     editor_ja.ts
