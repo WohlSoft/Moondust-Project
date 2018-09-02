@@ -831,6 +831,10 @@ Press ESC to cancel</source>
         <translation>Невозможно удалить исходный файл</translation>
     </message>
     <message>
+        <source>Cannot open destination file: %1</source>
+        <translation>Не удалось открыть файл назначения: %1</translation>
+    </message>
+    <message>
         <source>Cannot open %1 for input</source>
         <translation>Невозможно открыть %1 для ввода</translation>
     </message>
@@ -1105,7 +1109,7 @@ Do you want to delete it anyway?</source>
         <translation>Некорректное имя файла</translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translation>&lt;b&gt;Имя «%1» не может быть использовано.&lt;/b&gt;&lt;p&gt;Попробуйте использовать имя меньшей длины и/или без символов пунктуации.</translation>
     </message>
     <message>
@@ -1921,6 +1925,10 @@ Do you want to delete it anyway?</source>
         <translation>отсутствуют данные секции. Это не библиотека.</translation>
     </message>
     <message>
+        <source>Out of memory while loading plugin &apos;%1&apos;.</source>
+        <translation>Недостаточно памяти для загрузки модуля «%1».</translation>
+    </message>
+    <message>
         <source>Failed to extract plugin meta data from &apos;%1&apos;</source>
         <translation>Не удалось извлечь мета-данные модуля из «%1»</translation>
     </message>
@@ -2679,6 +2687,17 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>QPPDOptionsModel</name>
+    <message>
+        <source>Name</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Значение</translation>
+    </message>
+</context>
+<context>
     <name>QPSQLDriver</name>
     <message>
         <source>Unable to connect</source>
@@ -2708,8 +2727,20 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPSQLResult</name>
     <message>
+        <source>Query results lost - probably discarded on executing another SQL query.</source>
+        <translation>Результат запроса потерян, возможно, из-за выполнения другого запроса SQL.</translation>
+    </message>
+    <message>
         <source>Unable to create query</source>
         <translation>Невозможно создать запрос</translation>
+    </message>
+    <message>
+        <source>Unable to get result</source>
+        <translation>Не удалось получить результат</translation>
+    </message>
+    <message>
+        <source>Unable to send query</source>
+        <translation>Не удалось отправить запрос</translation>
     </message>
     <message>
         <source>Unable to prepare statement</source>
@@ -3505,6 +3536,14 @@ Do you want to delete it anyway?</source>
         <translation>&amp;Параметры &lt;&lt;</translation>
     </message>
     <message>
+        <source>Invalid Pages Definition</source>
+        <translation>Неверное определение страницы</translation>
+    </message>
+    <message>
+        <source>%1 does not follow the correct syntax. Please use &apos;,&apos; to separate ranges and pages, &apos;-&apos; to define ranges and make sure ranges do not intersect with each other.</source>
+        <translation>%1 имеет некорректный синтаксис. Используйте «,» для разделения страниц и диапазонов, а «-» для определения диапазонов. Пересекающиеся диапазоны недопустимы.</translation>
+    </message>
+    <message>
         <source>Print to File (PDF)</source>
         <translation>Печать в файл (PDF)</translation>
     </message>
@@ -3647,6 +3686,14 @@ Please turn one of those options off.</source>
         <source>Job Options</source>
         <translation>Параметры задания</translation>
     </message>
+    <message>
+        <source>Advanced Option Conflicts</source>
+        <translation>Конфликт расширенных настроек</translation>
+    </message>
+    <message>
+        <source>There are conflicts in some advanced options. Do you want to fix them?</source>
+        <translation>Обнаружены противоречия в некоторых расширенных настройках. Устранить?</translation>
+    </message>
 </context>
 <context>
     <name>QPrintPropertiesWidget</name>
@@ -3658,12 +3705,20 @@ Please turn one of those options off.</source>
         <source>Page</source>
         <translation>Страница</translation>
     </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Расширенные</translation>
+    </message>
+    <message>
+        <source>There are conflicts in some options. Please fix them.</source>
+        <translation>Обнаружены противоречия в некоторых настройках. Устраните их.</translation>
+    </message>
 </context>
 <context>
     <name>QPrintSettingsOutput</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copies</source>
@@ -3744,6 +3799,14 @@ Please turn one of those options off.</source>
     <message>
         <source>Page Set:</source>
         <translation>Список страниц:</translation>
+    </message>
+    <message>
+        <source>Pages</source>
+        <translation>Страницы</translation>
+    </message>
+    <message>
+        <source>Specify pages or ranges separated by commas. Ranges are specified by two numbers separated by a hyphen. E.g: 3,5-7,9 prints pages 3, 5, 6, 7 and 9.</source>
+        <translation>Укажите страницы или диапазоны разделённые запятыми. Диапазоны задаются двумя числами, разделёнными дефисом. Например: при указании 3,5-7,9 будут напечатаны страницы 3, 5, 6, 7 и 9.</translation>
     </message>
 </context>
 <context>
@@ -4174,7 +4237,7 @@ Please turn one of those options off.</source>
     </message>
     <message>
         <source>internal error: unknown newline setting</source>
-        <translation type="unfinished">внутренняя ошибка: неизвестная настройка новой строки</translation>
+        <translation>внутренняя ошибка: неизвестный разделитель строк</translation>
     </message>
     <message>
         <source>(*VERB) not recognized or malformed</source>
@@ -4476,7 +4539,7 @@ Please turn one of those options off.</source>
     </message>
     <message>
         <source>bad escape sequence in replacement string</source>
-        <translation type="unfinished">неверная ESC-последовательность в замещающей строке</translation>
+        <translation>неверная ESC-последовательность в замещающей строке</translation>
     </message>
     <message>
         <source>expected closing curly bracket in replacement string</source>
@@ -6282,6 +6345,14 @@ Role of an accessible object</extracomment>
         <translation>протокол не поддерживается</translation>
     </message>
     <message>
+        <source>Error while setting the minimal protocol version</source>
+        <translation>Ошибка при задании минимальной версии протокола</translation>
+    </message>
+    <message>
+        <source>Error while setting the maximum protocol version</source>
+        <translation>Ошибка при задании максимальной версии протокола</translation>
+    </message>
+    <message>
         <source>Invalid or empty cipher list (%1)</source>
         <translation>Некорректный или пустой список шифров (%1)</translation>
     </message>
@@ -6308,6 +6379,34 @@ Role of an accessible object</extracomment>
     <message>
         <source>OpenSSL version with disabled elliptic curves</source>
         <translation>Версия OpenSSL с отключёнными эллиптическими кривыми</translation>
+    </message>
+    <message>
+        <source>Error when setting the OpenSSL configuration (%1)</source>
+        <translation>Ошибка при создании конфигурации OpenSSL (%1)</translation>
+    </message>
+    <message>
+        <source>Expecting QByteArray for %1</source>
+        <translation>Для %1 требуется QByteArray</translation>
+    </message>
+    <message>
+        <source>An error occurred attempting to set %1 to %2</source>
+        <translation>Возникла ошибка при попытке задать %1 значение %2</translation>
+    </message>
+    <message>
+        <source>Wrong value for %1 (%2)</source>
+        <translation>Неверное значение для %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Unrecognized command %1 = %2</source>
+        <translation>Команда не распознана %1 = %2</translation>
+    </message>
+    <message>
+        <source>SSL_CONF_finish() failed</source>
+        <translation>Сбой SSL_CONF_finish()</translation>
+    </message>
+    <message>
+        <source>SSL_CONF_CTX_new() failed</source>
+        <translation>Сбой SSL_CONF_CTX_new()</translation>
     </message>
     <message>
         <source>OpenSSL version too old, need at least v1.0.2</source>
@@ -6712,10 +6811,10 @@ Role of an accessible object</extracomment>
     <message>
         <source>Qt cannot load the direct2d platform plugin because the Direct2D version on this system is too old. The minimum system requirement for this platform plugin is Windows 7 SP1 with Platform Update.
 
-The minimum Direct2D version required is %1.%2.%3.%4. The Direct2D version on this system is %5.%6.%7.%8.</source>
+The minimum Direct2D version required is %1. The Direct2D version on this system is %2.</source>
         <translation>Qt не может загрузить модуль платформы direct2d, так как установленная версия Direct2D слишком старая. Минимальные требования этого модуля: Windows 7 SP1 с Platform Update.
 
-Требуется Direct2D версии не ниже %1.%2.%3.%4. Версия обнаруженного Direct2D: %5.%6.%7.%8.</translation>
+Требуется Direct2D версии не ниже %1. Версия обнаруженного Direct2D: %2.</translation>
     </message>
     <message>
         <source>Cannot load direct2d platform plugin</source>

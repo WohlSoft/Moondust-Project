@@ -7412,6 +7412,10 @@ Il numero massimo di musiche è %2.</translation>
         <source>Initializing tileset categories...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>LTR</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>

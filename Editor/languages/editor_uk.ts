@@ -6701,6 +6701,10 @@ The maximum number of Music Boxes is %2.</source>
         <source>Initializing tileset categories...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>LTR</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtBoolEdit</name>

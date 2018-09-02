@@ -4,13 +4,14 @@ set(EDITOR_LANGUAGES
     editor_en.ts
     editor_es.ts
     editor_fr.ts
-    editor_he-IL.ts
+    editor_he-il.ts
     editor_id.ts
     editor_it.ts
     editor_ja.ts
     editor_nl.ts
     editor_pl.ts
-    editor_pt.ts
+    editor_pt-br.ts
+    editor_pt-pt.ts
     editor_ru.ts
     editor_sv.ts
     editor_uk.ts

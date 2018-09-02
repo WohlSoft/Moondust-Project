@@ -4105,7 +4105,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>קובץ</translation>
     </message>
     <message>
         <source>New</source>
@@ -6553,6 +6553,10 @@ The maximum number of Music Boxes is %2.</source>
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <translation>RTL</translation>
     </message>
 </context>
 <context>

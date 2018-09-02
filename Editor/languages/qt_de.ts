@@ -821,6 +821,10 @@ Drücken Sie ESC, um abzubrechen</translation>
         <translation>Die Quelldatei kann nicht entfernt werden</translation>
     </message>
     <message>
+        <source>Cannot open destination file: %1</source>
+        <translation>Die Zieldatei kann nicht geöffnet werden: %1</translation>
+    </message>
+    <message>
         <source>Cannot open %1 for input</source>
         <translation>%1 kann nicht zum Lesen geöffnet werden</translation>
     </message>
@@ -1095,7 +1099,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Ungültiger Dateiname</translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translation>&lt;b&gt;Der Name &quot;%1&quot; kann nicht verwendet werden.&lt;/b&gt;&lt;p&gt;Versuchen Sie, die Satzzeichen zu entfernen oder einen kürzeren Namen zu verwenden.</translation>
     </message>
     <message>
@@ -1513,10 +1517,6 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Host konnte nicht gefunden werden</translation>
     </message>
     <message>
-        <source>Unknown error</source>
-        <translation>Unbekannter Fehler</translation>
-    </message>
-    <message>
         <source>Unknown error (%1)</source>
         <translation>Unbekannter Fehler (%1)</translation>
     </message>
@@ -1913,6 +1913,10 @@ Möchten Sie die Datei trotzdem löschen?</translation>
     <message>
         <source>missing section data. This is not a library.</source>
         <translation>Fehlende Daten der Sektion; dies scheint keine Bibliothek zu sein.</translation>
+    </message>
+    <message>
+        <source>Out of memory while loading plugin &apos;%1&apos;.</source>
+        <translation>Das Plugin &apos;%1&apos; konnte auf Grund mangelnden Speicherplatzes nicht geladen werden.</translation>
     </message>
     <message>
         <source>Failed to extract plugin meta data from &apos;%1&apos;</source>
@@ -2673,6 +2677,17 @@ Möchten Sie die Datei trotzdem löschen?</translation>
     </message>
 </context>
 <context>
+    <name>QPPDOptionsModel</name>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Wert</translation>
+    </message>
+</context>
+<context>
     <name>QPSQLDriver</name>
     <message>
         <source>Unable to connect</source>
@@ -2702,8 +2717,20 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QPSQLResult</name>
     <message>
+        <source>Query results lost - probably discarded on executing another SQL query.</source>
+        <translation>Die Ergebnisse der Abfrage sind nicht länger verfügbar - wahrscheinlich wurden sie durch Ausführung einer anderen SQL-Abfrage gelöscht.</translation>
+    </message>
+    <message>
         <source>Unable to create query</source>
         <translation>Es konnte keine Abfrage erzeugt werden</translation>
+    </message>
+    <message>
+        <source>Unable to get result</source>
+        <translation>Es kann kein Ergebnis erhalten werden</translation>
+    </message>
+    <message>
+        <source>Unable to send query</source>
+        <translation>Die Abfrage kann nicht gesendet werden</translation>
     </message>
     <message>
         <source>Unable to prepare statement</source>
@@ -3498,6 +3525,14 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>&amp;Einstellungen &lt;&lt; </translation>
     </message>
     <message>
+        <source>Invalid Pages Definition</source>
+        <translation>Ungültige Seitendefinition</translation>
+    </message>
+    <message>
+        <source>%1 does not follow the correct syntax. Please use &apos;,&apos; to separate ranges and pages, &apos;-&apos; to define ranges and make sure ranges do not intersect with each other.</source>
+        <translation>%1 entspricht nicht der richtigen Schreibweise. Bitte benutzen Sie &apos;,&apos; um Bereiche und Seitennummern voneinander abzugrenzen, &apos;-&apos; um Bereiche festzulegen, und stellen Sie sicher, dass sich die Bereiche nicht überschneiden.</translation>
+    </message>
+    <message>
         <source>Print to File (PDF)</source>
         <translation>In PDF-Datei drucken</translation>
     </message>
@@ -3639,6 +3674,14 @@ Bitte deaktivieren Sie eine der beiden.</translation>
         <source>Job Options</source>
         <translation>Einstellungen zum Druckauftrag</translation>
     </message>
+    <message>
+        <source>Advanced Option Conflicts</source>
+        <translation>Widersprüchliche erweiterte Einstellungen</translation>
+    </message>
+    <message>
+        <source>There are conflicts in some advanced options. Do you want to fix them?</source>
+        <translation>Es liegen Widersprüche in den erweiterten Einstellung vor. Möchten Sie sie korrigieren?</translation>
+    </message>
 </context>
 <context>
     <name>QPrintPropertiesWidget</name>
@@ -3649,6 +3692,14 @@ Bitte deaktivieren Sie eine der beiden.</translation>
     <message>
         <source>Page</source>
         <translation>Seite</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Erweitert</translation>
+    </message>
+    <message>
+        <source>There are conflicts in some options. Please fix them.</source>
+        <translation>Einige Einstellungen sind widersprüchlich. Bitte korrigieren Sie diese.</translation>
     </message>
 </context>
 <context>
@@ -3736,6 +3787,14 @@ Bitte deaktivieren Sie eine der beiden.</translation>
     <message>
         <source>Page Set:</source>
         <translation>Seiten-Satz:</translation>
+    </message>
+    <message>
+        <source>Pages</source>
+        <translation>Seiten</translation>
+    </message>
+    <message>
+        <source>Specify pages or ranges separated by commas. Ranges are specified by two numbers separated by a hyphen. E.g: 3,5-7,9 prints pages 3, 5, 6, 7 and 9.</source>
+        <translation>Geben Sie die Seiten oder Bereiche durch Kommata getrennt ein. Bereiche werden durch zwei durch einen Bindestrich getrennte Zahlen festgelegt. Beispiel: 3,5-7,9 druckt die Seiten 3, 5, 6, 7 und 9.</translation>
     </message>
 </context>
 <context>
@@ -6296,6 +6355,34 @@ Role of an accessible object</extracomment>
         <translation>Elliptische Kurven sind in dieser Version von OpenSSL nicht verfügbar</translation>
     </message>
     <message>
+        <source>Error when setting the OpenSSL configuration (%1)</source>
+        <translation>Fehler beim Setzen der OpenSSL-Konfiguration (%1)</translation>
+    </message>
+    <message>
+        <source>Expecting QByteArray for %1</source>
+        <translation>Es wird der Typ QByteArray für %1 erwartet</translation>
+    </message>
+    <message>
+        <source>An error occurred attempting to set %1 to %2</source>
+        <translation>Beim Setzen von %1 auf %2 trat ein Fehler auf</translation>
+    </message>
+    <message>
+        <source>Wrong value for %1 (%2)</source>
+        <translation>Falscher Wert für %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Unrecognized command %1 = %2</source>
+        <translation>Nicht erkanntes Kommando %1 = %2</translation>
+    </message>
+    <message>
+        <source>SSL_CONF_finish() failed</source>
+        <translation>SSL_CONF_finish() schlug fehl</translation>
+    </message>
+    <message>
+        <source>SSL_CONF_CTX_new() failed</source>
+        <translation>SSL_CONF_CTX_new() schlug fehl</translation>
+    </message>
+    <message>
         <source>OpenSSL version too old, need at least v1.0.2</source>
         <translation>Die verwendete Version von OpenSSL ist zu alt, es muss v1.0.2 oder neuer sein</translation>
     </message>
@@ -6702,10 +6789,10 @@ Role of an accessible object</extracomment>
     <message>
         <source>Qt cannot load the direct2d platform plugin because the Direct2D version on this system is too old. The minimum system requirement for this platform plugin is Windows 7 SP1 with Platform Update.
 
-The minimum Direct2D version required is %1.%2.%3.%4. The Direct2D version on this system is %5.%6.%7.%8.</source>
+The minimum Direct2D version required is %1. The Direct2D version on this system is %2.</source>
         <translation>Qt kann das Direct2D-Plattform-Plugin nicht laden, weil die auf dem System installierte Version von Direct2D veraltet ist. Dieses Plattform-Plugin erfordert mindestens Windows 7 SP1 mit Plattform Update.
 
-Die minimal erforderliche Version von Direct2D ist %1.%2.%3.%4. Die auf diesem System installierte Version von Direct2D ist %5.%6.%7.%8.</translation>
+Die minimal erforderliche Version von Direct2D ist %1 Die auf diesem System installierte Version von Direct2D ist %2.</translation>
     </message>
     <message>
         <source>Cannot load direct2d platform plugin</source>

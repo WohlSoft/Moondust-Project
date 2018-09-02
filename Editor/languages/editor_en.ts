@@ -10256,6 +10256,10 @@ The maximum number of Music boxes is %2.</translation>
         <source>Initializing tileset categories...</source>
         <translation>Initializing tileset categories...</translation>
     </message>
+    <message>
+        <source>LTR</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>

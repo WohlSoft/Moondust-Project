@@ -9784,6 +9784,10 @@ El máximo es %2.</translation>
         <source>Initializing tileset categories...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>LTR</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>

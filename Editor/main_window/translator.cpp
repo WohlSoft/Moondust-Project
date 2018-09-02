@@ -38,6 +38,41 @@
 #include <ui_world_edit.h>
 #include <ui_npcedit.h>
 
+static QString makeLangFilePath(const QString &langPath, const QString &lang)
+{
+    return langPath + QString("/editor_%1.qm").arg(lang);
+}
+
+static QString makeQtLangFilePath(const QString &langPath, const QString &lang)
+{
+    return langPath + QString("/qt_%1.qm").arg(lang);
+}
+
+static bool langFileExists(const QString &langPath, const QString &lang)
+{
+    QString p = makeLangFilePath(langPath, lang);
+    return QFile::exists(p);
+}
+
+static QString getLangName(const QString &fname)
+{
+    QString locale;
+    locale = fname;                             // "TranslationExample_de.qm"
+    locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
+    locale.remove(0, locale.indexOf('_') + 1);  // "de"
+    return locale;
+}
+
+static QString getStdLangName(const QString &fname)
+{
+    QString locale;
+    locale = fname;                             // "TranslationExample_de.qm"
+    locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
+    locale.remove(0, locale.indexOf('_') + 1);  // "de"
+    locale = locale.replace('-', '_');
+    return locale;
+}
+
 void MainWindow::setDefLang()
 {
     /*
@@ -46,7 +81,10 @@ void MainWindow::setDefLang()
     LogDebug(QString("Lang->Translator loaging...."));
 
     QString defaultLocale = QLocale::system().name();
-    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
+
+    defaultLocale = defaultLocale.replace('_', '-').toLower();
+    if(!langFileExists(m_langPath, defaultLocale))
+        defaultLocale.truncate(defaultLocale.lastIndexOf('-'));
 
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
@@ -71,16 +109,16 @@ void MainWindow::setDefLang()
     QLocale locale = QLocale(m_currLang);
     QLocale::setDefault(locale);
 
-    bool ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+    bool ok = m_translator.load(makeLangFilePath(m_langPath, m_currLang));
     LogDebug(QString("Translation: %1").arg((int)ok));
     if(ok)
         qApp->installTranslator(&m_translator);
     else
     {
-        m_currLang="en"; //set to English if no other translations are found
+        m_currLang = "en"; //set to English if no other translations are found
         QLocale locale = QLocale(m_currLang);
         QLocale::setDefault(locale);
-        ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+        ok = m_translator.load(makeLangFilePath(m_langPath, m_currLang));
         if(ok)
             qApp->installTranslator(&m_translator);
 
@@ -88,12 +126,14 @@ void MainWindow::setDefLang()
     }
     qDebug() << "Common Translation: " << ok;
 
-    ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
+    ok = m_translatorQt.load(makeQtLangFilePath(m_langPath, m_currLang));
     LogDebug(QString("Qt Translation: %1").arg((int)ok));
     if(ok)
         qApp->installTranslator(&m_translatorQt);
 
     qDebug() << "Qt Translation: " << ok;
+
+    qApp->setLayoutDirection(QObject::tr("LTR") == "RTL" ? Qt::RightToLeft : Qt::LeftToRight);
 
     ui->retranslateUi(this);
     refreshLunaLUAMenuItems();
@@ -110,49 +150,56 @@ void MainWindow::langListSync()
 
     QDir dir(m_langPath);
     QStringList fileNames = dir.entryList(QStringList("editor_*.qm"));
-    for (int i = 0; i < fileNames.size(); ++i)
+    for(int i = 0; i < fileNames.size(); ++i)
+    {
+        // get locale extracted by filename
+        QString locale = getLangName(fileNames[i]);
+        QString localeStd = getStdLangName(fileNames[i]);
+        QString lang;
+        if(locale == "en")
+            lang = "English";
+        else
         {
-            // get locale extracted by filename
-            QString locale;
-            locale = fileNames[i];                  // "TranslationExample_de.qm"
-            locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
-            locale.remove(0, locale.indexOf('_') + 1);   // "de"
-
-            QString lang = QLocale::languageToString(QLocale(locale).language());
-            QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
-
-            QAction *action = new QAction(ico, lang, this);
-            action->setCheckable(true);
-            action->setData(locale);
-
-            LogDebug(QString("Locale: %1 %2").arg(m_langPath).arg(locale));
-
-            ui->menuLanguage->addAction(action);
-
-            if (GlobalSettings::locale == locale)
-            {
-                action->setChecked(true);
-            }
+            QLocale loc(localeStd);
+            lang = QString("%1 (%2)")
+                    .arg(loc.nativeLanguageName())
+                    .arg(loc.nativeCountryName());
+            if(!lang.isEmpty())
+                lang[0] = lang[0].toUpper();
         }
+        QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
 
-    if(fileNames.size()==0)
+        QAction *action = new QAction(ico, lang, this);
+        action->setCheckable(true);
+        action->setData(locale);
+
+        LogDebug(QString("Locale: %1 %2").arg(m_langPath).arg(locale));
+
+        ui->menuLanguage->addAction(action);
+
+        if(GlobalSettings::locale == locale)
+        {
+            action->setChecked(true);
+        }
+    }
+
+    if(fileNames.size() == 0)
     {
         QAction *action = ui->menuLanguage->addAction("[translations not found]");
         action->setCheckable(false);
         action->setDisabled(true);
     }
-
 }
 
 template<class T>
-static void reTranslateWidget(QWidget* w)
+static void reTranslateWidget(QWidget *w)
 {
-    T* wnd = qobject_cast<T*>(w);
+    T *wnd = qobject_cast<T *>(w);
     Q_ASSERT(wnd);
     wnd->reTranslate();
 }
 
-void MainWindow::slotLanguageChanged(QAction* action)
+void MainWindow::slotLanguageChanged(QAction *action)
 {
     LogDebug(QString("Translation->SlotStarted"));
     if(0 != action)
@@ -165,24 +212,22 @@ void MainWindow::slotLanguageChanged(QAction* action)
         DevConsole::retranslate();
 
         //Retranslate each opened sub-window / tab
-        QList<QMdiSubWindow*> subWS = ui->centralWidget->subWindowList();
-        foreach(QMdiSubWindow* w, subWS)
+        QList<QMdiSubWindow *> subWS = ui->centralWidget->subWindowList();
+        foreach(QMdiSubWindow *w, subWS)
         {
-            QWidget* wd = w->widget();
+            QWidget *wd = w->widget();
             QString className = wd->metaObject()->className();
-            if(className==LEVEL_EDIT_CLASS)
+            if(className == LEVEL_EDIT_CLASS)
                 reTranslateWidget<LevelEdit>(wd);
-            else
-            if(className==WORLD_EDIT_CLASS)
+            else if(className == WORLD_EDIT_CLASS)
                 reTranslateWidget<WorldEdit>(wd);
-            else
-            if(className==NPC_EDIT_CLASS)
+            else if(className == NPC_EDIT_CLASS)
                 reTranslateWidget<NpcEdit>(wd);
         }
     }
 }
 
-bool MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
+bool MainWindow::switchTranslator(QTranslator &translator, const QString &filename)
 {
     // remove the old translator
     qApp->removeTranslator(&translator);
@@ -191,12 +236,18 @@ bool MainWindow::switchTranslator(QTranslator& translator, const QString& filena
     LogDebug(QString("Translation: %1 %2").arg((int)ok).arg(filename));
 
     if(ok)
+    {
         qApp->installTranslator(&translator);
-    LogDebug(QString("Translation-> changed"));
+        LogDebug(QString("Translation-> changed"));
+    }
+    else
+    {
+        LogDebug(QString("Translation-> wasn't loaded because of error"));
+    }
     return ok;
 }
 
-void MainWindow::loadLanguage(const QString& rLanguage)
+void MainWindow::loadLanguage(const QString &rLanguage)
 {
     if(m_currLang != rLanguage)
     {
@@ -208,13 +259,12 @@ void MainWindow::loadLanguage(const QString& rLanguage)
 
         QString languageName = QLocale::languageToString(locale.language());
 
-        bool ok  = switchTranslator(m_translatorQt, m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-            if(ok)
-                qApp->installTranslator(&m_translatorQt);
-            qDebug() << "Qt Translation: " << ok;
-             ok  = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-            qDebug() << "Common Translation: " << ok;
-
+        bool ok  = switchTranslator(m_translatorQt, makeQtLangFilePath(m_langPath, m_currLang));
+        if(ok)
+            qApp->installTranslator(&m_translatorQt);
+        qDebug() << "Qt Translation: " << ok;
+        ok  = switchTranslator(m_translator, makeLangFilePath(m_langPath, m_currLang));
+        qDebug() << "Common Translation: " << ok;
 
         LogDebug(QString("Translation-> try to retranslate"));
 
