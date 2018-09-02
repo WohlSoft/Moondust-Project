@@ -38,6 +38,9 @@ EditorSpashScreen::~EditorSpashScreen()
 
 void EditorSpashScreen::drawContents(QPainter *painter)
 {
+    bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
+    painter->save();
+
     painter->setOpacity(1);
     painter->fillRect(rect(), QBrush(Qt::transparent));
     painter->setOpacity(opacity);
@@ -46,7 +49,7 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->setBrush(Qt::white);
     painter->setRenderHint(QPainter::TextAntialiasing);
     painter->setRenderHint(QPainter::Antialiasing);
-    for(int i=0; i<animations.size(); i++)
+    for(int i = 0; i < animations.size(); i++)
     {
         QPixmap &frame = animations[i].second->wholeImage();
         QRect frameRect = animations[i].second->frameRect();
@@ -58,24 +61,50 @@ void EditorSpashScreen::drawContents(QPainter *painter)
         painter->drawPixmap(x, frame, frameRect);
     }
 
+    if(rtl)
+    {
+        painter->save();
+        QRect rectToDraw = rect();
+        rectToDraw.setTop(rectToDraw.bottom() - 30);
+        painter->setBrush(QBrush(Qt::black));
+        painter->setPen(QPen(Qt::white, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        painter->drawRect(rectToDraw);
+        painter->restore();
+    }
+
     painter->setBrush(QBrush(Qt::black));
     QPen progressLine_bar( QBrush(Qt::black), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(progressLine_bar);
-    painter->drawRect(0, rect().height()-5, rect().width(), 4);
+    painter->drawRect(0, rect().height() - 5, rect().width(), 4);
 
     painter->setBrush(QBrush(Qt::green));
     painter->setPen(Qt::transparent);
-    painter->drawRect(0, rect().height()-4,
-                        Maths::iRound(double(rect().width()) *( (double)_percents/100.0)), 2);
+
+    int progressLineLength = Maths::iRound(double(rect().width()) *( (double)_percents/100.0));
+    painter->drawRect(rtl ? (rect().width() - progressLineLength) : 0,
+                      rect().height() - 4,
+                      progressLineLength,
+                      2);
 
     painter->setPen(Qt::white);
+    painter->setBrush(Qt::black);
     painter->setFont(QFont("Lucida Grande", 8, -1, true));
 
-    QPainterPath path;
-    path.addText(rect().x()+20, rect().bottom()-20, painter->font(), _label);
-    painter->strokePath(path, QPen(QColor(Qt::black), 4));
+    QRect rectToDraw = rect();
+    rectToDraw.setLeft(rectToDraw.left() + 20);
+    rectToDraw.setRight(rectToDraw.right() - 20);
+    rectToDraw.setTop(rectToDraw.bottom() - 30);
 
-    painter->drawText(rect().x()+20, rect().bottom()-20, _label);
+    if(!rtl)
+    {
+        QPainterPath path;
+        path.addText(rect().x() + 20, rect().bottom() - 20, painter->font(), _label);
+        painter->strokePath(path, QPen(QColor(Qt::black), 4));
+    }
+
+    painter->drawText(rectToDraw, Qt::AlignTop | Qt::AlignLeft, _label);
+
+    painter->restore();
 }
 
 void EditorSpashScreen::addAnimation(QPoint p, QPixmap &pixmap, int frames, int speed)

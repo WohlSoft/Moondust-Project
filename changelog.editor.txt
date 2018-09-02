@@ -20,6 +20,7 @@ Editor 0.3.1.14-1-dev
 - Strict SMBX64 mode will be kept when restoring files after crash
 - Fixed the spam of physical environment zones caused by history undo and redo
 - Added support for grid offset for blocks
+- Added support for Right-To-Left layout direction for Arabic, Hebrew, Persian, etc. languages
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)

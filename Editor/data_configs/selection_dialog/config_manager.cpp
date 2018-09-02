@@ -127,22 +127,25 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
     QString title       = index.data(Qt::DisplayRole).toString();
     QString description = index.data(CP_DESC_ROLE).toString();
 
-    int imageSpace = 10;
+    int imageSpace_l = 10, imageSpace_r = 10;
     if(!ic.isNull())
     {
         //ICON
         r = option.rect.adjusted(5, 10, -10, -10);
         ic.paint(painter, r, Qt::AlignVCenter | Qt::AlignLeft);
-        imageSpace = 80;
+        if(qApp->layoutDirection() == Qt::RightToLeft)
+            imageSpace_r = 80;
+        else
+            imageSpace_l = 80;
     }
 
     //TITLE
-    r = option.rect.adjusted(imageSpace, 0, -10, -30);
+    r = option.rect.adjusted(imageSpace_l, 0, -imageSpace_r, -30);
     painter->setFont(QFont("Lucida Grande", PGEDefaultFontSize + 2, QFont::Bold));
     painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom | Qt::AlignLeft, title, &r);
 
     //DESCRIPTION
-    r = option.rect.adjusted(imageSpace, 30, -10, 30);
+    r = option.rect.adjusted(imageSpace_l, 30, -imageSpace_r, 30);
     painter->setFont(QFont("Lucida Grande", PGEDefaultFontSize, QFont::Normal));
     painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignLeft, description, &r);
 }

@@ -116,12 +116,14 @@ QRubberBand *GraphicsWorkspace::rubberBand() const
 
 void GraphicsWorkspace::moveLeft()
 {
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value() - step);
+    bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value() - step * (rtl ? -1 : 1));
 }
 
 void GraphicsWorkspace::moveRight()
 {
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value() + step);
+    bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value() + step * (rtl ? -1 : 1));
 }
 
 void GraphicsWorkspace::moveUp()
@@ -246,7 +248,17 @@ void GraphicsWorkspace::focusOutEvent(QFocusEvent *event)
 void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
 {
     int modS = 128;
-    if(event->modifiers() & Qt::ShiftModifier) modS = 256;
+    int modS_h = modS;
+    bool rtl = (qApp->layoutDirection() == Qt::RightToLeft);
+
+    if(rtl)
+        modS_h *= -1;
+
+    if(event->modifiers() & Qt::ShiftModifier)
+    {
+        modS *= 2;
+        modS_h *= 2;
+    }
 
     if(event->modifiers() & Qt::AltModifier)
     {
@@ -276,9 +288,9 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     if(event->modifiers() & Qt::ControlModifier)
     {
         if(event->delta() > 0)
-            horizontalScrollBar()->setValue(horizontalScrollBar()->value() - modS);
+            horizontalScrollBar()->setValue(horizontalScrollBar()->value() - modS_h);
         else
-            horizontalScrollBar()->setValue(horizontalScrollBar()->value() + modS);
+            horizontalScrollBar()->setValue(horizontalScrollBar()->value() + modS_h);
         //event->accept();
         replayLastMouseEvent();
         if(scene())
