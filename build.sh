@@ -44,8 +44,22 @@ do
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
             printf " \E[1;4m--help\E[0m           - Print this manual\n"
             printf " \E[1;4mldoc\E[0m             - Make lua documentation\n"
+            if [ ! -f ../LDoc/ldoc.lua ]; then
+                printf " \E[0;4;41;37m<LDoc repository is not clonned! Clone it into parent folder!>\E[0m\n"
+            elif [ ! -f ./build-pge-cmake-release/bin/luajit-2.1.0-beta3 ]; then
+                printf " \E[0;4;44;37m<To use LDoc you need to build the project first!>\E[0m\n"
+            fi
+
             printf " \E[1;4mcmake-it\E[0m         - Run build through experimental alternative build on CMake\n"
+            if [[ "$(which cmake)" == "" ]]; then
+                printf " \E[0;4;41;37m<cmake is not installed!>\E[0m\n"
+            fi
+
             printf " \E[1;4mpack-src\E[0m         - Create the source code archive (git-archive-all is required!)'\n"
+            if [[ "$(which git-archive-all)" == "" ]]; then
+                printf " \E[0;4;41;37m<git-archive-all is not installed!>\E[0m\n"
+            fi
+
             echo ""
 
             echo "--- Flags ---"
@@ -53,9 +67,13 @@ do
             printf " \E[1;4msilent-make\E[0m      - Don't print build commands for each building file\n"
             printf " \E[1;4mdebug\E[0m            - Run build in debug configuration'\n"
             printf " \E[1;4mninja\E[0m            - Use Ninja build system (CMake only build)'\n"
+            if [[ "$(which ninja)" == "" ]]; then
+                printf " \E[0;4;41;37m<ninja is not installed!>\E[0m\n"
+            fi
+
             printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed (CMake only build)'\n"
             printf " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
-            if [[ ! -f /usr/bin/ccache && ! -f /bin/ccache && ! -f /usr/local/bin/ccache ]]; then
+            if [[ "$(which ccache)" == "" ]]; then
                 printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
             fi
             printf "\n"
@@ -129,6 +147,7 @@ do
             exit 0
             ;;
         ldoc)
+            # FIXME: 1) Autodetect luajit executible. 2) Don't rely on canonical paths, add LDoc as the submodule
             cd Engine/doc
             ../../build-pge-cmake-release/bin/luajit-2.1.0-beta3 ../../../LDoc/ldoc.lua .
             cd ../..
@@ -162,9 +181,28 @@ do
                     rm -Rf ./$BinDir/_build_x64
                 fi
 
+                if [ -d ./build-pge-cmake-release/ ]; then
+                    echo "removing build-pge-cmake-release/ ..."
+                    cd ./build-pge-cmake-release/
+                    find . -not -path "./bin*" -delete
+                    cd ..
+                fi
+
+                if [ -d ./build-pge-cmake-debug/ ]; then
+                    echo "removing build-pge-cmake-debug/ ..."
+                    cd ./build-pge-cmake-debug/
+                    find . -not -path "./bin*" -delete
+                    cd ..
+                fi
+
                 echo 'removing Dependencies build cache ...'
 
-                ./clear_deps.sh
+                if [ -d $PWD/_Libs/_sources/_build_cache ];
+                then
+	                echo "Deleting $PWD/_Libs/_sources/_build_cache..."
+	                rm -Rf $PWD/_Libs/_sources/_build_cache
+                fi
+
                 echo "==== Clear! ===="
                 exit 0;
             ;;
