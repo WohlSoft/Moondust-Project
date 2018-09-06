@@ -8979,7 +8979,7 @@ Please save the file first.</translation>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</translation>
     </message>
 </context>
 <context>

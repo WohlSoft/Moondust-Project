@@ -8919,7 +8919,7 @@ Please save the file first.</source>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Во время перезагрузки конфигурации, все открытые файлы будут закрыты и снова открыты при завершении перезагрузки. Хотите продолжить?</translation>
     </message>
 </context>
 <context>
