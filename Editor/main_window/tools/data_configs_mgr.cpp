@@ -61,14 +61,58 @@ class PGEProgressDialog : public QProgressDialog
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
+    QStringList openedFilesBackup;
+
     if(ui->centralWidget->subWindowList().size() > 0)
     {
-        QMessageBox::warning(this,
+        QMessageBox::StandardButton answer =
+                QMessageBox::warning(this,
                              tr("Configuration is busy"),
-                             tr("To reload configuration you should close all opened files first."),
-                             QMessageBox::Ok);
-        return;
+                             tr("When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?"),
+                             QMessageBox::Yes|QMessageBox::No);
+        if(answer != QMessageBox::Yes)
+            return; // Do Nothing
+
+        { // Collect list of all opened files
+            QList<QMdiSubWindow*> subWindows = ui->centralWidget->subWindowList();
+            for(QMdiSubWindow* w : subWindows)
+            {
+                switch(activeChildWindow(w))
+                {
+                case WND_Level:
+                {
+                    LevelEdit *wnd = activeLvlEditWin(w);
+                    if(wnd && !wnd->isUntitled)
+                        openedFilesBackup.push_back(wnd->currentFile());
+                    break;
+                }
+
+                case WND_World:
+                {
+                    WorldEdit *wnd = activeWldEditWin(w);
+                    if(wnd && !wnd->isUntitled)
+                        openedFilesBackup.push_back(wnd->currentFile());
+                    break;
+                }
+
+                case WND_NpcTxt:
+                {
+                    NpcEdit *wnd = activeNpcEditWin(w);
+                    if(wnd && !wnd->isUntitled)
+                        openedFilesBackup.push_back(wnd->currentFile());
+                    break;
+                }
+                }
+            }
+        }
+
+        ui->centralWidget->closeAllSubWindows();
+        //When some of subwindows are still be opened (for example, by user cancel)
+        if(ui->centralWidget->subWindowList().size() > 0)
+            return; // Do Nothing
     }
+
+
 
     //    //Disable all animations to take speed-up
     //    foreach( QMdiSubWindow *window, ui->centralWidget->subWindowList() )
@@ -145,6 +189,10 @@ void MainWindow::on_actionLoad_configs_triggered()
     //        }
     //    }
     LogDebug("Checking result...");
+
+    // Restore previously closed files
+    for(const QString &file : openedFilesBackup)
+        OpenFile(file);
 
     if(isOk.result())
     {

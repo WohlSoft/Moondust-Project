@@ -139,16 +139,16 @@ int MainWindow::activeChildWindow()
 int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
 {
     if(wnd == NULL)
-        return 0;
+        return WND_NoWindow;
 
     if(QString(wnd->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS)
-        return 1;
+        return WND_Level;
     else if(QString(wnd->widget()->metaObject()->className()) == NPC_EDIT_CLASS)
-        return 2;
+        return WND_NpcTxt;
     else if(QString(wnd->widget()->metaObject()->className()) == WORLD_EDIT_CLASS)
-        return 3;
+        return WND_World;
     else
-        return 0;
+        return WND_NoWindow;
 }
 
 NpcEdit *MainWindow::activeNpcEditWin()

@@ -22,6 +22,7 @@ Editor 0.3.1.14-1-dev
 - Added support for grid offset for blocks
 - Added support for Right-To-Left layout direction for Arabic, Hebrew, Persian, etc. languages
 - Added an action for LunaTester to kill a running background instance
+- Config pack reload will now save all opened files and restore them back after the reload
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)
