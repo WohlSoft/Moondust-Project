@@ -3621,6 +3621,28 @@ To use LunaTester you should have right Integration configuration package!</sour
         <source>Failed to find SMBX Window</source>
         <translation type="vanished">Окно SMBX не найдено</translation>
     </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester has been successfully closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester is not running.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlBaseItem</name>
