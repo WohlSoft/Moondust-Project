@@ -175,6 +175,11 @@ public:
         //! Is everything has been successfuly initialized
         bool m_isAppInited;
 
+        //! When application will be closed, restart it
+        bool m_isAppRestartRequested;
+
+        bool isAppRestartRequested();
+
         ///
         /// \brief loadSettings load settings from configuration file
         ///

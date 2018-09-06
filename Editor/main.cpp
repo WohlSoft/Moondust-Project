@@ -60,6 +60,7 @@
 
 static bool initied_sdl = false;
 static bool initied_fig = false;
+static bool restart_requested = false;
 
 static PGE_Application     *app         = nullptr;
 static SingleApplication   *appSingle   = nullptr;
@@ -303,9 +304,14 @@ int main(int argc, char *argv[])
     //Run main loop
     ret = app->exec();
 
+    restart_requested = mWindow->isAppRestartRequested();
+
 QuitFromEditor:
     pgeEditorQuit();
     LogDebugNC("--> Application closed <--");
+
+    if(restart_requested) // Self-restart
+        QProcess::startDetached(QString::fromUtf8(argv[0]));
 
     return ret;
 }

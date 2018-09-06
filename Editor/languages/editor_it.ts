@@ -5847,7 +5847,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover�
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</source>
-        <translation>Il pacchetto di configurazione è cambiato!
+        <translation type="vanished">Il pacchetto di configurazione è cambiato!
 Per iniziare a usare il nuovo pacchetto, riavvia l&apos;applicazione.</translation>
     </message>
     <message>
@@ -6322,6 +6322,11 @@ Salva prima il file.</translation>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

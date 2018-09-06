@@ -5415,11 +5415,6 @@ The PGE Engine is still at an early stage in development, and there are several 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The configuration pack has changed!
-To start using the new configuration pack, please restart the application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select directory with custom data to import.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5591,6 +5586,11 @@ Please save the file first.</source>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

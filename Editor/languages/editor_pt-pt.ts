@@ -6014,7 +6014,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</source>
-        <translation>A configuração foi alterada!
+        <translation type="vanished">A configuração foi alterada!
 Para trabalhar com ela, reinicie o aplicativo, por favor.</translation>
     </message>
     <message>
@@ -6592,6 +6592,11 @@ Please save the file first.</source>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

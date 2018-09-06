@@ -5158,11 +5158,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The configuration pack has changed!
-To start using the new configuration pack, please restart the application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5591,6 +5586,11 @@ Please save the file first.</source>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -7588,7 +7588,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</source>
-        <translation>Die Konfiguration wurde geändert!
+        <translation type="vanished">Die Konfiguration wurde geändert!
 Die Konfiguartion wird beim nächste Neustart der Anwendung verwendet.</translation>
     </message>
     <message>
@@ -8411,6 +8411,11 @@ Please save the file first.</source>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

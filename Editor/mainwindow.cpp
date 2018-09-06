@@ -39,6 +39,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 {
     MainWinConnect::pMainWin = this;
     m_isAppInited = false;
+    m_isAppRestartRequested = false;
 
     this->setAttribute(Qt::WA_QuitOnClose, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -65,6 +66,11 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->actionAbout->setEnabled(false);
     ui->actionApplication_settings->setEnabled(false);
 #endif
+}
+
+bool MainWindow::isAppRestartRequested()
+{
+    return m_isAppRestartRequested;
 }
 
 

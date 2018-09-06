@@ -7980,7 +7980,7 @@ File: %1</translation>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</source>
-        <translation>The configuration pack has changed!
+        <translation type="vanished">The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</translation>
     </message>
     <message>
@@ -8980,6 +8980,12 @@ Please save the file first.</translation>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
         <translation>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</translation>
     </message>
 </context>
 <context>

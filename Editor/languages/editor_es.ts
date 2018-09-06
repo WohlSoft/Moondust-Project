@@ -7698,7 +7698,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</source>
-        <translation>¡La configuración fue cambiada!
+        <translation type="vanished">¡La configuración fue cambiada!
 Para trabajar con la nueva configuración, por favor reinicie la aplicación.</translation>
     </message>
     <message>
@@ -8565,6 +8565,11 @@ Por favor guarde primero.</translation>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

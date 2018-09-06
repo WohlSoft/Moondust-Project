@@ -238,10 +238,20 @@ void MainWindow::on_actionChangeConfig_triggered()
         configPath          =  cmanager.m_currentConfig;
         currentConfigDir    = (cmanager.m_doAskAgain) ? "" : configPath;
         saveSettings();
-        QMessageBox::information(this,
+        QMessageBox::StandardButton answer = QMessageBox::question(this,
                                  tr("Configuration changed"),
                                  tr("The configuration pack has changed!\n"
-                                    "To start using the new configuration pack, please restart the application."),
-                                 QMessageBox::Ok);
+                                    "To start using the new configuration pack, you need to restart the Editor. Do you want to continue?"),
+                                 QMessageBox::Yes|QMessageBox::No);
+        if(answer == QMessageBox::Yes)
+        {
+            ui->centralWidget->closeAllSubWindows();
+            //When some of subwindows are still be opened (for example, by user cancel)
+            if(ui->centralWidget->subWindowList().size() == 0)
+            {
+                m_isAppRestartRequested = true;
+                this->close(); // Close main window
+            }
+        }
     }
 }
