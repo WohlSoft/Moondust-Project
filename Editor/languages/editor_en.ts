@@ -3676,23 +3676,23 @@ To use LunaTester you must use the Integration configuration package!</translati
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terminate running process</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ends the LunaTester process so the engine can be loaded from scratch.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester has been successfully closed.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester is not running.</translation>
     </message>
 </context>
 <context>
