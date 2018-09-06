@@ -5407,10 +5407,6 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>To reload configuration you should close all opened files first.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reloading configuration pack</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5591,6 +5587,10 @@ Please save the file first.</source>
     </message>
     <message>
         <source>Please enter grid alignment size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

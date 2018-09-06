@@ -5721,7 +5721,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>To reload configuration you should close all opened files first.</source>
-        <translation>Aby odśiwżyć konfigurację zamknij wszystkie otwarte pliki.</translation>
+        <translation type="vanished">Aby odśiwżyć konfigurację zamknij wszystkie otwarte pliki.</translation>
     </message>
     <message>
         <source>Reloading configuration pack</source>
@@ -6372,6 +6372,10 @@ Proszę  najpierw zapisać plik</translation>
     <message>
         <source>Please enter grid alignment size:</source>
         <translation>Proszę podać rozmiar siatki:</translation>
+    </message>
+    <message>
+        <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -7921,7 +7921,7 @@ File: %1
     </message>
     <message>
         <source>To reload configuration you should close all opened files first.</source>
-        <translation>Чтобы перезагрузить конфигурацию, сначала вы должны закрыть все открытые файлы.</translation>
+        <translation type="vanished">Чтобы перезагрузить конфигурацию, сначала вы должны закрыть все открытые файлы.</translation>
     </message>
     <message>
         <source>Reloading configuration</source>
@@ -8916,6 +8916,10 @@ Please save the file first.</source>
     <message>
         <source>Please enter grid alignment size:</source>
         <translation>Пожалуйста, введите размер сетки выравнивания:</translation>
+    </message>
+    <message>
+        <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

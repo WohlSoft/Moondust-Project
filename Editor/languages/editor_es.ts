@@ -7685,7 +7685,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>To reload configuration you should close all opened files first.</source>
-        <translation>Para recargar configuración primero debe cerrar todos los archivos.</translation>
+        <translation type="vanished">Para recargar configuración primero debe cerrar todos los archivos.</translation>
     </message>
     <message>
         <source>Reloading configuration</source>
@@ -8562,6 +8562,10 @@ Por favor guarde primero.</translation>
     <message>
         <source>Please enter grid alignment size:</source>
         <translation>Por favor indique tamaño de grilla:</translation>
+    </message>
+    <message>
+        <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
