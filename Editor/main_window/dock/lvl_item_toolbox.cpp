@@ -101,25 +101,31 @@ void LevelItemBox::initItemLists()
 
     LevelEdit *edit = mw()->activeLvlEditWin();
     if((edit == NULL) || (!edit->sceneCreated))
+    {
+        LogDebug("LevelTools -> Can't reload: no editing level, or scene isn't initialized!");
         return;
+    }
 
     LvlScene *scene = edit->scene;
     if(!scene)
+    {
+        LogDebug("LevelTools -> Can't reload: scene pointer is NULL!");
         return;
+    }
 
     m_allLabel = MainWindow::tr("[all]");
 
     mw()->ui->menuNew->setEnabled(false);
 
     lock_cat = true;
-    QString cat_blocks = ui->BlockCatList->count() > 0 ? ui->BlockCatList->currentText() : m_allLabel;
-    QString cat_bgos = ui->BGOCatList->count() > 0 ? ui->BGOCatList->currentText() : m_allLabel;
-    QString cat_npcs = ui->NPCCatList->count() > 0 ? ui->NPCCatList->currentText() : m_allLabel;
+    QString cat_blocks = ui->BlockCatList->currentIndex() > 0 ? ui->BlockCatList->currentText() : m_allLabel;
+    QString cat_bgos = ui->BGOCatList->currentIndex() > 0 ? ui->BGOCatList->currentText() : m_allLabel;
+    QString cat_npcs = ui->NPCCatList->currentIndex() > 0 ? ui->NPCCatList->currentText() : m_allLabel;
 
     lock_grp = true;
-    QString grp_blocks = ui->BlockGroupList->count() > 0 ? ui->BlockGroupList->currentText() : m_allLabel;
-    QString grp_bgo = ui->BGOGroupList->count() > 0 ? ui->BGOGroupList->currentText() : m_allLabel;
-    QString grp_npc = ui->NPCGroupList->count() > 0 ? ui->NPCGroupList->currentText() : m_allLabel;
+    QString grp_blocks = ui->BlockGroupList->currentIndex() > 0 ? ui->BlockGroupList->currentText() : m_allLabel;
+    QString grp_bgo = ui->BGOGroupList->currentIndex() > 0 ? ui->BGOGroupList->currentText() : m_allLabel;
+    QString grp_npc = ui->NPCGroupList->currentIndex() > 0 ? ui->NPCGroupList->currentText() : m_allLabel;
 
     LogDebug("LevelTools -> Clear current");
 

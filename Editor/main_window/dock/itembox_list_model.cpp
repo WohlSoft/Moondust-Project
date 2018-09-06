@@ -336,6 +336,8 @@ void ItemBoxListModel::setCategoryFilter(const QString &category)
 void ItemBoxListModel::setCategoryAllKey(const QString &category)
 {
     m_filterCategoryAllKey = category;
+    m_filterCategory = -1;
+    updateFilter();
 }
 
 void ItemBoxListModel::setGroupFilter(const QString &group)
@@ -351,6 +353,8 @@ void ItemBoxListModel::setGroupFilter(const QString &group)
 void ItemBoxListModel::setGroupAllKey(const QString &group)
 {
     m_filterGroupAllKey = group;
+    m_filterGroup = -1;
+    updateFilter();
 }
 
 void ItemBoxListModel::setOriginsOnlyFilter(bool origs)
