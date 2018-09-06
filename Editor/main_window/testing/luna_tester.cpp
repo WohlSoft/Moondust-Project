@@ -162,6 +162,13 @@ void LunaTester::initLunaMenu(MainWindow *mw,
         m_menuItems[menuItemId++] = KillFrozenThread;
     }
     {
+        QAction *KillBackgroundInstance = lunaMenu->addAction("KillBackgroundInstance");
+        mw->connect(KillBackgroundInstance,   &QAction::triggered,
+                    this,               &LunaTester::killBackgroundInstance,
+                    Qt::QueuedConnection);
+        m_menuItems[menuItemId++] = KillBackgroundInstance;
+    }
+    {
         lunaMenu->addSeparator();
         QAction *runLegacyEngine = lunaMenu->addAction("startLegacyEngine");
         mw->connect(runLegacyEngine,   &QAction::triggered,
@@ -245,6 +252,13 @@ void LunaTester::retranslateMenu()
         KillFrozenThread->setToolTip(tr("Termiates frozen thread to allow you to run a test again."));
     }
     {
+        QAction *KillBackgroundInstance = m_menuItems[menuItemId++];
+        KillBackgroundInstance->setText(tr("Terminate running process",
+                                           "Ends the LunaTester process, regardless of whether it's in \n"
+                                           "the background or foreground, so the engine can be loaded from scratch."));
+        KillBackgroundInstance->setToolTip(tr("Ends the LunaTester process so the engine can be loaded from scratch."));
+    }
+    {
         QAction *runLegacyEngine = m_menuItems[menuItemId++];
         runLegacyEngine->setText(tr("Start Legacy Engine",
                                     "Launch legacy engine in game mode"));
@@ -305,7 +319,8 @@ void LunaTester::startLunaTester()
             LevelEdit *lvl = m_mw->activeLvlEditWin();
             if(lvl)
             {
-                if(m_killPreviousSession) killEngine();
+                if(m_killPreviousSession)
+                    killEngine();
                 m_helper = QtConcurrent::run(this,
                                              &LunaTester::lunaRunnerThread,
                                              lvl->LvlData,
@@ -344,16 +359,7 @@ void LunaTester::killFrozenThread()
                                             QMessageBox::Yes | QMessageBox::No);
         if(reply == QMessageBox::Yes)
         {
-            DWORD lpExitCode = 0;
-            if(GetExitCodeProcess(m_pi.hProcess, &lpExitCode))
-            {
-                if(lpExitCode == STILL_ACTIVE)
-                {
-                    WaitForSingleObject(m_pi.hProcess, 0);
-                    TerminateProcess(m_pi.hProcess, lpExitCode);
-                    CloseHandle(m_pi.hProcess);
-                }
-            }
+            killEngine();
         }
     }
     else
@@ -369,6 +375,32 @@ void LunaTester::killFrozenThread()
     }
 }
 
+void LunaTester::killBackgroundInstance()
+{
+    DWORD lpExitCode = 0;
+    if(GetExitCodeProcess(m_pi.hProcess, &lpExitCode) && (lpExitCode == STILL_ACTIVE))
+    {
+        QMessageBox::StandardButton reply = QMessageBox::warning(m_mw,
+                                            "LunaTester",
+                                            tr("Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!"),
+                                            QMessageBox::Yes | QMessageBox::No);
+        if(reply == QMessageBox::Yes)
+        {
+            killEngine();
+            QMessageBox::information(m_mw,
+                         "LunaTester",
+                         tr("LunaTester has been successfully closed."),
+                         QMessageBox::Ok);
+        }
+    }
+    else
+    {
+        QMessageBox::information(m_mw,
+                                 "LunaTester",
+                                 tr("LunaTester is not running."),
+                                 QMessageBox::Ok);
+    }
+}
 
 
 /*****************************************Private functions*************************************************/

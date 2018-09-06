@@ -111,6 +111,10 @@ public slots:
      * @brief Kill frozen runner thread
      */
     void killFrozenThread();
+    /**
+     * @brief Kill running background instance
+     */
+    void killBackgroundInstance();
 private:
     /********Internal private functions*******/
     /**
