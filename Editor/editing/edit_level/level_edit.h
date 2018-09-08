@@ -66,7 +66,7 @@ public:
 
     bool trySave();
 
-    bool isUtitled();
+    bool isUntitled();
     bool isModified();
 
     void setCurrentSection(int scId);

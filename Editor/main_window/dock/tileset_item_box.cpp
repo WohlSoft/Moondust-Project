@@ -162,9 +162,9 @@ void TilesetItemBox::on_newTileset_clicked()
 
     bool untitled = false;
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
-        untitled = mw()->activeLvlEditWin()->isUtitled();
+        untitled = mw()->activeLvlEditWin()->isUntitled();
     else if(mw()->activeChildWindow() == MainWindow::WND_World)
-        untitled = mw()->activeWldEditWin()->isUtitled();
+        untitled = mw()->activeWldEditWin()->isUntitled();
 
     if(untitled)
     {

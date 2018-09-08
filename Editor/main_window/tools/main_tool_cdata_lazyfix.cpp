@@ -338,7 +338,7 @@ void MainWindow::on_actionFixWrongMasks_triggered()
     if(activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit *e = activeLvlEditWin();
-        if(e->isUtitled())
+        if(e->isUntitled())
         {
             QMessageBox::warning(this, tr("File is untitled"),
                                  tr("File doesn't use custom graphics.\n"));
@@ -354,7 +354,7 @@ void MainWindow::on_actionFixWrongMasks_triggered()
     else if(activeChildWindow() == MainWindow::WND_World)
     {
         WorldEdit *e = activeWldEditWin();
-        if(e->isUtitled())
+        if(e->isUntitled())
         {
             QMessageBox::warning(this, tr("File is untitled"),
                                  tr("File doesn't use custom graphics.\n"));

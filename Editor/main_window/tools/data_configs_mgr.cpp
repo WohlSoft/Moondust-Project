@@ -80,9 +80,9 @@ void MainWindow::on_actionLoad_configs_triggered()
                 EditBase *wnd = activeBaseEditWin(w);
                 if(wnd)
                 {
-                    if(wnd->isUtitled() && !wnd->trySave())
+                    if(wnd->isUntitled() && !wnd->trySave())
                         return;
-                    if(!wnd->isUtitled())
+                    if(!wnd->isUntitled())
                         openedFilesBackup.push_back(wnd->currentFile());
                 }
             }

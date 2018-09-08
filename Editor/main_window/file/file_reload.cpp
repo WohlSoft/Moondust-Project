@@ -50,7 +50,7 @@ void MainWindow::on_actionReload_triggered()
         LevelData FileData;
         filePath = lvlEdit->curFile;
 
-        if(lvlEdit->isUtitled())
+        if(lvlEdit->isUntitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);
@@ -159,7 +159,7 @@ void MainWindow::on_actionReload_triggered()
         NpcEdit *npcEdit = activeNpcEditWin(LastActiveSubWindow);
         filePath = npcEdit->curFile;
 
-        if(npcEdit->isUtitled())
+        if(npcEdit->isUntitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);
@@ -217,7 +217,7 @@ void MainWindow::on_actionReload_triggered()
         WorldData FileData;
         filePath = wldEdit->curFile;
 
-        if(wldEdit->isUtitled())
+        if(wldEdit->isUntitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);

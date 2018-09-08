@@ -52,7 +52,7 @@ public:
     virtual QString userFriendlyCurrentFile() = 0;
     virtual QString currentFile() = 0;
 
-    virtual bool    isUtitled() = 0;
+    virtual bool    isUntitled() = 0;
     virtual bool    isModified() = 0;
 
     /*TODO:

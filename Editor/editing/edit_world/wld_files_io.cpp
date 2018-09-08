@@ -465,7 +465,7 @@ bool WorldEdit::trySave()
     return maybeSave();
 }
 
-bool WorldEdit::isUtitled()
+bool WorldEdit::isUntitled()
 {
     return m_isUntitled;
 }

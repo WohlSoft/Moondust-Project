@@ -68,7 +68,7 @@ public:
 
     void makeCrashState();
 
-    bool isUtitled();
+    bool isUntitled();
     bool isModified();
 
     QString curFile;

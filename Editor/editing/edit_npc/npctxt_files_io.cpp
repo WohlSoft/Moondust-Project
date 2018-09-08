@@ -224,7 +224,7 @@ void NpcEdit::makeCrashState()
     this->m_isModyfied = true; //just in case
 }
 
-bool NpcEdit::isUtitled()
+bool NpcEdit::isUntitled()
 {
     return m_isUntitled;
 }

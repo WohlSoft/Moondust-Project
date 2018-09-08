@@ -325,7 +325,7 @@ void LunaTester::startLunaTester()
                                              &LunaTester::lunaRunnerThread,
                                              lvl->LvlData,
                                              lvl->curFile,
-                                             lvl->isUntitled);
+                                             lvl->isUntitled());
             }
         }
         else

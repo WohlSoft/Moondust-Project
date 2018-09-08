@@ -586,7 +586,7 @@ bool LevelEdit::trySave()
     return maybeSave();
 }
 
-bool LevelEdit::isUtitled()
+bool LevelEdit::isUntitled()
 {
     return m_isUntitled;
 }

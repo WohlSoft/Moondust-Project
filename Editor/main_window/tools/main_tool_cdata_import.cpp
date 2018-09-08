@@ -28,7 +28,7 @@ void MainWindow::on_actionCDATA_Import_triggered()
     QString sourceDir = AppPathManager::userAppDir();
     if(activeChildWindow() == WND_Level)
     {
-        if(activeLvlEditWin()->isUtitled())
+        if(activeLvlEditWin()->isUntitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);
@@ -38,7 +38,7 @@ void MainWindow::on_actionCDATA_Import_triggered()
     }
     else if(activeChildWindow() == WND_World)
     {
-        if(activeWldEditWin()->isUtitled())
+        if(activeWldEditWin()->isUntitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);

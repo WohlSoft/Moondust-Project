@@ -144,7 +144,7 @@ void MainWindow::on_actionCreateScriptLocal_triggered()
         if(!lvl)
             return;
 
-        if(lvl->isUtitled())
+        if(lvl->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -159,7 +159,7 @@ void MainWindow::on_actionCreateScriptLocal_triggered()
         if(!wld)
             return;
 
-        if(wld->isUtitled())
+        if(wld->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -180,7 +180,7 @@ void MainWindow::on_actionCreateScriptEpisode_triggered()
         if(!lvl)
             return;
 
-        if(lvl->isUtitled())
+        if(lvl->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -195,7 +195,7 @@ void MainWindow::on_actionCreateScriptEpisode_triggered()
         if(!wld)
             return;
 
-        if(wld->isUtitled())
+        if(wld->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -216,7 +216,7 @@ void MainWindow::on_actionLunaLUA_lvl_triggered()
         if(!lvl)
             return;
 
-        if(lvl->isUtitled())
+        if(lvl->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -244,7 +244,7 @@ void MainWindow::on_actionLunaLUA_lvl_triggered()
         if(!wld)
             return;
 
-        if(wld->isUtitled())
+        if(wld->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -277,7 +277,7 @@ void MainWindow::on_actionLunaLUA_eps_triggered()
         if(!lvl)
             return;
 
-        if(lvl->isUtitled())
+        if(lvl->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -304,7 +304,7 @@ void MainWindow::on_actionLunaLUA_eps_triggered()
         if(!wld)
             return;
 
-        if(wld->isUtitled())
+        if(wld->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -337,7 +337,7 @@ void MainWindow::on_actionLunaLUA_wld_triggered()
         if(!lvl)
             return;
 
-        if(lvl->isUtitled())
+        if(lvl->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;
@@ -364,7 +364,7 @@ void MainWindow::on_actionLunaLUA_wld_triggered()
         if(!wld)
             return;
 
-        if(wld->isUtitled())
+        if(wld->isUntitled())
         {
             showUnsavedFileNotify(this);
             return;

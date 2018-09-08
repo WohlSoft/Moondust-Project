@@ -912,7 +912,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
             return;
         }
         dirPath = edit->WldData.meta.path;
-        if(edit->isUtitled())
+        if(edit->isUntitled())
         {
             QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
             return;

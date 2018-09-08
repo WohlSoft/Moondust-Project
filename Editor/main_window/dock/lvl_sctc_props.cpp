@@ -435,7 +435,7 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
     if(!edit)
         return;
 
-    if(edit->isUtitled())
+    if(edit->isUntitled())
     {
         QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to manage custom background config files."), QMessageBox::Ok);
         return;
@@ -573,7 +573,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
 
     dirPath = edit->LvlData.meta.path;
 
-    if(edit->isUtitled())
+    if(edit->isUntitled())
     {
         QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
         return;

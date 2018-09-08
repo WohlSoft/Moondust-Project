@@ -305,7 +305,7 @@ void LevelItemBox::on_BlockItemsList_customContextMenuRequested(const QPoint &po
 
     QMenu itemMenu(this);
 
-    if(edit->isUtitled())
+    if(edit->isUntitled())
     {
         QAction *nothing = itemMenu.addAction(tr("<Save file first>"));
         nothing->setEnabled(false);
@@ -356,7 +356,7 @@ void LevelItemBox::on_BGOItemsList_customContextMenuRequested(const QPoint &pos)
 
     QMenu itemMenu(this);
 
-    if(edit->isUtitled())
+    if(edit->isUntitled())
     {
         QAction *nothing = itemMenu.addAction(tr("<Save file first>"));
         nothing->setEnabled(false);
@@ -407,7 +407,7 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
 
     QMenu itemMenu(this);
 
-    if(edit->isUtitled())
+    if(edit->isUntitled())
     {
         QAction *nothing = itemMenu.addAction(tr("<Save file first>"));
         nothing->setEnabled(false);

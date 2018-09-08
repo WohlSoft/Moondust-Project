@@ -52,7 +52,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
         if(e)
         {
             path = e->LvlData.meta.path;
-            isUntitled = e->isUtitled();
+            isUntitled = e->isUntitled();
         }
     }
     else if(activeChildWindow() == WND_NpcTxt)
@@ -61,7 +61,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
         if(e)
         {
             path = QFileInfo(e->curFile).absoluteDir().absolutePath();
-            isUntitled = e->isUtitled();
+            isUntitled = e->isUntitled();
         }
     }
     else if(activeChildWindow() == WND_World)
@@ -70,7 +70,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
         if(e)
         {
             path = e->WldData.meta.path;
-            isUntitled = e->isUtitled();
+            isUntitled = e->isUntitled();
         }
     }
 
@@ -96,7 +96,7 @@ void MainWindow::on_action_openCustomFolder_triggered()
         if(e)
         {
             path = e->LvlData.meta.path + "/" + e->LvlData.meta.filename;
-            isUntitled = e->isUtitled();
+            isUntitled = e->isUntitled();
         }
     }
     else if(activeChildWindow() == WND_NpcTxt)
@@ -109,7 +109,7 @@ void MainWindow::on_action_openCustomFolder_triggered()
         if(e)
         {
             path = e->WldData.meta.path + "/" + e->WldData.meta.filename;
-            isUntitled = e->isUtitled();
+            isUntitled = e->isUntitled();
         }
     }
 
