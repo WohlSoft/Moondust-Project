@@ -310,7 +310,7 @@ void WldSearchBox::on_FindStartLevel_clicked()
 {
     if(!(currentSearches & SEARCH_LEVEL))  //start search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             currentSearches |= SEARCH_LEVEL;
             ui->FindStartLevel->setText(tr("Next Level"));
@@ -328,7 +328,7 @@ void WldSearchBox::on_FindStartLevel_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
             if(!edit) return;
@@ -347,7 +347,7 @@ void WldSearchBox::on_FindStartTile_clicked()
 {
     if(!(currentSearches & SEARCH_TILE))  //start search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             currentSearches |= SEARCH_TILE;
             ui->FindStartTile->setText(tr("Next Tile"));
@@ -365,7 +365,7 @@ void WldSearchBox::on_FindStartTile_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
             if(!edit) return;
@@ -384,7 +384,7 @@ void WldSearchBox::on_FindStartScenery_clicked()
 {
     if(!(currentSearches & SEARCH_SCENERY))  //start search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             currentSearches |= SEARCH_SCENERY;
             ui->FindStartScenery->setText(tr("Next Scenery"));
@@ -402,7 +402,7 @@ void WldSearchBox::on_FindStartScenery_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
             if(!edit) return;
@@ -421,7 +421,7 @@ void WldSearchBox::on_FindStartPath_clicked()
 {
     if(!(currentSearches & SEARCH_PATH))  //start search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             currentSearches |= SEARCH_PATH;
             ui->FindStartPath->setText(tr("Next Path"));
@@ -439,7 +439,7 @@ void WldSearchBox::on_FindStartPath_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
             if(!edit) return;
@@ -458,7 +458,7 @@ void WldSearchBox::on_FindStartMusic_clicked()
 {
     if(!(currentSearches & SEARCH_MUSICBOX))  //start search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             currentSearches |= SEARCH_MUSICBOX;
             ui->FindStartMusic->setText(tr("Next Music"));
@@ -476,7 +476,7 @@ void WldSearchBox::on_FindStartMusic_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 3)
+        if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
             if(!edit) return;
@@ -776,7 +776,7 @@ void WldSearchBox::toggleNewWindowWLD(QMdiSubWindow */*window*/)
 void WldSearchBox::selectLevelForSearch()
 {
     QString dirPath;
-    if(mw()->activeChildWindow() == 3)
+    if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldEdit *edit = mw()->activeWldEditWin();
         if(!edit) return;

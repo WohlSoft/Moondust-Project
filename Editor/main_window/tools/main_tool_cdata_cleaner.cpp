@@ -24,26 +24,26 @@
 void MainWindow::on_actionCDATA_clear_unused_triggered()
 {
     //QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         QStringList filesForRemove;
-        LevelEdit * box = activeLvlEditWin();
+        LevelEdit *box = activeLvlEditWin();
         if(!box) return;
         if(!box->sceneCreated) return;
         if(box->isUtitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
-                tr("File doesn't saved on disk."), QMessageBox::Ok);
+                                 tr("File doesn't saved on disk."), QMessageBox::Ok);
             return;
         }
 
-        LvlScene * s = box->scene;
+        LvlScene *s = box->scene;
         QString levelDirectory(box->LvlData.meta.path);
 
-        QString levelCustomDirectory(box->LvlData.meta.path+"/"+box->LvlData.meta.filename);
+        QString levelCustomDirectory(box->LvlData.meta.path + "/" + box->LvlData.meta.filename);
         QDir levelCustomDirectory_dir(levelCustomDirectory);
 
-        filesForRemove.append( levelCustomDirectory_dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot) );
+        filesForRemove.append(levelCustomDirectory_dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot));
 
         qDebug() << levelCustomDirectory << "Total custom files" << filesForRemove.size();
 
@@ -88,152 +88,153 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         typedef QPair<unsigned long, QStringList > bossNPC;
         QList<bossNPC > bossNPCs;
 
-        bossNPCs << bossNPC(15, npcFile.arg(16).split('|') ); //boom-boom
+        bossNPCs << bossNPC(15, npcFile.arg(16).split('|'));  //boom-boom
 
-        bossNPCs << bossNPC(39, npcFile.arg(41).split('|') ); //Birdo
-        bossNPCs << bossNPC(39, npcFile.arg(40).split('|') );
+        bossNPCs << bossNPC(39, npcFile.arg(41).split('|'));  //Birdo
+        bossNPCs << bossNPC(39, npcFile.arg(40).split('|'));
 
         //giant coopa
-        bossNPCs << bossNPC(72, npcFile.arg(73).split('|') );
+        bossNPCs << bossNPC(72, npcFile.arg(73).split('|'));
 
         //green parakoopa 1
-        bossNPCs << bossNPC(76, npcFile.arg(4).split('|') );
-        bossNPCs << bossNPC(76, npcFile.arg(5).split('|') );
-        bossNPCs << bossNPC(4, npcFile.arg(5).split('|') );
+        bossNPCs << bossNPC(76, npcFile.arg(4).split('|'));
+        bossNPCs << bossNPC(76, npcFile.arg(5).split('|'));
+        bossNPCs << bossNPC(4, npcFile.arg(5).split('|'));
 
         //green parakoopa 2
-        bossNPCs << bossNPC(176, npcFile.arg(173).split('|') );
-        bossNPCs << bossNPC(176, npcFile.arg(172).split('|') );
-        bossNPCs << bossNPC(173, npcFile.arg(172).split('|') );
+        bossNPCs << bossNPC(176, npcFile.arg(173).split('|'));
+        bossNPCs << bossNPC(176, npcFile.arg(172).split('|'));
+        bossNPCs << bossNPC(173, npcFile.arg(172).split('|'));
 
         //red parakoopa 1
-        bossNPCs << bossNPC(161, npcFile.arg(6).split('|') );
-        bossNPCs << bossNPC(161, npcFile.arg(7).split('|') );
-        bossNPCs << bossNPC(6, npcFile.arg(7).split('|') );
+        bossNPCs << bossNPC(161, npcFile.arg(6).split('|'));
+        bossNPCs << bossNPC(161, npcFile.arg(7).split('|'));
+        bossNPCs << bossNPC(6, npcFile.arg(7).split('|'));
 
         //red parakoopa 2
-        bossNPCs << bossNPC(177, npcFile.arg(175).split('|') );
-        bossNPCs << bossNPC(177, npcFile.arg(174).split('|') );
-        bossNPCs << bossNPC(175, npcFile.arg(174).split('|') );
+        bossNPCs << bossNPC(177, npcFile.arg(175).split('|'));
+        bossNPCs << bossNPC(177, npcFile.arg(174).split('|'));
+        bossNPCs << bossNPC(175, npcFile.arg(174).split('|'));
 
         //Blue parakoopa 3
-        bossNPCs << bossNPC(111, npcFile.arg(115).split('|') );
-        bossNPCs << bossNPC(111, npcFile.arg(55).split('|') );
-        bossNPCs << bossNPC(111, npcFile.arg(119).split('|') );
+        bossNPCs << bossNPC(111, npcFile.arg(115).split('|'));
+        bossNPCs << bossNPC(111, npcFile.arg(55).split('|'));
+        bossNPCs << bossNPC(111, npcFile.arg(119).split('|'));
 
-        bossNPCs << bossNPC(123, npcFile.arg(111).split('|') );
-        bossNPCs << bossNPC(123, npcFile.arg(115).split('|') );
-        bossNPCs << bossNPC(123, npcFile.arg(55).split('|') );
-        bossNPCs << bossNPC(123, npcFile.arg(119).split('|') );
+        bossNPCs << bossNPC(123, npcFile.arg(111).split('|'));
+        bossNPCs << bossNPC(123, npcFile.arg(115).split('|'));
+        bossNPCs << bossNPC(123, npcFile.arg(55).split('|'));
+        bossNPCs << bossNPC(123, npcFile.arg(119).split('|'));
 
         //Red parakoopa 3
-        bossNPCs << bossNPC(110, npcFile.arg(118).split('|') );
-        bossNPCs << bossNPC(110, npcFile.arg(114).split('|') );
+        bossNPCs << bossNPC(110, npcFile.arg(118).split('|'));
+        bossNPCs << bossNPC(110, npcFile.arg(114).split('|'));
 
-        bossNPCs << bossNPC(122, npcFile.arg(110).split('|') );
-        bossNPCs << bossNPC(123, npcFile.arg(118).split('|') );
-        bossNPCs << bossNPC(123, npcFile.arg(114).split('|') );
+        bossNPCs << bossNPC(122, npcFile.arg(110).split('|'));
+        bossNPCs << bossNPC(123, npcFile.arg(118).split('|'));
+        bossNPCs << bossNPC(123, npcFile.arg(114).split('|'));
 
         //Green parakoopa 3
-        bossNPCs << bossNPC(109, npcFile.arg(113).split('|') );//shell
-        bossNPCs << bossNPC(109, npcFile.arg(117).split('|') );//beach
+        bossNPCs << bossNPC(109, npcFile.arg(113).split('|')); //shell
+        bossNPCs << bossNPC(109, npcFile.arg(117).split('|')); //beach
 
-        bossNPCs << bossNPC(121, npcFile.arg(109).split('|') );//koopa
-        bossNPCs << bossNPC(121, npcFile.arg(113).split('|') );//shell
-        bossNPCs << bossNPC(121, npcFile.arg(117).split('|') );//beach
+        bossNPCs << bossNPC(121, npcFile.arg(109).split('|')); //koopa
+        bossNPCs << bossNPC(121, npcFile.arg(113).split('|')); //shell
+        bossNPCs << bossNPC(121, npcFile.arg(117).split('|')); //beach
 
         //Yellow parakoopa 3
-        bossNPCs << bossNPC(112, npcFile.arg(116).split('|') );//shell
-        bossNPCs << bossNPC(112, npcFile.arg(120).split('|') );//beach
+        bossNPCs << bossNPC(112, npcFile.arg(116).split('|')); //shell
+        bossNPCs << bossNPC(112, npcFile.arg(120).split('|')); //beach
 
-        bossNPCs << bossNPC(124, npcFile.arg(112).split('|') );//koopa
-        bossNPCs << bossNPC(124, npcFile.arg(116).split('|') );//shell
-        bossNPCs << bossNPC(124, npcFile.arg(120).split('|') );//beach
+        bossNPCs << bossNPC(124, npcFile.arg(112).split('|')); //koopa
+        bossNPCs << bossNPC(124, npcFile.arg(116).split('|')); //shell
+        bossNPCs << bossNPC(124, npcFile.arg(120).split('|')); //beach
 
-        bossNPCs << bossNPC(124, npcFile.arg(194).split('|') );
-        bossNPCs << bossNPC(112, npcFile.arg(194).split('|') );
-        bossNPCs << bossNPC(116, npcFile.arg(194).split('|') );
+        bossNPCs << bossNPC(124, npcFile.arg(194).split('|'));
+        bossNPCs << bossNPC(112, npcFile.arg(194).split('|'));
+        bossNPCs << bossNPC(116, npcFile.arg(194).split('|'));
 
         //rainbow shell
-        bossNPCs << bossNPC(194, npcFile.arg(195).split('|') );
+        bossNPCs << bossNPC(194, npcFile.arg(195).split('|'));
 
         //Parakoopas
-        bossNPCs << bossNPC(243, npcFile.arg(242).split('|') );
-        bossNPCs << bossNPC(244, npcFile.arg(1).split('|') );
-        bossNPCs << bossNPC(3, npcFile.arg(2).split('|') );
+        bossNPCs << bossNPC(243, npcFile.arg(242).split('|'));
+        bossNPCs << bossNPC(244, npcFile.arg(1).split('|'));
+        bossNPCs << bossNPC(3, npcFile.arg(2).split('|'));
 
         //random vegetable
-        bossNPCs << bossNPC(147, npcFile.arg(146).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(140).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(142).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(92).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(139).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(141).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(143).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(144).split('|') );
-        bossNPCs << bossNPC(147, npcFile.arg(145).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(146).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(140).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(142).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(92).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(139).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(141).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(143).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(144).split('|'));
+        bossNPCs << bossNPC(147, npcFile.arg(145).split('|'));
 
         //random powerup
-        bossNPCs << bossNPC(287, npcFile.arg(9).split('|') );
-        bossNPCs << bossNPC(287, npcFile.arg(184).split('|') );
-        bossNPCs << bossNPC(287, npcFile.arg(185).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(9).split('|'));
+        bossNPCs << bossNPC(287, npcFile.arg(184).split('|'));
+        bossNPCs << bossNPC(287, npcFile.arg(185).split('|'));
 
-        bossNPCs << bossNPC(287, npcFile.arg(14).split('|') );
-        bossNPCs << bossNPC(287, npcFile.arg(182).split('|') );
-        bossNPCs << bossNPC(287, npcFile.arg(183).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(14).split('|'));
+        bossNPCs << bossNPC(287, npcFile.arg(182).split('|'));
+        bossNPCs << bossNPC(287, npcFile.arg(183).split('|'));
 
-        bossNPCs << bossNPC(287, npcFile.arg(34).split('|') );
-        bossNPCs << bossNPC(287, npcFile.arg(170).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(34).split('|'));
+        bossNPCs << bossNPC(287, npcFile.arg(170).split('|'));
 
-        bossNPCs << bossNPC(287, npcFile.arg(264).split('|') );
-        bossNPCs << bossNPC(287, npcFile.arg(277).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(264).split('|'));
+        bossNPCs << bossNPC(287, npcFile.arg(277).split('|'));
 
         //bill blasters
-        bossNPCs << bossNPC(21, npcFile.arg(17).split('|') );
-        bossNPCs << bossNPC(22, npcFile.arg(17).split('|') );
+        bossNPCs << bossNPC(21, npcFile.arg(17).split('|'));
+        bossNPCs << bossNPC(22, npcFile.arg(17).split('|'));
 
         //Toothy
-        bossNPCs << bossNPC(49, npcFile.arg(50).split('|') );
+        bossNPCs << bossNPC(49, npcFile.arg(50).split('|'));
 
         //Small Lakitu
-        bossNPCs << bossNPC(47, npcFile.arg(48).split('|') );
+        bossNPCs << bossNPC(47, npcFile.arg(48).split('|'));
 
         //Spiny
-        bossNPCs << bossNPC(286, npcFile.arg(285).split('|') );
+        bossNPCs << bossNPC(286, npcFile.arg(285).split('|'));
 
         //Rex
-        bossNPCs << bossNPC(162, npcFile.arg(163).split('|') );
+        bossNPCs << bossNPC(162, npcFile.arg(163).split('|'));
 
         //Magic potion
-        bossNPCs << bossNPC(288, npcFile.arg(289).split('|') );
+        bossNPCs << bossNPC(288, npcFile.arg(289).split('|'));
 
         //vined heads
-        bossNPCs << bossNPC(226, npcFile.arg(213).split('|') );
-        bossNPCs << bossNPC(225, npcFile.arg(214).split('|') );
-        bossNPCs << bossNPC(227, npcFile.arg(224).split('|') );
+        bossNPCs << bossNPC(226, npcFile.arg(213).split('|'));
+        bossNPCs << bossNPC(225, npcFile.arg(214).split('|'));
+        bossNPCs << bossNPC(227, npcFile.arg(224).split('|'));
 
         //Add into white SMBX64 dependencied of exists ID
-        for(int q=0; q < box->LvlData.npc.size(); q++)
+        for(int q = 0; q < box->LvlData.npc.size(); q++)
         {
-            bool isConainer=false;
+            bool isConainer = false;
 
             foreach(unsigned long x, npcContainers)
             {
                 if(box->LvlData.npc[q].id == x)
                 {
                     qDebug() << "container! " <<  box->LvlData.npc[q].contents;
-                    isConainer=true; break;
+                    isConainer = true;
+                    break;
                 }
             }
 
             unsigned long npcID = (isConainer ? box->LvlData.npc[q].contents : box->LvlData.npc[q].id);
-            for(int r=0;r<bossNPCs.size();r++)
+            for(int r = 0; r < bossNPCs.size(); r++)
             {
-                if( npcID == bossNPCs[r].first)
+                if(npcID == bossNPCs[r].first)
                 {
                     whiteList.append(bossNPCs[r].second);
                     bossNPCs.removeAt(r);
-                    r=-1;//reset loot to 0
+                    r = -1; //reset loot to 0
                 }
             }
 
@@ -241,14 +242,14 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         }
 
         //into included into blocks
-        for(int q=0;q<box->LvlData.blocks.size();q++)
+        for(int q = 0; q < box->LvlData.blocks.size(); q++)
         {
-            for(int r=0;r<bossNPCs.size();r++)
-                if( box->LvlData.blocks[q].npc_id == (signed)bossNPCs[r].first)
+            for(int r = 0; r < bossNPCs.size(); r++)
+                if(box->LvlData.blocks[q].npc_id == (signed)bossNPCs[r].first)
                 {
                     whiteList << bossNPCs[r].second;
                     bossNPCs.removeAt(r);
-                    r=-1;//reset loot to 0
+                    r = -1; //reset loot to 0
                 }
             if(bossNPCs.isEmpty()) break;
         }
@@ -307,21 +308,30 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         whiteList << "background-160m.png";
 
 
-        for(int i=0; i < filesForRemove.size(); i++)
+        for(int i = 0; i < filesForRemove.size(); i++)
         {
-            bool removed=false;
-            if(QFileInfo(levelCustomDirectory+"/"+filesForRemove[i]).isDir())
-                {filesForRemove.removeAt(i); i--; continue;}
-            else
-            foreach(QString f, whiteList)
+            bool removed = false;
+            if(QFileInfo(levelCustomDirectory + "/" + filesForRemove[i]).isDir())
             {
-                reg.setPattern(f);
-                if(reg.exactMatch(filesForRemove[i]))
-                    {filesForRemove.removeAt(i); i--; removed=true; break;}
+                filesForRemove.removeAt(i);
+                i--;
+                continue;
             }
+            else
+                foreach(QString f, whiteList)
+                {
+                    reg.setPattern(f);
+                    if(reg.exactMatch(filesForRemove[i]))
+                    {
+                        filesForRemove.removeAt(i);
+                        i--;
+                        removed = true;
+                        break;
+                    }
+                }
 
             if(!removed)
-                filesForRemove[i] = levelCustomDirectory+"/"+filesForRemove[i];
+                filesForRemove[i] = levelCustomDirectory + "/" + filesForRemove[i];
         }
 
 
@@ -331,20 +341,24 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         {
             if(y.music_file.isEmpty()) continue;
 
-            bool musicFileRemoved = !QFileInfo(levelDirectory+"/"+y.music_file).exists();
+            bool musicFileRemoved = !QFileInfo(levelDirectory + "/" + y.music_file).exists();
 
-            for(int i=0; i < filesForRemove.size(); i++)
+            for(int i = 0; i < filesForRemove.size(); i++)
             {
                 if(musicFileRemoved) break;
 
-                if( filesForRemove[i].toLower()==(levelDirectory+"/"+y.music_file).toLower() )
-                {filesForRemove.removeAt(i); i--; musicFileRemoved=true;}
+                if(filesForRemove[i].toLower() == (levelDirectory + "/" + y.music_file).toLower())
+                {
+                    filesForRemove.removeAt(i);
+                    i--;
+                    musicFileRemoved = true;
+                }
             }
         }
 
-        for(QHash<int, obj_BG>::iterator bgIT=s->m_localConfigBackgrounds.begin(); bgIT!=s->m_localConfigBackgrounds.end(); bgIT++)
+        for(QHash<int, obj_BG>::iterator bgIT = s->m_localConfigBackgrounds.begin(); bgIT != s->m_localConfigBackgrounds.end(); bgIT++)
         {
-            obj_BG &x=*bgIT;
+            obj_BG &x = *bgIT;
             foreach(LevelSection y, box->LvlData.sections)
             {
                 if(y.background == x.setup.id)
@@ -356,19 +370,23 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                     }
                     bool imageRemoved = !QFileInfo(image).exists();
 
-                    for(int i=0; i < filesForRemove.size(); i++)
+                    for(int i = 0; i < filesForRemove.size(); i++)
                     {
                         if(imageRemoved) break;
 
-                        if(filesForRemove[i].toLower()==image.toLower())
-                        {filesForRemove.removeAt(i); i--; imageRemoved=true;}
+                        if(filesForRemove[i].toLower() == image.toLower())
+                        {
+                            filesForRemove.removeAt(i);
+                            i--;
+                            imageRemoved = true;
+                        }
                     }
                     break;
                 }
             }
         }
 
-        for(obj_block* x : s->m_customBlocks)
+        for(obj_block *x : s->m_customBlocks)
         {
             foreach(LevelBlock y, box->LvlData.blocks)
             {
@@ -377,7 +395,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
                     QString image;
                     QString mask;
-                    long transformTo=0;
+                    long transformTo = 0;
                     QString transformTo_image;
                     QString transformTo_mask;
 
@@ -385,9 +403,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                     mask = levelCustomDirectory + "/" + x->setup.mask_n;
                     transformTo = x->setup.transfororm_on_hit_into;
 
-                    if(transformTo>0)
+                    if(transformTo > 0)
                     {
-                        obj_block&t=configs.main_block[transformTo];
+                        obj_block &t = configs.main_block[transformTo];
                         if(t.isValid)
                         {
                             transformTo_image = levelCustomDirectory + "/" + t.setup.image_n;
@@ -400,22 +418,35 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                     bool transformTo_img = !QFileInfo(transformTo_image).exists();
                     bool transformTo_msk = !QFileInfo(transformTo_mask).exists();
 
-                    for(int i=0; i < filesForRemove.size(); i++)
+                    for(int i = 0; i < filesForRemove.size(); i++)
                     {
                         if(imageRemoved && maskRemoved &&
                            transformTo_img && transformTo_msk) break;
 
-                        if(filesForRemove[i].toLower()==image.toLower())
-                        {filesForRemove.removeAt(i); i--; imageRemoved=true;}
-                        else
-                        if(filesForRemove[i].toLower()==mask.toLower())
-                        {filesForRemove.removeAt(i); i--;maskRemoved=true;}
-                        else
-                        if(filesForRemove[i].toLower()==transformTo_image.toLower())
-                        {filesForRemove.removeAt(i); i--;transformTo_img=true;}
-                        else
-                        if(filesForRemove[i].toLower()==transformTo_mask.toLower())
-                        {filesForRemove.removeAt(i); i--;transformTo_msk=true;}
+                        if(filesForRemove[i].toLower() == image.toLower())
+                        {
+                            filesForRemove.removeAt(i);
+                            i--;
+                            imageRemoved = true;
+                        }
+                        else if(filesForRemove[i].toLower() == mask.toLower())
+                        {
+                            filesForRemove.removeAt(i);
+                            i--;
+                            maskRemoved = true;
+                        }
+                        else if(filesForRemove[i].toLower() == transformTo_image.toLower())
+                        {
+                            filesForRemove.removeAt(i);
+                            i--;
+                            transformTo_img = true;
+                        }
+                        else if(filesForRemove[i].toLower() == transformTo_mask.toLower())
+                        {
+                            filesForRemove.removeAt(i);
+                            i--;
+                            transformTo_msk = true;
+                        }
                     }
                     break;
                 }
@@ -423,7 +454,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
         }
 
-        for(obj_bgo* x : s->m_customBGOs)
+        for(obj_bgo *x : s->m_customBGOs)
         {
             for(LevelBGO y : box->LvlData.bgo)
             {
@@ -437,15 +468,22 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
                     bool imageRemoved = !QFileInfo(image).exists();
                     bool maskRemoved = !QFileInfo(mask).exists();
-                    for(int i=0; i < filesForRemove.size(); i++)
+                    for(int i = 0; i < filesForRemove.size(); i++)
                     {
                         if(imageRemoved && maskRemoved) break;
 
-                        if(filesForRemove[i].toLower()==image.toLower())
-                        {filesForRemove.removeAt(i); i--; imageRemoved=true;}
-                        else
-                        if(filesForRemove[i].toLower()==mask.toLower())
-                        {filesForRemove.removeAt(i); i--;maskRemoved=true;}
+                        if(filesForRemove[i].toLower() == image.toLower())
+                        {
+                            filesForRemove.removeAt(i);
+                            i--;
+                            imageRemoved = true;
+                        }
+                        else if(filesForRemove[i].toLower() == mask.toLower())
+                        {
+                            filesForRemove.removeAt(i);
+                            i--;
+                            maskRemoved = true;
+                        }
                     }
                     break;
                 }
@@ -462,7 +500,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             //Used in level
             for(LevelNPC y : box->LvlData.npc)
             {
-                if(y.id==x->setup.id)
+                if(y.id == x->setup.id)
                 {
                     usedIDs.push_back(x->setup.id);
                     break;
@@ -472,7 +510,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             //Used in NPC containers
             for(LevelNPC y : box->LvlData.npc)
             {
-                bool found=false;
+                bool found = false;
                 foreach(unsigned long z, npcContainers)
                 {
                     if(y.id == z)
@@ -480,7 +518,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                         if(y.special_data == (signed)x->setup.id)
                         {
                             usedIDs.push_back(x->setup.id);
-                            found=true;
+                            found = true;
                         }
                         break;
                     }
@@ -491,7 +529,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             //included into blocks
             for(LevelBlock y : box->LvlData.blocks)
             {
-                if((y.npc_id>0) && ((unsigned long)y.npc_id == x->setup.id))
+                if((y.npc_id > 0) && ((unsigned long)y.npc_id == x->setup.id))
                 {
                     usedIDs.push_back(x->setup.id);
                     break;
@@ -503,29 +541,39 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                 QString image;
                 QString mask;
                 QString textConfig;
-                if( (npcID > 0) && configs.main_npc.contains(npcID) )
+                if((npcID > 0) && configs.main_npc.contains(npcID))
                 {
                     image = levelCustomDirectory + "/" + x->setup.image_n;
                     mask = levelCustomDirectory + "/" + x->setup.mask_n;
-                    textConfig = levelCustomDirectory + "/npc-"+QString::number(npcID)+".txt";
+                    textConfig = levelCustomDirectory + "/npc-" + QString::number(npcID) + ".txt";
                 }
 
                 bool imageRemoved = !QFileInfo(image).exists();
                 bool maskRemoved = !QFileInfo(mask).exists();
                 bool textRemoved = !QFileInfo(textConfig).exists();
 
-                for(int i=0; i < filesForRemove.size(); i++)
+                for(int i = 0; i < filesForRemove.size(); i++)
                 {
                     if(imageRemoved && maskRemoved && textRemoved) break;
 
-                    if(filesForRemove[i].toLower()==image.toLower())
-                    {filesForRemove.removeAt(i); i--; imageRemoved=true;}
-                    else
-                    if(filesForRemove[i].toLower()==mask.toLower())
-                    {filesForRemove.removeAt(i); i--;maskRemoved=true;}
-                    else
-                    if(filesForRemove[i].toLower()==textConfig.toLower())
-                    {filesForRemove.removeAt(i); i--;textRemoved=true;}
+                    if(filesForRemove[i].toLower() == image.toLower())
+                    {
+                        filesForRemove.removeAt(i);
+                        i--;
+                        imageRemoved = true;
+                    }
+                    else if(filesForRemove[i].toLower() == mask.toLower())
+                    {
+                        filesForRemove.removeAt(i);
+                        i--;
+                        maskRemoved = true;
+                    }
+                    else if(filesForRemove[i].toLower() == textConfig.toLower())
+                    {
+                        filesForRemove.removeAt(i);
+                        i--;
+                        textRemoved = true;
+                    }
                 }
                 //break;
             }
@@ -550,13 +598,13 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         if(QMessageBox::question(this,
                                  "Files to remove",
                                  QString("Found %1 unused files"
-                                 "\n\nDo you wanna remove them?").arg(filesForRemove.size()),
-                                 QMessageBox::Yes, QMessageBox::No ) != QMessageBox::Yes )
+                                         "\n\nDo you wanna remove them?").arg(filesForRemove.size()),
+                                 QMessageBox::Yes, QMessageBox::No) != QMessageBox::Yes)
             return;
 
 
-        QDir unused_dir(levelCustomDirectory+"/_unused");
-        if(!unused_dir.exists()) unused_dir.mkdir(levelCustomDirectory+"/_unused");
+        QDir unused_dir(levelCustomDirectory + "/_unused");
+        if(!unused_dir.exists()) unused_dir.mkdir(levelCustomDirectory + "/_unused");
 
         //Remove selected
         for(QString &f : filesForRemove)
@@ -572,7 +620,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         QMessageBox::information(this,
                                  "Unused files removed",
                                  "All unused files successfully removed from custom directory!",
-                                 QMessageBox::Ok );
+                                 QMessageBox::Ok);
     }
 }
 

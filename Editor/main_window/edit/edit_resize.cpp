@@ -30,12 +30,11 @@ void MainWindow::resizeToolbarVisible(bool vis)
 
 void MainWindow::on_actionResizeApply_triggered()
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->applyResizers();
     }
-    else
-    if (activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->applyResizers();
     }
@@ -44,12 +43,11 @@ void MainWindow::on_actionResizeApply_triggered()
 
 void MainWindow::on_actionResizeCancel_triggered()
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->resetResizers();;
     }
-    else
-    if (activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->resetResizers();
     }

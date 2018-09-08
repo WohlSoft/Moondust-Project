@@ -26,31 +26,31 @@
 
 void MainWindow::on_actionClear_NPC_garbadge_triggered()
 {
-    if(activeChildWindow()!=1) return;
-    LevelEdit * box = activeLvlEditWin();
+    if(activeChildWindow() != WND_Level) return;
+    LevelEdit *box = activeLvlEditWin();
     if(!box) return;
     if(!box->sceneCreated) return;
 
     QList<LevelNPC> _fine_npcs;
     QList<LevelNPC> _found_garbage;
-    for(int i=0; i<box->LvlData.npc.size(); i++)
+    for(int i = 0; i < box->LvlData.npc.size(); i++)
     {
-        LevelNPC npc=box->LvlData.npc[i];
-        bool fine=true;
-        for(int j=0;j<_fine_npcs.size(); j++)
+        LevelNPC npc = box->LvlData.npc[i];
+        bool fine = true;
+        for(int j = 0; j < _fine_npcs.size(); j++)
         {
-            if(npc.id!=_fine_npcs[j].id) continue;
-            if(npc.x!=_fine_npcs[j].x) continue;
-            if(npc.y!=_fine_npcs[j].y) continue;
-            if(npc.layer!=_fine_npcs[j].layer) continue;
-            if(npc.generator!=_fine_npcs[j].generator) continue;
-            if(npc.msg!=_fine_npcs[j].msg) continue;
-            if(npc.event_activate!=_fine_npcs[j].event_activate) continue;
-            if(npc.event_die!=_fine_npcs[j].event_die) continue;
-            if(npc.event_talk!=_fine_npcs[j].event_talk) continue;
-            if(npc.event_emptylayer!=_fine_npcs[j].event_emptylayer) continue;
+            if(npc.id != _fine_npcs[j].id) continue;
+            if(npc.x != _fine_npcs[j].x) continue;
+            if(npc.y != _fine_npcs[j].y) continue;
+            if(npc.layer != _fine_npcs[j].layer) continue;
+            if(npc.generator != _fine_npcs[j].generator) continue;
+            if(npc.msg != _fine_npcs[j].msg) continue;
+            if(npc.event_activate != _fine_npcs[j].event_activate) continue;
+            if(npc.event_die != _fine_npcs[j].event_die) continue;
+            if(npc.event_talk != _fine_npcs[j].event_talk) continue;
+            if(npc.event_emptylayer != _fine_npcs[j].event_emptylayer) continue;
 
-            fine=false;
+            fine = false;
             _found_garbage.push_back(npc);
             break;
         }
@@ -61,30 +61,32 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
         QMessageBox::information(this, tr("NPC garbage clean-up"), tr("Everything is fine, level has no NPC garbage!"), QMessageBox::Ok);
     else
     {
-        QMessageBox::StandardButton x=QMessageBox::question(this, tr("NPC garbage clean-up"), tr("Found %1 junk NPC's. Do you want to remove them?\nPress \"Help\" to show info about the junk NPCs we found.").arg(_found_garbage.size()), QMessageBox::Yes|QMessageBox::No|QMessageBox::Help);
-        if((x!=QMessageBox::Yes)&&(x!=QMessageBox::Help)) return;
-        bool help=(x==QMessageBox::Help);
+        QMessageBox::StandardButton x = QMessageBox::question(this, tr("NPC garbage clean-up"), tr("Found %1 junk NPC's. Do you want to remove them?\nPress \"Help\" to show info about the junk NPCs we found.").arg(_found_garbage.size()), QMessageBox::Yes | QMessageBox::No | QMessageBox::Help);
+        if((x != QMessageBox::Yes) && (x != QMessageBox::Help)) return;
+        bool help = (x == QMessageBox::Help);
         LvlScene *sc = box->scene;
         sc->clearSelection();
-        LvlScene::PGE_ItemList items=sc->items();
+        LvlScene::PGE_ItemList items = sc->items();
         LevelData removedItems;
         QPointF jumpTo;
 
-        for(int i=0; i<items.size(); i++)
+        for(int i = 0; i < items.size(); i++)
         {
-            if(items[i]->data(ITEM_TYPE).toString()=="NPC")
+            if(items[i]->data(ITEM_TYPE).toString() == "NPC")
             {
-                ItemNPC*npc= qgraphicsitem_cast<ItemNPC*>(items[i]);
+                ItemNPC *npc = qgraphicsitem_cast<ItemNPC *>(items[i]);
                 if(!npc) continue;
-                for(int j=0; j<_found_garbage.size();j++)
+                for(int j = 0; j < _found_garbage.size(); j++)
                 {
-                    if(npc->m_data.meta.array_id==_found_garbage[j].meta.array_id)
+                    if(npc->m_data.meta.array_id == _found_garbage[j].meta.array_id)
                     {
                         if(help) //Select & jump
                         {
                             npc->setSelected(true);
-                            jumpTo=npc->scenePos();
-                        } else { //Delete actual NPC
+                            jumpTo = npc->scenePos();
+                        }
+                        else     //Delete actual NPC
+                        {
                             removedItems.npc.push_back(npc->m_data);
                             npc->removeFromArray();
                             delete npc;
@@ -103,7 +105,7 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
         }
         else
         {
-            box->goTo(jumpTo.x(), jumpTo.y(), true, QPoint(0,0), true);
+            box->goTo(jumpTo.x(), jumpTo.y(), true, QPoint(0, 0), true);
         }
     }
 }

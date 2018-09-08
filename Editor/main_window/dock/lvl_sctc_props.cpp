@@ -41,25 +41,25 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     switchResizeMode(false);
 
-    lockSctSettingsProps=false;
+    lockSctSettingsProps = false;
 
     QRect mwg = mw()->geometry();
-    int GOffset=10;
+    int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     setFloating(true);
     setGeometry(
-                mwg.right() - width() - GOffset,
-                mwg.y() + 250,
-                width(),
-                height()
-                );
+        mwg.right() - width() - GOffset,
+        mwg.y() + 250,
+        width(),
+        height()
+    );
 
     connect(mw()->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
-                   this, SLOT(switchResizeMode(bool)));
+            this, SLOT(switchResizeMode(bool)));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionSection_Settings, SLOT(setChecked(bool)));
     connect(mw(), SIGNAL(setSMBX64Strict(bool)),
-                   this, SLOT(setSMBX64Strict(bool)));
+            this, SLOT(setSMBX64Strict(bool)));
 
     //Connect to menuitems
     connect(ui->LVLPropsWrapHorizontal, SIGNAL(toggled(bool)), mw()->ui->actionWrapHorizontal, SLOT(setChecked(bool)));
@@ -83,7 +83,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
-          addState(this, &m_lastVisibilityState);
+    addState(this, &m_lastVisibilityState);
 }
 
 
@@ -126,7 +126,7 @@ void MainWindow::on_actionSection_Settings_triggered(bool checked)
 // ////////////////Set LevelSection data//////////////////////////////////
 void LvlSectionProps::initDefaults()
 {
-    lockSctSettingsProps=true;
+    lockSctSettingsProps = true;
     mw()->dock_LvlEvents->setEventToolsLocked(true);
 
     LogDebug(QString("Set level Section Data"));
@@ -136,13 +136,13 @@ void LvlSectionProps::initDefaults()
     mw()->dock_LvlEvents->cbox_sct_mus()->clear(); //Music list in events
     mw()->dock_LvlEvents->cbox_sct_bg()->clear();  //Background list in events
 
-    QPixmap empty(100,70);
+    QPixmap empty(100, 70);
     empty.fill(QColor(Qt::black));
 
-    ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0) );
-    mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0) );
-    ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), QVariant::fromValue<unsigned long>(0) );
-    mw()->dock_LvlEvents->cbox_sct_mus()->addItem( tr("[Silence]"), QVariant::fromValue<unsigned long>(0) );
+    ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0));
+    mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0));
+    ui->LVLPropsMusicNumber->addItem(tr("[Silence]"), QVariant::fromValue<unsigned long>(0));
+    mw()->dock_LvlEvents->cbox_sct_mus()->addItem(tr("[Silence]"), QVariant::fromValue<unsigned long>(0));
 
 #ifdef Q_OS_WIN
 #define BkgIconHeight 70
@@ -150,61 +150,70 @@ void LvlSectionProps::initDefaults()
 #define BkgIconHeight 25
 #endif
 
-    ui->LVLPropsBackImage->setIconSize(QSize(100,BkgIconHeight));
-    mw()->dock_LvlEvents->cbox_sct_bg()->setIconSize(QSize(100,BkgIconHeight));
+    ui->LVLPropsBackImage->setIconSize(QSize(100, BkgIconHeight));
+    mw()->dock_LvlEvents->cbox_sct_bg()->setIconSize(QSize(100, BkgIconHeight));
 
     QAbstractItemView *abVw = ui->LVLPropsBackImage->view();
-            QListView *listVw = qobject_cast<QListView*>(abVw);
-            if (listVw) {
-                listVw->setSpacing(2);
-                listVw->setDragEnabled(false);
-                #ifdef Q_OS_WIN
-                listVw->setViewMode(QListView::IconMode);
-                #endif
-                listVw->setUniformItemSizes(true);
-            }
+    QListView *listVw = qobject_cast<QListView *>(abVw);
+    if(listVw)
+    {
+        listVw->setSpacing(2);
+        listVw->setDragEnabled(false);
+#ifdef Q_OS_WIN
+        listVw->setViewMode(QListView::IconMode);
+#endif
+        listVw->setUniformItemSizes(true);
+    }
 
     abVw = mw()->dock_LvlEvents->cbox_sct_bg()->view();
-            listVw = qobject_cast<QListView*>(abVw);
-            if (listVw) {
-                listVw->setSpacing(2);
-                listVw->setDragEnabled(false);
-                #ifdef Q_OS_WIN
-                listVw->setViewMode(QListView::IconMode);
-                #endif
-                listVw->setUniformItemSizes(true);
-            }
+    listVw = qobject_cast<QListView *>(abVw);
+    if(listVw)
+    {
+        listVw->setSpacing(2);
+        listVw->setDragEnabled(false);
+#ifdef Q_OS_WIN
+        listVw->setViewMode(QListView::IconMode);
+#endif
+        listVw->setUniformItemSizes(true);
+    }
 
     PGE_DataArray<obj_BG > &main_bg = mw()->configs.main_bg;
     for(int i = 1; i < main_bg.size(); i++)
     {
         const obj_BG &bgD = main_bg[i];
-        QPixmap bgThumb(100,BkgIconHeight); bgThumb.fill(QColor(Qt::white));
-        QPainter xx(&bgThumb); bool isCustom=false; QString bgTitle=bgD.setup.name;
+        QPixmap bgThumb(100, BkgIconHeight);
+        bgThumb.fill(QColor(Qt::white));
+        QPainter xx(&bgThumb);
+        bool isCustom = false;
+        QString bgTitle = bgD.setup.name;
         QPixmap tmp = bgD.image.scaledToHeight(70);
 
-        if (mw()->activeChildWindow()==1) {
-            LevelEdit * edit = mw()->activeLvlEditWin();
-            if(edit->scene->m_localConfigBackgrounds.contains(bgD.setup.id)) {
+        if(mw()->activeChildWindow() == 1)
+        {
+            LevelEdit *edit = mw()->activeLvlEditWin();
+            if(edit->scene->m_localConfigBackgrounds.contains(bgD.setup.id))
+            {
                 obj_BG &bgX = edit->scene->m_localConfigBackgrounds[bgD.setup.id];
                 if(!bgX.image.isNull()) tmp = bgX.image.scaledToHeight(70);
-                bgTitle=bgX.setup.name;
-                isCustom=true;
+                bgTitle = bgX.setup.name;
+                isCustom = true;
             }
         }
-        if(!tmp.isNull()) {
-            int d=0;
-            for(int i=0; i<100; i+=tmp.width() ) {
-                xx.drawPixmap(i,0, tmp.width(), tmp.height(), tmp);
-                d+=tmp.width();
+        if(!tmp.isNull())
+        {
+            int d = 0;
+            for(int i = 0; i < 100; i += tmp.width())
+            {
+                xx.drawPixmap(i, 0, tmp.width(), tmp.height(), tmp);
+                d += tmp.width();
             }
-            if(d<100) xx.drawPixmap(d,0, tmp.width()-(100-d), tmp.height(), tmp);
+            if(d < 100) xx.drawPixmap(d, 0, tmp.width() - (100 - d), tmp.height(), tmp);
         }
         xx.end();
 
-        #ifndef Q_OS_WIN
-        bgThumb = bgThumb.copy(0, ((bgThumb.height()/2)-(25/2)), bgThumb.width(), 25);
-        #endif
+#ifndef Q_OS_WIN
+        bgThumb = bgThumb.copy(0, ((bgThumb.height() / 2) - (25 / 2)), bgThumb.width(), 25);
+#endif
 
         ui->LVLPropsBackImage->addItem(QIcon(bgThumb),
                                        QString("%1: %2%3")
@@ -225,7 +234,7 @@ void LvlSectionProps::initDefaults()
     }
 
     mw()->dock_LvlEvents->setEventToolsLocked(false);
-    lockSctSettingsProps=false;
+    lockSctSettingsProps = false;
 
     //Set current data
     refreshFileData();
@@ -234,32 +243,38 @@ void LvlSectionProps::initDefaults()
 
 void LvlSectionProps::refreshFileData()
 {
-    lockSctSettingsProps=true;
+    lockSctSettingsProps = true;
     //Set current data
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
-        if(!edit) {lockSctSettingsProps=false; return;}
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        if(!edit)
+        {
+            lockSctSettingsProps = false;
+            return;
+        }
 
         ui->LVLProp_CurSect->setText(QString::number(edit->LvlData.CurSection));
 
         ui->LVLPropsBackImage->setCurrentIndex(0);
-        for(int i=0;i<ui->LVLPropsBackImage->count();i++)
+        for(int i = 0; i < ui->LVLPropsBackImage->count(); i++)
         {
             if((unsigned long)ui->LVLPropsBackImage->itemData(i).toInt() ==
-                    edit->LvlData.sections[edit->LvlData.CurSection].background)
+               edit->LvlData.sections[edit->LvlData.CurSection].background)
             {
-                ui->LVLPropsBackImage->setCurrentIndex(i); break;
+                ui->LVLPropsBackImage->setCurrentIndex(i);
+                break;
             }
         }
 
         ui->LVLPropsMusicNumber->setCurrentIndex(0);
-        for(int i=0;i<ui->LVLPropsMusicNumber->count();i++)
+        for(int i = 0; i < ui->LVLPropsMusicNumber->count(); i++)
         {
             if((unsigned long)ui->LVLPropsMusicNumber->itemData(i).toInt() ==
-                    edit->LvlData.sections[edit->LvlData.CurSection].music_id)
+               edit->LvlData.sections[edit->LvlData.CurSection].music_id)
             {
-                ui->LVLPropsMusicNumber->setCurrentIndex(i); break;
+                ui->LVLPropsMusicNumber->setCurrentIndex(i);
+                break;
             }
         }
 
@@ -274,7 +289,7 @@ void LvlSectionProps::refreshFileData()
 
         loadMusic();
     }
-    lockSctSettingsProps=false;
+    lockSctSettingsProps = false;
 }
 
 
@@ -286,7 +301,7 @@ void LvlSectionProps::on_LVLPropsWrapHorizontal_clicked(bool checked)
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECWRAPH, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].wrap_h = checked;
@@ -298,7 +313,7 @@ void LvlSectionProps::on_LVLPropsWrapVertical_clicked(bool checked)
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECWRAPV, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].wrap_v = checked;
@@ -310,7 +325,7 @@ void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECOFFSCREENEXIT, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn = checked;
@@ -322,7 +337,7 @@ void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECNOBACK, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].lock_left_scroll = checked;
@@ -334,7 +349,7 @@ void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECUNDERWATER, QVariant(checked));
         edit->LvlData.sections[edit->LvlData.CurSection].underwater = checked;
@@ -349,11 +364,11 @@ void LvlSectionProps::on_ResizeSection_clicked()
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         qApp->setActiveWindow(mw());
         edit->setFocus();
-        if(edit->scene->m_resizeBox==NULL)
+        if(edit->scene->m_resizeBox == NULL)
         {
             edit->scene->setSectionResizer(true);
         }
@@ -364,7 +379,7 @@ void LvlSectionProps::on_applyResize_clicked()
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         mw()->on_actionResizeApply_triggered();
     }
@@ -374,7 +389,7 @@ void LvlSectionProps::on_cancelResize_clicked()
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         mw()->on_actionResizeCancel_triggered();
     }
@@ -386,7 +401,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
     if(lockSctSettingsProps) return;
 
-    if(mw()->configs.main_bg.stored()==0)
+    if(mw()->configs.main_bg.stored() == 0)
     {
         LogCritical(QString("Error! *.INI Configs for backgrounds not loaded"));
         return;
@@ -398,7 +413,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     LogDebug("Change BG to " + QString::number(index));
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
 
         QList<QVariant> backData;
@@ -416,7 +431,7 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
 
-    LevelEdit * edit = mw()->activeLvlEditWin();
+    LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit)
         return;
 
@@ -438,11 +453,11 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
 
     QString fileName = QString("background2-%3.ini").arg(backgroundId);
     QString dirPath  = QString("%1/%2")
-                        .arg(edit->LvlData.meta.path)
-                        .arg(edit->LvlData.meta.filename);
+                       .arg(edit->LvlData.meta.path)
+                       .arg(edit->LvlData.meta.filename);
     QString fullPath = QString("%1/%2")
-                        .arg(dirPath)
-                        .arg(fileName);
+                       .arg(dirPath)
+                       .arg(fileName);
 
     if(!QFile::exists(fullPath))
     {
@@ -488,13 +503,13 @@ void LvlSectionProps::loadMusic()
 {
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit)
             return;
 
         LvlMusPlay::setMusic(LvlMusPlay::LevelMusic,
-                    edit->LvlData.sections[edit->LvlData.CurSection].music_id,
-                    edit->LvlData.sections[edit->LvlData.CurSection].music_file);
+                             edit->LvlData.sections[edit->LvlData.CurSection].music_id,
+                             edit->LvlData.sections[edit->LvlData.CurSection].music_file);
     }
     mw()->setMusic();
 }
@@ -505,11 +520,11 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     if(lockSctSettingsProps) return;
 
     unsigned int test = index;
-    ui->LVLPropsMusicCustomEn->setChecked(  test == mw()->configs.music_custom_id );
+    ui->LVLPropsMusicCustomEn->setChecked(test == mw()->configs.music_custom_id);
 
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
 
         QList<QVariant> musicData;
@@ -530,10 +545,10 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
     {
         if(checked)
         {
-            ui->LVLPropsMusicNumber->setCurrentIndex( mw()->configs.music_custom_id );
+            ui->LVLPropsMusicNumber->setCurrentIndex(mw()->configs.music_custom_id);
             if(mw()->activeChildWindow() == MainWindow::WND_Level)
             {
-                LevelEdit * edit = mw()->activeLvlEditWin();
+                LevelEdit *edit = mw()->activeLvlEditWin();
                 if(!edit) return;
 
                 QList<QVariant> musicData;
@@ -553,7 +568,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
 
-    LevelEdit * edit = mw()->activeLvlEditWin();
+    LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit) return;
 
     dirPath = edit->LvlData.meta.path;
@@ -564,10 +579,10 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
         return;
     }
 
-    MusicFileList musicList( dirPath, ui->LVLPropsMusicCustom->text() );
-    if( musicList.exec() == QDialog::Accepted )
+    MusicFileList musicList(dirPath, ui->LVLPropsMusicCustom->text());
+    if(musicList.exec() == QDialog::Accepted)
     {
-        ui->LVLPropsMusicCustom->setText( musicList.SelectedFile );
+        ui->LVLPropsMusicCustom->setText(musicList.SelectedFile);
         ui->LVLPropsMusicCustom->setModified(true);
         on_LVLPropsMusicCustom_editingFinished();
     }
@@ -582,7 +597,7 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
 
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelEdit * edit = mw()->activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit) return;
         QString arg1 = ui->LVLPropsMusicCustom->text();
 

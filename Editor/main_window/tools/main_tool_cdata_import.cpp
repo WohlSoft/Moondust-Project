@@ -31,31 +31,30 @@ void MainWindow::on_actionCDATA_Import_triggered()
         if(activeLvlEditWin()->isUtitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
-                tr("File doesn't saved on disk."), QMessageBox::Ok);
+                                 tr("File doesn't saved on disk."), QMessageBox::Ok);
             return;
         }
         sourceDir = QFileInfo(activeLvlEditWin()->curFile).absoluteDir().path();
     }
-    else
-    if(activeChildWindow() == WND_World)
+    else if(activeChildWindow() == WND_World)
     {
         if(activeWldEditWin()->isUtitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
-                tr("File doesn't saved on disk."), QMessageBox::Ok);
+                                 tr("File doesn't saved on disk."), QMessageBox::Ok);
             return;
         }
         sourceDir = QFileInfo(activeWldEditWin()->curFile).absoluteDir().path();
     }
     else
-    return;
+        return;
 
     //QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Select directory with custom data to import."),
-                                                 sourceDir,
-                                                 QFileDialog::DontResolveSymlinks);
+                       sourceDir,
+                       QFileDialog::DontResolveSymlinks);
 
-    qDebug()<<"File path: "<< fileName;
+    qDebug() << "File path: " << fileName;
 
     if(fileName.isEmpty()) return;
 
@@ -63,40 +62,40 @@ void MainWindow::on_actionCDATA_Import_triggered()
     this->setFocus();
     this->raise();
 
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit * box = activeLvlEditWin();
+        LevelEdit *box = activeLvlEditWin();
         if(QFileInfo(fileName).isDir())
         {
-            SmartImporter * importer = new SmartImporter((QWidget*)box, fileName, (QWidget*)box);
+            SmartImporter *importer = new SmartImporter((QWidget *)box, fileName, (QWidget *)box);
             if(importer->isValid())
             {
                 if(importer->attemptFastImport())
                 {
-                    qDebug()<<"Imported!";
+                    qDebug() << "Imported!";
                     on_actionReload_triggered();
                 }
-                else qDebug()<<"Import fail";
+                else qDebug() << "Import fail";
             }
             delete importer;
         }
     }
-    else if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
-        WorldEdit * box = activeWldEditWin();
+        WorldEdit *box = activeWldEditWin();
         if(QFileInfo(fileName).isDir())
         {
-            qDebug()<<"build";
-            SmartImporter * importer = new SmartImporter((QWidget*)box, fileName, (QWidget*)box);
+            qDebug() << "build";
+            SmartImporter *importer = new SmartImporter((QWidget *)box, fileName, (QWidget *)box);
             if(importer->isValid())
             {
-                qDebug()<<"do Attempt to import!";
+                qDebug() << "do Attempt to import!";
                 if(importer->attemptFastImport())
                 {
-                    qDebug()<<"Imported!";
+                    qDebug() << "Imported!";
                     on_actionReload_triggered();
                 }
-                else qDebug()<<"Import fail";
+                else qDebug() << "Import fail";
             }
             delete importer;
         }

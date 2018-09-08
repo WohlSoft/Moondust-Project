@@ -23,29 +23,26 @@
 
 void MainWindow::on_actionZoomIn_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
         activeLvlEditWin()->zoomIn();
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
         activeWldEditWin()->zoomIn();
 
 }
 
 void MainWindow::on_actionZoomOut_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
         activeLvlEditWin()->zoomOut();
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
         activeWldEditWin()->zoomOut();
 }
 
 void MainWindow::on_actionZoomReset_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
         activeLvlEditWin()->ResetZoom();
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
         activeWldEditWin()->ResetZoom();
 }
 
@@ -58,9 +55,12 @@ void MainWindow::applyTextZoom()
     if(!ok)
         return;
 
-    if(activeChildWindow()==1){
+    if(activeChildWindow() == WND_Level)
+    {
         activeLvlEditWin()->setZoom(zoomPercent);
-    }else if(activeChildWindow()==3){
+    }
+    else if(activeChildWindow() == WND_World)
+    {
         activeWldEditWin()->setZoom(zoomPercent);
     }
 }

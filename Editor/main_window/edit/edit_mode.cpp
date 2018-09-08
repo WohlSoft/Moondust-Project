@@ -40,19 +40,19 @@ void MainWindow::resetEditmodeButtons()
     ui->actionDrawSand->setChecked(0);
 
     ui->PlacingToolbar->setVisible(false);
-        ui->actionOverwriteMode->setVisible(false);
-        ui->actionRectFill->setVisible(false);
-        ui->actionCircleFill->setVisible(false);
-        ui->actionLine->setVisible(false);
-        ui->actionFill->setVisible(false);
-        ui->actionFloodSectionOnly->setVisible(false);
+    ui->actionOverwriteMode->setVisible(false);
+    ui->actionRectFill->setVisible(false);
+    ui->actionCircleFill->setVisible(false);
+    ui->actionLine->setVisible(false);
+    ui->actionFill->setVisible(false);
+    ui->actionFloodSectionOnly->setVisible(false);
 
     ui->ResizingToolbar->setVisible(false);
 
-    if(activeChildWindow()==1)
-       activeLvlEditWin()->scene->setLabelBoxItem(false);
-    else if(activeChildWindow()==3)
-       activeWldEditWin()->scene->setMessageBoxItem(false);
+    if(activeChildWindow() == WND_Level)
+        activeLvlEditWin()->scene->setLabelBoxItem(false);
+    else if(activeChildWindow() == WND_World)
+        activeWldEditWin()->scene->setMessageBoxItem(false);
 
 }
 
@@ -66,14 +66,13 @@ void MainWindow::on_actionSelect_triggered()
     dock_LvlItemProps->hide();
     dock_WldItemProps->hide();
 
-    if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
+    if((activeChildWindow() == WND_Level) && (ui->actionSelect->isChecked()))
     {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
+        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
     }
-    else
-    if ((activeChildWindow()==3) && (ui->actionSelect->isChecked()))
+    else if((activeChildWindow() == WND_World) && (ui->actionSelect->isChecked()))
     {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
+        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
     }
 }
 
@@ -85,14 +84,13 @@ void MainWindow::on_actionSelectOnly_triggered()
 
     dock_LvlItemProps->hide();
 
-    if ((activeChildWindow()==1) && (ui->actionSelectOnly->isChecked()))
+    if((activeChildWindow() == WND_Level) && (ui->actionSelectOnly->isChecked()))
     {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_SelectingOnly);
+        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_SelectingOnly);
     }
-    else
-    if ((activeChildWindow()==3) && (ui->actionSelectOnly->isChecked()))
+    else if((activeChildWindow() == WND_World) && (ui->actionSelectOnly->isChecked()))
     {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SelectingOnly);
+        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SelectingOnly);
     }
 }
 
@@ -104,14 +102,13 @@ void MainWindow::on_actionEriser_triggered()
 
     dock_LvlItemProps->hide();
 
-    if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
+    if((activeChildWindow() == WND_Level) && (ui->actionEriser->isChecked()))
     {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Erasing);
+        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Erasing);
     }
-    else
-    if ((activeChildWindow()==3) && (ui->actionEriser->isChecked()))
+    else if((activeChildWindow() == WND_World) && (ui->actionEriser->isChecked()))
     {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Erasing);
+        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Erasing);
     }
 }
 
@@ -123,13 +120,12 @@ void MainWindow::on_actionHandScroll_triggered()
 
     dock_LvlItemProps->hide();
 
-    if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
+    if((activeChildWindow() == WND_Level) && (ui->actionHandScroll->isChecked()))
     {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_HandScroll);
+        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_HandScroll);
     }
-    else
-    if ((activeChildWindow()==3) && (ui->actionHandScroll->isChecked()))
+    else if((activeChildWindow() == WND_World) && (ui->actionHandScroll->isChecked()))
     {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_HandScroll);
+        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_HandScroll);
     }
 }

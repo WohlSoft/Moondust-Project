@@ -158,9 +158,9 @@ static bool findEngine(MainWindow *parent, QString &command)
     while(!findEngineApp(command))
     {
         QMessageBox::warning(parent, MainWindow::tr("Engine is not found"),
-                                     MainWindow::tr("Can't start testing, engine is not found: \n%1\n"
-                                    "Please, choose the engine application yourself!").arg(PGE_ENGINE_BUNLDE),
-                                    QMessageBox::Ok);
+                             MainWindow::tr("Can't start testing, engine is not found: \n%1\n"
+                                            "Please, choose the engine application yourself!").arg(PGE_ENGINE_BUNLDE),
+                             QMessageBox::Ok);
         command = QFileDialog::getOpenFileName(parent,
                                                MainWindow::tr("Choose the Engine application"),
                                                GlobalSettings::testing.enginePath,
@@ -201,7 +201,7 @@ void MainWindow::on_action_doTest_triggered()
         return;
     }
 
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
         IntEngine::init(&engine_proc);
 
@@ -253,18 +253,18 @@ void MainWindow::on_action_doTestWld_triggered()
         FIXME!!! Implement the right world map testing via interprocess
         with ability to start player at absolutely any position on it
     */
-    if(activeChildWindow() == 3)
+    if(activeChildWindow() == WND_World)
     {
         WorldEdit *we = activeWldEditWin();
         if(!we->isUtitled() && we->isModified())
         {
             QMessageBox::StandardButton reply =
-                    QMessageBox::question(this,
-                                  tr("World map testing of saved file"),
-                                  tr("File is not saved!\n"
-                                     "Do you want to save file or you want to run test "
-                                     "of copy which is currently saved on the disk?"),
-                                  QMessageBox::Yes|QMessageBox::No|QMessageBox::Abort);
+                QMessageBox::question(this,
+                                      tr("World map testing of saved file"),
+                                      tr("File is not saved!\n"
+                                         "Do you want to save file or you want to run test "
+                                         "of copy which is currently saved on the disk?"),
+                                      QMessageBox::Yes | QMessageBox::No | QMessageBox::Abort);
             if(reply == QMessageBox::Yes)
             {
                 if(!we->save())
@@ -328,7 +328,7 @@ void MainWindow::on_action_doSafeTest_triggered()
 
     if(activeChildWindow() == WND_Level)
     {
-        LevelEdit * le = activeLvlEditWin();
+        LevelEdit *le = activeLvlEditWin();
         if(le->isUtitled())
         {
             QMessageBox::warning(this, tr("Save file first"),

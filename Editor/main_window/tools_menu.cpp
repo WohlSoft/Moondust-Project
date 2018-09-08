@@ -32,7 +32,7 @@
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
-    TilesetEditor* tilesetConfDia = new TilesetEditor(&configs, NULL, this);
+    TilesetEditor *tilesetConfDia = new TilesetEditor(&configs, NULL, this);
     util::DialogToCenter(tilesetConfDia);
     tilesetConfDia->exec();
     delete tilesetConfDia;
@@ -44,10 +44,10 @@ void MainWindow::on_actionConfigure_Tilesets_triggered()
 
 void MainWindow::on_actionTileset_groups_editor_triggered()
 {
-    TilesetGroupEditor * groupDialog;
-    if( activeChildWindow() == 1 )
+    TilesetGroupEditor *groupDialog;
+    if(activeChildWindow() == WND_Level)
         groupDialog = new TilesetGroupEditor(activeLvlEditWin()->scene, this);
-    else if(activeChildWindow() == 3)
+    else if(activeChildWindow() == WND_World)
         groupDialog = new TilesetGroupEditor(activeWldEditWin()->scene, this);
     else
         groupDialog = new TilesetGroupEditor(NULL, this);
@@ -66,14 +66,16 @@ void MainWindow::on_actionShow_Development_Console_triggered()
     DevConsole::show();
 }
 
-static LazyFixTool_gui * lazyfixGUI = nullptr;
-static gifs2png_gui * gifToPngGUI = nullptr;
-static png2gifs_gui * pngToGifGUI = nullptr;
+static LazyFixTool_gui *lazyfixGUI = nullptr;
+static gifs2png_gui *gifToPngGUI = nullptr;
+static png2gifs_gui *pngToGifGUI = nullptr;
 
 template<typename T>
-void defConstructObjAndExec(T*& dialogObj, QWidget* parent = 0){
+void defConstructObjAndExec(T *&dialogObj, QWidget *parent = 0)
+{
     static_assert(std::is_base_of<QDialog, T>::value, "dialogObj must be base of QDialog!");
-    if(!dialogObj){
+    if(!dialogObj)
+    {
         dialogObj = new T(parent);
     }
     util::DialogToCenter(dialogObj, true);
@@ -83,7 +85,7 @@ void defConstructObjAndExec(T*& dialogObj, QWidget* parent = 0){
 }
 
 void MainWindow::on_actionLazyFixTool_triggered()
-{    
+{
     defConstructObjAndExec(lazyfixGUI, this);
 }
 
@@ -105,7 +107,7 @@ void MainWindow::on_actionAudioCvt_triggered()
     util::DialogToCenter(&sox_cvt, true);
     sox_cvt.exec();
 
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
         dock_LvlSectionProps->refreshFileData();
 }
 

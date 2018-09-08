@@ -27,12 +27,11 @@ void MainWindow::on_actionExport_to_image_triggered()
 {
     on_actionSelect_triggered();
 
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->ExportToImage_fn_piece();
     }
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->ExportToImage_fn();
     }
@@ -40,7 +39,7 @@ void MainWindow::on_actionExport_to_image_triggered()
 
 void MainWindow::on_actionExport_to_image_section_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->ExportToImage_fn();
     }

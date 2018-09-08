@@ -152,7 +152,7 @@ void WorldSettingsBox::setCurrentWorldSettings()
 
 void WorldSettingsBox::characterActivated(bool checked)
 {
-    if(mw()->activeChildWindow() == 3)
+    if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldEdit *edit = mw()->activeWldEditWin();
 
@@ -355,7 +355,7 @@ void WorldSettingsBox::on_WLD_Credirs_textChanged()
 {
     if(world_settings_lock_fields) return;
 
-    if(mw()->activeChildWindow() == 3)
+    if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldEdit *edit = mw()->activeWldEditWin();
 

@@ -109,13 +109,13 @@ void DebuggerBox::on_DEBUG_GotoPoint_clicked()
     if(ui->DEBUG_GotoX->text().isEmpty()) return;
     if(ui->DEBUG_GotoY->text().isEmpty()) return;
 
-    if(mw()->activeChildWindow(mw()->LastActiveSubWindow) == 1)
+    if(mw()->activeChildWindow(mw()->LastActiveSubWindow) == MainWindow::WND_Level)
     {
         mw()->activeLvlEditWin(mw()->LastActiveSubWindow)->goTo(
             ui->DEBUG_GotoX->text().toInt(),
             ui->DEBUG_GotoY->text().toInt(), true, QPoint(0, 0), true);
     }
-    else if(mw()->activeChildWindow() == 3)
+    else if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
         mw()->activeWldEditWin(mw()->LastActiveSubWindow)->goTo(
             ui->DEBUG_GotoX->text().toInt(),
@@ -254,7 +254,7 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
         item->setData(Qt::UserRole, QVariant(i));
 
         int countItems = 0;
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             if(customCounters[i].type == ItemTypes::LVL_NPC)
             {
@@ -351,7 +351,7 @@ void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
                     }
             }
         }
-        else if(mw()->activeChildWindow() == 3)
+        else if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             if(customCounters[i].type == ItemTypes::WLD_Tile)
             {

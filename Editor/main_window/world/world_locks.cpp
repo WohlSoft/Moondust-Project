@@ -27,7 +27,7 @@
 
 void MainWindow::on_actionLockTiles_triggered(bool checked)
 {
-    if (activeChildWindow()==3)
+    if (activeChildWindow() == WND_World)
     {
         WorldEdit *e=activeWldEditWin();
         if(e) e->scene->setLocked(1, checked);
@@ -37,7 +37,7 @@ void MainWindow::on_actionLockTiles_triggered(bool checked)
 
 void MainWindow::on_actionLockScenes_triggered(bool checked)
 {
-    if (activeChildWindow()==3)
+    if (activeChildWindow() == WND_World)
     {
         WorldEdit *e=activeWldEditWin();
         if(e) e->scene->setLocked(2, checked);
@@ -46,7 +46,7 @@ void MainWindow::on_actionLockScenes_triggered(bool checked)
 
 void MainWindow::on_actionLockPaths_triggered(bool checked)
 {
-    if (activeChildWindow()==3)
+    if (activeChildWindow() == WND_World)
     {
         WorldEdit *e=activeWldEditWin();
         if(e) e->scene->setLocked(3, checked);
@@ -55,7 +55,7 @@ void MainWindow::on_actionLockPaths_triggered(bool checked)
 
 void MainWindow::on_actionLockLevels_triggered(bool checked)
 {
-    if (activeChildWindow()==3)
+    if (activeChildWindow() == WND_World)
     {
         WorldEdit *e=activeWldEditWin();
         if(e) e->scene->setLocked(4, checked);
@@ -64,7 +64,7 @@ void MainWindow::on_actionLockLevels_triggered(bool checked)
 
 void MainWindow::on_actionLockMusicBoxes_triggered(bool checked)
 {
-    if (activeChildWindow()==3)
+    if (activeChildWindow() == WND_World)
     {
         WorldEdit *e=activeWldEditWin();
         if(e) e->scene->setLocked(5, checked);

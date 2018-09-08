@@ -251,7 +251,7 @@ void LvlSearchBox::on_FindStartBlock_clicked()
 {
     if(!(currentSearches & SEARCH_BLOCK))  //start search
     {
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
             if(!edit) return;
@@ -269,7 +269,7 @@ void LvlSearchBox::on_FindStartBlock_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
             if(!edit) return;
@@ -288,7 +288,7 @@ void LvlSearchBox::on_FindStartBGO_clicked()
 {
     if(!(currentSearches & SEARCH_BGO))  //start search
     {
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
             if(!edit) return;
@@ -306,7 +306,7 @@ void LvlSearchBox::on_FindStartBGO_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
             if(!edit) return;
@@ -325,7 +325,7 @@ void LvlSearchBox::on_FindStartNPC_clicked()
 {
     if(!(currentSearches & SEARCH_NPC))  //start search
     {
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
             if(!edit) return;
@@ -343,7 +343,7 @@ void LvlSearchBox::on_FindStartNPC_clicked()
     }
     else   //middle in a search
     {
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
             if(!edit) return;

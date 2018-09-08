@@ -138,7 +138,7 @@ void LvlEventsBox::setEventsBox()
     QListWidgetItem *item;
     util::memclear(ui->LVLEvents_List);
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -229,7 +229,7 @@ void MainWindow::EventListsSync()
     _sb_npc_el->addItem(noEvent);
     _w_ent->addItem(noEvent);
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         foreach(LevelSMBX64Event event, activeLvlEditWin()->LvlData.events)
         {
@@ -316,7 +316,7 @@ void LvlEventsBox::setEventData(long index)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -563,7 +563,7 @@ void LvlEventsBox::eventSectionSettingsSync()
 {
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -681,7 +681,7 @@ void LvlEventsBox::eventLayerVisiblySyncList()
 {
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -788,7 +788,7 @@ void LvlEventsBox::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
     lockSetEventSettings = true;
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -812,7 +812,7 @@ void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/, int sourceS
              " to " + QString::number(destinationRow));
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -834,7 +834,7 @@ void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/, int sourceS
 
 long LvlEventsBox::getEventArrayIndex()
 {
-    if(mw()->activeChildWindow() != 1) return -2;
+    if(mw()->activeChildWindow() != MainWindow::WND_Level) return -2;
 
     LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -863,7 +863,7 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
 {
     lockSetEventSettings = true;
 
-    if(mw()->activeChildWindow() != 1) return;
+    if(mw()->activeChildWindow() != MainWindow::WND_Level) return;
 
     LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1128,7 +1128,7 @@ void LvlEventsBox::on_LVLEvents_del_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1176,7 +1176,7 @@ void LvlEventsBox::on_LVLEvent_AutoStart_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1204,7 +1204,7 @@ void LvlEventsBox::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1229,7 +1229,7 @@ void LvlEventsBox::on_LVLEvent_Layer_HideAdd_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1255,7 +1255,7 @@ void LvlEventsBox::on_LVLEvent_Layer_HideDel_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1289,7 +1289,7 @@ void LvlEventsBox::on_LVLEvent_Layer_ShowAdd_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1315,7 +1315,7 @@ void LvlEventsBox::on_LVLEvent_Layer_ShowDel_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1349,7 +1349,7 @@ void LvlEventsBox::on_LVLEvent_Layer_TogAdd_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1375,7 +1375,7 @@ void LvlEventsBox::on_LVLEvent_Layer_TogDel_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1416,7 +1416,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1441,7 +1441,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1466,7 +1466,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1497,7 +1497,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1522,7 +1522,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1547,7 +1547,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1585,7 +1585,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1635,7 +1635,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1685,7 +1685,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_define_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1737,7 +1737,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1776,7 +1776,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1815,7 +1815,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1854,7 +1854,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1893,7 +1893,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1935,7 +1935,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_none_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1969,7 +1969,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_reset_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2003,7 +2003,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_define_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2039,7 +2039,7 @@ void LvlEventsBox::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2072,7 +2072,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_none_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2106,7 +2106,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2140,7 +2140,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2176,7 +2176,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2211,7 +2211,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2257,7 +2257,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2311,7 +2311,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2338,7 +2338,7 @@ void LvlEventsBox::on_LVLEvent_Key_Up_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2360,7 +2360,7 @@ void LvlEventsBox::on_LVLEvent_Key_Down_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2382,7 +2382,7 @@ void LvlEventsBox::on_LVLEvent_Key_Left_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2404,7 +2404,7 @@ void LvlEventsBox::on_LVLEvent_Key_Right_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2426,7 +2426,7 @@ void LvlEventsBox::on_LVLEvent_Key_Run_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2448,7 +2448,7 @@ void LvlEventsBox::on_LVLEvent_Key_AltRun_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2470,7 +2470,7 @@ void LvlEventsBox::on_LVLEvent_Key_Jump_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2492,7 +2492,7 @@ void LvlEventsBox::on_LVLEvent_Key_AltJump_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2514,7 +2514,7 @@ void LvlEventsBox::on_LVLEvent_Key_Drop_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2536,7 +2536,7 @@ void LvlEventsBox::on_LVLEvent_Key_Start_clicked(bool checked)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2563,7 +2563,7 @@ void LvlEventsBox::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -2593,7 +2593,7 @@ void LvlEventsBox::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
 
     int WinType = mw()->activeChildWindow();
 
-    if(WinType == 1)
+    if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 

@@ -26,79 +26,74 @@
 void MainWindow::on_actionAlign_selected_triggered()
 {
 
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->applyGridToEach(
-                    activeLvlEditWin()->scene->selectedItems()   );
+            activeLvlEditWin()->scene->selectedItems());
     }
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->applyGridToEach(
-                    activeWldEditWin()->scene->selectedItems()   );
+            activeWldEditWin()->scene->selectedItems());
     }
 
 }
 
 void MainWindow::on_actionRotateLeft_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->rotateGroup(
-                    activeLvlEditWin()->scene->selectedItems(), false   );
+            activeLvlEditWin()->scene->selectedItems(), false);
     }
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->rotateGroup(
-                    activeWldEditWin()->scene->selectedItems(), false   );
+            activeWldEditWin()->scene->selectedItems(), false);
     }
 
 }
 
 void MainWindow::on_actionRotateRight_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->rotateGroup(
-                    activeLvlEditWin()->scene->selectedItems(), true  );
+            activeLvlEditWin()->scene->selectedItems(), true);
     }
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->rotateGroup(
-                    activeWldEditWin()->scene->selectedItems(), true   );
+            activeWldEditWin()->scene->selectedItems(), true);
     }
 }
 
 void MainWindow::on_actionFlipHorizontal_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->flipGroup(
-                    activeLvlEditWin()->scene->selectedItems(), false  );
+            activeLvlEditWin()->scene->selectedItems(), false);
     }
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->flipGroup(
-                    activeWldEditWin()->scene->selectedItems(), false  );
+            activeWldEditWin()->scene->selectedItems(), false);
     }
 
 }
 
 void MainWindow::on_actionFlipVertical_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         activeLvlEditWin()->scene->flipGroup(
-                    activeLvlEditWin()->scene->selectedItems(), true  );
+            activeLvlEditWin()->scene->selectedItems(), true);
     }
-    else
-    if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->flipGroup(
-                    activeWldEditWin()->scene->selectedItems(), true  );
+            activeWldEditWin()->scene->selectedItems(), true);
     }
 }
 

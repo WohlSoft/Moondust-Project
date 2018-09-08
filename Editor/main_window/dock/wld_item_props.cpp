@@ -213,7 +213,7 @@ void WLD_ItemProps::on_WLD_PROPS_PathBG_clicked(bool checked)
         WldPlacingItems::LevelSet.pathbg = checked;
     }
     else
-    if(mw()->activeChildWindow()==3)
+    if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -240,7 +240,7 @@ void WLD_ItemProps::on_WLD_PROPS_BigPathBG_clicked(bool checked)
         WldPlacingItems::LevelSet.bigpathbg = checked;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -268,7 +268,7 @@ void WLD_ItemProps::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
         WldPlacingItems::LevelSet.alwaysVisible = checked;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -296,7 +296,7 @@ void WLD_ItemProps::on_WLD_PROPS_GameStart_clicked(bool checked)
         WldPlacingItems::LevelSet.gamestart = checked;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -328,7 +328,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLFile_editingFinished()
         WldPlacingItems::LevelSet.lvlfile = ui->WLD_PROPS_LVLFile->text();
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -360,7 +360,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLTitle_editingFinished()
         WldPlacingItems::LevelSet.title = ui->WLD_PROPS_LVLTitle->text();
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -388,7 +388,7 @@ void WLD_ItemProps::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
         WldPlacingItems::LevelSet.entertowarp = arg1;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -413,7 +413,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
     if(wld_tools_lock) return;
 
     QString dirPath;
-    if(mw()->activeChildWindow()==3)
+    if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
         dirPath = mw()->activeWldEditWin()->WldData.meta.path;
     }
@@ -465,7 +465,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.top_exit = index-1;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -493,7 +493,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.left_exit = index-1;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -522,7 +522,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.right_exit = index-1;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -551,7 +551,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.bottom_exit = index-1;
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -585,7 +585,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoX_editingFinished()
         WldPlacingItems::LevelSet.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();
@@ -618,7 +618,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoY_editingFinished()
         WldPlacingItems::LevelSet.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
     }
     else
-    if (mw()->activeChildWindow()==3)
+    if (mw()->activeChildWindow() == MainWindow::WND_World)
     {
         WorldData selData;
         WorldEdit * edit = mw()->activeWldEditWin();

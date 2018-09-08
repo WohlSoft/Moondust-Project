@@ -276,7 +276,7 @@ void CrashHandler::attemptCrashsave()
 
     for(QMdiSubWindow *subWin : listOfAllSubWindows)
     {
-        if(mw->activeChildWindow(subWin) == 1)
+        if(mw->activeChildWindow(subWin) == MainWindow::WND_Level)
         {
             LevelEdit *lvledit = mw->activeLvlEditWin(subWin);
 
@@ -304,7 +304,7 @@ void CrashHandler::attemptCrashsave()
             lvl.meta.RecentFormat = LevelData::PGEX;
             lvledit->saveFile(crashSave.absoluteFilePath(fName), false);
         }
-        else if(mw->activeChildWindow(subWin) == 2)
+        else if(mw->activeChildWindow(subWin) == MainWindow::WND_NpcTxt)
         {
             NpcEdit *npcedit = mw->activeNpcEditWin(subWin);
 
@@ -320,7 +320,7 @@ void CrashHandler::attemptCrashsave()
 
             npcedit->saveFile(crashSave.absoluteFilePath(fName), false);
         }
-        else if(mw->activeChildWindow(subWin) == 3)
+        else if(mw->activeChildWindow(subWin) == MainWindow::WND_World)
         {
             WorldEdit *worldedit = mw->activeWldEditWin(subWin);
 
@@ -375,7 +375,7 @@ void CrashHandler::checkCrashsaves()
             /*if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1){
                 MainWinConnect::pMainWin->activeLvlEditWin()->makeCrashState();
             }else */
-            if(mw->activeChildWindow(subWin) == 2)
+            if(mw->activeChildWindow(subWin) == MainWindow::WND_NpcTxt)
                 mw->activeNpcEditWin()->makeCrashState();
 
             /*else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3){

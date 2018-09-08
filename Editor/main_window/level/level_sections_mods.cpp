@@ -341,7 +341,7 @@ void MainWindow::deleteLevelSection(LevelEdit *edit, int section, long margin)
 
 void MainWindow::on_actionSCT_RotateLeft_triggered()
 {
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *edit = activeLvlEditWin();
         QRectF zone;
@@ -369,7 +369,7 @@ void MainWindow::on_actionSCT_RotateLeft_triggered()
 
 void MainWindow::on_actionSCT_RotateRight_triggered()
 {
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *edit = activeLvlEditWin();
         QRectF zone;
@@ -397,7 +397,7 @@ void MainWindow::on_actionSCT_RotateRight_triggered()
 
 void MainWindow::on_actionSCT_FlipHorizontal_triggered()
 {
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *edit = activeLvlEditWin();
         QRectF zone;
@@ -425,7 +425,7 @@ void MainWindow::on_actionSCT_FlipHorizontal_triggered()
 
 void MainWindow::on_actionSCT_FlipVertical_triggered()
 {
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit *edit = activeLvlEditWin();
         QRectF zone;

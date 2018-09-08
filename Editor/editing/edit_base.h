@@ -26,6 +26,9 @@
 
 class MainWindow;
 
+/**
+ * @brief Generic interface class over file editing
+ */
 class EditBase : public QWidget
 {
     Q_OBJECT
@@ -51,6 +54,12 @@ public:
 
     virtual bool    isUtitled() = 0;
     virtual bool    isModified() = 0;
+
+    /*TODO:
+      - Implement "isXxxSupported" for most of generic actions and toolboxes
+      - Implement switchable proxy that will synchronize state between main window frontend and subwindow's backend
+      - More generic actions like history manager, zoom, etc!
+     */
 
 protected:
     MainWindow* m_mw;

@@ -26,7 +26,7 @@
 void MainWindow::on_actionCopy_triggered()
 {
     int q1=0, q2=0, q3=0, q4=0, q5=0;
-    if (activeChildWindow()==1) //if active window is a levelEditor
+    if (activeChildWindow() == WND_Level) //if active window is a levelEditor
     {
        LvlBuffer=activeLvlEditWin()->scene->copy();
        q1 += LvlBuffer.blocks.size();
@@ -40,7 +40,7 @@ void MainWindow::on_actionCopy_triggered()
        QApplication::clipboard()->setText(raw);
     }
     else
-    if (activeChildWindow()==3) //if active window is a worldEditor
+    if (activeChildWindow() == WND_World) //if active window is a worldEditor
     {
        WldBuffer=activeWldEditWin()->scene->copy();
        q1 += WldBuffer.tiles.size();
@@ -61,7 +61,7 @@ void MainWindow::on_actionCopy_triggered()
 void MainWindow::on_actionCut_triggered()
 {
     int q1=0, q2=0, q3=0, q4=0, q5=0;
-    if (activeChildWindow()==1) //if active window is a levelEditor
+    if (activeChildWindow() == WND_Level) //if active window is a levelEditor
     {
        LvlBuffer=activeLvlEditWin()->scene->copy(true);
        q1 += LvlBuffer.blocks.size();
@@ -74,7 +74,7 @@ void MainWindow::on_actionCut_triggered()
        QApplication::clipboard()->setText(raw);
     }
     else
-    if (activeChildWindow()==3) //if active window is a worldEditor
+    if (activeChildWindow() == WND_World) //if active window is a worldEditor
     {
        WldBuffer=activeWldEditWin()->scene->copy(true);
        q1 += WldBuffer.tiles.size();
@@ -92,7 +92,7 @@ void MainWindow::on_actionCut_triggered()
 //Paste
 void MainWindow::on_actionPaste_triggered()
 {
-    if (activeChildWindow()==1)
+    if (activeChildWindow() == WND_Level)
     {
         LevelData tmp;
         QString raw=QApplication::clipboard()->text();
@@ -110,7 +110,7 @@ void MainWindow::on_actionPaste_triggered()
         ) return;
     }
     else
-    if (activeChildWindow()==3)
+    if (activeChildWindow() == WND_World)
     {
         WorldData tmp;
         QString raw = QApplication::clipboard()->text();
@@ -132,13 +132,13 @@ void MainWindow::on_actionPaste_triggered()
     resetEditmodeButtons();
     ui->actionSelect->setChecked(1);
 
-    if (activeChildWindow()==1)
+    if (activeChildWindow() == WND_Level)
     {
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
        activeLvlEditWin()->scene->m_dataBuffer = LvlBuffer;
     }
     else
-    if (activeChildWindow()==3)
+    if (activeChildWindow() == WND_World)
     {
        activeWldEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
        activeWldEditWin()->scene->WldBuffer = WldBuffer;

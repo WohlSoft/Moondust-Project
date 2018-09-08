@@ -25,64 +25,67 @@
 
 void MainWindow::SetCurrentLevelSection(int SctId, int open)
 {
-    dock_LvlSectionProps->lockSctSettingsProps=true;
+    dock_LvlSectionProps->lockSctSettingsProps = true;
 
     int SectionId = SctId;
     int WinType = activeChildWindow();
-    LevelEdit *e=NULL;
-    if(WinType==1)
-        e=activeLvlEditWin();
+    LevelEdit *e = NULL;
+    if(WinType == WND_Level)
+        e = activeLvlEditWin();
 
     LogDebug("Set Current Section");
-    if ((open==1)&&(e!=NULL)) // Only Set Checked section number without section select
+    if((open == 1) && (e != NULL)) // Only Set Checked section number without section select
     {
         LogDebug("get Current Section");
         SectionId = e->LvlData.CurSection;
     }
 
+    /*FIXME:
+     * Generate section buttons dynamically and access them through an array by index!
+     */
     LogDebug("Set checkbox to");
-    ui->actionSection_1->setChecked( (SectionId==0) );
-    ui->actionSection_2->setChecked( (SectionId==1) );
-    ui->actionSection_3->setChecked( (SectionId==2) );
-    ui->actionSection_4->setChecked( (SectionId==3) );
-    ui->actionSection_5->setChecked( (SectionId==4) );
-    ui->actionSection_6->setChecked( (SectionId==5) );
-    ui->actionSection_7->setChecked( (SectionId==6) );
-    ui->actionSection_8->setChecked( (SectionId==7) );
-    ui->actionSection_9->setChecked( (SectionId==8) );
-    ui->actionSection_10->setChecked( (SectionId==9) );
-    ui->actionSection_11->setChecked( (SectionId==10) );
-    ui->actionSection_12->setChecked( (SectionId==11) );
-    ui->actionSection_13->setChecked( (SectionId==12) );
-    ui->actionSection_14->setChecked( (SectionId==13) );
-    ui->actionSection_15->setChecked( (SectionId==14) );
-    ui->actionSection_16->setChecked( (SectionId==15) );
-    ui->actionSection_17->setChecked( (SectionId==16) );
-    ui->actionSection_18->setChecked( (SectionId==17) );
-    ui->actionSection_19->setChecked( (SectionId==18) );
-    ui->actionSection_20->setChecked( (SectionId==19) );
-    ui->actionSection_21->setChecked( (SectionId==20) );
-    ui->actionSectionMore->setChecked( (SectionId>20) );
+    ui->actionSection_1->setChecked((SectionId == 0));
+    ui->actionSection_2->setChecked((SectionId == 1));
+    ui->actionSection_3->setChecked((SectionId == 2));
+    ui->actionSection_4->setChecked((SectionId == 3));
+    ui->actionSection_5->setChecked((SectionId == 4));
+    ui->actionSection_6->setChecked((SectionId == 5));
+    ui->actionSection_7->setChecked((SectionId == 6));
+    ui->actionSection_8->setChecked((SectionId == 7));
+    ui->actionSection_9->setChecked((SectionId == 8));
+    ui->actionSection_10->setChecked((SectionId == 9));
+    ui->actionSection_11->setChecked((SectionId == 10));
+    ui->actionSection_12->setChecked((SectionId == 11));
+    ui->actionSection_13->setChecked((SectionId == 12));
+    ui->actionSection_14->setChecked((SectionId == 13));
+    ui->actionSection_15->setChecked((SectionId == 14));
+    ui->actionSection_16->setChecked((SectionId == 15));
+    ui->actionSection_17->setChecked((SectionId == 16));
+    ui->actionSection_18->setChecked((SectionId == 17));
+    ui->actionSection_19->setChecked((SectionId == 18));
+    ui->actionSection_20->setChecked((SectionId == 19));
+    ui->actionSection_21->setChecked((SectionId == 20));
+    ui->actionSectionMore->setChecked((SectionId > 20));
 
-    if ((e!=NULL) && (open==0))
+    if((e != NULL) && (open == 0))
     {
-       LogDebug("Call to setCurrentSection()");
-       e->setCurrentSection(SectionId);
+        LogDebug("Call to setCurrentSection()");
+        e->setCurrentSection(SectionId);
     }
 
-    if(e!=NULL)
+    if(e != NULL)
     {
         dock_LvlSectionProps->refreshFileData();
     }
-    dock_LvlSectionProps->lockSctSettingsProps=false;
+    dock_LvlSectionProps->lockSctSettingsProps = false;
 }
 
 
 void MainWindow::on_actionGotoLeftBottom_triggered()
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         if(!edit) return;
         int SectionId = edit->LvlData.CurSection;
         int xb = edit->LvlData.sections[SectionId].size_left;
@@ -90,10 +93,9 @@ void MainWindow::on_actionGotoLeftBottom_triggered()
                  edit->scene->m_viewPort->viewport()->height() + 10;
         edit->goTo(xb, yb, false, QPoint(-10, 10));
     }
-    else
-    if (activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
-        WorldEdit *e=activeWldEditWin();
+        WorldEdit *e = activeWldEditWin();
         if(e) e->ResetPosition();
     }
 }
@@ -102,9 +104,9 @@ void MainWindow::on_actionGotoLeftTop_triggered()
 {
     qApp->setActiveWindow(this);
     int WinType = activeChildWindow();
-    if(WinType==1)
+    if(WinType == 1)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         if(!edit) return;
         int SectionId = edit->LvlData.CurSection;
         int xb = edit->LvlData.sections[SectionId].size_left;
@@ -117,13 +119,13 @@ void MainWindow::on_actionGotoTopRight_triggered()
 {
     qApp->setActiveWindow(this);
     int WinType = activeChildWindow();
-    if(WinType==1)
+    if(WinType == 1)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         if(!edit) return;
         int SectionId = edit->LvlData.CurSection;
         int xb = edit->LvlData.sections[SectionId].size_right -
-                edit->scene->m_viewPort->viewport()->width() + 10;
+                 edit->scene->m_viewPort->viewport()->width() + 10;
         int yb = edit->LvlData.sections[SectionId].size_top;
         edit->goTo(xb, yb, false, QPoint(10, -10));
     }
@@ -133,9 +135,9 @@ void MainWindow::on_actionGotoRightBottom_triggered()
 {
     qApp->setActiveWindow(this);
     int WinType = activeChildWindow();
-    if(WinType==1)
+    if(WinType == 1)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         if(!edit) return;
         int SectionId = edit->LvlData.CurSection;
         int xb = edit->LvlData.sections[SectionId].size_right -
@@ -150,20 +152,20 @@ void MainWindow::on_actionGotoRightBottom_triggered()
 
 bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
 {
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit* edit = activeLvlEditWin();
+        LevelEdit *edit = activeLvlEditWin();
         if(!edit) return false;
-        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
+        QPointF coor = edit->getGraphicsView()->mapToScene(0, 0);
         x = coor.x();
         y = coor.y();
         return true;
     }
-    else if(activeChildWindow() == 3)
+    else if(activeChildWindow() == WND_World)
     {
-        WorldEdit* edit = activeWldEditWin();
+        WorldEdit *edit = activeWldEditWin();
         if(!edit) return false;
-        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
+        QPointF coor = edit->getGraphicsView()->mapToScene(0, 0);
         x = coor.x();
         y = coor.y();
         return true;
@@ -281,13 +283,18 @@ void MainWindow::on_actionSection_21_triggered()
 
 void MainWindow::on_actionSectionMore_triggered()
 {
-    if(activeChildWindow() != 1) return;
-    LevelEdit* edit = activeLvlEditWin();
+    if(activeChildWindow() != WND_Level)
+        return;
+    LevelEdit *edit = activeLvlEditWin();
     QMenu section;
     for(int i = 21; i < edit->LvlData.sections.size(); i++)
     {
-        QAction *item=section.addAction(tr("Section %1").arg(i));
-        if(edit->LvlData.CurSection==i) { item->setCheckable(true); item->setChecked(true); }
+        QAction *item = section.addAction(tr("Section %1").arg(i));
+        if(edit->LvlData.CurSection == i)
+        {
+            item->setCheckable(true);
+            item->setChecked(true);
+        }
         item->setData(i);
     }
     QAction *newSection = section.addAction(tr("Initialize section %1...").arg(edit->LvlData.sections.size()));

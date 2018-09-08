@@ -27,18 +27,20 @@
 
 void MainWindow::refreshHistoryButtons()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         if(activeLvlEditWin()->sceneCreated)
         {
-            ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+            ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
+            ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
         }
-    }else if(activeChildWindow()==3){
+    }
+    else if(activeChildWindow() == WND_World)
+    {
         if(activeWldEditWin()->sceneCreated)
         {
-            ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
+            ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
+            ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
         }
     }
 
@@ -49,18 +51,18 @@ void MainWindow::on_actionUndo_triggered()
 {
     dock_LvlItemProps->hide();
     dock_WldItemProps->hide();
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         //Here must be call
         activeLvlEditWin()->scene->historyBack();
-        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+        ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
+        ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
     }
-    else if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->historyBack();
-        ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
+        ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
+        ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
     }
 }
 
@@ -69,18 +71,18 @@ void MainWindow::on_actionRedo_triggered()
 {
     dock_LvlItemProps->hide();
     dock_WldItemProps->hide();
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
         //Here must be call
         activeLvlEditWin()->scene->historyForward();
-        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+        ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
+        ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
     }
-    else if(activeChildWindow()==3)
+    else if(activeChildWindow() == WND_World)
     {
         activeWldEditWin()->scene->historyForward();
-        ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
+        ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
+        ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
     }
 }
 

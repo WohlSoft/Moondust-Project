@@ -45,7 +45,7 @@ CustomCounterGUI::CustomCounterGUI(QWidget *parent) :
 
     ui->setupUi(this);
     lockCombobox=false;
-    if( m_mainWindow->activeChildWindow() == 1 )
+    if(m_mainWindow->activeChildWindow() == MainWindow::WND_Level)
     {
         ui->ItemType->addItem(tr("Block"), QVariant(int(ItemTypes::LVL_Block)));
         ui->ItemType->addItem(tr("BGO"), QVariant(int(ItemTypes::LVL_BGO)));
@@ -53,7 +53,7 @@ CustomCounterGUI::CustomCounterGUI(QWidget *parent) :
         counterData.windowType=1;
     }
     else
-    if( m_mainWindow->activeChildWindow() == 3 )
+    if(m_mainWindow->activeChildWindow() == MainWindow::WND_World)
     {
         ui->ItemType->addItem(tr("Terrain tile"), QVariant(int(ItemTypes::WLD_Tile)));
         ui->ItemType->addItem(tr("Scenery"), QVariant(int(ItemTypes::WLD_Scenery)));

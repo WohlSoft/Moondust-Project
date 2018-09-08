@@ -7,6 +7,7 @@
 #include <QProcess>
 
 class LevelEdit;
+class MainWindow;
 namespace Ui {
 class AudioCvt_Sox_gui;
 }
@@ -55,6 +56,7 @@ private:
 
     bool isLevel;
     LevelEdit *ledit;
+    MainWindow *m_mw;
 };
 
 #endif // AUDIOCVT_SOX_GUI_H

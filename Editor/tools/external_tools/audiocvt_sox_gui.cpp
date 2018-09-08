@@ -16,6 +16,8 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AudioCvt_Sox_gui)
 {
+    m_mw = qobject_cast<MainWindow*>(parent);
+    Q_ASSERT(m_mw);//Parent must be a Main Window!
     ui->setupUi(this);
     ui->start->setText(tr("Start"));
 #ifdef Q_OS_WIN
@@ -26,12 +28,12 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(nextStep(int, QProcess::ExitStatus)));
     connect(&converter, SIGNAL(readyReadStandardOutput()), this, SLOT(consoleMessage()));
     connect(&converter, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessageErr()));
-    isLevel = (MainWinConnect::pMainWin->activeChildWindow() == 1);
+    isLevel = (m_mw && m_mw->activeChildWindow() == MainWindow::WND_Level);
     ledit = NULL;
 
-    if(isLevel)
+    if(m_mw && isLevel)
     {
-        ledit = MainWinConnect::pMainWin->activeLvlEditWin();
+        ledit = m_mw->activeLvlEditWin();
 
         if(ledit)
         {
@@ -197,7 +199,7 @@ void AudioCvt_Sox_gui::stop(bool do_abort)
         }
 
         PGE_MusPlayer::MUS_openFile(LvlMusPlay::currentMusicPath);
-        PGE_MusPlayer::MUS_changeVolume(MainWinConnect::pMainWin->musicVolume());
+        PGE_MusPlayer::MUS_changeVolume(m_mw ? m_mw->musicVolume() : MIX_MAX_VOLUME);
         PGE_MusPlayer::MUS_playMusic();
         QMessageBox::warning(this,
                              tr("SoX error"),
@@ -278,7 +280,7 @@ retry_queue:
         }
 
         PGE_MusPlayer::MUS_openFile(LvlMusPlay::currentMusicPath);
-        PGE_MusPlayer::MUS_changeVolume(MainWinConnect::pMainWin->musicVolume());
+        PGE_MusPlayer::MUS_changeVolume(m_mw ? m_mw->musicVolume() : MIX_MAX_VOLUME);
         PGE_MusPlayer::MUS_playMusic();
         QString warns = lastOutput;
         if(warns.size() > 200)

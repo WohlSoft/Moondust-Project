@@ -26,45 +26,45 @@
 // //////////////////////// Locks Begin //////////////////////////////
 void MainWindow::on_actionLockBlocks_triggered(bool checked)
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit * e=activeLvlEditWin();
+        LevelEdit *e = activeLvlEditWin();
         if(e) e->scene->setLocked(1, checked);
     }
 }
 
 void MainWindow::on_actionLockBGO_triggered(bool checked)
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit * e=activeLvlEditWin();
+        LevelEdit *e = activeLvlEditWin();
         if(e) e->scene->setLocked(2, checked);
     }
 }
 
 void MainWindow::on_actionLockNPC_triggered(bool checked)
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit * e=activeLvlEditWin();
+        LevelEdit *e = activeLvlEditWin();
         if(e) e->scene->setLocked(3, checked);
     }
 }
 
 void MainWindow::on_actionLockWaters_triggered(bool checked)
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit * e=activeLvlEditWin();
+        LevelEdit *e = activeLvlEditWin();
         if(e) e->scene->setLocked(4, checked);
     }
 }
 
 void MainWindow::on_actionLockDoors_triggered(bool checked)
 {
-    if (activeChildWindow()==1)
+    if(activeChildWindow() == WND_Level)
     {
-        LevelEdit * e=activeLvlEditWin();
+        LevelEdit *e = activeLvlEditWin();
         if(e) e->scene->setLocked(5, checked);
     }
 }

@@ -200,9 +200,9 @@ void TilesetItemBox::editSelectedTileset()
 {
     TilesetEditor *tilesetConfDia;
 
-    if(mw()->activeChildWindow() == 1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
         tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeLvlEditWin()->scene, mw());
-    else if(mw()->activeChildWindow() == 3)
+    else if(mw()->activeChildWindow() == MainWindow::WND_World)
         tilesetConfDia = new TilesetEditor(&mw()->configs, mw()->activeWldEditWin()->scene, mw());
     else
         tilesetConfDia = new TilesetEditor(&mw()->configs, NULL, mw());
@@ -589,13 +589,13 @@ QVector<SimpleTileset> TilesetItemBox::loadCustomTilesets()
     QString path;
     QString cfolder;
     bool doIt = false;
-    if(mw()->activeChildWindow() == 1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         path = mw()->activeLvlEditWin()->LvlData.meta.path + "/";
         cfolder = mw()->activeLvlEditWin()->LvlData.meta.filename + "/";
         doIt = !mw()->activeLvlEditWin()->LvlData.meta.untitled;
     }
-    else if(mw()->activeChildWindow() == 3)
+    else if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
         path = mw()->activeWldEditWin()->WldData.meta.path + "/";
         cfolder = mw()->activeWldEditWin()->WldData.meta.filename + "/";

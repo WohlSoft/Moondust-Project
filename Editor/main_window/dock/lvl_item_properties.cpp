@@ -262,7 +262,7 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.meta.array_id));
 
-        bool isLvlWin = ((mw()->activeChildWindow() == 1) && (mw()->activeLvlEditWin()));
+        bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
 
         obj_block &t_block = isLvlWin ?
                              mw()->activeLvlEditWin()->scene->m_localConfigBlocks[block.id] :
@@ -456,10 +456,10 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.meta.array_id));
 
-        bool isLvlWin = ((mw()->activeChildWindow() == 1) && (mw()->activeLvlEditWin()));
+        bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
         obj_npc &t_npc   = isLvlWin ?
-                             mw()->activeLvlEditWin()->scene->m_localConfigNPCs[npc.id] :
-                             mw()->configs.main_npc[npc.id];
+                           mw()->activeLvlEditWin()->scene->m_localConfigNPCs[npc.id] :
+                           mw()->configs.main_npc[npc.id];
 
         if(!t_npc.isValid)
             t_npc = mw()->configs.main_npc[1];
@@ -750,7 +750,7 @@ void LvlItemProperties::on_PROPS_BlockResize_clicked()
 
     if(blockPtr < 0) return;
 
-    if(mw()->activeChildWindow() == 1)
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
@@ -774,7 +774,7 @@ void LvlItemProperties::on_BLOCK_Width_editingFinished()
 
     if(blockPtr < 0)
         return;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
@@ -814,7 +814,7 @@ void LvlItemProperties::on_BLOCK_Height_editingFinished()
 
     if(blockPtr < 0)
         return;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
@@ -856,7 +856,7 @@ void LvlItemProperties::on_PROPS_BlockInvis_clicked(bool checked)
 
     if(blockPtr < 0)
         LvlPlacingItems::blockSet.invisible = checked;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -882,7 +882,7 @@ void LvlItemProperties::on_PROPS_BlkSlippery_clicked(bool checked)
 
     if(blockPtr < 0)
         LvlPlacingItems::blockSet.slippery = checked;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -910,7 +910,7 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
 
     if(blockPtr < 0)
         npcID = LvlPlacingItems::blockSet.npc_id;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem *targetItem, items1)
@@ -951,7 +951,7 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
 
         if(blockPtr < 1)
             LvlPlacingItems::blockSet.npc_id = selected_npc;
-        else if(mw()->activeChildWindow() == 1)
+        else if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
             QList<QGraphicsItem *> items = edit->scene->selectedItems();
@@ -982,7 +982,7 @@ void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(const QString &a
         LvlPlacingItems::blockSet.layer = arg1;
         LvlPlacingItems::layer = arg1;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1016,7 +1016,7 @@ void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(const QStri
 
         BlockEventDestroy = LvlPlacingItems::blockSet.event_destroy;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1058,7 +1058,7 @@ void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(const QString
 
         BlockEventHit = LvlPlacingItems::blockSet.event_hit;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1100,7 +1100,7 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QS
         BlockEventLayerEmpty = LvlPlacingItems::blockSet.event_emptylayer;
     }
 
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1143,7 +1143,7 @@ void LvlItemProperties::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg
         LvlPlacingItems::bgoSet.layer = arg1;
         LvlPlacingItems::layer = arg1;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1191,7 +1191,7 @@ void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
 
     if(bgoPtr < 0)
         LvlPlacingItems::bgoSet.z_mode = zMode;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1220,7 +1220,7 @@ void LvlItemProperties::on_PROPS_BGO_Z_Offset_valueChanged(double arg1)
 
     if(bgoPtr < 0)
         LvlPlacingItems::bgoSet.z_offset = arg1;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1247,7 +1247,7 @@ void LvlItemProperties::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
 
     if(bgoPtr < 0)
         LvlPlacingItems::bgoSet.smbx64_sp = arg1;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1374,10 +1374,10 @@ void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
     {
         LvlPlacingItems::npcSet.direct = -1;
 
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
             mw()->activeLvlEditWin()->scene->updateCursoredNpcDirection();
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1406,10 +1406,10 @@ void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
     {
         LvlPlacingItems::npcSet.direct = 0;
 
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
             mw()->activeLvlEditWin()->scene->updateCursoredNpcDirection();
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1438,11 +1438,11 @@ void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
     {
         LvlPlacingItems::npcSet.direct = 1;
 
-        if(mw()->activeChildWindow() == 1)
+        if(mw()->activeChildWindow() == MainWindow::WND_Level)
             mw()->activeLvlEditWin()->scene->updateCursoredNpcDirection();
 
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1468,7 +1468,7 @@ void LvlItemProperties::on_PROPS_NpcFri_clicked(bool checked)
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.friendly = checked;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1495,7 +1495,7 @@ void LvlItemProperties::on_PROPS_NPCNoMove_clicked(bool checked)
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.nomove = checked;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1522,7 +1522,7 @@ void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.is_boss = checked;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1557,7 +1557,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         message = LvlPlacingItems::npcSet.msg;
         friendly = LvlPlacingItems::npcSet.friendly;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
@@ -1584,7 +1584,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
             LvlPlacingItems::npcSet.msg = msgBox->currentText;
             LvlPlacingItems::npcSet.friendly = msgBox->isFriendlyChecked();
         }
-        else if(mw()->activeChildWindow() == 1)
+        else if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelData selData;
             LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1625,7 +1625,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.special_data = arg1 - npcSpecSpinOffset;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1780,7 +1780,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.special_data = index;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData selData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1845,7 +1845,7 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
         LvlItemPropsLock = false;
 
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1895,7 +1895,7 @@ void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.generator_type = index + 1;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1923,7 +1923,7 @@ void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.generator_period = qRound(arg1 * 10);
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1950,7 +1950,7 @@ void LvlItemProperties::on_PROPS_NPCGenUp_clicked()
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.generator_direct = 1;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -1979,7 +1979,7 @@ void LvlItemProperties::on_PROPS_NPCGenLeft_clicked()
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.generator_direct = 2;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2007,7 +2007,7 @@ void LvlItemProperties::on_PROPS_NPCGenDown_clicked()
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.generator_direct = 3;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2035,7 +2035,7 @@ void LvlItemProperties::on_PROPS_NPCGenRight_clicked()
 
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.generator_direct = 4;
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2066,7 +2066,7 @@ void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg
         LvlPlacingItems::npcSet.layer = arg1;
         LvlPlacingItems::layer = arg1;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2097,7 +2097,7 @@ void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(const QStrin
         else
             LvlPlacingItems::npcSet.attach_layer = "";
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2137,7 +2137,7 @@ void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(const QStr
             LvlPlacingItems::npcSet.event_activate = "";
         NpcEventActivated = LvlPlacingItems::npcSet.event_activate;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2177,7 +2177,7 @@ void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(const QString
             LvlPlacingItems::npcSet.event_die = "";
         NpcEventDeath = LvlPlacingItems::npcSet.event_die;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2217,7 +2217,7 @@ void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(const QString 
             LvlPlacingItems::npcSet.event_talk = "";
         NpcEventTalk = LvlPlacingItems::npcSet.event_talk;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -2257,7 +2257,7 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QS
             LvlPlacingItems::npcSet.event_emptylayer = "";
         NpcEventLayerEmpty = LvlPlacingItems::npcSet.event_emptylayer;
     }
-    else if(mw()->activeChildWindow() == 1)
+    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelData modData;
         LevelEdit *edit = mw()->activeLvlEditWin();

@@ -91,7 +91,7 @@ void HistoryElementMainSetting::processWorldUndo()
             wldScene->m_data->nocharacter[ind] = !m_modData.toList()[1].toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_WORLDTITLE){
         wldScene->m_data->EpisodeTitle = m_modData.toList()[0].toString();
-        if(MainWinConnect::pMainWin->activeChildWindow()==3)
+        if(MainWinConnect::pMainWin->activeChildWindow()==MainWindow::WND_World)
             MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
                         m_modData.toList()[0].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : m_modData.toList()[0].toString());
     }
@@ -140,7 +140,7 @@ void HistoryElementMainSetting::processWorldRedo()
             wldScene->m_data->nocharacter[ind] = m_modData.toList()[1].toBool();
     }else if(m_modWorldSetting == HistorySettings::SETTING_WORLDTITLE){
         wldScene->m_data->EpisodeTitle = m_modData.toList()[1].toString();
-        if(MainWinConnect::pMainWin->activeChildWindow()==3)
+        if(MainWinConnect::pMainWin->activeChildWindow()==MainWindow::WND_World)
             MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
                         m_modData.toList()[1].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : m_modData.toList()[1].toString());
     }
