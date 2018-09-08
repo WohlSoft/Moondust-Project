@@ -583,6 +583,11 @@ public:
          * \param window Genertic QWidget pointer to sub-window to activated
          */
         void setActiveSubWindow(QWidget *window);
+        /*!
+         * \brief Switch specific sub-window
+         * \param window QMdiSubWindow pointer to sub-window to activated
+         */
+        void setActiveSubWindow(QMdiSubWindow *window);
 
         /*!
          * \brief Cascade sub-windows

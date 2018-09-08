@@ -71,6 +71,8 @@ public:
     bool isUntitled();
     bool isModified();
 
+    void markForForceClose();
+
     QString curFile;
 
     bool m_isModyfied;

@@ -234,6 +234,12 @@ bool NpcEdit::isModified()
     return m_isModyfied;
 }
 
+void NpcEdit::markForForceClose()
+{
+    m_isUntitled = false;
+    m_isModyfied = false;
+}
+
 QString NpcEdit::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();

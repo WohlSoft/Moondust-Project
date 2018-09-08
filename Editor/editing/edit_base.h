@@ -55,6 +55,11 @@ public:
     virtual bool    isUntitled() = 0;
     virtual bool    isModified() = 0;
 
+    /**
+     * @brief Clear untitled and modified states to permit closing
+     */
+    virtual void    markForForceClose() = 0;
+
     /*TODO:
       - Implement "isXxxSupported" for most of generic actions and toolboxes
       - Implement switchable proxy that will synchronize state between main window frontend and subwindow's backend

@@ -18,6 +18,7 @@
 
 #include <QDesktopWidget>
 #include <QtConcurrent>
+#include <QMdiSubWindow>
 
 #include <data_configs/config_status/config_status.h>
 #include <data_configs/selection_dialog/config_manager.h>
@@ -36,27 +37,27 @@
  */
 class PGEProgressDialog : public QProgressDialog
 {
-    public:
-        explicit PGEProgressDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = Qt::WindowFlags())
-            : QProgressDialog(parent, flags) {}
+public:
+    explicit PGEProgressDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = Qt::WindowFlags())
+        : QProgressDialog(parent, flags) {}
 
-        PGEProgressDialog(const QString &labelText, const QString &cancelButtonText,
-                          int minimum, int maximum, QWidget *parent = Q_NULLPTR,
-                          Qt::WindowFlags flags = Qt::WindowFlags()):
-            QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, flags)
-        {}
-        virtual ~PGEProgressDialog() {}
+    PGEProgressDialog(const QString &labelText, const QString &cancelButtonText,
+                      int minimum, int maximum, QWidget *parent = Q_NULLPTR,
+                      Qt::WindowFlags flags = Qt::WindowFlags()):
+        QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, flags)
+    {}
+    virtual ~PGEProgressDialog() {}
 
-        virtual void keyPressEvent(QKeyEvent *e)
-        {
-            if(e->key() != Qt::Key_Escape)
-                QProgressDialog::keyPressEvent(e);
-        }
-        virtual void closeEvent(QCloseEvent *e)
-        {
-            //No way to close this dialog box!
-            e->ignore();
-        }
+    virtual void keyPressEvent(QKeyEvent *e)
+    {
+        if(e->key() != Qt::Key_Escape)
+            QProgressDialog::keyPressEvent(e);
+    }
+    virtual void closeEvent(QCloseEvent *e)
+    {
+        //No way to close this dialog box!
+        e->ignore();
+    }
 };
 
 void MainWindow::on_actionLoad_configs_triggered()
@@ -66,24 +67,29 @@ void MainWindow::on_actionLoad_configs_triggered()
     if(ui->centralWidget->subWindowList().size() > 0)
     {
         QMessageBox::StandardButton answer =
-                QMessageBox::warning(this,
-                             tr("Configuration is busy"),
-                             tr("When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?"),
-                             QMessageBox::Yes|QMessageBox::No);
+            QMessageBox::warning(this,
+                                 tr("Configuration is busy"),
+                                 tr("When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?"),
+                                 QMessageBox::Yes | QMessageBox::No);
         if(answer != QMessageBox::Yes)
             return; // Do Nothing
 
-        { // Collect list of all opened files
-            QList<QMdiSubWindow*> subWindows = ui->centralWidget->subWindowList();
-            for(QMdiSubWindow* w : subWindows)
+        {
+            // Collect list of all opened files
+            QList<QMdiSubWindow *> subWindows = ui->centralWidget->subWindowList();
+            for(QMdiSubWindow *w : subWindows)
             {
                 EditBase *wnd = activeBaseEditWin(w);
                 if(wnd)
                 {
-                    if(wnd->isUntitled() && !wnd->trySave())
+                    // Switch the subwindow to show wat to save or discard
+                    setActiveSubWindow(w);
+                    if((wnd->isUntitled() || wnd->isModified()) && !wnd->trySave())
                         return;
                     if(!wnd->isUntitled())
                         openedFilesBackup.push_back(wnd->currentFile());
+                    wnd->markForForceClose();
+                    w->close();
                 }
             }
         }
@@ -221,10 +227,10 @@ void MainWindow::on_actionChangeConfig_triggered()
         currentConfigDir    = (cmanager.m_doAskAgain) ? "" : configPath;
         saveSettings();
         QMessageBox::StandardButton answer = QMessageBox::question(this,
-                                 tr("Configuration changed"),
-                                 tr("The configuration pack has changed!\n"
-                                    "To start using the new configuration pack, you need to restart the Editor. Do you want to continue?"),
-                                 QMessageBox::Yes|QMessageBox::No);
+                                             tr("Configuration changed"),
+                                             tr("The configuration pack has changed!\n"
+                                                "To start using the new configuration pack, you need to restart the Editor. Do you want to continue?"),
+                                             QMessageBox::Yes | QMessageBox::No);
         if(answer == QMessageBox::Yes)
         {
             ui->centralWidget->closeAllSubWindows();

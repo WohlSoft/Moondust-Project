@@ -596,6 +596,12 @@ bool LevelEdit::isModified()
     return LvlData.meta.modified;
 }
 
+void LevelEdit::markForForceClose()
+{
+    m_isUntitled = false;
+    LvlData.meta.modified = false;
+}
+
 void LevelEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)

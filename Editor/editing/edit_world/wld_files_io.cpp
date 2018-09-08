@@ -475,6 +475,12 @@ bool WorldEdit::isModified()
     return WldData.meta.modified;
 }
 
+void WorldEdit::markForForceClose()
+{
+    m_isUntitled = false;
+    WldData.meta.modified = false;
+}
+
 void WorldEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)

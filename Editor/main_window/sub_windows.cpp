@@ -246,6 +246,11 @@ void MainWindow::setActiveSubWindow(QWidget *window)
     ui->centralWidget->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
 }
 
+void MainWindow::setActiveSubWindow(QMdiSubWindow *window)
+{
+    ui->centralWidget->setActiveSubWindow(window);
+}
+
 
 
 void MainWindow::close_sw()
