@@ -484,6 +484,18 @@ public:
         ///
         int activeChildWindow();
         int activeChildWindow(QMdiSubWindow* wnd);
+
+        /*!
+         * \brief Retreives pointer to generic file editing window if current window is generic file editor sub-window
+         * \return Pointer to generic sub-window, NULL if current window is not a generic file editor window
+         */
+        EditBase    *activeBaseEditWin();
+        /*!
+         * \brief Casts generic subwindow class into Generic file edit sub-window type
+         * \param wnd Generic sub-window pointer
+         * \return Generic file edit sub-window or NULL if given pointer is not a level editor
+         */
+        EditBase    *activeBaseEditWin(QMdiSubWindow *wnd);
         /*!
          * \brief Retreives pointer to level editing window if current window is level editor sub-window
          * \return Pointer to level sub-window, NULL if current window is not a level editor window

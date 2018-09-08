@@ -50,7 +50,7 @@ void MainWindow::on_actionReload_triggered()
         LevelData FileData;
         filePath = lvlEdit->curFile;
 
-        if(lvlEdit->isUntitled)
+        if(lvlEdit->isUtitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);
@@ -64,7 +64,7 @@ void MainWindow::on_actionReload_triggered()
             return;
         }
 
-        if(lvlEdit->LvlData.meta.modified)
+        if(lvlEdit->isModified())
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
                                               tr("Do you want to save before reload stuff?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
@@ -159,14 +159,14 @@ void MainWindow::on_actionReload_triggered()
         NpcEdit *npcEdit = activeNpcEditWin(LastActiveSubWindow);
         filePath = npcEdit->curFile;
 
-        if(npcEdit->isUntitled)
+        if(npcEdit->isUtitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);
             return;
         }
 
-        if(npcEdit->isModyfied)
+        if(npcEdit->isModified())
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
                                               tr("Do you want to save before reload stuff?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
@@ -191,11 +191,11 @@ void MainWindow::on_actionReload_triggered()
         }
 
         wnGeom = LastActiveSubWindow->geometry();
-        npcEdit->isModyfied = false;
+        npcEdit->m_isModyfied = false;
         npcEdit->close();
         //NpcEdit *child = createNPCChild();
         //QMdiSubWindow *npcWindow = LastActiveSubWindow;
-        NpcEdit *child = new NpcEdit(&configs, LastActiveSubWindow);
+        NpcEdit *child = new NpcEdit(this, &configs, LastActiveSubWindow);
         LastActiveSubWindow->setWidget(child);
 
         if(child->loadFile(filePath, FileData))
@@ -217,7 +217,7 @@ void MainWindow::on_actionReload_triggered()
         WorldData FileData;
         filePath = wldEdit->curFile;
 
-        if(wldEdit->isUntitled)
+        if(wldEdit->isUtitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                                  tr("File doesn't saved on disk."), QMessageBox::Ok);
@@ -231,7 +231,7 @@ void MainWindow::on_actionReload_triggered()
             return;
         }
 
-        if(wldEdit->WldData.meta.modified)
+        if(wldEdit->isModified())
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
                                               tr("Do you want to save before reload stuff?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);

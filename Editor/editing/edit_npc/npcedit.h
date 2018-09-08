@@ -29,19 +29,21 @@
 
 #include <editing/_scenes/level/items/item_npc.h>
 
+#include "../edit_base.h"
+
 #define NPC_EDIT_CLASS "NpcEdit"
 
 namespace Ui {
 class NpcEdit;
 }
 
-class NpcEdit : public QWidget
+class NpcEdit : public EditBase
 {
     Q_OBJECT
     
     friend class MainWindow;
 public:
-    explicit NpcEdit(dataconfigs *configs, QWidget *parent = 0);
+    explicit NpcEdit(MainWindow *mw, dataconfigs *configs, QWidget *parent = 0);
     ~NpcEdit();
 
 public slots:
@@ -53,17 +55,26 @@ public:
     NPCConfigFile NpcData;
     unsigned long npc_id;
 
-    bool save();
-    bool saveAs();
+    bool save(bool savOptionsDialog = false);
+
+    bool saveAs(bool savOptionsDialog = false);
+
+    bool trySave();
+
     bool saveFile(const QString &fileName, const bool addToRecent = true);
+
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+
     void makeCrashState();
+
+    bool isUtitled();
+    bool isModified();
 
     QString curFile;
 
-    bool isModyfied;
-    bool isUntitled;
+    bool m_isModyfied;
+    bool m_isUntitled;
 
 protected:
     void closeEvent(QCloseEvent *event);

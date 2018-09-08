@@ -27,7 +27,7 @@ void NpcEdit::on_ResetNPCData_clicked()
 {
     NpcData = StartNPCData; //Restore first version
     setDataBoxes();
-    if(!isUntitled) documentNotModified();
+    if(!m_isUntitled) documentNotModified();
 }
 
 
@@ -651,7 +651,7 @@ void NpcEdit::loadPreview()
     {
         pConfigs->main_npc[npc_id].copyTo(defaultNPC);
         LogDebug(QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(defaultNPC.setup.id).arg(defaultNPC.setup.name));
-        if(isUntitled)
+        if(m_isUntitled)
             npcImage = *defaultNPC.cur_image;
         else
             loadImageFile();

@@ -251,6 +251,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_dialogs/musicfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
     editing/_dialogs/wld_setpoint.cpp
+    editing/edit_base.cpp
     editing/edit_level/level_edit.cpp
     editing/edit_level/levelprops.cpp
     editing/edit_level/lvl_clone_section.cpp

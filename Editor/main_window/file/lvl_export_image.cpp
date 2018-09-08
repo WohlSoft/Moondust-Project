@@ -74,7 +74,6 @@ void LevelEdit::ExportToImage_fn_piece()
     scene->setScreenshotSelector(true);
 }
 
-
 void LevelEdit::ExportingReady() //slot
 {
     if(!sceneCreated) return;

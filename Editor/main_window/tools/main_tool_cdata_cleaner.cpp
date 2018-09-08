@@ -30,7 +30,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         LevelEdit * box = activeLvlEditWin();
         if(!box) return;
         if(!box->sceneCreated) return;
-        if(box->isUntitled)
+        if(box->isUtitled())
         {
             QMessageBox::warning(this, tr("File not saved"),
                 tr("File doesn't saved on disk."), QMessageBox::Ok);

@@ -29,7 +29,7 @@
 NpcEdit *MainWindow::createNPCChild(QMdiSubWindow **npcWindow_out)
 {
     QMdiSubWindow *npcWindow = new QMdiSubWindow(ui->centralWidget);
-    NpcEdit *child = new NpcEdit(&configs, npcWindow);
+    NpcEdit *child = new NpcEdit(this, &configs, npcWindow);
     npcWindow->setWidget(child);
     npcWindow->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -149,6 +149,20 @@ int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
         return WND_World;
     else
         return WND_NoWindow;
+}
+
+EditBase *MainWindow::activeBaseEditWin()
+{
+    if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
+        return qobject_cast<EditBase *>(activeSubWindow->widget());
+    return 0;
+}
+
+EditBase *MainWindow::activeBaseEditWin(QMdiSubWindow *wnd)
+{
+    if(wnd)
+        return qobject_cast<EditBase *>(wnd->widget());
+    return 0;
 }
 
 NpcEdit *MainWindow::activeNpcEditWin()

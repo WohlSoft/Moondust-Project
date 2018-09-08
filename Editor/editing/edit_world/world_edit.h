@@ -30,6 +30,8 @@
 #include <PGE_File_Formats/wld_filedata.h>
 #include <editing/_scenes/world/wld_scene.h>
 
+#include "../edit_base.h"
+
 #define WORLD_EDIT_CLASS "WorldEdit"
 
 namespace Ui {
@@ -38,7 +40,7 @@ class WorldEdit;
 
 class MainWindow;
 
-class WorldEdit : public QWidget
+class WorldEdit : public EditBase
 {
     Q_OBJECT
 
@@ -50,8 +52,6 @@ public slots:
     void reTranslate();
 
 public:
-    MainWindow* m_mw;
-
     WorldData WldData;
     //QGraphicsScene LvlScene;
 
@@ -66,6 +66,11 @@ public:
     bool saveFile(const QString &fileName, const bool addToRecent = true);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+
+    bool trySave();
+
+    bool isUtitled();
+    bool isModified();
 
     void setCurrentSection(int scId);
     void ResetPosition();
@@ -97,7 +102,7 @@ public:
     WldScene * scene;
 
     QAtomicInteger<bool> sceneCreated;
-    bool isUntitled;
+    bool m_isUntitled;
 
     QString curFile;
 

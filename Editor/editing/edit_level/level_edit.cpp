@@ -38,14 +38,13 @@
 #include <ui_leveledit.h>
 
 LevelEdit::LevelEdit(MainWindow* mw, QWidget *parent) :
-    QWidget(parent),
+    EditBase(mw, parent),
     scene(nullptr),
     sceneCreated(false),
-    isUntitled(true),
+    m_isUntitled(true),
     updateTimer(nullptr),
     ui(new Ui::LevelEdit),
-    m_fileType(FileFormats::LVL_PGEX),
-    m_mw(mw)
+    m_fileType(FileFormats::LVL_PGEX)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

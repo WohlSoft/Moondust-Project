@@ -26,15 +26,14 @@
 #include <tools/smart_import/smartimporter.h>
 
 WorldEdit::WorldEdit(MainWindow *mw, QWidget *parent) :
-    QWidget(parent),
+    EditBase(mw, parent),
     ui(new Ui::WorldEdit)
 {
-    m_mw = mw;
     sceneCreated = false;
     FileType = 0;
     currentMusic = 0;
     setAttribute(Qt::WA_DeleteOnClose);
-    isUntitled = true;
+    m_isUntitled = true;
     latest_export_path = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
     ui->setupUi(this);

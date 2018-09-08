@@ -41,7 +41,7 @@
 bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
-    isUntitled = true;
+    m_isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
     FileFormats::CreateWorldData(WldData);
@@ -85,7 +85,7 @@ namespace wld_file_io
 
 bool WorldEdit::save(bool savOptionsDialog)
 {
-    if(isUntitled)
+    if(m_isUntitled)
         return saveAs(savOptionsDialog);
     else
     {
@@ -129,7 +129,7 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     }
 
     bool isNotDone = true;
-    QString fileName = (isUntitled) ? GlobalSettings::savePath + QString("/") +
+    QString fileName = (m_isUntitled) ? GlobalSettings::savePath + QString("/") +
                        (WldData.EpisodeTitle.isEmpty() ? curFile : util::filePath(WldData.EpisodeTitle)) : curFile;
     QString fileSMBX64 = "SMBX64 (1.3) World map file (*.wld)";
     QString fileSMBXany = "SMBX0...64 Level file [choose version] (*.wld)";
@@ -338,7 +338,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     {
         modifystate                 = WldData.metaData.crash.modifyed;
         untitledstate               = WldData.metaData.crash.untitled;
-        isUntitled                  = WldData.metaData.crash.untitled;
+        m_isUntitled                  = WldData.metaData.crash.untitled;
         WldData.meta.smbx64strict   = WldData.metaData.crash.strictModeSMBX64;
         WldData.meta.RecentFormat        = WldData.metaData.crash.fmtID;
         WldData.meta.RecentFormatVersion = WldData.metaData.crash.fmtVer;
@@ -460,6 +460,21 @@ QString WorldEdit::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
+bool WorldEdit::trySave()
+{
+    return maybeSave();
+}
+
+bool WorldEdit::isUtitled()
+{
+    return m_isUntitled;
+}
+
+bool WorldEdit::isModified()
+{
+    return WldData.meta.modified;
+}
+
 void WorldEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)
@@ -526,7 +541,7 @@ void WorldEdit::setCurrentFile(const QString &fileName)
 {
     QFileInfo info(fileName);
     curFile = info.canonicalFilePath();
-    isUntitled = false;
+    m_isUntitled = false;
     WldData.meta.path = info.absoluteDir().absolutePath();
     WldData.meta.filename = util::getBaseFilename(info.fileName());
     WldData.meta.untitled = false;

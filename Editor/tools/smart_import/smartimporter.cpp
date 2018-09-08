@@ -51,7 +51,7 @@ bool SmartImporter::attemptFastImport()
 {
     if(targetLevelWindow)
     {
-        if(targetLevelWindow->isUntitled)
+        if(targetLevelWindow->isUtitled())
         {
             QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the level, so you can import custom graphics!"), QMessageBox::Ok);
             return false;
@@ -101,7 +101,7 @@ bool SmartImporter::attemptFastImport()
     }
     else if(targetWorldWindow)
     {
-        if(targetWorldWindow->isUntitled){
+        if(targetWorldWindow->isUtitled()){
             QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the world, so you can import custom graphics!"), QMessageBox::Ok);
             return false;
         }

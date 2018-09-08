@@ -256,7 +256,7 @@ void MainWindow::on_action_doTestWld_triggered()
     if(activeChildWindow() == 3)
     {
         WorldEdit *we = activeWldEditWin();
-        if(!we->isUntitled && we->WldData.meta.modified)
+        if(!we->isUtitled() && we->isModified())
         {
             QMessageBox::StandardButton reply =
                     QMessageBox::question(this,
@@ -326,10 +326,10 @@ void MainWindow::on_action_doSafeTest_triggered()
     else
         args << "--debug-print=no";
 
-    if(activeChildWindow() == 1)
+    if(activeChildWindow() == WND_Level)
     {
         LevelEdit * le = activeLvlEditWin();
-        if(le->isUntitled)
+        if(le->isUtitled())
         {
             QMessageBox::warning(this, tr("Save file first"),
                                  tr("To run testing of saved file, please save them into disk first!\n"
@@ -339,10 +339,10 @@ void MainWindow::on_action_doSafeTest_triggered()
         }
         args << le->curFile;
     }
-    else if(activeChildWindow() == 3)
+    else if(activeChildWindow() == WND_World)
     {
         WorldEdit *we = activeWldEditWin();
-        if(we->isUntitled)
+        if(we->isUtitled())
         {
             QMessageBox::warning(this, tr("Save file first"),
                                  tr("To run testing of saved file, please save them into disk first!\n"

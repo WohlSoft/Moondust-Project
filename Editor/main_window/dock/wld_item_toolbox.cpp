@@ -365,7 +365,7 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
         QString customMusicFile;
         if((uint64_t)id == mw()->configs.music_w_custom_id)
         {
-            if(edit->isUntitled)
+            if(edit->isUtitled())
             {
                 QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
                 return;

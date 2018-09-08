@@ -23,8 +23,10 @@
 #include <ui_npcedit.h>
 
 
-NpcEdit::NpcEdit(dataconfigs * configs, QWidget *parent) :
-    QWidget(parent),
+NpcEdit::NpcEdit(MainWindow *mw,
+                 dataconfigs * configs,
+                 QWidget *parent) :
+    EditBase(mw, parent),
     ui(new Ui::NpcEdit)
 {
     pConfigs = configs;
@@ -34,8 +36,8 @@ NpcEdit::NpcEdit(dataconfigs * configs, QWidget *parent) :
     npc_id = 0;
     FileType = 2;
     direction = -1;
-    isUntitled = true;
-    isModyfied  = false;
+    m_isUntitled = true;
+    m_isModyfied  = false;
     ui->setupUi(this);
 }
 

@@ -28,13 +28,15 @@
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <editing/_scenes/level/lvl_scene.h>
 
+#include "../edit_base.h"
+
 #define LEVEL_EDIT_CLASS "LevelEdit"
 
 namespace Ui {
 class LevelEdit;
 }
 
-class LevelEdit : public QWidget
+class LevelEdit : public EditBase
 {
     Q_OBJECT
     friend class LvlScene;
@@ -61,6 +63,11 @@ public:
     bool saveSMBX38aLVL(QString fileName, bool silent=false); //!< Saves SMBX38A Level file format
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+
+    bool trySave();
+
+    bool isUtitled();
+    bool isModified();
 
     void setCurrentSection(int scId);
     void ResetPosition();
@@ -93,7 +100,7 @@ public:
     LvlScene * scene;
 
     QAtomicInteger<bool> sceneCreated;
-    bool isUntitled;
+    bool m_isUntitled;
 
     QString curFile;
         
@@ -135,7 +142,6 @@ private:
     QString strippedName(const QString &fullFileName);
     QString m_recentExportPath;
     unsigned int m_fileType;
-    MainWindow* m_mw;
 };
 
 #endif // LEVELEDIT_H

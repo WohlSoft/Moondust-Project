@@ -77,31 +77,13 @@ void MainWindow::on_actionLoad_configs_triggered()
             QList<QMdiSubWindow*> subWindows = ui->centralWidget->subWindowList();
             for(QMdiSubWindow* w : subWindows)
             {
-                switch(activeChildWindow(w))
+                EditBase *wnd = activeBaseEditWin(w);
+                if(wnd)
                 {
-                case WND_Level:
-                {
-                    LevelEdit *wnd = activeLvlEditWin(w);
-                    if(wnd && !wnd->isUntitled)
+                    if(wnd->isUtitled() && !wnd->trySave())
+                        return;
+                    if(!wnd->isUtitled())
                         openedFilesBackup.push_back(wnd->currentFile());
-                    break;
-                }
-
-                case WND_World:
-                {
-                    WorldEdit *wnd = activeWldEditWin(w);
-                    if(wnd && !wnd->isUntitled)
-                        openedFilesBackup.push_back(wnd->currentFile());
-                    break;
-                }
-
-                case WND_NpcTxt:
-                {
-                    NpcEdit *wnd = activeNpcEditWin(w);
-                    if(wnd && !wnd->isUntitled)
-                        openedFilesBackup.push_back(wnd->currentFile());
-                    break;
-                }
                 }
             }
         }

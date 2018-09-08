@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -40,7 +40,7 @@ void NpcEdit::newFile(unsigned long npcID)
     static int sequenceNumber = 1;
     ui->CurrentNPCID->setText( QString::number(npcID) );
 
-    isUntitled = true;
+    m_isUntitled = true;
 
     curFile = QString("npc-%1.txt").arg(npcID);
 
@@ -90,23 +90,29 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
     return true;
 }
 
-bool NpcEdit::save()
+bool NpcEdit::save(bool savOptionsDialog)
 {
-    if (isUntitled) {
-        return saveAs();
+    if (m_isUntitled) {
+        return saveAs(savOptionsDialog);
     } else {
         return saveFile(curFile);
     }
 }
 
-bool NpcEdit::saveAs()
+bool NpcEdit::saveAs(bool savOptionsDialog)
 {
+    Q_UNUSED(savOptionsDialog);
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-      (isUntitled)?GlobalSettings::savePath_npctxt+QString("/")+curFile:curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
+      (m_isUntitled)?GlobalSettings::savePath_npctxt+QString("/")+curFile:curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
     if (fileName.isEmpty())
         return false;
 
     return saveFile(fileName);
+}
+
+bool NpcEdit::trySave()
+{
+    return maybeSave();
 }
 
 bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
@@ -156,7 +162,7 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 
 bool NpcEdit::maybeSave()
 {
-    if (isModyfied) {
+    if (m_isModyfied) {
     QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
                      tr("'%1' has been modified.\n"
@@ -178,7 +184,7 @@ void NpcEdit::documentWasModified()
 {
     QFont font;
     font.setWeight( QFont::Bold );
-    isModyfied = true;
+    m_isModyfied = true;
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
     ui->isModyfiedL->setText("Yes");
     ui->isModyfiedL->setFont( font );
@@ -189,7 +195,7 @@ void NpcEdit::documentNotModified()
     QFont font;
     font.setWeight( QFont::Normal );
 
-    isModyfied = false;
+    m_isModyfied = false;
     setWindowTitle(userFriendlyCurrentFile());
     ui->isModyfiedL->setText("No");
     ui->isModyfiedL->setFont( font );
@@ -198,7 +204,7 @@ void NpcEdit::documentNotModified()
 void NpcEdit::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
-    isUntitled = false;
+    m_isUntitled = false;
     //document()->setModified(false);
     setWindowModified(false);
     documentWasModified();
@@ -214,8 +220,18 @@ QString NpcEdit::userFriendlyCurrentFile()
 
 void NpcEdit::makeCrashState()
 {
-    this->isUntitled = true;
-    this->isModyfied = true; //just in case
+    this->m_isUntitled = true;
+    this->m_isModyfied = true; //just in case
+}
+
+bool NpcEdit::isUtitled()
+{
+    return m_isUntitled;
+}
+
+bool NpcEdit::isModified()
+{
+    return m_isModyfied;
 }
 
 QString NpcEdit::strippedName(const QString &fullFileName)

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -38,7 +38,7 @@
 bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
-    isUntitled = true;
+    m_isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(QString(curFile).replace("&", "&&&"));
     FileFormats::CreateLevelData(LvlData);
@@ -78,7 +78,7 @@ bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
 
 bool LevelEdit::save(bool savOptionsDialog)
 {
-    if(isUntitled)
+    if(m_isUntitled)
         return saveAs(savOptionsDialog);
     else
         return saveFile(curFile);
@@ -119,7 +119,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
 
     bool isNotDone = true;
     bool isSMBX64limit = false;
-    QString fileName = (isUntitled) ? GlobalSettings::savePath + QString("/") +
+    QString fileName = (m_isUntitled) ? GlobalSettings::savePath + QString("/") +
                        (LvlData.LevelName.isEmpty() ? curFile : util::filePath(LvlData.LevelName)) : curFile;
     QString fileSMBX64  = "SMBX64 (1.3) Level file (*.lvl)";
     QString fileSMBXany = "SMBX0...64 Level file [choose version] (*.lvl)";
@@ -127,7 +127,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     QString filePGEX    = "Extended Level file (*.lvlx)";
     QString selectedFilter;
 
-    if(isUntitled)
+    if(m_isUntitled)
         selectedFilter = fileSMBX64;
     else
     {
@@ -450,7 +450,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
         untitledstate               = LvlData.metaData.crash.untitled;
         LvlData.meta.RecentFormat        = LvlData.metaData.crash.fmtID;
         LvlData.meta.RecentFormatVersion = LvlData.metaData.crash.fmtVer;
-        isUntitled                  = LvlData.metaData.crash.untitled;
+        m_isUntitled                  = LvlData.metaData.crash.untitled;
         LvlData.meta.smbx64strict   = LvlData.metaData.crash.strictModeSMBX64;
         LvlData.meta.filename            = LvlData.metaData.crash.filename;
         LvlData.meta.path                = LvlData.metaData.crash.path;
@@ -581,6 +581,21 @@ QString LevelEdit::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
+bool LevelEdit::trySave()
+{
+    return maybeSave();
+}
+
+bool LevelEdit::isUtitled()
+{
+    return m_isUntitled;
+}
+
+bool LevelEdit::isModified()
+{
+    return LvlData.meta.modified;
+}
+
 void LevelEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)
@@ -652,7 +667,7 @@ void LevelEdit::setCurrentFile(const QString &fileName)
 {
     QFileInfo info(fileName);
     curFile = info.canonicalFilePath();
-    isUntitled = false;
+    m_isUntitled = false;
     LvlData.meta.path = info.absoluteDir().absolutePath();
     LvlData.meta.filename = util::getBaseFilename(info.fileName());
     LvlData.meta.untitled = false;

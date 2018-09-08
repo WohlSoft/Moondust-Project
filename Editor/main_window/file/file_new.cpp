@@ -45,7 +45,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
     npcList->setWindowTitle(tr("Create new NPC.txt configuration file"));
-    if(npcList->exec()==QDialog::Accepted)
+    if(npcList->exec() == QDialog::Accepted)
     {
         NpcEdit *child = createNPCChild();
         child->newFile((unsigned long)npcList->npcID);
