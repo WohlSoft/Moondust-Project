@@ -24,6 +24,7 @@ Editor 0.3.1.14-1-dev
 - Added an action for LunaTester to kill a running background instance
 - Config pack reload will now save all opened files and restore them back after the reload
 - Added ability to automatically restart editor on config pack switching
+- Fixed a crash of the LunaTester when receiving an incorrect input from the LunaLua backend
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)
