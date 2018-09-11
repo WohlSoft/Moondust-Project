@@ -443,29 +443,41 @@ static std::string ReadMsgString(HANDLE hInputRead)
 
         std::string byteCountStr = std::string(&data[0], data.size());
         data.clear();
-        // Interpret as number
-        int byteCount = std::stoi(byteCountStr);
-        if(byteCount <= 0) continue;
-        int byteCursor = 0;
-        data.resize(byteCount);
-        while(byteCursor < byteCount)
+        try
         {
-            DWORD bytesRead;
-            ReadFile(hInputRead, &data[byteCursor], 1, &bytesRead, NULL);
-            if(bytesRead == 0)
-                return "";
-            byteCursor += bytesRead;
-        }
-        // Get following comma
-        {
-            DWORD bytesRead;
-            ReadFile(hInputRead, &c, 1, &bytesRead, NULL);
-
-            if(bytesRead != 1)
-                return "";
-
-            if(c != ',')
+            // Interpret as number
+            int byteCount = byteCountStr.empty() ? 0 : std::stoi(byteCountStr);
+            if(byteCount <= 0)
                 continue;
+            int byteCursor = 0;
+            data.resize(byteCount);
+            while(byteCursor < byteCount)
+            {
+                DWORD bytesRead;
+                ReadFile(hInputRead, &data[byteCursor], 1, &bytesRead, NULL);
+                if(bytesRead == 0)
+                    return "";
+                byteCursor += bytesRead;
+            }
+            // Get following comma
+            {
+                DWORD bytesRead;
+                ReadFile(hInputRead, &c, 1, &bytesRead, NULL);
+
+                if(bytesRead != 1)
+                    return "";
+
+                if(c != ',')
+                    continue;
+            }
+        }
+        catch(const std::exception &)
+        {
+            return "";
+        }
+        catch(...)
+        {
+            return "";
         }
         return std::string(&data[0], data.size());
     }
