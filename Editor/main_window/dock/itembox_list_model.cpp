@@ -251,7 +251,9 @@ QModelIndex ItemBoxListModel::findVisibleItemById(qulonglong id) const
 
 void ItemBoxListModel::clear()
 {
-    beginRemoveRows(QModelIndex(), 0, m_elements.size());
+    if(m_elements.empty())
+        return; //Do nothing, already clean
+    beginRemoveRows(QModelIndex(), 0, std::max(rowCount() - 1, 0));
     m_groupCategories.clear();
     m_groupsMap.clear();
     m_categoriesMap.clear();
@@ -281,7 +283,7 @@ void ItemBoxListModel::setTableMode(bool isTable, int w, int h)
 
 void ItemBoxListModel::addElementsBegin(int allocate)
 {
-    beginInsertRows(QModelIndex(), m_elements.size(), m_elements.size() + allocate);
+    beginInsertRows(QModelIndex(), m_elements.size(), m_elements.size() + allocate - 1);
     if(allocate < 0)
         m_elements.reserve(allocate);
 }
@@ -491,9 +493,18 @@ void ItemBoxListModel::updateFilter()
     {
         for(Element &e : m_elements)
             e.isVisible = true;
-        beginInsertRows(QModelIndex(), m_elementsVisibleMap.size() - 1, m_elements.size() - 1);
+        bool insertNeed = (m_elementsVisibleMap.size() < m_elements.size());
+        if(insertNeed)
+        {
+            beginInsertRows(QModelIndex(),
+                            std::max(m_elementsVisibleMap.size(), 0),
+                            std::max(m_elements.size() - 1, 0));
+        }
+
         updateVisibilityMap();
-        endInsertRows();
+
+        if(insertNeed)
+            endInsertRows();
         return;
     }
 
@@ -508,15 +519,15 @@ void ItemBoxListModel::updateFilter()
             ++newVisiblesCount;
     }
 
-    if(oldVisiblesCount < newVisiblesCount)
+    if(oldVisiblesCount > newVisiblesCount)
     {
-        beginRemoveRows(QModelIndex(), newVisiblesCount - 1, oldVisiblesCount - 1);
+        beginRemoveRows(QModelIndex(), newVisiblesCount, oldVisiblesCount - 1);
         updateVisibilityMap();
         endRemoveRows();
     }
-    else if(oldVisiblesCount > newVisiblesCount)
+    else if(oldVisiblesCount < newVisiblesCount)
     {
-        beginInsertRows(QModelIndex(), newVisiblesCount - 1, oldVisiblesCount - 1);
+        beginInsertRows(QModelIndex(), oldVisiblesCount, newVisiblesCount - 1);
         updateVisibilityMap();
         endInsertRows();
     }
