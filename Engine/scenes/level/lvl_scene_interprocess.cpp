@@ -54,7 +54,7 @@ void LevelScene::process_InterprocessCommands()
 
             if(!got.meta.ReadFileValid)
             {
-                LogDebug(FileFormats::errorString);
+                LogDebug(got.meta.ERROR_info);
                 break;
             }
 

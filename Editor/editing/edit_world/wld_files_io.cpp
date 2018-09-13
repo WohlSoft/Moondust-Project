@@ -273,7 +273,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
-                                 .arg(FileFormats::errorString));
+                                 .arg(WldData.meta.ERROR_info));
             return false;
         }
 
@@ -291,7 +291,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
-                                 .arg(FileFormats::errorString));
+                                 .arg(WldData.meta.ERROR_info));
             return false;
         }
 

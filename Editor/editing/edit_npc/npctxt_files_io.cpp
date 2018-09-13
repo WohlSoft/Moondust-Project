@@ -124,7 +124,7 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
         QMessageBox::warning(this, tr("File save error"),
                              tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
-                             .arg(FileFormats::errorString));
+                             .arg(NpcData.errorString));
         return false;
     }
     GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();

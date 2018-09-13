@@ -49,10 +49,10 @@ bool EpisodeState::load()
             return true;
         }
         else
-            PGE_MsgBox::error(file + "\n" + FileFormats::errorString);
+            PGE_MsgBox::error(file + "\n" + FileData.meta.ERROR_info);
     }
     else
-        PGE_MsgBox::error(file + "\n" + FileFormats::errorString);
+        PGE_MsgBox::error(file + "\n" + FileData.meta.ERROR_info);
 
     return false;
 }

@@ -114,7 +114,7 @@ bool EpisodeConverterWorker::runJob()
                 lvl.ftype = EpisodeBox_level::F_LVLX;
                 renameExtension(lvl.fPath, ".lvlx");
                 if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_PGEX))
-                    throw(FileFormats::errorString);
+                    throw(lvl.d.meta.ERROR_info);
                 break;
             case 1://SMBX 1...64
                 qDebug() << "Make LVL SMBX" << lvl.ftypeVer;
@@ -122,14 +122,14 @@ bool EpisodeConverterWorker::runJob()
                 lvl.ftypeVer = m_targetFormatVer;
                 renameExtension(lvl.fPath, ".lvl");
                 if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_SMBX64, m_targetFormatVer))
-                    throw(FileFormats::errorString);
+                    throw(lvl.d.meta.ERROR_info);
                 break;
             case 2://SMBX-38A
                 qDebug() << "Make LVL SMBX-38a";
                 lvl.ftype = EpisodeBox_level::F_LVL38A;
                 renameExtension(lvl.fPath, ".lvl");
                 if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_SMBX38A))
-                    throw(FileFormats::errorString);
+                    throw(lvl.d.meta.ERROR_info);
                 break;
             }
 
@@ -168,7 +168,7 @@ bool EpisodeConverterWorker::runJob()
                 wld.ftype = EpisodeBox_world::F_WLDX;
                 renameExtension(wld.fPath, ".wldx");
                 if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_PGEX))
-                    throw(FileFormats::errorString);
+                    throw(wld.d.meta.ERROR_info);
                 break;
             case 1://SMBX 1...64
                 qDebug() << "Make WLD SMBX "<<wld.ftypeVer;
@@ -176,14 +176,14 @@ bool EpisodeConverterWorker::runJob()
                 wld.ftypeVer = m_targetFormatVer;
                 renameExtension(wld.fPath, ".wld");
                 if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_SMBX64, m_targetFormatVer))
-                    throw(FileFormats::errorString);
+                    throw(wld.d.meta.ERROR_info);
                 break;
             case 2://SMBX-38A
                 qDebug() << "Make WLD SMBX-38a";
                 wld.ftype = EpisodeBox_world::F_WLD38A;
                 renameExtension(wld.fPath, ".wld");
                 if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_SMBX38A))
-                    throw(FileFormats::errorString);
+                    throw(wld.d.meta.ERROR_info);
                 break;
             }
 

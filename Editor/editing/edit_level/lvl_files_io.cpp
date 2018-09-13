@@ -331,7 +331,7 @@ bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
-                                 .arg(FileFormats::errorString));
+                                 .arg(LvlData.meta.ERROR_info));
 
         return false;
     }
@@ -348,7 +348,7 @@ bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
-                                 .arg(FileFormats::errorString));
+                                 .arg(LvlData.meta.ERROR_info));
 
         return false;
     }
@@ -411,7 +411,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
-                                 .arg(FileFormats::errorString));
+                                 .arg(LvlData.meta.ERROR_info));
 
         return false;
     }
