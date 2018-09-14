@@ -1404,7 +1404,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 msg.warning(LunaTester::tr("File save error"),
                             LunaTester::tr("Cannot save file %1:\n%2.")
                             .arg(dst_Episode + "/tempworld.wld")
-                            .arg(FileFormats::errorString),
+                            .arg(worldmap.meta.ERROR_info),
                             QMessageBox::Ok);
                 return;
             }
