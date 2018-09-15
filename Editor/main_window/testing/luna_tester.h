@@ -57,7 +57,7 @@ public:
     //! Pointer to main window
     MainWindow *m_mw = nullptr;
     //! List of registered menu items
-    QAction *m_menuItems[6];
+    QAction *m_menuItems[7];
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
