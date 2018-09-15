@@ -54,6 +54,7 @@
 #define USE_LUNAHEXER
 #endif
 
+
 class QThreadPointNuller
 {
     QThread **pointer;
@@ -65,7 +66,8 @@ public:
     }
 };
 
-static std::string ReadMsgString(HANDLE hInputRead);
+static bool writeIPC(HANDLE pipeOut, const std::string &outData);
+static std::string readIPC(HANDLE hInputRead);
 
 LunaTester::LunaTester() :
     QObject(nullptr),
@@ -405,7 +407,44 @@ void LunaTester::killBackgroundInstance()
 
 /*****************************************Private functions*************************************************/
 
-static std::string ReadMsgString(HANDLE hInputRead)
+/**
+ * @brief Converting JSON data into net string
+ * @param jd Input JSON document
+ * @param outString Output raw NET string
+ */
+static void jSonToNetString(const QJsonDocument &jd, std::string &outString)
+{
+    QByteArray outputJSON = jd.toJson();
+    size_t len = static_cast<size_t>(outputJSON.size());
+    const char *dataToSend = outputJSON.data();
+    std::string len_std = std::to_string(len) + ":";
+
+    outString.clear();
+    outString.append(len_std);
+    outString.append(dataToSend, len);
+    outString.push_back(',');
+}
+
+static bool stringToJson(const std::string &message, QJsonDocument &out, QJsonParseError &err)
+{
+    QByteArray jsonData(message.c_str(), message.size());
+    out = QJsonDocument::fromJson(jsonData, &err);
+    return (err.error == QJsonParseError::NoError);
+}
+
+static bool writeIPC(HANDLE pipeOut, const std::string &outData)
+{
+    DWORD writtenBytes = 0;
+    BOOL ret = FALSE;
+    ret = WriteFile(pipeOut,
+                    reinterpret_cast<LPCVOID>(outData.c_str()),
+                    static_cast<DWORD>(outData.size()),
+                    &writtenBytes, NULL);
+    return (ret == TRUE) &&
+           (static_cast<size_t>(writtenBytes) == outData.size());
+}
+
+static std::string readIPC(HANDLE hInputRead)
 {
     // Note: This is not written to be particularly efficient right now. Just
     //       readable enough and safe.
@@ -870,6 +909,49 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
     if((m_ipc_pipe_out == 0))
         return false;
 
+    // Ask "Is LVLX"
+    bool hasLvlxSupport = false;
+    {
+        QJsonDocument jsonOut;
+        QJsonObject jsonObj;
+        jsonObj["jsonrpc"] = "2.0";
+        jsonObj["method"] = "getSupportedFeatures";
+        jsonObj["id"] = 3;
+        jsonOut.setObject(jsonObj);
+        std::string dataToSend;
+        LogDebug("LunaTester: -> Checking for LVLX support on LunaLua side...");
+
+        jSonToNetString(jsonOut, dataToSend);
+        LogDebugQD(QString("Sending message to SMBX %1").arg(QString::fromStdString(dataToSend)));
+
+        if(writeIPC(m_ipc_pipe_out, dataToSend))
+        {
+            std::string resultMsg = readIPC(m_ipc_pipe_in);
+            LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
+            QJsonParseError err;
+            QJsonDocument jsonOut;
+            if(stringToJson(resultMsg, jsonOut, err))
+            {
+                QJsonObject obj = jsonOut.object();
+                QJsonObject result = obj["result"].toObject();
+                if(!result["LVLX"].isNull())
+                {
+                    hasLvlxSupport = result["LVLX"].toBool();
+                    LogDebug("LunaTester: <- Yes! LVLX is supported!");
+                }
+            }
+            if(err.error != QJsonParseError::NoError)
+            {
+                LogDebug("LunaTester: <- Oops, fail to parse: " + err.errorString());
+            }
+        }
+
+        if(!hasLvlxSupport)
+        {
+            LogDebug("LunaTester: <- No! LVLX is NOT supported by this LunaLua build!");
+        }
+    }
+
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
     jsonObj["jsonrpc"] = "2.0";
@@ -879,12 +961,12 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
 
     if(!isUntitled)
     {
-        if(levelPath.endsWith(".lvlx", Qt::CaseInsensitive))
+        if(!hasLvlxSupport && levelPath.endsWith(".lvlx", Qt::CaseInsensitive))
             levelPath.remove(levelPath.size() - 1, 1);
         JSONparams["filename"] = levelPath;
     }
     else
-        JSONparams["filename"] = ApplicationPath + "/worlds/untitled.lvl";
+        JSONparams["filename"] = ApplicationPath + "/worlds/untitled.lvl" + (hasLvlxSupport ? "x" : "");
 
     QJsonArray JSONPlayers;
     QJsonObject JSONPlayer1, JSONPlayer2;
@@ -912,7 +994,10 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
 
     QString LVLRawData;
     //Generate actual SMBX64 Level file data
-    FileFormats::WriteSMBX64LvlFileRaw(lvl, LVLRawData, 64);
+    if(hasLvlxSupport)
+        FileFormats::WriteExtendedLvlFileRaw(lvl, LVLRawData);
+    else
+        FileFormats::WriteSMBX64LvlFileRaw(lvl, LVLRawData, 64);
     //Set CRLF
     LVLRawData.replace("\n", "\r\n");
     //Store data into JSON
@@ -921,17 +1006,14 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
     jsonObj["params"] = JSONparams;
     jsonObj["id"] = 3;
     jsonOut.setObject(jsonObj);
-    QByteArray outputJSON = jsonOut.toJson();
 
     //Converting JSON data into net string
-    std::string dataToSend = outputJSON.toStdString();
-    int len = dataToSend.size();
-    std::string len_std = std::to_string(len) + ":";
-    dataToSend.insert(0, len_std.c_str(), len_std.size());
-    dataToSend.push_back(',');
+    std::string dataToSend;
+    jSonToNetString(jsonOut, dataToSend);
 
     DWORD writtenBytes = 0;
 
+    LogDebug("LunaTester: -> Sending level data and testing request...");
     //Send data to SMBX
     if(WriteFile(m_ipc_pipe_out,
                  (LPCVOID)dataToSend.c_str(),
@@ -939,10 +1021,12 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
                  &writtenBytes, NULL) == TRUE)
     {
         //Read result from level testing run
-        std::string resultMsg = ReadMsgString(m_ipc_pipe_in);
-        LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
+        std::string resultMsg = readIPC(m_ipc_pipe_in);
+        LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
+        LogDebug("LunaTester: <- Command has been sent!");
         return true;
     }
+    LogWarning("<- Fail to send level data and testing request into LunaTester!");
     return false;
 }
 
@@ -970,14 +1054,10 @@ void LunaTester::lunaChkResetThread()
             jsonObj["params"] = JSONparams;
             jsonObj["id"] = 3;
             jsonOut.setObject(jsonObj);
-            QByteArray outputJSON = jsonOut.toJson();
 
             //Converting JSON data into net string
-            std::string dataToSend = outputJSON.toStdString();
-            int len = dataToSend.size();
-            std::stringstream outString;
-            outString << std::to_string(len) << ":" << dataToSend << ',';
-            dataToSend = outString.str();
+            std::string dataToSend;
+            jSonToNetString(jsonOut, dataToSend);
 
             DWORD writtenBytes = 0;
             //Send data to SMBX
@@ -986,12 +1066,11 @@ void LunaTester::lunaChkResetThread()
                          (DWORD)dataToSend.size(),
                          &writtenBytes, NULL) == TRUE)
             {
-                std::string inMessage = ReadMsgString(m_ipc_pipe_in);
+                std::string inMessage = readIPC(m_ipc_pipe_in);
                 LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
-                QByteArray jsonData(inMessage.c_str(), inMessage.size());
                 QJsonParseError err;
-                QJsonDocument jsonOut = QJsonDocument::fromJson(jsonData, &err);
-                if(err.error == QJsonParseError::NoError)
+                QJsonDocument jsonOut;
+                if(stringToJson(inMessage, jsonOut, err))
                 {
                     QJsonObject obj = jsonOut.object();
                     if(obj["error"].isNull())
@@ -1039,14 +1118,10 @@ bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
     jsonObj["params"] = JSONparams;
     jsonObj["id"] = 3;
     jsonOut.setObject(jsonObj);
-    QByteArray outputJSON = jsonOut.toJson();
 
     //Converting JSON data into net string
-    std::string dataToSend = outputJSON.toStdString();
-    int len = dataToSend.size();
-    std::stringstream outString;
-    outString << std::to_string(len) << ":" << dataToSend << ',';
-    dataToSend = outString.str();
+    std::string dataToSend;
+    jSonToNetString(jsonOut, dataToSend);
 
     DWORD writtenBytes = 0;
     //Send data to SMBX
@@ -1055,12 +1130,11 @@ bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
                  (DWORD)dataToSend.size(),
                  &writtenBytes, NULL) == TRUE)
     {
-        std::string inMessage = ReadMsgString(m_ipc_pipe_in);
+        std::string inMessage = readIPC(m_ipc_pipe_in);
         LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
-        QByteArray jsonData(inMessage.c_str(), inMessage.size());
         QJsonParseError err;
-        QJsonDocument jsonOut = QJsonDocument::fromJson(jsonData, &err);
-        if(err.error == QJsonParseError::NoError)
+        QJsonDocument jsonOut;
+        if(stringToJson(inMessage, jsonOut, err))
         {
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
@@ -1105,14 +1179,10 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
     jsonObj["params"] = JSONparams;
     jsonObj["id"] = 3;
     jsonOut.setObject(jsonObj);
-    QByteArray outputJSON = jsonOut.toJson();
 
     //Converting JSON data into net string
-    std::string dataToSend = outputJSON.toStdString();
-    int len = dataToSend.size();
-    std::stringstream outString;
-    outString << std::to_string(len) << ":" << dataToSend << ',';
-    dataToSend = outString.str();
+    std::string dataToSend;
+    jSonToNetString(jsonOut, dataToSend);
 
     DWORD writtenBytes = 0;
     //Send data to SMBX
@@ -1121,12 +1191,11 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
                  (DWORD)dataToSend.size(),
                  &writtenBytes, NULL) == TRUE)
     {
-        std::string inMessage = ReadMsgString(m_ipc_pipe_in);
+        std::string inMessage = readIPC(m_ipc_pipe_in);
         LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
-        QByteArray jsonData(inMessage.c_str(), inMessage.size());
         QJsonParseError err;
-        QJsonDocument jsonOut = QJsonDocument::fromJson(jsonData, &err);
-        if(err.error == QJsonParseError::NoError)
+        QJsonDocument jsonOut;
+        if(stringToJson(inMessage, jsonOut, err))
         {
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
