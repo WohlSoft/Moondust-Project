@@ -995,11 +995,15 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
     QString LVLRawData;
     //Generate actual SMBX64 Level file data
     if(hasLvlxSupport)
+    {
         FileFormats::WriteExtendedLvlFileRaw(lvl, LVLRawData);
+    }
     else
+    {
         FileFormats::WriteSMBX64LvlFileRaw(lvl, LVLRawData, 64);
-    //Set CRLF
-    LVLRawData.replace("\n", "\r\n");
+        //Set CRLF
+        LVLRawData.replace("\n", "\r\n");
+    }
     //Store data into JSON
     JSONparams["leveldata"] = LVLRawData;
 
