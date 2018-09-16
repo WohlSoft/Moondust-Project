@@ -145,6 +145,19 @@ void LvlHistoryManager::addChangeSettings(LevelData modifiedItems, HistorySettin
     emit refreshHistoryButtons();
 }
 
+void LvlHistoryManager::addChangeSettings(LevelData modifiedItems, HistoryElementCustomSetting *setting, QVariant extraData)
+{
+    updateHistoryBuffer();
+
+    HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, setting, extraData);
+    modf->setScene(m_scene);
+
+    operationList.push_back(QSharedPointer<IHistoryElement>(modf));
+    historyIndex++;
+
+    emit refreshHistoryButtons();
+}
+
 void LvlHistoryManager::addResizeSection(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                        long newLeft, long newTop, long newRight, long newBottom)
 {

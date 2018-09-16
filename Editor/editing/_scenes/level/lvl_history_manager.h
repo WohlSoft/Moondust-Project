@@ -29,6 +29,7 @@
 #include "items/item_door.h"
 #include "items/item_playerpoint.h"
 
+#include "../../_components/history/history_custom_setting.h"
 /*
  * NOTE: when use History with Doors, LevelDoors MUST be posted individual.
  * If Door Entrance: LevelDoors.isSetIn = true and LevelDoors.isSetOut = false
@@ -54,6 +55,8 @@ public:
     void addMove(LevelData sourceMovedItems, LevelData targetMovedItems);
 
     void addChangeSettings(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData);
+    void addChangeSettings(LevelData modifiedItems, HistoryElementCustomSetting *setting, QVariant extraData);
+
     void addResizeSection(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                  long newLeft, long newTop, long newRight, long newBottom);
 

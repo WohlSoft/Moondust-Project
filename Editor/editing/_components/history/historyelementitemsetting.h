@@ -3,6 +3,7 @@
 #define HISTORYELEMENTITEMSETTING_H
 
 #include "ihistoryelement.h"
+#include "history_custom_setting.h"
 #include <PGE_File_Formats/file_formats.h>
 #include <defines.h>
 
@@ -14,6 +15,8 @@ class HistoryElementItemSetting : public QObject, public IHistoryElement
 public:
     explicit HistoryElementItemSetting(const WorldData &data, HistorySettings::WorldSettingSubType wldSubType, QVariant extraData, QObject *parent = 0);
     explicit HistoryElementItemSetting(const LevelData &data, HistorySettings::LevelSettingSubType lvlSubType, QVariant extraData, QObject *parent = 0);
+    explicit HistoryElementItemSetting(const WorldData &data, HistoryElementCustomSetting *setting, QVariant extraData, QObject *parent = 0);
+    explicit HistoryElementItemSetting(const LevelData &data, HistoryElementCustomSetting *setting, QVariant extraData, QObject *parent = 0);
     virtual ~HistoryElementItemSetting();
     virtual QString getHistoryName();
     virtual void undo();
@@ -130,13 +133,40 @@ public slots:
     void historyUndoSettingsSortingBGO(const LevelBGO &sourceBGO, QGraphicsItem *item);
     void historyRedoSettingsSortingBGO(const LevelBGO &sourceBGO, QGraphicsItem *item);
 
+    void historyUndoSettingCustom(const LevelBlock &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const LevelBlock &sourceItem, QGraphicsItem *item);
+    void historyUndoSettingCustom(const LevelBGO &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const LevelBGO &sourceItem, QGraphicsItem *item);
+    void historyUndoSettingCustom(const LevelNPC &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const LevelNPC &sourceItem, QGraphicsItem *item);
+    void historyUndoSettingCustom(const LevelDoor &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const LevelDoor &sourceItem, QGraphicsItem *item);
+    void historyUndoSettingCustom(const LevelPhysEnv &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const LevelPhysEnv &sourceItem, QGraphicsItem *item);
+
+    void historyUndoSettingCustom(const WorldTerrainTile &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const WorldTerrainTile &sourceItem, QGraphicsItem *item);
+
+    void historyUndoSettingCustom(const WorldScenery &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const WorldScenery &sourceItem, QGraphicsItem *item);
+
+    void historyUndoSettingCustom(const WorldPathTile &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const WorldPathTile &sourceItem, QGraphicsItem *item);
+
+    void historyUndoSettingCustom(const WorldLevelTile &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const WorldLevelTile &sourceItem, QGraphicsItem *item);
+
+    void historyUndoSettingCustom(const WorldMusicBox &sourceItem, QGraphicsItem *item);
+    void historyRedoSettingCustom(const WorldMusicBox &sourceItem, QGraphicsItem *item);
+
+
 private:
     HistorySettings::WorldSettingSubType m_modWorldSetting;
     HistorySettings::LevelSettingSubType m_modLevelSetting;
     LevelData m_modLevelData;
     WorldData m_modWorldData;
-    QVariant m_modData;
-
+    QVariant  m_modData;
+    HistoryElementCustomSetting *m_customSetting;
 };
 
 #endif // HISTORYELEMENTITEMSETTING_H

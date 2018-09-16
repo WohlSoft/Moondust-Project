@@ -72,7 +72,8 @@ public:
         SETTING_GOTOX,
         SETTING_GOTOY,
         SETTING_CHARACTER,
-        SETTING_WORLDTITLE
+        SETTING_WORLDTITLE,
+        SETTING_WLD_CUSTOM
     };
 
     enum LevelSettingSubType{
@@ -161,7 +162,8 @@ public:
         SETTING_SECMUSIC,           //extraData: QList<QVariant[int]> [old music id, new music id]
         SETTING_SECCUSTOMMUSIC,     //extraData: QList<QVariant[String]> [old custom music name, new custom music name]
         SETTING_LEVELNAME,          //extraData: QList<QVariant[String]> [old level name, new level name]
-        SETTING_BGOSORTING
+        SETTING_BGOSORTING,
+        SETTING_LVL_CUSTOM
     };
 
     static QString settingToString(const HistorySettings::LevelSettingSubType &modLevelSetting)
@@ -252,6 +254,7 @@ public:
         case SETTING_SECCUSTOMMUSIC: return QObject::tr("Custom Music");
         case SETTING_LEVELNAME: return QObject::tr("Level Name");
         case SETTING_BGOSORTING: return QObject::tr("BGO Sorting Priority");
+        case SETTING_LVL_CUSTOM: return QObject::tr("Unknown");
         default:
             return QObject::tr("Unknown");
         }
@@ -278,6 +281,7 @@ public:
         case SETTING_PATHBYTOP: return QObject::tr("Exit at top");
         case SETTING_RESTARTAFTERFAIL: return QObject::tr("Restart after fail");
         case SETTING_TOTALSTARS: return QObject::tr("Total stars");
+        case SETTING_WLD_CUSTOM: return QObject::tr("Unknown");
         default:
             return QObject::tr("Unknown");
         }

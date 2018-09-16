@@ -19,12 +19,12 @@ ItemSearcher::ItemSearcher(ItemTypes::itemTypesMultiSelectable typesToFind, QObj
     m_findFilter = typesToFind;
 }
 
-ItemTypes::itemTypesMultiSelectable ItemSearcher::findFilter() const
+int ItemSearcher::findFilter() const
 {
     return m_findFilter;
 }
 
-void ItemSearcher::setFindFilter(const ItemTypes::itemTypesMultiSelectable &findFilter)
+void ItemSearcher::setFindFilter(const int &findFilter)
 {
     m_findFilter = findFilter;
 }

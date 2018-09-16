@@ -15,28 +15,67 @@
 
 #include <editing/_components/history/itemsearcher.h>
 
+
+HistoryElementCustomSetting::HistoryElementCustomSetting()
+{}
+
+HistoryElementCustomSetting::~HistoryElementCustomSetting()
+{}
+
+
+
+
 HistoryElementItemSetting::HistoryElementItemSetting(const WorldData &data, HistorySettings::WorldSettingSubType wldSubType, QVariant extraData, QObject *parent) :
     QObject(parent),
     m_modWorldSetting(wldSubType),
     m_modWorldData(data),
-    m_modData(extraData)
+    m_modData(extraData),
+    m_customSetting(nullptr)
 {}
 
 HistoryElementItemSetting::HistoryElementItemSetting(const LevelData &data, HistorySettings::LevelSettingSubType lvlSubType, QVariant extraData, QObject *parent) :
     QObject(parent),
     m_modLevelSetting(lvlSubType),
     m_modLevelData(data),
-    m_modData(extraData)
+    m_modData(extraData),
+    m_customSetting(nullptr)
+{}
+
+HistoryElementItemSetting::HistoryElementItemSetting(const WorldData &data, HistoryElementCustomSetting *setting, QVariant extraData, QObject *parent) :
+    QObject(parent),
+    m_modWorldSetting(HistorySettings::SETTING_WLD_CUSTOM),
+    m_modWorldData(data),
+    m_modData(extraData),
+    m_customSetting(setting)
+{}
+
+HistoryElementItemSetting::HistoryElementItemSetting(const LevelData &data, HistoryElementCustomSetting *setting, QVariant extraData, QObject *parent) :
+    QObject(parent),
+    m_modLevelSetting(HistorySettings::SETTING_LVL_CUSTOM),
+    m_modLevelData(data),
+    m_modData(extraData),
+    m_customSetting(setting)
 {}
 
 HistoryElementItemSetting::~HistoryElementItemSetting()
-{}
+{
+    if(m_customSetting)
+        delete m_customSetting;
+    m_customSetting = nullptr;
+}
 
 QString HistoryElementItemSetting::getHistoryName()
 {
-    if(qobject_cast<LvlScene*>(m_scene)){
+    if(m_modLevelSetting == HistorySettings::SETTING_LVL_CUSTOM || m_modWorldSetting == HistorySettings::SETTING_WLD_CUSTOM)
+    {
+        return m_customSetting->getHistoryName();
+    }
+    else if(qobject_cast<LvlScene*>(m_scene))
+    {
         return HistorySettings::settingToString(m_modLevelSetting);
-    }else if(qobject_cast<WldScene*>(m_scene)){
+    }
+    else if(qobject_cast<WldScene*>(m_scene))
+    {
         return HistorySettings::settingToString(m_modWorldSetting);
     }
     return QString("Error History");
@@ -106,7 +145,25 @@ void HistoryElementItemSetting::processWorldUndo()
         connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingLevelfileLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_LEVELTITLE){
         connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyUndoSettingLeveltitleLevel(WorldLevelTile,QGraphicsItem*)));
+    }else if(m_modWorldSetting == HistorySettings::SETTING_WLD_CUSTOM){
+        worldSearcher.setFindFilter(ItemTypes::WLD_S_Tile|ItemTypes::WLD_S_Scenery|ItemTypes::WLD_S_Path|ItemTypes::WLD_S_Level|ItemTypes::WLD_S_MusicBox);
+
+        connect(&worldSearcher, SIGNAL(foundTile(WorldTerrainTile,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(WorldTerrainTile,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundScenery(WorldScenery,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(WorldScenery,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundPath(WorldPathTile,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(WorldPathTile,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(WorldLevelTile,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundMusicbox(WorldMusicBox,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(WorldMusicBox,QGraphicsItem*)));
     }
+
     worldSearcher.find(m_modWorldData, m_scene->items());
 
 }
@@ -293,6 +350,26 @@ void HistoryElementItemSetting::processLevelUndo()
         levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
         connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyUndoSettingsSortingBGO(LevelBGO,QGraphicsItem*)));
     }
+    else
+    if(m_modLevelSetting == HistorySettings::SETTING_LVL_CUSTOM){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_Block|ItemTypes::LVL_S_BGO|ItemTypes::LVL_S_NPC|ItemTypes::LVL_S_Door|ItemTypes::LVL_S_PhysEnv);
+
+        connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(LevelBlock,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(LevelBGO,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(LevelNPC,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(LevelPhysEnv,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)),
+                this, SLOT(historyUndoSettingCustom(LevelDoor,QGraphicsItem*)));
+    }
+
     levelSearcher.find(m_modLevelData, m_scene->items());
 }
 
@@ -332,6 +409,23 @@ void HistoryElementItemSetting::processWorldRedo()
         connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingLevelfileLevel(WorldLevelTile,QGraphicsItem*)));
     }else if(m_modWorldSetting == HistorySettings::SETTING_LEVELTITLE){
         connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)), this, SLOT(historyRedoSettingLeveltitleLevel(WorldLevelTile,QGraphicsItem*)));
+    }else if(m_modWorldSetting == HistorySettings::SETTING_WLD_CUSTOM){
+        worldSearcher.setFindFilter(ItemTypes::itemTypesMultiSelectable(ItemTypes::WLD_S_Tile|ItemTypes::WLD_S_Scenery|ItemTypes::WLD_S_Path|ItemTypes::WLD_S_Level|ItemTypes::WLD_S_MusicBox));
+
+        connect(&worldSearcher, SIGNAL(foundTile(WorldTerrainTile,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(WorldTerrainTile,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundScenery(WorldScenery,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(WorldScenery,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundPath(WorldPathTile,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(WorldPathTile,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundLevel(WorldLevelTile,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(WorldLevelTile,QGraphicsItem*)));
+
+        connect(&worldSearcher, SIGNAL(foundMusicbox(WorldMusicBox,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(WorldMusicBox,QGraphicsItem*)));
     }
     worldSearcher.find(m_modWorldData, m_scene->items());
 
@@ -518,6 +612,25 @@ void HistoryElementItemSetting::processLevelRedo()
     if(m_modLevelSetting == HistorySettings::SETTING_BGOSORTING){
         levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
         connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyRedoSettingsSortingBGO(LevelBGO,QGraphicsItem*)));
+    }
+    else
+    if(m_modLevelSetting == HistorySettings::SETTING_LVL_CUSTOM){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_Block|ItemTypes::LVL_S_BGO|ItemTypes::LVL_S_NPC|ItemTypes::LVL_S_Door|ItemTypes::LVL_S_PhysEnv);
+
+        connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(LevelBlock,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(LevelBGO,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(LevelNPC,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(LevelPhysEnv,QGraphicsItem*)));
+
+        connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)),
+                this, SLOT(historyRedoSettingCustom(LevelDoor,QGraphicsItem*)));
     }
     levelSearcher.find(m_modLevelData, m_scene->items());
 }
@@ -1094,4 +1207,104 @@ void HistoryElementItemSetting::historyRedoSettingsSortingBGO(const LevelBGO &/*
 {
     ((ItemBGO*)item)->m_data.smbx64_sp = (long)m_modData.toLongLong();
     ((ItemBGO*)item)->arrayApply();
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const LevelBlock &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const LevelBlock &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const LevelBGO &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const LevelBGO &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const LevelNPC &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const LevelNPC &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const LevelDoor &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const LevelDoor &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const LevelPhysEnv &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const LevelPhysEnv &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const WorldTerrainTile &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const WorldTerrainTile &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const WorldScenery &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const WorldScenery &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const WorldPathTile &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const WorldPathTile &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const WorldLevelTile &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const WorldLevelTile &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyUndoSettingCustom(const WorldMusicBox &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->undo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
+}
+
+void HistoryElementItemSetting::historyRedoSettingCustom(const WorldMusicBox &sourceItem, QGraphicsItem *item)
+{
+    m_customSetting->redo(reinterpret_cast<const void*>(&sourceItem), &m_modData, item);
 }
