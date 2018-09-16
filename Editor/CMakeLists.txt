@@ -437,14 +437,14 @@ list(APPEND PGE_EDITOR_SRCS
     ${QT_PLUGINS_CPP}
 )
 
-if(WIN32)
+#if(WIN32)
     # TODO: Create external executable API
     # which will allow usage of LunaTester on the Wine with
     # Linux/Mac native builds or from 64-bit editor builds
     list(APPEND PGE_EDITOR_SRCS
         main_window/testing/luna_tester.cpp
     )
-endif()
+#endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC

@@ -40,8 +40,8 @@
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <QWinThumbnailToolBar>
-struct LunaTester;
 #endif
+struct LunaTester;
 
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <PGE_File_Formats/wld_filedata.h>
@@ -1090,9 +1090,8 @@ public:
         QProcess engine_proc;
         //! Mutex which helps to avoid multiple launches of engine
         QMutex   engine_mutex;
-        #ifdef _WIN32
+        //! LunaTester sub-system
         LunaTester * m_luna;
-        #endif
 
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Plugins////////////////////////////////////////

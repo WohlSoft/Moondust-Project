@@ -291,10 +291,9 @@ bool dataconfigs::loadconfigs()
         ConfStatus::configDataPath = data_dir;
 
         mainset.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
-        #ifdef _WIN32
+        // For LunaTester
         mainset.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
         mainset.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
-        #endif
 
         dirs.worlds     = data_dir + mainset.value("worlds", "worlds").toQString() + "/";
 

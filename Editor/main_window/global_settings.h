@@ -184,10 +184,9 @@ public:
     static QString configPath;
 
     static QString configDataPath;
-    #ifdef _WIN32
+
     static QString SmbxEXE_Name;
     static bool    SmbxTest_By_Default;
-    #endif
 };
 
 #endif // GLOBAL_SETTINGS_H

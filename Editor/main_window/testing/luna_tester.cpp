@@ -22,13 +22,11 @@
     communication with Wine is required.
 */
 
-#ifdef _WIN32
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
 #include "luna_tester.h"
 
 #include <sstream>
-#include <windows.h>
 #include <QThread>
 #include <cstring>
 #include <QDesktopWidget>
@@ -43,6 +41,10 @@
 #include <QtConcurrentRun>
 #include "luna_tester.h"
 
+#ifdef LUNA_TESTER_32
+#include <windows.h>
+#endif
+
 #include <PGE_File_Formats/file_formats.h>
 #include <data_functions/smbx64_validation_messages.h>
 #include <common_features/app_path.h>
@@ -50,9 +52,9 @@
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>
 
-#ifdef _WIN64
-#define USE_LUNAHEXER
-#endif
+//#ifdef _WIN64
+//#define USE_LUNAHEXER
+//#endif
 
 
 class QThreadPointNuller
@@ -66,23 +68,30 @@ public:
     }
 };
 
+#ifdef LUNA_TESTER_32
 static bool writeIPC(HANDLE pipeOut, const std::string &outData);
 static std::string readIPC(HANDLE hInputRead);
+#else
+static std::string readIPC(QProcess &input);
+#endif
 
 LunaTester::LunaTester() :
     QObject(nullptr),
     m_mw(nullptr),
+#ifdef LUNA_TESTER_32
     m_pi{0, 0, 0, 0},
     m_ipc_pipe_out(0),
     m_ipc_pipe_out_i(0),
     m_ipc_pipe_in(0),
     m_ipc_pipe_in_o(0),
+#endif
     m_helperThread(0),
     m_noGL(false)
 {}
 
 LunaTester::~LunaTester()
 {
+#ifdef LUNA_TESTER_32
     DWORD lpExitCode = 0;
     if(GetExitCodeProcess(m_pi.hProcess, &lpExitCode))
     {
@@ -103,6 +112,9 @@ LunaTester::~LunaTester()
         CloseHandle(m_ipc_pipe_in);
         m_ipc_pipe_in = 0;
     }
+#else
+    m_process.terminate();
+#endif
 }
 
 void LunaTester::initLunaMenu(MainWindow *mw,
@@ -268,8 +280,122 @@ void LunaTester::retranslateMenu()
     }
 }
 
+bool LunaTester::isEngineActive()
+{
+#ifdef LUNA_TESTER_32
+    DWORD lpExitCode = 0;
+    return GetExitCodeProcess(m_pi.hProcess, &lpExitCode) && (lpExitCode == STILL_ACTIVE);
+#else
+    return (m_process.state() == QProcess::Running);
+#endif
+}
+
+bool LunaTester::isInPipeOpen()
+{
+#ifdef LUNA_TESTER_32
+    return (m_ipc_pipe_in != 0);
+#else
+    return (m_process.state() == QProcess::Running);
+#endif
+}
+
+bool LunaTester::isOutPipeOpen()
+{
+#ifdef LUNA_TESTER_32
+    return (m_ipc_pipe_out != 0);
+#else
+    return (m_process.state() == QProcess::Running);
+#endif
+}
+
+bool LunaTester::writeToIPC(const std::string &out)
+{
+#ifdef LUNA_TESTER_32
+    return writeIPC(m_ipc_pipe_out, out);
+#else
+//    bool ret = m_process.write(out.c_str(), out.size()) == qint64(out.size());
+//    m_process.waitForBytesWritten();
+    bool ret = false;
+    QMetaObject::invokeMethod(this, "write", Qt::BlockingQueuedConnection,
+                              Q_ARG(const std::string &,out),
+                              Q_ARG(bool *, &ret));
+    return ret;
+#endif
+}
+
+bool LunaTester::writeToIPC(const QString &out)
+{
+#ifdef LUNA_TESTER_32
+    return writeIPC(m_ipc_pipe_out, out);
+#else
+//    QByteArray o = out.toUtf8();
+//    bool ret = m_process.write(o) == qint64(o.size());
+//    m_process.waitForBytesWritten();
+    bool ret = false;
+    QMetaObject::invokeMethod(this, "write", Qt::BlockingQueuedConnection,
+                              Q_ARG(const QString &,out),
+                              Q_ARG(bool *, &ret));
+    return ret;
+#endif
+}
+
+std::string LunaTester::readFromIPC()
+{
+#ifdef LUNA_TESTER_32
+    return readIPC(m_ipc_pipe_in);
+#else
+//    m_process.waitForReadyRead();
+//    return readIPC(m_process);
+    std::string out;
+    QMetaObject::invokeMethod(this, "read", Qt::BlockingQueuedConnection,
+                              Q_ARG(std::string*, &out));
+    return out;
+#endif
+}
+
+QString LunaTester::readFromIPCQ()
+{
+#ifdef LUNA_TESTER_32
+    return QString::fromStdString(readIPC(m_ipc_pipe_in));
+#else
+    std::string out;
+    QMetaObject::invokeMethod(this, "read", Qt::BlockingQueuedConnection,
+                              Q_ARG(std::string*, &out));
+    return QString::fromStdString(out);
+#endif
+}
+
+#ifndef LUNA_TESTER_32
+void LunaTester::start(const QString &program, const QStringList &arguments, bool *ok)
+{
+    m_process.start(program, arguments);
+    *ok = m_process.waitForStarted();
+}
+
+void LunaTester::write(const QString &out, bool *ok)
+{
+    QByteArray o = out.toUtf8();
+    *ok = m_process.write(o) == qint64(o.size());
+    m_process.waitForBytesWritten();
+}
+
+void LunaTester::write(const std::string &out, bool *ok)
+{
+    *ok = m_process.write(out.c_str(), out.size()) == qint64(out.size());
+    m_process.waitForBytesWritten();
+}
+
+void LunaTester::read(std::string *in)
+{
+    m_process.waitForReadyRead();
+    *in = readIPC(m_process);
+}
+
+#endif
+
 void LunaTester::killEngine()
 {
+#ifdef LUNA_TESTER_32
     DWORD lpExitCode = 0;
 
     //Abort engine staying in background
@@ -295,6 +421,10 @@ void LunaTester::killEngine()
         CloseHandle(this->m_ipc_pipe_in);
         this->m_ipc_pipe_in = 0;
     }
+#else
+    m_process.terminate();
+    m_process.close();
+#endif
 }
 
 /*****************************************Menu slots*************************************************/
@@ -379,8 +509,7 @@ void LunaTester::killFrozenThread()
 
 void LunaTester::killBackgroundInstance()
 {
-    DWORD lpExitCode = 0;
-    if(GetExitCodeProcess(m_pi.hProcess, &lpExitCode) && (lpExitCode == STILL_ACTIVE))
+    if(isEngineActive())
     {
         QMessageBox::StandardButton reply = QMessageBox::warning(m_mw,
                                             "LunaTester",
@@ -432,6 +561,8 @@ static bool stringToJson(const std::string &message, QJsonDocument &out, QJsonPa
     return (err.error == QJsonParseError::NoError);
 }
 
+
+#ifdef LUNA_TESTER_32
 static bool writeIPC(HANDLE pipeOut, const std::string &outData)
 {
     DWORD writtenBytes = 0;
@@ -522,6 +653,80 @@ static std::string readIPC(HANDLE hInputRead)
     }
 }
 
+#else
+
+static std::string readIPC(QProcess &input)
+{
+    // Note: This is not written to be particularly efficient right now. Just
+    //       readable enough and safe.
+    if(!input.isOpen())
+        return "";
+    char c;
+    std::vector<char> data;
+    while(1)
+    {
+        data.clear();
+        // Read until : delimiter
+        bool err = false;
+        while(true)
+        {
+            qint64 bytesRead = input.read(&c, 1);
+            if(bytesRead != 1)
+                return "";
+            if(c == ':')
+                break;
+            if((c > '9') || (c < '0'))
+            {
+                err = true;
+                break;
+            }
+
+            data.push_back(c);
+        }
+
+        if(err)
+            continue;
+
+        std::string byteCountStr = std::string(&data[0], data.size());
+        data.clear();
+        try
+        {
+            // Interpret as number
+            int byteCount = byteCountStr.empty() ? 0 : std::stoi(byteCountStr);
+            if(byteCount <= 0)
+                continue;
+            int byteCursor = 0;
+            data.resize(byteCount);
+            while(byteCursor < byteCount)
+            {
+                qint64 bytesRead = input.read(&data[byteCursor], 1);
+                if(bytesRead == 0)
+                    return "";
+                byteCursor += bytesRead;
+            }
+            // Get following comma
+            {
+                qint64 bytesRead = input.read(&c, 1);
+                if(bytesRead != 1)
+                    return "";
+                if(c != ',')
+                    continue;
+            }
+        }
+        catch(const std::exception &)
+        {
+            return "";
+        }
+        catch(...)
+        {
+            return "";
+        }
+        return std::string(&data[0], data.size());
+    }
+}
+#endif
+
+#ifdef LUNA_TESTER_32
 
 static void patch(FILE *f, unsigned int at, void *data, unsigned int size)
 {
@@ -896,7 +1101,7 @@ LunaTester::LunaLoaderResult LunaTester::LunaLoaderRun(
 
     return LUNALOADER_OK;
 }
-
+#endif
 
 bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled)
 {
@@ -906,7 +1111,7 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
 
     //"players": [ { "character": 1, "powerup": 1, "mountType": 1, "mountColor": 1 }, { "character": 2, "powerup": 1, "mountType": 1, "mountColor": 1 } ]
 
-    if((m_ipc_pipe_out == 0))
+    if(!isOutPipeOpen())
         return false;
 
     // Ask "Is LVLX"
@@ -924,9 +1129,9 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
         jSonToNetString(jsonOut, dataToSend);
         LogDebugQD(QString("Sending message to SMBX %1").arg(QString::fromStdString(dataToSend)));
 
-        if(writeIPC(m_ipc_pipe_out, dataToSend))
+        if(writeToIPC(dataToSend))
         {
-            std::string resultMsg = readIPC(m_ipc_pipe_in);
+            std::string resultMsg = readFromIPC();
             LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
             QJsonParseError err;
             QJsonDocument jsonOut;
@@ -1015,17 +1220,12 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
     std::string dataToSend;
     jSonToNetString(jsonOut, dataToSend);
 
-    DWORD writtenBytes = 0;
-
     LogDebug("LunaTester: -> Sending level data and testing request...");
     //Send data to SMBX
-    if(WriteFile(m_ipc_pipe_out,
-                 (LPCVOID)dataToSend.c_str(),
-                 (DWORD)dataToSend.size(),
-                 &writtenBytes, NULL) == TRUE)
+    if(writeToIPC(dataToSend))
     {
         //Read result from level testing run
-        std::string resultMsg = readIPC(m_ipc_pipe_in);
+        std::string resultMsg = readFromIPC();
         LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
         LogDebug("LunaTester: <- Command has been sent!");
         return true;
@@ -1042,62 +1242,55 @@ void LunaTester::lunaChkResetThread()
     Q_UNUSED(tlocker);
     SafeMsgBoxInterface msg(&m_mw->m_messageBoxer);
     this->m_helperThread = QThread::currentThread();
-    DWORD lpExitCode = 0;
-    if(GetExitCodeProcess(this->m_pi.hProcess, &lpExitCode))
+
+    if(isEngineActive())
     {
-        if(lpExitCode == STILL_ACTIVE)
+        if(!isOutPipeOpen() || !isInPipeOpen())
+            goto failed;
+        QJsonDocument jsonOut;
+        QJsonObject jsonObj;
+        jsonObj["jsonrpc"]  = "2.0";
+        jsonObj["method"]   = "resetCheckPoints";
+        QJsonObject JSONparams;
+        JSONparams["xxx"] = 0;
+        jsonObj["params"] = JSONparams;
+        jsonObj["id"] = 3;
+        jsonOut.setObject(jsonObj);
+
+        //Converting JSON data into net string
+        std::string dataToSend;
+        jSonToNetString(jsonOut, dataToSend);
+
+        //Send data to SMBX
+        if(writeToIPC(dataToSend))
         {
-            if((m_ipc_pipe_out == 0) || (m_ipc_pipe_in == 0))
-                goto failed;
+            std::string inMessage = readFromIPC();
+            LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
+            QJsonParseError err;
             QJsonDocument jsonOut;
-            QJsonObject jsonObj;
-            jsonObj["jsonrpc"]  = "2.0";
-            jsonObj["method"]   = "resetCheckPoints";
-            QJsonObject JSONparams;
-            JSONparams["xxx"] = 0;
-            jsonObj["params"] = JSONparams;
-            jsonObj["id"] = 3;
-            jsonOut.setObject(jsonObj);
-
-            //Converting JSON data into net string
-            std::string dataToSend;
-            jSonToNetString(jsonOut, dataToSend);
-
-            DWORD writtenBytes = 0;
-            //Send data to SMBX
-            if(WriteFile(m_ipc_pipe_out,
-                         (LPCVOID)dataToSend.c_str(),
-                         (DWORD)dataToSend.size(),
-                         &writtenBytes, NULL) == TRUE)
+            if(stringToJson(inMessage, jsonOut, err))
             {
-                std::string inMessage = readIPC(m_ipc_pipe_in);
-                LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
-                QJsonParseError err;
-                QJsonDocument jsonOut;
-                if(stringToJson(inMessage, jsonOut, err))
+                QJsonObject obj = jsonOut.object();
+                if(obj["error"].isNull())
                 {
-                    QJsonObject obj = jsonOut.object();
-                    if(obj["error"].isNull())
-                    {
-                        msg.info("LunaTester",
-                                 tr("Checkpoints successfully reseted!"),
-                                 QMessageBox::Ok);
-                    }
-                    else
-                    {
-                        msg.warning("LunaTester",
-                                    QString::fromStdString(inMessage),
-                                    QMessageBox::Ok);
-                    }
+                    msg.info("LunaTester",
+                             tr("Checkpoints successfully reseted!"),
+                             QMessageBox::Ok);
                 }
                 else
                 {
-                    msg.warning(tr("LunaTester error!"),
-                                err.errorString() +
-                                "\n\nData:\n" +
+                    msg.warning("LunaTester",
                                 QString::fromStdString(inMessage),
-                                QMessageBox::Warning);
+                                QMessageBox::Ok);
                 }
+            }
+            else
+            {
+                msg.warning(tr("LunaTester error!"),
+                            err.errorString() +
+                            "\n\nData:\n" +
+                            QString::fromStdString(inMessage),
+                            QMessageBox::Warning);
             }
         }
     }
@@ -1110,7 +1303,7 @@ failed:
 
 bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
 {
-    if(m_killPreviousSession || (m_ipc_pipe_out == 0) || (m_ipc_pipe_in == 0))
+    if(m_killPreviousSession || (!isOutPipeOpen()) || (!isInPipeOpen()))
         return false;
 
     QJsonDocument jsonOut;
@@ -1127,14 +1320,10 @@ bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
     std::string dataToSend;
     jSonToNetString(jsonOut, dataToSend);
 
-    DWORD writtenBytes = 0;
     //Send data to SMBX
-    if(WriteFile(m_ipc_pipe_out,
-                 (LPCVOID)dataToSend.c_str(),
-                 (DWORD)dataToSend.size(),
-                 &writtenBytes, NULL) == TRUE)
+    if(writeToIPC(dataToSend))
     {
-        std::string inMessage = readIPC(m_ipc_pipe_in);
+        std::string inMessage = readFromIPC();
         LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
         QJsonParseError err;
         QJsonDocument jsonOut;
@@ -1143,12 +1332,14 @@ bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
             {
+#ifdef _WIN32 // Windows-only trick
                 uintptr_t smbxHwnd = uintptr_t(obj["result"].toVariant().toULongLong());
                 HWND wSmbx = HWND(smbxHwnd);
                 //Close SMBX's window
                 PostMessage(wSmbx, WM_CLOSE, 0, 0);
                 //Wait half of second to avoid racings
                 Sleep(500);
+#endif
             }
             else
                 msg.warning("LunaTester (closeSmbxWindow, obj[\"error\"])",
@@ -1171,7 +1362,7 @@ bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
 
 bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
 {
-    if((m_ipc_pipe_out == 0) || (m_ipc_pipe_in == 0))
+    if(!isOutPipeOpen() || !isInPipeOpen())
         return false;
 
     QJsonDocument jsonOut;
@@ -1188,14 +1379,10 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
     std::string dataToSend;
     jSonToNetString(jsonOut, dataToSend);
 
-    DWORD writtenBytes = 0;
     //Send data to SMBX
-    if(WriteFile(m_ipc_pipe_out,
-                 (LPCVOID)dataToSend.c_str(),
-                 (DWORD)dataToSend.size(),
-                 &writtenBytes, NULL) == TRUE)
+    if(writeToIPC(dataToSend))
     {
-        std::string inMessage = readIPC(m_ipc_pipe_in);
+        std::string inMessage = readFromIPC();
         LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
         QJsonParseError err;
         QJsonDocument jsonOut;
@@ -1204,6 +1391,7 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
             {
+#ifdef _WIN32 // Windows-only trick
                 uintptr_t smbxHwnd = uintptr_t(obj["result"].toVariant().toULongLong());
                 HWND wSmbx = HWND(smbxHwnd);
                 //msg.warning("Test2", QString("Received: %1, from: %2").arg(smbxHwnd).arg(QString::fromStdString(inMessage)), QMessageBox::Ok);
@@ -1214,6 +1402,7 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
                 SetForegroundWindow(wSmbx);
                 SetActiveWindow(wSmbx);
                 SetFocus(wSmbx);
+#endif
             }
             else
                 msg.warning("LunaTester (switchToSmbxWindow, obj[\"error\"])",
@@ -1275,44 +1464,52 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             return;
         }
 
+#ifdef LUNA_TESTER_32
         DWORD lpExitCode = 0;
-        if(GetExitCodeProcess(this->m_pi.hProcess, &lpExitCode))
+#endif
+        if(isEngineActive())
         {
-            if(lpExitCode == STILL_ACTIVE)
+            if(isOutPipeOpen())
             {
-                if(m_ipc_pipe_out != 0)
+                //Workaround to avoid weird crash
+                closeSmbxWindow(msg);
+                //Then send level data to SMBX Engine
+                if(sendLevelData(in_levelData, levelPath, isUntitled))
                 {
-                    //Workaround to avoid weird crash
-                    closeSmbxWindow(msg);
-                    //Then send level data to SMBX Engine
-                    if(sendLevelData(in_levelData, levelPath, isUntitled))
-                    {
-                        //Stop music playback in the PGE Editor!
-                        QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                        // not sure how efficient it is
-                        QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                        //Attempt to switch SMBX Window
-                        switchToSmbxWindow(msg);
-                    }
+                    //Stop music playback in the PGE Editor!
+                    QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+                    // not sure how efficient it is
+                    QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+                    //Attempt to switch SMBX Window
+                    switchToSmbxWindow(msg);
                 }
-                else if(msg.warning(LunaTester::tr("SMBX Test is already runned"),
-                                    LunaTester::tr("SMBX Engine is already testing another level.\n"
-                                                   "Do you want to abort current testing process?"),
-                                    QMessageBox::Abort | QMessageBox::Cancel) == QMessageBox::Abort)
-                {
-                    WaitForSingleObject(this->m_pi.hProcess, 100);
-                    TerminateProcess(this->m_pi.hProcess, lpExitCode);
-                    CloseHandle(this->m_pi.hProcess);
-                }
-                return;
             }
+            else if(msg.warning(LunaTester::tr("SMBX Test is already runned"),
+                                LunaTester::tr("SMBX Engine is already testing another level.\n"
+                                               "Do you want to abort current testing process?"),
+                                QMessageBox::Abort | QMessageBox::Cancel) == QMessageBox::Abort)
+            {
+#ifdef LUNA_TESTER_32
+                WaitForSingleObject(this->m_pi.hProcess, 100);
+                TerminateProcess(this->m_pi.hProcess, lpExitCode);
+                CloseHandle(this->m_pi.hProcess);
+#else
+                killEngine();
+#endif
+            }
+            return;
         }
 
+#ifdef LUNA_TESTER_32
         QString command = smbxPath + ConfStatus::SmbxEXE_Name;
+#else
+        QString command = smbxPath + "LunaLoader.exe";
+#endif
         QStringList params;
 
         if(!QFile(smbxPath + "LunaDll.dll").exists())
         {
+#ifdef LUNA_TESTER_32
             /**********************************************
              *****Do Vanilla test with dummy episode!******
              **********************************************/
@@ -1487,6 +1684,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
             // not sure how efficient it is
             QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+#endif
             return;
 
         }
@@ -1507,7 +1705,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                     argString += " ";
                 argString += params[i];
             }
-
+#ifdef LUNA_TESTER_32
             // Make sure any old pipe handle is closed
             if(this->m_ipc_pipe_out)
             {
@@ -1520,6 +1718,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 this->m_ipc_pipe_in = 0;
             }
 
+
             #ifdef USE_LUNAHEXER //Hexes legacy SMBX.exe and starts it as regular exe
             LunaLoaderResult res = LunaHexerRun(command.toStdWString().c_str(),
                                                 argString.toStdWString().c_str(),
@@ -1529,8 +1728,20 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                                                  argString.toStdWString().c_str(),
                                                  smbxPath.toStdWString().c_str());
             #endif
+            bool engineStartedSuccess = (res == LUNALOADER_OK);
+#else
+            bool engineStartedSuccess = true;
+#   ifndef _WIN32
+            params.push_front(command);
+            command = "wine";
+#   endif
+            QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
+                                      Q_ARG(const QString &, command),
+                                      Q_ARG(const QStringList &, params),
+                                      Q_ARG(bool*, &engineStartedSuccess));
+#endif
 
-            if(res == LUNALOADER_OK)
+            if(engineStartedSuccess)
             {
                 if(sendLevelData(in_levelData, levelPath, isUntitled))
                 {
@@ -1550,6 +1761,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             {
                 QString luna_error = "Unknown error";
 
+#ifdef LUNA_TESTER_32
                 switch(res)
                 {
                 case LUNALOADER_CREATEPROCESS_FAIL:
@@ -1561,7 +1773,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 default:
                     break;
                 }
-
+#endif
                 msg.warning(LunaTester::tr("LunaTester error"),
                             LunaTester::tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
                             QMessageBox::Ok);
@@ -1573,9 +1785,13 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
 void LunaTester::lunaRunGame()
 {
     QString smbxPath = ConfStatus::configDataPath;
+#ifdef LUNA_TESTER_32
     QString command = smbxPath + ConfStatus::SmbxEXE_Name;
+#else
+    QString command = smbxPath + "LunaLoader.exe";
+#endif
 
-    if(!QFile(smbxPath + ConfStatus::SmbxEXE_Name).exists())
+    if(!QFile(command).exists())
     {
         QMessageBox::warning(m_mw,
                              LunaTester::tr("Directory of Legacy Engine wasn't configured right"),
@@ -1597,6 +1813,7 @@ void LunaTester::lunaRunGame()
         QProcess::startDetached(command, params, smbxPath);
     else
     {
+#ifdef LUNA_TESTER_32
         QString argString;
         for(int i = 0; i < params.length(); i++)
         {
@@ -1638,10 +1855,24 @@ void LunaTester::lunaRunGame()
                                              argString.toStdWString().c_str(),
                                              smbxPath.toStdWString().c_str());
         #endif
-        if(res != LUNALOADER_OK)
+
+        bool engineStartedSuccess = (res == LUNALOADER_OK);
+#else
+        bool engineStartedSuccess = true;
+#   ifndef _WIN32
+        params.push_front(command);
+        command = "wine";
+#   endif
+        QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
+                                  Q_ARG(const QString &, command),
+                                  Q_ARG(const QStringList &, params),
+                                  Q_ARG(bool*, &engineStartedSuccess));
+#endif
+        if(!engineStartedSuccess)
         {
             QString luna_error = "Unknown error";
 
+#ifdef LUNA_TESTER_32
             switch(res)
             {
             case LUNALOADER_CREATEPROCESS_FAIL:
@@ -1653,6 +1884,7 @@ void LunaTester::lunaRunGame()
             default:
                 break;
             }
+#endif
 
             QMessageBox::warning(m_mw,
                                  LunaTester::tr("LunaTester error"),
@@ -1676,4 +1908,3 @@ void LunaTester::lunaRunGame()
                               Q_ARG(bool, false));
 }
 
-#endif //_WIN32
