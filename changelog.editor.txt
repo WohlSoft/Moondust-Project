@@ -25,6 +25,7 @@ Editor 0.3.1.14-1-dev
 - Config pack reload will now save all opened files and restore them back after the reload
 - Added ability to automatically restart editor on config pack switching
 - Fixed a crash of the LunaTester when receiving an incorrect input from the LunaLua backend
+- Added basic support for custom user data per every element on the level (Blocks, BGOs and NPCs only yet)
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)
