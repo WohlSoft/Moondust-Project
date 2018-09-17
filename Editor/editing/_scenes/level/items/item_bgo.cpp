@@ -21,13 +21,12 @@
 
 #include <mainwindow.h>
 #include <editing/_dialogs/itemselectdialog.h>
+#include <editing/_dialogs/user_data_edit.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
 
 #include "../lvl_history_manager.h"
 #include "../newlayerbox.h"
-
-#include "../../../_components/history/historyelementitemsetting.h"
 
 class BgoHistory_UserData : public HistoryElementCustomSetting
 {
@@ -50,7 +49,7 @@ public:
     }
     virtual QString getHistoryName()
     {
-        return QObject::tr("BGO User data change");
+        return QObject::tr("BGO user data change");
     }
 };
 
@@ -167,7 +166,7 @@ void ItemBGO::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *remove_all =       ItemMenu.addAction(tr("Remove all %1").arg("BGO-%1").arg(m_data.id));
     ItemMenu.addSeparator();
 
-    QAction *jsonUserData =     ItemMenu.addAction(tr("Edit user data..."));
+    QAction *rawUserData =      ItemMenu.addAction(tr("Edit raw user data..."));
     ItemMenu.addSeparator();
 
     QAction *props =            ItemMenu.addAction(tr("Properties..."));
@@ -453,26 +452,21 @@ cancelTransform:
         );
         m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
-    else if(selected == jsonUserData)
+    else if(selected == rawUserData)
     {
-        bool ok;
-        QString ch = QInputDialog::getText(m_scene->m_subWindow,
-                                           tr("BGO User data"),
-                                           tr("Type user data here in JSON:"),
-                                           QLineEdit::Normal,
-                                           m_data.meta.custom_params,
-                                           &ok
-        );
-
-        if(ok)
+        UserDataEdit d(m_data.meta.custom_params, m_scene->m_subWindow);
+        int ret = d.exec();
+        if(ret == QDialog::Accepted)
         {
             LevelData selData;
+            QString ch = d.getText();
             foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                 {
                     selData.bgo.push_back(((ItemBGO *)SelItem)->m_data);
                     ((ItemBGO *) SelItem)->m_data.meta.custom_params = ch;
+                    ((ItemBGO *) SelItem)->arrayApply();
                 }
             }
             m_scene->m_history->addChangeSettings(selData, new BgoHistory_UserData(), ch);

@@ -23,12 +23,39 @@
 #include <mainwindow.h>
 #include <common_features/logger.h>
 #include <editing/_dialogs/itemselectdialog.h>
+#include <editing/_dialogs/user_data_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 
 #include "../lvl_history_manager.h"
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
+
+class NPCHistory_UserData : public HistoryElementCustomSetting
+{
+public:
+    NPCHistory_UserData() : HistoryElementCustomSetting() {}
+    virtual ~NPCHistory_UserData() {}
+
+    virtual void undo(const void *sourceItem, QVariant *, QGraphicsItem *item)
+    {
+        const LevelNPC * it = reinterpret_cast<const LevelNPC*>(sourceItem);
+        ItemNPC* ite = qgraphicsitem_cast<ItemNPC*>(item);
+        ite->m_data.meta.custom_params = it->meta.custom_params;
+        ite->arrayApply();
+    }
+    virtual void redo(const void *, QVariant *mod, QGraphicsItem *item)
+    {
+        ItemNPC* ite = qgraphicsitem_cast<ItemNPC*>(item);
+        ite->m_data.meta.custom_params = mod->toString();
+        ite->arrayApply();
+    }
+    virtual QString getHistoryName()
+    {
+        return QObject::tr("NPC user data change");
+    }
+};
+
 
 ItemNPC::ItemNPC(bool noScene, QGraphicsItem *parent)
     : LvlBaseItem(parent)
@@ -188,6 +215,9 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *remove =           ItemMenu.addAction(tr("Remove"));
     QAction *remove_all_s =     ItemMenu.addAction(tr("Remove all %1 in this section").arg("NPC-%1").arg(m_data.id));
     QAction *remove_all =       ItemMenu.addAction(tr("Remove all %1").arg("NPC-%1").arg(m_data.id));
+
+    QAction *rawUserData =      ItemMenu.addAction(tr("Edit raw user data..."));
+    ItemMenu.addSeparator();
 
     ItemMenu.addSeparator();
     QAction *props =            ItemMenu.addAction(tr("Properties..."));
@@ -485,6 +515,26 @@ cancelTransform:
         }
 cancelRemoveSSS:
         ;
+    }
+    else if(selected == rawUserData)
+    {
+        UserDataEdit d(m_data.meta.custom_params, m_scene->m_subWindow);
+        int ret = d.exec();
+        if(ret == QDialog::Accepted)
+        {
+            LevelData selData;
+            QString ch = d.getText();
+            foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
+            {
+                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+                {
+                    selData.npc.push_back(((ItemNPC *)SelItem)->m_data);
+                    ((ItemNPC *) SelItem)->m_data.meta.custom_params = ch;
+                    ((ItemNPC *) SelItem)->arrayApply();
+                }
+            }
+            m_scene->m_history->addChangeSettings(selData, new NPCHistory_UserData(), ch);
+        }
     }
     else if(selected == props)
         m_scene->openProps();

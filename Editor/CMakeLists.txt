@@ -117,6 +117,7 @@ qt5_wrap_ui(UIS_HDRS
     editing/_dialogs/levelfilelist.ui
     editing/_dialogs/musicfilelist.ui
     editing/_dialogs/savingnotificationdialog.ui
+    editing/_dialogs/user_data_edit.ui
     editing/_dialogs/wld_setpoint.ui
     editing/edit_level/leveledit.ui
     editing/edit_level/levelprops.ui
@@ -250,6 +251,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_dialogs/levelfilelist.cpp
     editing/_dialogs/musicfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
+    editing/_dialogs/user_data_edit.cpp
     editing/_dialogs/wld_setpoint.cpp
     editing/edit_base.cpp
     editing/edit_level/level_edit.cpp

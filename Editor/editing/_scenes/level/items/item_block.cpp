@@ -22,6 +22,7 @@
 
 #include <mainwindow.h>
 #include <editing/_dialogs/itemselectdialog.h>
+#include <editing/_dialogs/user_data_edit.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
@@ -30,6 +31,32 @@
 #include "../lvl_history_manager.h"
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
+
+class BlockHistory_UserData : public HistoryElementCustomSetting
+{
+public:
+    BlockHistory_UserData() : HistoryElementCustomSetting() {}
+    virtual ~BlockHistory_UserData() {}
+
+    virtual void undo(const void *sourceItem, QVariant *, QGraphicsItem *item)
+    {
+        const LevelBlock * it = reinterpret_cast<const LevelBlock*>(sourceItem);
+        ItemBlock* ite = qgraphicsitem_cast<ItemBlock*>(item);
+        ite->m_data.meta.custom_params = it->meta.custom_params;
+        ite->arrayApply();
+    }
+    virtual void redo(const void *, QVariant *mod, QGraphicsItem *item)
+    {
+        ItemBlock* ite = qgraphicsitem_cast<ItemBlock*>(item);
+        ite->m_data.meta.custom_params = mod->toString();
+        ite->arrayApply();
+    }
+    virtual QString getHistoryName()
+    {
+        return QObject::tr("Block user data change");
+    }
+};
+
 
 ItemBlock::ItemBlock(QGraphicsItem *parent)
     : LvlBaseItem(parent)
@@ -137,6 +164,9 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *remove =    ItemMenu.addAction(tr("Remove"));
     QAction *remove_all_s =     ItemMenu.addAction(tr("Remove all %1 in this section").arg("BLOCK-%1").arg(m_data.id));
     QAction *remove_all =       ItemMenu.addAction(tr("Remove all %1").arg("BLOCK-%1").arg(m_data.id));
+    ItemMenu.addSeparator();
+
+    QAction *rawUserData =      ItemMenu.addAction(tr("Edit raw user data..."));
     ItemMenu.addSeparator();
 
     QAction *props =     ItemMenu.addAction(tr("Properties..."));
@@ -458,6 +488,26 @@ typeEventAgain:
         }
 cancelRemoveSSS:
         ;
+    }
+    else if(selected == rawUserData)
+    {
+        UserDataEdit d(m_data.meta.custom_params, m_scene->m_subWindow);
+        int ret = d.exec();
+        if(ret == QDialog::Accepted)
+        {
+            LevelData selData;
+            QString ch = d.getText();
+            foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
+            {
+                if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                {
+                    selData.blocks.push_back(((ItemBlock *)SelItem)->m_data);
+                    ((ItemBlock*) SelItem)->m_data.meta.custom_params = ch;
+                    ((ItemBlock*) SelItem)->arrayApply();
+                }
+            }
+            m_scene->m_history->addChangeSettings(selData, new BlockHistory_UserData(), ch);
+        }
     }
     else if(selected == props)
         m_scene->openProps();

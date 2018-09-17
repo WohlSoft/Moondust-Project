@@ -198,6 +198,7 @@ SOURCES += \
     editing/_dialogs/levelfilelist.cpp \
     editing/_dialogs/musicfilelist.cpp \
     editing/_dialogs/savingnotificationdialog.cpp \
+    editing/_dialogs/user_data_edit.cpp \
     editing/_dialogs/wld_setpoint.cpp \
     editing/edit_level/level_edit.cpp \
     editing/edit_level/levelprops.cpp \
@@ -458,6 +459,7 @@ HEADERS  += \
     editing/_dialogs/levelfilelist.h \
     editing/_dialogs/musicfilelist.h \
     editing/_dialogs/savingnotificationdialog.h \
+    editing/_dialogs/user_data_edit.h \
     editing/_dialogs/wld_setpoint.h \
     editing/edit_level/level_edit.h \
     editing/edit_level/levelprops.h \
@@ -579,6 +581,7 @@ FORMS    += \
     editing/_dialogs/levelfilelist.ui \
     editing/_dialogs/musicfilelist.ui \
     editing/_dialogs/savingnotificationdialog.ui \
+    editing/_dialogs/user_data_edit.ui \
     editing/_dialogs/wld_setpoint.ui \
     editing/edit_level/leveledit.ui \
     editing/edit_level/levelprops.ui \
