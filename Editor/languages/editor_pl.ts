@@ -1403,6 +1403,10 @@ pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze mo�
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1539,6 +1543,10 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation>Przepraszamy, ale event &quot;Uderz&quot; został zajęty przez event &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1955,6 +1963,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7419,358 +7431,68 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QtBoolEdit</name>
     <message>
-        <source>True</source>
+        <source>Block user data change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>False</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtBoolPropertyManager</name>
-    <message>
-        <source>True</source>
+        <source>BGO user data change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>False</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtCharEdit</name>
-    <message>
-        <source>Clear Char</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtColorEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtColorPropertyManager</name>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Up Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wait</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IBeam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Backslash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Slash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pointing Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closed Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>What&apos;s This</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
-    <message>
-        <source>Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Strikeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kerning</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
-    <message>
-        <source>Clear Shortcut</source>
+        <source>NPC user data change</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
-        <translation type="unfinished">Język</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Język</translation>
     </message>
 </context>
 <context>
     <name>QtRectFPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
     <name>QtRectPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
     <name>QtSizeFPropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
     <name>QtSizePropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
-    </message>
-</context>
-<context>
-    <name>QtTreePropertyBrowser</name>
-    <message>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
@@ -8623,6 +8345,13 @@ Informacje mogą być uszkodzone!</translation>
     <message>
         <source>One or more SSL errors has occurred: %1</source>
         <translation>Jeden lub więcej błędów SLL: %1</translation>
+    </message>
+</context>
+<context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

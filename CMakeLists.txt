@@ -99,12 +99,21 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
         option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
         message("== Qt 5 has been found in ${Qt5_DIR}")
         get_filename_component(QT5_BINARY_DIR "${Qt5_DIR}/../../bin" ABSOLUTE)
+
         find_program(_QT_LRELEASE_PROGRAM lrelease PATHS ${QT5_BINARY_DIR}/bin/)
         if(_QT_LRELEASE_PROGRAM)
             message(STATUS "Found ${_QT_LRELEASE_PROGRAM}, locales will be compiled!")
         else()
             message(WARNING "Unable to find lrelease, locales will NOT be built!")
         endif()
+
+        find_program(_QT_LUPDATE_PROGRAM lupdate PATHS ${QT5_BINARY_DIR}/bin/)
+        if(_QT_LUPDATE_PROGRAM)
+            message(STATUS "Found ${_QT_LUPDATE_PROGRAM}, locales can be refreshed!")
+        else()
+            message(WARNING "Unable to find lupdate, locales can't be refreshed!")
+        endif()
+
         # Shared deploymend on Windows platforms
         if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
             include(_common/WinDeployQt.cmake)

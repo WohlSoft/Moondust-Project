@@ -1623,6 +1623,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>Las preferencias se copiaron: %1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1763,6 +1767,10 @@ Límites: longitud máxima de 27 caracteres</translation>
     <message>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2193,6 +2201,10 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9819,6 +9831,18 @@ El máximo es %2.</translation>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Block user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BGO user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>
@@ -9993,353 +10017,353 @@ El máximo es %2.</translation>
     <name>QtBoolEdit</name>
     <message>
         <source>True</source>
-        <translation>Verdadero</translation>
+        <translation type="vanished">Verdadero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Falso</translation>
+        <translation type="vanished">Falso</translation>
     </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
     <message>
         <source>True</source>
-        <translation>Verdadero</translation>
+        <translation type="vanished">Verdadero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Falso</translation>
+        <translation type="vanished">Falso</translation>
     </message>
 </context>
 <context>
     <name>QtCharEdit</name>
     <message>
         <source>Clear Char</source>
-        <translation>Limpiar Car</translation>
+        <translation type="vanished">Limpiar Car</translation>
     </message>
 </context>
 <context>
     <name>QtColorEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
     <name>QtColorPropertyManager</name>
     <message>
         <source>Red</source>
-        <translation>Rojo</translation>
+        <translation type="vanished">Rojo</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Verde</translation>
+        <translation type="vanished">Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Azul</translation>
+        <translation type="vanished">Azul</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation>Alfa</translation>
+        <translation type="vanished">Alfa</translation>
     </message>
 </context>
 <context>
     <name>QtCursorDatabase</name>
     <message>
         <source>Arrow</source>
-        <translation>Flecha</translation>
+        <translation type="vanished">Flecha</translation>
     </message>
     <message>
         <source>Up Arrow</source>
-        <translation>Flecha arriba</translation>
+        <translation type="vanished">Flecha arriba</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation>Cruz</translation>
+        <translation type="vanished">Cruz</translation>
     </message>
     <message>
         <source>Wait</source>
-        <translation>Esperar</translation>
+        <translation type="vanished">Esperar</translation>
     </message>
     <message>
         <source>IBeam</source>
-        <translation>IBeam</translation>
+        <translation type="vanished">IBeam</translation>
     </message>
     <message>
         <source>Size Vertical</source>
-        <translation>Tamaño vertical</translation>
+        <translation type="vanished">Tamaño vertical</translation>
     </message>
     <message>
         <source>Size Horizontal</source>
-        <translation>Tamaño horizontal</translation>
+        <translation type="vanished">Tamaño horizontal</translation>
     </message>
     <message>
         <source>Size Backslash</source>
-        <translation>Tamaño barra hacia atrás</translation>
+        <translation type="vanished">Tamaño barra hacia atrás</translation>
     </message>
     <message>
         <source>Size Slash</source>
-        <translation>Tamaño barra hacia adelante</translation>
+        <translation type="vanished">Tamaño barra hacia adelante</translation>
     </message>
     <message>
         <source>Size All</source>
-        <translation>Redimensionar todo</translation>
+        <translation type="vanished">Redimensionar todo</translation>
     </message>
     <message>
         <source>Blank</source>
-        <translation>Blanco</translation>
+        <translation type="vanished">Blanco</translation>
     </message>
     <message>
         <source>Split Vertical</source>
-        <translation>Dividir vertical</translation>
+        <translation type="vanished">Dividir vertical</translation>
     </message>
     <message>
         <source>Split Horizontal</source>
-        <translation>Dividir horizontal</translation>
+        <translation type="vanished">Dividir horizontal</translation>
     </message>
     <message>
         <source>Pointing Hand</source>
-        <translation>Mano apuntando</translation>
+        <translation type="vanished">Mano apuntando</translation>
     </message>
     <message>
         <source>Forbidden</source>
-        <translation>Prohibido</translation>
+        <translation type="vanished">Prohibido</translation>
     </message>
     <message>
         <source>Open Hand</source>
-        <translation>Mano abierta</translation>
+        <translation type="vanished">Mano abierta</translation>
     </message>
     <message>
         <source>Closed Hand</source>
-        <translation>Mano cerrada</translation>
+        <translation type="vanished">Mano cerrada</translation>
     </message>
     <message>
         <source>What&apos;s This</source>
-        <translation>Qué es esto</translation>
+        <translation type="vanished">Qué es esto</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation>Ocupado</translation>
+        <translation type="vanished">Ocupado</translation>
     </message>
 </context>
 <context>
     <name>QtFontEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Select Font</source>
-        <translation>Seleccionar fuente</translation>
+        <translation type="vanished">Seleccionar fuente</translation>
     </message>
 </context>
 <context>
     <name>QtFontPropertyManager</name>
     <message>
         <source>Family</source>
-        <translation>Familia</translation>
+        <translation type="vanished">Familia</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation>Tamaño puntual</translation>
+        <translation type="vanished">Tamaño puntual</translation>
     </message>
     <message>
         <source>Bold</source>
-        <translation>Negrita</translation>
+        <translation type="vanished">Negrita</translation>
     </message>
     <message>
         <source>Italic</source>
-        <translation>Cursiva</translation>
+        <translation type="vanished">Cursiva</translation>
     </message>
     <message>
         <source>Underline</source>
-        <translation>Subrayado</translation>
+        <translation type="vanished">Subrayado</translation>
     </message>
     <message>
         <source>Strikeout</source>
-        <translation>Tachado</translation>
+        <translation type="vanished">Tachado</translation>
     </message>
     <message>
         <source>Kerning</source>
-        <translation>Interletraje</translation>
+        <translation type="vanished">Interletraje</translation>
     </message>
 </context>
 <context>
     <name>QtKeySequenceEdit</name>
     <message>
         <source>Clear Shortcut</source>
-        <translation>Limpiar acceso directo</translation>
+        <translation type="vanished">Limpiar acceso directo</translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
         <source>%1, %2</source>
-        <translation>%1, %2</translation>
+        <translation type="vanished">%1, %2</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation type="vanished">Idioma</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation>País</translation>
+        <translation type="vanished">País</translation>
     </message>
 </context>
 <context>
     <name>QtPointFPropertyManager</name>
     <message>
         <source>(%1, %2)</source>
-        <translation>(%1, %2)</translation>
+        <translation type="vanished">(%1, %2)</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
 </context>
 <context>
     <name>QtPointPropertyManager</name>
     <message>
         <source>(%1, %2)</source>
-        <translation>(%1, %2)</translation>
+        <translation type="vanished">(%1, %2)</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
 </context>
 <context>
     <name>QtPropertyBrowserUtils</name>
     <message>
         <source>[%1, %2, %3] (%4)</source>
-        <translation>[%1, %2, %3] (%4)</translation>
+        <translation type="vanished">[%1, %2, %3] (%4)</translation>
     </message>
     <message>
         <source>[%1, %2]</source>
-        <translation>[%1, %2]</translation>
+        <translation type="vanished">[%1, %2]</translation>
     </message>
 </context>
 <context>
     <name>QtRectFPropertyManager</name>
     <message>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation>[(%1, %2), %3 x %4]</translation>
+        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtRectPropertyManager</name>
     <message>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation>[(%1, %2), %3 x %4]</translation>
+        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtSizeFPropertyManager</name>
     <message>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation type="vanished">%1 x %2</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtSizePolicyPropertyManager</name>
     <message>
         <source>&lt;Invalid&gt;</source>
-        <translation>&lt;Invalido&gt;</translation>
+        <translation type="vanished">&lt;Invalido&gt;</translation>
     </message>
     <message>
         <source>[%1, %2, %3, %4]</source>
-        <translation>[%1, %2, %3, %4]</translation>
+        <translation type="vanished">[%1, %2, %3, %4]</translation>
     </message>
     <message>
         <source>Horizontal Policy</source>
-        <translation>Política horizontal</translation>
+        <translation type="vanished">Política horizontal</translation>
     </message>
     <message>
         <source>Vertical Policy</source>
-        <translation>Política vertical</translation>
+        <translation type="vanished">Política vertical</translation>
     </message>
     <message>
         <source>Horizontal Stretch</source>
-        <translation>Estiramiento horizontal</translation>
+        <translation type="vanished">Estiramiento horizontal</translation>
     </message>
     <message>
         <source>Vertical Stretch</source>
-        <translation>Estiramiento vertical</translation>
+        <translation type="vanished">Estiramiento vertical</translation>
     </message>
 </context>
 <context>
     <name>QtSizePropertyManager</name>
     <message>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation type="vanished">%1 x %2</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtTreePropertyBrowser</name>
     <message>
         <source>Property</source>
-        <translation>Propiedad</translation>
+        <translation type="vanished">Propiedad</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valor</translation>
+        <translation type="vanished">Valor</translation>
     </message>
 </context>
 <context>
@@ -11173,6 +11197,13 @@ Data may be corrupted!</source>
     <message>
         <source>One or more SSL errors has occurred: %1</source>
         <translation>Uno o más errores de SSL ocurrieron: %1</translation>
+    </message>
+</context>
+<context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
