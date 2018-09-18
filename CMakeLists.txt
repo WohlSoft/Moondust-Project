@@ -353,13 +353,9 @@ add_custom_target(put_online_help
     COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/install_online_help.cmake"
 )
 
-if(WIN32)
-    set(PGE_FILE_PORTABLE_APP_INI
-        "[Main]\r\nforce-portable=true\r\n\r\n")
-else()
-    set(PGE_FILE_PORTABLE_APP_INI
-        "[Main]\nforce-portable=true\n\n")
-endif()
+
+set(PGE_FILE_PORTABLE_APP_INI
+    "[Main]\nforce-portable=true\n\n")
 
 file(WRITE "${CMAKE_BINARY_DIR}/install_portable.cmake" "
 file(WRITE
