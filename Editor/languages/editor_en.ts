@@ -1643,7 +1643,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit raw user data...</translation>
     </message>
 </context>
 <context>
@@ -1796,7 +1796,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit raw user data...</translation>
     </message>
 </context>
 <context>
@@ -2242,7 +2242,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit raw user data...</translation>
     </message>
 </context>
 <context>
@@ -10306,15 +10306,15 @@ The maximum number of Music boxes is %2.</translation>
     </message>
     <message>
         <source>Block user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Block user data change</translation>
     </message>
     <message>
         <source>BGO user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO user data change</translation>
     </message>
     <message>
         <source>NPC user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC user data change</translation>
     </message>
 </context>
 <context>
@@ -11442,7 +11442,7 @@ Data may be corrupted!</translation>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation type="unfinished"></translation>
+        <translation>User data editing</translation>
     </message>
 </context>
 <context>

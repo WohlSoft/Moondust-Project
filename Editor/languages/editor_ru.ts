@@ -1583,7 +1583,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Править код польз. данных...</translation>
     </message>
 </context>
 <context>
@@ -1737,7 +1737,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Править код польз. данных...</translation>
     </message>
 </context>
 <context>
@@ -2186,7 +2186,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Править код польз. данных...</translation>
     </message>
 </context>
 <context>
@@ -10208,15 +10208,15 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Block user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменение пользовательских настроек блока</translation>
     </message>
     <message>
         <source>BGO user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменение пользовательских настроек фонового объекта</translation>
     </message>
     <message>
         <source>NPC user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменение пользовательских настроек НеИгрового Персонажа</translation>
     </message>
 </context>
 <context>
@@ -11348,7 +11348,7 @@ Data may be corrupted!</source>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактирование пользовательских данных</translation>
     </message>
 </context>
 <context>
