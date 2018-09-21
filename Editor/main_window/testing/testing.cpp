@@ -229,6 +229,7 @@ void MainWindow::on_action_doTest_triggered()
         else
             args << "--debug-print=no";
 
+        edit->prepareLevelFile(edit->LvlData);
         IntEngine::setTestLvlBuffer(edit->LvlData);
 
         qDebug() << "Executing engine..." << command;

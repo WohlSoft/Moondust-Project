@@ -323,6 +323,8 @@ void LunaTester::startLunaTester()
             {
                 if(m_killPreviousSession)
                     killEngine();
+
+                lvl->prepareLevelFile(lvl->LvlData);
                 m_helper = QtConcurrent::run(this,
                                              &LunaTester::lunaRunnerThread,
                                              lvl->LvlData,

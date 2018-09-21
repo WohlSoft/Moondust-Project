@@ -77,6 +77,42 @@ void LevelEdit::reTranslate()
     setWindowTitle(backup);
 }
 
+void LevelEdit::prepareLevelFile(LevelData &data)
+{
+    if(!sceneCreated || !scene)
+        return;
+
+    dataconfigs *config = scene->m_configs;
+
+    // TODO: make here the synchronizarion with the main scene
+    // Instead of real-time in-scene synchronization, total performance
+    // and safety of workflow turning into one huge hell.
+    // Instead of per-action synchronization, make the data collecting
+    // from off the scene through this function.
+
+    for(LevelNPC &npc : data.npc)
+    {
+        if(npc.id == 0)
+            continue;
+
+        const obj_npc &npc_config = config->main_npc[npc.id];
+
+        if(!npc_config.isValid)
+            continue;
+
+        // Mark stars (for SMBX64 standard)
+        npc.is_star = npc_config.setup.is_star;
+        if((npc.is_star) && (npc.friendly)) // Non-takable stars? Nevermind!
+            npc.is_star = false;
+
+        // Zero containers are not used (for LVLX)
+        if(!npc_config.setup.container)
+            npc.contents = 0;
+        if(!npc_config.setup.special_option)
+            npc.special_data = 0;
+    }
+}
+
 void LevelEdit::focusInEvent(QFocusEvent *event)
 {
     ui->graphicsView->setFocus();

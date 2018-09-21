@@ -264,16 +264,8 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    //Mark stars
-    for(int q = 0; q < LvlData.npc.size(); q++)
-    {
-        if(LvlData.npc[q].id <= 0) continue;
-
-        LvlData.npc[q].is_star = m_mw->configs.main_npc[static_cast<int>(LvlData.npc[q].id)].setup.is_star;
-
-        if((LvlData.npc[q].is_star) && (LvlData.npc[q].friendly))
-            LvlData.npc[q].is_star = false;
-    }
+    // Prepare data for saving
+    prepareLevelFile(LvlData);
 
     // ////////////////// Write Extended LVL file (LVLX)/////////////////////
     if(LvlData.meta.RecentFormat == LevelData::PGEX)

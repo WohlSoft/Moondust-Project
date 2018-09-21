@@ -52,6 +52,8 @@ public:
     LevelData LvlData;
     //QGraphicsScene LvlScene;
 
+    void prepareLevelFile(LevelData &data);
+
     bool newFile(dataconfigs &configs, EditingSettings options);
     bool loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, EditingSettings options);
     void showCustomStuffWarnings();
