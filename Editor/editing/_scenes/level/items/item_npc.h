@@ -35,7 +35,7 @@ public:
     ~ItemNPC();
 
     void setMainPixmap(const QPixmap &pixmap);
-    void setNpcData(LevelNPC inD, obj_npc *mergedSet=0, long *animator_id=0);
+    void setNpcData(LevelNPC inD, obj_npc *mergedSet = 0, long *animator_id = 0, bool isHistoryManager = false);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene=NULL);
 

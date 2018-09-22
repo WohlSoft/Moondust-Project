@@ -206,7 +206,7 @@ void LvlScene::collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem 
     }
 }
 
-void LvlScene::placeAll(const LevelData &data)
+void LvlScene::placeAll(const LevelData &data, bool isHistoryManager)
 {
     bool hasToUpdateDoorData = false;
 
@@ -230,8 +230,7 @@ void LvlScene::placeAll(const LevelData &data)
     {
         //place them back
         m_data->npc.push_back(npc);
-        placeNPC(npc);
-
+        placeNPC(npc, false, isHistoryManager);
     }
 
     for(LevelPhysEnv water : data.physez)

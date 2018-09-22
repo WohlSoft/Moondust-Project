@@ -104,12 +104,6 @@ void LevelEdit::prepareLevelFile(LevelData &data)
         npc.is_star = npc_config.setup.is_star;
         if((npc.is_star) && (npc.friendly)) // Non-takable stars? Nevermind!
             npc.is_star = false;
-
-        // Zero containers are not used (for LVLX)
-        if(!npc_config.setup.container)
-            npc.contents = 0;
-        if(!npc_config.setup.special_option)
-            npc.special_data = 0;
     }
 }
 

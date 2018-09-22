@@ -88,7 +88,7 @@ void HistoryElementModification::processReplacement(const LevelData &toRemoveDat
         lvlSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
 
         //place the old lvl Data
-        lvlScene->placeAll(toPlaceData);
+        lvlScene->placeAll(toPlaceData, true);
     }
 }
 

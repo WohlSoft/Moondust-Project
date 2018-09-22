@@ -292,7 +292,7 @@ public:
 
     ItemBlock *placeBlock(LevelBlock &block, bool toGrid = false);
     ItemBGO *placeBGO(LevelBGO &bgo, bool toGrid = false);
-    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid = false);
+    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid = false, bool isHistoryManager = false);
     ItemPhysEnv *placeEnvironmentZone(LevelPhysEnv &water, bool toGrid = false);
     ItemPlayerPoint *placePlayerPoint(PlayerPoint plr, bool init = false);
 
@@ -321,7 +321,7 @@ public:
     void doorPointsSync(long arrayID, bool remove = false);
     void collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item);
     void collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items);
-    void placeAll(const LevelData &data);
+    void placeAll(const LevelData &data, bool isHistoryManager = false);
 
     void returnItemBackGroup(QList<QGraphicsItem * >items);
     void returnItemBack(QGraphicsItem *item);
