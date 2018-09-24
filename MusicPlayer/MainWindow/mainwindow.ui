@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>506</width>
-    <height>891</height>
+    <width>472</width>
+    <height>277</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -31,8 +31,11 @@
   </property>
   <property name="styleSheet">
    <string notr="true">*{
-background-color: rgb(0, 0, 0);
-color: rgb(0, 255, 0);
+    background-color: rgb(0, 0, 0);
+    color: rgb(0, 255, 0);
+}
+*:!enabled{
+    color: rgb(170, 170, 170);
 }
 QPushButton {
 	background-color: rgb(65, 65, 65);
@@ -49,15 +52,38 @@ QPushButton:pressed {
 }
 QCheckBox {
 	border-color: rgb(0, 170, 0);
-    border-width: 0px;
+    border-width: 1px;
 	color: rgb(0, 255, 255);
  }
-QComboBox, QSpinBox, QLineEdit{
+QComboBox, QSpinBox, QLineEdit:enabled{
 	border-radius: 3px;
     border-width: 2px;
     border-style: solid;
 	border-color: rgb(0, 170, 0);
 	color: rgb(0, 255, 255);
+}
+QSpinBox::up-button {
+    subcontrol-origin: border;
+	color: rgb(0, 255, 255);
+}
+QSpinBox::down-button {
+    subcontrol-origin: border;
+	color: rgb(0, 255, 255);
+}
+QSpinBox::up-button:!enabled {
+    subcontrol-origin: border;
+	color: rgb(230, 230, 230);
+}
+QSpinBox::down-button:!enabled {
+    subcontrol-origin: border;
+	color: rgb(230, 230, 230);
+}
+
+
+QPushButton:!enabled, QSpinBox:!enabled, QLineEdit:!enabled
+{
+    border-color: rgb(120, 120, 120);
+    color: rgb(128, 128, 128);
 }
 QGroupBox
 {
@@ -71,6 +97,7 @@ QLabel
 {
 	background-color: transparent;
 }
+
 </string>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -78,470 +105,8 @@ QLabel
     <property name="sizeConstraint">
      <enum>QLayout::SetMinimumSize</enum>
     </property>
-    <item row="8" column="0" rowspan="2" colspan="2">
-     <widget class="QFrame" name="frame">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <item row="4" column="0" colspan="2">
-        <widget class="QGroupBox" name="sfx_testing">
-         <property name="title">
-          <string>SFX testing</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="sfx_open">
-            <property name="text">
-             <string>SFX File</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>loops (n-1, -1 = forever)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QSpinBox" name="sfx_loops">
-            <property name="minimum">
-             <number>-1</number>
-            </property>
-            <property name="maximum">
-             <number>999999999</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="sfx_play">
-            <property name="text">
-             <string>play</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="sfx_stop">
-            <property name="text">
-             <string>stop</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>time limit (ms)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QSpinBox" name="sfx_timed">
-            <property name="minimum">
-             <number>0</number>
-            </property>
-            <property name="maximum">
-             <number>9999999</number>
-            </property>
-            <property name="value">
-             <number>0</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QPushButton" name="sfx_fadeIn">
-            <property name="text">
-             <string>fade in</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QPushButton" name="sfx_fadeout">
-            <property name="text">
-             <string>fade out</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>volume (0...128)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QSpinBox" name="sfx_volume">
-            <property name="minimum">
-             <number>-1</number>
-            </property>
-            <property name="maximum">
-             <number>128</number>
-            </property>
-            <property name="value">
-             <number>-1</number>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>fade delay (ms)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QSpinBox" name="sfx_fadems">
-            <property name="maximum">
-             <number>9999999</number>
-            </property>
-            <property name="value">
-             <number>1000</number>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="sfx_file">
-            <property name="text">
-             <string>SFX file</string>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QGroupBox" name="gme_setup">
-         <property name="title">
-          <string>Game Music Emulators setup</string>
-         </property>
-         <layout class="QFormLayout" name="formLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Track number:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="trackID">
-            <property name="maximum">
-             <number>9999999</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QGroupBox" name="midi_setup">
-         <property name="title">
-          <string>MIDI Setup</string>
-         </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>MIDI Device:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="mididevice">
-            <item>
-             <property name="text">
-              <string>ADL Midi (OPL3 Synth emulation)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Timidity (GUS-like wavetable MIDI Synth)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Native midi (Built-in MIDI of your OS)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>OPN Midi (YM2612 Synth emulation)</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>FluidSynth (SF2-based wavetable MIDI Synth)</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLineEdit" name="midiRawArgs">
-            <property name="placeholderText">
-             <string>Type raw MIDI arguments here or leave empty to use GUI setup...</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QGroupBox" name="opnmidi_extra">
-         <property name="title">
-          <string>OPNMIDI Extra Setup</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="3">
-           <widget class="QPushButton" name="opn_bank_browse">
-            <property name="text">
-             <string>Browse</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Custom bank file:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLineEdit" name="opn_bank"/>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="opn_use_custom">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this to use custom bank.&lt;/p&gt;&lt;p&gt;Uncheck this if you want to use default bank and keep custom bank field be filled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QCheckBox {
-	border-color: rgb(0, 170, 0);
-    border-width: 1px;
-	color: rgb(0, 255, 255);
- }</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QGroupBox" name="adlmidi_xtra">
-         <property name="title">
-          <string>ADLMIDI Extra Setup</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>ADL Midi bank ID:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="fmbank">
-            <property name="currentIndex">
-             <number>-1</number>
-            </property>
-            <property name="maxVisibleItems">
-             <number>50</number>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Volume ranges model:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="volumeModel">
-            <item>
-             <property name="text">
-              <string>[Auto]</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Generic</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>CMF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DMX</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Apogee</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>9X</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="tremolo">
-            <property name="text">
-             <string>Tremolo</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <property name="tristate">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="2">
-           <widget class="QCheckBox" name="vibrato">
-            <property name="text">
-             <string>Vibrato</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <property name="tristate">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QCheckBox" name="adlibMode">
-            <property name="text">
-             <string>Ad-Lib drums mode</string>
-            </property>
-            <property name="tristate">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0" colspan="2">
-           <widget class="QCheckBox" name="modulation">
-            <property name="text">
-             <string>Scalable modulation</string>
-            </property>
-            <property name="tristate">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0" colspan="2">
-           <widget class="QCheckBox" name="logVolumes">
-            <property name="text">
-             <string>Use logarithmic volumes (Generic and CMF volume models only)</string>
-            </property>
-            <property name="tristate">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0" colspan="2">
-           <widget class="QPushButton" name="resetDefaultADLMIDI">
-            <property name="text">
-             <string>Reset to defaults</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QFrame" name="frame_3">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <property name="spacing">
-              <number>5</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QCheckBox" name="adl_use_custom">
-               <property name="toolTip">
-                <string>Check this to use custom bank.
-Uncheck this if you want to use default bank and keep custom bank field be filled.</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QCheckBox {
-	border-color: rgb(0, 170, 0);
-    border-width: 1px;
-	color: rgb(0, 255, 255);
- }</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>Custom bank file:</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="adl_bank"/>
-             </item>
-             <item>
-              <widget class="QPushButton" name="adl_bank_browse">
-               <property name="text">
-                <string>Browse</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="2" column="0" colspan="2">
-     <widget class="QLabel" name="musArtist">
+     <widget class="LabelMarquee" name="musArtist">
       <property name="styleSheet">
        <string notr="true">border-width: 1px;
 border-style: solid;
@@ -558,7 +123,7 @@ border-bottom-color: rgb(0, 120, 0);
      </widget>
     </item>
     <item row="1" column="0" colspan="2">
-     <widget class="QLabel" name="musTitle">
+     <widget class="LabelMarquee" name="musTitle">
       <property name="styleSheet">
        <string notr="true">border-width: 1px;
 border-style: solid;
@@ -571,13 +136,6 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
       <property name="scaledContents">
        <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0" colspan="2">
-     <widget class="QCheckBox" name="recordWav">
-      <property name="text">
-       <string>Record WAV</string>
       </property>
      </widget>
     </item>
@@ -699,6 +257,9 @@ border-bottom-color: rgb(0, 120, 0);
        </item>
        <item>
         <widget class="QLabel" name="isLooping">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Current music has an embedded loop&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -725,7 +286,7 @@ border-bottom-color: rgb(0, 120, 0);
      </widget>
     </item>
     <item row="4" column="0" colspan="2">
-     <widget class="QLabel" name="musCopyright">
+     <widget class="LabelMarquee" name="musCopyright">
       <property name="styleSheet">
        <string notr="true">border-width: 1px;
 border-style: solid;
@@ -742,7 +303,7 @@ border-bottom-color: rgb(0, 120, 0);
      </widget>
     </item>
     <item row="3" column="0" colspan="2">
-     <widget class="QLabel" name="musAlbum">
+     <widget class="LabelMarquee" name="musAlbum">
       <property name="styleSheet">
        <string notr="true">border-width: 1px;
 border-style: solid;
@@ -796,18 +357,199 @@ border-bottom-color: rgb(0, 120, 0);
       </property>
      </widget>
     </item>
+    <item row="7" column="0">
+     <widget class="QFrame" name="frame_3">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QCheckBox" name="recordWav">
+         <property name="text">
+          <string>Record WAV</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>148</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QFrame" name="gme_setup">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Track number:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="trackID">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="maximum">
+             <number>9999999</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>472</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuSetup">
+    <property name="title">
+     <string>Setup</string>
+    </property>
+    <addaction name="actionMidiSetup"/>
+    <addaction name="actionSfxTesting"/>
+    <addaction name="actionFileAssoc"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnableReverb"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionHelpGitHub"/>
+    <addaction name="actionHelpLicense"/>
+    <addaction name="separator"/>
+    <addaction name="actionHelpAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSetup"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionMidiSetup">
+   <property name="text">
+    <string>MIDI Setup</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionHelpLicense">
+   <property name="text">
+    <string>GPL License</string>
+   </property>
+  </action>
+  <action name="actionHelpAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionHelpGitHub">
+   <property name="text">
+    <string>Visit Github page...</string>
+   </property>
+  </action>
+  <action name="actionSfxTesting">
+   <property name="text">
+    <string>SFX Testing</string>
+   </property>
+  </action>
+  <action name="actionEnableReverb">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable reverb</string>
+   </property>
+  </action>
+  <action name="actionFileAssoc">
+   <property name="text">
+    <string>File associations...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <tabstops>
-  <tabstop>trackID</tabstop>
-  <tabstop>mididevice</tabstop>
-  <tabstop>fmbank</tabstop>
-  <tabstop>tremolo</tabstop>
-  <tabstop>vibrato</tabstop>
-  <tabstop>modulation</tabstop>
- </tabstops>
+ <customwidgets>
+  <customwidget>
+   <class>LabelMarquee</class>
+   <extends>QLabel</extends>
+   <header>MainWindow/label_marquee.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../_resources/musicplayer.qrc"/>
  </resources>

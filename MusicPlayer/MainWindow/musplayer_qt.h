@@ -11,6 +11,10 @@
 #include <QMimeData>
 #include <QTimer>
 
+class SeekBar;
+class SfxTester;
+class SetupMidi;
+
 namespace Ui {
 class MainWindow;
 }
@@ -24,7 +28,7 @@ public:
     explicit MusPlayer_Qt(QWidget *parent = 0);
     virtual ~MusPlayer_Qt();
 
-public slots:
+protected:
     /*!
      * \brief Drop event, triggers when some object was dropped to main window
      * \param e Event parameters
@@ -37,6 +41,9 @@ public slots:
      */
     void dragEnterEvent(QDragEnterEvent *e);
 
+    void moveEvent(QMoveEvent *event);
+
+public slots:
     /*!
      * \brief Context menu
      * \param pos Mouse cursor position
@@ -51,35 +58,34 @@ public slots:
     //void playList_popCurrent(bool x = false);
     //void playListNext();
 
-    void switchMidiDevice(int index);
-
 private slots:
+    void restartMusic();
+
     void on_open_clicked();
     void on_stop_clicked();
     void on_play_clicked();
-    void on_mididevice_currentIndexChanged(int index);
+
     void on_trackID_editingFinished();
+
     void on_recordWav_clicked(bool checked);
-    void on_resetDefaultADLMIDI_clicked();
+
     /*!
      * \brief Changes color of "Recording WAV" label between black and red
      */
     void _blink_red();
 
-    void on_sfx_open_clicked();
-    void on_sfx_play_clicked();
-    void on_sfx_fadeIn_clicked();
-    void on_sfx_stop_clicked();
-    void on_sfx_fadeout_clicked();
-
     void updatePositionSlider();
-    void on_musicPosition_valueChanged(int value);
+    void musicPosition_seeked(double value);
 
-    void on_opn_bank_browse_clicked();
-    void on_opn_bank_editingFinished();
-
-    void on_adl_bank_browse_clicked();
-    void on_adl_bank_editingFinished();
+    void on_actionOpen_triggered();
+    void on_actionQuit_triggered();
+    void on_actionHelpLicense_triggered();
+    void on_actionHelpAbout_triggered();
+    void on_actionHelpGitHub_triggered();
+    void on_actionMidiSetup_triggered();
+    void on_actionSfxTesting_triggered();
+    void on_actionEnableReverb_triggered(bool checked);
+    void on_actionFileAssoc_triggered();
 
 private:
     bool playListMode = false;
@@ -91,8 +97,11 @@ private:
     //! UI form class pointer
     Ui::MainWindow *ui;
 
-    Mix_Chunk *m_testSfx = nullptr;
-    QString    m_testSfxDir;
+    QPoint    m_oldWindowPos;
+
+    SeekBar   *m_seekBar = nullptr;
+    SfxTester *m_sfxTester = nullptr;
+    SetupMidi *m_setupMidi = nullptr;
 };
 
 #endif // MUSPLAYER_QT_H

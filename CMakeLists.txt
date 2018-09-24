@@ -214,6 +214,9 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
     option(PGE_BUILD_MUSICPLAYER "Build the SDL Mixer X Music Player component (Qt5 required)" ON)
     if(PGE_BUILD_MUSICPLAYER)
         add_subdirectory(MusicPlayer)
+        # Append changelog file
+        InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/changelog.musplay.txt" RENAME "changelog.musplay.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        # Deployment list
         list(APPEND WINDEPLOY_LIST pge_musplay)
     endif()
 
@@ -467,6 +470,7 @@ if(WIN32) # Deployment for Windows
             "${ZIP_SRC_DIR}/SDL2${PGE_DLL_SUFFIX}.dll"
             "${ZIP_SRC_DIR}/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
             "${ZIP_SRC_DIR}/pge_musplay.exe"
+            "${ZIP_SRC_DIR}/changelog.musplay.txt"
         )
 
         set(PGE_CalibratorFiles
