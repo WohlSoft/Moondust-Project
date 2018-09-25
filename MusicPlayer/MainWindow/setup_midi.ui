@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
+    <width>453</width>
     <height>574</height>
    </rect>
   </property>
@@ -61,7 +61,7 @@
         </item>
         <item>
          <property name="text">
-          <string>CMF</string>
+          <string>Native OPL3</string>
          </property>
         </item>
         <item>
@@ -317,7 +317,7 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </item>
         <item>
          <property name="text">
-          <string>CMF</string>
+          <string>Native OPN2</string>
          </property>
         </item>
         <item>
