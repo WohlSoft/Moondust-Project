@@ -38,9 +38,10 @@
  */
 static obj_npc &getNpcProps(LevelNPC &npc, MainWindow *mw)
 {
-    int tarNPC = npc.id;
+    int tarNPC = static_cast<int>(npc.id);
     obj_npc *findNPC;
-    if(mw->configs.main_npc[tarNPC].setup.container)
+    obj_npc &thisNPC = mw->configs.main_npc[tarNPC];
+    if(thisNPC.setup.container && !thisNPC.setup.special_option)
         findNPC = &mw->configs.main_npc[npc.contents];
     else
         findNPC = &mw->configs.main_npc[tarNPC];
