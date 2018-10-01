@@ -15,7 +15,7 @@ CMAKE_GENERATOR="Unix Makefiles"
 flag_debugThisScript=false
 flag_debugDependencies=false
 flag_pack_src=false
-flag_cmake_it=false
+flag_cmake_it=true
 flag_cmake_it_ninja=false
 flag_cmake_deploy=false
 flag_cmake_static_qt=false
@@ -28,6 +28,9 @@ do
             echo ""
             printf "=== \e[44mBuild script for PGE Project for UNIX-Like operating\e[0m ===\n"
             echo ""
+            if [[ "$(which cmake)" == "" ]]; then
+                printf " \E[0;4;41;37mIMPORTANT!: CMake is not installed! CMake is required to build this project.\E[0m\n\n"
+            fi
             printf "\E[4mSYNTAX:\E[0m\n"
             echo ""
             printf "    $0 \e[90m[<arg1>] [<arg2>] [<arg2>] ...\e[0m\n"
@@ -50,10 +53,11 @@ do
                 printf " \E[0;4;44;37m<To use LDoc you need to build the project first!>\E[0m\n"
             fi
 
-            printf " \E[1;4mcmake-it\E[0m         - Run build through experimental alternative build on CMake\n"
-            if [[ "$(which cmake)" == "" ]]; then
-                printf " \E[0;4;41;37m<cmake is not installed!>\E[0m\n"
-            fi
+            # printf " \E[1;4mcmake-it\E[0m         - Run build through CMake\n"
+            # if [[ "$(which cmake)" == "" ]]; then
+            #    printf " \E[0;4;41;37m<cmake is not installed!>\E[0m\n"
+            # fi
+            printf " \E[1;4mqmake-it\E[0m         - Run legacy build through QMake\n"
 
             printf " \E[1;4mpack-src\E[0m         - Create the source code archive (git-archive-all is required!)'\n"
             if [[ "$(which git-archive-all)" == "" ]]; then
@@ -120,6 +124,9 @@ do
             ;;
         cmake-it)
                 flag_cmake_it=true
+            ;;
+        qmake-it)
+                flag_cmake_it=false
             ;;
         ninja)
                 CMAKE_GENERATOR="Ninja"
@@ -500,14 +507,11 @@ fi
 
 # Alternative building through CMake
 if $flag_cmake_it ; then
-    echo "==== Alternative build via CMake will be ran ===="
-    echo "It's experimental build yet which will replace"
-    echo "this clunky build system soon."
-    echo "I hope you will like it ;3"
-    echo ""
-    echo "Wohlstand."
-    echo "================================================="
-    echo ""
+
+    if [[ "$(which cmake)" == "" ]]; then
+        printf " \E[0;4;41;37mFATAL ERROR!: CMake is not installed! CMake is required to build this project.\E[0m\n\n"
+        exit 1
+    fi
 
     deployTarget="create_tar"
     if [[ "$OSTYPE" == "darwin"* ]]; then

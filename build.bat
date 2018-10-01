@@ -3,7 +3,7 @@
 SET NoPause=0
 SET BuildArgs=
 SET MAKE_EXTRA_ARGS=-j 4
-SET CMakeIt=0
+SET CMakeIt=1
 SET CMakeNinja=0
 SET CMakeDeploy=0
 SET DebugBuild=0
@@ -25,6 +25,7 @@ if "%1"=="nomanager" SET BuildArgs=%BuildArgs% CONFIG+=nomanager
 if "%1"=="nomaintainer" SET BuildArgs=%BuildArgs% CONFIG+=nomaintainer
 if "%1"=="nomusicplayer" SET BuildArgs=%BuildArgs% CONFIG+=nomusicplayer
 if "%1"=="cmake-it" SET CMakeIt=1
+if "%1"=="qmake-it" SET CMakeIt=0
 if "%1"=="deploy" SET CMakeDeploy=1
 if "%1"=="ninja" SET CMakeNinja=1
 if "%1"=="debug" SET DebugBuild=1
@@ -51,7 +52,8 @@ echo  clean                - Remove all object files and caches to build from sc
 echo  update-submodules    - Pull all submodules up to their latest states
 echo  repair-submodules    - Repair invalid or broken submodules
 echo  --help               - Print this manual
-echo  cmake-it             - Run build through experimental alternative build on CMake
+rem echo  cmake-it             - Run build through CMake
+echo  qmake-it             - Run legacy build through QMake
 echo  debug                - Run build in debug configuration
 echo  ninja                - Use Ninja build system (CMake only build)
 echo  deploy               - Automatically run a deploymed (CMake only build)
@@ -112,15 +114,6 @@ rem ------------------------------------------------------------
 rem ------------------------------------------------------------
 goto run
 :cMakeIt
-    
-echo ==== Alternative build via CMake will be ran ====
-echo It's experimental build yet which will replace
-echo this clunky build system soon.
-echo I hope you will like it ;3
-echo.
-echo Wohlstand.
-echo =================================================
-echo.
 
 set BUILD_DIR=%SRCDIR%/build-pge-cmake%BUILD_DIR_SUFFUX%
 set INSTALL_DIR=%SRCDIR%/bin-cmake%BUILD_DIR_SUFFUX%
