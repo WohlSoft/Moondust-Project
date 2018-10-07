@@ -23,6 +23,8 @@ include_directories(
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags

@@ -19,8 +19,8 @@
 
 #include "../pge_version.h" //Global Project version file
 
-#ifndef EDITOR_VERSION_H
-#define EDITOR_VERSION_H
+#ifndef ENGINE_VERSION_H
+#define ENGINE_VERSION_H
 
 #ifdef GIT_VERSION
 #define V_BUILD_VER GIT_VERSION
@@ -28,12 +28,35 @@
 #define V_BUILD_VER "<empty>"
 #endif
 
-#define V_VF1 0
-#define V_VF2 3
-#define V_VF3 0
-#define V_VF4 0
+#ifdef ENGINE_VERSION_1
+#   define V_VF1 ENGINE_VERSION_1
+#else
+#   define V_VF1 0
+#endif
 
-#define V_FILE_RELEASE "-alpha"
+#ifdef ENGINE_VERSION_2
+#   define V_VF2 ENGINE_VERSION_2
+#else
+#   define V_VF2 0
+#endif
+
+#ifdef ENGINE_VERSION_3
+#   define V_VF3 ENGINE_VERSION_3
+#else
+#   define V_VF3 0
+#endif
+
+#ifdef ENGINE_VERSION_4
+#   define V_VF4 ENGINE_VERSION_4
+#else
+#   define V_VF4 0
+#endif
+
+#ifdef ENGINE_VERSION_REL
+#   define V_FILE_RELEASE STR_VALUE(ENGINE_VERSION_REL)
+#else
+#   define V_FILE_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
 
 #define V_VF1_s STR_VALUE(V_VF1)
 #define V_VF2_s STR_VALUE(V_VF2)

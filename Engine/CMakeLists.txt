@@ -29,6 +29,8 @@ if(MSVC)
     endif()
 endif()
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
@@ -434,8 +436,8 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_engine.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_engine"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-engine"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "0.3-alpha"
-        MACOSX_BUNDLE_LONG_VERSION_STRING "0.3-alpha"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${ENGINE_VERSION_STRING}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${ENGINE_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "cat.icns"
         CPACK_BUNDLE_NAME "PGE Engine"
         MACOSX_BUNDLE_INFO_STRING "Platform Game Engine by Wohlstand"

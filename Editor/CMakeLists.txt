@@ -40,6 +40,8 @@ if(MSVC)
     endif()
 endif()
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
@@ -589,8 +591,8 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_editor.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_editor"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-editor"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "0.3.1.11-1"
-        MACOSX_BUNDLE_LONG_VERSION_STRING "0.3.1.11-1"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${EDITOR_VERSION_STRING}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${EDITOR_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "cat_builder.icns"
         CPACK_BUNDLE_NAME "PGE Editor"
         MACOSX_BUNDLE_INFO_STRING "Level and World map Editor for PGE Project"

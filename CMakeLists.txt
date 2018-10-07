@@ -140,6 +140,9 @@ else()
     set(PGE_SHARED_SDLMIXER ON)
 endif()
 
+# Version of complete toolchain
+include(version.cmake)
+
 # Dependent libraries
 include(_common/library_FreeImage.cmake)
 include(_common/library_FreeType.cmake)

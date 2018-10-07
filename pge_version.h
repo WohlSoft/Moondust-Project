@@ -19,10 +19,35 @@
 #ifndef GLOBAL_PGE_VERSION
 #define GLOBAL_PGE_VERSION
 
-#define V_VP1 0
-#define V_VP2 4
-#define V_VP3 1
-#define V_VP4 0
+#ifdef PGE_TOOLCHAIN_VERSION_1
+#   define V_VP1 PGE_TOOLCHAIN_VERSION_1
+#else
+#   define V_VP1 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_2
+#   define V_VP2 PGE_TOOLCHAIN_VERSION_2
+#else
+#   define V_VP2 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_3
+#   define V_VP3 PGE_TOOLCHAIN_VERSION_3
+#else
+#   define V_VP3 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_4
+#   define V_VP4 PGE_TOOLCHAIN_VERSION_4
+#else
+#   define V_VP4 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_REL
+#   define V_TOOLCHAIN_RELEASE PGE_TOOLCHAIN_VERSION_REL
+#else
+#   define V_TOOLCHAIN_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
 
 #define GEN_VERSION_NUMBER_2(v1,v2)     v1 "." v2
 #define GEN_VERSION_NUMBER_3(v1,v2,v3)  v1 "." v2 "." v3

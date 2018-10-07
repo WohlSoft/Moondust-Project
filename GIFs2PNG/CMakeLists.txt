@@ -23,6 +23,8 @@ if(MSVC)
     endif()
 endif()
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
