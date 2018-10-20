@@ -108,7 +108,7 @@
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>Properties box will not be shown atomatically when you select an item to place.</translation>
+        <translation>Properties box will not be shown automatically when you select an item to place.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
@@ -898,10 +898,6 @@ Are you want to configure it?</translation>
         <translation>Level: NPCs (%1/%2)</translation>
     </message>
     <message>
-        <source>World map: Terrian tiles (%1/%2)</source>
-        <translation type="vanished">World map: Terrian tiles (%1/%2)</translation>
-    </message>
-    <message>
         <source>World map: Terrain tiles (%1/%2)</source>
         <translation>World map: Terrain tiles (%1/%2)</translation>
     </message>
@@ -999,11 +995,6 @@ Are you want to configure it?</translation>
     </message>
     <message>
         <source>Crash recovery</source>
-        <comment>Crash-Save - emergency file saving after crash. A title of message box.</comment>
-        <translation type="vanished">Crash recovery</translation>
-    </message>
-    <message>
-        <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation>Crash recovery</translation>
     </message>
@@ -1011,12 +1002,6 @@ Are you want to configure it?</translation>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>Since the last crash, the editor recovered some files.
-Please save them before doing anything else.</translation>
-    </message>
-    <message>
-        <source>Since the last crash, the editor recorved some files.
-Please save them first before doing anything else.</source>
-        <translation type="obsolete">Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</translation>
     </message>
 </context>
@@ -1061,14 +1046,6 @@ Please save them before doing anything else.</translation>
     <message>
         <source>NPC</source>
         <translation>NPC</translation>
-    </message>
-    <message>
-        <source>Tile</source>
-        <translation type="vanished">Tile</translation>
-    </message>
-    <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -2036,12 +2013,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
         <translation>Friendly (Non-friendly NPCs can&apos;t be talked to)</translation>
     </message>
-    <message>
-        <source>Please, enter NPC&apos;s talkative message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Please enter NPC&apos;s dialog message
-(Max length per line is 28 characters)</translation>
-    </message>
 </context>
 <context>
     <name>ItemMusic</name>
@@ -2526,10 +2497,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>Terrain tile</source>
         <translation>Terrain tile</translation>
-    </message>
-    <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <source>[Empty]</source>
@@ -3686,7 +3653,7 @@ To use LunaTester you must use the Integration configuration package!</translati
     </message>
     <message>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>Terminate running process</translation>
     </message>
@@ -4285,12 +4252,6 @@ the destination section first with &apos;Delete Section&apos;.</translation>
         <translation>Please enter message
 (Max line length is 27 characters)</translation>
     </message>
-    <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Please enter message
-(Max line length is 28 characters)</translation>
-    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -4704,10 +4665,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
         <translation type="vanished">Remove warp entry</translation>
     </message>
     <message>
-        <source>Changed Warpsetting [%1]</source>
-        <translation type="vanished">Changed Warp Setting [%1]</translation>
-    </message>
-    <message>
         <source>Add Event</source>
         <translation type="vanished">Add Event</translation>
     </message>
@@ -4718,10 +4675,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
     <message>
         <source>Copy Event</source>
         <translation type="vanished">Copy Event</translation>
-    </message>
-    <message>
-        <source>Changed Eventsetting [%1]</source>
-        <translation type="vanished">Changed Event Setting [%1]</translation>
     </message>
     <message>
         <source>Move Items to new Layer</source>
@@ -4750,14 +4703,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
     <message>
         <source>Merge Layer</source>
         <translation type="vanished">Merge Layer</translation>
-    </message>
-    <message>
-        <source>Changed Sectionsetting [%1]</source>
-        <translation type="vanished">Changed Section Setting [%1]</translation>
-    </message>
-    <message>
-        <source>Changed Levelsetting [%1]</source>
-        <translation type="vanished">Changed Level Settings [%1]</translation>
     </message>
     <message>
         <source>Place Player Point</source>
@@ -4790,10 +4735,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
     <message>
         <source>Boss</source>
         <translation type="vanished">Boss</translation>
-    </message>
-    <message>
-        <source>Not Moveable</source>
-        <translation type="vanished">Not movable</translation>
     </message>
     <message>
         <source>Message</source>
@@ -5576,7 +5517,7 @@ The special state is defined by the active configuration pack.</translation>
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
         <translation>Show a blank screen instead of the standard loading screen.
 If this option is not selected, you will see the current character
@@ -5965,12 +5906,6 @@ Please select the map you want to use:</translation>
         <translation type="vanished">Please switch current section to %1 to capture data for this event</translation>
     </message>
     <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Please enter message
-(Max line length is 28 characters)</translation>
-    </message>
-    <message>
         <source>Music file:</source>
         <translation type="vanished">Music file:</translation>
     </message>
@@ -6045,10 +5980,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>Level Sections Switch</source>
         <translation>Switch level section</translation>
-    </message>
-    <message>
-        <source>Lock Terrian tiles</source>
-        <translation type="vanished">Lock Terrian tiles</translation>
     </message>
     <message>
         <source>Lock Scenery tiles</source>
@@ -6661,9 +6592,9 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Anti-overlap protection</translation>
     </message>
     <message>
-        <source>Enable anti-overlap protection. 
+        <source>Enable anti-overlap protection.
 Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</source>
-        <translation type="vanished">Prevents similar items from overlapping each other. 
+        <translation type="vanished">Prevents similar items from overlapping each other.
 Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</translation>
     </message>
     <message>
@@ -8527,10 +8458,10 @@ The PGE Engine is still at an early stage in development, and there are several 
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
-        <translation>Could not find engine application: 
+        <translation>Could not find engine application:
 %1
 Please, choose the engine application yourself!</translation>
     </message>
@@ -8549,7 +8480,7 @@ Do you want to save file or you want to run test of copy which is currently save
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
         <translation type="vanished">Unable to start testing, could not find the PGE Engine executable:
@@ -8557,7 +8488,7 @@ Please, check the application directory and make sure it is installed properly.<
 Please check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
-        <source>Engine is not found: 
+        <source>Engine is not found:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
         <translation type="vanished">Could not find the PGE Engine executable:
@@ -9957,23 +9888,23 @@ Forum link: wohlsoft.ru/forum</translation>
         <translation type="vanished">Editor was killed by mad maniac :-P [SIGKILL]</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+        <translation>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+        <translation>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff, or create an issue on GitHub,
@@ -9999,11 +9930,11 @@ Forum link: http://wohlsoft.ru/forum</translation>
         <translation>Floating-point exception [SIGFPE]</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+        <translation>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </translation>
@@ -10165,7 +10096,7 @@ The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
         <translation>SMBX64 standard doesn&apos;t allow saving %1 sections.
 The maximum number of sections is %2.
-All boundaries and settings of sections higher than 21 will be lost 
+All boundaries and settings of sections higher than 21 will be lost
 f you save in this format.</translation>
     </message>
     <message>
@@ -10811,10 +10742,6 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Save</source>
         <translation type="vanished">Save</translation>
-    </message>
-    <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <source>Open</source>
