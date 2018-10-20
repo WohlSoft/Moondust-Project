@@ -11008,7 +11008,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation>Пожалкйста, введите имя файла!</translation>
+        <translation>Пожалуйста, введите имя файла!</translation>
     </message>
     <message>
         <source>Filename:</source>
