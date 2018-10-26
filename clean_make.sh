@@ -32,8 +32,8 @@ kfile _Libs/AudioCodecs/libvorbis
 kfile _Libs/AudioCodecs/libFLAC
 kfile _Libs/AudioCodecs/libADLMIDI
 kfile _Libs/AudioCodecs/libOPNMIDI
-kfile _Libs/AudioCodecs/libtimidity
-kfile _Libs/AudioCodecs/libid3tag
+kfile _Libs/AudioCodecs/libtimidity-sdl
+kfile _Libs/AudioCodecs/libid3tag-sdl
 kfile _Libs/AudioCodecs/libmad
 kfile _Libs/AudioCodecs/zlib
 kfile _Libs/AudioCodecs/libgme
