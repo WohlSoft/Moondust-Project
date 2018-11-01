@@ -26,7 +26,15 @@ about::about(QWidget *parent) :
     ui(new Ui::about)
 {
     ui->setupUi(this);
-    ui->about1->setText(ui->about1->text().arg(V_FILE_VERSION).arg(V_FILE_RELEASE));
+    ui->about1->setText(ui->about1->text()
+                           .arg(V_FILE_VERSION)
+                           .arg(V_FILE_RELEASE)
+                           .arg(FILE_CPU)
+                           .arg(QString("Revision: %1-%2, Build date: <u>%3</u>")
+                                        .arg(V_BUILD_VER)
+                                        .arg(V_BUILD_BRANCH)
+                                        .arg(V_DATE_OF_BUILD))
+                        );
 }
 
 about::~about()

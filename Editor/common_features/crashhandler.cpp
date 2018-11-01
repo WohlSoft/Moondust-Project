@@ -50,6 +50,7 @@ static const char *g_messageToUser =
     V_FILE_DESC " version: " V_FILE_VERSION V_FILE_RELEASE "\n"
     "Architecture: " FILE_CPU "\n"
     "GIT Revision code: " GIT_VERSION "\n"
+    "GIT branch: " V_BUILD_BRANCH "\n"
     "Build date: " V_DATE_OF_BUILD "\n"
     "================================================\n"
     " Please send this log file to the developers by one of ways:\n"

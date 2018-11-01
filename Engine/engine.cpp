@@ -450,7 +450,7 @@ bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
 
         if(arg.compare("--version") == 0)
         {
-            std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << std::endl;
+            std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
             std::cout.flush();
             return false;
         }

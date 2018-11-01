@@ -29,6 +29,12 @@
 #define V_BUILD_VER "<empty>"
 #endif
 
+#ifdef GIT_BRANCH
+#define V_BUILD_BRANCH GIT_BRANCH
+#else
+#define V_BUILD_BRANCH "<unknown>"
+#endif
+
 //Version of this program
 
 #ifdef CALIBRATOR_VERSION_1

@@ -59,8 +59,9 @@ aboutDialog::aboutDialog(QWidget *parent) :
                         .arg(V_FILE_VERSION)
                         .arg(V_FILE_RELEASE)
                         .arg(FILE_CPU)
-                        .arg(QString("Revision: %1, Build date: <u>%2</u>")
+                        .arg(QString("Revision: %1-%2, Build date: <u>%3</u>")
                              .arg(V_BUILD_VER)
+                             .arg(V_BUILD_BRANCH)
                              .arg(V_DATE_OF_BUILD))
                         );
 

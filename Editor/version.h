@@ -28,6 +28,12 @@
 #define V_BUILD_VER "<empty>"
 #endif
 
+#ifdef GIT_BRANCH
+#define V_BUILD_BRANCH GIT_BRANCH
+#else
+#define V_BUILD_BRANCH "<unknown>"
+#endif
+
 #ifdef EDITOR_VERSION_1
 #   define V_VF1 EDITOR_VERSION_1
 #else
