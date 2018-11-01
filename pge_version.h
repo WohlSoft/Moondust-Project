@@ -43,6 +43,12 @@
 #   define V_VP4 0
 #endif
 
+#ifdef PGE_CONFIG_PACK_API_VERSION
+#   define V_CP_API PGE_CONFIG_PACK_API_VERSION
+#else
+#   define V_CP_API 0
+#endif
+
 #ifdef PGE_TOOLCHAIN_VERSION_REL
 #   define V_TOOLCHAIN_RELEASE PGE_TOOLCHAIN_VERSION_REL
 #else
