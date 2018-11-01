@@ -1,0 +1,44 @@
+{
+    "alienShit": {
+        "child1": 12,
+        "child2": "a sh9t",
+        "child3": "1t4t1"
+    },
+    "checkMe": true,
+    "checkMeNot": false,
+    "choice": 3,
+    "choice2": 24,
+    "fanSeeYou": {
+        "h": 12.11,
+        "w": 12.054,
+        "x": -1.05224,
+        "y": 34
+    },
+    "floatOfWhere": {
+        "x": 12.02,
+        "y": -12.104
+    },
+    "floatTest": 3.6999999999999993,
+    "floatingBrick": {
+        "h": 34.2,
+        "w": 40.22
+    },
+    "iCanSeeYou": {
+        "h": 18,
+        "w": 11,
+        "x": 38,
+        "y": -64
+    },
+    "sizeOfMyAss": {
+        "h": 21,
+        "w": 4
+    },
+    "someAnother": {
+        "kekVision": 5
+    },
+    "testNumber": 27,
+    "whereIsMySombrero": {
+        "x": 6,
+        "y": -35
+    }
+}
