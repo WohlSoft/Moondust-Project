@@ -61,7 +61,9 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}]")
+set(PACKAGE_SUFFIX ${GIT_BRANCH})
+
+message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}] ==")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
@@ -385,7 +387,7 @@ if(UNIX AND NOT APPLE) # Deployment for UNIX-like operating system except macOS
     add_custom_target(create_tar
         WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
         COMMAND ${CMAKE_COMMAND} -E tar "-cjvf"
-            "pge_project-${CMAKE_SYSTEM_NAME_LOWER}-${PGE_ARCHITECTURE_BITS}.tar.bz2"
+            "pge_project-${CMAKE_SYSTEM_NAME_LOWER}-${PACKAGE_SUFFIX}-${PGE_ARCHITECTURE_BITS}.tar.bz2"
             "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}"
             COMMENT "Packing tarball..."
     )
@@ -400,7 +402,7 @@ if(APPLE)
             --window-size 800 600
             --app-drop-link 450 320
             --subfolder
-            "${CMAKE_INSTALL_PREFIX}/pge-project-dev-macosx.dmg"
+            "${CMAKE_INSTALL_PREFIX}/pge-project-${PACKAGE_SUFFIX}-macosx.dmg"
             "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/"
             COMMENT "Packing DMG..."
     )
@@ -531,16 +533,16 @@ if(WIN32) # Deployment for Windows
 
         add_custom_target(create_zip_install
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-common-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-common-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallCommonFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-editor-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-editor-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallEditorFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-engine-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-engine-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallEngineFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-tools-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-tools-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallToolsFiles}
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing common install files into ZIP archive..."
@@ -548,22 +550,22 @@ if(WIN32) # Deployment for Windows
 
         add_custom_target(create_zip_tools
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/pge-musplay-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/pge-musplay-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_MusPlayFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/pge-maintainer-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/pge-maintainer-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_MaintainerFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/pge-calibrator-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/pge-calibrator-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_CalibratorFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/GIFs2PNG-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/GIFs2PNG-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_Gifs2PngFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/PNG2GIFs-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/PNG2GIFs-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_Png2GifsFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/LazyFixTool-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/LazyFixTool-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_LazyFixToolFiles}
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing tools into ZIP archive..."
@@ -572,7 +574,7 @@ if(WIN32) # Deployment for Windows
         add_custom_target(create_zip
             ${SevenZipProgram}
             a -tzip -mx9
-            "${ZIP_PACK_DIR}/pge-project-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+            "${ZIP_PACK_DIR}/pge-project-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             "${ZIP_SRC_DIR}/"
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing ZIP archive..."

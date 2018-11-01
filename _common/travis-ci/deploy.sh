@@ -4,6 +4,8 @@
 # Deploying of built PGE
 # ==============================================================================
 
+GIT_BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+
 if [ $TRAVIS_OS_NAME == linux ];
 then
     #Don't deploy on Travis-CI, because it used for Coverity Scan

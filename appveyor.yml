@@ -21,7 +21,7 @@
 #                             created 2015-11-25
 #--------------------------------------------------------------------------------
 
-version: 0.4.0.3.{build}
+version: 0.4.1.0.{build}
 
 # you can use {branch} name in version format too
 # version: 1.0.{build}-{branch}
@@ -125,18 +125,18 @@ build_script:
   - move bin-cmake-release\_packed\*.zip %BIN_DIR%\_packed
 
 artifacts:
-  - path: '$(BIN_DIR)\_packed\pge-project-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\install-pge-common-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\install-pge-editor-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\install-pge-engine-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\install-pge-tools-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\pge-maintainer-dev-$(WINXX_ARCH).zip'     #Standalone package of PGE Maintainer (work outside PGE)
-  - path: '$(BIN_DIR)\_packed\pge-musplay-dev-$(WINXX_ARCH).zip'        #Standalone package of PGE MusPlay (work outside PGE)
-  - path: '$(BIN_DIR)\_packed\pge-calibrator-dev-$(WINXX_ARCH).zip'     #Standalone package of Playable Character calibration tool (work outside PGE)
-  - path: '$(BIN_DIR)\_packed\GIFs2PNG-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\PNG2GIFs-dev-$(WINXX_ARCH).zip'
-  - path: '$(BIN_DIR)\_packed\LazyFixTool-dev-$(WINXX_ARCH).zip'
-  - path: 'build_date_dev_$(WINXX_ARCH).txt'
+  - path: '$(BIN_DIR)\_packed\pge-project-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\install-pge-common-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\install-pge-editor-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\install-pge-engine-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\install-pge-tools-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\pge-maintainer-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'     #Standalone package of PGE Maintainer (work outside PGE)
+  - path: '$(BIN_DIR)\_packed\pge-musplay-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'        #Standalone package of PGE MusPlay (work outside PGE)
+  - path: '$(BIN_DIR)\_packed\pge-calibrator-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'     #Standalone package of Playable Character calibration tool (work outside PGE)
+  - path: '$(BIN_DIR)\_packed\GIFs2PNG-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\PNG2GIFs-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\LazyFixTool-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: 'build_date_$(APPVEYOR_REPO_BRANCH)_$(WINXX_ARCH).txt'
 
 deploy:
   - provider: Environment
