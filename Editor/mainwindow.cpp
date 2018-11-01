@@ -1,3 +1,5 @@
+#include <utility>
+
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
@@ -74,20 +76,18 @@ bool MainWindow::isAppRestartRequested()
 }
 
 
-bool MainWindow::initEverything(QString configDir, QString themePack)
+bool MainWindow::initEverything(const QString &configDir, const QString &themePack)
 {
     currentConfigDir = configDir;
 
     configs.setConfigPath( configDir );
-
-
 
     try
     {
         if(!configs.loadBasics())
             throw("Fail to load basic configurations");
 
-        Themes::loadTheme( themePack );
+        Themes::loadTheme(themePack);
 
         /*********************Splash Screen**********************/
         QPixmap splashimg(configs.splash_logo.isEmpty()?
@@ -101,15 +101,15 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
         //splash.setWindowFlags( splash.windowFlags() | Qt::WindowStaysOnTopHint );
         //#endif
 
-        for(int a=0; a<configs.animations.size();a++)
+        for(auto &animation : configs.animations)
         {
             //QPoint pt(416,242);
-            QPoint pt(int(configs.animations[a].x), int(configs.animations[a].y));
+            QPoint pt(int(animation.x), int(animation.y));
             //QPixmap img = QPixmap("coin.png");
             splash.addAnimation(pt,
-                                configs.animations[a].img,
-                                int(configs.animations[a].frames),
-                                int(configs.animations[a].speed));
+                                animation.img,
+                                int(animation.frames),
+                                int(animation.speed));
         }
 
         splash.connect(&configs, SIGNAL(progressMax(int)),
@@ -179,7 +179,7 @@ bool MainWindow::initEverything(QString configDir, QString themePack)
         dock_LvlEvents->reloadSoundsList();
         dock_WldItemProps->WldLvlExitTypeListReset();
         dock_TilesetBox->setTileSetBox(true);
-        
+
         splash.progressTitle(tr("Initalizing plugins..."));
         initPlugins();
 

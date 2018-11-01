@@ -225,7 +225,7 @@ public:
     static void init();
     static QStringList availableThemes();
     static QString currentTheme();
-    static void loadTheme(QString themeDir);
+    static void loadTheme(const QString &themeDir);
 
     static QIcon icon(Icons icn);
     static QPixmap Image(Images img);

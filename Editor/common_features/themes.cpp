@@ -257,7 +257,7 @@ QString Themes::currentTheme()
     return currentThemeDir;
 }
 
-void Themes::loadTheme(QString themeDir)
+void Themes::loadTheme(const QString &themeDir)
 {
     init();
 

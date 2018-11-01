@@ -77,7 +77,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
     MainWindowFriends
 public:
     explicit MainWindow(QMdiArea *parent = 0);
@@ -89,7 +89,7 @@ public:
      * @param themePack Path to theme pack to load
      * @return true if everything has been successfully initialized, false if fatal error has occouped
      */
-    bool initEverything(QString configDir, QString themePack);
+    bool initEverything(const QString &configDir, const QString &themePack);
 
     //! Global game configucrations
     dataconfigs configs;

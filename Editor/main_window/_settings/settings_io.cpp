@@ -161,7 +161,7 @@ void MainWindow::loadSettings()
 
             //Refresh state of menubars
             updateWindowMenu();
-            updateMenus(NULL, true);
+            updateMenus(nullptr, true);
         }
     }
     settings.endGroup();
