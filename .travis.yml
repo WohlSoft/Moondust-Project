@@ -33,6 +33,7 @@ git:
 branches:
   only:
     - master
+    - stable
 
 language: cpp
 
