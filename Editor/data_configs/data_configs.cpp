@@ -181,9 +181,25 @@ bool dataconfigs::loadBasics()
 
     QString url     = guiset.value("home-page", "http://wohlsoft.ru/config_packs/").toQString();
     QString version = guiset.value("pge-editor-version", "0.0").toQString();
+    bool    hasApiVersion = guiset.hasKey("api-version");
+    uint    apiVersion = guiset.value("api-version", 1).toUInt();
     bool ver_notify = guiset.value("enable-version-notify", true).toBool();
-    if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(V_FILE_VERSION), version)))
+    bool ver_invalid = false;
+
+    if(hasApiVersion)
+        ver_invalid = (apiVersion != V_CP_API) || (apiVersion < 41);
+    else
+        ver_invalid = (version != VersionCmp::compare(QString("%1").arg(V_FILE_VERSION), version));
+
+    LogDebug(QString("Config pack version validation: "
+                     "has API version: %1, has invalid version: %2")
+                     .arg(hasApiVersion).arg(ver_invalid));
+
+    if(ver_notify && ver_invalid)
     {
+        LogWarning(QString("Config pack version is invalid: "
+                           "has API version: %1, has invalid version: %2, current version %3, version wanted: %4")
+                           .arg(hasApiVersion).arg(ver_invalid).arg(V_FILE_VERSION).arg(version));
         QMessageBox box;
         box.setWindowTitle("Legacy configuration package");
         box.setTextFormat(Qt::RichText);

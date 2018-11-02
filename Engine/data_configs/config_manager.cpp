@@ -157,10 +157,27 @@ bool ConfigManager::loadBasics()
 
         std::string url     = mainset.value("home-page", "http://wohlsoft.ru/config_packs/").toString();
         std::string version = mainset.value("pge-engine-version", "0.0").toString();
+        bool    hasApiVersion = mainset.hasKey("api-version");
+        uint    apiVersion = mainset.value("api-version", 1).toUInt();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
+        bool    ver_invalid = false;
 
-        if(ver_notify && (version != VersionCmp::compare(_LATEST_STABLE, version)))
+        if(hasApiVersion)
+            ver_invalid = (apiVersion != V_CP_API) || (apiVersion < 41);
+        else
+            ver_invalid = (version != VersionCmp::compare(_LATEST_STABLE, version));
+
+        pLogDebug("Config pack version validation: "
+                   "has API version: %d, has invalid version: %d",
+                   static_cast<int>(hasApiVersion),
+                   static_cast<int>(ver_invalid));
+
+        if(ver_notify && ver_invalid)
         {
+            pLogWarning("Config pack version is invalid: "
+                        "has API version: %d, has invalid version: %d, current version %s, version wanted: %s",
+                        static_cast<int>(hasApiVersion), static_cast<int>(ver_invalid), _LATEST_STABLE, version.c_str());
+
             //% "Legacy configuration package"
             std::string title = qtTrId("WARNING_LEGACY_CONFIG_PACK_TTL");
             /*% "You have a legacy configuration package.\n"
