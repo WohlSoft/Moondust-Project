@@ -1,4 +1,4 @@
-Editor 0.3.1.14-1-dev
+Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
 - Added weight order factor for tileset groups
 - Player start points now aligning with 16x16 grid size

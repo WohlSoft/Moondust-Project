@@ -3,11 +3,11 @@ set(ENGINE_VERSION_1 0)
 # Minor
 set(ENGINE_VERSION_2 3)
 # Revision
-set(ENGINE_VERSION_3 0)
+set(ENGINE_VERSION_3 1)
 # Patch
-set(ENGINE_VERSION_4 1)
+set(ENGINE_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
-set(ENGINE_VERSION_REL "-alpha")
+set(ENGINE_VERSION_REL "")
 
 add_definitions(-DENGINE_VERSION_1=${ENGINE_VERSION_1})
 add_definitions(-DENGINE_VERSION_2=${ENGINE_VERSION_2})

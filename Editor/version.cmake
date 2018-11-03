@@ -5,9 +5,9 @@ set(EDITOR_VERSION_2 3)
 # Revision
 set(EDITOR_VERSION_3 1)
 # Patch
-set(EDITOR_VERSION_4 14)
+set(EDITOR_VERSION_4 15)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
-set(EDITOR_VERSION_REL "-1-dev")
+set(EDITOR_VERSION_REL "")
 
 add_definitions(-DEDITOR_VERSION_1=${EDITOR_VERSION_1})
 add_definitions(-DEDITOR_VERSION_2=${EDITOR_VERSION_2})
