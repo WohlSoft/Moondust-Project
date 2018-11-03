@@ -46,12 +46,21 @@ string(REPLACE "(" "\\(" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 string(REPLACE ")" "\\)" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 
 # Get the current working branch
-execute_process(
-    COMMAND git rev-parse --abbrev-ref HEAD
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_BRANCH
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+set(OVERRIDE_GIT_BRANCH "" CACHE STRING "Override name of GIT branch")
+if(OVERRIDE_GIT_BRANCH)
+    set(GIT_BRANCH ${OVERRIDE_GIT_BRANCH})
+elseif($ENV{APPVEYOR_REPO_BRANCH})
+    set(GIT_BRANCH $ENV{APPVEYOR_REPO_BRANCH})
+elseif($ENV{TRAVIS_BRANCH})
+    set(GIT_BRANCH $ENV{TRAVIS_BRANCH})
+else()
+    execute_process(
+        COMMAND git rev-parse --abbrev-ref HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_BRANCH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+endif()
 
 # Get the latest abbreviated commit hash of the working branch
 execute_process(

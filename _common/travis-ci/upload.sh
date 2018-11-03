@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GIT_BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+source _common/travis-ci/_branch_env.sh
 
 if [ $TRAVIS_OS_NAME == linux ];
 then
