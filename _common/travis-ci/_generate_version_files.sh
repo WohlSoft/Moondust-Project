@@ -17,32 +17,20 @@ echo "== Generating version files into ${VERDIR}... =="
 
 mkdir -p $VERDIR
 
-gcc -DGIT_VERSION=\"$GIT_REVISION\" -DEDITOR -DVER_FULL $CPPTOBUILD -o $TEMPELF
-if [ -f ./$TEMPELF ]
-then
-    ./$TEMPELF > $VERDIR/editor.txt
-fi
+mkdir $TEMPELF
+cd $TEMPELF
+cmake ../_common/travis-ci/version_gen > /dev/null
+make -s -j 4 > /dev/null
+cd ..
 
-gcc -DGIT_VERSION=\"$GIT_REVISION\" -DEDITOR -DVER_SHORT $CPPTOBUILD -o $TEMPELF
-if [ -f ./$TEMPELF ]
-then
-    ./$TEMPELF > $VERDIR/editor_stable.txt
-fi
+$TEMPELF/version_gen_editor > $VERDIR/editor.txt
+$TEMPELF/version_gen_editor_short > $VERDIR/editor_stable.txt
 
-gcc -DGIT_VERSION=\"$GIT_REVISION\" -DENGINE -DVER_FULL $CPPTOBUILD -o $TEMPELF
-if [ -f ./$TEMPELF ]
-then
-    ./$TEMPELF > $VERDIR/engine.txt
-fi
+$TEMPELF/version_gen_engine > $VERDIR/engine.txt
+$TEMPELF/version_gen_engine_short > $VERDIR/engine_stable.txt
 
-gcc -DGIT_VERSION=\"$GIT_REVISION\" -DENGINE -DVER_SHORT $CPPTOBUILD -o $TEMPELF
-if [ -f ./$TEMPELF ]
+if [ -d ./$TEMPELF ]
 then
-    ./$TEMPELF > $VERDIR/engine_stable.txt
-fi
-
-if [ -f ./$TEMPELF ]
-then
-    rm ./$TEMPELF
+    rm -Rf ./$TEMPELF
 fi
 
