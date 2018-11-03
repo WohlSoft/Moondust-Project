@@ -158,7 +158,7 @@ bool ConfigManager::loadBasics()
         std::string url     = mainset.value("home-page", "http://wohlsoft.ru/config_packs/").toString();
         std::string version = mainset.value("pge-engine-version", "0.0").toString();
         bool    hasApiVersion = mainset.hasKey("api-version");
-        uint    apiVersion = mainset.value("api-version", 1).toUInt();
+        unsigned int apiVersion = mainset.value("api-version", 1).toUInt();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
         bool    ver_invalid = false;
 

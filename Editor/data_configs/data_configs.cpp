@@ -182,7 +182,7 @@ bool dataconfigs::loadBasics()
     QString url     = guiset.value("home-page", "http://wohlsoft.ru/config_packs/").toQString();
     QString version = guiset.value("pge-editor-version", "0.0").toQString();
     bool    hasApiVersion = guiset.hasKey("api-version");
-    uint    apiVersion = guiset.value("api-version", 1).toUInt();
+    unsigned int apiVersion = guiset.value("api-version", 1).toUInt();
     bool ver_notify = guiset.value("enable-version-notify", true).toBool();
     bool ver_invalid = false;
 
