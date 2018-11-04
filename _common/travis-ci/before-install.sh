@@ -15,14 +15,6 @@ then
     QtTarballName=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
     QtStaticVersion=5.10.1_static
 
-#    if [[ ! -d /home/runner ]];
-#    then
-#        bash _common/travis-ci/_generate_version_files.sh
-#    else
-#        bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
-#    fi
-    bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
-
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
     sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test;
     sudo add-apt-repository --yes ppa:george-edison55/cmake-3.x
@@ -45,6 +37,13 @@ then
     /usr/bin/cmake --version
     echo "================================================"
 
+#    if [[ ! -d /home/runner ]];
+#    then
+#        bash _common/travis-ci/_generate_version_files.sh
+#    else
+#        bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
+#    fi
+    bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
 
     if [ ! -d /home/runner/Qt/$QtCacheFolder ]; then
         mkdir -p /home/runner/Qt/$QtCacheFolder
