@@ -2,9 +2,9 @@
 git submodule init;
 git submodule update;
 
-if [ $TRAVIS_OS_NAME == linux ];
+if [[ ${TRAVIS_OS_NAME} == linux ]];
 then
-    if [ ! -d /home/runner ];
+    if [[ ! -d /home/runner ]];
     then
         echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
         # Make sure we have same home directory as on Semaphore-CI
@@ -15,12 +15,13 @@ then
     QtTarballName=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
     QtStaticVersion=5.10.1_static
 
-    if [ ! -d /home/runner ];
-    then
-        bash _common/travis-ci/_generate_version_files.sh
-    else
-        bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
-    fi
+#    if [[ ! -d /home/runner ]];
+#    then
+#        bash _common/travis-ci/_generate_version_files.sh
+#    else
+#        bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
+#    fi
+    bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
 
     sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
     sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test;
@@ -51,7 +52,7 @@ then
 
     printf "Downloading $QtTarballName..."
     wget --quiet http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /home/runner/Qt/$QtCacheFolder/$QtTarballName
-    if [ $? -eq 0 ]
+    if [[ $? -eq 0 ]]
     then
         printf " \E[37;42mOK!\E[0m\n"
     else
@@ -62,7 +63,7 @@ then
 
     printf "Unpacking $QtTarballName..."
     tar -xf /home/runner/Qt/$QtCacheFolder/$QtTarballName -C /home/runner/Qt
-    if [ $? -eq 0 ]
+    if [[ $? -eq 0 ]]
     then
         printf " \E[37;42mOK!\E[0m\n"
     else
@@ -76,7 +77,7 @@ then
     chmod u+x generate_paths.sh
     bash generate_paths.sh silent static
 
-elif [ $TRAVIS_OS_NAME == osx ];
+elif [[ ${TRAVIS_OS_NAME} == osx ]];
 then
 
     QT_VER=5.11.1
@@ -86,7 +87,7 @@ then
     QtTarballName=qt-5-11-1-static-macosx-10-13-6.tar.bz2
 
 # Try out the caching thing (if caching is works, downloading must not be happen)
-    if [ ! -d /Users/StaticQt/$QtCacheFolder ]
+    if [[ ! -d /Users/StaticQt/$QtCacheFolder ]]
     then
         sudo mkdir -p /Users/StaticQt/$QtCacheFolder;
         sudo chown -R travis /Users/StaticQt/;
@@ -98,7 +99,7 @@ then
 # ==============================================================================
         printf "Downloading $QtTarballName..."
         wget --quiet http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
-        if [ $? -eq 0 ]
+        if [[ $? -eq 0 ]]
         then
             printf " \E[37;42mOK!\E[0m\n"
         else
@@ -109,7 +110,7 @@ then
     fi
     printf "Unpacking $QtTarballName..."
     tar -xf /Users/StaticQt/$QtCacheFolder/$QtTarballName -C /Users/StaticQt;
-    if [ $? -eq 0 ]
+    if [[ $? -eq 0 ]]
     then
         printf " \E[37;42mOK!\E[0m\n"
     else
