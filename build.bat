@@ -8,6 +8,7 @@ SET CMakeNinja=0
 SET CMakeDeploy=0
 SET DebugBuild=0
 
+set OldPATH=%PATH%
 set SRCDIR=%CD%
 
 :argsloop
@@ -73,7 +74,6 @@ echo  nopng2gifs            - Skip building of PNG2GIFs compoment
 echo  nolazyfixtool         - Skip building of LazyFixTool compoment
 echo.
 set NoPause=1
-set OldPATH=%PATH%
 goto quit
 :SkipUsage
 
@@ -97,16 +97,15 @@ IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" f
 IF NOT EXIST _paths.bat goto error
 
 call _paths.bat
-set OldPATH=%PATH%
 PATH=%QtDir%;%MinGW%;%GitDir%;%CMakeDir%;%SystemRoot%\system32;%SystemRoot%;
 
 if %CMakeIt%==1 goto cMakeIt
 
 IF "%MINGWx64Dest%"=="yes" (
-	SET BuildArgs=%BuildArgs% CONFIG+=win64
+    SET BuildArgs=%BuildArgs% CONFIG+=win64
 )
 IF "%MINGWx32Dest%"=="yes" (
-	SET BuildArgs=%BuildArgs% CONFIG+=win32-mingw-w64
+    SET BuildArgs=%BuildArgs% CONFIG+=win32-mingw-w64
 )
 
 rem ------------------------------------------------------------
@@ -168,7 +167,7 @@ echo.
 echo =========BUILT!!===========
 echo.
 exit /B 0
-goto quit;
+goto quit
 
 :cleanX
 echo ======== Remove all cached object files and automatically generated Makefiles ========
@@ -207,7 +206,7 @@ IF EXIST .\_Libs\_sources\_build_cache_msvc\NUL (
 
 echo ==== Clear! ====
 exit /B 0
-goto quit;
+goto quit
 
 
 rem ------------------------------------------------------------
@@ -218,7 +217,7 @@ rem ------------------------------------------------------------
 git submodule foreach git checkout master
 git submodule foreach git pull origin master
 exit /B 0
-goto quit;
+goto quit
 
 
 rem ------------------------------------------------------------
@@ -250,7 +249,7 @@ git submodule foreach git pull origin master
 echo.
 echo ==== Fixed! ====
 exit /B 0
-goto quit;
+goto quit
 
 rem ------------------------------------------------------------
 rem ------------------------------------------------------------
@@ -281,6 +280,7 @@ echo.
 
 cd "%SRCDIR%"
 goto quit
+
 :error
 echo.
 echo =========ERROR!!===========
@@ -289,7 +289,7 @@ PATH=%OldPATH%
 cd "%SRCDIR%"
 if "%NoPause%"=="0" pause
 exit /B 1
+
 :quit
 PATH=%OldPATH%
 if "%NoPause%"=="0" pause
-
