@@ -107,8 +107,8 @@ install:
   - cmd: echo set CMakeDir=%CMAKE_BINARY_DIR%>> _paths.bat
   - cmd: echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
   - cmd: type temp.sh
-  - cmd: "\"C:\\Program Files\\Git\\bin\\bash.exe\" temp.sh > build_date_dev_%WINXX_ARCH%.txt"
-  - cmd: type build_date_dev_%WINXX_ARCH%.txt
+  - cmd: "\"C:\\Program Files\\Git\\bin\\bash.exe\" temp.sh > build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt"
+  - cmd: type build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt
   - cmd: del temp.sh
 
 build_script:
