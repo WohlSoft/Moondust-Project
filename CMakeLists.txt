@@ -45,43 +45,8 @@ string(REPLACE " " "\\ " CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 string(REPLACE "(" "\\(" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 string(REPLACE ")" "\\)" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 
-# Get the current working branch
-set(OVERRIDE_GIT_BRANCH "" CACHE STRING "Override name of GIT branch")
-
-message("DEBUG: Source of branch:
-  OVERRIDE_GIT_BRANCH=${OVERRIDE_GIT_BRANCH}
-  SEMAPHORE_GIT_BRANCH=$ENV{SEMAPHORE_GIT_BRANCH}
-  APPVEYOR_REPO_BRANCH=$ENV{APPVEYOR_REPO_BRANCH}
-  APPVEYOR_PULL_REQUEST_NUMBER=$ENV{APPVEYOR_PULL_REQUEST_NUMBER}
-  TRAVIS_BRANCH=$ENV{TRAVIS_BRANCH}
-  TRAVIS_PULL_REQUEST=$ENV{TRAVIS_PULL_REQUEST}")
-
-if(OVERRIDE_GIT_BRANCH)
-    set(GIT_BRANCH ${OVERRIDE_GIT_BRANCH})
-elseif(DEFINED ENV{APPVEYOR_REPO_BRANCH})
-    set(GIT_BRANCH $ENV{APPVEYOR_REPO_BRANCH})
-elseif(DEFINED ENV{TRAVIS_BRANCH})
-    set(GIT_BRANCH $ENV{TRAVIS_BRANCH})
-else()
-    execute_process(
-        COMMAND git rev-parse --abbrev-ref HEAD
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        OUTPUT_VARIABLE GIT_BRANCH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
-endif()
-
-# Get the latest abbreviated commit hash of the working branch
-execute_process(
-    COMMAND git log -1 --format=%h
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_COMMIT_HASH
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-set(PACKAGE_SUFFIX ${GIT_BRANCH})
-
-message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}] ==")
+include(_common/git_info.cmake)
+message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}], package [${PACKAGE_SUFFIX}] ==")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)

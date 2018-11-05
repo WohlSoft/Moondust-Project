@@ -2,7 +2,7 @@
 git submodule init;
 git submodule update;
 
-if [[ ${TRAVIS_OS_NAME} == linux ]];
+if [[ "${TRAVIS_OS_NAME}" == "linux" ]];
 then
     if [[ ! -d /home/runner ]];
     then
@@ -45,7 +45,7 @@ then
 #    fi
     bash _common/travis-ci/_generate_version_files.sh "bin-cmake-release/versions"
 
-    if [ ! -d /home/runner/Qt/$QtCacheFolder ]; then
+    if [[ ! -d /home/runner/Qt/$QtCacheFolder ]]; then
         mkdir -p /home/runner/Qt/$QtCacheFolder
     fi
 
@@ -76,7 +76,7 @@ then
     chmod u+x generate_paths.sh
     bash generate_paths.sh silent static
 
-elif [[ ${TRAVIS_OS_NAME} == osx ]];
+elif [[ "${TRAVIS_OS_NAME}" == "osx" ]];
 then
 
     QT_VER=5.11.1
@@ -86,7 +86,7 @@ then
     QtTarballName=qt-5-11-1-static-macosx-10-13-6.tar.bz2
 
 # Try out the caching thing (if caching is works, downloading must not be happen)
-    if [[ ! -d /Users/StaticQt/$QtCacheFolder ]]
+    if [[ ! -d /Users/StaticQt/$QtCacheFolder ]];
     then
         sudo mkdir -p /Users/StaticQt/$QtCacheFolder;
         sudo chown -R travis /Users/StaticQt/;
@@ -98,7 +98,7 @@ then
 # ==============================================================================
         printf "Downloading $QtTarballName..."
         wget --quiet http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
-        if [[ $? -eq 0 ]]
+        if [[ $? -eq 0 ]];
         then
             printf " \E[37;42mOK!\E[0m\n"
         else
@@ -109,7 +109,7 @@ then
     fi
     printf "Unpacking $QtTarballName..."
     tar -xf /Users/StaticQt/$QtCacheFolder/$QtTarballName -C /Users/StaticQt;
-    if [[ $? -eq 0 ]]
+    if [[ $? -eq 0 ]];
     then
         printf " \E[37;42mOK!\E[0m\n"
     else
@@ -140,7 +140,7 @@ then
 # ==============================================================================
 # Making "_paths.sh" config file
 # ==============================================================================
-    echo "== QT Path is /Users/StaticQt/$QT_VER/bin/ =="
+    echo "== QT Path is /Users/StaticQt/${QT_VER}/bin/ =="
 
     echo "# ==============Qt paths================" > _paths.sh;
     echo "QT_PATH=\"/Users/StaticQt/${QT_VER}/bin/\"" >> _paths.sh;
