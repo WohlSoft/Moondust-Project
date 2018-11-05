@@ -8,7 +8,7 @@ then
     exit 0;
 fi
 
-if [[ ${TRAVIS_OS_NAME} == "linux" ]];
+if [[ "${TRAVIS_OS_NAME}" == "linux" ]];
 then
 
     #Skip deploy on Travis-CI, since it done on Semaphore-CI
@@ -17,7 +17,7 @@ then
         PROJECT_ROOT=/home/runner/PGE-Project
         HAMSTER_ROOT=/home/runner/
 
-        if [[ ! -d ${PROJECT_ROOT}/bin/_packed -a ! -d ${PROJECT_ROOT}/bin-cmake-release ]];
+        if [[ ! -d ${PROJECT_ROOT}/bin/_packed && ! -d ${PROJECT_ROOT}/bin-cmake-release ]];
         then
             echo "Nothing built! Therefore is nothing to upload!"
             exit 1

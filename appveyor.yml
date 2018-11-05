@@ -124,18 +124,21 @@ build_script:
   - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] md %BIN_DIR%\_packed
   - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] move bin-cmake-release\_packed\*.zip %BIN_DIR%\_packed
 # Upload artifacts
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-project-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-common-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-editor-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-engine-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-tools-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-maintainer-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"     #Standalone package of PGE Maintainer (work outside PGE)
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-musplay-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"        #Standalone package of PGE MusPlay (work outside PGE)
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-calibrator-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"     #Standalone package of Playable Character calibration tool (work outside PGE)
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\GIFs2PNG-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\PNG2GIFs-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\LazyFixTool-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-project-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-common-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-editor-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-engine-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\install-pge-tools-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+#Standalone package of PGE Maintainer (work outside PGE)
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-maintainer-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+#Standalone package of PGE MusPlay (work outside PGE)
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-musplay-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+#Standalone package of Playable Character calibration tool (work outside PGE)
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\pge-calibrator-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\GIFs2PNG-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\PNG2GIFs-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "%BIN_DIR%\_packed\LazyFixTool-%APPVEYOR_REPO_BRANCH%-%WINXX_ARCH%.zip"
+  - if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] appveyor PushArtifact "build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt"
 
 #artifacts:
 #  - path: '$(BIN_DIR)\_packed\pge-project-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
