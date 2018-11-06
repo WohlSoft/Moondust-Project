@@ -112,6 +112,7 @@ install:
 
 build_script:
   - cmd: _common/appveyor-ci/build.cmd
+  - cmd: _common/appveyor-ci/deploy.cmd
 
 artifacts:
   - path: '$(BIN_DIR)\_packed\pge-project-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
