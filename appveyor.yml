@@ -109,7 +109,7 @@ install:
   - cmd: echo set CMakeDir=%CMAKE_BINARY_DIR%>> _paths.bat
   - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
   - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] type temp.sh
-  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] %BASH_EXE% temp.sh > build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt
+  - cmd: "if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] \"%BASH_EXE%\" temp.sh > build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt"
   - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] type build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt
   - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] del temp.sh
 
