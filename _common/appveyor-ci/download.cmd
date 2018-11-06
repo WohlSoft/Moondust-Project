@@ -27,11 +27,11 @@ if [%PLATFORM%]==[x64] (
     if ERRORLEVEL 1 goto error
 
     echo "Installing MinGW-w64..."
-    "%SEVENZIP%" x "%MINGW64_7z%" -oC:\MinGW-w64;
+    "%SEVENZIP%" x "%MINGW64_7z%" -oC:\MinGW-w64
     if ERRORLEVEL 1 goto error
 
     echo "Installing Qt64..."
-    "%SEVENZIP%" x "%QT64_7z%" -oC:\Qt;
+    "%SEVENZIP%" x "%QT64_7z%" -oC:\Qt
     if ERRORLEVEL 1 goto error
 )
 
