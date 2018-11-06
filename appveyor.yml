@@ -105,11 +105,11 @@ install:
 #  - cmd: if [%PLATFORM%]==[Win32] echo set MINGWx32Dest=yes>> _paths.bat
   - cmd: echo set GitDir=%GIT_BINARY_DIR%>> _paths.bat
   - cmd: echo set CMakeDir=%CMAKE_BINARY_DIR%>> _paths.bat
-  - cmd: echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
-  - cmd: type temp.sh
-  - cmd: "\"C:\\Program Files\\Git\\bin\\bash.exe\" temp.sh > build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt"
-  - cmd: type build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt
-  - cmd: del temp.sh
+  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] echo date +'%%%%Y-%%%%m-%%%%d %%%%H:%%%%M:%%%%S' > temp.sh
+  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] type temp.sh
+  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] "\"C:\\Program Files\\Git\\bin\\bash.exe\" temp.sh > build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt"
+  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] type build_date_%APPVEYOR_REPO_BRANCH%_%WINXX_ARCH%.txt
+  - cmd: if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] del temp.sh
 
 build_script:
 #  - cmd: build_deps.bat buildlibs nopause
