@@ -4,7 +4,7 @@ git submodule init
 git submodule update
 
 rem Create dummy _paths.bat file as all it's variables are declared from outside
-echo. >> _paths.bat
+echo. > _paths.bat
 
 rem echo set QtDir=%QT_DIR%>> _paths.bat
 rem echo set MinGW=%COMPILER%>> _paths.bat
