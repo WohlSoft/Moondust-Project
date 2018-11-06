@@ -1,5 +1,5 @@
 export IS_PULL_REQUEST=false
-if [[ "${TRAVIS_PULL_REQUEST}" == "true" ]]; then
+if [[ "${TRAVIS_PULL_REQUEST}" != "false" || "${PULL_REQUEST_NUMBER}" != "" || "${SEMAPHORE_GIT_BRANCH}" != "" ]]; then
     export IS_PULL_REQUEST=true
 fi
 
