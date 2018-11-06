@@ -1,6 +1,6 @@
 @echo on
 
-if NOT EXISTS C:\temp-d\NUL md C:\temp-d
+if NOT EXIST C:\temp-d\NUL md C:\temp-d
 
 set URL_NINJA=http://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip
 set NINJA_ZIP=C:\temp-d\ninja-win.zip
