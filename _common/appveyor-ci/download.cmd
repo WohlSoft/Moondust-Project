@@ -15,10 +15,6 @@ echo "Downloading NinjaBuild..."
 "%WGET_BIN%" --quiet %URL_NINJA% -O "%NINJA_ZIP%"
 if ERRORLEVEL 1 goto error
 
-echo "Installing NinjaBuild..."
-"%SEVENZIP%" x "%NINJA_ZIP%" -o"%COMPILER%"
-if ERRORLEVEL 1 goto error
-
 rem TODO: Provide 32-bit MinGW-w64 alternative 32-bit builds chain
 rem       to prevent any possible missings of toolchains in a case of AppVeyor images
 if [%PLATFORM%]==[x64] (
@@ -38,6 +34,10 @@ if [%PLATFORM%]==[x64] (
     "%SEVENZIP%" x "%QT64_7z%" -oC:\Qt;
     if ERRORLEVEL 1 goto error
 )
+
+echo "Installing NinjaBuild..."
+"%SEVENZIP%" x "%NINJA_ZIP%" -o"%COMPILER%"
+if ERRORLEVEL 1 goto error
 
 goto quit
 
