@@ -54,24 +54,31 @@ environment:
     BASH_EXE: "C:\\Program Files\\Git\\bin\\bash.exe"
     WGET_BIN: "C:\\msys64\\usr\\bin\\wget.exe"
     SEVENZIP: "C:\\Program Files\\7-Zip\\7z.exe"
+    GitDir: ${GIT_BINARY_DIR}
+    CMakeDir: ${CMAKE_BINARY_DIR}
 
   matrix:
-  # 64 bit build
+    # 64 bit build with modern Windows support
     - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2015"
       PLATFORM: x64
       BIN_DIR: bin-w64
       WINXX_ARCH: win64
       COMPILER: C:\mingw-w64\x86_64-7.1.0-posix-seh-rt_v5-rev0\mingw64\bin
       QT_DIR: C:\Qt\5.9.0-x64\bin
+      QtDir: ${QT_DIR}
+      MinGW: ${COMPILER}
+      MINGWx64Dest: yes
 #     COMPILER: C:\MinGW-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
 #     QT_DIR: C:\Qt\5.9.6-x64\bin
-    # 32 bit build with Windows XP support
+    # 32 bit build with legacy Windows XP support
     - APPVEYOR_BUILD_WORKER_IMAGE: "Visual Studio 2013"
       PLATFORM: Win32
       BIN_DIR: bin-w32
       WINXX_ARCH: win32
       COMPILER: C:\Qt\Tools\mingw530_32\bin
       QT_DIR: C:\Qt\5.7\mingw53_32\bin
+      QtDir: ${QT_DIR}
+      MinGW: ${COMPILER}
 #     COMPILER: C:\MinGW-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin
 #     QT_DIR: C:\Qt\5.6.3-i686\bin # Qt since 5.8 no more supports Windows XP, Keep support for Windows XP yet
 
