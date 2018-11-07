@@ -31,10 +31,10 @@ then
             # [DEPRECATED] SMBX config pack update patch
             # UPLOAD_LIST="${UPLOAD_LIST} put -O ./_common/ ${PROJECT_ROOT}/bin/_packed/SMBX-Config-Patch.zip;";
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${HAMSTER_ROOT}/build_date_${GIT_BRANCH}_linux.txt;";
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/editor.txt;";
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/editor_stable.txt;";
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/engine.txt;";
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/engine_stable.txt;";
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/editor_${GIT_BRANCH}.txt;";
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/editor_stable_${GIT_BRANCH}.txt;";
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/engine_${GIT_BRANCH}.txt;";
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin/versions/engine_stable_${GIT_BRANCH}.txt;";
             lftp -e "${UPLOAD_LIST} exit" -u ${FTP_USER},${FTP_PASSWORD} ${FTP_SERVER}
         fi
 
@@ -45,10 +45,10 @@ then
             # [DEPRECATED] SMBX config pack update patch
             # UPLOAD_LIST="${UPLOAD_LIST} put -O ./_common/ ${PROJECT_ROOT}/bin-cmake-release/SMBX-Config-Patch.zip;"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${HAMSTER_ROOT}/build_date_${GIT_BRANCH}_linux.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_stable.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_stable.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_${GIT_BRANCH}.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_stable_${GIT_BRANCH}.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_${GIT_BRANCH}.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_stable_${GIT_BRANCH}.txt;"
             lftp -e "${UPLOAD_LIST} exit" -u ${FTP_USER},${FTP_PASSWORD} ${FTP_SERVER}
         fi
 
