@@ -9,10 +9,6 @@ if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] (
     echo "Pull-request detected, skipping artifacts..."
 )
 
-rem Artifact uploading probe
-echo. > dummy.txt
-appveyor PushArtifact dummy.txt
-
 rem  == Disabled due next error: ==
 rem  'appveyor' is not recognized as an internal or external command,
 rem  operable program or batch file.
