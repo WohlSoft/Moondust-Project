@@ -1,5 +1,13 @@
+#!/bin/bash
+
 export IS_PULL_REQUEST=false
-if [[ "${TRAVIS_PULL_REQUEST}" != "false" || "${PULL_REQUEST_NUMBER}" != "" || "${SEMAPHORE_GIT_BRANCH}" != "" ]]; then
+
+if [[ "${TRAVIS_PULL_REQUEST}" == "" ]]; then
+    TRAVIS_PULL_REQUEST=false
+fi
+
+# FIXME: Figure out for Semaphore Pull-Request identifying at Semaphore 2.0
+if [[ "${TRAVIS_PULL_REQUEST}" != "false" || "${PULL_REQUEST_NUMBER}" != "" ]]; then
     export IS_PULL_REQUEST=true
 fi
 
