@@ -16,17 +16,21 @@ if "%1"=="clean" goto cleanX
 if "%1"=="update-submodules"  goto updateSubModules
 if "%1"=="repair-submodules"  goto repairSubModules
 if "%1"=="nopause"  SET NoPause=1
-if "%1"=="noeditor" SET BuildArgs=%BuildArgs% CONFIG+=noeditor
-if "%1"=="noengine" SET BuildArgs=%BuildArgs% CONFIG+=noengine
-if "%1"=="nocalibrator" SET BuildArgs=%BuildArgs% CONFIG+=nocalibrator
-if "%1"=="nogifs2png" SET BuildArgs=%BuildArgs% CONFIG+=nogifs2png
-if "%1"=="nopng2gifs" SET BuildArgs=%BuildArgs% CONFIG+=nopng2gifs
-if "%1"=="nolazyfixtool" SET BuildArgs=%BuildArgs% CONFIG+=nolazyfixtool
-if "%1"=="nomanager" SET BuildArgs=%BuildArgs% CONFIG+=nomanager
-if "%1"=="nomaintainer" SET BuildArgs=%BuildArgs% CONFIG+=nomaintainer
-if "%1"=="nomusicplayer" SET BuildArgs=%BuildArgs% CONFIG+=nomusicplayer
+if "%1"=="noqt" SET BuildArgs=%BuildArgs% -DPGE_ENABLE_QT=OFF
+if "%1"=="noeditor" SET BuildArgs=%BuildArgs% -DPGE_BUILD_EDITOR=OFF
+if "%1"=="noengine" SET BuildArgs=%BuildArgs% -DPGE_BUILD_ENGINE=OFF
+if "%1"=="nocalibrator" SET BuildArgs=%BuildArgs% -DPGE_BUILD_PLAYERCALIBRATOR=OFF
+if "%1"=="nogifs2png" SET BuildArgs=%BuildArgs% -DPGE_BUILD_GIFS2PNG=OFF
+if "%1"=="nopng2gifs" SET BuildArgs=%BuildArgs% -DPGE_BUILD_PNG2GIFS=OFF
+if "%1"=="nolazyfixtool" SET BuildArgs=%BuildArgs% -DPGE_BUILD_LAZYFIXTOOL=OFF
+rem if "%1"=="nomanager" SET BuildArgs=%BuildArgs% CONFIG+=nomanager
+if "%1"=="nomaintainer" SET BuildArgs=%BuildArgs% -DPGE_BUILD_MAINTAINER=OFF
+if "%1"=="nomusicplayer" SET BuildArgs=%BuildArgs% -DPGE_BUILD_MUSICPLAYER=OFF
 if "%1"=="cmake-it" SET CMakeIt=1
-if "%1"=="qmake-it" SET CMakeIt=0
+if "%1"=="qmake-it" (
+    echo "QMake support has been removed! Please use CMake build instead!"
+    goto error
+)
 if "%1"=="deploy" SET CMakeDeploy=1
 if "%1"=="ninja" SET CMakeNinja=1
 if "%1"=="debug" SET DebugBuild=1
@@ -53,8 +57,6 @@ echo  clean                - Remove all object files and caches to build from sc
 echo  update-submodules    - Pull all submodules up to their latest states
 echo  repair-submodules    - Repair invalid or broken submodules
 echo  --help               - Print this manual
-rem echo  cmake-it             - Run build through CMake
-echo  qmake-it             - Run legacy build through QMake
 echo  debug                - Run build in debug configuration
 echo  ninja                - Use Ninja build system (CMake only build)
 echo  deploy               - Automatically run a deploymed (CMake only build)
@@ -63,15 +65,16 @@ echo --- Flags ---
 echo  nopause              - Disable pause on script completion
 echo.
 echo --- Disable building of components ---
-echo  noeditor              - Skip building of PGE Editor compoment
-echo  noengine              - Skip building of PGE Engine compoment
-echo  nocalibrator          - Skip building of Playable Character Calibrator compoment
-echo  nomaintainer          - Skip building of PGE Maintainer compoment
-echo  nomanager             - Skip building of PGE Manager compoment
-echo  nomusicplayer         - Skip building of PGE MusPlay compoment
-echo  nogifs2png            - Skip building of GIFs2PNG compoment
-echo  nopng2gifs            - Skip building of PNG2GIFs compoment
-echo  nolazyfixtool         - Skip building of LazyFixTool compoment
+echo  noqt                  - Skip building of components are using Qt
+echo  noeditor              - Skip building of PGE Editor compoment (Qt5)
+echo  noengine              - Skip building of PGE Engine compoment (SDL2)
+echo  nocalibrator          - Skip building of Playable Character Calibrator compoment (Qt5)
+echo  nomaintainer          - Skip building of PGE Maintainer compoment (Qt5)
+echo  nomanager             - Skip building of PGE Manager compoment (Qt5)
+echo  nomusicplayer         - Skip building of PGE MusPlay compoment (Qt5)
+echo  nogifs2png            - Skip building of GIFs2PNG compoment (STL)
+echo  nopng2gifs            - Skip building of PNG2GIFs compoment (STL)
+echo  nolazyfixtool         - Skip building of LazyFixTool compoment (STL)
 echo.
 set NoPause=1
 goto quit
@@ -82,9 +85,6 @@ if %DebugBuild%==1 echo ==DEBUG BUILD!==
 
 if %DebugBuild%==0 set BUILD_DIR_SUFFUX=-release
 if %DebugBuild%==1 set BUILD_DIR_SUFFUX=-debug
-
-if %DebugBuild%==0 set CONFIG_QMAKE=CONFIG+=release CONFIG-=debug
-if %DebugBuild%==1 set CONFIG_QMAKE=CONFIG-=release CONFIG+=debug
 
 if %DebugBuild%==0 set CONFIG_CMAKE=Release
 if %DebugBuild%==1 set CONFIG_CMAKE=Debug
@@ -99,20 +99,9 @@ IF NOT EXIST _paths.bat goto error
 call _paths.bat
 PATH=%QtDir%;%MinGW%;%GitDir%;%CMakeDir%;%SystemRoot%\system32;%SystemRoot%;
 
-if %CMakeIt%==1 goto cMakeIt
-
-IF "%MINGWx64Dest%"=="yes" (
-    SET BuildArgs=%BuildArgs% CONFIG+=win64
-)
-IF "%MINGWx32Dest%"=="yes" (
-    SET BuildArgs=%BuildArgs% CONFIG+=win32-mingw-w64
-)
-
 rem ------------------------------------------------------------
 rem ------------------------------------------------------------
 rem ------------------------------------------------------------
-goto run
-:cMakeIt
 
 set BUILD_DIR=%SRCDIR%/build-pge-cmake%BUILD_DIR_SUFFUX%
 set INSTALL_DIR=%SRCDIR%/bin-cmake%BUILD_DIR_SUFFUX%
@@ -125,7 +114,7 @@ if %CMakeNinja%==1 SET CMAKE_GENERATOR=Ninja
 if %CMakeNinja%==0 SET CMAKE_GENERATOR=MinGW Makefiles
 
 @echo on
-cmake -G "%CMAKE_GENERATOR%" -DCMAKE_PREFIX_PATH="%QtDir%/../" -DCMAKE_INSTALL_PREFIX="%INSTALL_DIR%" -DCMAKE_BUILD_TYPE=%CONFIG_CMAKE% -DPGE_INSTALL_DIRECTORY="PGE_Project"  "%SRCDIR%"
+cmake -G "%CMAKE_GENERATOR%" -DCMAKE_PREFIX_PATH="%QtDir%/../" -DCMAKE_INSTALL_PREFIX="%INSTALL_DIR%" -DCMAKE_BUILD_TYPE=%CONFIG_CMAKE% -DPGE_INSTALL_DIRECTORY="PGE_Project" %BuildArgs% "%SRCDIR%"
 @echo off
 if ERRORLEVEL 1 goto error
 
@@ -171,8 +160,6 @@ goto quit
 
 :cleanX
 echo ======== Remove all cached object files and automatically generated Makefiles ========
-
-call ./clean_make.bat nopause
 
 IF EXIST .\bin-w32\_build_x32\NUL (
                     echo removing bin-w32/_build_x32 ...
@@ -254,32 +241,6 @@ goto quit
 rem ------------------------------------------------------------
 rem ------------------------------------------------------------
 rem ------------------------------------------------------------
-
-:run
-cd %CD%\Editor
-%QtDir%\lrelease.exe *.pro
-cd ..\Engine
-%QtDir%\lrelease.exe *.pro
-cd ..
-
-rem build all components
-%QtDir%\qmake.exe %CONFIG_QMAKE% %BuildArgs%
-if ERRORLEVEL 1 goto error
-
-%MinGW%\mingw32-make %MAKE_EXTRA_ARGS% release
-if ERRORLEVEL 1 goto error
-
-rem copy data and configs into the build directory
-
-%MinGW%\mingw32-make install
-if ERRORLEVEL 1 goto error
-
-echo.
-echo =========BUILT!!===========
-echo.
-
-cd "%SRCDIR%"
-goto quit
 
 :error
 echo.

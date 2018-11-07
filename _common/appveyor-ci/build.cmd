@@ -21,4 +21,4 @@ echo CMakeDir=%CMakeDir%
 "%CMakeDir%\cmake" --version
 echo =============================
 
-build.bat nopause cmake-it ninja deploy
+build.bat nopause ninja deploy
