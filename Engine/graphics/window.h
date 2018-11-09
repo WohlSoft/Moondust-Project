@@ -71,6 +71,13 @@ bool init(std::string WindowTitle = "Platformer Game Engine by Wohldtand", int r
 void setWindowTitle(std::string title);
 
 /**
+ * @brief Change size of internal resolution
+ * @param newWidth New width in pixels
+ * @param newHeight New height in pixels
+ */
+void changeInternalResolution(unsigned int newWidth, unsigned int newHeight);
+
+/**
  * @brief Toggle Vertical synchronization mode
  * @param vsync State of vertical synchronization mode
  */

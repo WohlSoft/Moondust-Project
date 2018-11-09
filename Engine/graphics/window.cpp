@@ -286,6 +286,23 @@ void PGE_Window::setWindowTitle(std::string title)
     SDL_SetWindowTitle(window, title.c_str());
 }
 
+void PGE_Window::changeInternalResolution(unsigned int newWidth, unsigned int newHeight)
+{
+    if(window == nullptr)
+        return;
+
+    Width = static_cast<int>(newWidth);
+    Height = static_cast<int>(newHeight);
+
+    GlRenderer::setVirtualSurfaceSize(Width, Height);
+    GlRenderer::setViewportSize(Width, Height);
+
+    SDL_SetWindowMinimumSize(window, Width, Height);
+
+    if(IsFullScreen(window) == SDL_FALSE)
+        SDL_SetWindowSize(window, Width, Height);
+}
+
 void PGE_Window::toggleVSync(bool vsync)
 {
     if(vsync)
@@ -391,7 +408,8 @@ void PGE_Window::clean()
 
 int PGE_Window::setFullScreen(bool fs)
 {
-    if(window == NULL) return -1;
+    if(window == NULL)
+        return -1;
 
     if(fs != IsFullScreen(window))
     {

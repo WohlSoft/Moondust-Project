@@ -218,6 +218,12 @@ int main(int argc, char *argv[])
         if(!ConfigManager::config_name.empty())
             PGE_Window::setWindowTitle(ConfigManager::config_name);
 
+        if(ConfigManager::screen_width != static_cast<unsigned int>(PGE_Window::Width) &&
+           ConfigManager::screen_height != static_cast<unsigned int>(PGE_Window::Height))
+        {
+            PGE_Window::changeInternalResolution(ConfigManager::screen_width, ConfigManager::screen_height);
+        }
+
         pLogDebug("Configuration package successfully loaded!");
 
         if(g_flags.audioEnabled)
