@@ -28,7 +28,7 @@ env:
    - secure: "eZjlsg6iAuRaU2qiofJUOFT8qmomXTgy9IpfbuI4UOLQpz7bXq9CVCrCE2HhoPLEj08AjLvn60sBDJE3vX7TWVDYAS4/tNx2mcWbRjPSlI0uIIC1ehCKUFoPu8wH8eJZCrJUijyPBf7WbZ2uDCar+pgAbecv+Fi//jUk1i+W/Q0="
 
 git:
-  depth: 1
+  depth: 2
 
 branches:
   only:
