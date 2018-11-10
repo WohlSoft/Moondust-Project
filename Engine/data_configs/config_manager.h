@@ -222,15 +222,15 @@ namespace ConfigManager
     //Common Data
     extern TexturesBank common_textures;
 
-    extern unsigned int screen_width;
-    extern unsigned int screen_height;
+    extern unsigned int viewport_width;
+    extern unsigned int viewport_height;
 
     enum screenType
     {
         SCR_Static = 0, //Static / Scalable screen
         SCR_Dynamic   //Dynamic screen
     };
-    extern screenType screen_type;
+    extern screenType viewport_type;
 
     //Fonts
     extern FontsSetup setup_fonts;
