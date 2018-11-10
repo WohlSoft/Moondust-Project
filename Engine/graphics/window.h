@@ -75,7 +75,7 @@ void setWindowTitle(std::string title);
  * @param newWidth New width in pixels
  * @param newHeight New height in pixels
  */
-void changeInternalResolution(unsigned int newWidth, unsigned int newHeight);
+void changeViewportResolution(unsigned int newWidth, unsigned int newHeight);
 
 /**
  * @brief Toggle Vertical synchronization mode

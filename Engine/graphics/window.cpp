@@ -286,7 +286,7 @@ void PGE_Window::setWindowTitle(std::string title)
     SDL_SetWindowTitle(window, title.c_str());
 }
 
-void PGE_Window::changeInternalResolution(unsigned int newWidth, unsigned int newHeight)
+void PGE_Window::changeViewportResolution(unsigned int newWidth, unsigned int newHeight)
 {
     if(window == nullptr)
         return;
