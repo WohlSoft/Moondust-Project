@@ -193,6 +193,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/installer.cpp
     common_features/item_rectangles.cpp
     common_features/items.cpp
+    common_features/json_settings_widget.cpp
     common_features/logger_sets.cpp
     common_features/main_window_ptr.cpp
     common_features/npc_animator.cpp
@@ -537,6 +538,7 @@ add_dependencies(pge_editor
     SDLMixerX_Local
     SDL2_Local
     FreeImage_Local
+    QtPropertyBrowser_Local
     editor_translations
 )
 
@@ -551,6 +553,7 @@ list(APPEND PGE_EDITOR_INSTALLS
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
+    QtPropertyBrowser$<$<CONFIG:Debug>:d>
 )
 
 set(MIXER_LIBS)

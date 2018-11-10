@@ -137,6 +137,7 @@ include(_common/library_luabind.cmake)
 include(_common/library_SDL2.cmake)
 include(_common/library_AudioCodecs.cmake)
 include(_common/library_SDLMixerX.cmake)
+include(_common/library_QtPropertyBrowser.cmake)
 
 # Build dependent libraries only. Workaround for Ninja
 add_custom_target(libs
@@ -148,6 +149,10 @@ add_custom_target(libs
     SQLite_Local
     FREETYPE_Local
 )
+
+if(PGE_ENABLE_QT) # Build if Qt support enabled
+    add_dependencies(libs QtPropertyBrowser_Local)
+endif()
 
 option(PGE_BUILD_ENGINE "Build the PGE Engine component" ON)
 if(PGE_BUILD_ENGINE)
