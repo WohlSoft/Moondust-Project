@@ -20,7 +20,7 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Opciones</translation>
+        <translation>Opciones</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1229,7 +1229,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea y elimina ItemSelectDialog par analizar fugas de memoria</translation>
     </message>
 </context>
 <context>
@@ -1625,7 +1625,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar datos de usuario en bruto...</translation>
     </message>
 </context>
 <context>
@@ -1770,7 +1770,7 @@ Límites: longitud máxima de 27 caracteres</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar datos de usuario en bruto...</translation>
     </message>
 </context>
 <context>
@@ -1778,52 +1778,52 @@ Límites: longitud máxima de 27 caracteres</translation>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por Nombre</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID (contenido)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Descendiente</translation>
     </message>
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vista uniforme</translation>
     </message>
     <message>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar elementos personalizados</translation>
     </message>
     <message>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar elementos estándar</translation>
     </message>
 </context>
 <context>
@@ -2204,7 +2204,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar datos de usuario en bruto...</translation>
     </message>
 </context>
 <context>
@@ -3115,11 +3115,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Buscar</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Guardar archivo primero&gt;</translation>
     </message>
 </context>
 <context>
@@ -3555,23 +3555,23 @@ To use LunaTester you should have right Integration configuration package!</sour
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terminar proceso ejecutado</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se terminó el proceso de LunaTester exitosamente.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester no está siendo ejecutado.</translation>
     </message>
 </context>
 <context>
@@ -8577,12 +8577,13 @@ Por favor guarde primero.</translation>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuando se recarga la configuración, todos los archivos abiertos se cerrarán y restaurarán luego de recargar. ¿Desea continuar?</translation>
     </message>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>¡El paquete de configuración se cambió!
+Para comenzar a usar el nuevo paquete, necesita reiniciar el Editor. ¿Desea continuar?</translation>
     </message>
 </context>
 <context>
@@ -9825,23 +9826,23 @@ El máximo es %2.</translation>
     </message>
     <message>
         <source>Initializing tileset categories...</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicializando categorías de tileset...</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Block user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio de datos de bloques de usuario</translation>
     </message>
     <message>
         <source>BGO user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio de datos de OF de usuario</translation>
     </message>
     <message>
         <source>NPC user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio de datos de PNJ de usuairo</translation>
     </message>
 </context>
 <context>
@@ -10727,164 +10728,164 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     <name>TilesetEditor</name>
     <message>
         <source>Tileset Editor</source>
-        <translation type="unfinished">Editor de conjuntos de bloques</translation>
+        <translation>Editor de conjuntos de bloques</translation>
     </message>
     <message>
         <source>Items</source>
-        <translation type="unfinished">Items</translation>
+        <translation>Items</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">Bloque</translation>
+        <translation>Bloque</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished">OF</translation>
+        <translation>OF</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished">PNJ</translation>
+        <translation>PNJ</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished">Azulejo de Terreno</translation>
+        <translation>Azulejo de Terreno</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished">Decoraciones</translation>
+        <translation>Decoraciones</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished">Directorio</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">Limpiar</translation>
+        <translation>Limpiar</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <source>Tileset name:</source>
-        <translation type="unfinished">Nombre del conjunto:</translation>
+        <translation>Nombre del conjunto:</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Altura:</translation>
+        <translation>Altura:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Ancho:</translation>
+        <translation>Ancho:</translation>
     </message>
     <message>
         <source>Show custom only</source>
-        <translation type="unfinished">Mostrar sólo personalizados</translation>
+        <translation>Mostrar sólo personalizados</translation>
     </message>
     <message>
         <source>Current Level/World specific</source>
-        <translation type="unfinished">Específico de mundo/nivel actual</translation>
+        <translation>Específico de mundo/nivel actual</translation>
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation type="unfinished">Eliminar el tileset</translation>
+        <translation>Eliminar el tileset</translation>
     </message>
     <message>
         <source>Show default only</source>
-        <translation type="unfinished">Mostrar solo predeterminado</translation>
+        <translation>Mostrar solo predeterminado</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Buscar</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <source>Search settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de búsqueda</translation>
     </message>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por Nombre</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID (contenido)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Descendiente</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation type="unfinished">Limpiar editor de tilesets</translation>
+        <translation>Limpiar editor de tilesets</translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation type="unfinished">¿Desea limpiar el editor para crear un nuevo tileset?</translation>
+        <translation>¿Desea limpiar el editor para crear un nuevo tileset?</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Ingrese un nombre de archivo!</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation type="unfinished">Nombre de archivo:</translation>
+        <translation>Nombre de archivo:</translation>
     </message>
     <message>
         <source>Open Tileset</source>
-        <translation type="unfinished">Abrir baldosas</translation>
+        <translation>Abrir baldosas</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation type="unfinished">¡Falló la carga de baldozas!</translation>
+        <translation>¡Falló la carga de baldozas!</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="unfinished">¡Falló la carga de baldosas!
+        <translation>¡Falló la carga de baldosas!
 ¡Los datos pueden estar corruptos!</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation type="unfinished">Editor de cajas de tilesets</translation>
+        <translation>Editor de cajas de tilesets</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
-        <translation type="unfinished">No mostrar este mensaje otra vez.</translation>
+        <translation>No mostrar este mensaje otra vez.</translation>
     </message>
     <message>
         <source>Welcome to tileset editor!
@@ -10895,7 +10896,7 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation type="unfinished">¡Bienvenido al editor de tilesets!
+        <translation>¡Bienvenido al editor de tilesets!
 
 Éste es un editor de tilesets globales.
 Todos los tilesets que se harán aquí serán guardados en ésta carpeta:
@@ -10906,19 +10907,19 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation type="unfinished">¿Desea remover este tileset?</translation>
+        <translation>¿Desea remover este tileset?</translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation type="unfinished">Tileset removido</translation>
+        <translation>Tileset removido</translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation type="unfinished">¡El tileset fue removido!</translation>
+        <translation>¡El tileset fue removido!</translation>
     </message>
 </context>
 <context>
@@ -11027,7 +11028,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Prioridad de orden de categoría</translation>
     </message>
 </context>
 <context>
@@ -11203,7 +11204,7 @@ Data may be corrupted!</source>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Edición de datos de usuario</translation>
     </message>
 </context>
 <context>
