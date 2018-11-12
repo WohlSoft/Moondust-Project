@@ -67,6 +67,9 @@ struct BgoSetup
     //! Detailed description of element
     PGEString   description = "";
 
+    //! Extra Settings JSON layout file name
+    PGEString   extra_settings = "";
+
     /**
      * @brief Base Z-Layer type
      */

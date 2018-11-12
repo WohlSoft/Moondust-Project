@@ -183,6 +183,9 @@ struct NpcSetup
     //! Special option Spinbox: spining value step
     int32_t         special_spin_value_offset = 0;
 
+    //! Extra Settings JSON layout file name
+    PGEString       extra_settings = "";
+
     //;game process
     //! [Gameplay] Scores code are will be added to player on beating this NPC
     uint32_t        score = 0;

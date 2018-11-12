@@ -32,31 +32,7 @@
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
 
-class BlockHistory_UserData : public HistoryElementCustomSetting
-{
-public:
-    BlockHistory_UserData() : HistoryElementCustomSetting() {}
-    virtual ~BlockHistory_UserData() {}
-
-    virtual void undo(const void *sourceItem, QVariant *, QGraphicsItem *item)
-    {
-        const LevelBlock * it = reinterpret_cast<const LevelBlock*>(sourceItem);
-        ItemBlock* ite = qgraphicsitem_cast<ItemBlock*>(item);
-        ite->m_data.meta.custom_params = it->meta.custom_params;
-        ite->arrayApply();
-    }
-    virtual void redo(const void *, QVariant *mod, QGraphicsItem *item)
-    {
-        ItemBlock* ite = qgraphicsitem_cast<ItemBlock*>(item);
-        ite->m_data.meta.custom_params = mod->toString();
-        ite->arrayApply();
-    }
-    virtual QString getHistoryName()
-    {
-        return QObject::tr("Block user data change");
-    }
-};
-
+#include <editing/_components/history/settings/lvl_block_userdata.hpp>
 
 ItemBlock::ItemBlock(QGraphicsItem *parent)
     : LvlBaseItem(parent)

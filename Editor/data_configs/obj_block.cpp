@@ -66,7 +66,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
     if(!openSection(setup, section.toStdString(), internal))
         return false;
 
-    if(sblock.setup.parse(setup, blockPath, defaultGrid.block, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(sblock.setup.parse(setup, folderLvlBlocks.graphics, defaultGrid.block, merge_with ? &merge_with->setup : nullptr, &errStr))
         sblock.isValid = true;
     else
     {
@@ -93,10 +93,9 @@ void dataconfigs::loadLevelBlocks()
     if(block_ini.isEmpty())
         return;
 
-    QString nestDir = "";
-
     IniProcessing setup(block_ini);
 
+    folderLvlBlocks.items.clear();
     main_block.clear();   //Clear old
     //index_blocks.clear();
 
@@ -108,10 +107,11 @@ void dataconfigs::loadLevelBlocks()
         setup.read("default-sizable-border-width", defaultBlock.sizable_block_border_size, -1);
         total_data += block_total;
 
-        setup.read("config-dir", nestDir, "");
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderLvlBlocks.items, "");
+        setup.read("extra-settings", folderLvlBlocks.extraSettings, folderLvlBlocks.items);
+        if(!folderLvlBlocks.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderLvlBlocks.items = config_dir + folderLvlBlocks.items;
             useDirectory = true;
         }
     }
@@ -138,7 +138,7 @@ void dataconfigs::loadLevelBlocks()
 
         bool valid = false;
         if(useDirectory)
-            valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(nestDir).arg(i));
+            valid = loadLevelBlock(sblock, "block", nullptr, QString("%1/block-%2.ini").arg(folderLvlBlocks.items).arg(i));
         else
             valid = loadLevelBlock(sblock, QString("block-%1").arg(i), 0, "", &setup);
 
@@ -146,7 +146,7 @@ void dataconfigs::loadLevelBlocks()
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(blockPath,
+            GraphicsHelps::loadMaskedImage(folderLvlBlocks.graphics,
                                            sblock.setup.image_n, sblock.setup.mask_n,
                                            sblock.image,
                                            errStr);

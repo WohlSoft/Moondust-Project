@@ -135,10 +135,9 @@ struct obj_blockGlobalSetup
 class dataconfigs : public QObject
 {
     Q_OBJECT
-    bool    m_isValid;
 public:
     dataconfigs();
-    virtual ~dataconfigs();
+    virtual ~dataconfigs() = default;
 
     bool loadconfigs();
     DataFolders dirs;
@@ -263,15 +262,24 @@ public:
     bool loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
     bool loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
 
-    inline QString getBgoPath()  {return bgoPath;}
-    inline QString getBGPath()   {return BGPath;}
-    inline QString getBlockPath(){return blockPath;}
-    inline QString getNpcPath()  {return npcPath;}
+    QString getBgoPath();
+    QString getBGPath();
+    QString getBlockPath();
+    QString getNpcPath();
 
-    inline QString getTilePath() {return tilePath;}
-    inline QString getScenePath(){return scenePath;}
-    inline QString getPathPath() {return pathPath;}
-    inline QString getWlvlPath() {return wlvlPath;}
+    QString getTilePath();
+    QString getScenePath();
+    QString getPathPath();
+    QString getWlvlPath();
+
+    QString getBgoExtraSettingsPath();
+    QString getBlockExtraSettingsPath();
+    QString getNpcExtraSettingsPath();
+
+    QString getTileExtraSettingsPath();
+    QString getSceneExtraSettingsPath();
+    QString getPathExtraSettingsPath();
+    QString getWlvlExtraSettingsPath();
 
 signals:
     void progressValue(int);
@@ -281,24 +289,24 @@ signals:
     void progressPartNumber(int);
 
 private:
-
-    //Buffers
-    QPixmap mask;
-    //QPixmap image;
-    QString imgFile, imgFileM;
-    QString tmpstr;
-    QStringList tmp;
-
     unsigned long total_data;
-    QString bgoPath;
-    QString BGPath;
-    QString blockPath;
-    QString npcPath;
 
-    QString tilePath;
-    QString scenePath;
-    QString pathPath;
-    QString wlvlPath;
+    struct ResourceFolder
+    {
+        QString graphics;
+        QString items;
+        QString extraSettings;
+    };
+
+    ResourceFolder folderLvlBgo;
+    ResourceFolder folderLvlBG;
+    ResourceFolder folderLvlBlocks;
+    ResourceFolder folderLvlNPC;
+
+    ResourceFolder folderWldTerrain;
+    ResourceFolder folderWldScenery;
+    ResourceFolder folderWldPaths;
+    ResourceFolder folderWldLevelPoints;
 
     void loadPlayers();
 

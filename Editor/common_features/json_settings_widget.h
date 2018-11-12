@@ -44,6 +44,7 @@ public:
     bool saveSettingsIntoFile(const QString &path);
 
     bool loadSettings(const QByteArray &rawData);
+    bool loadSettings(const QString &rawData);
     QString saveSettings();
 
     bool loadLayout(const QByteArray &layout);

@@ -66,6 +66,9 @@ struct BlockSetup
     //! Detailed description of element
     PGEString       description = "";
 
+    //! Extra Settings JSON layout file name
+    PGEString       extra_settings = "";
+
     //! Is block allowed to have any size?
     bool            sizable = false;
     //! Width of the border of sizable block texture (common)

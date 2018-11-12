@@ -27,6 +27,7 @@
 class MainWindow;
 class QComboBox;
 class QPushButton;
+class JsonSettingsWidget;
 
 namespace Ui {
 class LvlItemProperties;
@@ -133,9 +134,17 @@ protected:
 private:
     void processNpcContainerButton(QPushButton *btn);
 
+    void initExtraSettingsWidget(const QString &layoutPath, QString &properties, void (LvlItemProperties::*callback)());
+
+    void onExtraSettingsBlockChanged();
+    void onExtraSettingsBGOChanged();
+    void onExtraSettingsNPCChanged();
+
     int npcSpecSpinOffset;
     int npcSpecSpinOffset_2;
     bool LockItemProps;
+
+    JsonSettingsWidget *m_extraSettings = nullptr;
 
     int curItemType;
     QString BlockEventDestroy;

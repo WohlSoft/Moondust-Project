@@ -32,30 +32,7 @@
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
 
-class NPCHistory_UserData : public HistoryElementCustomSetting
-{
-public:
-    NPCHistory_UserData() : HistoryElementCustomSetting() {}
-    virtual ~NPCHistory_UserData() {}
-
-    virtual void undo(const void *sourceItem, QVariant *, QGraphicsItem *item)
-    {
-        const LevelNPC * it = reinterpret_cast<const LevelNPC*>(sourceItem);
-        ItemNPC* ite = qgraphicsitem_cast<ItemNPC*>(item);
-        ite->m_data.meta.custom_params = it->meta.custom_params;
-        ite->arrayApply();
-    }
-    virtual void redo(const void *, QVariant *mod, QGraphicsItem *item)
-    {
-        ItemNPC* ite = qgraphicsitem_cast<ItemNPC*>(item);
-        ite->m_data.meta.custom_params = mod->toString();
-        ite->arrayApply();
-    }
-    virtual QString getHistoryName()
-    {
-        return QObject::tr("NPC user data change");
-    }
-};
+#include <editing/_components/history/settings/lvl_npc_userdata.hpp>
 
 
 ItemNPC::ItemNPC(bool noScene, QGraphicsItem *parent)

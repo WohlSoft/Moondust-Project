@@ -61,6 +61,10 @@ struct WldGenericSetup
     PGEString   category = "_Other";
     //! Detailed description of element
     PGEString   description = "";
+
+    //! Extra Settings JSON layout file name
+    PGEString   extra_settings = "";
+
     //! Has element an animated sprite?
     bool        animated = false;
     //! Phyiscal count of animation frames on the sprite

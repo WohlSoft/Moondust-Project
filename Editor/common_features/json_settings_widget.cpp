@@ -90,7 +90,14 @@ QString JsonSettingsWidget::SetupStack::getPropertyId(const QString &name)
 bool JsonSettingsWidget::SetupStack::loadSetup(const QByteArray &layoutJson, QString &errorString)
 {
     QJsonParseError errCode = QJsonParseError();
+
     m_setupTree.clear();
+    if(layoutJson.isEmpty())
+    {
+        clear();
+        return true;
+    }
+
     m_setupCache = QJsonDocument::fromJson(layoutJson, &errCode);
     if(errCode.error != QJsonParseError::NoError)
     {
@@ -217,6 +224,12 @@ bool JsonSettingsWidget::loadSettings(const QByteArray &rawData)
 {
     m_errorString.clear();
     return m_setupStack.loadSetup(rawData, m_errorString);
+}
+
+bool JsonSettingsWidget::loadSettings(const QString &rawData)
+{
+    m_errorString.clear();
+    return m_setupStack.loadSetup(rawData.toUtf8(), m_errorString);
 }
 
 QString JsonSettingsWidget::saveSettings()

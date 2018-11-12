@@ -36,8 +36,6 @@
 
 dataconfigs::dataconfigs()
 {
-    m_isValid = false;
-
     total_data = 0;
 
     music_custom_id = 1;
@@ -58,9 +56,6 @@ dataconfigs::dataconfigs()
     engine.wld_viewport_w = 668;
     engine.wld_viewport_h = 403;
 }
-
-dataconfigs::~dataconfigs()
-{}
 
 /*
 [background-1]
@@ -256,10 +251,6 @@ bool dataconfigs::loadBasics()
 
 bool dataconfigs::loadconfigs()
 {
-    //unsigned long i;//, prgs=0;
-
-    m_isValid = false;
-
     total_data = 0;
     defaultGrid.general = 0;
 
@@ -361,32 +352,33 @@ bool dataconfigs::loadconfigs()
     QString engine_ini = config_dir + "engine.ini";
     if(QFile::exists(engine_ini)) //Load if exist, is not required
     {
-        QSettings engineset(engine_ini, QSettings::IniFormat);
-        engineset.setIniCodec("UTF-8");
+        QSettings engineSet(engine_ini, QSettings::IniFormat);
+        engineSet.setIniCodec("UTF-8");
 
-        engineset.beginGroup("common");
-        engine.screen_w = engineset.value("screen-width", engine.screen_w).toInt();
-        engine.screen_h = engineset.value("screen-height", engine.screen_h).toInt();
-        engineset.endGroup();
+        engineSet.beginGroup("common");
+        engine.screen_w = engineSet.value("viewport-width", engine.screen_w).toUInt();
+        engine.screen_h = engineSet.value("viewport-height", engine.screen_h).toUInt();
+        engine.screen_w = engineSet.value("screen-width", engine.screen_w).toUInt();
+        engine.screen_h = engineSet.value("screen-height", engine.screen_h).toUInt();
+        engineSet.endGroup();
 
-        engineset.beginGroup("world-map");
-        engine.wld_viewport_w = engineset.value("viewport-width", engine.wld_viewport_w).toInt();
-        engine.wld_viewport_h = engineset.value("viewport-height", engine.wld_viewport_h).toInt();
-        engineset.endGroup();
+        engineSet.beginGroup("world-map");
+        engine.wld_viewport_w = engineSet.value("viewport-width", engine.wld_viewport_w).toUInt();
+        engine.wld_viewport_h = engineSet.value("viewport-height", engine.wld_viewport_h).toUInt();
+        engineSet.endGroup();
     }
 
 
     ////////////////////////////////Preparing////////////////////////////////////////
-    bgoPath =   dirs.glevel +  "background/";
-    BGPath =    dirs.glevel +  "background2/";
-    blockPath = dirs.glevel +  "block/";
-    npcPath =   dirs.glevel +  "npc/";
+    folderLvlBgo.graphics           = dirs.glevel +  "background/";
+    folderLvlBG.graphics            = dirs.glevel +  "background2/";
+    folderLvlBlocks.graphics        = dirs.glevel +  "block/";
+    folderLvlNPC.graphics           = dirs.glevel +  "npc/";
 
-    tilePath =  dirs.gworld +  "tile/";
-    scenePath = dirs.gworld +  "scene/";
-    pathPath =  dirs.gworld +  "path/";
-    wlvlPath =  dirs.gworld +  "level/";
-
+    folderWldTerrain.graphics       = dirs.gworld +  "tile/";
+    folderWldScenery.graphics       = dirs.gworld +  "scene/";
+    folderWldPaths.graphics         = dirs.gworld +  "path/";
+    folderWldLevelPoints.graphics   = dirs.gworld +  "level/";
     //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -462,8 +454,6 @@ bool dataconfigs::loadconfigs()
     LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
     LogDebug(QString("-------------------------"));
 
-    m_isValid = !check();
-
     return true;
 }
 
@@ -509,3 +499,100 @@ long dataconfigs::getCharacterI(unsigned long itemID)
     return static_cast<long>(j);
 }
 
+
+QString dataconfigs::getBgoPath()
+{
+    return folderLvlBgo.graphics;
+}
+
+QString dataconfigs::getBGPath()
+{
+    return folderLvlBG.graphics;
+}
+
+QString dataconfigs::getBlockPath()
+{
+    return folderLvlBlocks.graphics;
+}
+
+QString dataconfigs::getNpcPath()
+{
+    return folderLvlNPC.graphics;
+}
+
+QString dataconfigs::getTilePath()
+{
+    return folderWldTerrain.graphics;
+}
+
+QString dataconfigs::getScenePath()
+{
+    return folderWldScenery.graphics;
+}
+
+QString dataconfigs::getPathPath()
+{
+    return folderWldPaths.graphics;
+}
+
+QString dataconfigs::getWlvlPath()
+{
+    return folderWldLevelPoints.graphics;
+}
+
+
+QString dataconfigs::getBgoExtraSettingsPath()
+{
+    if(folderLvlBgo.extraSettings.isEmpty())
+        return config_dir + "items/bgo";
+    else
+        return config_dir + folderLvlBgo.extraSettings;
+}
+
+QString dataconfigs::getBlockExtraSettingsPath()
+{
+    if(folderLvlBlocks.extraSettings.isEmpty())
+        return config_dir + "items/blocks";
+    else
+        return config_dir + folderLvlBlocks.extraSettings;
+}
+
+QString dataconfigs::getNpcExtraSettingsPath()
+{
+    if(folderLvlNPC.extraSettings.isEmpty())
+        return config_dir + "items/npc";
+    else
+        return config_dir + folderLvlNPC.extraSettings;
+}
+
+QString dataconfigs::getTileExtraSettingsPath()
+{
+    if(folderWldTerrain.extraSettings.isEmpty())
+        return config_dir + "items/terrain";
+    else
+        return config_dir + folderWldTerrain.extraSettings;
+}
+
+QString dataconfigs::getSceneExtraSettingsPath()
+{
+    if(folderWldScenery.extraSettings.isEmpty())
+        return config_dir + "items/scenery";
+    else
+        return config_dir + folderWldScenery.extraSettings;
+}
+
+QString dataconfigs::getPathExtraSettingsPath()
+{
+    if(folderWldPaths.extraSettings.isEmpty())
+        return config_dir + "items/paths";
+    else
+        return config_dir + folderWldPaths.extraSettings;
+}
+
+QString dataconfigs::getWlvlExtraSettingsPath()
+{
+    if(folderWldLevelPoints.extraSettings.isEmpty())
+        return config_dir + "items/levels";
+    else
+        return config_dir + folderWldLevelPoints.extraSettings;
+}

@@ -28,31 +28,7 @@
 #include "../lvl_history_manager.h"
 #include "../newlayerbox.h"
 
-class BgoHistory_UserData : public HistoryElementCustomSetting
-{
-public:
-    BgoHistory_UserData() : HistoryElementCustomSetting() {}
-    virtual ~BgoHistory_UserData() {}
-
-    virtual void undo(const void *sourceItem, QVariant *, QGraphicsItem *item)
-    {
-        const LevelBGO * it = reinterpret_cast<const LevelBGO*>(sourceItem);
-        ItemBGO* ite = qgraphicsitem_cast<ItemBGO*>(item);
-        ite->m_data.meta.custom_params = it->meta.custom_params;
-        ite->arrayApply();
-    }
-    virtual void redo(const void *, QVariant *mod, QGraphicsItem *item)
-    {
-        ItemBGO* ite = qgraphicsitem_cast<ItemBGO*>(item);
-        ite->m_data.meta.custom_params = mod->toString();
-        ite->arrayApply();
-    }
-    virtual QString getHistoryName()
-    {
-        return QObject::tr("BGO user data change");
-    }
-};
-
+#include <editing/_components/history/settings/lvl_bgo_userdata.hpp>
 
 
 ItemBGO::ItemBGO(QGraphicsItem *parent) : LvlBaseItem(parent)

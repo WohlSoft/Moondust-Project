@@ -60,7 +60,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg,
     if(!setup->beginGroup(section.toStdString()) && internal)
         setup->beginGroup("General");
 
-    if(sbg.setup.parse(setup, BGPath, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(sbg.setup.parse(setup, folderLvlBG.graphics, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
         sbg.isValid = true;
     else
     {
@@ -89,10 +89,10 @@ void dataconfigs::loadLevelBackgrounds()
     if(bg_ini.isEmpty())
         return;
 
-    QString nestDir = "";
-
     IniProcessing setup(bg_ini);
 
+    QString maskNameDummy;
+    folderLvlBG.items.clear();
     main_bg.clear();   //Clear old
 
     if(!openSection(&setup, "background2-main"))
@@ -100,10 +100,11 @@ void dataconfigs::loadLevelBackgrounds()
     {
         setup.read("total", bg_total, 0);
         total_data += bg_total;
-        setup.read("config-dir", nestDir, nestDir);
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderLvlBG.items, "");
+        setup.read("config-dir", folderLvlBG.items, folderLvlBG.items);
+        if(!folderLvlBG.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderLvlBG.items = config_dir + folderLvlBG.items;
             useDirectory = true;
         }
     }
@@ -129,15 +130,15 @@ void dataconfigs::loadLevelBackgrounds()
 
         bool valid = false;
         if(useDirectory)
-            valid = loadLevelBackground(sbg, "background2", nullptr, QString("%1/background2-%2.ini").arg(nestDir).arg(i));
+            valid = loadLevelBackground(sbg, "background2", nullptr, QString("%1/background2-%2.ini").arg(folderLvlBG.items).arg(i));
         else
             valid = loadLevelBackground(sbg, QString("background2-%1").arg(i), 0, "", &setup);
 
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(BGPath,
-                                           sbg.setup.image_n, imgFile,
+            GraphicsHelps::loadMaskedImage(folderLvlBG.graphics,
+                                           sbg.setup.image_n, maskNameDummy,
                                            sbg.image,
                                            errStr);
 
@@ -157,8 +158,8 @@ void dataconfigs::loadLevelBackgrounds()
 
             if(sbg.setup.type == BgSetup::BG_TYPE_DoubleRow)
             {
-                GraphicsHelps::loadMaskedImage(BGPath,
-                                               sbg.setup.second_image_n, imgFile,
+                GraphicsHelps::loadMaskedImage(folderLvlBG.graphics,
+                                               sbg.setup.second_image_n, maskNameDummy,
                                                sbg.second_image,
                                                errStr);
 

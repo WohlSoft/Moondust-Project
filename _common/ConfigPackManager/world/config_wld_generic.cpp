@@ -55,6 +55,7 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     setup->read("group",    group,      pMergeMe(group));
     setup->read("category", category,   pMergeMe(category));
     setup->read("description", description, pMerge(description, ""));
+    setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
 
     setup->read("image",    image_n,    pMerge(image_n, ""));
     if(!merge_with && !PGE_ImageInfo::getImageSize(imgPath + image_n, &w, &h, &errCode))

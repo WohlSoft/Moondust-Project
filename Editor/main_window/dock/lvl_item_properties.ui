@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>309</width>
-    <height>497</height>
+    <width>307</width>
+    <height>546</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -57,9 +57,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>311</width>
-         <height>1622</height>
+         <y>-742</y>
+         <width>293</width>
+         <height>2046</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -90,6 +90,9 @@
            <string>Block</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_13" columnstretch="35,78,1">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
            <property name="leftMargin">
             <number>1</number>
            </property>
@@ -480,6 +483,9 @@
            <string>BGO</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_14" columnstretch="10,80">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
            <property name="leftMargin">
             <number>1</number>
            </property>
@@ -687,13 +693,16 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>672</height>
+            <height>647</height>
            </size>
           </property>
           <property name="title">
            <string>NPC</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_15" columnstretch="35,0,0">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
            <property name="leftMargin">
             <number>1</number>
            </property>
@@ -709,6 +718,16 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <property name="spacing">
             <number>1</number>
            </property>
+           <item row="14" column="0" colspan="3">
+            <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>
+           </item>
+           <item row="23" column="0" colspan="3">
+            <widget class="Line" name="line_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
            <item row="26" column="0" colspan="3">
             <widget class="Line" name="line_2">
              <property name="orientation">
@@ -849,9 +868,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </property>
             </widget>
            </item>
-           <item row="14" column="0" colspan="3">
-            <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>
-           </item>
            <item row="33" column="1">
             <widget class="QComboBox" name="PROPS_NpcEventEmptyLayer">
              <property name="currentText">
@@ -896,8 +912,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </property>
             </widget>
            </item>
-           <item row="23" column="0" colspan="3">
-            <widget class="Line" name="line_5">
+           <item row="29" column="0" colspan="3">
+            <widget class="Line" name="line_3">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -910,6 +926,13 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </property>
             </widget>
            </item>
+           <item row="21" column="0" colspan="3">
+            <widget class="QComboBox" name="PROPS_NPCSpecialBox">
+             <property name="currentText">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="0" colspan="3">
             <widget class="QLabel" name="PROPS_NpcPos">
              <property name="text">
@@ -917,17 +940,10 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </property>
             </widget>
            </item>
-           <item row="29" column="0" colspan="3">
-            <widget class="Line" name="line_3">
+           <item row="12" column="0" colspan="3">
+            <widget class="Line" name="line_6">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="21" column="0" colspan="3">
-            <widget class="QComboBox" name="PROPS_NPCSpecialBox">
-             <property name="currentText">
-              <string notr="true"/>
              </property>
             </widget>
            </item>
@@ -970,17 +986,17 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </property>
             </widget>
            </item>
-           <item row="12" column="0" colspan="3">
-            <widget class="Line" name="line_6">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
            <item row="28" column="0">
             <widget class="QLabel" name="NpcLayerAttach">
              <property name="text">
               <string>Attach to:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="31" column="0">
+            <widget class="QLabel" name="NpcEventDeath">
+             <property name="text">
+              <string>Death:</string>
              </property>
             </widget>
            </item>
@@ -1297,13 +1313,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </layout>
             </widget>
            </item>
-           <item row="31" column="0">
-            <widget class="QLabel" name="NpcEventDeath">
-             <property name="text">
-              <string>Death:</string>
-             </property>
-            </widget>
-           </item>
            <item row="30" column="2">
             <widget class="QPushButton" name="PROPS_NpcEventActovateLock">
              <property name="maximumSize">
@@ -1353,7 +1362,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
+               <verstretch>30</verstretch>
               </sizepolicy>
              </property>
              <property name="minimumSize">
@@ -1373,7 +1382,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                <number>0</number>
               </property>
               <property name="sizeConstraint">
-               <enum>QLayout::SetDefaultConstraint</enum>
+               <enum>QLayout::SetFixedSize</enum>
               </property>
               <property name="leftMargin">
                <number>5</number>
@@ -1411,21 +1420,20 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </layout>
             </widget>
            </item>
-           <item row="34" column="0" colspan="3">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+           <item row="28" column="1" colspan="2">
+            <widget class="QComboBox" name="PROPS_NpcAttachLayer">
+             <property name="currentText">
+              <string notr="true">[none]</string>
              </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
+             <property name="maxVisibleItems">
+              <number>50</number>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>48</height>
-              </size>
-             </property>
-            </spacer>
+             <item>
+              <property name="text">
+               <string notr="true">[none]</string>
+              </property>
+             </item>
+            </widget>
            </item>
            <item row="19" column="0" colspan="3">
             <widget class="QPushButton" name="PROPS_NPCSpecialNPC">
@@ -1442,21 +1450,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <property name="flat">
               <bool>false</bool>
              </property>
-            </widget>
-           </item>
-           <item row="28" column="1" colspan="2">
-            <widget class="QComboBox" name="PROPS_NpcAttachLayer">
-             <property name="currentText">
-              <string notr="true">[none]</string>
-             </property>
-             <property name="maxVisibleItems">
-              <number>50</number>
-             </property>
-             <item>
-              <property name="text">
-               <string notr="true">[none]</string>
-              </property>
-             </item>
             </widget>
            </item>
            <item row="4" column="0" colspan="3">
@@ -1492,6 +1485,52 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </item>
           </layout>
          </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="extraSettings">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>400</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Extra settings</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>

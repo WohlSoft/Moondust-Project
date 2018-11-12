@@ -36,7 +36,7 @@ bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_lev
     if(!openSection(setup, section.toStdString(), internal))
         return false;
 
-    if(slevel.setup.parse(setup, wlvlPath, defaultGrid.levels, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(slevel.setup.parse(setup, folderWldLevelPoints.graphics, defaultGrid.levels, merge_with ? &merge_with->setup : nullptr, &errStr))
         slevel.isValid = true;
     else
     {
@@ -62,10 +62,9 @@ void dataconfigs::loadWorldLevels()
     if(level_ini.isEmpty())
         return;
 
-    QString nestDir = "";
-
     IniProcessing setup(level_ini);
 
+    folderWldLevelPoints.items.clear();
     main_wlevels.clear();   //Clear old
 
     if(!openSection(&setup, "levels-main"))
@@ -76,10 +75,11 @@ void dataconfigs::loadWorldLevels()
         marker_wlvl.path    = setup.value("path", 0).toUInt();
         marker_wlvl.bigpath = setup.value("bigpath", 0).toUInt();
         total_data += levels_total;
-        setup.read("config-dir", nestDir, "");
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderWldLevelPoints.items, "");
+        setup.read("extra-settings", folderWldLevelPoints.extraSettings, folderWldLevelPoints.items);
+        if(!folderWldLevelPoints.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderWldLevelPoints.items = config_dir + folderWldLevelPoints.items;
             useDirectory = true;
         }
     }
@@ -105,7 +105,7 @@ void dataconfigs::loadWorldLevels()
         emit progressValue(int(i));
         bool valid = false;
         if(useDirectory)
-            valid = loadWorldLevel(slevel, "level", nullptr, QString("%1/level-%2.ini").arg(nestDir).arg(i));
+            valid = loadWorldLevel(slevel, "level", nullptr, QString("%1/level-%2.ini").arg(folderWldLevelPoints.items).arg(i));
         else
             valid = loadWorldLevel(slevel, QString("level-%1").arg(i), 0, "", &setup);
 
@@ -113,7 +113,7 @@ void dataconfigs::loadWorldLevels()
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(wlvlPath,
+            GraphicsHelps::loadMaskedImage(folderWldLevelPoints.graphics,
                                            slevel.setup.image_n, slevel.setup.mask_n,
                                            slevel.image,
                                            errStr);
