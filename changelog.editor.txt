@@ -1,3 +1,6 @@
+Editor 0.3.2-dev
+- Added experimental support for element Extra Settings (Levels only)
+
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
 - Added weight order factor for tileset groups
