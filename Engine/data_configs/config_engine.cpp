@@ -66,14 +66,22 @@ bool ConfigManager::loadEngineSettings()
     engineset.endGroup();
     engineset.beginGroup("common");
     {
-        engineset.read("screen-width", screen_width, 800);
-        engineset.read("screen-height", screen_height, 600);
-        std::string scrType;
-        engineset.read("screen-type", scrType, "static");
-        if(scrType == "dynamic")
-            screen_type = SCR_Dynamic;
-        else
-            screen_type = SCR_Static;
+        IniProcessing::StrEnumMap scrTypeMap =
+        {
+            {"scalable", SCR_Static},
+            {"resizable", SCR_Dynamic},
+            {"static", SCR_Static},
+            {"dynamic", SCR_Dynamic}
+        };
+        // In-Game viewport properties
+        engineset.read("viewport-width", viewport_width, 800);
+        engineset.read("viewport-height", viewport_height, 600);
+        engineset.readEnum("viewport-type", viewport_type, SCR_Static, scrTypeMap);
+        // Aliases to Viewport size, deprecated
+        engineset.read("screen-width", viewport_width, viewport_width);
+        engineset.read("screen-height", viewport_height, viewport_height);
+        engineset.readEnum("screen-type", viewport_type, viewport_type, scrTypeMap);
+        // Mouse cursor properties
         engineset.read("cursor-image-normal", setup_cursors.normal, "");
         checkForImage(setup_cursors.normal, dirs.gcommon);
         engineset.read("cursor-image-rubber", setup_cursors.rubber, "");

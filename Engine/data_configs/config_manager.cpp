@@ -46,10 +46,10 @@ ScriptsSetup ConfigManager::setup_Scripts;
 Strings::List ConfigManager::errorsList;
 
 //Common Data
-unsigned int ConfigManager::screen_width = 800;
-unsigned int ConfigManager::screen_height = 600;
+unsigned int ConfigManager::viewport_width = 800;
+unsigned int ConfigManager::viewport_height = 600;
 
-ConfigManager::screenType ConfigManager::screen_type = ConfigManager::SCR_Static;
+ConfigManager::screenType ConfigManager::viewport_type = ConfigManager::SCR_Static;
 
 //Fonts
 FontsSetup ConfigManager::setup_fonts;
