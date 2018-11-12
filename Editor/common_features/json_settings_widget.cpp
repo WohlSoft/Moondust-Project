@@ -5,6 +5,7 @@
 #include <QJsonParseError>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonValue>
 #include <QJsonArray>
 
 #include <QtPropertyBrowser/qtpropertymanager.h>
