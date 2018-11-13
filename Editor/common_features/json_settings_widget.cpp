@@ -396,8 +396,9 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                                            QString &err,
                                            QWidget *parent)
 {
-    for(const QJsonValue &o : elements)
+    for(const QJsonValue &ov : elements)
     {
+        QJsonObject o = ov.toObject();
         QString type = o["type"].toString("invalid");
         QString name = o["name"].toString(type);
         QString title = o["title"].toString(name);
