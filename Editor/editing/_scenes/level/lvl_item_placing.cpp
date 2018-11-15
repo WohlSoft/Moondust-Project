@@ -111,6 +111,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::layer = LvlPlacingItems::blockSet.layer;
             LvlPlacingItems::blockSet.id = itemID;
 
+            // Clean up previously added extra settings
+            LvlPlacingItems::blockSet.meta.custom_params.clear();
+
             LvlPlacingItems::blockSet.w = tImg.width();
             LvlPlacingItems::blockSet.h = tImg.height();
 
@@ -233,6 +236,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::layer = LvlPlacingItems::bgoSet.layer;
         LvlPlacingItems::bgoSet.id = itemID;
 
+        // Clean up previously added extra settings
+        LvlPlacingItems::bgoSet.meta.custom_params.clear();
+
         long w = tImg.width();
         long h = tImg.height();//( (bgoC.animated)?bgoC.frames:1);
 
@@ -321,6 +327,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::npcSet.layer = "Default";
         LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
         LvlPlacingItems::npcSet.id = itemID;
+
+        // Clean up previously added extra settings
+        LvlPlacingItems::npcSet.meta.custom_params.clear();
 
         if(LvlPlacingItems::npcSet.generator)
             LvlPlacingItems::gridSz = (m_configs->defaultGrid.general/2);
