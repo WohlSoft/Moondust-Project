@@ -88,6 +88,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         WldPlacingItems::TileSet.id = itemID;
 
+        // Clean up previously added extra settings
+        WldPlacingItems::TileSet.meta.custom_params.clear();
 
         long w = tImg.width();
         long h = tImg.height();
@@ -178,6 +180,9 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::SceneSet.id = itemID;
+
+        // Clean up previously added extra settings
+        WldPlacingItems::SceneSet.meta.custom_params.clear();
 
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
@@ -270,6 +275,9 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         WldPlacingItems::PathSet.id = itemID;
 
+        // Clean up previously added extra settings
+        WldPlacingItems::PathSet.meta.custom_params.clear();
+
         long w = tImg.width();
         long h = tImg.height();
 
@@ -360,6 +368,9 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::LevelSet.id = itemID;
+
+        // Clean up previously added extra settings
+        WldPlacingItems::LevelSet.meta.custom_params.clear();
 
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
