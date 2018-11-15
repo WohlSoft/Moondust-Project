@@ -336,7 +336,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                 ui->action_Placing_ShowProperties->setEnabled(true);
                 activeWldEditWin()->scene->setItemPlacer(3, itemID);
                 dock_WldItemProps->WldItemProps(0,
-                                                WldPlacingItems::LevelSet,
+                                                WldPlacingItems::levelSet,
                                                 true,
                                                 GlobalSettings::Placing_dontShowPropertiesBox);
                 break;

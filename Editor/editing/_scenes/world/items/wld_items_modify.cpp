@@ -237,71 +237,71 @@ void WldScene::placeItemUnderCursor()
     {
         if(m_placingItemType == PLC_Terrain)
         {
-            WldPlacingItems::TileSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::TileSet.y = m_cursorItemImg->scenePos().y();
+            WldPlacingItems::terrainSet.x = m_cursorItemImg->scenePos().x();
+            WldPlacingItems::terrainSet.y = m_cursorItemImg->scenePos().y();
 
             m_data->tile_array_id++;
-            WldPlacingItems::TileSet.meta.array_id = m_data->tile_array_id;
+            WldPlacingItems::terrainSet.meta.array_id = m_data->tile_array_id;
 
-            m_data->tiles.push_back(WldPlacingItems::TileSet);
-            placeTile(WldPlacingItems::TileSet, true);
-            m_placingItems.tiles.push_back(WldPlacingItems::TileSet);
+            m_data->tiles.push_back(WldPlacingItems::terrainSet);
+            placeTile(WldPlacingItems::terrainSet, true);
+            m_placingItems.tiles.push_back(WldPlacingItems::terrainSet);
             wasPlaced=true;
         }
         else
         if(m_placingItemType == PLC_Scene)
         {
-            WldPlacingItems::SceneSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::SceneSet.y = m_cursorItemImg->scenePos().y();
+            WldPlacingItems::sceneSet.x = m_cursorItemImg->scenePos().x();
+            WldPlacingItems::sceneSet.y = m_cursorItemImg->scenePos().y();
 
             m_data->scene_array_id++;
-            WldPlacingItems::SceneSet.meta.array_id = m_data->scene_array_id;
+            WldPlacingItems::sceneSet.meta.array_id = m_data->scene_array_id;
 
-            m_data->scenery.push_back(WldPlacingItems::SceneSet);
-            placeScenery(WldPlacingItems::SceneSet, true);
-            m_placingItems.scenery.push_back(WldPlacingItems::SceneSet);
+            m_data->scenery.push_back(WldPlacingItems::sceneSet);
+            placeScenery(WldPlacingItems::sceneSet, true);
+            m_placingItems.scenery.push_back(WldPlacingItems::sceneSet);
             wasPlaced=true;
         }
         else
         if(m_placingItemType == PLC_Path)
         {
-            WldPlacingItems::PathSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::PathSet.y = m_cursorItemImg->scenePos().y();
+            WldPlacingItems::pathSet.x = m_cursorItemImg->scenePos().x();
+            WldPlacingItems::pathSet.y = m_cursorItemImg->scenePos().y();
 
             m_data->path_array_id++;
-            WldPlacingItems::PathSet.meta.array_id = m_data->path_array_id;
+            WldPlacingItems::pathSet.meta.array_id = m_data->path_array_id;
 
-            m_data->paths.push_back(WldPlacingItems::PathSet);
-            placePath(WldPlacingItems::PathSet, true);
-            m_placingItems.paths.push_back(WldPlacingItems::PathSet);
+            m_data->paths.push_back(WldPlacingItems::pathSet);
+            placePath(WldPlacingItems::pathSet, true);
+            m_placingItems.paths.push_back(WldPlacingItems::pathSet);
             wasPlaced=true;
         }
         else
         if(m_placingItemType == PLC_Level)
         {
-            WldPlacingItems::LevelSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::LevelSet.y = m_cursorItemImg->scenePos().y();
+            WldPlacingItems::levelSet.x = m_cursorItemImg->scenePos().x();
+            WldPlacingItems::levelSet.y = m_cursorItemImg->scenePos().y();
 
             m_data->level_array_id++;
-            WldPlacingItems::LevelSet.meta.array_id = m_data->level_array_id;
+            WldPlacingItems::levelSet.meta.array_id = m_data->level_array_id;
 
-            m_data->levels.push_back(WldPlacingItems::LevelSet);
-            placeLevel(WldPlacingItems::LevelSet, true);
-            m_placingItems.levels.push_back(WldPlacingItems::LevelSet);
+            m_data->levels.push_back(WldPlacingItems::levelSet);
+            placeLevel(WldPlacingItems::levelSet, true);
+            m_placingItems.levels.push_back(WldPlacingItems::levelSet);
             wasPlaced=true;
         }
         else
         if(m_placingItemType == PLC_Musicbox)
         {
-            WldPlacingItems::MusicSet.x = m_cursorItemImg->scenePos().x();
-            WldPlacingItems::MusicSet.y = m_cursorItemImg->scenePos().y();
+            WldPlacingItems::musicSet.x = m_cursorItemImg->scenePos().x();
+            WldPlacingItems::musicSet.y = m_cursorItemImg->scenePos().y();
 
             m_data->musicbox_array_id++;
-            WldPlacingItems::MusicSet.meta.array_id = m_data->musicbox_array_id;
+            WldPlacingItems::musicSet.meta.array_id = m_data->musicbox_array_id;
 
-            m_data->music.push_back(WldPlacingItems::MusicSet);
-            placeMusicbox(WldPlacingItems::MusicSet, true);
-            m_placingItems.music.push_back(WldPlacingItems::MusicSet);
+            m_data->music.push_back(WldPlacingItems::musicSet);
+            placeMusicbox(WldPlacingItems::musicSet, true);
+            m_placingItems.music.push_back(WldPlacingItems::musicSet);
             wasPlaced=true;
         }
 

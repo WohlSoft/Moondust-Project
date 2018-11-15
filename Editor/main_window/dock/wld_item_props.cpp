@@ -101,7 +101,7 @@ void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem, b
             {//Reset value to min, if it out of range
                 if(level.left_exit >= ui->WLD_PROPS_ExitLeft->count() )
                 {
-                   WldPlacingItems::LevelSet.left_exit = -1;
+                   WldPlacingItems::levelSet.left_exit = -1;
                    level.left_exit = -1;
                 }
             }
@@ -111,7 +111,7 @@ void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem, b
             {//Reset value to min, if it out of range
                 if(level.right_exit >= ui->WLD_PROPS_ExitRight->count() )
                 {
-                   WldPlacingItems::LevelSet.right_exit = -1;
+                   WldPlacingItems::levelSet.right_exit = -1;
                    level.right_exit = -1;
                 }
             }
@@ -121,7 +121,7 @@ void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem, b
             {//Reset value to min, if it out of range
                 if(level.top_exit >= ui->WLD_PROPS_ExitTop->count() )
                 {
-                   WldPlacingItems::LevelSet.top_exit = -1;
+                   WldPlacingItems::levelSet.top_exit = -1;
                    level.top_exit = -1;
                 }
             }
@@ -131,7 +131,7 @@ void WLD_ItemProps::WldItemProps(int Type, WorldLevelTile level, bool newItem, b
             {//Reset value to min, if it out of range
                 if(level.bottom_exit >= ui->WLD_PROPS_ExitBottom->count() )
                 {
-                   WldPlacingItems::LevelSet.bottom_exit = -1;
+                   WldPlacingItems::levelSet.bottom_exit = -1;
                    level.bottom_exit = -1;
                 }
             }
@@ -210,7 +210,7 @@ void WLD_ItemProps::on_WLD_PROPS_PathBG_clicked(bool checked)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.pathbg = checked;
+        WldPlacingItems::levelSet.pathbg = checked;
     }
     else
     if(mw()->activeChildWindow() == MainWindow::WND_World)
@@ -237,7 +237,7 @@ void WLD_ItemProps::on_WLD_PROPS_BigPathBG_clicked(bool checked)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.bigpathbg = checked;
+        WldPlacingItems::levelSet.bigpathbg = checked;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -265,7 +265,7 @@ void WLD_ItemProps::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.alwaysVisible = checked;
+        WldPlacingItems::levelSet.alwaysVisible = checked;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -293,7 +293,7 @@ void WLD_ItemProps::on_WLD_PROPS_GameStart_clicked(bool checked)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.gamestart = checked;
+        WldPlacingItems::levelSet.gamestart = checked;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -325,7 +325,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLFile_editingFinished()
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.lvlfile = ui->WLD_PROPS_LVLFile->text();
+        WldPlacingItems::levelSet.lvlfile = ui->WLD_PROPS_LVLFile->text();
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -357,7 +357,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLTitle_editingFinished()
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.title = ui->WLD_PROPS_LVLTitle->text();
+        WldPlacingItems::levelSet.title = ui->WLD_PROPS_LVLTitle->text();
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -385,7 +385,7 @@ void WLD_ItemProps::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.entertowarp = arg1;
+        WldPlacingItems::levelSet.entertowarp = arg1;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -462,7 +462,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.top_exit = index-1;
+        WldPlacingItems::levelSet.top_exit = index-1;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -490,7 +490,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.left_exit = index-1;
+        WldPlacingItems::levelSet.left_exit = index-1;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -519,7 +519,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.right_exit = index-1;
+        WldPlacingItems::levelSet.right_exit = index-1;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -548,7 +548,7 @@ void WLD_ItemProps::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.bottom_exit = index-1;
+        WldPlacingItems::levelSet.bottom_exit = index-1;
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -582,7 +582,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoX_editingFinished()
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
+        WldPlacingItems::levelSet.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)
@@ -615,7 +615,7 @@ void WLD_ItemProps::on_WLD_PROPS_GotoY_editingFinished()
 
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
+        WldPlacingItems::levelSet.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
     }
     else
     if (mw()->activeChildWindow() == MainWindow::WND_World)

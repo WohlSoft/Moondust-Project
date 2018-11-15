@@ -379,7 +379,7 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
                 return;
         }
 
-        WldPlacingItems::MusicSet.music_file = customMusicFile;
+        WldPlacingItems::musicSet.music_file = customMusicFile;
         mw()->SwitchPlacingItem(ItemTypes::WLD_MusicBox, id);
 
         //Play selected music
