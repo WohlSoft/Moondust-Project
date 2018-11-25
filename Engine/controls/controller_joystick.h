@@ -26,7 +26,7 @@
 /*!
  * \brief A Joystick controller which reads key states from a joystick device
  */
-class JoystickController : public Controller
+class JoystickController final : public Controller
 {
 public:
     /*!
@@ -37,7 +37,7 @@ public:
     /*!
      * \brief Destructir
      */
-    ~JoystickController();
+    ~JoystickController() override = default;
 
     /*!
      * \brief Sets joystick device descriptor which will be used by this controller
@@ -54,14 +54,15 @@ public:
     /*!
      * \brief Takes a state of specified joystick key
      * \param key Output key state which will be copied from actual joystick key state
+     * \param key_pressed Output one-shot key state which will be copied from actual joystick key state
      * \param mkey Joystick key info
      */
-    void updateKey(bool &key, KM_Key &mkey);
+    void updateKey(bool &key, bool &key_pressed, KM_Key &mkey);
 
     /*!
      * \brief Read states of all control keys of a joystick device
      */
-    void update();
+    void update() override;
 
 
     /*!

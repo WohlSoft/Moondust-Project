@@ -40,7 +40,7 @@ public:
     /*!
      * \brief Desctructor
      */
-    virtual ~Controller();
+    virtual ~Controller() = default;
 
     /*!
      * \brief Control key command codes

@@ -26,27 +26,47 @@ struct controller_keys
 {
     //! Start key
     bool start = false;
+    //! Start key (One-shot on press)
+    bool start_pressed = false;
 
     //! Left arrow
     bool left = false;
+    //! Left arrow (One-shot on press)
+    bool left_pressed = false;
     //! Right arrow
     bool right = false;
+    //! Right arrow (One-shot on press)
+    bool right_pressed = false;
     //! Up arrow
     bool up = false;
+    //! Up arrow (One-shot on press)
+    bool up_pressed = false;
     //! Down arrow
     bool down = false;
+    //! Down arrow (One-shot on press)
+    bool down_pressed = false;
 
     //! Run/shoot/whip/beat/attack
     bool run = false;
+    //! Run/shoot/whip/beat/attack (One-shot on press)
+    bool run_pressed = false;
     //! Jump/Swim up
     bool jump = false;
+    //! Jump/Swim up (One-shot on press)
+    bool jump_pressed = false;
     //! Alt-jump/Spin-jump/Unmount-vehicle
     bool alt_run = false;
+    //! Alt-jump/Spin-jump/Unmount-vehicle (One-shot on press)
+    bool alt_run_pressed = false;
     //! Alt-jump/Shoot/Whip/Attack
     bool alt_jump = false;
+    //! Alt-jump/Shoot/Whip/Attack (One-shot on press)
+    bool alt_jump_pressed = false;
 
     //! Drop a holden item from a reserve box or Choice & Use item in the stock (Weapon, Potion, Armor, Shield, Bomb, etc.)
     bool drop = false;
+    //! Drop (One-shot on press)
+    bool drop_pressed = false;
 };
 
 /*!

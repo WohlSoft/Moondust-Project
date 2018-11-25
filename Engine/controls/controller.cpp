@@ -24,9 +24,6 @@ Controller::Controller()
     keys = noKeys();
 }
 
-Controller::~Controller()
-{}
-
 controller_keys Controller::noKeys()
 {
     return ResetControlKeys();
@@ -58,7 +55,7 @@ void Controller::registerInControl(ControllableObject *obj)
 
 void Controller::removeFromControl(ControllableObject *obj)
 {
-    std::set<ControllableObject *>::iterator i = m_objects.find(obj);
+    auto i = m_objects.find(obj);
     if(i != m_objects.end())
         m_objects.erase(i);
 }

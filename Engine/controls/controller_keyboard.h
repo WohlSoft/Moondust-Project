@@ -25,7 +25,7 @@
 /*!
  * \brief A Keyboard controller which reads state of the keyboard device
  */
-class KeyboardController : public Controller
+class KeyboardController final : public Controller
 {
 public:
     /*!
@@ -36,12 +36,12 @@ public:
     /*!
      * \brief Destructor
      */
-    ~KeyboardController();
+    ~KeyboardController() override = default;
 
     /*!
      * \brief Read current state of keyboard controller
      */
-    void update();
+    void update() override;
 
 };
 

@@ -21,7 +21,7 @@
 
 JoystickController::JoystickController() :
     Controller(),
-    m_joystickController(0)
+    m_joystickController(nullptr)
 {
     //    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();
     //    if(SDL_NumJoysticks() > 0){
@@ -41,9 +41,6 @@ JoystickController::JoystickController() :
     kmap.down.val       = 13;
 }
 
-JoystickController::~JoystickController()
-{}
-
 void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
 {
     m_joystickController = jctrl;
@@ -54,10 +51,11 @@ SDL_Joystick *JoystickController::getJoystickDevice() const
     return m_joystickController;
 }
 
-void JoystickController::updateKey(bool &key, KM_Key &mkey)
+void JoystickController::updateKey(bool &key, bool &key_pressed, KM_Key &mkey)
 {
     Sint32 val = 0, dx = 0, dy = 0;
     Sint16 val_initial = 0;
+    bool key_new = false;
 
     switch(mkey.type)
     {
@@ -66,16 +64,16 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
         //      and doesn't available in already released assemblies
         if(SDL_JoystickGetAxisInitialState(m_joystickController, mkey.id, &val_initial) == SDL_FALSE)
         {
-            key = false;
+            key_new = false;
             break;
         }
         val = SDL_JoystickGetAxis(m_joystickController, mkey.id);
 
         if(mkey.val > val_initial)
-            key = (val > val_initial);
+            key_new = (val > val_initial);
         else if(mkey.val < val_initial)
-            key = (val < val_initial);
-        else key = false;
+            key_new = (val < val_initial);
+        else key_new = false;
 
         break;
 
@@ -83,10 +81,10 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
         SDL_JoystickGetBall(m_joystickController, mkey.id, &dx, &dy);
 
         if(mkey.id > 0)
-            key = (dx > 0);
+            key_new = (dx > 0);
         else if(mkey.id < 0)
-            key = (dx < 0);
-        else key = false;
+            key_new = (dx < 0);
+        else key_new = false;
 
         break;
 
@@ -94,26 +92,29 @@ void JoystickController::updateKey(bool &key, KM_Key &mkey)
         SDL_JoystickGetBall(m_joystickController, mkey.id, &dx, &dy);
 
         if(mkey.id > 0)
-            key = (dy > 0);
+            key_new = (dy > 0);
         else if(mkey.id < 0)
-            key = (dy < 0);
-        else key = false;
+            key_new = (dy < 0);
+        else key_new = false;
 
         break;
 
     case KeyMapJoyCtrls::JoyHat:
         val = (Sint32)SDL_JoystickGetHat(m_joystickController, mkey.id);
-        key = (val == mkey.val);
+        key_new = (val == mkey.val);
         break;
 
     case KeyMapJoyCtrls::JoyButton:
-        key = (Sint32)SDL_JoystickGetButton(m_joystickController, mkey.id);
+        key_new = (0 != (Sint32)SDL_JoystickGetButton(m_joystickController, mkey.id));
         break;
 
     default:
-        key = false;
+        key_new = false;
         break;
     }
+
+    key_pressed = (key_new && !key);
+    key = key_new;
 }
 
 void JoystickController::update()
@@ -123,16 +124,20 @@ void JoystickController::update()
 
     //SDL_PumpEvents();
     SDL_JoystickUpdate();
-    updateKey(keys.jump, kmap.jump);
-    updateKey(keys.alt_jump, kmap.jump_alt);
-    updateKey(keys.run, kmap.run);
-    updateKey(keys.alt_run, kmap.run_alt);
-    updateKey(keys.right, kmap.right);
-    updateKey(keys.left, kmap.left);
-    updateKey(keys.up, kmap.up);
-    updateKey(keys.down, kmap.down);
-    updateKey(keys.drop, kmap.drop);
-    updateKey(keys.start, kmap.start);
+
+    updateKey(keys.jump, keys.jump_pressed, kmap.jump);
+    updateKey(keys.alt_jump, keys.alt_jump_pressed, kmap.jump_alt);
+
+    updateKey(keys.run, keys.run_pressed, kmap.run);
+    updateKey(keys.alt_run, keys.alt_run_pressed, kmap.run_alt);
+
+    updateKey(keys.right, keys.right_pressed, kmap.right);
+    updateKey(keys.left, keys.left_pressed, kmap.left);
+    updateKey(keys.up, keys.up_pressed, kmap.up);
+    updateKey(keys.down, keys.down_pressed, kmap.down);
+
+    updateKey(keys.drop, keys.drop_pressed, kmap.drop);
+    updateKey(keys.start, keys.start_pressed, kmap.start);
 }
 
 

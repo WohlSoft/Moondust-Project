@@ -19,7 +19,7 @@
 #include "controller_keyboard.h"
 
 KeyboardController::KeyboardController() :
-    Controller()
+        Controller()
 {
     kmap.jump.val       = SDL_SCANCODE_Z;
     kmap.jump_alt.val   = SDL_SCANCODE_A;
@@ -33,24 +33,27 @@ KeyboardController::KeyboardController() :
     kmap.down.val       = SDL_SCANCODE_DOWN;
 }
 
-KeyboardController::~KeyboardController()
-{}
+static void updateKeyValue(bool &key, bool &key_pressed, const Uint8 &state)
+{
+    key_pressed = (static_cast<bool>(state) && !key);
+    key = state;
+}
 
 void KeyboardController::update()
 {
-    const Uint8* state = SDL_GetKeyboardState(NULL);
+    const Uint8 *state = SDL_GetKeyboardState(nullptr);
 
-    keys.jump=state[kmap.jump.val];
-    keys.alt_jump=state[kmap.jump_alt.val];
+    updateKeyValue(keys.jump, keys.jump_pressed, state[kmap.jump.val]);
+    updateKeyValue(keys.alt_jump, keys.alt_jump_pressed, state[kmap.jump_alt.val]);
 
-    keys.run=state[kmap.run.val];
-    keys.alt_run=state[kmap.run_alt.val];
+    updateKeyValue(keys.run, keys.run_pressed, state[kmap.run.val]);
+    updateKeyValue(keys.alt_run, keys.alt_run_pressed, state[kmap.run_alt.val]);
 
-    keys.right=state[kmap.right.val];
-    keys.up=state[kmap.up.val];
-    keys.down=state[kmap.down.val];
-    keys.left=state[kmap.left.val];
+    updateKeyValue(keys.right, keys.right_pressed, state[kmap.right.val]);
+    updateKeyValue(keys.up, keys.up_pressed, state[kmap.up.val]);
+    updateKeyValue(keys.down, keys.down_pressed, state[kmap.down.val]);
+    updateKeyValue(keys.left, keys.left_pressed, state[kmap.left.val]);
 
-    keys.drop=state[kmap.drop.val];
-    keys.start=state[kmap.start.val];
+    updateKeyValue(keys.drop, keys.drop_pressed, state[kmap.drop.val]);
+    updateKeyValue(keys.start, keys.start_pressed, state[kmap.start.val]);
 }
