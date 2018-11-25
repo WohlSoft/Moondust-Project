@@ -3,7 +3,7 @@ set(ENGINE_VERSION_1 0)
 # Minor
 set(ENGINE_VERSION_2 3)
 # Revision
-set(ENGINE_VERSION_3 1)
+set(ENGINE_VERSION_3 2)
 # Patch
 set(ENGINE_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
