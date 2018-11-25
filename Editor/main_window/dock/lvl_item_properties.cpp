@@ -239,8 +239,7 @@ void LvlItemProperties::LvlItemProps(int Type,
 
     LvlPlacingItems::npcSpecialAutoIncrement = false;
 
-    ui->extraSettings->setVisible(false);
-
+    ui->extraSettings->setMinimumHeight(0);
     if(m_extraSettings)
     {
         delete m_extraSettings;
@@ -795,7 +794,6 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &layoutPath,
                     LogWarning(m_extraSettings->errorString());
                 ui->extraSettings->layout()->addWidget(m_extraSettings->getWidget());
                 JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
-                ui->extraSettings->setVisible(true);
             }
             layoutFile.close();
         }

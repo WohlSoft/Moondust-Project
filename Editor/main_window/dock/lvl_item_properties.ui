@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>307</width>
-    <height>546</height>
+    <width>300</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -57,12 +57,12 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-742</y>
-         <width>293</width>
-         <height>2046</height>
+         <y>-1259</y>
+         <width>286</width>
+         <height>1731</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,100">
         <property name="spacing">
          <number>1</number>
         </property>
@@ -1487,15 +1487,15 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="extraSettings">
+         <widget class="QFrame" name="extraSettings">
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>400</height>
+            <height>200</height>
            </size>
           </property>
-          <property name="title">
-           <string>Extra settings</string>
+          <property name="lineWidth">
+           <number>0</number>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
@@ -1515,22 +1515,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </layout>
          </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </widget>
