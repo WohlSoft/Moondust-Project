@@ -46,7 +46,7 @@ struct WorldScene_misc_img
     int frmH;
 };
 
-class WorldScene : public Scene
+class WorldScene final : public Scene
 {
         friend class PGE_MsgBox;
         friend class PGE_TextInputBox;
@@ -54,20 +54,21 @@ class WorldScene : public Scene
         friend class WldPathOpener;
     public:
         WorldScene();
-        ~WorldScene();
+        ~WorldScene() override;
 
         bool init();
+        bool initPlayableCharacter(int playerId, bool isInit = false);
         bool loadConfigs();
 
-        void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
-        LuaEngine *getLuaEngine();
+        void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier) override;
+        LuaEngine *getLuaEngine() override;
 
-        void processEvents();
-        void update();
-        void render();
-        int  exec();
+        void processEvents() override;
+        void update() override;
+        void render() override;
+        int  exec() override;
 
-        bool isVizibleOnScreen(PGE_RectF &rect);
+        bool isVizibleOnScreen(PGE_RectF &rect) override;
 
         void tickAnimations(double ticks);
 
@@ -124,7 +125,9 @@ class WorldScene : public Scene
             //! Y Position of the playable character
             double          posY;
             //! Walk direction of the playable character
-            int             walkDirection;
+            int             walkDirection = 0;
+            //! Walk direction of the playable character
+            int             prevWalkDirection = 0;
             //! Calculated movement step dependent to physical step
             double          moveSpeed;
             //! Speps counterm, used to correct inter-cell position
@@ -139,7 +142,7 @@ class WorldScene : public Scene
             SimpleAnimator  ani;
             double          offsetX;
             double          offsetY;
-            void            refreshDirection();
+            void            refreshDirection(bool restorePrev = false);
         } m_mapWalker;
 
         void    doMoveStep(double &posVal);
@@ -221,6 +224,7 @@ class WorldScene : public Scene
         } m_pauseMenu;
 
         void processPauseMenu();
+        void processPauseMenuSwitchCharacter();
         /*****************Pause Menu**end**************/
 
         int     debug_render_delay;

@@ -61,43 +61,46 @@ struct PlayerState
 
 class EpisodeState
 {
-    public:
-        EpisodeState();
-        ~EpisodeState();
-        void reset();//!< Sets initial state of episode
-        bool load();
-        bool save();
-        int  numOfPlayers;//!< Number of players
-        bool episodeIsStarted;
-        bool isEpisode;
-        bool isHubLevel;
-        bool isTestingModeL;
-        bool isTestingModeW;
-        GamesaveData game_state;
+public:
+    EpisodeState();
+    ~EpisodeState();
+    void reset();//!< Sets initial state of episode
+    bool load();
+    bool save();
+    int  numOfPlayers;//!< Number of players
+    bool episodeIsStarted;
+    bool isEpisode;
+    bool isHubLevel;
+    bool isTestingModeL;
+    bool isTestingModeW;
+    GamesaveData game_state;
 
-        PlayerState getPlayerState(int playerID);
-        void setPlayerState(int playerID, PlayerState &state);
+    PlayerState getPlayerState(int playerID);
+    void setPlayerState(int playerID, PlayerState &state);
 
-        std::string WorldFile;
-        std::string WorldPath;
-        std::string saveFileName;
-        std::string _episodePath;
-        int _recent_ExitCode_level;
-        int _recent_ExitCode_world;
+    saveCharState getPlayableCharacterSetup(int playerID, uint32_t characterId);
+    void setPlayableCharacterSetup(int playerID, uint32_t characterId, const saveCharState &state);
 
-        std::string LevelFile;
-        std::string LevelFile_hub;
-        std::string LevelPath;
-        unsigned long LevelTargetWarp;
-        int gameType;
-        enum gameTypes
-        {
-            Testing = 0,
-            Episode = 1,
-            Battle,
-            Race
-        };
-        bool replay_on_fail;
+    std::string WorldFile;
+    std::string WorldPath;
+    std::string saveFileName;
+    std::string _episodePath;
+    int _recent_ExitCode_level;
+    int _recent_ExitCode_world;
+
+    std::string LevelFile;
+    std::string LevelFile_hub;
+    std::string LevelPath;
+    unsigned long LevelTargetWarp;
+    int gameType;
+    enum gameTypes
+    {
+        Testing = 0,
+        Episode = 1,
+        Battle,
+        Race
+    };
+    bool replay_on_fail;
 };
 
 #endif // EPISODESTATE_H

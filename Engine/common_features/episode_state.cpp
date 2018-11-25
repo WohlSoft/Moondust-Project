@@ -77,17 +77,11 @@ PlayerState EpisodeState::getPlayerState(int playerID)
     if(!game_state.currentCharacter.empty()
        && (playerID > 0)
        && (playerID <= static_cast<int>(game_state.currentCharacter.size())))
-        ch.characterID = game_state.currentCharacter[playerID - 1];
+        ch.characterID = static_cast<uint32_t>(game_state.currentCharacter[playerID - 1]);
 
-    for(size_t i = 0; i < game_state.characterStates.size(); i++)
-    {
-        if(game_state.characterStates[i].id == ch.characterID)
-        {
-            ch.stateID  = game_state.characterStates[i].state;
-            ch._chsetup = game_state.characterStates[i];
-            break;
-        }
-    }
+    saveCharState st = getPlayableCharacterSetup(playerID, ch.characterID);
+    ch.stateID  = static_cast<uint32_t>(st.state);
+    ch._chsetup = st;
 
     return ch;
 }
@@ -98,7 +92,7 @@ void EpisodeState::setPlayerState(int playerID, PlayerState &state)
         return;
     if(state.characterID < 1)
         return;
-    if(state.stateID< 1)
+    if(state.stateID < 1)
         return;
 
     state._chsetup.id = state.characterID;
@@ -113,22 +107,45 @@ void EpisodeState::setPlayerState(int playerID, PlayerState &state)
     else
         game_state.currentCharacter[static_cast<size_t>(playerID - 1)] = state.characterID;
 
-    //If characterID bigger than stored entries - append, or replace exists
-    if(state.characterID > static_cast<unsigned long>(game_state.characterStates.size()))
+    setPlayableCharacterSetup(playerID, state.characterID, state._chsetup);
+}
+
+saveCharState EpisodeState::getPlayableCharacterSetup(int playerID, uint32_t characterId)
+{
+    if(playerID < 1)
+        return {};
+    if(characterId < 1)
+        return {};
+
+    for(auto &characterState : game_state.characterStates)
     {
-        while(state.characterID > static_cast<unsigned long>(game_state.characterStates.size()))
+        if(characterState.id == characterId)
+            return characterState;
+    }
+    return {};
+}
+
+void EpisodeState::setPlayableCharacterSetup(int playerID, uint32_t characterId, const saveCharState &state)
+{
+    if(playerID < 1)
+        return;
+    if(characterId < 1)
+        return;
+
+    //If characterID bigger than stored entries - append, or replace exists
+    if(characterId > static_cast<unsigned long>(game_state.characterStates.size()))
+    {
+        while(characterId > static_cast<unsigned long>(game_state.characterStates.size()))
         {
             saveCharState st = FileFormats::CreateSavCharacterState();
             st.id = (static_cast<unsigned long>(game_state.characterStates.size()) + 1);
-
-            if(st.id == state.characterID)
-                st = state._chsetup;
+            if(st.id == characterId)
+                st = state;
             else
                 st.state = 1;
-
             game_state.characterStates.push_back(st);
         }
     }
     else
-        game_state.characterStates[static_cast<size_t>(state.characterID) - 1] = state._chsetup;
+        game_state.characterStates[static_cast<size_t>(characterId) - 1] = state;
 }

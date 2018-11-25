@@ -36,9 +36,6 @@ WorldScene_Portrait::WorldScene_Portrait(unsigned long CharacterID,
     init(CharacterID, stateID, posX, posY, std::move(ani), framedelay, dir);
 }
 
-WorldScene_Portrait::~WorldScene_Portrait()
-{}
-
 void WorldScene_Portrait::init(unsigned long CharacterID,
                                unsigned long stateID,
                                int posX,
