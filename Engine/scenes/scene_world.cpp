@@ -753,18 +753,20 @@ void WorldScene::update()
                     m_mapWalker.walkDirection = Walk_Down;
 
                 //If movement denied - play sound
-                if((m_controls_1.left || m_controls_1.right || m_controls_1.up || m_controls_1.down) && (m_mapWalker.walkDirection == Walk_Idle))
+                if(m_mapWalker.walkDirection == Walk_Idle)
                 {
                     m_playStopSnd = false;
-
                     if(!m_playDenySnd)
                     {
                         PGE_Audio::playSoundByRole(obj_sound_role::WorldDeny);
                         m_playDenySnd = true;
                     }
                 }
-                else if(!m_controls_1.left && !m_controls_1.right && !m_controls_1.up && !m_controls_1.down)
-                    m_playDenySnd = false;
+            }
+            else
+            {
+                // When keys are released, deny sound can be played again
+                m_playDenySnd = false;
             }
 
             if(m_mapWalker.walkDirection != Walk_Idle)
@@ -776,16 +778,18 @@ void WorldScene::update()
                 m_mapWalker.refreshDirection();
             }
 
+            // Play sound when player have stopped motion
             if(m_playStopSnd)
             {
                 PGE_Audio::playSoundByRole(obj_sound_role::WorldMove);
                 m_playStopSnd = false;
             }
         }
-        else
+        else // While player walks
         {
             m_mapWalker.ani.manualTick(uTickf);
 
+            // Change move direction if that possible
             if((!m_controls_1.left || !m_controls_1.right) && (!m_controls_1.up || !m_controls_1.down))
             {
                 switch(m_mapWalker.walkDirection)
@@ -793,25 +797,21 @@ void WorldScene::update()
                 case Walk_Left:
                     if(m_controls_1.right)
                         setDir(Walk_Right);
-
                     break;
 
                 case Walk_Right:
                     if(m_controls_1.left)
                         setDir(Walk_Left);
-
                     break;
 
                 case Walk_Up:
                     if(m_controls_1.down)
                         setDir(Walk_Down);
-
                     break;
 
                 case Walk_Down:
                     if(m_controls_1.up)
                         setDir(Walk_Up);
-
                     break;
 
                 default:
@@ -820,6 +820,7 @@ void WorldScene::update()
             }
         }
 
+        // Process move step
         switch(m_mapWalker.walkDirection)
         {
         case Walk_Left:
@@ -850,11 +851,11 @@ void WorldScene::update()
             double curPosX = m_viewportCameraMover.posX();
             double curPosY = m_viewportCameraMover.posY();
             m_itemsToRender.clear();
-            m_indexTable.query(Maths::lRound(curPosX - (m_viewportRect.width() / 2)),
-                              Maths::lRound(curPosY - (m_viewportRect.height() / 2)),
-                              Maths::lRound(curPosX + (m_viewportRect.width() / 2)),
-                              Maths::lRound(curPosY + (m_viewportRect.height() / 2)),
-                              m_itemsToRender, true);
+            m_indexTable.query(Maths::lRound(curPosX - (double(m_viewportRect.width()) / 2.0)),
+                               Maths::lRound(curPosY - (double(m_viewportRect.height()) / 2.0)),
+                               Maths::lRound(curPosX + (double(m_viewportRect.width()) / 2.0)),
+                               Maths::lRound(curPosY + (double(m_viewportRect.height()) / 2.0)),
+                               m_itemsToRender, true);
         }
     }
 
