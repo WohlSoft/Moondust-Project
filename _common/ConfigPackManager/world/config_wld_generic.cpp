@@ -75,6 +75,8 @@ bool WldGenericSetup::parse(IniProcessing *setup,
             case PGE_ImageInfo::ERR_CANT_OPEN:
                 *error = "Can't open image file: " + imgPath + image_n;
                 break;
+            default:
+                break;
             }
         }
 

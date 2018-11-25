@@ -39,10 +39,9 @@ int  ConfigManager::getBlockTexture(unsigned long blockID)
         std::string imgFile = Dir_Blocks.getCustomFile(blkSetup->setup.image_n);
         std::string maskFile = Dir_Blocks.getCustomFile(blkSetup->setup.mask_n);
         std::string maskFallback = Dir_Blocks.getMaskFallbackFile(blkSetup->setup.image_n);
-        int id = level_textures.size();
+        int id = static_cast<int>(level_textures.size());
         blkSetup->textureArrayId = id;
-        PGE_Texture texture;
-        level_textures.push_back(texture);
+        level_textures.emplace_back();
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
                                  maskFile,
@@ -92,7 +91,7 @@ int  ConfigManager::getBlockTexture(unsigned long blockID)
                 animator.setFrameSequance(blkSetup->setup.frame_sequence);
 
             Animator_Blocks.push_back(animator);
-            blkSetup->animator_ID = Animator_Blocks.size() - 1;
+            blkSetup->animator_ID = static_cast<int>(Animator_Blocks.size() - 1);
         }
 
         return id;
@@ -125,10 +124,9 @@ int  ConfigManager::getBgoTexture(unsigned long bgoID)
         std::string imgFile = Dir_BGO.getCustomFile(bgoSetup->setup.image_n);
         std::string maskFile = Dir_BGO.getCustomFile(bgoSetup->setup.mask_n);
         std::string maskFallback = Dir_BGO.getMaskFallbackFile(bgoSetup->setup.image_n);
-        int id = level_textures.size();
-        PGE_Texture texture;
+        int id = static_cast<int>(level_textures.size());
         bgoSetup->textureArrayId = id;
-        level_textures.push_back(texture);
+        level_textures.emplace_back();
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
                                  maskFile,
@@ -163,7 +161,7 @@ int  ConfigManager::getBgoTexture(unsigned long bgoID)
                 animator.setFrameSequance(bgoSetup->setup.frame_sequence);
 
             Animator_BGO.push_back(animator);
-            bgoSetup->animator_ID = Animator_BGO.size() - 1;
+            bgoSetup->animator_ID = static_cast<int>(Animator_BGO.size() - 1);
         }
 
         return id;
@@ -190,10 +188,9 @@ int  ConfigManager::getNpcTexture(unsigned long npcID)
         std::string imgFile  = Dir_NPC.getCustomFile(npcSetup->setup.image_n);
         std::string maskFile = Dir_NPC.getCustomFile(npcSetup->setup.mask_n);
         std::string maskFallback = Dir_NPC.getMaskFallbackFile(npcSetup->setup.image_n);
-        int id = level_textures.size();
+        int id = static_cast<int>(level_textures.size());
         npcSetup->textureArrayId = id;
-        PGE_Texture texture;
-        level_textures.push_back(texture);
+        level_textures.emplace_back();
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
                                  maskFile,
@@ -209,7 +206,7 @@ int  ConfigManager::getNpcTexture(unsigned long npcID)
             AdvNpcAnimator animator(*(npcSetup->image), *npcSetup);
             Animator_NPC.push_back(animator);
             Animator_NPC.back().start();
-            npcSetup->animator_ID = Animator_NPC.size() - 1;
+            npcSetup->animator_ID = static_cast<int>(Animator_NPC.size() - 1);
         }
 
         return id;
@@ -238,10 +235,9 @@ int ConfigManager::getEffectTexture(unsigned long effectID)
         std::string imgFile = Dir_EFFECT.getCustomFile(effSetup->image_n);
         std::string maskFile = Dir_EFFECT.getCustomFile(effSetup->mask_n);
         std::string maskFallback = Dir_EFFECT.getMaskFallbackFile(effSetup->image_n);
-        int id = level_textures.size();
+        int id = static_cast<int>(level_textures.size());
         effSetup->textureArrayId = id;
-        PGE_Texture texture;
-        level_textures.push_back(texture);
+        level_textures.emplace_back();
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
                                  maskFile,
@@ -307,19 +303,18 @@ int  ConfigManager::getLvlPlayerTexture(unsigned long playerID, unsigned long st
         bool isDefault = false;
         std::string imgFile = Dir_PlayerLvl.getCustomFile(state.image_n, &isDefault);
 
-        if(isDefault)
+        if(isDefault || imgFile.empty())
             imgFile = playerLvlPath + plr.sprite_folder + "/" + state.image_n;
 
         std::string maskFile = Dir_PlayerLvl.getCustomFile(state.mask_n, &isDefault);
         std::string maskFallback = Dir_PlayerLvl.getMaskFallbackFile(state.image_n);
 
-        if(isDefault)
+        if(isDefault || maskFile.empty())
             maskFile  = playerLvlPath + plr.sprite_folder + "/" + state.mask_n;
 
-        int id = level_textures.size();
+        int id = static_cast<int>(level_textures.size());
         state.textureArrayId = id;
-        PGE_Texture texture;
-        level_textures.push_back(texture);
+        level_textures.emplace_back();
         GlRenderer::loadTextureP(level_textures[id],
                                  imgFile,
                                  maskFile,
@@ -358,19 +353,18 @@ int  ConfigManager::getWldPlayerTexture(unsigned long playerID, unsigned long st
         bool isDefault = false;
         std::string imgFile = Dir_PlayerWld.getCustomFile(plr.image_wld_n, &isDefault);
 
-        if(isDefault)
+        if(isDefault || imgFile.empty())
             imgFile = playerWldPath + plr.image_wld_n;
 
         std::string maskFile = Dir_PlayerWld.getCustomFile(plr.mask_wld_n, &isDefault);
         std::string maskFallback = Dir_NPC.getMaskFallbackFile(plr.image_wld_n);
 
-        if(isDefault)
+        if(isDefault || maskFile.empty())
             maskFile  = playerWldPath + plr.mask_wld_n;
 
-        int id = world_textures.size();
+        int id = static_cast<int>(world_textures.size());
         plr.textureArrayId_wld = id;
-        PGE_Texture texture;
-        world_textures.push_back(texture);
+        world_textures.emplace_back();
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
                                  maskFile,
@@ -412,22 +406,21 @@ int  ConfigManager::getBGTexture(unsigned long bgID, bool isSecond)
     }
     else
     {
-        std::string imgFile = "";
+        std::string imgFile;
 
         if(isSecond)
             imgFile = Dir_BG.getCustomFile(bgSetup->setup.second_image_n);
         else
             imgFile = Dir_BG.getCustomFile(bgSetup->setup.image_n);
 
-        int id = level_textures.size();
+        int id = static_cast<int>(level_textures.size());
 
         if(isSecond)
             bgSetup->second_textureArrayId = id;
         else
             bgSetup->textureArrayId = id;
 
-        PGE_Texture texture;
-        level_textures.push_back(texture);
+        level_textures.emplace_back();
         GlRenderer::loadTextureP(level_textures[id], imgFile);
 
         if(isSecond)
@@ -469,7 +462,7 @@ int  ConfigManager::getBGTexture(unsigned long bgID, bool isSecond)
                 false
             );
             Animator_BG.push_back(animator);
-            bgSetup->animator_ID = Animator_BG.size() - 1;
+            bgSetup->animator_ID = static_cast<int>(Animator_BG.size() - 1);
         }
 
         return id;
@@ -496,7 +489,7 @@ int ConfigManager::getBGLayerTexture(uint64_t bgID, size_t layerId)
     }
     else
     {
-        std::string imgFile = "";
+        std::string imgFile;
         BgSetup::BgLayer &layer = bgSetup->setup.layers[layerId];
 
         imgFile = Dir_BG.getCustomFile(layer.image);
@@ -505,8 +498,7 @@ int ConfigManager::getBGLayerTexture(uint64_t bgID, size_t layerId)
 
         tID.textureArrayId = static_cast<int64_t>(id);
 
-        PGE_Texture texture;
-        level_textures.push_back(texture);
+        level_textures.emplace_back();
         GlRenderer::loadTextureP(level_textures[id], imgFile);
 
         tID.image          = &(level_textures[id]);
@@ -571,10 +563,9 @@ int  ConfigManager::getTileTexture(unsigned long tileID)
         std::string imgFile = Dir_Tiles.getCustomFile(tileSetup->setup.image_n);
         std::string maskFile = Dir_Tiles.getCustomFile(tileSetup->setup.mask_n);
         std::string maskFallback = Dir_Tiles.getMaskFallbackFile(tileSetup->setup.image_n);
-        int id = world_textures.size();
+        int id = static_cast<int>(world_textures.size());
         tileSetup->textureArrayId = id;
-        PGE_Texture texture;
-        world_textures.push_back(texture);
+        world_textures.emplace_back();
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
                                  maskFile,
@@ -609,7 +600,7 @@ int  ConfigManager::getTileTexture(unsigned long tileID)
                 animator.setFrameSequance(tileSetup->setup.frame_sequence);
 
             Animator_Tiles.push_back(animator);
-            tileSetup->animator_ID = Animator_Tiles.size() - 1;
+            tileSetup->animator_ID = static_cast<int>(Animator_Tiles.size() - 1);
         }
 
         return id;
@@ -636,10 +627,9 @@ int  ConfigManager::getSceneryTexture(unsigned long sceneryID)
         std::string imgFile = Dir_Scenery.getCustomFile(scenerySetup->setup.image_n);
         std::string maskFile = Dir_Scenery.getCustomFile(scenerySetup->setup.mask_n);
         std::string maskFallback = Dir_Scenery.getMaskFallbackFile(scenerySetup->setup.image_n);
-        int id = world_textures.size();
+        int id = static_cast<int>(world_textures.size());
         scenerySetup->textureArrayId = id;
-        PGE_Texture texture;
-        world_textures.push_back(texture);
+        world_textures.emplace_back();
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
                                  maskFile,
@@ -674,7 +664,7 @@ int  ConfigManager::getSceneryTexture(unsigned long sceneryID)
                 animator.setFrameSequance(scenerySetup->setup.frame_sequence);
 
             Animator_Scenery.push_back(animator);
-            scenerySetup->animator_ID = Animator_Scenery.size() - 1;
+            scenerySetup->animator_ID = static_cast<int>(Animator_Scenery.size() - 1);
         }
 
         return id;
@@ -701,10 +691,9 @@ int  ConfigManager::getWldPathTexture(unsigned long pathID)
         std::string imgFile     = Dir_WldPaths.getCustomFile(pathSetup->setup.image_n);
         std::string maskFile    = Dir_WldPaths.getCustomFile(pathSetup->setup.mask_n);
         std::string maskFallback = Dir_WldPaths.getMaskFallbackFile(pathSetup->setup.image_n);
-        int id = world_textures.size();
+        int id = static_cast<int>(world_textures.size());
         pathSetup->textureArrayId = id;
-        PGE_Texture texture;
-        world_textures.push_back(texture);
+        world_textures.emplace_back();
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
                                  maskFile,
@@ -739,7 +728,7 @@ int  ConfigManager::getWldPathTexture(unsigned long pathID)
                 animator.setFrameSequance(pathSetup->setup.frame_sequence);
 
             Animator_WldPaths.push_back(animator);
-            pathSetup->animator_ID = Animator_WldPaths.size() - 1;
+            pathSetup->animator_ID = static_cast<int>(Animator_WldPaths.size() - 1);
         }
 
         return id;
@@ -767,10 +756,9 @@ int  ConfigManager::getWldLevelTexture(unsigned long levelID)
         std::string imgFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.image_n);
         std::string maskFile = Dir_WldLevel.getCustomFile(lvlSetup->setup.mask_n);
         std::string maskFallback = Dir_WldLevel.getMaskFallbackFile(lvlSetup->setup.image_n);
-        int id = world_textures.size();
+        int id = static_cast<int>(world_textures.size());
         lvlSetup->textureArrayId = id;
-        PGE_Texture texture;
-        world_textures.push_back(texture);
+        world_textures.emplace_back();
         GlRenderer::loadTextureP(world_textures[id],
                                  imgFile,
                                  maskFile,
@@ -805,7 +793,7 @@ int  ConfigManager::getWldLevelTexture(unsigned long levelID)
                 animator.setFrameSequance(lvlSetup->setup.frame_sequence);
 
             Animator_WldLevel.push_back(animator);
-            lvlSetup->animator_ID = Animator_WldLevel.size() - 1;
+            lvlSetup->animator_ID = static_cast<int>(Animator_WldLevel.size() - 1);
         }
 
         return id;

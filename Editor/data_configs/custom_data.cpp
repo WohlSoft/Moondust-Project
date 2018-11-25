@@ -18,20 +18,19 @@
 
 #include <QFile>
 #include <QDir>
+#include <utility>
 
 #include "custom_data.h"
 
-CustomDirManager::CustomDirManager()
-{}
-
 CustomDirManager::CustomDirManager(QString path, QString name)
 {
-    setCustomDirs(path, name);
+    setCustomDirs(std::move(path), std::move(name));
 }
 
 QString CustomDirManager::getCustomFile(QString name, bool ignoreDefaultDirectory)
 {
-    if(name.isEmpty()) return "";
+    if(name.isEmpty())
+        return "";
     QString backupName;
 
     //Try to look up for a backup images (if original not found, try to search images in second format)

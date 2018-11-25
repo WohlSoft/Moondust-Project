@@ -30,7 +30,7 @@ public:
     /*!
      * \brief Constructor
      */
-    CustomDirManager();
+    CustomDirManager() = default;
     /*!
      * \brief Constructor with pre-defined parameters
      * \param path Full path to episode directory

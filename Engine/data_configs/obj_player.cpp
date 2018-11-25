@@ -135,7 +135,7 @@ bool ConfigManager::loadPlayableCharacters()
         if(!Files::fileExists(plr_ini))
         {
             addError("ERROR LOADING lvl_characters.ini: file does not exist");
-            PGE_MsgBox msgBox(NULL, "ERROR LOADING lvl_characters.ini: file does not exist", PGE_MsgBox::msg_fatal);
+            PGE_MsgBox msgBox(nullptr, "ERROR LOADING lvl_characters.ini: file does not exist", PGE_MsgBox::msg_fatal);
             msgBox.exec();
             return false;
         }
@@ -151,7 +151,7 @@ bool ConfigManager::loadPlayableCharacters()
         if(players_total == 0)
         {
             addError("ERROR LOADING lvl_characters.ini: number of items not define, or empty config");
-            PGE_MsgBox msgBox(NULL, "ERROR LOADING lvl_characters.ini: number of items not define, or empty config", PGE_MsgBox::msg_fatal);
+            PGE_MsgBox msgBox(nullptr, "ERROR LOADING lvl_characters.ini: number of items not define, or empty config", PGE_MsgBox::msg_fatal);
             msgBox.exec();
             return false;
         }
@@ -161,7 +161,7 @@ bool ConfigManager::loadPlayableCharacters()
         {
             obj_player splayer;
             splayer.isInit_wld = false;
-            splayer.image_wld = NULL;
+            splayer.image_wld = nullptr;
             splayer.textureArrayId_wld = 0;
             splayer.animator_ID_wld = 0;
             splayer.wld_offset_y = 0;
@@ -254,7 +254,7 @@ bool ConfigManager::loadPlayableCharacters()
                 {
                     obj_player_state pstate;
                     pstate.isInit = false;
-                    pstate.image = NULL;
+                    pstate.image = nullptr;
                     pstate.textureArrayId = 0;
                     pstate.animator_ID = 0;
                     setup.beginGroup(fmt::format_ne("character-{0}-state-{1}", i, j));
@@ -314,7 +314,7 @@ bool ConfigManager::loadPlayableCharacters()
                                               setup.lineWithError(),
                                               setup.lastError(), i);
                 addError(msg);
-                PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
+                PGE_MsgBox msgBox(nullptr, msg, PGE_MsgBox::msg_error);
                 msgBox.exec();
                 break;
             }
@@ -326,7 +326,7 @@ bool ConfigManager::loadPlayableCharacters()
                                           players_total,
                                           playable_characters.stored());
             addError(msg);
-            PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
+            PGE_MsgBox msgBox(nullptr, msg, PGE_MsgBox::msg_error);
             msgBox.exec();
         }
     }
