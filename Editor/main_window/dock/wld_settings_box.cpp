@@ -58,6 +58,11 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     m_lastVisibilityState = isVisible();
     mw()->docks_world.
     addState(this, &m_lastVisibilityState);
+    updateLevelIntroLabel();
+    connect(ui->WLD_NoWorldMap, &QCheckBox::toggled, [this](bool)
+    {
+        updateLevelIntroLabel();
+    });
 }
 
 WorldSettingsBox::~WorldSettingsBox()
@@ -69,6 +74,7 @@ void WorldSettingsBox::re_translate()
 {
     ui->retranslateUi(this);
     setCurrentWorldSettings();
+    updateLevelIntroLabel();
 }
 
 
@@ -202,6 +208,11 @@ void WorldSettingsBox::on_WLD_Title_editingFinished()
         edit->WldData.meta.modified = true;
         edit->setWindowTitle(ui->WLD_Title->text() == "" ? edit->userFriendlyCurrentFile() : ui->WLD_Title->text());
     }
+}
+
+void WorldSettingsBox::updateLevelIntroLabel()
+{
+    ui->introLevelLabel->setText(ui->WLD_NoWorldMap->isChecked() ? tr("Main hub level:") : tr("Intro level:"));
 }
 
 void WorldSettingsBox::on_WLD_NoWorldMap_clicked(bool checked)

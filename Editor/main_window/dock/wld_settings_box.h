@@ -31,6 +31,7 @@ class WorldSettingsBox : public QDockWidget, public MWDock_Base
 
         void on_WLD_Title_editingFinished();
         void on_WLD_NoWorldMap_clicked(bool checked);
+        void updateLevelIntroLabel();
         void on_WLD_RestartLevel_clicked(bool checked);
         void on_WLD_AutostartLvl_editingFinished();
         void on_WLD_AutostartLvlBrowse_clicked();
