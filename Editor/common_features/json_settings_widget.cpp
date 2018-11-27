@@ -403,6 +403,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         QString name = o["name"].toString(type);
         QString title = o["title"].toString(name);
         QString control = o["control"].toString();
+        QString tooltip = o["tooltip"].toString();
         QtVariantProperty *item = nullptr;
 
         if(control.isEmpty())
@@ -426,6 +427,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 int singleStep = o["single-step"].toInt(1);
                 item = manager->addProperty(QVariant::Int, title);
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
                 item->setAttribute(QLatin1String("singleStep"), singleStep);
@@ -441,6 +443,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 int decimals = o["decimals"].toInt(1);
                 item = manager->addProperty(QVariant::Double, title);
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
                 item->setAttribute(QLatin1String("singleStep"), singleStep);
@@ -454,6 +457,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             bool valueDefault = o["value-default"].toBool();
             item = manager->addProperty(QVariant::Bool, title);
             item->setValue(retrieve_property(setupTree, name, valueDefault));
+            item->setToolTip(tooltip);
             item->setPropertyId(setupTree.getPropertyId(name));
             target->addSubProperty(item);
         }
@@ -464,6 +468,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             QString validator = o["validator"].toString();
             item = manager->addProperty(QVariant::String, title);
             item->setValue(retrieve_property(setupTree, name, valueDefault));
+            item->setToolTip(tooltip);
             item->setAttribute(QLatin1String("maxlength"), maxLength);
             if(!validator.isEmpty())
                 item->setAttribute(QLatin1String("regExp"), QRegExp(validator));
@@ -480,6 +485,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             int valueDefault = o["value-default"].toInt();
             item->setAttribute(QLatin1String("enumNames"), enumList);
             item->setValue(retrieve_property(setupTree, name, valueDefault));
+            item->setToolTip(tooltip);
             item->setPropertyId(setupTree.getPropertyId(name));
             target->addSubProperty(item);
         }
@@ -493,6 +499,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             int valueDefault = o["value-default"].toInt();
             item->setAttribute(QLatin1String("flagNames"), enumList);
             item->setValue(retrieve_property(setupTree, name, valueDefault));
+            item->setToolTip(tooltip);
             item->setPropertyId(setupTree.getPropertyId(name));
             target->addSubProperty(item);
         }
@@ -508,6 +515,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 QSizeF valueMin = QSizeF(defMin["w"].toDouble(), defMin["h"].toDouble());
                 QSizeF valueMax = QSizeF(defMax["w"].toDouble(), defMax["h"].toDouble());
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
                 int decimals = o["decimals"].toInt(2);
@@ -520,6 +528,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 QSize valueMin = QSize(defMin["w"].toInt(), defMin["h"].toInt());
                 QSize valueMax = QSize(defMax["w"].toInt(), defMax["h"].toInt());
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
             }
@@ -540,6 +549,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 QPointF valueMin = QPointF(defMin["x"].toDouble(), defMin["y"].toDouble());
                 QPointF valueMax = QPointF(defMax["x"].toDouble(), defMax["y"].toDouble());
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
                 int decimals = o["decimals"].toInt(2);
@@ -552,6 +562,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 QPoint valueMin = QPoint(defMin["x"].toInt(), defMin["y"].toInt());
                 QPoint valueMax = QPoint(defMax["x"].toInt(), defMax["y"].toInt());
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
             }
@@ -575,6 +586,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 QRectF valueMax     = QRectF(defMax["x"].toDouble(), defMax["y"].toDouble(),
                         defMax["w"].toDouble(), defMax["h"].toDouble());
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
                 int decimals = o["decimals"].toInt(2);
@@ -590,6 +602,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 QRect valueMax     = QRect(defMax["x"].toInt(), defMax["y"].toInt(),
                         defMax["w"].toInt(), defMax["h"].toInt());
                 item->setValue(retrieve_property(setupTree, name, valueDefault));
+                item->setToolTip(tooltip);
                 item->setAttribute(QLatin1String("minimum"), valueMin);
                 item->setAttribute(QLatin1String("maximum"), valueMax);
             }
