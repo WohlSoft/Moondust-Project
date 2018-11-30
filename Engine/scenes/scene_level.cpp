@@ -44,6 +44,7 @@
 #include <script/bindings/core/events/luaevents_core_engine.h>
 #include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
+#include <Utils/maths.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -110,7 +111,7 @@ LevelScene::LevelScene()
     m_frameSkip = g_AppSettings.frameSkip;
     m_messages.m_scene = this;
     m_errorMsg = "";
-    m_gameState = NULL;
+    m_gameState = nullptr;
     m_debug_player_jumping = false;
     m_debug_player_onground = false;
     m_debug_player_foots = 0;
@@ -122,21 +123,15 @@ LevelScene::LevelScene()
 void LevelScene::processPhysics(double ticks)
 {
     //Iterate layer movement
-    m_layers.processMoving(uTickf);
+    m_layers.processMoving(ticks);
 
     //Iterate playable characters
-    for(LVL_PlayersArray::iterator it = m_itemsPlayers.begin(); it != m_itemsPlayers.end(); it++)
-    {
-        LVL_Player *plr = (*it);
+    for(auto plr : m_itemsPlayers)
         plr->iterateStep(ticks);
-    }
 
     //Iterate activated NPCs
-    for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
-    {
-        LVL_Npc *n = *i;
+    for(auto n : m_npcActive)
         n->iterateStep(ticks);
-    }
 }
 
 static bool comparePosY(PGE_Phys_Object *i, PGE_Phys_Object *j)
@@ -149,26 +144,23 @@ void LevelScene::processAllCollisions()
     std::vector<PGE_Phys_Object *> toCheck;
 
     //Reset events first
-    for(LVL_PlayersArray::iterator it = m_itemsPlayers.begin(); it != m_itemsPlayers.end(); it++)
+    for(auto plr : m_itemsPlayers)
     {
-        LVL_Player *plr = (*it);
         plr->resetEvents();
         toCheck.push_back(plr);
     }
 
     //Process collision check and resolving for activated NPC's
-    for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
+    for(auto n : m_npcActive)
     {
-        LVL_Npc *n = *i;
         n->resetEvents();
         toCheck.push_back(n);
     }
 
     std::stable_sort(toCheck.begin(), toCheck.end(), comparePosY);
 
-    for(std::vector<PGE_Phys_Object *>::iterator it = toCheck.begin(); it != toCheck.end(); it++)
+    for(auto obj : toCheck)
     {
-        PGE_Phys_Object *obj = *it;
         obj->updateCollisions();
     }
 }
@@ -207,9 +199,8 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebugNA("Destroy blocks");
-    for(LVL_BlocksArray::iterator i = m_itemsBlocks.begin(); i != m_itemsBlocks.end(); ++i)
+    for(auto tmp : m_itemsBlocks)
     {
-        LVL_Block *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -220,9 +211,8 @@ LevelScene::~LevelScene()
     m_itemsBlocks.clear();
 
     D_pLogDebugNA("Destroy BGO");
-    for(LVL_BgosArray::iterator i = m_itemsBgo.begin(); i != m_itemsBgo.end(); ++i)
+    for(auto tmp : m_itemsBgo)
     {
-        LVL_Bgo *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -233,9 +223,8 @@ LevelScene::~LevelScene()
     m_itemsBlocks.clear();
 
     D_pLogDebugNA("Destroy NPC");
-    for(LVL_NpcsArray::iterator i = m_itemsNpc.begin(); i != m_itemsNpc.end(); ++i)
+    for(auto tmp : m_itemsNpc)
     {
-        LVL_Npc *tmp = *i;
         if(tmp)
         {
             tmp->unregisterFromTree();
@@ -246,9 +235,8 @@ LevelScene::~LevelScene()
     m_itemsNpc.clear();
 
     D_pLogDebugNA("Destroy Warps");
-    for(LVL_WarpsArray::iterator i = m_itemsWarps.begin(); i != m_itemsWarps.end(); ++i)
+    for(auto tmp : m_itemsWarps)
     {
-        LVL_Warp *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -259,9 +247,8 @@ LevelScene::~LevelScene()
     m_itemsWarps.clear();
 
     D_pLogDebugNA("Destroy Physical Environment zones");
-    for(LVL_PhysEnvsArray::iterator i = m_itemsPhysEnvs.begin(); i != m_itemsPhysEnvs.end(); ++i)
+    for(auto tmp : m_itemsPhysEnvs)
     {
-        LVL_PhysEnv *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -405,7 +392,7 @@ void LevelScene::update()
 
         //Process activated NPCs
         //for(size_t i = 0; i < m_npcActive.size(); i++)
-        for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end();)
+        for(auto i = m_npcActive.begin(); i != m_npcActive.end();)
         {
             LVL_Npc *n = *i;
             n->update(uTickf);
@@ -473,7 +460,7 @@ void LevelScene::update()
         //Add effects into the render table
         for(Scene_Effect &item : WorkingEffects)
         {
-            renderArrayAddFunction([this, &item](double camPosX, double camPosY)
+            renderArrayAddFunction([&item](double camPosX, double camPosY)
             {
                 item.render(camPosX, camPosY);
             },  item.m_zIndex);
@@ -580,10 +567,10 @@ void LevelScene::render()
 
                 if(obj->type == PGE_Phys_Object::LVLNPC)
                 {
-                    LVL_Npc *npc = static_cast<LVL_Npc *>(obj);
-                    for(size_t i = 0; i < npc->detectors_inarea.size(); i++)
+                    auto *npc = dynamic_cast<LVL_Npc *>(obj);
+                    for(auto &i : npc->detectors_inarea)
                     {
-                        PGE_RectF trapZone = npc->detectors_inarea[i].trapZone();
+                        PGE_RectF trapZone = i.trapZone();
                         GlRenderer::renderRect(static_cast<float>(trapZone.x() - camPosX),
                                                static_cast<float>(trapZone.y() - camPosY),
                                                static_cast<float>(trapZone.width()),
@@ -756,7 +743,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
             case SDLK_7:
             {
-                if(m_itemsPlayers.size() >= 1)
+                if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID - 1, m_itemsPlayers[0]->stateID);
 
                 break;
@@ -764,7 +751,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
             case SDLK_8:
             {
-                if(m_itemsPlayers.size() >= 1)
+                if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID + 1, m_itemsPlayers[0]->stateID);
 
                 break;
@@ -775,7 +762,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
                 if(m_itemsPlayers.size() >= 2)
                     m_itemsPlayers[1]->setCharacterSafe(2, 1);
 
-                if(m_itemsPlayers.size() >= 1)
+                if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID, m_itemsPlayers[0]->stateID - 1);
 
                 break;
@@ -785,7 +772,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
             {
                 if(m_itemsPlayers.size() >= 2)
                     m_itemsPlayers[1]->setCharacterSafe(2, 2);
-                else if(m_itemsPlayers.size() >= 1)
+                else if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID, m_itemsPlayers[0]->stateID + 1);
 
                 break;
@@ -838,34 +825,50 @@ LuaEngine *LevelScene::getLuaEngine()
 
 void levelSceneLoopStep(void *scene)
 {
-    LevelScene* s = reinterpret_cast<LevelScene*>(scene);
+    auto * s = reinterpret_cast<LevelScene*>(scene);
     s->times.start_common = SDL_GetTicks();
-    s->debug_TimeCounted += s->uTickf;
 
     if(PGE_Window::showDebugInfo)
-        s->times.start_events = SDL_GetTicks();
-
-    /**********************Update common events and controllers******************/
-    s->processEvents();
-
-    /****************************************************************************/
-    if(PGE_Window::showDebugInfo)
-        s->times.stop_events = SDL_GetTicks();
-
-    if(PGE_Window::showDebugInfo)
-        s->m_debug_event_delay = static_cast<int>(s->times.stop_events - s->times.start_events);
-
-    s->times.start_physics = SDL_GetTicks();
-
-    /**********************Update physics and game progess***********************/
-    if(!s->m_debug_oneStepMode || s->m_debug_oneStepMode_doStep)
     {
-        s->update();
-        s->m_debug_oneStepMode_doStep = false;
+        s->times.start_physics = 0;
+        s->times.start_events = 0;
     }
 
-    /****************************************************************************/
-    s->times.stop_physics = SDL_GetTicks();
+    while(s->times.doUpdate_physics < static_cast<double>(s->uTick))
+    {
+        s->debug_TimeCounted += static_cast<int>(s->uTickf);
+        if(PGE_Window::showDebugInfo && s->times.start_events == 0)
+            s->times.start_events = SDL_GetTicks();
+
+        /**********************Update common events and controllers******************/
+        s->processEvents();
+
+        /****************************************************************************/
+        if(PGE_Window::showDebugInfo)
+            s->times.stop_events = SDL_GetTicks();
+
+        if(PGE_Window::showDebugInfo)
+            s->m_debug_event_delay = static_cast<int>(s->times.stop_events - s->times.start_events);
+
+        if(PGE_Window::showDebugInfo && s->times.start_physics == 0)
+            s->times.start_physics = SDL_GetTicks();
+
+        /**********************Update physics and game progess***********************/
+        if(!s->m_debug_oneStepMode || s->m_debug_oneStepMode_doStep)
+        {
+            s->update();
+            s->m_debug_oneStepMode_doStep = false;
+        }
+
+        /****************************************************************************/
+        s->times.stop_physics = SDL_GetTicks();
+
+        s->times.doUpdate_physics += s->uTickf;
+        Maths::clearPrecision(s->times.doUpdate_physics);
+    }
+
+    s->times.doUpdate_physics -= static_cast<double>(s->uTick);
+    Maths::clearPrecision(s->times.doUpdate_physics);
 
     if(PGE_Window::showDebugInfo)
         s->m_debug_phys_delay  = static_cast<int>(s->times.stop_physics - s->times.start_physics);
@@ -882,13 +885,15 @@ void levelSceneLoopStep(void *scene)
         GlRenderer::flush();
         GlRenderer::repaint();
         s->times.stop_render = SDL_GetTicks();
-        s->times.doUpdate_render = s->m_frameSkip ? s->uTickf + (s->times.stop_render - s->times.start_render) : 0;
-
+        s->times.doUpdate_render = s->m_frameSkip ?
+                static_cast<double>(s->uTick) + (s->times.stop_render - s->times.start_render) : 0;
         if(PGE_Window::showDebugInfo)
             s->m_debug_render_delay = static_cast<int>(s->times.stop_render - s->times.start_render);
+        Maths::clearPrecision(s->times.doUpdate_render);
     }
 
-    s->times.doUpdate_render -= s->uTickf;
+    s->times.doUpdate_render -= static_cast<double>(s->uTick);
+    Maths::clearPrecision(s->times.doUpdate_render);
 
     if(s->times.stop_render < s->times.start_render)
     {

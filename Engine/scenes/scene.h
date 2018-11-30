@@ -46,6 +46,7 @@ struct LoopTiming
         start_render    = 0;
         stop_render     = 0;
         doUpdate_render = 0.0;
+        doUpdate_physics = 0.0;
         start_physics   = 0;
         stop_physics    = 0;
         start_events    = 0;
@@ -61,6 +62,7 @@ struct LoopTiming
     Uint32 start_render;
     Uint32 stop_render;
     double doUpdate_render;
+    double doUpdate_physics;
 
     Uint32 start_physics;
     Uint32 stop_physics;
@@ -76,6 +78,8 @@ class Scene
         void construct();
     public:
         void updateTickValue();
+
+        double frameDelay();
 
         enum TypeOfScene
         {

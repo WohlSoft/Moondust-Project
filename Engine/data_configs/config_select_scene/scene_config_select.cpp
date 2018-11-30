@@ -35,6 +35,7 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <Utils/maths.h>
 #include <cstdlib>
 
 #include <common_features/app_path.h>
@@ -170,12 +171,10 @@ bool ConfigSelectScene::hasConfigPacks()
 
 std::string ConfigSelectScene::isPreLoaded(std::string openConfig)
 {
-    std::string configPath = openConfig;
-
-    if(!configPath.empty())
+    if(!openConfig.empty())
     {
         if(Files::fileExists(openConfig + "/main.ini"))
-            currentConfig = configPath;
+            currentConfig = openConfig;
     }
     else
     {
@@ -341,7 +340,7 @@ void ConfigSelectScene::render()
         brightnessDelta *= -1.0;
 
     {
-        int key = std::atoi(menu.currentItem().item_key.c_str());
+        int key = SDL_atoi(menu.currentItem().item_key.c_str());
         ConfigPackEntry &item = m_availablePacks[key];
         currentConfig       = item.key;
         currentConfigPath   = item.path;
@@ -394,11 +393,22 @@ void ConfigSelectScene::renderMouse()
 
 void configSelectSceneLoopStep(void *scene)
 {
-    ConfigSelectScene* s = reinterpret_cast<ConfigSelectScene*>(scene);
+    auto * s = reinterpret_cast<ConfigSelectScene*>(scene);
     s->times.start_common = SDL_GetTicks();
-    s->processEvents();
-    s->processMenu();
-    s->update();
+
+    while(s->times.doUpdate_physics < static_cast<double>(s->uTick))
+    {
+        s->processEvents();
+        s->processMenu();
+        s->update();
+
+        s->times.doUpdate_physics += s->uTickf;
+        Maths::clearPrecision(s->times.doUpdate_physics);
+    }
+
+    s->times.doUpdate_physics -= static_cast<double>(s->uTick);
+    Maths::clearPrecision(s->times.doUpdate_physics);
+
     s->times.stop_render  = 0;
     s->times.start_render = 0;
 
@@ -472,12 +482,14 @@ int32_t ConfigSelectScene::exec()
 
 void ConfigSelectScene::processMenu()
 {
+    if(m_doExit)
+        return;
     if(!menu.isSelected())
         return;
 
     if(menu.isAccepted())
     {
-        int key = std::atoi(menu.currentItem().item_key.c_str());
+        int key = SDL_atoi(menu.currentItem().item_key.c_str());
         ConfigPackEntry &item = m_availablePacks[key];
         currentConfig       = item.key;
         currentConfigPath   = item.path;
@@ -497,7 +509,7 @@ void ConfigSelectScene::processEvents()
     Scene::processEvents();
 }
 
-void ConfigSelectScene::setLabel(std::string label)
+void ConfigSelectScene::setLabel(const std::string &label)
 {
     m_label = label;
 }

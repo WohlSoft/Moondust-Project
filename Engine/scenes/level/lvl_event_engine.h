@@ -31,7 +31,7 @@ class LVL_EventAction
 public:
     LVL_EventAction();
     LVL_EventAction(const LVL_EventAction &ea) = default;
-    virtual ~LVL_EventAction();
+    virtual ~LVL_EventAction() = default;
 
     std::string m_eventName;
     EventQueue<LVL_EventAction > m_action;

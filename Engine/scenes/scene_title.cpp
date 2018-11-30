@@ -24,6 +24,7 @@
 #include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
 #include <common_features/fmt_format_ne.h>
+#include <Utils/maths.h>
 
 #include <fontman/font_manager.h>
 #include <controls/controller_joystick.h>
@@ -354,16 +355,16 @@ void TitleScene::render()
                                   PGE_Window::Height / 2 - m_backgroundTexture.h / 2);
     }
 
-    for(size_t i = 0; i < m_imgs.size(); i++)
+    for(auto &m_img : m_imgs)
     {
         AniPos x(0, 1);
-        x = m_imgs[i].a.image();
+        x = m_img.a.image();
         GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
-        GlRenderer::renderTexture(&m_imgs[i].t,
-                                  m_imgs[i].x,
-                                  m_imgs[i].y,
-                                  m_imgs[i].t.w,
-                                  m_imgs[i].frmH,
+        GlRenderer::renderTexture(&m_img.t,
+                                  m_img.x,
+                                  m_img.y,
+                                  m_img.t.w,
+                                  m_img.frmH,
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
     }
@@ -449,9 +450,19 @@ int TitleScene::exec()
         //Refresh frameskip flag
         frameSkip = g_AppSettings.frameSkip;
         times.start_common = SDL_GetTicks();
-        processEvents();
-        processMenu();
-        update();
+        while(times.doUpdate_physics < static_cast<double>(uTick))
+        {
+            processEvents();
+            processMenu();
+            update();
+
+            times.doUpdate_physics += uTickf;
+            Maths::clearPrecision(times.doUpdate_physics);
+        }
+
+        times.doUpdate_physics -= static_cast<double>(uTick);
+        Maths::clearPrecision(times.doUpdate_physics);
+
         times.stop_render = 0;
         times.start_render = 0;
 

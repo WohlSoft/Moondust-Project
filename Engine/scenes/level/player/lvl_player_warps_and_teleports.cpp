@@ -195,7 +195,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
             m_isWarping = true; setPaused(true);
             m_warpPipeOffset = 0.0;
             m_warpDirectO = 0;
-            teleport(x + 16 - (m_momentum.w/2.0),
+            teleport(x + 16 - (m_momentum.w / 2.0),
             y + 32 - m_momentum.h);
             m_animator.unlock();
             m_animator.switchAnimation(MatrixAnimator::PipeUpDown, m_direction, 115);
@@ -343,7 +343,7 @@ void LVL_Player::WarpTo(double x, double y, int warpType, int warpDirection, boo
             playSnd.makeCaller([this]()->void{PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
                                              }, 0);
             m_eventQueue.events.push_back(playSnd);
-            double pStep = 1.5 / PGE_Window::frameRate;
+            double pStep = 1.5 / (1000.0 / m_scene->frameDelay());
             EventQueueEntry<LVL_Player >warpOut;
             warpOut.makeWaiterCond([this, pStep]()->bool
             {
@@ -461,7 +461,7 @@ void LVL_Player::WarpTo(const LevelDoor &warp)
         break;
         }
 
-        double pStep = 1.5 / PGE_Window::frameRate;
+        double pStep = 1.5 / (1000.0 / m_scene->frameDelay());
         EventQueueEntry<LVL_Player >warpIn;
         warpIn.makeWaiterCond([this, pStep]()->bool
         {

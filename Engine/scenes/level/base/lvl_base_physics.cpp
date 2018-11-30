@@ -35,8 +35,6 @@
 #include <audio/pge_audio.h>
 #include <vector>
 
-PGE_physBody::PGE_physBody()
-{}
     /*****Physical engine locals*******/
 //    m_shape(SL_Rect),
 //    m_momentum(0.0, 0.0),
@@ -230,16 +228,21 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     if(!m_stand)
         m_momentum.velX = m_momentum.velXsrc;
 
-    double iterateX = (m_momentum.velX) * (ticks / m_smbxTickTime);
-    double iterateY = (m_momentum.velY) * (ticks / m_smbxTickTime);
+    double moveStepRatio = ticks / 15.6;
+
+    double iterateX = m_momentum.velX * moveStepRatio;
+    double iterateY = m_momentum.velY * moveStepRatio;
 
     if(m_slopeFloor.has)
-        iterateY += (m_onSlopeYAdd) * (ticks / m_smbxTickTime);
+        iterateY += m_onSlopeYAdd * moveStepRatio;
 
     // Iterate movement
     m_momentum.saveOld();
     m_momentum.x += iterateX;
     m_momentum.y += iterateY;
+
+    Maths::clearPrecision(m_momentum.x);
+    Maths::clearPrecision(m_momentum.y);
 
 //FIXME: Fix the missing in-area detector's trap position
     if(m_parent && (m_bodytype == Body_DYNAMIC))
@@ -250,6 +253,8 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
         m_momentum_relative.velY    = m_momentum.velY;
         m_momentum_relative.x += iterateX;
         m_momentum_relative.y += iterateY;
+        Maths::clearPrecision(m_momentum_relative.x);
+        Maths::clearPrecision(m_momentum_relative.y);
     }
 
     m_treemap.updatePos();
@@ -1737,8 +1742,7 @@ skipTriangleResolving:
 
     /* *********************** Check all collided sides ***************************** */
     {
-        ObjectCollidersIt it = l_contactL.begin();
-
+        auto it = l_contactL.begin();
         while(it != l_contactL.end())
         {
             PhysObject *cEL = *it;
@@ -1749,8 +1753,7 @@ skipTriangleResolving:
         }
     }
     {
-        ObjectCollidersIt it = l_contactR.begin();
-
+        auto it = l_contactR.begin();
         while(it != l_contactR.end())
         {
             PhysObject *cEL = *it;
@@ -1761,8 +1764,7 @@ skipTriangleResolving:
         }
     }
     {
-        ObjectCollidersIt it = l_contactT.begin();
-
+        auto it = l_contactT.begin();
         while(it != l_contactT.end())
         {
             PhysObject *cEL = *it;
@@ -1773,8 +1775,7 @@ skipTriangleResolving:
         }
     }
     {
-        ObjectCollidersIt it = l_contactB.begin();
-
+        auto it = l_contactB.begin();
         while(it != l_contactB.end())
         {
             PhysObject *cEL = *it;
@@ -1856,6 +1857,12 @@ skipTriangleResolving:
             m_momentum.velX = m_momentum.velXsrc + (speedSum / speedNum);
         m_treemap.updatePos();
     }
+
+    Maths::clearPrecision(m_momentum.x);
+    Maths::clearPrecision(m_momentum.y);
+    Maths::clearPrecision(m_momentum.velX);
+    Maths::clearPrecision(m_momentum.velY);
+    Maths::clearPrecision(m_momentum.velXsrc);
 
     processContacts();
     postCollision();

@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <utility>
+
 #include "lvl_layer_engine.h"
 #include <data_configs/config_manager.h>
+#include <Utils/maths.h>
 #include "../scene_level.h"
 
 LVL_LayerEngine::LVL_LayerEngine(LevelScene *_parent) :
@@ -47,7 +50,7 @@ void LVL_LayerEngine::spawnSmokeAt(double x, double y)
 
 LVL_LayerEngine::Layer &LVL_LayerEngine::getLayer(const std::string &lyr)
 {
-    LayersTable::iterator li = m_layers.find(lyr);
+    auto li = m_layers.find(lyr);
     if(li == m_layers.end())
     {
         Layer &lr = m_layers[lyr];
@@ -62,11 +65,8 @@ LVL_LayerEngine::Layer &LVL_LayerEngine::getLayer(const std::string &lyr)
 void LVL_LayerEngine::hide(std::string layer, bool smoke)
 {
     Layer &lyr = getLayer(layer);
-    for(Layer::Members::iterator it = lyr.m_members.begin();
-        it != lyr.m_members.end();
-        it++)
+    for(auto body : lyr.m_members)
     {
-        PGE_Phys_Object *body = *it;
         if(!body->isVisible())
             continue;
         body->hide();
@@ -111,11 +111,8 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
     }
     else
     {*/
-        for(Layer::Members::iterator it = lyr.m_members.begin();
-            it != lyr.m_members.end();
-            it++)
+        for(auto body : lyr.m_members)
         {
-            PGE_Phys_Object *body = *it;
             if(body->isVisible())
                 continue;
             body->show();
@@ -143,9 +140,8 @@ void LVL_LayerEngine::toggle(std::string layer, bool smoke)
         return;
     }
 
-    for(Layer::Members::iterator it = lyr.m_members.begin(); it != lyr.m_members.end(); it++)
+    for(auto body : lyr.m_members)
     {
-        PGE_Phys_Object *body = *it;
         body->setVisible(viz);
         if(smoke)
             spawnSmokeAt(body->posCenterX(), body->posCenterY());
@@ -168,7 +164,7 @@ void LVL_LayerEngine::registerItem(std::string layer, PGE_Phys_Object *item, boo
         setItemMovable(lyr, item, true, keepAbsPos);
         if(item->type == PGE_Phys_Object::LVLBlock)
         {
-            LVL_Block *blk = dynamic_cast<LVL_Block *>(item);
+            auto *blk = dynamic_cast<LVL_Block *>(item);
             if(blk)
             {
                 if(blk->m_destroyed)//Mark block as destroyed objects
@@ -195,7 +191,7 @@ void LVL_LayerEngine::removeRegItem(std::string layer, PGE_Phys_Object *item, bo
         setItemMovable(lyr, item, false, keepAbsPos);
         if(item->type == PGE_Phys_Object::LVLBlock)
         {
-            LVL_Block *blk = dynamic_cast<LVL_Block *>(item);
+            auto *blk = dynamic_cast<LVL_Block *>(item);
             if(blk)
             {
                 if(blk->m_destroyed)//Remove from list of destroyed objects
@@ -208,8 +204,8 @@ void LVL_LayerEngine::removeRegItem(std::string layer, PGE_Phys_Object *item, bo
 
 void LVL_LayerEngine::moveToAnotherLayerItem(std::string oldLayer, std::string newLayer, PGE_Phys_Object *item, bool keepAbsPos)
 {
-    removeRegItem(oldLayer, item, keepAbsPos);
-    registerItem(newLayer, item, keepAbsPos);
+    removeRegItem(std::move(oldLayer), item, keepAbsPos);
+    registerItem(std::move(newLayer), item, keepAbsPos);
 }
 
 void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Object *item, bool enabled, bool keepAbsPos)
@@ -293,7 +289,7 @@ void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Objec
 
 void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, double speedY)
 {
-    MovingLayersTable::iterator mv = m_movingLayers.find(layer);
+    auto mv = m_movingLayers.find(layer);
     if(mv != m_movingLayers.end())
     {
         MovingLayer &l = mv->second;
@@ -304,11 +300,11 @@ void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, doubl
     {
         if((speedX == 0.0) && (speedY == 0.0))
             return;//Don't store zero-speed layers!
-        LayersTable::iterator li = m_layers.find(layer);
+        auto li = m_layers.find(layer);
         if(li == m_layers.end())
             return;
         Layer &lyr = li->second;
-        MovingLayer l;
+        MovingLayer l = MovingLayer();
         l.m_speedX = speedX;
         l.m_speedY = speedY;
         l.m_members = &lyr.m_members;
@@ -323,21 +319,19 @@ void LVL_LayerEngine::processMoving(double tickTime)
         return;
 
     std::vector<std::string> remove_list;
-    for(MovingLayersTable::iterator layerIt = m_movingLayers.begin();
-        layerIt != m_movingLayers.end();
-        layerIt++)
+    for(auto &m_movingLayer : m_movingLayers)
     {
-        MovingLayer &l = layerIt->second;
+        MovingLayer &l = m_movingLayer.second;
         l.m_subtree->m_momentum.velX    = l.m_speedX;
         l.m_subtree->m_momentum.velXsrc = l.m_speedX;
         l.m_subtree->m_momentum.velY    = l.m_speedY;
         if(l.m_subtree->m_scene)
         {
             l.m_subtree->iterateStep(tickTime);
-            l.m_subtree->m_offsetX    = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.x;
-            l.m_subtree->m_offsetY    = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.y;
-            l.m_subtree->m_offsetXold = l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.oldx;
-            l.m_subtree->m_offsetYold = l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.oldy;
+            l.m_subtree->m_offsetX    = Maths::clearPrecisionRet(l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.x);
+            l.m_subtree->m_offsetY    = Maths::clearPrecisionRet(l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.y);
+            l.m_subtree->m_offsetXold = Maths::clearPrecisionRet(l.m_subtree->m_momentum_relative.x - l.m_subtree->m_momentum.oldx);
+            l.m_subtree->m_offsetYold = Maths::clearPrecisionRet(l.m_subtree->m_momentum_relative.y - l.m_subtree->m_momentum.oldy);
             l.m_subtree->m_treemap.updatePos();
         }
 //        for(Layer::Members::iterator it = l.m_members->begin(); it != l.m_members->end(); it++)
@@ -376,16 +370,16 @@ void LVL_LayerEngine::processMoving(double tickTime)
 //            //obj->_syncPosition();
 //        }
         if((l.m_speedX == 0.0) && (l.m_speedY == 0.0))
-            remove_list.push_back(layerIt->first);
+            remove_list.push_back(m_movingLayer.first);
     }
     //Remove zero-speed layers
-    for(size_t i = 0; i < remove_list.size(); i++)
-        m_movingLayers.erase(remove_list[i]);
+    for(const auto &i : remove_list)
+        m_movingLayers.erase(i);
 }
 
 bool LVL_LayerEngine::isEmpty(std::string layer)
 {
-    LayersTable::iterator i = m_layers.find(layer);
+    auto i = m_layers.find(layer);
     return (i == m_layers.end()) || ((i->second.m_members.size() - i->second.m_destroyedObjects) == 0);
 }
 

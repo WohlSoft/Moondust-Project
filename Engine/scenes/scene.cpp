@@ -40,14 +40,31 @@ void Scene::construct()
 
 void Scene::updateTickValue()
 {
-    uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.4875);//Experimentally
-            //static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
-    uTick  = Maths::uRound(uTickf);
+    //uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.4875);//Experimentally
+    uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.03125);
+    Maths::clearPrecision(uTickf);
+    //static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
+    uTick  = static_cast<uint32_t>(std::ceil(uTickf));
+
+    if(uTickf > 15.6)
+    {
+        uTick = static_cast<Uint32>(PGE_Window::frameDelay);
+        while(uTickf > 15.6)
+            uTickf /= 2.0;
+        uTickf = Maths::roundToDown(uTickf, 0.03125);
+        Maths::clearPrecision(uTickf);
+    }
+
     if(uTick == 0)
         uTick = 1;
     if(uTickf <= 0.0)
         uTickf = 1.0;
     SDL_assert(uTick < 2000u);//"uTick Must be less than two seconds!!!"
+}
+
+double Scene::frameDelay()
+{
+    return uTickf;
 }
 
 Scene::Scene()

@@ -55,7 +55,7 @@ public:
 
     Controller* controller;
 
-    void setLabel(std::string label);
+    void setLabel(const std::string &label);
 
 private:
     struct ConfigPackEntry

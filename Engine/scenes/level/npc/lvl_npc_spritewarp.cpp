@@ -43,7 +43,7 @@ void LVL_Npc::setWarpSpawn(LVL_Npc::WarpingSide side)
     double origGravityScale = gravityScale();
     setSpeed(0.0, 0.0);
     setGravityScale(0.0);
-    double pStep = 1.5 / PGE_Window::frameRate;
+    double pStep = 1.5 / (1000.0 / m_scene->frameDelay());
     EventQueueEntry<LVL_Npc >warpOut;
     warpOut.makeWaiterCond([this, pStep]()->bool
     {

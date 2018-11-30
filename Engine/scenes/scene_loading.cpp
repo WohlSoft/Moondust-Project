@@ -25,6 +25,7 @@
 #include <common_features/logger.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
+#include <Utils/maths.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -61,8 +62,8 @@ LoadingScene::~LoadingScene()
     GlRenderer::clearScreen();
     GlRenderer::deleteTexture(background);
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        GlRenderer::deleteTexture(imgs[i].t);
+    for(auto &img : imgs)
+        GlRenderer::deleteTexture(img.t);
 
     imgs.clear();
 }
@@ -154,8 +155,8 @@ void LoadingScene::update()
 
     Scene::update();
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        imgs[i].a.manualTick(uTickf);
+    for(auto &img : imgs)
+        img.a.manualTick(uTickf);
 
     if(!m_doExit)
     {
@@ -191,10 +192,20 @@ void LoadingScene::render()
 
 void loadingSceneLoopStep(void *scene)
 {
-    LoadingScene* s = reinterpret_cast<LoadingScene*>(scene);
+    auto * s = reinterpret_cast<LoadingScene*>(scene);
     s->times.start_common = SDL_GetTicks();
-    s->processEvents();
-    s->update();
+
+    while(s->times.doUpdate_physics < static_cast<double>(s->uTick))
+    {
+        s->processEvents();
+        s->update();
+        s->times.doUpdate_physics += s->uTickf;
+        Maths::clearPrecision(s->times.doUpdate_physics);
+    }
+
+    s->times.doUpdate_physics -= static_cast<double>(s->uTick);
+    Maths::clearPrecision(s->times.doUpdate_physics);
+
     s->times.stop_render = 0;
     s->times.start_render = 0;
 

@@ -23,6 +23,7 @@
 #include <data_configs/config_manager.h>
 #include <gui/pge_menubox.h>
 #include <settings/global_settings.h>
+#include <Utils/maths.h>
 
 GameOverScene::GameOverScene(): Scene(GameOver)
 {

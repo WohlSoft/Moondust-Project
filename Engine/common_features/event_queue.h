@@ -3,6 +3,7 @@
 
 #include <deque>
 #include <functional>
+#include <Utils/maths.h>
 
 
 /*!
@@ -47,7 +48,7 @@ struct EventQueueEntry
     /// \param _caller pointer to a static or any non-member function
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCaller(void(*_caller)(void), double _delay = 0)
+    void makeCaller(void(*_caller)(), double _delay = 0)
     {
         type = caller;
         call = _caller;
@@ -61,7 +62,7 @@ struct EventQueueEntry
     /// \param _obj pointer to object where function must be executed
     /// \param _delay time in milliseconds to wait before this function will be executed
     ///
-    void makeCallerT(T *_obj, void(T::*_caller)(void), double _delay = 0)
+    void makeCallerT(T *_obj, void(T::*_caller)(), double _delay = 0)
     {
         obj = _obj;
         type = caller_t;
@@ -221,7 +222,7 @@ struct EventQueueEntry
         case wait_condition:
             if(delay <= 0.0)
             {
-                if(flag_target ? ((condition()) == true) : ((condition()) == false))
+                if(flag_target == condition())
                     delay = 1.0;
             }
 
@@ -239,8 +240,8 @@ struct EventQueueEntry
 
     T *obj;
     //for caller
-    void (*call)(void);
-    void (T::*call_t)(void);
+    void (*call)();
+    void (T::*call_t)();
     //for function
     std::function<void()> call_func;
     //for caller, function and for waiting timer
@@ -305,8 +306,7 @@ class EventQueue
             events = eq.events;
         }
 
-        ~EventQueue()
-        {}
+        ~EventQueue() = default;
 
         void processEvents(double timeStep = 1.0)
         {
@@ -320,6 +320,7 @@ process_event:
             }
 
             left_time = events.front().trigger(timeStep);
+            Maths::clearPrecision(left_time);
 
             if(left_time <= 0.0)
             {
@@ -328,6 +329,7 @@ process_event:
                 do
                 {
                     timeStep = (left_time + timeStep);
+                    Maths::clearPrecision(timeStep);
                 }
                 while((timeStep != 0.0) && (timeStep < 0.0));
 

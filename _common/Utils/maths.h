@@ -44,6 +44,31 @@ namespace Maths
     long    roundTo(long src, long grid);
     double  roundTo(double src, double grid);
 
+    inline void clearPrecision(double &n)
+    {
+        n = float(n);
+    }
+
+    inline double clearPrecisionRet(double n)
+    {
+        return float(n);
+    }
+
+    inline double roundToUp(double numToRound, double multiple)
+    {
+        if (multiple == 0)
+            return numToRound;
+
+        double remainder = std::fmod(std::fabs(numToRound), multiple);
+        if (remainder == 0)
+            return numToRound;
+
+        if (numToRound < 0)
+            return -(std::fabs(numToRound) - remainder);
+        else
+            return numToRound + multiple - remainder;
+    }
+
     inline double roundToDown(double num, double multto)
     {
         if(multto == 0.0)

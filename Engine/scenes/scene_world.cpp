@@ -68,7 +68,8 @@ WorldScene::WorldScene()
     /*********Fader*************/
     m_fader.setFull();
     /*********Fader*************/
-    m_mapWalker.moveSpeed = 125 / PGE_Window::frameRate;
+    m_mapWalker.moveSpeed = 125.0 / (1000.0 / uTickf);
+    Maths::clearPrecision(m_mapWalker.moveSpeed);
     m_mapWalker.moveStepsCount = 0;
     ConfigManager::setup_WorldMap.initFonts();
     m_commonSetup = ConfigManager::setup_WorldMap;
@@ -1549,18 +1550,39 @@ int WorldScene::exec()
     {
         start_common = SDL_GetTicks();
 
-        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
-
-        processEvents();
-
-        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
-
         if(PGE_Window::showDebugInfo)
-            debug_event_delay = static_cast<int>(stop_events - start_events);
+        {
+            start_physics = 0;
+            start_events = 0;
+        }
 
-        start_physics = SDL_GetTicks();
-        update();
-        stop_physics = SDL_GetTicks();
+        while(times.doUpdate_physics < static_cast<double>(uTick))
+        {
+            if(PGE_Window::showDebugInfo && start_events == 0)
+                start_events = SDL_GetTicks();
+
+            processEvents();
+
+            if(PGE_Window::showDebugInfo)
+                stop_events = SDL_GetTicks();
+
+            if(PGE_Window::showDebugInfo)
+                debug_event_delay = static_cast<int>(stop_events - start_events);
+
+            if(PGE_Window::showDebugInfo && start_physics == 0)
+                start_physics = SDL_GetTicks();
+
+            update();
+
+            if(PGE_Window::showDebugInfo)
+                stop_physics = SDL_GetTicks();
+
+            times.doUpdate_physics += uTickf;
+            Maths::clearPrecision(times.doUpdate_physics);
+        }
+
+        times.doUpdate_physics -= static_cast<double>(uTick);
+        Maths::clearPrecision(times.doUpdate_physics);
 
         if(PGE_Window::showDebugInfo)
             debug_phys_delay = static_cast<int>(stop_physics - start_physics);
