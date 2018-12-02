@@ -2,6 +2,7 @@
 - Fixed incorrect management of custom config files caused missing of them
 - Fixed bug of the "move denied" sound on world map
 - Added ability to switch playable character from pause menu of world map
+- Fixed player and NPC stumbling at the top corner of slopes
 
 0.3.1
 - LuaJIT now is working on macOS!
