@@ -24,7 +24,7 @@
 #include <common_features/fmt_format_ne.h>
 
 /***********************************PGE_MusPlayer********************************************/
-static Mix_Music *p_playingMus = NULL;
+static Mix_Music *p_playingMus = nullptr;
 static std::string p_curMusicPath = "";
 static int         p_musVolume = 127;
 static bool        p_showMsgMus = true;
@@ -75,7 +75,7 @@ void  PGE_MusPlayer::fadeIn(int ms)
             if((Mix_FadingMusicStream(p_playingMus) != MIX_FADING_IN) &&
                (Mix_FadeInMusic(p_playingMus, -1, ms) == -1))
             {
-                PGE_MsgBox::warn((std::string("Mix_FadeInMusic:") + Mix_GetError()).c_str());
+                PGE_MsgBox::warn(std::string("Mix_FadeInMusic:") + Mix_GetError());
             }
         }
         else
@@ -84,7 +84,7 @@ void  PGE_MusPlayer::fadeIn(int ms)
     }
     else
     {
-        PGE_MsgBox::warn((std::string("Play nothing:") + Mix_GetError()).c_str());
+        PGE_MsgBox::warn(std::string("Play nothing:") + Mix_GetError());
     }
 }
 
@@ -127,7 +127,7 @@ bool PGE_MusPlayer::isPaused()
     if(!PGE_Audio::isLoaded()) return false;
     return (Mix_PausedMusicStream(p_playingMus) == 1);
 }
-bool PGE_MusPlayer::IsFading()
+bool PGE_MusPlayer::isFading()
 {
     if(!PGE_Audio::isLoaded()) return false;
     return (Mix_FadingMusicStream(p_playingMus) == 1);
@@ -144,11 +144,11 @@ void PGE_MusPlayer::openFile(std::string musFile)
             return;
     }
 
-    if(p_playingMus != NULL)
+    if(p_playingMus != nullptr)
     {
         Mix_HaltMusicStream(p_playingMus);
         Mix_FreeMusic(p_playingMus);
-        p_playingMus = NULL;
+        p_playingMus = nullptr;
     }
 
     p_playingMus = Mix_LoadMUS(musFile.data());
@@ -180,7 +180,5 @@ void PGE_MusPlayer::freeStream()
 {
     if(p_playingMus)
         Mix_FreeMusic(p_playingMus);
-    p_playingMus = NULL;
+    p_playingMus = nullptr;
 }
-
-

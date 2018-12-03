@@ -31,11 +31,11 @@ std::unordered_map<std::string, Mix_Chunk*> PGE_SfxPlayer::chunksBuffer;
 Mix_Chunk *PGE_SfxPlayer::openSFX(std::string sndFile)
 {
     if(!PGE_Audio::isLoaded())
-        return NULL;
+        return nullptr;
 
-    Mix_Chunk* tmpChunk = NULL;
+    Mix_Chunk* tmpChunk = nullptr;
 
-    sfxHash::iterator snd = chunksBuffer.find(sndFile);
+    auto snd = chunksBuffer.find(sndFile);
     if(snd == chunksBuffer.end())
     {
         #if defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
@@ -70,7 +70,7 @@ void PGE_SfxPlayer::playFile(std::string sndFile)
         return;
 
     Mix_Chunk* sound;
-    sfxHash::iterator snd = chunksBuffer.find(sndFile);
+    auto snd = chunksBuffer.find(sndFile);
     if(snd == chunksBuffer.end())
     {
         sound = Mix_LoadWAV( sndFile.c_str() );
@@ -84,7 +84,7 @@ void PGE_SfxPlayer::playFile(std::string sndFile)
         {
             const char* err = Mix_GetError();
             if (strcmp(err, "No free channels available") != 0)//Don't show overflow messagebox
-                PGE_MsgBox::warn((std::string("Mix_PlayChannel: ")+std::string(Mix_GetError())).c_str());
+                PGE_MsgBox::warn(std::string("Mix_PlayChannel: ")+std::string(Mix_GetError()));
             return;
         }
     }
@@ -94,7 +94,7 @@ void PGE_SfxPlayer::playFile(std::string sndFile)
         {
             const char* err = Mix_GetError();
             if(strcmp(err, "No free channels available") != 0)//Don't show overflow messagebox
-                PGE_MsgBox::warn( (std::string("Mix_PlayChannel: ") + err).c_str());
+                PGE_MsgBox::warn(std::string("Mix_PlayChannel: ") + err);
         }
     }
 }
@@ -105,11 +105,9 @@ void PGE_SfxPlayer::clearSoundBuffer()
         return;
 
     Mix_HaltChannel(-1);
-    for(sfxHash::iterator   it = chunksBuffer.begin();
-                            it != chunksBuffer.end();
-                            ++it)
+    for(auto &it : chunksBuffer)
     {
-        Mix_FreeChunk((it->second));
+        Mix_FreeChunk(it.second);
     }
 
     chunksBuffer.clear();

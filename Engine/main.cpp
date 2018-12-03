@@ -86,10 +86,10 @@ int main(int argc, char *argv[])
 {
     std::vector<std::string> args;
     for(int i = 0; i < argc; i++)
-        args.push_back(std::string(argv[i]));
+        args.emplace_back(argv[i]);
 
     #ifdef __EMSCRIPTEN__
-    args.push_back(PGE_RUN_SINGLE_LEVEL);
+    args.emplace_back(PGE_RUN_SINGLE_LEVEL);
     #endif
 
     // Parse --version or --install low args

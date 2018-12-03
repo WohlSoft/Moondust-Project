@@ -38,7 +38,7 @@ public:
 
     static bool isPlaying();
     static bool isPaused();
-    static bool IsFading();
+    static bool isFading();
 
     static void freeStream();
 };

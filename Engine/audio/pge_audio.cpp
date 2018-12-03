@@ -30,7 +30,7 @@ static struct AudioState
     SDL_mutex*  sampleCountMutex;
     Uint64      sCount;
     Uint64      musSCount;
-} p_audioState = {false, 44100, NULL, 0, 0};
+} p_audioState = {false, 44100, nullptr, 0, 0};
 
 static void postMixCallback(void *udata,
                             Uint8 *stream,
@@ -75,7 +75,7 @@ int PGE_Audio::init(Uint32 sampleRate,
     Mix_AllocateChannels(int(allocateChannels));
 
     // Reset the audio sample count and set the post mix callback
-    if(p_audioState.sampleCountMutex == NULL)
+    if(p_audioState.sampleCountMutex == nullptr)
     {
         p_audioState.sampleCountMutex = SDL_CreateMutex();
     }
@@ -85,7 +85,7 @@ int PGE_Audio::init(Uint32 sampleRate,
     {
         p_audioState.sCount = 0;
         p_audioState.musSCount = 0;
-        Mix_SetPostMix(postMixCallback, NULL);
+        Mix_SetPostMix(postMixCallback, nullptr);
         SDL_UnlockMutex(p_audioState.sampleCountMutex);
     }
 
@@ -100,7 +100,7 @@ int PGE_Audio::quit()
         return -1;
 
     PGE_MusPlayer::freeStream();
-    Mix_SetPostMix(NULL, NULL);
+    Mix_SetPostMix(nullptr, nullptr);
     PGE_SfxPlayer::clearSoundBuffer();
     Mix_CloseAudio();
     p_audioState.isLoaded = false;
