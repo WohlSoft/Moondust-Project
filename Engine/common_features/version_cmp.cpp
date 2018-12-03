@@ -17,7 +17,7 @@ static long str2ver(std::string verSuffix)
     };
 
     std::transform(verSuffix.begin(), verSuffix.end(), verSuffix.begin(), ::tolower);
-    std::unordered_map<std::string, VersionCmp::VersionSuffix>::const_iterator i = ver.find(verSuffix);
+    auto i = ver.find(verSuffix);
     if(i == ver.end())
         return 0;
     else
@@ -56,7 +56,7 @@ static bool ver2arr(long *dest, std::string ver)
         try
         {
             std::string cell = ver.substr(beg, (end - beg));
-            dest[iterator++] = std::atol(cell.c_str());
+            dest[iterator++] = std::strtol(cell.c_str(), nullptr, 10);
             end++;//skip dot
         }
         catch (...)

@@ -1,3 +1,22 @@
+/*
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
+ */
+
 #include "gl_color.h"
 
 #include <cmath>
@@ -18,7 +37,7 @@ static const ColorNamesHash s_ColorNames =
 {
     {"transparent", {0.0, 0.0, 0.0, 0.0}},
     {"alphablack",  {0.0, 0.0, 0.0, 0.0}},
-    
+
     {"white",       {1.0, 1.0, 1.0, 1.0}},
     {"black",       {0.0, 0.0, 0.0, 1.0}},
     {"red",         {1.0, 0.0, 0.0, 1.0}},
@@ -31,7 +50,7 @@ static const ColorNamesHash s_ColorNames =
     {"gray",        {0.625, 0.625, 0.625, 1.0}},
     {"grey",        {1.0, 0.95,0.4, 1.0}},
     {"pink",        {1.0, 0.45,0.67, 1.0}},
-    {"canary",      {1.0, 0.45,0.67, 1.0}},    
+    {"canary",      {1.0, 0.45,0.67, 1.0}},
     {"purple",      {0.67,0.4, 0.67, 1.0}},
     {"orange",      {1.0, 0.55,0.33, 1.0}},
     {"teal",        {0.0, 0.67,0.6,  1.0}},
@@ -172,7 +191,7 @@ void GlColor::setRgba(std::string rgba)
                 // 01 23 45 67 89
                 m_a = static_cast<double>(std::strtol( rgba.substr(8, 2).c_str(), NULL, 16)) / 255.0;
             }
-            
+
             if((rgba.size() == 8) || (rgba.size() == 10))
             {
                 // 01 23 45 67

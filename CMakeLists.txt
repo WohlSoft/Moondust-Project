@@ -154,7 +154,7 @@ if(PGE_ENABLE_QT) # Build if Qt support enabled
     add_dependencies(libs QtPropertyBrowser_Local)
 endif()
 
-option(PGE_BUILD_ENGINE "Build the PGE Engine component" ON)
+option(PGE_BUILD_ENGINE "Build the Runtime Engine component" ON)
 if(PGE_BUILD_ENGINE)
     add_subdirectory(Engine)
     # Append changelog file

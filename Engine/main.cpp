@@ -1,6 +1,6 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -109,12 +109,12 @@ int main(int argc, char *argv[])
     // Parse high arguments
     app.parseHighArgs(args);
 
-    // Initalizing SDL
+    // Initializing SDL
     if(app.initSDL())
     {
         //% "Unable to init SDL!"
         PGE_Window::printSDLError(qtTrId("SDL_INIT_ERROR"));
-        pLogDebug("<Application closed with failture>");
+        pLogDebug("<Application closed with failure>");
         return 1;
     }
 
@@ -127,13 +127,13 @@ int main(int argc, char *argv[])
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "Audio subsystem Error",
                                  msg.c_str(),
-                                 NULL);
+                                 nullptr);
         g_flags.audioEnabled = false;
     }
 
     if(app.initWindow(INITIAL_WINDOW_TITLE, g_flags.rendererType))
     {
-        pLogDebug("<Application closed with failture>");
+        pLogDebug("<Application closed with failure>");
         return 1;
     }
 
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
             GOScene.setLabel(qtTrId("CONFIG_SELECT_TEST"));
         }
 
-        //If application runned first time or target configuration is not exist
+        //If application have ran a first time or target configuration is not exist
         if(configPath_manager.empty() && g_configPackPath.empty())
         {
             //Ask for configuration
@@ -205,11 +205,11 @@ int main(int argc, char *argv[])
         pLogDebug("Opening of the configuration package...");
         ConfigManager::setConfigPath(g_configPackPath);
 
-        pLogDebug("Initalization of basic properties...");
+        pLogDebug("Initialization of basic properties...");
 
         if(!ConfigManager::loadBasics())
         {
-            pLogDebug("<Application closed with failture>");
+            pLogDebug("<Application closed with failure>");
             return 1;
         }
 
@@ -543,7 +543,7 @@ PlayLevel:
                     {
                         //SDL_Delay(50);
                         levelExitCode = LvlExit::EXIT_Error;
-                        PGE_MsgBox msgBox(NULL, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
+                        PGE_MsgBox msgBox(nullptr, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
                                                 lScene->getLastError()),
                                                 PGE_MsgBox::msg_error);
                         msgBox.exec();
@@ -564,7 +564,7 @@ PlayLevel:
                 if(!sceneResult)
                 {
                     SDL_Delay(50);
-                    PGE_MsgBox msgBox(NULL,
+                    PGE_MsgBox msgBox(nullptr,
                                       fmt::format_ne("ERROR:\nFail to start level\n\n"
                                                      "{0}", lScene->getLastError()),
                                       PGE_MsgBox::msg_error);

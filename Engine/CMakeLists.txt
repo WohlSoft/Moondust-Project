@@ -99,7 +99,6 @@ list(APPEND PGE_ENGINE_SRCS
     common_features/app_path.cpp
     common_features/crash_handler.cpp
     common_features/episode_state.cpp
-    common_features/event_queue.cpp
     common_features/fader.cpp
     common_features/graphics_funcs.cpp
     common_features/logger_sets.cpp
@@ -440,7 +439,7 @@ if(APPLE)
         MACOSX_BUNDLE_LONG_VERSION_STRING "${ENGINE_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "cat.icns"
         CPACK_BUNDLE_NAME "PGE Engine"
-        MACOSX_BUNDLE_INFO_STRING "Platform Game Engine by Wohlstand"
+        MACOSX_BUNDLE_INFO_STRING "Moondust Engine Runtime"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
