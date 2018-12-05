@@ -18,6 +18,8 @@
  */
 
 #include <SDL2/SDL_messagebox.h>
+#include <SDL2/SDL_version.h>
+#include <SDL2/SDL_mixer_ext.h>
 #include <cstdlib>
 #include <signal.h>
 #include <common_features/tr.h>
@@ -43,6 +45,9 @@
     "===================\n" \
     "%s"
 
+#define STR_EXPAND(tok) #tok
+#define STR(tok) STR_EXPAND(tok)
+
 static const char *g_messageToUser =
     "================================================\n"
     "            Additional information:\n"
@@ -51,7 +56,10 @@ static const char *g_messageToUser =
     "Architecture: " FILE_CPU "\n"
     "GIT Revision code: " V_BUILD_VER "\n"
     "GIT branch: " V_BUILD_BRANCH "\n"
-	"Build date: " V_DATE_OF_BUILD "\n"
+    "Build date: " V_DATE_OF_BUILD "\n"
+    "================================================\n"
+    "SDL2 " STR(SDL_MAJOR_VERSION) "." STR(SDL_MINOR_VERSION) "." STR(SDL_PATCHLEVEL) "\n"
+    "SDL Mixer X " STR(SDL_MIXER_MAJOR_VERSION) "." STR(SDL_MIXER_MINOR_VERSION) "." STR(SDL_MIXER_PATCHLEVEL) "\n"
     "================================================\n"
     " Please send this log file to the developers by one of ways:\n"
     " - Via contact form:          http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin\n"
@@ -124,7 +132,7 @@ static std::string getStacktrace()
     D_pLogDebugNA("Converting...");
     strings = backtrace_symbols(array, size);
     D_pLogDebugNA("Initializing std::string...");
-    std::string bkTrace("");
+    std::string bkTrace;
     D_pLogDebugNA("Filling std::string...");
 
     for(int j = 0; j < size; j++)
@@ -139,9 +147,6 @@ static std::string getStacktrace()
     return std::string("<Stack trace not supported for this platform!>");
 #endif
 }
-
-CrashHandler::CrashHandler()
-{}
 
 static void msgBox(std::string title, std::string text)
 {
@@ -174,7 +179,7 @@ static void msgBox(std::string title, std::string text)
     mbox.numbuttons     = 1;
     mbox.buttons        = &mboxButton;
     mbox.colorScheme    = &colorScheme;
-    SDL_ShowMessageBox(&mbox, NULL);
+    SDL_ShowMessageBox(&mbox, nullptr);
 }
 
 #ifdef __GNUC__
@@ -195,7 +200,7 @@ static LLVM_ATTRIBUTE_NORETURN void abortEngine(int signal)
 void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByUnhandledException()
 {
     std::string stack = getStacktrace();
-    std::string exc = "";
+    std::string exc;
 
     try
     {
@@ -485,7 +490,7 @@ struct siginfo_t;
 
 static void handle_signalWIN32(int signal)
 {
-    handle_signal(signal, NULL, NULL);
+    handle_signal(signal, nullptr, nullptr);
 }
 #endif
 
@@ -504,19 +509,19 @@ void CrashHandler::initSigs()
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = handle_signal;
     act.sa_flags = SA_SIGINFO;
-    sigaction(SIGHUP,  &act, NULL);
-    sigaction(SIGQUIT, &act, NULL);
-    //sigaction(SIGKILL, &act, NULL); This signal is unhandlable
-    sigaction(SIGALRM, &act, NULL);
-    sigaction(SIGURG,  &act, NULL);
-    sigaction(SIGUSR1, &act, NULL);
-    sigaction(SIGUSR2, &act, NULL);
-    sigaction(SIGBUS,  &act, NULL);
-    sigaction(SIGILL,  &act, NULL);
-    sigaction(SIGFPE,  &act, NULL);
-    sigaction(SIGSEGV, &act, NULL);
-    sigaction(SIGINT,  &act, NULL);
-    sigaction(SIGABRT, &act, NULL);
+    sigaction(SIGHUP,  &act, nullptr);
+    sigaction(SIGQUIT, &act, nullptr);
+    //sigaction(SIGKILL, &act, nullptr); This signal is unhandlable
+    sigaction(SIGALRM, &act, nullptr);
+    sigaction(SIGURG,  &act, nullptr);
+    sigaction(SIGUSR1, &act, nullptr);
+    sigaction(SIGUSR2, &act, nullptr);
+    sigaction(SIGBUS,  &act, nullptr);
+    sigaction(SIGILL,  &act, nullptr);
+    sigaction(SIGFPE,  &act, nullptr);
+    sigaction(SIGSEGV, &act, nullptr);
+    sigaction(SIGINT,  &act, nullptr);
+    sigaction(SIGABRT, &act, nullptr);
 #else
     signal(SIGILL,  &handle_signalWIN32);
     signal(SIGFPE,  &handle_signalWIN32);

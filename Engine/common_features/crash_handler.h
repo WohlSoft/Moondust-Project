@@ -23,7 +23,7 @@
 class CrashHandler
 {
 public:
-    CrashHandler();
+    CrashHandler() = default;
     static void crashByUnhandledException();
     static void crashByFlood();
     static void initSigs();

@@ -24,6 +24,8 @@
 #endif
 #include <QFile>
 #include <QTextStream>
+#include <SDL2/SDL_version.h>
+#include <SDL2/SDL_mixer_ext.h>
 
 #include "../../version.h"
 
@@ -55,14 +57,23 @@ aboutDialog::aboutDialog(QWidget *parent) :
     }
     #endif
 
+    SDL_version sdlVer;
+    SDL_GetVersion(&sdlVer);
+    const SDL_version *mixerXVer = Mix_Linked_Version();
+
     ui->About1->setText(ui->About1->text()
                         .arg(V_FILE_VERSION)
                         .arg(V_FILE_RELEASE)
                         .arg(FILE_CPU)
-                        .arg(QString("Revision: %1-%2, Build date: <u>%3</u>")
+                        .arg(QString("<b>Revision:</b> %1-%2, <b>Build date:</b> <u>%3</u><br/>"
+                                     "<b>Qt:</b> %4, <b>SDL2:</b> %5.%6.%7, <b>SDL Mixer X:</b> %8.%9.%10")
                              .arg(V_BUILD_VER)
                              .arg(V_BUILD_BRANCH)
-                             .arg(V_DATE_OF_BUILD))
+                             .arg(V_DATE_OF_BUILD)
+                             .arg(qVersion())
+                             .arg(sdlVer.major).arg(sdlVer.minor).arg(sdlVer.patch)
+                             .arg(mixerXVer->major).arg(mixerXVer->minor).arg(mixerXVer->patch)
+                             )
                         );
 
     QFile mFile(":/credits.html");
