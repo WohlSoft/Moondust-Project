@@ -461,6 +461,15 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             item->setPropertyId(setupTree.getPropertyId(name));
             target->addSubProperty(item);
         }
+        else if(!control.compare("color", Qt::CaseInsensitive))
+        {
+            QColor valueDefault = QColor(o["value-default"].toString());
+            item = manager->addProperty(QVariant::Color, title);
+            item->setValue(retrieve_property(setupTree, name, valueDefault));
+            item->setToolTip(tooltip);
+            item->setPropertyId(setupTree.getPropertyId(name));
+            target->addSubProperty(item);
+        }
         else if(!control.compare("lineEdit", Qt::CaseInsensitive))
         {
             int maxLength = o["max-length"].toInt(-1);
