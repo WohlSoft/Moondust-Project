@@ -19,8 +19,8 @@ if(WIN32)
     set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
 
-# let El Capitan to be a minimal supported platform
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11")
+# let macOS Sierra to be a minimal supported platform (as Qt 5.12 does)
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
 
 if(POLICY CMP0058) # Dependencies
     cmake_policy(SET CMP0058 NEW)
