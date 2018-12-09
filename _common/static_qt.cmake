@@ -122,6 +122,7 @@ if(PGE_ENABLE_STATIC_QT)
                 CoreServices
                 AppKit
                 ApplicationServices
+                Metal
                 CoreFoundation
                 CoreGraphics
                 OpenGL
