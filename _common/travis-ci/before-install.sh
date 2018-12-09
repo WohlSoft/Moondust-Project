@@ -50,7 +50,7 @@ then
     fi
 
     printf "Downloading $QtTarballName..."
-    wget --quiet http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /home/runner/Qt/$QtCacheFolder/$QtTarballName
+    wget --quiet http://wohlsoft.ru/docs/Software/QtBuilds/$QtTarballName -O /home/runner/Qt/$QtCacheFolder/$QtTarballName
     if [[ $? -eq 0 ]]
     then
         printf " \E[37;42mOK!\E[0m\n"
@@ -79,11 +79,11 @@ then
 elif [[ "${TRAVIS_OS_NAME}" == "osx" ]];
 then
 
-    QT_VER=5.11.3
+    QT_VER=5.12.0
     export PATH=/Users/StaticQt/$QT_VER/bin:/Users/StaticQt/$QT_VER/lib:/usr/local/opt/coreutils/libexec/gnubin:$PATH
     #source _common/travis-ci/_osx_env.sh
-    QtCacheFolder=qtcache5113
-    QtTarballName=qt-5-11-3-static-macosx-10-14-1.tar.bz2
+    QtCacheFolder=qtcache5120
+    QtTarballName=qt-5-12-0-static-macosx-10-14-1.tar.bz2
 
 # Try out the caching thing (if caching is works, downloading must not be happen)
     if [[ ! -d /Users/StaticQt/$QtCacheFolder ]];
@@ -97,7 +97,7 @@ then
 # we are re-making same tree which was on previous machine where this build of Qt was built
 # ==============================================================================
         printf "Downloading $QtTarballName..."
-        wget --quiet http://wohlsoft.ru/docs/Software/QtBuilts/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
+        wget --quiet http://wohlsoft.ru/docs/Software/QtBuilds/$QtTarballName -O /Users/StaticQt/$QtCacheFolder/$QtTarballName;
         if [[ $? -eq 0 ]];
         then
             printf " \E[37;42mOK!\E[0m\n"
