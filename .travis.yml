@@ -159,16 +159,17 @@ matrix:
             - gnu-sed
             - lftp
 
-before_script:
-  - bash _common/travis-ci/before-script.sh
-
 before_install:
   - bash _common/travis-ci/before-install.sh
 
-install: true
+# install: true
+
+before_script:
+  - bash _common/travis-ci/before-script.sh
 
 script:
   - bash _common/travis-ci/build.sh
 
 after_success:
   - bash _common/travis-ci/upload.sh
+
