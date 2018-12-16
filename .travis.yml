@@ -61,6 +61,7 @@ matrix:
             - sourceline: "ppa:ubuntu-sdk-team/ppa"
             - sourceline: "ppa:george-edison55/cmake-3.x"
           packages:
+            - build-essential
             - "^libxcb.*"
             - libx11-dev
             - libx11-xcb-dev
@@ -101,7 +102,7 @@ matrix:
             - cmake
             - ninja-build
     - os: linux
-      dist: bionic
+      dist: xenial
       sudo: required
       compiler: gcc
       env:
@@ -110,6 +111,7 @@ matrix:
       addons:
         apt:
           packages:
+            - build-essential
             - "^libxcb.*"
             - libx11-dev
             - libx11-xcb-dev
