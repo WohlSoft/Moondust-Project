@@ -13,7 +13,10 @@ then
         sudo ln -s /home/travis /home/runner
     fi
 
+    QtStaticVersion=${QT_VER}
+    QtTarballName=${QT_TARBALL}
     QtCacheFolder=qtcache
+
     if [[ "${QT_VER}" == "" ]]; then
         QtTarballName=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
         QtStaticVersion=5.10.1_static
@@ -40,8 +43,8 @@ then
     fi
 
     echo "================================================"
-    /usr/bin/g++ --version
-    /usr/bin/cmake --version
+    g++ --version
+    cmake --version
     echo "================================================"
 
 #    if [[ ! -d /home/runner ]];
