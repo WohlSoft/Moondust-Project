@@ -62,7 +62,7 @@ then
     then
         printf " \E[37;42mOK!\E[0m\n"
     else
-        printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+        printf "\n\n=========\E[37;41mAN ERROR OCCURRED!\E[0m==========\n"
         echo "Can't download ${QtTarballName}!"
         exit 1
     fi
@@ -73,7 +73,7 @@ then
     then
         printf " \E[37;42mOK!\E[0m\n"
     else
-        printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+        printf "\n\n=========\E[37;41mAN ERROR OCCURRED!\E[0m==========\n"
         echo "Can't extract ${QtCacheFolder}/${QtTarballName}!"
         exit 1
     fi
@@ -110,7 +110,7 @@ then
         then
             printf " \E[37;42mOK!\E[0m\n"
         else
-            printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+            printf "\n\n=========\E[37;41mAN ERROR OCCURRED!\E[0m==========\n"
             echo "Can't download ${QtTarballName}!"
             exit 1
         fi
@@ -121,7 +121,7 @@ then
     then
         printf " \E[37;42mOK!\E[0m\n"
     else
-        printf "\n\n=========\E[37;41mAN ERROR OCCURED!\E[0m==========\n"
+        printf "\n\n=========\E[37;41mAN ERROR OCCURRED!\E[0m==========\n"
         echo "Can't extract ${QtCacheFolder}/${QtTarballName}!"
         exit 1
     fi
