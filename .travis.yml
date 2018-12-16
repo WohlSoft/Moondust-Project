@@ -46,6 +46,7 @@ matrix:
       env:
         - QT_VER=5.10.1_static
         - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+        - IS_COVERITY_SCAN=true
       addons:
         coverity_scan:
           project:
@@ -145,7 +146,7 @@ matrix:
             - cmake
             - ninja-build
     - os: osx
-      osx_image: xcode9.4
+      osx_image: xcode10.1
       compiler: clang
       env:
         - QT_VER=5.12.0
