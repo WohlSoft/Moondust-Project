@@ -36,11 +36,12 @@ then
             libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev \
             libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev \
             libproxy-dev ccache gcc-6 g++-6 libc6 libstdc++6 cmake
-        sudo update-alternatives --remove-all gcc
-        sudo update-alternatives --remove-all g++
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60
-        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 60
     fi
+
+    sudo update-alternatives --remove-all gcc
+    sudo update-alternatives --remove-all g++
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 60
 
     echo "================================================"
     g++ --version
