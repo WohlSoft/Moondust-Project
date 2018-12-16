@@ -54,8 +54,8 @@ matrix:
           branch_pattern: master
         apt:
           sources:
-            - ubuntu-toolchain-r/test
-            - ppa:ubuntu-sdk-team/ppa
+            - sourceline: "ubuntu-toolchain-r/test"
+            - sourceline: "ppa:ubuntu-sdk-team/ppa"
             - sourceline: "ppa:george-edison55/cmake-3.x"
           packages:
             - "^libxcb.*"
