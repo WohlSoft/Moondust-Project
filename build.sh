@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 bak=~+
 
 if [[ "$OSTYPE" == "msys"* ]]; then
@@ -46,9 +46,9 @@ do
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
             printf " \E[1;4m--help\E[0m           - Print this manual\n"
             printf " \E[1;4mldoc\E[0m             - Make lua documentation\n"
-            if [ ! -f ../LDoc/ldoc.lua ]; then
+            if [[ ! -f ../LDoc/ldoc.lua ]]; then
                 printf " \E[0;4;41;37m<LDoc repository is not clonned! Clone it into parent folder!>\E[0m\n"
-            elif [ ! -f ./build-pge-cmake-release/bin/luajit-2.1.0-beta3 ]; then
+            elif [[ ! -f ./build-pge-cmake-release/bin/luajit-2.1.0-beta3 ]]; then
                 printf " \E[0;4;44;37m<To use LDoc you need to build the project first!>\E[0m\n"
             fi
 
@@ -166,24 +166,24 @@ do
         clean)
                 echo "======== Remove all cached object files and automatically generated Makefiles ========"
 
-                if [ -d ./$BinDir/_build_x32 ]; then
-                    echo "removing $BinDir/_build_x32 ..."
-                    rm -Rf ./$BinDir/_build_x32
+                if [[ -d ./${BinDir}/_build_x32 ]]; then
+                    echo "removing ${BinDir}/_build_x32 ..."
+                    rm -Rf ./${BinDir}/_build_x32
                 fi
 
-                if [ -d ./$BinDir/_build_x64 ]; then
-                    echo "removing $BinDir/_build_x64 ..."
-                    rm -Rf ./$BinDir/_build_x64
+                if [[ -d ./${BinDir}/_build_x64 ]]; then
+                    echo "removing ${BinDir}/_build_x64 ..."
+                    rm -Rf ./${BinDir}/_build_x64
                 fi
 
-                if [ -d ./build-pge-cmake-release/ ]; then
+                if [[ -d ./build-pge-cmake-release/ ]]; then
                     echo "removing build-pge-cmake-release/ ..."
                     cd ./build-pge-cmake-release/
                     find . -not -path "./bin*" -delete
                     cd ..
                 fi
 
-                if [ -d ./build-pge-cmake-debug/ ]; then
+                if [[ -d ./build-pge-cmake-debug/ ]]; then
                     echo "removing build-pge-cmake-debug/ ..."
                     cd ./build-pge-cmake-debug/
                     find . -not -path "./bin*" -delete
@@ -192,10 +192,10 @@ do
 
                 echo 'removing Dependencies build cache ...'
 
-                if [ -d $PWD/_Libs/_sources/_build_cache ];
+                if [[ -d $PWD/_Libs/_sources/_build_cache ]];
                 then
-	                echo "Deleting $PWD/_Libs/_sources/_build_cache..."
-	                rm -Rf $PWD/_Libs/_sources/_build_cache
+                    echo "Deleting $PWD/_Libs/_sources/_build_cache..."
+                    rm -Rf $PWD/_Libs/_sources/_build_cache
                 fi
 
                 echo "==== Clear! ===="
@@ -218,11 +218,11 @@ do
             SUBMODULES="${SUBMODULES} _Libs/SDL_Mixer_X"
             SUBMODULES="${SUBMODULES} Content/help"
             # \===============================================================================
-            for s in $SUBMODULES
+            for s in ${SUBMODULES}
             do
-                if [ -d $s ];then
+                if [[ -d ${s} ]];then
                     echo "Remove folder ${s}..."
-                    rm -Rf $s
+                    rm -Rf ${s}
                 fi
             done
             echo "Fetching new submodules..."
@@ -236,7 +236,7 @@ do
             exit 0;
             ;;
 
-        # Enable debuggin of this script by showing states of inernal variables with pauses
+        # Enable debugging of this script by showing states of internal variables with pauses
         debug-script)
             flag_debugThisScript=true
             ;;
@@ -249,7 +249,7 @@ do
         noqt)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_ENABLE_QT=OFF"
             ;;
-        # Disable building of some compnents
+        # Disable building of some components
         noeditor)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_EDITOR=OFF"
             ;;
@@ -283,33 +283,33 @@ done
 
 #=============Detect directory that contains script=====================
 SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-    SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-    SOURCE="$(readlink "$SOURCE")"
-    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+while [[ -h "${SOURCE}" ]]; do # resolve $SOURCE until the file is no longer a symlink
+    SCRDIR="$( cd -P "$( dirname "${SOURCE}" )" && pwd )"
+    SOURCE="$(readlink "${SOURCE}")"
+    [[ ${SOURCE} != /* ]] && SOURCE="${DIR}/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
-echo $SCRDIR
-cd $SCRDIR
+echo ${SCRDIR}
+cd ${SCRDIR}
 source ./_common/functions.sh
 #=======================================================================
 
-if [ -f "$SCRDIR/_paths.sh" ]
+if [[ -f "${SCRDIR}/_paths.sh" ]]
 then
-    source "$SCRDIR/_paths.sh"
+    source "${SCRDIR}/_paths.sh"
 else
     echo ""
     echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
     errorofbuild
 fi
 
-PATH=$QT_PATH:$PATH
-LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
+PATH=${QT_PATH}:$PATH
+LD_LIBRARY_PATH=${QT_LIB_PATH}:${LD_LIBRARY_PATH}
 
 MAKE_CPUS_COUNT=$(getCpusCount)
 
-if $flag_debugThisScript; then
+if ${flag_debugThisScript}; then
     echo "MAKE_EXTRA_ARGS = ${MAKE_EXTRA_ARGS}"
     echo "MAKE_CPUS_COUNT = ${MAKE_CPUS_COUNT}"
     pause
@@ -366,10 +366,10 @@ do
             echo "Running translation compilation...";
 
             printLine "Editor" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/$LRelease Editor/pge_editor.pro
+            ${QT_PATH}/${LRelease} Editor/pge_editor.pro
 
             printLine "Engine" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/$LRelease Engine/pge_engine.pro
+            ${QT_PATH}/${LRelease} Engine/pge_engine.pro
 
             printLine "Done!" "\E[0;42;37m" "\E[0;32m"
             exit 0;
@@ -378,8 +378,8 @@ do
 done
 
 # ===== Source code packer =====
-if $flag_pack_src ; then
-    if [ ! -d bin-archives ]; then
+if ${flag_pack_src} ; then
+    if [[ ! -d bin-archives ]]; then
         mkdir bin-archives
     fi
 
@@ -388,8 +388,8 @@ if $flag_pack_src ; then
     checkState
 
     printLine "Packed!" "\E[0;42;37m" "\E[0;32m"
-    cd $bak
-    if $flag_pause_on_end ; then
+    cd ${bak}
+    if ${flag_pause_on_end} ; then
         pause
     fi
 
@@ -399,7 +399,7 @@ fi
 
 # ===== Build project =====
 
-if $flag_debug_build ; then
+if ${flag_debug_build} ; then
     echo "==DEBUG BUILD!=="
     BUILD_DIR_SUFFUX="-debug"
     CONFIG_QMAKE="CONFIG-=release CONFIG+=debug"
@@ -425,14 +425,14 @@ fi
 BUILD_DIR="${SCRDIR}/build-pge-cmake${BUILD_DIR_SUFFUX}"
 INSTALL_DIR="${SCRDIR}/bin-cmake${BUILD_DIR_SUFFUX}"
 
-if [ ! -d "${BUILD_DIR}" ]; then
+if [[ ! -d "${BUILD_DIR}" ]]; then
     mkdir -p "${BUILD_DIR}"
 fi
 
 cd "${BUILD_DIR}"
 
 CMAKE_STATIC_QT=""
-if $flag_cmake_static_qt; then
+if ${flag_cmake_static_qt}; then
     CMAKE_STATIC_QT="-DPGE_ENABLE_STATIC_QT=ON"
 fi
 
@@ -441,7 +441,7 @@ cmake \
     -G "${CMAKE_GENERATOR}" \
     -DCMAKE_PREFIX_PATH=$(realpath "${QT_PATH}/../") \
     -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
-    -DCMAKE_BUILD_TYPE=$CONFIG_CMAKE \
+    -DCMAKE_BUILD_TYPE=${CONFIG_CMAKE} \
     -DPGE_INSTALL_DIRECTORY="PGE_Project" \
     "${SCRDIR}" \
     ${CMAKE_STATIC_QT} \
@@ -452,7 +452,7 @@ checkState
 #=======================================================================
 echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
 TIME_STARTED=$(date +%s)
-if $flag_cmake_it_ninja; then
+if ${flag_cmake_it_ninja}; then
     # ==== WORKAROUND for Ninja that won't allow refer not built yet libraries ====
     cmake --build . --target libs -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
     checkState
@@ -468,7 +468,7 @@ echo "Installing..."
 cmake --build . --target install
 checkState
 
-if $flag_cmake_deploy ; then
+if ${flag_cmake_deploy} ; then
     echo "Deploying..."
     cmake --build . --target put_online_help
     checkState
@@ -485,11 +485,11 @@ cd "${SCRDIR}"
 #=======================================================================
 echo ""
 
-show_time $TIME_PASSED
+show_time ${TIME_PASSED}
 printLine "BUILT!" "\E[0;42;37m" "\E[0;32m"
 
-cd $bak
-if $flag_pause_on_end ; then
+cd ${bak}
+if ${flag_pause_on_end} ; then
     pause
 fi
 
