@@ -54,7 +54,7 @@ matrix:
           branch_pattern: master
         apt:
           sources:
-            - sourceline: "ubuntu-toolchain-r/test"
+            - sourceline: "ppa:ubuntu-toolchain-r/test"
             - sourceline: "ppa:ubuntu-sdk-team/ppa"
             - sourceline: "ppa:george-edison55/cmake-3.x"
           packages:
