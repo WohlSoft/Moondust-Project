@@ -109,6 +109,9 @@ matrix:
         - QT_VER=5.10.1_static
         - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
       addons:
+        sources:
+          - sourceline: "ppa:ubuntu-toolchain-r/test"
+          - sourceline: "ppa:ubuntu-sdk-team/ppa"
         apt:
           packages:
             - build-essential
