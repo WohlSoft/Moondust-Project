@@ -436,10 +436,18 @@ if ${flag_cmake_static_qt}; then
     CMAKE_STATIC_QT="-DPGE_ENABLE_STATIC_QT=ON"
 fi
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    QT_PREFIX_ROOT=$(osx_realpath "${QT_PATH}/../")
+elif [[ -f /usr/bin/realpath ]]; then
+    QT_PREFIX_ROOT=$(realpath "${QT_PATH}/../")
+else
+    QT_PREFIX_ROOT=$(readlink -f -- "${QT_PATH}/../")
+fi
+
 #=======================================================================
 cmake \
     -G "${CMAKE_GENERATOR}" \
-    -DCMAKE_PREFIX_PATH=$(realpath "${QT_PATH}/../") \
+    -DCMAKE_PREFIX_PATH=${QT_PREFIX_ROOT} \
     -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
     -DCMAKE_BUILD_TYPE=${CONFIG_CMAKE} \
     -DPGE_INSTALL_DIRECTORY="PGE_Project" \
