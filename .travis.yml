@@ -145,6 +145,10 @@ matrix:
             - libmirclient-dev
             - libproxy-dev
             - ccache
+            - gcc-6
+            - g++-6
+            - libc6
+            - libstdc++6
             - cmake
             - ninja-build
     - os: osx
