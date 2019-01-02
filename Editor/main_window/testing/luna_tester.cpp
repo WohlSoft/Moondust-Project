@@ -333,6 +333,7 @@ void LunaTester::startLunaTester()
             }
         }
         else
+        if(m_mw->activeChildWindow() == MainWindow::WND_World)
         {
             QMessageBox::information(m_mw,
                                      "LunaTester",
