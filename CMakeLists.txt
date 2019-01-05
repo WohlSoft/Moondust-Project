@@ -75,6 +75,21 @@ set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT ON)
 if(HAIKU OR EMSCRIPTEN OR ANDROID)
     set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT OFF)
     message("== Qt-dependent components are not supported for this platform")
+    
+    find_program(_QT_LRELEASE_PROGRAM lrelease)
+    if(_QT_LRELEASE_PROGRAM)
+        message(STATUS "Found ${_QT_LRELEASE_PROGRAM}, locales will be compiled!")
+    else()
+        message(WARNING "Unable to find lrelease, locales will NOT be built!")
+    endif()
+
+    find_program(_QT_LUPDATE_PROGRAM lupdate)
+    if(_QT_LUPDATE_PROGRAM)
+        message(STATUS "Found ${_QT_LUPDATE_PROGRAM}, locales can be refreshed!")
+    else()
+        message(WARNING "Unable to find lupdate, locales can't be refreshed!")
+    endif()
+
 endif()
 
 if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
