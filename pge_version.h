@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -80,7 +80,7 @@
 #define V_VERSION V_PROJECT_VERSION_NUM
 #define V_RELEASE "" //Developing state (for release this field must be empty)
 
-#define V_COPYRIGHT "2014-2018 by Wohlstand"
+#define V_COPYRIGHT "2014-2019 by Wohlstand"
 
 #define V_COMPANY "Moondust (PGE) Team"
 

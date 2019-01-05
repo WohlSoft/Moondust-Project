@@ -1,10 +1,6 @@
-#ifndef PGE_MENUBOXBASE_H
-#define PGE_MENUBOXBASE_H
-
-
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -20,6 +16,9 @@
  * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
  * or see <http://www.gnu.org/licenses/>.
  */
+
+#ifndef PGE_MENUBOXBASE_H
+#define PGE_MENUBOXBASE_H
 
 #include "pge_boxbase.h"
 #include "../scenes/scene.h"

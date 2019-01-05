@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ class CalibrationMain;
 class CalibrationMain : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit CalibrationMain(QWidget *parent = 0);
     ~CalibrationMain();

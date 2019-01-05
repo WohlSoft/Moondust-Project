@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ void NpcEdit::setDataBoxes()
     ui->gheight_label->setEnabled(StartNPCData.en_gfxheight);
     ui->GFXh->setEnabled(StartNPCData.en_gfxheight);
     if(!StartNPCData.en_gfxheight)
-    {        
+    {
         ui->GFXh->setValue(DefaultNPCData.gfxheight);
         NpcData.gfxheight=DefaultNPCData.gfxheight;
     }
@@ -89,7 +89,7 @@ void NpcEdit::setDataBoxes()
     ui->framestyle_label->setEnabled(StartNPCData.en_framestyle);
     ui->FrameStyle->setEnabled(StartNPCData.en_framestyle);
     if(!StartNPCData.en_framestyle)
-    {        
+    {
         ui->FrameStyle->setCurrentIndex(DefaultNPCData.framestyle);
         NpcData.framestyle=DefaultNPCData.framestyle;
     }
@@ -101,7 +101,7 @@ void NpcEdit::setDataBoxes()
     ui->framespeed_label->setEnabled(StartNPCData.en_framespeed);
     ui->Framespeed->setEnabled(StartNPCData.en_framespeed);
     if(!StartNPCData.en_framespeed)
-    {        
+    {
         ui->Framespeed->setValue(DefaultNPCData.framespeed);
         NpcData.framespeed=DefaultNPCData.framespeed;
     }
@@ -125,7 +125,7 @@ void NpcEdit::setDataBoxes()
     ui->score_label->setEnabled(StartNPCData.en_score);
     ui->Score->setEnabled(StartNPCData.en_score);
     if(!StartNPCData.en_score)
-    {        
+    {
         ui->Score->setCurrentIndex(DefaultNPCData.score);
         NpcData.score=DefaultNPCData.score;
     }
@@ -148,7 +148,7 @@ void NpcEdit::setDataBoxes()
     ui->En_JumpHurt->setChecked(StartNPCData.en_jumphurt);
     ui->JumpHurt->setEnabled(StartNPCData.en_jumphurt);
     if(!StartNPCData.en_jumphurt)
-    {        
+    {
         ui->JumpHurt->setChecked(DefaultNPCData.jumphurt);
         NpcData.jumphurt=DefaultNPCData.jumphurt;
     }
@@ -159,7 +159,7 @@ void NpcEdit::setDataBoxes()
     ui->En_GrabTop->setChecked(StartNPCData.en_grabtop);
     ui->GrabTop->setEnabled(StartNPCData.en_grabtop);
     if(!StartNPCData.en_grabtop)
-    {        
+    {
         ui->GrabTop->setChecked(DefaultNPCData.grabtop);
         NpcData.grabtop=DefaultNPCData.grabtop;
     }
@@ -170,7 +170,7 @@ void NpcEdit::setDataBoxes()
     ui->En_GrabSide->setChecked(StartNPCData.en_grabside);
     ui->GrabSide->setEnabled(StartNPCData.en_grabside);
     if(!StartNPCData.en_grabside)
-    {        
+    {
         ui->GrabSide->setChecked(DefaultNPCData.grabside);
         NpcData.grabside=DefaultNPCData.grabside;
     }
@@ -192,7 +192,7 @@ void NpcEdit::setDataBoxes()
     ui->En_DontHurt->setChecked(StartNPCData.en_nohurt);
     ui->DontHurt->setEnabled(StartNPCData.en_nohurt);
     if(!StartNPCData.en_nohurt)
-    {        
+    {
         ui->DontHurt->setChecked(DefaultNPCData.nohurt);
         NpcData.nohurt=DefaultNPCData.nohurt;
     }
@@ -305,7 +305,7 @@ void NpcEdit::setDataBoxes()
     ui->En_NoBlockCollision->setChecked(StartNPCData.en_noblockcollision);
     ui->NoBlockCollision->setEnabled(StartNPCData.en_noblockcollision);
     if(!StartNPCData.en_noblockcollision)
-    {        
+    {
         ui->NoBlockCollision->setChecked(DefaultNPCData.noblockcollision);
         NpcData.noblockcollision=DefaultNPCData.noblockcollision;
     }
