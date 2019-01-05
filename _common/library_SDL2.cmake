@@ -1,7 +1,12 @@
 set(SDL2_VIA_AUTOTOOLS 0)
+set(SDL2_USE_SYSTEM 0)
 
-if(HAIKU OR ANDROID)
+if(ANDROID)
     set(SDL2_VIA_AUTOTOOLS 1)
+endif()
+
+if(HAIKU)
+    set(SDL2_USE_SYSTEM 1)
 endif()
 
 # Not needed for now
@@ -13,7 +18,14 @@ endif()
 #endif()
 
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
-if(SDL2_VIA_AUTOTOOLS)
+if(SDL2_USE_SYSTEM)
+    find_package(SDL2 REQUIRED)
+    message("== SDL2 will be used from system!")
+    add_custom_target(SDL2_Local ALL
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_INCLUDE_DIRS}/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
+    )
+elseif(SDL2_VIA_AUTOTOOLS)
     # ============================================================
     # Autotools build of SDL2 on platforms where CMake build is incomplete or not supported
     # ============================================================
