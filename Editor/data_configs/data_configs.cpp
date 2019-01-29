@@ -312,8 +312,8 @@ bool dataconfigs::loadconfigs()
 
         mainSet.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
         #ifdef _WIN32
-        mainset.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
-        mainset.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
+        mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
+        mainSet.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
         #endif
 
         dirs.worlds     = data_dir + mainSet.value("worlds", "worlds").toQString() + "/";
