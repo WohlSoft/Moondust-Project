@@ -1,7 +1,7 @@
 Editor 0.3.2-dev
 - Added experimental support for element Extra Settings (Levels only)
 - Config pack is able to specify the default file format
-- When SMBX64-LVL format is default, the strict mode is turned on untitled
+- When SMBX64 formats are default, the strict mode is turned on in untitled files
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
