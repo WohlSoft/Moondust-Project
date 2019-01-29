@@ -29,25 +29,26 @@ void MainWindow::save()
     qApp->setActiveWindow(this);
     bool saved=false;
     int WinType = activeChildWindow();
-    if (WinType!=0)
+    if (WinType != WND_NoWindow)
     {
         QProgressDialog progress(tr("Saving of file..."), tr("Abort"), 0, 1, this);
-             progress.setWindowTitle(tr("Saving"));
-             progress.setWindowModality(Qt::WindowModal);
-             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-             progress.setFixedSize(progress.size());
-             progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-             progress.setMinimumDuration(0);
-             progress.setAutoClose(false);
-             progress.setCancelButton(NULL);
+        progress.setWindowTitle(tr("Saving"));
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+        progress.setFixedSize(progress.size());
+        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+                progress.size(), qApp->desktop()->availableGeometry()));
+        progress.setMinimumDuration(0);
+        progress.setAutoClose(false);
+        progress.setCancelButton(nullptr);
         progress.show();
         qApp->processEvents();
 
-        if(WinType==3)
+        if(WinType == WND_World)
             saved = activeWldEditWin()->save(true);
-        if(WinType==2)
+        if(WinType == WND_NpcTxt)
             saved = activeNpcEditWin()->save();
-        if(WinType==1)
+        if(WinType == WND_Level)
             saved = activeLvlEditWin()->save(true);
 
         if(saved) statusBar()->showMessage(tr("File saved"), 2000);

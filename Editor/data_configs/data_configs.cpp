@@ -168,6 +168,19 @@ bool dataconfigs::loadBasics()
     }
     guiset.endGroup();
 
+    guiset.beginGroup("file-formats");
+    {
+        const IniProcessing::StrEnumMap formatEnum =
+        {
+            {"smbx64", EditorSetup::DefaultFileFormats::SMBX64},
+            {"pgex", EditorSetup::DefaultFileFormats::PGEX},
+            {"smbx38a", EditorSetup::DefaultFileFormats::SMBX38A}
+        };
+        guiset.readEnum("level", editor.default_file_formats.level, EditorSetup::DefaultFileFormats::SMBX64, formatEnum);
+        guiset.readEnum("world", editor.default_file_formats.world, EditorSetup::DefaultFileFormats::SMBX64, formatEnum);
+    }
+    guiset.endGroup();
+
     if(!openSection(&guiset, "main"))
         return false;
 
@@ -274,17 +287,17 @@ bool dataconfigs::loadconfigs()
     if(main_ini.isEmpty())
         return false;
 
-    IniProcessing mainset(main_ini);
+    IniProcessing mainSet(main_ini);
 
     QString customAppPath = ApplicationPath;
 
     LogDebug("Loading main.ini...");
-    if(!openSection(&mainset, "main"))
+    if(!openSection(&mainSet, "main"))
         return false;
     {
-        mainset.read("application-path", customAppPath, ApplicationPath);
+        mainSet.read("application-path", customAppPath, ApplicationPath);
         customAppPath.replace('\\', '/');
-        bool lookAppDir = mainset.value("application-dir", false).toBool();
+        bool lookAppDir = mainSet.value("application-dir", false).toBool();
         data_dir = (lookAppDir ? customAppPath + "/" : config_dir + "data/");
         if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
             data_dir = ApplicationPath + "/" + data_dir;
@@ -297,29 +310,29 @@ bool dataconfigs::loadconfigs()
         data_dir = QDir(data_dir).absolutePath() + "/";
         ConfStatus::configDataPath = data_dir;
 
-        mainset.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
+        mainSet.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
         #ifdef _WIN32
         mainset.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
         mainset.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
         #endif
 
-        dirs.worlds     = data_dir + mainset.value("worlds", "worlds").toQString() + "/";
+        dirs.worlds     = data_dir + mainSet.value("worlds", "worlds").toQString() + "/";
 
-        dirs.music      = data_dir + mainset.value("music", "data/music").toQString() + "/";
-        dirs.sounds     = data_dir + mainset.value("sound", "data/sound").toQString() + "/";
+        dirs.music      = data_dir + mainSet.value("music", "data/music").toQString() + "/";
+        dirs.sounds     = data_dir + mainSet.value("sound", "data/sound").toQString() + "/";
 
-        dirs.glevel     = data_dir + mainset.value("graphics-level", "data/graphics/level").toQString() + "/";
-        dirs.gworld     = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toQString() + "/";
-        dirs.gplayble   = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toQString() + "/";
+        dirs.glevel     = data_dir + mainSet.value("graphics-level", "data/graphics/level").toQString() + "/";
+        dirs.gworld     = data_dir + mainSet.value("graphics-worldmap", "data/graphics/worldmap").toQString() + "/";
+        dirs.gplayble   = data_dir + mainSet.value("graphics-characters", "data/graphics/characters").toQString() + "/";
 
-        localScriptName_lvl  = mainset.value("local-script-name-lvl", "level.lua").toQString();
-        commonScriptName_lvl = mainset.value("common-script-name-lvl", "level.lua").toQString();
-        localScriptName_wld  = mainset.value("local-script-name-wld", "world.lua").toQString();
-        commonScriptName_wld = mainset.value("common-script-name-wld", "world.lua").toQString();
+        localScriptName_lvl  = mainSet.value("local-script-name-lvl", "level.lua").toQString();
+        commonScriptName_lvl = mainSet.value("common-script-name-lvl", "level.lua").toQString();
+        localScriptName_wld  = mainSet.value("local-script-name-wld", "world.lua").toQString();
+        commonScriptName_wld = mainSet.value("common-script-name-wld", "world.lua").toQString();
 
-        dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toQString() + "/";
+        dirs.gcustom = data_dir + mainSet.value("custom-data", "data-custom").toQString() + "/";
     }
-    closeSection(&mainset);
+    closeSection(&mainSet);
 
     //Check existing of most important graphics paths
     if(!QDir(dirs.glevel).exists())
@@ -335,13 +348,13 @@ bool dataconfigs::loadconfigs()
 
     ConfStatus::configPath = config_dir;
 
-    mainset.beginGroup("graphics");
-    defaultGrid.general = mainset.value("default-grid", 32).toUInt();   //-V112
-    mainset.endGroup();
+    mainSet.beginGroup("graphics");
+    defaultGrid.general = mainSet.value("default-grid", 32).toUInt();   //-V112
+    mainSet.endGroup();
 
-    if(mainset.lastError() != IniProcessing::ERR_OK)
+    if(mainSet.lastError() != IniProcessing::ERR_OK)
     {
-        LogCriticalQD(QString("ERROR LOADING main.ini N:%1").arg(mainset.lastError()));
+        LogCriticalQD(QString("ERROR LOADING main.ini N:%1").arg(mainSet.lastError()));
         return false;
     }
 

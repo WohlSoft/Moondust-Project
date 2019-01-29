@@ -43,6 +43,23 @@ bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
     setWindowTitle(QString(curFile).replace("&", "&&&"));
     FileFormats::CreateLevelData(LvlData);
     LvlData.meta.untitled = true;
+
+    switch(configs.editor.default_file_formats.level)
+    {
+    case EditorSetup::DefaultFileFormats::SMBX64:
+        LvlData.meta.RecentFormat = LevelData::SMBX64;
+        LvlData.meta.smbx64strict = true;
+        break;
+    case EditorSetup::DefaultFileFormats::PGEX:
+        LvlData.meta.RecentFormat = LevelData::PGEX;
+        LvlData.meta.smbx64strict = false;
+        break;
+    case EditorSetup::DefaultFileFormats::SMBX38A:
+        LvlData.meta.RecentFormat = LevelData::SMBX38A;
+        LvlData.meta.smbx64strict = false;
+        break;
+    }
+
     StartLvlData = LvlData;
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
@@ -127,28 +144,22 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     QString filePGEX    = "Extended Level file (*.lvlx)";
     QString selectedFilter;
 
-    if(m_isUntitled)
-        selectedFilter = fileSMBX64;
-    else
+    switch(LvlData.meta.RecentFormat)
     {
-        switch(LvlData.meta.RecentFormat)
-        {
-        case LevelData::PGEX:
-            selectedFilter = filePGEX;
-            break;
+    case LevelData::PGEX:
+        selectedFilter = filePGEX;
+        break;
 
-        case LevelData::SMBX64:
-            if(LvlData.meta.RecentFormatVersion >= 64)
-                selectedFilter = fileSMBX64;
-            else
-                selectedFilter = fileSMBXany;
+    case LevelData::SMBX64:
+        if(LvlData.meta.RecentFormatVersion >= 64)
+            selectedFilter = fileSMBX64;
+        else
+            selectedFilter = fileSMBXany;
+        break;
 
-            break;
-
-        case LevelData::SMBX38A:
-            selectedFilter = fileSMBX38A;
-            break;
-        }
+    case LevelData::SMBX38A:
+        selectedFilter = fileSMBX38A;
+        break;
     }
 
     QString filter =

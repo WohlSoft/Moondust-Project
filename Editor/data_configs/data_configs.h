@@ -76,6 +76,18 @@ struct EditorSetup
         bool bookmarks_box = false;
         bool variables_box = false;
     } default_visibility;
+
+    struct DefaultFileFormats
+    {
+        enum Format
+        {
+            SMBX64 = 0,
+            PGEX,
+            SMBX38A
+        };
+        Format level = SMBX64;
+        Format world = SMBX64;
+    } default_file_formats;
 };
 
 struct EngineSetup

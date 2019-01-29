@@ -47,6 +47,24 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     FileFormats::CreateWorldData(WldData);
     WldData.meta.modified = true;
     WldData.meta.untitled = true;
+
+    switch(configs.editor.default_file_formats.world)
+    {
+    case EditorSetup::DefaultFileFormats::SMBX64:
+        WldData.meta.RecentFormat = LevelData::SMBX64;
+        WldData.meta.smbx64strict = true;
+        break;
+    case EditorSetup::DefaultFileFormats::PGEX:
+        WldData.meta.RecentFormat = LevelData::PGEX;
+        WldData.meta.smbx64strict = false;
+        break;
+    case EditorSetup::DefaultFileFormats::SMBX38A:
+        // WldData.meta.RecentFormat = LevelData::SMBX38A;
+        WldData.meta.RecentFormat = LevelData::PGEX;//TODO: Change to real 38A when PGE-FL will support write of WLD files
+        WldData.meta.smbx64strict = false;
+        break;
+    }
+
     StartWldData = WldData;
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
@@ -136,10 +154,25 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     QString filePGEX = "Extended World map file (*.wldx)";
     QString selectedFilter;
 
-    if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
+    switch(WldData.meta.RecentFormat)
+    {
+    case LevelData::PGEX:
         selectedFilter = filePGEX;
-    else
-        selectedFilter = fileSMBX64;
+        break;
+
+    case LevelData::SMBX64:
+        if(WldData.meta.RecentFormatVersion >= 64)
+            selectedFilter = fileSMBX64;
+        else
+            selectedFilter = fileSMBXany;
+
+        break;
+
+    case LevelData::SMBX38A:
+        // selectedFilter = fileSMBX38A;
+        selectedFilter = filePGEX;//TODO: Put 38A target once PGE-FL gets support for SMBX-38A
+        break;
+    }
 
     QString filter =
         fileSMBX64 + ";;" +
