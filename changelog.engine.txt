@@ -1,3 +1,6 @@
+0.3.3-dev
+- Fixed crash on missing player animation sequence
+
 0.3.2
 - Fixed incorrect management of custom config files caused missing of them
 - Fixed bug of the "move denied" sound on world map
