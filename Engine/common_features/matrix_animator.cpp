@@ -140,7 +140,13 @@ void MatrixAnimator::setDirection(int _direction, bool force)
         AniBank::iterator left = s_bank_left.find(m_current_sequance);
         //left
         if(left == s_bank_left.end())
-            return;
+        {
+            pLogWarning("Missing animation sequence of playable character of type %d of left direction!", (int)m_current_sequance);
+            left = s_bank_left.find(Idle);
+            if(left == s_bank_left.end())
+                pLogCritical("Playable character required to have the \"Idle\" animation sequence! However, it's missing!");
+            SDL_assert_release(left != s_bank_left.end());
+        }
 
         m_sequenceP = &(left->second);
     }
@@ -149,7 +155,13 @@ void MatrixAnimator::setDirection(int _direction, bool force)
         AniBank::iterator right = s_bank_right.find(m_current_sequance);
         //right
         if(right == s_bank_right.end())
-            return;
+        {
+            pLogWarning("Missing animation sequence of playable character of type %d of right direction!", (int)m_current_sequance);
+            right = s_bank_left.find(Idle);
+            if(right == s_bank_right.end())
+                pLogCritical("Playable character required to have the \"Idle\" animation sequence! However, it's missing!");
+            SDL_assert_release(right != s_bank_right.end());
+        }
 
         m_sequenceP = &(right->second);
     }
@@ -362,6 +374,8 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
         //right
         m_sequenceP = &(seq_right->second);
     }
+
+    SDL_assert_release(m_sequenceP);
 
     if(m_currentFrameIndex >= m_sequenceP->size())
     {
