@@ -1,0 +1,74 @@
+def buildAsLibrary = project.hasProperty('BUILD_AS_LIBRARY');
+def buildAsApplication = !buildAsLibrary
+if (buildAsApplication) {
+    apply plugin: 'com.android.application'
+}
+else {
+    apply plugin: 'com.android.library'
+}
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        if (buildAsApplication) {
+            applicationId "ru.wohlsoft.moondust"
+        }
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "0.3.2-alpha"
+        externalNativeBuild {
+            // REPLACE THIS with CMAKE build, HOW TO:
+            // https://stackoverflow.com/questions/47604628/use-externalproject-add-to-include-opus-in-android
+//            ndkBuild {
+//                arguments "APP_PLATFORM=android-16"
+//                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+//            }
+            cmake {
+                arguments "-DANDROID_PLATFORM=16"
+            }
+        }
+        ndk{
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    if (!project.hasProperty('EXCLUDE_NATIVE_LIBS')) {
+        sourceSets.main {
+            jniLibs.srcDirs "jniLibs"
+        }
+        externalNativeBuild {
+//            ndkBuild {
+//                path 'jni/Android.mk'
+//            }
+            cmake {
+                path "../../../CMakeLists.txt"
+            }
+        }
+       
+    }
+    lintOptions {
+        abortOnError false
+    }
+    
+    if (buildAsLibrary) {
+        libraryVariants.all { variant ->
+            variant.outputs.each { output ->
+                def outputFile = output.outputFile
+                if (outputFile != null && outputFile.name.endsWith(".aar")) {
+                    def fileName = "ru.wohlsoft.moondust.aar";
+                    output.outputFile = new File(outputFile.parent, fileName);
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'jniLibs')
+}

@@ -22,6 +22,8 @@ endif()
 # let macOS Sierra to be a minimal supported platform (as Qt 5.12 does)
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
 
+set(ANDROID_PLATFORM "android-16")
+
 if(POLICY CMP0058) # Dependencies
     cmake_policy(SET CMP0058 NEW)
 endif()
@@ -142,6 +144,19 @@ endif()
 
 # Version of complete toolchain
 include(version.cmake)
+
+if(ANDROID)
+    set(ANDROID_CMAKE_FLAGS
+        "-DANDROID_ABI=${ANDROID_ABI}"
+        "-DANDROID_NDK=${ANDROID_NDK}"
+        "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
+        "-DANDROID_PLATFORM=${ANDROID_PLATFORM}"
+        "-DANDROID_TOOLCHAIN=${ANDROID_TOOLCHAIN}"
+        "-DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
+        "-DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}"
+        "-DANDROID_ARM_NEON=${ANDROID_ARM_NEON}"
+    )
+endif()
 
 # Dependent libraries
 include(_common/library_FreeImage.cmake)

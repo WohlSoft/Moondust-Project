@@ -1,0 +1,8 @@
+/.idea/*
+/.gradle/*
+/SDL-default/*
+/moondust/jni/SDL/*
+/moondust/build/*
+*.iml
+.externalNativeBuild
+

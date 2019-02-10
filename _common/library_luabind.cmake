@@ -1,6 +1,13 @@
 
 # Note: You must also include "library_luajit.cmake" too!
 
+if(PGE_USE_LUAJIT)
+    set(LUAJIT_USE_CMAKE_FLAG -DUSE_LUAJIT=ON)
+else()
+    set(LUAJIT_USE_CMAKE_FLAG -DUSE_LUAJIT=OFF)
+    message("***** PUC-Rio Lua in use! *****")
+endif()
+
 # LuaBind is a powerful lua binding library for C++
 ExternalProject_Add(
     LuaBind_Local
@@ -12,8 +19,10 @@ ExternalProject_Add(
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
         "-DCMAKE_DEBUG_POSTFIX=d"
+        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+        ${ANDROID_CMAKE_FLAGS}
+        ${LUAJIT_USE_CMAKE_FLAG}
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
-        $<$<BOOL:PGE_USE_LUAJIT>:-DUSE_LUAJIT=ON>
 )
 
 if(PGE_USE_LUAJIT)

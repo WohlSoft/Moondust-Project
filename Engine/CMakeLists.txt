@@ -29,6 +29,11 @@ if(MSVC)
     endif()
 endif()
 
+if(ANDROID)
+    include(AndroidNdkModules)
+    android_ndk_import_module_cpufeatures()
+endif()
+
 # Version
 include(version.cmake)
 # Default GIT version
@@ -314,7 +319,7 @@ if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_ENGINE_SRCS _resources/engine.rc)
 endif()
 
-add_executable(pge_engine
+set(PGE_ENGINE_SRC_ARGS
     ${PGE_ENGINE_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
     ${DIRMANAGER_SRCS}
@@ -329,6 +334,22 @@ add_executable(pge_engine
     ${UTILS_SRCS}
     ${UTILS_SDL_SRCS}
 )
+
+if(ANDROID)
+    set(CMAKE_DEBUG_POSTFIX "")
+    add_library(pge_engine SHARED
+        ${PGE_ENGINE_SRC_ARGS}
+    )
+    add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
+    set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
+
+    add_library(hidapi SHARED IMPORTED DEPENDS SDL2_Local)
+    set_target_properties(hidapi PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libhidapi.so)
+else()
+    add_executable(pge_engine
+        ${PGE_ENGINE_SRC_ARGS}
+    )
+endif()
 
 target_compile_definitions(pge_engine
     PRIVATE
@@ -388,11 +409,17 @@ list(APPEND PGE_ENGINE_INSTALLS
     pge_engine
 )
 
+if(PGE_USE_LUAJIT)
+    set(LUAJIT_LIBRARY
+        luajit$<$<CONFIG:Debug>:d>
+    )
+endif()
+
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
     luabind$<$<CONFIG:Debug>:d>
-    $<$<BOOL:PGE_USE_LUAJIT>:luajit$<$<CONFIG:Debug>:d>>
+    ${LUAJIT_LIBRARY}
     freetype$<$<CONFIG:Debug>:d>
     sqlite3$<$<CONFIG:Debug>:d>
 )
@@ -420,7 +447,13 @@ if(NOT APPLE)
     )
 endif()
 
-if(NOT EMSCRIPTEN AND NOT MSVC)
+if(ANDROID)
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        "cpufeatures"
+    )
+endif()
+
+if(NOT EMSCRIPTEN AND NOT MSVC AND NOT ANDROID)
     if(WIN32)
         set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-mconsole")
         list(APPEND PGE_ENGINE_LINK_LIBS "-static")
@@ -484,5 +517,6 @@ target_link_libraries(pge_engine
 
 install(TARGETS ${PGE_ENGINE_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+    LIBRARY DESTINATION "${PGE_INSTALL_DIRECTORY}/"
     BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}/"
 )

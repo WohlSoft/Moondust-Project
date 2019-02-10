@@ -1,10 +1,6 @@
 set(SDL2_VIA_AUTOTOOLS 0)
 set(SDL2_USE_SYSTEM 0)
 
-if(ANDROID)
-    set(SDL2_VIA_AUTOTOOLS 1)
-endif()
-
 if(HAIKU)
     set(SDL2_USE_SYSTEM 1)
 endif()
@@ -18,7 +14,41 @@ endif()
 #endif()
 
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
-if(SDL2_USE_SYSTEM)
+if(ANDROID)
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        set(SDL2_DEBUG_SUFFIX "d")
+    else()
+        set(SDL2_DEBUG_SUFFIX "")
+    endif()
+    ExternalProject_Add(SDL2_Local_Build
+        PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-NDK
+        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
+        CONFIGURE_COMMAND ""
+        INSTALL_COMMAND ""
+        BUILD_COMMAND ${ANDROID_NDK}/ndk-build -C ${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build SDL2 SDL2_main hidapi
+        NDK_PROJECT_PATH=null
+        APP_BUILD_SCRIPT=${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/Android.mk
+        # NDK_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../..
+        NDK_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/
+        # NDK_LIBS_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/..
+        NDK_LIBS_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-libs-out/
+        APP_ABI=${ANDROID_ABI}
+        NDK_ALL_ABIS=${ANDROID_ABI}
+        APP_PLATFORM=${ANDROID_PLATFORM}
+        BUILD_BYPRODUCTS ${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/libSDL2.so
+    )
+    add_custom_target(SDL2_Local ALL
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/include/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
+        # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2${SDL2_DEBUG_SUFFIX}.a"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2main.a" "${CMAKE_BINARY_DIR}/lib/libSDL2main${SDL2_DEBUG_SUFFIX}.a"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libstdc++.a" "${CMAKE_BINARY_DIR}/lib/libstdc++.a"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_BINARY_DIR}/lib"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
+        DEPENDS SDL2_Local_Build
+    )
+elseif(SDL2_USE_SYSTEM)
     find_package(SDL2 REQUIRED)
     message("== SDL2 will be used from system!")
     add_custom_target(SDL2_Local ALL
