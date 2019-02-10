@@ -131,7 +131,7 @@ void LogWriter::LoadLogSettings()
         }
         else
         {
-            std::fprintf(stderr, "Impossible to open %s for write, all logs are will be printed through QtDebug...\n", m_logFilePath.c_str());
+            std::fprintf(stderr, "Impossible to open %s for write, log printing is disabled!\n", m_logFilePath.c_str());
             std::fflush(stderr);
         }
     }
@@ -148,7 +148,8 @@ void CloseLog()
 #ifndef __EMSCRIPTEN__
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
-    SDL_RWclose(LogWriter::m_logout);
+    if(LogWriter::m_logout)
+        SDL_RWclose(LogWriter::m_logout);
     LogWriter::m_logout = nullptr;
     //LogWriter::m_out_stream.reset();
     LogWriter::m_logIsOpened = false;
