@@ -90,9 +90,6 @@ Render_OpenGL21::Render_OpenGL21() : Render_Base("OpenGL 2.1"),
     color_binded_texture{1.0f, 1.0f, 1.0f, 1.0f}
 {}
 
-Render_OpenGL21::~Render_OpenGL21()
-{}
-
 void Render_OpenGL21::set_SDL_settings()
 {
     SDL_GL_ResetAttributes();

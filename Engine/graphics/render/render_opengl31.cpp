@@ -29,6 +29,9 @@
 
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
+#ifdef __ANDROID__
+#include <SDL2/SDL_opengles.h>
+#endif
 #include <SDL2/SDL_thread.h>
 
 #include "../gl_debug.h"
@@ -46,20 +49,28 @@ Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
                          1.0f, 1.0f, 1.0f, 1.0f}
 {}
 
-Render_OpenGL31::~Render_OpenGL31()
-{}
-
 void Render_OpenGL31::set_SDL_settings()
 {
     SDL_GL_ResetAttributes();
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
+
+#ifdef __ANDROID__ //Android specific
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          6);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           5);
+#else //Generic
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
+#endif
+
+#ifndef __ANDROID__
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);//3
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
+#endif
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);  //for GL 3.1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
@@ -107,7 +118,7 @@ bool Render_OpenGL31::init()
         return false;
     }
 
-    glViewport(0.f, 0.f, PGE_Window::Width, PGE_Window::Height);
+    glViewport(static_cast<GLint>(0), static_cast<GLint>(0), PGE_Window::Width, PGE_Window::Height);
     GLERRORCHECK();
     //Initialize clear color
     glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -359,9 +370,13 @@ void Render_OpenGL31::getPixelData(const PGE_Texture *tx, unsigned char *pixelDa
     if(!tx)
         return;
 
+#ifndef __ANDROID__ // OpenGL 3.1
     setRenderTexture(const_cast<PGE_Texture *>(tx)->texture);
     glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixelData);
     setUnbindTexture();
+#else //OpenGL ES
+    //FIXME: Implement correct texture pixel data capture!!!
+#endif
 }
 
 void Render_OpenGL31::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)

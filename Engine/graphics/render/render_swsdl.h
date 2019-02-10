@@ -35,31 +35,31 @@ class Render_SW_SDL : public Render_Base
 {
     public:
         Render_SW_SDL();
-        ~Render_SW_SDL();
-        virtual void set_SDL_settings();
-        virtual unsigned int SDL_InitFlags()
+        ~Render_SW_SDL() override = default;
+        void set_SDL_settings() override;
+        unsigned int SDL_InitFlags() override
         {
             return 0;
         }
-        virtual bool init();
-        virtual bool uninit();
-        virtual void initDummyTexture();
-        virtual PGE_Texture getDummyTexture();
-        virtual void loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t *RGBApixels);
-        virtual void deleteTexture(PGE_Texture &tx);
-        virtual bool isTopDown();
-        virtual void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels);
-        virtual void getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels);
-        virtual void getPixelData(const PGE_Texture *tx, unsigned char *pixelData);
-        virtual void setViewport(int x, int y, int w, int h);
+        bool init() override;
+        bool uninit() override;
+        void initDummyTexture() override;
+        PGE_Texture getDummyTexture() override;
+        void loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t *RGBApixels) override;
+        void deleteTexture(PGE_Texture &tx) override;
+        bool isTopDown() override;
+        void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels) override;
+        void getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels) override;
+        void getPixelData(const PGE_Texture *tx, unsigned char *pixelData) override;
+        void setViewport(int x, int y, int w, int h) override;
 
-        virtual void resetViewport();
-        virtual void setViewportSize(int w, int h);
-        virtual void setViewportSize(float w, float h);
-        virtual void setVirtualSurfaceSize(int w, int h);
+        void resetViewport() override;
+        void setViewportSize(int w, int h) override;
+        void setViewportSize(float w, float h);
+        void setVirtualSurfaceSize(int w, int h) override;
 
-        virtual void flush();
-        virtual void repaint();
+        void flush() override;
+        void repaint() override;
 
         /*!
          * \brief Changed color to clear screen
@@ -68,29 +68,29 @@ class Render_SW_SDL : public Render_Base
          * \param b level of blue (from 0.0 to 1.0)
          * \param a level of alpha (from 0.0 to 1.0)
          */
-        virtual void setClearColor(float r, float g, float b, float a);
+        void setClearColor(float r, float g, float b, float a) override;
         /*!
          * \brief Clear screen with pre-defined clear color
          */
-        virtual void clearScreen();
+        void clearScreen() override;
 
-        virtual void renderRect(float x, float y, float w, float h, GLfloat red = 1.f, GLfloat green = 1.f, GLfloat blue = 1.f, GLfloat alpha = 1.f, bool filled = true);
-        virtual void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
-        virtual void renderTexture(PGE_Texture *texture, float x, float y);
-        virtual void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0.0f, float ani_right = 1.0f);
-        virtual void renderTextureCur(float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0.0f, float ani_right = 1.0f);
+        void renderRect(float x, float y, float w, float h, GLfloat red = 1.f, GLfloat green = 1.f, GLfloat blue = 1.f, GLfloat alpha = 1.f, bool filled = true) override;
+        void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) override;
+        void renderTexture(PGE_Texture *texture, float x, float y) override;
+        void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0.0f, float ani_right = 1.0f) override;
+        void renderTextureCur(float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0.0f, float ani_right = 1.0f) override;
 
-        virtual void BindTexture(PGE_Texture *texture);
-        virtual void setTextureColor(float Red, float Green, float Blue, float Alpha = 1.0f);
-        virtual void UnBindTexture();
+        void BindTexture(PGE_Texture *texture) override;
+        void setTextureColor(float Red, float Green, float Blue, float Alpha = 1.0f) override;
+        void UnBindTexture() override;
 
         SDL_Rect   scaledRectIS(float x, float y, int w, int h);
         SDL_Rect   scaledRect(float x, float y, float w, float h);
         SDL_Rect   scaledRectS(float left, float top, float right, float bottom);
-        PGE_Point  MapToScr(PGE_Point point);
-        PGE_Point  MapToScr(int x, int y);
-        int  alignToCenterW(int x, int w);
-        int  alignToCenterH(int y, int h);
+        PGE_Point  MapToScr(PGE_Point point) override;
+        PGE_Point  MapToScr(int x, int y) override;
+        int  alignToCenterW(int x, int w) override;
+        int  alignToCenterH(int y, int h) override;
     private:
         PGE_Texture _dummyTexture;
 
@@ -109,12 +109,12 @@ class Render_SW_SDL : public Render_Base
 
         inline void setRenderTexture(GLuint &tID)
         {
-            m_currentTexture = (tID >= m_textureBank.size()) ? NULL : m_textureBank[tID];
+            m_currentTexture = (tID >= m_textureBank.size()) ? nullptr : m_textureBank[tID];
         }
 
         inline void setUnbindTexture()
         {
-            m_currentTexture = NULL;
+            m_currentTexture = nullptr;
         }
 
         inline void setRenderColors()
