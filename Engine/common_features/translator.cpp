@@ -22,12 +22,20 @@
 #include "translator.h"
 #include "app_path.h"
 #include "logger.h"
-#ifdef _WIN32
-#include <windows.h>
+
+#ifdef __ANDROID__
+#   include <SDL2/SDL_rwops.h>
+#   include <SDL2/SDL_assert.h>
+#   include <android/log.h>
 #endif
+
+#ifdef _WIN32
+#   include <windows.h>
+#endif
+
 #ifdef __APPLE__
-#include <CoreFoundation/CoreFoundation.h>
-#include <CoreServices/CoreServices.h>
+#   include <CoreFoundation/CoreFoundation.h>
+#   include <CoreServices/CoreServices.h>
 #endif
 
 #include "fmt_format_ne.h"
@@ -105,6 +113,23 @@ void PGE_Translator::init()
 #endif
 }
 
+static uint8_t *rwDumpFile(const char *path, size_t &size)
+{
+    SDL_RWops *op = SDL_RWFromFile(path, "rb");
+    if(op)
+    {
+        SDL_RWseek(op, 0, RW_SEEK_END);
+        size = static_cast<size_t>(SDL_RWtell(op));
+        SDL_RWseek(op, 0, RW_SEEK_SET);
+        uint8_t *data = (uint8_t *) SDL_malloc(size);
+        SDL_assert_release(data);
+        SDL_RWread(op, data, 1, size);
+        SDL_RWclose(op);
+        return data;
+    }
+    return nullptr;
+}
+
 void PGE_Translator::toggleLanguage(std::string lang)
 {
     if(!m_isInit || (m_currLang != lang))
@@ -115,15 +140,55 @@ void PGE_Translator::toggleLanguage(std::string lang)
         m_currLang = lang;
 
         std::string langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
-
+#ifdef __ANDROID__
+        bool ok = false;
+        size_t size = 0;
+        uint8_t *array = rwDumpFile(langFilePath.c_str(), size);
+        if(array)
+        {
+            ok = m_translator.loadData(array, size,
+                                       reinterpret_cast<unsigned char *>(&m_langPath[0]));
+            SDL_free(array);
+            if(!ok)
+            {
+                __android_log_print(ANDROID_LOG_WARN, "TRACKERS",
+                        "Failed to open translation file %s!",
+                        langFilePath.c_str());
+            }
+        }
+        else
+        {
+            __android_log_print(ANDROID_LOG_WARN, "TRACKERS", "Can't open translation file %s!", langFilePath.c_str());
+        }
+#else
         bool ok = m_translator.loadFile(langFilePath.c_str(),
                                         reinterpret_cast<unsigned char *>(&m_langPath[0]));
+#endif
         if(!ok)
         {
             m_currLang = "en"; //set to English if no other translations are found
             langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
+
+#ifdef __ANDROID__
+            bool enOk = false;
+            size_t enSize = 0;
+            uint8_t *enData = rwDumpFile(langFilePath.c_str(), enSize);
+            if(enData)
+            {
+                enOk = m_translator.loadData(enData, enSize,
+                                           reinterpret_cast<unsigned char *>(&m_langPath[0]));
+                SDL_free(enData);
+                if(!enOk)
+                {
+                    __android_log_print(ANDROID_LOG_WARN, "TRACKERS",
+                                        "Failed to open English translation file %s!",
+                                        langFilePath.c_str());
+                }
+            }
+#else
             m_translator.loadFile(langFilePath.c_str(),
                                   reinterpret_cast<unsigned char *>(&m_langPath[0]));
+#endif
             #ifdef __EMSCRIPTEN__
                 printf("Loading language file %s\n", langFilePath.c_str());
                 fflush(stdout);

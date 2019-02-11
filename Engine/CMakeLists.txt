@@ -85,14 +85,18 @@ if(_QT_LRELEASE_PROGRAM)
 endif()
 
 set(PGE_LANG_BIN_FILES)
-FILE(GLOB PGE_LANG_BIN_FILES "${_LANGAUGES_TEMP_FOLDER}/*.qm")
+file(GLOB PGE_LANG_BIN_FILES "${_LANGAUGES_TEMP_FOLDER}/*.qm")
 #foreach(LangBinFile ${PGE_LANG_BIN_FILES})
 #    message("-- locale ${LangBinFile} will be installed")
 #endforeach()
 
-if(NOT APPLE AND NOT EMSCRIPTEN)
+if(NOT APPLE AND NOT EMSCRIPTEN AND NOT ANDROID)
     file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
     install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+endif()
+
+if(ANDROID)
+    file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/android-project/moondust/src/main/assets/languages")
 endif()
 
 set(PGE_ENGINE_SRCS)
@@ -281,6 +285,12 @@ list(APPEND PGE_ENGINE_SRCS
     settings/debugger.cpp
     settings/global_settings.cpp
 )
+
+if(ANDROID)
+    list(APPEND PGE_ENGINE_SRCS
+        controls/controller_touchscreen.cpp
+    )
+endif()
 
 if(APPLE)
     FILE(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_icons/*.icns")

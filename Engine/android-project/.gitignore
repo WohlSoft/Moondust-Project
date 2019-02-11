@@ -5,4 +5,5 @@
 /moondust/build/*
 *.iml
 .externalNativeBuild
+/moondust/src/main/assets/languages/*
 

@@ -692,6 +692,9 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     uint8_t magicBuffer[MagicLength];
     size_t  fileGotLen = 0;
 
+    if(m_fileData)
+        close();
+
     #ifndef _WIN32
     FILE *file = std::fopen(filePath, "rb");
     #else
@@ -715,7 +718,7 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
         return false;//err("ERROR READING MAGIC NUMBER!!!", 3);
     }
 
-    if(std::memcmp(magicBuffer, magic, MagicLength))
+    if(std::memcmp(magicBuffer, magic, MagicLength) != 0)
     {
         std::fclose(file);
         return false;//err("MAGIC NUMBER DOESN'T CASE!", 4);
@@ -723,14 +726,14 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
 
     std::fseek(file, 0L, SEEK_END);
 
-    long fileLenth = std::ftell(file);
-    if(fileLenth < 0)
+    long fileLength = std::ftell(file);
+    if(fileLength < 0)
     {
         std::fclose(file);
         return false;//err("FAIL TO SEEK END!", 4);
     }
 
-    m_fileLength = static_cast<size_t>(fileLenth);
+    m_fileLength = static_cast<size_t>(fileLength);
     std::fseek(file, 0L, SEEK_SET);
 
     m_fileData = reinterpret_cast<uint8_t *>(std::malloc(m_fileLength));
@@ -742,10 +745,25 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     fileGotLen = std::fread(m_fileData, 1, m_fileLength, file);
     std::fclose(file);
     m_fileLength = fileGotLen;
-    return loadData(m_fileData, m_fileLength, directory);
+    return loadDataPrivate(m_fileData, m_fileLength, directory);
 }
 
-bool QmTranslatorX::loadData(uint8_t *data, size_t len, uint8_t *directory)
+bool QmTranslatorX::loadData(const uint8_t *data, size_t len, uint8_t *directory)
+{
+    if(!data || len == 0)
+        return false;
+    if(m_fileData)
+        close();
+
+    m_fileData = reinterpret_cast<uint8_t *>(std::malloc(len));
+    if(!m_fileData)
+        return false;//err("OUT OF MEMORY!", 5);
+    std::memcpy(m_fileData, data, len);
+    m_fileLength = len;
+    return loadDataPrivate(m_fileData, m_fileLength, directory);
+}
+
+bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *directory)
 {
     std::vector<std::string> dependencies;
     bool ok = true;
@@ -905,15 +923,16 @@ bool QmTranslatorX::isEmpty()
 
 void QmTranslatorX::close()
 {
-    m_messageArray = 0;
-    m_contextArray = 0;
-    m_offsetArray = 0;
-    m_numerusRulesArray = 0;
+    m_messageArray = nullptr;
+    m_contextArray = nullptr;
+    m_offsetArray = nullptr;
+    m_numerusRulesArray = nullptr;
     m_messageLength = 0;
     m_contextLength = 0;
     m_offsetLength = 0;
     m_numerusRulesLength = 0;
-    if(m_fileData) std::free(m_fileData);
+    if(m_fileData)
+        std::free(m_fileData);
     m_fileData = nullptr;
     m_fileLength = 0;
     for(QmTranslatorX *it : m_subTranslators)

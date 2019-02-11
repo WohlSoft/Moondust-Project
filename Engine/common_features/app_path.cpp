@@ -189,9 +189,7 @@ std::string AppPathManager::userAppDirSTD()
 
 std::string AppPathManager::languagesDir()
 {
-#ifndef __APPLE__
-    return ApplicationPathSTD + "languages";
-#else
+#if defined(__APPLE__)
     CFURLRef appUrlRef;
     appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
     CFStringRef filePathRef = CFURLGetString(appUrlRef);
@@ -202,6 +200,10 @@ std::string AppPathManager::languagesDir()
     if(path.compare(0, 7, "file://") == 0)
         path.erase(0, 7);
     return path;
+#elif defined(__ANDROID__)
+    return "languages";
+#else
+    return ApplicationPathSTD + "languages";
 #endif
 }
 
