@@ -190,13 +190,14 @@ void TitleScene::onKeyboardPressed(SDL_Scancode scancode)
 
     if(m_menu.isKeyGrabbing())
     {
-        if(scancode != SDL_SCANCODE_ESCAPE)
+        if((scancode != SDL_SCANCODE_ESCAPE) && (scancode != SDL_SCANCODE_AC_BACK))
             m_menu.storeKey(scancode);
         else
             m_menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
 
         //If key was grabbed, reset controlls
-        if(!m_menu.isKeyGrabbing()) resetController();
+        if(!m_menu.isKeyGrabbing())
+            resetController();
 
         /**************Control men via controllers*************/
     }
@@ -204,54 +205,39 @@ void TitleScene::onKeyboardPressed(SDL_Scancode scancode)
 
 void TitleScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(m_doExit) return;
+    if(m_doExit || m_menu.isKeyGrabbing())
+        return;
 
-    if(m_menu.isKeyGrabbing()) return;
-
-    if(controller->keys.up)
+    switch(sdl_key)
+    {
+    case SDLK_UP:
         m_menu.selectUp();
-    else if(controller->keys.down)
+        break;
+
+    case SDLK_DOWN:
         m_menu.selectDown();
-    else if(controller->keys.left)
+        break;
+
+    case SDLK_LEFT:
         m_menu.selectLeft();
-    else if(controller->keys.right)
+        break;
+
+    case SDLK_RIGHT:
         m_menu.selectRight();
-    else if(controller->keys.jump)
+        break;
+
+    case SDLK_RETURN:
         m_menu.acceptItem();
-    else if(controller->keys.alt_jump)
-        m_menu.acceptItem();
-    else if(controller->keys.run)
+        break;
+
+    case SDLK_ESCAPE:
+    case SDLK_AC_BACK:
         m_menu.rejectItem();
-    else
-        switch(sdl_key)
-        {
-        case SDLK_UP:
-            m_menu.selectUp();
-            break;
+        break;
 
-        case SDLK_DOWN:
-            m_menu.selectDown();
-            break;
-
-        case SDLK_LEFT:
-            m_menu.selectLeft();
-            break;
-
-        case SDLK_RIGHT:
-            m_menu.selectRight();
-            break;
-
-        case SDLK_RETURN:
-            m_menu.acceptItem();
-            break;
-
-        case SDLK_ESCAPE:
-            m_menu.rejectItem();
-            break;
-
-        default:
-            break;
-        }
+    default:
+        break;
+    }
 }
 
 void TitleScene::onMouseMoved(SDL_MouseMotionEvent &mmevent)
@@ -263,7 +249,8 @@ void TitleScene::onMouseMoved(SDL_MouseMotionEvent &mmevent)
 
 void TitleScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
 {
-    if(m_doExit) return;
+    if(m_doExit)
+        return;
 
     if(m_menu.isKeyGrabbing())
         m_menu.storeKey(PGE_KEYGRAB_CANCEL); //Calcel Keygrabbing
@@ -302,6 +289,7 @@ LuaEngine *TitleScene::getLuaEngine()
 
 void TitleScene::processEvents()
 {
+    bool wasKeyGrabber = false;
     SDL_PumpEvents();
 
     if(PGE_Window::showDebugInfo)
@@ -319,10 +307,31 @@ void TitleScene::processEvents()
     if(m_menu.processJoystickBinder())
     {
         //If key was grabbed, reset controlls
-        if(!m_menu.isKeyGrabbing()) resetController();
+        if(!m_menu.isKeyGrabbing())
+        {
+            wasKeyGrabber = true;
+            resetController();
+        }
     }
 
     controller->update();
+    if(!wasKeyGrabber && !m_doExit && !m_menu.isKeyGrabbing())
+    {
+        if (controller->keys.up_pressed)
+            m_menu.selectUp();
+        else if (controller->keys.down_pressed)
+            m_menu.selectDown();
+        else if (controller->keys.left_pressed)
+            m_menu.selectLeft();
+        else if (controller->keys.right_pressed)
+            m_menu.selectRight();
+        else if (controller->keys.jump_pressed)
+            m_menu.acceptItem();
+        else if (controller->keys.alt_jump_pressed)
+            m_menu.acceptItem();
+        else if (controller->keys.run_pressed)
+            m_menu.rejectItem();
+    }
     Scene::processEvents();
 }
 

@@ -122,7 +122,8 @@ void Scene::processEvents()
 
     while(SDL_PollEvent(&event))
     {
-        if(PGE_Window::processEvents(event) != 0) continue;
+        if(PGE_Window::processEvents(event) != 0)
+            continue;
 
         switch(event.type)
         {

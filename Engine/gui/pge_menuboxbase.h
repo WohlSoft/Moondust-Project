@@ -77,6 +77,7 @@ class PGE_MenuBoxBase : public PGE_BoxBase
         void reject();
 
         void processKeyEvent(SDL_Keycode &key);
+        void processController();
 
         void processLoader(double ticks);
         void processBox(double);

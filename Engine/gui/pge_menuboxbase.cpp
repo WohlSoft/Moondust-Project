@@ -30,6 +30,7 @@
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
 #include "../scenes/scene_gameover.h"
+#include "../scenes/scene_title.h"
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -379,61 +380,8 @@ void PGE_MenuBoxBase::reject()
 
 void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
 {
-    if(_page != 2) return;
-
-    if(_ctrl1)
-    {
-        if(_ctrl1->keys.up)
-        {
-            onUpButton();
-            return;
-        }
-        else if(_ctrl1->keys.down)
-        {
-            onDownButton();
-            return;
-        }
-        else if(_ctrl1->keys.left)
-        {
-            onLeftButton();
-            return;
-        }
-        else if(_ctrl1->keys.right)
-        {
-            onRightButton();
-            return;
-        }
-        else if(_ctrl1->keys.jump)
-        {
-            onJumpButton();
-            return;
-        }
-        else if(_ctrl1->keys.alt_jump)
-        {
-            onAltJumpButton();
-            return;
-        }
-        else if(_ctrl1->keys.run)
-        {
-            onRunButton();
-            return;
-        }
-        else if(_ctrl1->keys.alt_run)
-        {
-            onAltRunButton();
-            return;
-        }
-        else if(_ctrl1->keys.start)
-        {
-            onStartButton();
-            return;
-        }
-        else if(_ctrl1->keys.drop)
-        {
-            onDropButton();
-            return;
-        }
-    }
+    if(_page != 2)
+        return;
 
     switch(key)
     {
@@ -459,12 +407,74 @@ void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
         break;
 
     case SDLK_ESCAPE:
+    case SDLK_AC_BACK:
         onDropButton();
         return;
 
     default:
         break;
     }
+}
+
+void PGE_MenuBoxBase::processController()
+{
+    if(_page != 2)
+        return;
+
+    if(_ctrl1)
+    {
+        if(_ctrl1->keys.up_pressed)
+        {
+            onUpButton();
+            return;
+        }
+        else if(_ctrl1->keys.down_pressed)
+        {
+            onDownButton();
+            return;
+        }
+        else if(_ctrl1->keys.left_pressed)
+        {
+            onLeftButton();
+            return;
+        }
+        else if(_ctrl1->keys.right_pressed)
+        {
+            onRightButton();
+            return;
+        }
+        else if(_ctrl1->keys.jump_pressed)
+        {
+            onJumpButton();
+            return;
+        }
+        else if(_ctrl1->keys.alt_jump_pressed)
+        {
+            onAltJumpButton();
+            return;
+        }
+        else if(_ctrl1->keys.run_pressed)
+        {
+            onRunButton();
+            return;
+        }
+        else if(_ctrl1->keys.alt_run_pressed)
+        {
+            onAltRunButton();
+            return;
+        }
+        else if(_ctrl1->keys.start_pressed)
+        {
+            onStartButton();
+            return;
+        }
+        else if(_ctrl1->keys.drop_pressed)
+        {
+            onDropButton();
+            return;
+        }
+    }
+
 }
 
 void PGE_MenuBoxBase::processLoader(double ticks)
@@ -481,7 +491,8 @@ void PGE_MenuBoxBase::processLoader(double ticks)
 
     tickFader(ticks);
 
-    if(m_faderOpacity >= 1.0) _page++;
+    if(m_faderOpacity >= 1.0)
+        _page++;
 }
 
 void PGE_MenuBoxBase::processBox(double)
@@ -510,6 +521,8 @@ void PGE_MenuBoxBase::processBox(double)
             break;
         }
     }
+
+    processController();
 
     if(_menu.isSelected())
     {
@@ -550,8 +563,7 @@ void PGE_MenuBoxBase::initControllers()
     {
         if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
-
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
             if(s)
             {
                 _ctrl1 = s->m_player1Controller;
@@ -560,8 +572,7 @@ void PGE_MenuBoxBase::initControllers()
         }
         else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
-
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
             if(s)
             {
                 _ctrl1 = s->m_player1Controller;
@@ -570,8 +581,7 @@ void PGE_MenuBoxBase::initControllers()
         }
         else if(m_parentScene->type() == Scene::GameOver)
         {
-            GameOverScene *s = dynamic_cast<GameOverScene *>(m_parentScene);
-
+            auto s = dynamic_cast<GameOverScene *>(m_parentScene);
             if(s)
             {
                 _ctrl1 = s->player1Controller;
@@ -580,8 +590,16 @@ void PGE_MenuBoxBase::initControllers()
         }
         else if(m_parentScene->type() == Scene::ConfigSelect)
         {
-            ConfigSelectScene *s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
-
+            auto s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::Title)
+        {
+            auto s = dynamic_cast<TitleScene *>(m_parentScene);
             if(s)
             {
                 _ctrl1 = s->controller;
@@ -617,18 +635,18 @@ void PGE_MenuBoxBase::updateControllers()
         _ctrl2->sendControls();
     }
 
-    if(m_parentScene != NULL)
+    if(m_parentScene != nullptr)
     {
         if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
 
             if(s)
                 s->tickAnimations(m_uTickf);
         }
         else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
 
             if(s)
                 s->tickAnimations(m_uTickf);

@@ -24,6 +24,7 @@
 
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
+#include "../scenes/scene_title.h"
 
 #include <common_features/app_path.h>
 #include <common_features/tr.h>
@@ -258,10 +259,10 @@ void PGE_MsgBox::processBox(double)
     //    #endif
     updateControllers();
 
-    if(m_exitKeyLock && !keys.jump && !keys.run && !keys.alt_run)
+    if(m_exitKeyLock && !keys.jump_pressed && !keys.run_pressed && !keys.alt_run_pressed)
         m_exitKeyLock = false;
 
-    if((!m_exitKeyLock) && (keys.jump || keys.run || keys.alt_run))
+    if((!m_exitKeyLock) && (keys.jump_pressed || keys.run_pressed || keys.alt_run_pressed))
     {
         m_page++;
         setFade(10, 0.0, 0.05);
@@ -285,6 +286,7 @@ void PGE_MsgBox::processBox(double)
             case SDLK_ESCAPE: // ESC
             case SDLK_RETURN:// Enter
             case SDLK_KP_ENTER:
+            case SDLK_AC_BACK://Android "back" key
             {
                 m_page++;
                 setFade(10, 0.0, 0.05);
@@ -327,7 +329,8 @@ void PGE_MsgBox::processUnLoader(double ticks)
 
     updateControllers();
     tickFader(ticks);
-    if(m_faderOpacity <= 0.0) m_page++;
+    if(m_faderOpacity <= 0.0)
+        m_page++;
 }
 
 
@@ -337,7 +340,7 @@ void PGE_MsgBox::updateControllers()
     {
         if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
             if(s)
             {
                 s->tickAnimations(m_uTickf);
@@ -351,7 +354,7 @@ void PGE_MsgBox::updateControllers()
         }
         else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
             if(s)
             {
                 s->tickAnimations(m_uTickf);
@@ -359,6 +362,17 @@ void PGE_MsgBox::updateControllers()
                 s->m_player1Controller->update();
                 s->m_player1Controller->sendControls();
                 keys = s->m_player1Controller->keys;
+            }
+        }
+        else if(m_parentScene->type() == Scene::Title)
+        {
+            auto s = dynamic_cast<TitleScene *>(m_parentScene);
+            if(s)
+            {
+                s->m_fader.tickFader(m_uTickf);
+                s->controller->update();
+                s->controller->sendControls();
+                keys = s->controller->keys;
             }
         }
     }

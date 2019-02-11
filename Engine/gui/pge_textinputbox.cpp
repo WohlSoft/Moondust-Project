@@ -319,8 +319,9 @@ void PGE_TextInputBox::processBox(double tickTime)
             case SDLK_ESCAPE: // ESC
             case SDLK_RETURN:// Enter
             case SDLK_KP_ENTER:
+            case SDLK_AC_BACK://Android "back" key
             {
-                if(event.key.keysym.sym != SDLK_ESCAPE)
+                if(event.key.keysym.sym != SDLK_ESCAPE && event.key.keysym.sym != SDLK_AC_BACK)
                     _inputText_src = _inputText;
                 _page++;
                 setFade(10, 0.0, 0.05);
