@@ -22,6 +22,9 @@
 #include <graphics/window.h>
 #include <controls/controller_joystick.h>
 #include <controls/controller_keyboard.h>
+#if __ANDROID__
+#   include <controls/controller_touchscreen.h>
+#endif
 #include <common_features/logger.h>
 #include <common_features/number_limiter.h>
 #include <IniProcessor/ini_processing.h>
@@ -33,9 +36,6 @@ GlobalSettings::GlobalSettings()
 {
     resetDefaults();
 }
-
-GlobalSettings::~GlobalSettings()
-{}
 
 void GlobalSettings::initJoysticks()
 {
@@ -314,8 +314,8 @@ Controller *GlobalSettings::openController(int player)
     {
         if(player1_controller >= 0)
         {
-            JoystickController *joysticController = new JoystickController();
-            size_t deviceID = static_cast<size_t>(player1_controller);
+            auto joysticController = new JoystickController();
+            auto deviceID = static_cast<size_t>(player1_controller);
             if(deviceID < player1_joysticks.size())
                 joysticController->setKeyMap(player1_joysticks[deviceID]);
             if(deviceID < joysticks.size())
@@ -324,16 +324,21 @@ Controller *GlobalSettings::openController(int player)
         }
         else
         {
+#if __ANDROID__
+            targetController = new TouchScreenController();
+#else
             targetController = new KeyboardController();
             targetController->setKeyMap(player1_keyboard);
+#endif
+
         }
     }
     else if(player == 2)
     {
         if(player2_controller >= 0)
         {
-            JoystickController *joysticController = new JoystickController();
-            size_t deviceID = static_cast<size_t>(player2_controller);
+            auto joysticController = new JoystickController();
+            auto deviceID = static_cast<size_t>(player2_controller);
             if(deviceID < player2_joysticks.size())
                 joysticController->setKeyMap(player2_joysticks[deviceID]);
             if(deviceID < joysticks.size())
@@ -349,4 +354,3 @@ Controller *GlobalSettings::openController(int player)
 
     return targetController;
 }
-

@@ -34,7 +34,7 @@
 
 #include "scene_title.h"
 
-SDL_Thread                      *TitleScene::m_filefind_thread = NULL;
+SDL_Thread                      *TitleScene::m_filefind_thread = nullptr;
 std::string                      TitleScene::m_filefind_folder = "";
 std::vector<std::pair<std::string, std::string> > TitleScene::m_filefind_found_files;
 std::atomic_bool                 TitleScene::m_filefind_finished(false);
@@ -128,7 +128,7 @@ TitleScene::TitleScene() : Scene(Title), m_luaEngine(this)
     m_debug_joy_keyval = 0;
     m_debug_joy_keyid = 0;
     m_debug_joy_keytype = 0;
-    m_filefind_thread = NULL;
+    m_filefind_thread = nullptr;
 }
 
 TitleScene::~TitleScene()

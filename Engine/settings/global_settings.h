@@ -36,7 +36,7 @@ class GlobalSettings
 {
     public:
         GlobalSettings();
-        ~GlobalSettings();
+        ~GlobalSettings() = default;
         /*!
          * \brief Initialize all plugged joystics which are can be used in game
          */
