@@ -113,6 +113,7 @@ void PGE_Translator::init()
 #endif
 }
 
+#ifdef __ANDROID__
 static uint8_t *rwDumpFile(const char *path, size_t &size)
 {
     SDL_RWops *op = SDL_RWFromFile(path, "rb");
@@ -129,6 +130,7 @@ static uint8_t *rwDumpFile(const char *path, size_t &size)
     }
     return nullptr;
 }
+#endif
 
 void PGE_Translator::toggleLanguage(std::string lang)
 {
