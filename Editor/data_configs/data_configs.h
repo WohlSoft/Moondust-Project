@@ -149,7 +149,7 @@ class dataconfigs : public QObject
     Q_OBJECT
 public:
     dataconfigs();
-    virtual ~dataconfigs() = default;
+    ~dataconfigs() override = default;
 
     bool loadconfigs();
     DataFolders dirs;
