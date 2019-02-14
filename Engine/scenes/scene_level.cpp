@@ -484,6 +484,8 @@ void LevelScene::processEvents()
     Scene::processEvents();
     m_player1Controller->update();
     m_player2Controller->update();
+    if(m_player1Controller->keys.start_pressed)
+        onKeyboardPressedSDL(SDLK_ESCAPE, 0);
 }
 
 void LevelScene::render()
@@ -670,6 +672,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     // Check which
     case SDLK_ESCAPE:
     case SDLK_RETURN:   // Toggle pause mode
+    case SDLK_AC_BACK:
     {
         if(m_doExit || m_isPauseMenu) break;
 

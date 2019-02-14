@@ -1481,15 +1481,18 @@ renderBlack:
 
 void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(m_doExit) return;
+    if(m_doExit)
+        return;
 
-    if(m_pauseMenu.isShown) m_pauseMenu.menu.processKeyEvent(sdl_key);
+    if(m_pauseMenu.isShown)
+        m_pauseMenu.menu.processKeyEvent(sdl_key);
 
     switch(sdl_key)
     {
     // Check which
     case SDLK_ESCAPE: // ESC
     case SDLK_RETURN:// Enter
+    case SDLK_AC_BACK:
     {
         if(m_pauseMenu.isShown || m_doExit || m_lockControls)
         {
@@ -1523,6 +1526,8 @@ void WorldScene::processEvents()
     Scene::processEvents();
     m_player1Controller->update();
     m_controls_1 = m_player1Controller->keys;
+    if(m_controls_1.start_pressed)
+        onKeyboardPressedSDL(SDLK_ESCAPE, 0);
 }
 
 int WorldScene::exec()
@@ -1543,7 +1548,8 @@ int WorldScene::exec()
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
     m_controls_1 = Controller::noKeys();
 
-    if(m_isRunning) update();
+    if(m_isRunning)
+        update();
 
     /*****************************************************/
 
