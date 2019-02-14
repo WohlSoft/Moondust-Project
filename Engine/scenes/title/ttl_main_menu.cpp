@@ -343,15 +343,15 @@ void TitleScene::processMenu()
 }
 
 
-void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
+void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
 {
-    if(_menu < menuFirst) return;
-    if(_menu > menuLast) return;
+    if(targetMenu < menuFirst) return;
+    if(targetMenu > menuLast) return;
 
-    m_currentMenu = _menu;
+    m_currentMenu = targetMenu;
     m_menu.clear();
     m_menu.setTextLenLimit(22);
-    switch(int(_menu))
+    switch(int(targetMenu))
     {
     case menu_main:
         m_menu.setPos(300, 350);
@@ -383,10 +383,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                             []()->void{ PGE_MusPlayer::setVolume(g_AppSettings.volume_music); });
         //% "Sound volume"
         m_menu.addIntMenuItem(&g_AppSettings.volume_sound, 0, 128, "vlm_sound", qtTrId("MAINMENU_OPTIONS_SND_VOL"), false);
+#ifndef __ANDROID__
         //% "Full Screen mode"
         m_menu.addBoolMenuItem(&g_AppSettings.fullScreen, "full_screen", qtTrId("MAINMENU_OPTIONS_FULLSCR"),
-                             []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); }
-                            );
+                             []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); });
+#endif
         break;
     case menu_tests:
         m_menu.setPos(300, 350);
@@ -442,9 +443,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             }
             else
                 g_AppSettings.timeOfFrame = PGE_Window::frameDelay;
-        },
-        !PGE_Window::vsync
-                           );
+        }, !PGE_Window::vsync);
         break;
     case menu_controls:
         m_menu.setPos(300, 350);
@@ -459,11 +458,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     {
 
         KeyMap *mp_p;
-        int *mct_p = 0;
-        SDL_Joystick *jdev = NULL;
+        int *mct_p = nullptr;
+        SDL_Joystick *jDev = nullptr;
         std::function<void()> ctrlSwitch;
 
-        if(_menu == menu_controls_plr1)
+        if(targetMenu == menu_controls_plr1)
         {
             ctrlSwitch = [this]()->void
             {
@@ -473,7 +472,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player1_joysticks.size())))
             {
                 if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
-                    jdev = g_AppSettings.joysticks[size_t(*mct_p)];
+                    jDev = g_AppSettings.joysticks[size_t(*mct_p)];
                 mp_p = &g_AppSettings.player1_joysticks[size_t(*mct_p)];
             }
             else
@@ -489,7 +488,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player2_joysticks.size())))
             {
                 if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
-                    jdev = g_AppSettings.joysticks[size_t(*mct_p)];
+                    jDev = g_AppSettings.joysticks[size_t(*mct_p)];
                 mp_p = &g_AppSettings.player2_joysticks[size_t(*mct_p)];
             }
             else
@@ -516,25 +515,25 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         m_menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", qtTrId("PLAYER_CONTROLS_SETUP_INPUT_TYPE"), true, ctrlSwitch);
         m_menu.setItemWidth(300);
         m_menu.setValueOffset(150);
-        m_menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........", jDev);
         m_menu.setValueOffset(210);
     }
     break;
@@ -604,9 +603,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 
     PGE_Rect menuBox = m_menu.rect();
     m_menu.setPos(PGE_Window::Width / 2 - menuBox.width() / 2, menuBox.y());
-    pLogDebug("Menuitem ID: %d, scrolling offset: %d", m_menustates[_menu].first, m_menustates[_menu].second);
-    m_menu.setCurrentItem(m_menustates[_menu].first);
-    m_menu.setOffset(m_menustates[_menu].second);
+    pLogDebug("Menuitem ID: %d, scrolling offset: %d", m_menustates[targetMenu].first, m_menustates[targetMenu].second);
+    m_menu.setCurrentItem(m_menustates[targetMenu].first);
+    m_menu.setOffset(m_menustates[targetMenu].second);
 }
 
 

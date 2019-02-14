@@ -157,6 +157,16 @@ void AppPathManager::initAppPath()
         if(!DirMan::exists(ApplicationPathSTD + "/Data directory"))
             symlink((userDirPath).c_str(), (ApplicationPathSTD + "/Data directory").c_str());
 #endif
+
+#ifdef __ANDROID__
+        std::string noMediaFile = userDirPath + "/.nomedia";
+        if(!Files::fileExists(noMediaFile))
+        {
+            SDL_RWops* noMediaRWops = SDL_RWFromFile(noMediaFile.c_str(), "wb");
+            if(noMediaRWops)
+                SDL_RWclose(noMediaRWops);
+        }
+#endif
         m_userPath = appDir.absolutePath();
         m_userPath.push_back('/');
         initSettingsPath();
@@ -261,7 +271,7 @@ bool AppPathManager::isPortable()
 
 bool AppPathManager::userDirIsAvailable()
 {
-    return (m_userPath.compare(ApplicationPathSTD) != 0);
+    return (m_userPath != ApplicationPathSTD);
 }
 
 

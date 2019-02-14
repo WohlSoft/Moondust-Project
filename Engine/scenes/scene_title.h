@@ -129,7 +129,7 @@ class TitleScene : public Scene
     private:
         int         m_exitCode = 0;//!< Exit code
         CurrentMenu m_currentMenu = menu_main;
-        void setMenu(CurrentMenu _menu);
+        void setMenu(CurrentMenu targetMenu);
         std::map<CurrentMenu, menustate>    m_menustates;
         std::vector<int>                    m_menuChain;
 

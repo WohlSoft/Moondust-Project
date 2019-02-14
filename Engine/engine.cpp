@@ -19,6 +19,8 @@
 
 #include <ctime>
 #include <iostream>
+#include <utility>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <io.h>
@@ -93,7 +95,7 @@ PGEEngineApp::PGEEngineApp() :
     m_tr(nullptr)
 {
     CrashHandler::initSigs();
-    srand(static_cast<unsigned int>(std::time(NULL)));
+    srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 PGEEngineApp::~PGEEngineApp()
@@ -298,7 +300,7 @@ bool PGEEngineApp::initWindow(std::string title, int renderType)
 {
     bool ret = true;
     pLogDebug("Init main window...");
-    ret = PGE_Window::init(title, renderType);
+    ret = PGE_Window::init(std::move(title), renderType);
 
     if(ret)
         enable(PGE_WINDOW);
@@ -449,13 +451,13 @@ bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
         //Check only first argument
         const std::string &arg = args[1];
 
-        if(arg.compare("--version") == 0)
+        if(arg == "--version")
         {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
             std::cout.flush();
             return false;
         }
-        else if(arg.compare("--install") == 0)
+        else if(arg == "--install")
         {
             //PGEEngineApp  lib;
             //lib.loadQApp(argc, argv);
@@ -464,7 +466,7 @@ bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
             AppPathManager::initAppPath();
             return false;
         }
-        else if(arg.compare("--help") == 0)
+        else if(arg == "--help")
         {
             printUsage(args[0].c_str());
             return false;
@@ -531,7 +533,7 @@ static int takeIntFromArg(std::string &arg, bool &ok)
 
     ok = (len > 0);
 
-    return atoi(s);
+    return SDL_atoi(s);
 }
 
 void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
@@ -606,37 +608,37 @@ void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
             //1 or 2 players until 4-players mode will be implemented!
             NumberLimiter::applyD(g_flags.test_NumPlayers, 1, 1, 2);
         }
-        else if(param_s.compare("--debug") == 0)
+        else if(param_s == "--debug")
         {
             g_AppSettings.debugMode = true;
             g_flags.debugMode = true;
         }
-        else if(param_s.compare("--debug-pagan-god") == 0)
+        else if(param_s == "--debug-pagan-god")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_pagangod = true;
         }
-        else if(param_s.compare("--debug-superman") == 0)
+        else if(param_s == "--debug-superman")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_superman = true;
         }
-        else if(param_s.compare("--debug-chucknorris") == 0)
+        else if(param_s == "--debug-chucknorris")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_chucknorris = true;
         }
-        else if(param_s.compare("--debug-worldfreedom") == 0)
+        else if(param_s == "--debug-worldfreedom")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_worldfreedom = true;
         }
-        else if(param_s.compare("--debug-physics") == 0)
+        else if(param_s == "--debug-physics")
         {
             if(g_flags.debugMode)
                 PGE_Window::showPhysicsDebug = true;
         }
-        else if(param_s.compare("--debug-print=yes") == 0)
+        else if(param_s == "--debug-print=yes")
         {
             if(g_flags.debugMode)
             {
@@ -644,12 +646,12 @@ void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
                 PGE_Window::showDebugInfo = true;
             }
         }
-        else if(param_s.compare("--debug-print=no") == 0)
+        else if(param_s == "--debug-print=no")
         {
             PGE_Window::showDebugInfo = false;
             g_AppSettings.showDebugInfo = false;
         }
-        else if(param_s.compare("--interprocessing") == 0)
+        else if(param_s == "--interprocessing")
         {
             initInterprocessor();
             g_AppSettings.interprocessing = true;
@@ -663,15 +665,15 @@ void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
             if(ok)
                 m_tr->toggleLanguage(tmp);
         }
-        else if(param_s.compare("--render-auto") == 0)
+        else if(param_s == "--render-auto")
             g_flags.rendererType = GlRenderer::RENDER_AUTO;
-        else if(param_s.compare("--render-gl2") == 0)
+        else if(param_s == "--render-gl2")
             g_flags.rendererType = GlRenderer::RENDER_OPENGL_2_1;
-        else if(param_s.compare("--render-gl3") == 0)
+        else if(param_s == "--render-gl3")
             g_flags.rendererType = GlRenderer::RENDER_OPENGL_3_1;
-        else if(param_s.compare("--render-sw") == 0)
+        else if(param_s == "--render-sw")
             g_flags.rendererType = GlRenderer::RENDER_SW_SDL;
-        else if(param_s.compare("--render-vsync") == 0)
+        else if(param_s == "--render-vsync")
         {
             g_AppSettings.vsync = true;
             PGE_Window::vsync = true;
