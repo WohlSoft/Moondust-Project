@@ -39,17 +39,18 @@ class PGE_TextInputBox : public PGE_BoxBase
 {
 public:
     PGE_TextInputBox();
-    PGE_TextInputBox(Scene * _parentScene=NULL, std::string msg="Message box is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), double _padding=-1, std::string texture="");
+    explicit PGE_TextInputBox(Scene * _parentScene = nullptr, std::string msg = "Message box is works!",
+               msgType _type = msg_info, PGE_Point boxCenterPos = PGE_Point(-1,-1),
+               double _padding = -1, std::string texture = std::string());
     PGE_TextInputBox(const PGE_TextInputBox &mb);
-    ~PGE_TextInputBox();
+    ~PGE_TextInputBox() override = default;
 
     void setBoxSize(double _Width, double _Height, double _padding);
-    void update(double ticktime);
-    void render();
+    void update(double tickTime) override;
+    void render() override;
     void restart();
     bool isRunning();
-    void exec();
+    void exec() override;
 
     void processLoader(double ticks);
     void processBox(double tickTime);
@@ -59,8 +60,9 @@ public:
     std::string inputText();
 
 private:
-    void construct(std::string msg="Message box is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), double _padding=-1, std::string texture="");
+    void construct(std::string msg = "Message box is works!",
+                    msgType _type = msg_info, PGE_Point pos = PGE_Point(-1,-1),
+                    double _padding = -1, std::string texture = "");
     int     _page = 0;
     bool    running = false;
     int     fontID = 0;
@@ -75,13 +77,13 @@ private:
     Sint32 selection_len = 0;
     int _text_input_h_offset = 0;
 
-    bool   blink_shown = 0;
+    bool   blink_shown = false;
     double blink_timeout = 0;
 
     controller_keys keys;
 
-    msgType type;
-    PGE_Rect _sizeRect;
+    msgType type = msg_info;
+    PGE_Rect m_sizeRect;
     std::string message;
     double width = 0;
     double height = 0;

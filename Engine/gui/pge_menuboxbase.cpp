@@ -40,8 +40,8 @@ PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment al
                                  PGE_Point boxCenterPos, double _padding, std::string texture)
     : PGE_BoxBase(_parentScene), _menu(alignment, gapSpace)
 {
-    setParentScene(_parentScene);
     construct(_title, _type, boxCenterPos, _padding, texture);
+    setParentScene(_parentScene);
 }
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(const PGE_MenuBoxBase &mb)
@@ -159,7 +159,6 @@ void PGE_MenuBoxBase::setPadding(double _padding)
 {
     if(_padding < 0.0)
         _padding = ConfigManager::setup_menu_box.box_padding;
-
     padding = _padding;
 }
 
@@ -292,8 +291,8 @@ void PGE_MenuBoxBase::render()
                                fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
         _menu.render();
-        //        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
-        //                                         _sizeRect.top()+padding,
+        //        FontManager::SDL_string_render2D(m_sizeRect.left()+padding,
+        //                                         m_sizeRect.top()+padding,
         //                                         &textTexture);
     }
     else

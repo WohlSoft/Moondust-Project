@@ -34,8 +34,8 @@ PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, std::string _title, msgTyp
     : PGE_MenuBoxBase(  _parentScene, PGE_Menu::menuAlignment::HORIZONTAL, 30,
                         _title, _type, boxCenterPos, _padding, texture)
 {
-    setParentScene(_parentScene);
     PGE_MenuBoxBase::construct(_title, _type, boxCenterPos, _padding, texture);
+    setParentScene(_parentScene);
 }
 
 PGE_QuestionBox::PGE_QuestionBox(const PGE_QuestionBox &mb)

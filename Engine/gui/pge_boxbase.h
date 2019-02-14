@@ -25,15 +25,14 @@ public:
         msg_fatal
     };
 
-    PGE_BoxBase();
-    PGE_BoxBase(Scene *parentScene = 0);
+    explicit PGE_BoxBase(Scene *parentScene = nullptr);
     PGE_BoxBase(const PGE_BoxBase &bb);
     virtual ~PGE_BoxBase();
 
     virtual void setParentScene(Scene *_parentScene);
 
     virtual void exec();
-    virtual void update(double ticktime);
+    virtual void update(double tickTime);
     virtual void render();
 
     /**************Fader**************/
@@ -53,7 +52,7 @@ public:
 
 protected:
     Scene * m_parentScene;
-    void construct(Scene *parentScene = 0);
+    void construct(Scene *parentScene = nullptr);
     double m_uTickf;
     int    m_uTick;
 

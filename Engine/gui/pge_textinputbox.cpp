@@ -31,7 +31,7 @@
 #include <settings/global_settings.h>
 
 PGE_TextInputBox::PGE_TextInputBox()
-    : PGE_BoxBase(0)
+    : PGE_BoxBase(nullptr)
 {
     width = 0;
     height = 0;
@@ -56,7 +56,7 @@ PGE_TextInputBox::PGE_TextInputBox(const PGE_TextInputBox &mb)
     fontRgba = mb.fontRgba;
     keys    = mb.keys;
     type    = mb.type;
-    _sizeRect = mb._sizeRect;
+    m_sizeRect = mb.m_sizeRect;
     message = mb.message;
     width   = mb.width;
     height  = mb.height;
@@ -120,25 +120,25 @@ void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _typ
     PGE_Size textinputSize = FontManager::textSize(w27, fontID, 27);
     _text_input_h_offset = boxSize.h();
     boxSize.setWidth(textinputSize.w());
-    boxSize.setHeight(boxSize.h() + textinputSize.h() + _padding);
+    boxSize.setHeight(static_cast<int>(boxSize.h() + textinputSize.h() + _padding));
     setBoxSize(boxSize.w() / 2, boxSize.h() / 2, _padding);
 
     if((pos.x() == -1) && (pos.y() == -1))
     {
-        _sizeRect.setLeft(PGE_Window::Width / 2 - width - padding);
-        _sizeRect.setTop(PGE_Window::Height / 3 - height - padding);
-        _sizeRect.setRight(PGE_Window::Width / 2 + width + padding);
-        _sizeRect.setBottom(PGE_Window::Height / 3 + height + padding);
+        m_sizeRect.setLeft(static_cast<int>(PGE_Window::Width / 2 - width - padding));
+        m_sizeRect.setTop(static_cast<int>(PGE_Window::Height / 3 - height - padding));
+        m_sizeRect.setRight(static_cast<int>(PGE_Window::Width / 2 + width + padding));
+        m_sizeRect.setBottom(static_cast<int>(PGE_Window::Height / 3 + height + padding));
 
-        if(_sizeRect.top() < padding)
-            _sizeRect.setY(padding);
+        if(m_sizeRect.top() < padding)
+            m_sizeRect.setY(static_cast<int>(padding));
     }
     else
     {
-        _sizeRect.setLeft(pos.x() - width - padding);
-        _sizeRect.setTop(pos.y() - height - padding);
-        _sizeRect.setRight(pos.x() + width + padding);
-        _sizeRect.setBottom(pos.y() + height + padding);
+        m_sizeRect.setLeft(static_cast<int>(pos.x() - width - padding));
+        m_sizeRect.setTop(static_cast<int>(pos.y() - height - padding));
+        m_sizeRect.setRight(static_cast<int>(pos.x() + width + padding));
+        m_sizeRect.setBottom(static_cast<int>(pos.y() + height + padding));
     }
 }
 
@@ -151,9 +151,6 @@ void PGE_TextInputBox::updatePrintable()
         _inputText_printable = _inputText;
 }
 
-PGE_TextInputBox::~PGE_TextInputBox()
-{}
-
 void PGE_TextInputBox::setBoxSize(double _Width, double _Height, double _padding)
 {
     width = _Width;
@@ -161,7 +158,7 @@ void PGE_TextInputBox::setBoxSize(double _Width, double _Height, double _padding
     padding = _padding;
 }
 
-void PGE_TextInputBox::update(double ticktime)
+void PGE_TextInputBox::update(double tickTime)
 {
     switch(_page)
     {
@@ -171,15 +168,15 @@ void PGE_TextInputBox::update(double ticktime)
         break;
 
     case 1:
-        processLoader(ticktime);
+        processLoader(tickTime);
         break;
 
     case 2:
-        processBox(ticktime);
+        processBox(tickTime);
         break;
 
     case 3:
-        processUnLoader(ticktime);
+        processUnLoader(tickTime);
         break;
 
     case 4:
@@ -194,35 +191,38 @@ void PGE_TextInputBox::render()
     if(_page == 2)
     {
         if(m_textureUsed)
-            drawTexture(_sizeRect, m_borderWidth, static_cast<float>(m_faderOpacity));
+            drawTexture(m_sizeRect, m_borderWidth, static_cast<float>(m_faderOpacity));
         else
         {
-            GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
-                                   _sizeRect.width(), _sizeRect.height(),
+            GlRenderer::renderRect(m_sizeRect.left(), m_sizeRect.top(),
+                                   m_sizeRect.width(), m_sizeRect.height(),
                                    bg_color.Red(), bg_color.Green(), bg_color.Blue(), static_cast<float>(m_faderOpacity));
         }
 
-        FontManager::printText(message, _sizeRect.left() + padding, _sizeRect.top() + padding, fontID,
+        FontManager::printText(message, static_cast<int>(m_sizeRect.left() + padding),
+                               static_cast<int>(m_sizeRect.top() + padding), fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
-        FontManager::printText(_inputText_printable + (blink_shown ? "_" : ""), _sizeRect.left() + padding, _sizeRect.top() + _text_input_h_offset + padding * 2, fontID,
+        FontManager::printText(_inputText_printable + (blink_shown ? "_" : ""),
+                               static_cast<int>(m_sizeRect.left() + padding),
+                               static_cast<int>(m_sizeRect.top() + _text_input_h_offset + padding * 2), fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
     }
     else
     {
         if(m_textureUsed)
         {
-            drawTexture(_sizeRect.center().x() - (width + padding)*m_faderOpacity,
-                        _sizeRect.center().y() - (height + padding)*m_faderOpacity,
-                        _sizeRect.center().x() + (width + padding)*m_faderOpacity,
-                        _sizeRect.center().y() + (height + padding)*m_faderOpacity,
+            drawTexture(static_cast<int>(m_sizeRect.center().x() - (width + padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().y() - (height + padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().x() + (width + padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().y() + (height + padding) * m_faderOpacity),
                         m_borderWidth, static_cast<float>(m_faderOpacity));
         }
         else
         {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - (width + padding)*m_faderOpacity ,
-                                     _sizeRect.center().y() - (height + padding)*m_faderOpacity,
-                                     _sizeRect.center().x() + (width + padding)*m_faderOpacity,
-                                     _sizeRect.center().y() + (height + padding)*m_faderOpacity,
+            GlRenderer::renderRectBR(m_sizeRect.center().x() - (width + padding)*m_faderOpacity ,
+                                     m_sizeRect.center().y() - (height + padding)*m_faderOpacity,
+                                     m_sizeRect.center().x() + (width + padding)*m_faderOpacity,
+                                     m_sizeRect.center().y() + (height + padding)*m_faderOpacity,
                                      bg_color.Red(), bg_color.Green(), bg_color.Blue(), static_cast<float>(m_faderOpacity));
         }
     }
@@ -442,8 +442,7 @@ void PGE_TextInputBox::updateControllers()
     {
         if(m_parentScene->type() == Scene::Level)
         {
-            LevelScene *s = dynamic_cast<LevelScene *>(m_parentScene);
-
+            auto *s = dynamic_cast<LevelScene *>(m_parentScene);
             if(s)
             {
                 s->tickAnimations(m_uTickf);
@@ -457,8 +456,7 @@ void PGE_TextInputBox::updateControllers()
         }
         else if(m_parentScene->type() == Scene::World)
         {
-            WorldScene *s = dynamic_cast<WorldScene *>(m_parentScene);
-
+            auto *s = dynamic_cast<WorldScene *>(m_parentScene);
             if(s)
             {
                 s->tickAnimations(m_uTickf);

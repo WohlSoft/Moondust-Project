@@ -606,13 +606,13 @@ void WorldScene::PauseMenu::initPauseMenu1(WorldScene *parent)
 {
     isOpened = false;
     menuId = 1;
-    menu.setParentScene(parent);
     menu.construct(
         //% "Pause"
         qtTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
+    menu.setParentScene(parent);
     menu.clearMenu();
     std::vector<std::string> items;
     //% "Continue"
@@ -633,13 +633,13 @@ void WorldScene::PauseMenu::initPauseMenu2(WorldScene *parent)
 {
     isOpened = false;
     menuId = 2;
-    menu.setParentScene(parent);
     menu.construct(
         //% "Pause"
         qtTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
+    menu.setParentScene(parent);
     menu.clearMenu();
     std::vector<std::string> items;
     //% "Continue"

@@ -5,11 +5,6 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 
-PGE_BoxBase::PGE_BoxBase()
-{
-    construct(nullptr);
-}
-
 PGE_BoxBase::PGE_BoxBase(Scene *parentScene)
 {
     construct(parentScene);
@@ -134,9 +129,10 @@ void PGE_BoxBase::updateTickValue()
     m_uTickf = PGE_Window::frameDelay;//1000.0f/(float)PGE_Window::TicksPerSecond;
     m_uTick = static_cast<int>(round(m_uTickf));
 
-    if(m_uTick <= 0)    m_uTick = 1;
-
-    if(m_uTickf <= 0.0) m_uTickf = 1.0;
+    if(m_uTick <= 0)
+        m_uTick = 1;
+    if(m_uTickf <= 0.0)
+        m_uTickf = 1.0;
 }
 
 void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int border, float opacity)

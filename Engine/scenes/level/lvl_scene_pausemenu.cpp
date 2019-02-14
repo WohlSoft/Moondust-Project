@@ -26,15 +26,13 @@ void LevelScene::initPauseMenu1()
 {
     m_pauseMenu_opened=false;
     m_pauseMenuID=1;
-    m_pauseMenu.setParentScene(this);
-
-
     m_pauseMenu.construct(
                 //% "Pause"
                 qtTrId("LVL_MENU_PAUSE_TTL"),
                 PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                 ConfigManager::setup_menu_box.box_padding,
                 ConfigManager::setup_menu_box.sprite);
+    m_pauseMenu.setParentScene(this);
     m_pauseMenu.clearMenu();
 
     std::vector<std::string> items;
@@ -57,13 +55,13 @@ void LevelScene::initPauseMenu2()
 {
     m_pauseMenu_opened=false;
     m_pauseMenuID=2;
-    m_pauseMenu.setParentScene(this);
     m_pauseMenu.construct(
                 //% "Pause"
                 qtTrId("LVL_MENU_PAUSE_TTL"),
                 PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                 ConfigManager::setup_menu_box.box_padding,
                 ConfigManager::setup_menu_box.sprite);
+    m_pauseMenu.setParentScene(this);
     m_pauseMenu.clearMenu();
 
     std::vector<std::string> items;
