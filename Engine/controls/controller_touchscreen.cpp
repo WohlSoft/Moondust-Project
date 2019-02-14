@@ -154,7 +154,16 @@ void TouchScreenController::update()
         auto found = m_fingers.find(f->id);
         if(found != m_fingers.end())
         {
-            updateFingerKeyState(found->second, keys, found->second.heldKey, 1);
+            int keyCommand = findTouchKey(f->x, f->y);
+            if(keyCommand != found->second.heldKey) //Change key if different
+            {
+                updateFingerKeyState(found->second, keys, found->second.heldKey, 0);
+                updateFingerKeyState(found->second, keys, keyCommand, 1);
+            }
+            else // Keep current key alive
+            {
+                updateFingerKeyState(found->second, keys, found->second.heldKey, 1);
+            }
         }
         else
         {
