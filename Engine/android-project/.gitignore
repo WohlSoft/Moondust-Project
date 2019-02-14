@@ -1,5 +1,6 @@
 /.idea/*
 /.gradle/*
+/local.properties
 /SDL-default/*
 /moondust/jni/SDL/*
 /moondust/build/*
