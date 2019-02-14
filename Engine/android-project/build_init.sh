@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Remove old version if presented
+if [[ -d SDL-default ]]; then
+    rm -Rf SDL-default
+fi
+
+# Unpack recent SDL2 tarball
 if [[ ! -d SDL-default ]]; then
     tar -xf ../../_Libs/_sources/SDL-default.tar.gz
 fi
