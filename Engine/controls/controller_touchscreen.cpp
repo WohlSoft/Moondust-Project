@@ -20,9 +20,6 @@
 #include "controller_touchscreen.h"
 #include <graphics/window.h>
 #include <common_features/logger.h>
-#ifdef __ANDROID__
-#include <android/log.h>
-#endif
 
 TouchScreenController::TouchScreenController() :
         Controller()
@@ -35,9 +32,7 @@ static void updateKeyValue(bool &key, bool &key_pressed, const Uint8 state)
 {
     key_pressed = (static_cast<bool>(state) && !key);
     key = state;
-#ifdef __ANDROID__
-    __android_log_print(ANDROID_LOG_DEBUG, "TRACKERS", "= Touch key: Pressed=%d, State=%d", (int)key_pressed, (int)key);
-#endif
+    D_pLogDebug("TRACKERS", "= Touch key: Pressed=%d, State=%d", (int)key_pressed, (int)key);
 }
 
 static void updateFingerKeyState(TouchScreenController::FingerState &st, controller_keys &keys, int keyCommand, const Uint8 setState)
@@ -174,11 +169,7 @@ void TouchScreenController::update()
             if(st.alive)
                 m_fingers.insert({f->id, st});
         }
-#ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_DEBUG, "TRACKERS", "= Finger press: ID=%d, X=%.04f, Y=%.04f, P=%.04f", (int)f->id, f->x, f->y, f->pressure);
-#else
-        pLogDebug("= Finger press: ID=%d, X=%.04f, Y=%.04f, P=%.04f", f->id, f->x, f->y, f->pressure);
-#endif
+        D_pLogDebug("= Finger press: ID=%d, X=%.04f, Y=%.04f, P=%.04f", f->id, f->x, f->y, f->pressure);
     }
 
     for(auto it = m_fingers.begin(); it != m_fingers.end();)

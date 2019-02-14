@@ -37,6 +37,10 @@
 #define LOG_CHANNEL "Application"
 #endif
 
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
+
 static std::mutex g_lockLocker;
 #define OUT_BUFFER_SIZE 10240
 static char       g_outputBuffer[OUT_BUFFER_SIZE];
@@ -167,6 +171,13 @@ void CloseLog()
 void pLogDebug(const char *format, ...)
 {
     va_list arg;
+
+#if defined(__ANDROID__)
+    va_start(arg, format);
+    __android_log_vprint(ANDROID_LOG_DEBUG, "TRACKERS", format, arg);
+    va_end(arg);
+#endif
+
 #ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
@@ -193,6 +204,13 @@ void pLogDebug(const char *format, ...)
 void pLogWarning(const char *format, ...)
 {
     va_list arg;
+
+#if defined(__ANDROID__)
+    va_start(arg, format);
+    __android_log_vprint(ANDROID_LOG_WARN, "TRACKERS", format, arg);
+    va_end(arg);
+#endif
+
 #ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
@@ -219,6 +237,13 @@ void pLogWarning(const char *format, ...)
 void pLogCritical(const char *format, ...)
 {
     va_list arg;
+
+#if defined(__ANDROID__)
+    va_start(arg, format);
+    __android_log_vprint(ANDROID_LOG_ERROR, "TRACKERS", format, arg);
+    va_end(arg);
+#endif
+
 #ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
@@ -245,6 +270,13 @@ void pLogCritical(const char *format, ...)
 void pLogFatal(const char *format, ...)
 {
     va_list arg;
+
+#if defined(__ANDROID__)
+    va_start(arg, format);
+    __android_log_vprint(ANDROID_LOG_FATAL, "TRACKERS", format, arg);
+    va_end(arg);
+#endif
+
 #ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
@@ -271,6 +303,13 @@ void pLogFatal(const char *format, ...)
 void pLogInfo(const char *format, ...)
 {
     va_list arg;
+
+#if defined(__ANDROID__)
+    va_start(arg, format);
+    __android_log_vprint(ANDROID_LOG_INFO, "TRACKERS", format, arg);
+    va_end(arg);
+#endif
+
 #ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;

@@ -26,7 +26,6 @@
 #ifdef __ANDROID__
 #   include <SDL2/SDL_rwops.h>
 #   include <SDL2/SDL_assert.h>
-#   include <android/log.h>
 #endif
 
 #ifdef _WIN32
@@ -153,14 +152,12 @@ void PGE_Translator::toggleLanguage(std::string lang)
             SDL_free(array);
             if(!ok)
             {
-                __android_log_print(ANDROID_LOG_WARN, "TRACKERS",
-                        "Failed to open translation file %s!",
-                        langFilePath.c_str());
+                pLogWarning("Failed to open translation file %s!", langFilePath.c_str());
             }
         }
         else
         {
-            __android_log_print(ANDROID_LOG_WARN, "TRACKERS", "Can't open translation file %s!", langFilePath.c_str());
+            pLogWarning("Can't open translation file %s!", langFilePath.c_str());
         }
 #else
         bool ok = m_translator.loadFile(langFilePath.c_str(),
@@ -181,20 +178,17 @@ void PGE_Translator::toggleLanguage(std::string lang)
                                            reinterpret_cast<unsigned char *>(&m_langPath[0]));
                 SDL_free(enData);
                 if(!enOk)
-                {
-                    __android_log_print(ANDROID_LOG_WARN, "TRACKERS",
-                                        "Failed to open English translation file %s!",
-                                        langFilePath.c_str());
-                }
+                    pLogWarning("Failed to open English translation file %s!", langFilePath.c_str());
             }
 #else
             m_translator.loadFile(langFilePath.c_str(),
                                   reinterpret_cast<unsigned char *>(&m_langPath[0]));
 #endif
-            #ifdef __EMSCRIPTEN__
-                printf("Loading language file %s\n", langFilePath.c_str());
-                fflush(stdout);
-            #endif
+
+#ifdef __EMSCRIPTEN__
+            printf("Loading language file %s\n", langFilePath.c_str());
+            fflush(stdout);
+#endif
         }
         m_isInit = true;
     }
