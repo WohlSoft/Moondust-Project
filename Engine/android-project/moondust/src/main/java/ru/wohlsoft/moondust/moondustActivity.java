@@ -1,9 +1,12 @@
 package ru.wohlsoft.moondust;
-import org.libsdl.app.SDLActivity;
 
+import android.os.Bundle;
+import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import org.libsdl.app.SDLActivity;
 
 public class moondustActivity extends SDLActivity
 {
@@ -37,5 +40,15 @@ public class moondustActivity extends SDLActivity
         args.toArray(argsOut);
 
         return argsOut;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        LinearLayout ll = new LinearLayout(this);
+        ll.setBackground(getResources().getDrawable(R.mipmap.buttons));
+        addContentView(ll, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
     }
 }
