@@ -168,6 +168,7 @@ list(APPEND PGE_ENGINE_SRCS
     graphics/render/render_opengl21.cpp
     graphics/render/render_opengl31.cpp
     graphics/render/render_swsdl.cpp
+    graphics/vsync_validator.cpp
     graphics/window.cpp
     gui/menu/pge_bool_menuitem.cpp
     gui/menu/pge_int_menuitem.cpp

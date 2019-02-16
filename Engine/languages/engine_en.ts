@@ -25,7 +25,6 @@
     </message>
     <message id="CRASH_KILLED_MSG">
         <source>Engine has been killed by a mad maniac :-P</source>
-        <oldsource>Engine has killed by mad maniac :-P</oldsource>
         <translation type="vanished">Engine has been killed by a mad maniac :-P</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
@@ -58,7 +57,6 @@
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <oldsource>Engine has crashed because wrong arithmetical opreation!</oldsource>
         <translation>Engine has crashed because of a wrong arithmetical operation!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
@@ -90,7 +88,6 @@ and retry your recent actions to get more detailed information.</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <source>Engine has been interrupted</source>
-        <oldsource>Engine has interrupted</oldsource>
         <translation>Engine has been interrupted</translation>
     </message>
     <message id="MSGBOX_INFO">
@@ -107,7 +104,6 @@ and retry your recent actions to get more detailed information.</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <source>Fatal error</source>
-        <oldsource>Fatal</oldsource>
         <translation>Fatal error</translation>
     </message>
     <message id="SDL_INIT_ERROR">
@@ -380,8 +376,7 @@ Did you place  the player start point (or entrance warp point) too far out of th
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <source>Unable to find OpenGL support!
-Software renderer will be started.
-</source>
+Software renderer will be started.</source>
         <translation>Unable to find OpenGL support!
 Software renderer will be started.</translation>
     </message>
@@ -412,26 +407,21 @@ Software renderer will be started.</translation>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
-        <oldsource>Can&apos;t start game engine, because available
-configuration packages are not found!</oldsource>
         <translation>Can&apos;t start game, because available
 configuration packages are not found!</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <source>Config pack directory error</source>
-        <oldsource>Config error</oldsource>
         <translation>Config pack directory error</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
         <source>Config directory is not found at:
 %1</source>
-        <oldsource>CONFIG DIR NOT FOUND AT:</oldsource>
         <translation>Config directory is not found at:
 %1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <source>Missing main.ini</source>
-        <oldsource>Config error</oldsource>
         <translation>Missing main.ini</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
@@ -440,13 +430,11 @@ configuration packages are not found!</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <source>Missing config pack data directory</source>
-        <oldsource>Config error</oldsource>
         <translation>Missing config pack data directory</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <oldsource>Config data path not exists:</oldsource>
         <translation>Config pack data path not exists:
 %1</translation>
     </message>
@@ -484,13 +472,15 @@ therefore you can use same link to get updated version.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
-        <oldsource>Config error</oldsource>
         <translation>main.ini is invalid</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <oldsource>Error has occouped in main.ini in line {0}.</oldsource>
         <translation>Error has occouped in main.ini in line %1.</translation>
+    </message>
+    <message id="VSYNC_ERROR_INFO">
+        <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
+        <translation>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</translation>
     </message>
 </context>
 <context>

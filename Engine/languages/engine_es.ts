@@ -25,7 +25,6 @@
     </message>
     <message id="CRASH_KILLED_MSG">
         <source>Engine has been killed by a mad maniac :-P</source>
-        <oldsource>Engine has killed by mad maniac :-P</oldsource>
         <translation type="vanished">El motor fue matado por un loco maníaco :-P</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
@@ -58,7 +57,6 @@
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <oldsource>Engine has crashed because wrong arithmetical opreation!</oldsource>
         <translation>¡El motor colapsó debido a una operación aritmética equivocada!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
@@ -90,7 +88,6 @@ y reintente sus recientes acciones para ver información detallada.</translation
     </message>
     <message id="CRASH_INT_MSG">
         <source>Engine has been interrupted</source>
-        <oldsource>Engine has interrupted</oldsource>
         <translation>El motor fue interrumpido</translation>
     </message>
     <message id="MSGBOX_INFO">
@@ -107,7 +104,6 @@ y reintente sus recientes acciones para ver información detallada.</translation
     </message>
     <message id="MSGBOX_FATAL">
         <source>Fatal error</source>
-        <oldsource>Fatal</oldsource>
         <translation>Error fatal</translation>
     </message>
     <message id="SDL_INIT_ERROR">
@@ -380,11 +376,9 @@ Are you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <source>Unable to find OpenGL support!
-Software renderer will be started.
-</source>
+Software renderer will be started.</source>
         <translation>¡No se encuentra soporte para OpenGL!
-El software de renderizado comenzará.
-</translation>
+El software de renderizado comenzará.</translation>
     </message>
     <message id="NO_RENDERER_ERROR">
         <source>Renderer is not selected!</source>
@@ -420,19 +414,16 @@ paquetes no se encuentran!</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <source>Config pack directory error</source>
-        <oldsource>Config error</oldsource>
         <translation>Error de ubicación de la configuración</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
         <source>Config directory is not found at:
 %1</source>
-        <oldsource>CONFIG DIR NOT FOUND AT:</oldsource>
         <translation>La ubicación de la configuración no se encuentra en:
 %1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <source>Missing main.ini</source>
-        <oldsource>Config error</oldsource>
         <translation>No se encuentra main.ini</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
@@ -441,13 +432,11 @@ paquetes no se encuentran!</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <source>Missing config pack data directory</source>
-        <oldsource>Config error</oldsource>
         <translation>No se encuentra la ubicación de datos del paquete de configuración</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <oldsource>Config data path not exists:</oldsource>
         <translation>La ubicación de datos del paquete de configuración no se encuentra:
 %1</translation>
     </message>
@@ -485,13 +474,15 @@ sin embargo puede usar el mismo enlace para la versión actualizada.</translatio
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
-        <oldsource>Config error</oldsource>
         <translation>main.ini es inválido</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <oldsource>Error has occouped in main.ini in line {0}.</oldsource>
         <translation>El error se halla en main.ini en la línea %1.</translation>
+    </message>
+    <message id="VSYNC_ERROR_INFO">
+        <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

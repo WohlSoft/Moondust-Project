@@ -44,8 +44,8 @@ bool    PGE_Window::vsyncIsSupported    = true;
 bool    PGE_Window::showDebugInfo       = false;
 bool    PGE_Window::showPhysicsDebug    = false;
 
-SDL_Window      *PGE_Window::window     = NULL;
-SDL_GLContext    PGE_Window::glcontext  = NULL;
+SDL_Window      *PGE_Window::window     = nullptr;
+SDL_GLContext    PGE_Window::glcontext  = nullptr;
 
 //! Is graphical sub-system initialized?
 static  bool g_isRenderInit     = false;
@@ -148,7 +148,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     if(rtype == GlRenderer::RENDER_INVALID)
     {
-        //% "Unable to find OpenGL support!\nSoftware renderer will be started.\n"
+        //% "Unable to find OpenGL support!\nSoftware renderer will be started."
         printSDLWarn(qtTrId("RENDERER_NO_OPENGL_ERROR"));
         SDL_ClearError();
         rtype = GlRenderer::RENDER_SW_SDL;
@@ -191,7 +191,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
                               SDL_WINDOW_ALLOW_HIGHDPI |
                               GlRenderer::SDL_InitFlags());
 
-    if(window == NULL)
+    if(window == nullptr)
     {
         //% "Unable to create window!"
         printSDLError(qtTrId("WINDOW_CREATE_ERROR"));
@@ -248,10 +248,10 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     if(img)
     {
-        SDL_Surface *sicon = GraphicsHelps::fi2sdl(img);
-        SDL_SetWindowIcon(window, sicon);
+        SDL_Surface *sIcon = GraphicsHelps::fi2sdl(img);
+        SDL_SetWindowIcon(window, sIcon);
         GraphicsHelps::closeImage(img);
-        SDL_FreeSurface(sicon);
+        SDL_FreeSurface(sIcon);
 
         if(isSdlError())
         {
@@ -264,7 +264,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     g_isRenderInit = true;
     //Init OpenGL (to work with textures, OpenGL should be load)
-    pLogDebug("Init OpenGL settings...");
+    pLogDebug("Init graphics settings...");
 
     if(!GlRenderer::init())
     {
@@ -309,7 +309,8 @@ void PGE_Window::toggleVSync(bool vsync)
     if(vsync)
     {
         int display_count = 0, display_index = 0;
-        SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+        SDL_DisplayMode mode;
+        SDL_memset(&mode, 0, sizeof(SDL_DisplayMode));
 
         if((display_count = SDL_GetNumVideoDisplays()) < 1)
         {

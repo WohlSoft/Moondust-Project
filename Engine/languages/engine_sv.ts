@@ -83,8 +83,7 @@ and retry your recent actions to get more detailed information.</source>
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <source>Unable to find OpenGL support!
-Software renderer will be started.
-</source>
+Software renderer will be started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="NO_RENDERER_ERROR">
@@ -380,18 +379,15 @@ configuration packages are not found!</oldsource>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <source>Config pack directory error</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
         <source>Config directory is not found at:
 %1</source>
-        <oldsource>CONFIG DIR NOT FOUND AT:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <source>Missing main.ini</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
@@ -400,13 +396,11 @@ configuration packages are not found!</oldsource>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <source>Missing config pack data directory</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <oldsource>Config data path not exists:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
@@ -435,12 +429,14 @@ therefore you can use same link to get updated version.</oldsource>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <oldsource>Error has occouped in main.ini in line {0}.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="VSYNC_ERROR_INFO">
+        <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

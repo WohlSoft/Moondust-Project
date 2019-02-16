@@ -53,7 +53,7 @@ class TitleScene : public Scene
 
         bool init();
 
-        void onKeyboardPressed(SDL_Scancode scancode);
+        void onKeyboardPressed(SDL_Scancode scanCode);
         void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
         void onMouseMoved(SDL_MouseMotionEvent &mmevent);
         void onMousePressed(SDL_MouseButtonEvent &mbevent);

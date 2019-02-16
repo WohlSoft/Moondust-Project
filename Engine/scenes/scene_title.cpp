@@ -35,7 +35,7 @@
 #include "scene_title.h"
 
 SDL_Thread                      *TitleScene::m_filefind_thread = nullptr;
-std::string                      TitleScene::m_filefind_folder = "";
+std::string                      TitleScene::m_filefind_folder;
 std::vector<std::pair<std::string, std::string> > TitleScene::m_filefind_found_files;
 std::atomic_bool                 TitleScene::m_filefind_finished(false);
 
@@ -70,18 +70,18 @@ TitleScene::TitleScene() : Scene(Title), m_luaEngine(this)
 
     m_imgs.clear();
 
-    for(size_t i = 0; i < ConfigManager::setup_TitleScreen.AdditionalImages.size(); i++)
+    for(auto &AdditionalImage : ConfigManager::setup_TitleScreen.AdditionalImages)
     {
-        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile.empty())
+        if(AdditionalImage.imgFile.empty())
             continue;
 
         TitleScene_misc_img img;
-        GlRenderer::loadTextureP(img.t, ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile);
+        GlRenderer::loadTextureP(img.t, AdditionalImage.imgFile);
         //Using of X-Y as offsets if aligning is enabled
-        int x_offset = ConfigManager::setup_TitleScreen.AdditionalImages[i].x;
-        int y_offset = ConfigManager::setup_TitleScreen.AdditionalImages[i].y;
+        int x_offset = AdditionalImage.x;
+        int y_offset = AdditionalImage.y;
 
-        switch(ConfigManager::setup_TitleScreen.AdditionalImages[i].align_to)
+        switch(AdditionalImage.align_to)
         {
         case TitleScreenAdditionalImage::LEFT_ALIGN:
             img.y = (PGE_Window::Height / 2) - (img.t.h / 2) + y_offset;
@@ -107,21 +107,21 @@ TitleScene::TitleScene() : Scene(Title), m_luaEngine(this)
             break;
 
         case TitleScreenAdditionalImage::NO_ALIGN:
-            img.x = ConfigManager::setup_TitleScreen.AdditionalImages[i].x;
-            img.y = ConfigManager::setup_TitleScreen.AdditionalImages[i].y;
+            img.x = AdditionalImage.x;
+            img.y = AdditionalImage.y;
             break;
         }
 
-        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].center_x)
+        if(AdditionalImage.center_x)
             img.x = (PGE_Window::Width / 2) - (img.t.w / 2) + x_offset;
 
-        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].center_y)
+        if(AdditionalImage.center_y)
             img.y = (PGE_Window::Height / 2) - (img.t.h / 2) + y_offset;
 
-        img.a.construct(ConfigManager::setup_TitleScreen.AdditionalImages[i].animated,
-                        ConfigManager::setup_TitleScreen.AdditionalImages[i].frames,
-                        static_cast<int>(ConfigManager::setup_TitleScreen.AdditionalImages[i].framespeed));
-        img.frmH = (img.t.h / ConfigManager::setup_TitleScreen.AdditionalImages[i].frames);
+        img.a.construct(AdditionalImage.animated,
+                        AdditionalImage.frames,
+                        static_cast<int>(AdditionalImage.framespeed));
+        img.frmH = (img.t.h / AdditionalImage.frames);
         m_imgs.push_back(img);
     }
 
@@ -141,8 +141,8 @@ TitleScene::~TitleScene()
 
     GlRenderer::deleteTexture(m_backgroundTexture);
 
-    for(size_t i = 0; i < m_imgs.size(); i++)
-        GlRenderer::deleteTexture(m_imgs[i].t);
+    for(auto &m_img : m_imgs)
+        GlRenderer::deleteTexture(m_img.t);
 
     m_imgs.clear();
 
@@ -184,18 +184,19 @@ bool TitleScene::init()
     return true;
 }
 
-void TitleScene::onKeyboardPressed(SDL_Scancode scancode)
+void TitleScene::onKeyboardPressed(SDL_Scancode scanCode)
 {
-    if(m_doExit) return;
+    if(m_doExit)
+        return;
 
     if(m_menu.isKeyGrabbing())
     {
-        if((scancode != SDL_SCANCODE_ESCAPE) && (scancode != SDL_SCANCODE_AC_BACK))
-            m_menu.storeKey(scancode);
+        if((scanCode != SDL_SCANCODE_ESCAPE) && (scanCode != SDL_SCANCODE_AC_BACK))
+            m_menu.storeKey(scanCode);
         else
             m_menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
 
-        //If key was grabbed, reset controlls
+        //If key was grabbed, reset controls
         if(!m_menu.isKeyGrabbing())
             resetController();
 
@@ -294,19 +295,19 @@ void TitleScene::processEvents()
 
     if(PGE_Window::showDebugInfo)
     {
-        if(g_AppSettings.joysticks.size() > 0)
+        if(!g_AppSettings.joysticks.empty())
         {
-            KM_Key jkey;
-            JoystickController::bindJoystickKey(g_AppSettings.joysticks.front(), jkey);
-            m_debug_joy_keyval    = jkey.val;
-            m_debug_joy_keyid     = jkey.id;
-            m_debug_joy_keytype   = jkey.type;
+            KM_Key jKey;
+            JoystickController::bindJoystickKey(g_AppSettings.joysticks.front(), jKey);
+            m_debug_joy_keyval    = jKey.val;
+            m_debug_joy_keyid     = jKey.id;
+            m_debug_joy_keytype   = jKey.type;
         }
     }
 
     if(m_menu.processJoystickBinder())
     {
-        //If key was grabbed, reset controlls
+        //If key was grabbed, reset controls
         if(!m_menu.isKeyGrabbing())
         {
             wasKeyGrabber = true;
@@ -340,8 +341,8 @@ void TitleScene::update()
     Scene::update();
     updateLua();
 
-    for(size_t i = 0; i < m_imgs.size(); i++)
-        m_imgs[i].a.manualTick(uTickf);
+    for(auto &m_img : m_imgs)
+        m_img.a.manualTick(uTickf);
 
     if(m_doExit)
     {
@@ -436,8 +437,6 @@ void TitleScene::renderMouse()
         GlRenderer::renderRect(posX, posY, 10, 10, 0.f, 1.f, 0.f, 1.0f);
 }
 
-
-
 int TitleScene::exec()
 {
     LoopTiming times;
@@ -500,7 +499,6 @@ int TitleScene::exec()
         }
 
         /****************************************************************************/
-
         if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))
             SDL_Delay(uTick - times.passedCommonTime());
     }

@@ -497,22 +497,22 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
 
         m_menu.setPos(300, 216);
         m_menu.setItemsNumber(11);
-        std::vector<NamedIntItem> ctrls;
+        std::vector<NamedIntItem> controllers;
         NamedIntItem controller;
         controller.value = -1;
         //% "Keyboard"
         controller.label =   qtTrId("PLAYER_CONTROLS_SETUP_KEYBOARD");
-        ctrls.push_back(controller);
+        controllers.push_back(controller);
         for(size_t i = 0; i < g_AppSettings.joysticks.size(); i++)
         {
             controller.value = int(i);
             //FIXME: missing in-string arguments support
             //% "Joystick: %1"
             controller.label = fmt::qformat(qtTrId("PLAYER_CONTROLS_SETUP_JOYSTICK"), SDL_JoystickName(g_AppSettings.joysticks[i]));
-            ctrls.push_back(controller);
+            controllers.push_back(controller);
         }
         //% "Input:"
-        m_menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", qtTrId("PLAYER_CONTROLS_SETUP_INPUT_TYPE"), true, ctrlSwitch);
+        m_menu.addNamedIntMenuItem(mct_p, controllers, "ctrl_type", qtTrId("PLAYER_CONTROLS_SETUP_INPUT_TYPE"), true, ctrlSwitch);
         m_menu.setItemWidth(300);
         m_menu.setValueOffset(150);
         m_menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", jDev);
@@ -546,9 +546,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
         #ifndef PGE_NO_THREADING
-        m_filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", NULL);
+        m_filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", nullptr);
         #else
-        findEpisodes(NULL);
+        findEpisodes(nullptr);
         #endif
     }
     break;
@@ -576,9 +576,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
         #ifndef PGE_NO_THREADING
-        m_filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", NULL);
+        m_filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", nullptr);
         #else
-        findLevels(NULL);
+        findLevels(nullptr);
         #endif
     }
     break;
@@ -614,17 +614,17 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
 int TitleScene::findEpisodes(void *)
 {
     m_filefind_found_files.clear();
-    DirMan worlddir(m_filefind_folder);
+    DirMan worldDir(m_filefind_folder);
     std::vector<std::string> files;
     std::vector<std::string> folders;
-    worlddir.getListOfFolders(folders);
+    worldDir.getListOfFolders(folders);
 
     for(std::string &folder : folders)
     {
         std::string path = m_filefind_folder + folder;
-        DirMan episodedir(path);
+        DirMan episodeDir(path);
         std::vector<std::string> worlds;
-        episodedir.getListOfFiles(worlds, {".wld", ".wldx"});
+        episodeDir.getListOfFiles(worlds, {".wld", ".wldx"});
         for(std::string &world : worlds)
             files.push_back(m_filefind_folder + folder + "/" + world);
     }
@@ -670,10 +670,10 @@ int TitleScene::findEpisodes(void *)
 int TitleScene::findLevels(void *)
 {
     //Build list of casual levels
-    DirMan leveldir(m_filefind_folder);
+    DirMan levelDir(m_filefind_folder);
 
     std::vector<std::string> files;
-    leveldir.getListOfFiles(files, {".lvl", ".lvlx"});
+    levelDir.getListOfFiles(files, {".lvl", ".lvlx"});
 
     m_filefind_found_files.clear();//Clean up old stuff
 
@@ -687,10 +687,10 @@ int TitleScene::findLevels(void *)
             if(FileFormats::OpenLevelFileHeader(m_filefind_folder + file, level))
             {
                 std::string title = level.LevelName;
-                std::pair<std::string, std::string > filex;
-                filex.first = m_filefind_folder + file;
-                filex.second = (title.empty() ? file : title);
-                m_filefind_found_files.push_back(filex);
+                std::pair<std::string, std::string > fileX;
+                fileX.first = m_filefind_folder + file;
+                fileX.second = (title.empty() ? file : title);
+                m_filefind_found_files.push_back(fileX);
                 has_files_added = true;
             }
             else
