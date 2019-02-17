@@ -26,62 +26,58 @@ PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, std::string _title, msgType _type,
                       _title, _type, boxCenterPos, _padding, texture)
 {
     PGE_MenuBoxBase::construct(_title, _type, boxCenterPos, _padding, texture);
-    setParentScene(_parentScene);
 }
 
 PGE_MenuBox::PGE_MenuBox(const PGE_MenuBox &mb)
     : PGE_MenuBoxBase(mb)
 {}
 
-PGE_MenuBox::~PGE_MenuBox()
-{}
-
 void PGE_MenuBox::onUpButton()
 {
-    _menu.selectUp();
+    m_menu.selectUp();
 }
 
 void PGE_MenuBox::onDownButton()
 {
-    _menu.selectDown();
+    m_menu.selectDown();
 }
 
 void PGE_MenuBox::onLeftButton()
 {
-    _menu.selectLeft();
+    m_menu.selectLeft();
 }
 
 void PGE_MenuBox::onRightButton()
 {
-    _menu.selectRight();
+    m_menu.selectRight();
 }
 
 void PGE_MenuBox::onJumpButton()
 {
-    _menu.acceptItem();
+    m_menu.acceptItem();
 }
 
 void PGE_MenuBox::onAltJumpButton()
 {
-    _menu.acceptItem();
+    m_menu.acceptItem();
 }
 
 void PGE_MenuBox::onRunButton()
 {
-    _menu.rejectItem();
+    m_menu.rejectItem();
 }
 
 void PGE_MenuBox::onAltRunButton()
 {
-    _menu.rejectItem();
+    m_menu.rejectItem();
 }
 
 void PGE_MenuBox::onStartButton()
 {
-    _menu.acceptItem();
+    m_menu.acceptItem();
 }
 
 void PGE_MenuBox::onDropButton()
 {
-    _menu.rejectItem();
+    m_menu.rejectItem();
 }

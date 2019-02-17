@@ -1524,7 +1524,8 @@ LuaEngine *WorldScene::getLuaEngine()
 void WorldScene::processEvents()
 {
     Scene::processEvents();
-    m_player1Controller->update();
+    if(!m_pauseMenu.isOpened)// Don't process controllers from the pause menu
+        m_player1Controller->update();
     m_controls_1 = m_player1Controller->keys;
     if(m_controls_1.start_pressed)
         onKeyboardPressedSDL(SDLK_ESCAPE, 0);

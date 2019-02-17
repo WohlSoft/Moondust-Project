@@ -110,7 +110,7 @@ void LevelScene::processPauseMenu()
     if(!m_pauseMenu_opened)
     {
         m_pauseMenu.restart();
-        m_pauseMenu_opened=true;
+        m_pauseMenu_opened = true;
         PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
     }
     else

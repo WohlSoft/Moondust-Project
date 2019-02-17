@@ -63,7 +63,7 @@ bool PGE_Fader::tickFader(double ticks)
         return true;
 
     manual_ticks -= fabs(ticks);
-    while(manual_ticks<=0.0)
+    while(manual_ticks <= 0.0)
     {
         fadeStep();
         manual_ticks += fadeSpeed;
@@ -105,7 +105,7 @@ void PGE_Fader::setNull()
 
 int PGE_Fader::ticksLeft()
 {
-    return manual_ticks;
+    return static_cast<int>(manual_ticks);
 }
 
 void PGE_Fader::fadeStep()

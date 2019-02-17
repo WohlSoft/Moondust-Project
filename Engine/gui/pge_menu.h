@@ -47,19 +47,22 @@ public:
     enum menuAlignment { HORIZONTAL, VERTICLE };
     static const size_t npos = SIZE_MAX;
 
-    PGE_Menu(menuAlignment align = VERTICLE, int itemGap = 0);
+    explicit PGE_Menu(menuAlignment align = VERTICLE, int itemGap = 0);
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
     void addMenuItem(std::string value, std::string title="",
-                     std::function<void()> _extAction=([]()->void{}), bool enabled=true);
+            std::function<void()> _extAction=([]()->void{}), bool enabled=true);
     void addBoolMenuItem(bool *flag, std::string value, std::string title="",
-                         std::function<void()> _extAction=([]()->void{}), bool enabled=true);
-    void addIntMenuItem(int *intvalue, int min, int max, std::string value, std::string title, bool rotate=false,
-                        std::function<void()> _extAction=([]()->void{}), bool enabled=true );
-    void addNamedIntMenuItem(int *intvalue, std::vector<NamedIntItem > m_items, std::string value, std::string title, bool rotate=false,
-                        std::function<void()> _extAction=([]()->void{}), bool enabled=true );
-    void addKeyGrabMenuItem(KM_Key *key, std::string item_key, std::string title, SDL_Joystick *joystick_device=NULL, bool enabled=true);
+            std::function<void()> _extAction=([]()->void{}), bool enabled=true);
+    void addIntMenuItem(int *intvalue, int min, int max,
+            std::string value, std::string title, bool rotate=false,
+            std::function<void()> _extAction=([]()->void{}), bool enabled=true );
+    void addNamedIntMenuItem(int *intvalue, std::vector<NamedIntItem > m_items,
+            std::string value, std::string title, bool rotate=false,
+            std::function<void()> _extAction=([]()->void{}), bool enabled=true );
+    void addKeyGrabMenuItem(KM_Key *key, std::string item_key,
+            std::string title, SDL_Joystick *joystick_device = nullptr, bool enabled=true);
 
     /*!
      * \brief Change enable state of element by value key

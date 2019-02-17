@@ -1,9 +1,35 @@
+/*
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
+ */
+
 #include "pge_boxbase.h"
 #include <SDL2/SDL_opengl.h>
 #include <common_features/graphics_funcs.h>
 #include <Utils/maths.h>
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
+
+// Scenes
+#include <data_configs/config_select_scene/scene_config_select.h>
+#include <scenes/scene_level.h>
+#include <scenes/scene_world.h>
+#include <scenes/scene_gameover.h>
+#include <scenes/scene_title.h>
 
 PGE_BoxBase::PGE_BoxBase(Scene *parentScene)
 {
@@ -12,7 +38,25 @@ PGE_BoxBase::PGE_BoxBase(Scene *parentScene)
 
 PGE_BoxBase::PGE_BoxBase(const PGE_BoxBase &bb)
 {
-    m_faderOpacity  =   bb.m_faderOpacity;
+    m_keys =              bb.m_keys;
+
+    m_page =            bb.m_page;
+    m_running =         bb.m_running;
+
+    m_fontID =          bb.m_fontID;
+    m_fontRgba =        bb.m_fontRgba;
+    m_borderWidth =     bb.m_borderWidth;
+
+    m_bgColor =         bb.m_bgColor;
+
+    m_type =            bb.m_type;
+    m_sizeRect =        bb.m_sizeRect;
+
+    m_width   =         bb.m_width;
+    m_height  =         bb.m_height;
+    m_padding =         bb.m_padding;
+
+    m_faderOpacity =    bb.m_faderOpacity;
     m_targetOpacity =   bb.m_targetOpacity;
     m_fadeStep =        bb.m_fadeStep;
     m_fadeSpeed =       bb.m_fadeSpeed;
@@ -26,11 +70,23 @@ PGE_BoxBase::PGE_BoxBase(const PGE_BoxBase &bb)
 
 void PGE_BoxBase::construct(Scene *parentScene)
 {
+    updateTickValue();
+    restart();
+
+    m_fontID =          0;
+    m_fontRgba =        GlColor(0xFFFFFFFF);
+    m_borderWidth =     32;
+
+    m_keys = Controller::noKeys();
+
+    setType(msg_info);
+
     m_faderOpacity = 0.0;
     m_fadeStep = 0.02;
     m_targetOpacity = 0.0;
     m_fadeSpeed = 10;
     m_textureUsed = false;
+
     setParentScene(parentScene);
 }
 
@@ -49,13 +105,147 @@ void PGE_BoxBase::setParentScene(Scene *parentScene)
 
     if(!m_parentScene)
         GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    initControllers();
+}
+
+void PGE_BoxBase::setType(PGE_BoxBase::msgType type)
+{
+    switch(type)
+    {
+    case msg_info:
+        m_bgColor =       GlColor(0, 0, 0);
+        break;
+    case msg_info_light:
+        m_bgColor =      GlColor(0, 0, 0.490196078);
+        break;
+    case msg_warn:
+        m_bgColor =      GlColor(1.0, 0.788235294, 0.054901961);
+        break;
+    case msg_error:
+        m_bgColor =      GlColor(0.490196078, 0, 0);
+        break;
+    case msg_fatal:
+        m_bgColor =      GlColor(1.0, 0, 0);
+        break;
+    default:
+        m_bgColor =      GlColor(0, 0, 0);
+        break;
+    }
+
+    m_type = type;
+}
+
+void PGE_BoxBase::setBoxSize(double width, double height, double padding)
+{
+    m_width = width;
+    m_height = height;
+    m_padding = padding;
+}
+
+void PGE_BoxBase::processLoader(double tickDelay)
+{
+    updateControllers();
+
+    SDL_Event event;
+    while(SDL_PollEvent(&event))
+    {
+        PGE_Window::processEvents(event);
+        if(event.type == SDL_QUIT)
+            m_faderOpacity = 1.0;
+    }
+
+    tickFader(tickDelay);
+
+    if(m_faderOpacity >= 1.0)
+        nextPage();
+}
+
+void PGE_BoxBase::processBox(double tickDelay)
+{
+    (void)tickDelay;
+    updateControllers();
+}
+
+void PGE_BoxBase::processUnLoader(double tickDelay)
+{
+    updateControllers();
+
+    SDL_Event event;
+    while(SDL_PollEvent(&event))
+    {
+        PGE_Window::processEvents(event);
+        if(event.type == SDL_QUIT)
+            m_faderOpacity = 0.0;
+    }
+
+    tickFader(tickDelay);
+    if(m_faderOpacity <= 0.0)
+        nextPage();
+}
+
+void PGE_BoxBase::restart()
+{
+    m_running = true;
+    m_page = PageStart;
+    setFade(10, 1.0, 0.05);
+}
+
+void PGE_BoxBase::nextPage()
+{
+    m_page++;
+}
+
+bool PGE_BoxBase::isRunning()
+{
+    return m_running;
 }
 
 void PGE_BoxBase::exec()
-{}
+{
+    restart();
 
-void PGE_BoxBase::update(double)
-{}
+    while(m_running)
+    {
+        Uint32 start_render = SDL_GetTicks();
+
+        update(m_uTickf);
+        PGE_BoxBase::render();
+        render();
+        GlRenderer::flush();
+        GlRenderer::repaint();
+
+        if((!PGE_Window::vsync) && (m_uTick > static_cast<signed>(SDL_GetTicks() - start_render)))
+        {
+            Uint32 delay = static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render);
+            SDL_assert(delay < 2000u);
+            SDL_Delay(delay);
+        }
+    }
+}
+
+void PGE_BoxBase::update(double tickDelay)
+{
+    switch(m_page)
+    {
+    case PageStart:
+        m_page++;
+        break;
+    case PageLoading:
+        processLoader(tickDelay);
+        break;
+    case PageRunning:
+        processBox(tickDelay);
+        break;
+    case PageUnLoading:
+        processUnLoader(tickDelay);
+        break;
+    default:
+    case PageClose:
+        m_running = false;
+        break;
+    }
+}
 
 void PGE_BoxBase::render()
 {
@@ -316,4 +506,109 @@ void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture
                                  static_cast<float>(tx.bottom()),
                                  static_cast<float>(tx.left()),
                                  static_cast<float>(tx.right()));
+}
+
+
+void PGE_BoxBase::initControllers()
+{
+    m_ctrl1 = nullptr;
+    m_ctrl2 = nullptr;
+
+    if(m_parentScene != nullptr)
+    {
+        if(m_parentScene->type() == Scene::Level)
+        {
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
+            if(s)
+            {
+                m_ctrl1 = s->m_player1Controller;
+                m_ctrl2 = s->m_player2Controller;
+            }
+        }
+        else if(m_parentScene->type() == Scene::World)
+        {
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
+            if(s)
+            {
+                m_ctrl1 = s->m_player1Controller;
+                m_ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::GameOver)
+        {
+            auto s = dynamic_cast<GameOverScene *>(m_parentScene);
+            if(s)
+            {
+                m_ctrl1 = s->player1Controller;
+                m_ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::ConfigSelect)
+        {
+            auto s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
+            if(s)
+            {
+                m_ctrl1 = s->controller;
+                m_ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::Title)
+        {
+            auto s = dynamic_cast<TitleScene *>(m_parentScene);
+            if(s)
+            {
+                m_ctrl1 = s->controller;
+                m_ctrl2 = nullptr;
+            }
+        }
+    }
+}
+
+void PGE_BoxBase::updateControllers()
+{
+    SDL_PumpEvents();
+
+    if(!m_ctrl1)
+        m_keys = Controller::noKeys();
+
+    if(m_ctrl1)
+    {
+        m_ctrl1->update();
+        m_ctrl1->sendControls();
+        m_keys = m_ctrl1->keys;
+    }
+
+    if(m_ctrl2)
+    {
+        m_ctrl2->update();
+        m_ctrl2->sendControls();
+    }
+
+    if(m_parentScene)
+    {
+        if(m_parentScene->type() == Scene::Level)
+        {
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
+            if(s)
+            {
+                s->tickAnimations(m_uTickf);
+                s->m_fader.tickFader(m_uTickf);
+            }
+        }
+        else if(m_parentScene->type() == Scene::World)
+        {
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
+            if(s)
+            {
+                s->tickAnimations(m_uTickf);
+                s->m_fader.tickFader(m_uTickf);
+            }
+        }
+        else if(m_parentScene->type() == Scene::Title)
+        {
+            auto s = dynamic_cast<TitleScene *>(m_parentScene);
+            if(s)
+                s->m_fader.tickFader(m_uTickf);
+        }
+    }
 }

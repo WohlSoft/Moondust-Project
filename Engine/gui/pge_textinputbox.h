@@ -47,16 +47,10 @@ public:
     PGE_TextInputBox(const PGE_TextInputBox &mb);
     ~PGE_TextInputBox() override = default;
 
-    void setBoxSize(double _Width, double _Height, double _padding);
-    void update(double tickTime) override;
     void render() override;
-    void restart();
-    bool isRunning();
-    void exec() override;
+    void restart() override;
 
-    void processLoader(double ticks);
-    void processBox(double tickTime);
-    void processUnLoader(double ticks);
+    void processBox(double tickTime) override;
 
     void setInputText(std::string text);
     std::string inputText();
@@ -65,38 +59,20 @@ private:
     void construct(std::string msg = "Message box is works!",
                     msgType _type = msg_info, PGE_Point pos = PGE_Point(-1,-1),
                     double _padding = -1, std::string texture = "");
-    int     _page = 0;
-    bool    running = false;
-    int     fontID = 0;
-    GlColor fontRgba;
-    int     m_borderWidth = 32;
 
-    std::string _inputText_src;
-    std::string _inputText;
-    std::string _inputText_printable;
+    std::string m_inputTextSrc;
+    std::string m_inputText;
+    std::string m_inputTextPrintable;
     void updatePrintable();
-    Sint32 cursor = 0;
-    Sint32 selection_len = 0;
-    int _text_input_h_offset = 0;
 
-    bool   blink_shown = false;
-    double blink_timeout = 0;
+    Sint32      m_cursor = 0;
+    Sint32      m_selectionLength = 0;
+    int         m_textInput_h_offset = 0;
 
-    Controller *_ctrl1 = nullptr;
-    Controller *_ctrl2 = nullptr;
+    bool   m_blinkShown = false;
+    double m_blinkTimeout = 0;
 
-    controller_keys keys;
-
-    msgType type = msg_info;
-    PGE_Rect m_sizeRect;
     std::string message;
-    double width = 0;
-    double height = 0;
-    double padding = 0;
-    GlColor bg_color;
-
-    void initControllers();
-    void updateControllers();
 };
 
 #endif // PGE_TextInputBox_H

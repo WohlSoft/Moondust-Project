@@ -42,8 +42,6 @@
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(nullptr)
 {
-    width = 0;
-    height = 0;
     m_message = "Message box works fine!";
     construct(m_message, m_type);
 }
@@ -62,21 +60,8 @@ PGE_MsgBox::PGE_MsgBox(Scene *_parentScene,
 PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
     : PGE_BoxBase(mb)
 {
-    m_page   = mb.m_page;
-    m_running = mb.m_running;
-    fontID  = mb.fontID;
-    fontRgba = mb.fontRgba;
-
-    keys    = mb.keys;
     m_exitKeyLock = mb.m_exitKeyLock;
-
-    m_type    = mb.m_type;
-    m_sizeRect = mb.m_sizeRect;
     m_message = mb.m_message;
-    width   = mb.width;
-    height  = mb.height;
-    padding = mb.padding;
-    bg_color = mb.bg_color;
 }
 
 
@@ -89,74 +74,42 @@ void PGE_MsgBox::construct(std::string msg,
     loadTexture(std::move(texture));
 
     updateTickValue();
-    m_page = 0;
+    PGE_BoxBase::restart();
+
     m_message = std::move(msg);
-    m_type = _type;
-    m_running = false;
+    setType(_type);
+
     m_exitKeyLock = true;
 
-    keys = Controller::noKeys();
-
-    fontID   = FontManager::getFontID(ConfigManager::setup_message_box.font_name);
-    fontRgba = ConfigManager::setup_message_box.font_rgba;
-    if(_padding < 0)
-        _padding = ConfigManager::setup_message_box.box_padding;
+    m_fontID   = FontManager::getFontID(ConfigManager::setup_message_box.font_name);
+    m_fontRgba = ConfigManager::setup_message_box.font_rgba;
     m_borderWidth = ConfigManager::setup_message_box.borderWidth;
 
-    switch(m_type)
-    {
-        case msg_info: bg_color =       GlColor(0, 0, 0); break;
-        case msg_info_light: bg_color = GlColor(0, 0, 0.490196078); break;
-        case msg_warn: bg_color =       GlColor(1.0, 0.788235294, 0.054901961); break;
-        case msg_error: bg_color =      GlColor(0.490196078, 0, 0); break;
-        case msg_fatal: bg_color =      GlColor(1.0, 0, 0); break;
-        default:  bg_color =            GlColor(0, 0, 0); break;
-    }
+    if(_padding < 0)
+        _padding = ConfigManager::setup_message_box.box_padding;
 
     /****************Word wrap*********************/
     FontManager::optimizeText(m_message, 27);
     /****************Word wrap*end*****************/
-    PGE_Size boxSize = FontManager::textSize(m_message, fontID, 27);
+    PGE_Size boxSize = FontManager::textSize(m_message, m_fontID, 27);
     setBoxSize(boxSize.w() / 2, boxSize.h() / 2, _padding);
 
     if((pos.x() == -1) && (pos.y() == -1))
     {
-        m_sizeRect.setLeft(static_cast<int>(PGE_Window::Width / 2 - width - padding));
-        m_sizeRect.setTop(static_cast<int>(PGE_Window::Height / 3 - height - padding));
-        m_sizeRect.setRight(static_cast<int>(PGE_Window::Width / 2 + width + padding));
-        m_sizeRect.setBottom(static_cast<int>(PGE_Window::Height / 3 + height + padding));
+        m_sizeRect.setLeft(static_cast<int>(PGE_Window::Width / 2 - m_width - m_padding));
+        m_sizeRect.setTop(static_cast<int>(PGE_Window::Height / 3 - m_height - m_padding));
+        m_sizeRect.setRight(static_cast<int>(PGE_Window::Width / 2 + m_width + m_padding));
+        m_sizeRect.setBottom(static_cast<int>(PGE_Window::Height / 3 + m_height + m_padding));
 
-        if(m_sizeRect.top() < padding)
-            m_sizeRect.setY(static_cast<int>(padding));
+        if(m_sizeRect.top() < m_padding)
+            m_sizeRect.setY(static_cast<int>(m_padding));
     }
     else
     {
-        m_sizeRect.setLeft(static_cast<int>(pos.x() - width - padding));
-        m_sizeRect.setTop(static_cast<int>(pos.y() - height - padding));
-        m_sizeRect.setRight(static_cast<int>(pos.x() + width + padding));
-        m_sizeRect.setBottom(static_cast<int>(pos.y() + height + padding));
-    }
-
-    initControllers();
-}
-
-void PGE_MsgBox::setBoxSize(double _Width, double _Height, double _padding)
-{
-    width = _Width;
-    height = _Height;
-    padding = _padding;
-}
-
-void PGE_MsgBox::update(double ticks)
-{
-    switch(m_page)
-    {
-        case 0: setFade(10, 1.0, 0.05); m_page++; break;
-        case 1: processLoader(ticks); break;
-        case 2: processBox(ticks); break;
-        case 3: processUnLoader(ticks); break;
-        case 4:
-        default: m_running=false; break;
+        m_sizeRect.setLeft(static_cast<int>(pos.x() - m_width - m_padding));
+        m_sizeRect.setTop(static_cast<int>(pos.y() - m_height - m_padding));
+        m_sizeRect.setRight(static_cast<int>(pos.x() + m_width + m_padding));
+        m_sizeRect.setBottom(static_cast<int>(pos.y() + m_height + m_padding));
     }
 }
 
@@ -172,33 +125,33 @@ void PGE_MsgBox::render()
         {
             GlRenderer::renderRect(m_sizeRect.left(), m_sizeRect.top(),
                                    m_sizeRect.width(), m_sizeRect.height(),
-                                   bg_color.Red(), bg_color.Green(), bg_color.Blue(), static_cast<float>(m_faderOpacity));
+                                   m_bgColor.Red(), m_bgColor.Green(), m_bgColor.Blue(), static_cast<float>(m_faderOpacity));
         }
         FontManager::printText(m_message,
-                               static_cast<int>(m_sizeRect.left() + padding),
-                               static_cast<int>(m_sizeRect.top() + padding), fontID,
-                               fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
+                               static_cast<int>(m_sizeRect.left() + m_padding),
+                               static_cast<int>(m_sizeRect.top() + m_padding), m_fontID,
+                               m_fontRgba.Red(), m_fontRgba.Green(), m_fontRgba.Blue(), m_fontRgba.Alpha());
     }
     else
     {
         if(m_textureUsed)
         {
-            drawTexture(static_cast<int>(m_sizeRect.center().x() - (width + padding) * m_faderOpacity),
-                        static_cast<int>(m_sizeRect.center().y() - (height + padding) * m_faderOpacity),
-                        static_cast<int>(m_sizeRect.center().x() + (width + padding) * m_faderOpacity),
-                        static_cast<int>(m_sizeRect.center().y() + (height + padding) * m_faderOpacity),
+            drawTexture(static_cast<int>(m_sizeRect.center().x() - (m_width + m_padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().y() - (m_height + m_padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().x() + (m_width + m_padding) * m_faderOpacity),
+                        static_cast<int>(m_sizeRect.center().y() + (m_height + m_padding) * m_faderOpacity),
                         m_borderWidth,
                         static_cast<float>(m_faderOpacity));
         }
         else
         {
-            GlRenderer::renderRectBR(m_sizeRect.center().x() - (width + padding) * m_faderOpacity ,
-                                     m_sizeRect.center().y() - (height + padding) * m_faderOpacity,
-                                     m_sizeRect.center().x() + (width + padding) * m_faderOpacity,
-                                     m_sizeRect.center().y() + (height + padding) * m_faderOpacity,
-                                     bg_color.Red(),
-                                     bg_color.Green(),
-                                     bg_color.Blue(),
+            GlRenderer::renderRectBR(m_sizeRect.center().x() - (m_width + m_padding) * m_faderOpacity ,
+                                     m_sizeRect.center().y() - (m_height + m_padding) * m_faderOpacity,
+                                     m_sizeRect.center().x() + (m_width + m_padding) * m_faderOpacity,
+                                     m_sizeRect.center().y() + (m_height + m_padding) * m_faderOpacity,
+                                     m_bgColor.Red(),
+                                     m_bgColor.Green(),
+                                     m_bgColor.Blue(),
                                      static_cast<float>(m_faderOpacity));
         }
     }
@@ -206,70 +159,22 @@ void PGE_MsgBox::render()
 
 void PGE_MsgBox::restart()
 {
+    PGE_BoxBase::restart();
     PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
-    m_running = true;
-    m_page = 0;
 }
 
-bool PGE_MsgBox::isRunning()
+void PGE_MsgBox::processBox(double tickTime)
 {
-    return m_running;
-}
+    PGE_BoxBase::processBox(tickTime);
 
-void PGE_MsgBox::exec()
-{
-    updateControllers();
-    restart();
-    while(m_running)
-    {
-        Uint32 start_render = SDL_GetTicks();
-
-        update(m_uTickf);
-        PGE_BoxBase::render();
-        render();
-        GlRenderer::flush();
-        GlRenderer::repaint();
-
-        #ifndef __EMSCRIPTEN__
-        if((!PGE_Window::vsync) && (m_uTick > static_cast<Sint32>(SDL_GetTicks() - start_render)))
-            SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render));
-        #else
-        emscripten_sleep(1);
-        #endif
-    }
-}
-
-void PGE_MsgBox::processLoader(double ticks)
-{
-    SDL_Event event;
-    while(SDL_PollEvent(&event))
-    {
-        PGE_Window::processEvents(event);
-        if(event.type == SDL_QUIT)
-            m_faderOpacity = 1.0;
-    }
-    updateControllers();
-    tickFader(ticks);
-
-    if(m_faderOpacity >= 1.0) m_page++;
-}
-
-void PGE_MsgBox::processBox(double)
-{
-    //    #ifndef __APPLE__
-    //    if(g_AppSettings.interprocessing)
-    //        qApp->processEvents();
-    //    #endif
-    updateControllers();
-
-    bool wasExitKeyPress = keys.jump_pressed || keys.run_pressed || keys.alt_run_pressed || keys.start_pressed;
+    bool wasExitKeyPress = m_keys.jump_pressed || m_keys.run_pressed || m_keys.alt_run_pressed || m_keys.start_pressed;
 
     if(m_exitKeyLock && !wasExitKeyPress)
         m_exitKeyLock = false;
 
     if(!m_exitKeyLock && wasExitKeyPress)
     {
-        m_page++;
+        nextPage();
         setFade(10, 0.0, 0.05);
         return;
     }
@@ -281,7 +186,7 @@ void PGE_MsgBox::processBox(double)
         switch(event.type)
         {
         case SDL_QUIT:
-            m_page++;
+            nextPage();
             setFade(10, 0.0, 0.05);
             break;
         case SDL_KEYDOWN: // If pressed key
@@ -293,7 +198,7 @@ void PGE_MsgBox::processBox(double)
             case SDLK_KP_ENTER:
             case SDLK_AC_BACK://Android "back" key
             {
-                m_page++;
+                nextPage();
                 setFade(10, 0.0, 0.05);
             }
             break;
@@ -306,11 +211,13 @@ void PGE_MsgBox::processBox(double)
             switch(event.button.button)
             {
             case SDL_BUTTON_LEFT:
-            {
-                m_page++;
-                setFade(10, 0.0, 0.05);
-            }
-            break;
+                {
+                    nextPage();
+                    setFade(10, 0.0, 0.05);
+                }
+                break;
+            default:
+                break;
             }
             break;
         default:
@@ -319,134 +226,6 @@ void PGE_MsgBox::processBox(double)
     }
 
 }
-
-
-
-void PGE_MsgBox::processUnLoader(double ticks)
-{
-    SDL_Event event;
-    while(SDL_PollEvent(&event))
-    {
-        PGE_Window::processEvents(event);
-        if(event.type == SDL_QUIT)
-            m_faderOpacity = 0.0;
-    }
-
-    updateControllers();
-    tickFader(ticks);
-    if(m_faderOpacity <= 0.0)
-        m_page++;
-}
-
-
-void PGE_MsgBox::initControllers()
-{
-    if(m_parentScene != nullptr)
-    {
-        if(m_parentScene->type() == Scene::Level)
-        {
-            auto s = dynamic_cast<LevelScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->m_player1Controller;
-                _ctrl2 = s->m_player2Controller;
-            }
-        }
-        else if(m_parentScene->type() == Scene::World)
-        {
-            auto s = dynamic_cast<WorldScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->m_player1Controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else if(m_parentScene->type() == Scene::GameOver)
-        {
-            auto s = dynamic_cast<GameOverScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->player1Controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else if(m_parentScene->type() == Scene::ConfigSelect)
-        {
-            auto s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else if(m_parentScene->type() == Scene::Title)
-        {
-            auto s = dynamic_cast<TitleScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else
-        {
-            _ctrl1 = nullptr;
-            _ctrl2 = nullptr;
-        }
-    }
-    else
-    {
-        _ctrl1 = nullptr;
-        _ctrl2 = nullptr;
-    }
-}
-
-void PGE_MsgBox::updateControllers()
-{
-    SDL_PumpEvents();
-
-    if(_ctrl1)
-    {
-        _ctrl1->update();
-        _ctrl1->sendControls();
-        keys = _ctrl1->keys;
-    }
-
-    if(_ctrl2)
-    {
-        _ctrl2->update();
-        _ctrl2->sendControls();
-    }
-
-    if(m_parentScene != nullptr)
-    {
-        if(m_parentScene->type() == Scene::Level)
-        {
-            auto s = dynamic_cast<LevelScene *>(m_parentScene);
-            if(s)
-            {
-                s->tickAnimations(m_uTickf);
-                s->m_fader.tickFader(m_uTickf);
-            }
-        }
-        else if(m_parentScene->type() == Scene::World)
-        {
-            auto s = dynamic_cast<WorldScene *>(m_parentScene);
-            if(s)
-            {
-                s->tickAnimations(m_uTickf);
-                s->m_fader.tickFader(m_uTickf);
-            }
-        }
-        else if(m_parentScene->type() == Scene::Title)
-        {
-            auto s = dynamic_cast<TitleScene *>(m_parentScene);
-            if(s)
-                s->m_fader.tickFader(m_uTickf);
-        }
-    }
-}
-
 
 
 void PGE_MsgBox::info(std::string msg)

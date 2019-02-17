@@ -32,39 +32,27 @@
 #include "../scenes/scene_gameover.h"
 #include "../scenes/scene_title.h"
 
+#include <utility>
+
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(Scene *_parentScene, PGE_Menu::menuAlignment alignment, int gapSpace, std::string _title, msgType _type,
                                  PGE_Point boxCenterPos, double _padding, std::string texture)
-    : PGE_BoxBase(_parentScene), _menu(alignment, gapSpace)
+    : PGE_BoxBase(_parentScene), m_menu(alignment, gapSpace)
 {
-    construct(_title, _type, boxCenterPos, _padding, texture);
-    setParentScene(_parentScene);
+    construct(std::move(_title), _type, boxCenterPos, _padding, std::move(texture));
 }
 
 PGE_MenuBoxBase::PGE_MenuBoxBase(const PGE_MenuBoxBase &mb)
-    : PGE_BoxBase(mb), _menu(mb._menu)
+    : PGE_BoxBase(mb), m_menu(mb.m_menu)
 {
-    _page     = mb._page;
-    running   = mb.running;
-    fontID    = mb.fontID;
-    fontRgba  = mb.fontRgba;
-    _answer_id = mb._answer_id;
-    reject_snd = mb.reject_snd;
-    _ctrl1    = mb._ctrl1;
-    _ctrl2    = mb._ctrl2;
-    type      = mb.type;
-    _pos =       mb._pos;
-    _sizeRect = mb._sizeRect;
-    title     = mb.title;
-    title_size = mb.title_size;
-    //_menu     = mb._menu;
-    width     = mb.width;
-    height    = mb.height;
-    padding   = mb.padding;
-    bg_color  = mb.bg_color;
+    m_answerId =  mb.m_answerId;
+    m_rejectSnd = mb.m_rejectSnd;
+    m_pos =       mb.m_pos;
+    m_title     = mb.m_title;
+    m_titleSize = mb.m_titleSize;
 }
 
 
@@ -74,79 +62,42 @@ void PGE_MenuBoxBase::construct(std::string _title, PGE_MenuBoxBase::msgType _ty
     if(!texture.empty())
         loadTexture(texture);
 
-    _ctrl1 = nullptr;
-    _ctrl2 = nullptr;
-    fontRgba.setRgba(1.0, 1.0, 1.0, 1.0);
+    m_fontRgba.setRgba(1.0, 1.0, 1.0, 1.0);
     m_borderWidth = ConfigManager::setup_menu_box.borderWidth;
+
     updateTickValue();
-    _page = 0;
-    running = false;
-    _answer_id = PGE_Menu::npos;
-    _pos = pos;
-    _menu.setTextLenLimit(30, true);
+    PGE_BoxBase::restart();
+
+    m_answerId = PGE_Menu::npos;
+    m_pos = pos;
+    m_menu.setTextLenLimit(30, true);
     setTitleFont(ConfigManager::setup_menu_box.title_font_name);
     setTitleFontColor(ConfigManager::setup_menu_box.title_font_rgba);
     /****************Word wrap*********************/
-    title = _title;
-    FontManager::optimizeText(title, 27);
-    title_size = FontManager::textSize(_title, fontID, 27);
+    m_title = _title;
+    FontManager::optimizeText(m_title, 27);
+    m_titleSize = FontManager::textSize(_title, m_fontID, 27);
     /****************Word wrap*end*****************/
     setPadding(_padding);
     setType(_type);
     updateSize();
 }
 
-PGE_MenuBoxBase::~PGE_MenuBoxBase()
-{}
-
-void PGE_MenuBoxBase::setParentScene(Scene *_parentScene)
-{
-    PGE_BoxBase::setParentScene(_parentScene);
-    initControllers();
-}
-
-void PGE_MenuBoxBase::setType(PGE_MenuBoxBase::msgType _type)
-{
-    switch(int(type))
-    {
-    case msg_info:
-        bg_color =       GlColor(0, 0, 0);
-        break;
-    case msg_info_light:
-        bg_color =      GlColor(0, 0, 0.490196078);
-        break;
-    case msg_warn:
-        bg_color =       GlColor(1.0, 0.788235294, 0.054901961);
-        break;
-    case msg_error:
-        bg_color =      GlColor(0.490196078, 0, 0);
-        break;
-    case msg_fatal:
-        bg_color =      GlColor(1.0, 0, 0);
-        break;
-    default:
-        bg_color =      GlColor(0, 0, 0);
-        break;
-    }
-
-    type = _type;
-}
-
 void PGE_MenuBoxBase::setTitleFont(std::string fontName)
 {
-    fontID   = FontManager::getFontID(fontName);
+    m_fontID   = FontManager::getFontID(std::move(fontName));
 }
 
 void PGE_MenuBoxBase::setTitleFontColor(GlColor color)
 {
-    fontRgba = color;
+    m_fontRgba = color;
 }
 
 void PGE_MenuBoxBase::setTitleText(std::string text)
 {
-    title = text;
-    FontManager::optimizeText(title, 27);
-    title_size = FontManager::textSize(text, fontID, 27);
+    m_title = text;
+    FontManager::optimizeText(m_title, 27);
+    m_titleSize = FontManager::textSize(text, m_fontID, 27);
     updateSize();
 }
 
@@ -159,138 +110,102 @@ void PGE_MenuBoxBase::setPadding(double _padding)
 {
     if(_padding < 0.0)
         _padding = ConfigManager::setup_menu_box.box_padding;
-    padding = _padding;
+    m_padding = _padding;
 }
 
 void PGE_MenuBoxBase::setPos(double x, double y)
 {
-    _pos.setX(static_cast<int>(x));
-    _pos.setY(static_cast<int>(y));
+    m_pos.setX(static_cast<int>(x));
+    m_pos.setY(static_cast<int>(y));
     updateSize();
 }
 
 void PGE_MenuBoxBase::setMaxMenuItems(size_t items)
 {
-    _menu.setItemsNumber(items);
+    m_menu.setItemsNumber(items);
     updateSize();
-}
-
-void PGE_MenuBoxBase::setBoxSize(double _Width, double _Height, double _padding)
-{
-    width   = _Width;
-    height  = _Height;
-    padding = _padding;
 }
 
 void PGE_MenuBoxBase::updateSize()
 {
-    PGE_Rect menuRect = _menu.rectFull();
+    PGE_Rect menuRect = m_menu.rectFull();
 
-    if(menuRect.width() > title_size.w())
-        width = menuRect.width() / 2;
+    if(menuRect.width() > m_titleSize.w())
+        m_width = std::round(menuRect.width() / 2.0);
     else
-        width = title_size.w() / 2;
+        m_width = std::round(m_titleSize.w() / 2.0);
 
-    height = (title_size.h() + menuRect.height()) / 2;
-    int pad = static_cast<int>(padding);
-    int w = static_cast<int>(width);
-    int h = static_cast<int>(height);
+    m_height = std::round((m_titleSize.h() + menuRect.height()) / 2.0);
+    int pad = static_cast<int>(m_padding);
+    int w = static_cast<int>(m_width);
+    int h = static_cast<int>(m_height);
 
-    if((_pos.x() == -1) && (_pos.y() == -1))
+    if((m_pos.x() == -1) && (m_pos.y() == -1))
     {
-        _sizeRect.setLeft(PGE_Window::Width / 2 - w - pad);
-        _sizeRect.setTop(PGE_Window::Height / 2 - h - pad);
-        _sizeRect.setRight(PGE_Window::Width / 2 + w + pad);
-        _sizeRect.setBottom(PGE_Window::Height / 2 + h + pad);
+        m_sizeRect.setLeft(PGE_Window::Width / 2 - w - pad);
+        m_sizeRect.setTop(PGE_Window::Height / 2 - h - pad);
+        m_sizeRect.setRight(PGE_Window::Width / 2 + w + pad);
+        m_sizeRect.setBottom(PGE_Window::Height / 2 + h + pad);
 
-        if(_sizeRect.top() < padding)
-            _sizeRect.setY(pad);
+        if(m_sizeRect.top() < m_padding)
+            m_sizeRect.setY(pad);
     }
     else
     {
-        _sizeRect.setLeft(_pos.x() - w - pad);
-        _sizeRect.setTop(_pos.y() - h - pad);
-        _sizeRect.setRight(_pos.x() + w + pad);
-        _sizeRect.setBottom(_pos.y() + h + pad);
+        m_sizeRect.setLeft(m_pos.x() - w - pad);
+        m_sizeRect.setTop(m_pos.y() - h - pad);
+        m_sizeRect.setRight(m_pos.x() + w + pad);
+        m_sizeRect.setBottom(m_pos.y() + h + pad);
     }
 
-    _menu.setPos(_sizeRect.right() - (menuRect.width() > title_size.w() ? menuRect.width() : title_size.w()),
-                 _sizeRect.bottom() - menuRect.height() + _menu.topOffset() - pad);
+    m_menu.setPos(m_sizeRect.right() - (menuRect.width() > m_titleSize.w() ? menuRect.width() : m_titleSize.w()),
+                 m_sizeRect.bottom() - menuRect.height() + m_menu.topOffset() - pad);
 }
 
 
 
 void PGE_MenuBoxBase::clearMenu()
 {
-    _menu.clear();
+    m_menu.clear();
     updateSize();
 }
 
 void PGE_MenuBoxBase::addMenuItem(std::string& menuitem)
 {
-    _menu.addMenuItem(menuitem, menuitem);
+    m_menu.addMenuItem(menuitem, menuitem);
     updateSize();
 }
 
-void PGE_MenuBoxBase::addMenuItems(std::vector<std::string> &menuitems)
+void PGE_MenuBoxBase::addMenuItems(std::vector<std::string> &menuItems)
 {
-    for(std::string &menuitem : menuitems)
-        _menu.addMenuItem(menuitem, menuitem);
+    for(std::string &menuitem : menuItems)
+        m_menu.addMenuItem(menuitem, menuitem);
 
     updateSize();
-}
-
-
-void PGE_MenuBoxBase::update(double ticks)
-{
-    switch(_page)
-    {
-    case 0:
-        setFade(10, 1.0, 0.05);
-        _page++;
-        break;
-
-    case 1:
-        processLoader(ticks);
-        break;
-
-    case 2:
-        processBox(ticks);
-        break;
-
-    case 3:
-        processUnLoader(ticks);
-        break;
-
-    case 4:
-    default:
-        running = false;
-        break;
-    }
 }
 
 void PGE_MenuBoxBase::render()
 {
-    if(_page == 2)
+    if(m_page == PageRunning)
     {
         if(m_textureUsed)
-            drawTexture(_sizeRect, m_borderWidth, static_cast<float>(m_faderOpacity));
+            drawTexture(m_sizeRect, m_borderWidth, static_cast<float>(m_faderOpacity));
         else
         {
-            GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
-                                   _sizeRect.width(), _sizeRect.height(),
-                                   bg_color.Red(),
-                                   bg_color.Green(),
-                                   bg_color.Blue(),
+            GlRenderer::renderRect(m_sizeRect.left(), m_sizeRect.top(),
+                                   m_sizeRect.width(), m_sizeRect.height(),
+                                   m_bgColor.Red(),
+                                   m_bgColor.Green(),
+                                   m_bgColor.Blue(),
                                    static_cast<float>(m_faderOpacity));
         }
 
-        FontManager::printText(title,
-                               _sizeRect.center().x() - title_size.w() / 2,
-                               _sizeRect.top() + static_cast<int>(padding),
-                               fontID,
-                               fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
-        _menu.render();
+        FontManager::printText(m_title,
+                               m_sizeRect.center().x() - m_titleSize.w() / 2,
+                               m_sizeRect.top() + static_cast<int>(m_padding),
+                               m_fontID,
+                               m_fontRgba.Red(), m_fontRgba.Green(), m_fontRgba.Blue(), m_fontRgba.Alpha());
+        m_menu.render();
         //        FontManager::SDL_string_render2D(m_sizeRect.left()+padding,
         //                                         m_sizeRect.top()+padding,
         //                                         &textTexture);
@@ -299,91 +214,60 @@ void PGE_MenuBoxBase::render()
     {
         if(m_textureUsed)
         {
-            drawTexture(_sizeRect.center().x() - static_cast<int>((width + padding)*m_faderOpacity),
-                        _sizeRect.center().y() - static_cast<int>((height + padding)*m_faderOpacity),
-                        _sizeRect.center().x() + static_cast<int>((width + padding)*m_faderOpacity),
-                        _sizeRect.center().y() + static_cast<int>((height + padding)*m_faderOpacity),
+            drawTexture(m_sizeRect.center().x() - static_cast<int>((m_width + m_padding)*m_faderOpacity),
+                        m_sizeRect.center().y() - static_cast<int>((m_height + m_padding)*m_faderOpacity),
+                        m_sizeRect.center().x() + static_cast<int>((m_width + m_padding)*m_faderOpacity),
+                        m_sizeRect.center().y() + static_cast<int>((m_height + m_padding)*m_faderOpacity),
                         m_borderWidth, static_cast<float>(m_faderOpacity));
         }
         else
         {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - static_cast<int>((width + padding)*m_faderOpacity),
-                                     _sizeRect.center().y() - static_cast<int>((height + padding)*m_faderOpacity),
-                                     _sizeRect.center().x() + static_cast<int>((width + padding)*m_faderOpacity),
-                                     _sizeRect.center().y() + static_cast<int>((height + padding)*m_faderOpacity),
-                                     bg_color.Red(),
-                                     bg_color.Green(),
-                                     bg_color.Blue(), static_cast<float>(m_faderOpacity));
+            GlRenderer::renderRectBR(m_sizeRect.center().x() - static_cast<int>((m_width + m_padding)*m_faderOpacity),
+                                     m_sizeRect.center().y() - static_cast<int>((m_height + m_padding)*m_faderOpacity),
+                                     m_sizeRect.center().x() + static_cast<int>((m_width + m_padding)*m_faderOpacity),
+                                     m_sizeRect.center().y() + static_cast<int>((m_height + m_padding)*m_faderOpacity),
+                                     m_bgColor.Red(),
+                                     m_bgColor.Green(),
+                                     m_bgColor.Blue(), static_cast<float>(m_faderOpacity));
         }
     }
 }
 
 void PGE_MenuBoxBase::restart()
 {
-    _page = 0;
-    _menu.resetState();
-    _menu.reset();
-    running = true;
-}
-
-bool PGE_MenuBoxBase::isRunning()
-{
-    return running;
-}
-
-void PGE_MenuBoxBase::exec()
-{
-    restart();
-
-    while(running)
-    {
-        Uint32 start_render = SDL_GetTicks();
-        updateControllers();
-        update(m_uTickf);
-        PGE_BoxBase::render();
-        render();
-        GlRenderer::flush();
-        GlRenderer::repaint();
-
-        if((!PGE_Window::vsync) && (m_uTick > static_cast<Sint32>(SDL_GetTicks() - start_render)))
-        {
-            #ifndef __EMSCRIPTEN__
-            SDL_Delay(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render));
-            #else
-            emscripten_sleep(static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render));
-            #endif
-        }
-    }
+    PGE_BoxBase::restart();
+    m_menu.resetState();
+    m_menu.reset();
 }
 
 void PGE_MenuBoxBase::setRejectSnd(long sndRole)
 {
-    obj_sound_role::roles _sndRole =  static_cast<obj_sound_role::roles>(sndRole);
-    reject_snd = ConfigManager::getSoundByRole(_sndRole);
+    auto _sndRole =  static_cast<obj_sound_role::roles>(sndRole);
+    m_rejectSnd = ConfigManager::getSoundByRole(_sndRole);
 }
 
 size_t PGE_MenuBoxBase::answer()
 {
-    return _answer_id;
+    return m_answerId;
 }
 
 void PGE_MenuBoxBase::reject()
 {
-    _answer_id = PGE_Menu::npos;
-    _page++;
+    m_answerId = PGE_Menu::npos;
+    nextPage();
     setFade(10, 0.0, 0.05);
 
-    if(reject_snd > 0)
-        PGE_Audio::playSound(reject_snd);
+    if(m_rejectSnd > 0)
+        PGE_Audio::playSound(m_rejectSnd);
 }
 
 void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
 {
-    if(_page != 2)
+    if(m_page != PageRunning)
         return;
 
-    if(_ctrl1 && _ctrl1->keys.any_key_pressed)
-        return; // Skip keyboard when controller key was handled
+    if(m_keys.any_key_pressed)
+        return;
 
     switch(key)
     {
@@ -420,95 +304,73 @@ void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
 
 void PGE_MenuBoxBase::processController()
 {
-    if(_page != 2)
+    if(m_page != PageRunning)
         return;
 
-    if(_ctrl1)
-    {
-        if(_ctrl1->keys.up_pressed)
-        {
-            onUpButton();
-            return;
-        }
-        else if(_ctrl1->keys.down_pressed)
-        {
-            onDownButton();
-            return;
-        }
-        else if(_ctrl1->keys.left_pressed)
-        {
-            onLeftButton();
-            return;
-        }
-        else if(_ctrl1->keys.right_pressed)
-        {
-            onRightButton();
-            return;
-        }
-        else if(_ctrl1->keys.jump_pressed)
-        {
-            onJumpButton();
-            return;
-        }
-        else if(_ctrl1->keys.alt_jump_pressed)
-        {
-            onAltJumpButton();
-            return;
-        }
-        else if(_ctrl1->keys.run_pressed)
-        {
-            onRunButton();
-            return;
-        }
-        else if(_ctrl1->keys.alt_run_pressed)
-        {
-            onAltRunButton();
-            return;
-        }
-        else if(_ctrl1->keys.start_pressed)
-        {
-            onStartButton();
-            return;
-        }
-        else if(_ctrl1->keys.drop_pressed)
-        {
-            onDropButton();
-            return;
-        }
-    }
+    if(!m_keys.any_key_pressed)
+        return; // Nothing to do
 
+    if(m_keys.up_pressed)
+    {
+        onUpButton();
+        return;
+    }
+    else if(m_keys.down_pressed)
+    {
+        onDownButton();
+        return;
+    }
+    else if(m_keys.left_pressed)
+    {
+        onLeftButton();
+        return;
+    }
+    else if(m_keys.right_pressed)
+    {
+        onRightButton();
+        return;
+    }
+    else if(m_keys.jump_pressed)
+    {
+        onJumpButton();
+        return;
+    }
+    else if(m_keys.alt_jump_pressed)
+    {
+        onAltJumpButton();
+        return;
+    }
+    else if(m_keys.run_pressed)
+    {
+        onRunButton();
+        return;
+    }
+    else if(m_keys.alt_run_pressed)
+    {
+        onAltRunButton();
+        return;
+    }
+    else if(m_keys.start_pressed)
+    {
+        onStartButton();
+        return;
+    }
+    else if(m_keys.drop_pressed)
+    {
+        onDropButton();
+        return;
+    }
 }
 
-void PGE_MenuBoxBase::processLoader(double ticks)
+void PGE_MenuBoxBase::processBox(double tickDelay)
 {
-    SDL_Event event;
+    PGE_BoxBase::processBox(tickDelay);
+    processController();
 
+    SDL_Event event;
     while(SDL_PollEvent(&event))
     {
         PGE_Window::processEvents(event);
-
-        if(event.type == SDL_QUIT)
-            m_faderOpacity = 1.0;
-    }
-
-    tickFader(ticks);
-
-    if(m_faderOpacity >= 1.0)
-        _page++;
-}
-
-void PGE_MenuBoxBase::processBox(double)
-{
-    //    #ifndef __APPLE__
-    //    if(g_AppSettings.interprocessing)
-    //        qApp->processEvents();
-    //    #endif
-    SDL_Event event;
-
-    while(SDL_PollEvent(&event))
-    {
-        PGE_Window::processEvents(event);
-
         switch(event.type)
         {
         case SDL_QUIT:
@@ -524,132 +386,16 @@ void PGE_MenuBoxBase::processBox(double)
         }
     }
 
-    processController();
-
-    if(_menu.isSelected())
+    if(m_menu.isSelected())
     {
-        if(_menu.isAccepted())
-            _answer_id = _menu.currentItemI();
+        if(m_menu.isAccepted())
+            m_answerId = m_menu.currentItemI();
         else
-            _answer_id = PGE_Menu::npos;
+            m_answerId = PGE_Menu::npos;
 
-        _page++;
+        nextPage();
         setFade(10, 0.0, 0.05);
         return;
     }
 }
 
-
-
-void PGE_MenuBoxBase::processUnLoader(double ticks)
-{
-    SDL_Event event;
-
-    while(SDL_PollEvent(&event))
-    {
-        PGE_Window::processEvents(event);
-
-        if(event.type == SDL_QUIT)
-            m_faderOpacity = 0.0;
-    }
-
-    tickFader(ticks);
-
-    if(m_faderOpacity <= 0.0) _page++;
-}
-
-
-void PGE_MenuBoxBase::initControllers()
-{
-    if(m_parentScene != nullptr)
-    {
-        if(m_parentScene->type() == Scene::Level)
-        {
-            auto s = dynamic_cast<LevelScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->m_player1Controller;
-                _ctrl2 = s->m_player2Controller;
-            }
-        }
-        else if(m_parentScene->type() == Scene::World)
-        {
-            auto s = dynamic_cast<WorldScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->m_player1Controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else if(m_parentScene->type() == Scene::GameOver)
-        {
-            auto s = dynamic_cast<GameOverScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->player1Controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else if(m_parentScene->type() == Scene::ConfigSelect)
-        {
-            auto s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else if(m_parentScene->type() == Scene::Title)
-        {
-            auto s = dynamic_cast<TitleScene *>(m_parentScene);
-            if(s)
-            {
-                _ctrl1 = s->controller;
-                _ctrl2 = nullptr;
-            }
-        }
-        else
-        {
-            _ctrl1 = nullptr;
-            _ctrl2 = nullptr;
-        }
-    }
-    else
-    {
-        _ctrl1 = nullptr;
-        _ctrl2 = nullptr;
-    }
-}
-
-void PGE_MenuBoxBase::updateControllers()
-{
-    SDL_PumpEvents();
-
-    if(_ctrl1)
-    {
-        _ctrl1->update();
-        _ctrl1->sendControls();
-    }
-
-    if(_ctrl2)
-    {
-        _ctrl2->update();
-        _ctrl2->sendControls();
-    }
-
-    if(m_parentScene != nullptr)
-    {
-        if(m_parentScene->type() == Scene::Level)
-        {
-            auto s = dynamic_cast<LevelScene *>(m_parentScene);
-            if(s)
-                s->tickAnimations(m_uTickf);
-        }
-        else if(m_parentScene->type() == Scene::World)
-        {
-            auto s = dynamic_cast<WorldScene *>(m_parentScene);
-            if(s)
-                s->tickAnimations(m_uTickf);
-        }
-    }
-}

@@ -35,52 +35,48 @@ PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, std::string _title, msgTyp
                         _title, _type, boxCenterPos, _padding, texture)
 {
     PGE_MenuBoxBase::construct(_title, _type, boxCenterPos, _padding, texture);
-    setParentScene(_parentScene);
 }
 
 PGE_QuestionBox::PGE_QuestionBox(const PGE_QuestionBox &mb)
     : PGE_MenuBoxBase(mb)
 {}
 
-PGE_QuestionBox::~PGE_QuestionBox()
-{}
-
 void PGE_QuestionBox::onLeftButton()
 {
-    _menu.selectUp();
+    m_menu.selectUp();
 }
 
 void PGE_QuestionBox::onRightButton()
 {
-    _menu.selectDown();
+    m_menu.selectDown();
 }
 
 void PGE_QuestionBox::onJumpButton()
 {
-    _menu.acceptItem();
+    m_menu.acceptItem();
 }
 
 void PGE_QuestionBox::onAltJumpButton()
 {
-    _menu.acceptItem();
+    m_menu.acceptItem();
 }
 
 void PGE_QuestionBox::onRunButton()
 {
-    _menu.rejectItem();
+    m_menu.rejectItem();
 }
 
 void PGE_QuestionBox::onAltRunButton()
 {
-    _menu.rejectItem();
+    m_menu.rejectItem();
 }
 
 void PGE_QuestionBox::onStartButton()
 {
-    _menu.acceptItem();
+    m_menu.acceptItem();
 }
 
 void PGE_QuestionBox::onDropButton()
 {
-    _menu.rejectItem();
+    m_menu.rejectItem();
 }

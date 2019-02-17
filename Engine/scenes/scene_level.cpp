@@ -365,7 +365,7 @@ void LevelScene::update()
             m_blockTransforms.pop_front();
         }
 
-        //Update controllers
+        // Send controller states to controllable objects
         m_player1Controller->sendControls();
         m_player2Controller->sendControls();
 
@@ -482,8 +482,11 @@ void LevelScene::update()
 void LevelScene::processEvents()
 {
     Scene::processEvents();
-    m_player1Controller->update();
-    m_player2Controller->update();
+    if(!m_pauseMenu_opened)// Don't process controllers from the pause menu
+    {
+        m_player1Controller->update();
+        m_player2Controller->update();
+    }
     if(m_player1Controller->keys.start_pressed)
         onKeyboardPressedSDL(SDLK_ESCAPE, 0);
 }
@@ -940,7 +943,7 @@ int LevelScene::exec()
         m_cameras[i].cur_section->initBG();
     }
 
-    //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
+    //(Need to prevent accidental spawn of message box or pause menu with empty screen)
     m_player1Controller->resetControls();
     m_player2Controller->resetControls();
 

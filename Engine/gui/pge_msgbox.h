@@ -49,16 +49,10 @@ public:
     PGE_MsgBox(const PGE_MsgBox &mb);
     ~PGE_MsgBox() override = default;
 
-    void setBoxSize(double _Width, double _Height, double _padding);
-    void update(double ticks) override;
     void render() override;
-    void restart();
-    bool isRunning();
-    void exec() override;
+    void restart() override;
 
-    void processLoader(double ticks);
-    void processBox(double);
-    void processUnLoader(double ticks);
+    void processBox(double tickTime) override;
 
     static void info(std::string msg);
     //static void info(std::string msg);
@@ -73,28 +67,10 @@ private:
     void construct(std::string msg = "Message box is works!",
                    msgType _type = msg_info, PGE_Point pos = PGE_Point(-1, -1),
                    double _padding = -1, std::string texture = "");
-    int     m_page;
-    bool    m_running;
-    int     fontID;
-    GlColor fontRgba;
-    int     m_borderWidth = 32;
 
-    Controller *_ctrl1 = nullptr;
-    Controller *_ctrl2 = nullptr;
+    bool    m_exitKeyLock = false; //Don't close message box if exiting key already held (for example, 'Run' key)
 
-    controller_keys keys;
-    bool   m_exitKeyLock; //Don't close message box if exiting key already holden (for example, 'Run' key)
-
-    msgType m_type;
-    PGE_Rect m_sizeRect;
     std::string m_message;
-    double  width;
-    double  height;
-    double  padding;
-    GlColor bg_color;
-
-    void initControllers();
-    void updateControllers();
 };
 
 #endif // PGE_MSGBOX_H

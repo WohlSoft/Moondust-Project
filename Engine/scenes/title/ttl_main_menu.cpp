@@ -243,9 +243,9 @@ void TitleScene::processMenu()
             }
             else if(value == "menubox")
             {
-                PGE_MenuBox menubox(this, "Select something", PGE_MenuBox::msg_info, PGE_Point(-1, -1),
-                                    ConfigManager::setup_menu_box.box_padding,
-                                    ConfigManager::setup_message_box.sprite);
+                PGE_MenuBox menuBox = PGE_MenuBox(this, "Select something", PGE_MenuBox::msg_info, PGE_Point(-1, -1),
+                        ConfigManager::setup_menu_box.box_padding,
+                        ConfigManager::setup_message_box.sprite);
                 std::vector<std::string> items =
                 {
                     "Menuitem 1",
@@ -260,14 +260,14 @@ void TitleScene::processMenu()
                     "Menuitem 10",
                     "Menuitem 11"
                 };
-                menubox.addMenuItems(items);
-                menubox.setRejectSnd(obj_sound_role::MenuPause);
-                menubox.setMaxMenuItems(5);
-                menubox.exec();
+                menuBox.addMenuItems(items);
+                menuBox.setRejectSnd(obj_sound_role::MenuPause);
+                menuBox.setMaxMenuItems(5);
+                menuBox.exec();
 
-                if(menubox.answer() != PGE_Menu::npos)
+                if(menuBox.answer() != PGE_Menu::npos)
                 {
-                    PGE_MsgBox msg(this, "Your answer is:\n" + items[menubox.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1, -1),
+                    PGE_MsgBox msg(this, "Your answer is:\n" + items[menuBox.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1, -1),
                                    ConfigManager::setup_message_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
                     msg.exec();

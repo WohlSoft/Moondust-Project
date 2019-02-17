@@ -24,6 +24,7 @@
 #include <cassert>
 #include <cmath>
 #include <cstdlib>
+#include <utility>
 
 MatrixAnimator::MatrixAnimator():
     m_width(0.0),
@@ -98,14 +99,11 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a):
     buildRect();
 }
 
-MatrixAnimator::~MatrixAnimator()
-{}
-
 void MatrixAnimator::setFrameSequance(std::vector<MatrixAnimatorFrame> _sequence)
 {
     m_currentFrameIndex = 0;
     m_sequence.clear();
-    m_sequence = _sequence;
+    m_sequence = std::move(_sequence);
     m_sequenceP = &m_sequence;
     buildRect();
 }
@@ -137,7 +135,7 @@ void MatrixAnimator::setDirection(int _direction, bool force)
 
     if(m_direction < 0)
     {
-        AniBank::iterator left = s_bank_left.find(m_current_sequance);
+        auto left = s_bank_left.find(m_current_sequance);
         //left
         if(left == s_bank_left.end())
         {
@@ -152,7 +150,7 @@ void MatrixAnimator::setDirection(int _direction, bool force)
     }
     else
     {
-        AniBank::iterator right = s_bank_right.find(m_current_sequance);
+        auto right = s_bank_right.find(m_current_sequance);
         //right
         if(right == s_bank_right.end())
         {
@@ -296,7 +294,7 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
                             (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
-            MatrixAnimatorFrame frame;
+            MatrixAnimatorFrame frame = {};
             frame.x = static_cast<double>(x) / m_width;
             frame.y = static_cast<double>(y) / m_height;
             frame.offset_x = fr.offsetX;
@@ -317,7 +315,7 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
                             (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
-            MatrixAnimatorFrame frame;
+            MatrixAnimatorFrame frame = {};
             frame.x = static_cast<double>(x) / m_width;
             frame.y = static_cast<double>(y) / m_height;
             frame.offset_x = fr.offsetX;
@@ -512,7 +510,7 @@ MatrixAnimator::MatrixAnimates MatrixAnimator::toEnum(const std::string &aniName
     if(m_strToEnum.empty())
         buildEnums();
 
-    AniEnums::iterator ani = m_strToEnum.find(aniName);
+    auto ani = m_strToEnum.find(aniName);
 
     if(ani != m_strToEnum.end())
         return ani->second;

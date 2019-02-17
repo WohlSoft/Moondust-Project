@@ -92,7 +92,7 @@ public:
     MatrixAnimator();
     MatrixAnimator(int width, int height);
     MatrixAnimator(const MatrixAnimator &a);
-    virtual ~MatrixAnimator();
+    virtual ~MatrixAnimator() = default;
     void setFrameSequance(std::vector<MatrixAnimatorFrame> _sequence);
     void setFrameSpeed(int speed);
     void setDirection(int _direction, bool force = false);
