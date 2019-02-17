@@ -9490,6 +9490,14 @@ Vuoi salvare le modifiche?</translation>
         <source>Counting stars...</source>
         <translation>Conteggio stelle...</translation>
     </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>aboutDialog</name>

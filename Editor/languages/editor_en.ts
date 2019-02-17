@@ -3655,7 +3655,7 @@ To use LunaTester you must use the Integration configuration package!</translati
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Terminate running process</translation>
+        <translation type="vanished">Terminate running process</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
@@ -3672,6 +3672,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester is not running.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>Terminate running process</translation>
     </message>
 </context>
 <context>
@@ -5519,7 +5525,7 @@ The special state is defined by the active configuration pack.</translation>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
-        <translation>Show a blank screen instead of the standard loading screen.
+        <translation type="vanished">Show a blank screen instead of the standard loading screen.
 If this option is not selected, you will see the current character
 and remaining lives when loading a level (PGE Engine only).</translation>
     </message>
@@ -5649,14 +5655,6 @@ If set to zero, the player will start at the pre-defined level start point.</tra
         <translation>Browse for another level file</translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation type="vanished">Show a blank screen instead of loading screen.
-In the SMBX Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation>Hide level enter screen</translation>
     </message>
@@ -5725,6 +5723,14 @@ Please select the map you want to use:</translation>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Can&apos;t open the file!</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</translation>
     </message>
 </context>
 <context>
@@ -8461,7 +8467,7 @@ The PGE Engine is still at an early stage in development, and there are several 
         <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
-        <translation>Could not find engine application:
+        <translation type="vanished">Could not find engine application:
 %1
 Please, choose the engine application yourself!</translation>
     </message>
@@ -8478,22 +8484,6 @@ Please, choose the engine application yourself!</translation>
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Unable to start testing, could not find the PGE Engine executable:
-%1
-Please check the application directory and make sure it is installed properly.</translation>
-    </message>
-    <message>
-        <source>Engine is not found:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Could not find the PGE Engine executable:
-%1
-Please check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -8929,6 +8919,14 @@ Please save the file first.</translation>
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</translation>
     </message>
 </context>
 <context>
@@ -9888,32 +9886,6 @@ Forum link: wohlsoft.ru/forum</translation>
         <translation type="vanished">Editor was killed by mad maniac :-P [SIGKILL]</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff, or create an issue on GitHub,
-so we can try to fix this problem.
-
-GitHub link: https://github.com/WohlSoft/PGE-Project
-Forum link: http://wohlsoft.ru/forum</translation>
-    </message>
-    <message>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation>Editor was abourted because alarm() time out! [SIGALRM]</translation>
     </message>
@@ -9934,18 +9906,9 @@ Forum link: http://wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
         <translation type="vanished">We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
+
 </translation>
     </message>
     <message>
@@ -10246,6 +10209,40 @@ The maximum number of Music boxes is %2.</translation>
     <message>
         <source>NPC user data change</source>
         <translation>NPC user data change</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</translation>
     </message>
 </context>
 <context>
@@ -12533,6 +12530,14 @@ Do you want to save your changes?</translation>
     <message>
         <source>Counting stars...</source>
         <translation>Counting stars...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation>The name of the level that will be loaded when the game first loads.</translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation>Main hub level:</translation>
     </message>
 </context>
 <context>

@@ -11730,6 +11730,14 @@ Möchtest du die Änderungen speichern?</translation>
         <source>Counting stars...</source>
         <translation>Zähle Sterne...</translation>
     </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WorldToolBox</name>

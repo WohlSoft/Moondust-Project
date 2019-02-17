@@ -3618,7 +3618,7 @@ To use LunaTester you should have right Integration configuration package!</sour
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Прервать запущенный процесс</translation>
+        <translation type="vanished">Прервать запущенный процесс</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
@@ -3635,6 +3635,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester не запущен.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>Прервать запущенный процесс</translation>
     </message>
 </context>
 <context>
@@ -5605,7 +5611,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
-        <translation>Показать пустой экран вместо загрузочного экрана.
+        <translation type="vanished">Показать пустой экран вместо загрузочного экрана.
 В старом SMBX-движке загрузочный экран уровня показывает
 текущего игрового персонажа(ей) и остаток жизней.</translation>
     </message>
@@ -5679,6 +5685,14 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Невозможно открыть файл!</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation>Показать пустой экран вместо экрана загрузки.
+Инчае, на экране загрузки в устеревшем движке будет показан 
+действующий игровой персонаж(и) и остаток жизней.</translation>
     </message>
 </context>
 <context>
@@ -8444,7 +8458,7 @@ The PGE Engine is still at an early stage in development, and there are several 
         <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
-        <translation>Движок не найден:
+        <translation type="vanished">Движок не найден:
 %1
 Пожалуйста, выбери приложение движка сам!</translation>
     </message>
@@ -8899,6 +8913,14 @@ Please save the file first.</source>
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation>Конфигурация переключена!
 Чтобы начать работу с новой конфигурацией, нужно перезапустить редактор. Хотите продолжить?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation>Невозможно запустить тест, движок не найден:
+%1
+Пожалуйста, укажите приложение движка самостоятельно!</translation>
     </message>
 </context>
 <context>
@@ -9824,7 +9846,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Мы извиняемся, но редактор сломался.
+        <translation type="vanished">Мы извиняемся, но редактор сломался.
 Причина: Недостаточно памяти!
 
 Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
@@ -9836,7 +9858,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Извините, но PGE Editor сломался.
+        <translation type="vanished">Извините, но PGE Editor сломался.
 Причина: необработанное исключение
 
 Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
@@ -9892,7 +9914,7 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation>Мы извиняется, но Редактор PGE аварийно завершился. Этому послужила причина: %1
+        <translation type="vanished">Мы извиняется, но Редактор PGE аварийно завершился. Этому послужила причина: %1
 
 </translation>
     </message>
@@ -10178,6 +10200,40 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>NPC user data change</source>
         <translation>Изменение пользовательских настроек НеИгрового Персонажа</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>Мы извиняемся, но редактор сломался.
+Причина: Недостаточно памяти!
+
+Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation>Извините, но PGE Editor сломался.
+Причина: необработанное исключение
+
+Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
+
+Ссылка форума: wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation>Мы извиняется, но Редактор PGE аварийно завершился. 
+Этому послужила причина: %1
+
+</translation>
     </message>
 </context>
 <context>
@@ -12467,6 +12523,14 @@ Do you want to save your changes?</source>
     <message>
         <source>Counting stars...</source>
         <translation>Подсчёт звёзд...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation>Имя уровня, который будет загружен при первом запуске игры.</translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation>Уровень главного корридора:</translation>
     </message>
 </context>
 <context>
