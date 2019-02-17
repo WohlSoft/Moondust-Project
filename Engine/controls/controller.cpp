@@ -46,7 +46,20 @@ void Controller::sendControls()
         x->applyControls(keys);
 }
 
-void Controller::update() {}
+void Controller::update()
+{
+    keys.any_key_pressed = false;
+    keys.any_key_pressed |= keys.left_pressed;
+    keys.any_key_pressed |= keys.right_pressed;
+    keys.any_key_pressed |= keys.up_pressed;
+    keys.any_key_pressed |= keys.down_pressed;
+    keys.any_key_pressed |= keys.run_pressed;
+    keys.any_key_pressed |= keys.jump_pressed;
+    keys.any_key_pressed |= keys.alt_run_pressed;
+    keys.any_key_pressed |= keys.alt_jump_pressed;
+    keys.any_key_pressed |= keys.drop_pressed;
+    keys.any_key_pressed |= keys.start_pressed;
+}
 
 void Controller::registerInControl(ControllableObject *obj)
 {

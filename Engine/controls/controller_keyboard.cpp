@@ -57,4 +57,6 @@ void KeyboardController::update()
 
     updateKeyValue(keys.drop, keys.drop_pressed, state[kmap.drop.val]);
     updateKeyValue(keys.start, keys.start_pressed, state[kmap.start.val]);
+
+    Controller::update();
 }

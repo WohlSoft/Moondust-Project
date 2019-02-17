@@ -139,6 +139,8 @@ void JoystickController::update()
 
     updateKey(keys.drop, keys.drop_pressed, kmap.drop);
     updateKey(keys.start, keys.start_pressed, kmap.start);
+
+    Controller::update();
 }
 
 

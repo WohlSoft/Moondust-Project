@@ -22,21 +22,25 @@
 #include "../fontman/font_manager.h"
 #include "../graphics/window.h"
 
+#include "../data_configs/config_select_scene/scene_config_select.h"
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
 #include "../scenes/scene_title.h"
+#include "../scenes/scene_gameover.h"
 
 #include <common_features/app_path.h>
 #include <common_features/tr.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
 
+#include <utility>
+
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
 
 PGE_MsgBox::PGE_MsgBox()
-    : PGE_BoxBase(0)
+    : PGE_BoxBase(nullptr)
 {
     width = 0;
     height = 0;
@@ -52,7 +56,7 @@ PGE_MsgBox::PGE_MsgBox(Scene *_parentScene,
                        std::string texture)
     : PGE_BoxBase(_parentScene)
 {
-    construct(msg, _type, boxCenterPos, _padding, texture);
+    construct(std::move(msg), _type, boxCenterPos, _padding, std::move(texture));
 }
 
 PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
@@ -82,11 +86,11 @@ void PGE_MsgBox::construct(std::string msg,
                            double _padding,
                            std::string texture)
 {
-    loadTexture(texture);
+    loadTexture(std::move(texture));
 
     updateTickValue();
     m_page = 0;
-    m_message = msg;
+    m_message = std::move(msg);
     m_type = _type;
     m_running = false;
     m_exitKeyLock = true;
@@ -132,10 +136,9 @@ void PGE_MsgBox::construct(std::string msg,
         m_sizeRect.setRight(static_cast<int>(pos.x() + width + padding));
         m_sizeRect.setBottom(static_cast<int>(pos.y() + height + padding));
     }
-}
 
-PGE_MsgBox::~PGE_MsgBox()
-{}
+    initControllers();
+}
 
 void PGE_MsgBox::setBoxSize(double _Width, double _Height, double _padding)
 {
@@ -259,10 +262,12 @@ void PGE_MsgBox::processBox(double)
     //    #endif
     updateControllers();
 
-    if(m_exitKeyLock && !keys.jump_pressed && !keys.run_pressed && !keys.alt_run_pressed)
+    bool wasExitKeyPress = keys.jump_pressed || keys.run_pressed || keys.alt_run_pressed || keys.start_pressed;
+
+    if(m_exitKeyLock && !wasExitKeyPress)
         m_exitKeyLock = false;
 
-    if((!m_exitKeyLock) && (keys.jump_pressed || keys.run_pressed || keys.alt_run_pressed))
+    if(!m_exitKeyLock && wasExitKeyPress)
     {
         m_page++;
         setFade(10, 0.0, 0.05);
@@ -334,8 +339,85 @@ void PGE_MsgBox::processUnLoader(double ticks)
 }
 
 
+void PGE_MsgBox::initControllers()
+{
+    if(m_parentScene != nullptr)
+    {
+        if(m_parentScene->type() == Scene::Level)
+        {
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->m_player1Controller;
+                _ctrl2 = s->m_player2Controller;
+            }
+        }
+        else if(m_parentScene->type() == Scene::World)
+        {
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->m_player1Controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::GameOver)
+        {
+            auto s = dynamic_cast<GameOverScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->player1Controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::ConfigSelect)
+        {
+            auto s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::Title)
+        {
+            auto s = dynamic_cast<TitleScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else
+        {
+            _ctrl1 = nullptr;
+            _ctrl2 = nullptr;
+        }
+    }
+    else
+    {
+        _ctrl1 = nullptr;
+        _ctrl2 = nullptr;
+    }
+}
+
 void PGE_MsgBox::updateControllers()
 {
+    SDL_PumpEvents();
+
+    if(_ctrl1)
+    {
+        _ctrl1->update();
+        _ctrl1->sendControls();
+        keys = _ctrl1->keys;
+    }
+
+    if(_ctrl2)
+    {
+        _ctrl2->update();
+        _ctrl2->sendControls();
+    }
+
     if(m_parentScene != nullptr)
     {
         if(m_parentScene->type() == Scene::Level)
@@ -345,11 +427,6 @@ void PGE_MsgBox::updateControllers()
             {
                 s->tickAnimations(m_uTickf);
                 s->m_fader.tickFader(m_uTickf);
-                s->m_player1Controller->update();
-                s->m_player1Controller->sendControls();
-                s->m_player2Controller->update();
-                s->m_player2Controller->sendControls();
-                keys = s->m_player1Controller->keys;
             }
         }
         else if(m_parentScene->type() == Scene::World)
@@ -359,21 +436,13 @@ void PGE_MsgBox::updateControllers()
             {
                 s->tickAnimations(m_uTickf);
                 s->m_fader.tickFader(m_uTickf);
-                s->m_player1Controller->update();
-                s->m_player1Controller->sendControls();
-                keys = s->m_player1Controller->keys;
             }
         }
         else if(m_parentScene->type() == Scene::Title)
         {
             auto s = dynamic_cast<TitleScene *>(m_parentScene);
             if(s)
-            {
                 s->m_fader.tickFader(m_uTickf);
-                s->controller->update();
-                s->controller->sendControls();
-                keys = s->controller->keys;
-            }
         }
     }
 }

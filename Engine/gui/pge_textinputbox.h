@@ -35,6 +35,8 @@
 
 #include <string>
 
+class Controller;
+
 class PGE_TextInputBox : public PGE_BoxBase
 {
 public:
@@ -80,6 +82,9 @@ private:
     bool   blink_shown = false;
     double blink_timeout = 0;
 
+    Controller *_ctrl1 = nullptr;
+    Controller *_ctrl2 = nullptr;
+
     controller_keys keys;
 
     msgType type = msg_info;
@@ -89,6 +94,8 @@ private:
     double height = 0;
     double padding = 0;
     GlColor bg_color;
+
+    void initControllers();
     void updateControllers();
 };
 

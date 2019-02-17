@@ -68,6 +68,9 @@ struct controller_keys
     bool drop = false;
     //! Drop (One-shot on press)
     bool drop_pressed = false;
+
+    //! If any key pressed
+    bool any_key_pressed = false;
 };
 
 /*!

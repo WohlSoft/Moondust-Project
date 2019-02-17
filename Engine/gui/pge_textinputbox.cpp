@@ -22,8 +22,11 @@
 #include "../fontman/font_manager.h"
 #include "../graphics/window.h"
 
+#include "../data_configs/config_select_scene/scene_config_select.h"
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
+#include "../scenes/scene_title.h"
+#include "../scenes/scene_gameover.h"
 
 #include <common_features/app_path.h>
 #include <common_features/logger.h>
@@ -140,6 +143,8 @@ void PGE_TextInputBox::construct(std::string msg, PGE_TextInputBox::msgType _typ
         m_sizeRect.setRight(static_cast<int>(pos.x() + width + padding));
         m_sizeRect.setBottom(static_cast<int>(pos.y() + height + padding));
     }
+
+    initControllers();
 }
 
 void PGE_TextInputBox::updatePrintable()
@@ -289,6 +294,18 @@ void PGE_TextInputBox::processBox(double tickTime)
     //        qApp->processEvents();
     //    #endif
     updateControllers();
+
+    bool wasExitKeyPress = keys.run_pressed || keys.alt_run_pressed || keys.start_pressed;
+    if(wasExitKeyPress)
+    {
+        if(keys.start_pressed || keys.jump_pressed || keys.alt_jump_pressed)
+            _inputText_src = _inputText;
+        _page++;
+        setFade(10, 0.0, 0.05);
+        SDL_StopTextInput();
+        return;
+    }
+
     blink_timeout -= tickTime;
     if(blink_timeout < 0.0)
     {
@@ -335,7 +352,6 @@ void PGE_TextInputBox::processBox(double tickTime)
                 {
                     FontManager::utf8_pop_back(_inputText);
                     updatePrintable();
-
                 }
                 break;
             }
@@ -435,36 +451,110 @@ std::string PGE_TextInputBox::inputText()
     return _inputText_src;
 }
 
-
-void PGE_TextInputBox::updateControllers()
+void PGE_TextInputBox::initControllers()
 {
     if(m_parentScene != nullptr)
     {
         if(m_parentScene->type() == Scene::Level)
         {
-            auto *s = dynamic_cast<LevelScene *>(m_parentScene);
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
             if(s)
             {
-                s->tickAnimations(m_uTickf);
-                s->m_fader.tickFader(m_uTickf);
-                s->m_player1Controller->update();
-                s->m_player1Controller->sendControls();
-                s->m_player2Controller->update();
-                s->m_player2Controller->sendControls();
-                keys = s->m_player1Controller->keys;
+                _ctrl1 = s->m_player1Controller;
+                _ctrl2 = s->m_player2Controller;
             }
         }
         else if(m_parentScene->type() == Scene::World)
         {
-            auto *s = dynamic_cast<WorldScene *>(m_parentScene);
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->m_player1Controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::GameOver)
+        {
+            auto s = dynamic_cast<GameOverScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->player1Controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::ConfigSelect)
+        {
+            auto s = dynamic_cast<ConfigSelectScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else if(m_parentScene->type() == Scene::Title)
+        {
+            auto s = dynamic_cast<TitleScene *>(m_parentScene);
+            if(s)
+            {
+                _ctrl1 = s->controller;
+                _ctrl2 = nullptr;
+            }
+        }
+        else
+        {
+            _ctrl1 = nullptr;
+            _ctrl2 = nullptr;
+        }
+    }
+    else
+    {
+        _ctrl1 = nullptr;
+        _ctrl2 = nullptr;
+    }
+}
+
+void PGE_TextInputBox::updateControllers()
+{
+    SDL_PumpEvents();
+
+    if(_ctrl1)
+    {
+        _ctrl1->update();
+        _ctrl1->sendControls();
+        keys = _ctrl1->keys;
+    }
+
+    if(_ctrl2)
+    {
+        _ctrl2->update();
+        _ctrl2->sendControls();
+    }
+
+    if(m_parentScene != nullptr)
+    {
+        if(m_parentScene->type() == Scene::Level)
+        {
+            auto s = dynamic_cast<LevelScene *>(m_parentScene);
             if(s)
             {
                 s->tickAnimations(m_uTickf);
                 s->m_fader.tickFader(m_uTickf);
-                s->m_player1Controller->update();
-                s->m_player1Controller->sendControls();
-                keys = s->m_player1Controller->keys;
             }
+        }
+        else if(m_parentScene->type() == Scene::World)
+        {
+            auto s = dynamic_cast<WorldScene *>(m_parentScene);
+            if(s)
+            {
+                s->tickAnimations(m_uTickf);
+                s->m_fader.tickFader(m_uTickf);
+            }
+        }
+        else if(m_parentScene->type() == Scene::Title)
+        {
+            auto s = dynamic_cast<TitleScene *>(m_parentScene);
+            if(s)
+                s->m_fader.tickFader(m_uTickf);
         }
     }
 }

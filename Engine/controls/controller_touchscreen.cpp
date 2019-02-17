@@ -182,4 +182,6 @@ void TouchScreenController::update()
         }
         it++;
     }
+
+    Controller::update();
 }

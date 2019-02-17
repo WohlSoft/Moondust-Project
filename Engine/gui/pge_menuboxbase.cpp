@@ -382,6 +382,9 @@ void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
     if(_page != 2)
         return;
 
+    if(_ctrl1 && _ctrl1->keys.any_key_pressed)
+        return; // Skip keyboard when controller key was handled
+
     switch(key)
     {
     case SDLK_UP:
@@ -639,14 +642,12 @@ void PGE_MenuBoxBase::updateControllers()
         if(m_parentScene->type() == Scene::Level)
         {
             auto s = dynamic_cast<LevelScene *>(m_parentScene);
-
             if(s)
                 s->tickAnimations(m_uTickf);
         }
         else if(m_parentScene->type() == Scene::World)
         {
             auto s = dynamic_cast<WorldScene *>(m_parentScene);
-
             if(s)
                 s->tickAnimations(m_uTickf);
         }

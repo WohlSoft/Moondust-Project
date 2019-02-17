@@ -209,6 +209,9 @@ void TitleScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     if(m_doExit || m_menu.isKeyGrabbing())
         return;
 
+    if(controller->keys.any_key_pressed)
+        return; // Skip if controller was handled
+
     switch(sdl_key)
     {
     case SDLK_UP:

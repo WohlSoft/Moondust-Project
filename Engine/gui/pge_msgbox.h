@@ -34,25 +34,27 @@
 #include <controls/control_keys.h>
 #include <string>
 
+class Controller;
+
 class PGE_MsgBox : public PGE_BoxBase
 {
 public:
     PGE_MsgBox();
-    PGE_MsgBox(Scene *_parentScene = nullptr,
+    explicit PGE_MsgBox(Scene *_parentScene = nullptr,
                std::string msg = "Message box is works!",
                msgType _type = msg_info,
                PGE_Point boxCenterPos = PGE_Point(-1, -1),
                double _padding = -1,
                std::string texture = std::string());
     PGE_MsgBox(const PGE_MsgBox &mb);
-    ~PGE_MsgBox();
+    ~PGE_MsgBox() override = default;
 
     void setBoxSize(double _Width, double _Height, double _padding);
-    void update(double ticks);
-    void render();
+    void update(double ticks) override;
+    void render() override;
     void restart();
     bool isRunning();
-    void exec();
+    void exec() override;
 
     void processLoader(double ticks);
     void processBox(double);
@@ -77,6 +79,9 @@ private:
     GlColor fontRgba;
     int     m_borderWidth = 32;
 
+    Controller *_ctrl1 = nullptr;
+    Controller *_ctrl2 = nullptr;
+
     controller_keys keys;
     bool   m_exitKeyLock; //Don't close message box if exiting key already holden (for example, 'Run' key)
 
@@ -87,6 +92,8 @@ private:
     double  height;
     double  padding;
     GlColor bg_color;
+
+    void initControllers();
     void updateControllers();
 };
 
