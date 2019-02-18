@@ -25,6 +25,7 @@ android {
 //                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
 //            }
             cmake {
+                abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
                 arguments "-DANDROID_PLATFORM=16"
             }
         }

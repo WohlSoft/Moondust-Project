@@ -81,6 +81,6 @@ public class moondustActivity extends SDLActivity
     }
 
     public static native void setKeyPos(int cmd, float left, float top, float right, float bottom);
-    public static native void setConvasSize(float width, float height);
+    public static native void setCanvasSize(float width, float height);
 
 }

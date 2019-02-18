@@ -40,7 +40,12 @@ public:
     struct FingerState
     {
         bool alive = false;
-        commands heldKey;
+        bool heldKey[Controller::commands::key_END] = {};
+        bool heldKeyPrev[Controller::commands::key_END] = {};
+
+        FingerState();
+        FingerState(const FingerState &fs);
+        FingerState &operator=(const FingerState &fs);
     };
 
 private:

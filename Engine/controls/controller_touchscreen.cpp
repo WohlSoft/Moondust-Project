@@ -31,9 +31,31 @@
 #   endif
 #endif
 
-struct TouchKeyMap
+TouchScreenController::FingerState::FingerState()
 {
-    struct KeyPos {
+    SDL_memset(&heldKey, 0, sizeof(heldKey));
+    SDL_memset(&heldKeyPrev, 0, sizeof(heldKeyPrev));
+}
+
+TouchScreenController::FingerState::FingerState(const FingerState &fs)
+{
+    alive = fs.alive;
+    SDL_memcpy(&heldKey, &fs.heldKey, sizeof(heldKey));
+    SDL_memcpy(&heldKeyPrev, &fs.heldKeyPrev, sizeof(heldKeyPrev));
+}
+
+TouchScreenController::FingerState &TouchScreenController::FingerState::operator=(const FingerState &fs)
+{
+    alive = fs.alive;
+    SDL_memcpy(&heldKey, &fs.heldKey, sizeof(heldKey));
+    SDL_memcpy(&heldKeyPrev, &fs.heldKeyPrev, sizeof(heldKeyPrev));
+    return *this;
+}
+
+static struct TouchKeyMap
+{
+    struct KeyPos
+    {
         float x1;
         float y1;
         float x2;
@@ -41,23 +63,26 @@ struct TouchKeyMap
         Controller::commands cmd;
     };
 
-    float touchConvasWidth = 1024.0f;
-    float touchConvasHeight = 600.0f;
+    //! Width of canvas area
+    float touchCanvasWidth = 1024.0f;
+    //! Height of canvas area
+    float touchCanvasHeight = 600.0f;
 
+    //! List of key hit boxes
     KeyPos touchKeysMap[Controller::key_END] =
     {
         /* Note that order of keys must match the Controller::commands enum!!! */
         {331.0f, 537.0f, 482.0f,  587.0f, Controller::key_start},
 
-        {1.0f,   414.0f, 91.0f,   504.0f, Controller::key_left},
-        {171.0f, 413.0f, 261.0f,  503.0f, Controller::key_right},
-        {85.0f,  328.0f, 175.0f,  418.0f, Controller::key_up},
-        {85.0f,  498.0f, 175.0f,  588.0f, Controller::key_down},
+        {1.0f,   328.0f, 91.0f,   498.0f, Controller::key_left},
+        {171.0f, 328.0f, 261.0f,  498.0f, Controller::key_right},
+        {1.0f,  328.0f, 261.0f,  418.0f, Controller::key_up},
+        {1.0f,  498.0f, 261.0f,  588.0f, Controller::key_down},
 
-        {807.0f, 431.0f, 898.0f,  522.0f, Controller::key_run},
-        {914.0f, 396.0f, 1005.0f, 487.0f, Controller::key_jump},
-        {807.0f, 325.0f, 898.0f,  416.0f, Controller::key_altrun},
-        {914.0f, 290.0f, 1005.0f, 381.0f, Controller::key_altjump},
+        {807.0f, 431.0f, 914.0f,  522.0f, Controller::key_run},
+        {898.0f, 396.0f, 1005.0f, 487.0f, Controller::key_jump},
+        {807.0f, 325.0f, 914.0f,  416.0f, Controller::key_altrun},
+        {898.0f, 290.0f, 1005.0f, 381.0f, Controller::key_altjump},
 
         {542.0f, 537.0f, 693.0f,  587.0f, Controller::key_drop},
     };
@@ -68,12 +93,25 @@ struct TouchKeyMap
             touchKeysMap[it].cmd = static_cast<Controller::commands>(it);
     }
 
-    void setConvasSize(float width, float height)
+    /**
+     * \brief Change size of virtual canvas
+     * @param width Width of touchable canvas
+     * @param height Height of touchable canvas
+     */
+    void setCanvasSize(float width, float height)
     {
-        touchConvasWidth = width;
-        touchConvasHeight = height;
+        touchCanvasWidth = width;
+        touchCanvasHeight = height;
     }
 
+    /**
+     * \brief Change hitbox of key
+     * @param cmd Command
+     * @param left Left side position
+     * @param top Top side position
+     * @param right Right side position
+     * @param bottom Bottom side position
+     */
     void setKeyPos(Controller::commands cmd, float left, float top, float right, float bottom)
     {
         if(cmd < 0 || cmd >= Controller::key_END)
@@ -88,17 +126,31 @@ struct TouchKeyMap
         key.y2 = bottom;
     }
 
-    int findTouchKey(float x, float y)
+    /**
+     * \brief Find keys are touched by one finger
+     * @param x X position of finger
+     * @param y Y position of finger
+     * @param keys Destination array to write captured keys
+     * @return Count of keys are got touched
+     */
+    int findTouchKeys(float x, float y, TouchScreenController::FingerState &fs)
     {
         const size_t touchKeyMapSize = sizeof(touchKeysMap) / sizeof(KeyPos);
-        x *= touchConvasWidth;
-        y *= touchConvasHeight;
+        int count = 0;
+        x *= touchCanvasWidth;
+        y *= touchCanvasHeight;
+
         for(const auto &p : touchKeysMap)
         {
+            fs.heldKey[p.cmd] = false;
             if(x >= p.x1 && x <= p.x2 && y >= p.y1 && y <= p.y2)
-                return p.cmd;
+            {
+                fs.heldKey[p.cmd] = true;
+                count++;
+            }
         }
-        return -1;
+
+        return count;
     }
 
 } g_touchKeyMap;
@@ -116,13 +168,13 @@ Java_ru_wohlsoft_moondust_moondustActivity_setKeyPos(JNIEnv *env, jclass type,
 }
 
 JNIEXPORT void JNICALL
-Java_ru_wohlsoft_moondust_moondustActivity_setConvasSize(JNIEnv *env, jclass type,
+Java_ru_wohlsoft_moondust_moondustActivity_setCanvasSize(JNIEnv *env, jclass type,
         jfloat width, jfloat height)
 {
 
     (void)env;
     (void)type;
-    g_touchKeyMap.setConvasSize(width, height);
+    g_touchKeyMap.setCanvasSize(width, height);
 }
 
 #endif
@@ -135,19 +187,19 @@ TouchScreenController::TouchScreenController() :
     SDL_GetWindowSize(PGE_Window::window, &m_screenWidth, &m_screenHeight);
 }
 
-static void updateKeyValue(bool &key, bool &key_pressed, const Uint8 state)
+static void updateKeyValue(bool &key, bool &key_pressed, bool state)
 {
-    key_pressed = (static_cast<bool>(state) && !key);
+    key_pressed = (state && !key);
     key = state;
-    D_pLogDebug("TRACKERS", "= Touch key: Pressed=%d, State=%d", (int)key_pressed, (int)key);
+    D_pLogDebug("= Touch key: Pressed=%d, State=%d", (int)key_pressed, (int)key);
 }
 
-static void updateFingerKeyState(TouchScreenController::FingerState &st, controller_keys &keys, int keyCommand, const Uint8 setState)
+static void updateFingerKeyState(TouchScreenController::FingerState &st,
+        controller_keys &keys, int keyCommand, bool setState)
 {
-    st.alive = static_cast<bool>(setState);
+    st.alive = (setState != 0);
     if(keyCommand >= static_cast<int>(Controller::key_BEGIN) && keyCommand < static_cast<int>(Controller::key_END))
     {
-        st.heldKey = static_cast<Controller::commands>(keyCommand);
         switch(keyCommand)
         {
             case Controller::key_left:
@@ -209,39 +261,61 @@ void TouchScreenController::update()
     for(int i = 0; i < fingers; i++)
     {
         SDL_Finger *f = SDL_GetTouchFinger(dev, i);
-        if(!f) //Skip a wrong finger
+        if(!f || (f->id < 0)) //Skip a wrong finger
             continue;
-        auto found = m_fingers.find(f->id);
+
+        SDL_FingerID finger_id = f->id;
+        float finger_x = f->x, finger_y = f->y, finger_pressure = f->pressure;
+
+        auto found = m_fingers.find(finger_id);
         if(found != m_fingers.end())
         {
-            int keyCommand = g_touchKeyMap.findTouchKey(f->x, f->y);
-            if(keyCommand != found->second.heldKey) //Change key if different
+            FingerState &fs = found->second;
+            int keysCount = g_touchKeyMap.findTouchKeys(finger_x, finger_y, fs);
+            for(int key = 0; key < Controller::key_END; key++)
             {
-                updateFingerKeyState(found->second, keys, found->second.heldKey, 0);
-                updateFingerKeyState(found->second, keys, keyCommand, 1);
+                if(fs.heldKeyPrev[key] && !fs.heldKey[key]) // set key off
+                {
+                    updateFingerKeyState(found->second, keys, key, false);
+                    fs.heldKeyPrev[key] = fs.heldKey[key];
+                }
+                else if(fs.heldKey[key]) // set key on and keep alive
+                {
+                    updateFingerKeyState(found->second, keys, key, true);
+                    fs.heldKeyPrev[key] = fs.heldKey[key];
+                }
             }
-            else // Keep current key alive
-            {
-                updateFingerKeyState(found->second, keys, found->second.heldKey, 1);
-            }
+            fs.alive = (keysCount > 0);
         }
         else
         {
             // Detect which key is pressed, and press it
-            int keyCommand = g_touchKeyMap.findTouchKey(f->x, f->y);
             FingerState st;
-            updateFingerKeyState(st, keys, keyCommand, 1);
+            int keysCount = g_touchKeyMap.findTouchKeys(finger_x, finger_y, st);
+            for(int key = 0; key < Controller::key_END; key++)
+            {
+                if(st.heldKey[key]) // set key on
+                {
+                    updateFingerKeyState(found->second, keys, key, true);
+                    st.heldKeyPrev[key] = st.heldKey[key];
+                }
+            }
+            st.alive = (keysCount > 0);
             if(st.alive)
-                m_fingers.insert({f->id, st});
+                m_fingers.insert({finger_id, st});
         }
-        D_pLogDebug("= Finger press: ID=%d, X=%.04f, Y=%.04f, P=%.04f", f->id, f->x, f->y, f->pressure);
+
+        D_pLogDebug("= Finger press: ID=%d, X=%.04f, Y=%.04f, P=%.04f",
+                static_cast<int>(finger_id), finger_x, finger_y, finger_pressure);
+
     }
 
     for(auto it = m_fingers.begin(); it != m_fingers.end();)
     {
         if(!it->second.alive)
         {
-            updateFingerKeyState(it->second, keys, it->second.heldKey, 0);
+            for(int key = 0; key < Controller::key_END; key++)
+                updateFingerKeyState(it->second, keys, key, false);
             it = m_fingers.erase(it);
             continue;
         }
