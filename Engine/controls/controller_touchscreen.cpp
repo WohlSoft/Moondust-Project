@@ -98,28 +98,27 @@ struct KeyPos
 
 KeyPos touchKeysMap[] =
 {
-    {7.0f, 483.0f, 134.0f, 604.0f, Controller::key_left},
-    {280.0f, 483.0f, 403.0f, 604.0f, Controller::key_right},
-    {147.0f, 338.0f, 270.0f, 455.0f, Controller::key_up},
-    {147.0f, 483.0f, 270.0f, 604.0f, Controller::key_down},
+    {1.0f, 414.0f, 91.0f, 504.0f, Controller::key_left},
+    {171.0f, 413.0f, 261.0f, 503.0f, Controller::key_right},
+    {85.0f, 328.0f, 175.0f, 418.0f, Controller::key_up},
+    {85.0f, 498.0f, 175.0f, 588.0f, Controller::key_down},
 
-    {897.0f, 459.0f, 1016.0f, 557.0f, Controller::key_jump},
-    {897.0f, 304.0f, 1016.0f, 418.0f, Controller::key_altjump},
-    {732.0f, 459.0f, 853.0f, 557.0f, Controller::key_run},
-    {732.0f, 304.0f, 853.0f, 418.0f, Controller::key_altrun},
+    {914.0f, 396.0f, 1005.0f, 487.0f, Controller::key_jump},
+    {914.0f, 290.0f, 1005.0f, 381.0f, Controller::key_altjump},
+    {807.0f, 431.0f, 898.0f, 522.0f, Controller::key_run},
+    {807.0f, 325.0f, 898.0f, 416.0f, Controller::key_altrun},
 
-    {897.0f, 142.0f, 1016.0f, 207.0f, Controller::key_drop},
-    {439.0f, 7.0f, 636.0f, 66.0f, Controller::key_start}
+    {542.0f, 537.0f, 693.0f, 587.0f, Controller::key_drop},
+    {331.0f, 537.0f, 482.0f, 587.0f, Controller::key_start}
 };
 
 static int findTouchKey(float x, float y)
 {
     const size_t touchKeyMapSize = sizeof(touchKeysMap) / sizeof(KeyPos);
     x *= 1024.0f;
-    y *= 612.f;
-    for(size_t i = 0; i < touchKeyMapSize; i++)
+    y *= 600.f;
+    for(const auto &p : touchKeysMap)
     {
-        const KeyPos &p = touchKeysMap[i];
         if(x >= p.x1 && x <= p.x2 && y >= p.y1 && y <= p.y2)
             return p.cmd;
     }
@@ -135,10 +134,10 @@ void TouchScreenController::update()
 
     int fingers = SDL_GetNumTouchFingers(dev);
 
-    for(auto it = m_fingers.begin(); it != m_fingers.end(); it++)
+    for(auto &m_finger : m_fingers)
     {
         // Mark as "dead"
-        it->second.alive = false;
+        m_finger.second.alive = false;
     }
 
     for(int i = 0; i < fingers; i++)
