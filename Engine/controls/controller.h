@@ -48,6 +48,7 @@ public:
      */
     enum commands
     {
+        key_BEGIN = 0,
         key_start = 0,
         key_left,
         key_right,
@@ -57,7 +58,8 @@ public:
         key_jump,
         key_altrun,
         key_altjump,
-        key_drop
+        key_drop,
+        key_END
     };
 
     /*!

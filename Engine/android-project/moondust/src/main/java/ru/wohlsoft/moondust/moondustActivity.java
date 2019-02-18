@@ -8,6 +8,34 @@ import java.util.Locale;
 
 import org.libsdl.app.SDLActivity;
 
+enum ControllerKeys
+{
+    key_BEGIN(0),
+    key_start(0),
+    key_left(1),
+    key_right(2),
+    key_up(3),
+    key_down(4),
+    key_run(5),
+    key_jump(6),
+    key_altrun(7),
+    key_altjump(8),
+    key_drop(9),
+    key_END(10);
+
+    private final int value;
+
+    ControllerKeys(final int newValue)
+    {
+        value = newValue;
+    }
+
+    public int getValue()
+    {
+        return value;
+    }
+}
+
 public class moondustActivity extends SDLActivity
 {
     protected String[] getLibraries()
@@ -51,4 +79,8 @@ public class moondustActivity extends SDLActivity
         addContentView(ll, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
     }
+
+    public static native void setKeyPos(int cmd, float left, float top, float right, float bottom);
+    public static native void setConvasSize(float width, float height);
+
 }
