@@ -26,11 +26,16 @@
 #include <settings/debugger.h>
 
 #ifdef _WIN32
-#include <windows.h>
-#include <dbghelp.h>
+#   include <windows.h>
+#   include <dbghelp.h>
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
-#include <execinfo.h>
-#include <unistd.h>
+#   include <execinfo.h>
+#   include <unistd.h>
+#elif defined(__ANDROID__)
+#   include <unwind.h>
+#   include <dlfcn.h>
+#   include <sstream>
+#   include <iomanip>
 #endif
 
 #include "crash_handler.h"
@@ -111,6 +116,55 @@ static bool GetStackWalk(std::string &outWalk)
 }
 #endif
 
+#ifdef __ANDROID__
+namespace AndroidStackTrace
+{
+    struct BacktraceState
+    {
+        void** current;
+        void** end;
+    };
+
+    static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context* context, void* arg)
+    {
+        BacktraceState* state = static_cast<BacktraceState*>(arg);
+        uintptr_t pc = _Unwind_GetIP(context);
+        if (pc) {
+            if (state->current == state->end) {
+                return _URC_END_OF_STACK;
+            } else {
+                *state->current++ = reinterpret_cast<void*>(pc);
+            }
+        }
+        return _URC_NO_REASON;
+    }
+
+}
+
+static size_t captureBacktrace(void** buffer, size_t max)
+{
+    AndroidStackTrace::BacktraceState state = {buffer, buffer + max};
+    _Unwind_Backtrace(AndroidStackTrace::unwindCallback, &state);
+
+    return state.current - buffer;
+}
+
+static void androidDumpBacktrace(std::ostringstream &os, void **buffer, size_t count)
+{
+    for (size_t idx = 0; idx < count; ++idx) {
+        const void* addr = buffer[idx];
+        const char* symbol = "";
+
+        Dl_info info;
+        if (dladdr(addr, &info) && info.dli_sname) {
+            symbol = info.dli_sname;
+        }
+
+        os << "  #" << std::setw(2) << idx << ": " << addr << "  " << symbol << "\n";
+    }
+}
+#endif
+
 static std::string getStacktrace()
 {
 #if defined(_WIN32)
@@ -123,6 +177,7 @@ static std::string getStacktrace()
     std::string stack;
     GetStackWalk(stack);
     return stack;
+
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
     void  *array[400];
     int size;
@@ -143,6 +198,15 @@ static std::string getStacktrace()
 
     D_pLogDebugNA("DONE!");
     return bkTrace;
+
+#elif defined(__ANDROID__)
+    const size_t max = 400;
+    void* buffer[max];
+    std::ostringstream oss;
+    androidDumpBacktrace(oss, buffer, captureBacktrace(buffer, max));
+    D_pLogDebugNA("DONE!");
+    return oss.str();
+
 #else
     return std::string("<Stack trace not supported for this platform!>");
 #endif
