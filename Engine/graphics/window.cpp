@@ -52,6 +52,21 @@ static  bool g_isRenderInit     = false;
 //! Is mouse cursor must be shown?
 static  bool g_showMouseCursor  = true;
 
+class ScreenSize
+{
+public:
+    int screenWidth = 0;
+    int screenHeight = 0;
+
+    ScreenSize()
+    {
+        SDL_DisplayMode dm;
+        SDL_GetCurrentDisplayMode(0, &dm);
+        screenWidth = dm.w;
+        screenHeight = dm.h;
+    }
+};
+
 static SDL_bool IsFullScreen(SDL_Window *win)
 {
     Uint32 flags = SDL_GetWindowFlags(win);
@@ -177,12 +192,9 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 #endif //0
 
 #ifdef __ANDROID__
-    int screenWidth = Width;
-    int screenHeight = Height;
-    SDL_DisplayMode dm;
-    SDL_GetCurrentDisplayMode(0, &dm);
-    screenWidth = dm.w;
-    screenHeight = dm.h;
+    ScreenSize screenSize;
+    int screenWidth = screenSize.screenWidth;
+    int screenHeight = screenSize.screenHeight;
 #else
 #   define screenWidth Width
 #   define screenHeight Height
@@ -308,13 +320,17 @@ void PGE_Window::changeViewportResolution(unsigned int newWidth, unsigned int ne
     Height = static_cast<int>(newHeight);
 
     GlRenderer::setVirtualSurfaceSize(Width, Height);
+#ifdef __ANDROID__
+    ScreenSize screenSize;
+    GlRenderer::setViewportSize(screenSize.screenWidth, screenSize.screenHeight);
+#else
     GlRenderer::setViewportSize(Width, Height);
     SDL_SetWindowMinimumSize(window, Width, Height);
 
-#ifndef __ANDROID__
     if(IsFullScreen(window) == SDL_FALSE)
         SDL_SetWindowSize(window, Width, Height);
 #endif
+    GlRenderer::resetViewport();
 }
 
 void PGE_Window::toggleVSync(bool vsync)
