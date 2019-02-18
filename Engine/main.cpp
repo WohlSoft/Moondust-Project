@@ -218,10 +218,14 @@ int main(int argc, char *argv[])
         if(!ConfigManager::config_name.empty())
             PGE_Window::setWindowTitle(ConfigManager::config_name);
 
-        if(ConfigManager::viewport_width != static_cast<unsigned int>(PGE_Window::Width) &&
+        pLogDebug("Current scene resolution: %d x %d", PGE_Window::Width, PGE_Window::Height);
+        pLogDebug("Config pack scene resolution: %d x %d", ConfigManager::viewport_width, ConfigManager::viewport_height);
+
+        if(ConfigManager::viewport_width != static_cast<unsigned int>(PGE_Window::Width) ||
            ConfigManager::viewport_height != static_cast<unsigned int>(PGE_Window::Height))
         {
             PGE_Window::changeViewportResolution(ConfigManager::viewport_width, ConfigManager::viewport_height);
+            pLogDebug("Using scene resolution: %d x %d", ConfigManager::viewport_width, ConfigManager::viewport_height);
         }
 
         pLogDebug("Configuration package successfully loaded!");

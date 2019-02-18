@@ -176,15 +176,27 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     }
 #endif //0
 
+#ifdef __ANDROID__
+    int screenWidth = Width;
+    int screenHeight = Height;
+    SDL_DisplayMode dm;
+    SDL_GetCurrentDisplayMode(0, &dm);
+    screenWidth = dm.w;
+    screenHeight = dm.h;
+#else
+#   define screenWidth Width
+#   define screenHeight Height
+#endif
+
     GlRenderer::setVirtualSurfaceSize(Width, Height);
-    GlRenderer::setViewportSize(Width, Height);
+    GlRenderer::setViewportSize(screenWidth, screenHeight);
     window = SDL_CreateWindow(WindowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
                           #ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
                               Width / 2, Height / 2,
                           #else
-                              Width, Height,
+                              screenWidth, screenHeight,
                           #endif //__EMSCRIPTEN__
                               SDL_WINDOW_RESIZABLE |
                               SDL_WINDOW_HIDDEN |
@@ -297,11 +309,12 @@ void PGE_Window::changeViewportResolution(unsigned int newWidth, unsigned int ne
 
     GlRenderer::setVirtualSurfaceSize(Width, Height);
     GlRenderer::setViewportSize(Width, Height);
-
     SDL_SetWindowMinimumSize(window, Width, Height);
 
+#ifndef __ANDROID__
     if(IsFullScreen(window) == SDL_FALSE)
         SDL_SetWindowSize(window, Width, Height);
+#endif
 }
 
 void PGE_Window::toggleVSync(bool vsync)
@@ -372,7 +385,7 @@ bool PGE_Window::uninit()
     GlRenderer::uninit();
     GraphicsHelps::closeFreeImage();
     SDL_DestroyWindow(window);
-    window = NULL;
+    window = nullptr;
     g_isRenderInit = false;
     return true;
 }
@@ -386,7 +399,7 @@ void PGE_Window::setCursorVisibly(bool viz)
 {
     g_showMouseCursor = viz;
 
-    if(window != NULL)
+    if(window != nullptr)
     {
         if(!IsFullScreen(window))
         {
@@ -400,7 +413,8 @@ void PGE_Window::setCursorVisibly(bool viz)
 
 void PGE_Window::clean()
 {
-    if(window == NULL) return;
+    if(window == nullptr)
+        return;
 
     GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     GlRenderer::clearScreen();
@@ -410,7 +424,7 @@ void PGE_Window::clean()
 
 int PGE_Window::setFullScreen(bool fs)
 {
-    if(window == NULL)
+    if(window == nullptr)
         return -1;
 
     if(fs != IsFullScreen(window))
