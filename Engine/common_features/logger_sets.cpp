@@ -177,6 +177,8 @@ static int pgeToAndroidLL(PGE_LogLevel level)
         return ANDROID_LOG_INFO;
     case PGE_LogLevel::Fatal:
         return ANDROID_LOG_FATAL;
+    case PGE_LogLevel::Info:
+        return ANDROID_LOG_INFO;
     case PGE_LogLevel::Critical:
         return ANDROID_LOG_ERROR;
     case PGE_LogLevel::Warning:
@@ -184,6 +186,8 @@ static int pgeToAndroidLL(PGE_LogLevel level)
     case PGE_LogLevel::Debug:
         return ANDROID_LOG_DEBUG;
     }
+    // For just in a case
+    return ANDROID_LOG_INFO;
 }
 #endif
 
