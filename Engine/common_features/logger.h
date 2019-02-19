@@ -26,9 +26,10 @@
 
 enum class PGE_LogLevel
 {
-    Debug    = 4,
-    Warning  = 3,
-    Critical = 2,
+    Debug    = 5,
+    Warning  = 4,
+    Critical = 3,
+    Info     = 2,
     Fatal    = 1,
     NoLog    = 0,
 };
@@ -44,8 +45,8 @@ extern "C"
 extern void pLogDebug(const char *format, ...);
 extern void pLogWarning(const char *format, ...);
 extern void pLogCritical(const char *format, ...);
-extern void pLogFatal(const char *format, ...);
 extern void pLogInfo(const char *format, ...);
+extern void pLogFatal(const char *format, ...);
 #ifdef __cplusplus
 }
 #endif
@@ -55,18 +56,18 @@ extern void WriteToLog(PGE_LogLevel type, std::string msg);
 #endif
 
 #ifdef DEBUG_BUILD
-// Variatic with arguments
+// Variadic with arguments
 #define D_pLogDebug(fmt, ...) pLogDebug(fmt, ##__VA_ARGS__)
 #define D_pLogWarning(fmt, ...) pLogWarning(fmt, ##__VA_ARGS__)
 #define D_pLogCritical(fmt, ...) pLogCritical(fmt, ##__VA_ARGS__)
-#define D_pLogFatal(fmt, ...) pLogFatal(fmt, ##__VA_ARGS__)
 #define D_pLogInfo(fmt, ...) pLogInfo(fmt, ##__VA_ARGS__)
+#define D_pLogFatal(fmt, ...) pLogFatal(fmt, ##__VA_ARGS__)
 // Standard without arguments to avoid "ISO C++11 requires at least one argument of the '...' in a variadic macro"
 #define D_pLogDebugNA(fmt) pLogDebug(fmt)
 #define D_pLogWarningNA(fmt) pLogWarning(fmt)
 #define D_pLogCriticalNA(fmt) pLogCritical(fmt)
-#define D_pLogFatalNA(fmt) pLogFatal(fmt)
 #define D_pLogInfoNA(fmt) pLogInfo(fmt)
+#define D_pLogFatalNA(fmt) pLogFatal(fmt)
 #else
 #define D_pLogDebug(fmt, ...)
 #define D_pLogWarning(fmt, ...)

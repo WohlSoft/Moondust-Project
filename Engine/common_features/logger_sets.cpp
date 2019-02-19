@@ -168,169 +168,109 @@ void CloseLog()
 #define OS_NEWLINE_LEN 1
 #endif
 
-void pLogDebug(const char *format, ...)
+#if defined(__ANDROID__)
+static int pgeToAndroidLL(PGE_LogLevel level)
 {
-    va_list arg;
+    switch(level)
+    {
+    case PGE_LogLevel::NoLog:
+        return ANDROID_LOG_INFO;
+    case PGE_LogLevel::Fatal:
+        return ANDROID_LOG_FATAL;
+    case PGE_LogLevel::Critical:
+        return ANDROID_LOG_ERROR;
+    case PGE_LogLevel::Warning:
+        return ANDROID_LOG_WARN;
+    case PGE_LogLevel::Debug:
+        return ANDROID_LOG_DEBUG;
+    }
+}
+#endif
+
+static void pLogGeneric(PGE_LogLevel level, const char *label, const char *format, va_list arg_in)
+{
+    va_list arg_back;
+    va_copy(arg_back, arg_in);
+    va_end(arg_in);
+
+#if defined(DEBUG_BUILD) && !defined(__ANDROID__)
+    va_copy(arg_in, arg_back);
+    std::fprintf(stdout, "%s: ", label);
+    std::vfprintf(stdout, format, arg_in);
+    std::fprintf(stdout, OS_NEWLINE);
+    std::fflush(stdout);
+    va_end(arg_in);
+#endif
 
 #if defined(__ANDROID__)
-    va_start(arg, format);
-    __android_log_vprint(ANDROID_LOG_DEBUG, "TRACKERS", format, arg);
-    va_end(arg);
+    va_copy(arg_in, arg_back);
+    __android_log_vprint(pgeToAndroidLL(level), "TRACKERS", format, arg_in);
+    va_end(arg_in);
 #endif
 
 #ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
 #endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Debug)
+
+    if(LogWriter::m_logLevel < level)
         return;
 
     MutexLocker mutex(&g_lockLocker);
     ((void)mutex);
-    va_start(arg, format);
+
 #ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Debug: %s\n", g_outputBuffer);
+    va_copy(arg_in, arg_back);
+    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg_in);
+    std::fprintf(stdout, "%s: %s\n", label, g_outputBuffer);
     std::fflush(stdout);
+    va_end(arg_in);
 #else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Debug: "), 1, 7);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
+    va_copy(arg_in, arg_back);
+    int len = SDL_snprintf(g_outputBuffer, OUT_BUFFER_SIZE, "%s: ", label);
+    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
+    len = SDL_vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg_in);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
+    va_end(arg_in);
 #endif
-    va_end(arg);
+
+    va_end(arg_back);
+}
+
+void pLogDebug(const char *format, ...)
+{
+    va_list arg;
+    va_start(arg, format);
+    pLogGeneric(PGE_LogLevel::Debug, "Debug", format, arg);
 }
 
 void pLogWarning(const char *format, ...)
 {
     va_list arg;
-
-#if defined(__ANDROID__)
     va_start(arg, format);
-    __android_log_vprint(ANDROID_LOG_WARN, "TRACKERS", format, arg);
-    va_end(arg);
-#endif
-
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Warning)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
-    va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Warning: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Warning: "), 1, 9);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
-    va_end(arg);
+    pLogGeneric(PGE_LogLevel::Warning, "Warning", format, arg);
 }
 
 void pLogCritical(const char *format, ...)
 {
     va_list arg;
-
-#if defined(__ANDROID__)
     va_start(arg, format);
-    __android_log_vprint(ANDROID_LOG_ERROR, "TRACKERS", format, arg);
-    va_end(arg);
-#endif
-
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Critical)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
-    va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Critical: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Critical: "), 1, 10);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
-    va_end(arg);
+    pLogGeneric(PGE_LogLevel::Critical, "Critical", format, arg);
 }
 
 void pLogFatal(const char *format, ...)
 {
     va_list arg;
-
-#if defined(__ANDROID__)
     va_start(arg, format);
-    __android_log_vprint(ANDROID_LOG_FATAL, "TRACKERS", format, arg);
-    va_end(arg);
-#endif
-
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
-    va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Fatal: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Fatal: "), 1, 7);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
-    va_end(arg);
+    pLogGeneric(PGE_LogLevel::Fatal, "Fatal", format, arg);
 }
 
 void pLogInfo(const char *format, ...)
 {
     va_list arg;
-
-#if defined(__ANDROID__)
     va_start(arg, format);
-    __android_log_vprint(ANDROID_LOG_INFO, "TRACKERS", format, arg);
-    va_end(arg);
-#endif
-
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
-    va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Info: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Info: "), 1, 6);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
-    va_end(arg);
+    pLogGeneric(PGE_LogLevel::Info, "Info", format, arg);
 }
 
 void WriteToLog(PGE_LogLevel type, std::string msg)
@@ -356,6 +296,9 @@ void LogWriter::WriteToLog(PGE_LogLevel type, const std::string &msg)
             break;
         case PGE_LogLevel::Critical:
             std::fprintf(stderr, "CRITICAL ERROR: %s\n", msg.c_str());
+            break;
+        case PGE_LogLevel::Info:
+            std::fprintf(stderr, "INFO: %s\n", msg.c_str());
             break;
         case PGE_LogLevel::Fatal:
             std::fprintf(stderr, "FATAL ERROR: %s\n", msg.c_str());
@@ -383,6 +326,11 @@ void LogWriter::WriteToLog(PGE_LogLevel type, const std::string &msg)
         if(m_logLevel < PGE_LogLevel::Critical)
             return;
         pLogCritical("%s", msg.c_str());
+        break;
+    case PGE_LogLevel::Info:
+        if(m_logLevel < PGE_LogLevel::Info)
+            return;
+        pLogInfo("%s", msg.c_str());
         break;
     case PGE_LogLevel::Fatal:
         if(m_logLevel < PGE_LogLevel::Fatal)
