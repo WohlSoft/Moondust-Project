@@ -1,4 +1,9 @@
 
+if(ANDROID)
+    # TODO: fix the OPUS build and remove this
+    set(AUDIOCODECS_ANDROID_CMAKE_FLAGS -DBUILD_OPUS=OFF)
+endif()
+
 # A collection of audio codecs libraries, dependency of SDL Mixer X
 ExternalProject_Add(
     AudioCodecs_Local
@@ -12,8 +17,8 @@ ExternalProject_Add(
         "-DSDL2_REPO_PATH=${DEPENDENCIES_INSTALL_DIR}"
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
         "-DCMAKE_DEBUG_POSTFIX=d"
-        $<$<BOOL:ANDROID>:-DBUILD_OPUS=OFF> # TODO: fix the OPUS build and remove this
         ${ANDROID_CMAKE_FLAGS}
+        ${AUDIOCODECS_ANDROID_CMAKE_FLAGS}
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DADLMIDI_USE_DOSBOX_EMULATOR=ON>
     DEPENDS SDL2_Local
 )
