@@ -181,7 +181,7 @@ Java_ru_wohlsoft_moondust_moondustActivity_setCanvasSize(JNIEnv *env, jclass typ
 
 
 TouchScreenController::TouchScreenController() :
-        Controller()
+        Controller(type_touchscreen)
 {
     m_touchDevicesCount = SDL_GetNumTouchDevices();
     SDL_GetWindowSize(PGE_Window::window, &m_screenWidth, &m_screenHeight);

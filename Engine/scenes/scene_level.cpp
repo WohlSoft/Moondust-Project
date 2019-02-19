@@ -105,6 +105,7 @@ LevelScene::LevelScene()
     /*********Controller********/
     m_player1Controller = g_AppSettings.openController(1);
     m_player2Controller = g_AppSettings.openController(2);
+    SDL_assert_release(m_player1Controller);//At least one controller must be defined
     /*********Controller********/
     /*********Pause menu*************/
     initPauseMenu1();
@@ -303,7 +304,9 @@ void LevelScene::update()
     }
 
     Scene::update();
-    tickAnimations(uTickf);
+
+    if(!m_isPauseMenu)
+        tickAnimations(uTickf);
 
     if(!m_isLevelContinues)
     {
@@ -482,7 +485,7 @@ void LevelScene::update()
 void LevelScene::processEvents()
 {
     Scene::processEvents();
-    if(!m_pauseMenu_opened)// Don't process controllers from the pause menu
+    if(!m_isPauseMenu)// Don't process controllers from the pause menu
     {
         m_player1Controller->update();
         m_player2Controller->update();
@@ -665,9 +668,10 @@ renderBlack:
 
 void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(m_doExit || isExit()) return;
+    if(m_doExit || isExit())
+        return;
 
-    if(m_isPauseMenu)
+    if(m_isPauseMenu && (m_player1Controller->type() != Controller::type_keyboard))
         m_pauseMenu.processKeyEvent(sdl_key);
 
     switch(sdl_key)
@@ -677,7 +681,11 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     case SDLK_RETURN:   // Toggle pause mode
     case SDLK_AC_BACK:
     {
-        if(m_doExit || m_isPauseMenu) break;
+        if(m_isPauseMenu && (m_player1Controller->type() == Controller::type_keyboard))
+            m_pauseMenu.processKeyEvent(sdl_key);
+
+        if(m_doExit || m_isPauseMenu)
+            break;
 
         m_isPauseMenu = true;
         break;

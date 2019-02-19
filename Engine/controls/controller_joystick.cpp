@@ -21,7 +21,7 @@
 
 
 JoystickController::JoystickController() :
-    Controller(),
+    Controller(type_other),
     m_joystickController(nullptr)
 {
     //    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();

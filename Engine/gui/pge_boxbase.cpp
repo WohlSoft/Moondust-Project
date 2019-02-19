@@ -229,7 +229,7 @@ void PGE_BoxBase::update(double tickDelay)
     switch(m_page)
     {
     case PageStart:
-        m_page++;
+        nextPage();
         break;
     case PageLoading:
         processLoader(tickDelay);

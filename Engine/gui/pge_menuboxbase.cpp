@@ -25,6 +25,7 @@
 #include <common_features/app_path.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
+#include <common_features/logger.h>
 
 #include "../data_configs/config_select_scene/scene_config_select.h"
 #include "../scenes/scene_level.h"
@@ -266,8 +267,13 @@ void PGE_MenuBoxBase::processKeyEvent(SDL_Keycode &key)
     if(m_page != PageRunning)
         return;
 
+    D_pLogDebug("== MenuBox key %d from ::processKeyEvent ==", key);
+
     if(m_keys.any_key_pressed)
+    {
+        D_pLogDebug("== MenuBox key %d from ::processKeyEvent [REJECTED by controller] ==", key);
         return;
+    }
 
     switch(key)
     {
@@ -309,6 +315,8 @@ void PGE_MenuBoxBase::processController()
 
     if(!m_keys.any_key_pressed)
         return; // Nothing to do
+
+    D_pLogDebug("== MenuBox key from %s ==", "controller");
 
     if(m_keys.up_pressed)
     {
@@ -378,6 +386,7 @@ void PGE_MenuBoxBase::processBox(double tickDelay)
             break;
 
         case SDL_KEYDOWN: // If pressed key
+            D_pLogDebug("== MenuBox key %d from poll Event ==", event.key.keysym.sym);
             processKeyEvent(event.key.keysym.sym);
             break;
 

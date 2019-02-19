@@ -20,7 +20,7 @@
 #include "controller_keyboard.h"
 
 KeyboardController::KeyboardController() :
-        Controller()
+        Controller(type_keyboard)
 {
     kmap.jump.val       = SDL_SCANCODE_Z;
     kmap.jump_alt.val   = SDL_SCANCODE_A;

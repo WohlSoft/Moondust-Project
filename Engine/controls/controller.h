@@ -33,15 +33,34 @@
 class Controller
 {
 public:
+    /**
+     * \brief Type of controller
+     */
+    enum ControllerType
+    {
+        //! Is a keyboard
+                type_keyboard = 0,
+        //! Is a touch screen of mobile device
+                type_touchscreen,
+        //! Any other controller: joystick, gamepad, etc.
+                type_other
+    };
+
     /*!
      * \brief Constructor
      */
-    Controller();
+    explicit Controller(ControllerType type = type_other);
 
     /*!
-     * \brief Desctructor
+     * \brief Destructor
      */
     virtual ~Controller() = default;
+
+    /**
+     * \brief Get type of current controller
+     * @return type of controller
+     */
+    ControllerType type() const;
 
     /*!
      * \brief Control key command codes
@@ -108,6 +127,8 @@ public:
 protected:
     //! Current control keys map
     KeyMap kmap;
+    //! Type of controller
+    const ControllerType m_controllerType;
 
 private:
     //! Array of registered controllabl objects

@@ -788,8 +788,11 @@ void WorldScene::processPauseMenuSwitchCharacter()
 
 void WorldScene::update()
 {
-    tickAnimations(uTickf);
     Scene::update();
+
+    if(!m_pauseMenu.isShown)
+        tickAnimations(uTickf);
+
     m_viewportFader.tickFader(uTickf);
     updateLua();
 
@@ -1039,10 +1042,8 @@ void WorldScene::fetchSideNodes(bool &side, std::vector<WorldNode * > &nodes, lo
 
             if(side)
             {
-                WldPathItem *u = dynamic_cast<WldPathItem *>(x);
-
+                auto *u = dynamic_cast<WldPathItem *>(x);
                 if(u) side = u->vizible;
-
                 if(side) break;
             }
             else continue;
@@ -1054,10 +1055,8 @@ void WorldScene::fetchSideNodes(bool &side, std::vector<WorldNode * > &nodes, lo
 
             if(side)
             {
-                WldLevelItem *u = dynamic_cast<WldLevelItem *>(x);
-
+                auto *u = dynamic_cast<WldLevelItem *>(x);
                 if(u) side = u->vizible;
-
                 if(side) break;
             }
             else continue;
@@ -1124,7 +1123,7 @@ void WorldScene::updateCenter()
         /*************MusicBox***************/
         if(x->type == WorldNode::musicbox)
         {
-            WldMusicBoxItem *y = dynamic_cast<WldMusicBoxItem *>(x);
+            auto *y = dynamic_cast<WldMusicBoxItem *>(x);
 
             if(y && y->collidePoint(px, py))
             {
@@ -1141,7 +1140,7 @@ void WorldScene::updateCenter()
         /*************Level Point***************/
         else if(x->type == WorldNode::level)
         {
-            WldLevelItem *y = dynamic_cast<WldLevelItem *>(x);
+            auto *y = dynamic_cast<WldLevelItem *>(x);
 
             if(y && y->collidePoint(px, py))
             {
@@ -1484,7 +1483,7 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     if(m_doExit)
         return;
 
-    if(m_pauseMenu.isShown)
+    if(m_pauseMenu.isShown && (m_player1Controller->type() != Controller::type_keyboard))
         m_pauseMenu.menu.processKeyEvent(sdl_key);
 
     switch(sdl_key)
@@ -1494,6 +1493,9 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     case SDLK_RETURN:// Enter
     case SDLK_AC_BACK:
     {
+        if(m_pauseMenu.isShown && (m_player1Controller->type() == Controller::type_keyboard))
+            m_pauseMenu.menu.processKeyEvent(sdl_key);
+
         if(m_pauseMenu.isShown || m_doExit || m_lockControls)
         {
             if(m_pathOpeningInProcess)
@@ -1525,7 +1527,9 @@ void WorldScene::processEvents()
 {
     Scene::processEvents();
     if(!m_pauseMenu.isOpened)// Don't process controllers from the pause menu
+    {
         m_player1Controller->update();
+    }
     m_controls_1 = m_player1Controller->keys;
     if(m_controls_1.start_pressed)
         onKeyboardPressedSDL(SDLK_ESCAPE, 0);

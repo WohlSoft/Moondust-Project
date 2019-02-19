@@ -20,9 +20,15 @@
 #include "controller.h"
 #include "controllable_object.h"
 
-Controller::Controller()
+Controller::Controller(ControllerType controllerType) :
+    m_controllerType(controllerType)
 {
     keys = noKeys();
+}
+
+Controller::ControllerType Controller::type() const
+{
+    return m_controllerType;
 }
 
 controller_keys Controller::noKeys()
