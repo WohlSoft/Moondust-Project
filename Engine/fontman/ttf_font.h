@@ -39,8 +39,8 @@
 //! FreeType library descriptor
 extern FT_Library  g_ft;
 
-bool initializeFreeType();
-void closeFreeType();
+extern bool initializeFreeType();
+extern void closeFreeType();
 
 class TtfFont : public BaseFontEngine
 {
@@ -56,7 +56,7 @@ public:
 
 
     PGE_Size textSize(std::string &text,
-                      uint32_t max_line_lenght = 0,
+                      uint32_t max_line_length = 0,
                       bool cut = false, uint32_t fontSize = 14);
 
     void printText(const std::string &text,
@@ -111,7 +111,7 @@ private:
 
     struct TheGlyph
     {
-        TheGlyph();
+        TheGlyph() = default;
         PGE_Texture *tx     = nullptr;
         uint32_t width  = 0;
         uint32_t height = 0;

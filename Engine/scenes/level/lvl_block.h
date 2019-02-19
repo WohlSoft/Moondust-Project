@@ -51,7 +51,7 @@ class LVL_Block : public PGE_Phys_Object
             int32_t t;
             int32_t r;
             int32_t b;
-        } sizable_border;
+        } sizable_border = {0, 0, 0, 0, 0};
 
         long animator_ID;
         double offset_x;

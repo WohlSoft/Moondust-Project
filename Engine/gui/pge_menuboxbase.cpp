@@ -316,7 +316,7 @@ void PGE_MenuBoxBase::processController()
     if(!m_keys.any_key_pressed)
         return; // Nothing to do
 
-    D_pLogDebug("== MenuBox key from %s ==", "controller");
+    D_pLogDebugNA("== MenuBox key from controller ==");
 
     if(m_keys.up_pressed)
     {

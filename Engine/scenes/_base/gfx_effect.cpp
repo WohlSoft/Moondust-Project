@@ -155,7 +155,7 @@ void Scene::launchEffect(const SpawnEffectDef &effect_def, bool centered)
         break;
     }
 
-    D_pLogDebug(fmt::format_ne("Effect-{0} FST{1}, FRM-{2}  ({3}..{4})",
+    D_pLogDebugNA(fmt::format_ne("Effect-{0} FST{1}, FRM-{2}  ({3}..{4})",
             effect_def.id, _effect.m_frameStyle, frms, frame1, frameE).c_str());
 
     if(frms <= 0)

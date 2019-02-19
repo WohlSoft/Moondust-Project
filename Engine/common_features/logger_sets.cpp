@@ -191,14 +191,12 @@ static int pgeToAndroidLL(PGE_LogLevel level)
 }
 #endif
 
-static void pLogGeneric(PGE_LogLevel level, const char *label, const char *format, va_list arg_in)
+static void pLogGeneric(PGE_LogLevel level, const char *label, const char *format, va_list arg)
 {
-    va_list arg_back;
-    va_copy(arg_back, arg_in);
-    va_end(arg_in);
+    va_list arg_in;
 
 #if defined(DEBUG_BUILD) && !defined(__ANDROID__)
-    va_copy(arg_in, arg_back);
+    va_copy(arg_in, arg);
     std::fprintf(stdout, "%s: ", label);
     std::vfprintf(stdout, format, arg_in);
     std::fprintf(stdout, OS_NEWLINE);
@@ -207,7 +205,7 @@ static void pLogGeneric(PGE_LogLevel level, const char *label, const char *forma
 #endif
 
 #if defined(__ANDROID__)
-    va_copy(arg_in, arg_back);
+    va_copy(arg_in, arg);
     __android_log_vprint(pgeToAndroidLL(level), "TRACKERS", format, arg_in);
     va_end(arg_in);
 #endif
@@ -224,13 +222,13 @@ static void pLogGeneric(PGE_LogLevel level, const char *label, const char *forma
     ((void)mutex);
 
 #ifdef __EMSCRIPTEN__
-    va_copy(arg_in, arg_back);
+    va_copy(arg_in, arg);
     int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg_in);
     std::fprintf(stdout, "%s: %s\n", label, g_outputBuffer);
     std::fflush(stdout);
     va_end(arg_in);
 #else
-    va_copy(arg_in, arg_back);
+    va_copy(arg_in, arg);
     int len = SDL_snprintf(g_outputBuffer, OUT_BUFFER_SIZE, "%s: ", label);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     len = SDL_vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg_in);
@@ -239,7 +237,6 @@ static void pLogGeneric(PGE_LogLevel level, const char *label, const char *forma
     va_end(arg_in);
 #endif
 
-    va_end(arg_back);
 }
 
 void pLogDebug(const char *format, ...)
@@ -247,6 +244,7 @@ void pLogDebug(const char *format, ...)
     va_list arg;
     va_start(arg, format);
     pLogGeneric(PGE_LogLevel::Debug, "Debug", format, arg);
+    va_end(arg);
 }
 
 void pLogWarning(const char *format, ...)
@@ -254,6 +252,7 @@ void pLogWarning(const char *format, ...)
     va_list arg;
     va_start(arg, format);
     pLogGeneric(PGE_LogLevel::Warning, "Warning", format, arg);
+    va_end(arg);
 }
 
 void pLogCritical(const char *format, ...)
@@ -261,6 +260,7 @@ void pLogCritical(const char *format, ...)
     va_list arg;
     va_start(arg, format);
     pLogGeneric(PGE_LogLevel::Critical, "Critical", format, arg);
+    va_end(arg);
 }
 
 void pLogFatal(const char *format, ...)
@@ -268,6 +268,7 @@ void pLogFatal(const char *format, ...)
     va_list arg;
     va_start(arg, format);
     pLogGeneric(PGE_LogLevel::Fatal, "Fatal", format, arg);
+    va_end(arg);
 }
 
 void pLogInfo(const char *format, ...)
@@ -275,6 +276,7 @@ void pLogInfo(const char *format, ...)
     va_list arg;
     va_start(arg, format);
     pLogGeneric(PGE_LogLevel::Info, "Info", format, arg);
+    va_end(arg);
 }
 
 void WriteToLog(PGE_LogLevel type, std::string msg)
