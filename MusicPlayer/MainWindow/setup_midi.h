@@ -39,7 +39,6 @@ private slots:
 
     void on_adl_tremolo_clicked();
     void on_adl_vibrato_clicked();
-    void on_adl_adlibMode_clicked();
     void on_adl_scalableModulation_clicked();
 
     void updateAutoArgs();

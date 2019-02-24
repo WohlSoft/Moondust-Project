@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>574</height>
+    <width>448</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,6 +38,42 @@
         <property name="maxVisibleItems">
          <number>50</number>
         </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="adlEmulatorLabel">
+        <property name="text">
+         <string>Chip emulator:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="adlEmulator">
+        <item>
+         <property name="text">
+          <string>Nuked OPL3 1.8</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Nuked OPL3 1.7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>DosBox OPL3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Opal OPL3 (by RAD)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>JavaOPL3 (OPL3.java)</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="3" column="0">
@@ -166,16 +202,6 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
        </widget>
       </item>
       <item row="7" column="0" colspan="2">
-       <widget class="QCheckBox" name="adl_adlibMode">
-        <property name="text">
-         <string>Ad-Lib drums mode</string>
-        </property>
-        <property name="tristate">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0" colspan="2">
        <widget class="QCheckBox" name="adl_scalableModulation">
         <property name="text">
          <string>Scalable modulation</string>
@@ -185,37 +211,11 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </property>
        </widget>
       </item>
-      <item row="9" column="0" colspan="2">
+      <item row="8" column="0" colspan="2">
        <widget class="QPushButton" name="resetDefaultADLMIDI">
         <property name="text">
          <string>Reset to defaults</string>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="adlEmulatorLabel">
-        <property name="text">
-         <string>Chip emulator:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="adlEmulator">
-        <item>
-         <property name="text">
-          <string>Nuked OPL3 1.8</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Nuked OPL3 1.7</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>DosBox OPL3</string>
-         </property>
-        </item>
        </widget>
       </item>
      </layout>
@@ -411,7 +411,7 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
        <widget class="QComboBox" name="opnEmulator">
         <item>
          <property name="text">
-          <string>Mame YM2612</string>
+          <string>Mame YM2612 (OPN2)</string>
          </property>
         </item>
         <item>
@@ -421,7 +421,17 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </item>
         <item>
          <property name="text">
-          <string>GENS 2.10</string>
+          <string>GENS 2.10 OPN2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Neko Project II OPNA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Mame YM2608 (OPNA)</string>
          </property>
         </item>
        </widget>

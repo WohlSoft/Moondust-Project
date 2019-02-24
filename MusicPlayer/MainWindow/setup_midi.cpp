@@ -42,7 +42,6 @@ SetupMidi::SetupMidi(QWidget *parent) :
     ui->adl_tremolo->setCheckState(Qt::PartiallyChecked);
     ui->adl_vibrato->setCheckState(Qt::PartiallyChecked);
     ui->adl_scalableModulation->setCheckState(Qt::PartiallyChecked);
-    ui->adl_adlibMode->setCheckState(Qt::PartiallyChecked);
 }
 
 SetupMidi::~SetupMidi()
@@ -79,11 +78,6 @@ void SetupMidi::loadSetup()
     ui->adl_vibrato->setCheckState((Qt::CheckState)setup.value("ADLMIDI-Vibrato", Qt::PartiallyChecked).toInt());
 #ifdef SDL_MIXER_X
     Mix_ADLMIDI_setVibrato(tristateToInt(ui->adl_vibrato->checkState()));
-#endif
-
-    ui->adl_adlibMode->setCheckState((Qt::CheckState)setup.value("ADLMIDI-AdLib-Drums-Mode", Qt::Unchecked).toInt());
-#ifdef SDL_MIXER_X
-    Mix_ADLMIDI_setAdLibMode(tristateToInt(ui->adl_adlibMode->checkState()));
 #endif
 
     ui->adl_scalableModulation->setCheckState((Qt::CheckState)setup.value("ADLMIDI-Scalable-Modulation", Qt::Unchecked).toInt());
@@ -124,7 +118,6 @@ void SetupMidi::saveSetup()
     setup.setValue("ADLMIDI-VolumeModel", ui->adlVolumeModel->currentIndex());
     setup.setValue("ADLMIDI-Tremolo", ui->adl_tremolo->checkState());
     setup.setValue("ADLMIDI-Vibrato", ui->adl_vibrato->checkState());
-    setup.setValue("ADLMIDI-AdLib-Drums-Mode", ui->adl_adlibMode->checkState());
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->adl_scalableModulation->checkState());
 
     setup.setValue("ADLMIDI-Bank", ui->adl_bank->text());
@@ -157,12 +150,42 @@ void SetupMidi::changeEvent(QEvent *e)
     }
 }
 
+/**
+ * @brief Convert menu ID into actual emulator ID
+ * @param index index of menu
+ * @return actual index of emulator
+ */
+static int toOpnEmu(int index)
+{
+#ifdef SDL_MIXER_X
+    switch(index)
+    {
+    case 0:
+        index = OPNMIDI_OPN2_EMU_MAME_OPN2;
+        break;
+    case 1:
+        index = OPNMIDI_OPN2_EMU_NUKED;
+        break;
+    case 2:
+        index = OPNMIDI_OPN2_EMU_GENS;
+        break;
+    case 3:
+        index = OPNMIDI_OPN2_EMU_NP2;
+        break;
+    case 4:
+        index = OPNMIDI_OPN2_EMU_MAME_OPNA;
+        break;
+    }
+#endif
+    return index;
+}
+
 void SetupMidi::on_opnEmulator_currentIndexChanged(int index)
 {
     if(m_setupLock)
         return;
 #ifdef SDL_MIXER_X
-    Mix_OPNMIDI_setEmulator(index);
+    Mix_OPNMIDI_setEmulator(toOpnEmu(index));
     restartForOpn();
 #endif
     updateAutoArgs();
@@ -323,22 +346,12 @@ void SetupMidi::on_adl_vibrato_clicked()
     updateAutoArgs();
 }
 
-void SetupMidi::on_adl_adlibMode_clicked()
-{
-    if(m_setupLock)
-        return;
-#ifdef SDL_MIXER_X
-    Mix_ADLMIDI_setScaleMod(tristateToInt(ui->adl_scalableModulation->checkState()));
-#endif
-    updateAutoArgs();
-}
-
 void SetupMidi::on_adl_scalableModulation_clicked()
 {
     if(m_setupLock)
         return;
 #ifdef SDL_MIXER_X
-    Mix_ADLMIDI_setScaleMod(tristateToInt(ui->adl_adlibMode->checkState()));
+    Mix_ADLMIDI_setScaleMod(tristateToInt(ui->adl_scalableModulation->checkState()));
 #endif
     updateAutoArgs();
 }
@@ -349,14 +362,12 @@ void SetupMidi::on_resetDefaultADLMIDI_clicked()
     ui->adl_bankId->setCurrentIndex(58);
     ui->adl_tremolo->setCheckState(Qt::PartiallyChecked);
     ui->adl_vibrato->setCheckState(Qt::PartiallyChecked);
-    ui->adl_adlibMode->setCheckState(Qt::PartiallyChecked);
     ui->adl_scalableModulation->setCheckState(Qt::PartiallyChecked);
     ui->adlVolumeModel->setCurrentIndex(0);
     ui->adlEmulator->setCurrentIndex(0);
 #ifdef SDL_MIXER_X
     Mix_ADLMIDI_setTremolo(tristateToInt(ui->adl_tremolo->checkState()));
     Mix_ADLMIDI_setVibrato(tristateToInt(ui->adl_vibrato->checkState()));
-    Mix_ADLMIDI_setAdLibMode(tristateToInt(ui->adl_adlibMode->checkState()));
     Mix_ADLMIDI_setScaleMod(tristateToInt(ui->adl_scalableModulation->checkState()));
     Mix_ADLMIDI_setVolumeModel(ui->adlVolumeModel->currentIndex());
     Mix_ADLMIDI_setBankID(ui->adl_bankId->currentIndex());
@@ -381,8 +392,6 @@ void SetupMidi::updateAutoArgs()
             args += QString("t%1;").arg(tristateToInt(ui->adl_tremolo->checkState()));
         if(ui->adl_vibrato->checkState() != Qt::PartiallyChecked)
             args += QString("v%1;").arg(tristateToInt(ui->adl_vibrato->checkState()));
-        if(ui->adl_adlibMode->checkState() != Qt::PartiallyChecked)
-            args += QString("a%1;").arg(tristateToInt(ui->adl_adlibMode->checkState()));
         if(ui->adl_scalableModulation->checkState() != Qt::PartiallyChecked)
             args += QString("m%1;").arg(tristateToInt(ui->adl_scalableModulation->checkState()));
         if(ui->adlVolumeModel->currentIndex() != 0)
