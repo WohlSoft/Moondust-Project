@@ -3063,7 +3063,7 @@ Do you want to save your changes?</source>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Herramientas de nivel</translation>
+        <translation type="vanished">Herramientas de nivel</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3120,6 +3120,10 @@ Do you want to save your changes?</source>
     <message>
         <source>&lt;Save file first&gt;</source>
         <translation>&lt;Guardar archivo primero&gt;</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6333,7 +6337,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Herramientas de nivel</translation>
+        <translation type="vanished">Herramientas de nivel</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -7308,7 +7312,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Herramientas de objetos de nivel</translation>
+        <translation type="vanished">Herramientas de objetos de nivel</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7533,7 +7537,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Herramientas del mundo</translation>
+        <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8584,6 +8588,18 @@ Por favor guarde primero.</translation>
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation>¡El paquete de configuración se cambió!
 Para comenzar a usar el nuevo paquete, necesita reiniciar el Editor. ¿Desea continuar?</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12253,7 +12269,7 @@ Do you want to save your changes?</source>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Herramientas del mundo</translation>
+        <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -12290,6 +12306,10 @@ Do you want to save your changes?</source>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

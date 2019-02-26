@@ -2841,7 +2841,7 @@ Deseja salvar sua mudanças?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Caixa de ferramentas de itens do nível</translation>
+        <translation type="vanished">Caixa de ferramentas de itens do nível</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -2893,6 +2893,10 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4891,7 +4895,7 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Caixa de ferramentas de itens do nível</translation>
+        <translation type="vanished">Caixa de ferramentas de itens do nível</translation>
     </message>
     <message>
         <source>CommonEdit Bar</source>
@@ -5461,11 +5465,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Caixa de ferramentas de objetos do nível</translation>
+        <translation type="vanished">Caixa de ferramentas de objetos do nível</translation>
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Caixa de ferramentas de itens do mundo</translation>
+        <translation type="vanished">Caixa de ferramentas de itens do mundo</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -6609,6 +6613,18 @@ Please save the file first.</source>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9551,7 +9567,7 @@ Deseja salvar sua mudanças?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Caixa de ferramentas do mundo</translation>
+        <translation type="vanished">Caixa de ferramentas do mundo</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -9588,6 +9604,10 @@ Deseja salvar sua mudanças?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Salve o arquivo primeiro caso deseje utilizar uma música personalizada.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

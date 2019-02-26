@@ -3092,7 +3092,7 @@ Do you want to save your changes?</source>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Панель элементов Уровня</translation>
+        <translation type="vanished">Панель элементов Уровня</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3149,6 +3149,10 @@ Do you want to save your changes?</source>
     <message>
         <source>&lt;Save file first&gt;</source>
         <translation>&lt;Сперва сохрание файл&gt;</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7032,7 +7036,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Объекты уровня</translation>
+        <translation type="vanished">Объекты уровня</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7134,7 +7138,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Панель элементов Уровня</translation>
+        <translation type="vanished">Панель элементов Уровня</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -7711,7 +7715,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Панель объектов Карты Мира</translation>
+        <translation type="vanished">Панель объектов Карты Мира</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8921,6 +8925,18 @@ Please, choose the engine application yourself!</source>
         <translation>Невозможно запустить тест, движок не найден:
 %1
 Пожалуйста, укажите приложение движка самостоятельно!</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12419,7 +12435,7 @@ Do you want to save your changes?</source>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Панель объектов карты мира</translation>
+        <translation type="vanished">Панель объектов карты мира</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -12456,6 +12472,10 @@ Do you want to save your changes?</source>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Пожалуйста, сначала сохраните файл, если вы хотите выбрать файл пользовательской музыки.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2744,7 +2744,7 @@ Czy chcesz zapisać zmiany?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Obiekty</translation>
+        <translation type="vanished">Obiekty</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -2800,6 +2800,10 @@ Czy chcesz zapisać zmiany?</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4660,7 +4664,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Obiekty poziomu</translation>
+        <translation type="vanished">Obiekty poziomu</translation>
     </message>
     <message>
         <source>CommonEdit Bar</source>
@@ -5074,11 +5078,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Obiekty poziomu</translation>
+        <translation type="vanished">Obiekty poziomu</translation>
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Obiekty świata</translation>
+        <translation type="vanished">Obiekty świata</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -6392,6 +6396,18 @@ Proszę  najpierw zapisać plik</translation>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9115,7 +9131,7 @@ Czy chcesz zapisać zmiany?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Obiekty Mapy świata</translation>
+        <translation type="vanished">Obiekty Mapy świata</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -9148,6 +9164,10 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Proszę zapisz plik, jeżeli chcesz wybrać własną muzykę.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

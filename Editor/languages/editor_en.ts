@@ -3134,7 +3134,7 @@ Do you want to save your changes?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Level Item toolbox</translation>
+        <translation type="vanished">Level Item toolbox</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3191,6 +3191,10 @@ Do you want to save your changes?</translation>
     <message>
         <source>&lt;Save file first&gt;</source>
         <translation>&lt;Save file first&gt;</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7026,7 +7030,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Level objects</translation>
+        <translation type="vanished">Level objects</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7144,7 +7148,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Level toolbox</translation>
+        <translation type="vanished">Level toolbox</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -7721,7 +7725,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>World Map Itembox</translation>
+        <translation type="vanished">World Map Itembox</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8927,6 +8931,18 @@ Please, choose the engine application yourself!</source>
         <translation>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12426,7 +12442,7 @@ Do you want to save your changes?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>World Map Itembox</translation>
+        <translation type="vanished">World Map Itembox</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -12463,6 +12479,10 @@ Do you want to save your changes?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Please save the file first if you want to select a custom music file.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -3050,7 +3050,7 @@ Möchtest du die Änderungen speichern?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Level toolbox</translation>
+        <translation type="vanished">Level toolbox</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3102,6 +3102,10 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6726,7 +6730,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Level objekte Toolbox</translation>
+        <translation type="vanished">Level objekte Toolbox</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7012,7 +7016,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Level toolbox</translation>
+        <translation type="vanished">Level toolbox</translation>
     </message>
     <message>
         <source>World map Toolbar</source>
@@ -7407,7 +7411,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Welt Toolbox</translation>
+        <translation type="vanished">Welt Toolbox</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8428,6 +8432,18 @@ Please save the file first.</source>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11625,7 +11641,7 @@ Möchtest du die Änderungen speichern?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Weltkarte Toolbox</translation>
+        <translation type="vanished">Weltkarte Toolbox</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -11662,6 +11678,10 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2652,7 +2652,7 @@ Vuoi salvare i cambiamenti?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Tavolozza del livello</translation>
+        <translation type="vanished">Tavolozza del livello</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -2708,6 +2708,10 @@ Vuoi salvare i cambiamenti?</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4948,7 +4952,7 @@ Seleziona la Mappa necessaria nella lista:</translation>
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Tavolozza Mappa</translation>
+        <translation type="vanished">Tavolozza Mappa</translation>
     </message>
     <message>
         <source>Go to left-bottom of the section</source>
@@ -5067,7 +5071,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover√
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Tavolozza livello</translation>
+        <translation type="vanished">Tavolozza livello</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
@@ -5381,7 +5385,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover√
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Tavolozza Oggetti</translation>
+        <translation type="vanished">Tavolozza Oggetti</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -6339,6 +6343,18 @@ Salva prima il file.</translation>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9397,7 +9413,7 @@ Vuoi salvare le modifiche?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Tavolozza Mappa</translation>
+        <translation type="vanished">Tavolozza Mappa</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -9430,6 +9446,10 @@ Vuoi salvare le modifiche?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Salva prima il file, se vuoi selezionare il file musicale personalizzato.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

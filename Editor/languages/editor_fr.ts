@@ -2483,10 +2483,6 @@ Do you want to save your changes?</source>
 <context>
     <name>LevelItemBox</name>
     <message>
-        <source>Level toolbox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Blocks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2520,6 +2516,10 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4222,10 +4222,6 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Level toolbox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warps and Doors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4485,10 +4481,6 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Restart level after fail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>World Toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4963,10 +4955,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Wrap Vertically</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Level objects tool box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5603,6 +5591,18 @@ Please save the file first.</source>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7939,10 +7939,6 @@ Do you want to save your changes?</source>
 <context>
     <name>WorldItemBox</name>
     <message>
-        <source>World Map Toolbox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terrain</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7968,6 +7964,10 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
