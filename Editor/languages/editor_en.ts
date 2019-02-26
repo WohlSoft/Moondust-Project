@@ -3194,7 +3194,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Level items browser</translation>
     </message>
 </context>
 <context>
@@ -8934,15 +8934,15 @@ Please, choose the engine application yourself!</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Level items browser</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
-        <translation type="unfinished"></translation>
+        <translation>Items browser with a search</translation>
     </message>
     <message>
         <source>World map items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>World map items browser</translation>
     </message>
 </context>
 <context>
@@ -12482,7 +12482,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>World map items browser</translation>
     </message>
 </context>
 <context>

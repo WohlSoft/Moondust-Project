@@ -3152,7 +3152,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Обозреватель элементов Уровня</translation>
     </message>
 </context>
 <context>
@@ -8928,15 +8928,15 @@ Please, choose the engine application yourself!</source>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Обозреватель элементов Уровня</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
-        <translation type="unfinished"></translation>
+        <translation>Оборзеватель элементов с поиском</translation>
     </message>
     <message>
         <source>World map items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Обозреватель элементов Карты Мира</translation>
     </message>
 </context>
 <context>
@@ -12475,7 +12475,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Обозреватель элементов Карты Мира</translation>
     </message>
 </context>
 <context>
