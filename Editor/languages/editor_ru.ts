@@ -3148,7 +3148,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation>&lt;Сперва сохрание файл&gt;</translation>
+        <translation>&lt;Сначала сохраните файл&gt;</translation>
     </message>
     <message>
         <source>Level items browser</source>
