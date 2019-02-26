@@ -18,7 +18,7 @@
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
-   <string>Level toolbox</string>
+   <string>Search</string>
   </property>
   <property name="currentIndex" stdset="0">
    <number>0</number>
