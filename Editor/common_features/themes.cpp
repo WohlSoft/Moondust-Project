@@ -53,6 +53,9 @@ void Themes::init()
     icons_map[world_24]     = QIcon(":/images/world.png");
     icons_map[npc_16]       = QIcon(":/images/coin.png");
 
+    icons_map[level_item_browser] = QIcon(":/images/item_browser_level.png");
+    icons_map[world_item_browser] = QIcon(":/images/item_browser_world.png");
+
     icons_map[file_open]    = QIcon(":/images/open.png");
     icons_map[file_new]     = QIcon(":/images/new.png");
     icons_map[file_save]    = QIcon(":/images/save.png");
@@ -380,6 +383,7 @@ void Themes::loadTheme(const QString &themeDir)
     guiset.endGroup();
 
     guiset.beginGroup("level");
+    loadIcon(guiset, "item-browser", level_item_browser);
     loadIcon(guiset, "section-settings", section_settings);
     loadIcon(guiset, "section-settings-16", section_settings_16);
     loadIcon(guiset, "doors", doors);
@@ -389,6 +393,10 @@ void Themes::loadTheme(const QString &themeDir)
     loadIcon(guiset, "quicksand", quicksand);
     loadIcon(guiset, "player1", draw_player1);
     loadIcon(guiset, "player2", draw_player2);
+    guiset.endGroup();
+
+    guiset.beginGroup("world");
+    loadIcon(guiset, "item-browser", world_item_browser);
     guiset.endGroup();
 
     guiset.beginGroup("level-items");

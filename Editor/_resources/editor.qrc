@@ -134,6 +134,8 @@
         <file>lunalua/lunalua_16.png</file>
         <file>constributors/AndrewPixel.png</file>
         <file>images/wrench_16x16.png</file>
+        <file>images/item_browser_level.png</file>
+        <file>images/item_browser_world.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>

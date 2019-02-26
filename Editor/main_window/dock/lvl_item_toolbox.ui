@@ -12,13 +12,13 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
+    <normaloff>:/images/item_browser_level.png</normaloff>:/images/item_browser_level.png</iconset>
   </property>
   <property name="allowedAreas">
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
-   <string>Search</string>
+   <string>Level items browser</string>
   </property>
   <property name="currentIndex" stdset="0">
    <number>0</number>

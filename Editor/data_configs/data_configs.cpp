@@ -150,6 +150,7 @@ bool dataconfigs::loadBasics()
 
     guiset.beginGroup("widgets-default-visibility");
     {
+        // Visibility
         guiset.read("lvl-itembox", editor.default_visibility.lvl_itembox, true);
         guiset.read("lvl-section-props", editor.default_visibility.lvl_section_props, false);
         guiset.read("lvl-warp-props", editor.default_visibility.lvl_warp_props, true);
@@ -165,6 +166,23 @@ bool dataconfigs::loadBasics()
         guiset.read("debugger-box", editor.default_visibility.debugger_box, false);
         guiset.read("bookmarks-box", editor.default_visibility.bookmarks_box, false);
         guiset.read("variables-box", editor.default_visibility.variables_box, false);
+
+        // Enforcing default value
+        guiset.read("lvl-itembox-enforce-default", editor.default_visibility_enforce.lvl_itembox, false);
+        guiset.read("lvl-section-props-enforce-default", editor.default_visibility_enforce.lvl_section_props, false);
+        guiset.read("lvl-warp-props-enforce-default", editor.default_visibility_enforce.lvl_warp_props, false);
+        guiset.read("lvl-layers-enforce-default", editor.default_visibility_enforce.lvl_layers, false);
+        guiset.read("lvl-events-enforce-default", editor.default_visibility_enforce.lvl_events, false);
+        guiset.read("lvl-search-enforce-default", editor.default_visibility_enforce.lvl_search, false);
+
+        guiset.read("wld-itembox-enforce-default", editor.default_visibility_enforce.wld_itembox, false);
+        guiset.read("wld-settings-enforce-default", editor.default_visibility_enforce.wld_settings, false);
+        guiset.read("wld-search-enforce-default", editor.default_visibility_enforce.wld_search, false);
+
+        guiset.read("tilesets-box-enforce-default", editor.default_visibility_enforce.tilesets_box, false);
+        guiset.read("debugger-box-enforce-default", editor.default_visibility_enforce.debugger_box, false);
+        guiset.read("bookmarks-box-enforce-default", editor.default_visibility_enforce.bookmarks_box, false);
+        guiset.read("variables-box-enforce-default", editor.default_visibility_enforce.variables_box, false);
     }
     guiset.endGroup();
 

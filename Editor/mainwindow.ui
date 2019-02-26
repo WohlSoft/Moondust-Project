@@ -1501,13 +1501,13 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
+     <normaloff>:/images/item_browser_level.png</normaloff>:/images/item_browser_level.png</iconset>
    </property>
    <property name="text">
-    <string>Level toolbox</string>
+    <string>Level items browser</string>
    </property>
    <property name="toolTip">
-    <string>Level objects tool box</string>
+    <string>Items browser with a search</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -1519,10 +1519,13 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
+     <normaloff>:/images/item_browser_world.png</normaloff>:/images/item_browser_world.png</iconset>
    </property>
    <property name="text">
-    <string>World Toolbox</string>
+    <string>World map items browser</string>
+   </property>
+   <property name="toolTip">
+    <string>Items browser with a search</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>

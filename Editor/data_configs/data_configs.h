@@ -75,7 +75,12 @@ struct EditorSetup
         bool debugger_box = false;
         bool bookmarks_box = false;
         bool variables_box = false;
-    } default_visibility;
+    };
+
+    //! Inital visibiltiy of toolboxes
+    WidgetVisiblity default_visibility;
+    //! Enforce default toolbox visibility and ignore last state
+    WidgetVisiblity default_visibility_enforce = {0};
 
     struct DefaultFileFormats
     {

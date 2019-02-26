@@ -45,6 +45,9 @@ public:
         world_24,
         npc_16,
 
+        level_item_browser,
+        world_item_browser,
+
         file_open,
         file_new,
         file_save,
