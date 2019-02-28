@@ -994,8 +994,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Force vertical background tiling</source>
-        <translatorcomment>“vertical background tiling”是什么意思？</translatorcomment>
-        <translation>强制使纵向背景留空</translation>
+        <translation>强制平铺纵向背景</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -5223,7 +5222,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Check for updates...</source>
-        <translation>正在检查更新……</translation>
+        <translation>检查更新……</translation>
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
