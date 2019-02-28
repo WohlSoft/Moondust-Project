@@ -965,6 +965,10 @@ Please save them before doing anything else.</source>
         <source>Does a segmentation violation</source>
         <translation>触发段落失败事件，用于崩溃测试</translation>
     </message>
+    <message>
+        <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportToImage</name>
@@ -1348,6 +1352,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1484,6 +1492,63 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation>抱歉，“撞击”事件已被“%1”事件占用。</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemBoxListModel</name>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation type="unfinished">名称</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation type="unfinished">编号</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uniform item sizes view</source>
+        <comment>Align elements inside of Item Box list in uniform view</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show custom elements</source>
+        <comment>Show custom elements only in Item Box List</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show standard elements</source>
+        <comment>Show standard elements only in Item Box List</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1842,6 +1907,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>偏好已复制：%1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemPath</name>
@@ -2107,11 +2176,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Text</source>
-        <translation>文本</translation>
+        <translation type="vanished">文本</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation>编号</translation>
+        <translation type="vanished">编号</translation>
     </message>
     <message>
         <source>[all]</source>
@@ -2119,7 +2188,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>ID (contents)</source>
-        <translation>编号 （包含）</translation>
+        <translation type="vanished">编号 （包含）</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -2482,7 +2551,7 @@ Do you want to save your changes?</source>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>关卡工具箱</translation>
+        <translation type="vanished">关卡工具箱</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -2494,19 +2563,19 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Filter:</source>
-        <translation>筛选：</translation>
+        <translation type="vanished">筛选：</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>文本</translation>
+        <translation type="vanished">文本</translation>
     </message>
     <message>
         <source>ID (contents)</source>
-        <translation>编号 （包含）</translation>
+        <translation type="vanished">编号 （包含）</translation>
     </message>
     <message>
         <source>Uniform icon size</source>
-        <translation>图标大小</translation>
+        <translation type="vanished">图标大小</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -2527,6 +2596,18 @@ Do you want to save your changes?</source>
     <message>
         <source>Copy graphic to episode folder</source>
         <translation>复制素材到作品目录</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2830,6 +2911,28 @@ To use LunaTester you should have right Integration configuration package!</sour
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
         <translation>启动 SMBX 引擎失败，原因： %1</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester has been successfully closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester is not running.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4245,7 +4348,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>关卡工具箱</translation>
+        <translation type="vanished">关卡工具箱</translation>
     </message>
     <message>
         <source>CommonEdit Bar</source>
@@ -4550,11 +4653,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>关卡对象</translation>
+        <translation type="vanished">关卡对象</translation>
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>大地图工具箱</translation>
+        <translation type="vanished">大地图工具箱</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -5175,7 +5278,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>[custom]</source>
-        <translation>[自定义]</translation>
+        <translation type="vanished">[自定义]</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
@@ -5203,7 +5306,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>To reload configuration you should close all opened files first.</source>
-        <translation>请关闭所有已打开的文件再重新加载配置包。</translation>
+        <translation type="vanished">请关闭所有已打开的文件再重新加载配置包。</translation>
     </message>
     <message>
         <source>Reloading configuration pack</source>
@@ -5224,7 +5327,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</source>
-        <translation>配置包已更换！
+        <translation type="vanished">配置包已更换！
 请重新启动应用以使用新配置包。</translation>
     </message>
     <message>
@@ -5671,6 +5774,27 @@ Please save the file first.</source>
     <message>
         <source>Please enter grid alignment size:</source>
         <translation>请输入网格对齐大小：</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The configuration pack has changed!
+To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6692,358 +6816,98 @@ The maximum number of Music Boxes is %2.</source>
         <source>Debug</source>
         <translation>调试</translation>
     </message>
+    <message>
+        <source>BGO user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initializing tileset categories...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtBoolEdit</name>
     <message>
         <source>True</source>
-        <translation>真</translation>
+        <translation type="vanished">真</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>假</translation>
+        <translation type="vanished">假</translation>
     </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
     <message>
         <source>True</source>
-        <translation>真</translation>
+        <translation type="vanished">真</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>假</translation>
+        <translation type="vanished">假</translation>
     </message>
 </context>
 <context>
     <name>QtCharEdit</name>
     <message>
         <source>Clear Char</source>
-        <translation>清除字符</translation>
-    </message>
-</context>
-<context>
-    <name>QtColorEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">清除字符</translation>
     </message>
 </context>
 <context>
     <name>QtColorPropertyManager</name>
     <message>
         <source>Red</source>
-        <translation>红</translation>
+        <translation type="vanished">红</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>绿</translation>
+        <translation type="vanished">绿</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>蓝</translation>
+        <translation type="vanished">蓝</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation>透明</translation>
-    </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Up Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wait</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IBeam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Backslash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Slash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pointing Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closed Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>What&apos;s This</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
-    <message>
-        <source>Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Strikeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kerning</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">透明</translation>
     </message>
 </context>
 <context>
     <name>QtKeySequenceEdit</name>
     <message>
         <source>Clear Shortcut</source>
-        <translation>清除快捷键</translation>
+        <translation type="vanished">清除快捷键</translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
-        <translation>语言</translation>
+        <translation type="vanished">语言</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation>地区</translation>
-    </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtRectFPropertyManager</name>
-    <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtRectPropertyManager</name>
-    <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtSizeFPropertyManager</name>
-    <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePropertyManager</name>
-    <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">地区</translation>
     </message>
 </context>
 <context>
     <name>QtTreePropertyBrowser</name>
     <message>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Value</source>
-        <translation>值</translation>
+        <translation type="vanished">值</translation>
     </message>
 </context>
 <context>
@@ -7221,121 +7085,121 @@ The maximum number of Music Boxes is %2.</source>
     <name>TilesetConfigureDialog</name>
     <message>
         <source>Tileset Editor</source>
-        <translation>图块组编辑器</translation>
+        <translation type="vanished">图块组编辑器</translation>
     </message>
     <message>
         <source>Items</source>
-        <translation>对象</translation>
+        <translation type="vanished">对象</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation>砖块</translation>
+        <translation type="vanished">砖块</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation>背景</translation>
+        <translation type="vanished">背景</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation>NPC</translation>
+        <translation type="vanished">NPC</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation>地形</translation>
+        <translation type="vanished">地形</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation>风景</translation>
+        <translation type="vanished">风景</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>路线</translation>
+        <translation type="vanished">路线</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>关卡</translation>
+        <translation type="vanished">关卡</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>类型：</translation>
+        <translation type="vanished">类型：</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>清除</translation>
+        <translation type="vanished">清除</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation type="vanished">保存</translation>
     </message>
     <message>
         <source>Tileset name:</source>
-        <translation>图块名称：</translation>
+        <translation type="vanished">图块名称：</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>打开</translation>
+        <translation type="vanished">打开</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation>高度：</translation>
+        <translation type="vanished">高度：</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation>宽度：</translation>
+        <translation type="vanished">宽度：</translation>
     </message>
     <message>
         <source>Show custom only</source>
-        <translation>只显示自定义素材</translation>
+        <translation type="vanished">只显示自定义素材</translation>
     </message>
     <message>
         <source>Current Level/World specific</source>
-        <translation>只在当前关卡 / 世界</translation>
+        <translation type="vanished">只在当前关卡 / 世界</translation>
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation>删除此图块</translation>
+        <translation type="vanished">删除此图块</translation>
     </message>
     <message>
         <source>Show default only</source>
-        <translation>只显示默认素材</translation>
+        <translation type="vanished">只显示默认素材</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation>清除图块组</translation>
+        <translation type="vanished">清除图块组</translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation>要清除图块并新建吗？未保存的数据将会丢失。</translation>
+        <translation type="vanished">要清除图块并新建吗？未保存的数据将会丢失。</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation>请输入文件名！</translation>
+        <translation type="vanished">请输入文件名！</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation>文件名：</translation>
+        <translation type="vanished">文件名：</translation>
     </message>
     <message>
         <source>Open Tileset</source>
-        <translation>打开图块组</translation>
+        <translation type="vanished">打开图块组</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation>图块组加载失败！</translation>
+        <translation type="vanished">图块组加载失败！</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation>图块组加载失败！
+        <translation type="vanished">图块组加载失败！
 数据可能已损坏！</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation>图块编辑器</translation>
+        <translation type="vanished">图块编辑器</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
-        <translation>不再显示此信息。</translation>
+        <translation type="vanished">不再显示此信息。</translation>
     </message>
     <message>
         <source>Welcome to tileset editor!
@@ -7347,7 +7211,7 @@ I.e. there are will work globally for this configuration package and can be used
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
         <translatorcomment>Tileset 是什么意思？</translatorcomment>
-        <translation>欢迎来到图块组编辑器！
+        <translation type="vanished">欢迎来到图块组编辑器！
 
 你可以使用本工具创建图块组，将会保存在下方目录：
 %1
@@ -7357,19 +7221,216 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation>移除图块组</translation>
+        <translation type="vanished">移除图块组</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation>要删除此图块组吗？</translation>
+        <translation type="vanished">要删除此图块组吗？</translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation>图块已移除</translation>
+        <translation type="vanished">图块已移除</translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation>图块已删除！</translation>
+        <translation type="vanished">图块已删除！</translation>
+    </message>
+</context>
+<context>
+    <name>TilesetEditor</name>
+    <message>
+        <source>Tileset Editor</source>
+        <translation type="unfinished">图块组编辑器</translation>
+    </message>
+    <message>
+        <source>Items</source>
+        <translation type="unfinished">对象</translation>
+    </message>
+    <message>
+        <source>Block</source>
+        <translation type="unfinished">砖块</translation>
+    </message>
+    <message>
+        <source>BGO</source>
+        <translation type="unfinished">背景</translation>
+    </message>
+    <message>
+        <source>NPC</source>
+        <translation type="unfinished">NPC</translation>
+    </message>
+    <message>
+        <source>Terrain tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished">路线</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation type="unfinished">关卡</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">类型：</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">清除</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <source>Tileset name:</source>
+        <translation type="unfinished">图块名称：</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">打开</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation type="unfinished">高度：</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished">宽度：</translation>
+    </message>
+    <message>
+        <source>Show custom only</source>
+        <translation type="unfinished">只显示自定义素材</translation>
+    </message>
+    <message>
+        <source>Current Level/World specific</source>
+        <translation type="unfinished">只在当前关卡 / 世界</translation>
+    </message>
+    <message>
+        <source>Delete this tileset</source>
+        <translation type="unfinished">删除此图块</translation>
+    </message>
+    <message>
+        <source>Show default only</source>
+        <translation type="unfinished">只显示默认素材</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by Name</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search by ID (Contained)</source>
+        <comment>Element search criteria</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <comment>Search settings pop-up menu, sort submenu</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Sort by name</comment>
+        <translation type="unfinished">名称</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <comment>Sort by ID</comment>
+        <translation type="unfinished">编号</translation>
+    </message>
+    <message>
+        <source>Descending</source>
+        <comment>Descending sorting order</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clean tileset editor</source>
+        <translation type="unfinished">清除图块组</translation>
+    </message>
+    <message>
+        <source>Do you want to clean tileset editor to create a new tileset?</source>
+        <translation type="unfinished">要清除图块并新建吗？未保存的数据将会丢失。</translation>
+    </message>
+    <message>
+        <source>Please enter a filename!</source>
+        <translation type="unfinished">请输入文件名！</translation>
+    </message>
+    <message>
+        <source>Filename:</source>
+        <translation type="unfinished">文件名：</translation>
+    </message>
+    <message>
+        <source>Open Tileset</source>
+        <translation type="unfinished">打开图块组</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!</source>
+        <translation type="unfinished">图块组加载失败！</translation>
+    </message>
+    <message>
+        <source>Failed to load tileset!
+Data may be corrupted!</source>
+        <translation type="unfinished">图块组加载失败！
+数据可能已损坏！</translation>
+    </message>
+    <message>
+        <source>Tileset box editor</source>
+        <translation type="unfinished">图块编辑器</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show this message again.</source>
+        <translation type="unfinished">不再显示此信息。</translation>
+    </message>
+    <message>
+        <source>Welcome to tileset editor!
+
+This is an editor of global tilesets.
+All tilesets which made here will be saved in this folder:
+%1
+I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
+
+If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
+        <translation type="unfinished">欢迎来到图块组编辑器！
+
+你可以使用本工具创建图块组，将会保存在下方目录：
+%1
+它们可以作为此配置包的全局图块组使用。
+
+如果你要创建的是包含自定义素材的关卡或大地图图块组，请使用打开工具箱，然后找到“自定义”标签中的“新图块组”。</translation>
+    </message>
+    <message>
+        <source>Remove tileset</source>
+        <translation type="unfinished">移除图块组</translation>
+    </message>
+    <message>
+        <source>Do you want to remove this tileset?</source>
+        <translation type="unfinished">要删除此图块组吗？</translation>
+    </message>
+    <message>
+        <source>Tileset removed</source>
+        <translation type="unfinished">图块已移除</translation>
+    </message>
+    <message>
+        <source>Tileset has been removed!</source>
+        <translation type="unfinished">图块已删除！</translation>
     </message>
 </context>
 <context>
@@ -7393,7 +7454,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>TextLabel</source>
-        <translation>文本标签</translation>
+        <translation type="vanished">文本标签</translation>
     </message>
     <message>
         <source>Category:</source>
@@ -7476,6 +7537,10 @@ Data may be corrupted!</source>
     <message>
         <source>Filename:</source>
         <translation>文件名：</translation>
+    </message>
+    <message>
+        <source>Category order weight</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7640,6 +7705,13 @@ Data may be corrupted!</source>
     <message>
         <source>One or more SSL errors has occurred: %1</source>
         <translation>发生一个或多个 SSL 错误： %1</translation>
+    </message>
+</context>
+<context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8366,7 +8438,7 @@ Do you want to save your changes?</source>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>大地图道具栏</translation>
+        <translation type="vanished">大地图道具栏</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -8390,7 +8462,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>[Silence]</source>
-        <translation>[无音乐]</translation>
+        <translation type="vanished">[无音乐]</translation>
     </message>
     <message>
         <source>Please, save file</source>
@@ -8399,6 +8471,10 @@ Do you want to save your changes?</source>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>请先保存文件后再选择音乐。</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8458,6 +8534,14 @@ Do you want to save your changes?</source>
     <message>
         <source>Counting stars...</source>
         <translation>正在计算星星数量……</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
