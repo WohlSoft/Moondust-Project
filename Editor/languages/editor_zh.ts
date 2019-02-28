@@ -967,7 +967,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>新建和删除对象选择对话框以分析内存泄漏情况</translation>
     </message>
 </context>
 <context>
@@ -1354,7 +1354,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑原始用户数据……</translation>
     </message>
 </context>
 <context>
@@ -1495,7 +1495,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑原始用户数据……</translation>
     </message>
 </context>
 <context>
@@ -1503,52 +1503,53 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>按名称搜索</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>按编号搜索</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>按编号搜索（包含）</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>排序</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished">编号</translation>
+        <translation>编号</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>降序</translation>
     </message>
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>“Uniform item sizes view”</translatorcomment>
+        <translation>对象大小统一视图</translation>
     </message>
     <message>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>只显示自定义素材</translation>
     </message>
     <message>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>只显示默认素材</translation>
     </message>
 </context>
 <context>
@@ -1909,7 +1910,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑原始用户数据……</translation>
     </message>
 </context>
 <context>
@@ -2599,15 +2600,15 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>关卡对象浏览器</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;请先保存文件&gt;</translation>
     </message>
 </context>
 <context>
@@ -2916,23 +2917,23 @@ To use LunaTester you should have right Integration configuration package!</sour
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>结束进程</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>结束 LunaTester 进程，使引擎重新开始。</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 已成功关闭。</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 未运行。</translation>
     </message>
 </context>
 <context>
@@ -5777,24 +5778,25 @@ Please save the file first.</source>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>关卡对象浏览器</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
-        <translation type="unfinished"></translation>
+        <translation>带搜索功能的对象浏览器</translation>
     </message>
     <message>
         <source>World map items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>大地图对象浏览器</translation>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>重新加载配置包时，所有已打开的文件将会关闭并在重新加载后还原。要继续吗？</translation>
     </message>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>配置包已更换！
+您需要重新启动应用才能使用新配置包。要继续吗？</translation>
     </message>
 </context>
 <context>
@@ -6818,23 +6820,23 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>BGO user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>更改背景用户数据</translation>
     </message>
     <message>
         <source>Block user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>更改砖块用户数据</translation>
     </message>
     <message>
         <source>NPC user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>更改 NPC 用户数据</translation>
     </message>
     <message>
         <source>Initializing tileset categories...</source>
-        <translation type="unfinished"></translation>
+        <translation>正在初始化图块组目录……</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>从左到右</translation>
     </message>
 </context>
 <context>
@@ -7240,164 +7242,164 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <name>TilesetEditor</name>
     <message>
         <source>Tileset Editor</source>
-        <translation type="unfinished">图块组编辑器</translation>
+        <translation>图块组编辑器</translation>
     </message>
     <message>
         <source>Items</source>
-        <translation type="unfinished">对象</translation>
+        <translation>对象</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">砖块</translation>
+        <translation>砖块</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished">背景</translation>
+        <translation>背景</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished">NPC</translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>地形</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>场景</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished">路线</translation>
+        <translation>路线</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished">关卡</translation>
+        <translation>关卡</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">类型：</translation>
+        <translation>类型：</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">清除</translation>
+        <translation>清除</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Tileset name:</source>
-        <translation type="unfinished">图块名称：</translation>
+        <translation>图块组名称：</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished">打开</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">高度：</translation>
+        <translation>高度：</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">宽度：</translation>
+        <translation>宽度：</translation>
     </message>
     <message>
         <source>Show custom only</source>
-        <translation type="unfinished">只显示自定义素材</translation>
+        <translation>只显示自定义素材</translation>
     </message>
     <message>
         <source>Current Level/World specific</source>
-        <translation type="unfinished">只在当前关卡 / 世界</translation>
+        <translation>只在当前关卡 / 世界</translation>
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation type="unfinished">删除此图块</translation>
+        <translation>删除此图块</translation>
     </message>
     <message>
         <source>Show default only</source>
-        <translation type="unfinished">只显示默认素材</translation>
+        <translation>只显示默认素材</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <source>Search settings</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索设置</translation>
     </message>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>按名称搜索</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>按编号搜索</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>按编号搜索（包含）</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>排序</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished">编号</translation>
+        <translation>编号</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>降序</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation type="unfinished">清除图块组</translation>
+        <translation>清除图块组</translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation type="unfinished">要清除图块并新建吗？未保存的数据将会丢失。</translation>
+        <translation>要清除图块组并新建吗？未保存的数据将会丢失。</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="unfinished">请输入文件名！</translation>
+        <translation>请输入文件名！</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation type="unfinished">文件名：</translation>
+        <translation>文件名：</translation>
     </message>
     <message>
         <source>Open Tileset</source>
-        <translation type="unfinished">打开图块组</translation>
+        <translation>打开图块组</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation type="unfinished">图块组加载失败！</translation>
+        <translation>图块组加载失败！</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="unfinished">图块组加载失败！
+        <translation>图块组加载失败！
 数据可能已损坏！</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation type="unfinished">图块编辑器</translation>
+        <translation>图块编辑器</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
-        <translation type="unfinished">不再显示此信息。</translation>
+        <translation>不再显示此信息。</translation>
     </message>
     <message>
         <source>Welcome to tileset editor!
@@ -7408,7 +7410,7 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation type="unfinished">欢迎来到图块组编辑器！
+        <translation>欢迎来到图块组编辑器！
 
 你可以使用本工具创建图块组，将会保存在下方目录：
 %1
@@ -7418,19 +7420,19 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation type="unfinished">移除图块组</translation>
+        <translation>移除图块组</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation type="unfinished">要删除此图块组吗？</translation>
+        <translation>要删除此图块组吗？</translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation type="unfinished">图块已移除</translation>
+        <translation>图块组已删除</translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation type="unfinished">图块已删除！</translation>
+        <translation>图块组已删除！</translation>
     </message>
 </context>
 <context>
@@ -7540,7 +7542,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7711,7 +7713,7 @@ Data may be corrupted!</source>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation type="unfinished"></translation>
+        <translation>正在编辑用户数据</translation>
     </message>
 </context>
 <context>
@@ -8474,7 +8476,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>大地图对象浏览器</translation>
     </message>
 </context>
 <context>
@@ -8537,11 +8539,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>
-        <translation type="unfinished"></translation>
+        <translation>当游戏即将初次加载关卡时的名称。</translation>
     </message>
     <message>
         <source>Main hub level:</source>
-        <translation type="unfinished"></translation>
+        <translation>中心关卡：</translation>
     </message>
 </context>
 <context>
