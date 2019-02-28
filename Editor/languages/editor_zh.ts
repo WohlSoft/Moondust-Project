@@ -776,7 +776,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Please add the Item IDs which will be in this custom group:</source>
-        <translation>请在此自定义分组内添加要计数的物品：</translation>
+        <translation>请在此自定义分组内添加要计数的对象：</translation>
     </message>
     <message>
         <source>Item type:</source>
@@ -3585,10 +3585,10 @@ Warp entries:		%5
 Physical env. zones:	%6
 </source>
         <translation>玩家起点数量：	 %1
-砖块数量：			 %2
+砖块数量：		 %2
 背景物品数量：	 %3
-NPC 数量： %4
-传送点数量：		 %5
+NPC 数量：	 %4
+传送点数量：	 %5
 物理区域数量：	 %6
 </translation>
     </message>
@@ -4544,7 +4544,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Section 1</source>
-        <translation>场景1</translation>
+        <translation>场景 1</translation>
     </message>
     <message>
         <source>Section 2</source>
@@ -6988,7 +6988,7 @@ The maximum number of Music Boxes is %2.</source>
     <name>TestingSettings</name>
     <message>
         <source>2 Player settings</source>
-        <translation>双人模式设置</translation>
+        <translation>玩家 2 设置</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
@@ -7079,7 +7079,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>1 Player settings</source>
-        <translation>单人模式设置</translation>
+        <translation>玩家 1 设置</translation>
     </message>
 </context>
 <context>
@@ -8098,10 +8098,10 @@ Levels:	%4
 Music boxes:		%5
 </source>
         <translation>地形数量：		%1
-风景数量：	%2
+风景数量：		%2
 路线数量：		%3
 关卡数量：		%4
-音乐数量：	%5
+音乐数量：		%5
 </translation>
     </message>
     <message>
