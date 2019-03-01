@@ -62,7 +62,7 @@
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>一个关卡里最多的动态物品的数量。超上限则会暂停。</translation>
+        <translation>单关卡中最多的动画对象数量。超上限则会暂停。</translation>
     </message>
     <message>
         <source>Animation items limit</source>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>Associate file extensions</source>
-        <translation>关联文件类型</translation>
+        <translation>关联文件扩展</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -148,7 +148,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation>自动展开以下事件标签</translation>
+        <translation>自动展开下列事件标签</translation>
     </message>
     <message>
         <source>Common</source>
@@ -184,11 +184,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation>强制卷轴区域</translation>
+        <translation>强制卷轴场景</translation>
     </message>
     <message>
         <source>Layer visibility</source>
-        <translation>显示 / 隐藏指定图层</translation>
+        <translation>显示或隐藏图层</translation>
     </message>
     <message>
         <source>Section settings</source>
@@ -208,15 +208,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Warp</source>
-        <translation>传送点</translation>
+        <translation>水管</translation>
     </message>
     <message>
         <source>Projectile</source>
-        <translation>发射器</translation>
+        <translation>喷射</translation>
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation>延迟 (秒) :</translation>
+        <translation>延迟 (秒) ：</translation>
     </message>
     <message>
         <source>Direction</source>
@@ -224,7 +224,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Left</source>
-        <translation>左</translation>
+        <translation>向左</translation>
     </message>
     <message>
         <source>Random</source>
@@ -232,7 +232,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Right</source>
-        <translation>右</translation>
+        <translation>向右</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
@@ -746,7 +746,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>啊！PGE 编辑器程序崩溃啦！(&lt;br&gt;崩溃详细信息:</translation>
+        <translation>啊！PGE 编辑器程序崩溃啦！&lt;br&gt;崩溃详细信息:</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -1734,7 +1734,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>World-Music-ID: %1</source>
-        <translation>音大地图乐编号：%1</translation>
+        <translation>大地图音乐编号：%1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2983,7 +2983,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Source and Destination sections should be selected!</source>
-        <translation>必须选择源文件和目标文件！</translation>
+        <translation>必须选择源文件中场景和目标文件中场景！</translation>
     </message>
     <message>
         <source>Empty section</source>
@@ -3114,7 +3114,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Replace music to:</source>
-        <translation>改变音乐为：</translation>
+        <translation>更换音乐为：</translation>
     </message>
     <message>
         <source>Set background</source>
@@ -3158,7 +3158,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Run</source>
-        <translation>Run 键</translation>
+        <translation>奔跑键</translation>
     </message>
     <message>
         <source>Down</source>
@@ -3170,15 +3170,15 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Drop</source>
-        <translation>Drop</translation>
+        <translation>Drop 键</translation>
     </message>
     <message>
         <source>Alt-run</source>
-        <translation>Alt-run 键</translation>
+        <translation>第二奔跑键</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation>开始键</translation>
     </message>
     <message>
         <source>Jump</source>
@@ -3186,7 +3186,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Alt-jump</source>
-        <translation>Alt-jump 键</translation>
+        <translation>第二跳跃键</translation>
     </message>
     <message>
         <source>Trigger event</source>
@@ -5498,7 +5498,7 @@ Do you want to abort current testing process?</source>
     </message>
     <message>
         <source>World map testing of saved file</source>
-        <translation>正在从存档文件测试大地图</translation>
+        <translation>从存档文件测试大地图</translation>
     </message>
     <message>
         <source>File is not saved!
@@ -5518,7 +5518,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>PGE 引擎测试中</translation>
+        <translation>PGE 引擎测试</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -5528,7 +5528,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation>您好！您正在试图使用 PGE 引擎测试关卡。
-PGE 引擎目前处于内测阶段，因此很多功能都未完善。如果您的关卡或地图属于 SMBX 1.3 引擎，并且要测试的是它的完整性，请您直接在 SMBX 上测试，PGE 仅限于测试 PGE 引擎本身和带 PGE 引擎专属的关卡。</translation>
+PGE 引擎目前处于内测阶段，因此很多功能都未完善。如果您的关卡或地图属于 SMBX 1.3 引擎，并且要测试的是它的完整性，请您直接在 SMBX 上测试，PGE 仅限于测试 PGE 引擎本身和带 PGE 引擎专属功能的关卡。</translation>
     </message>
     <message>
         <source>Sub-windows</source>
@@ -7071,11 +7071,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>1 player</source>
-        <translation>单人模式</translation>
+        <translation>单人</translation>
     </message>
     <message>
         <source>2 player</source>
-        <translation>双人模式</translation>
+        <translation>双人</translation>
     </message>
     <message>
         <source>1 Player settings</source>
@@ -8423,8 +8423,8 @@ Installed LunaLUA partially extends than limits.</source>
     <message>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation>“%1”的修改未保存。
-是否保存所做修改？</translation>
+        <translation>&apos;%1&apos;已被修改。
+要保存所做的改动吗？</translation>
     </message>
     <message>
         <source> not saved</source>
