@@ -41,7 +41,7 @@ class Scene_Effect
     public:
         Scene_Effect();
         Scene_Effect(const Scene_Effect &e);
-        ~Scene_Effect();
+        ~Scene_Effect() = default;
 
         void init();
 

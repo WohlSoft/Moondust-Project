@@ -246,9 +246,6 @@ Scene_Effect::Scene_Effect(const Scene_Effect &e) :
     m_animator(e.m_animator)
 {}
 
-Scene_Effect::~Scene_Effect()
-{}
-
 void Scene_Effect::init()
 {}
 
