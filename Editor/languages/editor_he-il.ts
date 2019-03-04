@@ -4328,15 +4328,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 0 (Ctrl+1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 1 (Ctrl+2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4344,15 +4336,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 2 (Ctrl+3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 3 (Ctrl+4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4360,15 +4344,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 4 (Ctrl+5)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 5 (Ctrl+6)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4376,15 +4352,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 6 (Ctrl+7)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 7</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 7 (Ctrl+8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4392,15 +4360,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 8 (Ctrl+9)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 9</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 9 (Ctrl+0)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4408,15 +4368,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 11</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 11 (Ctrl+Alt+2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4424,15 +4376,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 13</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 13 (Ctrl+Alt+4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4440,15 +4384,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 15</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 15 (Ctrl+Alt+6)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4456,15 +4392,7 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 17</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 17 (Ctrl+Alt+8)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4472,23 +4400,11 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 19</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section 20</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Section 20 (Alt+1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

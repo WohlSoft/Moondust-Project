@@ -6307,7 +6307,7 @@ show the current playable character(s) and number of lives.</translation>
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Section 0 (Ctrl+1)</translation>
+        <translation type="vanished">Section 0 (Ctrl+1)</translation>
     </message>
     <message>
         <source>Section 1</source>
@@ -6479,83 +6479,83 @@ show the current playable character(s) and number of lives.</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Section 1 (Ctrl+2)</translation>
+        <translation type="vanished">Section 1 (Ctrl+2)</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Section 2 (Ctrl+3)</translation>
+        <translation type="vanished">Section 2 (Ctrl+3)</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Section 3 (Ctrl+4)</translation>
+        <translation type="vanished">Section 3 (Ctrl+4)</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Section 4 (Ctrl+5)</translation>
+        <translation type="vanished">Section 4 (Ctrl+5)</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Section 5 (Ctrl+6)</translation>
+        <translation type="vanished">Section 5 (Ctrl+6)</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Section 6 (Ctrl+7)</translation>
+        <translation type="vanished">Section 6 (Ctrl+7)</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Section 7 (Ctrl+8)</translation>
+        <translation type="vanished">Section 7 (Ctrl+8)</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Section 8 (Ctrl+9)</translation>
+        <translation type="vanished">Section 8 (Ctrl+9)</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Section 9 (Ctrl+0)</translation>
+        <translation type="vanished">Section 9 (Ctrl+0)</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Section 10 (Ctrl+Alt+1)</translation>
+        <translation type="vanished">Section 10 (Ctrl+Alt+1)</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Section 11 (Ctrl+Alt+2)</translation>
+        <translation type="vanished">Section 11 (Ctrl+Alt+2)</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Section 12 (Ctrl+Alt+3)</translation>
+        <translation type="vanished">Section 12 (Ctrl+Alt+3)</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Section 13 (Ctrl+Alt+4)</translation>
+        <translation type="vanished">Section 13 (Ctrl+Alt+4)</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Section 14 (Ctrl+Alt+5)</translation>
+        <translation type="vanished">Section 14 (Ctrl+Alt+5)</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Section 15 (Ctrl+Alt+6)</translation>
+        <translation type="vanished">Section 15 (Ctrl+Alt+6)</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Section 16 (Ctrl+Alt+7)</translation>
+        <translation type="vanished">Section 16 (Ctrl+Alt+7)</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Section 17 (Ctrl+Alt+8)</translation>
+        <translation type="vanished">Section 17 (Ctrl+Alt+8)</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Section 18 (Ctrl+Alt+9)</translation>
+        <translation type="vanished">Section 18 (Ctrl+Alt+9)</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Section 19 (Ctrl+Alt+0)</translation>
+        <translation type="vanished">Section 19 (Ctrl+Alt+0)</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Section 20 (Alt+1)</translation>
+        <translation type="vanished">Section 20 (Alt+1)</translation>
     </message>
     <message>
         <source>Wrap Horizontally</source>

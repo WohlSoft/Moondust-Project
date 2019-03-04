@@ -4868,87 +4868,87 @@ Seleziona la Mappa necessaria nella lista:</translation>
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Sezione 0 (Ctrl+1)</translation>
+        <translation type="vanished">Sezione 0 (Ctrl+1)</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Sezione 1 (Ctrl+2)</translation>
+        <translation type="vanished">Sezione 1 (Ctrl+2)</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Sezione 2 (Ctrl+3)</translation>
+        <translation type="vanished">Sezione 2 (Ctrl+3)</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Sezione 3 (Ctrl+4)</translation>
+        <translation type="vanished">Sezione 3 (Ctrl+4)</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Sezione 4 (Ctrl+5)</translation>
+        <translation type="vanished">Sezione 4 (Ctrl+5)</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Sezione 5 (Ctrl+6)</translation>
+        <translation type="vanished">Sezione 5 (Ctrl+6)</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Sezione 6 (Ctrl+7)</translation>
+        <translation type="vanished">Sezione 6 (Ctrl+7)</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Sezione 7 (Ctrl+8)</translation>
+        <translation type="vanished">Sezione 7 (Ctrl+8)</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Sezione 8 (Ctrl+9)</translation>
+        <translation type="vanished">Sezione 8 (Ctrl+9)</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Sezione 9 (Ctrl+0)</translation>
+        <translation type="vanished">Sezione 9 (Ctrl+0)</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Sezione 10 (Ctrl+Alt+1)</translation>
+        <translation type="vanished">Sezione 10 (Ctrl+Alt+1)</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Sezione 11 (Ctrl+Alt+2)</translation>
+        <translation type="vanished">Sezione 11 (Ctrl+Alt+2)</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Sezione 12 (Ctrl+Alt+3)</translation>
+        <translation type="vanished">Sezione 12 (Ctrl+Alt+3)</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Sezione 13 (Ctrl+Alt+4)</translation>
+        <translation type="vanished">Sezione 13 (Ctrl+Alt+4)</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Sezione 14 (Ctrl+Alt+5)</translation>
+        <translation type="vanished">Sezione 14 (Ctrl+Alt+5)</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Sezione 15 (Ctrl+Alt+6)</translation>
+        <translation type="vanished">Sezione 15 (Ctrl+Alt+6)</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Sezione 16 (Ctrl+Alt+7)</translation>
+        <translation type="vanished">Sezione 16 (Ctrl+Alt+7)</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Sezione 17 (Ctrl+Alt+8)</translation>
+        <translation type="vanished">Sezione 17 (Ctrl+Alt+8)</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Sezione 18 (Ctrl+Alt+9)</translation>
+        <translation type="vanished">Sezione 18 (Ctrl+Alt+9)</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Sezione 19 (Ctrl+Alt+0)</translation>
+        <translation type="vanished">Sezione 19 (Ctrl+Alt+0)</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Sezione 20 (Alt+1)</translation>
+        <translation type="vanished">Sezione 20 (Alt+1)</translation>
     </message>
     <message>
         <source>World Toolbox</source>

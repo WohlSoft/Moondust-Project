@@ -4977,87 +4977,87 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>场景 0 （Ctrl+1）</translation>
+        <translation type="vanished">场景 0 （Ctrl+1）</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>场景 1 （Ctrl+2）</translation>
+        <translation type="vanished">场景 1 （Ctrl+2）</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>场景 2 （Ctrl+3）</translation>
+        <translation type="vanished">场景 2 （Ctrl+3）</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>场景 3 （Ctrl+4）</translation>
+        <translation type="vanished">场景 3 （Ctrl+4）</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>场景 4 （Ctrl+5）</translation>
+        <translation type="vanished">场景 4 （Ctrl+5）</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>场景 5 （Ctrl+6）</translation>
+        <translation type="vanished">场景 5 （Ctrl+6）</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>场景 6 （Ctrl+7）</translation>
+        <translation type="vanished">场景 6 （Ctrl+7）</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>场景 7 （Ctrl+8）</translation>
+        <translation type="vanished">场景 7 （Ctrl+8）</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>场景 8 （Ctrl+9）</translation>
+        <translation type="vanished">场景 8 （Ctrl+9）</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>场景 9 （Ctrl+0）</translation>
+        <translation type="vanished">场景 9 （Ctrl+0）</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>场景 10 （Ctrl+Alt+1）</translation>
+        <translation type="vanished">场景 10 （Ctrl+Alt+1）</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>场景 11 （Ctrl+Alt+2）</translation>
+        <translation type="vanished">场景 11 （Ctrl+Alt+2）</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>场景 12 （Ctrl+Alt+3）</translation>
+        <translation type="vanished">场景 12 （Ctrl+Alt+3）</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>场景 13 （Ctrl+Alt+4）</translation>
+        <translation type="vanished">场景 13 （Ctrl+Alt+4）</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>场景 14 （Ctrl+Alt+5）</translation>
+        <translation type="vanished">场景 14 （Ctrl+Alt+5）</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>场景 15 （Ctrl+Alt+6）</translation>
+        <translation type="vanished">场景 15 （Ctrl+Alt+6）</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>场景 16 （Ctrl+Alt+7）</translation>
+        <translation type="vanished">场景 16 （Ctrl+Alt+7）</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>场景 17 （Ctrl+Alt+8）</translation>
+        <translation type="vanished">场景 17 （Ctrl+Alt+8）</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>场景 18 （Ctrl+Alt+9）</translation>
+        <translation type="vanished">场景 18 （Ctrl+Alt+9）</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>场景 19 （Ctrl+Alt+0）</translation>
+        <translation type="vanished">场景 19 （Ctrl+Alt+0）</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>场景 20 （Alt+1）</translation>
+        <translation type="vanished">场景 20 （Alt+1）</translation>
     </message>
     <message>
         <source>Apply (Enter)</source>

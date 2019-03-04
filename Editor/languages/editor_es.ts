@@ -5869,83 +5869,83 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Sección 10 (Ctrl+10) {1 ?} {2)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {1 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Sección 10 (Ctrl+10) {2 ?} {3)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {2 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Sección 10 (Ctrl+10) {3 ?} {4)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {3 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Sección 10 (Ctrl+10) {4 ?} {5)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {4 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Sección 10 (Ctrl+10) {5 ?} {6)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {5 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Sección 10 (Ctrl+10) {6 ?} {7)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {6 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Sección 10 (Ctrl+10) {7 ?} {8)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {7 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Sección 10 (Ctrl+10) {8 ?} {9)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {8 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Sección 10 (Ctrl+10) {9 ?} {0)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {9 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Sección 21 (Alt+1) {20 ?} {1)?}</translation>
+        <translation type="vanished">Sección 21 (Alt+1) {20 ?} {1)?}</translation>
     </message>
     <message>
         <source>Prevent overlap</source>
@@ -6695,7 +6695,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Sección 10 (Ctrl+10) {0 ?} {1)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {0 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 1</source>
