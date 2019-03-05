@@ -65,7 +65,7 @@
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation>Music will automatically play when you open a level file</translation>
+        <translation>Music will play automatically when you open a level file</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
@@ -148,15 +148,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Layer movement</source>
-        <translation>Layer movement</translation>
+        <translation>Layer Movement</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation>Trigger event</translation>
+        <translation>Trigger Event</translation>
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation>Hold buttons</translation>
+        <translation>Hold Buttons</translation>
     </message>
     <message>
         <source>Section Settings</source>
@@ -164,7 +164,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>NPC settings</source>
-        <translation>NPC settings</translation>
+        <translation>NPC Settings</translation>
     </message>
     <message>
         <source>Generator</source>
@@ -208,7 +208,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Warp type:</source>
-        <translation>Warp type:</translation>
+        <translation>Warp Type:</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -232,7 +232,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation>Level Item toolbox</translation>
+        <translation>Level Item Toolbox</translation>
     </message>
     <message>
         <source>Extra</source>
@@ -240,11 +240,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation>Note: Some of those settings will take change on application restart</translation>
+        <translation>Note: Some settings will apply their changes only after restarting the editor</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation>Enable auto-scaling on High-DPI monitors</translation>
+        <translation>Enable auto-scaling on high-DPI monitors</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
@@ -256,7 +256,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>World Map Item toolbox</source>
-        <translation>World Map Item toolbox</translation>
+        <translation>World Map Item Toolbox</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
@@ -300,7 +300,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Tileset Item toolbox</source>
-        <translation>Tileset Item toolbox</translation>
+        <translation>Tileset Item Toolbox</translation>
     </message>
     <message>
         <source>Logging</source>
@@ -3194,7 +3194,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Level items browser</translation>
+        <translation>Search Browser</translation>
     </message>
 </context>
 <context>
@@ -3413,7 +3413,7 @@ Otherwise it will be very limited.</translation>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>Termiates frozen loader thread to allow you to run a test again.</translation>
+        <translation>Terminates frozen loader thread to allow you to run a test again.</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
@@ -8934,15 +8934,15 @@ Please, choose the engine application yourself!</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Level items browser</translation>
+        <translation>Search Browser</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
-        <translation>Items browser with a search</translation>
+        <translation>Search Browser</translation>
     </message>
     <message>
         <source>World map items browser</source>
-        <translation>World map items browser</translation>
+        <translation>Search Browser</translation>
     </message>
 </context>
 <context>
@@ -12482,7 +12482,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation>World map items browser</translation>
+        <translation>Search Browser</translation>
     </message>
 </context>
 <context>
