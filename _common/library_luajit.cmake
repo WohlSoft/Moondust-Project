@@ -1,6 +1,6 @@
 
 set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT ON)
-if(ANDROID OR EMSCRIPTEN OR MSVC)
+if(EMSCRIPTEN OR MSVC)
     # Disable LuaJIT for unsupported platforms
     set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT OFF)
 endif()

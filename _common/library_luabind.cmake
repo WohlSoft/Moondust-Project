@@ -3,6 +3,7 @@
 
 if(PGE_USE_LUAJIT)
     set(LUAJIT_USE_CMAKE_FLAG -DUSE_LUAJIT=ON)
+    message("***** LuaJIT Lua in use! *****")
 else()
     set(LUAJIT_USE_CMAKE_FLAG -DUSE_LUAJIT=OFF)
     message("***** PUC-Rio Lua in use! *****")
