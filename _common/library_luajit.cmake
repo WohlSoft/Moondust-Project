@@ -8,6 +8,21 @@ endif()
 option(PGE_USE_LUAJIT "Use LuaJIT lua engine" ${PGE_USE_LUAJIT_ENABLED_BY_DEFAULT})
 
 if(PGE_USE_LUAJIT)
+    ExternalProject_Add(
+        LuaJIT_local
+        PREFIX ${CMAKE_BINARY_DIR}/external/luabind
+        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz
+        CMAKE_ARGS
+        "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
+        "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
+        "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+        "-DCMAKE_DEBUG_POSTFIX=d"
+        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+        ${ANDROID_CMAKE_FLAGS}
+        ${LUAJIT_USE_CMAKE_FLAG}
+        $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
+    )
+elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
     if(WIN32)
         set(MAKECMD "mingw32-make")
     else()
