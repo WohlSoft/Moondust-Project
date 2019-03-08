@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>271</width>
+    <width>293</width>
     <height>671</height>
    </rect>
   </property>
@@ -162,9 +162,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-1466</y>
-       <width>255</width>
-       <height>1851</height>
+       <y>-24</y>
+       <width>276</width>
+       <height>1818</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -217,32 +217,16 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
-           <width>235</width>
-           <height>426</height>
+           <y>-55</y>
+           <width>247</width>
+           <height>453</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
+         <layout class="QGridLayout" name="gridLayout" columnstretch="0,1000">
           <item row="1" column="0" colspan="2">
            <widget class="QCheckBox" name="LVLEvent_disableSmokeEffect">
             <property name="text">
              <string>Disable smoke effects</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0">
-           <widget class="QPushButton" name="LVLEvent_Layer_TogDel">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">-</string>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -258,22 +242,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="4" column="0">
-           <widget class="QPushButton" name="LVLEvent_Layer_HideDel">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">-</string>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
           </item>
           <item row="2" column="0" colspan="2">
            <widget class="QLabel" name="label_15">
@@ -311,42 +279,10 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QPushButton" name="LVLEvent_Layer_HideAdd">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">+</string>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QListWidget" name="LVLEvents_layerList">
             <property name="verticalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOn</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QPushButton" name="LVLEvent_Layer_ShowDel">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">-</string>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -362,38 +298,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="7" column="0">
-           <widget class="QPushButton" name="LVLEvent_Layer_ShowAdd">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">+</string>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="QPushButton" name="LVLEvent_Layer_TogAdd">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true">+</string>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
           </item>
           <item row="6" column="0" colspan="2">
            <widget class="QLabel" name="label_16">
@@ -467,6 +371,66 @@
             </property>
            </spacer>
           </item>
+          <item row="3" column="0">
+           <widget class="QToolButton" name="LVLEvent_Layer_HideAdd">
+            <property name="text">
+             <string notr="true">+</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextOnly</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QToolButton" name="LVLEvent_Layer_HideDel">
+            <property name="text">
+             <string notr="true">-</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextOnly</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QToolButton" name="LVLEvent_Layer_ShowAdd">
+            <property name="text">
+             <string notr="true">+</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextOnly</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QToolButton" name="LVLEvent_Layer_ShowDel">
+            <property name="text">
+             <string notr="true">-</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextOnly</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QToolButton" name="LVLEvent_Layer_TogAdd">
+            <property name="text">
+             <string notr="true">+</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextOnly</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QToolButton" name="LVLEvent_Layer_TogDel">
+            <property name="text">
+             <string notr="true">-</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextOnly</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </widget>
@@ -519,7 +483,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>249</width>
+           <width>262</width>
            <height>161</height>
           </rect>
          </property>
@@ -553,7 +517,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
+             <enum>Qt::ClickFocus</enum>
             </property>
             <property name="decimals">
              <number>15</number>
@@ -592,7 +556,7 @@
              <bool>false</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
+             <enum>Qt::ClickFocus</enum>
             </property>
             <property name="decimals">
              <number>15</number>
@@ -687,7 +651,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>249</width>
+           <width>262</width>
            <height>146</height>
           </rect>
          </property>
@@ -858,7 +822,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>243</width>
+           <width>288</width>
            <height>529</height>
           </rect>
          </property>
@@ -1275,8 +1239,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>235</width>
-           <height>156</height>
+           <width>247</width>
+           <height>160</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
@@ -1439,8 +1403,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>235</width>
-           <height>134</height>
+           <width>262</width>
+           <height>119</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_7">
@@ -1570,7 +1534,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>249</width>
+           <width>262</width>
            <height>98</height>
           </rect>
          </property>
