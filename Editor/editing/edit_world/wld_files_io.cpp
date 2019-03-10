@@ -28,6 +28,7 @@
 #include <common_features/logger.h>
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
+#include <common_features/file_keeper.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
 #include <main_window/global_settings.h>
@@ -257,6 +258,16 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         return false;
     }
 
+    FileKeeper fileKeeper = FileKeeper(fileName);
+    if(!fileKeeper.isValid())
+    {
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
+                                     .arg(fileName)
+                                     .arg(tr("Can't create a temporary backup file")));
+        return false;
+    }
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
@@ -301,7 +312,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                 isSMBX64limit = false;
         }
 
-        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, file_format))
+        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, static_cast<unsigned int>(file_format)))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -342,6 +353,9 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
+
+    // Remove temporary backup file
+    fileKeeper.remove();
 
     return true;
 }

@@ -186,6 +186,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/crashhandler.cpp
     common_features/dir_copy.cpp
     common_features/edit_mode_base.cpp
+    common_features/file_keeper.cpp
     common_features/flowlayout.cpp
     common_features/graphics_funcs.cpp
     common_features/graphicsworkspace.cpp

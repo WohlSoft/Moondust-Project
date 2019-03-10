@@ -17,6 +17,7 @@
  */
 
 #include <common_features/main_window_ptr.h>
+#include <common_features/file_keeper.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_x.h>
@@ -127,11 +128,22 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
                              .arg(NpcData.errorString));
         return false;
     }
+
+    FileKeeper fileKeeper = FileKeeper(fileName);
+    if(!fileKeeper.isValid())
+    {
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
+                                     .arg(fileName)
+                                     .arg(tr("Can't create a temporary backup file")));
+        return false;
+    }
+
     GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
 
     QFileInfo fileI(fileName);
-    unsigned int old_npc_id = npc_id;
-    npc_id = FileName_to_npcID(fileI.baseName());
+    unsigned long old_npc_id = npc_id;
+    npc_id = static_cast<unsigned long>(FileName_to_npcID(fileI.baseName()));
     setDefaultData(npc_id);
     ui->CurrentNPCID->setText( QString::number(npc_id) );
 
@@ -155,6 +167,10 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
+
+    // Remove temporary backup file
+    fileKeeper.remove();
+
     return true;
 }
 

@@ -29,7 +29,7 @@ class EditMode : public QObject
 {
     Q_OBJECT
 public:
-    explicit EditMode(QString toolTitle, QGraphicsScene *ParentScene = 0, QObject *parent = 0);
+    explicit EditMode(QString toolTitle, QGraphicsScene *ParentScene = nullptr, QObject *parent = nullptr);
     virtual ~EditMode();
     virtual void set();
     QString name() const;

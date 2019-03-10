@@ -25,6 +25,7 @@
 #include <common_features/main_window_ptr.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
+#include <common_features/file_keeper.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <data_functions/smbx64_validation_messages.h>
@@ -174,7 +175,7 @@ RetrySave:
 
     while(isNotDone)
     {
-        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter);
+        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter, QFileDialog::DontUseNativeDialog);
 
         if(fileName.isEmpty())
             return false;
@@ -273,6 +274,16 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
         return false;
     }
 
+    FileKeeper fileKeeper = FileKeeper(fileName);
+    if(!fileKeeper.isValid())
+    {
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
+                                     .arg(fileName)
+                                     .arg(tr("Can't create a temporary backup file")));
+        return false;
+    }
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // Prepare data for saving
@@ -320,6 +331,9 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
         m_mw->AddToRecentFiles(fileName);
         m_mw->SyncRecentFiles();
     }
+
+    // Remove temporary backup file
+    fileKeeper.remove();
 
     //Refresh Strict SMBX64 flag
     emit m_mw->setSMBX64Strict(LvlData.meta.smbx64strict);
