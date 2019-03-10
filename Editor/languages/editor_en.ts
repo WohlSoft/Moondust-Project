@@ -3114,6 +3114,10 @@ Do you want to save your changes?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Loading Doors...</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation>Can&apos;t create a temporary backup file</translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -9249,6 +9253,10 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; has been modified.
 Do you want to save your changes?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation>Can&apos;t create a temporary backup file</translation>
+    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -12436,6 +12444,10 @@ because object configurations are not loaded
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; has been modified.
 Do you want to save your changes?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation>Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>

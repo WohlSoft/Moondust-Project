@@ -2531,6 +2531,10 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 正在加载传送点……</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -6049,6 +6053,10 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos;已被修改。
 要保存所做的改动吗？</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -8433,6 +8441,10 @@ Do you want to save your changes?</source>
     <message>
         <source>World title:</source>
         <translation>大地图标题：</translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

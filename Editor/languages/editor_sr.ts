@@ -2953,7 +2953,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="144"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="487"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="501"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2963,43 +2963,43 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="42"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="43"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="112"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="113"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="113"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="114"/>
         <source>Saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="117"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="558"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="118"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
         <source>Level title: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="118"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="119"/>
         <source>Make custom folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="177"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="178"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="187"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="188"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="188"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="189"/>
         <source>Which version do you want to save as? (from 0 to 64)
 List of known SMBX versions and format codes:
 %1
@@ -3008,40 +3008,47 @@ version code must be less or equal specific code)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="244"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="271"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="245"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="272"/>
         <source>Extension is not set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="245"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="272"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="246"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="273"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="334"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="351"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="414"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="280"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="348"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="365"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="428"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="335"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="352"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="415"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="281"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="349"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="366"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="429"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="378"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="393"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="283"/>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="392"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="407"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="394"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="408"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3049,42 +3056,42 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="440"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="454"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="441"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="455"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="487"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="488"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="501"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="502"/>
         <source>Loading level data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="531"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="545"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="532"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="546"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="554"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="568"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="556"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="570"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3703,233 +3710,233 @@ Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="287"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="255"/>
         <source>Hide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="407"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="311"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="420"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="324"/>
         <source>Toggle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="484"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="448"/>
         <source>Layers movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="533"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="497"/>
         <source>Set moving layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="578"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="617"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="714"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="727"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="542"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="581"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="678"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="691"/>
         <source>bps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="585"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="795"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="549"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="759"/>
         <source>Vertical speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="640"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="788"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="604"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="752"/>
         <source>Horisontal speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="658"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="622"/>
         <source>Autoscroll section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="701"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="665"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="365"/>
         <source>Section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="829"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="793"/>
         <source>Section settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="875"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="839"/>
         <source>Current section:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="862"/>
         <source>Set size and position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="934"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="940"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="904"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="953"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="959"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="917"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="923"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="972"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="978"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1492"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="936"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="942"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1456"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="991"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="997"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1506"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="955"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="961"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1470"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1010"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="974"/>
         <source>Capture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1050"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1089"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1163"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1014"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1053"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1127"/>
         <source>Don&apos;t change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1057"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1096"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1170"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1021"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1060"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1134"/>
         <source>Reset to default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1064"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1028"/>
         <source>Define new:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1083"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1047"/>
         <source>Set music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1103"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1067"/>
         <source>Replace music to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1157"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1121"/>
         <source>Set background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1177"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1141"/>
         <source>Replace background to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1252"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1216"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1302"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1266"/>
         <source>Play sound:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1333"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1297"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1346"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1310"/>
         <source>Do end game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1363"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1327"/>
         <source>Nothing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1368"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1332"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1398"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1362"/>
         <source>Display message:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1416"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1380"/>
         <source>Player Control hold keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1450"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1414"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1457"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1421"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1464"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1428"/>
         <source>Drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1471"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1435"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1478"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1442"/>
         <source>Alt-run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1485"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1449"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1499"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1463"/>
         <source>Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1513"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1477"/>
         <source>Alt-jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1547"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1511"/>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1594"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1558"/>
         <source>Delay</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7410,44 +7417,51 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="67"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="68"/>
         <source>Load file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="68"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="69"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="105"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="106"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="106"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="107"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="124"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="125"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="135"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="125"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="126"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="136"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="167"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="138"/>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="183"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="168"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="184"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
@@ -9952,7 +9966,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="116"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9992,70 +10006,75 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="45"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="46"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="124"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="125"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="125"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="126"/>
         <source>Saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="128"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="129"/>
         <source>Episode Title: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="129"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="130"/>
         <source>Make custom folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="130"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="131"/>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="189"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="190"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="216"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="255"/>
-        <source>Extension is not set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="217"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="256"/>
+        <source>Extension is not set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="218"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="257"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="273"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="267"/>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="284"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="274"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
         <source>Which version do you want to save as? (from 0 to 64)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="286"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="294"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="297"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="305"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="295"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -10063,60 +10082,62 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="324"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="264"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="317"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="335"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="307"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="325"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="265"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="362"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="376"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="363"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="377"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="404"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="418"/>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="441"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="455"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="442"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="456"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="463"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="465"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="479"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="467"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="481"/>
         <source>World title:</source>
         <translation type="unfinished"></translation>
     </message>

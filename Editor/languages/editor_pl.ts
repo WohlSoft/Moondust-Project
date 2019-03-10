@@ -2724,6 +2724,10 @@ Czy chcesz zapisać zmiany?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Ładowanie drzwi...</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -6664,6 +6668,10 @@ Do you want to save your changes?</source>
         <translation>%1 został zmodyfikowany.
 Czy chcesz zapisać zmiany?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -9125,6 +9133,10 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <source>World title:</source>
         <translation>Nazwa epizodu:</translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

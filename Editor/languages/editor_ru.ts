@@ -3072,6 +3072,10 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Загрузка дверей...</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation>Не удалось создать временный файл</translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -9241,6 +9245,10 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation>Не удалось создать временный файл</translation>
+    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -12429,6 +12437,10 @@ because object configurations are not loaded
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation>Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>

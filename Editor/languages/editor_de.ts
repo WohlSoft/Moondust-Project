@@ -3030,6 +3030,10 @@ Möchtest du die Änderungen speichern?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -8759,6 +8763,10 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; wurde verändert.
 Möchtest du die Änderungen speichern?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -11635,6 +11643,10 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <source>5/%1 Applying Musics...</source>
         <translation>5/%1 Setzte Musik...</translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

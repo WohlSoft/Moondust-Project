@@ -2464,6 +2464,10 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -5770,6 +5774,10 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -7849,6 +7857,10 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>World title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
