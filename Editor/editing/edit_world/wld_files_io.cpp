@@ -258,17 +258,9 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         return false;
     }
 
-    FileKeeper fileKeeper = FileKeeper(fileName);
-    if(!fileKeeper.isValid())
-    {
-        QMessageBox::warning(this, tr("File save error"),
-                             tr("Cannot save file %1:\n%2.")
-                                     .arg(fileName)
-                                     .arg(tr("Can't create a temporary backup file")));
-        return false;
-    }
-
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    FileKeeper fileKeeper = FileKeeper(fileName);
 
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
     if(fileName.endsWith(".wld", Qt::CaseInsensitive))
@@ -312,7 +304,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                 isSMBX64limit = false;
         }
 
-        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, static_cast<unsigned int>(file_format)))
+        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_SMBX64, static_cast<unsigned int>(file_format)))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -330,7 +322,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
     {
         WldData.meta.smbx64strict = false; //Disable strict mode
 
-        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_PGEX))
+        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_PGEX))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -341,6 +333,9 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     // //////////////////////////////////////////////////////////////////////
     QApplication::restoreOverrideCursor();
@@ -353,9 +348,6 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
-
-    // Remove temporary backup file
-    fileKeeper.remove();
 
     return true;
 }

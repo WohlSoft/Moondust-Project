@@ -41,52 +41,57 @@ FileKeeper::FileKeeper(const QString &path) :
 {
     if(!QFile::exists(path))
     {
-        m_origPath.clear();
+        m_tempPath = m_origPath;
         return; //Do nothing when file is not exists (aka, new-made)
     }
 
     QFileInfo info = QFileInfo(path);
     QString dirPath = info.absoluteDir().absolutePath() + "/";
-    QString baseName = info.fileName();
+    QString baseName = info.baseName();
+    QString suffix = info.suffix();
 
     QString targetPath;
     do
     {
-        targetPath = dirPath + baseName + "." + getRandomString();
+        targetPath = dirPath + baseName + "." + getRandomString() + "." + suffix;
     } while(QFile::exists(targetPath));
 
     if(QFile::rename(m_origPath, targetPath))
     {
-        m_backupPath = targetPath;
+        m_tempPath = targetPath;
     }
 }
 
 FileKeeper::~FileKeeper()
 {
-    restore();
+    remove();
 }
 
-bool FileKeeper::isValid()
+QString FileKeeper::tempPath()
 {
-    return !m_backupPath.isEmpty() || m_origPath.isEmpty();
+    return m_tempPath;
 }
 
 void FileKeeper::remove()
 {
-    if(!m_backupPath.isEmpty() && QFile::exists(m_backupPath))
+    if(m_tempPath == m_origPath)
+        return;
+    if(!m_tempPath.isEmpty() && QFile::exists(m_tempPath))
     {
-        QFile::remove(m_backupPath);
-        m_backupPath.clear();
+        QFile::remove(m_tempPath);
+        m_tempPath.clear();
     }
 }
 
 void FileKeeper::restore()
 {
-    if(!m_origPath.isEmpty() && !m_backupPath.isEmpty() && QFile::exists(m_backupPath))
+    if(m_tempPath == m_origPath)
+        return;
+    if(!m_origPath.isEmpty() && !m_tempPath.isEmpty() && QFile::exists(m_tempPath))
     {
         if(QFile::exists(m_origPath))
             QFile::remove(m_origPath);// Clean up for just a case
-        QFile::rename(m_backupPath, m_origPath);
-        m_backupPath.clear();
+        QFile::rename(m_tempPath, m_origPath);
+        m_tempPath.clear();
     }
 }

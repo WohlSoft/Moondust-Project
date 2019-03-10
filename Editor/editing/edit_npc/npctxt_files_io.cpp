@@ -119,7 +119,11 @@ bool NpcEdit::trySave()
 bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    if(!FileFormats::WriteNPCTxtFileF(fileName, NpcData))
+
+    FileKeeper fileKeeper = FileKeeper(fileName);
+    QString fileNameNew = fileKeeper.tempPath();
+
+    if(!FileFormats::WriteNPCTxtFileF(fileNameNew, NpcData))
     {
         QApplication::restoreOverrideCursor();
         QMessageBox::warning(this, tr("File save error"),
@@ -129,15 +133,8 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
         return false;
     }
 
-    FileKeeper fileKeeper = FileKeeper(fileName);
-    if(!fileKeeper.isValid())
-    {
-        QMessageBox::warning(this, tr("File save error"),
-                             tr("Cannot save file %1:\n%2.")
-                                     .arg(fileName)
-                                     .arg(tr("Can't create a temporary backup file")));
-        return false;
-    }
+    // Swap old file with new
+    fileKeeper.restore();
 
     GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
 
@@ -167,9 +164,6 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
-
-    // Remove temporary backup file
-    fileKeeper.remove();
 
     return true;
 }

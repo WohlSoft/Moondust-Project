@@ -175,7 +175,7 @@ RetrySave:
 
     while(isNotDone)
     {
-        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter, QFileDialog::DontUseNativeDialog);
+        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter);
 
         if(fileName.isEmpty())
             return false;
@@ -274,16 +274,6 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
         return false;
     }
 
-    FileKeeper fileKeeper = FileKeeper(fileName);
-    if(!fileKeeper.isValid())
-    {
-        QMessageBox::warning(this, tr("File save error"),
-                             tr("Cannot save file %1:\n%2.")
-                                     .arg(fileName)
-                                     .arg(tr("Can't create a temporary backup file")));
-        return false;
-    }
-
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // Prepare data for saving
@@ -332,9 +322,6 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
         m_mw->SyncRecentFiles();
     }
 
-    // Remove temporary backup file
-    fileKeeper.remove();
-
     //Refresh Strict SMBX64 flag
     emit m_mw->setSMBX64Strict(LvlData.meta.smbx64strict);
     return true;
@@ -342,7 +329,9 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
 
 bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 {
-    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_PGEX))
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_PGEX))
     {
         if(!silent)
             QMessageBox::warning(this, tr("File save error"),
@@ -352,6 +341,9 @@ bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 
         return false;
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     return true;
 }
@@ -359,7 +351,9 @@ bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 
 bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
 {
-    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_SMBX38A))
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_SMBX38A))
     {
         if(!silent)
             QMessageBox::warning(this, tr("File save error"),
@@ -369,6 +363,9 @@ bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
 
         return false;
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     return true;
 }
@@ -377,6 +374,8 @@ bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
 
 bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIsAborted)
 {
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
     //SMBX64 Standard check
     bool isSMBX64limit = false;
 
@@ -420,7 +419,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
         }
     }
 
-    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_SMBX64, LvlData.meta.RecentFormatVersion))
+    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_SMBX64, LvlData.meta.RecentFormatVersion))
     {
         QApplication::restoreOverrideCursor();
 
@@ -432,6 +431,9 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
 
         return false;
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     QApplication::restoreOverrideCursor();
     return true;

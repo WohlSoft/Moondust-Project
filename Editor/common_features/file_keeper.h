@@ -29,19 +29,16 @@ class FileKeeper
     //! Original file path
     QString m_origPath;
     //! Backup file path
-    QString m_backupPath;
+    QString m_tempPath;
 public:
     /**
-     * \brief Renames file into temp name
+     * \brief Keeps file about new temp file
      * @param path Path to original file
      */
     explicit FileKeeper(const QString &path);
     virtual ~FileKeeper();
-    /**
-     * \brief Was temp file made or not?
-     * @return true if temp file was successfully created, false on disk access error
-     */
-    bool isValid();
+
+    QString tempPath();
 
     /**
      * \brief Delete temp file
