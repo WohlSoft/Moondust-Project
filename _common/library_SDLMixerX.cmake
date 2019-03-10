@@ -18,7 +18,6 @@ ExternalProject_Add(
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
         $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DUSE_FLAC=OFF>
-        $<$<BOOL:ANDROID>:-DUSE_OPUS=OFF> # TODO: fix the OPUS build and remove this
     DEPENDS AudioCodecs_Local SDL2_Local
 )
 
