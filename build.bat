@@ -118,10 +118,6 @@ cmake -G "%CMAKE_GENERATOR%" -DCMAKE_PREFIX_PATH="%QtDir%/../" -DCMAKE_INSTALL_P
 @echo off
 if ERRORLEVEL 1 goto error
 
-rem ==== WORKAROUND for Ninja that won't allow refer not built yet libraries ====
-if %CMakeNinja%==1 cmake --build . --target libs -- %MAKE_EXTRA_ARGS%
-if %CMakeNinja%==1 if ERRORLEVEL 1 goto error
-
 cmake --build . --target all -- %MAKE_EXTRA_ARGS%
 if ERRORLEVEL 1 goto error
 

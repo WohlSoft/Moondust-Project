@@ -47,6 +47,12 @@ if (CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
     add_definitions(-DNDEBUG)
 endif()
 
+if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+    set(PGE_LIBS_DEBUG_SUFFIX "d")
+else()
+    set(PGE_LIBS_DEBUG_SUFFIX "")
+endif()
+
 if(MSVC)
     # Force to always compile with W4
     if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
