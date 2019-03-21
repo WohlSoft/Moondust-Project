@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.2)
-project (Moondust)
+project (Moondust LANGUAGES C CXX)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" insource)
 if(insource)
@@ -237,7 +237,9 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
 
     # Shared deployment on Windows
     if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
-        string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        if($ENV{QtDir})
+            string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        endif()
         set(MINGW_BIN_PATH $ENV{MinGW})
         if(NOT MINGW_BIN_PATH)
             set(MINGW_BIN_PATH "${QT_BINLIB_DIR}")
@@ -436,7 +438,9 @@ if(WIN32) # Deployment for Windows
     )
     if(SevenZipProgram)
         message("Detected 7Zip installed: ${SevenZipProgram}. Deployment is possible!")
-        string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        if($ENV{QtDir})
+            string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        endif()
 
         set(ZIP_PACK_DIR "${CMAKE_INSTALL_PREFIX_ORIG}/_packed")
         set(ZIP_SRC_DIR "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}")

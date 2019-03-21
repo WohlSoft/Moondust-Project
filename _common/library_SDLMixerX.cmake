@@ -35,15 +35,16 @@ ExternalProject_Add(
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DUSE_FLAC=OFF>
     DEPENDS AudioCodecs_Local SDL2_Local
     BUILD_BYPRODUCTS
-        ${SDL_MixerX_SO_Lib}
-        ${SDL_MixerX_A_Lib}
+        "${SDL_MixerX_SO_Lib}"
+        "${SDL_MixerX_A_Lib}"
 )
 
 add_library(SDLMixerXLibrarySO SHARED IMPORTED GLOBAL)
-set_property(TARGET SDLMixerXLibrarySO PROPERTY
-    IMPORTED_LOCATION
-    "${SDL_MixerX_SO_Lib}"
-)
+if(WIN32)
+    set_property(TARGET SDLMixerXLibrarySO PROPERTY IMPORTED_IMPLIB "${SDL_MixerX_SO_Lib}")
+else()
+    set_property(TARGET SDLMixerXLibrarySO PROPERTY IMPORTED_LOCATION "${SDL_MixerX_SO_Lib}")
+endif()
 
 add_library(SDLMixerXLibraryA STATIC IMPORTED GLOBAL)
 set_property(TARGET SDLMixerXLibraryA PROPERTY

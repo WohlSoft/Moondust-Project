@@ -106,8 +106,8 @@ elseif(SDL2_VIA_AUTOTOOLS)
             COMMAND ln -s "libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2d.a"
             COMMAND ln -s "libSDL2.so" "${CMAKE_BINARY_DIR}/lib/libSDL2d.so"
         BUILD_BYPRODUCTS
-            ${SDL2_SO_Lib}
-            ${SDL2_A_Lib}
+            "${SDL2_SO_Lib}"
+            "${SDL2_A_Lib}"
     )
 else()
     # ============================================================
@@ -133,17 +133,19 @@ else()
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS=ON>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS_SEM=ON>
         BUILD_BYPRODUCTS
-            ${SDL2_SO_Lib}
-            ${SDL2_A_Lib}
+            "${SDL2_SO_Lib}"
+            "${SDL2_A_Lib}"
     )
     add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
-    set_property(TARGET SDL2LibrarySO PROPERTY
-        IMPORTED_LOCATION
-        ${SDL2_SO_Lib}
-    )
+    if(WIN32)
+        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_IMPLIB "${SDL2_SO_Lib}")
+    else()
+        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_LOCATION "${SDL2_SO_Lib}")
+    endif()
+
     add_library(SDL2LibraryA STATIC IMPORTED GLOBAL)
     set_property(TARGET SDL2LibraryA PROPERTY
         IMPORTED_LOCATION
-        ${SDL2_A_Lib}
+        "${SDL2_A_Lib}"
     )
 endif()
