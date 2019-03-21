@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.2)
 project(MoondustEngine C CXX)
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
