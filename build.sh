@@ -460,11 +460,6 @@ checkState
 #=======================================================================
 echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
 TIME_STARTED=$(date +%s)
-if ${flag_cmake_it_ninja}; then
-    # ==== WORKAROUND for Ninja that won't allow refer not built yet libraries ====
-    cmake --build . --target libs -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
-    checkState
-fi
 cmake --build . --target all -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
 checkState
 TIME_ENDED=$(date +%s)

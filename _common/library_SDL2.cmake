@@ -13,6 +13,21 @@ endif()
 #    set(PATCH_CMD "C:/Program Files/Git/usr/bin/patch.exe")
 #endif()
 
+if(WIN32)
+    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
+elseif(APPLE)
+    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dylib")
+else()
+    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.so")
+endif()
+
+if(WIN32)
+    # list(APPEND FOUND_LIBS "${_mixerx_SEARCH_PATHS}/libSDL2_mixer_ext-static${MIX_DEBUG_SUFFIX}.a")
+    set(SDL2_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2-static${PGE_LIBS_DEBUG_SUFFIX}.a")
+else()
+    set(SDL2_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.a")
+endif()
+
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
 if(ANDROID)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -35,7 +50,10 @@ if(ANDROID)
         APP_ABI=${ANDROID_ABI}
         NDK_ALL_ABIS=${ANDROID_ABI}
         APP_PLATFORM=${ANDROID_PLATFORM}
-        BUILD_BYPRODUCTS ${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/libSDL2.so
+        BUILD_BYPRODUCTS
+            ${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/libSDL2.so
+            "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+            "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
     )
     add_custom_target(SDL2_Local ALL
         COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
@@ -47,6 +65,16 @@ if(ANDROID)
         COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_BINARY_DIR}/lib"
         COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
         DEPENDS SDL2_Local_Build
+    )
+    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
+    set_property(TARGET SDL2LibrarySO PROPERTY
+        IMPORTED_LOCATION
+        "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+    )
+    add_library(HIDAPILibrary SHARED IMPORTED GLOBAL)
+    set_property(TARGET HIDAPILibrary PROPERTY
+        IMPORTED_LOCATION
+        "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
     )
 elseif(SDL2_USE_SYSTEM)
     find_package(SDL2 REQUIRED)
@@ -77,6 +105,9 @@ elseif(SDL2_VIA_AUTOTOOLS)
         INSTALL_DIR make install
             COMMAND ln -s "libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2d.a"
             COMMAND ln -s "libSDL2.so" "${CMAKE_BINARY_DIR}/lib/libSDL2d.so"
+        BUILD_BYPRODUCTS
+            "${SDL2_SO_Lib}"
+            "${SDL2_A_Lib}"
     )
 else()
     # ============================================================
@@ -101,5 +132,20 @@ else()
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DEXTRA_CFLAGS=-s USE_PTHREADS=1>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS=ON>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS_SEM=ON>
+        BUILD_BYPRODUCTS
+            "${SDL2_SO_Lib}"
+            "${SDL2_A_Lib}"
+    )
+    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
+    if(WIN32)
+        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_IMPLIB "${SDL2_SO_Lib}")
+    else()
+        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_LOCATION "${SDL2_SO_Lib}")
+    endif()
+
+    add_library(SDL2LibraryA STATIC IMPORTED GLOBAL)
+    set_property(TARGET SDL2LibraryA PROPERTY
+        IMPORTED_LOCATION
+        "${SDL2_A_Lib}"
     )
 endif()
