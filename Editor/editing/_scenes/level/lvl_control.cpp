@@ -54,6 +54,8 @@ void LvlScene::selectionChanged()
     #ifdef _DEBUG_
         LogDebug("Selection Changed!");
     #endif
+    if(m_mw->dock_LvlItemProps->isVisible())
+        openProps(true);
 }
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -287,7 +289,7 @@ void LvlScene::Debugger_updateItemList()
 
 
 // /////////////////////////////Open properties window of selected item////////////////////////////////
-void LvlScene::openProps()
+void LvlScene::openProps(bool noSelectionChange)
 {
     QList<QGraphicsItem * > items = this->selectedItems();
     if(!items.isEmpty())
@@ -314,7 +316,8 @@ void LvlScene::openProps()
         m_mw->dock_LvlItemProps->CloseBox();
     }
 
-    QGraphicsScene::selectionChanged();
+    if(!noSelectionChange)
+        QGraphicsScene::selectionChanged();
 }
 
 

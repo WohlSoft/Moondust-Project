@@ -180,7 +180,7 @@ public:
     /**
      * @brief Open properties box of selected items
      */
-    void openProps();
+    void openProps(bool noSelectionChange = false);
     /**
      * @brief Refresh debugger box
      */

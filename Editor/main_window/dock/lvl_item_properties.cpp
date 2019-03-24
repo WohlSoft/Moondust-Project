@@ -107,7 +107,7 @@ LvlItemProperties::~LvlItemProperties()
     delete ui;
 }
 
-/******************Comobo boxes*********************************/
+/******************Combo boxes*********************************/
 QComboBox *LvlItemProperties::cbox_layer_block()
 {
     return ui->PROPS_BlockLayer;
@@ -157,7 +157,7 @@ void LvlItemProperties::setSMBX64Strict(bool en)
 {
     ui->PROPS_BGO_Z_Pos->setEnabled(!en);
 }
-/******************Comobo boxes*********************************/
+/******************Combo boxes*********************************/
 
 void LvlItemProperties::re_translate()
 {
@@ -209,7 +209,7 @@ void LvlItemProperties::OpenNPC(LevelNPC &npc, bool newItem, bool dont_reset_pro
 
 void LvlItemProperties::CloseBox()
 {
-    hide();
+    // hide(); Don't hide box, only hide content
     ui->blockProp->setVisible(false);
     ui->bgoProps->setVisible(false);
     ui->npcProps->setVisible(false);
