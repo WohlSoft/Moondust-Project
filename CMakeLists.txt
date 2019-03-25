@@ -55,6 +55,17 @@ if(NOT CMAKE_BUILD_TYPE)
     message("== Using default build configuration which is a Release!")
 endif()
 
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+if (CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
+    add_definitions(-DNDEBUG)
+endif()
+
+if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+    set(PGE_LIBS_DEBUG_SUFFIX "d")
+else()
+    set(PGE_LIBS_DEBUG_SUFFIX "")
+endif()
+
 include_directories(
     ${DEPENDENCIES_INSTALL_DIR}/include
     ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
