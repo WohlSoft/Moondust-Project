@@ -126,24 +126,28 @@ bool dataconfigs::loadBasics()
     guiset.beginGroup("gui");
     {
         guiset.read("editor-splash", splash_logo, "");
-        #ifdef __linux__
+#ifdef __linux__
         QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
         QString envir = env.value("XDG_CURRENT_DESKTOP", "");
+#   if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+        qApp->setStyle("GTK3");
+#   else
         qApp->setStyle("GTK");
+#   endif
         if(envir == "KDE" || envir == "XFCE")
             ConfStatus::defaultTheme = "Breeze";
         else
             guiset.read("default-theme", ConfStatus::defaultTheme, "");
-        #elif __APPLE__
+#elif __APPLE__
         ConfStatus::defaultTheme = "Breeze";
-        #elif _WIN32
+#elif _WIN32
         if(QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
             ConfStatus::defaultTheme = "Breeze";
         else
             guiset.read("default-theme", ConfStatus::defaultTheme, "");
-        #else
+#else
         guiset.read("default-theme", ConfStatus::defaultTheme, "");
-        #endif
+#endif
         guiset.read("animations", Animations, 0);
     }
     guiset.endGroup();
