@@ -11,25 +11,6 @@ endif()
 
 include(ExternalProject)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_DEBUG_POSTFIX "d")
-if(WIN32)
-    set(CMAKE_SHARED_LIBRARY_PREFIX "")
-endif()
-
-# let macOS Sierra to be a minimal supported platform (as Qt 5.12 does)
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
-
-set(ANDROID_PLATFORM "android-16")
-
-if(POLICY CMP0058) # Dependencies
-    cmake_policy(SET CMP0058 NEW)
-endif()
-
-set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
-
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
 
 # Destinition bitness of the build
@@ -41,37 +22,10 @@ else()
     set(PGE_ARCHITECTURE_BITS "unk")
 endif()
 
-# Allow install into space-containing paths
-set(CMAKE_INSTALL_PREFIX_ORIG ${CMAKE_INSTALL_PREFIX})
-string(REPLACE " " "\\ " CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-string(REPLACE "(" "\\(" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-string(REPLACE ")" "\\)" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-
 include(_common/git_info.cmake)
 message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}], package [${PACKAGE_SUFFIX}] ==")
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
-    message("== Using default build configuration which is a Release!")
-endif()
-
-string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
-if (CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
-    add_definitions(-DNDEBUG)
-endif()
-
-if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
-    set(PGE_LIBS_DEBUG_SUFFIX "d")
-else()
-    set(PGE_LIBS_DEBUG_SUFFIX "")
-endif()
-
-include_directories(
-    ${DEPENDENCIES_INSTALL_DIR}/include
-    ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
-    ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
-)
-link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
+include(_common/build_env.cmake)
 
 if(APPLE)
     # Prevent "directory not exists" warnings when building XCode as project
@@ -167,6 +121,9 @@ include(_common/library_luajit.cmake)
 include(_common/library_luabind.cmake)
 include(_common/library_SDL2.cmake)
 include(_common/library_AudioCodecs.cmake)
+if(TARGET libpng_Local)
+    add_dependencies(libpng_Local AudioCodecs_Local)
+endif()
 include(_common/library_SDLMixerX.cmake)
 include(_common/library_QtPropertyBrowser.cmake)
 

@@ -187,6 +187,16 @@ IF EXIST .\_Libs\_sources\_build_cache_msvc\NUL (
     rmdir /s /q _Libs\_sources\_build_cache_msvc
 )
 
+IF EXIST .\build-pge-cmake-release\NUL (
+                    echo removing build-pge-cmake-release ...
+                    rmdir /s /q build-pge-cmake-release
+)
+
+IF EXIST .\build-pge-cmake-debug\NUL (
+                    echo removing build-pge-cmake-debug ...
+                    rmdir /s /q build-pge-cmake-debug
+)
+
 echo ==== Clear! ====
 exit /B 0
 goto quit
