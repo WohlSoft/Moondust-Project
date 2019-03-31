@@ -89,6 +89,8 @@ list(APPEND LazyFixTool_LINK_LIBS
     FreeImageLite$<$<CONFIG:Debug>:d>
 )
 
+list(APPEND LazyFixTool_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
+
 list(APPEND LazyFixTool_INSTALLS
     LazyFixTool
 )

@@ -89,6 +89,8 @@ list(APPEND PNG2GIFs_LINK_LIBS
     FreeImageLite$<$<CONFIG:Debug>:d>
 )
 
+list(APPEND PNG2GIFs_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
+
 list(APPEND PNG2GIFs_INSTALLS
     PNG2GIFs
 )

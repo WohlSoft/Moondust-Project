@@ -119,6 +119,8 @@ list(APPEND PGE_CALIBRATOR_LINK_LIBS
     FreeImageLite$<$<CONFIG:Debug>:d>
 )
 
+list(APPEND PGE_CALIBRATOR_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
+
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(pge_calibrator
     PRIVATE
