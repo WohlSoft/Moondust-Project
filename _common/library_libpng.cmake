@@ -1,6 +1,6 @@
 # libPNG is a PNG format library
 
-set(USE_SYSTEM_LIBPNG OFF)
+option(USE_SYSTEM_LIBPNG "Use libPNG and ZLib from the system" OFF)
 if(USE_SYSTEM_LIBPNG)
     find_library(LIBPNG_LIBRARY
         NAMES libpng.a png
