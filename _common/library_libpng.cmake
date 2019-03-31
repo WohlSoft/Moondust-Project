@@ -1,7 +1,7 @@
 # libPNG is a PNG format library
 
 find_library(LIBPNG_LIBRARY
-    NAMES libpng.a libqtlibpng.a png qtlibpng
+    NAMES libpng.a png
     PATHS "${CMAKE_BINARY_DIR}/lib/"
 )
 if(LIBPNG_LIBRARY)
