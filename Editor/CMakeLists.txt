@@ -557,6 +557,8 @@ list(APPEND PGE_EDITOR_LINK_LIBS
     QtPropertyBrowser$<$<CONFIG:Debug>:d>
 )
 
+list(APPEND PGE_EDITOR_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
+
 set(MIXER_LIBS)
 
 if(PGE_STATIC_SDLMIXER)

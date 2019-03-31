@@ -156,7 +156,11 @@ if(ANDROID)
 endif()
 
 # Dependent libraries
+include(_common/library_libpng.cmake)
 include(_common/library_FreeImage.cmake)
+if(TARGET libpng_Local)
+    add_dependencies(FreeImage_Local libpng_Local)
+endif()
 include(_common/library_FreeType.cmake)
 include(_common/library_sqlite.cmake)
 include(_common/library_luajit.cmake)
