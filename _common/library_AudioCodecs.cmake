@@ -1,4 +1,10 @@
 
+set(libZLib_AC_A_Lib "${CMAKE_BINARY_DIR}/lib/libzlib${PGE_LIBS_DEBUG_SUFFIX}.a")
+
+if(NOT DEFINED libZLib_A_Lib)
+    set(libZLib_A_Lib "${libZLib_AC_A_Lib}")
+endif()
+
 # A collection of audio codecs libraries, dependency of SDL Mixer X
 ExternalProject_Add(
     AudioCodecs_Local
@@ -15,6 +21,8 @@ ExternalProject_Add(
         ${ANDROID_CMAKE_FLAGS}
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DADLMIDI_USE_DOSBOX_EMULATOR=ON>
     DEPENDS SDL2_Local
+    BUILD_BYPRODUCTS
+        "${libZLib_AC_A_Lib}"
 )
 
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libFLAC/COPYING.Xiph" RENAME "License.FLAC.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses")

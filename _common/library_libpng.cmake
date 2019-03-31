@@ -11,8 +11,12 @@ if(LIBPNG_LIBRARY)
         NAMES libzlib.a libz.a zlib z
         PATHS "${CMAKE_BINARY_DIR}/lib/"
     )
-    message("-- Found ${LIBZLIB_LIBRARY} --")
-    set(libZLib_A_Lib ${LIBZLIB_LIBRARY})
+    if(LIBZLIB_LIBRARY)
+        message("-- Found ${LIBZLIB_LIBRARY} --")
+        set(libZLib_A_Lib ${LIBZLIB_LIBRARY})
+    else() # Use that built with separately
+        set(libZLib_A_Lib "${CMAKE_BINARY_DIR}/lib/libzlib${PGE_LIBS_DEBUG_SUFFIX}.a")
+    endif()
 else()
     set(libPNG_A_Lib "${CMAKE_BINARY_DIR}/lib/libpng16${PGE_LIBS_DEBUG_SUFFIX}.a")
     set(libZLib_A_Lib "${CMAKE_BINARY_DIR}/lib/libzlib${PGE_LIBS_DEBUG_SUFFIX}.a")
