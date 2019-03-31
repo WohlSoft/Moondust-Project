@@ -720,7 +720,8 @@ void LvlItemProperties::LvlItemProps(int Type,
     }
     case -1: //Nothing to edit
     default:
-        hide();
+        // hide();
+        break;
     }
 }
 

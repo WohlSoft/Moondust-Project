@@ -309,7 +309,9 @@ void LvlScene::openProps(bool noSelectionChange)
             m_mw->dock_LvlItemProps->OpenNPC(dynamic_cast<ItemNPC *>(items.first())->m_data);
         }
         else
-        m_mw->dock_LvlItemProps->CloseBox();
+        {
+            m_mw->dock_LvlItemProps->CloseBox();
+        }
     }
     else
     {
