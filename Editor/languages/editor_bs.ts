@@ -2952,8 +2952,8 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="144"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="501"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2979,7 +2979,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="118"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="574"/>
         <source>Level title: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3020,35 +3020,28 @@ version code must be less or equal specific code)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="280"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="348"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="365"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="428"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="337"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="359"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="427"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="281"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="349"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="366"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="429"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="338"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="360"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="428"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="283"/>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="392"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="407"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="391"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="406"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="408"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="407"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3056,42 +3049,42 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="454"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="456"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="455"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="457"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="501"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="502"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="504"/>
         <source>Loading level data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="545"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="547"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="546"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="548"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="568"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="570"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="570"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6568,11 +6561,11 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="400"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/file/file_save.cpp" line="34"/>
         <location filename="../main_window/file/file_save.cpp" line="81"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6673,8 +6666,8 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6787,11 +6780,11 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="36"/>
         <location filename="../main_window/file/file_new.cpp" line="65"/>
         <location filename="../main_window/file/file_new.cpp" line="101"/>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7438,30 +7431,23 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="125"/>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="135"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="129"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="126"/>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="136"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="130"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="138"/>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="183"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="177"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="184"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="178"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
@@ -8202,7 +8188,7 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="465"/>
+        <location filename="../data_configs/data_configs.cpp" line="469"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9384,12 +9370,22 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="660"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="427"/>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="428"/>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="670"/>
         <source>Placement mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="660"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="670"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9965,8 +9961,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="409"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="116"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10053,28 +10049,23 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="267"/>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="284"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="276"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="277"/>
         <source>Which version do you want to save as? (from 0 to 64)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="289"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="297"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="305"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="298"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -10082,62 +10073,60 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="264"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="317"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="335"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="309"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="327"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="265"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="310"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="328"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="376"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="368"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="377"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="369"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="418"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="409"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="410"/>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="455"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="447"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="456"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="448"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="469"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="479"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="471"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="481"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="473"/>
         <source>World title:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10286,7 +10275,7 @@ Do you want to save your changes?</source>
 <context>
     <name>dataconfigs</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="235"/>
+        <location filename="../data_configs/data_configs.cpp" line="239"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;

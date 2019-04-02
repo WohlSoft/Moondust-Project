@@ -3116,7 +3116,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Can&apos;t create a temporary backup file</translation>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>
@@ -9255,7 +9255,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Can&apos;t create a temporary backup file</translation>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>
@@ -11558,6 +11558,14 @@ Data may be corrupted!</translation>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Place item on the map first and open the &apos;Properties&apos; context menu item.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -12447,7 +12455,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Can&apos;t create a temporary backup file</translation>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>

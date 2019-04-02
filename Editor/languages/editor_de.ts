@@ -3030,10 +3030,6 @@ Möchtest du die Änderungen speichern?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -8763,10 +8759,6 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; wurde verändert.
 Möchtest du die Änderungen speichern?</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -10791,6 +10783,14 @@ Daten könnten fehlerhaft sein!</translation>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Plaziere Item zuerst und dann rufe &apos;Einstellungen&apos; im Kontextmenu auf.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -11643,10 +11643,6 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <source>5/%1 Applying Musics...</source>
         <translation>5/%1 Setzte Musik...</translation>
-    </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

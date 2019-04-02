@@ -2821,10 +2821,6 @@ Deseja salvar sua mudanças?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -6935,10 +6931,6 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; foi modificado.
 Deseja salvar sua mudanças?</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -8871,6 +8863,14 @@ Os dados podem estar corrompidos!</translation>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Coloque um item no mapa primeiro e depois coloque o menu do botão direito de Propiedade.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -9569,10 +9569,6 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; foi modificado.
 Deseja salvar sua mudanças?</translation>
-    </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

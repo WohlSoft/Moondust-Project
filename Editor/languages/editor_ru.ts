@@ -3074,7 +3074,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Не удалось создать временный файл</translation>
+        <translation type="vanished">Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>
@@ -9247,7 +9247,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Не удалось создать временный файл</translation>
+        <translation type="vanished">Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>
@@ -11553,6 +11553,14 @@ Data may be corrupted!</source>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Сперва разместите объект на карту мира и вызовите &quot;Свойства&quot; через контекстное меню.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -12440,7 +12448,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Не удалось создать временный файл</translation>
+        <translation type="vanished">Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>

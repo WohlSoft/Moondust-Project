@@ -2464,10 +2464,6 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -5774,10 +5770,6 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -7327,6 +7319,14 @@ Data may be corrupted!</source>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -7857,10 +7857,6 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>World title:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

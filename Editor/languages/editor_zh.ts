@@ -2531,10 +2531,6 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 正在加载传送点……</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -6053,10 +6049,6 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos;已被修改。
 要保存所做的改动吗？</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -7888,6 +7880,14 @@ Data may be corrupted!</source>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>放置对象后弹出“属性”菜单。</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -8441,10 +8441,6 @@ Do you want to save your changes?</source>
     <message>
         <source>World title:</source>
         <translation>大地图标题：</translation>
-    </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
