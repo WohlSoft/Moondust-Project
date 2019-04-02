@@ -413,12 +413,22 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
     if(wld_tools_lock) return;
 
     QString dirPath;
-    if(mw()->activeChildWindow() == MainWindow::WND_World)
-    {
-        dirPath = mw()->activeWldEditWin()->WldData.meta.path;
-    }
-    else
+    if(mw()->activeChildWindow() != MainWindow::WND_World)
         return;
+
+    WorldEdit *edit = mw()->activeWldEditWin();
+    if(!edit) return;
+
+    dirPath = edit->WldData.meta.path;
+
+    if(edit->isUntitled())
+    {
+        QMessageBox::information(this,
+                                tr("Please save the file"),
+                                tr("Please save the file before selecting levels."),
+                                QMessageBox::Ok);
+        return;
+    }
 
     LevelFileList levelList(dirPath, ui->WLD_PROPS_LVLFile->text());
     if( levelList.exec() == QDialog::Accepted )
