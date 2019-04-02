@@ -11560,11 +11560,11 @@ Data may be corrupted!</translation>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Please save the file</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Please save the file before selecting levels.</translation>
     </message>
 </context>
 <context>

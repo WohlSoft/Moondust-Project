@@ -11555,11 +11555,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, сохраните файл</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
 </context>
 <context>
