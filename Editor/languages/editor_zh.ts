@@ -7882,11 +7882,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>请先保存文件</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>请先保存文件后再选择关卡。</translation>
     </message>
 </context>
 <context>
@@ -8695,7 +8695,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="unfinished">跳过大背景 （不转换 background2-*.gif）</translation>
+        <translation>跳过大背景 （不转换 background2-*.gif）</translation>
     </message>
 </context>
 <context>
