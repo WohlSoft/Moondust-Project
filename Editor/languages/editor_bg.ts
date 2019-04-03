@@ -8035,10 +8035,6 @@ therefore you can use same link to get updated version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Look for images in subdirectories</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8086,6 +8082,10 @@ therefore you can use same link to get updated version</source>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

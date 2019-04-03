@@ -12676,7 +12676,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
+        <translation type="vanished">Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12753,6 +12753,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Невозможно запустить приложение:
 %1
 Пожалуйста, проверьте папку с приложением.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Не конвертировать фоны (не конвертировать background2-*.gif)</translation>
     </message>
 </context>
 <context>

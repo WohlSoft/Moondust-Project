@@ -2952,8 +2952,8 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="144"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6561,11 +6561,11 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="400"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="400"/>
         <location filename="../main_window/file/file_save.cpp" line="34"/>
         <location filename="../main_window/file/file_save.cpp" line="81"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6666,8 +6666,8 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6780,11 +6780,11 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="36"/>
         <location filename="../main_window/file/file_new.cpp" line="65"/>
         <location filename="../main_window/file/file_new.cpp" line="101"/>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9961,8 +9961,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="409"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="116"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="409"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10377,7 +10377,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="198"/>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

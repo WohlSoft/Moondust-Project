@@ -229,14 +229,14 @@ Entrance point: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="298"/>
         <location filename="../scenes/scene_world.cpp" line="550"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="298"/>
         <source>Invalid playable character ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="307"/>
         <location filename="../scenes/scene_world.cpp" line="559"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="307"/>
         <source>Invalid playable character state ID</source>
         <translation type="unfinished"></translation>
     </message>

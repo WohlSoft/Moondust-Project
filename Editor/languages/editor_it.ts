@@ -9602,7 +9602,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Salta conversione degli sfondi (non convertire i file background2-* a causa di un bug di LunaLua)</translation>
+        <translation type="vanished">Salta conversione degli sfondi (non convertire i file background2-* a causa di un bug di LunaLua)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
@@ -9655,6 +9655,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Impossibile avviare applicazione:
 %1
 Controlla la cartella dell&apos;applicazione e assicurati che sia installata correttamente.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

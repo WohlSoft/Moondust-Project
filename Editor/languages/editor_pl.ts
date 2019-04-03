@@ -9326,10 +9326,6 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
         <translation>Start</translation>
     </message>
     <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Look for images in subdirectories</source>
         <translation>Szukaj obrazów w podfolderach</translation>
     </message>
@@ -9384,6 +9380,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Nie można uruchomić aplikacji: 
 %1
 Proszę sprawdź folder aplikacji.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

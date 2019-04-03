@@ -12502,7 +12502,7 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada</tr
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
+        <translation type="vanished">Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12565,6 +12565,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>No se puede ejecutar aplicación:
 %1
 Por favor, controle el directorio de la misma.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Saltar conversión de archivos (no convertir background2-*.gif)</translation>
     </message>
 </context>
 <context>

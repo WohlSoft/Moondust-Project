@@ -8635,7 +8635,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>跳过大背景 （由于 LunaLua 的 Bug 因此不转换 background2-*.gif）</translation>
+        <translation type="vanished">跳过大背景 （由于 LunaLua 的 Bug 因此不转换 background2-*.gif）</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
@@ -8692,6 +8692,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>无法运行应用程序：
 %1:
 请检查应用程序目录，并确保安装正确。</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished">跳过大背景 （不转换 background2-*.gif）</translation>
     </message>
 </context>
 <context>
