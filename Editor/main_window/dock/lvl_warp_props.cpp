@@ -1330,12 +1330,25 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
 
 void LvlWarpBox::on_WarpBrowseLevels_clicked()
 {
+    if(lockWarpSetSettings) return;
+
     QString dirPath;
-    if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    if(!edit) return;
+
+    dirPath = edit->LvlData.meta.path;
+
+    if(edit->isUntitled())
     {
-        dirPath = mw()->activeLvlEditWin()->LvlData.meta.path;
+        QMessageBox::information(this,
+                                 tr("Please save the file"),
+                                 tr("Please save the file before selecting levels."),
+                                 QMessageBox::Ok);
+        return;
     }
-    else return;
 
     LevelFileList levelList(dirPath, ui->WarpLevelFile->text());
     if(levelList.exec() == QDialog::Accepted)
