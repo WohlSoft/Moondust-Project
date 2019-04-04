@@ -93,6 +93,23 @@ struct EditorSetup
         Format level = SMBX64;
         Format world = SMBX64;
     } default_file_formats;
+
+    struct FeaturesSupport
+    {
+        bool level_section_vertical_wrap = true;
+
+        bool level_phys_ez_new_types = true;
+
+        bool level_bgo_z_layer = true;
+        bool level_bgo_z_position = true;
+
+        bool level_warp_two_way = true;
+        bool level_warp_portal = true;
+        bool level_warp_bomb_exit = true;
+        bool level_warp_allow_sp_state_only = true;
+        bool level_warp_hide_interlevel_scene = true;
+        bool level_warp_needstars_message = true;
+    } supported_features;
 };
 
 struct EngineSetup
