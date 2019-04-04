@@ -205,23 +205,38 @@ bool dataconfigs::loadBasics()
 
     guiset.beginGroup("supported-features");
     {
-        guiset.read("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, true);
+        const IniProcessing::StrEnumMap formatEnum =
+        {
+                {"false", EditorSetup::FeaturesSupport::F_DISABLED},
+                {"disabled", EditorSetup::FeaturesSupport::F_DISABLED},
+                {"inactive", EditorSetup::FeaturesSupport::F_DISABLED},
+                {"0", EditorSetup::FeaturesSupport::F_DISABLED},
 
-        guiset.read("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, true);
+                {"enabled", EditorSetup::FeaturesSupport::F_ENABLED},
+                {"active", EditorSetup::FeaturesSupport::F_ENABLED},
+                {"true", EditorSetup::FeaturesSupport::F_ENABLED},
+                {"1", EditorSetup::FeaturesSupport::F_ENABLED},
 
-        guiset.read("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, true);
-        guiset.read("level-bgo-z-position", editor.supported_features.level_bgo_z_position, true);
+                {"hidden", EditorSetup::FeaturesSupport::F_HIDDEN},
+                {"2", EditorSetup::FeaturesSupport::F_HIDDEN}
+        };
+        guiset.readEnum("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
-        guiset.read("level-warp-two-way", editor.supported_features.level_warp_two_way, true);
-        guiset.read("level-warp-portal", editor.supported_features.level_warp_portal, true);
-        guiset.read("level-warp-bomb-exit", editor.supported_features.level_warp_bomb_exit, true);
-        guiset.read("level-warp-allow-special-state-only", editor.supported_features.level_warp_allow_sp_state_only, true);
-        guiset.read("level-warp-hide-interlevel-scene", editor.supported_features.level_warp_hide_interlevel_scene, true);
-        guiset.read("level-warp-allow-interlevel-npc", editor.supported_features.level_warp_allow_interlevel_npc, true);
-        guiset.read("level-warp-hide-stars", editor.supported_features.level_warp_hide_stars, true);
-        guiset.read("level-warp-needed-stars-message", editor.supported_features.level_warp_needstars_message, true);
-        guiset.read("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, true);
-        guiset.read("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, true);
+        guiset.readEnum("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-bgo-z-position", editor.supported_features.level_bgo_z_position, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("level-warp-two-way", editor.supported_features.level_warp_two_way, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-portal", editor.supported_features.level_warp_portal, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-bomb-exit", editor.supported_features.level_warp_bomb_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-allow-special-state-only", editor.supported_features.level_warp_allow_sp_state_only, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-hide-interlevel-scene", editor.supported_features.level_warp_hide_interlevel_scene, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-allow-interlevel-npc", editor.supported_features.level_warp_allow_interlevel_npc, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-hide-stars", editor.supported_features.level_warp_hide_stars, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-needed-stars-message", editor.supported_features.level_warp_needstars_message, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
     }
 
     if(!openSection(&guiset, "main"))

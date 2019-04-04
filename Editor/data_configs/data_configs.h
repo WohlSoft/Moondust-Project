@@ -96,23 +96,29 @@ struct EditorSetup
 
     struct FeaturesSupport
     {
-        bool level_section_vertical_wrap = true;
+        enum State
+        {
+            F_DISABLED = 0,
+            F_ENABLED,
+            F_HIDDEN
+        };
+        State level_section_vertical_wrap = F_ENABLED;
 
-        bool level_phys_ez_new_types = true;
+        State level_phys_ez_new_types = F_ENABLED;
 
-        bool level_bgo_z_layer = true;
-        bool level_bgo_z_position = true;
+        State level_bgo_z_layer = F_ENABLED;
+        State level_bgo_z_position = F_ENABLED;
 
-        bool level_warp_two_way = true;
-        bool level_warp_portal = true;
-        bool level_warp_bomb_exit = true;
-        bool level_warp_allow_sp_state_only = true;
-        bool level_warp_hide_interlevel_scene = true;
-        bool level_warp_allow_interlevel_npc = true;
-        bool level_warp_hide_stars = true;
-        bool level_warp_needstars_message = true;
-        bool level_warp_on_enter_event = true;
-        bool level_warp_cannon_exit = true;
+        State level_warp_two_way = F_ENABLED;
+        State level_warp_portal = F_ENABLED;
+        State level_warp_bomb_exit = F_ENABLED;
+        State level_warp_allow_sp_state_only = F_ENABLED;
+        State level_warp_hide_interlevel_scene = F_ENABLED;
+        State level_warp_allow_interlevel_npc = F_ENABLED;
+        State level_warp_hide_stars = F_ENABLED;
+        State level_warp_needstars_message = F_ENABLED;
+        State level_warp_on_enter_event = F_ENABLED;
+        State level_warp_cannon_exit = F_ENABLED;
     } supported_features;
 };
 
