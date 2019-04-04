@@ -203,6 +203,27 @@ bool dataconfigs::loadBasics()
     }
     guiset.endGroup();
 
+    guiset.beginGroup("supported-features");
+    {
+        guiset.read("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, true);
+
+        guiset.read("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, true);
+
+        guiset.read("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, true);
+        guiset.read("level-bgo-z-position", editor.supported_features.level_bgo_z_position, true);
+
+        guiset.read("level-warp-two-way", editor.supported_features.level_warp_two_way, true);
+        guiset.read("level-warp-portal", editor.supported_features.level_warp_portal, true);
+        guiset.read("level-warp-bomb-exit", editor.supported_features.level_warp_bomb_exit, true);
+        guiset.read("level-warp-allow-special-state-only", editor.supported_features.level_warp_allow_sp_state_only, true);
+        guiset.read("level-warp-hide-interlevel-scene", editor.supported_features.level_warp_hide_interlevel_scene, true);
+        guiset.read("level-warp-allow-interlevel-npc", editor.supported_features.level_warp_allow_interlevel_npc, true);
+        guiset.read("level-warp-hide-stars", editor.supported_features.level_warp_hide_stars, true);
+        guiset.read("level-warp-needed-stars-message", editor.supported_features.level_warp_needstars_message, true);
+        guiset.read("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, true);
+        guiset.read("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, true);
+    }
+
     if(!openSection(&guiset, "main"))
         return false;
 

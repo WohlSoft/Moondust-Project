@@ -155,7 +155,11 @@ QComboBox *LvlItemProperties::cbox_event_npc_le()
 
 void LvlItemProperties::setSMBX64Strict(bool en)
 {
+    dataconfigs &c = mw()->configs;
     ui->PROPS_BGO_Z_Pos->setEnabled(!en);
+    ui->PROPS_BGO_Z_Pos->setVisible(c.editor.supported_features.level_bgo_z_layer || c.editor.supported_features.level_bgo_z_position);
+    ui->PROPS_BGO_Z_Layer->setVisible(c.editor.supported_features.level_bgo_z_layer);
+    ui->PROPS_BGO_Z_Offset->setVisible(c.editor.supported_features.level_bgo_z_position);
 }
 /******************Comobo boxes*********************************/
 

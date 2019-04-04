@@ -18,6 +18,7 @@
 
 #include <QInputDialog>
 #include <QDesktopWidget>
+#include <QStandardItemModel>
 
 #include <editing/_scenes/level/lvl_history_manager.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
@@ -87,23 +88,34 @@ QComboBox *LvlWarpBox::cbox_event_enter()
 
 void LvlWarpBox::setSMBX64Strict(bool en)
 {
+    dataconfigs &c = mw()->configs;
     bool shown = !en;
+
+    {
+        QStandardItemModel* model = qobject_cast<QStandardItemModel*>(ui->WarpType->model());
+        QStandardItem *item = model->item(3);//Portal warp item
+        if(c.editor.supported_features.level_warp_portal)
+            item->setFlags(item->flags() | Qt::ItemIsEnabled);
+        else
+            item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+    }
+
     // Disalbe/Hide all non-supported in SMBX 1.3 parameters
-    ui->WarpTwoWay->setVisible(shown);
-    ui->WarpNeedAStarsMsg->setVisible(shown);
-    ui->WarpNeedAStarsMsg_label->setVisible(shown);
-    ui->WarpHideStars->setVisible(shown);
-    ui->WarpBombNeed->setVisible(shown);
-    ui->WarpHideLevelEnterScreen->setVisible(shown);
+    ui->WarpTwoWay->setVisible(shown && c.editor.supported_features.level_warp_two_way);
+    ui->WarpNeedAStarsMsg->setVisible(shown && c.editor.supported_features.level_warp_needstars_message);
+    ui->WarpNeedAStarsMsg_label->setVisible(shown && c.editor.supported_features.level_warp_needstars_message);
+    ui->WarpHideStars->setVisible(shown && c.editor.supported_features.level_warp_hide_stars);
+    ui->WarpBombNeed->setVisible(shown && c.editor.supported_features.level_warp_bomb_exit);
+    ui->WarpHideLevelEnterScreen->setVisible(shown && c.editor.supported_features.level_warp_hide_interlevel_scene);
 
-    ui->WarpAllowNPC_IL->setVisible(shown);
-    ui->WarpSpecialStateOnly->setVisible(shown);
+    ui->WarpAllowNPC_IL->setVisible(shown && c.editor.supported_features.level_warp_allow_interlevel_npc);
+    ui->WarpSpecialStateOnly->setVisible(shown && c.editor.supported_features.level_warp_allow_sp_state_only);
 
-    ui->warpBoxCannon->setVisible(shown);
+    ui->warpBoxCannon->setVisible(shown && c.editor.supported_features.level_warp_cannon_exit);
     ui->WarpEnableCannon->setDisabled(en);
     ui->WarpCannonSpeed->setDisabled(en);
 
-    ui->warpBoxEnterEvent->setVisible(shown);
+    ui->warpBoxEnterEvent->setVisible(shown && c.editor.supported_features.level_warp_on_enter_event);
     ui->WarpEnterEvent->setDisabled(en);
     ui->WarpEnterEvent_label->setDisabled(en);
 }

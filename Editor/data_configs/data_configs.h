@@ -108,7 +108,11 @@ struct EditorSetup
         bool level_warp_bomb_exit = true;
         bool level_warp_allow_sp_state_only = true;
         bool level_warp_hide_interlevel_scene = true;
+        bool level_warp_allow_interlevel_npc = true;
+        bool level_warp_hide_stars = true;
         bool level_warp_needstars_message = true;
+        bool level_warp_on_enter_event = true;
+        bool level_warp_cannon_exit = true;
     } supported_features;
 };
 

@@ -99,8 +99,9 @@ QPushButton *LvlSectionProps::getEditBackground2IniButton()
 
 void LvlSectionProps::setSMBX64Strict(bool en)
 {
-    ui->LVLPropsWrapVertical->setEnabled(!en);
-    mw()->ui->actionWrapVertically->setEnabled(!en);
+    dataconfigs &c = mw()->configs;
+    ui->LVLPropsWrapVertical->setEnabled(!en && c.editor.supported_features.level_section_vertical_wrap);
+    mw()->ui->actionWrapVertically->setEnabled(!en && c.editor.supported_features.level_section_vertical_wrap);
 }
 
 void LvlSectionProps::re_translate()
