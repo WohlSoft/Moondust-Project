@@ -5491,6 +5491,14 @@ Bitte wähle eine Weltkarte in der Liste aus:</translation>
         <source>Can&apos;t open the file!</source>
         <translation>Kann Datei nicht öffnen.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

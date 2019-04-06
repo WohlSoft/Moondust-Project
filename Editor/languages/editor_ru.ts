@@ -5702,6 +5702,14 @@ show the current playable character(s) and number of lives.</source>
 Инчае, на экране загрузки в устеревшем движке будет показан 
 действующий игровой персонаж(и) и остаток жизней.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

@@ -5619,6 +5619,14 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <source>Can&apos;t open the file!</source>
         <translation>¡No se puede abrir archivo!</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

@@ -4595,6 +4595,14 @@ Proszę, wybierz jeden plik z listy:</translation>
         <source>Can&apos;t open the file!</source>
         <translation>Nie można otworzyć pliku.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

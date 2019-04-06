@@ -4838,6 +4838,14 @@ Escolha qual da lista quer utilizar:</translation>
         <source>Can&apos;t open the file!</source>
         <translation>Não foi possível abrir o arquivo.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

@@ -2426,123 +2426,123 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="124"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="125"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
         <source>Quicksand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="126"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
         <source>Custom liquid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="127"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
         <source>Gravity Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
         <source>Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
         <source>Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
         <source>NPC/Player Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
         <source>NPC/Player Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
         <source>Mouse click Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
         <source>Collision script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
         <source>Mouse click Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
         <source>Collision Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
         <source>Air chamber</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
         <source>NPC Touch Event (Once)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
         <source>NPC Touch Event (Every frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
         <source>NPC Hurting Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="145"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="149"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="150"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="154"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="154"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="158"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="159"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="180"/>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="191"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="195"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4225,14 +4225,14 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1098"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1375"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="560"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="580"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1186"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1402"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="561"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="581"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4244,7 +4244,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1246"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1416"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="564"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="584"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4265,7 +4265,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1409"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="563"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="583"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4280,45 +4280,45 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="276"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="296"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="322"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="425"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="559"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="342"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="445"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="579"/>
         <source>Position: [%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="336"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1091"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="356"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1111"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="337"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="586"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1092"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1502"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1854"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="357"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="606"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1112"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1522"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1874"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="411"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="431"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="489"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="509"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="593"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1749"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="613"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1769"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4831,58 +4831,58 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="142"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="143"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="149"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="150"/>
         <source>[No image]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="144"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="145"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="151"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="152"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="440"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="578"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="447"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="585"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="440"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="447"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="448"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="455"/>
         <source>Choose a background first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="449"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="456"/>
         <source>Please, choose the background image first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="476"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="483"/>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="481"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="488"/>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="486"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="493"/>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="578"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="585"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5269,36 +5269,46 @@ Measured in pixels per 1/65 seconds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1105"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1127"/>
         <source>World map files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1106"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1128"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1117"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1139"/>
         <source>Select world map file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1118"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1140"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1130"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1152"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1131"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1153"/>
         <source>Can&apos;t open the file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1357"/>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1358"/>
+        <source>Please save the file before selecting levels.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8188,7 +8198,7 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="469"/>
+        <location filename="../data_configs/data_configs.cpp" line="505"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10275,7 +10285,7 @@ Do you want to save your changes?</source>
 <context>
     <name>dataconfigs</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="239"/>
+        <location filename="../data_configs/data_configs.cpp" line="275"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;

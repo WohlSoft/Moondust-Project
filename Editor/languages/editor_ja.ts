@@ -4130,6 +4130,14 @@ Please, select necessary world map in a list:</source>
         <source>Can&apos;t open the file!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

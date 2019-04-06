@@ -5740,6 +5740,14 @@ show the current playable character(s) and number of lives.</source>
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">Please save the file</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">Please save the file before selecting levels.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

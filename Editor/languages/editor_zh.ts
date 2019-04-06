@@ -4275,6 +4275,14 @@ Please, select necessary world map in a list:</source>
         <source>Can&apos;t open the file!</source>
         <translation>打开文件失败！</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">请先保存文件</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">请先保存文件后再选择关卡。</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
