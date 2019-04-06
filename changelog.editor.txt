@@ -6,6 +6,7 @@ Editor 0.3.2-dev
 - Added safer file saving strategy
 - Fixed imperfection that allows to use level file selector in the untitled world map file
 - Added an ability to hide or disable certain field or feature from the config pack
+- Added Dutch translation by Gameinsky
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
