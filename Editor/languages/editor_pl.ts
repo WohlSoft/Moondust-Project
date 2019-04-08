@@ -2724,10 +2724,6 @@ Czy chcesz zapisać zmiany?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Ładowanie drzwi...</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -4598,6 +4594,14 @@ Proszę, wybierz jeden plik z listy:</translation>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Nie można otworzyć pliku.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6668,10 +6672,6 @@ Do you want to save your changes?</source>
         <translation>%1 został zmodyfikowany.
 Czy chcesz zapisać zmiany?</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -8543,6 +8543,14 @@ Informacje mogą być uszkodzone!</translation>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Umieść przedmiot na mapie i otwórz menu właściwości.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -9134,10 +9142,6 @@ Czy chcesz zapisać zmiany?</translation>
         <source>World title:</source>
         <translation>Nazwa epizodu:</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
@@ -9330,10 +9334,6 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
         <translation>Start</translation>
     </message>
     <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Look for images in subdirectories</source>
         <translation>Szukaj obrazów w podfolderach</translation>
     </message>
@@ -9388,6 +9388,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Nie można uruchomić aplikacji: 
 %1
 Proszę sprawdź folder aplikacji.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

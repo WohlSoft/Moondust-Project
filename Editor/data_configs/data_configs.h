@@ -93,6 +93,33 @@ struct EditorSetup
         Format level = SMBX64;
         Format world = SMBX64;
     } default_file_formats;
+
+    struct FeaturesSupport
+    {
+        enum State
+        {
+            F_DISABLED = 0,
+            F_ENABLED,
+            F_HIDDEN
+        };
+        State level_section_vertical_wrap = F_ENABLED;
+
+        State level_phys_ez_new_types = F_ENABLED;
+
+        State level_bgo_z_layer = F_ENABLED;
+        State level_bgo_z_position = F_ENABLED;
+
+        State level_warp_two_way = F_ENABLED;
+        State level_warp_portal = F_ENABLED;
+        State level_warp_bomb_exit = F_ENABLED;
+        State level_warp_allow_sp_state_only = F_ENABLED;
+        State level_warp_hide_interlevel_scene = F_ENABLED;
+        State level_warp_allow_interlevel_npc = F_ENABLED;
+        State level_warp_hide_stars = F_ENABLED;
+        State level_warp_needstars_message = F_ENABLED;
+        State level_warp_on_enter_event = F_ENABLED;
+        State level_warp_cannon_exit = F_ENABLED;
+    } supported_features;
 };
 
 struct EngineSetup

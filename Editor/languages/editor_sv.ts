@@ -2464,10 +2464,6 @@ Do you want to save your changes?</source>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -4134,6 +4130,14 @@ Please, select necessary world map in a list:</source>
         <source>Can&apos;t open the file!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -5774,10 +5778,6 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -7327,6 +7327,14 @@ Data may be corrupted!</source>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -7859,10 +7867,6 @@ Do you want to save your changes?</source>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
@@ -8039,10 +8043,6 @@ therefore you can use same link to get updated version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Look for images in subdirectories</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8090,6 +8090,10 @@ therefore you can use same link to get updated version</source>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

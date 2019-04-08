@@ -3116,7 +3116,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Can&apos;t create a temporary backup file</translation>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>
@@ -5739,6 +5739,14 @@ show the current playable character(s) and number of lives.</source>
         <translation>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">Please save the file</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">Please save the file before selecting levels.</translation>
     </message>
 </context>
 <context>
@@ -9255,7 +9263,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Can&apos;t create a temporary backup file</translation>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>
@@ -11558,6 +11566,14 @@ Data may be corrupted!</translation>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Place item on the map first and open the &apos;Properties&apos; context menu item.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation>Please save the file</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation>Please save the file before selecting levels.</translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -12447,7 +12463,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Can&apos;t create a temporary backup file</translation>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>
@@ -12677,7 +12693,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</translation>
+        <translation type="vanished">Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12754,6 +12770,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</translation>
     </message>
 </context>
 <context>

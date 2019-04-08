@@ -2531,10 +2531,6 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 正在加载传送点……</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -4278,6 +4274,14 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>打开文件失败！</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">请先保存文件</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">请先保存文件后再选择关卡。</translation>
     </message>
 </context>
 <context>
@@ -6052,10 +6056,6 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos;已被修改。
 要保存所做的改动吗？</translation>
-    </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7888,6 +7888,14 @@ Data may be corrupted!</source>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>放置对象后弹出“属性”菜单。</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation>请先保存文件</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation>请先保存文件后再选择关卡。</translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -8442,10 +8450,6 @@ Do you want to save your changes?</source>
         <source>World title:</source>
         <translation>大地图标题：</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
@@ -8639,7 +8643,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>跳过大背景 （由于 LunaLua 的 Bug 因此不转换 background2-*.gif）</translation>
+        <translation type="vanished">跳过大背景 （由于 LunaLua 的 Bug 因此不转换 background2-*.gif）</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
@@ -8696,6 +8700,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>无法运行应用程序：
 %1:
 请检查应用程序目录，并确保安装正确。</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>跳过大背景 （不转换 background2-*.gif）</translation>
     </message>
 </context>
 <context>

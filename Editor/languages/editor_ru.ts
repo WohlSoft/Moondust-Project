@@ -3074,7 +3074,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Не удалось создать временный файл</translation>
+        <translation type="vanished">Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>
@@ -5701,6 +5701,14 @@ show the current playable character(s) and number of lives.</source>
         <translation>Показать пустой экран вместо экрана загрузки.
 Инчае, на экране загрузки в устеревшем движке будет показан 
 действующий игровой персонаж(и) и остаток жизней.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
 </context>
 <context>
@@ -9247,7 +9255,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Не удалось создать временный файл</translation>
+        <translation type="vanished">Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>
@@ -11553,6 +11561,14 @@ Data may be corrupted!</source>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Сперва разместите объект на карту мира и вызовите &quot;Свойства&quot; через контекстное меню.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation>Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation>Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -12440,7 +12456,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Can&apos;t create a temporary backup file</source>
-        <translation>Не удалось создать временный файл</translation>
+        <translation type="vanished">Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>
@@ -12668,7 +12684,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
+        <translation type="vanished">Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12745,6 +12761,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Невозможно запустить приложение:
 %1
 Пожалуйста, проверьте папку с приложением.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Не конвертировать фоны (не конвертировать background2-*.gif)</translation>
     </message>
 </context>
 <context>

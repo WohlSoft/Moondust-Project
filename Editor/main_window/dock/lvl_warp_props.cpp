@@ -18,6 +18,7 @@
 
 #include <QInputDialog>
 #include <QDesktopWidget>
+#include <QStandardItemModel>
 
 #include <editing/_scenes/level/lvl_history_manager.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
@@ -87,23 +88,44 @@ QComboBox *LvlWarpBox::cbox_event_enter()
 
 void LvlWarpBox::setSMBX64Strict(bool en)
 {
+    dataconfigs &c = mw()->configs;
     bool shown = !en;
-    // Disalbe/Hide all non-supported in SMBX 1.3 parameters
-    ui->WarpTwoWay->setVisible(shown);
-    ui->WarpNeedAStarsMsg->setVisible(shown);
-    ui->WarpNeedAStarsMsg_label->setVisible(shown);
-    ui->WarpHideStars->setVisible(shown);
-    ui->WarpBombNeed->setVisible(shown);
-    ui->WarpHideLevelEnterScreen->setVisible(shown);
 
-    ui->WarpAllowNPC_IL->setVisible(shown);
-    ui->WarpSpecialStateOnly->setVisible(shown);
+    {
+        auto* model = qobject_cast<QStandardItemModel*>(ui->WarpType->model());
+        QStandardItem *item = model->item(3);//Portal warp item
+        if(c.editor.supported_features.level_warp_portal == EditorSetup::FeaturesSupport::F_ENABLED)
+            item->setFlags(item->flags() | Qt::ItemIsEnabled);
+        else
+            item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+    }
 
-    ui->warpBoxCannon->setVisible(shown);
+    // Disable/Hide all non-supported in SMBX 1.3 parameters
+    ui->WarpTwoWay->setEnabled(shown && (c.editor.supported_features.level_warp_two_way == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpTwoWay->setHidden(c.editor.supported_features.level_warp_two_way == EditorSetup::FeaturesSupport::F_HIDDEN);
+    ui->WarpNeedAStarsMsg->setEnabled(shown && (c.editor.supported_features.level_warp_needstars_message == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpNeedAStarsMsg->setHidden(c.editor.supported_features.level_warp_needstars_message == EditorSetup::FeaturesSupport::F_HIDDEN);
+    ui->WarpNeedAStarsMsg_label->setEnabled(shown && (c.editor.supported_features.level_warp_needstars_message == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpNeedAStarsMsg_label->setHidden(c.editor.supported_features.level_warp_needstars_message == EditorSetup::FeaturesSupport::F_HIDDEN);
+    ui->WarpHideStars->setEnabled(shown && (c.editor.supported_features.level_warp_hide_stars == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpHideStars->setHidden(c.editor.supported_features.level_warp_hide_stars == EditorSetup::FeaturesSupport::F_HIDDEN);
+    ui->WarpBombNeed->setEnabled(shown && (c.editor.supported_features.level_warp_bomb_exit == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpBombNeed->setHidden(shown && (c.editor.supported_features.level_warp_bomb_exit == EditorSetup::FeaturesSupport::F_HIDDEN));
+    ui->WarpHideLevelEnterScreen->setEnabled(shown && (c.editor.supported_features.level_warp_hide_interlevel_scene == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpHideLevelEnterScreen->setHidden(c.editor.supported_features.level_warp_hide_interlevel_scene == EditorSetup::FeaturesSupport::F_HIDDEN);
+
+    ui->WarpAllowNPC_IL->setEnabled(shown && (c.editor.supported_features.level_warp_allow_interlevel_npc == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpAllowNPC_IL->setHidden(c.editor.supported_features.level_warp_allow_interlevel_npc == EditorSetup::FeaturesSupport::F_HIDDEN);
+    ui->WarpSpecialStateOnly->setEnabled(shown && (c.editor.supported_features.level_warp_allow_sp_state_only == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->WarpSpecialStateOnly->setHidden(c.editor.supported_features.level_warp_allow_sp_state_only == EditorSetup::FeaturesSupport::F_HIDDEN);
+
+    ui->warpBoxCannon->setEnabled(shown && (c.editor.supported_features.level_warp_cannon_exit == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->warpBoxCannon->setHidden(c.editor.supported_features.level_warp_cannon_exit == EditorSetup::FeaturesSupport::F_HIDDEN);
     ui->WarpEnableCannon->setDisabled(en);
     ui->WarpCannonSpeed->setDisabled(en);
 
-    ui->warpBoxEnterEvent->setVisible(shown);
+    ui->warpBoxEnterEvent->setEnabled(shown && (c.editor.supported_features.level_warp_on_enter_event == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->warpBoxEnterEvent->setHidden(c.editor.supported_features.level_warp_on_enter_event == EditorSetup::FeaturesSupport::F_HIDDEN);
     ui->WarpEnterEvent->setDisabled(en);
     ui->WarpEnterEvent_label->setDisabled(en);
 }
@@ -1318,12 +1340,25 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
 
 void LvlWarpBox::on_WarpBrowseLevels_clicked()
 {
+    if(lockWarpSetSettings) return;
+
     QString dirPath;
-    if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    if(!edit) return;
+
+    dirPath = edit->LvlData.meta.path;
+
+    if(edit->isUntitled())
     {
-        dirPath = mw()->activeLvlEditWin()->LvlData.meta.path;
+        QMessageBox::information(this,
+                                 tr("Please save the file"),
+                                 tr("Please save the file before selecting levels."),
+                                 QMessageBox::Ok);
+        return;
     }
-    else return;
 
     LevelFileList levelList(dirPath, ui->WarpLevelFile->text());
     if(levelList.exec() == QDialog::Accepted)

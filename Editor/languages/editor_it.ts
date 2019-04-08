@@ -2631,10 +2631,6 @@ Vuoi salvare i cambiamenti?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Caricando Porte...</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -4641,6 +4637,14 @@ Seleziona la Mappa necessaria nella lista:</translation>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Impossibile aprire il file!</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6662,10 +6666,6 @@ vuoi continuare lo stesso?</translation>
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; è stato modificato.
 Vuoi salvare le modifiche?</translation>
-    </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8838,6 +8838,14 @@ I dati potrebbero essere corrotti!</translation>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Piazza oggetti sulla mappa e visualizza il menu &apos;Proprietà&apos;.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -9416,10 +9424,6 @@ Vuoi salvare le modifiche?</translation>
         <source>World title:</source>
         <translation>Titolo mappa:</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
@@ -9606,7 +9610,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Salta conversione degli sfondi (non convertire i file background2-* a causa di un bug di LunaLua)</translation>
+        <translation type="vanished">Salta conversione degli sfondi (non convertire i file background2-* a causa di un bug di LunaLua)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
@@ -9659,6 +9663,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Impossibile avviare applicazione:
 %1
 Controlla la cartella dell&apos;applicazione e assicurati che sia installata correttamente.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

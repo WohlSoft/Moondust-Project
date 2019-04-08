@@ -3043,10 +3043,6 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Cargando Puertas...</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -5622,6 +5618,14 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>¡No se puede abrir archivo!</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8917,10 +8921,6 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; ha sido modificado.
 ¿Desea guardar sus cambios?</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -11396,6 +11396,14 @@ Data may be corrupted!</source>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Colocar elemento en el mapa primero y vea las &apos;Propiedades&apos; en el menú contextual.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -12272,10 +12280,6 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; fue modificado.
 ¿Quiere que se guarden sus cambios?</translation>
     </message>
-    <message>
-        <source>Can&apos;t create a temporary backup file</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
@@ -12506,7 +12510,7 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada</tr
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
+        <translation type="vanished">Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12569,6 +12573,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>No se puede ejecutar aplicación:
 %1
 Por favor, controle el directorio de la misma.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Saltar conversión de archivos (no convertir background2-*.gif)</translation>
     </message>
 </context>
 <context>

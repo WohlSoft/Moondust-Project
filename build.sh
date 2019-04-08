@@ -76,6 +76,11 @@ do
             printf "\n"
             echo ""
 
+            echo "--- Compile options ---"
+            printf " \E[1;4msystem-png\E[0m       - Prefer to use libPNG and ZLib from system\n"
+            printf "\n"
+            echo ""
+
             echo "--- Disable building of components ---"
             printf " \E[1;4mnoqt\E[0m             - Skip building of components are using Qt\n"
             printf " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment (Qt5)\n"
@@ -245,6 +250,9 @@ do
             ;;
         test)
             flag_debugDependencies=true
+            ;;
+        system-png)
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBPNG=ON"
             ;;
         noqt)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_ENABLE_QT=OFF"

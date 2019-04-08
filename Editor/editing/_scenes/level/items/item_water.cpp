@@ -112,31 +112,35 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QMenu *WaterType =     ItemMenu.addMenu(tr("Environment type"));
     WaterType->deleteLater();
 
-#define CONTEXT_MENU_ITEM_CHK(name, enable, label, checked_condition)\
+#define CONTEXT_MENU_ITEM_CHK(name, enable, visible, label, checked_condition)\
     name = WaterType->addAction(label);\
     name->setCheckable(true);\
     name->setEnabled(enable);\
+    name->setVisible(visible);\
     name->setChecked(checked_condition); typeID++;
 
     QAction *envTypes[16];
     int typeID = 0;
+    bool enable_new_types = !m_scene->m_data->meta.smbx64strict
+            && (m_scene->m_configs->editor.supported_features.level_phys_ez_new_types == EditorSetup::FeaturesSupport::F_ENABLED);
+    bool show_new_types = (m_scene->m_configs->editor.supported_features.level_phys_ez_new_types != EditorSetup::FeaturesSupport::F_HIDDEN);
 
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                                tr("Water"),        m_data.env_type == LevelPhysEnv::ENV_WATER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true,                                tr("Quicksand"),    m_data.env_type == LevelPhysEnv::ENV_QUICKSAND);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Custom liquid"), m_data.env_type == LevelPhysEnv::ENV_CUSTOM_LIQUID);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Gravity Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC/Player Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC/Player Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Mouse click Event"), m_data.env_type == LevelPhysEnv::ENV_CLICK_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Collision script"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Mouse click Script"), m_data.env_type == LevelPhysEnv::ENV_CLICK_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Collision Event"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("Air chamber"), m_data.env_type == LevelPhysEnv::ENV_AIR);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC1);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], !m_scene->m_data->meta.smbx64strict, tr("NPC Hurting Field"), m_data.env_type == LevelPhysEnv::ENV_NPC_HURTING_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true, true,                       tr("Water"),        m_data.env_type == LevelPhysEnv::ENV_WATER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true, true,                       tr("Quicksand"),    m_data.env_type == LevelPhysEnv::ENV_QUICKSAND);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Custom liquid"), m_data.env_type == LevelPhysEnv::ENV_CUSTOM_LIQUID);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Gravity Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Event"), m_data.env_type == LevelPhysEnv::ENV_CLICK_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision script"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Script"), m_data.env_type == LevelPhysEnv::ENV_CLICK_SCRIPT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision Event"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_EVENT);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Air chamber"), m_data.env_type == LevelPhysEnv::ENV_AIR);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC1);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Hurting Field"), m_data.env_type == LevelPhysEnv::ENV_NPC_HURTING_FIELD);
 
 #undef CONTEXT_MENU_ITEM_CHK
 

@@ -155,7 +155,27 @@ QComboBox *LvlItemProperties::cbox_event_npc_le()
 
 void LvlItemProperties::setSMBX64Strict(bool en)
 {
+    dataconfigs &c = mw()->configs;
+    bool zLayer_hide = (c.editor.supported_features.level_bgo_z_layer == EditorSetup::FeaturesSupport::F_HIDDEN);
+    bool zLayer_active = (c.editor.supported_features.level_bgo_z_layer == EditorSetup::FeaturesSupport::F_ENABLED);
+
+    bool zPos_hide = (c.editor.supported_features.level_bgo_z_position == EditorSetup::FeaturesSupport::F_HIDDEN);
+    bool zPos_active = (c.editor.supported_features.level_bgo_z_position == EditorSetup::FeaturesSupport::F_ENABLED);
+
     ui->PROPS_BGO_Z_Pos->setEnabled(!en);
+    ui->PROPS_BGO_Z_Pos->setVisible(!zLayer_hide || !zPos_hide);
+
+    ui->PROPS_BGO_Z_Layer->setEnabled(zLayer_active);
+    ui->PROPS_BGO_Z_Layer->setHidden(zLayer_hide);
+
+    ui->PROPS_BGO_Z_Layer_label->setEnabled(zLayer_active);
+    ui->PROPS_BGO_Z_Layer_label->setHidden(zLayer_hide);
+
+    ui->PROPS_BGO_Z_Offset->setEnabled(zPos_active);
+    ui->PROPS_BGO_Z_Offset_label->setEnabled(zPos_active);
+
+    ui->PROPS_BGO_Z_Offset->setHidden(zPos_hide);
+    ui->PROPS_BGO_Z_Offset_label->setHidden(zPos_hide);
 }
 /******************Combo boxes*********************************/
 
