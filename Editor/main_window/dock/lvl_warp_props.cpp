@@ -110,7 +110,7 @@ void LvlWarpBox::setSMBX64Strict(bool en)
     ui->WarpHideStars->setEnabled(shown && (c.editor.supported_features.level_warp_hide_stars == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->WarpHideStars->setHidden(c.editor.supported_features.level_warp_hide_stars == EditorSetup::FeaturesSupport::F_HIDDEN);
     ui->WarpBombNeed->setEnabled(shown && (c.editor.supported_features.level_warp_bomb_exit == EditorSetup::FeaturesSupport::F_ENABLED));
-    ui->WarpBombNeed->setHidden(shown && (c.editor.supported_features.level_warp_bomb_exit == EditorSetup::FeaturesSupport::F_HIDDEN));
+    ui->WarpBombNeed->setHidden(c.editor.supported_features.level_warp_bomb_exit == EditorSetup::FeaturesSupport::F_HIDDEN);
     ui->WarpHideLevelEnterScreen->setEnabled(shown && (c.editor.supported_features.level_warp_hide_interlevel_scene == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->WarpHideLevelEnterScreen->setHidden(c.editor.supported_features.level_warp_hide_interlevel_scene == EditorSetup::FeaturesSupport::F_HIDDEN);
 
