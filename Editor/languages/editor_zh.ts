@@ -4277,11 +4277,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished">请先保存文件</translation>
+        <translation>请先保存文件</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished">请先保存文件后再选择关卡。</translation>
+        <translation>请先保存文件后再选择关卡。</translation>
     </message>
 </context>
 <context>
@@ -7720,7 +7720,7 @@ Data may be corrupted!</source>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation>正在编辑用户数据</translation>
+        <translation>用户数据编辑</translation>
     </message>
 </context>
 <context>
