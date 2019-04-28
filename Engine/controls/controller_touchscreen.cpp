@@ -183,8 +183,12 @@ Java_ru_wohlsoft_moondust_moondustActivity_setCanvasSize(JNIEnv *env, jclass typ
 TouchScreenController::TouchScreenController() :
         Controller(type_touchscreen)
 {
+    D_pLogDebugNA("Initialization of touch-screen controller...");
     m_touchDevicesCount = SDL_GetNumTouchDevices();
     SDL_GetWindowSize(PGE_Window::window, &m_screenWidth, &m_screenHeight);
+    D_pLogDebug("Found %d touch devices, screen size: %d x %d",
+            m_touchDevicesCount,
+            m_screenWidth, m_screenHeight);
 }
 
 static void updateKeyValue(bool &key, bool &key_pressed, bool state)
@@ -242,13 +246,9 @@ static void updateFingerKeyState(TouchScreenController::FingerState &st,
     }
 }
 
-
-void TouchScreenController::update()
+void TouchScreenController::processTouchDevice(int dev_i)
 {
-    if(m_touchDevicesCount == 0)
-        return; // Nothing to do
-
-    const SDL_TouchID dev = SDL_GetTouchDevice(0);
+    const SDL_TouchID dev = SDL_GetTouchDevice(dev_i);
 
     int fingers = SDL_GetNumTouchFingers(dev);
 
@@ -261,7 +261,7 @@ void TouchScreenController::update()
     for(int i = 0; i < fingers; i++)
     {
         SDL_Finger *f = SDL_GetTouchFinger(dev, i);
-        if(!f || (f->id < 0)) //Skip a wrong finger
+        if (!f || (f->id < 0)) //Skip a wrong finger
             continue;
 
         SDL_FingerID finger_id = f->id;
@@ -298,6 +298,10 @@ void TouchScreenController::update()
                 {
                     updateFingerKeyState(found->second, keys, key, true);
                     st.heldKeyPrev[key] = st.heldKey[key];
+                    // Also: when more than one touch devices found, choose one which is actual
+                    // Otherwise, the spam of on/off events will happen
+                    if(m_actualDevice < 0)
+                        m_actualDevice = dev_i;
                 }
             }
             st.alive = (keysCount > 0);
@@ -306,7 +310,7 @@ void TouchScreenController::update()
         }
 
         D_pLogDebug("= Finger press: ID=%d, X=%.04f, Y=%.04f, P=%.04f",
-                static_cast<int>(finger_id), finger_x, finger_y, finger_pressure);
+                    static_cast<int>(finger_id), finger_x, finger_y, finger_pressure);
 
     }
 
@@ -320,6 +324,26 @@ void TouchScreenController::update()
             continue;
         }
         it++;
+    }
+}
+
+void TouchScreenController::update()
+{
+    if(m_touchDevicesCount == 0)
+        return; // Nothing to do
+
+    // If actually used in the game touch was found, use it
+    if(m_actualDevice >= 0)
+    {
+        processTouchDevice(m_actualDevice);
+        return;
+    }
+    // Otherwise, find it
+    for(int dev_i = 0; dev_i < m_touchDevicesCount; dev_i++)
+    {
+        processTouchDevice(dev_i);
+        if(m_actualDevice >= 0)
+            break;
     }
 
     Controller::update();

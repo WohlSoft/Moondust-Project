@@ -18,10 +18,12 @@
  */
 
 #include "controller_keyboard.h"
+#include <common_features/logger.h>
 
 KeyboardController::KeyboardController() :
         Controller(type_keyboard)
 {
+    D_pLogDebugNA("Initialization of keyboard controller...");
     kmap.jump.val       = SDL_SCANCODE_Z;
     kmap.jump_alt.val   = SDL_SCANCODE_A;
     kmap.run.val        = SDL_SCANCODE_X;
