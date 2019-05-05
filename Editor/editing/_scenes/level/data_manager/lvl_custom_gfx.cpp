@@ -57,10 +57,10 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         QStringList rules = rTableINI.childGroups();
 
         int count = 0;
-        foreach(QString x, rules)
+        for(const QString &x : rules)
         {
-            obj_rotation_table t;
             rTableINI.beginGroup(x);
+            obj_rotation_table t;
             t.id = rTableINI.value("id", 0).toInt();
             t.type = Items::getItemType(rTableINI.value("type", "-1").toString());
             t.rotate_left = rTableINI.value("rotate-left", 0).toInt();
@@ -87,6 +87,28 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             }
         }
         qDebug() << "Loaded custom rotation rules: " << count;
+    }
+
+    //Get extra folders for search
+    QString sFoldersFile = uLVL.getCustomFile("folders.ini");
+    if(!sFoldersFile.isEmpty())
+    {
+        LogDebug(QString("Found folders.ini: %1").arg(sFoldersFile));
+        QSettings rTableINI(sFoldersFile, QSettings::IniFormat);
+        rTableINI.setIniCodec("UTF-8");
+
+        rTableINI.beginGroup("folders");
+        auto keys = rTableINI.allKeys();
+        for(const QString &k : keys)
+        {
+            QString val = rTableINI.value(k, "").toString();
+            if(!val.isEmpty())
+            {
+                uLVL.addExtraDir(m_data->meta.path + "/" + val);
+                LogDebug(QString("Adding extra folder: %1").arg(m_data->meta.path + "/" + val));
+            }
+        }
+        rTableINI.endGroup();
     }
 
     if(!progress.wasCanceled())

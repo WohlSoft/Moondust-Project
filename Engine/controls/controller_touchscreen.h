@@ -35,7 +35,8 @@ class TouchScreenController final : public Controller
     int m_screenWidth = 0;
     //! Physical screen height
     int m_screenHeight = 0;
-
+    //! Actual touch device to use
+    int m_actualDevice = -1;
 public:
     struct FingerState
     {
@@ -67,6 +68,8 @@ public:
      * \brief Read current state of keyboard controller
      */
     void update() override;
+
+    void processTouchDevice(int dev_i);
 };
 
 

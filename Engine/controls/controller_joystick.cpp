@@ -18,12 +18,13 @@
  */
 
 #include "controller_joystick.h"
-
+#include <common_features/logger.h>
 
 JoystickController::JoystickController() :
     Controller(type_other),
     m_joystickController(nullptr)
 {
+    D_pLogDebugNA("Initialization of joystick controller...");
     //    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();
     //    if(SDL_NumJoysticks() > 0){
     //        //TODO: Select which controller you want to use.

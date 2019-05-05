@@ -22,6 +22,7 @@
 
 #include <QPixmap>
 #include <QImage>
+#include <QList>
 
 #include <PGE_File_Formats/npc_filedata.h>
 #include <data_configs/obj_npc.h>
@@ -70,14 +71,17 @@ public:
     QStringList getCustomFiles(QString nameBase, QStringList extensions, bool ignoreDefaultDirectory = false);
     void setCustomDirs(QString path, QString name);
     void setDefaultDir(QString dPath);
+    void addExtraDir(QString dPath);
+    void clearExtraDirs();
+    QString findFileInExtraDirs(QString fPath);
     void createDirIfNotExsist();
     void import(QStringList &files, bool local = true);
 
 private:
     QString dirEpisode;
     QString dirCustom;
+    QList<QString> dirsExtra;
     QString defaultDirectory;
-
 };
 
 
