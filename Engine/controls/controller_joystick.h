@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef CONTROLLER_JOYSTICK_H
@@ -26,7 +27,7 @@
 /*!
  * \brief A Joystick controller which reads key states from a joystick device
  */
-class JoystickController : public Controller
+class JoystickController final : public Controller
 {
 public:
     /*!
@@ -37,7 +38,7 @@ public:
     /*!
      * \brief Destructir
      */
-    ~JoystickController();
+    ~JoystickController() override = default;
 
     /*!
      * \brief Sets joystick device descriptor which will be used by this controller
@@ -54,14 +55,15 @@ public:
     /*!
      * \brief Takes a state of specified joystick key
      * \param key Output key state which will be copied from actual joystick key state
+     * \param key_pressed Output one-shot key state which will be copied from actual joystick key state
      * \param mkey Joystick key info
      */
-    void updateKey(bool &key, KM_Key &mkey);
+    void updateKey(bool &key, bool &key_pressed, KM_Key &mkey);
 
     /*!
      * \brief Read states of all control keys of a joystick device
      */
-    void update();
+    void update() override;
 
 
     /*!

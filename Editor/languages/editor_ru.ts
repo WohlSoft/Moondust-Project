@@ -688,7 +688,7 @@ Are you want to configure it?</source>
     </message>
     <message>
         <source>This config pack has no configuring tool.</source>
-        <translation>Этот конфигурационный пакет не содержит настроечую утилиту.</translation>
+        <translation>Этот конфигурационный пакет не содержит настроечную утилиту.</translation>
     </message>
 </context>
 <context>
@@ -719,7 +719,7 @@ Are you want to configure it?</source>
     </message>
     <message>
         <source>Configuration directories:</source>
-        <translation>Папки конфигуркции:</translation>
+        <translation>Папки конфигурации:</translation>
     </message>
     <message>
         <source>Name</source>
@@ -836,10 +836,6 @@ Are you want to configure it?</source>
     <message>
         <source>Level: NPCs (%1/%2)</source>
         <translation>Уровень: НИПы (%1/%2)</translation>
-    </message>
-    <message>
-        <source>World map: Terrian tiles (%1/%2)</source>
-        <translation type="vanished">Карта мира: Ландшафтные плитки (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Terrain tiles (%1/%2)</source>
@@ -1006,10 +1002,6 @@ Please save them first before doing anything else.</source>
         <translation type="vanished">Плитка</translation>
     </message>
     <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Ландшафтная плитка</translation>
-    </message>
-    <message>
         <source>Terrain tile</source>
         <translation>Ландшафтная плитка</translation>
     </message>
@@ -1153,7 +1145,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
-        <translation type="vanished">[В разработке] Попытка протестировать уровено в редакторе SMBX!</translation>
+        <translation type="vanished">[В разработке] Попытка протестировать уровень в редакторе SMBX!</translation>
     </message>
     <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
@@ -1177,7 +1169,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Throws an unhandled exception to crash the editor</source>
-        <translation>Сбрасывает необработанное исключение, чтобы спрврцировать аварию редактора</translation>
+        <translation>Сбрасывает необработанное исключение, чтобы спровоцировать аварию редактора</translation>
     </message>
     <message>
         <source>Does a segmentation violation</source>
@@ -1288,7 +1280,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation>Классический интрерфейс более похож на редактор старого движка.</translation>
+        <translation>Классический интерфейс более похож на редактор старого движка.</translation>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
@@ -1581,6 +1573,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>Свойства скопированы: %1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Править код польз. данных...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1693,19 +1689,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>&apos;Hit&apos; event slot is used</source>
-        <translation>Слот события &apos;Стуктут&apos; уже используется</translation>
+        <translation>Слот события &apos;Стукнут&apos; уже используется</translation>
     </message>
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
-        <translation>Извинте, но слот события &quot;Стукнут&quot; уже используется событием &quot;%1&quot;.</translation>
+        <translation>Извините, но слот события &quot;Стукнут&quot; уже используется событием &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>&apos;Hit&apos; event slot is busy</source>
-        <translation type="vanished">Слот события &apos;Стуктут&apos; уже занято</translation>
+        <translation type="vanished">Слот события &apos;Стукнут&apos; уже занято</translation>
     </message>
     <message>
         <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
-        <translation type="vanished">Извинте, но слот события &quot;Стукнут&quot; уже занято событием &quot;%1&quot;.</translation>
+        <translation type="vanished">Извините, но слот события &quot;Стукнут&quot; уже занято событием &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
@@ -1730,6 +1726,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Properties...</source>
         <translation>Свойства...</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Править код польз. данных...</translation>
     </message>
 </context>
 <context>
@@ -1821,7 +1821,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation>Рразрешить предметы</translation>
+        <translation>Разрешить предметы</translation>
     </message>
     <message>
         <source>Locked</source>
@@ -1969,13 +1969,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
         <translation>Дружелюбный (Недружелюбные НИПы не разговаривают)</translation>
-    </message>
-    <message>
-        <source>Please, enter NPC&apos;s talkative message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Пожалуйста, наберите сообщение разговора с NPC
-Ограничения сообщения:
-максимальная длина строки 28 символов</translation>
     </message>
 </context>
 <context>
@@ -2175,6 +2168,10 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>Remove</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Править код польз. данных...</translation>
     </message>
 </context>
 <context>
@@ -2460,10 +2457,6 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Ландшафтная плитка</translation>
     </message>
     <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Ландшафтная плитка</translation>
-    </message>
-    <message>
         <source>[Empty]</source>
         <translation></translation>
     </message>
@@ -2737,7 +2730,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Это консолная утилита, которая исправляет лениво сделанные маски, созданые для SMBX. Эта утилита корректирует маску через сравнение цветов. Изображения будут перезаписаны, но при этом всегда создаётся резервная копя. Если конвертирование окажется неудачным, вы всегда можете восстановить исходные изображения.</translation>
+        <translation>Это консольная утилита, которая исправляет лениво сделанные маски, созданые для SMBX. Эта утилита корректирует маску через сравнение цветов. Изображения будут перезаписаны, но при этом всегда создаётся резервная копя. Если конвертирование окажется неудачным, вы всегда можете восстановить исходные изображения.</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
@@ -2753,7 +2746,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Откыть исходную папку</translation>
+        <translation>Открыть исходную папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
@@ -2775,7 +2768,7 @@ Message limits: max line lenth is 28 characters</source>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Невозможно запустить приложение: 
+        <translation>Невозможно запустить приложение:
 %1
 Пожалуйста, проверьте папку с приложением.</translation>
     </message>
@@ -2847,12 +2840,12 @@ Please, check the application directory and make sure it is installed properly.<
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно создать файл уровня:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
         <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation>Пожалуйста, ввездите название уровня для &apos;%1&apos;!</translation>
+        <translation>Пожалуйста, введите название уровня для &apos;%1&apos;!</translation>
     </message>
     <message>
         <source>Saving </source>
@@ -2892,7 +2885,7 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation>Расширение файла не определно, пожалуйста, введите расширение файла!</translation>
+        <translation>Расширение файла не определено, пожалуйста, введите расширение файла!</translation>
     </message>
     <message>
         <source>SMBX file version</source>
@@ -2924,7 +2917,7 @@ Please remove excess blocks from this level or save file into LVLX format.</sour
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Блоков
 Максимальное число Блоков -  %2.
 
-Подалуйста, удалите лишние Блоки с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Блоки с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Background Objects
@@ -2934,7 +2927,7 @@ Please remove excess Background Objects from this level or save file into LVLX f
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Фоновых объектов
 Максимальное число Фоновых объектов -  %2.
 
-Подалуйста, удалите лишние Фоновые объекты с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Фоновые объекты с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
@@ -2944,7 +2937,7 @@ Please remove excess Non-Playable Characters from this level or save file into L
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Неигровых персонажей
 Максимальное число Неигровых персонажей -  %2.
 
-Подалуйста, удалите лишних Неигровых персонажей с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишних Неигровых персонажей с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Warps
@@ -2954,7 +2947,7 @@ Please remove excess Warps from this level or save file into LVLX format.</sourc
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Проходов
 Максимальное число Проходов -  %2.
 
-Подалуйста, удалите лишние Проходы с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Проходы с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
@@ -2964,7 +2957,7 @@ Please remove excess Water Boxes from this level or save file into LVLX format.<
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Водяные зоны
 Максимальное число Водяных зон -  %2.
 
-Подалуйста, удалите лишние Водяные зоны с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Водяные зоны с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Layers
@@ -2974,7 +2967,7 @@ Please remove excess Layers from this level or save file into LVLX format.</sour
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Слоёв
 Максимальное число Слоёв -  %2.
 
-Подалуйста, удалите лишние Слои с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Слои с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Events
@@ -2984,7 +2977,7 @@ Please remove excess Events from this level or save file into LVLX format.</sour
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Событий
 Максимальное число Событий -  %2.
 
-Подалуйста, удалите лишние События с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние События с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>File save error</source>
@@ -3021,7 +3014,7 @@ Installed LunaLUA partially extends than limits.</source>
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно открыть файл %1:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -3036,7 +3029,7 @@ because object configurations are not loaded
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation>На этом уровне имеются некоторые неправильные файлы конфигураций, которые не могут загрузиться. Чтобы это сообщение не появлялось в следующий раз, пожалуйста, исправьте следующие ошибки в ваших кофигурационных файлах в пользовательских папках:
+        <translation>На этом уровне имеются некоторые неправильные файлы конфигураций, которые не могут загрузиться. Чтобы это сообщение не появлялось в следующий раз, пожалуйста, исправьте следующие ошибки в ваших конфигурационных файлах в пользовательских папках:
 
 %1</translation>
     </message>
@@ -3079,6 +3072,10 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Загрузка дверей...</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Не удалось создать временный файл</translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -3099,7 +3096,7 @@ Do you want to save your changes?</source>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Панель элементов Уровня</translation>
+        <translation type="vanished">Панель элементов Уровня</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3155,7 +3152,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation>&lt;Сперва сохрание файл&gt;</translation>
+        <translation>&lt;Сначала сохраните файл&gt;</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation>Обозреватель элементов Уровня</translation>
     </message>
 </context>
 <context>
@@ -3398,7 +3399,7 @@ Otherwise it will be very limited.</source>
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
         <translation>Запустить тест уровня в устаревшем движке.
-Чтобы эта возможность работала, треубется наличие последней версии LunaLua.
+Чтобы эта возможность работала, требуется наличие последней версии LunaLua.
 Иначе, эта возможность будет работать очень ограниченно.</translation>
     </message>
     <message>
@@ -3419,7 +3420,7 @@ Otherwise, it will be very limited.</source>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation>Позволяет запускать уровни очень быстро после превого запуска.
+        <translation>Позволяет запускать уровни очень быстро после первого запуска.
 Требуется мощный компьютер, иначе движок зависнет при повторной попытке запуска тестирования.
 Желательно отключать эту опцию на медленных компьютерах или если имеются какие-нибудь трудности при попытках запуска тестирования.</translation>
     </message>
@@ -3512,7 +3513,7 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
 %3</source>
         <translation>%2 не найден!
 Вы имеете Vanilla SMBX!&lt;br&gt;
-Это значит, что автозапуск теста уровня невозможен. Чтобы запустить тест уровня, будет сгенерирован временный эпизод, которвый вы можете запустить и выбрать вручную.&lt;br&gt;
+Это значит, что автозапуск теста уровня невозможен. Чтобы запустить тест уровня, будет сгенерирован временный эпизод, который вы можете запустить и выбрать вручную.&lt;br&gt;
 &lt;br&gt;
 Имя генерируемого эпизода: %1&lt;br&gt;
 &lt;br&gt;
@@ -3623,9 +3624,9 @@ To use LunaTester you should have right Integration configuration package!</sour
     </message>
     <message>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Прерзвать запущенный процесс</translation>
+        <translation type="vanished">Прервать запущенный процесс</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
@@ -3642,6 +3643,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester не запущен.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>Прервать запущенный процесс</translation>
     </message>
 </context>
 <context>
@@ -3800,11 +3807,11 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>&apos;Hit&apos; event slot is used</source>
-        <translation type="obsolete">Слот события &apos;Стуктут&apos; уже используется</translation>
+        <translation type="obsolete">Слот события &apos;Стукнут&apos; уже используется</translation>
     </message>
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
-        <translation type="obsolete">Извинте, но слот события &quot;Стукнут&quot; уже используется событием &quot;%1&quot;.</translation>
+        <translation type="obsolete">Извините, но слот события &quot;Стукнут&quot; уже используется событием &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Open target level: %1</source>
@@ -3883,7 +3890,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Source</source>
-        <translation>Источик</translation>
+        <translation>Источник</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3950,7 +3957,7 @@ Do you want to continue?</source>
 Please select another section, or clear
 the destination section first with &apos;Delete Section&apos;.</source>
         <translation type="vanished">Целевая секция занята!
-Пожалуйста, выберие другую секцию
+Пожалуйста, выберите другую секцию
 или удалите эту секцию с помощью свойства &quot;Удалить секцию&quot;.</translation>
     </message>
     <message>
@@ -3962,7 +3969,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
 Please select another section, or clear
 the destination section first with &apos;Delete Section&apos;.</source>
         <translation type="vanished">Целевая секция занята!
-Пожалуйста, выберие другую секцию
+Пожалуйста, выберите другую секцию
 или удалите эту секцию с помощью свойства &quot;Удалить секцию&quot;.</translation>
     </message>
 </context>
@@ -4194,12 +4201,6 @@ the destination section first with &apos;Delete Section&apos;.</source>
         <translation>Пожалуйста, введите сообщение
 (Макс. длина одной строки 27 символов)</translation>
     </message>
-    <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Пожалуйста, введите сообщение
-(Макс. длина одной строки 28 символов)</translation>
-    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -4414,7 +4415,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Contains of current NPC-Container</source>
-        <translation>Содержимое конейнера НИП</translation>
+        <translation>Содержимое контейнера НИП</translation>
     </message>
     <message>
         <source>Auto-increment</source>
@@ -4542,7 +4543,7 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Search User BGOs %1</source>
-        <translation>Поикс польз. фон.об. %1</translation>
+        <translation>Поиск польз. фон.об. %1</translation>
     </message>
     <message>
         <source>Search User NPCs %1</source>
@@ -4938,7 +4939,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Is Warp</source>
-        <translation type="vanished">Соедининение левого-правого крёв</translation>
+        <translation type="vanished">Соединение левого-правого крёв</translation>
     </message>
     <message>
         <source>No Back</source>
@@ -5250,7 +5251,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Edit a custom background config...</source>
-        <translation>Править пользоватьский конфиг фона...</translation>
+        <translation>Править пользовательский конфиг фона...</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5295,7 +5296,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Choose a background first</source>
-        <translation>Сначала нужно выберать фоновую картинку</translation>
+        <translation>Сначала нужно выбрать фоновую картинку</translation>
     </message>
     <message>
         <source>Please, choose the background image first.</source>
@@ -5478,11 +5479,11 @@ The special state is defined by the active configuration pack.</source>
     </message>
     <message>
         <source>Sp. State only</source>
-        <translation>Только Спц-Сост</translation>
+        <translation>Только Спец-Сост</translation>
     </message>
     <message>
         <source>Allow entering from both sides of this warp.</source>
-        <translation>Разрешить проходитть через этот проход с обеих сторон.</translation>
+        <translation>Разрешить проходить через этот проход с обеих сторон.</translation>
     </message>
     <message>
         <source>Two-way warp</source>
@@ -5499,8 +5500,8 @@ The special state is defined by the active configuration pack.</source>
     <message>
         <source>The speed at which the player will exit the warp.
 Measured in pixels per 1/65 seconds.</source>
-        <translation>Как быстро будет лететь игрок в момент вылетета.
-Единица измерения - пиксели в 1/65 секунды.</translation>
+        <translation>Как быстро будет лететь игрок в момент вылета из трубы.
+Единица измерения - пиксели на 1/65 секунды.</translation>
     </message>
     <message>
         <source>The direction in which the player will exit the warp.</source>
@@ -5562,7 +5563,7 @@ when you exit from a level through this warp.</source>
     </message>
     <message>
         <source>Set</source>
-        <translation>Выбр</translation>
+        <translation>Выбрать</translation>
     </message>
     <message>
         <source>Level door</source>
@@ -5616,9 +5617,9 @@ If set to zero, the player will start at the pre-defined level start point.</sou
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
-        <translation>Показать пустой экран вместо загрузочного экрана.
+        <translation type="vanished">Показать пустой экран вместо загрузочного экрана.
 В старом SMBX-движке загрузочный экран уровня показывает
 текущего игрового персонажа(ей) и остаток жизней.</translation>
     </message>
@@ -5652,7 +5653,7 @@ Every warp point pair requires a warp entry.</source>
     </message>
     <message>
         <source>Remove current warp entry with all placed points.</source>
-        <translation>Удалить текущую запись прохда вместе со всеми размещёнными точками.</translation>
+        <translation>Удалить текущую запись прохода вместе со всеми размещёнными точками.</translation>
     </message>
     <message>
         <source>Level file</source>
@@ -5692,6 +5693,22 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Невозможно открыть файл!</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation>Показать пустой экран вместо экрана загрузки.
+Инчае, на экране загрузки в устеревшем движке будет показан 
+действующий игровой персонаж(и) и остаток жизней.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
 </context>
 <context>
@@ -5873,12 +5890,6 @@ Please, select necessary world map in a list:</source>
         <translation type="vanished">Пожалуйста, переключите текущую секцию на %1 для захвата данных для этого события</translation>
     </message>
     <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Пожалуйста, введите сообщение
-(Макс. длина одной строки 28 символов)</translation>
-    </message>
-    <message>
         <source>Music file:</source>
         <translation type="vanished">Музыкальный файл:</translation>
     </message>
@@ -5953,10 +5964,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>Level Sections Switch</source>
         <translation>Переключить секцию уровня</translation>
-    </message>
-    <message>
-        <source>Lock Terrian tiles</source>
-        <translation type="vanished">Заблокировать все ландшафтные плитки</translation>
     </message>
     <message>
         <source>Lock Scenery tiles</source>
@@ -6120,7 +6127,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="obsolete">Аттрибуты</translation>
+        <translation type="obsolete">Атрибуты</translation>
     </message>
     <message>
         <source>Invisible</source>
@@ -6286,7 +6293,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Секция 0 (Ctrl+1)</translation>
+        <translation type="vanished">Секция 0 (Ctrl+1)</translation>
     </message>
     <message>
         <source>Section 1</source>
@@ -6458,83 +6465,83 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Секция 1 (Ctrl+2)</translation>
+        <translation type="vanished">Секция 1 (Ctrl+2)</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Секция 2 (Ctrl+3)</translation>
+        <translation type="vanished">Секция 2 (Ctrl+3)</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Секция 3 (Ctrl+4)</translation>
+        <translation type="vanished">Секция 3 (Ctrl+4)</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Секция 4 (Ctrl+5)</translation>
+        <translation type="vanished">Секция 4 (Ctrl+5)</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Секция 5 (Ctrl+6)</translation>
+        <translation type="vanished">Секция 5 (Ctrl+6)</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Секция 6 (Ctrl+7)</translation>
+        <translation type="vanished">Секция 6 (Ctrl+7)</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Секция 7 (Ctrl+8)</translation>
+        <translation type="vanished">Секция 7 (Ctrl+8)</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Секция 8 (Ctrl+9)</translation>
+        <translation type="vanished">Секция 8 (Ctrl+9)</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Секция 9 (Ctrl+0)</translation>
+        <translation type="vanished">Секция 9 (Ctrl+0)</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Секция 10 (Ctrl+Alt+1)</translation>
+        <translation type="vanished">Секция 10 (Ctrl+Alt+1)</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Секция 11 (Ctrl+Alt+2)</translation>
+        <translation type="vanished">Секция 11 (Ctrl+Alt+2)</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Секция 12 (Ctrl+Alt+3)</translation>
+        <translation type="vanished">Секция 12 (Ctrl+Alt+3)</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Секция 13 (Ctrl+Alt+4)</translation>
+        <translation type="vanished">Секция 13 (Ctrl+Alt+4)</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Секция 14 (Ctrl+Alt+5)</translation>
+        <translation type="vanished">Секция 14 (Ctrl+Alt+5)</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Секция 15 (Ctrl+Alt+6)</translation>
+        <translation type="vanished">Секция 15 (Ctrl+Alt+6)</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Секция 16 (Ctrl+Alt+7)</translation>
+        <translation type="vanished">Секция 16 (Ctrl+Alt+7)</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Секция 17 (Ctrl+Alt+8)</translation>
+        <translation type="vanished">Секция 17 (Ctrl+Alt+8)</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Секция 18 (Ctrl+Alt+9)</translation>
+        <translation type="vanished">Секция 18 (Ctrl+Alt+9)</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Секция 19 (Ctrl+Alt+0)</translation>
+        <translation type="vanished">Секция 19 (Ctrl+Alt+0)</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Секция 20 (Alt+1)</translation>
+        <translation type="vanished">Секция 20 (Alt+1)</translation>
     </message>
     <message>
         <source>Wrap Horizontally</source>
@@ -6581,7 +6588,7 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Защита от наложения элементов</translation>
     </message>
     <message>
-        <source>Enable anti-overlap protection. 
+        <source>Enable anti-overlap protection.
 Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</source>
         <translation type="vanished">Предотвращает наложение похожих элементов друг на друга.
 Попытка перетащить группу выделенных элементов поверх другой группы будет отвергнута, и все выделенные элементы вернутся в исходное положение. Если этот флажок убран, вы сможете перетаскивать элементы накладывая поверх друг-друга без ограничений. Защита от наложения действует всегда при добавлении новых элементов на сцену. Защита не работает при дублировании или вставки из буфера обмена.</translation>
@@ -6648,7 +6655,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Modern GUI</source>
-        <translation>Совмеренный интерфейс</translation>
+        <translation>Современный интерфейс</translation>
     </message>
     <message>
         <source>Variables</source>
@@ -6700,11 +6707,11 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
-        <translation>Глобальный сценарий для всех уровней эпизона. Новое имя файла сценария заменяет старый &quot;lunaworld.lua&quot;</translation>
+        <translation>Глобальный сценарий для всех уровней эпизода. Новое имя файла сценария заменяет старый &quot;lunaworld.lua&quot;</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
-        <translation>Начальное приветсвие</translation>
+        <translation>Начальное приветствие</translation>
     </message>
     <message>
         <source>Test world map (Alpha)</source>
@@ -6712,7 +6719,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Global level scrupt for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
-        <translation type="vanished">Глобальный сценарий для всех уровней эпизона. Новое имя файла сценария заменяет старый &quot;lunaworld.lua&quot;</translation>
+        <translation type="vanished">Глобальный сценарий для всех уровней эпизода. Новое имя файла сценария заменяет старый &quot;lunaworld.lua&quot;</translation>
     </message>
     <message>
         <source>World map script (%1)</source>
@@ -6797,7 +6804,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Reset Zoom</source>
-        <translation>Сбросить мастшаб</translation>
+        <translation>Сбросить масштаб</translation>
     </message>
     <message>
         <source>Change configuration pack...</source>
@@ -6897,15 +6904,15 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Enable GFX fix (reload of the file required)</source>
-        <translation type="vanished">Вкл. граф. исправление (требутеся переоткрыть файл)</translation>
+        <translation type="vanished">Вкл. граф. исправление (требуется переоткрыть файл)</translation>
     </message>
     <message>
         <source>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</source>
-        <translation type="vanished">Этот флаг включает альтернативный алогритм применения маски чтобы корректно отобразить лениво-сделанную графику</translation>
+        <translation type="vanished">Этот флаг включает альтернативный алгоритм применения маски чтобы корректно отобразить лениво-сделанную графику</translation>
     </message>
     <message>
         <source>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</source>
-        <translation>Заклазки позиции. Сохраняют текущую позицию камеры. Вы можете использовать их, чтобы быстро вернуться в нужное место на большой карте.</translation>
+        <translation>Закладки позиции. Сохраняют текущую позицию камеры. Вы можете использовать их, чтобы быстро вернуться в нужное место на большой карте.</translation>
     </message>
     <message>
         <source>Clone section to...</source>
@@ -7041,7 +7048,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Объекты уровня</translation>
+        <translation type="vanished">Объекты уровня</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7143,7 +7150,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Панель элементов Уровня</translation>
+        <translation type="vanished">Панель элементов Уровня</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -7225,7 +7232,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Contains of current NPC-Container</source>
-        <translation type="vanished">Содержимое конейнера нИП</translation>
+        <translation type="vanished">Содержимое контейнера нИП</translation>
     </message>
     <message>
         <source>Classic Events</source>
@@ -7337,7 +7344,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Display message:</source>
-        <translation type="vanished">Показть сообщение:</translation>
+        <translation type="vanished">Показать сообщение:</translation>
     </message>
     <message>
         <source>Play sound:</source>
@@ -7663,7 +7670,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Hub-styled world (without world map)</source>
-        <translation type="vanished">Кооридоный мир (Без карты мира)</translation>
+        <translation type="vanished">Коридорный мир (Без карты мира)</translation>
     </message>
     <message>
         <source>Restart last level after fail</source>
@@ -7720,7 +7727,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Панель объектов Карты Мира</translation>
+        <translation type="vanished">Панель объектов Карты Мира</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -7935,7 +7942,7 @@ File: %1
         <source>The configuration pack has changed!
 To start using the new configuration pack, please restart the application.</source>
         <translation type="vanished">Конфигурация переключена!
-Чтобы начать работу с новоу конфигурацией, пожалуйста, перезапустите приложение.</translation>
+Чтобы начать работу с новой конфигурацией, пожалуйста, перезапустите приложение.</translation>
     </message>
     <message>
         <source>Reload configuration</source>
@@ -8040,10 +8047,6 @@ File not exist.</source>
     <message>
         <source>Dummy</source>
         <translation type="vanished">Пустышка</translation>
-    </message>
-    <message>
-        <source>Sorry, the World Maps support is not inplemented in this version.</source>
-        <translation type="vanished">Извините, поддерка карт мира пока не реализована в этой версии приложения.</translation>
     </message>
     <message>
         <source>Untitled file</source>
@@ -8368,12 +8371,12 @@ The configuration pack was loaded, but contains errors.</source>
         <translation>Движок не найден</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Невозможно начать тестирование, т.к. движок не найден: 
+        <translation type="vanished">Невозможно начать тестирование, т.к. движок не найден:
 %1
-Пожалуйста, проверье папку приложения.</translation>
+Пожалуйста, проверьте папку приложения.</translation>
     </message>
     <message>
         <source>Engine already runned</source>
@@ -8404,10 +8407,10 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="vanished">Пустышка!</translation>
     </message>
     <message>
-        <source>Engine is not found: 
+        <source>Engine is not found:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Движок не найден: 
+        <translation type="vanished">Движок не найден:
 %1
 Пожалуйста, проверьте папку с приложением.</translation>
     </message>
@@ -8441,9 +8444,9 @@ You have a Vanilia SMBX!
 That means, impossible to launch level testing automatically.
 To launch a level testing, start a game and select playing of the %1 episode.</source>
         <translation type="vanished">%2 не найден!
-Вы имеете устаревшую сборку SMBX (Vanilia)!
-Это значит, что с данной сборкой невозможно автоматически запустить тестовый уровень. 
-Чтобы запустить тест урвоня вручную, запустите SMBX в режиме игры и зайдите в эпизод &quot;%1&quot;.</translation>
+Вы имеете устаревшую сборку SMBX (Vanilla)!
+Это значит, что с данной сборкой невозможно автоматически запустить тестовый уровень.
+Чтобы запустить тест уровня вручную, запустите SMBX в режиме игры и зайдите в эпизод &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>process execution is failed.</source>
@@ -8465,13 +8468,13 @@ To launch a level testing, start a game and select playing of the %1 episode.</s
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation>Привет! Это тест на движке PGE.
-Движок PGE - это находящийся в разработке компонент PGE Project, который реализует игровой процесс и функциональность тестирвоания уровней. Сейчас движок является экспериментальным и имеет множество нереализованных функций. Некоторые функции можут быть всё ещё не реализованы, или могут работать неправильно. Если вы создаёте уровни или эпизоды для старого движка SMBX, и вы хотите запустить тест с полным набором функциональности, пожалуйста, запустите тест на движке SMBX. Используйте тест на движке PGE в случаях, когда вы хотите протестировать сам движок PGE, или вы хотите протестировать специфичные для PGE уровни и эпизоды.</translation>
+Движок PGE - это находящийся в разработке компонент PGE Project, который реализует игровой процесс и функциональность тестирования уровней. Сейчас движок является экспериментальным и имеет множество нереализованных функций. Некоторые функции можут быть всё ещё не реализованы, или могут работать неправильно. Если вы создаёте уровни или эпизоды для старого движка SMBX, и вы хотите запустить тест с полным набором функциональности, пожалуйста, запустите тест на движке SMBX. Используйте тест на движке PGE в случаях, когда вы хотите протестировать сам движок PGE, или вы хотите протестировать специфичные для PGE уровни и эпизоды.</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
-        <translation>Движок не найден: 
+        <translation type="vanished">Движок не найден:
 %1
 Пожалуйста, выбери приложение движка сам!</translation>
     </message>
@@ -8500,8 +8503,8 @@ That means, impossible to launch level testing automatically.
 To launch a level testing, start a game and select playing of the %1 episode.</source>
         <translation type="vanished">%2 не найден!
 Вы имеете устаревшую сборку SMBX (Vanilla)!
-Это значит, что с данной сборкой невозможно автоматически запустить тестовый уровень. 
-Чтобы запустить тест урвоня вручную, запустите SMBX в режиме игры и зайдите в эпизод &quot;%1&quot;.</translation>
+Это значит, что с данной сборкой невозможно автоматически запустить тестовый уровень.
+Чтобы запустить тест уровня вручную, запустите SMBX в режиме игры и зайдите в эпизод &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -8516,7 +8519,7 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
 %3</source>
         <translation type="vanished">%2 не найден!
 Вы имеете Vanilla SMBX!&lt;br&gt;
-Это значит, что автозапуск теста уровня невозможен. Чтобы запустить тест уровня, будет сгенерирован временный эпизод, которвый вы можете запустить и выбрать вручную.&lt;br&gt;
+Это значит, что автозапуск теста уровня невозможен. Чтобы запустить тест уровня, будет сгенерирован временный эпизод, который вы можете запустить и выбрать вручную.&lt;br&gt;
 &lt;br&gt;
 Имя генерируемого эпизода: %1&lt;br&gt;
 &lt;br&gt;
@@ -8603,7 +8606,7 @@ Will be created a temporary file. Do you want to continue?</source>
     <message>
         <source>Engine is already testing another level.
 Please exit from engine and try again.</source>
-        <translation type="vanished">Движок уже тестирует другой уровеньl.
+        <translation type="vanished">Движок уже тестирует другой уровень.
 Пожалуйста, выйдите из движка и попробуйте ещё раз.</translation>
     </message>
     <message>
@@ -8675,7 +8678,7 @@ Do you want to clone another section?</source>
     <message>
         <source>File doesn&apos;t use custom graphics.
 </source>
-        <translation>Файл не использует пользовательску графикую.
+        <translation>Файл не использует пользовательскую графику.
 </translation>
     </message>
     <message>
@@ -8784,8 +8787,8 @@ See in PGE_Editor_log.txt for more information.</source>
 Please open the Tools/Global Configuration/Configuration Status
 to get more information.</source>
         <translation type="vanished">Конфигурационный пакет загружен с ошибками.
-Пожауйста, откройте Инструменты/Глобальная Конфигурация/Состояние текущей конфигурации
-чтобы получить подробнуюю информацию.</translation>
+Пожалуйста, откройте Инструменты/Глобальная Конфигурация/Состояние текущей конфигурации
+чтобы получить подробную информацию.</translation>
     </message>
     <message>
         <source>Open</source>
@@ -8927,6 +8930,26 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation>Конфигурация переключена!
 Чтобы начать работу с новой конфигурацией, нужно перезапустить редактор. Хотите продолжить?</translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation>Невозможно запустить тест, движок не найден:
+%1
+Пожалуйста, укажите приложение движка самостоятельно!</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation>Обозреватель элементов Уровня</translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation>Оборзеватель элементов с поиском</translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation>Обозреватель элементов Карты Мира</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -9034,7 +9057,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>NPC collision top</source>
-        <translation>НИПы можгут стоять сверху</translation>
+        <translation>НИПы могут стоять сверху</translation>
     </message>
     <message>
         <source>NPC collision</source>
@@ -9230,6 +9253,10 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Не удалось создать временный файл</translation>
+    </message>
 </context>
 <context>
     <name>PGE_EditorPluginInfo</name>
@@ -9331,7 +9358,7 @@ Error description:
     </message>
     <message>
         <source>Loading Paths images...</source>
-        <translation type="vanished">Зfгрузка изображений путей...</translation>
+        <translation type="vanished">Загрузка изображений путей...</translation>
     </message>
     <message>
         <source>Loading Sceneries...</source>
@@ -9349,26 +9376,26 @@ Error description:
         <source>We&apos;re sorry, but PGE has crashed. Reason: Out of memory! :(
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
         <translation type="vanished">Извините, но PGE упал. Причина: Не достаточно памяти! :(
-Чтобы недопустить этого, пожалуйста, закройте ненужные программы чтобы освободить больше памяти.</translation>
+Чтобы не допустить этого, пожалуйста, закройте ненужные программы чтобы освободить больше памяти.</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="vanished">Мы извиняемся, но редактор сломался. 
+        <translation type="vanished">Мы извиняемся, но редактор сломался.
 Причина: Недостаточно памяти!
 
 Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="vanished">Извините, но PGE Editor сломался. 
+        <translation type="vanished">Извините, но PGE Editor сломался.
 Причина: необработанное исключение
 
 Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
@@ -9376,25 +9403,25 @@ Forum link: wohlsoft.ru/forum</source>
 Ссылка форума: wohlsoft.ru/forum</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="vanished">Мы извиняемся, но редактор сломался. 
+        <translation type="vanished">Мы извиняемся, но редактор сломался.
 Причина: %1
 
 Пожалуйста, проинформируйте администрацию форума, таким образом, мы можем попытаться решить эту проблему, Спасибо
 
-Сылка форума: wohlsoft.ru/forum</translation>
+Ссылка форума: wohlsoft.ru/forum</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Signal Segmentation Violation [SIGSERV]
 
 </source>
-        <translation type="vanished">Мы извиняемся, но редактор сломался. 
+        <translation type="vanished">Мы извиняемся, но редактор сломался.
 Причина: Сигнал нарушения сегментирования [SIGSERV]
 </translation>
     </message>
@@ -9492,7 +9519,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation>Рразрешить предметы</translation>
+        <translation>Разрешить предметы</translation>
     </message>
     <message>
         <source>Allow NPC inter level</source>
@@ -9736,7 +9763,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Is Warp</source>
-        <translation>Соедининение левого-правого крёв</translation>
+        <translation>Соединение левого-правого крёв</translation>
     </message>
     <message>
         <source>No Back</source>
@@ -9804,7 +9831,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Hub styled world</source>
-        <translation>Корридорный мир</translation>
+        <translation>Коридорный мир</translation>
     </message>
     <message>
         <source>Intro Level</source>
@@ -9847,23 +9874,23 @@ Reason: Signal Segmentation Violation [SIGSERV]
         <translation>Всего звёзд</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Мы извиняемся, но редактор сломался. 
+        <translation type="vanished">Мы извиняемся, но редактор сломался.
 Причина: Недостаточно памяти!
 
 Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Извините, но PGE Editor сломался. 
+        <translation type="vanished">Извините, но PGE Editor сломался.
 Причина: необработанное исключение
 
 Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
@@ -9915,20 +9942,20 @@ Forum link: wohlsoft.ru/forum</source>
         <translation>Прервано! [SIGINT]</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>
-        <translation>Мы извиняется, но Редактор PGE аварийно завершился. Этому послужила причина: %1
+        <translation type="vanished">Мы извиняется, но Редактор PGE аварийно завершился. Этому послужила причина: %1
 
 </translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Signal Segmentation Violation [SIGSERV]
 
 </source>
-        <translation type="vanished">Мы извиняемся, но редактор сломался. 
+        <translation type="vanished">Мы извиняемся, но редактор сломался.
 Причина: Сигнал нарушения сегментирования [SIGSERV]
 </translation>
     </message>
@@ -9986,7 +10013,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Loading Paths images...</source>
-        <translation>Зfгрузка изображений путей...</translation>
+        <translation>Загрузка изображений путей...</translation>
     </message>
     <message>
         <source>Loading Sceneries...</source>
@@ -10104,7 +10131,7 @@ The maximum number of Events is %2.</source>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation>Во время сохранения уровня в формат SMBX64 проихошли неполадки:
+        <translation>Во время сохранения уровня в формат SMBX64 произошли неполадки:
 
 %1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
     </message>
@@ -10142,7 +10169,7 @@ The maximum number of Music Boxes is %2.</source>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation>Во время сохранения карты мира в формат SMBX64 проихошли неполадки:
+        <translation>Во время сохранения карты мира в формат SMBX64 произошли неполадки:
 
 %1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
     </message>
@@ -10188,11 +10215,57 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Initializing tileset categories...</source>
-        <translation>Инициализация категорий элементых наборов...</translation>
+        <translation>Инициализация категорий элементных наборов...</translation>
     </message>
     <message>
         <source>LTR</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Block user data change</source>
+        <translation>Изменение пользовательских настроек блока</translation>
+    </message>
+    <message>
+        <source>BGO user data change</source>
+        <translation>Изменение пользовательских настроек фонового объекта</translation>
+    </message>
+    <message>
+        <source>NPC user data change</source>
+        <translation>Изменение пользовательских настроек НеИгрового Персонажа</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>Мы извиняемся, но редактор сломался.
+Причина: Недостаточно памяти!
+
+Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation>Извините, но PGE Editor сломался.
+Причина: необработанное исключение
+
+Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
+
+Ссылка форума: wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation>Мы извиняется, но Редактор PGE аварийно завершился. 
+Этому послужила причина: %1
+
+</translation>
     </message>
 </context>
 <context>
@@ -10324,7 +10397,7 @@ The maximum number of Events is %2.</source>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="vanished">Во время сохранения уровня в формат SMBX64 проихошли неполадки:
+        <translation type="vanished">Во время сохранения уровня в формат SMBX64 произошли неполадки:
 
 %1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
     </message>
@@ -10362,7 +10435,7 @@ The maximum number of Music Boxes is %2.</source>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation type="vanished">Во время сохранения карты мира в формат SMBX64 проихошли неполадки:
+        <translation type="vanished">Во время сохранения карты мира в формат SMBX64 произошли неполадки:
 
 %1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
     </message>
@@ -10371,353 +10444,120 @@ The maximum number of Music Boxes is %2.</source>
     <name>QtBoolEdit</name>
     <message>
         <source>True</source>
-        <translation>Истина</translation>
+        <translation type="vanished">Истина</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Ложь</translation>
+        <translation type="vanished">Ложь</translation>
     </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
     <message>
         <source>True</source>
-        <translation>Истина</translation>
+        <translation type="vanished">Истина</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Ложь</translation>
+        <translation type="vanished">Ложь</translation>
     </message>
 </context>
 <context>
     <name>QtCharEdit</name>
     <message>
         <source>Clear Char</source>
-        <translation>Очистить символ</translation>
+        <translation type="vanished">Очистить символ</translation>
     </message>
 </context>
 <context>
     <name>QtColorEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
     <name>QtColorPropertyManager</name>
     <message>
         <source>Red</source>
-        <translation>Красный</translation>
+        <translation type="vanished">Красный</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Зелёный</translation>
+        <translation type="vanished">Зелёный</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Синий</translation>
+        <translation type="vanished">Синий</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation>Альфа</translation>
-    </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Up Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wait</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IBeam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Backslash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Slash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pointing Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closed Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>What&apos;s This</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Альфа</translation>
     </message>
 </context>
 <context>
     <name>QtFontEditWidget</name>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <source>Select Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
-    <message>
-        <source>Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Strikeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kerning</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
-    <message>
-        <source>Clear Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">...</translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
-        <translation type="unfinished">Язык</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Язык</translation>
     </message>
 </context>
 <context>
     <name>QtRectFPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Ширина</translation>
+        <translation type="obsolete">Ширина</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Высота</translation>
+        <translation type="obsolete">Высота</translation>
     </message>
 </context>
 <context>
     <name>QtRectPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Ширина</translation>
+        <translation type="obsolete">Ширина</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Высота</translation>
+        <translation type="obsolete">Высота</translation>
     </message>
 </context>
 <context>
     <name>QtSizeFPropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Ширина</translation>
+        <translation type="obsolete">Ширина</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Высота</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Высота</translation>
     </message>
 </context>
 <context>
     <name>QtSizePropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Ширина</translation>
+        <translation type="obsolete">Ширина</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Высота</translation>
+        <translation type="obsolete">Высота</translation>
     </message>
 </context>
 <context>
     <name>QtTreePropertyBrowser</name>
     <message>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Value</source>
-        <translation type="unfinished">Значение</translation>
+        <translation type="obsolete">Значение</translation>
     </message>
 </context>
 <context>
@@ -10728,7 +10568,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Не сохраять</translation>
+        <translation>Не сохранять</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10926,10 +10766,6 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation type="vanished">Сохранить</translation>
     </message>
     <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Ландшафтная плитка</translation>
-    </message>
-    <message>
         <source>Open</source>
         <translation type="vanished">Открыть</translation>
     </message>
@@ -11019,7 +10855,7 @@ Those preferences will makes no effect on a testing process before it will be fi
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="vanished">Пожалкйста, введите имя файла!</translation>
+        <translation type="vanished">Пожалуйста, введите имя файла!</translation>
     </message>
     <message>
         <source>Filename:</source>
@@ -11036,7 +10872,7 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="vanished">Неудалось загрузить набор плиток!
+        <translation type="vanished">Не удалось загрузить набор плиток!
 Данные могут быть повреждены!</translation>
     </message>
     <message>
@@ -11061,9 +10897,9 @@ If you wish to create level/world specific tilesets with using of custom graphic
 Это редактор глобальных наборов.
 Все наборы элементов, сделанные здесь, будут сохранены в этой папке:
 %1
-Т.е. все сохранённые наборы будут глобальны для конфируационного пакета и могут быть использованы в групповых наборах.
+Т.е. все сохранённые наборы будут глобальны для конфигурационного пакета и могут быть использованы в групповых наборах.
 
-Если вы желаете создать локальный набор для уровеня/мира с использованием собственной графики, пожалуйста, откройте &quot;Набор элементов&quot; и найдите кнопку &quot;Новый набор&quot; во вкладке &quot;Custom&quot;.</translation>
+Если вы желаете создать локальный набор для уровня/мира с использованием собственной графики, пожалуйста, откройте &quot;Набор элементов&quot; и найдите кнопку &quot;Новый набор&quot; во вкладке &quot;Custom&quot;.</translation>
     </message>
     <message>
         <source>Remove tileset</source>
@@ -11217,7 +11053,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation>Пожалкйста, введите имя файла!</translation>
+        <translation>Пожалуйста, введите имя файла!</translation>
     </message>
     <message>
         <source>Filename:</source>
@@ -11234,7 +11070,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation>Неудалось загрузить набор плиток!
+        <translation>Не удалось загрузить набор плиток!
 Данные могут быть повреждены!</translation>
     </message>
     <message>
@@ -11259,9 +11095,9 @@ If you wish to create level/world specific tilesets with using of custom graphic
 Это редактор глобальных наборов.
 Все наборы элементов, сделанные здесь, будут сохранены в этой папке:
 %1
-Т.е. все сохранённые наборы будут глобальны для конфируационного пакета и могут быть использованы в групповых наборах.
+Т.е. все сохранённые наборы будут глобальны для конфигурационного пакета и могут быть использованы в групповых наборах.
 
-Если вы желаете создать локальный набор для уровеня/мира с использованием собственной графики, пожалуйста, откройте &quot;Набор элементов&quot; и найдите кнопку &quot;Новый набор&quot; во вкладке &quot;Custom&quot;.</translation>
+Если вы желаете создать локальный набор для уровня/мира с использованием собственной графики, пожалуйста, откройте &quot;Набор элементов&quot; и найдите кнопку &quot;Новый набор&quot; во вкладке &quot;Custom&quot;.</translation>
     </message>
     <message>
         <source>Remove tileset</source>
@@ -11355,7 +11191,7 @@ Import anyway and overwrite?</source>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation>Неудалось загрузить набор плиток!
+        <translation>Не удалось загрузить набор плиток!
 Данные могут быть повреждены!</translation>
     </message>
     <message>
@@ -11374,7 +11210,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation>Пожалкйста, введите имя файла!</translation>
+        <translation>Пожалуйста, введите имя файла!</translation>
     </message>
     <message>
         <source>Filename:</source>
@@ -11463,7 +11299,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Layer exists</source>
-        <translation>Слой уже сщуествует</translation>
+        <translation>Слой уже существует</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; is exist, please, set other name.</source>
@@ -11551,6 +11387,13 @@ Data may be corrupted!</source>
     <message>
         <source>One or more SSL errors has occurred: %1</source>
         <translation>Получены ошибки SSL: %1</translation>
+    </message>
+</context>
+<context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation>Редактирование пользовательских данных</translation>
     </message>
 </context>
 <context>
@@ -11708,7 +11551,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>8 - Tape Exit</source>
-        <translation>8 - Финишная леточка</translation>
+        <translation>8 - Финишная ленточка</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -11717,6 +11560,14 @@ Data may be corrupted!</source>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Сперва разместите объект на карту мира и вызовите &quot;Свойства&quot; через контекстное меню.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation>Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation>Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
 </context>
 <context>
@@ -11727,11 +11578,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the ALT key.</source>
-        <translation type="vanished">Замечание: Используйте колёсико мыши для прокрутки по карте. Вы можете прокрутить горизонтально вместе с зажатой клвавижей ALT на клавиатуре.</translation>
+        <translation type="vanished">Замечание: Используйте колёсико мыши для прокрутки по карте. Вы можете прокрутить горизонтально вместе с зажатой клавишей ALT на клавиатуре.</translation>
     </message>
     <message>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
-        <translation>Замечание: Используйте колёсико мыши для прокрутки по карте. Вы можете прокрутить горизонтально вместе с зажатой клвавижей CTRL на клавиатуре.</translation>
+        <translation>Замечание: Используйте колёсико мыши для прокрутки по карте. Вы можете прокрутить горизонтально вместе с зажатой клавишей CTRL на клавиатуре.</translation>
     </message>
     <message>
         <source>Current Point:</source>
@@ -11784,7 +11635,7 @@ Data may be corrupted!</source>
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation>Невозможно открыть файл %1:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -11821,7 +11672,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Point is not selected</source>
-        <translation>Точка не выбрата</translation>
+        <translation>Точка не выбрана</translation>
     </message>
     <message>
         <source>Select the point on the world map first.</source>
@@ -12095,7 +11946,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Changed Itemsetting [%1]</source>
-        <translation type="vanished">Измененена настройка объекта [%1]</translation>
+        <translation type="vanished">Изменена настройка объекта [%1]</translation>
     </message>
     <message>
         <source>Rotate</source>
@@ -12139,7 +11990,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Hub styled world</source>
-        <translation type="vanished">Корридорный мир</translation>
+        <translation type="vanished">Коридорный мир</translation>
     </message>
     <message>
         <source>Intro Level</source>
@@ -12394,7 +12245,7 @@ Music boxes:		%5
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно создать файл мира:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -12419,7 +12270,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation>Расширение файла не определно, пожалуйста, введите расширение файла!</translation>
+        <translation>Расширение файла не определено, пожалуйста, введите расширение файла!</translation>
     </message>
     <message>
         <source>SMBX file version</source>
@@ -12441,7 +12292,7 @@ Please remove excess Tiles from this world map or save file into WLDX format.</s
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Плиток
 Максимальное число Плиток -  %2.
 
-Подалуйста, удалите лишние Плитки с карты мира или сохрание файл в формат WLDX.</translation>
+Пожалуйста, удалите лишние Плитки с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Sceneries
@@ -12451,7 +12302,7 @@ Please remove excess Sceneries from this world map or save file into WLDX format
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Декораций
 Максимальное число Декораций -  %2.
 
-Подалуйста, удалите лишние Декорации с карты мира или сохрание файл в формат WLDX.</translation>
+Пожалуйста, удалите лишние Декорации с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Paths
@@ -12461,7 +12312,7 @@ Please remove excess Paths from this world map or save file into WLDX format.</s
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Дорог
 Максимальное число Дорог -  %2.
 
-Подалуйста, удалите лишние Дороги с карты мира или сохрание файл в формат WLDX.</translation>
+Пожалуйста, удалите лишние Дороги с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Levels
@@ -12471,7 +12322,7 @@ Please remove excess Paths from this world map or save file into WLDX format.</s
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Уровней
 Максимальное число Уровней -  %2.
 
-Подалуйста, удалите лишние Уровни с карты мира или сохрание файл в формат WLDX.</translation>
+Пожалуйста, удалите лишние Уровни с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Music Boxes
@@ -12481,7 +12332,7 @@ Please remove excess Music Boxes from this world map or save file into WLDX form
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Музыкальных коробок
 Максимальное число Музыкальных коробок -  %2.
 
-Подалуйста, удалите лишние Музыкальные коробки с карты мира или сохрание файл в формат WLDX.</translation>
+Пожалуйста, удалите лишние Музыкальные коробки с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
         <source>Do you want to save file anyway?
@@ -12538,7 +12389,7 @@ Installed LunaLUA partially extends than limits.</source>
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="obsolete">Невозможно создать файл уровня:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -12558,7 +12409,7 @@ because object configurations are not loaded
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно открыть файл %1:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -12573,7 +12424,7 @@ because object configurations are not loaded
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
-        <translation>На этой карте мира имеются некоторые неправильные файлы конфигураций, которые не могут загрузиться. Чтобы это сообщение не появлялось в следующий раз, пожалуйста, исправьте следующие ошибки в ваших кофигурационных файлах в пользовательских папках:
+        <translation>На этой карте мира имеются некоторые неправильные файлы конфигураций, которые не могут загрузиться. Чтобы это сообщение не появлялось в следующий раз, пожалуйста, исправьте следующие ошибки в ваших конфигурационных файлах в пользовательских папках:
 
 %1</translation>
     </message>
@@ -12590,7 +12441,7 @@ because object configurations are not loaded
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно открыть файл %1:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -12603,12 +12454,16 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Не удалось создать временный файл</translation>
+    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Панель объектов карты мира</translation>
+        <translation type="vanished">Панель объектов карты мира</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -12645,6 +12500,10 @@ Do you want to save your changes?</source>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Пожалуйста, сначала сохраните файл, если вы хотите выбрать файл пользовательской музыки.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation>Обозреватель элементов Карты Мира</translation>
     </message>
 </context>
 <context>
@@ -12687,7 +12546,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Hub-styled world (without world map)</source>
-        <translation>Кооридоный мир (Без карты мира)</translation>
+        <translation>Коридорный мир (Без карты мира)</translation>
     </message>
     <message>
         <source>Total stars:</source>
@@ -12712,6 +12571,14 @@ Do you want to save your changes?</source>
     <message>
         <source>Counting stars...</source>
         <translation>Подсчёт звёзд...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation>Имя уровня, который будет загружен при первом запуске игры.</translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation>Уровень главного корридора:</translation>
     </message>
 </context>
 <context>
@@ -12817,7 +12684,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
+        <translation type="vanished">Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12869,7 +12736,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Откыть исходную папку</translation>
+        <translation>Открыть исходную папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
@@ -12891,9 +12758,13 @@ therefore you can use same link to get updated version</source>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Невозможно запустить приложение: 
+        <translation>Невозможно запустить приложение:
 %1
 Пожалуйста, проверьте папку с приложением.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Не конвертировать фоны (не конвертировать background2-*.gif)</translation>
     </message>
 </context>
 <context>
@@ -12931,12 +12802,12 @@ Please, check the application directory and make sure it is installed properly.<
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно создать файл уровня:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
         <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation type="vanished">Пожалуйста, ввездите название уровня для &apos;%1&apos;!</translation>
+        <translation type="vanished">Пожалуйста, введите название уровня для &apos;%1&apos;!</translation>
     </message>
     <message>
         <source>Saving </source>
@@ -12956,7 +12827,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="vanished">Расширение файла не определно, пожалуйста, введите расширение файла!</translation>
+        <translation type="vanished">Расширение файла не определено, пожалуйста, введите расширение файла!</translation>
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
@@ -12970,7 +12841,7 @@ Please remove excess blocks from this level or save file into LVLX format.</sour
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Блоков
 Максимальное число Блоков -  %2.
 
-Подалуйста, удалите лишние Блоки с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Блоки с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Background Objects
@@ -12980,7 +12851,7 @@ Please remove excess Background Objects from this level or save file into LVLX f
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Фоновых объектов
 Максимальное число Фоновых объектов -  %2.
 
-Подалуйста, удалите лишние Фоновые объекты с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Фоновые объекты с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
@@ -12990,7 +12861,7 @@ Please remove excess Non-Playable Characters from this level or save file into L
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Неигровых персонажей
 Максимальное число Неигровых персонажей -  %2.
 
-Подалуйста, удалите лишних Неигровых персонажей с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишних Неигровых персонажей с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Warps
@@ -13000,7 +12871,7 @@ Please remove excess Warps from this level or save file into LVLX format.</sourc
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Проходов
 Максимальное число Проходов -  %2.
 
-Подалуйста, удалите лишние Проходы с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Проходы с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
@@ -13010,7 +12881,7 @@ Please remove excess Water Boxes from this level or save file into LVLX format.<
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Водяные зоны
 Максимальное число Водяных зон -  %2.
 
-Подалуйста, удалите лишние Водяные зоны с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Водяные зоны с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Layers
@@ -13020,7 +12891,7 @@ Please remove excess Layers from this level or save file into LVLX format.</sour
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Слоёв
 Максимальное число Слоёв -  %2.
 
-Подалуйста, удалите лишние Слои с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние Слои с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 Events
@@ -13030,7 +12901,7 @@ Please remove excess Events from this level or save file into LVLX format.</sour
         <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Событий
 Максимальное число Событий -  %2.
 
-Подалуйста, удалите лишние События с уровеня  или сохрание файл в формат LVLX.</translation>
+Пожалуйста, удалите лишние События с уровня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
         <source>File save error</source>
@@ -13047,7 +12918,7 @@ Please remove excess Events from this level or save file into LVLX format.</sour
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно открыть файл %1:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -13073,7 +12944,7 @@ because object configurations are not loaded
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Невозможно открыть файл %1:
-Посколькоу конфигурации объектов не загружены.
+Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
@@ -13217,7 +13088,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>NPC collision top</source>
-        <translation type="vanished">нИПы можгут стоять сверху</translation>
+        <translation type="vanished">нИПы могут стоять сверху</translation>
     </message>
     <message>
         <source>NPC collision</source>
@@ -13395,7 +13266,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Откыть исходную папку</translation>
+        <translation>Открыть исходную папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
@@ -13417,7 +13288,7 @@ Do you want to save your changes?</source>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Невозможно запустить приложение: 
+        <translation>Невозможно запустить приложение:
 %1
 Пожалуйста, проверьте папку с приложением.</translation>
     </message>

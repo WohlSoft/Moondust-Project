@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1.0)
+cmake_minimum_required (VERSION 3.2)
 project(MoondustEditor C CXX)
 
 if(POLICY CMP0071) # Automoc
@@ -40,6 +40,8 @@ if(MSVC)
     endif()
 endif()
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
@@ -117,6 +119,7 @@ qt5_wrap_ui(UIS_HDRS
     editing/_dialogs/levelfilelist.ui
     editing/_dialogs/musicfilelist.ui
     editing/_dialogs/savingnotificationdialog.ui
+    editing/_dialogs/user_data_edit.ui
     editing/_dialogs/wld_setpoint.ui
     editing/edit_level/leveledit.ui
     editing/edit_level/levelprops.ui
@@ -183,6 +186,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/crashhandler.cpp
     common_features/dir_copy.cpp
     common_features/edit_mode_base.cpp
+    common_features/file_keeper.cpp
     common_features/flowlayout.cpp
     common_features/graphics_funcs.cpp
     common_features/graphicsworkspace.cpp
@@ -190,6 +194,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/installer.cpp
     common_features/item_rectangles.cpp
     common_features/items.cpp
+    common_features/json_settings_widget.cpp
     common_features/logger_sets.cpp
     common_features/main_window_ptr.cpp
     common_features/npc_animator.cpp
@@ -250,6 +255,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_dialogs/levelfilelist.cpp
     editing/_dialogs/musicfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
+    editing/_dialogs/user_data_edit.cpp
     editing/_dialogs/wld_setpoint.cpp
     editing/edit_base.cpp
     editing/edit_level/level_edit.cpp
@@ -533,6 +539,7 @@ add_dependencies(pge_editor
     SDLMixerX_Local
     SDL2_Local
     FreeImage_Local
+    QtPropertyBrowser_Local
     editor_translations
 )
 
@@ -547,7 +554,10 @@ list(APPEND PGE_EDITOR_INSTALLS
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
+    QtPropertyBrowser$<$<CONFIG:Debug>:d>
 )
+
+list(APPEND PGE_EDITOR_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 set(MIXER_LIBS)
 
@@ -587,8 +597,8 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_editor.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_editor"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-editor"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "0.3.1.11-1"
-        MACOSX_BUNDLE_LONG_VERSION_STRING "0.3.1.11-1"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${EDITOR_VERSION_STRING}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${EDITOR_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "cat_builder.icns"
         CPACK_BUNDLE_NAME "PGE Editor"
         MACOSX_BUNDLE_INFO_STRING "Level and World map Editor for PGE Project"

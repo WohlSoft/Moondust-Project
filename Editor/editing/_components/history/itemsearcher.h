@@ -17,8 +17,8 @@ public:
     void find(const LevelData &dataToFind, const QList<QGraphicsItem *> &allItems);
     void find(const WorldData &dataToFind, const QList<QGraphicsItem *> &allItems);
 
-    ItemTypes::itemTypesMultiSelectable findFilter() const;
-    void setFindFilter(const ItemTypes::itemTypesMultiSelectable &findFilter);
+    int findFilter() const;
+    void setFindFilter(const int &findFilter);
 
 signals:
     //Level
@@ -39,7 +39,7 @@ signals:
 public slots:
 
 private:
-    ItemTypes::itemTypesMultiSelectable m_findFilter;
+    int m_findFilter;
 };
 
 #endif // ITEMSEARCHER_H

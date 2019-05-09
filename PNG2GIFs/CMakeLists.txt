@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.2)
 project(MoondustPNG2GIFs C CXX)
 
 include_directories(
@@ -23,6 +23,8 @@ if(MSVC)
     endif()
 endif()
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
@@ -86,6 +88,8 @@ list(APPEND PNG2GIFs_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
 )
+
+list(APPEND PNG2GIFs_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 list(APPEND PNG2GIFs_INSTALLS
     PNG2GIFs

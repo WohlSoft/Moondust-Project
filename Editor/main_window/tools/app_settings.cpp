@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -207,7 +207,7 @@ void g_AppSettings::on_buttonBox_accepted()
     GlobalSettings::Placing_dontShowPropertiesBox = ui->Editor_placing_dontShowPropsBox->isChecked();
     GlobalSettings::historyLimit = ui->historyLimit->value();
 
-    GlobalSettings::LvlOpts.default_zoom = ui->defaultZoom->value();
+    GlobalSettings::LvlOpts.default_zoom = static_cast<unsigned int>(ui->defaultZoom->value());
 
     if(ui->screengrabFit->isChecked())
         GlobalSettings::screenGrab.sizeType = SETTINGS_ScreenGrabSettings::GRAB_Fit;
@@ -254,7 +254,7 @@ void g_AppSettings::on_buttonBox_accepted()
         GlobalSettings::LvlItemDefaults.npc_direction=-1;
 
     GlobalSettings::LvlItemDefaults.npc_generator_type = ui->defaults_npc_generator_type->currentIndex()+1;
-    GlobalSettings::LvlItemDefaults.npc_generator_delay = round(ui->defaults_npc_generator_delay->value()*10.0);
+    GlobalSettings::LvlItemDefaults.npc_generator_delay = static_cast<int>(round(ui->defaults_npc_generator_delay->value() * 10.0));
     GlobalSettings::LvlItemDefaults.warp_type = ui->defaults_warps_type->currentIndex();
 
     GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz=ui->defaults_eventtab_layviz->isChecked();

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,22 +76,22 @@ void MainWindow::on_actionRectFill_triggered(bool checked)
         switch(edit->scene->m_placingItemType)
         {
         case WldScene::PLC_Terrain:
-            edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id);
+            edit->scene->setItemPlacer(0, WldPlacingItems::terrainSet.id);
             LogDebug(QString("Tile Square draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Scene:
-            edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id);
+            edit->scene->setItemPlacer(1, WldPlacingItems::sceneSet.id);
             LogDebug(QString("Scenery Square draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Path:
-            edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id);
+            edit->scene->setItemPlacer(2, WldPlacingItems::pathSet.id);
             LogDebug(QString("Path Square draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Level:
-            edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id);
+            edit->scene->setItemPlacer(3, WldPlacingItems::levelSet.id);
             LogDebug(QString("Path Square draw -> %1").arg(checked));
 
             break;
@@ -159,22 +159,22 @@ void MainWindow::on_actionCircleFill_triggered(bool checked)
         switch(edit->scene->m_placingItemType)
         {
         case WldScene::PLC_Terrain:
-            edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id);
+            edit->scene->setItemPlacer(0, WldPlacingItems::terrainSet.id);
             LogDebug(QString("Tile Circle draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Scene:
-            edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id);
+            edit->scene->setItemPlacer(1, WldPlacingItems::sceneSet.id);
             LogDebug(QString("Scenery Circle draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Path:
-            edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id);
+            edit->scene->setItemPlacer(2, WldPlacingItems::pathSet.id);
             LogDebug(QString("Path Circle draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Level:
-            edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id);
+            edit->scene->setItemPlacer(3, WldPlacingItems::levelSet.id);
             LogDebug(QString("Path Circle draw -> %1").arg(checked));
 
             break;
@@ -248,22 +248,22 @@ void MainWindow::on_actionLine_triggered(bool checked)
         switch(edit->scene->m_placingItemType)
         {
         case WldScene::PLC_Terrain:
-            edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id);
+            edit->scene->setItemPlacer(0, WldPlacingItems::terrainSet.id);
             LogDebug(QString("Tile Line draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Scene:
-            edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id);
+            edit->scene->setItemPlacer(1, WldPlacingItems::sceneSet.id);
             LogDebug(QString("Scenery Line draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Path:
-            edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id);
+            edit->scene->setItemPlacer(2, WldPlacingItems::pathSet.id);
             LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Level:
-            edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id);
+            edit->scene->setItemPlacer(3, WldPlacingItems::levelSet.id);
             LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;
@@ -328,22 +328,22 @@ void MainWindow::on_actionFill_triggered(bool checked)
         switch(edit->scene->m_placingItemType)
         {
         case WldScene::PLC_Terrain:
-            edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id);
+            edit->scene->setItemPlacer(0, WldPlacingItems::terrainSet.id);
             LogDebug(QString("Tile Line draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Scene:
-            edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id);
+            edit->scene->setItemPlacer(1, WldPlacingItems::sceneSet.id);
             LogDebug(QString("Scenery Line draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Path:
-            edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id);
+            edit->scene->setItemPlacer(2, WldPlacingItems::pathSet.id);
             LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;
         case WldScene::PLC_Level:
-            edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id);
+            edit->scene->setItemPlacer(3, WldPlacingItems::levelSet.id);
             LogDebug(QString("Path Line draw -> %1").arg(checked));
 
             break;

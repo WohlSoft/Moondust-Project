@@ -878,10 +878,7 @@
     <string>Section 0</string>
    </property>
    <property name="toolTip">
-    <string>Section 0 (Ctrl+1)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+1</string>
+    <string>Section 0</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -903,10 +900,7 @@
     <string>Section 1</string>
    </property>
    <property name="toolTip">
-    <string>Section 1 (Ctrl+2)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+2</string>
+    <string>Section 1</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -928,10 +922,7 @@
     <string>Section 2</string>
    </property>
    <property name="toolTip">
-    <string>Section 2 (Ctrl+3)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+3</string>
+    <string>Section 2</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -953,10 +944,7 @@
     <string>Section 3</string>
    </property>
    <property name="toolTip">
-    <string>Section 3 (Ctrl+4)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+4</string>
+    <string>Section 3</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -978,10 +966,7 @@
     <string>Section 4</string>
    </property>
    <property name="toolTip">
-    <string>Section 4 (Ctrl+5)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+5</string>
+    <string>Section 4</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1003,10 +988,7 @@
     <string>Section 5</string>
    </property>
    <property name="toolTip">
-    <string>Section 5 (Ctrl+6)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+6</string>
+    <string>Section 5</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1028,10 +1010,7 @@
     <string>Section 6</string>
    </property>
    <property name="toolTip">
-    <string>Section 6 (Ctrl+7)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+7</string>
+    <string>Section 6</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1053,10 +1032,7 @@
     <string>Section 7</string>
    </property>
    <property name="toolTip">
-    <string>Section 7 (Ctrl+8)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+8</string>
+    <string>Section 7</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1078,10 +1054,7 @@
     <string>Section 8</string>
    </property>
    <property name="toolTip">
-    <string>Section 8 (Ctrl+9)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+9</string>
+    <string>Section 8</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1103,10 +1076,7 @@
     <string>Section 9</string>
    </property>
    <property name="toolTip">
-    <string>Section 9 (Ctrl+0)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+0</string>
+    <string>Section 9</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1128,10 +1098,7 @@
     <string>Section 10</string>
    </property>
    <property name="toolTip">
-    <string>Section 10 (Ctrl+Alt+1)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+1</string>
+    <string>Section 10</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1153,10 +1120,7 @@
     <string>Section 11</string>
    </property>
    <property name="toolTip">
-    <string>Section 11 (Ctrl+Alt+2)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+2</string>
+    <string>Section 11</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1178,10 +1142,7 @@
     <string>Section 12</string>
    </property>
    <property name="toolTip">
-    <string>Section 12 (Ctrl+Alt+3)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+3</string>
+    <string>Section 12</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1203,10 +1164,7 @@
     <string>Section 13</string>
    </property>
    <property name="toolTip">
-    <string>Section 13 (Ctrl+Alt+4)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+4</string>
+    <string>Section 13</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1228,10 +1186,7 @@
     <string>Section 14</string>
    </property>
    <property name="toolTip">
-    <string>Section 14 (Ctrl+Alt+5)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+5</string>
+    <string>Section 14</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1253,10 +1208,7 @@
     <string>Section 15</string>
    </property>
    <property name="toolTip">
-    <string>Section 15 (Ctrl+Alt+6)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+6</string>
+    <string>Section 15</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1278,10 +1230,7 @@
     <string>Section 16</string>
    </property>
    <property name="toolTip">
-    <string>Section 16 (Ctrl+Alt+7)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+7</string>
+    <string>Section 16</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1303,10 +1252,7 @@
     <string>Section 17</string>
    </property>
    <property name="toolTip">
-    <string>Section 17 (Ctrl+Alt+8)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+8</string>
+    <string>Section 17</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1328,10 +1274,7 @@
     <string>Section 18</string>
    </property>
    <property name="toolTip">
-    <string>Section 18 (Ctrl+Alt+9)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+9</string>
+    <string>Section 18</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1353,10 +1296,7 @@
     <string>Section 19</string>
    </property>
    <property name="toolTip">
-    <string>Section 19 (Ctrl+Alt+0)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+0</string>
+    <string>Section 19</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1378,10 +1318,7 @@
     <string>Section 20</string>
    </property>
    <property name="toolTip">
-    <string>Section 20 (Alt+1)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Alt+1</string>
+    <string>Section 20</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1501,13 +1438,13 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
+     <normaloff>:/images/item_browser_level.png</normaloff>:/images/item_browser_level.png</iconset>
    </property>
    <property name="text">
-    <string>Level toolbox</string>
+    <string>Level items browser</string>
    </property>
    <property name="toolTip">
-    <string>Level objects tool box</string>
+    <string>Items browser with a search</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -1519,10 +1456,13 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
+     <normaloff>:/images/item_browser_world.png</normaloff>:/images/item_browser_world.png</iconset>
    </property>
    <property name="text">
-    <string>World Toolbox</string>
+    <string>World map items browser</string>
+   </property>
+   <property name="toolTip">
+    <string>Items browser with a search</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>

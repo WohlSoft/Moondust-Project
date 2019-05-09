@@ -1388,6 +1388,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <source>Preferences have been copied: %1</source>
         <translation>Le preferenze sono state copiate: %1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1528,6 +1532,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation>Scusa, ma lo slot evento &apos;Colpisci&apos; è già usato dall&apos;evento: &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1958,6 +1966,10 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
     <message>
         <source>Properties...</source>
         <translation>Proprietà...</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2640,7 +2652,7 @@ Vuoi salvare i cambiamenti?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Tavolozza del livello</translation>
+        <translation type="vanished">Tavolozza del livello</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -2696,6 +2708,10 @@ Vuoi salvare i cambiamenti?</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4622,6 +4638,14 @@ Seleziona la Mappa necessaria nella lista:</translation>
         <source>Can&apos;t open the file!</source>
         <translation>Impossibile aprire il file!</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4852,91 +4876,91 @@ Seleziona la Mappa necessaria nella lista:</translation>
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Sezione 0 (Ctrl+1)</translation>
+        <translation type="vanished">Sezione 0 (Ctrl+1)</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Sezione 1 (Ctrl+2)</translation>
+        <translation type="vanished">Sezione 1 (Ctrl+2)</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Sezione 2 (Ctrl+3)</translation>
+        <translation type="vanished">Sezione 2 (Ctrl+3)</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Sezione 3 (Ctrl+4)</translation>
+        <translation type="vanished">Sezione 3 (Ctrl+4)</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Sezione 4 (Ctrl+5)</translation>
+        <translation type="vanished">Sezione 4 (Ctrl+5)</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Sezione 5 (Ctrl+6)</translation>
+        <translation type="vanished">Sezione 5 (Ctrl+6)</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Sezione 6 (Ctrl+7)</translation>
+        <translation type="vanished">Sezione 6 (Ctrl+7)</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Sezione 7 (Ctrl+8)</translation>
+        <translation type="vanished">Sezione 7 (Ctrl+8)</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Sezione 8 (Ctrl+9)</translation>
+        <translation type="vanished">Sezione 8 (Ctrl+9)</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Sezione 9 (Ctrl+0)</translation>
+        <translation type="vanished">Sezione 9 (Ctrl+0)</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Sezione 10 (Ctrl+Alt+1)</translation>
+        <translation type="vanished">Sezione 10 (Ctrl+Alt+1)</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Sezione 11 (Ctrl+Alt+2)</translation>
+        <translation type="vanished">Sezione 11 (Ctrl+Alt+2)</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Sezione 12 (Ctrl+Alt+3)</translation>
+        <translation type="vanished">Sezione 12 (Ctrl+Alt+3)</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Sezione 13 (Ctrl+Alt+4)</translation>
+        <translation type="vanished">Sezione 13 (Ctrl+Alt+4)</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Sezione 14 (Ctrl+Alt+5)</translation>
+        <translation type="vanished">Sezione 14 (Ctrl+Alt+5)</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Sezione 15 (Ctrl+Alt+6)</translation>
+        <translation type="vanished">Sezione 15 (Ctrl+Alt+6)</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Sezione 16 (Ctrl+Alt+7)</translation>
+        <translation type="vanished">Sezione 16 (Ctrl+Alt+7)</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Sezione 17 (Ctrl+Alt+8)</translation>
+        <translation type="vanished">Sezione 17 (Ctrl+Alt+8)</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Sezione 18 (Ctrl+Alt+9)</translation>
+        <translation type="vanished">Sezione 18 (Ctrl+Alt+9)</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Sezione 19 (Ctrl+Alt+0)</translation>
+        <translation type="vanished">Sezione 19 (Ctrl+Alt+0)</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Sezione 20 (Alt+1)</translation>
+        <translation type="vanished">Sezione 20 (Alt+1)</translation>
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Tavolozza Mappa</translation>
+        <translation type="vanished">Tavolozza Mappa</translation>
     </message>
     <message>
         <source>Go to left-bottom of the section</source>
@@ -5055,7 +5079,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover�
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Tavolozza livello</translation>
+        <translation type="vanished">Tavolozza livello</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
@@ -5369,7 +5393,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover�
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Tavolozza Oggetti</translation>
+        <translation type="vanished">Tavolozza Oggetti</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -6327,6 +6351,18 @@ Salva prima il file.</translation>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7447,6 +7483,18 @@ Il numero massimo di musiche è %2.</translation>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Block user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BGO user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>
@@ -7476,353 +7524,353 @@ file: %1</translation>
     <name>QtBoolEdit</name>
     <message>
         <source>True</source>
-        <translation>Vero</translation>
+        <translation type="vanished">Vero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Falso</translation>
+        <translation type="vanished">Falso</translation>
     </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
     <message>
         <source>True</source>
-        <translation>Vero</translation>
+        <translation type="vanished">Vero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Falso</translation>
+        <translation type="vanished">Falso</translation>
     </message>
 </context>
 <context>
     <name>QtCharEdit</name>
     <message>
         <source>Clear Char</source>
-        <translation>Pulisci Pers</translation>
+        <translation type="vanished">Pulisci Pers</translation>
     </message>
 </context>
 <context>
     <name>QtColorEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
     <name>QtColorPropertyManager</name>
     <message>
         <source>Red</source>
-        <translation>Rosso</translation>
+        <translation type="vanished">Rosso</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Verde</translation>
+        <translation type="vanished">Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Blu</translation>
+        <translation type="vanished">Blu</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation>Trasparente</translation>
+        <translation type="vanished">Trasparente</translation>
     </message>
 </context>
 <context>
     <name>QtCursorDatabase</name>
     <message>
         <source>Arrow</source>
-        <translation>Freccia</translation>
+        <translation type="vanished">Freccia</translation>
     </message>
     <message>
         <source>Up Arrow</source>
-        <translation>Freccia su</translation>
+        <translation type="vanished">Freccia su</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation>Croce</translation>
+        <translation type="vanished">Croce</translation>
     </message>
     <message>
         <source>Wait</source>
-        <translation>Attendere</translation>
+        <translation type="vanished">Attendere</translation>
     </message>
     <message>
         <source>IBeam</source>
-        <translation>IBeam</translation>
+        <translation type="vanished">IBeam</translation>
     </message>
     <message>
         <source>Size Vertical</source>
-        <translation>Ridimensiona verticale</translation>
+        <translation type="vanished">Ridimensiona verticale</translation>
     </message>
     <message>
         <source>Size Horizontal</source>
-        <translation>Ridimensiona orizzontale</translation>
+        <translation type="vanished">Ridimensiona orizzontale</translation>
     </message>
     <message>
         <source>Size Backslash</source>
-        <translation>Ridimensiona Backslash</translation>
+        <translation type="vanished">Ridimensiona Backslash</translation>
     </message>
     <message>
         <source>Size Slash</source>
-        <translation>Ridimensiona slash</translation>
+        <translation type="vanished">Ridimensiona slash</translation>
     </message>
     <message>
         <source>Size All</source>
-        <translation>Ridimensiona tutto</translation>
+        <translation type="vanished">Ridimensiona tutto</translation>
     </message>
     <message>
         <source>Blank</source>
-        <translation>Vuoto</translation>
+        <translation type="vanished">Vuoto</translation>
     </message>
     <message>
         <source>Split Vertical</source>
-        <translation>Dividi verticale</translation>
+        <translation type="vanished">Dividi verticale</translation>
     </message>
     <message>
         <source>Split Horizontal</source>
-        <translation>Dividi orizzontale</translation>
+        <translation type="vanished">Dividi orizzontale</translation>
     </message>
     <message>
         <source>Pointing Hand</source>
-        <translation>Puntatore</translation>
+        <translation type="vanished">Puntatore</translation>
     </message>
     <message>
         <source>Forbidden</source>
-        <translation>Non permesso</translation>
+        <translation type="vanished">Non permesso</translation>
     </message>
     <message>
         <source>Open Hand</source>
-        <translation>Mano aperta</translation>
+        <translation type="vanished">Mano aperta</translation>
     </message>
     <message>
         <source>Closed Hand</source>
-        <translation>Mano chiusa</translation>
+        <translation type="vanished">Mano chiusa</translation>
     </message>
     <message>
         <source>What&apos;s This</source>
-        <translation>Cos&apos;è</translation>
+        <translation type="vanished">Cos&apos;è</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation>Occupato</translation>
+        <translation type="vanished">Occupato</translation>
     </message>
 </context>
 <context>
     <name>QtFontEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Select Font</source>
-        <translation>Seleziona Font</translation>
+        <translation type="vanished">Seleziona Font</translation>
     </message>
 </context>
 <context>
     <name>QtFontPropertyManager</name>
     <message>
         <source>Family</source>
-        <translation>Famiglia</translation>
+        <translation type="vanished">Famiglia</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation>Dimensione punta</translation>
+        <translation type="vanished">Dimensione punta</translation>
     </message>
     <message>
         <source>Bold</source>
-        <translation>Grassetto</translation>
+        <translation type="vanished">Grassetto</translation>
     </message>
     <message>
         <source>Italic</source>
-        <translation>Corsivo</translation>
+        <translation type="vanished">Corsivo</translation>
     </message>
     <message>
         <source>Underline</source>
-        <translation>Sottolinea</translation>
+        <translation type="vanished">Sottolinea</translation>
     </message>
     <message>
         <source>Strikeout</source>
-        <translation>Strikeout</translation>
+        <translation type="vanished">Strikeout</translation>
     </message>
     <message>
         <source>Kerning</source>
-        <translation>Kerning</translation>
+        <translation type="vanished">Kerning</translation>
     </message>
 </context>
 <context>
     <name>QtKeySequenceEdit</name>
     <message>
         <source>Clear Shortcut</source>
-        <translation>Pulisci scorciatoia</translation>
+        <translation type="vanished">Pulisci scorciatoia</translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
         <source>%1, %2</source>
-        <translation>%1, %2</translation>
+        <translation type="vanished">%1, %2</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Lingua</translation>
+        <translation type="vanished">Lingua</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation>Nazione</translation>
+        <translation type="vanished">Nazione</translation>
     </message>
 </context>
 <context>
     <name>QtPointFPropertyManager</name>
     <message>
         <source>(%1, %2)</source>
-        <translation>(%1, %2)</translation>
+        <translation type="vanished">(%1, %2)</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
 </context>
 <context>
     <name>QtPointPropertyManager</name>
     <message>
         <source>(%1, %2)</source>
-        <translation>(%1,%2)</translation>
+        <translation type="vanished">(%1,%2)</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
 </context>
 <context>
     <name>QtPropertyBrowserUtils</name>
     <message>
         <source>[%1, %2, %3] (%4)</source>
-        <translation>[%1, %2, %3] (%4)</translation>
+        <translation type="vanished">[%1, %2, %3] (%4)</translation>
     </message>
     <message>
         <source>[%1, %2]</source>
-        <translation>[%1, %2]</translation>
+        <translation type="vanished">[%1, %2]</translation>
     </message>
 </context>
 <context>
     <name>QtRectFPropertyManager</name>
     <message>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation>[(%1, %2), %3 x %4]</translation>
+        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Larghezza</translation>
+        <translation type="vanished">Larghezza</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altezza</translation>
+        <translation type="vanished">Altezza</translation>
     </message>
 </context>
 <context>
     <name>QtRectPropertyManager</name>
     <message>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation>[(%1, %2), %3 x %4]</translation>
+        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Larghezza</translation>
+        <translation type="vanished">Larghezza</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altezza</translation>
+        <translation type="vanished">Altezza</translation>
     </message>
 </context>
 <context>
     <name>QtSizeFPropertyManager</name>
     <message>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation type="vanished">%1 x %2</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Larghezza</translation>
+        <translation type="vanished">Larghezza</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altezza</translation>
+        <translation type="vanished">Altezza</translation>
     </message>
 </context>
 <context>
     <name>QtSizePolicyPropertyManager</name>
     <message>
         <source>&lt;Invalid&gt;</source>
-        <translation>&lt;Invalido&gt;</translation>
+        <translation type="vanished">&lt;Invalido&gt;</translation>
     </message>
     <message>
         <source>[%1, %2, %3, %4]</source>
-        <translation>[%1, %2, %3, %4]</translation>
+        <translation type="vanished">[%1, %2, %3, %4]</translation>
     </message>
     <message>
         <source>Horizontal Policy</source>
-        <translation>Restringi orizzontale</translation>
+        <translation type="vanished">Restringi orizzontale</translation>
     </message>
     <message>
         <source>Vertical Policy</source>
-        <translation>Restringi verticale</translation>
+        <translation type="vanished">Restringi verticale</translation>
     </message>
     <message>
         <source>Horizontal Stretch</source>
-        <translation>Allarga orizzontale</translation>
+        <translation type="vanished">Allarga orizzontale</translation>
     </message>
     <message>
         <source>Vertical Stretch</source>
-        <translation>Allarga verticale</translation>
+        <translation type="vanished">Allarga verticale</translation>
     </message>
 </context>
 <context>
     <name>QtSizePropertyManager</name>
     <message>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation type="vanished">%1 x %2</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Larghezza</translation>
+        <translation type="vanished">Larghezza</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altezza</translation>
+        <translation type="vanished">Altezza</translation>
     </message>
 </context>
 <context>
     <name>QtTreePropertyBrowser</name>
     <message>
         <source>Property</source>
-        <translation>Proprietà</translation>
+        <translation type="vanished">Proprietà</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valore</translation>
+        <translation type="vanished">Valore</translation>
     </message>
 </context>
 <context>
@@ -8619,6 +8667,13 @@ I dati potrebbero essere corrotti!</translation>
     </message>
 </context>
 <context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VariablesBox</name>
     <message>
         <source>Variables [Under Construction]</source>
@@ -8782,6 +8837,14 @@ I dati potrebbero essere corrotti!</translation>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Piazza oggetti sulla mappa e visualizza il menu &apos;Proprietà&apos;.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9366,7 +9429,7 @@ Vuoi salvare le modifiche?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Tavolozza Mappa</translation>
+        <translation type="vanished">Tavolozza Mappa</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -9399,6 +9462,10 @@ Vuoi salvare le modifiche?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Salva prima il file, se vuoi selezionare il file musicale personalizzato.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9458,6 +9525,14 @@ Vuoi salvare le modifiche?</translation>
     <message>
         <source>Counting stars...</source>
         <translation>Conteggio stelle...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9535,7 +9610,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Salta conversione degli sfondi (non convertire i file background2-* a causa di un bug di LunaLua)</translation>
+        <translation type="vanished">Salta conversione degli sfondi (non convertire i file background2-* a causa di un bug di LunaLua)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
@@ -9588,6 +9663,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Impossibile avviare applicazione:
 %1
 Controlla la cartella dell&apos;applicazione e assicurati che sia installata correttamente.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

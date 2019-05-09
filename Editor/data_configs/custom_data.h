@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <QPixmap>
 #include <QImage>
+#include <QList>
 
 #include <PGE_File_Formats/npc_filedata.h>
 #include <data_configs/obj_npc.h>
@@ -70,14 +71,17 @@ public:
     QStringList getCustomFiles(QString nameBase, QStringList extensions, bool ignoreDefaultDirectory = false);
     void setCustomDirs(QString path, QString name);
     void setDefaultDir(QString dPath);
+    void addExtraDir(QString dPath);
+    void clearExtraDirs();
+    QString findFileInExtraDirs(QString fPath);
     void createDirIfNotExsist();
     void import(QStringList &files, bool local = true);
 
 private:
     QString dirEpisode;
     QString dirCustom;
+    QList<QString> dirsExtra;
     QString defaultDirectory;
-
 };
 
 

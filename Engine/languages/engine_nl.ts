@@ -25,7 +25,6 @@
     </message>
     <message id="CRASH_KILLED_MSG">
         <source>Engine has been killed by a mad maniac :-P</source>
-        <oldsource>Engine has killed by mad maniac :-P</oldsource>
         <translation type="vanished">Het programma is door een gekke maniak vermoord</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
@@ -50,7 +49,6 @@
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <oldsource>Engine has crashed because wrong arithmetical opreation!</oldsource>
         <translation>The programma is gecrashed door een verkeerde arithmetische operatie!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
@@ -83,13 +81,11 @@ en doe uw stappen opnieuw om meer info te krijgen.</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <source>Engine has been interrupted</source>
-        <oldsource>Engine has interrupted</oldsource>
         <translation>Het programma werd onderbroken</translation>
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <source>Unable to find OpenGL support!
-Software renderer will be started.
-</source>
+Software renderer will be started.</source>
         <translation>Kan OpenGL support niet vinden!
 Software renderaar wordt opgestart.</translation>
     </message>
@@ -123,7 +119,6 @@ Software renderaar wordt opgestart.</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <source>Fatal error</source>
-        <oldsource>Fatal</oldsource>
         <translation>Fatale fout</translation>
     </message>
     <message id="SDL_INIT_ERROR">
@@ -418,18 +413,15 @@ configuration packages are not found!</oldsource>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <source>Config pack directory error</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
         <source>Config directory is not found at:
 %1</source>
-        <oldsource>CONFIG DIR NOT FOUND AT:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <source>Missing main.ini</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
@@ -438,13 +430,11 @@ configuration packages are not found!</oldsource>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <source>Missing config pack data directory</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <oldsource>Config data path not exists:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
@@ -473,12 +463,14 @@ therefore you can use same link to get updated version.</oldsource>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
-        <oldsource>Config error</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <oldsource>Error has occouped in main.ini in line {0}.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="VSYNC_ERROR_INFO">
+        <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

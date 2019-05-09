@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 bak=~+
 
 if [[ "$OSTYPE" == "msys"* ]]; then
@@ -8,14 +8,13 @@ fi
 
 #flags
 flag_pause_on_end=true
-QMAKE_EXTRA_ARGS=""
+CMAKE_EXTRA_ARGS=""
 MAKE_EXTRA_ARGS="-r"
 MAKE_CPUS_COUNT=4
 CMAKE_GENERATOR="Unix Makefiles"
 flag_debugThisScript=false
 flag_debugDependencies=false
 flag_pack_src=false
-flag_cmake_it=false
 flag_cmake_it_ninja=false
 flag_cmake_deploy=false
 flag_cmake_static_qt=false
@@ -28,6 +27,9 @@ do
             echo ""
             printf "=== \e[44mBuild script for PGE Project for UNIX-Like operating\e[0m ===\n"
             echo ""
+            if [[ "$(which cmake)" == "" ]]; then
+                printf " \E[0;4;41;37mIMPORTANT!: CMake is not installed! CMake is required to build this project.\E[0m\n\n"
+            fi
             printf "\E[4mSYNTAX:\E[0m\n"
             echo ""
             printf "    $0 \e[90m[<arg1>] [<arg2>] [<arg2>] ...\e[0m\n"
@@ -44,15 +46,10 @@ do
             printf " \E[1;4misvalid\E[0m          - Show validation state of dependencies\n"
             printf " \E[1;4m--help\E[0m           - Print this manual\n"
             printf " \E[1;4mldoc\E[0m             - Make lua documentation\n"
-            if [ ! -f ../LDoc/ldoc.lua ]; then
+            if [[ ! -f ../LDoc/ldoc.lua ]]; then
                 printf " \E[0;4;41;37m<LDoc repository is not clonned! Clone it into parent folder!>\E[0m\n"
-            elif [ ! -f ./build-pge-cmake-release/bin/luajit-2.1.0-beta3 ]; then
+            elif [[ ! -f ./build-pge-cmake-release/bin/luajit-2.1.0-beta3 ]]; then
                 printf " \E[0;4;44;37m<To use LDoc you need to build the project first!>\E[0m\n"
-            fi
-
-            printf " \E[1;4mcmake-it\E[0m         - Run build through experimental alternative build on CMake\n"
-            if [[ "$(which cmake)" == "" ]]; then
-                printf " \E[0;4;41;37m<cmake is not installed!>\E[0m\n"
             fi
 
             printf " \E[1;4mpack-src\E[0m         - Create the source code archive (git-archive-all is required!)'\n"
@@ -79,17 +76,22 @@ do
             printf "\n"
             echo ""
 
+            echo "--- Compile options ---"
+            printf " \E[1;4msystem-png\E[0m       - Prefer to use libPNG and ZLib from system\n"
+            printf "\n"
+            echo ""
+
             echo "--- Disable building of components ---"
             printf " \E[1;4mnoqt\E[0m             - Skip building of components are using Qt\n"
-            printf " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment\n"
-            printf " \E[1;4mnoengine\E[0m         - Skip building of PGE Engine compoment\n"
-            printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment\n"
-            printf " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment\n"
-            printf " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment\n"
-            printf " \E[1;4mnomusicplayer\E[0m    - Skip building of PGE MusPlay compoment\n"
-            printf " \E[1;4mnogifs2png\E[0m       - Skip building of GIFs2PNG compoment\n"
-            printf " \E[1;4mnopng2gifs\E[0m       - Skip building of PNG2GIFs compoment\n"
-            printf " \E[1;4mnolazyfixtool\E[0m    - Skip building of LazyFixTool compoment\n"
+            printf " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment (Qt5)\n"
+            printf " \E[1;4mnoengine\E[0m         - Skip building of PGE Engine compoment (SDL2)\n"
+            printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment (Qt5)\n"
+            printf " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment (Qt5)\n"
+            printf " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment (Qt5)\n"
+            printf " \E[1;4mnomusicplayer\E[0m    - Skip building of PGE MusPlay compoment (Qt5)\n"
+            printf " \E[1;4mnogifs2png\E[0m       - Skip building of GIFs2PNG compoment (STL)\n"
+            printf " \E[1;4mnopng2gifs\E[0m       - Skip building of PNG2GIFs compoment (STL)\n"
+            printf " \E[1;4mnolazyfixtool\E[0m    - Skip building of LazyFixTool compoment (STL)\n"
             echo ""
 
             echo "--- Special ---"
@@ -119,7 +121,11 @@ do
                 flag_pack_src=true
             ;;
         cmake-it)
-                flag_cmake_it=true
+                # dummy
+            ;;
+        qmake-it)
+                echo "QMake support has been removed! Please use CMake build instead!"
+                exit 1;
             ;;
         ninja)
                 CMAKE_GENERATOR="Ninja"
@@ -155,40 +161,34 @@ do
             exit 0;
             ;;
         use-ccache)
-                if [[ "$OSTYPE" == "linux-gnu" ]]; then
-                    QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS -spec linux-g++ CONFIG+=useccache"
-                else
-                    QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS CONFIG+=useccache"
-                fi
+                # FIXME: Implement this option for CMake case
+                # if [[ "$OSTYPE" == "linux-gnu" ]]; then
+                #     QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS -spec linux-g++ CONFIG+=useccache"
+                # else
+                #     QMAKE_EXTRA_ARGS="$QMAKE_EXTRA_ARGS CONFIG+=useccache"
+                # fi
             ;;
         clean)
                 echo "======== Remove all cached object files and automatically generated Makefiles ========"
-                if [[ "$OSTYPE" == "msys"* ]]; then
-                    ./clean_make.bat nopause
-                    BinDir=bin-w32
-                else
-                    ./clean_make.sh nopause
-                    BinDir=bin
+
+                if [[ -d ./${BinDir}/_build_x32 ]]; then
+                    echo "removing ${BinDir}/_build_x32 ..."
+                    rm -Rf ./${BinDir}/_build_x32
                 fi
 
-                if [ -d ./$BinDir/_build_x32 ]; then
-                    echo "removing $BinDir/_build_x32 ..."
-                    rm -Rf ./$BinDir/_build_x32
+                if [[ -d ./${BinDir}/_build_x64 ]]; then
+                    echo "removing ${BinDir}/_build_x64 ..."
+                    rm -Rf ./${BinDir}/_build_x64
                 fi
 
-                if [ -d ./$BinDir/_build_x64 ]; then
-                    echo "removing $BinDir/_build_x64 ..."
-                    rm -Rf ./$BinDir/_build_x64
-                fi
-
-                if [ -d ./build-pge-cmake-release/ ]; then
+                if [[ -d ./build-pge-cmake-release/ ]]; then
                     echo "removing build-pge-cmake-release/ ..."
                     cd ./build-pge-cmake-release/
                     find . -not -path "./bin*" -delete
                     cd ..
                 fi
 
-                if [ -d ./build-pge-cmake-debug/ ]; then
+                if [[ -d ./build-pge-cmake-debug/ ]]; then
                     echo "removing build-pge-cmake-debug/ ..."
                     cd ./build-pge-cmake-debug/
                     find . -not -path "./bin*" -delete
@@ -197,10 +197,10 @@ do
 
                 echo 'removing Dependencies build cache ...'
 
-                if [ -d $PWD/_Libs/_sources/_build_cache ];
+                if [[ -d $PWD/_Libs/_sources/_build_cache ]];
                 then
-	                echo "Deleting $PWD/_Libs/_sources/_build_cache..."
-	                rm -Rf $PWD/_Libs/_sources/_build_cache
+                    echo "Deleting $PWD/_Libs/_sources/_build_cache..."
+                    rm -Rf $PWD/_Libs/_sources/_build_cache
                 fi
 
                 echo "==== Clear! ===="
@@ -223,11 +223,11 @@ do
             SUBMODULES="${SUBMODULES} _Libs/SDL_Mixer_X"
             SUBMODULES="${SUBMODULES} Content/help"
             # \===============================================================================
-            for s in $SUBMODULES
+            for s in ${SUBMODULES}
             do
-                if [ -d $s ];then
+                if [[ -d ${s} ]];then
                     echo "Remove folder ${s}..."
-                    rm -Rf $s
+                    rm -Rf ${s}
                 fi
             done
             echo "Fetching new submodules..."
@@ -241,7 +241,7 @@ do
             exit 0;
             ;;
 
-        # Enable debuggin of this script by showing states of inernal variables with pauses
+        # Enable debugging of this script by showing states of internal variables with pauses
         debug-script)
             flag_debugThisScript=true
             ;;
@@ -251,161 +251,82 @@ do
         test)
             flag_debugDependencies=true
             ;;
-        noqt)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=noeditor"
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nocalibrator"
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomanager"
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomaintainer"
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=nomusicplayer"
+        system-png)
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBPNG=ON"
             ;;
-        # Disable building of some compnents
+        noqt)
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_ENABLE_QT=OFF"
+            ;;
+        # Disable building of some components
         noeditor)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_EDITOR=OFF"
             ;;
         noengine)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_ENGINE=OFF"
             ;;
         nocalibrator)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_PLAYERCALIBRATOR=OFF"
             ;;
         nogifs2png)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_GIFS2PNG=OFF"
             ;;
         nopng2gifs)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_PNG2GIFS=OFF"
             ;;
         nolazyfixtool)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_LAZYFIXTOOL=OFF"
             ;;
         nomanager)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            # WIP
+            # CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_MANAGER=OFF"
             ;;
         nomaintainer)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_MAINTAINER=OFF"
             ;;
         nomusicplayer)
-            QMAKE_EXTRA_ARGS="${QMAKE_EXTRA_ARGS} CONFIG+=${var}"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_MUSICPLAYER=OFF"
             ;;
     esac
 done
 
 #=============Detect directory that contains script=====================
 SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-    SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-    SOURCE="$(readlink "$SOURCE")"
-    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+while [[ -h "${SOURCE}" ]]; do # resolve $SOURCE until the file is no longer a symlink
+    SCRDIR="$( cd -P "$( dirname "${SOURCE}" )" && pwd )"
+    SOURCE="$(readlink "${SOURCE}")"
+    [[ ${SOURCE} != /* ]] && SOURCE="${DIR}/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
-echo $SCRDIR
-cd $SCRDIR
+echo ${SCRDIR}
+cd ${SCRDIR}
 source ./_common/functions.sh
 #=======================================================================
 
-if [ -f "$SCRDIR/_paths.sh" ]
+if [[ -f "${SCRDIR}/_paths.sh" ]]
 then
-    source "$SCRDIR/_paths.sh"
+    source "${SCRDIR}/_paths.sh"
 else
     echo ""
     echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
     errorofbuild
 fi
 
-PATH=$QT_PATH:$PATH
-LD_LIBRARY_PATH=$QT_LIB_PATH:$LD_LIBRARY_PATH
+PATH=${QT_PATH}:$PATH
+LD_LIBRARY_PATH=${QT_LIB_PATH}:${LD_LIBRARY_PATH}
 
 MAKE_CPUS_COUNT=$(getCpusCount)
 
-if $flag_debugThisScript; then
-    echo "QMAKE_EXTRA_ARGS = ${QMAKE_EXTRA_ARGS}"
+if ${flag_debugThisScript}; then
     echo "MAKE_EXTRA_ARGS = ${MAKE_EXTRA_ARGS}"
     echo "MAKE_CPUS_COUNT = ${MAKE_CPUS_COUNT}"
     pause
 fi
 
-checkForDependencies()
-{
-    libPref="lib"
-    dlibExt="so"
-    slibExt="a"
-    osDir="linux_default"
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        dlibExt="dylib"
-        slibExt="a"
-        libPref="lib"
-        osDir="macos"
-    elif [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
-        osDir="linux"
-        libPref="lib"
-    elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        osDir="freebsd"
-        libPref="lib"
-    elif [[ "$OSTYPE" == "haiku" ]]; then
-        osDir="haiku"
-        libPref="lib"
-    elif [[ "$OSTYPE" == "msys"* ]]; then
-        dlibExt="a"
-        osDir="win32"
-        libPref="lib"
-    fi
-    libsDir=$SCRDIR/_Libs/_builds/$osDir/
-    #echo "$libsDir"
-
-    HEADS="SDL2/SDL.h"
-    HEADS="${HEADS} SDL2/SDL_mixer_ext.h"
-    HEADS="${HEADS} FreeImageLite.h"
-    HEADS="${HEADS} mad.h"
-    HEADS="${HEADS} sqlite3.h"
-    HEADS="${HEADS} freetype2/ft2build.h"
-    HEADS="${HEADS} FLAC/all.h"
-    HEADS="${HEADS} luajit-2.1/lua.h"
-    HEADS="${HEADS} luajit-2.1/luajit.h"
-    HEADS="${HEADS} ogg/ogg.h"
-    HEADS="${HEADS} vorbis/codec.h"
-    HEADS="${HEADS} vorbis/vorbisfile.h"
-    HEADS="${HEADS} vorbis/vorbisenc.h"
-    for head in $HEADS
-    do
-        if $flag_debugDependencies; then
-            echo "Checking include ${head}..."
-        fi
-        if [[ ! -f ${libsDir}/include/${head} ]]
-        then
-            lackOfDependency
-        fi
-    done
-
-    DEPS="FLAC.$slibExt"
-    DEPS="${DEPS} ogg.$slibExt"
-    DEPS="${DEPS} vorbis.$slibExt"
-    DEPS="${DEPS} vorbisfile.$slibExt"
-    DEPS="${DEPS} mad.$slibExt"
-    DEPS="${DEPS} SDL2.$slibExt"
-    DEPS="${DEPS} freetype.$slibExt"
-    DEPS="${DEPS} sqlite3.$slibExt"
-    for lib in $DEPS
-    do
-        if [[ $1 == "test" ]]
-        then
-            echo "Checking library ${libPref}${lib}..."
-        fi
-        if [[ ! -f ${libsDir}/lib/${libPref}${lib} ]]
-        then
-            lackOfDependency
-        fi
-    done
-}
-
 # Check input arguments again
 for var in "$@"
 do
     case "$var" in
-        isvalid)
-            checkForDependencies "test"
-            printf "=== \E[37;42mOK!\E[0m ===\n\n"
-            exit 0
-            ;;
         cool)
             printLine "Yeah!"                   "\E[0;42;37m" "\E[0;34m"
             printLine "This must be cool!"      "\E[0;42;36m" "\E[0;35m"
@@ -419,10 +340,31 @@ do
             echo "Running translation refreshing...";
 
             printLine "Editor" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/lupdate -locations none -no-ui-lines Editor/pge_editor.pro
+            # ${QT_PATH}/lupdate -locations none -no-ui-lines Editor/pge_editor.pro
+
+            cd Editor
+
+            find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
+            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            for lang in bg bs de en es fr "he-il" "id" it ja "nl" pl "pt-br" "pt-pt" ru sv sr uk zh; do
+                ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/editor_$lang.ts -I .
+            done
+            rm _lupdate_temp_list.tmp
+
+            cd ..
 
             printLine "Engine" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/lupdate -locations none Engine/pge_engine.pro
+            # ${QT_PATH}/lupdate -locations none Engine/pge_engine.pro
+
+            cd Engine
+
+            find . \( -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
+            for lang in de bs en es "he-il" it jp "nl" pl "pt" ru sv sr zh; do
+                ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/engine_$lang.ts -I .
+            done
+            rm _lupdate_temp_list.tmp
+
+            cd ..
 
             printLine "Done!" "\E[0;42;37m" "\E[0;32m"
             exit 0;
@@ -432,10 +374,10 @@ do
             echo "Running translation compilation...";
 
             printLine "Editor" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/$LRelease Editor/pge_editor.pro
+            ${QT_PATH}/${LRelease} Editor/pge_editor.pro
 
             printLine "Engine" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/$LRelease Engine/pge_engine.pro
+            ${QT_PATH}/${LRelease} Engine/pge_engine.pro
 
             printLine "Done!" "\E[0;42;37m" "\E[0;32m"
             exit 0;
@@ -444,8 +386,8 @@ do
 done
 
 # ===== Source code packer =====
-if $flag_pack_src ; then
-    if [ ! -d bin-archives ]; then
+if ${flag_pack_src} ; then
+    if [[ ! -d bin-archives ]]; then
         mkdir bin-archives
     fi
 
@@ -454,8 +396,8 @@ if $flag_pack_src ; then
     checkState
 
     printLine "Packed!" "\E[0;42;37m" "\E[0;32m"
-    cd $bak
-    if $flag_pause_on_end ; then
+    cd ${bak}
+    if ${flag_pause_on_end} ; then
         pause
     fi
 
@@ -465,7 +407,7 @@ fi
 
 # ===== Build project =====
 
-if $flag_debug_build ; then
+if ${flag_debug_build} ; then
     echo "==DEBUG BUILD!=="
     BUILD_DIR_SUFFUX="-debug"
     CONFIG_QMAKE="CONFIG-=release CONFIG+=debug"
@@ -477,139 +419,90 @@ else
     CONFIG_CMAKE="Release"
 fi
 
-# Alternative building through CMake
-if $flag_cmake_it ; then
-    echo "==== Alternative build via CMake will be ran ===="
-    echo "It's experimental build yet which will replace"
-    echo "this clunky build system soon."
-    echo "I hope you will like it ;3"
-    echo ""
-    echo "Wohlstand."
-    echo "================================================="
-    echo ""
-
-    deployTarget="create_tar"
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        deployTarget="create_dmg"
-    fi
-
-    BUILD_DIR="${SCRDIR}/build-pge-cmake${BUILD_DIR_SUFFUX}"
-    INSTALL_DIR="${SCRDIR}/bin-cmake${BUILD_DIR_SUFFUX}"
-
-    if [ ! -d "${BUILD_DIR}" ]; then
-        mkdir -p "${BUILD_DIR}"
-    fi
-
-    cd "${BUILD_DIR}"
-
-    CMAKE_STATIC_QT=""
-    if $flag_cmake_static_qt; then
-        CMAKE_STATIC_QT="-DPGE_ENABLE_STATIC_QT=ON"
-    fi
-
-    #=======================================================================
-    cmake \
-        -G "${CMAKE_GENERATOR}" \
-        -DCMAKE_PREFIX_PATH=$(realpath "${QT_PATH}/../") \
-        -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
-        -DCMAKE_BUILD_TYPE=$CONFIG_CMAKE \
-        -DPGE_INSTALL_DIRECTORY="PGE_Project" \
-        "${SCRDIR}" \
-        ${CMAKE_STATIC_QT}
-        # -DQT_QMAKE_EXECUTABLE="$QMake"
-    checkState
-
-    #=======================================================================
-    echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
-    TIME_STARTED=$(date +%s)
-    if $flag_cmake_it_ninja; then
-        # ==== WORKAROUND for Ninja that won't allow refer not built yet libraries ====
-        cmake --build . --target libs -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
-        checkState
-    fi
-    cmake --build . --target all -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
-    checkState
-    TIME_ENDED=$(date +%s)
-    TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
-    #=======================================================================
-    # copy data and configs into the build directory
-
-    echo "Installing..."
-    cmake --build . --target install
-    checkState
-
-    if $flag_cmake_deploy ; then
-        echo "Deploying..."
-        cmake --build . --target put_online_help
-        checkState
-        if [[ "$OSTYPE" != "darwin"* ]]; then
-            cmake --build . --target enable_portable
-            checkState
-        fi
-        cmake --build . --target $deployTarget
-        checkState
-    fi
-
-    cd "${SCRDIR}"
-
-    #=======================================================================
-    echo ""
-
-    show_time $TIME_PASSED
-    printLine "BUILT!" "\E[0;42;37m" "\E[0;32m"
-
-    cd $bak
-    if $flag_pause_on_end ; then
-        pause
-    fi
-
-    exit 0;
+# ===== Building through CMake =====
+if [[ "$(which cmake)" == "" ]]; then
+    printf " \E[0;4;41;37mFATAL ERROR!: CMake is not installed! CMake is required to build this project.\E[0m\n\n"
+    exit 1
 fi
 
-# Validate built dependencies!
-checkForDependencies
+deployTarget="create_tar"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    deployTarget="create_dmg"
+fi
 
-#=======================================================================
-# build translations of the editor
-#cd Editor
-#$LRelease *.pro
-#checkState
-#cd ../Engine
-#$LRelease -idbased *.pro
-#checkState
-#cd ..
-#=======================================================================
-# build all components
-echo "Running $QMake..."
-if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux" ]]; then
-    $QMake $CONFIG_QMAKE QTPLUGIN.platforms=qxcb QMAKE_TARGET.arch=$(uname -m) $QMAKE_EXTRA_ARGS
+BUILD_DIR="${SCRDIR}/build-pge-cmake${BUILD_DIR_SUFFUX}"
+INSTALL_DIR="${SCRDIR}/bin-cmake${BUILD_DIR_SUFFUX}"
+
+if [[ ! -d "${BUILD_DIR}" ]]; then
+    mkdir -p "${BUILD_DIR}"
+fi
+
+cd "${BUILD_DIR}"
+
+CMAKE_STATIC_QT=""
+if ${flag_cmake_static_qt}; then
+    CMAKE_STATIC_QT="-DPGE_ENABLE_STATIC_QT=ON"
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    QT_PREFIX_ROOT=$(osx_realpath "${QT_PATH}/../")
+elif [[ -f /usr/bin/realpath ]]; then
+    QT_PREFIX_ROOT=$(realpath "${QT_PATH}/../")
 else
-    $QMake $CONFIG_QMAKE $QMAKE_EXTRA_ARGS
+    QT_PREFIX_ROOT=$(readlink -f -- "${QT_PATH}/../")
 fi
+
+#=======================================================================
+cmake \
+    -G "${CMAKE_GENERATOR}" \
+    -DCMAKE_PREFIX_PATH=${QT_PREFIX_ROOT} \
+    -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
+    -DCMAKE_BUILD_TYPE=${CONFIG_CMAKE} \
+    -DPGE_INSTALL_DIRECTORY="PGE_Project" \
+    "${SCRDIR}" \
+    ${CMAKE_STATIC_QT} \
+    ${CMAKE_EXTRA_ARGS}
+    # -DQT_QMAKE_EXECUTABLE="$QMake"
 checkState
 
 #=======================================================================
 echo "Building (${MAKE_CPUS_COUNT} parallel jobs)..."
 TIME_STARTED=$(date +%s)
-make ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
+cmake --build . --target all -- ${MAKE_EXTRA_ARGS} -j ${MAKE_CPUS_COUNT}
 checkState
 TIME_ENDED=$(date +%s)
 TIME_PASSED=$(($TIME_ENDED-$TIME_STARTED))
 #=======================================================================
 # copy data and configs into the build directory
+
 echo "Installing..."
-make -s install
+cmake --build . --target install
 checkState
+
+if ${flag_cmake_deploy} ; then
+    echo "Deploying..."
+    cmake --build . --target put_online_help
+    checkState
+    if [[ "$OSTYPE" != "darwin"* ]]; then
+        cmake --build . --target enable_portable
+        checkState
+    fi
+    cmake --build . --target $deployTarget
+    checkState
+fi
+
+cd "${SCRDIR}"
 
 #=======================================================================
 echo ""
 
-show_time $TIME_PASSED
+show_time ${TIME_PASSED}
 printLine "BUILT!" "\E[0;42;37m" "\E[0;32m"
 
-cd $bak
-if $flag_pause_on_end ; then
+cd ${bak}
+if ${flag_pause_on_end} ; then
     pause
 fi
-exit 0
+
+exit 0;
 

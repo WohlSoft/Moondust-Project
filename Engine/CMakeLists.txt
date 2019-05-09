@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.2)
 project(MoondustEngine C CXX)
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -29,6 +29,13 @@ if(MSVC)
     endif()
 endif()
 
+if(ANDROID)
+    include(AndroidNdkModules)
+    android_ndk_import_module_cpufeatures()
+endif()
+
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
@@ -78,14 +85,18 @@ if(_QT_LRELEASE_PROGRAM)
 endif()
 
 set(PGE_LANG_BIN_FILES)
-FILE(GLOB PGE_LANG_BIN_FILES "${_LANGAUGES_TEMP_FOLDER}/*.qm")
+file(GLOB PGE_LANG_BIN_FILES "${_LANGAUGES_TEMP_FOLDER}/*.qm")
 #foreach(LangBinFile ${PGE_LANG_BIN_FILES})
 #    message("-- locale ${LangBinFile} will be installed")
 #endforeach()
 
-if(NOT APPLE AND NOT EMSCRIPTEN)
+if(NOT APPLE AND NOT EMSCRIPTEN AND NOT ANDROID)
     file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
     install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+endif()
+
+if(ANDROID)
+    file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/android-project/moondust/src/main/assets/languages")
 endif()
 
 set(PGE_ENGINE_SRCS)
@@ -97,7 +108,6 @@ list(APPEND PGE_ENGINE_SRCS
     common_features/app_path.cpp
     common_features/crash_handler.cpp
     common_features/episode_state.cpp
-    common_features/event_queue.cpp
     common_features/fader.cpp
     common_features/graphics_funcs.cpp
     common_features/logger_sets.cpp
@@ -158,6 +168,7 @@ list(APPEND PGE_ENGINE_SRCS
     graphics/render/render_opengl21.cpp
     graphics/render/render_opengl31.cpp
     graphics/render/render_swsdl.cpp
+    graphics/vsync_validator.cpp
     graphics/window.cpp
     gui/menu/pge_bool_menuitem.cpp
     gui/menu/pge_int_menuitem.cpp
@@ -276,6 +287,12 @@ list(APPEND PGE_ENGINE_SRCS
     settings/global_settings.cpp
 )
 
+if(ANDROID)
+    list(APPEND PGE_ENGINE_SRCS
+        controls/controller_touchscreen.cpp
+    )
+endif()
+
 if(APPLE)
     FILE(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_icons/*.icns")
     list(APPEND PGE_ENGINE_SRCS
@@ -313,7 +330,7 @@ if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_ENGINE_SRCS _resources/engine.rc)
 endif()
 
-add_executable(pge_engine
+set(PGE_ENGINE_SRC_ARGS
     ${PGE_ENGINE_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
     ${DIRMANAGER_SRCS}
@@ -328,6 +345,22 @@ add_executable(pge_engine
     ${UTILS_SRCS}
     ${UTILS_SDL_SRCS}
 )
+
+if(ANDROID)
+    set(CMAKE_DEBUG_POSTFIX "")
+    add_library(pge_engine SHARED
+        ${PGE_ENGINE_SRC_ARGS}
+    )
+    add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
+    set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
+
+    add_library(hidapi SHARED IMPORTED DEPENDS SDL2_Local)
+    set_target_properties(hidapi PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libhidapi.so)
+else()
+    add_executable(pge_engine
+        ${PGE_ENGINE_SRC_ARGS}
+    )
+endif()
 
 target_compile_definitions(pge_engine
     PRIVATE
@@ -387,14 +420,22 @@ list(APPEND PGE_ENGINE_INSTALLS
     pge_engine
 )
 
+if(PGE_USE_LUAJIT)
+    set(LUAJIT_LIBRARY
+        luajit$<$<CONFIG:Debug>:d>
+    )
+endif()
+
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
     luabind$<$<CONFIG:Debug>:d>
-    $<$<BOOL:PGE_USE_LUAJIT>:luajit$<$<CONFIG:Debug>:d>>
+    ${LUAJIT_LIBRARY}
     freetype$<$<CONFIG:Debug>:d>
     sqlite3$<$<CONFIG:Debug>:d>
 )
+
+list(APPEND PGE_ENGINE_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 set(MIXER_LIBS)
 
@@ -419,7 +460,13 @@ if(NOT APPLE)
     )
 endif()
 
-if(NOT EMSCRIPTEN AND NOT MSVC)
+if(ANDROID)
+    list(APPEND PGE_ENGINE_LINK_LIBS
+        "cpufeatures"
+    )
+endif()
+
+if(NOT EMSCRIPTEN AND NOT MSVC AND NOT ANDROID)
     if(WIN32)
         set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-mconsole")
         list(APPEND PGE_ENGINE_LINK_LIBS "-static")
@@ -434,11 +481,11 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_engine.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_engine"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-engine"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "0.3-alpha"
-        MACOSX_BUNDLE_LONG_VERSION_STRING "0.3-alpha"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${ENGINE_VERSION_STRING}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${ENGINE_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "cat.icns"
         CPACK_BUNDLE_NAME "PGE Engine"
-        MACOSX_BUNDLE_INFO_STRING "Platform Game Engine by Wohlstand"
+        MACOSX_BUNDLE_INFO_STRING "Moondust Engine Runtime"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
@@ -483,5 +530,6 @@ target_link_libraries(pge_engine
 
 install(TARGETS ${PGE_ENGINE_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
+    LIBRARY DESTINATION "${PGE_INSTALL_DIRECTORY}/"
     BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}/"
 )

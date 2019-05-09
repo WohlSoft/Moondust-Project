@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 #
 # Platform Game Engine Project by Wohlstand, a free platform for making games of platform genre
-# Copyright (c) 2014-2017 Vitaly Novichkov <admin@wohlnet.ru>
+# Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,11 +28,12 @@ env:
    - secure: "eZjlsg6iAuRaU2qiofJUOFT8qmomXTgy9IpfbuI4UOLQpz7bXq9CVCrCE2HhoPLEj08AjLvn60sBDJE3vX7TWVDYAS4/tNx2mcWbRjPSlI0uIIC1ehCKUFoPu8wH8eJZCrJUijyPBf7WbZ2uDCar+pgAbecv+Fi//jUk1i+W/Q0="
 
 git:
-  depth: 1
+  depth: 2
 
 branches:
   only:
     - master
+    - stable
 
 language: cpp
 
@@ -41,39 +42,148 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      compiler: g++
+      compiler: gcc
+      env:
+        - QT_VER=5.10.1_static
+        - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+        - IS_COVERITY_SCAN=true
       addons:
         coverity_scan:
           project:
             name: "WohlSoft/PGE-Project"
             description: "PGE Project - a free and open source game engine to create games of platform genre"
           notification_email: admin@wohlnet.ru
-          build_command_prepend: "./clean_make.sh nopause"
-          build_command:   "bash ./build.sh no-pause noeditor nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer;"
+          build_command:   "bash ./build.sh no-pause noqt noeditor nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer;"
           branch_pattern: master
-#      cache:
-#        directories:
-#          - bin/_build_x64
-#          - _Libs/_builds/linux
+        apt:
+          sources:
+            - sourceline: "ppa:ubuntu-toolchain-r/test"
+            - sourceline: "ppa:ubuntu-sdk-team/ppa"
+            - sourceline: "ppa:george-edison55/cmake-3.x"
+          packages:
+            - build-essential
+            - "^libxcb.*"
+            - libx11-dev
+            - libx11-xcb-dev
+            - libxcursor-dev
+            - libxrender-dev
+            - libxrandr-dev
+            - libxext-dev
+            - libxi-dev
+            - libxss-dev
+            - libxt-dev
+            - libxv-dev
+            - libxxf86vm-dev
+            - libxinerama-dev
+            - libxkbcommon-dev
+            - libfontconfig1-dev
+            - libasound2-dev
+            - libpulse-dev
+            - libdbus-1-dev
+            - udev
+            - mtdev-tools
+            - webp
+            - libudev-dev
+            - libglm-dev
+            - libwayland-dev
+            - libegl1-mesa-dev
+            - mesa-common-dev
+            - libgl1-mesa-dev
+            - libglu1-mesa-dev
+            - libgles2-mesa
+            - libgles2-mesa-dev
+            - libmirclient-dev
+            - libproxy-dev
+            - ccache
+            - gcc-6
+            - g++-6
+            - libc6
+            - libstdc++6
+            - cmake
+            - ninja-build
+    - os: linux
+      dist: xenial
+      sudo: required
+      compiler: gcc
+      env:
+        - QT_VER=5.10.1_static
+        - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+      addons:
+        apt:
+          sources:
+            - sourceline: "ppa:ubuntu-toolchain-r/test"
+            - sourceline: "ppa:ubuntu-sdk-team/ppa"
+          packages:
+            - build-essential
+            - "^libxcb.*"
+            - libx11-dev
+            - libx11-xcb-dev
+            - libxcursor-dev
+            - libxrender-dev
+            - libxrandr-dev
+            - libxext-dev
+            - libxi-dev
+            - libxss-dev
+            - libxt-dev
+            - libxv-dev
+            - libxxf86vm-dev
+            - libxinerama-dev
+            - libxkbcommon-dev
+            - libfontconfig1-dev
+            - libasound2-dev
+            - libpulse-dev
+            - libdbus-1-dev
+            - udev
+            - mtdev-tools
+            - webp
+            - libudev-dev
+            - libglm-dev
+            - libwayland-dev
+            - libegl1-mesa-dev
+            - mesa-common-dev
+            - libgl1-mesa-dev
+            - libglu1-mesa-dev
+            - libgles2-mesa
+            - libgles2-mesa-dev
+            - libmirclient-dev
+            - libproxy-dev
+            - ccache
+            - gcc-6
+            - g++-6
+            - libc6
+            - libstdc++6
+            - cmake
+            - ninja-build
     - os: osx
-      osx_image: xcode9.4
-      compiler: clang++
+      osx_image: xcode10.1
+      compiler: clang
+      env:
+        - QT_VER=5.12.0
+        - QT_TARBALL=qt-5-12-0-static-macosx-10-14-1.tar.bz2
       cache:
         directories:
           - $HOME/Library/Caches/Homebrew
-
-before_script:
-  - bash _common/travis-ci/before-script.sh
+      addons:
+        homebrew:
+          packages:
+            - ninja
+            - cmake
+            - coreutils
+            - binutils
+            - gnu-sed
+            - lftp
 
 before_install:
   - bash _common/travis-ci/before-install.sh
-  - bash _common/travis-ci/build_dependencies.sh
 
-install: true
+# install: true
+
+before_script:
+  - bash _common/travis-ci/before-script.sh
 
 script:
   - bash _common/travis-ci/build.sh
 
 after_success:
-  - bash _common/travis-ci/deploy.sh
   - bash _common/travis-ci/upload.sh
+

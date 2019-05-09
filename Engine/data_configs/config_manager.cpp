@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <common_features/pge_texture.h>
@@ -46,10 +47,10 @@ ScriptsSetup ConfigManager::setup_Scripts;
 Strings::List ConfigManager::errorsList;
 
 //Common Data
-unsigned int ConfigManager::screen_width = 800;
-unsigned int ConfigManager::screen_height = 600;
+unsigned int ConfigManager::viewport_width = 800;
+unsigned int ConfigManager::viewport_height = 600;
 
-ConfigManager::screenType ConfigManager::screen_type = ConfigManager::SCR_Static;
+ConfigManager::screenType ConfigManager::viewport_type = ConfigManager::SCR_Static;
 
 //Fonts
 FontsSetup ConfigManager::setup_fonts;
@@ -157,10 +158,27 @@ bool ConfigManager::loadBasics()
 
         std::string url     = mainset.value("home-page", "http://wohlsoft.ru/config_packs/").toString();
         std::string version = mainset.value("pge-engine-version", "0.0").toString();
+        bool    hasApiVersion = mainset.hasKey("api-version");
+        unsigned int apiVersion = mainset.value("api-version", 1).toUInt();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
+        bool    ver_invalid = false;
 
-        if(ver_notify && (version != VersionCmp::compare(_LATEST_STABLE, version)))
+        if(hasApiVersion)
+            ver_invalid = (apiVersion != V_CP_API) || (apiVersion < 41);
+        else
+            ver_invalid = (version != VersionCmp::compare(_LATEST_STABLE, version));
+
+        pLogDebug("Config pack version validation: "
+                   "has API version: %d, has invalid version: %d",
+                   static_cast<int>(hasApiVersion),
+                   static_cast<int>(ver_invalid));
+
+        if(ver_notify && ver_invalid)
         {
+            pLogWarning("Config pack version is invalid: "
+                        "has API version: %d, has invalid version: %d, current version %s, version wanted: %s",
+                        static_cast<int>(hasApiVersion), static_cast<int>(ver_invalid), _LATEST_STABLE, version.c_str());
+
             //% "Legacy configuration package"
             std::string title = qtTrId("WARNING_LEGACY_CONFIG_PACK_TTL");
             /*% "You have a legacy configuration package.\n"

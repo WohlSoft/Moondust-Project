@@ -1403,6 +1403,10 @@ pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze mo�
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1539,6 +1543,10 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
         <translation>Przepraszamy, ale event &quot;Uderz&quot; został zajęty przez event &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1955,6 +1963,10 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Ustawienia zostały skopiowane: %1</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2732,7 +2744,7 @@ Czy chcesz zapisać zmiany?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Obiekty</translation>
+        <translation type="vanished">Obiekty</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -2788,6 +2800,10 @@ Czy chcesz zapisać zmiany?</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4579,6 +4595,14 @@ Proszę, wybierz jeden plik z listy:</translation>
         <source>Can&apos;t open the file!</source>
         <translation>Nie można otworzyć pliku.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4648,7 +4672,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Obiekty poziomu</translation>
+        <translation type="vanished">Obiekty poziomu</translation>
     </message>
     <message>
         <source>CommonEdit Bar</source>
@@ -5062,11 +5086,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Obiekty poziomu</translation>
+        <translation type="vanished">Obiekty poziomu</translation>
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Obiekty świata</translation>
+        <translation type="vanished">Obiekty świata</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -5388,87 +5412,87 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {0 ?} {1)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {0 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {1 ?} {2)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {1 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {2 ?} {3)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {2 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {3 ?} {4)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {3 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {4 ?} {5)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {4 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {5 ?} {6)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {5 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {6 ?} {7)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {6 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {7 ?} {8)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {7 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {8 ?} {9)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {8 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation type="unfinished">Sekcja 10 (Ctrl+0) {9 ?} {0)?}</translation>
+        <translation type="obsolete">Sekcja 10 (Ctrl+0) {9 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation type="unfinished">Sekcja 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
+        <translation type="obsolete">Sekcja 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation type="unfinished">Sekcja 21 (Alt+1) {20 ?} {1)?}</translation>
+        <translation type="obsolete">Sekcja 21 (Alt+1) {20 ?} {1)?}</translation>
     </message>
     <message>
         <source>Apply (Enter)</source>
@@ -6380,6 +6404,18 @@ Proszę  najpierw zapisać plik</translation>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7419,358 +7455,68 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QtBoolEdit</name>
     <message>
-        <source>True</source>
+        <source>Block user data change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>False</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtBoolPropertyManager</name>
-    <message>
-        <source>True</source>
+        <source>BGO user data change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>False</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtCharEdit</name>
-    <message>
-        <source>Clear Char</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtColorEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtColorPropertyManager</name>
-    <message>
-        <source>Red</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Up Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wait</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IBeam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Backslash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Slash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pointing Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closed Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>What&apos;s This</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
-    <message>
-        <source>Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Strikeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kerning</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
-    <message>
-        <source>Clear Shortcut</source>
+        <source>NPC user data change</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
-        <translation type="unfinished">Język</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Język</translation>
     </message>
 </context>
 <context>
     <name>QtRectFPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
     <name>QtRectPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
     <name>QtSizeFPropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
     <name>QtSizePropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Szerokość</translation>
+        <translation type="obsolete">Szerokość</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Wysokość</translation>
-    </message>
-</context>
-<context>
-    <name>QtTreePropertyBrowser</name>
-    <message>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Wysokość</translation>
     </message>
 </context>
 <context>
@@ -8626,6 +8372,13 @@ Informacje mogą być uszkodzone!</translation>
     </message>
 </context>
 <context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VariablesBox</name>
     <message>
         <source>Variables [Under Construction]</source>
@@ -8789,6 +8542,14 @@ Informacje mogą być uszkodzone!</translation>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Umieść przedmiot na mapie i otwórz menu właściwości.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9386,7 +9147,7 @@ Czy chcesz zapisać zmiany?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Obiekty Mapy świata</translation>
+        <translation type="vanished">Obiekty Mapy świata</translation>
     </message>
     <message>
         <source>Terrain</source>
@@ -9419,6 +9180,10 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Proszę zapisz plik, jeżeli chcesz wybrać własną muzykę.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9478,6 +9243,14 @@ Czy chcesz zapisać zmiany?</translation>
     <message>
         <source>Counting stars...</source>
         <translation>Liczenie gwiazd...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9561,10 +9334,6 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
         <translation>Start</translation>
     </message>
     <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Look for images in subdirectories</source>
         <translation>Szukaj obrazów w podfolderach</translation>
     </message>
@@ -9619,6 +9388,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Nie można uruchomić aplikacji: 
 %1
 Proszę sprawdź folder aplikacji.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,0 +1,15 @@
+1.4.1
+* Removed "AdLib percussions" flag since it have lost a sense with rework on libADLMIDI side
+* Added support for more OPL3 and OPL2 emulators into emulator cchoice lists
+
+1.4
+* Begin the changelog
+* Split up MIDI Settings and SFX testing
+* Added menu-bar
+* Seek-bar has been replaced with custom which now can indicate a loop range
+* Meta-tag labels now has a marquee effect on mouse hover
+* File re-open now no more causes main toolbox be moved on certain distance
+* MIDI settings now can be changed without requirement of a MIDI file open
+* Added ability to setup the chip emulator for ADLMIDI and OPNMIDI
+* Added printing of arguments in the bottom of MIDI settings
+

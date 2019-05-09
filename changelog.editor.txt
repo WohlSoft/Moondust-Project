@@ -1,4 +1,14 @@
-Editor 0.3.1.14-1-dev
+Editor 0.3.2-dev
+- Added experimental support for element Extra Settings (Levels only)
+- Config pack is able to specify the default file format
+- When SMBX64 formats are default, the strict mode is turned on in untitled files
+- Added Chinese translation by 快乐爱的小精灵
+- Added safer file saving strategy
+- Fixed imperfection that allows to use level file selector in the untitled world map file
+- Added an ability to hide or disable certain field or feature from the config pack
+- Added Dutch translation by Gameinsky
+
+Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
 - Added weight order factor for tileset groups
 - Player start points now aligning with 16x16 grid size
@@ -25,6 +35,7 @@ Editor 0.3.1.14-1-dev
 - Config pack reload will now save all opened files and restore them back after the reload
 - Added ability to automatically restart editor on config pack switching
 - Fixed a crash of the LunaTester when receiving an incorrect input from the LunaLua backend
+- Added basic support for custom user data per every element on the level (Blocks, BGOs and NPCs only yet)
 
 Editor 0.3.1.14
 - Fixed a crash on attempt to load some NPC-*.txt files with incorrect values (for example, a grid size value that equal to zero)

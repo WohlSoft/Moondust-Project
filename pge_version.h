@@ -1,28 +1,60 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef GLOBAL_PGE_VERSION
 #define GLOBAL_PGE_VERSION
 
-#define V_VP1 0
-#define V_VP2 4
-#define V_VP3 1
-#define V_VP4 0
+#ifdef PGE_TOOLCHAIN_VERSION_1
+#   define V_VP1 PGE_TOOLCHAIN_VERSION_1
+#else
+#   define V_VP1 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_2
+#   define V_VP2 PGE_TOOLCHAIN_VERSION_2
+#else
+#   define V_VP2 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_3
+#   define V_VP3 PGE_TOOLCHAIN_VERSION_3
+#else
+#   define V_VP3 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_4
+#   define V_VP4 PGE_TOOLCHAIN_VERSION_4
+#else
+#   define V_VP4 0
+#endif
+
+#ifdef PGE_CONFIG_PACK_API_VERSION
+#   define V_CP_API PGE_CONFIG_PACK_API_VERSION
+#else
+#   define V_CP_API 0
+#endif
+
+#ifdef PGE_TOOLCHAIN_VERSION_REL
+#   define V_TOOLCHAIN_RELEASE PGE_TOOLCHAIN_VERSION_REL
+#else
+#   define V_TOOLCHAIN_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
 
 #define GEN_VERSION_NUMBER_2(v1,v2)     v1 "." v2
 #define GEN_VERSION_NUMBER_3(v1,v2,v3)  v1 "." v2 "." v3
@@ -48,13 +80,13 @@
 #define V_VERSION V_PROJECT_VERSION_NUM
 #define V_RELEASE "" //Developing state (for release this field must be empty)
 
-#define V_COPYRIGHT "2014-2018 by Wohlstand"
+#define V_COPYRIGHT "2014-2019 by Wohlstand"
 
-#define V_COMPANY "PGE Team"
+#define V_COMPANY "Moondust (PGE) Team"
 
 #define V_PGE_URL "wohlsoft.ru"
 
-#define V_PRODUCT_NAME "Platformer Game Engine"
+#define V_PRODUCT_NAME "Moondust"
 
 #if defined(_WIN64)
     #define OPERATION_SYSTEM "Windows x64"

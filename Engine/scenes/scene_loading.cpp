@@ -1,30 +1,34 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "scene_loading.h"
 #include <graphics/gl_renderer.h>
 #include <graphics/graphics.h>
 #include <graphics/window.h>
+#include <graphics/vsync_validator.h>
+#include <gui/pge_msgbox.h>
 #include <settings/global_settings.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
+#include <Utils/maths.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -61,8 +65,8 @@ LoadingScene::~LoadingScene()
     GlRenderer::clearScreen();
     GlRenderer::deleteTexture(background);
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        GlRenderer::deleteTexture(imgs[i].t);
+    for(auto &img : imgs)
+        GlRenderer::deleteTexture(img.t);
 
     imgs.clear();
 }
@@ -154,8 +158,8 @@ void LoadingScene::update()
 
     Scene::update();
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        imgs[i].a.manualTick(uTickf);
+    for(auto &img : imgs)
+        img.a.manualTick(uTickf);
 
     if(!m_doExit)
     {
@@ -173,62 +177,20 @@ void LoadingScene::render()
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
     GlRenderer::renderTexture(&background, PGE_Window::Width / 2 - background.w / 2, PGE_Window::Height / 2 - background.h / 2);
 
-    for(size_t i = 0; i < imgs.size(); i++)
+    for (auto &img : imgs)
     {
         AniPos x(0, 1);
-        x = imgs[i].a.image();
-        GlRenderer::renderTexture(&imgs[i].t,
-                                  imgs[i].x,
-                                  imgs[i].y,
-                                  imgs[i].t.w,
-                                  imgs[i].frmH,
+        x = img.a.image();
+        GlRenderer::renderTexture(&img.t,
+                                  img.x,
+                                  img.y,
+                                  img.t.w,
+                                  img.frmH,
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
     }
 
     Scene::render();
-}
-
-void loadingSceneLoopStep(void *scene)
-{
-    LoadingScene* s = reinterpret_cast<LoadingScene*>(scene);
-    s->times.start_common = SDL_GetTicks();
-    s->processEvents();
-    s->update();
-    s->times.stop_render = 0;
-    s->times.start_render = 0;
-
-    /**********************Process rendering of stuff****************************/
-    if((PGE_Window::vsync) || (s->times.doUpdate_render <= 0.0))
-    {
-        s->times.start_render = SDL_GetTicks();
-        /**********************Render everything***********************/
-        s->render();
-        GlRenderer::flush();
-        GlRenderer::repaint();
-        s->times.stop_render = SDL_GetTicks();
-        s->times.doUpdate_render = s->m_gfx_frameSkip ? s->uTickf + (s->times.stop_render - s->times.start_render) : 0;
-    }
-
-    s->times.doUpdate_render -= s->uTickf;
-
-    if(s->times.stop_render < s->times.start_render)
-    {
-        s->times.stop_render = 0;
-        s->times.start_render = 0;
-    }
-
-    /****************************************************************************/
-    #ifndef __EMSCRIPTEN__
-    if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
-        SDL_Delay(s->uTick - s->times.passedCommonTime());
-    #else
-    if(!s->m_isRunning)
-    {
-        emscripten_cancel_main_loop();
-        pLogDebug("Exit from loop triggered");
-    }
-    #endif
 }
 
 int LoadingScene::exec()
@@ -238,15 +200,52 @@ int LoadingScene::exec()
     times.start_common = SDL_GetTicks();
     m_gfx_frameSkip = g_AppSettings.frameSkip;
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
+    auto vSyncProbe = VSyncValidator(this, PGE_Window::frameDelay);
 
-    #ifndef __EMSCRIPTEN__
-    while(m_isRunning)
-        loadingSceneLoopStep(this);
-    #else
-    pLogDebug("Main loop started");
-    emscripten_set_main_loop_arg(loadingSceneLoopStep, this, -1, 1);
-    pLogDebug("Main loop finished");
-    #endif
+    while(m_isRunning || !vSyncProbe.isComplete())
+    {
+        times.start_common = SDL_GetTicks();
+
+        while(times.doUpdate_physics < static_cast<double>(uTick))
+        {
+            processEvents();
+            update();
+            times.doUpdate_physics += uTickf;
+            Maths::clearPrecision(times.doUpdate_physics);
+        }
+
+        times.doUpdate_physics -= static_cast<double>(uTick);
+        Maths::clearPrecision(times.doUpdate_physics);
+
+        times.stop_render = 0;
+        times.start_render = 0;
+
+        /**********************Process rendering of stuff****************************/
+        if((PGE_Window::vsync) || (times.doUpdate_render <= 0.0))
+        {
+            times.start_render = SDL_GetTicks();
+            /**********************Render everything***********************/
+            render();
+            GlRenderer::flush();
+            GlRenderer::repaint();
+            times.stop_render = SDL_GetTicks();
+            times.doUpdate_render = m_gfx_frameSkip ? uTickf + (times.stop_render - times.start_render) : 0;
+        }
+
+        times.doUpdate_render -= uTickf;
+
+        if(times.stop_render < times.start_render)
+        {
+            times.stop_render = 0;
+            times.start_render = 0;
+        }
+
+        vSyncProbe.update();
+
+        /****************************************************************************/
+        if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))
+            SDL_Delay(uTick - times.passedCommonTime());
+    }
 
     return 0;
 }

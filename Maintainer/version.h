@@ -21,11 +21,38 @@
 #ifndef MAINTAINER_VERSION_H
 #define MAINTAINER_VERSION_H
 
-#define V_VF1 0
-#define V_VF2 0
-#define V_VF3 1
-#define V_VF4 0
-#define V_FILE_RELEASE "-alpha"
+//Version of this program
+
+#ifdef MAINTAINER_VERSION_1
+#   define V_VF1 MAINTAINER_VERSION_1
+#else
+#   define V_VF1 0
+#endif
+
+#ifdef MAINTAINER_VERSION_2
+#   define V_VF2 MAINTAINER_VERSION_2
+#else
+#   define V_VF2 0
+#endif
+
+#ifdef MAINTAINER_VERSION_3
+#   define V_VF3 MAINTAINER_VERSION_3
+#else
+#   define V_VF3 0
+#endif
+
+#ifdef MAINTAINER_VERSION_4
+#   define V_VF4 MAINTAINER_VERSION_4
+#else
+#   define V_VF4 0
+#endif
+
+#ifdef MAINTAINER_VERSION_REL
+#   define V_FILE_RELEASE STR_VALUE(MAINTAINER_VERSION_REL)
+#else
+#   define V_FILE_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
+
 
 #define V_VF1_s STR_VALUE(V_VF1)
 #define V_VF2_s STR_VALUE(V_VF2)

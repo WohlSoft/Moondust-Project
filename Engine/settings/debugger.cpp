@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "debugger.h"
@@ -89,7 +90,7 @@ int PGE_Debugger::isDebuggerPresent()
         buf[num_read] = 0;
         tracer_pid    = strstr(buf, TracerPid);
         if(tracer_pid)
-            debugger_present = !!atoi(tracer_pid + sizeof(TracerPid) - 1);
+            debugger_present = static_cast<bool>(SDL_atoi(tracer_pid + sizeof(TracerPid) - 1));
     }
     return debugger_present;
     #endif
@@ -108,7 +109,8 @@ void PGE_Debugger::executeCommand(Scene *parent)
                               ConfigManager::setup_message_box.sprite);
     inputBox.exec();
 
-    if(inputBox.inputText() == "") return;
+    if(inputBox.inputText().empty())
+        return;
 
     bool cheatfound = false;
     bool en = false;
@@ -185,7 +187,7 @@ void PGE_Debugger::executeCommand(Scene *parent)
                     try
                     {
                         int exitcode = SDL_atoi(input.substr(dim + 1, input.size() - (dim + 1)).c_str());
-                        LevelScene *s = static_cast<LevelScene *>(parent);
+                        auto *s = dynamic_cast<LevelScene *>(parent);
                         if(s)
                         {
                             s->setExiting(1500, exitcode);

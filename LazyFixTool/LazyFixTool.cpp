@@ -2,7 +2,7 @@
  * LazyFixTool, a free tool for fix lazily-made image masks
  * and also, convert all BMPs into GIF
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -345,7 +345,7 @@ int main(int argc, char *argv[])
     {
         // Define the command line object.
         TCLAP::CmdLine  cmd(V_FILE_DESC "\n"
-                            "Copyright (c) 2017-2018 Vitaly Novichkov <admin@wohlnet.ru>\n"
+                            "Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>\n"
                             "This program is distributed under the GNU GPLv3+ license\n", ' ', V_FILE_VERSION V_FILE_RELEASE);
 
         TCLAP::SwitchArg switchNoBackups("n",       "no-backup", "Don't create backup", false);

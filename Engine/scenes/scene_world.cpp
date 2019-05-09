@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "scene_world.h"
@@ -48,7 +49,7 @@ WorldScene::WorldScene()
     m_exitWorldDelay = 2000;
     m_worldIsContinues = true;
     m_pauseMenu.isShown = false;
-    m_gameState = NULL;
+    m_gameState = nullptr;
     m_isInit = false;
     debug_render_delay = 0;
     debug_phys_delay = 0;
@@ -68,7 +69,8 @@ WorldScene::WorldScene()
     /*********Fader*************/
     m_fader.setFull();
     /*********Fader*************/
-    m_mapWalker.moveSpeed = 125 / PGE_Window::frameRate;
+    m_mapWalker.moveSpeed = 125.0 / (1000.0 / uTickf);
+    Maths::clearPrecision(m_mapWalker.moveSpeed);
     m_mapWalker.moveStepsCount = 0;
     ConfigManager::setup_WorldMap.initFonts();
     m_commonSetup = ConfigManager::setup_WorldMap;
@@ -80,19 +82,19 @@ WorldScene::WorldScene()
 
     m_imgs.clear();
 
-    for(size_t i = 0; i < m_commonSetup.AdditionalImages.size(); i++)
+    for(const auto &additionalImage : m_commonSetup.AdditionalImages)
     {
-        if(m_commonSetup.AdditionalImages[i].imgFile.empty())
+        if(additionalImage.imgFile.empty())
             continue;
 
         WorldScene_misc_img img;
-        GlRenderer::loadTextureP(img.t, m_commonSetup.AdditionalImages[i].imgFile);
-        img.x = m_commonSetup.AdditionalImages[i].x;
-        img.y = m_commonSetup.AdditionalImages[i].y;
-        img.a.construct(m_commonSetup.AdditionalImages[i].animated,
-                        m_commonSetup.AdditionalImages[i].frames,
-                        m_commonSetup.AdditionalImages[i].framedelay);
-        img.frmH = (img.t.h / m_commonSetup.AdditionalImages[i].frames);
+        GlRenderer::loadTextureP(img.t, additionalImage.imgFile);
+        img.x = additionalImage.x;
+        img.y = additionalImage.y;
+        img.a.construct(additionalImage.animated,
+                        additionalImage.frames,
+                        additionalImage.framedelay);
+        img.frmH = (img.t.h / additionalImage.frames);
         m_imgs.push_back(std::move(img));
     }
 
@@ -138,11 +140,11 @@ WorldScene::~WorldScene()
     //destroy textures
     D_pLogDebugNA("clear world textures");
 
-    for(size_t i = 0; i < m_texturesBank.size(); i++)
-        GlRenderer::deleteTexture(m_texturesBank[i]);
+    for(auto &i : m_texturesBank)
+        GlRenderer::deleteTexture(i);
 
-    for(size_t i = 0; i < m_imgs.size(); i++)
-        GlRenderer::deleteTexture(m_imgs[i].t);
+    for(auto &img : m_imgs)
+        GlRenderer::deleteTexture(img.t);
 
     ConfigManager::unloadLevelConfigs();
     ConfigManager::unloadWorldConfigs();
@@ -178,12 +180,12 @@ void WorldScene::setGameState(EpisodeState *_state)
         m_gameState->WorldPath = m_data.meta.path;
 
         //Detect gamestart and set position on them
-        for(size_t i = 0; i < m_data.levels.size(); i++)
+        for(auto &level : m_data.levels)
         {
-            if(m_data.levels[i].gamestart)
+            if(level.gamestart)
             {
-                m_mapWalker.posX = m_data.levels[i].x;
-                m_mapWalker.posY = m_data.levels[i].y;
+                m_mapWalker.posX = level.x;
+                m_mapWalker.posY = level.y;
                 m_gameState->game_state.worldPosX = static_cast<long>(m_mapWalker.posX);
                 m_gameState->game_state.worldPosY = static_cast<long>(m_mapWalker.posY);
                 break;
@@ -271,132 +273,69 @@ bool WorldScene::init()
     if(!loadConfigs())
         return false;
 
-    int player_portrait_step = 0;
-    int player_portrait_x = m_commonSetup.portrait_x;
-    int player_portrait_y = m_commonSetup.portrait_y;
-
-    if(m_numOfPlayers > 1)
-    {
-        player_portrait_step = 30;
-        player_portrait_x = player_portrait_x - (m_numOfPlayers * 30) / 2;
-    }
-
     m_players.clear();
-
     for(int i = 1; i <= m_numOfPlayers; i++)
     {
-        PlayerState state;
-
-        if(m_gameState)
-        {
-            state = m_gameState->getPlayerState(i);
-            m_players.push_back(state);
-        }
-        else
-        {
-            state.characterID = 1;
-            state.stateID = 1;
-            state._chsetup = FileFormats::CreateSavCharacterState();
-            m_players.push_back(state);
-        }
-
-        if(m_commonSetup.points_en)
-        {
-            WorldScene_Portrait portrait(state.characterID,
-                                         state.stateID,
-                                         player_portrait_x,
-                                         player_portrait_y,
-                                         m_commonSetup.portrait_animation,
-                                         m_commonSetup.portrait_frame_delay,
-                                         m_commonSetup.portrait_direction);
-            if(portrait.isValid())
-            {
-                m_portraits.push_back(std::move(portrait));
-                player_portrait_x += player_portrait_step;
-            }
-            else
-            {
-                pLogWarning("Fail to initialize portrait "
-                            "of playable character %ul with state %ul",
-                            state.characterID, state.stateID);
-            }
-        }
+        if(!initPlayableCharacter(i, true))
+            return false;
     }
 
-    PlayerState player_state;
-
-    if(m_gameState)
-        player_state = m_gameState->getPlayerState(1);
-
-    m_mapWalker.setup = ConfigManager::playable_characters[player_state.characterID];
-    long tID = ConfigManager::getWldPlayerTexture(player_state.characterID, player_state.stateID);
-
-    if(tID < 0)
-        return false;
-
-    m_mapWalker.texture = ConfigManager::world_textures[static_cast<size_t>(tID)];
-    m_mapWalker.img_h = m_mapWalker.texture.h / m_mapWalker.setup.wld_frames;
-    m_mapWalker.ani.construct(true, m_mapWalker.setup.wld_frames, m_mapWalker.setup.wld_framespeed);
-    m_mapWalker.ani.setFrameSequance(m_mapWalker.setup.wld_frames_down);
-    m_mapWalker.offsetX = (static_cast<double>(ConfigManager::default_grid) / 2.0) - (m_mapWalker.texture.w / 2.0);
-    m_mapWalker.offsetY =  static_cast<double>(ConfigManager::default_grid)
-                         - static_cast<double>(m_mapWalker.img_h)
-                         + static_cast<double>(m_mapWalker.setup.wld_offset_y);
-
-    for(size_t i = 0; i < m_data.tiles.size(); i++)
+    m_itemsTerrain.reserve(m_data.tiles.size());
+    for(const auto &item : m_data.tiles)
     {
-        WldTerrainItem tile(m_data.tiles[i]);
-
+        m_itemsTerrain.emplace_back(item);
+        WldTerrainItem &tile = m_itemsTerrain.back();
         if(!tile.init())
             continue;
-
-        m_itemsTerrain.push_back(std::move(tile));
-        m_indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &(m_itemsTerrain.back()));
+        m_indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &tile);
     }
 
-    for(size_t i = 0; i < m_data.scenery.size(); i++)
+    m_itemsSceneries.reserve(m_data.scenery.size());
+    for(const auto &item : m_data.scenery)
     {
-        WldSceneryItem scenery(m_data.scenery[i]);
+        m_itemsSceneries.emplace_back(item);
+        WldSceneryItem &scenery = m_itemsSceneries.back();
         if(!scenery.init())
             continue;
-        m_itemsSceneries.push_back(std::move(scenery));
-        m_indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &(m_itemsSceneries.back()));
+        m_indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &scenery);
     }
 
-    for(size_t i = 0; i < m_data.paths.size(); i++)
+    m_itemsPaths.reserve(m_data.paths.size());
+    for(const auto &item : m_data.paths)
     {
-        WldPathItem path(m_data.paths[i]);
+        m_itemsPaths.emplace_back(item);
+        WldPathItem &path = m_itemsPaths.back();
         if(!path.init())
             continue;
-        m_itemsPaths.push_back(std::move(path));
-        m_indexTable.addNode(path.x, path.y, path.w, path.h, &(m_itemsPaths.back()));
+        m_indexTable.addNode(path.x, path.y, path.w, path.h, &path);
     }
 
-    for(size_t i = 0; i < m_data.levels.size(); i++)
+    m_itemsLevels.reserve(m_data.levels.size());
+    for(const auto &item : m_data.levels)
     {
-        WldLevelItem levelp(m_data.levels[i]);
-
-        if(!levelp.init())
+        m_itemsLevels.emplace_back(item);
+        WldLevelItem &levelPoint = m_itemsLevels.back();
+        if(!levelPoint.init())
             continue;
-        m_itemsLevels.push_back(std::move(levelp));
-        m_indexTable.addNode(levelp.x + static_cast<long>(levelp.offset_x),
-                            levelp.y + static_cast<long>(levelp.offset_y),
-                            levelp.texture.w,
-                            levelp.texture.h,
-                            &(m_itemsLevels.back()));
+        m_indexTable.addNode(levelPoint.x + static_cast<long>(levelPoint.offset_x),
+                            levelPoint.y + static_cast<long>(levelPoint.offset_y),
+                            levelPoint.texture.w,
+                            levelPoint.texture.h,
+                            &levelPoint);
     }
 
-    for(size_t i = 0; i < m_data.music.size(); i++)
+    m_itemsMusicBoxes.reserve(m_data.music.size());
+    for(const auto &item : m_data.music)
     {
-        WldMusicBoxItem musicbox(m_data.music[i]);
-        musicbox.r = 0.5f;
-        musicbox.g = 0.5f;
-        musicbox.b = 1.f;
-        m_itemsMusicBoxes.push_back(std::move(musicbox));
-        m_indexTable.addNode(musicbox.x, musicbox.y, musicbox.w, musicbox.h, &(m_itemsMusicBoxes.back()));
+        m_itemsMusicBoxes.emplace_back(item);
+        WldMusicBoxItem &musicBox = m_itemsMusicBoxes.back();
+        musicBox.r = 0.5f;
+        musicBox.g = 0.5f;
+        musicBox.b = 1.f;
+        m_indexTable.addNode(musicBox.x, musicBox.y, musicBox.w, musicBox.h, &musicBox);
     }
 
-    //Apply vizibility settings to elements
+    //Apply visibility settings to elements
     initElementsVisibility();
     m_pathOpener.startAt(PGE_PointF(m_mapWalker.posX, m_mapWalker.posY));
     PGE_PointF pos = m_pathOpener.curPos();
@@ -409,6 +348,112 @@ bool WorldScene::init()
         playMusic(m_gameState->game_state.musicID, m_gameState->game_state.musicFile, true, 200);
 
     m_isInit = true;
+    return true;
+}
+
+bool WorldScene::initPlayableCharacter(int playerId, bool isInit)
+{
+    int player_portrait_step = 0;
+    int player_portrait_x = m_commonSetup.portrait_x;
+    int player_portrait_y = m_commonSetup.portrait_y;
+
+    if(m_numOfPlayers > 1)
+    {
+        player_portrait_step = 30;
+        player_portrait_x = player_portrait_x - (m_numOfPlayers * 30) / 2;
+        player_portrait_x += player_portrait_step * (playerId - 1);
+    }
+
+    PlayerState state;
+    if(isInit)
+    {
+        if(m_gameState)
+        {
+            state = m_gameState->getPlayerState(playerId);
+            m_players.push_back(state);
+        }
+        else
+        {
+            state.characterID = 1;
+            state.stateID = 1;
+            state._chsetup = FileFormats::CreateSavCharacterState();
+            m_players.push_back(state);
+        }
+    }
+    else
+    {
+        if(playerId >= 1 && static_cast<size_t>(playerId) <= m_players.size())
+            state = m_players[playerId - 1];
+        else
+            pLogWarning("Fail to get pre-loaded state for player ID %d", playerId);
+    }
+
+    if(m_commonSetup.portrait_en)
+    {
+        if(isInit)
+        {
+            // Create new portrait
+            WorldScene_Portrait portrait(state.characterID,
+                                         state.stateID,
+                                         player_portrait_x,
+                                         player_portrait_y,
+                                         m_commonSetup.portrait_animation,
+                                         m_commonSetup.portrait_frame_delay,
+                                         m_commonSetup.portrait_direction);
+            if(portrait.isValid())
+                m_portraits.push_back(std::move(portrait));
+            else
+                pLogWarning("Fail to initialize portrait "
+                            "of playable character %ul with state %ul",
+                            state.characterID, state.stateID);
+        }
+        else
+        {
+            // Update existing portrait
+            WorldScene_Portrait &portrait = m_portraits[playerId - 1];
+            portrait.init(state.characterID,
+                          state.stateID,
+                          player_portrait_x,
+                          player_portrait_y,
+                          m_commonSetup.portrait_animation,
+                          m_commonSetup.portrait_frame_delay,
+                          m_commonSetup.portrait_direction);
+
+            if(!portrait.isValid())
+            {
+                pLogWarning("Fail to update portrait "
+                            "of playable character %ul with state %ul",
+                            state.characterID, state.stateID);
+            }
+        }
+    }
+
+    // Initalize map walker for first player only
+    if(playerId == 1)
+    {
+        PlayerState player_state;
+
+        if(m_gameState)
+            player_state = m_gameState->getPlayerState(playerId);
+
+        m_mapWalker.setup = ConfigManager::playable_characters[player_state.characterID];
+        long tID = ConfigManager::getWldPlayerTexture(player_state.characterID, player_state.stateID);
+
+        if(tID < 0)
+            return false;
+
+        m_mapWalker.texture = ConfigManager::world_textures[static_cast<size_t>(tID)];
+        m_mapWalker.img_h = m_mapWalker.texture.h / m_mapWalker.setup.wld_frames;
+        m_mapWalker.ani.construct(true, m_mapWalker.setup.wld_frames, m_mapWalker.setup.wld_framespeed);
+        m_mapWalker.ani.setFrameSequance(m_mapWalker.setup.wld_frames_down);
+        m_mapWalker.offsetX = (static_cast<double>(ConfigManager::default_grid) / 2.0) - (m_mapWalker.texture.w / 2.0);
+        m_mapWalker.offsetY = static_cast<double>(ConfigManager::default_grid)
+                              - static_cast<double>(m_mapWalker.img_h)
+                              + static_cast<double>(m_mapWalker.setup.wld_offset_y);
+        if(!isInit)
+            m_mapWalker.refreshDirection(true);
+    }
+
     return true;
 }
 
@@ -449,7 +494,7 @@ bool WorldScene::loadConfigs()
     {
         _errorString = "Fail on terrain tiles config loading";
         m_exitWorldCode = WldExit::EXIT_error;
-        goto abortInit;
+        return success;
     }
 
     success = ConfigManager::loadWorldScenery(); //!< Scenery
@@ -457,7 +502,7 @@ bool WorldScene::loadConfigs()
     {
         _errorString = "Fail on sceneries config loading";
         m_exitWorldCode = WldExit::EXIT_error;
-        goto abortInit;
+        return success;
     }
 
     success = ConfigManager::loadWorldPaths();   //!< Paths
@@ -465,7 +510,7 @@ bool WorldScene::loadConfigs()
     {
         _errorString = "Fail on paths config loading";
         m_exitWorldCode = WldExit::EXIT_error;
-        goto abortInit;
+        return success;
     }
 
     success = ConfigManager::loadWorldLevels();  //!< Levels
@@ -473,7 +518,7 @@ bool WorldScene::loadConfigs()
     {
         _errorString = "Fail on level entrances config loading";
         m_exitWorldCode = WldExit::EXIT_error;
-        goto abortInit;
+        return success;
     }
 
     success = ConfigManager::loadPlayableCharacters();  //!< Playalbe Characters
@@ -481,7 +526,7 @@ bool WorldScene::loadConfigs()
     {
         _errorString = "Fail on playalbe characters config loading";
         m_exitWorldCode = WldExit::EXIT_error;
-        goto abortInit;
+        return success;
     }
 
     success = ConfigManager::loadLevelEffects();  //!< Effects
@@ -489,7 +534,7 @@ bool WorldScene::loadConfigs()
     {
         _errorString = "Fail on effects config loading";
         m_exitWorldCode = WldExit::EXIT_error;
-        goto abortInit;
+        return success;
     }
 
     //Validate all playable characters until use game state!
@@ -520,9 +565,9 @@ bool WorldScene::loadConfigs()
         }
     }
 
-    if(!success) m_exitWorldCode = WldExit::EXIT_error;
+    if(!success)
+        m_exitWorldCode = WldExit::EXIT_error;
 
-abortInit:
     return success;
 }
 
@@ -561,13 +606,13 @@ void WorldScene::PauseMenu::initPauseMenu1(WorldScene *parent)
 {
     isOpened = false;
     menuId = 1;
-    menu.setParentScene(parent);
     menu.construct(
         //% "Pause"
         qtTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
+    menu.setParentScene(parent);
     menu.clearMenu();
     std::vector<std::string> items;
     //% "Continue"
@@ -588,13 +633,13 @@ void WorldScene::PauseMenu::initPauseMenu2(WorldScene *parent)
 {
     isOpened = false;
     menuId = 2;
-    menu.setParentScene(parent);
     menu.construct(
         //% "Pause"
         qtTrId("WLD_MENU_PAUSE_TTL"),
         PGE_MenuBox::msg_info, PGE_Point(-1, -1),
         ConfigManager::setup_menu_box.box_padding,
         ConfigManager::setup_menu_box.sprite);
+    menu.setParentScene(parent);
     menu.clearMenu();
     std::vector<std::string> items;
     //% "Continue"
@@ -617,6 +662,7 @@ void WorldScene::processPauseMenu()
     }
     else
     {
+        processPauseMenuSwitchCharacter();
         m_pauseMenu.menu.update(uTickf);
 
         if(!m_pauseMenu.menu.isRunning())
@@ -679,10 +725,74 @@ void WorldScene::processPauseMenu()
     }
 }
 
+void WorldScene::processPauseMenuSwitchCharacter()
+{
+    if((m_controls_1.left_pressed ^ m_controls_1.right_pressed) &&
+       (m_controls_1.left_pressed || m_controls_1.right_pressed))
+    {
+        int32_t dir = m_controls_1.left_pressed ? -1 : m_controls_1.right_pressed ? +1 : 0;
+        auto totalCharacters = static_cast<uint32_t>(ConfigManager::playable_characters.total());
+
+        std::vector<uint32_t> allowedCharacterId;
+        for(uint32_t i = 1; i <= totalCharacters; i++)
+        {
+            if(m_data.nocharacter.size() >= i && !m_data.nocharacter[i - 1])
+                allowedCharacterId.push_back(i);
+            else if(m_data.nocharacter.size() < i)
+                allowedCharacterId.push_back(i);
+        }
+
+        if(!allowedCharacterId.empty())
+        {
+            for(size_t plrIdx = 0; plrIdx < m_players.size(); plrIdx++)
+            {
+                PlayerState &p = m_players[plrIdx];
+                const int playerId = static_cast<int>(plrIdx + 1);
+                if(plrIdx == 0)
+                {
+                    bool chosen = true;
+                    while(chosen)
+                    {
+                        if(dir < 0)
+                        {
+                            p.characterID--;
+                            if(p.characterID < 1)
+                                p.characterID = totalCharacters;
+                        }
+                        else if(dir > 0)
+                        {
+                            p.characterID++;
+                            if(p.characterID > totalCharacters)
+                                p.characterID = 1;
+                        }
+
+                        if(std::find(allowedCharacterId.begin(), allowedCharacterId.end(), p.characterID) != allowedCharacterId.end())
+                        {
+                            chosen = false;
+                            if(m_gameState)
+                            {
+                                p._chsetup = m_gameState->getPlayableCharacterSetup(playerId, p.characterID);
+                                p.stateID = static_cast<uint32_t>(p._chsetup.state);
+                                m_gameState->setPlayerState(playerId, p);
+                            }
+
+                            initPlayableCharacter(playerId, false);
+                        }
+                    }
+                    PGE_Audio::playSoundByRole(obj_sound_role::MenuScroll);
+                }
+            }
+        }
+    }
+}
+
 void WorldScene::update()
 {
-    tickAnimations(uTickf);
     Scene::update();
+
+    if(!m_pauseMenu.isShown)
+        tickAnimations(uTickf);
+
     m_viewportFader.tickFader(uTickf);
     updateLua();
 
@@ -753,18 +863,20 @@ void WorldScene::update()
                     m_mapWalker.walkDirection = Walk_Down;
 
                 //If movement denied - play sound
-                if((m_controls_1.left || m_controls_1.right || m_controls_1.up || m_controls_1.down) && (m_mapWalker.walkDirection == Walk_Idle))
+                if(m_mapWalker.walkDirection == Walk_Idle)
                 {
                     m_playStopSnd = false;
-
                     if(!m_playDenySnd)
                     {
                         PGE_Audio::playSoundByRole(obj_sound_role::WorldDeny);
                         m_playDenySnd = true;
                     }
                 }
-                else if(!m_controls_1.left && !m_controls_1.right && !m_controls_1.up && !m_controls_1.down)
-                    m_playDenySnd = false;
+            }
+            else
+            {
+                // When keys are released, deny sound can be played again
+                m_playDenySnd = false;
             }
 
             if(m_mapWalker.walkDirection != Walk_Idle)
@@ -776,16 +888,18 @@ void WorldScene::update()
                 m_mapWalker.refreshDirection();
             }
 
+            // Play sound when player have stopped motion
             if(m_playStopSnd)
             {
                 PGE_Audio::playSoundByRole(obj_sound_role::WorldMove);
                 m_playStopSnd = false;
             }
         }
-        else
+        else // While player walks
         {
             m_mapWalker.ani.manualTick(uTickf);
 
+            // Change move direction if that possible
             if((!m_controls_1.left || !m_controls_1.right) && (!m_controls_1.up || !m_controls_1.down))
             {
                 switch(m_mapWalker.walkDirection)
@@ -793,25 +907,21 @@ void WorldScene::update()
                 case Walk_Left:
                     if(m_controls_1.right)
                         setDir(Walk_Right);
-
                     break;
 
                 case Walk_Right:
                     if(m_controls_1.left)
                         setDir(Walk_Left);
-
                     break;
 
                 case Walk_Up:
                     if(m_controls_1.down)
                         setDir(Walk_Down);
-
                     break;
 
                 case Walk_Down:
                     if(m_controls_1.up)
                         setDir(Walk_Up);
-
                     break;
 
                 default:
@@ -820,6 +930,7 @@ void WorldScene::update()
             }
         }
 
+        // Process move step
         switch(m_mapWalker.walkDirection)
         {
         case Walk_Left:
@@ -850,11 +961,11 @@ void WorldScene::update()
             double curPosX = m_viewportCameraMover.posX();
             double curPosY = m_viewportCameraMover.posY();
             m_itemsToRender.clear();
-            m_indexTable.query(Maths::lRound(curPosX - (m_viewportRect.width() / 2)),
-                              Maths::lRound(curPosY - (m_viewportRect.height() / 2)),
-                              Maths::lRound(curPosX + (m_viewportRect.width() / 2)),
-                              Maths::lRound(curPosY + (m_viewportRect.height() / 2)),
-                              m_itemsToRender, true);
+            m_indexTable.query(Maths::lRound(curPosX - (double(m_viewportRect.width()) / 2.0)),
+                               Maths::lRound(curPosY - (double(m_viewportRect.height()) / 2.0)),
+                               Maths::lRound(curPosX + (double(m_viewportRect.width()) / 2.0)),
+                               Maths::lRound(curPosY + (double(m_viewportRect.height()) / 2.0)),
+                               m_itemsToRender, true);
         }
     }
 
@@ -931,10 +1042,8 @@ void WorldScene::fetchSideNodes(bool &side, std::vector<WorldNode * > &nodes, lo
 
             if(side)
             {
-                WldPathItem *u = dynamic_cast<WldPathItem *>(x);
-
+                auto *u = dynamic_cast<WldPathItem *>(x);
                 if(u) side = u->vizible;
-
                 if(side) break;
             }
             else continue;
@@ -946,10 +1055,8 @@ void WorldScene::fetchSideNodes(bool &side, std::vector<WorldNode * > &nodes, lo
 
             if(side)
             {
-                WldLevelItem *u = dynamic_cast<WldLevelItem *>(x);
-
+                auto *u = dynamic_cast<WldLevelItem *>(x);
                 if(u) side = u->vizible;
-
                 if(side) break;
             }
             else continue;
@@ -1016,7 +1123,7 @@ void WorldScene::updateCenter()
         /*************MusicBox***************/
         if(x->type == WorldNode::musicbox)
         {
-            WldMusicBoxItem *y = dynamic_cast<WldMusicBoxItem *>(x);
+            auto *y = dynamic_cast<WldMusicBoxItem *>(x);
 
             if(y && y->collidePoint(px, py))
             {
@@ -1033,7 +1140,7 @@ void WorldScene::updateCenter()
         /*************Level Point***************/
         else if(x->type == WorldNode::level)
         {
-            WldLevelItem *y = dynamic_cast<WldLevelItem *>(x);
+            auto *y = dynamic_cast<WldLevelItem *>(x);
 
             if(y && y->collidePoint(px, py))
             {
@@ -1201,23 +1308,27 @@ void WorldScene::render()
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     if(m_backgroundTexture.w > 0)
-        GlRenderer::renderTexture(&m_backgroundTexture, PGE_Window::Width / 2 - m_backgroundTexture.w / 2, PGE_Window::Height / 2 - m_backgroundTexture.h / 2);
+    {
+        GlRenderer::renderTexture(&m_backgroundTexture,
+                                  PGE_Window::Width / 2 - m_backgroundTexture.w / 2,
+                                  PGE_Window::Height / 2 - m_backgroundTexture.h / 2);
+    }
 
-    for(std::vector<WorldScene_misc_img>::iterator it = m_imgs.begin(); it != m_imgs.end(); it++)
+    for(auto &m_img : m_imgs)
     {
         AniPos x(0, 1);
-        x = it->a.image();
-        GlRenderer::renderTexture(&it->t,
-                                  it->x,
-                                  it->y,
-                                  it->t.w,
-                                  it->frmH,
+        x = m_img.a.image();
+        GlRenderer::renderTexture(&m_img.t,
+                                  m_img.x,
+                                  m_img.y,
+                                  m_img.t.w,
+                                  m_img.frmH,
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
     }
 
-    for(std::vector<WorldScene_Portrait>::iterator it = m_portraits.begin(); it != m_portraits.end(); it++)
-        it->render();
+    for(auto &m_portrait : m_portraits)
+        m_portrait.render();
 
     //Viewport zone black background
     GlRenderer::renderRect(m_viewportRect.left(), m_viewportRect.top(), m_viewportRect.width(), m_viewportRect.height(), 0.f, 0.f, 0.f);
@@ -1248,11 +1359,8 @@ void WorldScene::render()
                                   static_cast<float>(img.first),
                                   static_cast<float>(img.second));
 
-        for(SceneEffectsArray::iterator it = WorkingEffects.begin(); it != WorkingEffects.end(); it++)
-        {
-            Scene_Effect &item = (*it);
+        for(auto &item : WorkingEffects)
             item.render(renderX, renderY);
-        }
 
         if(m_pathOpeningInProcess && PGE_Window::showPhysicsDebug)
             m_pathOpener.debugRender(renderX, renderY);
@@ -1366,22 +1474,28 @@ void WorldScene::render()
 
 renderBlack:
     Scene::render();
-
-    if(m_pauseMenu.isShown) m_pauseMenu.menu.render();
+    if(m_pauseMenu.isShown)
+        m_pauseMenu.menu.render();
 }
 
 void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(m_doExit) return;
+    if(m_doExit)
+        return;
 
-    if(m_pauseMenu.isShown) m_pauseMenu.menu.processKeyEvent(sdl_key);
+    if(m_pauseMenu.isShown && (m_player1Controller->type() != Controller::type_keyboard))
+        m_pauseMenu.menu.processKeyEvent(sdl_key);
 
     switch(sdl_key)
     {
     // Check which
     case SDLK_ESCAPE: // ESC
     case SDLK_RETURN:// Enter
+    case SDLK_AC_BACK:
     {
+        if(m_pauseMenu.isShown && (m_player1Controller->type() == Controller::type_keyboard))
+            m_pauseMenu.menu.processKeyEvent(sdl_key);
+
         if(m_pauseMenu.isShown || m_doExit || m_lockControls)
         {
             if(m_pathOpeningInProcess)
@@ -1412,8 +1526,13 @@ LuaEngine *WorldScene::getLuaEngine()
 void WorldScene::processEvents()
 {
     Scene::processEvents();
-    m_player1Controller->update();
+    if(!m_pauseMenu.isOpened)// Don't process controllers from the pause menu
+    {
+        m_player1Controller->update();
+    }
     m_controls_1 = m_player1Controller->keys;
+    if(m_controls_1.start_pressed)
+        onKeyboardPressedSDL(SDLK_ESCAPE, 0);
 }
 
 int WorldScene::exec()
@@ -1434,7 +1553,8 @@ int WorldScene::exec()
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
     m_controls_1 = Controller::noKeys();
 
-    if(m_isRunning) update();
+    if(m_isRunning)
+        update();
 
     /*****************************************************/
 
@@ -1442,18 +1562,39 @@ int WorldScene::exec()
     {
         start_common = SDL_GetTicks();
 
-        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
-
-        processEvents();
-
-        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
-
         if(PGE_Window::showDebugInfo)
-            debug_event_delay = static_cast<int>(stop_events - start_events);
+        {
+            start_physics = 0;
+            start_events = 0;
+        }
 
-        start_physics = SDL_GetTicks();
-        update();
-        stop_physics = SDL_GetTicks();
+        while(times.doUpdate_physics < static_cast<double>(uTick))
+        {
+            if(PGE_Window::showDebugInfo && start_events == 0)
+                start_events = SDL_GetTicks();
+
+            processEvents();
+
+            if(PGE_Window::showDebugInfo)
+                stop_events = SDL_GetTicks();
+
+            if(PGE_Window::showDebugInfo)
+                debug_event_delay = static_cast<int>(stop_events - start_events);
+
+            if(PGE_Window::showDebugInfo && start_physics == 0)
+                start_physics = SDL_GetTicks();
+
+            update();
+
+            if(PGE_Window::showDebugInfo)
+                stop_physics = SDL_GetTicks();
+
+            times.doUpdate_physics += uTickf;
+            Maths::clearPrecision(times.doUpdate_physics);
+        }
+
+        times.doUpdate_physics -= static_cast<double>(uTick);
+        Maths::clearPrecision(times.doUpdate_physics);
 
         if(PGE_Window::showDebugInfo)
             debug_phys_delay = static_cast<int>(stop_physics - start_physics);
@@ -1507,11 +1648,11 @@ void WorldScene::tickAnimations(double ticks)
     for(ConfigManager::AnimatorsArray::iterator it = ConfigManager::Animator_WldLevel.begin(); it != ConfigManager::Animator_WldLevel.end(); it++)
         it->manualTick(ticks);
 
-    for(std::vector<WorldScene_misc_img>::iterator it = m_imgs.begin(); it != m_imgs.end(); it++)
-        it->a.manualTick(ticks);
+    for(auto &m_img : m_imgs)
+        m_img.a.manualTick(ticks);
 
-    for(std::vector<WorldScene_Portrait>::iterator it = m_portraits.begin(); it != m_portraits.end(); it++)
-        it->update(ticks);
+    for(auto &m_portrait : m_portraits)
+        m_portrait.update(ticks);
 }
 
 bool WorldScene::isExit()
@@ -1595,21 +1736,26 @@ void WorldScene::playMusic(unsigned long musicID, std::string customMusicFile, b
     }
 }
 
-void WorldScene::MapWalker::refreshDirection()
+void WorldScene::MapWalker::refreshDirection(bool restorePrev)
 {
-    switch(walkDirection)
+    int dir = restorePrev ? prevWalkDirection : walkDirection;
+    switch(dir)
     {
     case Walk_Left:
         ani.setFrameSequance(setup.wld_frames_left);
+        prevWalkDirection = dir;
         break;
     case Walk_Right:
         ani.setFrameSequance(setup.wld_frames_right);
+        prevWalkDirection = dir;
         break;
     case Walk_Up:
         ani.setFrameSequance(setup.wld_frames_up);
+        prevWalkDirection = dir;
         break;
     case Walk_Down:
         ani.setFrameSequance(setup.wld_frames_down);
+        prevWalkDirection = dir;
         break;
     default:
         break;
@@ -1623,8 +1769,5 @@ bool WorldScene::isVizibleOnScreen(PGE_RectF &rect)
     double renderY = m_mapWalker.posY + 16 - (m_viewportRect.height() / 2);
     screen.setPos(renderX, renderY);
 
-    if(screen.collideRect(rect))
-        return true;
-
-    return false;
+    return screen.collideRect(rect);
 }

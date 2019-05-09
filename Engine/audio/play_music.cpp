@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "pge_audio.h"
@@ -23,7 +24,7 @@
 #include <common_features/fmt_format_ne.h>
 
 /***********************************PGE_MusPlayer********************************************/
-static Mix_Music *p_playingMus = NULL;
+static Mix_Music *p_playingMus = nullptr;
 static std::string p_curMusicPath = "";
 static int         p_musVolume = 127;
 static bool        p_showMsgMus = true;
@@ -74,7 +75,7 @@ void  PGE_MusPlayer::fadeIn(int ms)
             if((Mix_FadingMusicStream(p_playingMus) != MIX_FADING_IN) &&
                (Mix_FadeInMusic(p_playingMus, -1, ms) == -1))
             {
-                PGE_MsgBox::warn((std::string("Mix_FadeInMusic:") + Mix_GetError()).c_str());
+                PGE_MsgBox::warn(std::string("Mix_FadeInMusic:") + Mix_GetError());
             }
         }
         else
@@ -83,7 +84,7 @@ void  PGE_MusPlayer::fadeIn(int ms)
     }
     else
     {
-        PGE_MsgBox::warn((std::string("Play nothing:") + Mix_GetError()).c_str());
+        PGE_MsgBox::warn(std::string("Play nothing:") + Mix_GetError());
     }
 }
 
@@ -126,7 +127,7 @@ bool PGE_MusPlayer::isPaused()
     if(!PGE_Audio::isLoaded()) return false;
     return (Mix_PausedMusicStream(p_playingMus) == 1);
 }
-bool PGE_MusPlayer::IsFading()
+bool PGE_MusPlayer::isFading()
 {
     if(!PGE_Audio::isLoaded()) return false;
     return (Mix_FadingMusicStream(p_playingMus) == 1);
@@ -143,11 +144,11 @@ void PGE_MusPlayer::openFile(std::string musFile)
             return;
     }
 
-    if(p_playingMus != NULL)
+    if(p_playingMus != nullptr)
     {
         Mix_HaltMusicStream(p_playingMus);
         Mix_FreeMusic(p_playingMus);
-        p_playingMus = NULL;
+        p_playingMus = nullptr;
     }
 
     p_playingMus = Mix_LoadMUS(musFile.data());
@@ -179,7 +180,5 @@ void PGE_MusPlayer::freeStream()
 {
     if(p_playingMus)
         Mix_FreeMusic(p_playingMus);
-    p_playingMus = NULL;
+    p_playingMus = nullptr;
 }
-
-

@@ -47,46 +47,6 @@ class MusPlayerBase
         virtual void on_volume_valueChanged(int value);
 
         /*!
-         * \brief MIDI Device combo-box index change event
-         * \param index New value of index after change
-         */
-        virtual void on_mididevice_currentIndexChanged(int index);
-
-        /*!
-         * \brief FM Bank combo-box index change event
-         * \param index New value of index after change
-         */
-        virtual void on_fmbank_currentIndexChanged(int index);
-
-        /*!
-         * \brief Volume model combobox index change event
-         * \param index New value of volume model after change
-         */
-        virtual void on_volumeModel_currentIndexChanged(int index);
-
-        /*!
-         * \brief Tremolo checkbox click event
-         * \param checked New value of Tremolo checkbox
-         */
-        virtual void on_tremolo_clicked(bool checked);
-
-        /*!
-         * \brief Vibrato checkbox click event
-         * \param checked New value of Vibrato checkbox
-         */
-        virtual void on_vibrato_clicked(bool checked);
-
-        /*!
-         * \brief Modulation scale checkbox click event
-         * \param checked New value of Modulation scale checkbox
-         */
-        virtual void on_modulation_clicked(bool checked);
-
-        virtual void on_adlibMode_clicked(bool checked);
-
-        virtual void on_logVolumes_clicked(bool checked);
-
-        /*!
          * \brief Track-ID editing finished event
          */
         virtual void on_trackID_editingFinished();

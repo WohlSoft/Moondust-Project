@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,6 @@
 
 dataconfigs::dataconfigs()
 {
-    m_isValid = false;
-
     total_data = 0;
 
     music_custom_id = 1;
@@ -58,9 +56,6 @@ dataconfigs::dataconfigs()
     engine.wld_viewport_w = 668;
     engine.wld_viewport_h = 403;
 }
-
-dataconfigs::~dataconfigs()
-{}
 
 /*
 [background-1]
@@ -131,30 +126,35 @@ bool dataconfigs::loadBasics()
     guiset.beginGroup("gui");
     {
         guiset.read("editor-splash", splash_logo, "");
-        #ifdef __linux__
+#ifdef __linux__
         QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
         QString envir = env.value("XDG_CURRENT_DESKTOP", "");
+#   if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+        qApp->setStyle("GTK3");
+#   else
         qApp->setStyle("GTK");
+#   endif
         if(envir == "KDE" || envir == "XFCE")
             ConfStatus::defaultTheme = "Breeze";
         else
             guiset.read("default-theme", ConfStatus::defaultTheme, "");
-        #elif __APPLE__
+#elif __APPLE__
         ConfStatus::defaultTheme = "Breeze";
-        #elif _WIN32
+#elif _WIN32
         if(QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
             ConfStatus::defaultTheme = "Breeze";
         else
             guiset.read("default-theme", ConfStatus::defaultTheme, "");
-        #else
+#else
         guiset.read("default-theme", ConfStatus::defaultTheme, "");
-        #endif
+#endif
         guiset.read("animations", Animations, 0);
     }
     guiset.endGroup();
 
     guiset.beginGroup("widgets-default-visibility");
     {
+        // Visibility
         guiset.read("lvl-itembox", editor.default_visibility.lvl_itembox, true);
         guiset.read("lvl-section-props", editor.default_visibility.lvl_section_props, false);
         guiset.read("lvl-warp-props", editor.default_visibility.lvl_warp_props, true);
@@ -170,8 +170,74 @@ bool dataconfigs::loadBasics()
         guiset.read("debugger-box", editor.default_visibility.debugger_box, false);
         guiset.read("bookmarks-box", editor.default_visibility.bookmarks_box, false);
         guiset.read("variables-box", editor.default_visibility.variables_box, false);
+
+        // Enforcing default value
+        guiset.read("lvl-itembox-enforce-default", editor.default_visibility_enforce.lvl_itembox, false);
+        guiset.read("lvl-section-props-enforce-default", editor.default_visibility_enforce.lvl_section_props, false);
+        guiset.read("lvl-warp-props-enforce-default", editor.default_visibility_enforce.lvl_warp_props, false);
+        guiset.read("lvl-layers-enforce-default", editor.default_visibility_enforce.lvl_layers, false);
+        guiset.read("lvl-events-enforce-default", editor.default_visibility_enforce.lvl_events, false);
+        guiset.read("lvl-search-enforce-default", editor.default_visibility_enforce.lvl_search, false);
+
+        guiset.read("wld-itembox-enforce-default", editor.default_visibility_enforce.wld_itembox, false);
+        guiset.read("wld-settings-enforce-default", editor.default_visibility_enforce.wld_settings, false);
+        guiset.read("wld-search-enforce-default", editor.default_visibility_enforce.wld_search, false);
+
+        guiset.read("tilesets-box-enforce-default", editor.default_visibility_enforce.tilesets_box, false);
+        guiset.read("debugger-box-enforce-default", editor.default_visibility_enforce.debugger_box, false);
+        guiset.read("bookmarks-box-enforce-default", editor.default_visibility_enforce.bookmarks_box, false);
+        guiset.read("variables-box-enforce-default", editor.default_visibility_enforce.variables_box, false);
     }
     guiset.endGroup();
+
+    guiset.beginGroup("file-formats");
+    {
+        const IniProcessing::StrEnumMap formatEnum =
+        {
+            {"smbx64", EditorSetup::DefaultFileFormats::SMBX64},
+            {"pgex", EditorSetup::DefaultFileFormats::PGEX},
+            {"smbx38a", EditorSetup::DefaultFileFormats::SMBX38A}
+        };
+        guiset.readEnum("level", editor.default_file_formats.level, EditorSetup::DefaultFileFormats::SMBX64, formatEnum);
+        guiset.readEnum("world", editor.default_file_formats.world, EditorSetup::DefaultFileFormats::SMBX64, formatEnum);
+    }
+    guiset.endGroup();
+
+    guiset.beginGroup("supported-features");
+    {
+        const IniProcessing::StrEnumMap formatEnum =
+        {
+                {"false", EditorSetup::FeaturesSupport::F_DISABLED},
+                {"disabled", EditorSetup::FeaturesSupport::F_DISABLED},
+                {"inactive", EditorSetup::FeaturesSupport::F_DISABLED},
+                {"0", EditorSetup::FeaturesSupport::F_DISABLED},
+
+                {"enabled", EditorSetup::FeaturesSupport::F_ENABLED},
+                {"active", EditorSetup::FeaturesSupport::F_ENABLED},
+                {"true", EditorSetup::FeaturesSupport::F_ENABLED},
+                {"1", EditorSetup::FeaturesSupport::F_ENABLED},
+
+                {"hidden", EditorSetup::FeaturesSupport::F_HIDDEN},
+                {"2", EditorSetup::FeaturesSupport::F_HIDDEN}
+        };
+        guiset.readEnum("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-bgo-z-position", editor.supported_features.level_bgo_z_position, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("level-warp-two-way", editor.supported_features.level_warp_two_way, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-portal", editor.supported_features.level_warp_portal, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-bomb-exit", editor.supported_features.level_warp_bomb_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-allow-special-state-only", editor.supported_features.level_warp_allow_sp_state_only, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-hide-interlevel-scene", editor.supported_features.level_warp_hide_interlevel_scene, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-allow-interlevel-npc", editor.supported_features.level_warp_allow_interlevel_npc, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-hide-stars", editor.supported_features.level_warp_hide_stars, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-needed-stars-message", editor.supported_features.level_warp_needstars_message, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+    }
 
     if(!openSection(&guiset, "main"))
         return false;
@@ -181,9 +247,25 @@ bool dataconfigs::loadBasics()
 
     QString url     = guiset.value("home-page", "http://wohlsoft.ru/config_packs/").toQString();
     QString version = guiset.value("pge-editor-version", "0.0").toQString();
+    bool    hasApiVersion = guiset.hasKey("api-version");
+    unsigned int apiVersion = guiset.value("api-version", 1).toUInt();
     bool ver_notify = guiset.value("enable-version-notify", true).toBool();
-    if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(V_FILE_VERSION), version)))
+    bool ver_invalid = false;
+
+    if(hasApiVersion)
+        ver_invalid = (apiVersion != V_CP_API) || (apiVersion < 41);
+    else
+        ver_invalid = (version != VersionCmp::compare(QString("%1").arg(V_FILE_VERSION), version));
+
+    LogDebug(QString("Config pack version validation: "
+                     "has API version: %1, has invalid version: %2")
+                     .arg(hasApiVersion).arg(ver_invalid));
+
+    if(ver_notify && ver_invalid)
     {
+        LogWarning(QString("Config pack version is invalid: "
+                           "has API version: %1, has invalid version: %2, current version %3, version wanted: %4")
+                           .arg(hasApiVersion).arg(ver_invalid).arg(V_FILE_VERSION).arg(version));
         QMessageBox box;
         box.setWindowTitle("Legacy configuration package");
         box.setTextFormat(Qt::RichText);
@@ -240,10 +322,6 @@ bool dataconfigs::loadBasics()
 
 bool dataconfigs::loadconfigs()
 {
-    //unsigned long i;//, prgs=0;
-
-    m_isValid = false;
-
     total_data = 0;
     defaultGrid.general = 0;
 
@@ -267,17 +345,17 @@ bool dataconfigs::loadconfigs()
     if(main_ini.isEmpty())
         return false;
 
-    IniProcessing mainset(main_ini);
+    IniProcessing mainSet(main_ini);
 
     QString customAppPath = ApplicationPath;
 
     LogDebug("Loading main.ini...");
-    if(!openSection(&mainset, "main"))
+    if(!openSection(&mainSet, "main"))
         return false;
     {
-        mainset.read("application-path", customAppPath, ApplicationPath);
+        mainSet.read("application-path", customAppPath, ApplicationPath);
         customAppPath.replace('\\', '/');
-        bool lookAppDir = mainset.value("application-dir", false).toBool();
+        bool lookAppDir = mainSet.value("application-dir", false).toBool();
         data_dir = (lookAppDir ? customAppPath + "/" : config_dir + "data/");
         if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
             data_dir = ApplicationPath + "/" + data_dir;
@@ -290,28 +368,28 @@ bool dataconfigs::loadconfigs()
         data_dir = QDir(data_dir).absolutePath() + "/";
         ConfStatus::configDataPath = data_dir;
 
-        mainset.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
+        mainSet.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
         // For LunaTester
-        mainset.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
-        mainset.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
+        mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
+        mainSet.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
 
-        dirs.worlds     = data_dir + mainset.value("worlds", "worlds").toQString() + "/";
+        dirs.worlds     = data_dir + mainSet.value("worlds", "worlds").toQString() + "/";
 
-        dirs.music      = data_dir + mainset.value("music", "data/music").toQString() + "/";
-        dirs.sounds     = data_dir + mainset.value("sound", "data/sound").toQString() + "/";
+        dirs.music      = data_dir + mainSet.value("music", "data/music").toQString() + "/";
+        dirs.sounds     = data_dir + mainSet.value("sound", "data/sound").toQString() + "/";
 
-        dirs.glevel     = data_dir + mainset.value("graphics-level", "data/graphics/level").toQString() + "/";
-        dirs.gworld     = data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toQString() + "/";
-        dirs.gplayble   = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toQString() + "/";
+        dirs.glevel     = data_dir + mainSet.value("graphics-level", "data/graphics/level").toQString() + "/";
+        dirs.gworld     = data_dir + mainSet.value("graphics-worldmap", "data/graphics/worldmap").toQString() + "/";
+        dirs.gplayble   = data_dir + mainSet.value("graphics-characters", "data/graphics/characters").toQString() + "/";
 
-        localScriptName_lvl  = mainset.value("local-script-name-lvl", "level.lua").toQString();
-        commonScriptName_lvl = mainset.value("common-script-name-lvl", "level.lua").toQString();
-        localScriptName_wld  = mainset.value("local-script-name-wld", "world.lua").toQString();
-        commonScriptName_wld = mainset.value("common-script-name-wld", "world.lua").toQString();
+        localScriptName_lvl  = mainSet.value("local-script-name-lvl", "level.lua").toQString();
+        commonScriptName_lvl = mainSet.value("common-script-name-lvl", "level.lua").toQString();
+        localScriptName_wld  = mainSet.value("local-script-name-wld", "world.lua").toQString();
+        commonScriptName_wld = mainSet.value("common-script-name-wld", "world.lua").toQString();
 
-        dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toQString() + "/";
+        dirs.gcustom = data_dir + mainSet.value("custom-data", "data-custom").toQString() + "/";
     }
-    closeSection(&mainset);
+    closeSection(&mainSet);
 
     //Check existing of most important graphics paths
     if(!QDir(dirs.glevel).exists())
@@ -327,13 +405,13 @@ bool dataconfigs::loadconfigs()
 
     ConfStatus::configPath = config_dir;
 
-    mainset.beginGroup("graphics");
-    defaultGrid.general = mainset.value("default-grid", 32).toUInt();   //-V112
-    mainset.endGroup();
+    mainSet.beginGroup("graphics");
+    defaultGrid.general = mainSet.value("default-grid", 32).toUInt();   //-V112
+    mainSet.endGroup();
 
-    if(mainset.lastError() != IniProcessing::ERR_OK)
+    if(mainSet.lastError() != IniProcessing::ERR_OK)
     {
-        LogCriticalQD(QString("ERROR LOADING main.ini N:%1").arg(mainset.lastError()));
+        LogCriticalQD(QString("ERROR LOADING main.ini N:%1").arg(mainSet.lastError()));
         return false;
     }
 
@@ -344,32 +422,33 @@ bool dataconfigs::loadconfigs()
     QString engine_ini = config_dir + "engine.ini";
     if(QFile::exists(engine_ini)) //Load if exist, is not required
     {
-        QSettings engineset(engine_ini, QSettings::IniFormat);
-        engineset.setIniCodec("UTF-8");
+        QSettings engineSet(engine_ini, QSettings::IniFormat);
+        engineSet.setIniCodec("UTF-8");
 
-        engineset.beginGroup("common");
-        engine.screen_w = engineset.value("screen-width", engine.screen_w).toInt();
-        engine.screen_h = engineset.value("screen-height", engine.screen_h).toInt();
-        engineset.endGroup();
+        engineSet.beginGroup("common");
+        engine.screen_w = engineSet.value("viewport-width", engine.screen_w).toUInt();
+        engine.screen_h = engineSet.value("viewport-height", engine.screen_h).toUInt();
+        engine.screen_w = engineSet.value("screen-width", engine.screen_w).toUInt();
+        engine.screen_h = engineSet.value("screen-height", engine.screen_h).toUInt();
+        engineSet.endGroup();
 
-        engineset.beginGroup("world-map");
-        engine.wld_viewport_w = engineset.value("viewport-width", engine.wld_viewport_w).toInt();
-        engine.wld_viewport_h = engineset.value("viewport-height", engine.wld_viewport_h).toInt();
-        engineset.endGroup();
+        engineSet.beginGroup("world-map");
+        engine.wld_viewport_w = engineSet.value("viewport-width", engine.wld_viewport_w).toUInt();
+        engine.wld_viewport_h = engineSet.value("viewport-height", engine.wld_viewport_h).toUInt();
+        engineSet.endGroup();
     }
 
 
     ////////////////////////////////Preparing////////////////////////////////////////
-    bgoPath =   dirs.glevel +  "background/";
-    BGPath =    dirs.glevel +  "background2/";
-    blockPath = dirs.glevel +  "block/";
-    npcPath =   dirs.glevel +  "npc/";
+    folderLvlBgo.graphics           = dirs.glevel +  "background/";
+    folderLvlBG.graphics            = dirs.glevel +  "background2/";
+    folderLvlBlocks.graphics        = dirs.glevel +  "block/";
+    folderLvlNPC.graphics           = dirs.glevel +  "npc/";
 
-    tilePath =  dirs.gworld +  "tile/";
-    scenePath = dirs.gworld +  "scene/";
-    pathPath =  dirs.gworld +  "path/";
-    wlvlPath =  dirs.gworld +  "level/";
-
+    folderWldTerrain.graphics       = dirs.gworld +  "tile/";
+    folderWldScenery.graphics       = dirs.gworld +  "scene/";
+    folderWldPaths.graphics         = dirs.gworld +  "path/";
+    folderWldLevelPoints.graphics   = dirs.gworld +  "level/";
     //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -445,8 +524,6 @@ bool dataconfigs::loadconfigs()
     LogDebug(QString("Loaded Sounds          %1/%2").arg(main_sound.stored()).arg(ConfStatus::total_sound));
     LogDebug(QString("-------------------------"));
 
-    m_isValid = !check();
-
     return true;
 }
 
@@ -492,3 +569,100 @@ long dataconfigs::getCharacterI(unsigned long itemID)
     return static_cast<long>(j);
 }
 
+
+QString dataconfigs::getBgoPath()
+{
+    return folderLvlBgo.graphics;
+}
+
+QString dataconfigs::getBGPath()
+{
+    return folderLvlBG.graphics;
+}
+
+QString dataconfigs::getBlockPath()
+{
+    return folderLvlBlocks.graphics;
+}
+
+QString dataconfigs::getNpcPath()
+{
+    return folderLvlNPC.graphics;
+}
+
+QString dataconfigs::getTilePath()
+{
+    return folderWldTerrain.graphics;
+}
+
+QString dataconfigs::getScenePath()
+{
+    return folderWldScenery.graphics;
+}
+
+QString dataconfigs::getPathPath()
+{
+    return folderWldPaths.graphics;
+}
+
+QString dataconfigs::getWlvlPath()
+{
+    return folderWldLevelPoints.graphics;
+}
+
+
+QString dataconfigs::getBgoExtraSettingsPath()
+{
+    if(folderLvlBgo.extraSettings.isEmpty())
+        return config_dir + "items/bgo";
+    else
+        return config_dir + folderLvlBgo.extraSettings;
+}
+
+QString dataconfigs::getBlockExtraSettingsPath()
+{
+    if(folderLvlBlocks.extraSettings.isEmpty())
+        return config_dir + "items/blocks";
+    else
+        return config_dir + folderLvlBlocks.extraSettings;
+}
+
+QString dataconfigs::getNpcExtraSettingsPath()
+{
+    if(folderLvlNPC.extraSettings.isEmpty())
+        return config_dir + "items/npc";
+    else
+        return config_dir + folderLvlNPC.extraSettings;
+}
+
+QString dataconfigs::getTileExtraSettingsPath()
+{
+    if(folderWldTerrain.extraSettings.isEmpty())
+        return config_dir + "items/terrain";
+    else
+        return config_dir + folderWldTerrain.extraSettings;
+}
+
+QString dataconfigs::getSceneExtraSettingsPath()
+{
+    if(folderWldScenery.extraSettings.isEmpty())
+        return config_dir + "items/scenery";
+    else
+        return config_dir + folderWldScenery.extraSettings;
+}
+
+QString dataconfigs::getPathExtraSettingsPath()
+{
+    if(folderWldPaths.extraSettings.isEmpty())
+        return config_dir + "items/paths";
+    else
+        return config_dir + folderWldPaths.extraSettings;
+}
+
+QString dataconfigs::getWlvlExtraSettingsPath()
+{
+    if(folderWldLevelPoints.extraSettings.isEmpty())
+        return config_dir + "items/levels";
+    else
+        return config_dir + folderWldLevelPoints.extraSettings;
+}

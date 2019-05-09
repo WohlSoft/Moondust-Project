@@ -1,3 +1,22 @@
+/*
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
+ */
+
 #include "lua_engine.h"
 
 #include "lua_event.h"
@@ -108,7 +127,7 @@ void LuaEngine::init()
                 pLogWarning("Stacktrace: \n%s", stacktrace.c_str());
         };
     }
-    
+
     //Create our new lua state
     L = luaL_newstate();
     if(!L)
@@ -174,7 +193,19 @@ void LuaEngine::init()
     }
 
     //Activate Luabind for out state
-    luabind::open(L);
+    try
+    {
+        luabind::open(L);
+    }
+    catch(const std::runtime_error &e)
+    {
+        // Must not happen: the possible exception
+        // may be thrown when "open()" called in a different thread
+        pLogCritical("Can't start LuaBind engine: %s", e.what());
+        m_lateShutdown = true;
+        shutdown();
+        return;
+    }
 
     //Add error handler
     luabind::set_pcall_callback(&push_pcall_handler);
@@ -192,7 +223,7 @@ void LuaEngine::init()
     }
 
     //Add config package path
-    if(fullPaths != "")
+    if(!fullPaths.empty())
     {
         luabind::object _G = luabind::globals(L);
         luabind::object package = _G["package"];

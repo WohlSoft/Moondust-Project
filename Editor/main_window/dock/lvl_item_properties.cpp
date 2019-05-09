@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
+#include <common_features/json_settings_widget.h>
 #include <defines.h>
 #include <editing/_scenes/level/lvl_history_manager.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
@@ -30,6 +31,10 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include <editing/_components/history/settings/lvl_block_userdata.hpp>
+#include <editing/_components/history/settings/lvl_bgo_userdata.hpp>
+#include <editing/_components/history/settings/lvl_npc_userdata.hpp>
+
 /*!
  * \brief Return reference to global NPC settings container with dependency to container setup. If this NPC a container - find config from contained NPC
  * \param npc Level NPC settings
@@ -38,9 +43,10 @@
  */
 static obj_npc &getNpcProps(LevelNPC &npc, MainWindow *mw)
 {
-    int tarNPC = npc.id;
+    int tarNPC = static_cast<int>(npc.id);
     obj_npc *findNPC;
-    if(mw->configs.main_npc[tarNPC].setup.container)
+    obj_npc &thisNPC = mw->configs.main_npc[tarNPC];
+    if(thisNPC.setup.container && !thisNPC.setup.special_option)
         findNPC = &mw->configs.main_npc[npc.contents];
     else
         findNPC = &mw->configs.main_npc[tarNPC];
@@ -149,9 +155,29 @@ QComboBox *LvlItemProperties::cbox_event_npc_le()
 
 void LvlItemProperties::setSMBX64Strict(bool en)
 {
+    dataconfigs &c = mw()->configs;
+    bool zLayer_hide = (c.editor.supported_features.level_bgo_z_layer == EditorSetup::FeaturesSupport::F_HIDDEN);
+    bool zLayer_active = (c.editor.supported_features.level_bgo_z_layer == EditorSetup::FeaturesSupport::F_ENABLED);
+
+    bool zPos_hide = (c.editor.supported_features.level_bgo_z_position == EditorSetup::FeaturesSupport::F_HIDDEN);
+    bool zPos_active = (c.editor.supported_features.level_bgo_z_position == EditorSetup::FeaturesSupport::F_ENABLED);
+
     ui->PROPS_BGO_Z_Pos->setEnabled(!en);
+    ui->PROPS_BGO_Z_Pos->setVisible(!zLayer_hide || !zPos_hide);
+
+    ui->PROPS_BGO_Z_Layer->setEnabled(zLayer_active);
+    ui->PROPS_BGO_Z_Layer->setHidden(zLayer_hide);
+
+    ui->PROPS_BGO_Z_Layer_label->setEnabled(zLayer_active);
+    ui->PROPS_BGO_Z_Layer_label->setHidden(zLayer_hide);
+
+    ui->PROPS_BGO_Z_Offset->setEnabled(zPos_active);
+    ui->PROPS_BGO_Z_Offset_label->setEnabled(zPos_active);
+
+    ui->PROPS_BGO_Z_Offset->setHidden(zPos_hide);
+    ui->PROPS_BGO_Z_Offset_label->setHidden(zPos_hide);
 }
-/******************Comobo boxes*********************************/
+/******************Combo boxes*********************************/
 
 void LvlItemProperties::re_translate()
 {
@@ -232,6 +258,13 @@ void LvlItemProperties::LvlItemProps(int Type,
     LockItemProps = true;
 
     LvlPlacingItems::npcSpecialAutoIncrement = false;
+
+    ui->extraSettings->setMinimumHeight(0);
+    if(m_extraSettings)
+    {
+        delete m_extraSettings;
+        m_extraSettings = nullptr;
+    }
 
     ui->PROPS_BlkEventDestroyedLock->setVisible(isPlacingNew);
     ui->PROPS_BlkEventHitLock->setVisible(isPlacingNew);
@@ -364,10 +397,15 @@ void LvlItemProperties::LvlItemProps(int Type,
             }
         }
 
+        initExtraSettingsWidget(t_block.setup.extra_settings,
+                                bgo.meta.custom_params,
+                                &LvlItemProperties::onExtraSettingsBlockChanged);
+
         LvlItemPropsLock = false;
         LockItemProps = false;
 
         ui->blockProp->show();
+        ui->blockProp->adjustSize();
         if(!dontShowToolbox)
         {
             show();
@@ -391,6 +429,15 @@ void LvlItemProperties::LvlItemProps(int Type,
         }
 
         ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.meta.array_id));
+
+        bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
+
+        obj_bgo &t_bgo   = isLvlWin ?
+                           mw()->activeLvlEditWin()->scene->m_localConfigBGOs[bgo.id] :
+                           mw()->configs.main_bgo[bgo.id];
+
+        if(!t_bgo.isValid)
+            t_bgo = mw()->configs.main_bgo[1];
 
         //ui->PROPS_BGOSquareFill->setVisible( newItem );
         //ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
@@ -436,10 +483,15 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         ui->PROPS_BGO_smbx64_sp->setValue(bgo.smbx64_sp);
 
+        initExtraSettingsWidget(t_bgo.setup.extra_settings,
+                                bgo.meta.custom_params,
+                                &LvlItemProperties::onExtraSettingsBGOChanged);
+
         LvlItemPropsLock = false;
         LockItemProps = false;
 
         ui->bgoProps->show();
+        ui->bgoProps->adjustSize();
         if(!dontShowToolbox)
         {
             show();
@@ -536,6 +588,7 @@ void LvlItemProperties::LvlItemProps(int Type,
         case -1:
             ui->PROPS_NPCDirLeft->setChecked(true);
             break;
+        default:
         case 0:
             ui->PROPS_NPCDirRand->setChecked(true);
             break;
@@ -668,10 +721,16 @@ void LvlItemProperties::LvlItemProps(int Type,
                 break;
             }
         }
+
+        initExtraSettingsWidget(t_npc.setup.extra_settings,
+                                npc.meta.custom_params,
+                                &LvlItemProperties::onExtraSettingsNPCChanged);
+
         LvlItemPropsLock = false;
         LockItemProps = false;
 
         ui->npcProps->show();
+        ui->npcProps->adjustSize();
         if(!dontShowToolbox)
         {
             show();
@@ -737,6 +796,110 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
     LvlItemPropsLock = false;
 }
 
+void LvlItemProperties::initExtraSettingsWidget(const QString &layoutPath,
+                                                QString &properties,
+                                                void (LvlItemProperties::*callback)())
+{
+    if(!layoutPath.isEmpty())
+    {
+        QString esLayoutFile = mw()->configs.getNpcExtraSettingsPath() + "/" + layoutPath;
+        QFile layoutFile(esLayoutFile);
+        if(layoutFile.open(QIODevice::ReadOnly))
+        {
+            QByteArray rawLayout = layoutFile.readAll();
+            m_extraSettings = new JsonSettingsWidget(ui->extraSettings);
+            if(m_extraSettings)
+            {
+                if(!m_extraSettings->loadLayout(properties.toUtf8(), rawLayout))
+                    LogWarning(m_extraSettings->errorString());
+                ui->extraSettings->layout()->addWidget(m_extraSettings->getWidget());
+                JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
+            }
+            layoutFile.close();
+        }
+    }
+}
+
+void LvlItemProperties::onExtraSettingsBlockChanged()
+{
+    QString custom_params = m_extraSettings->saveSettings();
+    if(blockPtr < 0)
+        LvlPlacingItems::blockSet.meta.custom_params = custom_params;
+    else
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelData selData;
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
+        edit->LvlData.meta.modified = true;
+        foreach(QGraphicsItem *item, items)
+        {
+            if(item->data(ITEM_TYPE).toString() == "Block")
+            {
+                ItemBlock *n = qgraphicsitem_cast<ItemBlock*>(item);
+                Q_ASSERT(n);
+                selData.blocks.push_back(n->m_data);
+                n->m_data.meta.custom_params = custom_params;
+                n->arrayApply();
+            }
+        }
+        edit->scene->m_history->addChangeSettings(selData, new BlockHistory_UserData(), custom_params);
+    }
+}
+
+void LvlItemProperties::onExtraSettingsBGOChanged()
+{
+    QString custom_params = m_extraSettings->saveSettings();
+    if(bgoPtr < 0)
+        LvlPlacingItems::bgoSet.meta.custom_params = custom_params;
+    else
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelData selData;
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
+        edit->LvlData.meta.modified = true;
+        foreach(QGraphicsItem *item, items)
+        {
+            if(item->data(ITEM_TYPE).toString() == "BGO")
+            {
+                ItemBGO *n = qgraphicsitem_cast<ItemBGO*>(item);
+                Q_ASSERT(n);
+                selData.bgo.push_back(n->m_data);
+                n->m_data.meta.custom_params = custom_params;
+                n->arrayApply();
+            }
+        }
+        edit->scene->m_history->addChangeSettings(selData, new BgoHistory_UserData(), custom_params);
+    }
+}
+
+void LvlItemProperties::onExtraSettingsNPCChanged()
+{
+    QString custom_params = m_extraSettings->saveSettings();
+    if(npcPtr < 0)
+        LvlPlacingItems::npcSet.meta.custom_params = custom_params;
+    else
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelData selData;
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
+        edit->LvlData.meta.modified = true;
+        foreach(QGraphicsItem *item, items)
+        {
+            if(item->data(ITEM_TYPE).toString() == "NPC")
+            {
+                ItemNPC *n = qgraphicsitem_cast<ItemNPC*>(item);
+                Q_ASSERT(n);
+                selData.npc.push_back(n->m_data);
+                n->m_data.meta.custom_params = custom_params;
+                n->arrayApply();
+            }
+        }
+        edit->scene->m_history->addChangeSettings(selData, new NPCHistory_UserData(), custom_params);
+    }
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////

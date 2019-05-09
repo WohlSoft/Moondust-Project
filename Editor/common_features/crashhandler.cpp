@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <SDL2/SDL_version.h>
+#include <SDL2/SDL_mixer_ext.h>
 #ifdef _WIN32
 #include <windows.h>
 #include <dbghelp.h>
@@ -42,6 +44,9 @@
 #include <common_features/logger.h>
 #include <common_features/logger_sets.h>
 
+#define STR_EXPAND(tok) #tok
+#define STR(tok) STR_EXPAND(tok)
+
 static const char *g_messageToUser =
     "\n"
     "================================================\n"
@@ -50,7 +55,12 @@ static const char *g_messageToUser =
     V_FILE_DESC " version: " V_FILE_VERSION V_FILE_RELEASE "\n"
     "Architecture: " FILE_CPU "\n"
     "GIT Revision code: " GIT_VERSION "\n"
+    "GIT branch: " V_BUILD_BRANCH "\n"
     "Build date: " V_DATE_OF_BUILD "\n"
+    "================================================\n"
+    "Qt " QT_VERSION_STR "\n"
+    "SDL2 " STR(SDL_MAJOR_VERSION) "." STR(SDL_MINOR_VERSION) "." STR(SDL_PATCHLEVEL) "\n"
+    "SDL Mixer X " STR(SDL_MIXER_MAJOR_VERSION) "." STR(SDL_MIXER_MINOR_VERSION) "." STR(SDL_MIXER_PATCHLEVEL) "\n"
     "================================================\n"
     " Please send this log file to the developers by one of ways:\n"
     " - Via contact form:          http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin\n"

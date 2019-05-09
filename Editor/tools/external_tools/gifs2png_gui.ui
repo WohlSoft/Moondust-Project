@@ -195,10 +195,10 @@
    <item row="11" column="0" colspan="5">
     <widget class="QCheckBox" name="SkipBackgrounds">
      <property name="text">
-      <string>Skip conversion of backgrounds (don't convert background2-*.gif due bug in the LunaLua)</string>
+      <string>Skip conversion of backgrounds (don't convert background2-*.gif)</string>
      </property>
      <property name="checked">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>

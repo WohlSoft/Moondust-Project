@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,11 +29,44 @@
 #define V_BUILD_VER "<empty>"
 #endif
 
-#define V_VF1 2
-#define V_VF2 1
-#define V_VF3 1
-#define V_VF4 0
-#define V_FILE_RELEASE ""
+#ifdef GIT_BRANCH
+#define V_BUILD_BRANCH GIT_BRANCH
+#else
+#define V_BUILD_BRANCH "<unknown>"
+#endif
+
+//Version of this program
+
+#ifdef CALIBRATOR_VERSION_1
+#   define V_VF1 CALIBRATOR_VERSION_1
+#else
+#   define V_VF1 0
+#endif
+
+#ifdef CALIBRATOR_VERSION_2
+#   define V_VF2 CALIBRATOR_VERSION_2
+#else
+#   define V_VF2 0
+#endif
+
+#ifdef CALIBRATOR_VERSION_3
+#   define V_VF3 CALIBRATOR_VERSION_3
+#else
+#   define V_VF3 0
+#endif
+
+#ifdef CALIBRATOR_VERSION_4
+#   define V_VF4 CALIBRATOR_VERSION_4
+#else
+#   define V_VF4 0
+#endif
+
+#ifdef CALIBRATOR_VERSION_REL
+#   define V_FILE_RELEASE STR_VALUE(CALIBRATOR_VERSION_REL)
+#else
+#   define V_FILE_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
+
 
 #define V_VF1_s STR_VALUE(V_VF1)
 #define V_VF2_s STR_VALUE(V_VF2)

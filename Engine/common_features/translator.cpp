@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <locale>
@@ -21,17 +22,24 @@
 #include "translator.h"
 #include "app_path.h"
 #include "logger.h"
-#ifdef _WIN32
-#include <windows.h>
+
+#ifdef __ANDROID__
+#   include <SDL2/SDL_rwops.h>
+#   include <SDL2/SDL_assert.h>
 #endif
+
+#ifdef _WIN32
+#   include <windows.h>
+#endif
+
 #ifdef __APPLE__
-#include <CoreFoundation/CoreFoundation.h>
-#include <CoreServices/CoreServices.h>
+#   include <CoreFoundation/CoreFoundation.h>
+#   include <CoreServices/CoreServices.h>
 #endif
 
 #include "fmt_format_ne.h"
 
-static PGE_Translator *g_translator = NULL;
+static PGE_Translator *g_translator = nullptr;
 
 PGE_Translator::PGE_Translator() :
     m_isInit(false),
@@ -84,14 +92,14 @@ void PGE_Translator::init()
     }
     catch(const std::runtime_error &err)
     {
-    	pLogCritical("Can't recogonize locale by std::locale: %s", err.what());
-    	defaultLocale = "en";
+        pLogCritical("Can't recognize locale by std::locale: %s", err.what());
+        defaultLocale = "en";
     }
     catch(...)
     {
-    	pLogCritical("Can't recogonize locale by std::locale: Unknown error");
-    	defaultLocale = "en";
-    }    
+        pLogCritical("Can't recognize locale by std::locale: Unknown error");
+        defaultLocale = "en";
+    }
 #endif
 
     m_langPath = AppPathManager::languagesDir();
@@ -104,6 +112,25 @@ void PGE_Translator::init()
 #endif
 }
 
+#ifdef __ANDROID__
+static uint8_t *rwDumpFile(const char *path, size_t &size)
+{
+    SDL_RWops *op = SDL_RWFromFile(path, "rb");
+    if(op)
+    {
+        SDL_RWseek(op, 0, RW_SEEK_END);
+        size = static_cast<size_t>(SDL_RWtell(op));
+        SDL_RWseek(op, 0, RW_SEEK_SET);
+        uint8_t *data = (uint8_t *) SDL_malloc(size);
+        SDL_assert_release(data);
+        SDL_RWread(op, data, 1, size);
+        SDL_RWclose(op);
+        return data;
+    }
+    return nullptr;
+}
+#endif
+
 void PGE_Translator::toggleLanguage(std::string lang)
 {
     if(!m_isInit || (m_currLang != lang))
@@ -114,19 +141,54 @@ void PGE_Translator::toggleLanguage(std::string lang)
         m_currLang = lang;
 
         std::string langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
-
+#ifdef __ANDROID__
+        bool ok = false;
+        size_t size = 0;
+        uint8_t *array = rwDumpFile(langFilePath.c_str(), size);
+        if(array)
+        {
+            ok = m_translator.loadData(array, size,
+                                       reinterpret_cast<unsigned char *>(&m_langPath[0]));
+            SDL_free(array);
+            if(!ok)
+            {
+                pLogWarning("Failed to open translation file %s!", langFilePath.c_str());
+            }
+        }
+        else
+        {
+            pLogWarning("Can't open translation file %s!", langFilePath.c_str());
+        }
+#else
         bool ok = m_translator.loadFile(langFilePath.c_str(),
                                         reinterpret_cast<unsigned char *>(&m_langPath[0]));
+#endif
         if(!ok)
         {
             m_currLang = "en"; //set to English if no other translations are found
             langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
+
+#ifdef __ANDROID__
+            bool enOk = false;
+            size_t enSize = 0;
+            uint8_t *enData = rwDumpFile(langFilePath.c_str(), enSize);
+            if(enData)
+            {
+                enOk = m_translator.loadData(enData, enSize,
+                                           reinterpret_cast<unsigned char *>(&m_langPath[0]));
+                SDL_free(enData);
+                if(!enOk)
+                    pLogWarning("Failed to open English translation file %s!", langFilePath.c_str());
+            }
+#else
             m_translator.loadFile(langFilePath.c_str(),
                                   reinterpret_cast<unsigned char *>(&m_langPath[0]));
-            #ifdef __EMSCRIPTEN__
-                printf("Loading language file %s\n", langFilePath.c_str());
-                fflush(stdout);
-            #endif
+#endif
+
+#ifdef __EMSCRIPTEN__
+            printf("Loading language file %s\n", langFilePath.c_str());
+            fflush(stdout);
+#endif
         }
         m_isInit = true;
     }
@@ -136,7 +198,7 @@ std::string qtTrId(const char* string)
 {
     if(!g_translator)
         return string;
-    std::string out = g_translator->m_translator.do_translate8(0, string, 0, -1);
+    std::string out = g_translator->m_translator.do_translate8(nullptr, string, nullptr, -1);
     if(out.empty())
         return std::string(string);
     else

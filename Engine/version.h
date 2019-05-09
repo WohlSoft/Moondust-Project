@@ -1,26 +1,27 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
- * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * This is a part of the Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "../pge_version.h" //Global Project version file
 
-#ifndef EDITOR_VERSION_H
-#define EDITOR_VERSION_H
+#ifndef ENGINE_VERSION_H
+#define ENGINE_VERSION_H
 
 #ifdef GIT_VERSION
 #define V_BUILD_VER GIT_VERSION
@@ -28,12 +29,41 @@
 #define V_BUILD_VER "<empty>"
 #endif
 
-#define V_VF1 0
-#define V_VF2 3
-#define V_VF3 0
-#define V_VF4 0
+#ifdef GIT_BRANCH
+#define V_BUILD_BRANCH GIT_BRANCH
+#else
+#define V_BUILD_BRANCH "<unknown>"
+#endif
 
-#define V_FILE_RELEASE "-alpha"
+#ifdef ENGINE_VERSION_1
+#   define V_VF1 ENGINE_VERSION_1
+#else
+#   define V_VF1 0
+#endif
+
+#ifdef ENGINE_VERSION_2
+#   define V_VF2 ENGINE_VERSION_2
+#else
+#   define V_VF2 0
+#endif
+
+#ifdef ENGINE_VERSION_3
+#   define V_VF3 ENGINE_VERSION_3
+#else
+#   define V_VF3 0
+#endif
+
+#ifdef ENGINE_VERSION_4
+#   define V_VF4 ENGINE_VERSION_4
+#else
+#   define V_VF4 0
+#endif
+
+#ifdef ENGINE_VERSION_REL
+#   define V_FILE_RELEASE STR_VALUE(ENGINE_VERSION_REL)
+#else
+#   define V_FILE_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
 
 #define V_VF1_s STR_VALUE(V_VF1)
 #define V_VF2_s STR_VALUE(V_VF2)

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,16 +118,3 @@ void MainWindow::on_actionSprite_editor_triggered()
 {
     QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

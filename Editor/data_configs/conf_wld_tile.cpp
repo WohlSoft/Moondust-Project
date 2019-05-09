@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_til
     if(!openSection(setup, section.toStdString(), internal))
         return false;
 
-    if(stile.setup.parse(setup, tilePath, defaultGrid.terrain, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(stile.setup.parse(setup, folderWldTerrain.graphics, defaultGrid.terrain, merge_with ? &merge_with->setup : nullptr, &errStr))
         stile.isValid = true;
     else
     {
@@ -62,10 +62,9 @@ void dataconfigs::loadWorldTiles()
     if(tile_ini.isEmpty())
         return;
 
-    QString nestDir = "";
-
     IniProcessing setup(tile_ini);
 
+    folderWldTerrain.items.clear();
     main_wtiles.clear();   //Clear old
 
     if(!openSection(&setup, "tiles-main"))
@@ -74,10 +73,11 @@ void dataconfigs::loadWorldTiles()
         setup.read("total", tiles_total, 0);
         setup.read("grid", defaultGrid.terrain, defaultGrid.terrain);
         total_data += tiles_total;
-        setup.read("config-dir", nestDir, "");
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderWldTerrain.items, "");
+        setup.read("extra-settings", folderWldTerrain.extraSettings, folderWldTerrain.items);
+        if(!folderWldTerrain.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderWldTerrain.items = config_dir + folderWldTerrain.items;
             useDirectory = true;
         }
     }
@@ -103,14 +103,14 @@ void dataconfigs::loadWorldTiles()
         emit progressValue(int(i));
         bool valid = false;
         if(useDirectory)
-            valid = loadWorldTerrain(stile, "tile", nullptr, QString("%1/tile-%2.ini").arg(nestDir).arg(i));
+            valid = loadWorldTerrain(stile, "tile", nullptr, QString("%1/tile-%2.ini").arg(folderWldTerrain.items).arg(i));
         else
-            valid = loadWorldTerrain(stile, QString("tile-%1").arg(i), 0, "", &setup);
+            valid = loadWorldTerrain(stile, QString("tile-%1").arg(i), nullptr, "", &setup);
         /***************Load image*******************/
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(tilePath,
+            GraphicsHelps::loadMaskedImage(folderWldTerrain.graphics,
                                            stile.setup.image_n, stile.setup.mask_n,
                                            stile.image,
                                            errStr);

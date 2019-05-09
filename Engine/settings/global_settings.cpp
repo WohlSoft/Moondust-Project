@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "global_settings.h"
@@ -21,6 +22,9 @@
 #include <graphics/window.h>
 #include <controls/controller_joystick.h>
 #include <controls/controller_keyboard.h>
+#if __ANDROID__
+#   include <controls/controller_touchscreen.h>
+#endif
 #include <common_features/logger.h>
 #include <common_features/number_limiter.h>
 #include <IniProcessor/ini_processing.h>
@@ -32,9 +36,6 @@ GlobalSettings::GlobalSettings()
 {
     resetDefaults();
 }
-
-GlobalSettings::~GlobalSettings()
-{}
 
 void GlobalSettings::initJoysticks()
 {
@@ -313,8 +314,8 @@ Controller *GlobalSettings::openController(int player)
     {
         if(player1_controller >= 0)
         {
-            JoystickController *joysticController = new JoystickController();
-            size_t deviceID = static_cast<size_t>(player1_controller);
+            auto joysticController = new JoystickController();
+            auto deviceID = static_cast<size_t>(player1_controller);
             if(deviceID < player1_joysticks.size())
                 joysticController->setKeyMap(player1_joysticks[deviceID]);
             if(deviceID < joysticks.size())
@@ -323,16 +324,21 @@ Controller *GlobalSettings::openController(int player)
         }
         else
         {
+#if __ANDROID__
+            targetController = new TouchScreenController();
+#else
             targetController = new KeyboardController();
             targetController->setKeyMap(player1_keyboard);
+#endif
+
         }
     }
     else if(player == 2)
     {
         if(player2_controller >= 0)
         {
-            JoystickController *joysticController = new JoystickController();
-            size_t deviceID = static_cast<size_t>(player2_controller);
+            auto joysticController = new JoystickController();
+            auto deviceID = static_cast<size_t>(player2_controller);
             if(deviceID < player2_joysticks.size())
                 joysticController->setKeyMap(player2_joysticks[deviceID]);
             if(deviceID < joysticks.size())
@@ -348,4 +354,3 @@ Controller *GlobalSettings::openController(int player)
 
     return targetController;
 }
-

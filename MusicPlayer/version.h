@@ -1,7 +1,7 @@
 /*
  * GIFs2PNG, a free tool for merge GIF images with his masks and save into PNG
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,38 @@
 #define IDI_ICON1 30001
 #define IDI_ICON2 30002
 
+//Version of this program
 
-#define V_VF1 1
-#define V_VF2 3
-#define V_VF3 0
-#define V_VF4 0
-#define V_FILE_RELEASE ""
+#ifdef MUSPLAY_VERSION_1
+#   define V_VF1 MUSPLAY_VERSION_1
+#else
+#   define V_VF1 0
+#endif
+
+#ifdef MUSPLAY_VERSION_2
+#   define V_VF2 MUSPLAY_VERSION_2
+#else
+#   define V_VF2 0
+#endif
+
+#ifdef MUSPLAY_VERSION_3
+#   define V_VF3 MUSPLAY_VERSION_3
+#else
+#   define V_VF3 0
+#endif
+
+#ifdef MUSPLAY_VERSION_4
+#   define V_VF4 MUSPLAY_VERSION_4
+#else
+#   define V_VF4 0
+#endif
+
+#ifdef MUSPLAY_VERSION_REL
+#   define V_FILE_RELEASE STR_VALUE(MUSPLAY_VERSION_REL)
+#else
+#   define V_FILE_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
+
 
 #define V_VF1_s STR_VALUE(V_VF1)
 #define V_VF2_s STR_VALUE(V_VF2)

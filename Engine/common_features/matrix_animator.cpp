@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "matrix_animator.h"
@@ -23,6 +24,7 @@
 #include <cassert>
 #include <cmath>
 #include <cstdlib>
+#include <utility>
 
 MatrixAnimator::MatrixAnimator():
     m_width(0.0),
@@ -97,14 +99,11 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a):
     buildRect();
 }
 
-MatrixAnimator::~MatrixAnimator()
-{}
-
 void MatrixAnimator::setFrameSequance(std::vector<MatrixAnimatorFrame> _sequence)
 {
     m_currentFrameIndex = 0;
     m_sequence.clear();
-    m_sequence = _sequence;
+    m_sequence = std::move(_sequence);
     m_sequenceP = &m_sequence;
     buildRect();
 }
@@ -136,19 +135,33 @@ void MatrixAnimator::setDirection(int _direction, bool force)
 
     if(m_direction < 0)
     {
-        AniBank::iterator left = s_bank_left.find(m_current_sequance);
+        auto left = s_bank_left.find(m_current_sequance);
         //left
         if(left == s_bank_left.end())
-            return;
+        {
+            pLogWarning("Missing animation sequence of playable character of type %d of left direction!",
+                        static_cast<int>(m_current_sequance));
+            left = s_bank_left.find(Idle);
+            if(left == s_bank_left.end())
+                pLogCritical("Playable character required to have the \"Idle\" animation sequence! However, it's missing!");
+            SDL_assert_release(left != s_bank_left.end());
+        }
 
         m_sequenceP = &(left->second);
     }
     else
     {
-        AniBank::iterator right = s_bank_right.find(m_current_sequance);
+        auto right = s_bank_right.find(m_current_sequance);
         //right
         if(right == s_bank_right.end())
-            return;
+        {
+            pLogWarning("Missing animation sequence of playable character of type %d of right direction!",
+                        static_cast<int>(m_current_sequance));
+            right = s_bank_right.find(Idle);
+            if(right == s_bank_right.end())
+                pLogCritical("Playable character required to have the \"Idle\" animation sequence! However, it's missing!");
+            SDL_assert_release(right != s_bank_right.end());
+        }
 
         m_sequenceP = &(right->second);
     }
@@ -283,7 +296,7 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
                             (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
-            MatrixAnimatorFrame frame;
+            MatrixAnimatorFrame frame = {};
             frame.x = static_cast<double>(x) / m_width;
             frame.y = static_cast<double>(y) / m_height;
             frame.offset_x = fr.offsetX;
@@ -304,7 +317,7 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
                             (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
-            MatrixAnimatorFrame frame;
+            MatrixAnimatorFrame frame = {};
             frame.x = static_cast<double>(x) / m_width;
             frame.y = static_cast<double>(y) / m_height;
             frame.offset_x = fr.offsetX;
@@ -361,6 +374,8 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
         //right
         m_sequenceP = &(seq_right->second);
     }
+
+    SDL_assert_release(m_sequenceP);
 
     if(m_currentFrameIndex >= m_sequenceP->size())
     {
@@ -497,7 +512,7 @@ MatrixAnimator::MatrixAnimates MatrixAnimator::toEnum(const std::string &aniName
     if(m_strToEnum.empty())
         buildEnums();
 
-    AniEnums::iterator ani = m_strToEnum.find(aniName);
+    auto ani = m_strToEnum.find(aniName);
 
     if(ani != m_strToEnum.end())
         return ani->second;

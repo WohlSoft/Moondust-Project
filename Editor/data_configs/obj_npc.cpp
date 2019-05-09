@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
     if(!openSection(setup, section.toStdString(), internal))
         return false;
 
-    if(snpc.setup.parse(setup, npcPath, defaultGrid.npc, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(snpc.setup.parse(setup, folderLvlNPC.graphics, defaultGrid.npc, merge_with ? &merge_with->setup : nullptr, &errStr))
         snpc.isValid = true;
     else
     {
@@ -90,9 +90,9 @@ void dataconfigs::loadLevelNPC()
     if(npc_ini.isEmpty())
         return;
 
-    QString nestDir = "";
     IniProcessing setup(npc_ini);
 
+    folderLvlNPC.items.clear();
     main_npc.clear();   //Clear old
 
     if(!openSection(&setup, "npc-main"))
@@ -102,10 +102,11 @@ void dataconfigs::loadLevelNPC()
         setup.read("grid", defaultGrid.npc, defaultGrid.npc);
         total_data += npc_total;
 
-        setup.read("config-dir", nestDir, "");
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderLvlNPC.items, "");
+        setup.read("extra-settings", folderLvlNPC.extraSettings, folderLvlNPC.items);
+        if(!folderLvlNPC.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderLvlNPC.items = config_dir + folderLvlNPC.items;
             useDirectory = true;
         }
         setup.read("coin-in-block", marker_npc.coin_in_block, 10);
@@ -130,7 +131,7 @@ void dataconfigs::loadLevelNPC()
         bool valid = false;
 
         if(useDirectory)
-            valid = loadLevelNPC(snpc, "npc", nullptr, QString("%1/npc-%2.ini").arg(nestDir).arg(i));
+            valid = loadLevelNPC(snpc, "npc", nullptr, QString("%1/npc-%2.ini").arg(folderLvlNPC.items).arg(i));
         else
             valid = loadLevelNPC(snpc, QString("npc-%1").arg(i), nullptr, "", &setup);
 
@@ -138,7 +139,7 @@ void dataconfigs::loadLevelNPC()
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(npcPath,
+            GraphicsHelps::loadMaskedImage(folderLvlNPC.graphics,
                                            snpc.setup.image_n, snpc.setup.mask_n,
                                            snpc.image,
                                            errStr);

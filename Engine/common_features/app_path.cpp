@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <DirManager/dirman.h>
@@ -156,6 +157,16 @@ void AppPathManager::initAppPath()
         if(!DirMan::exists(ApplicationPathSTD + "/Data directory"))
             symlink((userDirPath).c_str(), (ApplicationPathSTD + "/Data directory").c_str());
 #endif
+
+#ifdef __ANDROID__
+        std::string noMediaFile = userDirPath + "/.nomedia";
+        if(!Files::fileExists(noMediaFile))
+        {
+            SDL_RWops* noMediaRWops = SDL_RWFromFile(noMediaFile.c_str(), "wb");
+            if(noMediaRWops)
+                SDL_RWclose(noMediaRWops);
+        }
+#endif
         m_userPath = appDir.absolutePath();
         m_userPath.push_back('/');
         initSettingsPath();
@@ -188,9 +199,7 @@ std::string AppPathManager::userAppDirSTD()
 
 std::string AppPathManager::languagesDir()
 {
-#ifndef __APPLE__
-    return ApplicationPathSTD + "languages";
-#else
+#if defined(__APPLE__)
     CFURLRef appUrlRef;
     appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
     CFStringRef filePathRef = CFURLGetString(appUrlRef);
@@ -201,6 +210,10 @@ std::string AppPathManager::languagesDir()
     if(path.compare(0, 7, "file://") == 0)
         path.erase(0, 7);
     return path;
+#elif defined(__ANDROID__)
+    return "languages";
+#else
+    return ApplicationPathSTD + "languages";
 #endif
 }
 
@@ -258,7 +271,7 @@ bool AppPathManager::isPortable()
 
 bool AppPathManager::userDirIsAvailable()
 {
-    return (m_userPath.compare(ApplicationPathSTD) != 0);
+    return (m_userPath != ApplicationPathSTD);
 }
 
 

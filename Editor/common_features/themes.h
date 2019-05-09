@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,9 @@ public:
         world_16,
         world_24,
         npc_16,
+
+        level_item_browser,
+        world_item_browser,
 
         file_open,
         file_new,
@@ -225,7 +228,7 @@ public:
     static void init();
     static QStringList availableThemes();
     static QString currentTheme();
-    static void loadTheme(QString themeDir);
+    static void loadTheme(const QString &themeDir);
 
     static QIcon icon(Icons icn);
     static QPixmap Image(Images img);

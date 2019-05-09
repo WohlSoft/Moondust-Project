@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,8 +99,15 @@ QPushButton *LvlSectionProps::getEditBackground2IniButton()
 
 void LvlSectionProps::setSMBX64Strict(bool en)
 {
-    ui->LVLPropsWrapVertical->setEnabled(!en);
-    mw()->ui->actionWrapVertically->setEnabled(!en);
+    dataconfigs &c = mw()->configs;
+
+    bool wrap_vertical_enabled = !en && (c.editor.supported_features.level_section_vertical_wrap == EditorSetup::FeaturesSupport::F_ENABLED);
+    bool wrap_vertical_hidden = (c.editor.supported_features.level_section_vertical_wrap == EditorSetup::FeaturesSupport::F_HIDDEN);
+
+    ui->LVLPropsWrapVertical->setEnabled(wrap_vertical_enabled);
+    ui->LVLPropsWrapVertical->setHidden(wrap_vertical_hidden);
+    mw()->ui->actionWrapVertically->setEnabled(wrap_vertical_enabled);
+    mw()->ui->actionWrapVertically->setVisible(!wrap_vertical_hidden);
 }
 
 void LvlSectionProps::re_translate()
@@ -471,21 +478,23 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
         {
             const obj_BG &bg = main_bg[backgroundId];
             QTextStream o(&f);
-            o << "[background2]\n"
+            o << "[background2]\r\n"
 
-              << "; " << tr("Custom background name which will be shown in the editor",
-                            "A comment in the template if Background2 INI file.")
-              << "\n"
-              << QString("name = \"%1\"\n").arg(bg.setup.name)
+              << "; " << tr("Name that will appear in the editor",
+                            "A comment in the template of Background2 INI file.") << "\r\n"
+              << QString("name = \"%1\"\r\n").arg(bg.setup.name)
 
-              << "; " << tr("Default screen fill color",
-                            "A comment in the template if Background2 INI file.") << "\n"
-              << QString("fill-color = \"#000000\"\n")
+              << "; " << tr("Backdrop fill color",
+                            "A comment in the template of Background2 INI file.") << "\r\n"
+              << QString("fill-color = black\r\n")
 
-              << "\n\n"
-              << "; " << tr("Create your background layers setup here...",
-                            "A comment in the template if Background2 INI file.")
-              << "\n\n";
+              << "\r\n\r\n"
+              << "; " << tr("Add layers here, for example:",
+                            "A comment in the template of Background2 INI file.") << "\r\n\r\n"
+              << "; [Layer1]\r\n"
+              << "; " << "depth = INFINITE" << "\r\n"
+              << "; " << "img = \"background.png\"" << "\r\n"
+              << "; " << "repeatX = true" << "\r\n";
         }
     }
 

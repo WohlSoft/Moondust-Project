@@ -1,4 +1,15 @@
-0.3.1-dev
+0.3.3-dev
+- Fixed crash on missing player animation sequence
+- Added support for Android platform
+- Added protection from a too high framespeed which may appear due incorrect v-sync settings in video driver settings
+
+0.3.2
+- Fixed incorrect management of custom config files caused missing of them
+- Fixed bug of the "move denied" sound on world map
+- Added ability to switch playable character from pause menu of world map
+- Fixed player and NPC stumbling at the top corner of slopes
+
+0.3.1
 - LuaJIT now is working on macOS!
 - Using of updated SDL Mixer X
 - Fixed the date filenames generation for screenshots and recorded GIF movies
@@ -12,6 +23,7 @@
 - Fixed message box texture border width support
 - Added support for bitblit mask fallback (using default PNG to regenerate the missing mask)
 - Added attackArea lua function to playable character which allows players to have melee attacks
+- Added an experimental ability to customize in-game resolution by config pack from the engine.ini file
 
 0.3.0
 - Fixed some NPC-AI API properties

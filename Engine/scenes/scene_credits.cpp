@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "scene_credits.h"
@@ -25,6 +26,7 @@
 #include <common_features/logger.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
+#include <Utils/maths.h>
 
 CreditsScene_misc_img::CreditsScene_misc_img()
 {
@@ -57,8 +59,8 @@ CreditsScene::~CreditsScene()
     GlRenderer::clearScreen();
     GlRenderer::deleteTexture(background);
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        GlRenderer::deleteTexture(imgs[i].t);
+    for(auto &img : imgs)
+        GlRenderer::deleteTexture(img.t);
 
     imgs.clear();
 }
@@ -99,7 +101,7 @@ void CreditsScene::init()
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     luaEngine.setCoreFile(":/script/maincore_credits.lua");
     luaEngine.setUserFile(ConfigManager::setup_CreditsScreen.luaFile);
-    luaEngine.setErrorReporterFunc([this](const std::string & errorMessage, const std::string  &stacktrace)
+    luaEngine.setErrorReporterFunc([](const std::string & errorMessage, const std::string  &stacktrace)
     {
         pLogWarning("Lua-Error: ");
         pLogWarning("Error Message: %s", errorMessage.c_str());
@@ -159,8 +161,8 @@ void CreditsScene::update()
     Scene::update();
     updateLua();
 
-    for(size_t i = 0; i < imgs.size(); i++)
-        imgs[i].a.manualTick(uTickf);
+    for(auto &img : imgs)
+        img.a.manualTick(uTickf);
 
     /******************Update built-in faders and animators*********************/
 
@@ -188,15 +190,15 @@ void CreditsScene::render()
     GlRenderer::setTextureColor(1.0f, 1.0f, 1.0f, 1.0f);
     GlRenderer::renderTexture(&background, PGE_Window::Width / 2 - background.w / 2, PGE_Window::Height / 2 - background.h / 2);
 
-    for(size_t i = 0; i < imgs.size(); i++)
+    for(auto &img : imgs)
     {
         AniPos x(0, 1);
-        x = imgs[i].a.image();
-        GlRenderer::renderTexture(&imgs[i].t,
-                                  imgs[i].x,
-                                  imgs[i].y,
-                                  imgs[i].t.w,
-                                  imgs[i].frmH, x.first, x.second);
+        x = img.a.image();
+        GlRenderer::renderTexture(&img.t,
+                                  img.x,
+                                  img.y,
+                                  img.t.w,
+                                  img.frmH, x.first, x.second);
     }
 
     Scene::render();
@@ -213,8 +215,17 @@ int CreditsScene::exec()
     while(m_isRunning)
     {
         times.start_common = SDL_GetTicks();
-        processEvents();
-        update();
+
+        while(times.doUpdate_physics < static_cast<double>(uTick))
+        {
+            processEvents();
+            update();
+            times.doUpdate_physics += uTickf;
+            Maths::clearPrecision(times.doUpdate_physics);
+        }
+        times.doUpdate_physics -= static_cast<double>(uTick);
+        Maths::clearPrecision(times.doUpdate_physics);
+
         times.stop_render = 0;
         times.start_render = 0;
 

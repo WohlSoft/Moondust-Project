@@ -2,7 +2,7 @@
  * LazyFixTool, a free tool for fix lazily-made image masks
  * and also, convert all BMPs into GIF
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,36 @@
 #define EDITOR_VERSION_H
 
 
-#define V_VF1 3
-#define V_VF2 0
-#define V_VF3 0
-#define V_VF4 0
-#define V_FILE_RELEASE ""
+#ifdef LAZYFIXTOOL_VERSION_1
+#   define V_VF1 LAZYFIXTOOL_VERSION_1
+#else
+#   define V_VF1 0
+#endif
+
+#ifdef LAZYFIXTOOL_VERSION_2
+#   define V_VF2 LAZYFIXTOOL_VERSION_2
+#else
+#   define V_VF2 0
+#endif
+
+#ifdef LAZYFIXTOOL_VERSION_3
+#   define V_VF3 LAZYFIXTOOL_VERSION_3
+#else
+#   define V_VF3 0
+#endif
+
+#ifdef LAZYFIXTOOL_VERSION_4
+#   define V_VF4 LAZYFIXTOOL_VERSION_4
+#else
+#   define V_VF4 0
+#endif
+
+#ifdef LAZYFIXTOOL_VERSION_REL
+#   define V_FILE_RELEASE STR_VALUE(LAZYFIXTOOL_VERSION_REL)
+#else
+#   define V_FILE_RELEASE "-unk" //"-alpha","-beta","-dev", or "" aka "release"
+#endif
+
 
 #define V_VF1_s STR_VALUE(V_VF1)
 #define V_VF2_s STR_VALUE(V_VF2)

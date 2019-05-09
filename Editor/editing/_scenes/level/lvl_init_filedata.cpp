@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include <editing/edit_level/level_edit.h>
 
 #include "lvl_scene.h"
+#include "items/item_npc.h"
 
 // //////////////////////////Apply used sections///////////////////////////////////////
 void LvlScene::makeSectionBG(QProgressDialog &progress)
@@ -89,8 +90,15 @@ void LvlScene::setNPC(QProgressDialog &progress)
 
     for(i=0; i<m_data->npc.size(); i++)
     {
+        LevelNPC &npc = m_data->npc[i];
         //add NPC to scene
-        placeNPC(m_data->npc[i]);
+        ItemNPC *n = placeNPC(npc);
+        //FIXME: TEMPORARY, Remove this after removing of real-time PGE-FL <-> Scene synchronization
+        Q_ASSERT(n);
+        npc.contents        = n->m_data.contents;
+        npc.special_data    = n->m_data.special_data;
+        //------------------------------------------------------------------------------------------
+
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             return;

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,6 +75,36 @@ void LevelEdit::reTranslate()
     QString backup = windowTitle();
     ui->retranslateUi(this);
     setWindowTitle(backup);
+}
+
+void LevelEdit::prepareLevelFile(LevelData &data)
+{
+    if(!sceneCreated || !scene)
+        return;
+
+    dataconfigs *config = scene->m_configs;
+
+    // TODO: make here the synchronizarion with the main scene
+    // Instead of real-time in-scene synchronization, total performance
+    // and safety of workflow turning into one huge hell.
+    // Instead of per-action synchronization, make the data collecting
+    // from off the scene through this function.
+
+    for(LevelNPC &npc : data.npc)
+    {
+        if(npc.id == 0)
+            continue;
+
+        const obj_npc &npc_config = config->main_npc[npc.id];
+
+        if(!npc_config.isValid)
+            continue;
+
+        // Mark stars (for SMBX64 standard)
+        npc.is_star = npc_config.setup.is_star;
+        if((npc.is_star) && (npc.friendly)) // Non-takable stars? Nevermind!
+            npc.is_star = false;
+    }
 }
 
 void LevelEdit::focusInEvent(QFocusEvent *event)

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,6 +137,19 @@ void LvlHistoryManager::addChangeSettings(LevelData modifiedItems, HistorySettin
     updateHistoryBuffer();
 
     HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, subType, extraData);
+    modf->setScene(m_scene);
+
+    operationList.push_back(QSharedPointer<IHistoryElement>(modf));
+    historyIndex++;
+
+    emit refreshHistoryButtons();
+}
+
+void LvlHistoryManager::addChangeSettings(LevelData modifiedItems, HistoryElementCustomSetting *setting, QVariant extraData)
+{
+    updateHistoryBuffer();
+
+    HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, setting, extraData);
     modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));

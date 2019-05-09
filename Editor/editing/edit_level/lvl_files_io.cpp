@@ -1,6 +1,6 @@
-﻿/*
+/*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <common_features/main_window_ptr.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
+#include <common_features/file_keeper.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <data_functions/smbx64_validation_messages.h>
@@ -43,6 +44,23 @@ bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
     setWindowTitle(QString(curFile).replace("&", "&&&"));
     FileFormats::CreateLevelData(LvlData);
     LvlData.meta.untitled = true;
+
+    switch(configs.editor.default_file_formats.level)
+    {
+    case EditorSetup::DefaultFileFormats::SMBX64:
+        LvlData.meta.RecentFormat = LevelData::SMBX64;
+        LvlData.meta.smbx64strict = true;
+        break;
+    case EditorSetup::DefaultFileFormats::PGEX:
+        LvlData.meta.RecentFormat = LevelData::PGEX;
+        LvlData.meta.smbx64strict = false;
+        break;
+    case EditorSetup::DefaultFileFormats::SMBX38A:
+        LvlData.meta.RecentFormat = LevelData::SMBX38A;
+        LvlData.meta.smbx64strict = false;
+        break;
+    }
+
     StartLvlData = LvlData;
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
@@ -127,28 +145,22 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     QString filePGEX    = "Extended Level file (*.lvlx)";
     QString selectedFilter;
 
-    if(m_isUntitled)
-        selectedFilter = fileSMBX64;
-    else
+    switch(LvlData.meta.RecentFormat)
     {
-        switch(LvlData.meta.RecentFormat)
-        {
-        case LevelData::PGEX:
-            selectedFilter = filePGEX;
-            break;
+    case LevelData::PGEX:
+        selectedFilter = filePGEX;
+        break;
 
-        case LevelData::SMBX64:
-            if(LvlData.meta.RecentFormatVersion >= 64)
-                selectedFilter = fileSMBX64;
-            else
-                selectedFilter = fileSMBXany;
+    case LevelData::SMBX64:
+        if(LvlData.meta.RecentFormatVersion >= 64)
+            selectedFilter = fileSMBX64;
+        else
+            selectedFilter = fileSMBXany;
+        break;
 
-            break;
-
-        case LevelData::SMBX38A:
-            selectedFilter = fileSMBX38A;
-            break;
-        }
+    case LevelData::SMBX38A:
+        selectedFilter = fileSMBX38A;
+        break;
     }
 
     QString filter =
@@ -264,16 +276,8 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    //Mark stars
-    for(int q = 0; q < LvlData.npc.size(); q++)
-    {
-        if(LvlData.npc[q].id <= 0) continue;
-
-        LvlData.npc[q].is_star = m_mw->configs.main_npc[static_cast<int>(LvlData.npc[q].id)].setup.is_star;
-
-        if((LvlData.npc[q].is_star) && (LvlData.npc[q].friendly))
-            LvlData.npc[q].is_star = false;
-    }
+    // Prepare data for saving
+    prepareLevelFile(LvlData);
 
     // ////////////////// Write Extended LVL file (LVLX)/////////////////////
     if(LvlData.meta.RecentFormat == LevelData::PGEX)
@@ -325,7 +329,9 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
 
 bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 {
-    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_PGEX))
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_PGEX))
     {
         if(!silent)
             QMessageBox::warning(this, tr("File save error"),
@@ -335,6 +341,9 @@ bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 
         return false;
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     return true;
 }
@@ -342,7 +351,9 @@ bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 
 bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
 {
-    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_SMBX38A))
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_SMBX38A))
     {
         if(!silent)
             QMessageBox::warning(this, tr("File save error"),
@@ -352,6 +363,9 @@ bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
 
         return false;
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     return true;
 }
@@ -360,6 +374,8 @@ bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
 
 bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIsAborted)
 {
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
     //SMBX64 Standard check
     bool isSMBX64limit = false;
 
@@ -403,7 +419,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
         }
     }
 
-    if(!FileFormats::SaveLevelFile(LvlData, fileName, FileFormats::LVL_SMBX64, LvlData.meta.RecentFormatVersion))
+    if(!FileFormats::SaveLevelFile(LvlData, fileKeeper.tempPath(), FileFormats::LVL_SMBX64, LvlData.meta.RecentFormatVersion))
     {
         QApplication::restoreOverrideCursor();
 
@@ -415,6 +431,9 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
 
         return false;
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     QApplication::restoreOverrideCursor();
     return true;

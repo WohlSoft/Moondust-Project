@@ -1,5 +1,5 @@
-cmake_minimum_required (VERSION 2.8.11)
-project (Moondust)
+cmake_minimum_required (VERSION 3.2)
+project (Moondust LANGUAGES C CXX)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" insource)
 if(insource)
@@ -10,23 +10,6 @@ Please run cmake configure from another directory, for example, create a 'build'
 endif()
 
 include(ExternalProject)
-
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_DEBUG_POSTFIX "d")
-if(WIN32)
-    set(CMAKE_SHARED_LIBRARY_PREFIX "")
-endif()
-
-# let El Capitan to be a minimal supported platform
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11")
-
-if(POLICY CMP0058) # Dependencies
-    cmake_policy(SET CMP0058 NEW)
-endif()
-
-set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
 
@@ -39,41 +22,10 @@ else()
     set(PGE_ARCHITECTURE_BITS "unk")
 endif()
 
-# Allow install into space-containing paths
-set(CMAKE_INSTALL_PREFIX_ORIG ${CMAKE_INSTALL_PREFIX})
-string(REPLACE " " "\\ " CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-string(REPLACE "(" "\\(" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-string(REPLACE ")" "\\)" CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+include(_common/git_info.cmake)
+message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}], package [${PACKAGE_SUFFIX}] ==")
 
-# Get the current working branch
-execute_process(
-    COMMAND git rev-parse --abbrev-ref HEAD
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_BRANCH
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-# Get the latest abbreviated commit hash of the working branch
-execute_process(
-    COMMAND git log -1 --format=%h
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_COMMIT_HASH
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}]")
-
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
-    message("== Using default build configuration which is a Release!")
-endif()
-
-include_directories(
-    ${DEPENDENCIES_INSTALL_DIR}/include
-    ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
-    ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
-)
-link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
+include(_common/build_env.cmake)
 
 if(APPLE)
     # Prevent "directory not exists" warnings when building XCode as project
@@ -90,6 +42,7 @@ set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT ON)
 if(HAIKU OR EMSCRIPTEN OR ANDROID)
     set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT OFF)
     message("== Qt-dependent components are not supported for this platform")
+    include(_common/find_linguist.cmake)
 endif()
 
 if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
@@ -99,12 +52,21 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
         option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
         message("== Qt 5 has been found in ${Qt5_DIR}")
         get_filename_component(QT5_BINARY_DIR "${Qt5_DIR}/../../bin" ABSOLUTE)
+
         find_program(_QT_LRELEASE_PROGRAM lrelease PATHS ${QT5_BINARY_DIR}/bin/)
         if(_QT_LRELEASE_PROGRAM)
             message(STATUS "Found ${_QT_LRELEASE_PROGRAM}, locales will be compiled!")
         else()
             message(WARNING "Unable to find lrelease, locales will NOT be built!")
         endif()
+
+        find_program(_QT_LUPDATE_PROGRAM lupdate PATHS ${QT5_BINARY_DIR}/bin/)
+        if(_QT_LUPDATE_PROGRAM)
+            message(STATUS "Found ${_QT_LUPDATE_PROGRAM}, locales can be refreshed!")
+        else()
+            message(WARNING "Unable to find lupdate, locales can't be refreshed!")
+        endif()
+
         # Shared deploymend on Windows platforms
         if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
             include(_common/WinDeployQt.cmake)
@@ -131,15 +93,39 @@ else()
     set(PGE_SHARED_SDLMIXER ON)
 endif()
 
+# Version of complete toolchain
+include(version.cmake)
+
+if(ANDROID)
+    set(ANDROID_CMAKE_FLAGS
+        "-DANDROID_ABI=${ANDROID_ABI}"
+        "-DANDROID_NDK=${ANDROID_NDK}"
+        "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
+        "-DANDROID_PLATFORM=${ANDROID_PLATFORM}"
+        "-DANDROID_TOOLCHAIN=${ANDROID_TOOLCHAIN}"
+        "-DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
+        "-DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}"
+        "-DANDROID_ARM_NEON=${ANDROID_ARM_NEON}"
+    )
+endif()
+
 # Dependent libraries
+include(_common/library_libpng.cmake)
 include(_common/library_FreeImage.cmake)
+if(TARGET libpng_Local)
+    add_dependencies(FreeImage_Local libpng_Local)
+endif()
 include(_common/library_FreeType.cmake)
 include(_common/library_sqlite.cmake)
 include(_common/library_luajit.cmake)
 include(_common/library_luabind.cmake)
 include(_common/library_SDL2.cmake)
 include(_common/library_AudioCodecs.cmake)
+if(TARGET libpng_Local)
+    add_dependencies(libpng_Local AudioCodecs_Local)
+endif()
 include(_common/library_SDLMixerX.cmake)
+include(_common/library_QtPropertyBrowser.cmake)
 
 # Build dependent libraries only. Workaround for Ninja
 add_custom_target(libs
@@ -152,7 +138,11 @@ add_custom_target(libs
     FREETYPE_Local
 )
 
-option(PGE_BUILD_ENGINE "Build the PGE Engine component" ON)
+if(PGE_ENABLE_QT) # Build if Qt support enabled
+    add_dependencies(libs QtPropertyBrowser_Local)
+endif()
+
+option(PGE_BUILD_ENGINE "Build the Runtime Engine component" ON)
 if(PGE_BUILD_ENGINE)
     add_subdirectory(Engine)
     # Append changelog file
@@ -205,6 +195,9 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
     option(PGE_BUILD_MUSICPLAYER "Build the SDL Mixer X Music Player component (Qt5 required)" ON)
     if(PGE_BUILD_MUSICPLAYER)
         add_subdirectory(MusicPlayer)
+        # Append changelog file
+        InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/changelog.musplay.txt" RENAME "changelog.musplay.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        # Deployment list
         list(APPEND WINDEPLOY_LIST pge_musplay)
     endif()
 
@@ -216,7 +209,9 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
 
     # Shared deployment on Windows
     if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
-        string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        if($ENV{QtDir})
+            string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        endif()
         set(MINGW_BIN_PATH $ENV{MinGW})
         if(NOT MINGW_BIN_PATH)
             set(MINGW_BIN_PATH "${QT_BINLIB_DIR}")
@@ -344,13 +339,9 @@ add_custom_target(put_online_help
     COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/install_online_help.cmake"
 )
 
-if(WIN32)
-    set(PGE_FILE_PORTABLE_APP_INI
-        "[Main]\r\nforce-portable=true\r\n\r\n")
-else()
-    set(PGE_FILE_PORTABLE_APP_INI
-        "[Main]\nforce-portable=true\n\n")
-endif()
+
+set(PGE_FILE_PORTABLE_APP_INI
+    "[Main]\nforce-portable=true\n\n")
 
 file(WRITE "${CMAKE_BINARY_DIR}/install_portable.cmake" "
 file(WRITE
@@ -374,7 +365,7 @@ if(UNIX AND NOT APPLE) # Deployment for UNIX-like operating system except macOS
     add_custom_target(create_tar
         WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
         COMMAND ${CMAKE_COMMAND} -E tar "-cjvf"
-            "pge_project-${CMAKE_SYSTEM_NAME_LOWER}-${PGE_ARCHITECTURE_BITS}.tar.bz2"
+            "pge_project-${CMAKE_SYSTEM_NAME_LOWER}-${PACKAGE_SUFFIX}-${PGE_ARCHITECTURE_BITS}.tar.bz2"
             "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}"
             COMMENT "Packing tarball..."
     )
@@ -389,7 +380,7 @@ if(APPLE)
             --window-size 800 600
             --app-drop-link 450 320
             --subfolder
-            "${CMAKE_INSTALL_PREFIX}/pge-project-dev-macosx.dmg"
+            "${CMAKE_INSTALL_PREFIX}/pge-project-${PACKAGE_SUFFIX}-macosx.dmg"
             "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/"
             COMMENT "Packing DMG..."
     )
@@ -419,7 +410,9 @@ if(WIN32) # Deployment for Windows
     )
     if(SevenZipProgram)
         message("Detected 7Zip installed: ${SevenZipProgram}. Deployment is possible!")
-        string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        if($ENV{QtDir})
+            string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
+        endif()
 
         set(ZIP_PACK_DIR "${CMAKE_INSTALL_PREFIX_ORIG}/_packed")
         set(ZIP_SRC_DIR "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}")
@@ -446,7 +439,7 @@ if(WIN32) # Deployment for Windows
             "${ZIP_SRC_DIR}/help/"
         )
 
-        if(EXISTS "${QT_BINLIB_DIR}/plugins/styles")
+        if(EXISTS "${ZIP_SRC_DIR}/styles")
             list(APPEND PGE_CommonFiles "${ZIP_SRC_DIR}/styles/")
             list(APPEND PGE_CommonQtFiles "${ZIP_SRC_DIR}/styles/")
         endif()
@@ -462,6 +455,7 @@ if(WIN32) # Deployment for Windows
             "${ZIP_SRC_DIR}/SDL2${PGE_DLL_SUFFIX}.dll"
             "${ZIP_SRC_DIR}/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
             "${ZIP_SRC_DIR}/pge_musplay.exe"
+            "${ZIP_SRC_DIR}/changelog.musplay.txt"
         )
 
         set(PGE_CalibratorFiles
@@ -519,16 +513,16 @@ if(WIN32) # Deployment for Windows
 
         add_custom_target(create_zip_install
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-common-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-common-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallCommonFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-editor-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-editor-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallEditorFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-engine-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-engine-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallEngineFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/install-pge-tools-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/install-pge-tools-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_InstallToolsFiles}
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing common install files into ZIP archive..."
@@ -536,22 +530,22 @@ if(WIN32) # Deployment for Windows
 
         add_custom_target(create_zip_tools
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/pge-musplay-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/pge-musplay-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_MusPlayFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/pge-maintainer-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/pge-maintainer-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_MaintainerFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/pge-calibrator-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/pge-calibrator-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_CalibratorFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/GIFs2PNG-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/GIFs2PNG-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_Gifs2PngFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/PNG2GIFs-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/PNG2GIFs-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_Png2GifsFiles}
             COMMAND ${SevenZipProgram} a -tzip -mx9
-                "${ZIP_PACK_DIR}/LazyFixTool-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+                "${ZIP_PACK_DIR}/LazyFixTool-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
                 ${PGE_LazyFixToolFiles}
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing tools into ZIP archive..."
@@ -560,7 +554,7 @@ if(WIN32) # Deployment for Windows
         add_custom_target(create_zip
             ${SevenZipProgram}
             a -tzip -mx9
-            "${ZIP_PACK_DIR}/pge-project-dev-win${PGE_ARCHITECTURE_BITS}.zip"
+            "${ZIP_PACK_DIR}/pge-project-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             "${ZIP_SRC_DIR}/"
             DEPENDS mkdir_packed_create_zip
             COMMENT "Packing ZIP archive..."

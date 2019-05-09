@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include <common_features/logger.h>
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
+#include <common_features/file_keeper.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
 #include <main_window/global_settings.h>
@@ -47,6 +48,24 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     FileFormats::CreateWorldData(WldData);
     WldData.meta.modified = true;
     WldData.meta.untitled = true;
+
+    switch(configs.editor.default_file_formats.world)
+    {
+    case EditorSetup::DefaultFileFormats::SMBX64:
+        WldData.meta.RecentFormat = LevelData::SMBX64;
+        WldData.meta.smbx64strict = true;
+        break;
+    case EditorSetup::DefaultFileFormats::PGEX:
+        WldData.meta.RecentFormat = LevelData::PGEX;
+        WldData.meta.smbx64strict = false;
+        break;
+    case EditorSetup::DefaultFileFormats::SMBX38A:
+        // WldData.meta.RecentFormat = LevelData::SMBX38A;
+        WldData.meta.RecentFormat = LevelData::PGEX;//TODO: Change to real 38A when PGE-FL will support write of WLD files
+        WldData.meta.smbx64strict = false;
+        break;
+    }
+
     StartWldData = WldData;
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
@@ -136,10 +155,25 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     QString filePGEX = "Extended World map file (*.wldx)";
     QString selectedFilter;
 
-    if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
+    switch(WldData.meta.RecentFormat)
+    {
+    case LevelData::PGEX:
         selectedFilter = filePGEX;
-    else
-        selectedFilter = fileSMBX64;
+        break;
+
+    case LevelData::SMBX64:
+        if(WldData.meta.RecentFormatVersion >= 64)
+            selectedFilter = fileSMBX64;
+        else
+            selectedFilter = fileSMBXany;
+
+        break;
+
+    case LevelData::SMBX38A:
+        // selectedFilter = fileSMBX38A;
+        selectedFilter = filePGEX;//TODO: Put 38A target once PGE-FL gets support for SMBX-38A
+        break;
+    }
 
     QString filter =
         fileSMBX64 + ";;" +
@@ -226,6 +260,8 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
     if(fileName.endsWith(".wld", Qt::CaseInsensitive))
     {
@@ -268,7 +304,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                 isSMBX64limit = false;
         }
 
-        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, file_format))
+        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_SMBX64, static_cast<unsigned int>(file_format)))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -286,7 +322,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
     {
         WldData.meta.smbx64strict = false; //Disable strict mode
 
-        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_PGEX))
+        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_PGEX))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -297,6 +333,9 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     // //////////////////////////////////////////////////////////////////////
     QApplication::restoreOverrideCursor();

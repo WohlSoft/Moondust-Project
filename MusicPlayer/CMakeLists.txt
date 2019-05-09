@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1.0)
+cmake_minimum_required (VERSION 3.2)
 project(SDLMixerMusPlayer C CXX)
 
 if(POLICY CMP0071) # Automoc
@@ -23,6 +23,8 @@ include_directories(
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
@@ -55,6 +57,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} $
 
 qt5_wrap_ui(UIS_HDRS
     MainWindow/mainwindow.ui
+    MainWindow/sfx_tester.ui
+    MainWindow/setup_midi.ui
     AssocFiles/assoc_files.ui
 )
 
@@ -73,8 +77,12 @@ set(SDLMixer_MusPlay_SRC)
 list(APPEND SDLMixer_MusPlay_SRC
     AssocFiles/assoc_files.cpp
     Effects/reverb.cpp
+    MainWindow/label_marquee.cpp
     MainWindow/musplayer_base.cpp
     MainWindow/musplayer_qt.cpp
+    MainWindow/seek_bar.cpp
+    MainWindow/setup_midi.cpp
+    MainWindow/sfx_tester.cpp
     Player/mus_player.cpp
     SingleApplication/localserver.cpp
     SingleApplication/pge_application.cpp

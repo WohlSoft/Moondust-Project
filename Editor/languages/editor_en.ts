@@ -65,7 +65,7 @@
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation>Music will automatically play when you open a level file</translation>
+        <translation>Music will play automatically when you open a level file</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
@@ -108,7 +108,7 @@
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>Properties box will not be shown atomatically when you select an item to place.</translation>
+        <translation>Properties box will not be shown automatically when you select an item to place.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
@@ -148,15 +148,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Layer movement</source>
-        <translation>Layer movement</translation>
+        <translation>Layer Movement</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation>Trigger event</translation>
+        <translation>Trigger Event</translation>
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation>Hold buttons</translation>
+        <translation>Hold Buttons</translation>
     </message>
     <message>
         <source>Section Settings</source>
@@ -164,7 +164,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>NPC settings</source>
-        <translation>NPC settings</translation>
+        <translation>NPC Settings</translation>
     </message>
     <message>
         <source>Generator</source>
@@ -208,7 +208,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Warp type:</source>
-        <translation>Warp type:</translation>
+        <translation>Warp Type:</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -232,7 +232,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation>Level Item toolbox</translation>
+        <translation>Level Item Toolbox</translation>
     </message>
     <message>
         <source>Extra</source>
@@ -240,11 +240,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation>Note: Some of those settings will take change on application restart</translation>
+        <translation>Note: Some settings will apply their changes only after restarting the editor</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation>Enable auto-scaling on High-DPI monitors</translation>
+        <translation>Enable auto-scaling on high-DPI monitors</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
@@ -256,7 +256,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>World Map Item toolbox</source>
-        <translation>World Map Item toolbox</translation>
+        <translation>World Map Item Toolbox</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
@@ -300,7 +300,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Tileset Item toolbox</source>
-        <translation>Tileset Item toolbox</translation>
+        <translation>Tileset Item Toolbox</translation>
     </message>
     <message>
         <source>Logging</source>
@@ -898,10 +898,6 @@ Are you want to configure it?</translation>
         <translation>Level: NPCs (%1/%2)</translation>
     </message>
     <message>
-        <source>World map: Terrian tiles (%1/%2)</source>
-        <translation type="vanished">World map: Terrian tiles (%1/%2)</translation>
-    </message>
-    <message>
         <source>World map: Terrain tiles (%1/%2)</source>
         <translation>World map: Terrain tiles (%1/%2)</translation>
     </message>
@@ -999,11 +995,6 @@ Are you want to configure it?</translation>
     </message>
     <message>
         <source>Crash recovery</source>
-        <comment>Crash-Save - emergency file saving after crash. A title of message box.</comment>
-        <translation type="vanished">Crash recovery</translation>
-    </message>
-    <message>
-        <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation>Crash recovery</translation>
     </message>
@@ -1011,12 +1002,6 @@ Are you want to configure it?</translation>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>Since the last crash, the editor recovered some files.
-Please save them before doing anything else.</translation>
-    </message>
-    <message>
-        <source>Since the last crash, the editor recorved some files.
-Please save them first before doing anything else.</source>
-        <translation type="obsolete">Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</translation>
     </message>
 </context>
@@ -1061,14 +1046,6 @@ Please save them before doing anything else.</translation>
     <message>
         <source>NPC</source>
         <translation>NPC</translation>
-    </message>
-    <message>
-        <source>Tile</source>
-        <translation type="vanished">Tile</translation>
-    </message>
-    <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -1641,6 +1618,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>Preferences have been copied: %1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Edit raw user data...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1789,6 +1770,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Properties...</source>
         <translation>Properties...</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Edit raw user data...</translation>
     </message>
 </context>
 <context>
@@ -2028,12 +2013,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
         <translation>Friendly (Non-friendly NPCs can&apos;t be talked to)</translation>
     </message>
-    <message>
-        <source>Please, enter NPC&apos;s talkative message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Please enter NPC&apos;s dialog message
-(Max length per line is 28 characters)</translation>
-    </message>
 </context>
 <context>
     <name>ItemMusic</name>
@@ -2231,6 +2210,10 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>Remove</source>
         <translation>Remove</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Edit raw user data...</translation>
     </message>
 </context>
 <context>
@@ -2514,10 +2497,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>Terrain tile</source>
         <translation>Terrain tile</translation>
-    </message>
-    <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <source>[Empty]</source>
@@ -3135,6 +3114,10 @@ Do you want to save your changes?</translation>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Loading Doors...</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -3155,7 +3138,7 @@ Do you want to save your changes?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Level Item toolbox</translation>
+        <translation type="vanished">Level Item toolbox</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3212,6 +3195,10 @@ Do you want to save your changes?</translation>
     <message>
         <source>&lt;Save file first&gt;</source>
         <translation>&lt;Save file first&gt;</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation>Search Browser</translation>
     </message>
 </context>
 <context>
@@ -3430,7 +3417,7 @@ Otherwise it will be very limited.</translation>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>Termiates frozen loader thread to allow you to run a test again.</translation>
+        <translation>Terminates frozen loader thread to allow you to run a test again.</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
@@ -3674,9 +3661,9 @@ To use LunaTester you must use the Integration configuration package!</translati
     </message>
     <message>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Terminate running process</translation>
+        <translation type="vanished">Terminate running process</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
@@ -3693,6 +3680,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester is not running.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>Terminate running process</translation>
     </message>
 </context>
 <context>
@@ -4273,12 +4266,6 @@ the destination section first with &apos;Delete Section&apos;.</translation>
         <translation>Please enter message
 (Max line length is 27 characters)</translation>
     </message>
-    <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Please enter message
-(Max line length is 28 characters)</translation>
-    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -4692,10 +4679,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
         <translation type="vanished">Remove warp entry</translation>
     </message>
     <message>
-        <source>Changed Warpsetting [%1]</source>
-        <translation type="vanished">Changed Warp Setting [%1]</translation>
-    </message>
-    <message>
         <source>Add Event</source>
         <translation type="vanished">Add Event</translation>
     </message>
@@ -4706,10 +4689,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
     <message>
         <source>Copy Event</source>
         <translation type="vanished">Copy Event</translation>
-    </message>
-    <message>
-        <source>Changed Eventsetting [%1]</source>
-        <translation type="vanished">Changed Event Setting [%1]</translation>
     </message>
     <message>
         <source>Move Items to new Layer</source>
@@ -4738,14 +4717,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
     <message>
         <source>Merge Layer</source>
         <translation type="vanished">Merge Layer</translation>
-    </message>
-    <message>
-        <source>Changed Sectionsetting [%1]</source>
-        <translation type="vanished">Changed Section Setting [%1]</translation>
-    </message>
-    <message>
-        <source>Changed Levelsetting [%1]</source>
-        <translation type="vanished">Changed Level Settings [%1]</translation>
     </message>
     <message>
         <source>Place Player Point</source>
@@ -4778,10 +4749,6 @@ Please reconvert your images to a valid format and try reloading this level.</tr
     <message>
         <source>Boss</source>
         <translation type="vanished">Boss</translation>
-    </message>
-    <message>
-        <source>Not Moveable</source>
-        <translation type="vanished">Not movable</translation>
     </message>
     <message>
         <source>Message</source>
@@ -5564,9 +5531,9 @@ The special state is defined by the active configuration pack.</translation>
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
-        <translation>Show a blank screen instead of the standard loading screen.
+        <translation type="vanished">Show a blank screen instead of the standard loading screen.
 If this option is not selected, you will see the current character
 and remaining lives when loading a level (PGE Engine only).</translation>
     </message>
@@ -5696,14 +5663,6 @@ If set to zero, the player will start at the pre-defined level start point.</tra
         <translation>Browse for another level file</translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation type="vanished">Show a blank screen instead of loading screen.
-In the SMBX Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation>Hide level enter screen</translation>
     </message>
@@ -5772,6 +5731,22 @@ Please select the map you want to use:</translation>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Can&apos;t open the file!</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished">Please save the file</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished">Please save the file before selecting levels.</translation>
     </message>
 </context>
 <context>
@@ -5953,12 +5928,6 @@ Please select the map you want to use:</translation>
         <translation type="vanished">Please switch current section to %1 to capture data for this event</translation>
     </message>
     <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Please enter message
-(Max line length is 28 characters)</translation>
-    </message>
-    <message>
         <source>Music file:</source>
         <translation type="vanished">Music file:</translation>
     </message>
@@ -6033,10 +6002,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <source>Level Sections Switch</source>
         <translation>Switch level section</translation>
-    </message>
-    <message>
-        <source>Lock Terrian tiles</source>
-        <translation type="vanished">Lock Terrian tiles</translation>
     </message>
     <message>
         <source>Lock Scenery tiles</source>
@@ -6354,7 +6319,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Section 0 (Ctrl+1)</translation>
+        <translation type="vanished">Section 0 (Ctrl+1)</translation>
     </message>
     <message>
         <source>Section 1</source>
@@ -6526,83 +6491,83 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Section 1 (Ctrl+2)</translation>
+        <translation type="vanished">Section 1 (Ctrl+2)</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Section 2 (Ctrl+3)</translation>
+        <translation type="vanished">Section 2 (Ctrl+3)</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Section 3 (Ctrl+4)</translation>
+        <translation type="vanished">Section 3 (Ctrl+4)</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Section 4 (Ctrl+5)</translation>
+        <translation type="vanished">Section 4 (Ctrl+5)</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Section 5 (Ctrl+6)</translation>
+        <translation type="vanished">Section 5 (Ctrl+6)</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Section 6 (Ctrl+7)</translation>
+        <translation type="vanished">Section 6 (Ctrl+7)</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Section 7 (Ctrl+8)</translation>
+        <translation type="vanished">Section 7 (Ctrl+8)</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Section 8 (Ctrl+9)</translation>
+        <translation type="vanished">Section 8 (Ctrl+9)</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Section 9 (Ctrl+0)</translation>
+        <translation type="vanished">Section 9 (Ctrl+0)</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Section 10 (Ctrl+Alt+1)</translation>
+        <translation type="vanished">Section 10 (Ctrl+Alt+1)</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Section 11 (Ctrl+Alt+2)</translation>
+        <translation type="vanished">Section 11 (Ctrl+Alt+2)</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Section 12 (Ctrl+Alt+3)</translation>
+        <translation type="vanished">Section 12 (Ctrl+Alt+3)</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Section 13 (Ctrl+Alt+4)</translation>
+        <translation type="vanished">Section 13 (Ctrl+Alt+4)</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Section 14 (Ctrl+Alt+5)</translation>
+        <translation type="vanished">Section 14 (Ctrl+Alt+5)</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Section 15 (Ctrl+Alt+6)</translation>
+        <translation type="vanished">Section 15 (Ctrl+Alt+6)</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Section 16 (Ctrl+Alt+7)</translation>
+        <translation type="vanished">Section 16 (Ctrl+Alt+7)</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Section 17 (Ctrl+Alt+8)</translation>
+        <translation type="vanished">Section 17 (Ctrl+Alt+8)</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Section 18 (Ctrl+Alt+9)</translation>
+        <translation type="vanished">Section 18 (Ctrl+Alt+9)</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Section 19 (Ctrl+Alt+0)</translation>
+        <translation type="vanished">Section 19 (Ctrl+Alt+0)</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Section 20 (Alt+1)</translation>
+        <translation type="vanished">Section 20 (Alt+1)</translation>
     </message>
     <message>
         <source>Wrap Horizontally</source>
@@ -6649,9 +6614,9 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Anti-overlap protection</translation>
     </message>
     <message>
-        <source>Enable anti-overlap protection. 
+        <source>Enable anti-overlap protection.
 Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</source>
-        <translation type="vanished">Prevents similar items from overlapping each other. 
+        <translation type="vanished">Prevents similar items from overlapping each other.
 Attempt to move selected elements over another group of elements will reject move and all selected elements will return to previous position. If this flag is disabled, you will be able to move elements over each other with no limitation. Anti-overlap protection always enabled while you placing new elements. Anti-overlap protection doesn&apos;t works on duplication or pasting from clipboard.</translation>
     </message>
     <message>
@@ -7077,7 +7042,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Level objects</translation>
+        <translation type="vanished">Level objects</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7195,7 +7160,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Level toolbox</translation>
+        <translation type="vanished">Level toolbox</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -7772,7 +7737,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>World Map Itembox</translation>
+        <translation type="vanished">World Map Itembox</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8515,10 +8480,10 @@ The PGE Engine is still at an early stage in development, and there are several 
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
-        <translation>Could not find engine application: 
+        <translation type="vanished">Could not find engine application:
 %1
 Please, choose the engine application yourself!</translation>
     </message>
@@ -8535,22 +8500,6 @@ Please, choose the engine application yourself!</translation>
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start testing, engine is not found: 
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Unable to start testing, could not find the PGE Engine executable:
-%1
-Please check the application directory and make sure it is installed properly.</translation>
-    </message>
-    <message>
-        <source>Engine is not found: 
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Could not find the PGE Engine executable:
-%1
-Please check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -8987,6 +8936,26 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation>Search Browser</translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation>Search Browser</translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation>Search Browser</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -9291,6 +9260,10 @@ Do you want to continue?</source>
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; has been modified.
 Do you want to save your changes?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
     </message>
 </context>
 <context>
@@ -9945,32 +9918,6 @@ Forum link: wohlsoft.ru/forum</translation>
         <translation type="vanished">Editor was killed by mad maniac :-P [SIGKILL]</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff, or create an issue on GitHub,
-so we can try to fix this problem.
-
-GitHub link: https://github.com/WohlSoft/PGE-Project
-Forum link: http://wohlsoft.ru/forum</translation>
-    </message>
-    <message>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation>Editor was abourted because alarm() time out! [SIGALRM]</translation>
     </message>
@@ -9987,22 +9934,13 @@ Forum link: http://wohlsoft.ru/forum</translation>
         <translation>Floating-point exception [SIGFPE]</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: %1
-
-</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: %1
-
-</translation>
-    </message>
-    <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>
         <translation type="vanished">We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
+
 </translation>
     </message>
     <message>
@@ -10153,7 +10091,7 @@ The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
         <translation>SMBX64 standard doesn&apos;t allow saving %1 sections.
 The maximum number of sections is %2.
-All boundaries and settings of sections higher than 21 will be lost 
+All boundaries and settings of sections higher than 21 will be lost
 f you save in this format.</translation>
     </message>
     <message>
@@ -10291,6 +10229,52 @@ The maximum number of Music boxes is %2.</translation>
     <message>
         <source>LTR</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Block user data change</source>
+        <translation>Block user data change</translation>
+    </message>
+    <message>
+        <source>BGO user data change</source>
+        <translation>BGO user data change</translation>
+    </message>
+    <message>
+        <source>NPC user data change</source>
+        <translation>NPC user data change</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</translation>
     </message>
 </context>
 <context>
@@ -10468,353 +10452,120 @@ The maximum number of Music Boxes is %2.</translation>
     <name>QtBoolEdit</name>
     <message>
         <source>True</source>
-        <translation>True</translation>
+        <translation type="vanished">True</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>False</translation>
+        <translation type="vanished">False</translation>
     </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
     <message>
         <source>True</source>
-        <translation>True</translation>
+        <translation type="vanished">True</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>False</translation>
+        <translation type="vanished">False</translation>
     </message>
 </context>
 <context>
     <name>QtCharEdit</name>
     <message>
         <source>Clear Char</source>
-        <translation>Clear Char</translation>
+        <translation type="vanished">Clear Char</translation>
     </message>
 </context>
 <context>
     <name>QtColorEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
     <name>QtColorPropertyManager</name>
     <message>
         <source>Red</source>
-        <translation>Red</translation>
+        <translation type="vanished">Red</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Green</translation>
+        <translation type="vanished">Green</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation type="vanished">Blue</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation>Alpha</translation>
-    </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Up Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wait</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IBeam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Backslash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size Slash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Blank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Split Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pointing Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closed Hand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>What&apos;s This</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Alpha</translation>
     </message>
 </context>
 <context>
     <name>QtFontEditWidget</name>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <source>Select Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
-    <message>
-        <source>Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Strikeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kerning</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
-    <message>
-        <source>Clear Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">...</translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
-        <translation type="unfinished">Language</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Language</translation>
     </message>
 </context>
 <context>
     <name>QtRectFPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Width</translation>
+        <translation type="obsolete">Width</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Height</translation>
+        <translation type="obsolete">Height</translation>
     </message>
 </context>
 <context>
     <name>QtRectPropertyManager</name>
     <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Width</translation>
+        <translation type="obsolete">Width</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Height</translation>
+        <translation type="obsolete">Height</translation>
     </message>
 </context>
 <context>
     <name>QtSizeFPropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Width</translation>
+        <translation type="obsolete">Width</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Height</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Policy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Height</translation>
     </message>
 </context>
 <context>
     <name>QtSizePropertyManager</name>
     <message>
-        <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
-        <translation type="unfinished">Width</translation>
+        <translation type="obsolete">Width</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Height</translation>
+        <translation type="obsolete">Height</translation>
     </message>
 </context>
 <context>
     <name>QtTreePropertyBrowser</name>
     <message>
-        <source>Property</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Value</source>
-        <translation type="unfinished">Value</translation>
+        <translation type="obsolete">Value</translation>
     </message>
 </context>
 <context>
@@ -11020,10 +10771,6 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Save</source>
         <translation type="vanished">Save</translation>
-    </message>
-    <message>
-        <source>Terrian tile</source>
-        <translation type="vanished">Terrian tile</translation>
     </message>
     <message>
         <source>Open</source>
@@ -11648,6 +11395,13 @@ Data may be corrupted!</translation>
     </message>
 </context>
 <context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation>User data editing</translation>
+    </message>
+</context>
+<context>
     <name>VariablesBox</name>
     <message>
         <source>Variables [Under Construction]</source>
@@ -11811,6 +11565,14 @@ Data may be corrupted!</translation>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Place item on the map first and open the &apos;Properties&apos; context menu item.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation>Please save the file</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation>Please save the file before selecting levels.</translation>
     </message>
 </context>
 <context>
@@ -12699,12 +12461,16 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; has been modified.
 Do you want to save your changes?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Can&apos;t create a temporary backup file</translation>
+    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>World Map Itembox</translation>
+        <translation type="vanished">World Map Itembox</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -12741,6 +12507,10 @@ Do you want to save your changes?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Please save the file first if you want to select a custom music file.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation>Search Browser</translation>
     </message>
 </context>
 <context>
@@ -12808,6 +12578,14 @@ Do you want to save your changes?</translation>
     <message>
         <source>Counting stars...</source>
         <translation>Counting stars...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation>The name of the level that will be loaded when the game first loads.</translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation>Main hub level:</translation>
     </message>
 </context>
 <context>
@@ -12915,7 +12693,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</translation>
+        <translation type="vanished">Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12992,6 +12770,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</translation>
     </message>
 </context>
 <context>

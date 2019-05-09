@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "pge_audio.h"
@@ -29,7 +30,7 @@ static struct AudioState
     SDL_mutex*  sampleCountMutex;
     Uint64      sCount;
     Uint64      musSCount;
-} p_audioState = {false, 44100, NULL, 0, 0};
+} p_audioState = {false, 44100, nullptr, 0, 0};
 
 static void postMixCallback(void *udata,
                             Uint8 *stream,
@@ -74,7 +75,7 @@ int PGE_Audio::init(Uint32 sampleRate,
     Mix_AllocateChannels(int(allocateChannels));
 
     // Reset the audio sample count and set the post mix callback
-    if(p_audioState.sampleCountMutex == NULL)
+    if(p_audioState.sampleCountMutex == nullptr)
     {
         p_audioState.sampleCountMutex = SDL_CreateMutex();
     }
@@ -84,7 +85,7 @@ int PGE_Audio::init(Uint32 sampleRate,
     {
         p_audioState.sCount = 0;
         p_audioState.musSCount = 0;
-        Mix_SetPostMix(postMixCallback, NULL);
+        Mix_SetPostMix(postMixCallback, nullptr);
         SDL_UnlockMutex(p_audioState.sampleCountMutex);
     }
 
@@ -99,7 +100,7 @@ int PGE_Audio::quit()
         return -1;
 
     PGE_MusPlayer::freeStream();
-    Mix_SetPostMix(NULL, NULL);
+    Mix_SetPostMix(nullptr, nullptr);
     PGE_SfxPlayer::clearSoundBuffer();
     Mix_CloseAudio();
     p_audioState.isLoaded = false;

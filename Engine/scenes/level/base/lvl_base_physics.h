@@ -36,10 +36,10 @@ struct PGE_Phys_Object_Phys
 class PGE_physBody
 {
 public:
-    PGE_physBody();
+    PGE_physBody() = default;
     PGE_physBody(const PGE_physBody &o) = default;
 
-    void processCollisions(PGE_RenderList &objs);
+    // void processCollisions(PGE_RenderList &objs);
 
     /***********************Physical engine locals*****************************/
     enum ContactAt
@@ -86,7 +86,7 @@ public:
 
     struct objRect
     {
-        objRect() {}
+        objRect() = default;
         objRect(double _x, double _y, double _w, double _h):
             x(_x), y(_y), w(_w), h(_h)
         {}

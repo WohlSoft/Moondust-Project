@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *
     if(!openSection(setup, section.toStdString(), internal))
         return false;
 
-    if(spath.setup.parse(setup, pathPath, defaultGrid.paths, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(spath.setup.parse(setup, folderWldPaths.graphics, defaultGrid.paths, merge_with ? &merge_with->setup : nullptr, &errStr))
         spath.isValid = true;
     else
     {
@@ -62,10 +62,10 @@ void dataconfigs::loadWorldPaths()
     if(scene_ini.isEmpty())
         return;
 
-    QString nestDir = "";
 
     IniProcessing setup(scene_ini);
 
+    folderWldPaths.items.clear();
     main_wpaths.clear();   //Clear old
 
     if(!openSection(&setup, "path-main"))
@@ -74,10 +74,11 @@ void dataconfigs::loadWorldPaths()
         path_total = setup.value("total", 0).toUInt();
         defaultGrid.paths = setup.value("grid", defaultGrid.paths).toUInt();
         total_data += path_total;
-        setup.read("config-dir", nestDir, "");
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderWldPaths.items, "");
+        setup.read("extra-settings", folderWldPaths.extraSettings, folderWldPaths.items);
+        if(!folderWldPaths.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderWldPaths.items = config_dir + folderWldPaths.items;
             useDirectory = true;
         }
     }
@@ -103,14 +104,14 @@ void dataconfigs::loadWorldPaths()
         emit progressValue(int(i));
         bool valid = false;
         if(useDirectory)
-            valid = loadWorldPath(sPath, "path", nullptr, QString("%1/path-%2.ini").arg(nestDir).arg(i));
+            valid = loadWorldPath(sPath, "path", nullptr, QString("%1/path-%2.ini").arg(folderWldPaths.items).arg(i));
         else
             valid = loadWorldPath(sPath, QString("path-%1").arg(i), 0, "", &setup);
         /***************Load image*******************/
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(pathPath,
+            GraphicsHelps::loadMaskedImage(folderWldPaths.graphics,
                                            sPath.setup.image_n, sPath.setup.mask_n,
                                            sPath.image,
                                            errStr);

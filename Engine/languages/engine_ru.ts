@@ -26,7 +26,6 @@
     </message>
     <message id="CRASH_KILLED_MSG">
         <source>Engine has been killed by a mad maniac :-P</source>
-        <oldsource>Engine has killed by mad maniac :-P</oldsource>
         <translation type="vanished">Движок был убит сумасшедшим маньяком :-P</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
@@ -59,7 +58,6 @@
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <oldsource>Engine has crashed because wrong arithmetical opreation!</oldsource>
         <translation>Движок был аварийно завершён в связи с ошибочной арифметической операцией!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
@@ -92,7 +90,6 @@ and retry your recent action to take more detail info.</oldsource>
     </message>
     <message id="CRASH_INT_MSG">
         <source>Engine has been interrupted</source>
-        <oldsource>Engine has interrupted</oldsource>
         <translation>Работа движка была прервана</translation>
     </message>
     <message id="MSGBOX_INFO">
@@ -109,7 +106,6 @@ and retry your recent action to take more detail info.</oldsource>
     </message>
     <message id="MSGBOX_FATAL">
         <source>Fatal error</source>
-        <oldsource>Fatal</oldsource>
         <translation>Авария</translation>
     </message>
     <message id="SDL_INIT_ERROR">
@@ -382,8 +378,7 @@ Are you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <source>Unable to find OpenGL support!
-Software renderer will be started.
-</source>
+Software renderer will be started.</source>
         <translation>Невозможно обнаружить поддержку OpenGL!
 Будет испльзоваться программный отрисовщик.</translation>
     </message>
@@ -416,24 +411,21 @@ Software renderer will be started.
 configuration packages are not found!</source>
         <oldsource>Can&apos;t start game engine, because available
 configuration packages are not found!</oldsource>
-        <translation>Невозможно запустить игру, 
+        <translation>Невозможно запустить игру,
 потому что конфигурационные пакеты отсутствуют!</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <source>Config pack directory error</source>
-        <oldsource>Config error</oldsource>
         <translation>Ошибка директории конфиг-пакета</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
         <source>Config directory is not found at:
 %1</source>
-        <oldsource>CONFIG DIR NOT FOUND AT:</oldsource>
         <translation>Директория конфиг-пакета не найдена:
 %1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <source>Missing main.ini</source>
-        <oldsource>Config error</oldsource>
         <translation>Отсутствует main.ini</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
@@ -442,13 +434,11 @@ configuration packages are not found!</oldsource>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <source>Missing config pack data directory</source>
-        <oldsource>Config error</oldsource>
         <translation>Отсутствует папка с данными в конфиг-пакете</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <oldsource>Config data path not exists:</oldsource>
         <translation>Папка с данными конфиг-пакета отсутствует:
 %1</translation>
     </message>
@@ -486,13 +476,15 @@ therefore you can use same link to get updated version.</oldsource>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
-        <oldsource>Config error</oldsource>
         <translation>Файл main.ini имеет ошибки</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <oldsource>Error has occouped in main.ini in line {0}.</oldsource>
         <translation>В файле main.ini произошла ошибка на строке %1.</translation>
+    </message>
+    <message id="VSYNC_ERROR_INFO">
+        <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
+        <translation>Обнаружена слишком быстрая частота кадров. Чтобы предотвратить проблемы, вертикальная синхронизация (V-Sync) будет отключена. Пожалуйста, включите V-Sync в настройках видео-драйвера.</translation>
     </message>
 </context>
 <context>

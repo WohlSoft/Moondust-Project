@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_s
     if(!openSection(setup, section.toStdString(), internal))
         return false;
 
-    if(sScene.setup.parse(setup, scenePath, defaultGrid.scenery, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(sScene.setup.parse(setup, folderWldScenery.graphics, defaultGrid.scenery, merge_with ? &merge_with->setup : nullptr, &errStr))
         sScene.isValid = true;
     else
     {
@@ -63,10 +63,9 @@ void dataconfigs::loadWorldScene()
     if(scene_ini.isEmpty())
         return;
 
-    QString nestDir = "";
-
     IniProcessing setup(scene_ini);
 
+    folderWldScenery.items.clear();
     main_wscene.clear();   //Clear old
 
     if(!openSection(&setup, "scenery-main"))
@@ -75,10 +74,11 @@ void dataconfigs::loadWorldScene()
         setup.read("total", scenery_total, 0);
         setup.read("grid", defaultGrid.scenery, defaultGrid.scenery);
         total_data += scenery_total;
-        setup.read("config-dir", nestDir, "");
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderWldScenery.items, "");
+        setup.read("extra-settings", folderWldScenery.extraSettings, folderWldScenery.items);
+        if(!folderWldScenery.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderWldScenery.items = config_dir + folderWldScenery.items;
             useDirectory = true;
         }
     }
@@ -104,14 +104,14 @@ void dataconfigs::loadWorldScene()
         emit progressValue(int(i));
         bool valid = false;
         if(useDirectory)
-            valid = loadWorldScene(sScene, "scenery", nullptr, QString("%1/scenery-%2.ini").arg(nestDir).arg(i));
+            valid = loadWorldScene(sScene, "scenery", nullptr, QString("%1/scenery-%2.ini").arg(folderWldScenery.items).arg(i));
         else
             valid = loadWorldScene(sScene, QString("scenery-%1").arg(i), 0, "", &setup);
         /***************Load image*******************/
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(scenePath,
+            GraphicsHelps::loadMaskedImage(folderWldScenery.graphics,
                                            sScene.setup.image_n, sScene.setup.mask_n,
                                            sScene.image,
                                            errStr);

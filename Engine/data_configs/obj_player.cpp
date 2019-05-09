@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "config_manager.h"
@@ -135,7 +136,7 @@ bool ConfigManager::loadPlayableCharacters()
         if(!Files::fileExists(plr_ini))
         {
             addError("ERROR LOADING lvl_characters.ini: file does not exist");
-            PGE_MsgBox msgBox(NULL, "ERROR LOADING lvl_characters.ini: file does not exist", PGE_MsgBox::msg_fatal);
+            PGE_MsgBox msgBox(nullptr, "ERROR LOADING lvl_characters.ini: file does not exist", PGE_MsgBox::msg_fatal);
             msgBox.exec();
             return false;
         }
@@ -151,7 +152,7 @@ bool ConfigManager::loadPlayableCharacters()
         if(players_total == 0)
         {
             addError("ERROR LOADING lvl_characters.ini: number of items not define, or empty config");
-            PGE_MsgBox msgBox(NULL, "ERROR LOADING lvl_characters.ini: number of items not define, or empty config", PGE_MsgBox::msg_fatal);
+            PGE_MsgBox msgBox(nullptr, "ERROR LOADING lvl_characters.ini: number of items not define, or empty config", PGE_MsgBox::msg_fatal);
             msgBox.exec();
             return false;
         }
@@ -161,7 +162,7 @@ bool ConfigManager::loadPlayableCharacters()
         {
             obj_player splayer;
             splayer.isInit_wld = false;
-            splayer.image_wld = NULL;
+            splayer.image_wld = nullptr;
             splayer.textureArrayId_wld = 0;
             splayer.animator_ID_wld = 0;
             splayer.wld_offset_y = 0;
@@ -254,7 +255,7 @@ bool ConfigManager::loadPlayableCharacters()
                 {
                     obj_player_state pstate;
                     pstate.isInit = false;
-                    pstate.image = NULL;
+                    pstate.image = nullptr;
                     pstate.textureArrayId = 0;
                     pstate.animator_ID = 0;
                     setup.beginGroup(fmt::format_ne("character-{0}-state-{1}", i, j));
@@ -314,7 +315,7 @@ bool ConfigManager::loadPlayableCharacters()
                                               setup.lineWithError(),
                                               setup.lastError(), i);
                 addError(msg);
-                PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
+                PGE_MsgBox msgBox(nullptr, msg, PGE_MsgBox::msg_error);
                 msgBox.exec();
                 break;
             }
@@ -326,7 +327,7 @@ bool ConfigManager::loadPlayableCharacters()
                                           players_total,
                                           playable_characters.stored());
             addError(msg);
-            PGE_MsgBox msgBox(NULL, msg, PGE_MsgBox::msg_error);
+            PGE_MsgBox msgBox(nullptr, msg, PGE_MsgBox::msg_error);
             msgBox.exec();
         }
     }

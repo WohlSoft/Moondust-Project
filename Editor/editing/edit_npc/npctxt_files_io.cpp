@@ -1,6 +1,6 @@
-﻿/*
+/*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  */
 
 #include <common_features/main_window_ptr.h>
+#include <common_features/file_keeper.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_x.h>
@@ -118,7 +119,11 @@ bool NpcEdit::trySave()
 bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    if(!FileFormats::WriteNPCTxtFileF(fileName, NpcData))
+
+    FileKeeper fileKeeper = FileKeeper(fileName);
+    QString fileNameNew = fileKeeper.tempPath();
+
+    if(!FileFormats::WriteNPCTxtFileF(fileNameNew, NpcData))
     {
         QApplication::restoreOverrideCursor();
         QMessageBox::warning(this, tr("File save error"),
@@ -127,11 +132,15 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
                              .arg(NpcData.errorString));
         return false;
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
+
     GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
 
     QFileInfo fileI(fileName);
-    unsigned int old_npc_id = npc_id;
-    npc_id = FileName_to_npcID(fileI.baseName());
+    unsigned long old_npc_id = npc_id;
+    npc_id = static_cast<unsigned long>(FileName_to_npcID(fileI.baseName()));
     setDefaultData(npc_id);
     ui->CurrentNPCID->setText( QString::number(npc_id) );
 
@@ -155,6 +164,7 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
+
     return true;
 }
 

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ public:
     ~ItemNPC();
 
     void setMainPixmap(const QPixmap &pixmap);
-    void setNpcData(LevelNPC inD, obj_npc *mergedSet=0, long *animator_id=0);
+    void setNpcData(LevelNPC inD, obj_npc *mergedSet = 0, long *animator_id = 0, bool isHistoryManager = false);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene=NULL);
 

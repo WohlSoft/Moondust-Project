@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "config_manager.h"
@@ -66,14 +67,22 @@ bool ConfigManager::loadEngineSettings()
     engineset.endGroup();
     engineset.beginGroup("common");
     {
-        engineset.read("screen-width", screen_width, 800);
-        engineset.read("screen-height", screen_height, 600);
-        std::string scrType;
-        engineset.read("screen-type", scrType, "static");
-        if(scrType == "dynamic")
-            screen_type = SCR_Dynamic;
-        else
-            screen_type = SCR_Static;
+        IniProcessing::StrEnumMap scrTypeMap =
+        {
+            {"scalable", SCR_Static},
+            {"resizable", SCR_Dynamic},
+            {"static", SCR_Static},
+            {"dynamic", SCR_Dynamic}
+        };
+        // In-Game viewport properties
+        engineset.read("viewport-width", viewport_width, 800);
+        engineset.read("viewport-height", viewport_height, 600);
+        engineset.readEnum("viewport-type", viewport_type, SCR_Static, scrTypeMap);
+        // Aliases to Viewport size, deprecated
+        engineset.read("screen-width", viewport_width, viewport_width);
+        engineset.read("screen-height", viewport_height, viewport_height);
+        engineset.readEnum("screen-type", viewport_type, viewport_type, scrTypeMap);
+        // Mouse cursor properties
         engineset.read("cursor-image-normal", setup_cursors.normal, "");
         checkForImage(setup_cursors.normal, dirs.gcommon);
         engineset.read("cursor-image-rubber", setup_cursors.rubber, "");

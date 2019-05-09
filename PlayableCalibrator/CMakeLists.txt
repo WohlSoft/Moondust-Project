@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1.0)
+cmake_minimum_required (VERSION 3.2)
 project(MoondustPlayerCalibrator C CXX)
 
 if(POLICY CMP0071) # Automoc
@@ -21,6 +21,8 @@ include_directories(
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
+# Version
+include(version.cmake)
 # Default GIT version
 include(../_common/git_version.cmake)
 # Common building properties and optimization flags
@@ -116,6 +118,8 @@ list(APPEND PGE_CALIBRATOR_LINK_LIBS
     ${UTILS_LIBS}
     FreeImageLite$<$<CONFIG:Debug>:d>
 )
+
+list(APPEND PGE_CALIBRATOR_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(pge_calibrator

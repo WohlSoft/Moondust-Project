@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,28 @@ void WldScene::loadUserData(QProgressDialog &progress)
             }
         }
         qDebug() << "Loaded custom rotation rules: " << count;
+    }
+
+    //Get extra folders for search
+    QString sFoldersFile = uWLD.getCustomFile("folders.ini");
+    if(!sFoldersFile.isEmpty())
+    {
+        LogDebug(QString("Found folders.ini: %1").arg(sFoldersFile));
+        QSettings rTableINI(sFoldersFile, QSettings::IniFormat);
+        rTableINI.setIniCodec("UTF-8");
+
+        rTableINI.beginGroup("folders");
+        auto keys = rTableINI.allKeys();
+        for(const QString &k : keys)
+        {
+            QString val = rTableINI.value(k, "").toString();
+            if(!val.isEmpty())
+            {
+                uWLD.addExtraDir(m_data->meta.path + "/" + val);
+                LogDebug(QString("Adding extra folder: %1").arg(m_data->meta.path + "/" + val));
+            }
+        }
+        rTableINI.endGroup();
     }
 
     if(!progress.wasCanceled())

@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <SDL2/SDL_rect.h>
@@ -37,9 +38,9 @@
 
 
 Render_SW_SDL::Render_SW_SDL() : Render_Base("Software SDL"),
-    m_gRenderer(NULL),
+    m_gRenderer(nullptr),
     m_clearColor{0, 0, 0, 0},
-    m_currentTexture(NULL),
+    m_currentTexture(nullptr),
     //Virtual resolution of renderable zone
     window_w(800.0f),
     window_h(600.0f),
@@ -64,15 +65,19 @@ Render_SW_SDL::Render_SW_SDL() : Render_Base("Software SDL"),
     //Texture render color levels
     color_binded_texture{1.0f, 1.0f, 1.0f, 1.0f}
 {
-    m_textureBank.push_back(NULL);
+    m_textureBank.push_back(nullptr);
 }
-
-Render_SW_SDL::~Render_SW_SDL()
-{}
 
 void Render_SW_SDL::set_SDL_settings()
 {
     SDL_GL_ResetAttributes();
+#ifdef __ANDROID__
+    // Avoid red screen on some devices
+    // More info here: https://bugzilla.libsdl.org/show_bug.cgi?id=2291
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+#endif
 }
 
 bool Render_SW_SDL::init()
@@ -80,11 +85,11 @@ bool Render_SW_SDL::init()
     //Initialize clear color
     setClearColor(0.f, 0.f, 0.f, 1.f);
     //Create renderer for window
-    #ifdef __ENSCRIPTEN__
+#if defined(__ENSCRIPTEN__) || defined(__ANDROID__)
     m_gRenderer = SDL_CreateRenderer(PGE_Window::window, -1, SDL_RENDERER_ACCELERATED);
-    #else
+#else
     m_gRenderer = SDL_CreateRenderer(PGE_Window::window, -1, SDL_RENDERER_SOFTWARE);
-    #endif
+#endif
 
     if(!m_gRenderer)
     {
@@ -112,17 +117,17 @@ void Render_SW_SDL::initDummyTexture()
         std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
                                       "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
-                                 "OpenGL Error", msg.c_str(), NULL);
+                                 "OpenGL Error", msg.c_str(), nullptr);
         abort();
     }
 
-    uint32_t w = static_cast<uint32_t>(FreeImage_GetWidth(image));
-    uint32_t h = static_cast<uint32_t>(FreeImage_GetHeight(image));
+    auto w = static_cast<uint32_t>(FreeImage_GetWidth(image));
+    auto h = static_cast<uint32_t>(FreeImage_GetHeight(image));
     _dummyTexture.nOfColors = GL_RGBA;
     _dummyTexture.format = GL_BGRA;
     _dummyTexture.w = static_cast<int>(w);
     _dummyTexture.h = static_cast<int>(h);
-    GLubyte *textura = reinterpret_cast<GLubyte *>(FreeImage_GetBits(image));
+    auto textura = reinterpret_cast<GLubyte *>(FreeImage_GetBits(image));
     loadTexture(_dummyTexture, w, h, textura);
     GraphicsHelps::closeImage(image);
 }
@@ -199,7 +204,7 @@ void Render_SW_SDL::deleteTexture(PGE_Texture &tx)
     {
         //If entry deleted from middle, remember that number to use it again
         m_textureFreeNumbers.push(tx.texture);
-        m_textureBank[ tx.texture ] = NULL;
+        m_textureBank[ tx.texture ] = nullptr;
     }
     else
     {
@@ -208,7 +213,7 @@ void Render_SW_SDL::deleteTexture(PGE_Texture &tx)
         {
             m_textureBank.pop_back();
         }
-        while((m_textureBank.size() != 1) && (m_textureBank.back() == NULL));
+        while((m_textureBank.size() != 1) && (m_textureBank.back() == nullptr));
     }
 
     tx.texture = 0;
@@ -250,10 +255,10 @@ void Render_SW_SDL::getScreenPixelsRGBA(int x, int y, int w, int h, unsigned cha
 
 void Render_SW_SDL::setViewport(int x, int y, int w, int h)
 {
-    float xF = static_cast<float>(x);
-    float yF = static_cast<float>(y);
-    float wF = static_cast<float>(w);
-    float hF = static_cast<float>(h);
+    auto xF = static_cast<float>(x);
+    auto yF = static_cast<float>(y);
+    auto wF = static_cast<float>(w);
+    auto hF = static_cast<float>(h);
     SDL_Rect topLeftViewport;
     topLeftViewport.x = Maths::iRound(offset_x + std::ceil(xF * viewport_scale_x));
     topLeftViewport.y = Maths::iRound(offset_y + std::ceil(yF * viewport_scale_y));
@@ -354,8 +359,8 @@ void Render_SW_SDL::getPixelData(const PGE_Texture *tx, unsigned char *pixelData
     int pitch, w, h, a;
     void *pixels;
     SDL_SetTextureBlendMode(m_currentTexture, SDL_BLENDMODE_BLEND);
-    SDL_QueryTexture(m_currentTexture, NULL, &a, &w, &h);
-    SDL_LockTexture(m_currentTexture, NULL, &pixels, &pitch);
+    SDL_QueryTexture(m_currentTexture, nullptr, &a, &w, &h);
+    SDL_LockTexture(m_currentTexture, nullptr, &pixels, &pitch);
     memcpy(pixelData, pixels, static_cast<size_t>(pitch * h));
     SDL_UnlockTexture(m_currentTexture);
     setUnbindTexture();
@@ -412,7 +417,7 @@ void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y)
                            static_cast<unsigned char>(255.f * color_binded_texture[1]),
                            static_cast<unsigned char>(255.f * color_binded_texture[2]));
     SDL_SetTextureAlphaMod(m_currentTexture, static_cast<unsigned char>(255.f * color_binded_texture[3]));
-    SDL_RenderCopy(m_gRenderer, m_currentTexture, NULL, &aRect);
+    SDL_RenderCopy(m_gRenderer, m_currentTexture, nullptr, &aRect);
     setUnbindTexture();
 }
 
@@ -434,10 +439,10 @@ void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y, float 
         return;
     }
 
-    float texW = static_cast<float>(texture->w);
-    float texH = static_cast<float>(texture->h);
+    auto texW = static_cast<float>(texture->w);
+    auto texH = static_cast<float>(texture->h);
 
-    int flip = SDL_FLIP_NONE;
+    unsigned int flip = SDL_FLIP_NONE;
     if( ani_left > ani_right )
     {
         std::swap(ani_left, ani_right);
@@ -463,11 +468,13 @@ void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y, float 
                            static_cast<unsigned char>(255.f * color_binded_texture[2]));
     SDL_SetTextureAlphaMod(m_currentTexture, static_cast<unsigned char>(255.f * color_binded_texture[3]));
     SDL_RenderCopyEx(m_gRenderer, m_currentTexture, &sourceRect, &destRect,
-                     0.0, NULL, static_cast<SDL_RendererFlip>(flip));
+                     0.0, nullptr, static_cast<SDL_RendererFlip>(flip));
     setUnbindTexture();
 }
 
-void Render_SW_SDL::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
+void Render_SW_SDL::renderTextureCur(float x, float y, float w, float h,
+                                     float ani_top, float ani_bottom,
+                                     float ani_left, float ani_right)
 {
     if(!m_currentTexture)
     {
@@ -479,10 +486,10 @@ void Render_SW_SDL::renderTextureCur(float x, float y, float w, float h, float a
         return;
     }
 
-    float texW = static_cast<float>(m_currentTextureRect.width());
-    float texH = static_cast<float>(m_currentTextureRect.height());
+    auto texW = static_cast<float>(m_currentTextureRect.width());
+    auto texH = static_cast<float>(m_currentTextureRect.height());
 
-    int flip = SDL_FLIP_NONE;
+    unsigned int flip = SDL_FLIP_NONE;
     if( ani_left > ani_right )
     {
         std::swap(ani_left, ani_right);
@@ -508,7 +515,7 @@ void Render_SW_SDL::renderTextureCur(float x, float y, float w, float h, float a
                            static_cast<unsigned char>(255.f * color_binded_texture[2]));
     SDL_SetTextureAlphaMod(m_currentTexture, static_cast<unsigned char>(255.f * color_binded_texture[3]));
     SDL_RenderCopyEx(m_gRenderer, m_currentTexture, &sourceRect, &destRect,
-                     0.0, NULL, static_cast<SDL_RendererFlip>(flip));
+                     0.0, nullptr, static_cast<SDL_RendererFlip>(flip));
 }
 
 

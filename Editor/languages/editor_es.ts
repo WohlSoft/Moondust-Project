@@ -20,7 +20,7 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Opciones</translation>
+        <translation>Opciones</translation>
     </message>
     <message>
         <source>Main</source>
@@ -1229,7 +1229,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea y elimina ItemSelectDialog par analizar fugas de memoria</translation>
     </message>
 </context>
 <context>
@@ -1623,6 +1623,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Preferences have been copied: %1</source>
         <translation>Las preferencias se copiaron: %1</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Editar datos de usuario en bruto...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBlock</name>
@@ -1764,58 +1768,62 @@ Límites: longitud máxima de 27 caracteres</translation>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Editar datos de usuario en bruto...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBoxListModel</name>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por Nombre</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID (contenido)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Descendiente</translation>
     </message>
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vista uniforme</translation>
     </message>
     <message>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar elementos personalizados</translation>
     </message>
     <message>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar elementos estándar</translation>
     </message>
 </context>
 <context>
@@ -2193,6 +2201,10 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
+    </message>
+    <message>
+        <source>Edit raw user data...</source>
+        <translation>Editar datos de usuario en bruto...</translation>
     </message>
 </context>
 <context>
@@ -3051,7 +3063,7 @@ Do you want to save your changes?</source>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Herramientas de nivel</translation>
+        <translation type="vanished">Herramientas de nivel</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3103,10 +3115,14 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Buscar</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation>&lt;Guardar archivo primero&gt;</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3543,23 +3559,23 @@ To use LunaTester you should have right Integration configuration package!</sour
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terminar proceso ejecutado</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se terminó el proceso de LunaTester exitosamente.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester no está siendo ejecutado.</translation>
     </message>
 </context>
 <context>
@@ -5603,6 +5619,14 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <source>Can&apos;t open the file!</source>
         <translation>¡No se puede abrir archivo!</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -5853,83 +5877,83 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Sección 10 (Ctrl+10) {1 ?} {2)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {1 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Sección 10 (Ctrl+10) {2 ?} {3)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {2 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Sección 10 (Ctrl+10) {3 ?} {4)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {3 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Sección 10 (Ctrl+10) {4 ?} {5)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {4 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Sección 10 (Ctrl+10) {5 ?} {6)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {5 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Sección 10 (Ctrl+10) {6 ?} {7)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {6 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Sección 10 (Ctrl+10) {7 ?} {8)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {7 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Sección 10 (Ctrl+10) {8 ?} {9)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {8 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Sección 10 (Ctrl+10) {9 ?} {0)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {9 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Sección 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
+        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Sección 21 (Alt+1) {20 ?} {1)?}</translation>
+        <translation type="vanished">Sección 21 (Alt+1) {20 ?} {1)?}</translation>
     </message>
     <message>
         <source>Prevent overlap</source>
@@ -6321,7 +6345,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Herramientas de nivel</translation>
+        <translation type="vanished">Herramientas de nivel</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -6679,7 +6703,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Sección 10 (Ctrl+10) {0 ?} {1)?}</translation>
+        <translation type="vanished">Sección 10 (Ctrl+10) {0 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 1</source>
@@ -7296,7 +7320,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Herramientas de objetos de nivel</translation>
+        <translation type="vanished">Herramientas de objetos de nivel</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7521,7 +7545,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Herramientas del mundo</translation>
+        <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8565,11 +8589,24 @@ Por favor guarde primero.</translation>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuando se recarga la configuración, todos los archivos abiertos se cerrarán y restaurarán luego de recargar. ¿Desea continuar?</translation>
     </message>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
+        <translation>¡El paquete de configuración se cambió!
+Para comenzar a usar el nuevo paquete, necesita reiniciar el Editor. ¿Desea continuar?</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9813,11 +9850,23 @@ El máximo es %2.</translation>
     </message>
     <message>
         <source>Initializing tileset categories...</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicializando categorías de tileset...</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
+    </message>
+    <message>
+        <source>Block user data change</source>
+        <translation>Cambio de datos de bloques de usuario</translation>
+    </message>
+    <message>
+        <source>BGO user data change</source>
+        <translation>Cambio de datos de OF de usuario</translation>
+    </message>
+    <message>
+        <source>NPC user data change</source>
+        <translation>Cambio de datos de PNJ de usuairo</translation>
     </message>
 </context>
 <context>
@@ -9993,353 +10042,353 @@ El máximo es %2.</translation>
     <name>QtBoolEdit</name>
     <message>
         <source>True</source>
-        <translation>Verdadero</translation>
+        <translation type="vanished">Verdadero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Falso</translation>
+        <translation type="vanished">Falso</translation>
     </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
     <message>
         <source>True</source>
-        <translation>Verdadero</translation>
+        <translation type="vanished">Verdadero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation>Falso</translation>
+        <translation type="vanished">Falso</translation>
     </message>
 </context>
 <context>
     <name>QtCharEdit</name>
     <message>
         <source>Clear Char</source>
-        <translation>Limpiar Car</translation>
+        <translation type="vanished">Limpiar Car</translation>
     </message>
 </context>
 <context>
     <name>QtColorEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
 </context>
 <context>
     <name>QtColorPropertyManager</name>
     <message>
         <source>Red</source>
-        <translation>Rojo</translation>
+        <translation type="vanished">Rojo</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation>Verde</translation>
+        <translation type="vanished">Verde</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Azul</translation>
+        <translation type="vanished">Azul</translation>
     </message>
     <message>
         <source>Alpha</source>
-        <translation>Alfa</translation>
+        <translation type="vanished">Alfa</translation>
     </message>
 </context>
 <context>
     <name>QtCursorDatabase</name>
     <message>
         <source>Arrow</source>
-        <translation>Flecha</translation>
+        <translation type="vanished">Flecha</translation>
     </message>
     <message>
         <source>Up Arrow</source>
-        <translation>Flecha arriba</translation>
+        <translation type="vanished">Flecha arriba</translation>
     </message>
     <message>
         <source>Cross</source>
-        <translation>Cruz</translation>
+        <translation type="vanished">Cruz</translation>
     </message>
     <message>
         <source>Wait</source>
-        <translation>Esperar</translation>
+        <translation type="vanished">Esperar</translation>
     </message>
     <message>
         <source>IBeam</source>
-        <translation>IBeam</translation>
+        <translation type="vanished">IBeam</translation>
     </message>
     <message>
         <source>Size Vertical</source>
-        <translation>Tamaño vertical</translation>
+        <translation type="vanished">Tamaño vertical</translation>
     </message>
     <message>
         <source>Size Horizontal</source>
-        <translation>Tamaño horizontal</translation>
+        <translation type="vanished">Tamaño horizontal</translation>
     </message>
     <message>
         <source>Size Backslash</source>
-        <translation>Tamaño barra hacia atrás</translation>
+        <translation type="vanished">Tamaño barra hacia atrás</translation>
     </message>
     <message>
         <source>Size Slash</source>
-        <translation>Tamaño barra hacia adelante</translation>
+        <translation type="vanished">Tamaño barra hacia adelante</translation>
     </message>
     <message>
         <source>Size All</source>
-        <translation>Redimensionar todo</translation>
+        <translation type="vanished">Redimensionar todo</translation>
     </message>
     <message>
         <source>Blank</source>
-        <translation>Blanco</translation>
+        <translation type="vanished">Blanco</translation>
     </message>
     <message>
         <source>Split Vertical</source>
-        <translation>Dividir vertical</translation>
+        <translation type="vanished">Dividir vertical</translation>
     </message>
     <message>
         <source>Split Horizontal</source>
-        <translation>Dividir horizontal</translation>
+        <translation type="vanished">Dividir horizontal</translation>
     </message>
     <message>
         <source>Pointing Hand</source>
-        <translation>Mano apuntando</translation>
+        <translation type="vanished">Mano apuntando</translation>
     </message>
     <message>
         <source>Forbidden</source>
-        <translation>Prohibido</translation>
+        <translation type="vanished">Prohibido</translation>
     </message>
     <message>
         <source>Open Hand</source>
-        <translation>Mano abierta</translation>
+        <translation type="vanished">Mano abierta</translation>
     </message>
     <message>
         <source>Closed Hand</source>
-        <translation>Mano cerrada</translation>
+        <translation type="vanished">Mano cerrada</translation>
     </message>
     <message>
         <source>What&apos;s This</source>
-        <translation>Qué es esto</translation>
+        <translation type="vanished">Qué es esto</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation>Ocupado</translation>
+        <translation type="vanished">Ocupado</translation>
     </message>
 </context>
 <context>
     <name>QtFontEditWidget</name>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
         <source>Select Font</source>
-        <translation>Seleccionar fuente</translation>
+        <translation type="vanished">Seleccionar fuente</translation>
     </message>
 </context>
 <context>
     <name>QtFontPropertyManager</name>
     <message>
         <source>Family</source>
-        <translation>Familia</translation>
+        <translation type="vanished">Familia</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation>Tamaño puntual</translation>
+        <translation type="vanished">Tamaño puntual</translation>
     </message>
     <message>
         <source>Bold</source>
-        <translation>Negrita</translation>
+        <translation type="vanished">Negrita</translation>
     </message>
     <message>
         <source>Italic</source>
-        <translation>Cursiva</translation>
+        <translation type="vanished">Cursiva</translation>
     </message>
     <message>
         <source>Underline</source>
-        <translation>Subrayado</translation>
+        <translation type="vanished">Subrayado</translation>
     </message>
     <message>
         <source>Strikeout</source>
-        <translation>Tachado</translation>
+        <translation type="vanished">Tachado</translation>
     </message>
     <message>
         <source>Kerning</source>
-        <translation>Interletraje</translation>
+        <translation type="vanished">Interletraje</translation>
     </message>
 </context>
 <context>
     <name>QtKeySequenceEdit</name>
     <message>
         <source>Clear Shortcut</source>
-        <translation>Limpiar acceso directo</translation>
+        <translation type="vanished">Limpiar acceso directo</translation>
     </message>
 </context>
 <context>
     <name>QtLocalePropertyManager</name>
     <message>
         <source>%1, %2</source>
-        <translation>%1, %2</translation>
+        <translation type="vanished">%1, %2</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation type="vanished">Idioma</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation>País</translation>
+        <translation type="vanished">País</translation>
     </message>
 </context>
 <context>
     <name>QtPointFPropertyManager</name>
     <message>
         <source>(%1, %2)</source>
-        <translation>(%1, %2)</translation>
+        <translation type="vanished">(%1, %2)</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
 </context>
 <context>
     <name>QtPointPropertyManager</name>
     <message>
         <source>(%1, %2)</source>
-        <translation>(%1, %2)</translation>
+        <translation type="vanished">(%1, %2)</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
 </context>
 <context>
     <name>QtPropertyBrowserUtils</name>
     <message>
         <source>[%1, %2, %3] (%4)</source>
-        <translation>[%1, %2, %3] (%4)</translation>
+        <translation type="vanished">[%1, %2, %3] (%4)</translation>
     </message>
     <message>
         <source>[%1, %2]</source>
-        <translation>[%1, %2]</translation>
+        <translation type="vanished">[%1, %2]</translation>
     </message>
 </context>
 <context>
     <name>QtRectFPropertyManager</name>
     <message>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation>[(%1, %2), %3 x %4]</translation>
+        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtRectPropertyManager</name>
     <message>
         <source>[(%1, %2), %3 x %4]</source>
-        <translation>[(%1, %2), %3 x %4]</translation>
+        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
     </message>
     <message>
         <source>X</source>
-        <translation>X</translation>
+        <translation type="vanished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation type="vanished">Y</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtSizeFPropertyManager</name>
     <message>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation type="vanished">%1 x %2</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtSizePolicyPropertyManager</name>
     <message>
         <source>&lt;Invalid&gt;</source>
-        <translation>&lt;Invalido&gt;</translation>
+        <translation type="vanished">&lt;Invalido&gt;</translation>
     </message>
     <message>
         <source>[%1, %2, %3, %4]</source>
-        <translation>[%1, %2, %3, %4]</translation>
+        <translation type="vanished">[%1, %2, %3, %4]</translation>
     </message>
     <message>
         <source>Horizontal Policy</source>
-        <translation>Política horizontal</translation>
+        <translation type="vanished">Política horizontal</translation>
     </message>
     <message>
         <source>Vertical Policy</source>
-        <translation>Política vertical</translation>
+        <translation type="vanished">Política vertical</translation>
     </message>
     <message>
         <source>Horizontal Stretch</source>
-        <translation>Estiramiento horizontal</translation>
+        <translation type="vanished">Estiramiento horizontal</translation>
     </message>
     <message>
         <source>Vertical Stretch</source>
-        <translation>Estiramiento vertical</translation>
+        <translation type="vanished">Estiramiento vertical</translation>
     </message>
 </context>
 <context>
     <name>QtSizePropertyManager</name>
     <message>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation type="vanished">%1 x %2</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation>Ancho</translation>
+        <translation type="vanished">Ancho</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation>Altura</translation>
+        <translation type="vanished">Altura</translation>
     </message>
 </context>
 <context>
     <name>QtTreePropertyBrowser</name>
     <message>
         <source>Property</source>
-        <translation>Propiedad</translation>
+        <translation type="vanished">Propiedad</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valor</translation>
+        <translation type="vanished">Valor</translation>
     </message>
 </context>
 <context>
@@ -10703,164 +10752,164 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     <name>TilesetEditor</name>
     <message>
         <source>Tileset Editor</source>
-        <translation type="unfinished">Editor de conjuntos de bloques</translation>
+        <translation>Editor de conjuntos de bloques</translation>
     </message>
     <message>
         <source>Items</source>
-        <translation type="unfinished">Items</translation>
+        <translation>Items</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">Bloque</translation>
+        <translation>Bloque</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished">OF</translation>
+        <translation>OF</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished">PNJ</translation>
+        <translation>PNJ</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished">Azulejo de Terreno</translation>
+        <translation>Azulejo de Terreno</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished">Decoraciones</translation>
+        <translation>Decoraciones</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished">Directorio</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">Limpiar</translation>
+        <translation>Limpiar</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <source>Tileset name:</source>
-        <translation type="unfinished">Nombre del conjunto:</translation>
+        <translation>Nombre del conjunto:</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Altura:</translation>
+        <translation>Altura:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Ancho:</translation>
+        <translation>Ancho:</translation>
     </message>
     <message>
         <source>Show custom only</source>
-        <translation type="unfinished">Mostrar sólo personalizados</translation>
+        <translation>Mostrar sólo personalizados</translation>
     </message>
     <message>
         <source>Current Level/World specific</source>
-        <translation type="unfinished">Específico de mundo/nivel actual</translation>
+        <translation>Específico de mundo/nivel actual</translation>
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation type="unfinished">Eliminar el tileset</translation>
+        <translation>Eliminar el tileset</translation>
     </message>
     <message>
         <source>Show default only</source>
-        <translation type="unfinished">Mostrar solo predeterminado</translation>
+        <translation>Mostrar solo predeterminado</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Buscar</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <source>Search settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de búsqueda</translation>
     </message>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por Nombre</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por ID (contenido)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Descendiente</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation type="unfinished">Limpiar editor de tilesets</translation>
+        <translation>Limpiar editor de tilesets</translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation type="unfinished">¿Desea limpiar el editor para crear un nuevo tileset?</translation>
+        <translation>¿Desea limpiar el editor para crear un nuevo tileset?</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Ingrese un nombre de archivo!</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation type="unfinished">Nombre de archivo:</translation>
+        <translation>Nombre de archivo:</translation>
     </message>
     <message>
         <source>Open Tileset</source>
-        <translation type="unfinished">Abrir baldosas</translation>
+        <translation>Abrir baldosas</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation type="unfinished">¡Falló la carga de baldozas!</translation>
+        <translation>¡Falló la carga de baldozas!</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="unfinished">¡Falló la carga de baldosas!
+        <translation>¡Falló la carga de baldosas!
 ¡Los datos pueden estar corruptos!</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation type="unfinished">Editor de cajas de tilesets</translation>
+        <translation>Editor de cajas de tilesets</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
-        <translation type="unfinished">No mostrar este mensaje otra vez.</translation>
+        <translation>No mostrar este mensaje otra vez.</translation>
     </message>
     <message>
         <source>Welcome to tileset editor!
@@ -10871,7 +10920,7 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation type="unfinished">¡Bienvenido al editor de tilesets!
+        <translation>¡Bienvenido al editor de tilesets!
 
 Éste es un editor de tilesets globales.
 Todos los tilesets que se harán aquí serán guardados en ésta carpeta:
@@ -10882,19 +10931,19 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation type="unfinished">¿Desea remover este tileset?</translation>
+        <translation>¿Desea remover este tileset?</translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation type="unfinished">Tileset removido</translation>
+        <translation>Tileset removido</translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation type="unfinished">¡El tileset fue removido!</translation>
+        <translation>¡El tileset fue removido!</translation>
     </message>
 </context>
 <context>
@@ -11003,7 +11052,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Prioridad de orden de categoría</translation>
     </message>
 </context>
 <context>
@@ -11176,6 +11225,13 @@ Data may be corrupted!</source>
     </message>
 </context>
 <context>
+    <name>UserDataEdit</name>
+    <message>
+        <source>User data editing</source>
+        <translation>Edición de datos de usuario</translation>
+    </message>
+</context>
+<context>
     <name>VariablesBox</name>
     <message>
         <source>Variables [Under Construction]</source>
@@ -11339,6 +11395,14 @@ Data may be corrupted!</source>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Colocar elemento en el mapa primero y vea las &apos;Propiedades&apos; en el menú contextual.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12221,7 +12285,7 @@ Do you want to save your changes?</source>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Herramientas del mundo</translation>
+        <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -12258,6 +12322,10 @@ Do you want to save your changes?</source>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12325,6 +12393,14 @@ Do you want to save your changes?</source>
     <message>
         <source>Counting stars...</source>
         <translation>Contando estrellas...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12434,7 +12510,7 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada</tr
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
+        <translation type="vanished">Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12497,6 +12573,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>No se puede ejecutar aplicación:
 %1
 Por favor, controle el directorio de la misma.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Saltar conversión de archivos (no convertir background2-*.gif)</translation>
     </message>
 </context>
 <context>

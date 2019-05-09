@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,15 +164,15 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place tile if collision test
-                        WldPlacingItems::TileSet.x = scene->m_cursorItemImg->scenePos().x();
-                        WldPlacingItems::TileSet.y = scene->m_cursorItemImg->scenePos().y();
+                        WldPlacingItems::terrainSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::terrainSet.y = scene->m_cursorItemImg->scenePos().y();
 
                         scene->m_data->tile_array_id++;
-                        WldPlacingItems::TileSet.meta.array_id = scene->m_data->tile_array_id;
+                        WldPlacingItems::terrainSet.meta.array_id = scene->m_data->tile_array_id;
 
-                        scene->m_data->tiles.push_back(WldPlacingItems::TileSet);
-                        scene->placeTile(WldPlacingItems::TileSet, true);
-                        historyBuffer.tiles.push_back(WldPlacingItems::TileSet);
+                        scene->m_data->tiles.push_back(WldPlacingItems::terrainSet);
+                        scene->placeTile(WldPlacingItems::terrainSet, true);
+                        historyBuffer.tiles.push_back(WldPlacingItems::terrainSet);
 
                         //expand on all sides
                         newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW,coor.second);
@@ -210,15 +210,15 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place scenery if collision test
-                        WldPlacingItems::SceneSet.x = scene->m_cursorItemImg->scenePos().x();
-                        WldPlacingItems::SceneSet.y = scene->m_cursorItemImg->scenePos().y();
+                        WldPlacingItems::sceneSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::sceneSet.y = scene->m_cursorItemImg->scenePos().y();
 
                         scene->m_data->scene_array_id++;
-                        WldPlacingItems::SceneSet.meta.array_id = scene->m_data->scene_array_id;
+                        WldPlacingItems::sceneSet.meta.array_id = scene->m_data->scene_array_id;
 
-                        scene->m_data->scenery.push_back(WldPlacingItems::SceneSet);
-                        scene->placeScenery(WldPlacingItems::SceneSet, true);
-                        historyBuffer.scenery.push_back(WldPlacingItems::SceneSet);
+                        scene->m_data->scenery.push_back(WldPlacingItems::sceneSet);
+                        scene->placeScenery(WldPlacingItems::sceneSet, true);
+                        historyBuffer.scenery.push_back(WldPlacingItems::sceneSet);
 
                         //expand on all sides
                         newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW,coor.second);
@@ -256,15 +256,15 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place path if collision test
-                        WldPlacingItems::PathSet.x = scene->m_cursorItemImg->scenePos().x();
-                        WldPlacingItems::PathSet.y = scene->m_cursorItemImg->scenePos().y();
+                        WldPlacingItems::pathSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::pathSet.y = scene->m_cursorItemImg->scenePos().y();
 
                         scene->m_data->path_array_id++;
-                        WldPlacingItems::PathSet.meta.array_id = scene->m_data->path_array_id;
+                        WldPlacingItems::pathSet.meta.array_id = scene->m_data->path_array_id;
 
-                        scene->m_data->paths.push_back(WldPlacingItems::PathSet);
-                        scene->placePath(WldPlacingItems::PathSet, true);
-                        historyBuffer.paths.push_back(WldPlacingItems::PathSet);
+                        scene->m_data->paths.push_back(WldPlacingItems::pathSet);
+                        scene->placePath(WldPlacingItems::pathSet, true);
+                        historyBuffer.paths.push_back(WldPlacingItems::pathSet);
 
                         //expand on all sides
                         newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW,coor.second);
@@ -302,15 +302,15 @@ void WLD_ModeFill::attemptFlood(WldScene *scene)
                     if(!scene->itemCollidesWith(scene->m_cursorItemImg))
                     {
                         //place Level if collision test
-                        WldPlacingItems::LevelSet.x = scene->m_cursorItemImg->scenePos().x();
-                        WldPlacingItems::LevelSet.y = scene->m_cursorItemImg->scenePos().y();
+                        WldPlacingItems::levelSet.x = scene->m_cursorItemImg->scenePos().x();
+                        WldPlacingItems::levelSet.y = scene->m_cursorItemImg->scenePos().y();
 
                         scene->m_data->level_array_id++;
-                        WldPlacingItems::LevelSet.meta.array_id = scene->m_data->level_array_id;
+                        WldPlacingItems::levelSet.meta.array_id = scene->m_data->level_array_id;
 
-                        scene->m_data->levels.push_back(WldPlacingItems::LevelSet);
-                        scene->placeLevel(WldPlacingItems::LevelSet, true);
-                        historyBuffer.levels.push_back(WldPlacingItems::LevelSet);
+                        scene->m_data->levels.push_back(WldPlacingItems::levelSet);
+                        scene->placeLevel(WldPlacingItems::levelSet, true);
+                        historyBuffer.levels.push_back(WldPlacingItems::levelSet);
 
                         //expand on all sides
                         newList << qMakePair<qreal, qreal>(coor.first - WldPlacingItems::itemW,coor.second);

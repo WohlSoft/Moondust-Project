@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ ItemBGO *LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     return BGOItem;
 }
 
-ItemNPC *LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
+ItemNPC *LvlScene::placeNPC(LevelNPC &npc, bool toGrid, bool isHistoryManager)
 {
     obj_npc &mergedSet = m_localConfigNPCs[npc.id];
     long animator = mergedSet.animator_id;
@@ -110,7 +110,7 @@ ItemNPC *LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     ItemNPC *NPCItem = new ItemNPC(this);
     npc.meta.userdata = NPCItem;
-    NPCItem->setNpcData(npc, &mergedSet, &animator);
+    NPCItem->setNpcData(npc, &mergedSet, &animator, isHistoryManager);
 
     if(m_pastingMode) NPCItem->setSelected(true);
     return NPCItem;

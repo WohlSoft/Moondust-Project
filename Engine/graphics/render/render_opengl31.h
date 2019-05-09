@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef RENDER_OPENGL31_H
@@ -28,28 +29,28 @@ class Render_OpenGL31 : public Render_Base
 {
     public:
         Render_OpenGL31();
-        ~Render_OpenGL31();
-        virtual void set_SDL_settings();
-        virtual unsigned int SDL_InitFlags();
-        virtual bool init();
-        virtual bool uninit();
-        virtual void initDummyTexture();
-        virtual PGE_Texture getDummyTexture();
-        virtual void loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t *RGBApixels);
-        virtual void deleteTexture(PGE_Texture &tx);
-        virtual bool isTopDown();
-        virtual void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels);
-        virtual void getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels);
-        virtual void getPixelData(const PGE_Texture *tx, unsigned char *pixelData);
-        virtual void setViewport(int x, int y, int w, int h);
+        ~Render_OpenGL31() override = default;
+        void set_SDL_settings() override;
+        unsigned int SDL_InitFlags() override;
+        bool init() override;
+        bool uninit() override;
+        void initDummyTexture() override;
+        PGE_Texture getDummyTexture() override;
+        void loadTexture(PGE_Texture &target, uint32_t width, uint32_t height, uint8_t *RGBApixels) override;
+        void deleteTexture(PGE_Texture &tx) override;
+        bool isTopDown() override;
+        void getScreenPixels(int x, int y, int w, int h, unsigned char *pixels) override;
+        void getScreenPixelsRGBA(int x, int y, int w, int h, unsigned char *pixels) override;
+        void getPixelData(const PGE_Texture *tx, unsigned char *pixelData) override;
+        void setViewport(int x, int y, int w, int h) override;
 
-        virtual void resetViewport();
-        virtual void setViewportSize(int w, int h);
-        virtual void setViewportSize(float w, float h);
-        virtual void setVirtualSurfaceSize(int w, int h);
+        void resetViewport() override;
+        void setViewportSize(int w, int h) override;
+        void setViewportSize(float w, float h);
+        void setVirtualSurfaceSize(int w, int h) override;
 
-        virtual void flush();
-        virtual void repaint();
+        void flush() override;
+        void repaint() override;
 
         /*!
          * \brief Changed color to clear screen
@@ -58,29 +59,29 @@ class Render_OpenGL31 : public Render_Base
          * \param b level of blue (from 0.0 to 1.0)
          * \param a level of alpha (from 0.0 to 1.0)
          */
-        virtual void setClearColor(float r, float g, float b, float a);
+        void setClearColor(float r, float g, float b, float a) override;
         /*!
          * \brief Clear screen with pre-defined clear color
          */
-        virtual void clearScreen();
+        void clearScreen() override;
 
-        virtual void renderRect(float x, float y, float w, float h, GLfloat red = 1.f, GLfloat green = 1.f, GLfloat blue = 1.f, GLfloat alpha = 1.f, bool filled = true);
-        virtual void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
-        virtual void renderTexture(PGE_Texture *texture, float x, float y);
-        virtual void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0.0f, float ani_right = 1.0f);
-        virtual void renderTextureCur(float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0, float ani_right = 1.0f);
+        void renderRect(float x, float y, float w, float h, GLfloat red = 1.f, GLfloat green = 1.f, GLfloat blue = 1.f, GLfloat alpha = 1.f, bool filled = true) override;
+        void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) override;
+        void renderTexture(PGE_Texture *texture, float x, float y) override;
+        void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0.0f, float ani_right = 1.0f) override;
+        void renderTextureCur(float x, float y, float w, float h, float ani_top = 0.0f, float ani_bottom = 1.0f, float ani_left = 0, float ani_right = 1.0f) override;
 
-        virtual void BindTexture(PGE_Texture *texture);
-        virtual void setTextureColor(float Red, float Green, float Blue, float Alpha = 1.0f);
-        virtual void UnBindTexture();
+        void BindTexture(PGE_Texture *texture) override;
+        void setTextureColor(float Red, float Green, float Blue, float Alpha = 1.0f) override;
+        void UnBindTexture() override;
 
         PGE_RectF MapToGl(float x, float y, float w, float h);
         PGE_RectF MapToGlSI(float left, float top, float right, float bottom);
 
-        PGE_Point MapToScr(PGE_Point point);
-        PGE_Point MapToScr(int x, int y);
-        int  alignToCenterW(int x, int w);
-        int  alignToCenterH(int y, int h);
+        PGE_Point MapToScr(PGE_Point point) override;
+        PGE_Point MapToScr(int x, int y) override;
+        int  alignToCenterW(int x, int w) override;
+        int  alignToCenterH(int y, int h) override;
     private:
         PGE_Texture _dummyTexture;
 
@@ -125,8 +126,8 @@ class Render_OpenGL31 : public Render_Base
 class Render_OpenGL31 : public Render_dummy
 {
     public:
-        virtual bool init();
-        virtual bool uninit();
+        bool init() override;
+        bool uninit() override;
 };
 
 #endif //RENDER_SUPORT_OPENGL3

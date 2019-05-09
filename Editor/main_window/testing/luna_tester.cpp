@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -453,6 +453,8 @@ void LunaTester::startLunaTester()
             {
                 if(m_killPreviousSession)
                     killEngine();
+
+                lvl->prepareLevelFile(lvl->LvlData);
                 m_helper = QtConcurrent::run(this,
                                              &LunaTester::lunaRunnerThread,
                                              lvl->LvlData,
@@ -461,6 +463,7 @@ void LunaTester::startLunaTester()
             }
         }
         else
+        if(m_mw->activeChildWindow() == MainWindow::WND_World)
         {
             QMessageBox::information(m_mw,
                                      "LunaTester",

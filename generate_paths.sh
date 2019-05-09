@@ -57,7 +57,7 @@ if [[ $QT_VERSION == "undefined/gcc_64" ]]; then
 fi
 
 #Automatically detect manually installed Qt
-for var in 5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.7.1 5.7.2 5.8 5.8.1 5.8.2 5.8.3 5.9 5.9.1 5.9.2 5.9.3 5.10 5.10.1 5.10.2 5.10.3
+for var in 5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.7.1 5.7.2 5.8 5.8.1 5.8.2 5.8.3 5.9 5.9.1 5.9.2 5.9.3 5.10 5.10.1 5.10.2 5.10.3 5.11 5.11.0 5.11.1 5.11.2 5.11.3 5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6
 do
     if [ -f /opt/Qt/$var/$GCC_ARCH/bin/qmake ]; then
         QT_VERSION=$var/$GCC_ARCH
@@ -96,10 +96,10 @@ do
         static) #Change paths ti Semaphore-CI compatible
                 #QT_VERSION=5.8.0_static
                 #Automatically detect static build
-                for var in 5.6.0_static 5.6.1_static 5.6.1-1_static 5.7.0_static 5.7.1_static 5.7.2_static 5.8.0_static 5.8.1_static 5.8.2_static 5.8.3_static 5.9.0_static 5.9.1_static 5.9.2_static 5.9.3_static 5.10.0_static 5.10.1_static 5.10.2_static 5.10.3_static
+                for var in 5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.7.1 5.7.2 5.8 5.8.1 5.8.2 5.8.3 5.9 5.9.1 5.9.2 5.9.3 5.10 5.10.1 5.10.2 5.10.3 5.11 5.11.0 5.11.1 5.11.2 5.11.3 5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6
                 do
-                    if [ -f ~/Qt/$var/bin/qmake ]; then
-                        QT_VERSION=$var
+                    if [ -f ~/Qt/${var}_static/bin/qmake ]; then
+                        QT_VERSION=${var}_static
                         QT_PATH=~/Qt/$QT_VERSION/bin/
                         QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
                         AUTODETECTED=true

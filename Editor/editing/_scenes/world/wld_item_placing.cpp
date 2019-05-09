@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,31 +38,33 @@
 
 //Default dataSets
 
-WorldTerrainTile WldPlacingItems::TileSet=FileFormats::CreateWldTile();
-WorldScenery WldPlacingItems::SceneSet=FileFormats::CreateWldScenery();
-WorldPathTile WldPlacingItems::PathSet=FileFormats::CreateWldPath();
-WorldLevelTile WldPlacingItems::LevelSet=FileFormats::CreateWldLevel();
-WorldMusicBox WldPlacingItems::MusicSet=FileFormats::CreateWldMusicbox();
+WorldTerrainTile WldPlacingItems::terrainSet = FileFormats::CreateWldTile();
+WorldScenery WldPlacingItems::sceneSet = FileFormats::CreateWldScenery();
+WorldPathTile WldPlacingItems::pathSet = FileFormats::CreateWldPath();
+WorldLevelTile WldPlacingItems::levelSet = FileFormats::CreateWldLevel();
+WorldMusicBox WldPlacingItems::musicSet = FileFormats::CreateWldMusicbox();
 
-int WldPlacingItems::c_offset_x=0;
-int WldPlacingItems::c_offset_y=0;
+int WldPlacingItems::c_offset_x = 0;
+int WldPlacingItems::c_offset_y = 0;
 
-int WldPlacingItems::itemW=0;
-int WldPlacingItems::itemH=0;
+int WldPlacingItems::itemW = 0;
+int WldPlacingItems::itemH = 0;
 
-int WldPlacingItems::gridSz=1;
-QPoint WldPlacingItems::gridOffset=QPoint(0,0);
+int WldPlacingItems::gridSz = 1;
+QPoint WldPlacingItems::gridOffset = QPoint(0, 0);
 
-bool WldPlacingItems::overwriteMode=false;
-WldPlacingItems::PlaceMode WldPlacingItems::placingMode=WldPlacingItems::PMODE_Brush;
+bool WldPlacingItems::overwriteMode = false;
+WldPlacingItems::PlaceMode WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
 
-QList<QPair<int, QVariant > > WldPlacingItems::flags;
+QList<QPair<int, QVariant> > WldPlacingItems::flags;
 
 void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 {
     if(m_cursorItemImg)
-        {delete m_cursorItemImg;
-        m_cursorItemImg=NULL;}
+    {
+        delete m_cursorItemImg;
+        m_cursorItemImg = nullptr;
+    }
 
     QPixmap tImg;
     LogDebug(QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
@@ -75,7 +77,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         Items::getItemGFX(&tileConf, tImg, false);
         if(tImg.isNull())
         {
-            tImg=m_dummyTerrainImg;
+            tImg = m_dummyTerrainImg;
         }
         if(!tileConf.isValid)
         {
@@ -86,74 +88,80 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::gridSz = tileConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
-        WldPlacingItems::TileSet.id = itemID;
+        WldPlacingItems::terrainSet.id = itemID;
 
+        // Clean up previously added extra settings
+        WldPlacingItems::terrainSet.meta.custom_params.clear();
 
         long w = tImg.width();
         long h = tImg.height();
 
-        WldPlacingItems::itemW = w;
-        WldPlacingItems::itemH = h;
+        WldPlacingItems::itemW = int(w);
+        WldPlacingItems::itemH = int(h);
 
 
         WldPlacingItems::flags.clear();
-        QPair<int, QVariant > flag;
+        QPair<int, QVariant> flag;
 
-            flag.first=ITEM_TYPE;
-            flag.second="TILE";
+        flag.first = ITEM_TYPE;
+        flag.second = "TILE";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=ITEM_ID;
-            flag.second=QString::number(itemID);
+        flag.first = ITEM_ID;
+        flag.second = QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_WIDTH;
-            flag.second = QString::number(w);
+        flag.first = ITEM_WIDTH;
+        flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_HEIGHT;
-            flag.second = QString::number(h);
+        flag.first = ITEM_HEIGHT;
+        flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_IS_CURSOR;
-            flag.second = "CURSOR";
+        flag.first = ITEM_IS_CURSOR;
+        flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Rect)
         {
-            setRectDrawer(); return;
+            setRectDrawer();
+            return;
         }
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Circle)
         {
-            setCircleDrawer(); return;
+            setCircleDrawer();
+            return;
         }
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+        WldPlacingItems::c_offset_x = qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y = qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Line)
         {
-            setLineDrawer(); return;
+            setLineDrawer();
+            return;
         }
 
         m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
-        foreach(dataFlag_w flag, WldPlacingItems::flags)
-            m_cursorItemImg->setData(flag.first, flag.second);
+        for(const dataFlag_w &itemFlag : WldPlacingItems::flags)
+            m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
         m_cursorItemImg->setZValue(7000);
-        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
-        m_placingItemType=PLC_Terrain;
-        WldPlacingItems::TileSet.id = itemID;
+        m_placingItemType = PLC_Terrain;
+        WldPlacingItems::terrainSet.id = itemID;
 
         //flood fill uses 'item' cursor
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_FloodFill)
         {
-            setFloodFiller(); return;
+            setFloodFiller();
+            return;
         }
 
         SwitchEditingMode(MODE_PlacingNew);
@@ -166,7 +174,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         Items::getItemGFX(&sceneConf, tImg, false);
         if(tImg.isNull())
         {
-            tImg=m_dummySceneryImg;
+            tImg = m_dummySceneryImg;
         }
         if(!sceneConf.isValid)
         {
@@ -177,74 +185,81 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::gridSz = sceneConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
-        WldPlacingItems::SceneSet.id = itemID;
+        WldPlacingItems::sceneSet.id = itemID;
+
+        // Clean up previously added extra settings
+        WldPlacingItems::sceneSet.meta.custom_params.clear();
 
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
 
-        WldPlacingItems::itemW = w;
-        WldPlacingItems::itemH = h;
+        WldPlacingItems::itemW = int(w);
+        WldPlacingItems::itemH = int(h);
 
         WldPlacingItems::flags.clear();
-        QPair<int, QVariant > flag;
+        QPair<int, QVariant> flag;
 
-            flag.first=ITEM_TYPE;
-            flag.second="SCENERY";
+        flag.first = ITEM_TYPE;
+        flag.second = "SCENERY";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=ITEM_ID;
-            flag.second=QString::number(itemID);
+        flag.first = ITEM_ID;
+        flag.second = QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_WIDTH;
-            flag.second = QString::number(w);
+        flag.first = ITEM_WIDTH;
+        flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_HEIGHT;
-            flag.second = QString::number(h);
+        flag.first = ITEM_HEIGHT;
+        flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_IS_CURSOR;
-            flag.second = "CURSOR";
+        flag.first = ITEM_IS_CURSOR;
+        flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
 
         if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Rect)
         {
-            setRectDrawer(); return;
+            setRectDrawer();
+            return;
         }
 
-        WldPlacingItems::c_offset_x= qRound(qreal(tImg.width()) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(tImg.height()) / 2);
+        WldPlacingItems::c_offset_x = qRound(qreal(tImg.width()) / 2);
+        WldPlacingItems::c_offset_y = qRound(qreal(tImg.height()) / 2);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Line)
         {
-            setLineDrawer(); return;
+            setLineDrawer();
+            return;
         }
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Circle)
         {
-            setCircleDrawer(); return;
+            setCircleDrawer();
+            return;
         }
 
         m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
-        foreach(dataFlag_w flag, WldPlacingItems::flags)
-            m_cursorItemImg->setData(flag.first, flag.second);
+        for(const dataFlag_w &itemFlag : WldPlacingItems::flags)
+            m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
         m_cursorItemImg->setZValue(7000);
-        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
-        m_placingItemType=PLC_Scene;
-        WldPlacingItems::SceneSet.id = itemID;
+        m_placingItemType = PLC_Scene;
+        WldPlacingItems::sceneSet.id = itemID;
 
         //flood fill uses 'item' cursor
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_FloodFill)
         {
-            setFloodFiller(); return;
+            setFloodFiller();
+            return;
         }
 
         SwitchEditingMode(MODE_PlacingNew);
@@ -257,7 +272,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         Items::getItemGFX(&pathConf, tImg, false);
         if(tImg.isNull())
         {
-            tImg=m_dummyPathImg;
+            tImg = m_dummyPathImg;
         }
         if(!pathConf.isValid)
         {
@@ -268,73 +283,80 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::gridSz = pathConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
-        WldPlacingItems::PathSet.id = itemID;
+        WldPlacingItems::pathSet.id = itemID;
+
+        // Clean up previously added extra settings
+        WldPlacingItems::pathSet.meta.custom_params.clear();
 
         long w = tImg.width();
         long h = tImg.height();
 
-        WldPlacingItems::itemW = w;
-        WldPlacingItems::itemH = h;
+        WldPlacingItems::itemW = int(w);
+        WldPlacingItems::itemH = int(h);
 
         WldPlacingItems::flags.clear();
-        QPair<int, QVariant > flag;
+        QPair<int, QVariant> flag;
 
-            flag.first=ITEM_TYPE;
-            flag.second="PATH";
+        flag.first = ITEM_TYPE;
+        flag.second = "PATH";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=ITEM_ID;
-            flag.second=QString::number(itemID);
+        flag.first = ITEM_ID;
+        flag.second = QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_WIDTH;
-            flag.second = QString::number(w);
+        flag.first = ITEM_WIDTH;
+        flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_HEIGHT;
-            flag.second = QString::number(h);
+        flag.first = ITEM_HEIGHT;
+        flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_IS_CURSOR;
-            flag.second = "CURSOR";
+        flag.first = ITEM_IS_CURSOR;
+        flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Rect)
         {
-            setRectDrawer(); return;
+            setRectDrawer();
+            return;
         }
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Circle)
         {
-            setCircleDrawer(); return;
+            setCircleDrawer();
+            return;
         }
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+        WldPlacingItems::c_offset_x = qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y = qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Line)
         {
-            setLineDrawer(); return;
+            setLineDrawer();
+            return;
         }
 
         m_cursorItemImg = addPixmap(tImg);
 
         //set data flags
-        foreach(dataFlag_w flag, WldPlacingItems::flags)
-            m_cursorItemImg->setData(flag.first, flag.second);
+        for(const dataFlag_w &itemFlag : WldPlacingItems::flags)
+            m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
         m_cursorItemImg->setZValue(7000);
-        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
-        m_placingItemType=PLC_Path;
-        WldPlacingItems::PathSet.id = itemID;
+        m_placingItemType = PLC_Path;
+        WldPlacingItems::pathSet.id = itemID;
 
         //flood fill uses 'item' cursor
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_FloodFill)
         {
-            setFloodFiller(); return;
+            setFloodFiller();
+            return;
         }
 
         SwitchEditingMode(MODE_PlacingNew);
@@ -359,130 +381,144 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::gridSz = wlevelConf.setup.grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
-        WldPlacingItems::LevelSet.id = itemID;
+        WldPlacingItems::levelSet.id = itemID;
+
+        // Clean up previously added extra settings
+        WldPlacingItems::levelSet.meta.custom_params.clear();
 
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
 
-        WldPlacingItems::itemW = w;
-        WldPlacingItems::itemH = h;
+        WldPlacingItems::itemW = int(w);
+        WldPlacingItems::itemH = int(h);
 
         WldPlacingItems::flags.clear();
-        QPair<int, QVariant > flag;
+        QPair<int, QVariant> flag;
 
-            flag.first=ITEM_TYPE;
-            flag.second="LEVEL";
+        flag.first = ITEM_TYPE;
+        flag.second = "LEVEL";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=ITEM_ID;
-            flag.second=QString::number(itemID);
+        flag.first = ITEM_ID;
+        flag.second = QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_WIDTH;
-            flag.second = QString::number(w);
+        flag.first = ITEM_WIDTH;
+        flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_HEIGHT;
-            flag.second = QString::number(h);
+        flag.first = ITEM_HEIGHT;
+        flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = ITEM_IS_CURSOR;
-            flag.second = "CURSOR";
+        flag.first = ITEM_IS_CURSOR;
+        flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Rect)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Rect)
         {
-            setRectDrawer(); return;
+            setRectDrawer();
+            return;
         }
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Circle)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Circle)
         {
-            setCircleDrawer(); return;
+            setCircleDrawer();
+            return;
         }
 
         WldPlacingItems::c_offset_x = qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y = qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_Line)
         {
-            setLineDrawer(); return;
+            setLineDrawer();
+            return;
         }
 
         m_cursorItemImg = addPixmap(tImg);
 
-        int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
-        int imgOffsetY = (int)qRound( -qreal(tImg.height()) + WldPlacingItems::gridSz);
+        int imgOffsetX = (int) qRound(-(qreal(tImg.width()) - qreal(WldPlacingItems::gridSz)) / 2);
+        int imgOffsetY = (int) qRound(-qreal(tImg.height()) + WldPlacingItems::gridSz);
 
-        ((QGraphicsPixmapItem*)m_cursorItemImg)->setOffset(imgOffsetX, imgOffsetY );
+        ((QGraphicsPixmapItem *) m_cursorItemImg)->setOffset(imgOffsetX, imgOffsetY);
 
         //set data flags
-        foreach(dataFlag_w flag, WldPlacingItems::flags)
-            m_cursorItemImg->setData(flag.first, flag.second);
+        for(const dataFlag_w &itemFlag : WldPlacingItems::flags)
+            m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
         m_cursorItemImg->setZValue(7000);
-        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
-        m_placingItemType=PLC_Level;
-        WldPlacingItems::LevelSet.id = itemID;
+        m_placingItemType = PLC_Level;
+        WldPlacingItems::levelSet.id = itemID;
 
         //flood fill uses 'item' cursor
-        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        if(WldPlacingItems::placingMode == WldPlacingItems::PMODE_FloodFill)
         {
-            setFloodFiller(); return;
+            setFloodFiller();
+            return;
         }
         SwitchEditingMode(MODE_PlacingNew);
         break;
     }
 
     case 4: //MusicBox
-        m_placingItemType=PLC_Musicbox;
-        WldPlacingItems::MusicSet.id = itemID;
+    {
+        m_placingItemType = PLC_Musicbox;
+        WldPlacingItems::musicSet.id = itemID;
 
-        WldPlacingItems::gridSz     = m_configs->defaultGrid.general;
-        WldPlacingItems::gridOffset = QPoint(0,0);
+        WldPlacingItems::gridSz = m_configs->defaultGrid.general;
+        WldPlacingItems::gridOffset = QPoint(0, 0);
 
-        WldPlacingItems::c_offset_x = m_configs->defaultGrid.general/2;
-        WldPlacingItems::c_offset_y = m_configs->defaultGrid.general/2;
+        WldPlacingItems::c_offset_x = m_configs->defaultGrid.general / 2;
+        WldPlacingItems::c_offset_y = m_configs->defaultGrid.general / 2;
 
-        m_cursorItemImg = addRect(0,0, m_configs->defaultGrid.general, m_configs->defaultGrid.general);
+        m_cursorItemImg = addRect(0, 0, m_configs->defaultGrid.general, m_configs->defaultGrid.general);
         m_cursorItemImg->setData(ITEM_TYPE, "MUSICBOX");
         m_cursorItemImg->setData(ITEM_ID, QString::number(itemID));
         m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->defaultGrid.general));
         m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->defaultGrid.general));
-        ((QGraphicsRectItem *)m_cursorItemImg)->setBrush(QBrush(Qt::yellow));
-        ((QGraphicsRectItem *)m_cursorItemImg)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
+        auto cursor = qgraphicsitem_cast<QGraphicsRectItem *>(m_cursorItemImg);
+        Q_ASSERT(cursor);
+        cursor->setBrush(QBrush(Qt::yellow));
+        cursor->setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
         m_cursorItemImg->setZValue(7000);
-        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
         SwitchEditingMode(MODE_PlacingNew);
 
         break;
+    }
     case 5: //Get point from a world map
-        m_placingItemType=MODE_SetPoint;
-        WldPlacingItems::MusicSet.id = itemID;
+    {
+        m_placingItemType = MODE_SetPoint;
+        WldPlacingItems::musicSet.id = itemID;
 
-        WldPlacingItems::gridSz=m_configs->defaultGrid.general;
-        WldPlacingItems::gridOffset = QPoint(0,0);
+        WldPlacingItems::gridSz = m_configs->defaultGrid.general;
+        WldPlacingItems::gridOffset = QPoint(0, 0);
 
-        WldPlacingItems::c_offset_x = m_configs->defaultGrid.general/2;
-        WldPlacingItems::c_offset_y = m_configs->defaultGrid.general/2;
+        WldPlacingItems::c_offset_x = m_configs->defaultGrid.general / 2;
+        WldPlacingItems::c_offset_y = m_configs->defaultGrid.general / 2;
 
-        m_cursorItemImg = addRect(0,0, m_configs->defaultGrid.general, m_configs->defaultGrid.general);
+        m_cursorItemImg = addRect(0, 0, m_configs->defaultGrid.general, m_configs->defaultGrid.general);
         m_cursorItemImg->setData(ITEM_TYPE, "WorldMapPoint");
         m_cursorItemImg->setData(ITEM_ID, QString::number(itemID));
         m_cursorItemImg->setData(ITEM_WIDTH, QString::number(m_configs->defaultGrid.general));
         m_cursorItemImg->setData(ITEM_HEIGHT, QString::number(m_configs->defaultGrid.general));
-        ((QGraphicsRectItem *)m_cursorItemImg)->setBrush(QBrush(Qt::yellow));
-        ((QGraphicsRectItem *)m_cursorItemImg)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
+        auto cursor = qgraphicsitem_cast<QGraphicsRectItem *>(m_cursorItemImg);
+        Q_ASSERT(cursor);
+        cursor->setBrush(QBrush(Qt::yellow));
+        cursor->setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
         m_cursorItemImg->setZValue(7000);
-        m_cursorItemImg->setOpacity( 0.8 );
+        m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
 
@@ -493,19 +529,22 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             m_pointSelector.setPoint(m_pointSelector.m_pointCoord);
 
         break;
-        default: break;
     }
-    if(itemType!=5) SwitchEditingMode(MODE_PlacingNew);
-    m_contextMenuIsOpened=false;
+    default:
+        break;
+    }
+    if(itemType != 5) SwitchEditingMode(MODE_PlacingNew);
+    m_contextMenuIsOpened = false;
 }
-
 
 
 void WldScene::setRectDrawer()
 {
     if(m_cursorItemImg)
-        {delete m_cursorItemImg;
-        m_cursorItemImg=NULL;}
+    {
+        delete m_cursorItemImg;
+        m_cursorItemImg = nullptr;
+    }
 
     QPen pen;
     QBrush brush;
@@ -515,31 +554,31 @@ void WldScene::setRectDrawer()
     brush = QBrush(Qt::darkGray);
 
     //Align width and height to fit into item aligning
-    long addW=WldPlacingItems::gridSz-WldPlacingItems::itemW%WldPlacingItems::gridSz;
-    long addH=WldPlacingItems::gridSz-WldPlacingItems::itemH%WldPlacingItems::gridSz;
-    if(addW==WldPlacingItems::gridSz) addW=0;
-    if(addH==WldPlacingItems::gridSz) addH=0;
-    WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
-    WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
+    long addW = WldPlacingItems::gridSz - WldPlacingItems::itemW % WldPlacingItems::gridSz;
+    long addH = WldPlacingItems::gridSz - WldPlacingItems::itemH % WldPlacingItems::gridSz;
+    if(addW == WldPlacingItems::gridSz) addW = 0;
+    if(addH == WldPlacingItems::gridSz) addH = 0;
+    WldPlacingItems::itemW = int(WldPlacingItems::itemW + addW);
+    WldPlacingItems::itemH = int(WldPlacingItems::itemH + addH);
 
     QPixmap oneCell(WldPlacingItems::itemW, WldPlacingItems::itemH);
     oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
     QPainter p(&oneCell);
     p.setBrush(Qt::NoBrush);
     p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
-    p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
+    p.drawRect(0, 0, WldPlacingItems::itemW, WldPlacingItems::itemH);
     brush.setTexture(oneCell);
 
-    m_cursorItemImg = addRect(0,0,1,1, pen, brush);
+    m_cursorItemImg = addRect(0, 0, 1, 1, pen, brush);
 
     //set data flags
-    foreach(dataFlag_w flag, WldPlacingItems::flags)
-        m_cursorItemImg->setData(flag.first, flag.second);
+    for(const dataFlag_w &itemFlag : WldPlacingItems::flags)
+        m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
     m_cursorItemImg->setData(0, "Square");
     m_cursorItemImg->setData(25, "CURSOR");
     m_cursorItemImg->setZValue(7000);
-    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setOpacity(0.5);
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
@@ -549,8 +588,10 @@ void WldScene::setRectDrawer()
 void WldScene::setCircleDrawer()
 {
     if(m_cursorItemImg)
-        {delete m_cursorItemImg;
-        m_cursorItemImg=NULL;}
+    {
+        delete m_cursorItemImg;
+        m_cursorItemImg = nullptr;
+    }
 
     QPen pen;
     QBrush brush;
@@ -560,31 +601,31 @@ void WldScene::setCircleDrawer()
     brush = QBrush(Qt::darkGray);
 
     //Align width and height to fit into item aligning
-    long addW=WldPlacingItems::gridSz-WldPlacingItems::itemW%WldPlacingItems::gridSz;
-    long addH=WldPlacingItems::gridSz-WldPlacingItems::itemH%WldPlacingItems::gridSz;
-    if(addW==WldPlacingItems::gridSz) addW=0;
-    if(addH==WldPlacingItems::gridSz) addH=0;
-    WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
-    WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
+    long addW = WldPlacingItems::gridSz - WldPlacingItems::itemW % WldPlacingItems::gridSz;
+    long addH = WldPlacingItems::gridSz - WldPlacingItems::itemH % WldPlacingItems::gridSz;
+    if(addW == WldPlacingItems::gridSz) addW = 0;
+    if(addH == WldPlacingItems::gridSz) addH = 0;
+    WldPlacingItems::itemW = int(WldPlacingItems::itemW + addW);
+    WldPlacingItems::itemH = int(WldPlacingItems::itemH + addH);
 
     QPixmap oneCell(WldPlacingItems::itemW, WldPlacingItems::itemH);
     oneCell.fill(QColor(0xFF, 0xFF, 0x00, 128));
     QPainter p(&oneCell);
     p.setBrush(Qt::NoBrush);
     p.setPen(QPen(Qt::yellow, 2, Qt::SolidLine));
-    p.drawRect(0,0, WldPlacingItems::itemW, WldPlacingItems::itemH);
+    p.drawRect(0, 0, WldPlacingItems::itemW, WldPlacingItems::itemH);
     brush.setTexture(oneCell);
 
-    m_cursorItemImg = addEllipse(0,0,1,1, pen, brush);
+    m_cursorItemImg = addEllipse(0, 0, 1, 1, pen, brush);
 
     //set data flags
-    foreach(dataFlag_w flag, WldPlacingItems::flags)
-        m_cursorItemImg->setData(flag.first, flag.second);
+    for(const dataFlag_w &itemFlag : WldPlacingItems::flags)
+        m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
     m_cursorItemImg->setData(0, "Circle");
     m_cursorItemImg->setData(25, "CURSOR");
     m_cursorItemImg->setZValue(7000);
-    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setOpacity(0.5);
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
@@ -594,31 +635,33 @@ void WldScene::setCircleDrawer()
 void WldScene::setLineDrawer()
 {
     if(m_cursorItemImg)
-        {delete m_cursorItemImg;
-        m_cursorItemImg=NULL;}
+    {
+        delete m_cursorItemImg;
+        m_cursorItemImg = nullptr;
+    }
 
     QPen pen;
 
     pen = QPen(Qt::transparent, 2);
 
     //Align width and height to fit into item aligning
-    long addW=WldPlacingItems::gridSz-WldPlacingItems::itemW%WldPlacingItems::gridSz;
-    long addH=WldPlacingItems::gridSz-WldPlacingItems::itemH%WldPlacingItems::gridSz;
-    if(addW==WldPlacingItems::gridSz) addW=0;
-    if(addH==WldPlacingItems::gridSz) addH=0;
-    WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
-    WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
+    long addW = WldPlacingItems::gridSz - WldPlacingItems::itemW % WldPlacingItems::gridSz;
+    long addH = WldPlacingItems::gridSz - WldPlacingItems::itemH % WldPlacingItems::gridSz;
+    if(addW == WldPlacingItems::gridSz) addW = 0;
+    if(addH == WldPlacingItems::gridSz) addH = 0;
+    WldPlacingItems::itemW = int(WldPlacingItems::itemW + addW);
+    WldPlacingItems::itemH = int(WldPlacingItems::itemH + addH);
 
-    m_cursorItemImg = addLine(0,0,1,1, pen);
+    m_cursorItemImg = addLine(0, 0, 1, 1, pen);
 
     //set data flags
-    foreach(dataFlag_w flag, WldPlacingItems::flags)
-        m_cursorItemImg->setData(flag.first, flag.second);
+    for(const dataFlag_w &itemFlag : WldPlacingItems::flags)
+        m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
     m_cursorItemImg->setData(0, "Line");
     m_cursorItemImg->setData(25, "CURSOR");
     m_cursorItemImg->setZValue(7000);
-    m_cursorItemImg->setOpacity( 0.5 );
+    m_cursorItemImg->setOpacity(0.5);
     m_cursorItemImg->setVisible(false);
     m_cursorItemImg->setEnabled(true);
 
@@ -634,11 +677,13 @@ void WldScene::setFloodFiller()
 void WldScene::resetCursor()
 {
     if(m_cursorItemImg)
-        {delete m_cursorItemImg;
-        m_cursorItemImg=NULL;}
+    {
+        delete m_cursorItemImg;
+        m_cursorItemImg = nullptr;
+    }
 
-    m_busyMode=false;
-    QPixmap cur(QSize(1,1));
+    m_busyMode = false;
+    QPixmap cur(QSize(1, 1));
     cur.fill(Qt::black);
     m_cursorItemImg = addPixmap(QPixmap(cur));
     m_cursorItemImg->setZValue(1000);
@@ -652,11 +697,11 @@ void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
         if(!show)
         {
             delete m_labelBox;
-            m_labelBox = NULL;
+            m_labelBox = nullptr;
             return;
         }
 
-        if(text!=m_labelBox->text())
+        if(text != m_labelBox->text())
             m_labelBox->setText(text);
         m_labelBox->setPos(pos);
     }

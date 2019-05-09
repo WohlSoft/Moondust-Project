@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class EditMode : public QObject
 {
     Q_OBJECT
 public:
-    explicit EditMode(QString toolTitle, QGraphicsScene *ParentScene = 0, QObject *parent = 0);
+    explicit EditMode(QString toolTitle, QGraphicsScene *ParentScene = nullptr, QObject *parent = nullptr);
     virtual ~EditMode();
     virtual void set();
     QString name() const;

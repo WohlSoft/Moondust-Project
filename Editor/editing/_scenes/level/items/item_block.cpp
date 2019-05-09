@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <mainwindow.h>
 #include <editing/_dialogs/itemselectdialog.h>
+#include <editing/_dialogs/user_data_edit.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
@@ -30,6 +31,8 @@
 #include "../lvl_history_manager.h"
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
+
+#include <editing/_components/history/settings/lvl_block_userdata.hpp>
 
 ItemBlock::ItemBlock(QGraphicsItem *parent)
     : LvlBaseItem(parent)
@@ -137,6 +140,9 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *remove =    ItemMenu.addAction(tr("Remove"));
     QAction *remove_all_s =     ItemMenu.addAction(tr("Remove all %1 in this section").arg("BLOCK-%1").arg(m_data.id));
     QAction *remove_all =       ItemMenu.addAction(tr("Remove all %1").arg("BLOCK-%1").arg(m_data.id));
+    ItemMenu.addSeparator();
+
+    QAction *rawUserData =      ItemMenu.addAction(tr("Edit raw user data..."));
     ItemMenu.addSeparator();
 
     QAction *props =     ItemMenu.addAction(tr("Properties..."));
@@ -458,6 +464,26 @@ typeEventAgain:
         }
 cancelRemoveSSS:
         ;
+    }
+    else if(selected == rawUserData)
+    {
+        UserDataEdit d(m_data.meta.custom_params, m_scene->m_subWindow);
+        int ret = d.exec();
+        if(ret == QDialog::Accepted)
+        {
+            LevelData selData;
+            QString ch = d.getText();
+            foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
+            {
+                if(SelItem->data(ITEM_TYPE).toString() == "Block")
+                {
+                    selData.blocks.push_back(((ItemBlock *)SelItem)->m_data);
+                    ((ItemBlock*) SelItem)->m_data.meta.custom_params = ch;
+                    ((ItemBlock*) SelItem)->arrayApply();
+                }
+            }
+            m_scene->m_history->addChangeSettings(selData, new BlockHistory_UserData(), ch);
+        }
     }
     else if(selected == props)
         m_scene->openProps();

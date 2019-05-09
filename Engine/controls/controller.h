@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef CONTROLLER_H
@@ -32,21 +33,41 @@
 class Controller
 {
 public:
+    /**
+     * \brief Type of controller
+     */
+    enum ControllerType
+    {
+        //! Is a keyboard
+                type_keyboard = 0,
+        //! Is a touch screen of mobile device
+                type_touchscreen,
+        //! Any other controller: joystick, gamepad, etc.
+                type_other
+    };
+
     /*!
      * \brief Constructor
      */
-    Controller();
+    explicit Controller(ControllerType type = type_other);
 
     /*!
-     * \brief Desctructor
+     * \brief Destructor
      */
-    virtual ~Controller();
+    virtual ~Controller() = default;
+
+    /**
+     * \brief Get type of current controller
+     * @return type of controller
+     */
+    ControllerType type() const;
 
     /*!
      * \brief Control key command codes
      */
     enum commands
     {
+        key_BEGIN = 0,
         key_start = 0,
         key_left,
         key_right,
@@ -56,7 +77,8 @@ public:
         key_jump,
         key_altrun,
         key_altjump,
-        key_drop
+        key_drop,
+        key_END
     };
 
     /*!
@@ -105,6 +127,8 @@ public:
 protected:
     //! Current control keys map
     KeyMap kmap;
+    //! Type of controller
+    const ControllerType m_controllerType;
 
 private:
     //! Array of registered controllabl objects

@@ -122,6 +122,7 @@ if(PGE_ENABLE_STATIC_QT)
                 CoreServices
                 AppKit
                 ApplicationServices
+                Metal
                 CoreFoundation
                 CoreGraphics
                 OpenGL
@@ -281,7 +282,7 @@ if(PGE_ENABLE_STATIC_QT)
             find_library(QT_GL GL)
             list(APPEND QT_FOUND_EXTRA_LIBS ${QT_GL})
 
-            find_library(QT_DL glib NAMES dl)
+            find_library(QT_DL dl)
             if(QT_DL)
                 # message("==DL detected! (${QT_DL})==")
                 list(APPEND QT_FOUND_EXTRA_LIBS ${QT_DL})

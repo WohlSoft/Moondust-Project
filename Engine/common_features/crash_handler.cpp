@@ -1,33 +1,41 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <SDL2/SDL_messagebox.h>
+#include <SDL2/SDL_version.h>
+#include <SDL2/SDL_mixer_ext.h>
 #include <cstdlib>
 #include <signal.h>
 #include <common_features/tr.h>
 #include <settings/debugger.h>
 
 #ifdef _WIN32
-#include <windows.h>
-#include <dbghelp.h>
+#   include <windows.h>
+#   include <dbghelp.h>
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
-#include <execinfo.h>
-#include <unistd.h>
+#   include <execinfo.h>
+#   include <unistd.h>
+#elif defined(__ANDROID__)
+#   include <unwind.h>
+#   include <dlfcn.h>
+#   include <sstream>
+#   include <iomanip>
 #endif
 
 #include "crash_handler.h"
@@ -42,14 +50,21 @@
     "===================\n" \
     "%s"
 
+#define STR_EXPAND(tok) #tok
+#define STR(tok) STR_EXPAND(tok)
+
 static const char *g_messageToUser =
     "================================================\n"
     "            Additional information:\n"
     "================================================\n"
     V_FILE_DESC " version: " V_FILE_VERSION V_FILE_RELEASE "\n"
     "Architecture: " FILE_CPU "\n"
-    "GIT Revision code: " GIT_VERSION "\n"
-	"Build date: " V_DATE_OF_BUILD "\n"
+    "GIT Revision code: " V_BUILD_VER "\n"
+    "GIT branch: " V_BUILD_BRANCH "\n"
+    "Build date: " V_DATE_OF_BUILD "\n"
+    "================================================\n"
+    "SDL2 " STR(SDL_MAJOR_VERSION) "." STR(SDL_MINOR_VERSION) "." STR(SDL_PATCHLEVEL) "\n"
+    "SDL Mixer X " STR(SDL_MIXER_MAJOR_VERSION) "." STR(SDL_MIXER_MINOR_VERSION) "." STR(SDL_MIXER_PATCHLEVEL) "\n"
     "================================================\n"
     " Please send this log file to the developers by one of ways:\n"
     " - Via contact form:          http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin\n"
@@ -101,6 +116,55 @@ static bool GetStackWalk(std::string &outWalk)
 }
 #endif
 
+#ifdef __ANDROID__
+namespace AndroidStackTrace
+{
+    struct BacktraceState
+    {
+        void** current;
+        void** end;
+    };
+
+    static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context* context, void* arg)
+    {
+        BacktraceState* state = static_cast<BacktraceState*>(arg);
+        uintptr_t pc = _Unwind_GetIP(context);
+        if (pc) {
+            if (state->current == state->end) {
+                return _URC_END_OF_STACK;
+            } else {
+                *state->current++ = reinterpret_cast<void*>(pc);
+            }
+        }
+        return _URC_NO_REASON;
+    }
+
+}
+
+static size_t captureBacktrace(void** buffer, size_t max)
+{
+    AndroidStackTrace::BacktraceState state = {buffer, buffer + max};
+    _Unwind_Backtrace(AndroidStackTrace::unwindCallback, &state);
+
+    return state.current - buffer;
+}
+
+static void androidDumpBacktrace(std::ostringstream &os, void **buffer, size_t count)
+{
+    for (size_t idx = 0; idx < count; ++idx) {
+        const void* addr = buffer[idx];
+        const char* symbol = "";
+
+        Dl_info info;
+        if (dladdr(addr, &info) && info.dli_sname) {
+            symbol = info.dli_sname;
+        }
+
+        os << "  #" << std::setw(2) << idx << ": " << addr << "  " << symbol << "\n";
+    }
+}
+#endif
+
 static std::string getStacktrace()
 {
 #if defined(_WIN32)
@@ -113,6 +177,7 @@ static std::string getStacktrace()
     std::string stack;
     GetStackWalk(stack);
     return stack;
+
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
     void  *array[400];
     int size;
@@ -122,7 +187,7 @@ static std::string getStacktrace()
     D_pLogDebugNA("Converting...");
     strings = backtrace_symbols(array, size);
     D_pLogDebugNA("Initializing std::string...");
-    std::string bkTrace("");
+    std::string bkTrace;
     D_pLogDebugNA("Filling std::string...");
 
     for(int j = 0; j < size; j++)
@@ -133,13 +198,19 @@ static std::string getStacktrace()
 
     D_pLogDebugNA("DONE!");
     return bkTrace;
+
+#elif defined(__ANDROID__)
+    const size_t max = 400;
+    void* buffer[max];
+    std::ostringstream oss;
+    androidDumpBacktrace(oss, buffer, captureBacktrace(buffer, max));
+    D_pLogDebugNA("DONE!");
+    return oss.str();
+
 #else
     return std::string("<Stack trace not supported for this platform!>");
 #endif
 }
-
-CrashHandler::CrashHandler()
-{}
 
 static void msgBox(std::string title, std::string text)
 {
@@ -172,7 +243,7 @@ static void msgBox(std::string title, std::string text)
     mbox.numbuttons     = 1;
     mbox.buttons        = &mboxButton;
     mbox.colorScheme    = &colorScheme;
-    SDL_ShowMessageBox(&mbox, NULL);
+    SDL_ShowMessageBox(&mbox, nullptr);
 }
 
 #ifdef __GNUC__
@@ -193,7 +264,7 @@ static LLVM_ATTRIBUTE_NORETURN void abortEngine(int signal)
 void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByUnhandledException()
 {
     std::string stack = getStacktrace();
-    std::string exc = "";
+    std::string exc;
 
     try
     {
@@ -483,7 +554,7 @@ struct siginfo_t;
 
 static void handle_signalWIN32(int signal)
 {
-    handle_signal(signal, NULL, NULL);
+    handle_signal(signal, nullptr, nullptr);
 }
 #endif
 
@@ -502,19 +573,19 @@ void CrashHandler::initSigs()
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = handle_signal;
     act.sa_flags = SA_SIGINFO;
-    sigaction(SIGHUP,  &act, NULL);
-    sigaction(SIGQUIT, &act, NULL);
-    //sigaction(SIGKILL, &act, NULL); This signal is unhandlable
-    sigaction(SIGALRM, &act, NULL);
-    sigaction(SIGURG,  &act, NULL);
-    sigaction(SIGUSR1, &act, NULL);
-    sigaction(SIGUSR2, &act, NULL);
-    sigaction(SIGBUS,  &act, NULL);
-    sigaction(SIGILL,  &act, NULL);
-    sigaction(SIGFPE,  &act, NULL);
-    sigaction(SIGSEGV, &act, NULL);
-    sigaction(SIGINT,  &act, NULL);
-    sigaction(SIGABRT, &act, NULL);
+    sigaction(SIGHUP,  &act, nullptr);
+    sigaction(SIGQUIT, &act, nullptr);
+    //sigaction(SIGKILL, &act, nullptr); This signal is unhandlable
+    sigaction(SIGALRM, &act, nullptr);
+    sigaction(SIGURG,  &act, nullptr);
+    sigaction(SIGUSR1, &act, nullptr);
+    sigaction(SIGUSR2, &act, nullptr);
+    sigaction(SIGBUS,  &act, nullptr);
+    sigaction(SIGILL,  &act, nullptr);
+    sigaction(SIGFPE,  &act, nullptr);
+    sigaction(SIGSEGV, &act, nullptr);
+    sigaction(SIGINT,  &act, nullptr);
+    sigaction(SIGABRT, &act, nullptr);
 #else
     signal(SIGILL,  &handle_signalWIN32);
     signal(SIGFPE,  &handle_signalWIN32);

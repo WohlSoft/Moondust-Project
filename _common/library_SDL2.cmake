@@ -1,7 +1,8 @@
 set(SDL2_VIA_AUTOTOOLS 0)
+set(SDL2_USE_SYSTEM 0)
 
-if(HAIKU OR ANDROID)
-    set(SDL2_VIA_AUTOTOOLS 1)
+if(HAIKU)
+    set(SDL2_USE_SYSTEM 1)
 endif()
 
 # Not needed for now
@@ -12,8 +13,77 @@ endif()
 #    set(PATCH_CMD "C:/Program Files/Git/usr/bin/patch.exe")
 #endif()
 
+if(WIN32)
+    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
+elseif(APPLE)
+    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dylib")
+else()
+    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.so")
+endif()
+
+if(WIN32)
+    # list(APPEND FOUND_LIBS "${_mixerx_SEARCH_PATHS}/libSDL2_mixer_ext-static${MIX_DEBUG_SUFFIX}.a")
+    set(SDL2_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2-static${PGE_LIBS_DEBUG_SUFFIX}.a")
+else()
+    set(SDL2_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.a")
+endif()
+
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
-if(SDL2_VIA_AUTOTOOLS)
+if(ANDROID)
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        set(SDL2_DEBUG_SUFFIX "d")
+    else()
+        set(SDL2_DEBUG_SUFFIX "")
+    endif()
+    ExternalProject_Add(SDL2_Local_Build
+        PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-NDK
+        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
+        CONFIGURE_COMMAND ""
+        INSTALL_COMMAND ""
+        BUILD_COMMAND ${ANDROID_NDK}/ndk-build -C ${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build SDL2 SDL2_main hidapi
+        NDK_PROJECT_PATH=null
+        APP_BUILD_SCRIPT=${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/Android.mk
+        # NDK_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../..
+        NDK_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/
+        # NDK_LIBS_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/..
+        NDK_LIBS_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-libs-out/
+        APP_ABI=${ANDROID_ABI}
+        NDK_ALL_ABIS=${ANDROID_ABI}
+        APP_PLATFORM=${ANDROID_PLATFORM}
+        BUILD_BYPRODUCTS
+            ${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/libSDL2.so
+            "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+            "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
+    )
+    add_custom_target(SDL2_Local ALL
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/include/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
+        # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2${SDL2_DEBUG_SUFFIX}.a"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2main.a" "${CMAKE_BINARY_DIR}/lib/libSDL2main${SDL2_DEBUG_SUFFIX}.a"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libstdc++.a" "${CMAKE_BINARY_DIR}/lib/libstdc++.a"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_BINARY_DIR}/lib"
+        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
+        DEPENDS SDL2_Local_Build
+    )
+    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
+    set_property(TARGET SDL2LibrarySO PROPERTY
+        IMPORTED_LOCATION
+        "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+    )
+    add_library(HIDAPILibrary SHARED IMPORTED GLOBAL)
+    set_property(TARGET HIDAPILibrary PROPERTY
+        IMPORTED_LOCATION
+        "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
+    )
+elseif(SDL2_USE_SYSTEM)
+    find_package(SDL2 REQUIRED)
+    message("== SDL2 will be used from system!")
+    add_custom_target(SDL2_Local ALL
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
+        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_INCLUDE_DIRS}/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
+    )
+elseif(SDL2_VIA_AUTOTOOLS)
     # ============================================================
     # Autotools build of SDL2 on platforms where CMake build is incomplete or not supported
     # ============================================================
@@ -35,6 +105,9 @@ if(SDL2_VIA_AUTOTOOLS)
         INSTALL_DIR make install
             COMMAND ln -s "libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2d.a"
             COMMAND ln -s "libSDL2.so" "${CMAKE_BINARY_DIR}/lib/libSDL2d.so"
+        BUILD_BYPRODUCTS
+            "${SDL2_SO_Lib}"
+            "${SDL2_A_Lib}"
     )
 else()
     # ============================================================
@@ -51,13 +124,28 @@ else()
             "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
             "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
             "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
-            "-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}"
+            $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
             -DSDL_SHARED=${PGE_SHARED_SDLMIXER}
-            $<$<BOOL:WIN32>:-DWASAPI=OFF>
+            # $<$<BOOL:WIN32>:-DWASAPI=OFF>  #For some experiment, enable WASAPI support
             $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
             $<$<BOOL:LINUX>:-DSNDIO=OFF>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DEXTRA_CFLAGS=-s USE_PTHREADS=1>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS=ON>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS_SEM=ON>
+        BUILD_BYPRODUCTS
+            "${SDL2_SO_Lib}"
+            "${SDL2_A_Lib}"
+    )
+    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
+    if(WIN32)
+        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_IMPLIB "${SDL2_SO_Lib}")
+    else()
+        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_LOCATION "${SDL2_SO_Lib}")
+    endif()
+
+    add_library(SDL2LibraryA STATIC IMPORTED GLOBAL)
+    set_property(TARGET SDL2LibraryA PROPERTY
+        IMPORTED_LOCATION
+        "${SDL2_A_Lib}"
     )
 endif()
