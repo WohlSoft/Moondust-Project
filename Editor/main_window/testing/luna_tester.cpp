@@ -87,7 +87,7 @@ QString pathUnixToWine(const QString &unixPath)
     return windowsPath;
 }
 #else
-#   define pathUnixToWine(unixPath) // dummy, no need on real Windows
+#   define pathUnixToWine(unixPath) (unixPath) // dummy, no need on real Windows
 #endif
 
 LunaTester::LunaTester() :
