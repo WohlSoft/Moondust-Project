@@ -114,12 +114,10 @@ public:
     std::string readFromIPC();
     QString readFromIPCQ();
 public slots:
-#ifndef LUNA_TESTER_32
     void start(const QString &program, const QStringList &arguments, bool *ok);
     void write(const QString &out, bool *ok);
     void write(const std::string &out, bool *ok);
     void read(std::string *in);
-#endif
 
     void killEngine();
     /********Menu items*******/
@@ -191,7 +189,9 @@ private:
     LunaLoaderResult LunaHexerRun(const wchar_t *pathToLegacyEngine,
                                   const wchar_t *cmdLineArgs,
                                   const wchar_t *workingDir);
+#endif
 
+#ifdef LUNA_TESTER_32
     /**
      * @brief Starts legacy engine with attaching LunaLUA library by in-memory patching way
      * @param pathToLegacyEngine full path to legacy engine executive
@@ -203,5 +203,6 @@ private:
                                    const wchar_t *cmdLineArgs,
                                    const wchar_t *workingDir);
 #endif
+
 };
 #endif // LUNA_TESTER_H

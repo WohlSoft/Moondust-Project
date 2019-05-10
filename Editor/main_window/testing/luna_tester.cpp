@@ -342,7 +342,7 @@ bool LunaTester::writeToIPC(const std::string &out)
 bool LunaTester::writeToIPC(const QString &out)
 {
 #ifdef LUNA_TESTER_32
-    return writeIPC(m_ipc_pipe_out, out);
+    return writeIPC(m_ipc_pipe_out, out.toStdString());
 #else
 //    QByteArray o = out.toUtf8();
 //    bool ret = m_process.write(o) == qint64(o.size());
@@ -381,33 +381,52 @@ QString LunaTester::readFromIPCQ()
 #endif
 }
 
-#ifndef LUNA_TESTER_32
+
 void LunaTester::start(const QString &program, const QStringList &arguments, bool *ok)
 {
+#ifndef LUNA_TESTER_32
     m_process.start(program, arguments);
     *ok = m_process.waitForStarted();
+#else
+    Q_UNUSED(program);
+    Q_UNUSED(arguments);
+    Q_UNUSED(ok);
+#endif
 }
 
 void LunaTester::write(const QString &out, bool *ok)
 {
+#ifndef LUNA_TESTER_32
     QByteArray o = out.toUtf8();
     *ok = m_process.write(o) == qint64(o.size());
     m_process.waitForBytesWritten();
+#else
+    Q_UNUSED(out);
+    Q_UNUSED(ok);
+#endif
 }
 
 void LunaTester::write(const std::string &out, bool *ok)
 {
+#ifndef LUNA_TESTER_32
     *ok = m_process.write(out.c_str(), out.size()) == qint64(out.size());
     m_process.waitForBytesWritten();
+#else
+    Q_UNUSED(out);
+    Q_UNUSED(ok);
+#endif
 }
 
 void LunaTester::read(std::string *in)
 {
+#ifndef LUNA_TESTER_32
     m_process.waitForReadyRead();
     *in = readIPC(m_process);
+#else
+    Q_UNUSED(in);
+#endif
 }
 
-#endif
 
 void LunaTester::killEngine()
 {
@@ -747,6 +766,7 @@ static std::string readIPC(QProcess &input)
 
 #ifdef LUNA_TESTER_32
 
+#   ifdef USE_LUNAHEXER
 static void patch(FILE *f, unsigned int at, void *data, unsigned int size)
 {
     fseek(f, at, SEEK_SET);
@@ -877,7 +897,6 @@ static int patchSMBX(const LUNACHAR *srcexe, const LUNACHAR *dstexe)
     return 0;
 }
 
-
 LunaTester::LunaLoaderResult LunaTester::LunaHexerRun(
     const wchar_t *pathToLegacyEngine,
     const wchar_t *cmdLineArgs,
@@ -969,7 +988,7 @@ LunaTester::LunaLoaderResult LunaTester::LunaHexerRun(
 
     return LUNALOADER_OK;
 }
-
+#   endif //USE_LUNAHEXER
 
 
 static inline void setJmpAddr(uint8_t *patch, DWORD patchAddr, DWORD patchOffset, intptr_t target)
@@ -1120,7 +1139,8 @@ LunaTester::LunaLoaderResult LunaTester::LunaLoaderRun(
 
     return LUNALOADER_OK;
 }
-#endif
+
+#endif //LUNA_TESTER_32
 
 bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled)
 {
