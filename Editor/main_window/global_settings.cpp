@@ -90,9 +90,8 @@ QString ConfStatus::configName="";
 QString ConfStatus::configPath="";
 
 QString ConfStatus::configDataPath="";
-#ifdef _WIN32
+
 QString ConfStatus::SmbxEXE_Name="";
 bool    ConfStatus::SmbxTest_By_Default=false;
-#endif
 
 QString ConfStatus::defaultTheme="";

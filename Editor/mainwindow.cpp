@@ -26,9 +26,7 @@
 #include <common_features/logger_sets.h>
 #include <common_features/main_window_ptr.h>
 
-#ifdef Q_OS_WIN
 #include <main_window/testing/luna_tester.h>
-#endif
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
@@ -53,9 +51,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     LogDebug(QString("Setting Lang..."));
     setDefLang();
 
-#ifdef Q_OS_WIN
     m_luna = new LunaTester;
-#endif
 
     LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
@@ -160,14 +156,12 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
 
         applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
 
-        #ifdef Q_OS_WIN
         m_luna->initLunaMenu(this,
                              ui->menuTest,
                              ui->action_Start_Engine,
                              ui->action_doTest,
                              ui->action_doSafeTest,
                              ui->action_Start_Engine);
-        #endif
 
         splash.progressTitle(tr("Initializing dock widgets..."));
 
@@ -221,9 +215,9 @@ MainWindow::~MainWindow()
 #ifdef Q_OS_WIN
     if(pge_thumbbar)
         delete pge_thumbbar;
+#endif
     if(m_luna)
         delete m_luna;
-#endif
     delete ui;
 
     MainWinConnect::pMainWin = nullptr;

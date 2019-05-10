@@ -29,9 +29,8 @@
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
-#ifdef _WIN32
+
 #include <main_window/testing/luna_tester.h>
-#endif
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -218,14 +217,12 @@ void MainWindow::loadSettings()
     }
     settings.endGroup();
 
-    #ifdef _WIN32
     settings.beginGroup("LunaTester");
     {
         m_luna->m_noGL = settings.value("nogl", false).toBool();
         m_luna->m_killPreviousSession = settings.value("kill-engine-on-every-test", false).toBool();
     }
     settings.endGroup();
-    #endif
 }
 
 
@@ -361,14 +358,12 @@ void MainWindow::saveSettings()
     }
     settings.endGroup();
 
-    #ifdef _WIN32
     settings.beginGroup("LunaTester");
     {
         settings.setValue("nogl", m_luna->m_noGL);
         settings.setValue("kill-engine-on-every-test", m_luna->m_killPreviousSession);
     }
     settings.endGroup();
-    #endif
 
     settings.beginGroup("logging");
     {

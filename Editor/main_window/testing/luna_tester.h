@@ -20,17 +20,21 @@
 #ifndef LUNA_TESTER_H
 #define LUNA_TESTER_H
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_WIN64)
+#define LUNA_TESTER_32
+#endif
+
 #include <QFuture>
 #include <QMutex>
-#include <windows.h>
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <common_features/safe_msg_box.h>
 class QMenu;
 class QAction;
 class MainWindow;
+#ifdef LUNA_TESTER_32
+#include <windows.h>
 #else
-#include <QObject>
+#include <QProcess>
 #endif
 
 /**
@@ -41,7 +45,6 @@ class LunaTester : public QObject
     Q_OBJECT
 
 public:
-    #ifdef Q_OS_WIN
     /**
      * @brief LunaLoader result code
      */
@@ -53,7 +56,7 @@ public:
     };
 
     LunaTester();
-    ~LunaTester();
+    ~LunaTester() override;
     //! Pointer to main window
     MainWindow *m_mw = nullptr;
     //! List of registered menu items
@@ -77,6 +80,8 @@ public:
      * @brief Refresh menu text
      */
     void retranslateMenu();
+
+#ifdef LUNA_TESTER_32
     //! LunaLoader process information
     PROCESS_INFORMATION m_pi;
     //! LunaLUA IPC Out pipe
@@ -87,6 +92,9 @@ public:
     HANDLE              m_ipc_pipe_in = 0;
     //! LunaLUA IPC In pipe backend
     HANDLE              m_ipc_pipe_in_o = 0;
+#else
+    QProcess            m_process;
+#endif
     //! Helper which protects from editor freezing
     QFuture<void>       m_helper;
     //! Ranner thread
@@ -96,9 +104,25 @@ public:
     //! Disable OpenGL on LunaLua side
     bool                m_noGL = false;
     bool                m_killPreviousSession = false;
+
+    bool isEngineActive();
+    bool isInPipeOpen();
+    bool isOutPipeOpen();
+
+    bool writeToIPC(const std::string &out);
+    bool writeToIPC(const QString &out);
+    std::string readFromIPC();
+    QString readFromIPCQ();
 public slots:
-    /********Menu items*******/
+#ifndef LUNA_TESTER_32
+    void start(const QString &program, const QStringList &arguments, bool *ok);
+    void write(const QString &out, bool *ok);
+    void write(const std::string &out, bool *ok);
+    void read(std::string *in);
+#endif
+
     void killEngine();
+    /********Menu items*******/
     /**
      * @brief Start testing of currently opened level
      */
@@ -156,6 +180,7 @@ private:
      */
     bool sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled);
 
+#ifdef USE_LUNAHEXER
     /**
      * @brief Starts legacy engine with attaching LunaLUA library by hexing way
      * @param pathToLegacyEngine full path to legacy engine executive
@@ -177,6 +202,6 @@ private:
     LunaLoaderResult LunaLoaderRun(const wchar_t *pathToLegacyEngine,
                                    const wchar_t *cmdLineArgs,
                                    const wchar_t *workingDir);
-    #endif
+#endif
 };
 #endif // LUNA_TESTER_H
