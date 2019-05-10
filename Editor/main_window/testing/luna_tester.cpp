@@ -39,6 +39,11 @@
 #include <QMenu>
 #include <QAction>
 #include <QtConcurrentRun>
+
+//#ifdef _WIN64
+//#define USE_LUNAHEXER
+//#endif
+
 #include "luna_tester.h"
 
 #ifdef LUNA_TESTER_32
@@ -52,16 +57,11 @@
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>
 
-//#ifdef _WIN64
-//#define USE_LUNAHEXER
-//#endif
-
-
 class QThreadPointNuller
 {
     QThread **pointer;
 public:
-    QThreadPointNuller(QThread **ptr) : pointer(ptr) {}
+    explicit QThreadPointNuller(QThread **ptr) : pointer(ptr) {}
     ~QThreadPointNuller()
     {
         *pointer = nullptr;
@@ -75,9 +75,25 @@ static std::string readIPC(HANDLE hInputRead);
 static std::string readIPC(QProcess &input);
 #endif
 
+#ifndef _WIN32
+QString pathUnixToWine(const QString &unixPath)
+{
+    QProcess winePath;
+    QStringList args;
+    args << "--windows" << unixPath;
+    winePath.start("winepath", args);
+    winePath.waitForFinished();
+    QString windowsPath = winePath.readAllStandardOutput();
+    return windowsPath;
+}
+#else
+#   define pathUnixToWine(unixPath) // dummy, no need on real Windows
+#endif
+
 LunaTester::LunaTester() :
     QObject(nullptr),
     m_mw(nullptr),
+    m_menuItems{nullptr},
 #ifdef LUNA_TESTER_32
     m_pi{0, 0, 0, 0},
     m_ipc_pipe_out(0),
@@ -85,7 +101,7 @@ LunaTester::LunaTester() :
     m_ipc_pipe_in(0),
     m_ipc_pipe_in_o(0),
 #endif
-    m_helperThread(0),
+    m_helperThread(nullptr),
     m_noGL(false)
 {}
 
@@ -1166,15 +1182,19 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
     jsonObj["method"] = "testLevel";
 
     QJsonObject JSONparams;
+    QString levelPathOut;
+    QString smbxPath = ConfStatus::configDataPath;
 
     if(!isUntitled)
     {
         if(!hasLvlxSupport && levelPath.endsWith(".lvlx", Qt::CaseInsensitive))
             levelPath.remove(levelPath.size() - 1, 1);
-        JSONparams["filename"] = levelPath;
+        levelPathOut = levelPath;
     }
     else
-        JSONparams["filename"] = ApplicationPath + "/worlds/untitled.lvl" + (hasLvlxSupport ? "x" : "");
+        levelPathOut = smbxPath + "/worlds/untitled.lvl" + (hasLvlxSupport ? "x" : "");
+
+    JSONparams["filename"] = pathUnixToWine(levelPathOut);
 
     QJsonArray JSONPlayers;
     QJsonObject JSONPlayer1, JSONPlayer2;
@@ -1506,7 +1526,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
 #ifdef LUNA_TESTER_32
         QString command = smbxPath + ConfStatus::SmbxEXE_Name;
 #else
-        QString command = smbxPath + "LunaLoader.exe";
+        QString command = smbxPath + "LunaLoader-exec.exe";
 #endif
         QStringList params;
 
@@ -1791,7 +1811,7 @@ void LunaTester::lunaRunGame()
 #ifdef LUNA_TESTER_32
     QString command = smbxPath + ConfStatus::SmbxEXE_Name;
 #else
-    QString command = smbxPath + "LunaLoader.exe";
+    QString command = smbxPath + "LunaLoader-exec.exe";
 #endif
 
     if(!QFile(command).exists())
@@ -1813,7 +1833,13 @@ void LunaTester::lunaRunGame()
         params << "--nogl";
 
     if(!QFile(smbxPath + "LunaDll.dll").exists())
-        QProcess::startDetached(command, params, smbxPath);
+    {
+#   ifndef _WIN32
+        params.push_front(command);
+        command = "wine";
+#   endif
+        QProcess::startDetached(command, params, pathUnixToWine(smbxPath));
+    }
     else
     {
 #ifdef LUNA_TESTER_32
@@ -1866,10 +1892,11 @@ void LunaTester::lunaRunGame()
         params.push_front(command);
         command = "wine";
 #   endif
-        QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
-                                  Q_ARG(const QString &, command),
-                                  Q_ARG(const QStringList &, params),
-                                  Q_ARG(bool*, &engineStartedSuccess));
+        start(command, params, &engineStartedSuccess);
+//        QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
+//                                  Q_ARG(const QString &, command),
+//                                  Q_ARG(const QStringList &, params),
+//                                  Q_ARG(bool*, &engineStartedSuccess));
 #endif
         if(!engineStartedSuccess)
         {

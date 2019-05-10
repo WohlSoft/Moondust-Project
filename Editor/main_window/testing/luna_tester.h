@@ -56,7 +56,7 @@ public:
     };
 
     LunaTester();
-    ~LunaTester();
+    ~LunaTester() override;
     //! Pointer to main window
     MainWindow *m_mw = nullptr;
     //! List of registered menu items
@@ -121,7 +121,7 @@ public slots:
     void read(std::string *in);
 #endif
 
-    void killEngine();    
+    void killEngine();
     /********Menu items*******/
     /**
      * @brief Start testing of currently opened level
@@ -180,6 +180,7 @@ private:
      */
     bool sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled);
 
+#ifdef USE_LUNAHEXER
     /**
      * @brief Starts legacy engine with attaching LunaLUA library by hexing way
      * @param pathToLegacyEngine full path to legacy engine executive
@@ -201,6 +202,6 @@ private:
     LunaLoaderResult LunaLoaderRun(const wchar_t *pathToLegacyEngine,
                                    const wchar_t *cmdLineArgs,
                                    const wchar_t *workingDir);
-
+#endif
 };
 #endif // LUNA_TESTER_H
