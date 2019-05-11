@@ -46,6 +46,16 @@
 
 #include "luna_tester.h"
 
+#ifndef _WIN32
+#   ifdef __APPLE__
+#       define WINE_PREFIX_BIN "/usr/local/bin/"
+#   else
+#       define WINE_PREFIX_BIN
+#   endif
+#   define WINE_EXECUTIBLE WINE_PREFIX_BIN "wine"
+#   define WINEPATH_EXECUTIBLE WINE_PREFIX_BIN "winepath"
+#endif
+
 #ifdef LUNA_TESTER_32
 #include <windows.h>
 #endif
@@ -81,7 +91,7 @@ QString pathUnixToWine(const QString &unixPath)
     QProcess winePath;
     QStringList args;
     args << "--windows" << unixPath;
-    winePath.start("winepath", args);
+    winePath.start(WINEPATH_EXECUTIBLE, args);
     winePath.waitForFinished();
     QString windowsPath = winePath.readAllStandardOutput();
     return windowsPath;
@@ -382,15 +392,20 @@ QString LunaTester::readFromIPCQ()
 }
 
 
-void LunaTester::start(const QString &program, const QStringList &arguments, bool *ok)
+void LunaTester::start(const QString &program, const QStringList &arguments, bool *ok, QString *errorString)
 {
 #ifndef LUNA_TESTER_32
+    LogDebug(QString("LunaTester: starting command: %1 %2").arg(program).arg(arguments.join(' ')));
     m_process.start(program, arguments);
     *ok = m_process.waitForStarted();
+    *errorString = m_process.errorString();
+    if(!*ok)
+        LogWarning(QString("LunaTester: startup error: %1").arg(*errorString));
 #else
     Q_UNUSED(program);
     Q_UNUSED(arguments);
     Q_UNUSED(ok);
+    Q_UNUSED(errorString);
 #endif
 }
 
@@ -1774,14 +1789,16 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             bool engineStartedSuccess = (res == LUNALOADER_OK);
 #else
             bool engineStartedSuccess = true;
+            QString engineStartupErrorString;
 #   ifndef _WIN32
             params.push_front(command);
-            command = "wine";
+            command = WINE_EXECUTIBLE;
 #   endif
             QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
                                       Q_ARG(const QString &, command),
                                       Q_ARG(const QStringList &, params),
-                                      Q_ARG(bool*, &engineStartedSuccess));
+                                      Q_ARG(bool*, &engineStartedSuccess),
+                                      Q_ARG(QString*, &engineStartupErrorString));
 #endif
 
             if(engineStartedSuccess)
@@ -1802,7 +1819,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             }
             else
             {
-                QString luna_error = "Unknown error";
+                QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
 
 #ifdef LUNA_TESTER_32
                 switch(res)
@@ -1856,7 +1873,7 @@ void LunaTester::lunaRunGame()
     {
 #   ifndef _WIN32
         params.push_front(command);
-        command = "wine";
+        command = WINE_EXECUTIBLE;
 #   endif
         QProcess::startDetached(command, params, pathUnixToWine(smbxPath));
     }
@@ -1908,11 +1925,12 @@ void LunaTester::lunaRunGame()
         bool engineStartedSuccess = (res == LUNALOADER_OK);
 #else
         bool engineStartedSuccess = true;
+        QString engineStartupErrorString;
 #   ifndef _WIN32
         params.push_front(command);
         command = "wine";
 #   endif
-        start(command, params, &engineStartedSuccess);
+        start(command, params, &engineStartedSuccess, &engineStartupErrorString);
 //        QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
 //                                  Q_ARG(const QString &, command),
 //                                  Q_ARG(const QStringList &, params),
@@ -1920,7 +1938,7 @@ void LunaTester::lunaRunGame()
 #endif
         if(!engineStartedSuccess)
         {
-            QString luna_error = "Unknown error";
+            QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
 
 #ifdef LUNA_TESTER_32
             switch(res)

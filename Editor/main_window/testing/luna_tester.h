@@ -114,7 +114,7 @@ public:
     std::string readFromIPC();
     QString readFromIPCQ();
 public slots:
-    void start(const QString &program, const QStringList &arguments, bool *ok);
+    void start(const QString &program, const QStringList &arguments, bool *ok, QString *errorString = nullptr);
     void write(const QString &out, bool *ok);
     void write(const std::string &out, bool *ok);
     void read(std::string *in);
