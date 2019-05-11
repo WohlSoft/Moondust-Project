@@ -1187,11 +1187,11 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
         {
             std::string resultMsg = readFromIPC();
             LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
-            QJsonParseError err;
-            QJsonDocument jsonOut;
-            if(stringToJson(resultMsg, jsonOut, err))
+            QJsonParseError errData;
+            QJsonDocument jsonOutData;
+            if(stringToJson(resultMsg, jsonOutData, errData))
             {
-                QJsonObject obj = jsonOut.object();
+                QJsonObject obj = jsonOutData.object();
                 QJsonObject result = obj["result"].toObject();
                 if(!result["LVLX"].isNull())
                 {
@@ -1199,9 +1199,9 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
                     LogDebug("LunaTester: <- Yes! LVLX is supported!");
                 }
             }
-            if(err.error != QJsonParseError::NoError)
+            if(errData.error != QJsonParseError::NoError)
             {
-                LogDebug("LunaTester: <- Oops, fail to parse: " + err.errorString());
+                LogDebug("LunaTester: <- Oops, fail to parse: " + errData.errorString());
             }
         }
 
@@ -1481,7 +1481,7 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
     return false;
 }
 
-void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, bool isUntitled)
+void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPath, bool isUntitled)
 {
     QMutexLocker mlocker(&this->m_engine_mutex);
     Q_UNUSED(mlocker);
@@ -1524,7 +1524,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
 
 #ifdef LUNA_TESTER_32
         DWORD lpExitCode = 0;
-#endif
+#endif //LUNA_TESTER_32
         if(isEngineActive())
         {
             if(isOutPipeOpen())
@@ -1553,7 +1553,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                 CloseHandle(this->m_pi.hProcess);
 #else
                 killEngine();
-#endif
+#endif //LUNA_TESTER_32
             }
             return;
         }
@@ -1742,7 +1742,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
             // not sure how efficient it is
             QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-#endif
+#endif //LUNA_TESTER_32
             return;
 
         }
@@ -1787,7 +1787,19 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                                                  smbxPath.toStdWString().c_str());
             #endif
             bool engineStartedSuccess = (res == LUNALOADER_OK);
-#else
+            QString engineStartupErrorString;
+            switch(res)
+            {
+            case LUNALOADER_CREATEPROCESS_FAIL:
+                engineStartupErrorString = LunaTester::tr("process execution is failed.");
+                break;
+            case LUNALOADER_PATCH_FAIL:
+                engineStartupErrorString = LunaTester::tr("patching has failed.");
+                break;
+            default:
+                break;
+            }
+#else //LUNA_TESTER_32
             bool engineStartedSuccess = true;
             QString engineStartupErrorString;
 #   ifndef _WIN32
@@ -1799,7 +1811,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
                                       Q_ARG(const QStringList &, params),
                                       Q_ARG(bool*, &engineStartedSuccess),
                                       Q_ARG(QString*, &engineStartupErrorString));
-#endif
+#endif //LUNA_TESTER_32
 
             if(engineStartedSuccess)
             {
@@ -1820,20 +1832,6 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, QString levelPath, boo
             else
             {
                 QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
-
-#ifdef LUNA_TESTER_32
-                switch(res)
-                {
-                case LUNALOADER_CREATEPROCESS_FAIL:
-                    luna_error = LunaTester::tr("process execution is failed.");
-                    break;
-                case LUNALOADER_PATCH_FAIL:
-                    luna_error = LunaTester::tr("patching has failed.");
-                    break;
-                default:
-                    break;
-                }
-#endif
                 msg.warning(LunaTester::tr("LunaTester error"),
                             LunaTester::tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
                             QMessageBox::Ok);
@@ -1874,7 +1872,7 @@ void LunaTester::lunaRunGame()
 #   ifndef _WIN32
         params.push_front(command);
         command = WINE_EXECUTIBLE;
-#   endif
+#   endif //_WIN32
         QProcess::startDetached(command, params, pathUnixToWine(smbxPath));
     }
     else
@@ -1923,37 +1921,30 @@ void LunaTester::lunaRunGame()
         #endif
 
         bool engineStartedSuccess = (res == LUNALOADER_OK);
-#else
+        QString engineStartupErrorString;
+        switch(res)
+        {
+        case LUNALOADER_CREATEPROCESS_FAIL:
+            engineStartupErrorString = LunaTester::tr("process execution is failed.");
+            break;
+        case LUNALOADER_PATCH_FAIL:
+            engineStartupErrorString = LunaTester::tr("patching has failed.");
+            break;
+        default:
+            break;
+        }
+#else //LUNA_TESTER_32
         bool engineStartedSuccess = true;
         QString engineStartupErrorString;
 #   ifndef _WIN32
         params.push_front(command);
         command = "wine";
-#   endif
+#   endif //_WIN32
         start(command, params, &engineStartedSuccess, &engineStartupErrorString);
-//        QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
-//                                  Q_ARG(const QString &, command),
-//                                  Q_ARG(const QStringList &, params),
-//                                  Q_ARG(bool*, &engineStartedSuccess));
-#endif
+#endif //LUNA_TESTER_32
         if(!engineStartedSuccess)
         {
             QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
-
-#ifdef LUNA_TESTER_32
-            switch(res)
-            {
-            case LUNALOADER_CREATEPROCESS_FAIL:
-                luna_error = LunaTester::tr("process execution is failed.");
-                break;
-            case LUNALOADER_PATCH_FAIL:
-                luna_error = LunaTester::tr("patching has failed.");
-                break;
-            default:
-                break;
-            }
-#endif
-
             QMessageBox::warning(m_mw,
                                  LunaTester::tr("LunaTester error"),
                                  LunaTester::tr("Impossible to launch Legacy Engine, because %1")

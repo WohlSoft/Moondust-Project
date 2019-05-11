@@ -146,7 +146,7 @@ private:
      * @param levelPath Full path to the level file
      * @param isUntitled Is untitled level (just created but not saved)
      */
-    void lunaRunnerThread(LevelData in_levelData, QString levelPath, bool isUntitled);
+    void lunaRunnerThread(LevelData in_levelData, const QString &levelPath, bool isUntitled);
 
     /**
      * @brief Start legacy engine in game mode
