@@ -324,7 +324,7 @@ void LunaWorker::errorOccurred(QProcess::ProcessError err)
         errString = "Unknown error";
         break;
     }
-    LogWarning(QString("LunaWorker: Process finished with error: %1").arg(errString));
+    LogDebug(QString("LunaWorker: Process finished with error: %1").arg(errString));
     m_lastStatus = m_process->state();
 }
 
