@@ -20,23 +20,20 @@
 #ifndef LUNA_TESTER_H
 #define LUNA_TESTER_H
 
-#if defined(_WIN32) && !defined(_WIN64)
-#define LUNA_TESTER_32
-#endif
-
 #include <QFuture>
 #include <QMutex>
+#include <QProcess>
+#include <QSharedPointer>
+#include <QThread>
+#ifndef _WIN32
+#   include <QHash>
+#endif
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <common_features/safe_msg_box.h>
 class QMenu;
 class QAction;
 class MainWindow;
-#ifdef LUNA_TESTER_32
-#include <windows.h>
-#else
-#include <QProcess>
-#include <QSharedPointer>
-#include <QThread>
+
 
 class LunaWorker : public QObject
 {
@@ -49,6 +46,7 @@ public:
     ~LunaWorker() override;
 
 public slots:
+    void setEnv(const QHash<QString, QString> &env);
     void start(const QString &command, const QStringList &args, bool *ok, QString *errString);
 
     void write(const QString &out, bool *ok);
@@ -66,7 +64,6 @@ private slots:
     void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
 };
 
-#endif
 
 /**
  * @brief Provides IPC layer with LunaLUA to manipulate legacy engine.
@@ -99,14 +96,14 @@ public:
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
-     * @param mainmenu Menu where insert LunaTester
+     * @param mainMenu Menu where insert LunaTester
      * @param insert_before Action where is need to insert LunaTester menu
      * @param defaultTestAction pointer to default test launcher (run interprocessing test)
      * @param secondaryTestAction pointer to second test launcher (run test of saved file)
      * @param startEngineAction pointer to engine launcher
      */
     void initLunaMenu(MainWindow   *mw,
-                      QMenu        *mainmenu,
+                      QMenu        *mainMenu,
                       QAction      *insert_before,
                       QAction      *defaultTestAction,
                       QAction      *secondaryTestAction,
@@ -115,22 +112,10 @@ public:
      * @brief Refresh menu text
      */
     void retranslateMenu();
-
-#ifdef LUNA_TESTER_32
-    //! LunaLoader process information
-    PROCESS_INFORMATION m_pi;
-    //! LunaLUA IPC Out pipe
-    HANDLE              m_ipc_pipe_out = 0;
-    //! LunaLUA IPC Out pipe backend
-    HANDLE              m_ipc_pipe_out_i = 0;
-    //! LunaLUA IPC In pipe
-    HANDLE              m_ipc_pipe_in = 0;
-    //! LunaLUA IPC In pipe backend
-    HANDLE              m_ipc_pipe_in_o = 0;
-#else
+    //! LunaTester process handler
     QSharedPointer<LunaWorker> m_worker;
+    //! LunaTester process handler's thread
     QSharedPointer<QThread> m_thread;
-#endif
     //! Helper which protects from editor freezing
     QFuture<void>       m_helper;
     //! Ranner thread
@@ -141,6 +126,13 @@ public:
     bool                m_noGL = false;
     bool                m_killPreviousSession = false;
 
+#ifndef _WIN32
+    QString                 m_wineBinDir;
+    QHash<QString, QString> m_wineEnv;
+#endif
+    void useWine(QString &command, QStringList &args);
+    QString pathUnixToWine(const QString &unixPath);
+
     bool isEngineActive();
     bool isInPipeOpen();
     bool isOutPipeOpen();
@@ -149,6 +141,7 @@ public:
     bool writeToIPC(const QString &out);
     std::string readFromIPC();
     QString readFromIPCQ();
+
 public slots:
     void killEngine();
     /********Menu items*******/
@@ -209,33 +202,8 @@ private:
      */
     bool sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled);
 
-#ifdef USE_LUNAHEXER
-    /**
-     * @brief Starts legacy engine with attaching LunaLUA library by hexing way
-     * @param pathToLegacyEngine full path to legacy engine executive
-     * @param cmdLineArgs full list of arguments to start legacy engine
-     * @param workingDir working directory (must be equal to legacy engine executable!)
-     * @return Result code
-     */
-    LunaLoaderResult LunaHexerRun(const wchar_t *pathToLegacyEngine,
-                                  const wchar_t *cmdLineArgs,
-                                  const wchar_t *workingDir);
-#endif
-
-#ifdef LUNA_TESTER_32
-    /**
-     * @brief Starts legacy engine with attaching LunaLUA library by in-memory patching way
-     * @param pathToLegacyEngine full path to legacy engine executive
-     * @param cmdLineArgs full list of arguments to start legacy engine
-     * @param workingDir working directory (must be equal to legacy engine executable!)
-     * @return Result code
-     */
-    LunaLoaderResult LunaLoaderRun(const wchar_t *pathToLegacyEngine,
-                                   const wchar_t *cmdLineArgs,
-                                   const wchar_t *workingDir);
-#endif
-
 signals:
+    void engineSetEnv(const QHash<QString, QString> &env);
     void engineStart(const QString &command, const QStringList &args, bool *ok, QString *errString);
     void engineWrite(const QString &out, bool *ok);
     void engineRead(QString *in, bool *ok);
