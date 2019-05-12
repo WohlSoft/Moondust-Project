@@ -97,20 +97,18 @@ LogWriterSignal::LogWriterSignal(DevConsole *console, QObject *parent) : QObject
 
 void LogWriterSignal::setup(DevConsole *console)
 {
-    connect(this, SIGNAL(logToConsole(QString, QString)), console, SLOT(logMessage(QString,QString)));
+    connect(this, SIGNAL(logToConsole(const QString&, const QString&)),
+            console, SLOT(logMessage(const QString&, const QString&)));
 }
 
-LogWriterSignal::~LogWriterSignal()
-{}
-
-void LogWriterSignal::log(QString msg, QString chan)
+void LogWriterSignal::log(const QString &msg, const QString &chan)
 {
     emit logToConsole(msg, chan);
 }
 
 
 
-LogWriterSignal *LogWriter::consoleConnector=nullptr;
+LogWriterSignal *LogWriter::consoleConnector = nullptr;
 
 void LogWriter::LoadLogSettings()
 {
@@ -152,15 +150,33 @@ void LogWriter::LoadLogSettings()
 
 }
 
-void LogWriter::writeLog(PGE_LogLevel type, QString msg)
+static void writeToFile(const QString &txt)
+{
+    QFile outFile(LogWriter::DebugLogFile);
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << endl;
+    outFile.close();
+}
+
+static void writeToScreen(const QString &txt)
+{
+    QTextStream ts(stdout);
+    ts << txt << endl;
+    ts.flush();
+}
+
+
+void LogWriter::writeLog(PGE_LogLevel type, const QString &msg)
 {
     QString txt;
 
+#ifndef DEBUG_BUILD
     if(type == PGE_LogLevel::NoLog)
         return;
-
     if(type > logLevel)
         return;
+#endif
 
     switch(type)
     {
@@ -179,19 +195,19 @@ void LogWriter::writeLog(PGE_LogLevel type, QString msg)
         case PGE_LogLevel::System:
             txt = QString("System: %1").arg(msg);
         break;
-        case PGE_LogLevel::NoLog:
-            return;
-        break;
         default:
             txt = QString("Info: %1").arg(msg);
         break;
     }
 
-    QFile outFile(DebugLogFile);
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-    ts << txt << endl;
-    outFile.close();
+#ifdef DEBUG_BUILD
+    writeToScreen(txt);
+    if(type == PGE_LogLevel::NoLog)
+        return;
+    if(type > logLevel)
+        return;
+#endif
+    writeToFile(txt);
 }
 
 void LogWriter::logMessageHandler(QtMsgType type,
@@ -201,11 +217,12 @@ void LogWriter::logMessageHandler(QtMsgType type,
 
     PGE_LogLevel ptype = qMsg2PgeLL(type);
 
-    if( ptype == PGE_LogLevel::NoLog )
+#ifndef DEBUG_BUILD
+    if(ptype == PGE_LogLevel::NoLog)
         return;
-
-    if( ptype > logLevel )
+    if(ptype > logLevel)
         return;
+#endif
 
     QByteArray lMessage = msg.toLocal8Bit();
     QString txt;
@@ -248,14 +265,14 @@ void LogWriter::logMessageHandler(QtMsgType type,
                 .arg(lMessage.constData());
     }
 
-    QFile outFile(DebugLogFile);
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-    ts << txt << endl;
-    outFile.close();
-
-    if(type == QtFatalMsg)
-        abort();
+#ifdef DEBUG_BUILD
+    writeToScreen(txt);
+    if(ptype == PGE_LogLevel::NoLog)
+        return;
+    if(ptype > logLevel)
+        return;
+#endif
+    writeToFile(txt);
 
     if(!LogWriter::consoleConnector)
         return;
@@ -278,6 +295,9 @@ void LogWriter::logMessageHandler(QtMsgType type,
         LogWriter::consoleConnector->log(msg, QString("Info"));
         break;
     }
+
+    if(type == QtFatalMsg)
+        abort();
 }
 
 void LogWriter::installConsole(DevConsole* console)
@@ -300,9 +320,9 @@ void LoadLogSettings()
     LogWriter::LoadLogSettings();
 }
 
-static  QMutex logger_mutex;
+static QMutex logger_mutex;
 
-void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole)
+void WriteToLog(PGE_LogLevel type, const QString &msg, bool noConsole)
 {
     QMutexLocker muLocker(&logger_mutex); Q_UNUSED(muLocker);
     LogWriter::writeLog(type, msg);

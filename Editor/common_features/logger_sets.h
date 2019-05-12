@@ -32,14 +32,14 @@ class LogWriterSignal: public QObject
     Q_OBJECT
 
     friend class LogWriter;
-    friend void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole);
-    LogWriterSignal(QObject *parent = 0);
-    LogWriterSignal(DevConsole *console, QObject *parent=0);
-    virtual ~LogWriterSignal();
+    friend void WriteToLog(PGE_LogLevel type, const QString &msg, bool noConsole);
+    explicit LogWriterSignal(QObject *parent = nullptr);
+    LogWriterSignal(DevConsole *console, QObject *parent = nullptr);
+    ~LogWriterSignal() override = default;
     void setup(DevConsole*console);
-    void log(QString msg, QString chan);
+    void log(const QString &msg, const QString &chan);
 signals:
-    void logToConsole(QString msg, QString chan);//!<msg, channel
+    void logToConsole(const QString &msg, const QString &chan);//!<msg, channel
 };
 
 class QComboBox;
@@ -52,14 +52,14 @@ public:
 
     static void loadLogLevels(QComboBox* targetComboBox);
 
-    static void writeLog(PGE_LogLevel type, QString msg);
+    static void writeLog(PGE_LogLevel type, const QString &msg);
     static void LoadLogSettings();
 
     static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     static void installConsole(DevConsole *console);
     static void uninstallConsole();
 private:
-    friend void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole);
+    friend void WriteToLog(PGE_LogLevel type, const QString &msg, bool noConsole);
     static LogWriterSignal *consoleConnector;
 };
 
