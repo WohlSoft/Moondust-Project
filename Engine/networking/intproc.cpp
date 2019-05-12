@@ -71,7 +71,7 @@ std::string IntProc::getState()
     return tmp;
 }
 
-void IntProc::setState(std::string instate)
+void IntProc::setState(const std::string &instate)
 {
     state_lock.lock();
     state = instate;
@@ -139,19 +139,25 @@ std::string IntProc::getCMD()
     return tmp.cmd;
 }
 
-bool IntProc::sendMessage(std::string command)
+bool IntProc::sendMessage(const std::string &command)
 {
     if(!editor)
+    {
+        pLogWarning("IntProc::sendMessage: `editor` is not initialized!");
         return false;
+    }
 
     editor->sendMessage(command);
     return true;
 }
 
-bool IntProc::sendMessageS(std::string command)
+bool IntProc::sendMessageS(const std::string &command)
 {
     if(!editor)
+    {
+        pLogWarning("IntProc::sendMessageS: `editor` is not initialized!");
         return false;
+    }
 
     editor->sendMessage(command);
     return true;
@@ -160,7 +166,10 @@ bool IntProc::sendMessageS(std::string command)
 bool IntProc::sendMessage(const char *command)
 {
     if(!editor)
+    {
+        pLogWarning("IntProc::sendMessage: `editor` is not initialized!");
         return false;
+    }
 
     editor->sendMessage(command);
     return true;

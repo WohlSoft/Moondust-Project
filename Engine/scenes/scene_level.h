@@ -98,7 +98,7 @@ class LevelScene : public Scene
         bool m_isInitFailed = false;
     public:
         //Init 1
-        bool        loadFile(std::string filePath);
+        bool        loadFile(const std::string &filePath);
         bool        loadFileIP(); //!< Load data via interprocessing
 
         //Init 2

@@ -25,7 +25,7 @@
 
 #include "../../networking/intproc.h"
 
-bool LevelScene::loadFile(std::string filePath)
+bool LevelScene::loadFile(const std::string &filePath)
 {
     m_data.meta.ReadFileValid = false;
 

@@ -34,7 +34,7 @@ enum class PGE_LogLevel
     NoLog    = 0,
 };
 
-extern void LoadLogSettings();
+extern void LoadLogSettings(bool disableStdOut = false);
 extern void CloseLog();
 #endif//__cplusplus
 
@@ -52,7 +52,7 @@ extern void pLogFatal(const char *format, ...);
 #endif
 
 #ifdef __cplusplus
-extern void WriteToLog(PGE_LogLevel type, std::string msg);
+extern void WriteToLog(PGE_LogLevel type, const std::string &msg);
 #endif
 
 #ifdef DEBUG_BUILD

@@ -331,7 +331,7 @@ void PGEEngineApp::loadSettings()
 
 void PGEEngineApp::loadJoysticks()
 {
-    pLogDebug("Init joystics...");
+    pLogDebug("Init joysticks...");
     g_AppSettings.initJoysticks();
     g_AppSettings.loadJoystickSettings();
     enable(JOYSTICKS);
@@ -339,7 +339,7 @@ void PGEEngineApp::loadJoysticks()
 
 void PGEEngineApp::loadLogger()
 {
-    LoadLogSettings();
+    LoadLogSettings(g_AppSettings.interprocessing);
     //Write into log the application start event
     pLogDebug("<Application started>");
     enable(LOGGER);
@@ -354,11 +354,11 @@ static void printUsage(const char *arg0)
         "=================================================\n"
         "\n";
 
-    #ifndef _WIN32
-#define OPTIONAL_BREAK "\n"
-    #else
-#define OPTIONAL_BREAK " "
-    #endif
+#ifndef _WIN32
+#   define OPTIONAL_BREAK "\n"
+#else
+#   define OPTIONAL_BREAK " "
+#endif
 
     std::string msg(
         "Command line syntax:\n"
@@ -369,39 +369,39 @@ static void printUsage(const char *arg0)
         "Play single level or episode:\n"
         "   " + arg0s + " [options] <path to level or world map file>\n"
         "\n"
-        #ifndef _WIN32
+#ifndef _WIN32
         "Show application version:\n"
         "   " + arg0s + " --version\n"
         "\n"
-        #endif
+#endif
         "Copy settings into "
-        #if defined(_WIN32)
+#if defined(_WIN32)
         "%UserProfile%/.PGE_Project/"
-        #elif defined(__APPLE__)
+#elif defined(__APPLE__)
         "/Library/Application Support/PGE_Project/"
-        #else
+#else
         "~/.PGE_Project/"
-        #endif
+#endif
         " folder and use it as" OPTIONAL_BREAK
         "placement of config packs, episodes, for screenshots store, etc.:\n"
         "   " + arg0s + " --install\n"
         "\n"
-        #ifndef _WIN32
+#ifndef _WIN32
         "Show this help:\n"
         "   " + arg0s + " --help\n"
         "\n\n"
-        #endif
+#endif
         "Options:\n\n"
         "  --config=\"{path}\"          - Use a specific configuration package\n"
-        #if defined(__APPLE__)
+#if defined(__APPLE__)
         "  --render-[auto|sw|gl2] - Choose a graphical sub-system\n"
-        #else
+#else
         "  --render-[auto|sw|gl2|gl3] - Choose a graphical sub-system\n"
-        #endif
+#endif
         "             auto - Automatically detect it (DEFAULT)\n"
-        #if !defined(__APPLE__)
+#if !defined(__APPLE__)
         "             gl3  - Use OpenGL 3.1 renderer\n"
-        #endif
+#endif
         "             gl2  - Use OpenGL 2.1 renderer\n"
         "             sw   - Use software renderer (may overload CPU)\n"
         "  --render-vsync             - Toggle on VSync if supported on your hardware\n"
@@ -473,10 +473,18 @@ bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
         }
     }
 
-    #ifdef _WIN32
+    for(const std::string &arg : args)
+    {
+        if(arg == "--interprocessing") // Disable `stdout` logging for safe InterProcess
+        {
+            g_AppSettings.interprocessing = true;
+        }
+    }
+
+#ifdef _WIN32
     //Close console which is no more needed
     FreeConsole();
-    #endif
+#endif
 
     return true;
 }
