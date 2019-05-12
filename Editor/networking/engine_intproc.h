@@ -30,7 +30,7 @@ class IntEngine: public QObject
         Q_OBJECT
     public:
         IntEngine();
-        ~IntEngine();
+        ~IntEngine() override = default;
         static void init(QProcess *engine_proc);
 
         static void quit();

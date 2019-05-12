@@ -401,7 +401,7 @@ public:
         MODE_Line,
         MODE_Fill
     };
-    void switchMode(QString title);
+    void switchMode(const QString &title);
     void SwitchEditingMode(int EdtMode);
 
 
@@ -496,7 +496,7 @@ private:
 public:
     void applyLayersVisible();
     void setLayerToSelected();
-    void setLayerToSelected(QString lName, bool isNew = false);
+    void setLayerToSelected(const QString &lName, bool isNew = false);
 
 
     // ///////////////////Resizers///////////////////////////
