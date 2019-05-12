@@ -45,6 +45,10 @@
 #include <glob.h>
 #endif
 
+#ifdef __APPLE__
+#include <QRegExp>
+#endif
+
 //#ifdef _WIN64
 //#define USE_LUNAHEXER
 //#endif
@@ -99,7 +103,7 @@ static std::string readIPC(QProcess &input);
 
 #ifndef LUNA_TESTER_32
 
-#if !defined(_WIN32) && !defined(__APPLE__)
+#   if !defined(_WIN32) && !defined(__APPLE__)
 static pid_t find_pid(const char *process_name)
 {
     pid_t pid = -1;
@@ -144,7 +148,7 @@ static pid_t find_pid(const char *process_name)
     globfree(&pglob);
     return pid;
 }
-#endif
+#   endif
 
 void LunaWorker::init()
 {
@@ -198,6 +202,7 @@ void LunaWorker::terminate()
 #ifdef _WIN32
         if(pid)
         {
+            DWORD lpExitCode = 0;
             if(GetExitCodeProcess(pid->hProcess, &lpExitCode))
             {
                 WaitForSingleObject(pid->hProcess, 100);
@@ -208,20 +213,37 @@ void LunaWorker::terminate()
         }
 #else // _WIN32
         if(pid)
-        {
-            kill(pid, SIGTERM);
+            kill(static_cast<pid_t>(pid), SIGTERM);
 #   ifdef __APPLE__
-            LogDebug(QString("LunaWorker: Killing %1 by 'killall'...").arg(ConfStatus::SmbxEXE_Name));
-            QProcess::startDetached("killall", {"-9", ConfStatus::SmbxEXE_Name});
-#   else
-            pid = find_pid(ConfStatus::SmbxEXE_Name.toUtf8().data());
-            LogDebug(QString("LunaWorker: Killing %1 by pid %2...")
-                .arg(ConfStatus::SmbxEXE_Name)
-                .arg(pid));
-            kill(pid, SIGKILL);
-        }
-#   endif //__APPLE__
+        LogDebug(QString("LunaWorker: Killing %1 by 'kill'...").arg(ConfStatus::SmbxEXE_Name));
+        QProcess ps;
+        ps.start("/bin/ps", {"-A"});
+        ps.waitForFinished();
+        QString psAll = ps.readAllStandardOutput();
 
+        QStringList psAllList = psAll.split('\n');
+        QString smbxExeName = ConfStatus::SmbxEXE_Name;
+
+        QRegExp psReg(QString("(\\d+) .*(wine-preloader).*(%1)").arg(smbxExeName));
+        for(QString &psOne : psAllList)
+        {
+            int pos = 0;
+            while((pos = psReg.indexIn(psOne, pos)) != -1)
+            {
+                pid_t toKill = static_cast<pid_t>(psReg.cap(1).toUInt());
+                LogDebug(QString("LunaWorker: kill -TERM %1").arg(toKill));
+                kill(toKill, SIGTERM);
+                pos += psReg.matchedLength();
+            }
+        }
+#   else
+        pid = find_pid(ConfStatus::SmbxEXE_Name.toUtf8().data());
+        LogDebug(QString("LunaWorker: Killing %1 by pid %2...")
+            .arg(ConfStatus::SmbxEXE_Name)
+            .arg(pid));
+        if(pid)
+            kill(static_cast<pid_t>(pid), SIGKILL);
+#   endif //__APPLE__
 #endif // _WIN32
     }
 }
@@ -821,7 +843,7 @@ static void jSonToNetString(const QJsonDocument &jd, std::string &outString)
 
 static bool stringToJson(const std::string &message, QJsonDocument &out, QJsonParseError &err)
 {
-    QByteArray jsonData(message.c_str(), message.size());
+    QByteArray jsonData(message.c_str(), static_cast<int>(message.size()));
     out = QJsonDocument::fromJson(jsonData, &err);
     return (err.error == QJsonParseError::NoError);
 }
@@ -961,10 +983,10 @@ static std::string readIPC(QProcess &input)
             if(byteCount <= 0)
                 continue;
             int byteCursor = 0;
-            data.resize(byteCount);
+            data.resize(static_cast<size_t>(byteCount));
             while(byteCursor < byteCount)
             {
-                qint64 bytesRead = input.read(&data[byteCursor], 1);
+                qint64 bytesRead = input.read(&data[static_cast<size_t>(byteCursor)], 1);
                 if(bytesRead == 0)
                     return "";
                 byteCursor += bytesRead;
