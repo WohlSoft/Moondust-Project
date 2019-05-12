@@ -35,6 +35,40 @@ class MainWindow;
 #include <windows.h>
 #else
 #include <QProcess>
+#include <QSharedPointer>
+#include <QThread>
+
+class LunaWorker : public QObject
+{
+    Q_OBJECT
+    QProcess *m_process = nullptr;
+    QProcess::ProcessState m_lastStatus = QProcess::NotRunning;
+    void init();
+public:
+    explicit LunaWorker(QObject *parent = nullptr);
+    ~LunaWorker() override;
+
+public slots:
+    void start(const QString &command, const QStringList &args, bool *ok, QString *errString);
+
+    void write(const QString &out, bool *ok);
+    void read(QString *in, bool *ok);
+
+    void writeStd(const std::string &out, bool *ok);
+    void readStd(std::string *in, bool *ok);
+
+public:
+    void terminate();
+    bool isActive();
+
+private slots:
+    void errorOccurred(QProcess::ProcessError error);
+    void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
+signals:
+    void finished();
+};
+
 #endif
 
 /**
@@ -57,6 +91,10 @@ public:
 
     LunaTester();
     ~LunaTester() override;
+    /**
+     * \brief Initialize LunaTester's runtime
+     */
+    void initRuntime();
     //! Pointer to main window
     MainWindow *m_mw = nullptr;
     //! List of registered menu items
@@ -93,7 +131,8 @@ public:
     //! LunaLUA IPC In pipe backend
     HANDLE              m_ipc_pipe_in_o = 0;
 #else
-    QProcess            m_process;
+    QSharedPointer<LunaWorker> m_worker;
+    QSharedPointer<QThread> m_thread;
 #endif
     //! Helper which protects from editor freezing
     QFuture<void>       m_helper;
@@ -114,11 +153,6 @@ public:
     std::string readFromIPC();
     QString readFromIPCQ();
 public slots:
-    void start(const QString &program, const QStringList &arguments, bool *ok, QString *errorString = nullptr);
-    void write(const QString &out, bool *ok);
-    void write(const std::string &out, bool *ok);
-    void read(std::string *in);
-
     void killEngine();
     /********Menu items*******/
     /**
@@ -204,5 +238,11 @@ private:
                                    const wchar_t *workingDir);
 #endif
 
+signals:
+    void engineStart(const QString &command, const QStringList &args, bool *ok, QString *errString);
+    void engineWrite(const QString &out, bool *ok);
+    void engineRead(QString *in, bool *ok);
+    void engineWriteStd(const std::string &out, bool *ok);
+    void engineReadStd(std::string *in, bool *ok);
 };
 #endif // LUNA_TESTER_H

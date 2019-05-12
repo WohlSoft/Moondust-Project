@@ -39,6 +39,11 @@
 #include <QMenu>
 #include <QAction>
 #include <QtConcurrentRun>
+#include <signal.h>
+
+#if !defined(_WIN32) && !defined(__APPLE__)
+#include <glob.h>
+#endif
 
 //#ifdef _WIN64
 //#define USE_LUNAHEXER
@@ -54,6 +59,13 @@
 #   endif
 #   define WINE_EXECUTIBLE WINE_PREFIX_BIN "wine"
 #   define WINEPATH_EXECUTIBLE WINE_PREFIX_BIN "winepath"
+static void useWine(QString &command, QStringList &args)
+{
+    args.push_front(command);
+    command = WINE_EXECUTIBLE;
+}
+#else
+#   define useWine(command, args)
 #endif
 
 #ifdef LUNA_TESTER_32
@@ -84,6 +96,226 @@ static std::string readIPC(HANDLE hInputRead);
 #else
 static std::string readIPC(QProcess &input);
 #endif
+
+#ifndef LUNA_TESTER_32
+
+#if !defined(_WIN32) && !defined(__APPLE__)
+static pid_t find_pid(const char *process_name)
+{
+    pid_t pid = -1;
+    glob_t pglob;
+    char *procname, *readbuf;
+    int buflen = strlen(process_name) + 2;
+    unsigned i;
+    /* Get a list of all comm files. man 5 proc */
+    if (glob("/proc/*/comm", 0, nullptr, &pglob) != 0)
+        return pid;
+    /* The comm files include trailing newlines, so... */
+    procname = (char*)malloc(buflen);
+    strcpy(procname, process_name);
+    procname[buflen - 2] = '\n';
+    procname[buflen - 1] = 0;
+    /* readbuff will hold the contents of the comm files. */
+    readbuf = (char*)malloc(buflen);
+    for (i = 0; i < pglob.gl_pathc; ++i)
+    {
+        FILE *comm;
+        char *ret;
+        /* Read the contents of the file. */
+        if ((comm = fopen(pglob.gl_pathv[i], "r")) == nullptr)
+            continue;
+        ret = fgets(readbuf, buflen, comm);
+        fclose(comm);
+        if (ret == nullptr)
+            continue;
+        /*
+        If comm matches our process name, extract the process ID from the
+        path, convert it to a pid_t, and return it.
+        */
+        if (strcmp(readbuf, procname) == 0)
+        {
+            pid = (pid_t)std::atoi(pglob.gl_pathv[i] + strlen("/proc/"));
+            break;
+        }
+    }
+    /* Clean up. */
+    free(procname);
+    free(readbuf);
+    globfree(&pglob);
+    return pid;
+}
+#endif
+
+void LunaWorker::init()
+{
+    if(!m_process)
+    {
+        m_process = new QProcess;
+        QObject::connect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                         this, &LunaWorker::processFinished);
+        QObject::connect(m_process, &QProcess::errorOccurred, this, &LunaWorker::errorOccurred);
+        m_lastStatus = m_process->state();
+    }
+}
+
+LunaWorker::LunaWorker(QObject *parent) : QObject(parent)
+{
+    m_lastStatus = QProcess::NotRunning;
+}
+
+LunaWorker::~LunaWorker()
+{
+    if(m_process)
+    {
+        if(m_process->state() == QProcess::Running)
+            m_process->terminate();
+        delete m_process;
+        m_process = nullptr;
+    }
+}
+
+void LunaWorker::start(const QString &command, const QStringList &args, bool *ok, QString *errString)
+{
+    init();
+    Q_ASSERT(m_process);
+    LogDebug(QString("LunaTester: starting command: %1 %2").arg(command).arg(args.join(' ')));
+    m_process->start(command, args);
+    m_lastStatus = m_process->state();
+    *ok = m_process->waitForStarted();
+    *errString = m_process->errorString();
+    if(!*ok)
+        LogWarning(QString("LunaTester: startup error: %1").arg(*errString));
+    m_lastStatus = m_process->state();
+}
+
+void LunaWorker::terminate()
+{
+    if(m_process && (m_process->state() == QProcess::Running))
+    {
+        Q_PID pid = m_process->pid();
+        LogDebug(QString("LunaWorker: Killing by termiate()..."));
+        m_process->terminate();
+#ifdef _WIN32
+        if(pid)
+        {
+            if(GetExitCodeProcess(pid->hProcess, &lpExitCode))
+            {
+                WaitForSingleObject(pid->hProcess, 100);
+                TerminateProcess(pid->hProcess, lpExitCode);
+            }
+            LogDebug(QString("LunaWorker: Killing %1 by 'taskkill'...").arg(ConfStatus::SmbxEXE_Name));
+            QProcess::startDetached("taskkill", {"/t", "/f", "/im", ConfStatus::SmbxEXE_Name});
+        }
+#else // _WIN32
+        if(pid)
+        {
+            kill(pid, SIGTERM);
+#   ifdef __APPLE__
+            LogDebug(QString("LunaWorker: Killing %1 by 'killall'...").arg(ConfStatus::SmbxEXE_Name));
+            QProcess::startDetached("killall", {"-9", ConfStatus::SmbxEXE_Name});
+#   else
+            pid = find_pid(ConfStatus::SmbxEXE_Name.toUtf8().data());
+            LogDebug(QString("LunaWorker: Killing %1 by pid %2...")
+                .arg(ConfStatus::SmbxEXE_Name)
+                .arg(pid));
+            kill(pid, SIGKILL);
+        }
+#   endif //__APPLE__
+
+#endif // _WIN32
+    }
+}
+
+void LunaWorker::write(const QString &out, bool *ok)
+{
+    if(!m_process)
+    {
+        *ok = false;
+        return;
+    }
+    QByteArray o = out.toUtf8();
+    *ok = m_process->write(o) == qint64(o.size());
+    m_process->waitForBytesWritten();
+}
+
+void LunaWorker::read(QString *in, bool *ok)
+{
+    if(!m_process)
+    {
+        *ok = false;
+        return;
+    }
+    m_process->waitForReadyRead();
+    *in = QString::fromStdString(readIPC(*m_process));
+    *ok = !in->isEmpty();
+}
+
+void LunaWorker::writeStd(const std::string &out, bool *ok)
+{
+    if(!m_process)
+    {
+        *ok = false;
+        return;
+    }
+    *ok = m_process->write(out.c_str(), qint64(out.size())) == qint64(out.size());
+    m_process->waitForBytesWritten();
+}
+
+void LunaWorker::readStd(std::string *in, bool *ok)
+{
+    if(!m_process)
+    {
+        *ok = false;
+        return;
+    }
+    m_process->waitForReadyRead();
+    *in = readIPC(*m_process);
+    *ok = !in->empty();
+}
+
+bool LunaWorker::isActive()
+{
+    return m_lastStatus == QProcess::Running;
+}
+
+void LunaWorker::errorOccurred(QProcess::ProcessError err)
+{
+    QString errString;
+    switch(err)
+    {
+    case QProcess::FailedToStart:
+        errString = "Failed to start";
+        break;
+    case QProcess::Crashed:
+        errString = "Crashed";
+        break;
+    case QProcess::Timedout:
+        errString = "Timed out";
+        break;
+    case QProcess::ReadError:
+        errString = "Read error";
+        break;
+    case QProcess::WriteError:
+        errString = "Write error";
+        break;
+    case QProcess::UnknownError:
+        errString = "Unknown error";
+        break;
+    }
+    LogWarning(QString("LunaWorker: Process finished with error: %1").arg(errString));
+    m_lastStatus = m_process->state();
+}
+
+void LunaWorker::processFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    LogDebug(QString("LunaWorker: Process finished with code %1 and %2 exit")
+        .arg(exitCode)
+        .arg(exitStatus == QProcess::NormalExit ? "normal" : "crash")
+    );
+    m_lastStatus = m_process->state();
+}
+#endif
+
 
 #ifndef _WIN32
 QString pathUnixToWine(const QString &unixPath)
@@ -139,7 +371,38 @@ LunaTester::~LunaTester()
         m_ipc_pipe_in = 0;
     }
 #else
-    m_process.terminate();
+    if(!m_thread.isNull())
+        m_worker->terminate();
+    m_worker.reset(); // Kill worker before killing of the thread
+    m_thread->quit();
+    m_thread->wait(2000);
+    m_thread.reset();
+#endif
+}
+
+void LunaTester::initRuntime()
+{
+#ifndef LUNA_TESTER_32
+    if(m_worker.isNull() && m_thread.isNull())
+    {
+        m_worker.reset(new LunaWorker());
+        m_thread.reset(new QThread());
+        m_worker->moveToThread(m_thread.get());
+        QObject::connect(this, &LunaTester::engineStart, m_worker.get(),
+                &LunaWorker::start, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &LunaTester::engineWrite, m_worker.get(),
+                &LunaWorker::write, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &LunaTester::engineRead, m_worker.get(),
+                &LunaWorker::read, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &LunaTester::engineWriteStd, m_worker.get(),
+                &LunaWorker::writeStd, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &LunaTester::engineReadStd, m_worker.get(),
+                &LunaWorker::readStd, Qt::BlockingQueuedConnection);
+        QObject::connect(m_worker.get(), &LunaWorker::finished, m_worker.get(), [=](){
+
+        });
+        m_thread->start();
+    }
 #endif
 }
 
@@ -312,7 +575,9 @@ bool LunaTester::isEngineActive()
     DWORD lpExitCode = 0;
     return GetExitCodeProcess(m_pi.hProcess, &lpExitCode) && (lpExitCode == STILL_ACTIVE);
 #else
-    return (m_process.state() == QProcess::Running);
+    if(m_worker.isNull())
+        return false;
+    return m_worker->isActive();
 #endif
 }
 
@@ -321,7 +586,9 @@ bool LunaTester::isInPipeOpen()
 #ifdef LUNA_TESTER_32
     return (m_ipc_pipe_in != 0);
 #else
-    return (m_process.state() == QProcess::Running);
+    if(m_worker.isNull())
+        return false;
+    return m_worker->isActive();
 #endif
 }
 
@@ -330,21 +597,22 @@ bool LunaTester::isOutPipeOpen()
 #ifdef LUNA_TESTER_32
     return (m_ipc_pipe_out != 0);
 #else
-    return (m_process.state() == QProcess::Running);
+    if(m_worker.isNull())
+        return false;
+    return m_worker->isActive();
 #endif
 }
 
 bool LunaTester::writeToIPC(const std::string &out)
 {
 #ifdef LUNA_TESTER_32
+    Q_UNUSED(noBlock);
     return writeIPC(m_ipc_pipe_out, out);
 #else
 //    bool ret = m_process.write(out.c_str(), out.size()) == qint64(out.size());
 //    m_process.waitForBytesWritten();
     bool ret = false;
-    QMetaObject::invokeMethod(this, "write", Qt::BlockingQueuedConnection,
-                              Q_ARG(const std::string &,out),
-                              Q_ARG(bool *, &ret));
+    emit engineWriteStd(out, &ret);
     return ret;
 #endif
 }
@@ -352,15 +620,11 @@ bool LunaTester::writeToIPC(const std::string &out)
 bool LunaTester::writeToIPC(const QString &out)
 {
 #ifdef LUNA_TESTER_32
+    Q_UNUSED(noBlock);
     return writeIPC(m_ipc_pipe_out, out.toStdString());
 #else
-//    QByteArray o = out.toUtf8();
-//    bool ret = m_process.write(o) == qint64(o.size());
-//    m_process.waitForBytesWritten();
     bool ret = false;
-    QMetaObject::invokeMethod(this, "write", Qt::BlockingQueuedConnection,
-                              Q_ARG(const QString &,out),
-                              Q_ARG(bool *, &ret));
+    emit engineWrite(out, &ret);
     return ret;
 #endif
 }
@@ -370,11 +634,9 @@ std::string LunaTester::readFromIPC()
 #ifdef LUNA_TESTER_32
     return readIPC(m_ipc_pipe_in);
 #else
-//    m_process.waitForReadyRead();
-//    return readIPC(m_process);
     std::string out;
-    QMetaObject::invokeMethod(this, "read", Qt::BlockingQueuedConnection,
-                              Q_ARG(std::string*, &out));
+    bool ok = false;
+    emit engineReadStd(&out, &ok);
     return out;
 #endif
 }
@@ -384,61 +646,10 @@ QString LunaTester::readFromIPCQ()
 #ifdef LUNA_TESTER_32
     return QString::fromStdString(readIPC(m_ipc_pipe_in));
 #else
-    std::string out;
-    QMetaObject::invokeMethod(this, "read", Qt::BlockingQueuedConnection,
-                              Q_ARG(std::string*, &out));
-    return QString::fromStdString(out);
-#endif
-}
-
-
-void LunaTester::start(const QString &program, const QStringList &arguments, bool *ok, QString *errorString)
-{
-#ifndef LUNA_TESTER_32
-    LogDebug(QString("LunaTester: starting command: %1 %2").arg(program).arg(arguments.join(' ')));
-    m_process.start(program, arguments);
-    *ok = m_process.waitForStarted();
-    *errorString = m_process.errorString();
-    if(!*ok)
-        LogWarning(QString("LunaTester: startup error: %1").arg(*errorString));
-#else
-    Q_UNUSED(program);
-    Q_UNUSED(arguments);
-    Q_UNUSED(ok);
-    Q_UNUSED(errorString);
-#endif
-}
-
-void LunaTester::write(const QString &out, bool *ok)
-{
-#ifndef LUNA_TESTER_32
-    QByteArray o = out.toUtf8();
-    *ok = m_process.write(o) == qint64(o.size());
-    m_process.waitForBytesWritten();
-#else
-    Q_UNUSED(out);
-    Q_UNUSED(ok);
-#endif
-}
-
-void LunaTester::write(const std::string &out, bool *ok)
-{
-#ifndef LUNA_TESTER_32
-    *ok = m_process.write(out.c_str(), out.size()) == qint64(out.size());
-    m_process.waitForBytesWritten();
-#else
-    Q_UNUSED(out);
-    Q_UNUSED(ok);
-#endif
-}
-
-void LunaTester::read(std::string *in)
-{
-#ifndef LUNA_TESTER_32
-    m_process.waitForReadyRead();
-    *in = readIPC(m_process);
-#else
-    Q_UNUSED(in);
+    QString out;
+    bool ok = false;
+    emit engineRead(&out, &ok);
+    return out;
 #endif
 }
 
@@ -472,8 +683,8 @@ void LunaTester::killEngine()
         this->m_ipc_pipe_in = 0;
     }
 #else
-    m_process.terminate();
-    m_process.close();
+    if(!m_thread.isNull())
+        m_worker->terminate();
 #endif
 }
 
@@ -492,6 +703,7 @@ inline void busyThreadBox(MainWindow *mw)
  */
 void LunaTester::startLunaTester()
 {
+    initRuntime();
     if(m_helper.isRunning())
         busyThreadBox(m_mw);
     else
@@ -713,10 +925,10 @@ static std::string readIPC(QProcess &input)
     // Note: This is not written to be particularly efficient right now. Just
     //       readable enough and safe.
     if(!input.isOpen())
-        return "";
+        return std::string();
     char c;
     std::vector<char> data;
-    while(1)
+    while(true)
     {
         data.clear();
         // Read until : delimiter
@@ -1802,15 +2014,8 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPa
 #else //LUNA_TESTER_32
             bool engineStartedSuccess = true;
             QString engineStartupErrorString;
-#   ifndef _WIN32
-            params.push_front(command);
-            command = WINE_EXECUTIBLE;
-#   endif
-            QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection,
-                                      Q_ARG(const QString &, command),
-                                      Q_ARG(const QStringList &, params),
-                                      Q_ARG(bool*, &engineStartedSuccess),
-                                      Q_ARG(QString*, &engineStartupErrorString));
+            useWine(command, params);
+            emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
 #endif //LUNA_TESTER_32
 
             if(engineStartedSuccess)
@@ -1848,7 +2053,6 @@ void LunaTester::lunaRunGame()
 #else
     QString command = smbxPath + "LunaLoader-exec.exe";
 #endif
-
     if(!QFile(command).exists())
     {
         QMessageBox::warning(m_mw,
@@ -1869,14 +2073,13 @@ void LunaTester::lunaRunGame()
 
     if(!QFile(smbxPath + "LunaDll.dll").exists())
     {
-#   ifndef _WIN32
-        params.push_front(command);
-        command = WINE_EXECUTIBLE;
-#   endif //_WIN32
+        useWine(command, params);
         QProcess::startDetached(command, params, pathUnixToWine(smbxPath));
     }
     else
     {
+        initRuntime();
+
 #ifdef LUNA_TESTER_32
         QString argString;
         for(int i = 0; i < params.length(); i++)
@@ -1933,15 +2136,15 @@ void LunaTester::lunaRunGame()
         default:
             break;
         }
+
 #else //LUNA_TESTER_32
         bool engineStartedSuccess = true;
         QString engineStartupErrorString;
-#   ifndef _WIN32
-        params.push_front(command);
-        command = "wine";
-#   endif //_WIN32
-        start(command, params, &engineStartedSuccess, &engineStartupErrorString);
+        killEngine();// Kill previously running game
+        useWine(command, params);
+        emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
 #endif //LUNA_TESTER_32
+
         if(!engineStartedSuccess)
         {
             QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;

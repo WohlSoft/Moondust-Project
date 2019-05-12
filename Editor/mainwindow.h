@@ -41,7 +41,7 @@
 #include <windows.h>
 #include <QWinThumbnailToolBar>
 #endif
-struct LunaTester;
+class LunaTester;
 
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <PGE_File_Formats/wld_filedata.h>
