@@ -410,19 +410,17 @@ void LunaTester::initRuntime()
         m_worker.reset(new LunaWorker());
         m_thread.reset(new QThread());
         m_worker->moveToThread(m_thread.get());
-        QObject::connect(this, &LunaTester::engineStart, m_worker.get(),
+        auto *worker_ptr = m_worker.get();
+        QObject::connect(this, &LunaTester::engineStart, worker_ptr,
                 &LunaWorker::start, Qt::BlockingQueuedConnection);
-        QObject::connect(this, &LunaTester::engineWrite, m_worker.get(),
+        QObject::connect(this, &LunaTester::engineWrite, worker_ptr,
                 &LunaWorker::write, Qt::BlockingQueuedConnection);
-        QObject::connect(this, &LunaTester::engineRead, m_worker.get(),
+        QObject::connect(this, &LunaTester::engineRead, worker_ptr,
                 &LunaWorker::read, Qt::BlockingQueuedConnection);
-        QObject::connect(this, &LunaTester::engineWriteStd, m_worker.get(),
+        QObject::connect(this, &LunaTester::engineWriteStd, worker_ptr,
                 &LunaWorker::writeStd, Qt::BlockingQueuedConnection);
-        QObject::connect(this, &LunaTester::engineReadStd, m_worker.get(),
+        QObject::connect(this, &LunaTester::engineReadStd, worker_ptr,
                 &LunaWorker::readStd, Qt::BlockingQueuedConnection);
-        QObject::connect(m_worker.get(), &LunaWorker::finished, m_worker.get(), [=](){
-
-        });
         m_thread->start();
     }
 #endif
@@ -628,7 +626,6 @@ bool LunaTester::isOutPipeOpen()
 bool LunaTester::writeToIPC(const std::string &out)
 {
 #ifdef LUNA_TESTER_32
-    Q_UNUSED(noBlock);
     return writeIPC(m_ipc_pipe_out, out);
 #else
 //    bool ret = m_process.write(out.c_str(), out.size()) == qint64(out.size());
@@ -642,7 +639,6 @@ bool LunaTester::writeToIPC(const std::string &out)
 bool LunaTester::writeToIPC(const QString &out)
 {
 #ifdef LUNA_TESTER_32
-    Q_UNUSED(noBlock);
     return writeIPC(m_ipc_pipe_out, out.toStdString());
 #else
     bool ret = false;
