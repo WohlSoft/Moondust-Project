@@ -27,8 +27,15 @@
 #include "luna_tester.h"
 
 #include <sstream>
-#include <QThread>
 #include <cstring>
+#include <signal.h>
+
+#if !defined(_WIN32) && !defined(__APPLE__)
+#include <glob.h>
+#endif
+
+#include <QThread>
+#include <QEventLoop>
 #include <QDesktopWidget>
 #include <QDirIterator>
 #include <QJsonObject>
@@ -39,11 +46,6 @@
 #include <QMenu>
 #include <QAction>
 #include <QtConcurrentRun>
-#include <signal.h>
-
-#if !defined(_WIN32) && !defined(__APPLE__)
-#include <glob.h>
-#endif
 
 #if !defined(_WIN32)
 #include <QProcessEnvironment>
@@ -142,6 +144,7 @@ LunaWorker::LunaWorker(QObject *parent) : QObject(parent)
 
 LunaWorker::~LunaWorker()
 {
+    emit stopLoop();
     if(m_process)
     {
         if(m_process->state() == QProcess::Running)
@@ -185,12 +188,6 @@ void LunaWorker::terminate()
 #ifdef _WIN32
         if(pid)
         {
-            DWORD lpExitCode = 0;
-            if(GetExitCodeProcess(pid->hProcess, &lpExitCode))
-            {
-                WaitForSingleObject(pid->hProcess, 100);
-                TerminateProcess(pid->hProcess, lpExitCode);
-            }
             LogDebug(QString("LunaWorker: Killing %1 by 'taskkill'...").arg(ConfStatus::SmbxEXE_Name));
             QProcess::startDetached("taskkill", {"/t", "/f", "/im", ConfStatus::SmbxEXE_Name});
         }
@@ -278,6 +275,21 @@ void LunaWorker::readStd(std::string *in, bool *ok)
     *ok = !in->empty();
 }
 
+void LunaWorker::processLoop()
+{
+    QEventLoop loop;
+    QObject::connect(this, SIGNAL(stopLoop()),
+                     &loop, SLOT(quitLoop()),
+                     Qt::BlockingQueuedConnection);
+    loop.exec();
+    emit loopFinished();
+}
+
+void LunaWorker::quitLoop()
+{
+    emit stopLoop();
+}
+
 bool LunaWorker::isActive()
 {
     return m_lastStatus == QProcess::Running;
@@ -347,7 +359,7 @@ QString LunaTester::pathUnixToWine(const QString &unixPath)
     return windowsPath;
 }
 #else
-void LunaTester::useWine(QString &, QStringList &, QProcess &) // Dummy
+void LunaTester::useWine(QString &, QStringList &) // Dummy
 {}
 
 QString LunaTester::pathUnixToWine(const QString &unixPath)
@@ -376,12 +388,19 @@ LunaTester::LunaTester() :
 
 LunaTester::~LunaTester()
 {
+    if(m_helper.isRunning())
+    {
+        killEngine();
+        m_helper.waitForFinished();
+    }
     if(!m_thread.isNull())
+    {
         m_worker->terminate();
-    m_worker.reset(); // Kill worker before killing of the thread
-    if(!m_thread.isNull())
+        m_worker->quitLoop();
         m_thread->quit();
-    m_thread->wait(2000);
+        m_thread->wait(2000);
+    }
+    m_worker.reset();
     m_thread.reset();
 }
 
@@ -393,6 +412,11 @@ void LunaTester::initRuntime()
         m_thread.reset(new QThread());
         m_worker->moveToThread(m_thread.get());
         auto *worker_ptr = m_worker.get();
+        auto *thread_ptr = m_thread.get();
+        QObject::connect(thread_ptr, SIGNAL(started()),
+                         worker_ptr, SLOT(processLoop()));
+        QObject::connect(worker_ptr, SIGNAL(loopFinished()),
+                         thread_ptr, SLOT(quit()));
         QObject::connect(this, &LunaTester::engineSetEnv, worker_ptr,
                 &LunaWorker::setEnv, Qt::BlockingQueuedConnection);
         QObject::connect(this, &LunaTester::engineStart, worker_ptr,

@@ -40,6 +40,7 @@ class LunaWorker : public QObject
     Q_OBJECT
     QProcess *m_process = nullptr;
     QProcess::ProcessState m_lastStatus = QProcess::NotRunning;
+    bool m_isRunning = false;
     void init();
 public:
     explicit LunaWorker(QObject *parent = nullptr);
@@ -55,6 +56,9 @@ public slots:
     void writeStd(const std::string &out, bool *ok);
     void readStd(std::string *in, bool *ok);
 
+    void processLoop();
+    void quitLoop();
+
 public:
     void terminate();
     bool isActive();
@@ -62,6 +66,10 @@ public:
 private slots:
     void errorOccurred(QProcess::ProcessError error);
     void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
+signals:
+    void loopFinished();
+    void stopLoop();
 };
 
 
