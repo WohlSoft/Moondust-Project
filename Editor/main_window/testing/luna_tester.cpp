@@ -278,8 +278,8 @@ void LunaWorker::readStd(std::string *in, bool *ok)
 void LunaWorker::processLoop()
 {
     QEventLoop loop;
-    QObject::connect(this, SIGNAL(stopLoop()),
-                     &loop, SLOT(quitLoop()),
+    QObject::connect(this, &LunaWorker::stopLoop,
+                     &loop, &QEventLoop::quit,
                      Qt::BlockingQueuedConnection);
     loop.exec();
     emit loopFinished();

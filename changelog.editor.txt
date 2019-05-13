@@ -7,6 +7,7 @@ Editor 0.3.2-dev
 - Fixed imperfection that allows to use level file selector in the untitled world map file
 - Added an ability to hide or disable certain field or feature from the config pack
 - Added Dutch translation by Gameinsky
+- LunaTester now is cross-platform and no more needs 32-bit Editor on Windows for a work (`LunaLoader-exec.exe` module is required)
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
