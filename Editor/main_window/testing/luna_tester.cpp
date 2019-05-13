@@ -410,9 +410,9 @@ void LunaTester::initRuntime()
     {
         m_worker.reset(new LunaWorker());
         m_thread.reset(new QThread());
-        m_worker->moveToThread(m_thread.get());
-        auto *worker_ptr = m_worker.get();
-        auto *thread_ptr = m_thread.get();
+        m_worker->moveToThread(m_thread.data());
+        auto *worker_ptr = m_worker.data();
+        auto *thread_ptr = m_thread.data();
         QObject::connect(thread_ptr, SIGNAL(started()),
                          worker_ptr, SLOT(processLoop()));
         QObject::connect(worker_ptr, SIGNAL(loopFinished()),
