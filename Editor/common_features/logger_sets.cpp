@@ -159,12 +159,15 @@ static void writeToFile(const QString &txt)
     outFile.close();
 }
 
+
+#ifdef DEBUG_BUILD
 static void writeToScreen(const QString &txt)
 {
     QTextStream ts(stdout);
     ts << txt << endl;
     ts.flush();
 }
+#endif
 
 
 void LogWriter::writeLog(PGE_LogLevel type, const QString &msg)
