@@ -21,6 +21,7 @@
 #define CUSTOM_DATA_H
 
 #include <string>
+#include <vector>
 
 /*!
  * \brief This is a capturer of custom files from level/world custom directories
@@ -29,47 +30,68 @@ class CustomDirManager
 {
 public:
     /*!
-     * \brief Constructor
+     * @brief Constructor
      */
     CustomDirManager() = default;
     /*!
-     * \brief Constructor with pre-defined parameters
-     * \param path Full path to episode directory
-     * \param name Base file name of current file
-     * \param stuffPath Full path to default data folder
+     * @brief Constructor with pre-defined parameters
+     * @param path Full path to episode directory
+     * @param name Base file name of current file
+     * @param stuffPath Full path to default data folder
      */
-    CustomDirManager(std::string path, std::string name, std::string stuffPath);
+    CustomDirManager(const std::string &path, const std::string &name, const std::string &stuffPath);
     /*!
-     * \brief Get custom file path if exist.
-     * \param name Target file name which need to find
-     * \return empty string if not exist
+     * @brief Get custom file path if exist.
+     * @param name Target file name which need to find
+     * @return empty string if not exist
      */
-    std::string getCustomFile(std::string name, bool *isDefault=0);
-    /**
+    std::string getCustomFile(const std::string &name, bool *isDefault = nullptr);
+    /*!
      * @brief Get the file from default storage of config pack
      * @param name Target file name which need to find
      * @return empty string if not exist
      */
-    std::string getDefaultFile(std::string name);
-    /**
+    std::string getDefaultFile(const std::string &name);
+    /*!
      * @brief Get the mask fallback file if default is PNG
      * @param name Target file name which need to find
      * @return empty string if not exist
      */
-    std::string getMaskFallbackFile(std::string name);
+    std::string getMaskFallbackFile(const std::string &name);
     /*!
-     * \brief Sets paths where look for a requested files
-     * \param path Full path to episode directory
-     * \param name Base file name of current file
-     * \param stuffPath Full path to default data folder
+     * @brief Sets paths where look for a requested files
+     * @param path Full path to episode directory
+     * @param name Base file name of current file
+     * @param stuffPath Full path to default data folder
      */
-    void setCustomDirs(std::string path, std::string name, std::string stuffPath);
+    void setCustomDirs(const std::string &path,
+                       const std::string &name,
+                       const std::string &stuffPath,
+                       const std::vector<std::string> &extraPaths = std::vector<std::string>()
+    );
+    /*!
+     * @brief Add extra custom data directories
+     * @param dPaths Lost of paths to the custom data directories
+     */
+    void addExtraDirs(const std::vector<std::string> &dPaths);
+    /*!
+     * @brief Remove all custom data directories from a list
+     */
+    void clearExtraDirs();
+    /*!
+     * @brief Find a file through extra custom data directories
+     * @param fPath
+     * @return
+     */
+    std::string findFileInExtraDirs(const std::string &fPath);
 
 private:
     //! Full path to episode directory
     std::string m_dirEpisode;
     //! Full path to file's custom stuff directory
     std::string m_dirCustom;
+    //! Extra directories for resources search until search in the config pack
+    std::vector<std::string> m_dirsExtra;
     //! Full path to default data folder
     std::string m_mainStuffFullPath;
 
