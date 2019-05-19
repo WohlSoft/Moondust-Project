@@ -524,16 +524,18 @@ void LunaTester::initLunaMenu(MainWindow *mw,
 
         mainMenu->insertAction(defaultTestAction, RunLunaTest);
 
-        QMenu *pgeEngineMenu = mainMenu->addMenu(pgeEngine, "PGE Engine");
-        mainMenu->insertMenu(lunaMenu->menuAction(), pgeEngineMenu);
         mainMenu->removeAction(defaultTestAction);
         mainMenu->removeAction(secondaryTestAction);
         mainMenu->removeAction(startEngineAction);
-
-        pgeEngineMenu->insertAction(nullptr, defaultTestAction);
-        pgeEngineMenu->insertAction(nullptr, secondaryTestAction);
-        pgeEngineMenu->addSeparator();
-        pgeEngineMenu->insertAction(nullptr, startEngineAction);
+        if(!ConfStatus::SmbxTest_HidePgeEngine)
+        {
+            QMenu *pgeEngineMenu = mainMenu->addMenu(pgeEngine, "PGE Engine");
+            mainMenu->insertMenu(lunaMenu->menuAction(), pgeEngineMenu);
+            pgeEngineMenu->insertAction(nullptr, defaultTestAction);
+            pgeEngineMenu->insertAction(nullptr, secondaryTestAction);
+            pgeEngineMenu->addSeparator();
+            pgeEngineMenu->insertAction(nullptr, startEngineAction);
+        }
 
         RunLunaTest->setShortcut(QStringLiteral("F5"));
         RunLunaTest->setShortcutContext(Qt::WindowShortcut);

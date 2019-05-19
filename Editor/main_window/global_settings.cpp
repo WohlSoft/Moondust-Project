@@ -86,12 +86,13 @@ long ConfStatus::total_music_wld=0;
 long ConfStatus::total_music_spc=0;
 long ConfStatus::total_sound=0;
 
-QString ConfStatus::configName="";
-QString ConfStatus::configPath="";
+QString ConfStatus::configName;
+QString ConfStatus::configPath;
 
-QString ConfStatus::configDataPath="";
+QString ConfStatus::configDataPath;
 
-QString ConfStatus::SmbxEXE_Name="";
-bool    ConfStatus::SmbxTest_By_Default=false;
+QString ConfStatus::SmbxEXE_Name;
+bool    ConfStatus::SmbxTest_By_Default = false;
+bool    ConfStatus::SmbxTest_HidePgeEngine = false;
 
-QString ConfStatus::defaultTheme="";
+QString ConfStatus::defaultTheme;

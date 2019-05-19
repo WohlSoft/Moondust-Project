@@ -372,6 +372,7 @@ bool dataconfigs::loadconfigs()
         // For LunaTester
         mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
         mainSet.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
+        mainSet.read("smbx-test-hide-pge-engine-menu", ConfStatus::SmbxTest_HidePgeEngine, false);
 
         dirs.worlds     = data_dir + mainSet.value("worlds", "worlds").toQString() + "/";
 
