@@ -134,7 +134,10 @@ protected:
 private:
     void processNpcContainerButton(QPushButton *btn);
 
-    void initExtraSettingsWidget(const QString &layoutPath, QString &properties, void (LvlItemProperties::*callback)());
+    void initExtraSettingsWidget(const QString &defaultDir,
+                                 const QString &layoutPath,
+                                 QString &properties,
+                                 void (LvlItemProperties::*callback)());
 
     void onExtraSettingsBlockChanged();
     void onExtraSettingsBGOChanged();
