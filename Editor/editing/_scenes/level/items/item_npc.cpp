@@ -593,7 +593,7 @@ void ItemNPC::transformTo(long target_id)
 
     m_data.id = target_id;
 
-    setNpcData(m_data, &mergedSet, &animator);
+    setNpcData(m_data, &mergedSet, &animator, true);
     arrayApply();
 
     if(!m_scene->m_opts.animationEnabled)
@@ -851,7 +851,7 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     refreshOffsets();
 }
 
-void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bool isHistoryManager)
+void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bool isTransform)
 {
     m_data = inD;
 
@@ -888,7 +888,7 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
         else
             setZValue(m_scene->Z_npcStd);
 
-        if(!isHistoryManager) // Do nothing if it's a history manager
+        if(isTransform) // Do work only if it's a transforming
         {
             // Zero containers are not used (for LVLX)
             if(!m_localProps.setup.container)
