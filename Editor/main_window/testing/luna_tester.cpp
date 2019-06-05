@@ -397,8 +397,10 @@ LunaTester::~LunaTester()
     {
         m_worker->terminate();
         m_worker->quitLoop();
-        m_thread->quit();
-        m_thread->wait(2000);
+        m_thread->wait(3000);
+#ifdef _WIN32 // WORKAROUND: kill LunaLoader-exec if it's still running
+        QProcess::startDetached("taskkill", {"/t", "/f", "/im", "LunaLoader-exec.exe"});
+#endif
     }
     m_worker.reset();
     m_thread.reset();

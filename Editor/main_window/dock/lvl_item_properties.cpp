@@ -397,7 +397,8 @@ void LvlItemProperties::LvlItemProps(int Type,
             }
         }
 
-        initExtraSettingsWidget(t_block.setup.extra_settings,
+        initExtraSettingsWidget(mw()->configs.getBlockExtraSettingsPath(),
+                                t_block.setup.extra_settings,
                                 bgo.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBlockChanged);
 
@@ -483,7 +484,8 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         ui->PROPS_BGO_smbx64_sp->setValue(bgo.smbx64_sp);
 
-        initExtraSettingsWidget(t_bgo.setup.extra_settings,
+        initExtraSettingsWidget(mw()->configs.getBgoExtraSettingsPath(),
+                                t_bgo.setup.extra_settings,
                                 bgo.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBGOChanged);
 
@@ -722,7 +724,8 @@ void LvlItemProperties::LvlItemProps(int Type,
             }
         }
 
-        initExtraSettingsWidget(t_npc.setup.extra_settings,
+        initExtraSettingsWidget(mw()->configs.getNpcExtraSettingsPath(),
+                                t_npc.setup.extra_settings,
                                 npc.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsNPCChanged);
 
@@ -796,27 +799,35 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
     LvlItemPropsLock = false;
 }
 
-void LvlItemProperties::initExtraSettingsWidget(const QString &layoutPath,
+void LvlItemProperties::initExtraSettingsWidget(const QString &defaultDir,
+                                                const QString &layoutPath,
                                                 QString &properties,
                                                 void (LvlItemProperties::*callback)())
 {
-    if(!layoutPath.isEmpty())
+    LevelEdit *edit = nullptr;
+    if(!layoutPath.isEmpty() && (mw()->activeChildWindow() == MainWindow::WND_Level) && (edit = mw()->activeLvlEditWin()))
     {
-        QString esLayoutFile = mw()->configs.getNpcExtraSettingsPath() + "/" + layoutPath;
+        CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
+        uLVL.setDefaultDir(defaultDir);
+
+        QString esLayoutFile = uLVL.getCustomFile(layoutPath);
+        if(esLayoutFile.isEmpty())
+            return;
+
         QFile layoutFile(esLayoutFile);
-        if(layoutFile.open(QIODevice::ReadOnly))
+        if(!layoutFile.open(QIODevice::ReadOnly))
+            return;
+
+        QByteArray rawLayout = layoutFile.readAll();
+        m_extraSettings = new JsonSettingsWidget(ui->extraSettings);
+        if(m_extraSettings)
         {
-            QByteArray rawLayout = layoutFile.readAll();
-            m_extraSettings = new JsonSettingsWidget(ui->extraSettings);
-            if(m_extraSettings)
-            {
-                if(!m_extraSettings->loadLayout(properties.toUtf8(), rawLayout))
-                    LogWarning(m_extraSettings->errorString());
-                ui->extraSettings->layout()->addWidget(m_extraSettings->getWidget());
-                JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
-            }
-            layoutFile.close();
+            if(!m_extraSettings->loadLayout(properties.toUtf8(), rawLayout))
+                LogWarning(m_extraSettings->errorString());
+            ui->extraSettings->layout()->addWidget(m_extraSettings->getWidget());
+            JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
         }
+        layoutFile.close();
     }
 }
 
