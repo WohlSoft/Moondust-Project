@@ -332,3 +332,37 @@ void ConfigManager::checkForImage(std::string &imgPath, std::string root)
             imgPath = "";
     }
 }
+
+bool ConfigManager::loadExtraFoldersList(const std::string &episodePath, std::vector<std::string> &out_paths)
+{
+    std::string episodePath_s = episodePath;
+    if(!episodePath_s.empty())
+    {
+        if(episodePath_s.back() != '/')
+            episodePath_s.push_back('/');
+    }
+    std::string foldersIni = episodePath_s + "folders.ini";
+    out_paths.clear();
+
+    if(!Files::fileExists(foldersIni))
+    {
+        pLogDebug("Extra folders.ini is not exists [%s], skipping...", foldersIni.c_str());
+        return false;
+    }
+
+    IniProcessing fIni(foldersIni);
+
+    fIni.beginGroup("folders");
+    auto keys = fIni.allKeys();
+    std::string out;
+    for(std::string &k : keys)
+    {
+        fIni.read(k.c_str(), out, "");
+        if(!out.empty())
+            out_paths.push_back(episodePath_s + out);
+    }
+    fIni.endGroup();
+
+    pLogDebug("Extra folders.ini has been loaded with %zu paths in the list.", out_paths.size());
+    return true;
+}

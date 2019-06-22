@@ -55,18 +55,18 @@ void MusicFileList::buildMusicList()
     QStringList filters;
     filters //MPEG 1 Layer III (LibMAD)
             << "*.mp3"
-            //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
-            << "*.ogg" << "*.flac"
+            //OGG Vorbis, FLAC, amd Opus (LibOGG, LibVorbis, LibFLAC, libOpus)
+            << "*.ogg" << "*.flac" << "*.opus"
             //Uncompressed audio data
             << "*.wav" << "*.voc" << "*.aiff"
             //MIDI
-            << "*.mid"
+            << "*.mid" << "*.midi" << "*.rmi" << "*.mus" << "*.kar" << "*.xmi" << "*.cmf"
             //MikMod (Modules)
             << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
             << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
             << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
             //GAME EMU
-            << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz";
+            << "*.ay" << "*.gbs" << "*.gym" << "*.hes" << "*.kss" << "*.nsf" << "*.nsfe" << "*.sap" << "*.spc" << "*.vgm" << "*.vgz";
 
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);

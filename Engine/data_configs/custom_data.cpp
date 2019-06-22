@@ -21,12 +21,12 @@
 #include <Utils/files.h>
 #include <utility>
 
-CustomDirManager::CustomDirManager(std::string path, std::string name, std::string stuffPath)
+CustomDirManager::CustomDirManager(const std::string &path, const std::string &name, const std::string &stuffPath)
 {
-    setCustomDirs(std::move(path), std::move(name), std::move(stuffPath));
+    setCustomDirs(path, name, stuffPath);
 }
 
-std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
+std::string CustomDirManager::getCustomFile(const std::string &name, bool *isDefault)
 {
     if(name.empty())
         return "";
@@ -39,7 +39,7 @@ std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
         backupName = srcName;
         backupName = Files::changeSuffix(backupName, ".png");
         //backupName.replace(backupName.size() - 3, 3, "png");
-        //find PNG's first!
+        //find PNGs first!
         std::string tmp = backupName;
         backupName = srcName;
         srcName = tmp;
@@ -67,6 +67,9 @@ tryBackup:
             *isDefault = false;
     }
     else
+        target = findFileInExtraDirs(name);
+
+    if(target.empty())
     {
         if((!backupName.empty()) && (backupName != srcName))
         {
@@ -88,7 +91,7 @@ tryBackup:
     return target;
 }
 
-std::string CustomDirManager::getDefaultFile(std::string name)
+std::string CustomDirManager::getDefaultFile(const std::string &name)
 {
     std::string target;
     target = m_mainStuffFullPath + name;
@@ -97,16 +100,40 @@ std::string CustomDirManager::getDefaultFile(std::string name)
     return target;
 }
 
-std::string CustomDirManager::getMaskFallbackFile(std::string name)
+std::string CustomDirManager::getMaskFallbackFile(const std::string &name)
 {
     if(Files::hasSuffix(name, ".png"))
         return getDefaultFile(name);
     return std::string();
 }
 
-void CustomDirManager::setCustomDirs(std::string path, std::string name, std::string stuffPath)
+void CustomDirManager::setCustomDirs(const std::string &path, const std::string &name, const std::string &stuffPath, const std::vector<std::string> &extraPaths)
 {
     m_dirCustom = path + "/" + name;
     m_dirEpisode = path;
-    m_mainStuffFullPath = std::move(stuffPath);
+    m_mainStuffFullPath = stuffPath;
+    m_dirsExtra = extraPaths;
+}
+
+void CustomDirManager::addExtraDirs(const std::vector<std::string> &dPaths)
+{
+    m_dirsExtra.insert(m_dirsExtra.end(), dPaths.begin(), dPaths.end());
+}
+
+void CustomDirManager::clearExtraDirs()
+{
+    m_dirsExtra.clear();
+}
+
+std::string CustomDirManager::findFileInExtraDirs(const std::string &fPath)
+{
+    for(const std::string &d : m_dirsExtra)
+    {
+        std::string f = d;
+        f += "/";
+        f += fPath;
+        if(Files::fileExists(f))
+            return f;
+    }
+    return std::string();
 }

@@ -231,15 +231,17 @@ bool LevelScene::loadConfigs()
     //Set paths
     std::string metaPath  = m_data.meta.path;
     std::string metaFName = m_data.meta.filename;
-    ConfigManager::Dir_Blocks.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBlock());
-    ConfigManager::Dir_BGO.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBGO());
-    ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC());
-    ConfigManager::Dir_NPCScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPCScript());
-    ConfigManager::Dir_PlayerScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerScript());
-    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerCalibrations());
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable());
-    ConfigManager::Dir_BG.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBG());
-    ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect());
+    std::vector<std::string> extraPaths;
+    ConfigManager::loadExtraFoldersList(metaPath, extraPaths);
+    ConfigManager::Dir_Blocks.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBlock(), extraPaths);
+    ConfigManager::Dir_BGO.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBGO(), extraPaths);
+    ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC(), extraPaths);
+    ConfigManager::Dir_NPCScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPCScript(), extraPaths);
+    ConfigManager::Dir_PlayerScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerScript(), extraPaths);
+    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerCalibrations(), extraPaths);
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable(), extraPaths);
+    ConfigManager::Dir_BG.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBG(), extraPaths);
+    ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect(), extraPaths);
 
     //Load INI-files
     success = ConfigManager::loadLevelBlocks(); //!< Blocks

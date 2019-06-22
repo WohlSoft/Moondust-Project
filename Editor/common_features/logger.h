@@ -33,7 +33,7 @@ enum class PGE_LogLevel
 };
 
 void LoadLogSettings();
-void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole=false);
+void WriteToLog(PGE_LogLevel type, const QString &msg, bool noConsole=false);
 
 // Regular loggers
 #define LogDebug(msg)       WriteToLog(PGE_LogLevel::Debug, (msg), false);

@@ -62,7 +62,8 @@ class MutexLocker
 
 std::string     LogWriter::m_logFilePath;
 PGE_LogLevel    LogWriter::m_logLevel;
-bool            LogWriter::m_enabled;
+bool            LogWriter::m_enabled = false;
+bool            LogWriter::m_enabledStdOut = false;
 
 bool  LogWriter::m_logIsOpened = false;
 SDL_RWops *LogWriter::m_logout = nullptr;
@@ -81,7 +82,7 @@ static std::string return_current_time_and_date()
 }
 #endif//__EMSCRIPTEN__
 
-void LogWriter::LoadLogSettings()
+void LogWriter::LoadLogSettings(bool disableStdOut)
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
@@ -93,6 +94,7 @@ void LogWriter::LoadLogSettings()
 #else
     std::string logFileName = fmt::format_ne("PGE_Engine_log_{0}.txt", return_current_time_and_date());
 
+    m_enabledStdOut = !disableStdOut;
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();
     IniProcessing logSettings(mainIniFile);
@@ -142,9 +144,9 @@ void LogWriter::LoadLogSettings()
 #endif
 }
 
-void LoadLogSettings()
+void LoadLogSettings(bool disableStdOut)
 {
-    LogWriter::LoadLogSettings();
+    LogWriter::LoadLogSettings(disableStdOut);
 }
 
 void CloseLog()
@@ -196,12 +198,15 @@ static void pLogGeneric(PGE_LogLevel level, const char *label, const char *forma
     va_list arg_in;
 
 #if defined(DEBUG_BUILD) && !defined(__ANDROID__)
-    va_copy(arg_in, arg);
-    std::fprintf(stdout, "%s: ", label);
-    std::vfprintf(stdout, format, arg_in);
-    std::fprintf(stdout, OS_NEWLINE);
-    std::fflush(stdout);
-    va_end(arg_in);
+    if(LogWriter::m_enabledStdOut)
+    {
+        va_copy(arg_in, arg);
+        std::fprintf(stdout, "%s: ", label);
+        std::vfprintf(stdout, format, arg_in);
+        std::fprintf(stdout, OS_NEWLINE);
+        std::fflush(stdout);
+        va_end(arg_in);
+    }
 #endif
 
 #if defined(__ANDROID__)
@@ -279,7 +284,7 @@ void pLogInfo(const char *format, ...)
     va_end(arg);
 }
 
-void WriteToLog(PGE_LogLevel type, std::string msg)
+void WriteToLog(PGE_LogLevel type, const std::string &msg)
 {
     LogWriter::WriteToLog(type, msg);
 }

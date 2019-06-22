@@ -436,6 +436,8 @@ namespace ConfigManager
     extern CustomDirManager Dir_PlayerCalibrations;
     /********Playable characters*******/
 
+    bool loadExtraFoldersList(const std::string &episodePath, std::vector<std::string> &out_paths);
+
     /*================================Common config Data===end=====================*/
 
     /***********Texture banks*************/

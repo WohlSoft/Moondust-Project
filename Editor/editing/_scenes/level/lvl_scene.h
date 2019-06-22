@@ -292,7 +292,7 @@ public:
 
     ItemBlock *placeBlock(LevelBlock &block, bool toGrid = false);
     ItemBGO *placeBGO(LevelBGO &bgo, bool toGrid = false);
-    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid = false, bool isHistoryManager = false);
+    ItemNPC *placeNPC(LevelNPC &npc, bool toGrid = false);
     ItemPhysEnv *placeEnvironmentZone(LevelPhysEnv &water, bool toGrid = false);
     ItemPlayerPoint *placePlayerPoint(PlayerPoint plr, bool init = false);
 
@@ -321,7 +321,7 @@ public:
     void doorPointsSync(long arrayID, bool remove = false);
     void collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item);
     void collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items);
-    void placeAll(const LevelData &data, bool isHistoryManager = false);
+    void placeAll(const LevelData &data);
 
     void returnItemBackGroup(QList<QGraphicsItem * >items);
     void returnItemBack(QGraphicsItem *item);
@@ -401,7 +401,7 @@ public:
         MODE_Line,
         MODE_Fill
     };
-    void switchMode(QString title);
+    void switchMode(const QString &title);
     void SwitchEditingMode(int EdtMode);
 
 
@@ -496,7 +496,7 @@ private:
 public:
     void applyLayersVisible();
     void setLayerToSelected();
-    void setLayerToSelected(QString lName, bool isNew = false);
+    void setLayerToSelected(const QString &lName, bool isNew = false);
 
 
     // ///////////////////Resizers///////////////////////////

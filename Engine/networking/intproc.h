@@ -33,7 +33,7 @@ namespace IntProc
     bool isWorking();
 
     std::string getState();
-    void        setState(std::string instate);
+    void        setState(const std::string &instate);
 
     enum ExternalCommands
     {
@@ -49,8 +49,8 @@ namespace IntProc
     };
 
     bool sendMessage(const char *command);
-    bool sendMessageS(std::string command);
-    bool sendMessage(std::string command);
+    bool sendMessageS(const std::string &command);
+    bool sendMessage(const std::string &command);
 
     void             storeCommand(const char *cmd, size_t length, ExternalCommands type);
     void             cmdLock();

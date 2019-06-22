@@ -187,6 +187,7 @@ public:
 
     static QString SmbxEXE_Name;
     static bool    SmbxTest_By_Default;
+    static bool    SmbxTest_HidePgeEngine;
 };
 
 #endif // GLOBAL_SETTINGS_H

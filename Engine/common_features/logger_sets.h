@@ -31,15 +31,17 @@ class LogWriter
 public:
     static std::string  m_logFilePath;
     static PGE_LogLevel m_logLevel;
-    //! Is logging system is enabmed
+    //! Is logging system is enabled
     static bool  m_enabled;
+    //! Is logging system allowed to output into `stdout`
+    static bool  m_enabledStdOut;
     //! Is log file is opened
     static bool  m_logIsOpened;
     //! Output file
-    static SDL_RWops*                   m_logout;
+    static SDL_RWops *m_logout;
 
     static void WriteToLog(PGE_LogLevel type, const std::string &msg);
-    static void LoadLogSettings();
+    static void LoadLogSettings(bool disableStdOut = false);
 };
 
 #endif // LOGGER_SETS_H

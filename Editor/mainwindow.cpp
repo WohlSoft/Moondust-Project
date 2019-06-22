@@ -18,6 +18,7 @@
 
 #include <QtConcurrent>
 #include <utility>
+#include <stdexcept>
 
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
@@ -179,6 +180,21 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         splash.progressTitle(tr("Finishing loading..."));
 
         m_isAppInited = true;
+    }
+    catch(const char *e)
+    {
+        LogWriter::logLevel = PGE_LogLevel::Debug; //Force debug log
+        QMessageBox::critical(this, tr("Configuration error"),
+                              tr("Configuration can't be loaded:\n"
+                                 "%1.\n"
+                                 "See %2 for more information.")
+                              .arg(e)
+                              .arg(LogWriter::DebugLogFile),
+                              QMessageBox::Ok);
+        LogFatal(QString("Initialization failure: %1").arg(e));
+        LogFatal("<Error, application closed>");
+        m_isAppInited = false;
+        return false;
     }
     catch(...)
     {

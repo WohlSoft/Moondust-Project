@@ -38,7 +38,7 @@ class EditorPipe
         std::atomic_bool    m_levelAccepted;
         std::mutex          m_levelAccepted_lock;
 
-        void icomingData(std::string &in);
+        void icomingData(const std::string &in);
 };
 
 #endif // EDITOR_PIPE_H

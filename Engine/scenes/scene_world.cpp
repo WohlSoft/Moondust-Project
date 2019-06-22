@@ -479,14 +479,18 @@ bool WorldScene::loadConfigs()
     }
 
     //Set paths
-    ConfigManager::Dir_EFFECT.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathLevelEffect());
-    ConfigManager::Dir_Tiles.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldTiles());
-    ConfigManager::Dir_Scenery.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldScenery());
-    ConfigManager::Dir_WldPaths.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldPaths());
-    ConfigManager::Dir_WldLevel.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldLevels());
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathLevelPlayable());
-    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathLevelPlayerCalibrations());
-    ConfigManager::Dir_PlayerWld.setCustomDirs(m_data.meta.path, m_data.meta.filename, ConfigManager::PathWorldPlayable());
+    std::vector<std::string> extraPaths;
+    std::string metaPath  = m_data.meta.path;
+    std::string metaFName = m_data.meta.filename;
+    ConfigManager::loadExtraFoldersList(metaPath, extraPaths);
+    ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect(), extraPaths);
+    ConfigManager::Dir_Tiles.setCustomDirs(metaPath, metaFName, ConfigManager::PathWorldTiles(), extraPaths);
+    ConfigManager::Dir_Scenery.setCustomDirs(metaPath, metaFName, ConfigManager::PathWorldScenery(), extraPaths);
+    ConfigManager::Dir_WldPaths.setCustomDirs(metaPath, metaFName, ConfigManager::PathWorldPaths(), extraPaths);
+    ConfigManager::Dir_WldLevel.setCustomDirs(metaPath, metaFName, ConfigManager::PathWorldLevels(), extraPaths);
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable(), extraPaths);
+    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerCalibrations(), extraPaths);
+    ConfigManager::Dir_PlayerWld.setCustomDirs(metaPath, metaFName, ConfigManager::PathWorldPlayable(), extraPaths);
     //Load INI-files
     success = ConfigManager::loadWorldTiles();   //!< Tiles
 

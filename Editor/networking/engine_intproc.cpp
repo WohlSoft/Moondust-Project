@@ -38,15 +38,12 @@ static void base64_encode(QByteArray &out, QString &string)
 IntEngine::IntEngine()
 {}
 
-IntEngine::~IntEngine()
-{}
-
 void IntEngine::onData()
 {
     if(isWorking())
     {
-        QByteArray strdata = engine->readAllStandardOutput();
-        QByteArray msg = QByteArray::fromBase64(strdata);
+        QByteArray strData = engine->readAllStandardOutput();
+        QByteArray msg = QByteArray::fromBase64(strData);
 
         if(msg.startsWith("CMD:"))
         {
