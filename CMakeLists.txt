@@ -442,6 +442,7 @@ if(WIN32) # Deployment for Windows
 
         add_custom_target(mkdir_packed_create_zip
             COMMAND ${CMAKE_COMMAND} -E make_directory "${ZIP_PACK_DIR}"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${ZIP_SRC_DIR}/styles" # WORKAROUND: when styles DLLs realy not used, just make empty folder
         )
 
         set(PGE_CommonQtFiles)
@@ -453,6 +454,7 @@ if(WIN32) # Deployment for Windows
                 "${ZIP_SRC_DIR}/Qt5Widgets${PGE_DLL_SUFFIX}.dll"
                 "${ZIP_SRC_DIR}/imageformats/"
                 "${ZIP_SRC_DIR}/platforms/"
+                "${ZIP_SRC_DIR}/styles/"
                 ${MINGW_DLLS}
             )
         elseif(PGE_SHARED_SDLMIXER)
@@ -466,13 +468,9 @@ if(WIN32) # Deployment for Windows
             "${ZIP_SRC_DIR}/licenses/"
             "${ZIP_SRC_DIR}/imageformats/"
             "${ZIP_SRC_DIR}/platforms/"
+            "${ZIP_SRC_DIR}/styles/"
             "${ZIP_SRC_DIR}/help/"
         )
-
-        if(EXISTS "${ZIP_SRC_DIR}/styles")
-            list(APPEND PGE_CommonFiles "${ZIP_SRC_DIR}/styles/")
-            list(APPEND PGE_CommonQtFiles "${ZIP_SRC_DIR}/styles/")
-        endif()
 
         set(PGE_MaintainerFiles
             ${PGE_CommonQtFiles}
