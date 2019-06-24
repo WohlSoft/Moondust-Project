@@ -207,19 +207,15 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
         list(APPEND WINDEPLOY_LIST pge_maintainer)
     endif()
 
+    if(WIN32)
+        add_custom_target(windeploy)
+    endif()
+
     # Shared deployment on Windows
     if(WIN32 AND NOT PGE_ENABLE_STATIC_QT)
         if($ENV{QtDir})
             string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
         endif()
-        set(MINGW_BIN_PATH $ENV{MinGW})
-        if(NOT MINGW_BIN_PATH)
-            set(MINGW_BIN_PATH "${QT_BINLIB_DIR}")
-        else()
-            string(REPLACE "\\" "/" MINGW_BIN_PATH $ENV{MinGW})
-        endif()
-
-        add_custom_target(windeploy)
         WinDeployQt(pge_windeploy TARGETS ${WINDEPLOY_LIST} NOSWGL NOANGLE NOD3DCOMPILER)
 
         set(JUNK_DLLS)
@@ -266,26 +262,49 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
                                 "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/${JunkDir}"
             )
         endforeach()
+    else()
+        add_custom_target(pge_windeploy) # DUMMY
+    endif()
+
+    if(WIN32 AND (NOT PGE_ENABLE_STATIC_QT OR PGE_SHARED_SDLMIXER))
+        set(MINGW_BIN_PATH $ENV{MinGW})
+        if(NOT MINGW_BIN_PATH)
+            set(MINGW_BIN_PATH "${QT_BINLIB_DIR}")
+        else()
+            string(REPLACE "\\" "/" MINGW_BIN_PATH $ENV{MinGW})
+        endif()
 
         set(MINGW_DLLS)
-        if(EXISTS "${MINGW_BIN_PATH}/libgcc_s_dw2-1.dll")
-            list(APPEND MINGW_DLLS "${MINGW_BIN_PATH}/libgcc_s_dw2-1.dll")
+        find_file(MINGWDLL_LIBGCCDW libgcc_s_dw2-1.dll PATHS "${MINGW_BIN_PATH}")
+        if(MINGWDLL_LIBGCC)
+            list(APPEND MINGW_DLLS "${MINGWDLL_LIBGCC}")
         endif()
-        if(EXISTS "${MINGW_BIN_PATH}/libgcc_s_seh-1.dll")
-            list(APPEND MINGW_DLLS "${MINGW_BIN_PATH}/libgcc_s_seh-1.dll")
+
+        find_file(MINGWDLL_LIBGCCSEC libgcc_s_seh-1.dll PATHS "${MINGW_BIN_PATH}")
+        if(MINGWDLL_LIBGCCSEC)
+            list(APPEND MINGW_DLLS "${MINGWDLL_LIBGCCSEC}")
         endif()
-        if(EXISTS "${MINGW_BIN_PATH}/libmingwex-0.dll")
-            list(APPEND MINGW_DLLS "${MINGW_BIN_PATH}/libmingwex-0.dll")
+
+        find_file(MINGWDLL_MINGWEX libmingwex-0.dll PATHS "${MINGW_BIN_PATH}")
+        if(MINGWDLL_MINGWEX)
+            list(APPEND MINGW_DLLS "${MINGWDLL_MINGWEX}")
         endif()
-        if(EXISTS "${MINGW_BIN_PATH}/libwinpthread-1.dll")
-            list(APPEND MINGW_DLLS "${MINGW_BIN_PATH}/libwinpthread-1.dll")
+
+        find_file(MINGWDLL_WINPTHREAD libwinpthread-1.dll PATHS "${MINGW_BIN_PATH}")
+        if(MINGWDLL_WINPTHREAD)
+            list(APPEND MINGW_DLLS "${MINGWDLL_WINPTHREAD}")
         endif()
-        if(EXISTS "${MINGW_BIN_PATH}/pthreadGC-3.dll")
-            list(APPEND MINGW_DLLS "${MINGW_BIN_PATH}/pthreadGC-3.dll")
+
+        find_file(MINGWDLL_WINPTHREADGC3 pthreadGC-3.dll PATHS "${MINGW_BIN_PATH}")
+        if(MINGWDLL_WINPTHREADGC3)
+            list(APPEND MINGW_DLLS "${MINGWDLL_WINPTHREADGC3}")
         endif()
-        if(EXISTS "${MINGW_BIN_PATH}/libstdc++-6.dll")
-            list(APPEND MINGW_DLLS "${MINGW_BIN_PATH}/libstdc++-6.dll")
+
+        find_file(MINGWDLL_STDCPP libstdc++-6.dll PATHS "${MINGW_BIN_PATH}")
+        if(EXISTS "${MINGWDLL_STDCPP}")
+            list(APPEND MINGW_DLLS "${MINGWDLL_STDCPP}")
         endif()
+
         install(FILES
             ${MINGW_DLLS}
             DESTINATION "${PGE_INSTALL_DIRECTORY}/"
@@ -309,11 +328,12 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
             COMMAND ${CMAKE_COMMAND} -E tar "-xjvf"
                 "${CMAKE_SOURCE_DIR}/_Misc/tools/sox-win32.tar.gz" -C "tools"
             DEPENDS mkdir_tools_windeploy
+            COMMENT "Unpacking extra Win32 tools..."
         )
         if(NOT PGE_ENABLE_STATIC_QT)
             add_dependencies(windeploy pge_windeploy cleanup_files_windeploy cleanup_dirs_windeploy)
         endif()
-        add_dependencies(windeploy install_tools_windeploy)
+        add_dependencies(windeploy pge_windeploy install_tools_windeploy)
     endif()
 endif()
 
@@ -403,11 +423,14 @@ if(WIN32) # Deployment for Windows
     endif()
 
     find_program(SevenZipProgram 7z
-            PATHS
-            "$ENV{ProgramFiles}/7-zip/"
-            "C:/Program Files/7-zip/"
-            "C:/Program Files (x86)/7-zip/"
+        PATHS
+        "/usr/lib/p7zip/"
+        "$ENV{ProgramFiles}/7-zip/"
+        "C:/Program Files/7-zip/"
+        "C:/Program Files (x86)/7-zip/"
+        NO_DEFAULT_PATH
     )
+
     if(SevenZipProgram)
         message("Detected 7Zip installed: ${SevenZipProgram}. Deployment is possible!")
         if($ENV{QtDir})
@@ -421,15 +444,22 @@ if(WIN32) # Deployment for Windows
             COMMAND ${CMAKE_COMMAND} -E make_directory "${ZIP_PACK_DIR}"
         )
 
-        set(PGE_CommonQtFiles
-            "${ZIP_SRC_DIR}/Qt5Core${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/Qt5Gui${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/Qt5Network${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/Qt5Widgets${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/imageformats/"
-            "${ZIP_SRC_DIR}/platforms/"
-            ${MINGW_DLLS}
-        )
+        set(PGE_CommonQtFiles)
+        if(NOT PGE_ENABLE_STATIC_QT)
+            set(PGE_CommonQtFiles
+                "${ZIP_SRC_DIR}/Qt5Core${PGE_DLL_SUFFIX}.dll"
+                "${ZIP_SRC_DIR}/Qt5Gui${PGE_DLL_SUFFIX}.dll"
+                "${ZIP_SRC_DIR}/Qt5Network${PGE_DLL_SUFFIX}.dll"
+                "${ZIP_SRC_DIR}/Qt5Widgets${PGE_DLL_SUFFIX}.dll"
+                "${ZIP_SRC_DIR}/imageformats/"
+                "${ZIP_SRC_DIR}/platforms/"
+                ${MINGW_DLLS}
+            )
+        elseif(PGE_SHARED_SDLMIXER)
+            set(PGE_CommonQtFiles
+                ${MINGW_DLLS}
+            )
+        endif()
 
         set(PGE_CommonFiles
             "${ZIP_SRC_DIR}/*.dll"
