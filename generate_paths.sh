@@ -19,73 +19,146 @@ QT_PATH=~/Qt/$QT_VERSION/bin/
 QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
 AUTODETECTED=false
 STATIC_QT=false
+PREFER_SHARED=false
+PREFER_STATIC=false
 
-#At first detect globally installed Qt
-if [[ $QT_VERSION == "undefined/gcc_64" ]]; then
-    if [ -f /usr/bin/qmake ]; then
-        QT_VERSION=/usr
-        QT_PATH=/usr/bin/
-        QT_LIB_PATH=/usr/lib
-        AUTODETECTED=true
-    fi
-    if [ -f /usr/local/bin/qmake ]; then
-        QT_VERSION=/usr/local
-        QT_PATH=/usr/local/bin/
-        QT_LIB_PATH=/usr/lib
-        AUTODETECTED=true
-    fi
-    if [ -f /usr/bin/qmake-qt5 ]; then
-        QT_VERSION=/usr
-        QT_PATH=/usr/bin/
-        QT_LIB_PATH=/usr/local/lib
-        QMAKE_PATH=qmake-qt5
-        LRELEASE_PATH=lrelease-qt5
-        AUTODETECTED=true
-    fi
-    if [ -f /usr/local/bin/qmake-qt5 ]; then
-        QT_VERSION=/usr/local
-        QT_PATH=/usr/local/bin/
-        QT_LIB_PATH=/usr/local/lib
-        QMAKE_PATH=qmake-qt5
-        LRELEASE_PATH=lrelease-qt5
-        AUTODETECTED=true
-    fi
-fi
-
-#Automatically detect manually installed Qt
-for var in 5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.7.1 5.7.2 5.8 5.8.1 5.8.2 5.8.3 5.9 5.9.1 5.9.2 5.9.3 5.10 5.10.1 5.10.2 5.10.3 5.11 5.11.0 5.11.1 5.11.2 5.11.3 5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6
+for var in "$@"
 do
-    if [[ -f /opt/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
-        QT_VERSION=$var/$GCC_ARCH
-        QT_PATH=~/Qt/$QT_VERSION/bin/
-        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-        AUTODETECTED=true
-    elif [[ -f ~/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
-        QT_VERSION=$var/$GCC_ARCH
-        QT_PATH=~/Qt/$QT_VERSION/bin/
-        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-        AUTODETECTED=true
-    elif [[ -f /opt/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
-        QT_VERSION=$var/$CLANG_ARCH
-        QT_PATH=~/Qt/$QT_VERSION/bin/
-        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-        AUTODETECTED=true
-    elif [[ -f ~/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
-        QT_VERSION=$var/$CLANG_ARCH
-        QT_PATH=~/Qt/$QT_VERSION/bin/
-        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-        AUTODETECTED=true
-    fi
+    case "$var" in
+        --shared)
+            PREFER_SHARED=true
+        ;;
+        static)
+            PREFER_STATIC=true
+        ;;
+        --static)
+            PREFER_STATIC=true
+        ;;
+    esac
 done
 
+
+if ! $PREFER_STATIC; then
+    #At first detect globally installed Qt
+    if [[ $QT_VERSION == "undefined/gcc_64" ]]; then
+        if [ -f /usr/bin/qmake ]; then
+            QT_VERSION=/usr
+            QT_PATH=/usr/bin/
+            QT_LIB_PATH=/usr/lib
+            AUTODETECTED=true
+        elif [ -f /usr/local/bin/qmake ]; then
+            QT_VERSION=/usr/local
+            QT_PATH=/usr/local/bin/
+            QT_LIB_PATH=/usr/lib
+            AUTODETECTED=true
+        elif [ -f /usr/bin/qmake-qt5 ]; then
+            QT_VERSION=/usr
+            QT_PATH=/usr/bin/
+            QT_LIB_PATH=/usr/local/lib
+            QMAKE_PATH=qmake-qt5
+            LRELEASE_PATH=lrelease-qt5
+            AUTODETECTED=true
+        elif [ -f /usr/local/bin/qmake-qt5 ]; then
+            QT_VERSION=/usr/local
+            QT_PATH=/usr/local/bin/
+            QT_LIB_PATH=/usr/local/lib
+            QMAKE_PATH=qmake-qt5
+            LRELEASE_PATH=lrelease-qt5
+            AUTODETECTED=true
+        fi
+    fi
+
+    # Automatically detect manually installed Qt
+    for var in 5.4 5.4.0 5.4.1 5.4.2 \
+               5.5 5.5.0 5.5.1 \
+               5.6 5.6.0 5.6.1 5.6.1-1 \
+               5.7 5.7.1 5.7.2 \
+               5.8 5.8.1 5.8.2 5.8.3 \
+               5.9 5.9.1 5.9.2 5.9.3 \
+               5.10 5.10.1 5.10.2 5.10.3 \
+               5.11 5.11.0 5.11.1 5.11.2 5.11.3 \
+               5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 \
+               5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 \
+               5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 \
+               5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6
+    do
+        if [[ -f /opt/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
+            QT_VERSION=$var/$GCC_ARCH
+            QT_PATH=~/Qt/$QT_VERSION/bin/
+            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+            AUTODETECTED=true
+        elif [[ -f ~/Qt/$var/$GCC_ARCH/bin/qmake ]]; then
+            QT_VERSION=$var/$GCC_ARCH
+            QT_PATH=~/Qt/$QT_VERSION/bin/
+            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+            AUTODETECTED=true
+        elif [[ -f /opt/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
+            QT_VERSION=$var/$CLANG_ARCH
+            QT_PATH=~/Qt/$QT_VERSION/bin/
+            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+            AUTODETECTED=true
+        elif [[ -f ~/Qt/$var/$CLANG_ARCH/bin/qmake ]]; then
+            QT_VERSION=$var/$CLANG_ARCH
+            QT_PATH=~/Qt/$QT_VERSION/bin/
+            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+            AUTODETECTED=true
+        fi
+    done
+fi
+
+if [[ $PREFER_SHARED == false && $AUTODETECTED == false ]]; then
+    for var in 5.4 5.4.0 5.4.1 5.4.2 \
+               5.5 5.5.0 5.5.1 \
+               5.6 5.6.0 5.6.1 5.6.1-1 \
+               5.7 5.7.1 5.7.2 \
+               5.8 5.8.1 5.8.2 5.8.3 \
+               5.9 5.9.1 5.9.2 5.9.3 \
+               5.10 5.10.1 5.10.2 5.10.3 \
+               5.11 5.11.0 5.11.1 5.11.2 5.11.3 \
+               5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 \
+               5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 \
+               5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 \
+               5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6
+    do
+        if [[ -f ~/Qt/${var}_static/bin/qmake ]]; then
+            QT_VERSION=${var}_static
+            QT_PATH=~/Qt/$QT_VERSION/bin/
+            QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
+            AUTODETECTED=true
+            STATIC_QT=true
+        fi
+    done
+fi
+
 if [[ "$OSTYPE" == "msys"* ]]; then
-    if [[ -f /mingw64/qt5-static/bin/qmake ]]; then
+    if [[ $PREFER_STATIC == false && -f "${MSYSTEM_PREFIX}/bin/qmake" ]]; then
+        QT_VERSION="${MSYSTEM_PREFIX:1}/"
+        QT_PATH="${MSYSTEM_PREFIX}/bin/"
+        QT_LIB_PATH="${MSYSTEM_PREFIX}/lib/"
+        AUTODETECTED=true
+    elif [[ $PREFER_SHARED == false && -f "${MSYSTEM_PREFIX}/qt5-static/bin/qmake" ]]; then
+        QT_VERSION="${MSYSTEM_PREFIX:1}/qt5-static"
+        QT_PATH="${MSYSTEM_PREFIX}/qt5-static/bin/"
+        QT_LIB_PATH="${MSYSTEM_PREFIX}/qt5-static/lib/"
+        AUTODETECTED=true
+        STATIC_QT=true
+    elif [[ $PREFER_STATIC == false && -f /mingw64/bin/qmake ]]; then
+        QT_VERSION=mingw64/qt5
+        QT_PATH=/mingw64/qt5/bin/
+        QT_LIB_PATH=/mingw64/qt5/lib/
+        AUTODETECTED=true
+    elif [[ $PREFER_SHARED == false && -f /mingw64/qt5-static/bin/qmake ]]; then
         QT_VERSION=mingw64/qt5-static
         QT_PATH=/mingw64/qt5-static/bin/
         QT_LIB_PATH=/mingw64/qt5-static/lib/
         AUTODETECTED=true
         STATIC_QT=true
-    elif [[ -f /mingw32/qt5-static/bin/qmake ]]; then
+    elif [[ $PREFER_STATIC == false && -f /mingw32/bin/qmake ]]; then
+        QT_VERSION=mingw32/qt5
+        QT_PATH=/mingw32/qt5/bin/
+        QT_LIB_PATH=/mingw32/qt5/lib/
+        AUTODETECTED=true
+    elif [[ $PREFER_SHARED == false && -f /mingw32/qt5-static/bin/qmake ]]; then
         QT_VERSION=mingw32/qt5-static
         QT_PATH=/mingw32/qt5-static/bin/
         QT_LIB_PATH=/mingw32/qt5-static/lib/
@@ -101,24 +174,6 @@ do
         silent)
                 OPEN_GEDIT=false
                 AUTODETECTED=false
-            ;;
-        static) #Change paths ti Semaphore-CI compatible
-                #QT_VERSION=5.8.0_static
-                #Automatically detect static build
-                for var in 5.4 5.4.0 5.4.1 5.4.2 5.5 5.5.0 5.5.1 5.6 5.6.0 5.6.1 5.6.1-1 5.7 5.7.1 5.7.2 5.8 5.8.1 5.8.2 5.8.3 5.9 5.9.1 5.9.2 5.9.3 5.10 5.10.1 5.10.2 5.10.3 5.11 5.11.0 5.11.1 5.11.2 5.11.3 5.12 5.12.0 5.12.1 5.12.2 5.12.3 5.12.4 5.12.5 5.13 5.13.0 5.13.1 5.13.2 5.13.3 5.13.4 5.14 5.14.0 5.14.1 5.14.2 5.14.3 5.14.4 5.14.5 5.15 5.15.0 5.15.1 5.15.2 5.15.3 5.15.4 5.15.5 5.15.6
-                do
-                    if [ -f ~/Qt/${var}_static/bin/qmake ]; then
-                        QT_VERSION=${var}_static
-                        QT_PATH=~/Qt/$QT_VERSION/bin/
-                        QT_LIB_PATH=~/Qt/$QT_VERSION/lib/
-                        AUTODETECTED=true
-                        STATIC_QT=true
-                    fi
-                done
-                #QT_PATH=/home/runner/Qt/$QT_VERSION/bin/
-                #QT_LIB_PATH=/home/runner/Qt/$QT_VERSION/lib/
-                #QMAKE_PATH=/home/runner/Qt/$QT_VERSION/bin/qmake
-                #LRELEASE_PATH=/home/runner/Qt/$QT_VERSION/bin/lrelease
             ;;
     esac
 done
