@@ -160,6 +160,9 @@ matrix:
       env:
         - QT_VER=5.12.0
         - QT_TARBALL=qt-5-12-0-static-macosx-10-14-1.tar.bz2
+      before_cache:
+        - brew cleanup
+        - brew update
       cache:
         directories:
           - $HOME/Library/Caches/Homebrew
