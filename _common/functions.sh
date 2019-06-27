@@ -46,9 +46,9 @@ function getCpusCount()
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo $(sysctl -n hw.ncpu);
     elif [[ "$OSTYPE" == "msys"* ]]; then
-        echo 4; # Windows says 'No way!'. Yet... Until we find a way to do this
+        echo $(grep -c ^processor /proc/cpuinfo);
     elif [[ "$OSTYPE" == "haiku" ]]; then
-        echo 4; # Haiku also can't say count of CPUs
+        echo 4; # Haiku can't say count of CPUs
     else
         echo $(grep -c ^processor /proc/cpuinfo);
     fi

@@ -1,11 +1,6 @@
 #!/bin/bash
 bak=~+
 
-if [[ "$OSTYPE" == "msys"* ]]; then
-    ./build.bat
-    exit 0
-fi
-
 #flags
 flag_pause_on_end=true
 CMAKE_EXTRA_ARGS=""
@@ -39,7 +34,6 @@ do
 
             echo "--- Actions ---"
             printf " \E[1;4mlupdate\E[0m          - Update the translations\n"
-            printf " \E[1;4mlrelease\E[0m         - Compile the translations\n"
             printf " \E[1;4mclean\E[0m            - Remove all object files and caches to build from scratch\n"
             printf " \E[1;4mupdate-submodules\E[0m- Pull all submodules up to their latest states\n"
             printf " \E[1;4mrepair-submodules\E[0m- Repair invalid or broken submodules\n"
@@ -103,12 +97,12 @@ do
             printf " \E[1;4mcool\E[0m             - Prints some strings inside the lines (test of printLine command)\n"
             echo ""
 
-            printf "==== \e[43mIMPORTANT!\e[0m ====\n"
-            echo "This script is designed for Linux and macOS operating systems."
-            echo "If you trying to start it under Windows, it will automatically start"
-            echo "the build.bat script instead of this."
-            echo "===================="
-            echo ""
+            #printf "==== \e[43mIMPORTANT!\e[0m ====\n"
+            #echo "This script is designed for Linux and macOS operating systems."
+            #echo "If you trying to start it under Windows, it will automatically start"
+            #echo "the build.bat script instead of this."
+            #echo "===================="
+            #echo ""
             exit 1
             ;;
         no-pause)
@@ -155,7 +149,15 @@ do
         ldoc)
             # FIXME: 1) Autodetect luajit executible. 2) Don't rely on canonical paths, add LDoc as the submodule
             cd Engine/doc
-            ../../build-pge-cmake-release/bin/luajit-2.1.0-beta3 ../../../LDoc/ldoc.lua .
+            LUAJIT_BIN="../../build-pge-cmake-release/bin/luajit"
+            if [[ -f "../../build-pge-cmake-release/bin/luajit" ]]; then
+                LUAJIT_BIN="../../build-pge-cmake-release/bin/luajit"
+            elif [[ -f "../../build-pge-cmake-release/bin/luajit.exe" ]]; then
+                LUAJIT_BIN="../../build-pge-cmake-release/bin/luajit.exe"
+            elif [[ -f "../../build-pge-cmake-release/bin/luajit-2.1.0-beta3" ]]; then
+                LUAJIT_BIN="../../build-pge-cmake-release/bin/luajit-2.1.0-beta3"
+            fi
+            ${LUAJIT_BIN} ../../../LDoc/ldoc.lua .
             cd ../..
             printf "\n==== Done! ====\n\n"
             exit 0;
@@ -371,15 +373,9 @@ do
             ;;
         lrelease)
             echo ""
-            echo "Running translation compilation...";
-
-            printLine "Editor" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/${LRelease} Editor/pge_editor.pro
-
-            printLine "Engine" "\E[0;42;37m" "\E[0;34m"
-            ${QT_PATH}/${LRelease} Engine/pge_engine.pro
-
-            printLine "Done!" "\E[0;42;37m" "\E[0;32m"
+            echo "-- This action is deprecated! --";
+            echo "Translations will be compiled automatically while build process is going";
+            echo "...Do nothing since this option is now useless...";
             exit 0;
             ;;
     esac
@@ -428,6 +424,8 @@ fi
 deployTarget="create_tar"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     deployTarget="create_dmg"
+elif [[ "$OSTYPE" == "msys"* ]]; then
+    deployTarget="create_zip"
 fi
 
 BUILD_DIR="${SCRDIR}/build-pge-cmake${BUILD_DIR_SUFFUX}"
@@ -450,6 +448,14 @@ elif [[ -f /usr/bin/realpath ]]; then
     QT_PREFIX_ROOT=$(realpath "${QT_PATH}/../")
 else
     QT_PREFIX_ROOT=$(readlink -f -- "${QT_PATH}/../")
+fi
+
+if [[ "$OSTYPE" == "msys"* ]]; then
+    if ! $flag_cmake_it_ninja ; then
+        CMAKE_GENERATOR="MSYS Makefiles"
+    fi
+    export CC="gcc"
+    export CXX="g++"
 fi
 
 #=======================================================================
@@ -487,8 +493,21 @@ if ${flag_cmake_deploy} ; then
         cmake --build . --target enable_portable
         checkState
     fi
+
+    if [[ "$OSTYPE" == "msys"* ]]; then
+        cmake --build . --target windeploy
+        checkState
+    fi
+
     cmake --build . --target $deployTarget
     checkState
+
+    if [[ "$OSTYPE" == "msys"* ]]; then  # run extra tasks for Windows
+        cmake --build . --target create_zip_tools
+        checkState
+        cmake --build . --target create_zip_install
+        checkState
+    fi
 fi
 
 cd "${SCRDIR}"
