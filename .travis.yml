@@ -177,8 +177,6 @@ matrix:
             - axel
 
 before_install:
-  - brew update
-  - brew install ninja cmake coreutils binutils gnu-sed lftp axel # for just in a case, keep a duplicate
   - bash _common/travis-ci/before-install.sh
 
 # install: true
