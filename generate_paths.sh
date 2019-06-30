@@ -199,6 +199,11 @@ if $STATIC_QT; then
     echo "flag_cmake_static_qt=true;" >> _paths.sh
     echo "" >> _paths.sh
 fi
+if ! $AUTODETECTED ; then
+    echo "#---------Define this flag if you use a Static Qt build------------" >> _paths.sh
+    echo "#flag_cmake_static_qt=true;" >> _paths.sh
+    echo "" >> _paths.sh
+fi
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
