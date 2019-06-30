@@ -12,7 +12,13 @@ if(APPLE)
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
     set(LINK_FLAGS_RELEASE  "${LINK_FLAGS_RELEASE} -dead_strip")
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11") # macOS El Capitan
+
+    # Unify visibility to meet llvm's default.
+    include(CheckCXXCompilerFlag)
+    check_cxx_compiler_flag("-fvisibility-inlines-hidden" SUPPORTS_FVISIBILITY_INLINES_HIDDEN_FLAG)
+    if(SUPPORTS_FVISIBILITY_INLINES_HIDDEN_FLAG)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
+    endif()
 elseif(NOT MSVC)
     if(EMSCRIPTEN)
         set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-s")
