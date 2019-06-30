@@ -119,6 +119,7 @@ if(PGE_ENABLE_STATIC_QT)
                 Qt5PrintSupport
                 DiskArbitration
                 IOKit
+                IOSurface
                 Foundation
                 CoreServices
                 AppKit
