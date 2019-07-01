@@ -20,6 +20,7 @@
 #include <editing/_dialogs/musicfilelist.h>
 #include <editing/_scenes/level/lvl_history_manager.h>
 #include <main_window/dock/lvl_events_box.h>
+#include <common_features/image_list_menu.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -38,6 +39,14 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
     setVisible(false);
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
+    m_bgSelectMenu = new ImageListMenu(this);
+    {
+        auto *kkk = new QMenu(ui->bgImage);
+        kkk->addAction(m_bgSelectMenu);
+        QResizeEvent re(QSize(600, 600), kkk->size());
+        qApp->sendEvent(kkk, &re);
+        ui->bgImage->setMenu(kkk);
+    }
 
     switchResizeMode(false);
 
@@ -161,7 +170,7 @@ void LvlSectionProps::initDefaults()
     mw()->dock_LvlEvents->cbox_sct_bg()->setIconSize(QSize(100, BkgIconHeight));
 
     QAbstractItemView *abVw = ui->LVLPropsBackImage->view();
-    QListView *listVw = qobject_cast<QListView *>(abVw);
+    auto *listVw = qobject_cast<QListView *>(abVw);
     if(listVw)
     {
         listVw->setSpacing(2);
@@ -209,9 +218,9 @@ void LvlSectionProps::initDefaults()
         if(!tmp.isNull())
         {
             int d = 0;
-            for(int i = 0; i < 100; i += tmp.width())
+            for(int pi = 0; pi < 100; pi += tmp.width())
             {
-                xx.drawPixmap(i, 0, tmp.width(), tmp.height(), tmp);
+                xx.drawPixmap(pi, 0, tmp.width(), tmp.height(), tmp);
                 d += tmp.width();
             }
             if(d < 100) xx.drawPixmap(d, 0, tmp.width() - (100 - d), tmp.height(), tmp);
@@ -375,7 +384,7 @@ void LvlSectionProps::on_ResizeSection_clicked()
         if(!edit) return;
         qApp->setActiveWindow(mw());
         edit->setFocus();
-        if(edit->scene->m_resizeBox == NULL)
+        if(edit->scene->m_resizeBox == nullptr)
         {
             edit->scene->setSectionResizer(true);
         }
@@ -478,7 +487,8 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
         {
             const obj_BG &bg = main_bg[backgroundId];
             QTextStream o(&f);
-            o << "[background2]\r\n"
+            o << "; " << tr("Header section. Contains global settings of background like name or default fill color.",
+                         "A comment in the template of Background2 INI file.") << "\r\n\r\n"
 
               << "; " << tr("Name that will appear in the editor",
                             "A comment in the template of Background2 INI file.") << "\r\n"
@@ -492,8 +502,8 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
               << "; " << tr("Add layers here, for example:",
                             "A comment in the template of Background2 INI file.") << "\r\n\r\n"
               << "; [Layer1]\r\n"
-              << "; " << "depth = INFINITE" << "\r\n"
               << "; " << "img = \"background.png\"" << "\r\n"
+              << "; " << "depth = INFINITE" << "\r\n"
               << "; " << "repeatX = true" << "\r\n";
         }
     }

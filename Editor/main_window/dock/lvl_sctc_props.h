@@ -7,6 +7,7 @@
 
 class MainWindow;
 class QPushButton;
+class ImageListMenu;
 
 namespace Ui {
 class LvlSectionProps;
@@ -19,7 +20,7 @@ class LvlSectionProps : public QDockWidget, public MWDock_Base
     friend class MainWindow;
 private:
     explicit LvlSectionProps(QWidget *parent);
-    ~LvlSectionProps();
+    ~LvlSectionProps() override;
 public:
     bool lockSctSettingsProps;
     QPushButton *getEditBackground2IniButton();
@@ -57,9 +58,10 @@ private slots:
 
 
 protected:
-    virtual void focusInEvent(QFocusEvent * ev);
+    void focusInEvent(QFocusEvent * ev) override;
 
 private:
+    ImageListMenu *m_bgSelectMenu;
     Ui::LvlSectionProps *ui;
 };
 

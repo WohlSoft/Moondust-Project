@@ -264,24 +264,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="editBackground2Ini">
-         <property name="toolTip">
-          <string>Edit a custom background config...</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../_resources/editor.qrc">
-           <normaloff>:/images/pencil_16x16.png</normaloff>:/images/pencil_16x16.png</iconset>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
+       <item row="3" column="0" colspan="2">
         <widget class="QComboBox" name="LVLPropsBackImage">
          <property name="minimumSize">
           <size>
@@ -310,6 +293,30 @@
             <normaloff>:/dummies/dummies/unknown_block.png</normaloff>:/dummies/dummies/unknown_block.png</iconset>
           </property>
          </item>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="editBackground2Ini">
+         <property name="toolTip">
+          <string>Edit a custom background config...</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../_resources/editor.qrc">
+           <normaloff>:/images/pencil_16x16.png</normaloff>:/images/pencil_16x16.png</iconset>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QPushButton" name="bgImage">
+         <property name="text">
+          <string>choose bg</string>
+         </property>
         </widget>
        </item>
       </layout>

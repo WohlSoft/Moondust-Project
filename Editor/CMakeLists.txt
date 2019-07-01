@@ -191,6 +191,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/graphics_funcs.cpp
     common_features/graphicsworkspace.cpp
     common_features/grid.cpp
+    common_features/image_list_menu.cpp
     common_features/installer.cpp
     common_features/item_rectangles.cpp
     common_features/items.cpp
