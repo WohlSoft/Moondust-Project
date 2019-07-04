@@ -58,9 +58,10 @@ TilesetEditor::TilesetEditor(dataconfigs *conf, QGraphicsScene *scene, QWidget *
 
     ui->tilesetLayoutWidgetContainer->insertWidget(0, m_tileset = (new tileset(conf, ItemTypes::LVL_Block, 0, 32, 3, 3, scn)));
 
-    ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
     ui->listView->setDragEnabled(true);
+    ui->listView->setAcceptDrops(false);
+    ui->listView->setDragDropMode(QListView::DragOnly);
     m_model = new ElementsListModel(conf, ElementsListModel::LEVELPIECE_BLOCK, 32, nullptr, this);
     ui->listView->setModel(m_model);
 
@@ -236,6 +237,7 @@ void TilesetEditor::setUpItems(int type)
     case ItemTypes::LVL_Block:
     {
         ui->listView->setViewMode(QListView::ListMode);
+        ui->listView->setGridSize(QSize(34, 34));
         if(custom)
         {
             if(lvl_scene && (mode == GFX_Level))
@@ -272,6 +274,7 @@ void TilesetEditor::setUpItems(int type)
     case ItemTypes::LVL_BGO:
     {
         ui->listView->setViewMode(QListView::ListMode);
+        ui->listView->setGridSize(QSize(34, 34));
         if(custom)
         {
             if(lvl_scene && (mode == GFX_Level))
@@ -308,6 +311,7 @@ void TilesetEditor::setUpItems(int type)
     case ItemTypes::LVL_NPC:
     {
         ui->listView->setViewMode(QListView::ListMode);
+        ui->listView->setGridSize(QSize(34, 34));
         if(custom)
         {
             if(lvl_scene && (mode == GFX_Level))
@@ -344,6 +348,7 @@ void TilesetEditor::setUpItems(int type)
     case ItemTypes::WLD_Tile:
     {
         ui->listView->setViewMode(QListView::IconMode);
+        ui->listView->setGridSize(QSize(34, 45));
         if(custom)
         {
             if(wld_scene && (mode == GFX_World))
@@ -379,6 +384,7 @@ void TilesetEditor::setUpItems(int type)
     }
     case ItemTypes::WLD_Scenery:
         ui->listView->setViewMode(QListView::IconMode);
+        ui->listView->setGridSize(QSize(34, 45));
         if(custom)
         {
             if(wld_scene && (mode == GFX_World))
@@ -413,6 +419,7 @@ void TilesetEditor::setUpItems(int type)
         break;
     case ItemTypes::WLD_Path:
         ui->listView->setViewMode(QListView::IconMode);
+        ui->listView->setGridSize(QSize(34, 45));
         if(custom)
         {
             if(wld_scene && (mode == GFX_World))
@@ -447,6 +454,7 @@ void TilesetEditor::setUpItems(int type)
         break;
     case ItemTypes::WLD_Level:
         ui->listView->setViewMode(QListView::IconMode);
+        ui->listView->setGridSize(QSize(34, 45));
         if(custom)
         {
             if(wld_scene && (mode == GFX_World))

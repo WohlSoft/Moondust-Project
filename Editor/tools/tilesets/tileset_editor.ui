@@ -229,6 +229,15 @@
        <height>0</height>
       </size>
      </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::DragDrop</enum>
+     </property>
+     <property name="defaultDropAction">
+      <enum>Qt::IgnoreAction</enum>
+     </property>
      <property name="iconSize">
       <size>
        <width>32</width>
@@ -237,6 +246,9 @@
      </property>
      <property name="movement">
       <enum>QListView::Snap</enum>
+     </property>
+     <property name="resizeMode">
+      <enum>QListView::Adjust</enum>
      </property>
      <property name="viewMode">
       <enum>QListView::IconMode</enum>
