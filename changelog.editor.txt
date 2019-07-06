@@ -78,6 +78,7 @@ Editor 0.3.1.13
 - Fixed a retranslation of Vanilla-like toolbar
 - Fixed inability to save tileset when forbidden file path characters are was typed
 - Custom counters settings now saving into "settings" subfolder as all other settings INI files
+- Fixed a clumping of elements inside the Tileset Editor
 
 Editor 0.3.1.12
 - Added draggable splitter in the events toolbox
