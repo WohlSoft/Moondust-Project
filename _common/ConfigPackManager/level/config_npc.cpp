@@ -81,6 +81,7 @@ bool NpcSetup::parse(IniProcessing *setup,
                 *error = "image file is not exist: " + npcImgPath + image_n;
                 break;
 
+            default:
             case PGE_ImageInfo::ERR_CANT_OPEN:
                 *error = "Can't open image file: " + npcImgPath + image_n;
                 break;
@@ -194,16 +195,16 @@ bool NpcSetup::parse(IniProcessing *setup,
         if(!common.empty())
         {
             uint32_t framesOffset = ((framestyle > 0)? 1 : 0) * frames;
-            for(pge_size_t i = 0; i < frames_right.size(); i++)
-                frames_right[i] += framesOffset;
+            for(int & i : frames_right)
+                i += framesOffset;
         }
 
-        if(frames_left.size() > 0)
+        if(frames_left.empty())
         {
             custom_ani_fl = frames_left.front();
             custom_ani_el = frames_left.back();
         }
-        if(frames_right.size() > 0)
+        if(frames_right.empty())
         {
             custom_ani_fr = frames_right.front();
             custom_ani_er = frames_right.back();
@@ -214,7 +215,8 @@ bool NpcSetup::parse(IniProcessing *setup,
     /***************GRID And snap*********************************/
     setup->read("grid", grid, pMerge(grid, defaultGrid));
     NumberLimiter::apply(grid, 1u);
-    setup->read("grid-attachement-style", grid_attach_style, 0);
+    setup->read("grid-attachment-style", grid_attach_style, 0);
+    pAlias("grid-attachement-style", grid_attach_style); //Parameter with a typo, kept for compatibility
     NumberLimiter::apply(grid_attach_style, 0u);
 
     /***************Calculate the grid offset********************/
@@ -423,13 +425,14 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     NumberLimiter::apply(grid, 1u);
 
     if(width >= grid)
-        grid_offset_x = -1 * Maths::iRound(static_cast<double>((width % grid) / 2));
+        grid_offset_x = -1 * Maths::iRound(static_cast<double>(width % grid) / 2.0);
     else
         grid_offset_x = Maths::iRound(static_cast<double>(static_cast<int32_t>(grid) - static_cast<int32_t>(width)) / 2.0);
 
     grid_attach_style = (local->en_gridalign) ? static_cast<uint32_t>(local->gridalign) : global.grid_attach_style;
 
-    if(grid_attach_style == 1) grid_offset_x += (grid / 2);
+    if(grid_attach_style == 1)
+        grid_offset_x += (grid / 2);
 
     grid_offset_y = -static_cast<int>(height) % static_cast<int>(grid);
     grid_offset_x += (local->en_gridoffsetx) ? local->gridoffsetx : 0;
@@ -438,7 +441,12 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     // This check must go before frames will be changed
     bool animation_differs = (local->en_frames && (local->frames != global.frames));
 
-    if((framestyle == 0) && ((local->en_gfxheight) || (local->en_height)) && (!local->en_frames))
+    if(
+        local->en_framestyle &&
+        (framestyle == 0) &&
+        ((local->en_gfxheight) || (local->en_height)) &&
+        (!local->en_frames)
+    )
     {
         frames = Maths::uRound(static_cast<double>(captured_h) / static_cast<double>(gfx_h));
         custom_animate = false;

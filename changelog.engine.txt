@@ -2,6 +2,7 @@
 - Fixed crash on missing player animation sequence
 - Added support for Android platform
 - Added protection from a too high framespeed which may appear due incorrect v-sync settings in video driver settings
+- Fixed incorrect animation setup after height change via user's NPC.txt configs
 
 0.3.2
 - Fixed incorrect management of custom config files caused missing of them

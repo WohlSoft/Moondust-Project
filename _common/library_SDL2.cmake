@@ -14,6 +14,12 @@ endif()
 #endif()
 
 if(WIN32)
+    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.zip")
+else()
+    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz")
+endif()
+
+if(WIN32)
     set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
 elseif(APPLE)
     set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dylib")
@@ -37,7 +43,7 @@ if(ANDROID)
     endif()
     ExternalProject_Add(SDL2_Local_Build
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-NDK
-        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
+        URL ${SDL2_SOURCE_TARBALL}
         CONFIGURE_COMMAND ""
         INSTALL_COMMAND ""
         BUILD_COMMAND ${ANDROID_NDK}/ndk-build -C ${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build SDL2 SDL2_main hidapi
@@ -91,7 +97,7 @@ elseif(SDL2_VIA_AUTOTOOLS)
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-AM
-        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
+        URL ${SDL2_SOURCE_TARBALL}
         BUILD_IN_SOURCE 1
         PATCH_COMMAND sed -i "s/-version-info [^ ]\\+/-avoid-version /g" "Makefile.in"
               COMMAND sed -i "s/libSDL2-2\\.0\\.so\\.0/libSDL2\\.so/g" "SDL2.spec.in"
@@ -117,7 +123,7 @@ else()
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
-        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz
+        URL ${SDL2_SOURCE_TARBALL}
         # This issue has been fixed. Kept commented as example for future neccerity to patch futher SDL2 updates
         # PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_remove_lib_prefix_on_windows.patch"
         CMAKE_ARGS
