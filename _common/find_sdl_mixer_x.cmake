@@ -92,7 +92,7 @@ function(find_mixer_x_real)
 
     if(WIN32 AND NOT EMSCRIPTEN)
         list(APPEND FOUND_LIBS
-            version opengl32 dbghelp advapi32 kernel32 winmm imm32
+            version opengl32 dbghelp advapi32 kernel32 winmm imm32 setupapi
         )
     endif()
 
@@ -205,7 +205,7 @@ function(find_mixer_x)
 
     if(WIN32 AND NOT EMSCRIPTEN)
         list(APPEND FOUND_LIBS
-            version opengl32 dbghelp advapi32 kernel32 winmm imm32
+            version opengl32 dbghelp advapi32 kernel32 winmm imm32 setupapi
         )
     endif()
 
