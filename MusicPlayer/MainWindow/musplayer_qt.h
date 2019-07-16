@@ -67,6 +67,8 @@ private slots:
 
     void on_trackID_editingFinished();
 
+    void on_tempo_valueChanged(int tempo);
+
     void on_recordWav_clicked(bool checked);
 
     /*!

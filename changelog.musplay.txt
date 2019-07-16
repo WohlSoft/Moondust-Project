@@ -1,3 +1,7 @@
+1.4.2
+* Added tempo change slider (will work for some formats only)
+* Added tooltip to display current volume value while sliding volume by mouse
+
 1.4.1
 * Removed "AdLib percussions" flag since it have lost a sense with rework on libADLMIDI side
 * Added support for more OPL3 and OPL2 emulators into emulator cchoice lists
