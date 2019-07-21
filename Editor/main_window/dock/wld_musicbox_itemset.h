@@ -17,8 +17,8 @@
  */
 
 #pragma once
-#ifndef WLD_ITEM_TOOLBOX_H
-#define WLD_ITEM_TOOLBOX_H
+#ifndef WLD_MUSICBOX_ITEMSET_H
+#define WLD_MUSICBOX_ITEMSET_H
 
 #include <QDockWidget>
 #include "mwdock_base.h"
@@ -27,16 +27,16 @@ class MainWindow;
 class ItemBoxListModel;
 
 namespace Ui {
-class WorldItemBox;
+class WorldMusicBoxItemBox;
 }
 
-class WorldItemBox : public QDockWidget, public MWDock_Base
+class WorldMusicBoxItemBox : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
     friend class MainWindow;
 private:
-    explicit WorldItemBox(QWidget *parent = nullptr);
-    ~WorldItemBox();
+    explicit WorldMusicBoxItemBox(QWidget *parent = nullptr);
+    ~WorldMusicBoxItemBox();
 
 public:
     QTabWidget *tabWidget();
@@ -49,20 +49,12 @@ public slots:
     void initItemLists();
 
 private slots:
-    void TerrainTilesTable_itemClicked(const QModelIndex &item);
-    void SceneList_itemClicked(const QModelIndex &item);
-    void PathsTable_itemClicked(const QModelIndex &item);
-    void LevelList_itemClicked(const QModelIndex &item);
     void MusicList_itemClicked(const QModelIndex &item);
 
 private:
-    Ui::WorldItemBox *ui;
+    Ui::WorldMusicBoxItemBox *ui;
 
-    ItemBoxListModel *m_terrainModel = nullptr;
-    ItemBoxListModel *m_sceneryModel = nullptr;
-    ItemBoxListModel *m_pathsModel = nullptr;
-    ItemBoxListModel *m_levelsModel = nullptr;
     ItemBoxListModel *m_musicBoxModel = nullptr;
 };
 
-#endif // WLD_ITEM_TOOLBOX_H
+#endif // WLD_MUSICBOX_ITEMSET_H

@@ -55,6 +55,7 @@ void Themes::init()
 
     icons_map[level_item_browser] = QIcon(":/images/item_browser_level.png");
     icons_map[world_item_browser] = QIcon(":/images/item_browser_world.png");
+    icons_map[world_music_boxes] = QIcon(":/images/musicboxes.png");
 
     icons_map[file_open]    = QIcon(":/images/open.png");
     icons_map[file_new]     = QIcon(":/images/new.png");
@@ -397,6 +398,7 @@ void Themes::loadTheme(const QString &themeDir)
 
     guiset.beginGroup("world");
     loadIcon(guiset, "item-browser", world_item_browser);
+    loadIcon(guiset, "music-boxes", world_music_boxes);
     guiset.endGroup();
 
     guiset.beginGroup("level-items");

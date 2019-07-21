@@ -68,6 +68,7 @@ struct EditorSetup
         bool lvl_search = false;
 
         bool wld_itembox = true;
+        bool wld_musicboxes = false;
         bool wld_settings = false;
         bool wld_search = false;
 

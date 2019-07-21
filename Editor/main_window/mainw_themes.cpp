@@ -48,6 +48,7 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionLVLToolBox->setIcon(Themes::icon(Themes::level_item_browser));
     ui->actionWLDToolBox->setIcon(Themes::icon(Themes::world_item_browser));
+    ui->actionMusicBoxes->setIcon(Themes::icon(Themes::world_music_boxes));
 
     ui->menuNew->setIcon(Themes::icon(Themes::file_new));
     setToolButtonMenuIcon(ui->fileIoTooBar, ui->menuNew, Themes::icon(Themes::file_new));

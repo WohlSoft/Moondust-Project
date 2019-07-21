@@ -137,6 +137,7 @@ void MainWindow::loadSettings()
         loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      configs.editor.default_visibility.lvl_search,       configs.editor.default_visibility_enforce.lvl_search,  true);
 
         loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        configs.editor.default_visibility.wld_itembox,      configs.editor.default_visibility_enforce.wld_itembox,   false);
+        loadToolboxProps(settings, QStringLiteral("world-muscboxes-box"), dock_WldMusicBoxes,   configs.editor.default_visibility.wld_musicboxes,   configs.editor.default_visibility_enforce.wld_musicboxes,false);
         loadToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox,   configs.editor.default_visibility.wld_settings,     configs.editor.default_visibility_enforce.wld_settings,  true);
         loadToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps,    false,  false, true);
         loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      configs.editor.default_visibility.wld_search,       configs.editor.default_visibility_enforce.wld_search,  true);
@@ -253,6 +254,7 @@ void MainWindow::saveSettings()
         saveToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox);
 
         saveToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox);
+        saveToolboxProps(settings, QStringLiteral("world-muscboxes-box"), dock_WldMusicBoxes);
         saveToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox);
         saveToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps);
         saveToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox);

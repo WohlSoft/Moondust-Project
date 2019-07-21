@@ -142,6 +142,7 @@ qt5_wrap_ui(UIS_HDRS
     main_window/dock/variables_box.ui
     main_window/dock/wld_item_props.ui
     main_window/dock/wld_item_toolbox.ui
+    main_window/dock/wld_musicbox_itemset.ui
     main_window/dock/wld_search_box.ui
     main_window/dock/wld_settings_box.ui
     main_window/file/lvl_export_image.ui
@@ -368,6 +369,7 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/dock/variables_box.cpp
     main_window/dock/wld_item_props.cpp
     main_window/dock/wld_item_toolbox.cpp
+    main_window/dock/wld_musicbox_itemset.cpp
     main_window/dock/wld_search_box.cpp
     main_window/dock/wld_settings_box.cpp
     main_window/edit/edit_clipboard.cpp

@@ -280,4 +280,5 @@ void MainWindow::UpdateCustomItems()
 {
     dock_LvlItemBox->initItemLists();
     dock_WldItemBox->initItemLists();
+    dock_WldMusicBoxes->initItemLists();
 }

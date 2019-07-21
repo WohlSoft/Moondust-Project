@@ -1017,6 +1017,15 @@ public:
         void on_actionWLDToolBox_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+// ////////////////////World MusicBoxes toolbox /////////////////
+    public:
+        //! World map music boxes toolbox
+        WorldMusicBoxItemBox * dock_WldMusicBoxes;
+
+    private slots:
+        void on_actionMusicBoxes_triggered(bool checked);
+// ////////////////////////////////////////////////////////
+
 // ///////////////World Item Properties box //////////////////
     public:
         //! World map item properties box

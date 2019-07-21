@@ -11,6 +11,7 @@ Editor 0.3.2-dev
 - Added missing support for episode and level wide extra settings JSON files
 - Fixed unneeded special values reset for NPCs
 - Fixed incorrect animation setup after height change via user's NPC.txt configs
+- Added separated music boxes toolbox for world map
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

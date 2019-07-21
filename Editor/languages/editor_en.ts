@@ -5742,11 +5742,11 @@ show the current playable character(s) and number of lives.</translation>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished">Please save the file</translation>
+        <translation>Please save the file</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished">Please save the file before selecting levels.</translation>
+        <translation>Please save the file before selecting levels.</translation>
     </message>
 </context>
 <context>
@@ -8946,15 +8946,15 @@ Please, choose the engine application yourself!</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Search Browser</translation>
+        <translation>Level itemset Browser</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
-        <translation>Search Browser</translation>
+        <translation>Browser of available items with a search</translation>
     </message>
     <message>
         <source>World map items browser</source>
-        <translation>Search Browser</translation>
+        <translation>World map Itemset Browser</translation>
     </message>
 </context>
 <context>

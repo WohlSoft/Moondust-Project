@@ -66,10 +66,10 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
     connect(ui->WLD_LevelList, &QListView::clicked, this, &WorldItemBox::LevelList_itemClicked);
     m_levelsModel->setSort(ItemBoxListModel::Sort_ById, false);
 
-    m_musicboxModel = new ItemBoxListModel(this);
-    ui->WLD_MusicList->setModel(m_musicboxModel);
+    m_musicBoxModel = new ItemBoxListModel(this);
+    ui->WLD_MusicList->setModel(m_musicBoxModel);
     connect(ui->WLD_MusicList, &QListView::clicked, this, &WorldItemBox::MusicList_itemClicked);
-    m_musicboxModel->setSort(ItemBoxListModel::Sort_ById, false);
+    m_musicBoxModel->setSort(ItemBoxListModel::Sort_ById, false);
 
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
@@ -109,7 +109,7 @@ void WorldItemBox::initItemLists()
         return;
 
     WorldEdit *edit = mw()->activeWldEditWin();
-    if((edit==NULL) || (!edit->sceneCreated))
+    if((edit == nullptr) || (!edit->sceneCreated))
         return;
 
     WldScene* scene = edit->scene;
@@ -124,7 +124,7 @@ void WorldItemBox::initItemLists()
     m_sceneryModel->clear();
     m_pathsModel->clear();
     m_levelsModel->clear();
-    m_musicboxModel->clear();
+    m_musicBoxModel->clear();
 
     LogDebugQD("WorldTools -> Declare new");
 
@@ -132,9 +132,9 @@ void WorldItemBox::initItemLists()
     LogDebug("LevelTools -> Fill list of Terrain tiles");
     {
         QSet<uint64_t> tilesCustomId;
-        for(int i = 0; i < scene->m_customTerrain.size(); i++)
+        for(auto & i : scene->m_customTerrain)
         {
-            obj_w_tile &tiles = *scene->m_customTerrain[i];
+            obj_w_tile &tiles = *i;
             tilesCustomId.insert(tiles.setup.id);
         }
 
@@ -174,9 +174,9 @@ void WorldItemBox::initItemLists()
     LogDebug("LevelTools -> Fill list of Sceneries");
     {
         QSet<uint64_t> sceneryCustomId;
-        for(int i = 0; i < scene->m_customSceneries.size(); i++)
+        for(auto & customScenery : scene->m_customSceneries)
         {
-            obj_w_scenery &scenery = *scene->m_customSceneries[i];
+            obj_w_scenery &scenery = *customScenery;
             sceneryCustomId.insert(scenery.setup.id);
         }
         m_sceneryModel->addElementsBegin();
@@ -201,9 +201,9 @@ void WorldItemBox::initItemLists()
     LogDebug("LevelTools -> Fill list of Path cells");
     {
         QSet<uint64_t> pathCustomId;
-        for(int i = 0; i < scene->m_customPaths.size(); i++)
+        for(auto & customPath : scene->m_customPaths)
         {
-            obj_w_path &paths = *scene->m_customPaths[i];
+            obj_w_path &paths = *customPath;
             pathCustomId.insert(paths.setup.id);
         }
 
@@ -242,9 +242,9 @@ void WorldItemBox::initItemLists()
     LogDebug("LevelTools -> Fill list of Level cells");
     {
         QSet<uint64_t> levelCustomId;
-        for(int i = 0; i < scene->m_customLevels.size(); i++)
+        for(auto & customLevel : scene->m_customLevels)
         {
-            obj_w_scenery &scenery = *scene->m_customLevels[i];
+            obj_w_scenery &scenery = *customLevel;
             levelCustomId.insert(scenery.setup.id);
         }
 
@@ -269,7 +269,7 @@ void WorldItemBox::initItemLists()
 
     LogDebug("LevelTools -> Fill list of Music Boxes");
     {
-        m_musicboxModel->addElementsBegin();
+        m_musicBoxModel->addElementsBegin();
         for(int i = 1; i < mw()->configs.main_music_wld.size(); i++)
         {
             obj_music &musicItem = mw()->configs.main_music_wld[i];
@@ -280,9 +280,9 @@ void WorldItemBox::initItemLists()
             e.elementId = musicItem.id;
             e.isCustom = false;
             e.isValid = true;
-            m_musicboxModel->addElement(e);
+            m_musicBoxModel->addElement(e);
         }
-        m_musicboxModel->addElementsEnd();
+        m_musicBoxModel->addElementsEnd();
     }
 
     mw()->ui->menuNew->setEnabled(true);
@@ -358,9 +358,9 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
         WorldEdit * edit = mw()->activeWldEditWin();
         if(!edit)
             return;
-        if(!m_musicboxModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
+        if(!m_musicBoxModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
             return;
-        int id = m_musicboxModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        int id = m_musicBoxModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
 
         QString customMusicFile;
         if((uint64_t)id == mw()->configs.music_w_custom_id)
