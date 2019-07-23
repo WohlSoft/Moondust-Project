@@ -187,7 +187,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         return;
     }
 
-    QMdiSubWindow *newSubWin = NULL;
+    QMdiSubWindow *newSubWin = nullptr;
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
     if(existing)
     {

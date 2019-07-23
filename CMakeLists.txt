@@ -112,20 +112,21 @@ endif()
 # Dependent libraries
 include(_common/library_libpng.cmake)
 include(_common/library_FreeImage.cmake)
-if(TARGET libpng_Local)
-    add_dependencies(FreeImage_Local libpng_Local)
-endif()
 include(_common/library_FreeType.cmake)
 include(_common/library_sqlite.cmake)
 include(_common/library_luajit.cmake)
 include(_common/library_luabind.cmake)
 include(_common/library_SDL2.cmake)
 include(_common/library_AudioCodecs.cmake)
-if(TARGET libpng_Local)
-    add_dependencies(libpng_Local AudioCodecs_Local)
-endif()
 include(_common/library_SDLMixerX.cmake)
 include(_common/library_QtPropertyBrowser.cmake)
+
+if(TARGET libpng_Local)
+    add_dependencies(libpng_Local AudioCodecs_Local) #Zlib is needed to libPNG
+    add_dependencies(FREETYPE_Local libpng_Local) #libPNG is needed to FreeType
+    add_dependencies(FreeImage_Local libpng_Local) #libPNG needed to FreeImage
+endif()
+add_dependencies(FREETYPE_Local AudioCodecs_Local) #Zlib is needed to FreeType
 
 # Build dependent libraries only. Workaround for Ninja
 add_custom_target(libs
