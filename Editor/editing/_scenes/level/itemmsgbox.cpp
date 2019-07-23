@@ -58,8 +58,8 @@ ItemMsgBox::ItemMsgBox(Opened_By openedBy, QString text, bool isFriendly, QStrin
     QFontMetrics meter(ui->msgTextBox->font());
     int w_width = meter.size(Qt::TextSingleLine, "XXXXXXXXXXXXXXXXXXXXXXXXXXX").width();
     int scrW = ui->msgTextBox->style()->pixelMetric(QStyle::PM_ScrollBarExtent);
-    ui->msgTextBox->setMaximumWidth(w_width+scrW + 12);
-    ui->msgTextBox->setMinimumWidth(w_width+scrW + 12);
+    ui->msgTextBox->setMaximumWidth(w_width + scrW + 18);
+    ui->msgTextBox->setMinimumWidth(w_width + scrW + 18);
     ui->msgTextBox->appendPlainText(currentText);
     updateGeometry();
 }
