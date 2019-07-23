@@ -52,13 +52,14 @@ ItemMsgBox::ItemMsgBox(Opened_By openedBy, QString text, bool isFriendly, QStrin
 //#endif
     QFont theFont("Press Start 2P");
     theFont.setPixelSize(8);
+    theFont.setStyleHint(QFont::Monospace);
     ui->msgTextBox->setFont(theFont);
     ui->msgTextBox->clear();
     QFontMetrics meter(ui->msgTextBox->font());
     int w_width = meter.size(Qt::TextSingleLine, "XXXXXXXXXXXXXXXXXXXXXXXXXXX").width();
     int scrW = ui->msgTextBox->style()->pixelMetric(QStyle::PM_ScrollBarExtent);
-    ui->msgTextBox->setMaximumWidth(w_width+scrW+12);
-    ui->msgTextBox->setMinimumWidth(w_width+scrW+12);
+    ui->msgTextBox->setMaximumWidth(w_width+scrW + 12);
+    ui->msgTextBox->setMinimumWidth(w_width+scrW + 12);
     ui->msgTextBox->appendPlainText(currentText);
     updateGeometry();
 }
