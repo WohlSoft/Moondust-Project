@@ -326,7 +326,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     }
     case 2: //npcs
     {
-        obj_npc &mergedSet = m_localConfigNPCs[itemID];
+        obj_npc &mergedSet = m_localConfigNPCs[static_cast<int>(itemID)];
+
+        LvlPlacingItems::npcSet.direct = mergedSet.setup.direct_default_value;
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
         if(!mergedSet.isValid)
         {
@@ -345,7 +347,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         if(LvlPlacingItems::npcSet.generator)
             LvlPlacingItems::gridSz = (m_configs->defaultGrid.general / 2);
         else
-            LvlPlacingItems::gridSz = mergedSet.setup.grid;
+            LvlPlacingItems::gridSz = static_cast<int>(mergedSet.setup.grid);
 
         LvlPlacingItems::npcSet.is_star = mergedSet.setup.is_star;
 
