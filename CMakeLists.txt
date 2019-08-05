@@ -327,7 +327,7 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
         add_custom_target(install_tools_windeploy
             WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/tools"
             COMMAND ${CMAKE_COMMAND} -E tar "-xjvf"
-                "${CMAKE_SOURCE_DIR}/_Misc/tools/sox-win32.tar.gz" -C "tools"
+                "${CMAKE_SOURCE_DIR}/_Misc/tools/sox-win32.tar.gz"
             DEPENDS mkdir_tools_windeploy
             COMMENT "Unpacking extra Win32 tools..."
         )
