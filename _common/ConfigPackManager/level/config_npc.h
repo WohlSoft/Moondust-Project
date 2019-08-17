@@ -253,6 +253,8 @@ struct NpcSetup
     PGEString       direct_alt_rand;
     //! [In-Editor] Disable support for "Random" face direction value
     bool            direct_disable_random = false;
+    //! [In-Editor] Default value for direction field
+    int32_t         direct_default_value = -1;
 
 //    ; Physics
     //! Physical height of NPC hitbox
