@@ -13,6 +13,7 @@ Editor 0.3.2-dev
 - Fixed incorrect animation setup after height change via user's NPC.txt configs
 - Fixed a clumping of elements inside the Tileset Editor
 - Added separated music boxes toolbox for world map
+- On Linux and macOS is no more need to try restart Editor twice after crash: single try should start Editor normally
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
