@@ -3471,11 +3471,11 @@ Si desea tener pruebas de forma completa, necesita obtener LunaLUA de acá:&lt;b
     </message>
     <message>
         <source>process execution is failed.</source>
-        <translation>Proceso fallido.</translation>
+        <translation type="vanished">Proceso fallido.</translation>
     </message>
     <message>
         <source>patching has failed.</source>
-        <translation>El parcheamiento falló.</translation>
+        <translation type="vanished">El parcheamiento falló.</translation>
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
@@ -3576,6 +3576,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester no está siendo ejecutado.</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5236,12 +5242,12 @@ Zonas físicas de ambiente:	%6
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Nombre personalizado que figurará en el editor</translation>
+        <translation type="vanished">Nombre personalizado que figurará en el editor</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Cree su organización de capas de fondo aquí...</translation>
+        <translation type="vanished">Cree su organización de capas de fondo aquí...</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5250,7 +5256,22 @@ Zonas físicas de ambiente:	%6
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Color de relleno predeterminado</translation>
+        <translation type="vanished">Color de relleno predeterminado</translation>
+    </message>
+    <message>
+        <source>Name that will appear in the editor</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backdrop fill color</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add layers here, for example:</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8609,6 +8630,16 @@ Para comenzar a usar el nuevo paquete, necesita reiniciar el Editor. ¿Desea con
         <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Music change points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -10499,7 +10530,7 @@ El máximo es %2.</translation>
     </message>
     <message>
         <source>Chuck Norris</source>
-        <translation>Chuck Norris</translation>
+        <translation type="vanished">Chuck Norris</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
@@ -10575,6 +10606,10 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation type="vanished">¡Hola!
 Este diálogo aún no se ha terminado.
 Esas preferencias no van a tener efecto en un proceso de prueba hasta que se terminen. Disculpe.</translation>
+    </message>
+    <message>
+        <source>Bulldozer mode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12326,6 +12361,25 @@ Do you want to save your changes?</source>
     <message>
         <source>World Map Items browser</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WorldMusicBoxItemBox</name>
+    <message>
+        <source>Music boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music Box</source>
+        <translation type="unfinished">Cajas de música</translation>
+    </message>
+    <message>
+        <source>Please, save file</source>
+        <translation type="unfinished">Por favor, guarde el archivo</translation>
+    </message>
+    <message>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation type="unfinished">Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
     </message>
 </context>
 <context>

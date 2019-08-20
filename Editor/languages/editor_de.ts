@@ -3421,14 +3421,6 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>process execution is failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>patching has failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3516,6 +3508,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>LunaTester is not running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5128,22 +5126,22 @@ Physikalische Umgebungen:	%6</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Custom background name which will be shown in the editor</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create your background layers setup here...</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
     </message>
     <message>
-        <source>Default screen fill color</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
+        <source>Name that will appear in the editor</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backdrop fill color</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add layers here, for example:</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8454,6 +8452,16 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <source>World map items browser</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Music change points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -9910,10 +9918,6 @@ Datei: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chuck Norris</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9974,6 +9978,10 @@ Datei: %1
     </message>
     <message>
         <source>1 Player settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulldozer mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11698,6 +11706,25 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <source>World Map Items browser</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WorldMusicBoxItemBox</name>
+    <message>
+        <source>Music boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music Box</source>
+        <translation type="unfinished">Musikbox</translation>
+    </message>
+    <message>
+        <source>Please, save file</source>
+        <translation type="unfinished">Bitte speichere Datei</translation>
+    </message>
+    <message>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation type="unfinished">Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
     </message>
 </context>
 <context>

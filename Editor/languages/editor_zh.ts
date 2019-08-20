@@ -2888,11 +2888,11 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>process execution is failed.</source>
-        <translation>执行失败。</translation>
+        <translation type="vanished">执行失败。</translation>
     </message>
     <message>
         <source>patching has failed.</source>
-        <translation>补丁导入失败。</translation>
+        <translation type="vanished">补丁导入失败。</translation>
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
@@ -2933,6 +2933,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester 未运行。</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3904,12 +3910,12 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>编辑器中自定义背景的名称</translation>
+        <translation type="vanished">编辑器中自定义背景的名称</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>在这里创建你的背景图层……</translation>
+        <translation type="vanished">在这里创建你的背景图层……</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -3918,7 +3924,22 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>默认屏幕填充颜色</translation>
+        <translation type="vanished">默认屏幕填充颜色</translation>
+    </message>
+    <message>
+        <source>Name that will appear in the editor</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backdrop fill color</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add layers here, for example:</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5805,6 +5826,16 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation>配置包已更换！
 您需要重新启动应用才能使用新配置包。要继续吗？</translation>
     </message>
+    <message>
+        <source>Music change points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -7024,7 +7055,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Chuck Norris</source>
         <translatorcomment>不知道怎么翻译 Norris……</translatorcomment>
-        <translation>检测 Norris</translation>
+        <translation type="vanished">检测 Norris</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
@@ -7088,6 +7119,10 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>1 Player settings</source>
         <translation>玩家 1 设置</translation>
+    </message>
+    <message>
+        <source>Bulldozer mode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8492,6 +8527,25 @@ Do you want to save your changes?</source>
     <message>
         <source>World Map Items browser</source>
         <translation>大地图对象浏览器</translation>
+    </message>
+</context>
+<context>
+    <name>WorldMusicBoxItemBox</name>
+    <message>
+        <source>Music boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music Box</source>
+        <translation type="unfinished">音乐盒</translation>
+    </message>
+    <message>
+        <source>Please, save file</source>
+        <translation type="unfinished">请先保存文件</translation>
+    </message>
+    <message>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation type="unfinished">请先保存文件后再选择音乐。</translation>
     </message>
 </context>
 <context>
