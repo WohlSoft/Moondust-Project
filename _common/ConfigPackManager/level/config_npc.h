@@ -183,6 +183,8 @@ struct NpcSetup
     int32_t         special_spin_max = 0;
     //! Special option Spinbox: spining value step
     int32_t         special_spin_value_offset = 0;
+    //! Special option Spinbox: allow "auto-increment" feature to be used with line drawing tool, otherwise, hide it for this NPC
+    bool            special_spin_allow_autoincrement = true;
 
     //! Extra Settings JSON layout file name
     PGEString       extra_settings = "";
