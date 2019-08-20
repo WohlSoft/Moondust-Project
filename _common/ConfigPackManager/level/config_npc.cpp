@@ -278,6 +278,9 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("custom-value-spin-value-offset", special_spin_value_offset, pMerge(special_spin_value_offset, 0));
     pAlias("special-spin-value-offset", special_spin_value_offset);//Old name
 
+    setup->read("custom-value-spin-allow-autoincrement", special_spin_allow_autoincrement, pMerge(special_spin_allow_autoincrement, true));
+    pAlias("special-spin-allow-autoincrement", special_spin_allow_autoincrement);//Style like old name
+
     setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
 
     /*************Build special value combobox***end*****/
