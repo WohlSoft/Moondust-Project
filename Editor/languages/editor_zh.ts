@@ -2938,7 +2938,9 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="unfinished"></translation>
+        <translation>没有找到 %2！
+您使用的是 SMBX 1.3！&lt;br&gt;
+因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试.</translation>
     </message>
 </context>
 <context>
@@ -3929,17 +3931,17 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>编辑器中所显示的名称</translation>
     </message>
     <message>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>背景颜色</translation>
     </message>
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>在此处加入图层，例如：</translation>
     </message>
 </context>
 <context>
@@ -5828,13 +5830,15 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     </message>
     <message>
         <source>Music change points</source>
-        <translation type="unfinished"></translation>
+        <translation>音乐更换地点</translation>
     </message>
     <message>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>配置读取错误:
+%1.
+请查看 %2 以获取更多信息。</translation>
     </message>
 </context>
 <context>
@@ -7122,7 +7126,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Bulldozer mode</source>
-        <translation type="unfinished"></translation>
+        <translation>挖掘模式</translation>
     </message>
 </context>
 <context>
@@ -8533,19 +8537,19 @@ Do you want to save your changes?</source>
     <name>WorldMusicBoxItemBox</name>
     <message>
         <source>Music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>音乐盒</translation>
     </message>
     <message>
         <source>Music Box</source>
-        <translation type="unfinished">音乐盒</translation>
+        <translation>音乐盒</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished">请先保存文件</translation>
+        <translation>请先保存文件</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished">请先保存文件后再选择音乐。</translation>
+        <translation>请先保存文件后再选择音乐。</translation>
     </message>
 </context>
 <context>
