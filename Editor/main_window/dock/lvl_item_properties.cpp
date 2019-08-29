@@ -44,12 +44,16 @@
 static obj_npc &getNpcProps(LevelNPC &npc, MainWindow *mw)
 {
     int tarNPC = static_cast<int>(npc.id);
+    bool isLvlWin = ((mw->activeChildWindow() == MainWindow::WND_Level) && (mw->activeLvlEditWin()));
+    PGE_DataArray<obj_npc> &dataSource = isLvlWin ?
+                                         mw->activeLvlEditWin()->scene->m_localConfigNPCs :
+                                         mw->configs.main_npc;
     obj_npc *findNPC;
-    obj_npc &thisNPC = mw->configs.main_npc[tarNPC];
+    obj_npc &thisNPC = dataSource[tarNPC];
     if(thisNPC.setup.container && !thisNPC.setup.special_option)
-        findNPC = &mw->configs.main_npc[npc.contents];
+        findNPC = &dataSource[npc.contents];
     else
-        findNPC = &mw->configs.main_npc[tarNPC];
+        findNPC = &dataSource[tarNPC];
     return *findNPC;
 }
 
