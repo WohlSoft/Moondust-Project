@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1675</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -732,6 +732,9 @@
    <property name="text">
     <string>Level...</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+N, L</string>
+   </property>
   </action>
   <action name="actionNewWorld_map">
    <property name="icon">
@@ -741,6 +744,9 @@
    <property name="text">
     <string>World map...</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+N, M</string>
+   </property>
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
@@ -749,6 +755,9 @@
    </property>
    <property name="text">
     <string>NPC config...</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+N, N</string>
    </property>
   </action>
   <action name="actionSave">
