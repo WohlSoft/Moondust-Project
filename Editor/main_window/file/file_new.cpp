@@ -27,6 +27,13 @@
 
 ////////////////////////New files templates///////////////////////////
 
+
+void MainWindow::on_actionNewFile_triggered()
+{
+    //QMessageBox::information(this, "BURP!", "BURP!");
+    ui->menuNew->exec(QCursor::pos());
+}
+
 void MainWindow::on_actionNewNPC_config_triggered()
 {
     //Check if data configs are valid

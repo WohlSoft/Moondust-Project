@@ -303,6 +303,10 @@ public:
 
         //New file
         /*!
+         * \brief Dialog to choice what new format to create
+         */
+        void on_actionNewFile_triggered();
+        /*!
          * \brief Open level editing sub-window with a blank file
          */
         void on_actionNewLevel_triggered();
@@ -1117,7 +1121,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

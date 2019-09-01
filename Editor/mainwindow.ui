@@ -3014,6 +3014,17 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <string>Music change points</string>
    </property>
   </action>
+  <action name="actionNewFile">
+   <property name="text">
+    <string notr="true">New file</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">New file</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+N</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

@@ -357,6 +357,9 @@ void MainWindow::setUiDefults()
         m_toolbarVanilla->setVisible(false);
     }
 
+    // Register hot key without adding into toolbar
+    addAction(ui->actionNewFile);
+
     ui->menuWindow->menuAction()->setEnabled(true);
     ui->menuLevel->menuAction()->setEnabled(false);
     ui->menuWorld->menuAction()->setEnabled(false);
