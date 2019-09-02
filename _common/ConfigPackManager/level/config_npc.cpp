@@ -199,12 +199,12 @@ bool NpcSetup::parse(IniProcessing *setup,
                 i += framesOffset;
         }
 
-        if(frames_left.empty())
+        if(!frames_left.empty())
         {
             custom_ani_fl = frames_left.front();
             custom_ani_el = frames_left.back();
         }
-        if(frames_right.empty())
+        if(!frames_right.empty())
         {
             custom_ani_fr = frames_right.front();
             custom_ani_er = frames_right.back();
