@@ -17,6 +17,9 @@ Editor 0.3.2-dev
 - Added NPC config pack option to disable "Auto-Increment" support for custom value of spin-box type
 - Fixed inability to change special value by level/episode custom NPC INI config file
 - Added hot keys for "Create New": Ctrl+N, L for levels; Ctrl+N, M for world maps; and Ctrl+N, N for NPC configs; Ctrl+Shift+N will spawn a menu to select a type of file to create
+- Improved UI of Tileset Editor
+- Added scroll area into Tileset Editor's scene to allow use it on smaller monitors
+- Added a grid drawing in the Tileset Editor's scene
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
