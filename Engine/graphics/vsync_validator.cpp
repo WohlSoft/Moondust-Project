@@ -63,6 +63,13 @@ void VSyncValidator::update()
         m_testPassed = (m_steps <= m_maxStepsAllowed);
         if(!m_testPassed)
         {
+            PGE_Window::vsync = false;
+            PGE_Window::toggleVSync(g_AppSettings.vsync);
+            g_AppSettings.vsync = false;
+            g_AppSettings.timeOfFrame = PGE_Window::frameDelay;
+            g_AppSettings.apply();
+            g_AppSettings.save();
+
             PGE_MsgBox msg2(m_parentScene,
                     /*% "Detected framerate is too high. "
                         "V-Sync will be disabled to prevent problematic results. "
@@ -73,13 +80,6 @@ void VSyncValidator::update()
                             ConfigManager::setup_message_box.sprite
             );
             msg2.exec();
-
-            PGE_Window::vsync = false;
-            PGE_Window::toggleVSync(g_AppSettings.vsync);
-            g_AppSettings.vsync = false;
-            g_AppSettings.timeOfFrame = PGE_Window::frameDelay;
-            g_AppSettings.apply();
-            g_AppSettings.save();
         }
     }
 }

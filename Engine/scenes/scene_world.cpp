@@ -1560,6 +1560,8 @@ int WorldScene::exec()
     if(m_isRunning)
         update();
 
+    runVsyncValidator();
+
     /*****************************************************/
 
     while(m_isRunning)

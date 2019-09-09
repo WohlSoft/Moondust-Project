@@ -933,6 +933,8 @@ void levelSceneLoopStep(void *scene)
 
 int LevelScene::exec()
 {
+    runVsyncValidator();
+
     m_isLevelContinues = true;
     m_doExit = false;
     m_isRunning = true;

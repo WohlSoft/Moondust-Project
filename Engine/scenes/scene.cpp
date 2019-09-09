@@ -20,6 +20,7 @@
 #include "scene.h"
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
+#include <graphics/vsync_validator.h>
 #include <Utils/maths.h>
 
 #include <script/lua_event.h>
@@ -209,6 +210,45 @@ void Scene::renderMouse()
 int Scene::exec()
 {
     return 0;
+}
+
+void Scene::runVsyncValidator()
+{
+    auto vSyncProbe = VSyncValidator(this, PGE_Window::frameDelay);
+    LoopTiming  testTimes;
+    testTimes.init();
+    testTimes.start_common = SDL_GetTicks();
+    while(!vSyncProbe.isComplete())
+    {
+        testTimes.start_common = SDL_GetTicks();
+
+        testTimes.stop_render = 0;
+        testTimes.start_render = 0;
+
+        /**********************Process rendering of stuff****************************/
+        if((PGE_Window::vsync) || (testTimes.doUpdate_render <= 0.0))
+        {
+            testTimes.start_render = SDL_GetTicks();
+            GlRenderer::clearScreen();
+            GlRenderer::flush();
+            GlRenderer::repaint();
+            testTimes.stop_render = SDL_GetTicks();
+            testTimes.doUpdate_render = uTickf + (testTimes.stop_render - testTimes.start_render);
+        }
+
+        testTimes.doUpdate_render -= uTickf;
+
+        if(testTimes.stop_render < testTimes.start_render)
+        {
+            testTimes.stop_render = 0;
+            testTimes.start_render = 0;
+        }
+
+        vSyncProbe.update();
+
+        if((!PGE_Window::vsync) && (uTick > testTimes.passedCommonTime()))
+            SDL_Delay(uTick - testTimes.passedCommonTime());
+    }
 }
 
 Scene::TypeOfScene Scene::type()

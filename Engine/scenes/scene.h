@@ -114,6 +114,7 @@ class Scene
         virtual void render();
         virtual void renderMouse();
         virtual int exec(); //scene's loop
+        void runVsyncValidator();
         TypeOfScene type();
 
         struct RenderFuncs

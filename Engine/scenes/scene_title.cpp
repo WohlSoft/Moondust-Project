@@ -443,7 +443,6 @@ void TitleScene::renderMouse()
 int TitleScene::exec()
 {
     LoopTiming times;
-    times.start_common = SDL_GetTicks();
     bool frameSkip = g_AppSettings.frameSkip;
     m_menustates.clear();
     m_menuChain.clear();
@@ -456,6 +455,9 @@ int TitleScene::exec()
     setMenu(menu_main);
     //Hide mouse cursor
     PGE_Window::setCursorVisibly(false);
+
+    runVsyncValidator();
+    times.start_common = SDL_GetTicks();
 
     while(m_isRunning)
     {

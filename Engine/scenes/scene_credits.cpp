@@ -206,6 +206,8 @@ void CreditsScene::render()
 
 int CreditsScene::exec()
 {
+    runVsyncValidator();
+
     m_doExit = false;
     LoopTiming times;
     times.start_common = SDL_GetTicks();
