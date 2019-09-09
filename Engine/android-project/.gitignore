@@ -1,10 +1,12 @@
 # Folders
 /.idea/*
 /.gradle/*
+/build/*
 /local.properties
 /SDL-default/*
 /moondust/jni/SDL/*
 /moondust/build/*
+/moondust/.cxx/*
 .externalNativeBuild
 /moondust/src/main/assets/languages/*
 
