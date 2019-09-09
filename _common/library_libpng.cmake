@@ -1,18 +1,20 @@
 # libPNG is a PNG format library
 
 option(USE_SYSTEM_LIBPNG "Use libPNG and ZLib from the system" OFF)
+
 if(USE_SYSTEM_LIBPNG)
     find_library(LIBPNG_LIBRARY
-        NAMES libpng.a png
+        NAMES png libpng.a
         PATHS "${CMAKE_BINARY_DIR}/lib/"
     )
-endif()
-
-if(USE_SYSTEM_LIBPNG AND LIBPNG_LIBRARY)
+    if(NOT LIBPNG_LIBRARY)
+        message(FATAL_ERROR "Missing libPNG in system! Try to install it or disable USE_SYSTEM_LIBPNG option to build PNG in the place.")
+    endif()
     message("-- Found ${LIBPNG_LIBRARY} --")
     set(libPNG_A_Lib ${LIBPNG_LIBRARY})
+
     find_library(LIBZLIB_LIBRARY
-        NAMES libzlib.a libz.a zlib z
+        NAMES z zlib libzlib.a libz.a
         PATHS "${CMAKE_BINARY_DIR}/lib/"
     )
     if(LIBZLIB_LIBRARY)
@@ -21,6 +23,7 @@ if(USE_SYSTEM_LIBPNG AND LIBPNG_LIBRARY)
     else() # Use that built with separately
         set(libZLib_A_Lib "${CMAKE_BINARY_DIR}/lib/libzlib${PGE_LIBS_DEBUG_SUFFIX}.a")
     endif()
+
 else()
     set(libPNG_A_Lib "${CMAKE_BINARY_DIR}/lib/libpng16${PGE_LIBS_DEBUG_SUFFIX}.a")
     set(libZLib_A_Lib "${CMAKE_BINARY_DIR}/lib/libzlib${PGE_LIBS_DEBUG_SUFFIX}.a")
