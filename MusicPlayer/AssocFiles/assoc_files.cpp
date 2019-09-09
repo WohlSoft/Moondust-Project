@@ -8,7 +8,9 @@
 #include <QFile>
 #include <QTextStream>
 #include <QSettings>
+#include <QProcess>
 #include <QMessageBox>
+#include <QtDebug>
 
 AssocFiles::AssocFiles(QWidget *parent) :
     QDialog(parent),
@@ -26,6 +28,9 @@ AssocFiles::AssocFiles(QWidget *parent) :
     formats << tentry("midi", "midi - Music Instrument Digital Interface, commands list");
     formats << tentry("kar",  "kar - Music Instrument Digital Interface, commands list");
     formats << tentry("rmi",  "rmi - Music Instrument Digital Interface, commands list");
+    formats << tentry("xmi",  "XMI - AIL eXtended MIDI file");
+    formats << tentry("mus",  "MUS - DMX MIDI Music file");
+    formats << tentry("cmf",  "CMF - Creative Music File (mixed MIDI and OPL2 synth)");
 
     formats << tentry("ay",   "AY - ZX Spectrum/Amstrad CPC");
     formats << tentry("gbs",  "GBS - Nintendo Game Boy");
@@ -77,6 +82,10 @@ void AssocFiles::on_reset_clicked()
     QHash<QString, bool> defaultFormats;
 
     defaultFormats["kar"] = true;
+
+    defaultFormats["xmi"] = true;
+    defaultFormats["mus"] = true;
+    defaultFormats["cmf"] = true;
 
     defaultFormats["voc"] = true;
     defaultFormats["ay"]  = true;
@@ -148,31 +157,78 @@ static bool xCopyFile(const QString &src, const QString &target)
     tmp.setFileName(target);
     if(tmp.exists())
         tmp.remove();
-    return QFile::copy(src, target);
+    bool ret = QFile::copy(src, target);
+    if(!ret)
+        qWarning() << "Failed to copy file" << src << "into" << target;
+    else
+        qDebug() << "File " << src << "was successfully copiled into" << target;
+    return ret;
+}
+
+static bool xRunCommand(QString command, const QStringList &args)
+{
+    QProcess xdg;
+    xdg.setProgram(command);
+    xdg.setArguments(args);
+
+    xdg.start();
+    xdg.waitForFinished();
+
+    QString printed = xdg.readAll();
+
+    if(!printed.isEmpty())
+        qDebug() << printed;
+
+    bool ret = (xdg.exitCode() == 0);
+    if(!ret)
+        qWarning() << "Command" << command << "with arguments" << args << "finished with failure";
+    else
+        qDebug() << "Command" << command << "with arguments" << args << "successfully finished";
+
+    return ret;
+}
+
+static bool xInstallIconResource(QString context, int iconSize, QString iconName, QString mimeName)
+{
+    QStringList args;
+    args << "install";
+    args << "--context";
+    args << context;
+    if(context == "apps")
+        args << "--novendor";
+    args << "--size";
+    args << QString::number(iconSize);
+    args << QDir::home().absolutePath() + "/.local/share/icons/" + iconName.arg(iconSize);
+    args << mimeName;
+
+    return xRunCommand("xdg-icon-resource", args);
 }
 
 static bool xIconSize(QList<QListWidgetItem> &items, int iconSize)
 {
     bool success = true;
-    if(success) success = xCopyFile(QString(":/cat_musplay/cat_musplay_%1x%1.png").arg(iconSize),
-                                    QString("%1/.local/share/icons/PgeMusplay-%2.png").arg(QDir::home().absolutePath(), iconSize));
-    if(success) success = xCopyFile(QString(":/file_musplay/file_musplay_%1x%1.png").arg(iconSize),
-                                    QString("%1/.local/share/icons/pge_musplay_file-%2.png").arg(QDir::home().absolutePath(), iconSize));
+    const QString home = QDir::home().absolutePath();
+    if(success) success = xCopyFile(QString(":/cat_musplay/cat_musplay_%1x%1.png")
+                                    .arg(iconSize),
+                                    QString("%1/.local/share/icons/PgeMusplay-%2.png")
+                                    .arg(home).arg(iconSize));
+    if(success) success = xCopyFile(QString(":/file_musplay/file_musplay_%1x%1.png")
+                                    .arg(iconSize),
+                                    QString("%1/.local/share/icons/pge_musplay_file-%2.png")
+                                    .arg(home).arg(iconSize));
     for(int i = 0; i < items.size(); i++)
     {
         if(items[i].checkState() == Qt::Checked)
         {
             auto &item = items[i];
-            if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size %3 %2/.local/share/icons/pge_musplay_file-%3.png x-application-music-%1")
-                                          .arg(item.data(Qt::UserRole).toString()).arg(QDir::home().absolutePath()).arg(iconSize)
-                                          .toLocal8Bit().constData()
-                                          ) == 0;
+            if(success) success = xInstallIconResource("mimetypes",
+                                                       iconSize,
+                                                       "pge_musplay_file-%1.png",
+                                                       QString("x-application-music-%1").arg(item.data(Qt::UserRole).toString()));
         }
     }
-    if(success) success = system( QString("xdg-icon-resource install --context apps --novendor --size %2 %1/.local/share/icons/PgeMusplay-%2.png PgeMusplay")
-                                  .arg(QDir::home().absolutePath())
-                                  .arg(iconSize)
-                                  .toLocal8Bit().constData()) == 0;
+    if(success) success = xInstallIconResource("apps", iconSize, "PgeMusplay-%1.png", "PgeMusplay");
+
     return success;
 }
 #endif
@@ -180,9 +236,11 @@ static bool xIconSize(QList<QListWidgetItem> &items, int iconSize)
 void AssocFiles::on_AssocFiles_accepted()
 {
     bool success = true;
-#ifdef _WIN32
 
+#ifdef _WIN32
     QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
+
+    success = registry_hkcu.isWritable();
 
     //Main entry
     registry_hkcu.setValue("Software/Classes/PGEWohlstand.MusicFile/Default", tr("PGE-MusPlay Music File", "File Types"));
@@ -196,10 +254,13 @@ void AssocFiles::on_AssocFiles_accepted()
             registry_hkcu.setValue(QString("Software/Classes/.%1/Default").arg(items[i].data(Qt::UserRole).toString()), "PGEWohlstand.MusicFile");
         }
     }
-#elif not defined __APPLE__
-    if(success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/mime/packages");
-    if(success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/applications");
-    if(success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/icons");
+
+#elif !defined __APPLE__
+    const QString home = QDir::home().absolutePath();
+
+    if(success) success = QDir().mkpath(home + "/.local/share/mime/packages");
+    if(success) success = QDir().mkpath(home + "/.local/share/applications");
+    if(success) success = QDir().mkpath(home + "/.local/share/icons");
 
     QString mimeHead =
             "<?xml version=\"1.0\"?>\n"
@@ -224,7 +285,7 @@ void AssocFiles::on_AssocFiles_accepted()
         }
     }
 
-    QFile outMime(QDir::home().absolutePath() + "/.local/share/mime/packages/pge-musplay-mimeinfo.xml");
+    QFile outMime(home + "/.local/share/mime/packages/pge-musplay-mimeinfo.xml");
     outMime.open(QIODevice::WriteOnly|QIODevice::Truncate|QIODevice::Text);
     QTextStream outMimeS(&outMime);
     outMimeS << mimeHead;
@@ -245,7 +306,7 @@ void AssocFiles::on_AssocFiles_accepted()
     {
         QTextStream shtct(&shortcut);
         QString shortcut_text = shtct.readAll();
-        QFile saveAs(QDir::home().absolutePath() + "/.local/share/applications/pge_musplay.desktop");
+        QFile saveAs(home + "/.local/share/applications/pge_musplay.desktop");
 
         if(success) success = saveAs.open(QFile::WriteOnly | QFile::Text);
         if(success) QTextStream(&saveAs) << shortcut_text.arg(QApplication::applicationDirPath() + "/", minesForDesktopFile);
@@ -256,20 +317,18 @@ void AssocFiles::on_AssocFiles_accepted()
         if(items[i].checkState() == Qt::Checked)
         {
             auto &item = items[i];
-            if(success) success = system(QString("xdg-mime default pge_musplay.desktop application/x-pge-music-%1").arg(item.data(Qt::UserRole).toString()).toLocal8Bit()) == 0;
+            if(success) success = xRunCommand("xdg-mime", {"default", "pge_musplay.desktop", QString("application/x-pge-music-%1").arg(item.data(Qt::UserRole).toString())});
         }
     }
 
-    if(success) success = system(QString("update-desktop-database " + QDir::home().absolutePath() + "/.local/share/applications").toLocal8Bit().constData()) == 0;
-    if(success) success = system(QString("update-mime-database " + QDir::home().absolutePath() + "/.local/share/mime").toLocal8Bit().constData()) == 0;
+    if(success) success = xRunCommand("update-desktop-database", {home + "/.local/share/applications"});
+    if(success) success = xRunCommand("update-mime-database", {home + "/.local/share/mime"});
+#endif
 
     if(!success)
         QMessageBox::warning(this, tr("Error"), tr("File association error has occured."));
     else
         QMessageBox::information(this, tr("Success"), tr("All files has been associated!"));
-#else
-    Q_UNUSED(success);
-#endif
 }
 
 #endif
