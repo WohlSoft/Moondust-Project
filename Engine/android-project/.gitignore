@@ -6,6 +6,7 @@
 /SDL-default/*
 /moondust/jni/SDL/*
 /moondust/build/*
+/moondust/release/*
 /moondust/.cxx/*
 .externalNativeBuild
 /moondust/src/main/assets/languages/*
