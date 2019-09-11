@@ -287,7 +287,7 @@ bool WorldScene::init()
         WldTerrainItem &tile = m_itemsTerrain.back();
         if(!tile.init())
             continue;
-        m_indexTable.addNode(tile.x, tile.y, tile.w, tile.h, &tile);
+        m_indexTable.addNode(&tile);
     }
 
     m_itemsSceneries.reserve(m_data.scenery.size());
@@ -297,7 +297,7 @@ bool WorldScene::init()
         WldSceneryItem &scenery = m_itemsSceneries.back();
         if(!scenery.init())
             continue;
-        m_indexTable.addNode(scenery.x, scenery.y, scenery.w, scenery.h, &scenery);
+        m_indexTable.addNode(&scenery);
     }
 
     m_itemsPaths.reserve(m_data.paths.size());
@@ -307,7 +307,7 @@ bool WorldScene::init()
         WldPathItem &path = m_itemsPaths.back();
         if(!path.init())
             continue;
-        m_indexTable.addNode(path.x, path.y, path.w, path.h, &path);
+        m_indexTable.addNode(&path);
     }
 
     m_itemsLevels.reserve(m_data.levels.size());
@@ -317,11 +317,7 @@ bool WorldScene::init()
         WldLevelItem &levelPoint = m_itemsLevels.back();
         if(!levelPoint.init())
             continue;
-        m_indexTable.addNode(levelPoint.x + static_cast<long>(levelPoint.offset_x),
-                            levelPoint.y + static_cast<long>(levelPoint.offset_y),
-                            levelPoint.texture.w,
-                            levelPoint.texture.h,
-                            &levelPoint);
+        m_indexTable.addNode(&levelPoint);
     }
 
     m_itemsMusicBoxes.reserve(m_data.music.size());
@@ -332,7 +328,7 @@ bool WorldScene::init()
         musicBox.r = 0.5f;
         musicBox.g = 0.5f;
         musicBox.b = 1.f;
-        m_indexTable.addNode(musicBox.x, musicBox.y, musicBox.w, musicBox.h, &musicBox);
+        m_indexTable.addNode(&musicBox);
     }
 
     //Apply visibility settings to elements

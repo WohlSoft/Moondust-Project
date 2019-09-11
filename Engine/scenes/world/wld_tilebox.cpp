@@ -18,8 +18,9 @@
  */
 
 #include "wld_tilebox.h"
-
+#include <common_features/QuadTree/LooseQuadtree.h>
 #include <stack>
+
 
 WorldNode::WorldNode()
 {
@@ -89,6 +90,26 @@ bool WorldNode::collideWith(WorldNode *it)
     if((y + h) <= it->y) return false;
 
     return true;
+}
+
+long WorldNode::finalX() const
+{
+    return x;
+}
+
+long WorldNode::finalY() const
+{
+    return y;
+}
+
+long WorldNode::finalW() const
+{
+    return w;
+}
+
+long WorldNode::finalH() const
+{
+    return h;
 }
 
 
@@ -393,6 +414,26 @@ void WldLevelItem::render(double rx, double ry)
                               static_cast<float>(a.second));
 }
 
+long WldLevelItem::finalX() const
+{
+    return x + static_cast<long>(offset_x);
+}
+
+long WldLevelItem::finalY() const
+{
+    return y + static_cast<long>(offset_y);
+}
+
+long WldLevelItem::finalW() const
+{
+    return texture.w;
+}
+
+long WldLevelItem::finalH() const
+{
+    return texture.h;
+}
+
 
 
 
@@ -422,12 +463,28 @@ WldMusicBoxItem::~WldMusicBoxItem()
 
 
 
+class QTreePGE_WorldNode_Extractor
+{
+public:
+    static void ExtractBoundingBox(const WorldNode *object, loose_quadtree::BoundingBox<long> *bbox)
+    {
+        bbox->left      = object->finalX();
+        bbox->top       = object->finalY();
+        bbox->width     = object->finalW();
+        bbox->height    = object->finalH();
+    }
+};
+
+struct WldQuadTree_private
+{
+    typedef loose_quadtree::LooseQuadtree<long, WorldNode, QTreePGE_WorldNode_Extractor> IndexTreeQ;
+    IndexTreeQ tree;
+};
 
 
 
-
-
-TileBox::TileBox()
+TileBox::TileBox() :
+    p(new WldQuadTree_private)
 {
     gridSize = ConfigManager::default_grid;
     gridSize_h = ConfigManager::default_grid / 2;
@@ -444,55 +501,48 @@ TileBox::~TileBox()
     clean();
 }
 
-void TileBox::addNode(long X, long Y, long W, long H, WorldNode *item)
+void TileBox::addNode(WorldNode *item)
 {
-    registerElement(item, X, Y, W, H);
+    p->tree.Insert(item);
 }
 
-static bool _TreeSearchCallback(WorldNode *item, void *arg)
+void TileBox::removeNode(WorldNode *item)
 {
-    std::vector<WorldNode *> *list = static_cast<std::vector<WorldNode *>* >(arg);
-    if(list)
-    {
-        if(item)
-            (*list).push_back(item);
-        else
-            return false;
-    }
-    else
-        return false;
-
-    return true;
+    p->tree.Remove(item);
 }
 
-
-static bool _TreeSearchCallback_with_vizibility(WorldNode *item, void *arg)
+void TileBox::updateElement(WorldNode *item)
 {
-    std::vector<WorldNode *> *list = static_cast<std::vector<WorldNode *>* >(arg);
-
-    if(list)
-    {
-        if(item && item->vizible)
-            (*list).push_back(item);
-    }
-
-    return true;
+    p->tree.Update(item);
 }
 
 void TileBox::query(long X, long Y, std::vector<WorldNode *> &list)
 {
     //PGE_Point t = applyGrid(X,Y);
     long margin = gridSize_h - 2l;
-    RPoint lt = { X - margin, Y - margin };
-    RPoint rb = { X + margin, Y + margin };
-    tree.Search(lt, rb, _TreeSearchCallback, reinterpret_cast<void *>(&list));
+    WldQuadTree_private::IndexTreeQ::Query q = p->tree.QueryIntersectsRegion(loose_quadtree::BoundingBox<long>(X - margin, Y - margin, margin * 2, margin * 2));
+    while(!q.EndOfQuery())
+    {
+        auto *item = q.GetCurrent();
+        if(item)
+            list.push_back(q.GetCurrent());
+        q.Next();
+    }
 }
 
 void TileBox::query(long Left, long Top, long Right, long Bottom, std::vector<WorldNode *> &list, bool z_sort)
 {
-    RPoint lt = {Left - gridSize_h, Top - gridSize_h};
-    RPoint rb = {Right + gridSize_h, Bottom + gridSize_h};
-    tree.Search(lt, rb, z_sort ? _TreeSearchCallback_with_vizibility : _TreeSearchCallback, reinterpret_cast<void *>(&list));
+    WldQuadTree_private::IndexTreeQ::Query q = p->tree.QueryIntersectsRegion(loose_quadtree::BoundingBox<long>(Left - gridSize_h, Top - gridSize_h, (Right - Left) + gridSize_h * 2, (Bottom - Top) +  + gridSize_h * 2));
+    while(!q.EndOfQuery())
+    {
+        auto *item = q.GetCurrent();
+        if(item)
+        {
+            if((z_sort && item->vizible) || !z_sort)
+                list.push_back(q.GetCurrent());
+        }
+        q.Next();
+    }
 
     if(z_sort)
         sortElements(list);
@@ -557,8 +607,7 @@ void TileBox::sortElements(std::vector<WorldNode *> &list)
 
 void TileBox::clean()
 {
-    //map.clear();
-    tree.RemoveAll();
+    p->tree.Clear();
 }
 
 const long &TileBox::grid()
@@ -571,47 +620,6 @@ const long &TileBox::grid_half()
     return gridSize_h;
 }
 
-void TileBox::registerElement(WorldNode *item)
-{
-    RPoint lt = {item->x, item->y};
-    RPoint rb = {item->x + item->w, item->y + item->h};
-
-    if(item->w <= 0)
-        rb[0] = item->x + 1;
-
-    if(item->h <= 0)
-        rb[1] = item->y + 1;
-
-    tree.Insert(lt, rb, item);
-}
-
-void TileBox::registerElement(WorldNode *item, long X, long Y, long W, long H)
-{
-    RPoint lt = {X, Y};
-    RPoint rb = {X + W, Y + H};
-
-    if(W <= 0)
-        rb[0] = X + 1;
-
-    if(H <= 0)
-        rb[1] = Y + 1;
-
-    tree.Insert(lt, rb, item);
-}
-
-void TileBox::unregisterElement(WorldNode *item)
-{
-    RPoint lt = {item->x, item->y};
-    RPoint rb = {item->x + item->w, item->y + item->h};
-
-    if(item->w <= 0)
-        rb[0] = item->x + 1;
-
-    if(item->h <= 0)
-        rb[1] = item->y + 1;
-
-    tree.Remove(lt, rb, item);
-}
 
 PGE_Point TileBox::applyGrid(long x, long y)
 {
