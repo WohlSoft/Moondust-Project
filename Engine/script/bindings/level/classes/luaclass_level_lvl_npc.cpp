@@ -410,6 +410,12 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             */
             .property("frameDelay", &LVL_Npc::lua_frameDelay, &LVL_Npc::lua_setFrameDelay)
 
+            /***
+            Enable activity of NPC: NPC will be awake until offscreen timeout out
+            @tfield bool activity
+            */
+            .property("activity", &LVL_Npc::activity, &LVL_Npc::setActivity)
+
             //Parameters
 
             /***
