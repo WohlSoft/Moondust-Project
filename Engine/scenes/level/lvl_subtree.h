@@ -21,19 +21,22 @@
 #define LVL_SUBTREE_H
 
 #include "lvl_base_object.h"
+#include <memory>
 
 struct LVL_SubTree_private;
 class LVL_SubTree : public PGE_Phys_Object
 {
     public:
         LVL_SubTree(LevelScene *_parent = NULL);
-        LVL_SubTree(const LVL_SubTree &st);
+        LVL_SubTree(const LVL_SubTree &st) = delete;
         ~LVL_SubTree();
 
         typedef bool (*t_resultCallback)(PGE_Phys_Object*, void *);
         typedef PGE_Phys_Object *PhysObjPtr;
-        void registerElement(PhysObjPtr item);
-        void unregisterElement(PhysObjPtr item);
+        void    insert(PhysObjPtr item);
+        void    update(PhysObjPtr item);
+        void    remove(PhysObjPtr item);
+        void    clear();
         void    query(PGE_RectF &zone, t_resultCallback a_resultCallback, void *context);
 
         double  m_offsetX = 0.0;
@@ -43,7 +46,7 @@ class LVL_SubTree : public PGE_Phys_Object
         double  m_offsetYold = 0.0;
 
     private:
-        LVL_SubTree_private *p = nullptr;
+        std::unique_ptr<LVL_SubTree_private> p;
 };
 
 #endif // LVL_SUBTREE_H

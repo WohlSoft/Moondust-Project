@@ -103,7 +103,7 @@ void LVL_Npc::setStaticBody(bool isStatic)
     else if(!isStatic && (m_bodytype == Body_STATIC))
     {
         m_bodytype = Body_DYNAMIC;
-        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, false, true);
+        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, m_bodySticky, true);
     }
     is_static = isStatic;
 }
@@ -123,6 +123,7 @@ void LVL_Npc::setBodyType(bool isStatic, bool isSticky)
     else
         m_bodytype = Body_DYNAMIC;
 
+    m_bodySticky = isSticky;
     if((bool)m_parent != isSticky)
         m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, isSticky, true);
 

@@ -28,7 +28,6 @@
 #include <common_features/episode_state.h>
 #include <common_features/event_queue.h>
 #include <common_features/point.h>
-#include <common_features/RTree/RTree.h>
 #include "level/lvl_quad_tree.h"
 
 #include <gui/pge_menubox.h>
@@ -409,7 +408,6 @@ class LevelScene : public Scene
 
         typedef PGE_Phys_Object *PhysObjPtr;
     private:
-        typedef RTree<PhysObjPtr, double, 2, double > IndexTree;
         typedef LvlQuadTree IndexTree4;
 
     public:
@@ -432,7 +430,6 @@ class LevelScene : public Scene
         LVL_BgosArray   &getBGOs();
 
     private:
-        IndexTree                   m_tree;
         IndexTree4                  m_qtree;
         std::vector<PGE_Texture >   m_texturesBank;
 

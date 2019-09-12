@@ -48,7 +48,7 @@ class PGE_LevelCamera
         //! List of NPC's which needs an activation
         std::queue<PGE_Phys_Object *> npcs_to_activate;
         /*!
-         * \brief RTree search callback function which accepts found elements into cache
+         * \brief QuadTree search callback function which accepts found elements into cache
          * \param item found element
          * \param arg pointer to this camera
          * \return always true

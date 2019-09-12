@@ -46,7 +46,7 @@ public:
         //! Count of destroyed objects are
         size_t      m_destroyedObjects = 0;
         //! Sub-tree of statical objects
-        LVL_SubTree m_rtree;
+        LVL_SubTree m_subtree;
         enum Type
         {
             T_REGULAR = 0,

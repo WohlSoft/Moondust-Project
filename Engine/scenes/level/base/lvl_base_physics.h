@@ -395,6 +395,9 @@ public:
     double  m_onSlopeYAdd = 0.0;
     //! Body type
     BodyType m_bodytype = Body_STATIC;
+    //! Stick body on parent subtree, othrewise, it will freely move in the common space
+    bool     m_bodySticky = false;
+    //! Collision check policy
     int      m_collisionCheckPolicy = CollisionCheckPolicy_EVERYTHING;
 
     //! Allow running over floor holes

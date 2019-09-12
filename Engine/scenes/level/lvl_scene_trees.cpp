@@ -41,7 +41,7 @@ void PGE_Phys_Object::TreeMapMember::addToScene(bool keepAbsPos)
             m_posY_registered   = m.y;
             m_width_registered  = m.w;
             m_height_registered = m.h;
-            st->registerElement(m_self);
+            st->insert(m_self);
         }
         else
         {
@@ -63,13 +63,15 @@ void PGE_Phys_Object::TreeMapMember::updatePos()
         //m.oldx += st->m_offsetXold;
         //m.oldy += st->m_offsetYold;
         //m_self->m_momentum_relative = m;
-        if(m_is_registered)
-            st->unregisterElement(m_self);
-        else
-            m_is_registered = true;
         m_posX_registered   = m.x;
         m_posY_registered   = m.y;
-        st->registerElement(m_self);
+        if(!m_is_registered)
+        {
+            st->insert(m_self);
+            m_is_registered = true;
+        }
+        else
+            st->update(m_self);
     }
     else
     {
@@ -100,15 +102,17 @@ void PGE_Phys_Object::TreeMapMember::updatePosAndSize()
            (m_width_registered != m.w) ||
            (m_height_registered != m.h) )
         {
-            if(m_is_registered)
-                st->unregisterElement(m_self);
-            else
-                m_is_registered = true;
             m_posX_registered   = m.x;
             m_posY_registered   = m.y;
             m_width_registered  = m.w;
             m_height_registered = m.h;
-            st->registerElement(m_self);
+            if(!m_is_registered)
+            {
+                st->insert(m_self);
+                m_is_registered = true;
+            }
+            else
+                st->update(m_self);
         }
     }
     else
@@ -129,13 +133,16 @@ void PGE_Phys_Object::TreeMapMember::updateSize()
     if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
     {
         Momentum &m = m_self->m_momentum;
-        if(m_is_registered)
-            st->unregisterElement(m_self);
-        else
-            m_is_registered = true;
         m_width_registered  = m.w;
         m_height_registered = m.h;
-        st->registerElement(m_self);
+        if(!m_is_registered)
+        {
+            st->insert(m_self);
+            m_is_registered = true;
+        }
+        else
+            st->update(m_self);
+
     }
     else
     {
@@ -155,7 +162,7 @@ void PGE_Phys_Object::TreeMapMember::delFromScene()
     {
         LVL_SubTree *st = nullptr;
         if(m_self->m_parent && ((st = dynamic_cast<LVL_SubTree *>(m_self->m_parent)) != nullptr))
-            st->unregisterElement(m_self);
+            st->remove(m_self);
         else
             m_self->m_scene->unregisterElement(m_self);
     }
@@ -215,9 +222,13 @@ static bool _TreeSearchCallback(PGE_Phys_Object* item, void* arg)
                         item->m_momentum.y -= st->m_offsetY;
                         item->m_momentum.oldx -= st->m_offsetXold;
                         item->m_momentum.oldy -= st->m_offsetYold;
-                        item->m_momentum.velX =    st->speedXsum();
-                        item->m_momentum.velXsrc = st->speedX();
-                        item->m_momentum.velY =    st->speedY();
+                        if((item->m_bodytype == PGE_Phys_Object::Body_STATIC) ||
+                          ((item->m_bodytype == PGE_Phys_Object::Body_DYNAMIC) && !item->m_bodySticky))
+                        {
+                            item->m_momentum.velX = st->speedXsum();
+                            item->m_momentum.velXsrc = st->speedX();
+                            item->m_momentum.velY = st->speedY();
+                        }
                     }
                 }
                 d->list->push_back(item);

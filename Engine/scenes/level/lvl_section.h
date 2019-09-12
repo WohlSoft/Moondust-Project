@@ -21,7 +21,6 @@
 #define LVL_SECTION_H
 
 #include <PGE_File_Formats/lvl_filedata.h>
-#include <common_features/RTree/RTree.h>
 #include <common_features/rectf.h>
 
 #include "lvl_backgrnd.h"
