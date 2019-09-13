@@ -23,6 +23,371 @@
 #include <gui/pge_msgbox.h>
 #include <Utils/files.h>
 
+
+void GameUserDataManager::importData(const saveUserData &in)
+{
+    for(auto &section : in.store)
+    {
+        int location_clean = (section.location & saveUserData::DATA_LOCATION_MASK);
+        bool is_volatile = (section.location & saveUserData::DATA_VOLATILE_FLAG);
+        std::string name = section.name.empty() ? "default" : section.name;
+        DataList list;
+
+        for(auto &entry : section.data)
+            list.insert({entry.key, entry.value});
+
+        switch(location_clean)
+        {
+        default:
+        case saveUserData::DATA_WORLD:
+            if(is_volatile)
+                data_volatile_world.insert({name, list});
+            else
+                data_world.insert({name, list});
+            break;
+
+        case saveUserData::DATA_LEVEL:
+            if(is_volatile)
+                data_volatile_all_levels[section.location_name].insert({name, list});
+            else
+                data_all_levels[section.location_name].insert({name, list});
+            break;
+
+        case saveUserData::DATA_GLOBAL:
+            if(is_volatile)
+                data_volatile_global.insert({name, list});
+            else
+                data_global.insert({name, list});
+            break;
+        }
+    }
+}
+
+void GameUserDataManager::exportData(saveUserData &out)
+{
+    out.store.clear();
+    for(auto &e : data_world)
+    {
+        saveUserData::DataSection section;
+        section.name = e.first;
+        section.location = saveUserData::DATA_WORLD;
+        for(auto &in_entry : e.second)
+        {
+            saveUserData::DataEntry entry;
+            entry.key = in_entry.first;
+            entry.value = in_entry.second;
+            section.data.push_back(entry);
+        }
+        out.store.push_back(section);
+    }
+
+    for(auto &e : data_volatile_world)
+    {
+        saveUserData::DataSection section;
+        section.name = e.first;
+        section.location = saveUserData::DATA_WORLD | saveUserData::DATA_VOLATILE_FLAG;
+        for(auto &in_entry : e.second)
+        {
+            saveUserData::DataEntry entry;
+            entry.key = in_entry.first;
+            entry.value = in_entry.second;
+            section.data.push_back(entry);
+        }
+        out.store.push_back(section);
+    }
+
+    for(auto &e : data_global)
+    {
+        saveUserData::DataSection section;
+        section.name = e.first;
+        section.location = saveUserData::DATA_GLOBAL;
+        for(auto &in_entry : e.second)
+        {
+            saveUserData::DataEntry entry;
+            entry.key = in_entry.first;
+            entry.value = in_entry.second;
+            section.data.push_back(entry);
+        }
+        out.store.push_back(section);
+    }
+
+    for(auto &e : data_volatile_global)
+    {
+        saveUserData::DataSection section;
+        section.name = e.first;
+        section.location = saveUserData::DATA_GLOBAL | saveUserData::DATA_VOLATILE_FLAG;
+        for(auto &in_entry : e.second)
+        {
+            saveUserData::DataEntry entry;
+            entry.key = in_entry.first;
+            entry.value = in_entry.second;
+            section.data.push_back(entry);
+        }
+        out.store.push_back(section);
+    }
+
+    for(auto &level : data_all_levels)
+    {
+        for(auto &e : level.second)
+        {
+            saveUserData::DataSection section;
+            section.name = e.first;
+            section.location = saveUserData::DATA_LEVEL;
+            section.location_name = level.first;
+            for(auto &in_entry : e.second)
+            {
+                saveUserData::DataEntry entry;
+                entry.key = in_entry.first;
+                entry.value = in_entry.second;
+                section.data.push_back(entry);
+            }
+            out.store.push_back(section);
+        }
+    }
+
+    for(auto &level : data_volatile_all_levels)
+    {
+        for(auto &e : level.second)
+        {
+            saveUserData::DataSection section;
+            section.name = e.first;
+            section.location = saveUserData::DATA_LEVEL | saveUserData::DATA_VOLATILE_FLAG;
+            section.location_name = level.first;
+            for(auto &in_entry : e.second)
+            {
+                saveUserData::DataEntry entry;
+                entry.key = in_entry.first;
+                entry.value = in_entry.second;
+                section.data.push_back(entry);
+            }
+            out.store.push_back(section);
+        }
+    }
+}
+
+GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManager::DataType dataType,
+                                                              const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+    {
+        const auto &f = data_world.find("default");
+        if(f != data_world.end())
+            return f->second;
+        break;
+    }
+    case DATA_LEVEL:
+    {
+        const auto &l = data_all_levels.find(fileName);
+        if(l != data_all_levels.end())
+        {
+            const auto &f = l->second.find("default");
+            if(f != l->second.end())
+                return f->second;
+        }
+        break;
+    }
+    case DATA_GLOBAL:
+    {
+        const auto &f = data_global.find("default");
+        if(f != data_global.end())
+            return f->second;
+        break;
+    }
+    }
+    return DataList();
+}
+
+GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManager::DataType dataType,
+                                                              const std::string &sectionName,
+                                                              const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+    {
+        const auto &f = data_world.find(sectionName);
+        if(f != data_world.end())
+            return f->second;
+        break;
+    }
+    case DATA_LEVEL:
+    {
+        const auto &l = data_all_levels.find(fileName);
+        if(l != data_all_levels.end())
+        {
+            const auto &f = l->second.find(sectionName);
+            if(f != l->second.end())
+                return f->second;
+        }
+        break;
+    }
+    case DATA_GLOBAL:
+    {
+        const auto &f = data_global.find(sectionName);
+        if(f != data_global.end())
+            return f->second;
+        break;
+    }
+    }
+    return DataList();
+}
+
+GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDataManager::DataType dataType,
+                                                                      const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+    {
+        const auto &f = data_volatile_world.find("default");
+        if(f != data_volatile_world.end())
+            return f->second;
+        break;
+    }
+    case DATA_LEVEL:
+    {
+        const auto &l = data_volatile_all_levels.find(fileName);
+        if(l != data_volatile_all_levels.end())
+        {
+            const auto &f = l->second.find("default");
+            if(f != l->second.end())
+                return f->second;
+        }
+        break;
+    }
+    case DATA_GLOBAL:
+    {
+        const auto &f = data_volatile_global.find("default");
+        if(f != data_volatile_global.end())
+            return f->second;
+        break;
+    }
+    }
+    return DataList();
+}
+
+GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDataManager::DataType dataType,
+                                                                      const std::string &sectionName,
+                                                                      const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+    {
+        const auto &f = data_volatile_world.find(sectionName);
+        if(f != data_volatile_world.end())
+            return f->second;
+        break;
+    }
+    case DATA_LEVEL:
+    {
+        const auto &l = data_volatile_all_levels.find(fileName);
+        if(l != data_volatile_all_levels.end())
+        {
+            const auto &f = l->second.find(sectionName);
+            if(f != l->second.end())
+                return f->second;
+        }
+        break;
+    }
+    case DATA_GLOBAL:
+    {
+        const auto &f = data_volatile_global.find(sectionName);
+        if(f != data_volatile_global.end())
+            return f->second;
+        break;
+    }
+    }
+    return DataList();
+}
+
+void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
+                                     const GameUserDataManager::DataList &list,
+                                     const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+        data_world["default"] = list;
+        break;
+    case DATA_LEVEL:
+        data_all_levels[fileName]["default"] = list;
+        break;
+    case DATA_GLOBAL:
+        data_global["default"] = list;
+        break;
+    }
+}
+
+void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
+                                                              const GameUserDataManager::DataList &list,
+                                                              const std::string &sectionName,
+                                                              const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+        data_world[sectionName] = list;
+        break;
+    case DATA_LEVEL:
+        data_all_levels[fileName][sectionName] = list;
+        break;
+    case DATA_GLOBAL:
+        data_global[sectionName] = list;
+        break;
+    }
+}
+
+void GameUserDataManager::setVolatileSection(GameUserDataManager::DataType dataType,
+                                                                      const GameUserDataManager::DataList &list,
+                                                                      const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+        data_volatile_world["default"] = list;
+        break;
+    case DATA_LEVEL:
+        data_volatile_all_levels[fileName]["default"] = list;
+        break;
+    case DATA_GLOBAL:
+        data_volatile_global["default"] = list;
+        break;
+    }
+}
+
+void GameUserDataManager::setVolatileSection(GameUserDataManager::DataType dataType,
+                                                                      const GameUserDataManager::DataList &list,
+                                                                      const std::string &sectionName,
+                                                                      const std::string &fileName)
+{
+    switch(dataType)
+    {
+    default:
+    case DATA_WORLD:
+        data_volatile_world[sectionName] = list;
+        break;
+    case DATA_LEVEL:
+        data_volatile_all_levels[fileName][sectionName] = list;
+        break;
+    case DATA_GLOBAL:
+        data_volatile_global[sectionName] = list;
+        break;
+    }
+}
+
+
+
+
 EpisodeState::EpisodeState()
 {
     reset();

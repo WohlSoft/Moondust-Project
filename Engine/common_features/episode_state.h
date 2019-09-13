@@ -21,6 +21,7 @@
 #define EPISODESTATE_H
 
 #include <string>
+#include <unordered_map>
 #include <stdint.h>
 #include <PGE_File_Formats/save_filedata.h>
 
@@ -76,6 +77,62 @@ struct PlayerState
     uint32_t characterID = 1;
     uint32_t stateID = 1;
     saveCharState _chsetup;
+};
+
+class GameUserDataManager
+{
+public:
+    typedef std::unordered_map<std::string, std::string>    DataList;
+    typedef std::unordered_map<std::string, DataList>       DataBank;
+
+private:
+    DataBank    data_global;
+    DataBank    data_world;
+    std::unordered_map<std::string, DataBank> data_all_levels;
+
+    DataBank    data_volatile_global;
+    DataBank    data_volatile_world;
+    std::unordered_map<std::string, DataBank> data_volatile_all_levels;
+
+public:
+    enum DataType
+    {
+        DATA_LEVEL = 0,
+        DATA_WORLD,
+        DATA_GLOBAL
+    };
+    GameUserDataManager() = default;
+    GameUserDataManager(const GameUserDataManager &o) = default;
+    ~GameUserDataManager() = default;
+
+    void importData(const saveUserData &in);
+    void exportData(saveUserData &out);
+
+    DataList getSection(DataType dataType,
+                        const std::string &fileName = std::string());
+    DataList getSection(DataType dataType,
+                        const std::string &sectionName,
+                        const std::string &fileName = std::string());
+    DataList getVolatileSection(DataType dataType,
+                                const std::string &fileName = std::string());
+    DataList getVolatileSection(DataType dataType,
+                                const std::string &sectionName,
+                                const std::string &fileName = std::string());
+
+    void setSection(DataType dataType,
+                    const DataList &list,
+                    const std::string &fileName = std::string());
+    void setSection(DataType dataType,
+                    const DataList &list,
+                    const std::string &sectionName,
+                    const std::string &fileName = std::string());
+    void setVolatileSection(DataType dataType,
+                            const DataList &list,
+                            const std::string &fileName = std::string());
+    void setVolatileSection(DataType dataType,
+                            const DataList &list,
+                            const std::string &sectionName,
+                            const std::string &fileName = std::string());
 };
 
 class EpisodeState
