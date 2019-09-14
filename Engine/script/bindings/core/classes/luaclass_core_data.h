@@ -28,6 +28,9 @@
 
 class EpisodeState;
 
+/**
+ * @brief Data() class for Lua API, provides a "shelve" for cross-level data storage
+ */
 class Binding_Core_Data
 {
 public:
@@ -48,36 +51,92 @@ public:
 
     ~Binding_Core_Data();
 
+    /**
+     * @brief Sets value of data entry by key
+     * @param key Key of data entry
+     * @param value Value of data entry
+     */
     void set(const std::string &key, const std::string &value);
+    /**
+     * @brief Returns value of data entry by key
+     * @param key Key of data entry
+     * @return Value of data entry
+     */
     std::string get(const std::string &key) const;
+
+    /**
+     * @brief Gives a table of all stored data
+     * @param L Lua state
+     * @return Lua table of all data, stored by key=value
+     */
     luabind::object get(lua_State* L) const;
 
+    /**
+     * @brief Store all holding data into episode state
+     */
     void save();
+    /**
+     * @brief Store all holding data into episode state, and rename the section
+     * @param sectionName New name of section
+     */
     void save(const std::string &sectionName);
 
+    /**
+     * @brief Get the type of data storage scope
+     * @return type of data storage scope
+     */
     DataType dataType() const;
+    /**
+     * @brief Change the storage scope type
+     * @param dataType Data storage scope type
+     */
     void setDataType(DataType dataType);
 
+    /**
+     * @brief Gives name of data section
+     * @return Name of data section
+     */
     std::string sectionName() const;
+    /**
+     * @brief Rename data section
+     * @param sectionName New name of data section
+     */
     void setSectionName(const std::string &sectionName);
 
+    /**
+     * @brief Useless, showing a value of "useSaveSlot" property
+     * @return Value of "useSaveSlot" property
+     */
     bool useSaveSlot() const;
+
+    /**
+     * @brief Useless, changing the value of "useSaveSlot" property
+     * @param useSaveSlot New value of "useSaveSlot" property
+     */
     void setUseSaveSlot(bool useSaveSlot);
 
     static luabind::scope bindToLua();
 
 private:
+    //! Storage type and scope
     DataType m_dataType = DATA_WORLD;
+    //! Type of data section
     std::string m_sectionName = "default";
+    //! Level filename for Level data scope
     std::string m_levelFileName = "unknown";
+    //! Data store hash table
     typedef std::unordered_map<std::string, std::string>    DataList;
+    //! Data store
     DataList m_data;
+    //! Useless "use Save Slot" kept for backward compatibility with LunaLua
     bool m_useSaveSlot = true;
-    bool m_isVolatile = false;
-
+    //! Current episode state reference. If it's not set, no data will be saved or loaded
     EpisodeState *m_episodeState = nullptr;
 
-
+    /**
+     * @brief Internal initialization and loading of data
+     * @param L State of Lua script engine
+     */
     void init(lua_State* L);
 };
 
