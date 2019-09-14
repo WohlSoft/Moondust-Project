@@ -26,6 +26,7 @@
 #include "lua_engine.h"
 #include "lua_titlescreen_engine.h"
 #include "lua_level_engine.h"
+#include "lua_world_engine.h"
 
 namespace LuaGlobal {
     void add(lua_State* L, LuaEngine* engine);
@@ -33,6 +34,7 @@ namespace LuaGlobal {
     LuaEngine* getEngine(lua_State* L);
     LuaTitleScreenEngine* getTitleScreenEngine(lua_State* L);
     LuaLevelEngine* getLevelEngine(lua_State* L);
+    LuaWorldEngine* getWorldEngine(lua_State* L);
 }
 
 #endif // LUAGLOBAL

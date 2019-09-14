@@ -26,6 +26,8 @@
 
 void GameUserDataManager::importData(const saveUserData &in)
 {
+    clear(); // Remove old data if presented
+
     for(auto &section : in.store)
     {
         int location_clean = (section.location & saveUserData::DATA_LOCATION_MASK);
@@ -165,44 +167,19 @@ void GameUserDataManager::exportData(saveUserData &out)
     }
 }
 
-GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManager::DataType dataType,
-                                                              const std::string &fileName)
+void GameUserDataManager::clear()
 {
-    switch(dataType)
-    {
-    default:
-    case DATA_WORLD:
-    {
-        const auto &f = data_world.find("default");
-        if(f != data_world.end())
-            return f->second;
-        break;
-    }
-    case DATA_LEVEL:
-    {
-        const auto &l = data_all_levels.find(fileName);
-        if(l != data_all_levels.end())
-        {
-            const auto &f = l->second.find("default");
-            if(f != l->second.end())
-                return f->second;
-        }
-        break;
-    }
-    case DATA_GLOBAL:
-    {
-        const auto &f = data_global.find("default");
-        if(f != data_global.end())
-            return f->second;
-        break;
-    }
-    }
-    return DataList();
+    data_global.clear();
+    data_volatile_global.clear();
+    data_world.clear();
+    data_volatile_world.clear();
+    data_all_levels.clear();
+    data_volatile_all_levels.clear();
 }
 
 GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManager::DataType dataType,
                                                               const std::string &sectionName,
-                                                              const std::string &fileName)
+                                                              const std::string &fileName) const
 {
     switch(dataType)
     {
@@ -237,43 +214,8 @@ GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManage
 }
 
 GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDataManager::DataType dataType,
-                                                                      const std::string &fileName)
-{
-    switch(dataType)
-    {
-    default:
-    case DATA_WORLD:
-    {
-        const auto &f = data_volatile_world.find("default");
-        if(f != data_volatile_world.end())
-            return f->second;
-        break;
-    }
-    case DATA_LEVEL:
-    {
-        const auto &l = data_volatile_all_levels.find(fileName);
-        if(l != data_volatile_all_levels.end())
-        {
-            const auto &f = l->second.find("default");
-            if(f != l->second.end())
-                return f->second;
-        }
-        break;
-    }
-    case DATA_GLOBAL:
-    {
-        const auto &f = data_volatile_global.find("default");
-        if(f != data_volatile_global.end())
-            return f->second;
-        break;
-    }
-    }
-    return DataList();
-}
-
-GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDataManager::DataType dataType,
                                                                       const std::string &sectionName,
-                                                                      const std::string &fileName)
+                                                                      const std::string &fileName) const
 {
     switch(dataType)
     {
@@ -308,25 +250,6 @@ GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDa
 }
 
 void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
-                                     const GameUserDataManager::DataList &list,
-                                     const std::string &fileName)
-{
-    switch(dataType)
-    {
-    default:
-    case DATA_WORLD:
-        data_world["default"] = list;
-        break;
-    case DATA_LEVEL:
-        data_all_levels[fileName]["default"] = list;
-        break;
-    case DATA_GLOBAL:
-        data_global["default"] = list;
-        break;
-    }
-}
-
-void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
                                                               const GameUserDataManager::DataList &list,
                                                               const std::string &sectionName,
                                                               const std::string &fileName)
@@ -342,25 +265,6 @@ void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
         break;
     case DATA_GLOBAL:
         data_global[sectionName] = list;
-        break;
-    }
-}
-
-void GameUserDataManager::setVolatileSection(GameUserDataManager::DataType dataType,
-                                                                      const GameUserDataManager::DataList &list,
-                                                                      const std::string &fileName)
-{
-    switch(dataType)
-    {
-    default:
-    case DATA_WORLD:
-        data_volatile_world["default"] = list;
-        break;
-    case DATA_LEVEL:
-        data_volatile_all_levels[fileName]["default"] = list;
-        break;
-    case DATA_GLOBAL:
-        data_volatile_global["default"] = list;
         break;
     }
 }
@@ -426,6 +330,7 @@ bool EpisodeState::load()
         if(FileData.meta.ReadFileValid)
         {
             game_state = FileData;
+            userData.importData(game_state.userData);
             episodeIsStarted = true;
             return true;
         }
@@ -442,6 +347,7 @@ bool EpisodeState::save()
 {
     if(!isEpisode)
         return false;
+    userData.exportData(game_state.userData);
     std::string file = _episodePath + saveFileName;
     return FileFormats::WriteExtendedSaveFileF(file, game_state);
 }
@@ -529,4 +435,20 @@ void EpisodeState::setPlayableCharacterSetup(int playerID, uint32_t characterId,
     }
     else
         game_state.characterStates[static_cast<size_t>(characterId) - 1] = state;
+}
+
+std::string EpisodeState::getRelativeLevelFile()
+{
+    if(isEpisode) // get relative path to level file
+        return LevelFile.substr(_episodePath.size(), std::string::npos);
+    else
+        return LevelFile;
+}
+
+std::string EpisodeState::getRelativeWorldFile()
+{
+    if(isEpisode) // get relative path to level file
+        return WorldFile.substr(_episodePath.size(), std::string::npos);
+    else
+        return WorldFile;
 }

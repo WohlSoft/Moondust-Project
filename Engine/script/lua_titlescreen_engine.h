@@ -26,10 +26,9 @@ class TitleScene;
 
 class LuaTitleScreenEngine : public LuaEngine
 {
-//private:
-//    Q_DISABLE_COPY(LuaTitleScreenEngine)
 public:
-    LuaTitleScreenEngine(TitleScene* scene);
+    LuaTitleScreenEngine(TitleScene *scene);
+    LuaTitleScreenEngine(const LuaTitleScreenEngine&) = delete;
     ~LuaTitleScreenEngine();
 
     TitleScene* getScene();

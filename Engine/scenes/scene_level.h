@@ -81,6 +81,7 @@ class LevelScene : public Scene
         friend class LVL_EventEngine;
         friend class PGE_LevelCamera;
         friend class CharacterSwitcherEngine;
+        friend class Binding_Core_Data;
         friend class Binding_Level_CommonFuncs;
         friend void  levelSceneLoopStep(void *scene);
     public:

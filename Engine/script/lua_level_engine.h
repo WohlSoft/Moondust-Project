@@ -28,33 +28,32 @@ class LVL_Npc;
 
 class LuaLevelEngine : public LuaEngine
 {
-//    private:
-//        Q_DISABLE_COPY(LuaLevelEngine)
-    public:
-        LuaLevelEngine(LevelScene *scene);
-        ~LuaLevelEngine();
+public:
+    LuaLevelEngine(LevelScene *scene);
+    LuaLevelEngine(const LuaLevelEngine&) = delete;
+    ~LuaLevelEngine();
 
-        LVL_Player *createLuaPlayer();
-        LVL_Npc *createLuaNpc(unsigned long id);
-        void destoryLuaNpc(LVL_Npc *npc);
-        void destoryLuaPlayer(LVL_Player *plr);
+    LVL_Player *createLuaPlayer();
+    LVL_Npc *createLuaNpc(unsigned long id);
+    void destoryLuaNpc(LVL_Npc *npc);
+    void destoryLuaPlayer(LVL_Player *plr);
 
-        void loadNPCClass(unsigned long id, const std::string &path);
-        void loadPlayerClass(unsigned long id, const std::string &path);
+    void loadNPCClass(unsigned long id, const std::string &path);
+    void loadPlayerClass(unsigned long id, const std::string &path);
 
-        LevelScene *getScene();
+    LevelScene *getScene();
 
-        std::string getNpcBaseClassPath() const;
-        void setNpcBaseClassPath(const std::string &npcBaseClassPath);
+    std::string getNpcBaseClassPath() const;
+    void setNpcBaseClassPath(const std::string &npcBaseClassPath);
 
-        std::string getPlayerBaseClassPath() const;
-        void setPlayerBaseClassPath(const std::string &playerBaseClassPath);
+    std::string getPlayerBaseClassPath() const;
+    void setPlayerBaseClassPath(const std::string &playerBaseClassPath);
 
-    protected:
-        std::string m_npcBaseClassPath;
-        std::string m_playerBaseClassPath;
+protected:
+    std::string m_npcBaseClassPath;
+    std::string m_playerBaseClassPath;
 
-        void onBindAll();
+    void onBindAll();
 };
 
 #endif // LUALEVELENGINE_H

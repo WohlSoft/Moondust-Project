@@ -26,10 +26,9 @@ class WorldScene;
 
 class LuaWorldEngine : public LuaEngine
 {
-//private:
-//    Q_DISABLE_COPY(LuaWorldEngine)
 public:
     LuaWorldEngine(WorldScene* scene);
+    LuaWorldEngine(const LuaWorldEngine&) = delete;
     ~LuaWorldEngine();
 
     WorldScene* getScene();

@@ -251,6 +251,7 @@ list(APPEND PGE_ENGINE_SRCS
     scenes/world/wld_pathopener.cpp
     scenes/world/wld_player_portrait.cpp
     scenes/world/wld_tilebox.cpp
+    script/bindings/core/classes/luaclass_core_data.cpp
     script/bindings/core/classes/luaclass_core_graphics.cpp
     script/bindings/core/classes/luaclass_core_scene_effects.cpp
     script/bindings/core/classes/luaclass_core_simpleevent.cpp

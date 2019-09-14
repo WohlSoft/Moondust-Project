@@ -108,33 +108,26 @@ public:
     void importData(const saveUserData &in);
     void exportData(saveUserData &out);
 
-    DataList getSection(DataType dataType,
-                        const std::string &fileName = std::string());
+    void clear();
+
     DataList getSection(DataType dataType,
                         const std::string &sectionName,
-                        const std::string &fileName = std::string());
-    DataList getVolatileSection(DataType dataType,
-                                const std::string &fileName = std::string());
+                        const std::string &fileName = std::string()) const;
     DataList getVolatileSection(DataType dataType,
                                 const std::string &sectionName,
-                                const std::string &fileName = std::string());
+                                const std::string &fileName = std::string()) const;
 
-    void setSection(DataType dataType,
-                    const DataList &list,
-                    const std::string &fileName = std::string());
     void setSection(DataType dataType,
                     const DataList &list,
                     const std::string &sectionName,
                     const std::string &fileName = std::string());
     void setVolatileSection(DataType dataType,
                             const DataList &list,
-                            const std::string &fileName = std::string());
-    void setVolatileSection(DataType dataType,
-                            const DataList &list,
                             const std::string &sectionName,
                             const std::string &fileName = std::string());
 };
 
+// TODO: Refactor, clean-up, and document this class!!!
 class EpisodeState
 {
 public:
@@ -151,6 +144,8 @@ public:
     bool isTestingModeW;
     GamesaveData game_state;
 
+    GameUserDataManager userData;
+
     PlayerState getPlayerState(int playerID);
     void setPlayerState(int playerID, PlayerState &state);
 
@@ -164,6 +159,8 @@ public:
     int _recent_ExitCode_level;
     int _recent_ExitCode_world;
 
+    std::string getRelativeLevelFile();
+    std::string getRelativeWorldFile();
     std::string LevelFile;
     std::string LevelFile_hub;
     std::string LevelPath;
