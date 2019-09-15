@@ -51,5 +51,4 @@ luabind::scope LuaEvent::bindToLua()
     return
         class_<LuaEvent>("LuaEvent")
             .property("eventName", &LuaEvent::eventName, &LuaEvent::setEventName);
-
 }
