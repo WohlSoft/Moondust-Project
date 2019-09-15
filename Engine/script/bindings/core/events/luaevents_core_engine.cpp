@@ -175,12 +175,12 @@ LuaEvent BindingCore_Events_Engine::createInputUpdateEvent(LuaEngine *engine)
 }
 
 LuaEvent BindingCore_Events_Engine::createMessageBoxEvent(LuaEngine *engine,
-                                                          Binding_Core_Class_SimpleEvent *event,
+                                                          Binding_Core_Class_SimpleEvent *eventContext,
                                                           const std::string &messageText)
 {
     LuaEvent event = LuaEvent(engine);
     event.setEventName("messageBox");
-    event.addParameter(event);
+    event.addParameter(eventContext);
     event.addParameter(messageText);
     return event;
 }
@@ -194,32 +194,34 @@ LuaEvent BindingCore_Events_Engine::createEventEvent(LuaEngine *engine, const st
 }
 
 LuaEvent BindingCore_Events_Engine::createEventDirectEvent(LuaEngine *engine,
-                                                           Binding_Core_Class_SimpleEvent *event,
+                                                           Binding_Core_Class_SimpleEvent *eventContext,
                                                            const std::string &eventName)
 {
     LuaEvent event = LuaEvent(engine);
     event.setEventName("eventDirect");
-    event.addParameter(event);
+    event.addParameter(eventContext);
     event.addParameter(eventName);
     return event;
 }
 
-LuaEvent BindingCore_Events_Engine::createCameraUpdateEvent(LuaEngine *engine, Binding_Core_Class_SimpleEvent *event, int cameraIndex)
+LuaEvent BindingCore_Events_Engine::createCameraUpdateEvent(LuaEngine *engine,
+                                                            Binding_Core_Class_SimpleEvent *eventContext,
+                                                            int cameraIndex)
 {
     LuaEvent event = LuaEvent(engine);
     event.setEventName("cameraUpdate");
-    event.addParameter(event);
+    event.addParameter(eventContext);
     event.addParameter(cameraIndex);
     return event;
 }
 
 LuaEvent BindingCore_Events_Engine::createCameraUpdateDirectEvent(LuaEngine *engine,
-                                                                  Binding_Core_Class_SimpleEvent *event,
+                                                                  Binding_Core_Class_SimpleEvent *eventContext,
                                                                   PGE_LevelCamera *camera)
 {
     LuaEvent event = LuaEvent(engine);
     event.setEventName("cameraUpdateDirect");
-    event.addParameter(event);
+    event.addParameter(eventContext);
     event.addParameter(camera);
     return event;
 }
@@ -267,12 +269,12 @@ LuaEvent BindingCore_Events_Engine::createKeyboardPressEvent(LuaEngine *engine, 
 }
 
 LuaEvent BindingCore_Events_Engine::createKeyboardPressDirectEvent(LuaEngine *engine,
-                                                                   Binding_Core_Class_SimpleEvent *event,
+                                                                   Binding_Core_Class_SimpleEvent *eventContext,
                                                                    int vkCode)
 {
     LuaEvent event = LuaEvent(engine);
     event.setEventName("keyboardPressDirect");
-    event.addParameter(event);
+    event.addParameter(eventContext);
     event.addParameter(vkCode);
     return event;
 }

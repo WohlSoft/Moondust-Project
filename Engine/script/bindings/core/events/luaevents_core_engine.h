@@ -23,6 +23,7 @@
 #include "../../../lua_event.h"
 #include <scenes/level/lvl_camera.h>
 #include "../../level/classes/luaclass_level_playerstate.h"
+#include "../../level/classes/luaclass_level_lvl_player.h"
 #include "../classes/luaclass_core_simpleevent.h"
 
 class BindingCore_Events_Engine
