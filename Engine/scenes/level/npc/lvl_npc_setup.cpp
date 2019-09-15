@@ -55,7 +55,7 @@ void LVL_Npc::init()
     m_scene->m_layers.registerItem(data.layer, this);
     m_momentum_relative.saveOld();
     m_momentum.saveOld();
-    setStaticBody(is_static);
+    setBodyType(is_static, m_bodySticky);
 }
 
 void LVL_Npc::setScenePointer(LevelScene *_pointer)
@@ -124,7 +124,7 @@ void LVL_Npc::setBodyType(bool isStatic, bool isSticky)
         m_bodytype = Body_DYNAMIC;
 
     m_bodySticky = isSticky;
-    if((bool)m_parent != isSticky)
+    if((m_parent != nullptr) != isSticky)
         m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, isSticky, true);
 
     is_static = isStatic;
@@ -190,9 +190,10 @@ void LVL_Npc::setDefaults()
     is_shared_animation = setup->setup.shared_ani;
     keep_position_on_despawn = setup->setup.keep_position;
     is_static            = setup->setup.scenery;
-    is_layer_unstickable = !setup->setup.scenery && !m_isGenerator;
+    m_bodySticky = setup->setup.sticked_on_layer;
+    is_layer_unstickable = !setup->setup.sticked_on_layer && !m_isGenerator;
     if(m_isInited)
-        setStaticBody(setup->setup.scenery);
+        setBodyType(setup->setup.scenery, m_bodySticky);
 }
 
 void LVL_Npc::transformTo_x(unsigned long id)

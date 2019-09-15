@@ -199,8 +199,10 @@ struct NpcSetup
     double          speed = 0.0;
     //! Let NPC simply moving right/left
     bool            movement = false;
-    //! Make NPC be statical body as blocks
+    //! Make NPC be statical body as blocks, also enables "sticked_on_layer" option by default
     bool            scenery = false;
+    //! NPC will use internal coordinates of parent layer, will follow motion of the parent layer
+    bool            sticked_on_layer = false;
     //! NPC can't be destroyed
     bool            immortal = false;
     //! NPC will keep it's position after deactivation and will not be returned back on re-activation

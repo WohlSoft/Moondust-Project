@@ -287,9 +287,11 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("score",                score,                  pMerge(score, 0u));
     setup->read("speed",                speed,                  pMerge(speed, 2.0));
     setup->read("coins",                coins,                  pMerge(coins, 0));
-    setup->read("moving",               movement,               pMerge(movement, 1));
-    setup->read("activity",             activity,               pMerge(activity, 1));
-    setup->read("scenery",              scenery,                pMerge(scenery, 0));
+    setup->read("moving",               movement,               pMerge(movement, true));
+    setup->read("activity",             activity,               pMerge(activity, true));
+    setup->read("static-body",          scenery,                pMerge(scenery, false));
+    pAlias("scenery",                   scenery);//Alias. DEPRECATED!
+    setup->read("sticked-on-layer",     sticked_on_layer,       pMerge(sticked_on_layer, scenery));
     setup->read("keep-position",        keep_position,          pMerge(keep_position, 0));
     setup->read("shared-animation",     shared_ani,             pMerge(shared_ani, 0));
     setup->read("immortal",             immortal,               pMerge(immortal, 0));
