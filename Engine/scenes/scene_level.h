@@ -103,6 +103,8 @@ class LevelScene : public Scene
 
         //Init 2
         bool        setEntrance(unsigned long entr);
+        bool        changePlayerStartPosition(int playerId, double x, double y);
+        bool        changePlayerStartWarp(int playerId, long warpId);
     private:
         bool        m_isWarpEntrance;
         PGE_PointF  m_cameraStart;

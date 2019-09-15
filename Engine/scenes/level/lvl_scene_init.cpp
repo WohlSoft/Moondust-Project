@@ -129,6 +129,16 @@ bool LevelScene::setEntrance(unsigned long entr)
     return false;
 }
 
+bool LevelScene::changePlayerStartPosition(int playerId, double x, double y)
+{
+
+}
+
+bool LevelScene::changePlayerStartWarp(int playerId, long warpId)
+{
+
+}
+
 PlayerPoint LevelScene::getStartLocation(int playerID)
 {
     //If no placed player star points
