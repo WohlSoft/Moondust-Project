@@ -57,7 +57,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-440</y>
+         <y>-386</y>
          <width>286</width>
          <height>1731</height>
         </rect>
@@ -563,6 +563,9 @@
                 </property>
                 <property name="maximum">
                  <double>500.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.0000001</double>
                 </property>
                </widget>
               </item>

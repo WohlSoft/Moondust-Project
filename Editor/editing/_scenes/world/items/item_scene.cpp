@@ -26,6 +26,12 @@
 #include "item_scene.h"
 #include "../wld_history_manager.h"
 
+static inline double sceneryZ(const WorldScenery &b)
+{
+    return (static_cast<double>(b.meta.array_id) * 0.000000000001);
+}
+
+
 ItemScene::ItemScene(QGraphicsItem *parent)
     : WldBaseItem(parent)
 {
@@ -340,7 +346,7 @@ void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *a
     m_data = inD;
     setData(ITEM_ID, QString::number(m_data.id) );
     setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
-
+    setZValue(m_scene->Z_Scenery + sceneryZ(m_data));
     setPos(m_data.x, m_data.y);
     if(mergedSet)
     {

@@ -262,6 +262,8 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     FileKeeper fileKeeper = FileKeeper(fileName);
 
+    FileFormats::WorldPrepare(WldData); // Sort all data arrays
+
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
     if(fileName.endsWith(".wld", Qt::CaseInsensitive))
     {
