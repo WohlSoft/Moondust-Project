@@ -964,12 +964,12 @@ int LevelScene::exec()
     debug_TimeReal.restart();
     /*****************************************************/
 
-    #ifndef __EMSCRIPTEN__
+#ifndef __EMSCRIPTEN__
     while(m_isRunning)
         levelSceneLoopStep(this);
-    #else
+#else
     emscripten_set_main_loop_arg(levelSceneLoopStep, this, (int)PGE_Window::frameRate, 1);
-    #endif
+#endif
 
     return m_exitLevelCode;
 }
@@ -1028,11 +1028,11 @@ void LevelScene::setGameState(EpisodeState *_gameState)
 
     if(m_gameState)
     {
-        m_numberOfPlayers = m_gameState->numOfPlayers;
+        m_numberOfPlayers = m_gameState->m_numOfPlayers;
 
-        if((m_gameState->isEpisode) && (!m_gameState->isHubLevel))
+        if((m_gameState->m_isEpisode) && (!m_gameState->m_isHubLevel))
             initPauseMenu2();
-        else if(m_gameState->isTestingModeL)
+        else if(m_gameState->m_isTestingModeL)
             initPauseMenu3();
         else
             initPauseMenu1();

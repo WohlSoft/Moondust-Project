@@ -299,26 +299,27 @@ EpisodeState::EpisodeState()
 
 void EpisodeState::reset()
 {
-    episodeIsStarted    = false;
-    isEpisode           = false;
-    isHubLevel          = false;
-    isTestingModeL      = false;
-    isTestingModeW      = false;
-    numOfPlayers        = 1;
-    LevelFile_hub.clear();
-    replay_on_fail      = false;
-    game_state          = FileFormats::CreateGameSaveData();
-    gameType            = Testing;
-    LevelTargetWarp     = 0;
-    _recent_ExitCode_level = 0;
-    _recent_ExitCode_world = 0;
-    saveFileName = "";
-    _episodePath = "";
+    m_episodeIsStarted    = false;
+    m_isEpisode           = false;
+    m_isHubLevel          = false;
+    m_isTestingModeL      = false;
+    m_isTestingModeW      = false;
+    m_numOfPlayers        = 1;
+    m_currentHubLevelFile.clear();
+    m_autoRestartFailedLevel      = false;
+    m_gameSave          = FileFormats::CreateGameSaveData();
+    m_userData.clear();
+    m_gameType            = Testing;
+    m_nextLevelEnterWarp     = 0;
+    m_lastLevelExitCode = 0;
+    m_lastWorldExitCode = 0;
+    m_saveFileName = "";
+    m_episodePath = "";
 }
 
 bool EpisodeState::load()
 {
-    std::string file = _episodePath + saveFileName;
+    std::string file = m_episodePath + m_saveFileName;
 
     if(!Files::fileExists(file))
         return false;
@@ -329,9 +330,9 @@ bool EpisodeState::load()
     {
         if(FileData.meta.ReadFileValid)
         {
-            game_state = FileData;
-            userData.importData(game_state.userData);
-            episodeIsStarted = true;
+            m_gameSave = FileData;
+            m_userData.importData(m_gameSave.userData);
+            m_episodeIsStarted = true;
             return true;
         }
         else
@@ -345,11 +346,11 @@ bool EpisodeState::load()
 
 bool EpisodeState::save()
 {
-    if(!isEpisode)
+    if(!m_isEpisode)
         return false;
-    userData.exportData(game_state.userData);
-    std::string file = _episodePath + saveFileName;
-    return FileFormats::WriteExtendedSaveFileF(file, game_state);
+    m_userData.exportData(m_gameSave.userData);
+    std::string file = m_episodePath + m_saveFileName;
+    return FileFormats::WriteExtendedSaveFileF(file, m_gameSave);
 }
 
 PlayerState EpisodeState::getPlayerState(int playerID)
@@ -361,10 +362,10 @@ PlayerState EpisodeState::getPlayerState(int playerID)
     ch._chsetup.id = 1;
     ch._chsetup.state = 1;
 
-    if(!game_state.currentCharacter.empty()
+    if(!m_gameSave.currentCharacter.empty()
        && (playerID > 0)
-       && (playerID <= static_cast<int>(game_state.currentCharacter.size())))
-        ch.characterID = static_cast<uint32_t>(game_state.currentCharacter[playerID - 1]);
+       && (playerID <= static_cast<int>(m_gameSave.currentCharacter.size())))
+        ch.characterID = static_cast<uint32_t>(m_gameSave.currentCharacter[playerID - 1]);
 
     saveCharState st = getPlayableCharacterSetup(playerID, ch.characterID);
     ch.stateID  = static_cast<uint32_t>(st.state);
@@ -386,13 +387,13 @@ void EpisodeState::setPlayerState(int playerID, PlayerState &state)
     state._chsetup.state = state.stateID;
 
     //If playerID bigger than stored states - append, or replace exists
-    if(playerID > static_cast<int>(game_state.currentCharacter.size()))
+    if(playerID > static_cast<int>(m_gameSave.currentCharacter.size()))
     {
-        while(playerID > static_cast<int>(game_state.currentCharacter.size()))
-            game_state.currentCharacter.push_back(state.characterID);
+        while(playerID > static_cast<int>(m_gameSave.currentCharacter.size()))
+            m_gameSave.currentCharacter.push_back(state.characterID);
     }
     else
-        game_state.currentCharacter[static_cast<size_t>(playerID - 1)] = state.characterID;
+        m_gameSave.currentCharacter[static_cast<size_t>(playerID - 1)] = state.characterID;
 
     setPlayableCharacterSetup(playerID, state.characterID, state._chsetup);
 }
@@ -404,7 +405,7 @@ saveCharState EpisodeState::getPlayableCharacterSetup(int playerID, uint32_t cha
     if(characterId < 1)
         return {};
 
-    for(auto &characterState : game_state.characterStates)
+    for(auto &characterState : m_gameSave.characterStates)
     {
         if(characterState.id == characterId)
             return characterState;
@@ -420,35 +421,35 @@ void EpisodeState::setPlayableCharacterSetup(int playerID, uint32_t characterId,
         return;
 
     //If characterID bigger than stored entries - append, or replace exists
-    if(characterId > static_cast<unsigned long>(game_state.characterStates.size()))
+    if(characterId > static_cast<unsigned long>(m_gameSave.characterStates.size()))
     {
-        while(characterId > static_cast<unsigned long>(game_state.characterStates.size()))
+        while(characterId > static_cast<unsigned long>(m_gameSave.characterStates.size()))
         {
             saveCharState st = FileFormats::CreateSavCharacterState();
-            st.id = (static_cast<unsigned long>(game_state.characterStates.size()) + 1);
+            st.id = (static_cast<unsigned long>(m_gameSave.characterStates.size()) + 1);
             if(st.id == characterId)
                 st = state;
             else
                 st.state = 1;
-            game_state.characterStates.push_back(st);
+            m_gameSave.characterStates.push_back(st);
         }
     }
     else
-        game_state.characterStates[static_cast<size_t>(characterId) - 1] = state;
+        m_gameSave.characterStates[static_cast<size_t>(characterId) - 1] = state;
 }
 
 std::string EpisodeState::getRelativeLevelFile()
 {
-    if(isEpisode) // get relative path to level file
-        return LevelFile.substr(_episodePath.size(), std::string::npos);
+    if(m_isEpisode) // get relative path to level file
+        return m_nextLevelFile.substr(m_episodePath.size(), std::string::npos);
     else
-        return LevelFile;
+        return m_nextLevelFile;
 }
 
 std::string EpisodeState::getRelativeWorldFile()
 {
-    if(isEpisode) // get relative path to level file
-        return WorldFile.substr(_episodePath.size(), std::string::npos);
+    if(m_isEpisode) // get relative path to level file
+        return m_nextWorldFile.substr(m_episodePath.size(), std::string::npos);
     else
-        return WorldFile;
+        return m_nextWorldFile;
 }

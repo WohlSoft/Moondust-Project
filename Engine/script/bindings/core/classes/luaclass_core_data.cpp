@@ -82,22 +82,22 @@ void Binding_Core_Data::init(lua_State *L)
         switch(m_dataType)
         {
         case DATA_LEVEL:
-            m_data = m_episodeState->userData.getSection(GameUserDataManager::DATA_LEVEL, m_sectionName, m_levelFileName);
+            m_data = m_episodeState->m_userData.getSection(GameUserDataManager::DATA_LEVEL, m_sectionName, m_levelFileName);
             break;
         case DATA_WORLD:
-            m_data = m_episodeState->userData.getSection(GameUserDataManager::DATA_WORLD, m_sectionName);
+            m_data = m_episodeState->m_userData.getSection(GameUserDataManager::DATA_WORLD, m_sectionName);
             break;
         case DATA_GLOBAL:
-            m_data = m_episodeState->userData.getSection(GameUserDataManager::DATA_GLOBAL, m_sectionName);
+            m_data = m_episodeState->m_userData.getSection(GameUserDataManager::DATA_GLOBAL, m_sectionName);
             break;
         case DATA_VOLATILE_LEVEL:
-            m_data = m_episodeState->userData.getVolatileSection(GameUserDataManager::DATA_LEVEL, m_sectionName, m_levelFileName);
+            m_data = m_episodeState->m_userData.getVolatileSection(GameUserDataManager::DATA_LEVEL, m_sectionName, m_levelFileName);
             break;
         case DATA_VOLATILE_WORLD:
-            m_data = m_episodeState->userData.getVolatileSection(GameUserDataManager::DATA_WORLD, m_sectionName);
+            m_data = m_episodeState->m_userData.getVolatileSection(GameUserDataManager::DATA_WORLD, m_sectionName);
             break;
         case DATA_VOLATILE_GLOBAL:
-            m_data = m_episodeState->userData.getVolatileSection(GameUserDataManager::DATA_GLOBAL, m_sectionName);
+            m_data = m_episodeState->m_userData.getVolatileSection(GameUserDataManager::DATA_GLOBAL, m_sectionName);
             break;
         }
     }
@@ -134,22 +134,22 @@ void Binding_Core_Data::save()
     switch(m_dataType)
     {
     case DATA_LEVEL:
-        m_episodeState->userData.setSection(GameUserDataManager::DATA_LEVEL, m_data, m_sectionName, m_levelFileName);
+        m_episodeState->m_userData.setSection(GameUserDataManager::DATA_LEVEL, m_data, m_sectionName, m_levelFileName);
         break;
     case DATA_WORLD:
-        m_episodeState->userData.setSection(GameUserDataManager::DATA_WORLD, m_data, m_sectionName);
+        m_episodeState->m_userData.setSection(GameUserDataManager::DATA_WORLD, m_data, m_sectionName);
         break;
     case DATA_GLOBAL:
-        m_episodeState->userData.setSection(GameUserDataManager::DATA_GLOBAL, m_data, m_sectionName);
+        m_episodeState->m_userData.setSection(GameUserDataManager::DATA_GLOBAL, m_data, m_sectionName);
         break;
     case DATA_VOLATILE_LEVEL:
-        m_episodeState->userData.setVolatileSection(GameUserDataManager::DATA_LEVEL, m_data, m_sectionName, m_levelFileName);
+        m_episodeState->m_userData.setVolatileSection(GameUserDataManager::DATA_LEVEL, m_data, m_sectionName, m_levelFileName);
         break;
     case DATA_VOLATILE_WORLD:
-        m_episodeState->userData.setVolatileSection(GameUserDataManager::DATA_WORLD, m_data, m_sectionName);
+        m_episodeState->m_userData.setVolatileSection(GameUserDataManager::DATA_WORLD, m_data, m_sectionName);
         break;
     case DATA_VOLATILE_GLOBAL:
-        m_episodeState->userData.setVolatileSection(GameUserDataManager::DATA_GLOBAL, m_data, m_sectionName);
+        m_episodeState->m_userData.setVolatileSection(GameUserDataManager::DATA_GLOBAL, m_data, m_sectionName);
         break;
     }
 }

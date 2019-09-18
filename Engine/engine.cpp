@@ -73,7 +73,7 @@ PGEEngineCmdArgs::PGEEngineCmdArgs() :
 
 void PGEEngineCmdArgs::applyTestSettings(EpisodeState &state)
 {
-    state.numOfPlayers = test_NumPlayers;
+    state.m_numOfPlayers = test_NumPlayers;
 
     for(int i = 0; i < 4; i++)
     {

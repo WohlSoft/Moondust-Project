@@ -157,27 +157,27 @@ void WorldScene::setGameState(EpisodeState *_state)
         return;
 
     m_gameState = _state;
-    m_numOfPlayers = _state->numOfPlayers;
-    m_counters.points = m_gameState->game_state.points;
-    m_counters.coins  = m_gameState->game_state.coins;
-    m_counters.stars  = uint32_t(m_gameState->game_state.gottenStars.size());
-    m_counters.lives  = m_gameState->game_state.lives;
+    m_numOfPlayers = _state->m_numOfPlayers;
+    m_counters.points = m_gameState->m_gameSave.points;
+    m_counters.coins  = m_gameState->m_gameSave.coins;
+    m_counters.stars  = uint32_t(m_gameState->m_gameSave.gottenStars.size());
+    m_counters.lives  = m_gameState->m_gameSave.lives;
     PlayerState x = m_gameState->getPlayerState(1);
     m_counters.health = x._chsetup.health;
-    m_gameState->replay_on_fail = m_data.restartlevel;
+    m_gameState->m_autoRestartFailedLevel = m_data.restartlevel;
 
-    if(m_gameState->episodeIsStarted && !m_data.HubStyledWorld)
+    if(m_gameState->m_episodeIsStarted && !m_data.HubStyledWorld)
     {
-        m_mapWalker.posX = m_gameState->game_state.worldPosX;
-        m_mapWalker.posY = m_gameState->game_state.worldPosY;
+        m_mapWalker.posX = m_gameState->m_gameSave.worldPosX;
+        m_mapWalker.posY = m_gameState->m_gameSave.worldPosY;
         m_viewportCameraMover.setPos(static_cast<double>(m_mapWalker.posX), static_cast<double>(m_mapWalker.posY));
         updateAvailablePaths();
         updateCenter();
     }
     else
     {
-        m_gameState->episodeIsStarted = true;
-        m_gameState->WorldPath = m_data.meta.path;
+        m_gameState->m_episodeIsStarted = true;
+        m_gameState->m_currentWorldPath = m_data.meta.path;
 
         //Detect gamestart and set position on them
         for(auto &level : m_data.levels)
@@ -186,8 +186,8 @@ void WorldScene::setGameState(EpisodeState *_state)
             {
                 m_mapWalker.posX = level.x;
                 m_mapWalker.posY = level.y;
-                m_gameState->game_state.worldPosX = static_cast<long>(m_mapWalker.posX);
-                m_gameState->game_state.worldPosY = static_cast<long>(m_mapWalker.posY);
+                m_gameState->m_gameSave.worldPosX = static_cast<long>(m_mapWalker.posX);
+                m_gameState->m_gameSave.worldPosY = static_cast<long>(m_mapWalker.posY);
                 break;
             }
         }
@@ -200,7 +200,7 @@ void WorldScene::setGameState(EpisodeState *_state)
                (!Files::hasSuffix(m_data.IntroLevel_file, ".lvl")))
                 m_data.IntroLevel_file.append(".lvl");
 
-            std::string introLevelFile = m_gameState->WorldPath + "/" + m_data.IntroLevel_file;
+            std::string introLevelFile = m_gameState->m_currentWorldPath + "/" + m_data.IntroLevel_file;
             pLogDebug("Opening intro level: %s", introLevelFile.c_str());
 
             if(Files::fileExists(introLevelFile))
@@ -210,18 +210,18 @@ void WorldScene::setGameState(EpisodeState *_state)
                 if(FileFormats::OpenLevelFile(introLevelFile, checking))
                 {
                     pLogDebug("File valid, do exit!");
-                    m_gameState->LevelFile = introLevelFile;
-                    m_gameState->LevelPath = checking.meta.path;
+                    m_gameState->m_nextLevelFile = introLevelFile;
+                    m_gameState->m_currentLevelPath = checking.meta.path;
 
                     if(m_data.HubStyledWorld)
                     {
-                        m_gameState->LevelFile_hub = checking.meta.path;
-                        m_gameState->LevelTargetWarp = m_gameState->game_state.last_hub_warp;
+                        m_gameState->m_currentHubLevelFile = checking.meta.path;
+                        m_gameState->m_nextLevelEnterWarp = m_gameState->m_gameSave.last_hub_warp;
                     }
                     else
-                        m_gameState->LevelTargetWarp = 0;
+                        m_gameState->m_nextLevelEnterWarp = 0;
 
-                    m_gameState->isHubLevel = m_data.HubStyledWorld;
+                    m_gameState->m_isHubLevel = m_data.HubStyledWorld;
                     //Jump to the intro/hub level
                     m_doExit = true;
                     m_exitWorldCode = WldExit::EXIT_beginLevel;
@@ -341,7 +341,7 @@ bool WorldScene::init()
     updateCenter();
 
     if(m_gameState)
-        playMusic(m_gameState->game_state.musicID, m_gameState->game_state.musicFile, true, 200);
+        playMusic(m_gameState->m_gameSave.musicID, m_gameState->m_gameSave.musicFile, true, 200);
 
     m_isInit = true;
     return true;
@@ -677,16 +677,16 @@ void WorldScene::processPauseMenu()
 
                 case PAUSE_SaveCont:
                     //Save game state!
-                    m_gameState->game_state.worldPosX = Maths::lRound(m_mapWalker.posX);
-                    m_gameState->game_state.worldPosY = Maths::lRound(m_mapWalker.posY);
+                    m_gameState->m_gameSave.worldPosX = Maths::lRound(m_mapWalker.posX);
+                    m_gameState->m_gameSave.worldPosY = Maths::lRound(m_mapWalker.posY);
                     saveElementsVisibility();
                     m_gameState->save();
                     break;
 
                 case PAUSE_SaveQuit:
                     //Save game state! and exit from episode
-                    m_gameState->game_state.worldPosX = Maths::lRound(m_mapWalker.posX);
-                    m_gameState->game_state.worldPosY = Maths::lRound(m_mapWalker.posY);
+                    m_gameState->m_gameSave.worldPosX = Maths::lRound(m_mapWalker.posX);
+                    m_gameState->m_gameSave.worldPosY = Maths::lRound(m_mapWalker.posY);
                     saveElementsVisibility();
                     m_gameState->save();
                     setExiting(0, WldExit::EXIT_exitWithSave);
@@ -883,7 +883,7 @@ void WorldScene::update()
             {
                 m_playDenySnd = false;
                 m_playStopSnd = false;
-                m_gameState->LevelFile.clear();
+                m_gameState->m_nextLevelFile.clear();
                 m_jumpTo = false;
                 m_mapWalker.refreshDirection();
             }
@@ -973,11 +973,11 @@ void WorldScene::update()
     {
         if((!m_doExit) && (!m_lockControls) && (!m_pauseMenu.isShown) && (m_gameState))
         {
-            if(!m_gameState->LevelFile.empty())
+            if(!m_gameState->m_nextLevelFile.empty())
             {
-                pLogDebug("Entering level %s...", m_gameState->LevelFile.c_str());
-                m_gameState->game_state.worldPosX = Maths::lRound(m_mapWalker.posX);
-                m_gameState->game_state.worldPosY = Maths::lRound(m_mapWalker.posY);
+                pLogDebug("Entering level %s...", m_gameState->m_nextLevelFile.c_str());
+                m_gameState->m_gameSave.worldPosX = Maths::lRound(m_mapWalker.posX);
+                m_gameState->m_gameSave.worldPosY = Maths::lRound(m_mapWalker.posY);
                 saveElementsVisibility();
                 PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
                 stopMusic(true, 300);
@@ -988,7 +988,7 @@ void WorldScene::update()
             {
                 pLogDebug("Trying to jump to X=%f, Y=%f...", m_jumpToXY.x(), m_jumpToXY.y());
                 //Don't inheret exit code when going through warps!
-                m_gameState->_recent_ExitCode_level = LvlExit::EXIT_Warp;
+                m_gameState->m_lastLevelExitCode = LvlExit::EXIT_Warp;
                 //Create events
                 EventQueueEntry<WorldScene >event1;
                 event1.makeWaiterCond([this]()->bool
@@ -1103,8 +1103,8 @@ void WorldScene::updateCenter()
 {
     if(m_gameState)
     {
-        m_gameState->LevelFile.clear();
-        m_gameState->LevelTargetWarp = 0;
+        m_gameState->m_nextLevelFile.clear();
+        m_gameState->m_nextLevelEnterWarp = 0;
     }
 
     m_levelTitle.clear();
@@ -1131,8 +1131,8 @@ void WorldScene::updateCenter()
                     playMusic(y->data.id, y->data.music_file);
                 else if(m_gameState)
                 {
-                    m_gameState->game_state.musicID   = static_cast<unsigned int>(y->data.id);
-                    m_gameState->game_state.musicFile = y->data.music_file;
+                    m_gameState->m_gameSave.musicID   = static_cast<unsigned int>(y->data.id);
+                    m_gameState->m_gameSave.musicFile = y->data.music_file;
                 }
             }
         }
@@ -1165,8 +1165,8 @@ void WorldScene::updateCenter()
 
                         if(m_gameState)
                         {
-                            m_gameState->LevelFile = lvlPath;
-                            m_gameState->LevelTargetWarp = y->data.entertowarp;
+                            m_gameState->m_nextLevelFile = lvlPath;
+                            m_gameState->m_nextLevelEnterWarp = y->data.entertowarp;
                         }
                     }
                     else
@@ -1201,43 +1201,43 @@ void WorldScene::initElementsVisibility()
     {
         for(size_t i = 0; i < m_itemsSceneries.size(); i++)
         {
-            if(i < m_gameState->game_state.visibleScenery.size())
-                m_itemsSceneries[i].vizible = m_gameState->game_state.visibleScenery[i].second;
+            if(i < m_gameState->m_gameSave.visibleScenery.size())
+                m_itemsSceneries[i].vizible = m_gameState->m_gameSave.visibleScenery[i].second;
             else
             {
                 m_itemsSceneries[i].vizible = true;
                 visibleItem viz;
                 viz.first = static_cast<unsigned int>(m_itemsSceneries[i].data.meta.array_id);
                 viz.second = true;
-                m_gameState->game_state.visibleScenery.push_back(viz);
+                m_gameState->m_gameSave.visibleScenery.push_back(viz);
             }
         }
 
         for(size_t i = 0; i < m_itemsPaths.size(); i++)
         {
-            if(i < m_gameState->game_state.visiblePaths.size())
-                m_itemsPaths[i].vizible = m_gameState->game_state.visiblePaths[i].second;
+            if(i < m_gameState->m_gameSave.visiblePaths.size())
+                m_itemsPaths[i].vizible = m_gameState->m_gameSave.visiblePaths[i].second;
             else
             {
                 m_itemsPaths[i].vizible = false;
                 visibleItem viz;
                 viz.first = static_cast<unsigned int>(m_itemsPaths[i].data.meta.array_id);
                 viz.second = false;
-                m_gameState->game_state.visiblePaths.push_back(viz);
+                m_gameState->m_gameSave.visiblePaths.push_back(viz);
             }
         }
 
         for(size_t i = 0; i < m_itemsLevels.size(); i++)
         {
-            if(i < m_gameState->game_state.visibleLevels.size())
-                m_itemsLevels[i].vizible = m_gameState->game_state.visibleLevels[i].second;
+            if(i < m_gameState->m_gameSave.visibleLevels.size())
+                m_itemsLevels[i].vizible = m_gameState->m_gameSave.visibleLevels[i].second;
             else
             {
                 m_itemsLevels[i].vizible = (m_itemsLevels[i].data.alwaysVisible || m_itemsLevels[i].data.gamestart);
                 visibleItem viz;
                 viz.first = static_cast<unsigned int>(m_itemsLevels[i].data.meta.array_id);
                 viz.second = m_itemsLevels[i].vizible;
-                m_gameState->game_state.visibleLevels.push_back(viz);
+                m_gameState->m_gameSave.visibleLevels.push_back(viz);
             }
         }
     }
@@ -1249,49 +1249,49 @@ void WorldScene::saveElementsVisibility()
     {
         for(size_t i = 0; i < m_itemsSceneries.size(); i++)
         {
-            if(i < m_gameState->game_state.visibleScenery.size())
+            if(i < m_gameState->m_gameSave.visibleScenery.size())
             {
-                m_gameState->game_state.visibleScenery[i].first = m_itemsSceneries[i].data.meta.array_id;
-                m_gameState->game_state.visibleScenery[i].second = m_itemsSceneries[i].vizible;
+                m_gameState->m_gameSave.visibleScenery[i].first = m_itemsSceneries[i].data.meta.array_id;
+                m_gameState->m_gameSave.visibleScenery[i].second = m_itemsSceneries[i].vizible;
             }
             else
             {
                 visibleItem viz;
                 viz.first = static_cast<unsigned int>(m_itemsSceneries[i].data.meta.array_id);
                 viz.second = m_itemsSceneries[i].vizible;
-                m_gameState->game_state.visibleScenery.push_back(viz);
+                m_gameState->m_gameSave.visibleScenery.push_back(viz);
             }
         }
 
         for(size_t i = 0; i < m_itemsPaths.size(); i++)
         {
-            if(i < m_gameState->game_state.visiblePaths.size())
+            if(i < m_gameState->m_gameSave.visiblePaths.size())
             {
-                m_gameState->game_state.visiblePaths[i].first = m_itemsPaths[i].data.meta.array_id;
-                m_gameState->game_state.visiblePaths[i].second = m_itemsPaths[i].vizible;
+                m_gameState->m_gameSave.visiblePaths[i].first = m_itemsPaths[i].data.meta.array_id;
+                m_gameState->m_gameSave.visiblePaths[i].second = m_itemsPaths[i].vizible;
             }
             else
             {
                 visibleItem viz;
                 viz.first = static_cast<unsigned int>(m_itemsPaths[i].data.meta.array_id);
                 viz.second = m_itemsPaths[i].vizible;
-                m_gameState->game_state.visiblePaths.push_back(viz);
+                m_gameState->m_gameSave.visiblePaths.push_back(viz);
             }
         }
 
         for(size_t i = 0; i < m_itemsLevels.size(); i++)
         {
-            if(i < m_gameState->game_state.visibleLevels.size())
+            if(i < m_gameState->m_gameSave.visibleLevels.size())
             {
-                m_gameState->game_state.visibleLevels[i].first = m_itemsLevels[i].data.meta.array_id;
-                m_gameState->game_state.visibleLevels[i].second = m_itemsLevels[i].vizible;
+                m_gameState->m_gameSave.visibleLevels[i].first = m_itemsLevels[i].data.meta.array_id;
+                m_gameState->m_gameSave.visibleLevels[i].second = m_itemsLevels[i].vizible;
             }
             else
             {
                 visibleItem viz;
                 viz.first = static_cast<unsigned int>(m_itemsLevels[i].data.meta.array_id);
                 viz.second = m_itemsLevels[i].vizible;
-                m_gameState->game_state.visibleLevels.push_back(viz);
+                m_gameState->m_gameSave.visibleLevels.push_back(viz);
             }
         }
     }
@@ -1699,8 +1699,8 @@ void WorldScene::jump()
 
     if(m_gameState)
     {
-        m_gameState->game_state.worldPosX = Maths::lRound(m_mapWalker.posX);
-        m_gameState->game_state.worldPosY = Maths::lRound(m_mapWalker.posY);
+        m_gameState->m_gameSave.worldPosX = Maths::lRound(m_mapWalker.posX);
+        m_gameState->m_gameSave.worldPosY = Maths::lRound(m_mapWalker.posY);
     }
 
     updateAvailablePaths();
@@ -1733,8 +1733,8 @@ void WorldScene::playMusic(unsigned long musicID, std::string customMusicFile, b
 
     if(m_gameState)
     {
-        m_gameState->game_state.musicID = static_cast<unsigned int>(musicID);
-        m_gameState->game_state.musicFile = customMusicFile;
+        m_gameState->m_gameSave.musicID = static_cast<unsigned int>(musicID);
+        m_gameState->m_gameSave.musicFile = customMusicFile;
     }
 }
 

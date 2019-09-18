@@ -98,7 +98,7 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
         size_t target_id = static_cast<size_t>(nearest->setup->setup.plSwitch_Button_id - 1);
-        std::vector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
+        std::vector<saveCharState> &states = player->m_scene->getGameState()->m_gameSave.characterStates;
         if(target_id >= states.size())
         {
             PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);

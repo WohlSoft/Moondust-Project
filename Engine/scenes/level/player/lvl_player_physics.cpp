@@ -32,11 +32,12 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
 {
     if(!nearest || !player)
         return;
+
     //Do transformation if needed
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
         unsigned long target_id = (nearest->setup->setup.plSwitch_Button_id - 1);
-        std::vector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
+        auto &states = player->m_scene->getGameState()->m_gameSave.characterStates;
         if(target_id >= static_cast<unsigned long>(states.size()))
         {
             PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
@@ -45,7 +46,7 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
             x._chsetup.state = 1;
             player->m_scene->getGameState()->setPlayerState(player->playerID, x);
         }
-        saveCharState &st = states[static_cast<size_t>(target_id)];
+        auto &st = states[static_cast<size_t>(target_id)];
         player->setCharacterSafe(nearest->setup->setup.plSwitch_Button_id, st.state);
     }
 }
