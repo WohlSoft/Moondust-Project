@@ -917,7 +917,7 @@ void levelSceneLoopStep(void *scene)
     }
 
     /****************************************************************************/
-    #ifndef __EMSCRIPTEN__
+#if 1//ndef __EMSCRIPTEN__
     if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
     {
         if(!s->m_debug_slowTimeMode)
@@ -928,7 +928,7 @@ void levelSceneLoopStep(void *scene)
     else if(s->m_debug_slowTimeMode) {
         SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
     }
-    #endif
+#endif
 }
 
 int LevelScene::exec()
@@ -964,7 +964,7 @@ int LevelScene::exec()
     debug_TimeReal.restart();
     /*****************************************************/
 
-#ifndef __EMSCRIPTEN__
+#if 1 //ndef __EMSCRIPTEN__
     while(m_isRunning)
         levelSceneLoopStep(this);
 #else

@@ -20,6 +20,8 @@ ExternalProject_Add(
         -DPNG_FOUND=TRUE
         -DPNG_LIBRARIES=png
         "-DPNG_INCLUDE_DIRS=${CMAKE_BINARY_DIR}/include"
+        "-DZLIB_INCLUDE_DIR=${CMAKE_BINARY_DIR}/include"
+        "-DZLIB_LIBRARY=${libZLib_A_Lib}"
         -DFT_WITH_HARFBUZZ=OFF
         -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE
         -DCMAKE_DISABLE_FIND_PACKAGE_BZip2=TRUE
