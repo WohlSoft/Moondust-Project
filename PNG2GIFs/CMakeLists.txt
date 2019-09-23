@@ -111,6 +111,8 @@ target_link_libraries(PNG2GIFs
     ${PNG2GIFs_LINK_LIBS}
 )
 
+pge_set_nopie(PNG2GIFs)
+
 install(TARGETS ${PNG2GIFs_INSTALLS}
         RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
 )

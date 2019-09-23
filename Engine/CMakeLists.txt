@@ -372,6 +372,8 @@ target_compile_definitions(pge_engine
     -DPGE_ENGINE
 )
 
+pge_set_nopie(pge_engine)
+
 # add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
 if(PGE_USE_LUAJIT)
     message("== Engine will be built with LuaJIT support")

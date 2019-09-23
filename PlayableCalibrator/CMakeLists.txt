@@ -127,6 +127,8 @@ target_compile_definitions(pge_calibrator
     ${Qt5Widgets_DEFINITIONS}
 )
 
+pge_set_nopie(pge_calibrator)
+
 if(WIN32)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS
         version

@@ -172,6 +172,8 @@ target_link_libraries(pge_maintainer
     ${PGE_MAINTAINER_LINK_LIBS}
 )
 
+pge_set_nopie(pge_maintainer)
+
 install(TARGETS ${PGE_MAINTAINER_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
     BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"

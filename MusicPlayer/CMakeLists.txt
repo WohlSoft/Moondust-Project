@@ -240,6 +240,8 @@ target_link_libraries(pge_musplay
     ${PGE_MUSPLAY_LINK_LIBS}
 )
 
+pge_set_nopie(pge_musplay)
+
 install(TARGETS ${PGE_MUSPLAY_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"
     BUNDLE DESTINATION "${PGE_INSTALL_DIRECTORY}"

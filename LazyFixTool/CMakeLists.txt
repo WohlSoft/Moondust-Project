@@ -111,6 +111,8 @@ target_link_libraries(LazyFixTool
     ${LazyFixTool_LINK_LIBS}
 )
 
+pge_set_nopie(LazyFixTool)
+
 install(TARGETS ${LazyFixTool_INSTALLS}
         RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"
 )
