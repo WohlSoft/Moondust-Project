@@ -33,8 +33,6 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
-# Find the SDL Mixer X library and it's dependencies
-include(../_common/find_sdl_mixer_x.cmake)
 
 # WORKAROUND: Avoid ImpLib file creation on a non-library project
 if(CYGWIN OR MINGW)
@@ -127,7 +125,6 @@ target_include_directories(pge_musplay
     ${Qt5Network_INCLUDE_DIRS}
     ${USE_SDL_MIXER_X_PREFIX}/include)
 
-
 set(PGE_MUSPLAY_LINK_LIBS)
 set(PGE_MUSPLAY_INSTALLS)
 
@@ -149,26 +146,16 @@ option(USE_OFFICIAL_SDL_MIXER "Compile player in compatibility with official SDL
 if(USE_OFFICIAL_SDL_MIXER)
     set(SDL_MIXER_X_LIB SDL2_mixer)
 else()
-    set(MIXER_LIBS)
-
     target_compile_definitions(pge_musplay
         PRIVATE
         -DUSE_SDL_MIXER_X
     )
 
     if(PGE_STATIC_SDLMIXER)
-        find_mixer_x(TARGET MIXER_LIBS
-                    STATIC
-                    SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-        )
+        list(APPEND PGE_MUSPLAY_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
     else()
-        find_mixer_x(TARGET MIXER_LIBS
-                    SHARED
-                    SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-        )
+        list(APPEND PGE_MUSPLAY_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
     endif()
-
-    list(APPEND PGE_MUSPLAY_LINK_LIBS ${MIXER_LIBS})
 endif()
 
 if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
@@ -182,7 +169,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
             list(APPEND PGE_MUSPLAY_LINK_LIBS "-static")
         endif()
     endif()
-    list(APPEND PGE_MUSPLAY_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND LazyFixTool_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 if(APPLE)

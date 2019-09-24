@@ -86,10 +86,8 @@ set(LazyFixTool_INSTALLS)
 
 list(APPEND LazyFixTool_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
+    PGE_FreeImage
 )
-
-list(APPEND LazyFixTool_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 list(APPEND LazyFixTool_INSTALLS
     LazyFixTool
@@ -104,7 +102,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
         set_target_properties(LazyFixTool PROPERTIES LINK_FLAGS "-mconsole")
         list(APPEND LazyFixTool_LINK_LIBS "-static")
     endif()
-    list(APPEND LazyFixTool_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND LazyFixTool_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 target_link_libraries(LazyFixTool

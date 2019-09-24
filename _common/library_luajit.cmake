@@ -1,4 +1,6 @@
 
+add_library(PGE_LuaJIT INTERFACE)
+
 set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT ON)
 if(EMSCRIPTEN OR MSVC)
     # Disable LuaJIT for unsupported platforms
@@ -9,6 +11,8 @@ option(PGE_USE_LUAJIT "Use LuaJIT lua engine" ${PGE_USE_LUAJIT_ENABLED_BY_DEFAUL
 
 set(luajitArchive ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz)
 file(SHA256 ${luajitArchive} luajitArchive_hash)
+
+set(libLuaJit_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}luajit${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
 if(PGE_USE_LUAJIT)
     ExternalProject_Add(
@@ -26,7 +30,12 @@ if(PGE_USE_LUAJIT)
         ${ANDROID_CMAKE_FLAGS}
         ${LUAJIT_USE_CMAKE_FLAG}
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
+    BUILD_BYPRODUCTS
+        "${libLuaJit_Lib}"
     )
+
+    target_link_libraries(PGE_LuaJIT INTERFACE ${libLuaJit_Lib})
+
 elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
     if(WIN32)
         set(MAKECMD "mingw32-make")
@@ -74,6 +83,8 @@ elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
             "CCWARN+=-Wno-unused-function"
             ${BUILD_FLAGS}
         INSTALL_COMMAND "${LUAJIT_INSTALL_COMMAND}"
+    BUILD_BYPRODUCTS
+        "${libLuaJit_Lib}"
     )
     if(WIN32)
         set(LUAJIT_BINARY_FILES "luajit.exe")
@@ -109,5 +120,8 @@ elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
             DEPENDEES BUILD CreateLuaJitInstallFolder
         )
     endif() #NOT WIN32
+
+    target_link_libraries(PGE_LuaJIT INTERFACE ${libLuaJit_Lib})
+
 endif()
 

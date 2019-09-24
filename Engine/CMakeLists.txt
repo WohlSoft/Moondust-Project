@@ -8,7 +8,6 @@ SET(BUILD_SHARED_LIBRARIES OFF)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
-    ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
     ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
@@ -42,8 +41,6 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
-# Find the SDL Mixer X library and it's dependencies
-include(../_common/find_sdl_mixer_x.cmake)
 
 # include shared code modules
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
@@ -420,6 +417,12 @@ add_dependencies(pge_engine
     FREETYPE_Local
 )
 
+if(NOT SDL2_USE_SYSTEM)
+    add_dependencies(pge_engine SDL2_Local)
+else()
+    target_include_directories(pge_engine PRIVATE ${SDL2_INCLUDE_DIRS})
+endif()
+
 set(PGE_ENGINE_LINK_LIBS)
 set(PGE_ENGINE_INSTALLS)
 
@@ -427,38 +430,20 @@ list(APPEND PGE_ENGINE_INSTALLS
     pge_engine
 )
 
-if(PGE_USE_LUAJIT)
-    set(LUAJIT_LIBRARY
-        luajit$<$<CONFIG:Debug>:d>
-    )
-endif()
-
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
-    luabind$<$<CONFIG:Debug>:d>
-    ${LUAJIT_LIBRARY}
-    freetype$<$<CONFIG:Debug>:d>
-    sqlite3$<$<CONFIG:Debug>:d>
+    PGE_FreeImage
+    PGE_LuaBind
+    PGE_LuaJIT
+    PGE_FreeType
+    PGE_SQLite
 )
 
-list(APPEND PGE_ENGINE_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
-
-set(MIXER_LIBS)
-
 if(PGE_STATIC_SDLMIXER)
-    find_mixer_x(TARGET MIXER_LIBS
-                STATIC
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
 else()
-    find_mixer_x(TARGET MIXER_LIBS
-                SHARED
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
-
-list(APPEND PGE_ENGINE_LINK_LIBS ${MIXER_LIBS})
 
 if(NOT APPLE)
     list(APPEND PGE_ENGINE_LINK_LIBS

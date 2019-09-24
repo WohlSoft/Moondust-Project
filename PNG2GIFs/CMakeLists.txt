@@ -86,10 +86,8 @@ set(PNG2GIFs_INSTALLS)
 
 list(APPEND PNG2GIFs_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
+    PGE_FreeImage
 )
-
-list(APPEND PNG2GIFs_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 list(APPEND PNG2GIFs_INSTALLS
     PNG2GIFs
@@ -104,7 +102,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
         set_target_properties(PNG2GIFs PROPERTIES LINK_FLAGS "-mconsole")
         list(APPEND PNG2GIFs_LINK_LIBS "-static")
     endif()
-    list(APPEND PNG2GIFs_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND LazyFixTool_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 target_link_libraries(PNG2GIFs

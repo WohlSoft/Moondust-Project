@@ -126,11 +126,12 @@ if(TARGET libpng_Local)
     add_dependencies(FREETYPE_Local libpng_Local) #libPNG is needed to FreeType
     add_dependencies(FreeImage_Local libpng_Local) #libPNG needed to FreeImage
 endif()
-add_dependencies(FREETYPE_Local AudioCodecs_Local) #Zlib is needed to FreeType
 
-# Build dependent libraries only. Workaround for Ninja
-add_custom_target(libs
-    DEPENDS
+if(NOT USE_SYSTEM_LIBFREETYPE)
+    add_dependencies(FREETYPE_Local AudioCodecs_Local) #Zlib is needed to FreeType
+endif()
+
+set(LIBS_TARGETS
     SDLMixerX_Local
     SDL2_Local
     LuaBind_Local
@@ -138,6 +139,9 @@ add_custom_target(libs
     SQLite_Local
     FREETYPE_Local
 )
+
+# Build dependent libraries only
+add_custom_target(libs DEPENDS ${LIBS_TARGETS})
 
 if(PGE_ENABLE_QT) # Build if Qt support enabled
     add_dependencies(libs QtPropertyBrowser_Local)

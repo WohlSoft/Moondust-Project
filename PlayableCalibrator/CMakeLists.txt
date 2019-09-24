@@ -116,10 +116,8 @@ list(APPEND PGE_CALIBRATOR_INSTALLS
 
 list(APPEND PGE_CALIBRATOR_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
+    PGE_FreeImage
 )
-
-list(APPEND PGE_CALIBRATOR_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(pge_calibrator
@@ -135,7 +133,10 @@ if(WIN32)
     )
 else()
     if(UNIX AND NOT APPLE)
-        list(APPEND PGE_CALIBRATOR_LINK_LIBS dl)
+        find_library(_lib_dl dl)
+        if(_lib_dl)
+            list(APPEND PGE_CALIBRATOR_LINK_LIBS ${_lib_dl})
+        endif()
     endif()
 endif()
 

@@ -50,8 +50,6 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
-# Find the SDL Mixer X library and it's dependencies
-include(../_common/find_sdl_mixer_x.cmake)
 
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
@@ -548,34 +546,21 @@ add_dependencies(pge_editor
 set(PGE_EDITOR_LINK_LIBS)
 set(PGE_EDITOR_INSTALLS)
 
-
 list(APPEND PGE_EDITOR_INSTALLS
     pge_editor
 )
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
-    QtPropertyBrowser$<$<CONFIG:Debug>:d>
+    PGE_FreeImage
+    PGE_QPropertyBrowser
 )
 
-list(APPEND PGE_EDITOR_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
-
-set(MIXER_LIBS)
-
 if(PGE_STATIC_SDLMIXER)
-    find_mixer_x(TARGET MIXER_LIBS
-                STATIC
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_EDITOR_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
 else()
-    find_mixer_x(TARGET MIXER_LIBS
-                SHARED
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_EDITOR_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
-
-list(APPEND PGE_EDITOR_LINK_LIBS ${MIXER_LIBS})
 
 if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
     set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")

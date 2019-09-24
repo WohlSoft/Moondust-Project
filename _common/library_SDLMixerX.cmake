@@ -1,19 +1,27 @@
 
 # Note: You must also include "library_AudioCodecs.cmake" too!
 
+add_library(PGE_SDLMixerX        INTERFACE)
+add_library(PGE_SDLMixerX_static INTERFACE)
+
 if(WIN32)
-    set(SDL_MixerX_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
-elseif(APPLE)
-    set(SDL_MixerX_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}.dylib")
+    set(SDL_MixerX_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
 else()
-    set(SDL_MixerX_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}.so")
+    set(SDL_MixerX_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif()
 
 if(WIN32)
-    # list(APPEND FOUND_LIBS "${_mixerx_SEARCH_PATHS}/libSDL2_mixer_ext-static${MIX_DEBUG_SUFFIX}.a")
-    set(SDL_MixerX_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2_mixer_ext-static${PGE_LIBS_DEBUG_SUFFIX}.a")
+    set(SDL_MixerX_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2_mixer_ext-static${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 else()
-    set(SDL_MixerX_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}.a")
+    set(SDL_MixerX_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2_mixer_ext${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+endif()
+
+set(MixerX_Deps
+    AudioCodecs_Local
+)
+
+if(NOT SDL2_USE_SYSTEM)
+    list(APPEND MixerX_Deps SDL2_Local)
 endif()
 
 # SDL Mixer X - an audio library, fork of SDL Mixer
@@ -27,13 +35,14 @@ ExternalProject_Add(
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
         "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
         "-DAUDIO_CODECS_INSTALL_PATH=${DEPENDENCIES_INSTALL_DIR}"
+        "-DUSE_SYSTEM_SDL2=${SDL2_USE_SYSTEM}"
         "-DCMAKE_DEBUG_POSTFIX=d"
         "-DSDL_MIXER_X_SHARED=${PGE_SHARED_SDLMIXER}"
         ${ANDROID_CMAKE_FLAGS}
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
         $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DUSE_FLAC=OFF>
-    DEPENDS AudioCodecs_Local SDL2_Local
+    DEPENDS ${MixerX_Deps}
     BUILD_BYPRODUCTS
         "${SDL_MixerX_SO_Lib}"
         "${SDL_MixerX_A_Lib}"
@@ -50,6 +59,21 @@ add_library(SDLMixerXLibraryA STATIC IMPORTED GLOBAL)
 set_property(TARGET SDLMixerXLibraryA PROPERTY
     IMPORTED_LOCATION
     "${SDL_MixerX_A_Lib}"
+)
+
+target_link_libraries(PGE_SDLMixerX INTERFACE
+    SDLMixerXLibrarySO
+)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(MIX_DEBUG_SUFFIX "d")
+else()
+    set(MIX_DEBUG_SUFFIX "")
+endif()
+
+target_link_libraries(PGE_SDLMixerX_static INTERFACE
+    SDLMixerXLibraryA
+    PGE_AudioCodecs
 )
 
 # Append licenses of libraries

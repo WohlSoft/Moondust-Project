@@ -13,6 +13,15 @@ endif()
 #    set(PATCH_CMD "C:/Program Files/Git/usr/bin/patch.exe")
 #endif()
 
+add_library(PGE_SDL2        INTERFACE)
+add_library(PGE_SDL2_static INTERFACE)
+
+option(USE_SYSTEM_SDL2 "Use SDL2 from the system" OFF)
+
+if(USE_SYSTEM_SDL2)
+    set(SDL2_USE_SYSTEM 1)
+endif()
+
 if(WIN32)
     set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.zip")
 else()
@@ -21,23 +30,46 @@ endif()
 
 file(SHA256 ${SDL2_SOURCE_TARBALL} SDL2_SOURCE_TARBALL_HASH)
 
+set(SDL2_main_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2main${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+
 if(WIN32)
-    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
-elseif(APPLE)
-    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.dylib")
+    set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
 else()
-    set(SDL2_SO_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.so")
+    set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif()
 
 if(WIN32)
     # list(APPEND FOUND_LIBS "${_mixerx_SEARCH_PATHS}/libSDL2_mixer_ext-static${MIX_DEBUG_SUFFIX}.a")
-    set(SDL2_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2-static${PGE_LIBS_DEBUG_SUFFIX}.a")
+    set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2-static${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 else()
-    set(SDL2_A_Lib "${CMAKE_BINARY_DIR}/lib/libSDL2${PGE_LIBS_DEBUG_SUFFIX}.a")
+    set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 endif()
 
 # Simple Direct-Media Layer library, dependency of AudioCodecs and SDL Mixer X
-if(ANDROID)
+if(SDL2_USE_SYSTEM)
+    add_library(SDL2_Local INTERFACE)
+
+    message("== SDL2 will be used from system!")
+
+    find_package(SDL2 REQUIRED)
+    message("-- Found SDL2: ${SDL2_LIBRARIES} --")
+
+    if(TARGET SDL2::SDL2)
+        target_link_libraries(PGE_SDL2 INTERFACE SDL2::SDL2)
+        target_link_libraries(PGE_SDL2_static INTERFACE SDL2::SDL2)
+    else()
+        string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
+        target_include_directories(PGE_SDL2 INTERFACE ${SDL2_INCLUDE_DIRS})
+        target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_LIBRARIES})
+        target_include_directories(PGE_SDL2_static INTERFACE ${SDL2_INCLUDE_DIRS})
+        target_link_libraries(PGE_SDL2_static INTERFACE ${SDL2_LIBRARIES})
+    endif()
+
+    set(SDL2_SO_Lib ${SDL2_LIBRARIES})
+    set(SDL2_A_Lib ${SDL2_LIBRARIES})
+    set(SDL2_main_Lib ${SDL2MAIN_LIBRARY})
+
+elseif(ANDROID)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         set(SDL2_DEBUG_SUFFIX "d")
     else()
@@ -85,13 +117,9 @@ if(ANDROID)
         IMPORTED_LOCATION
         "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
     )
-elseif(SDL2_USE_SYSTEM)
-    find_package(SDL2 REQUIRED)
-    message("== SDL2 will be used from system!")
-    add_custom_target(SDL2_Local ALL
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
-        COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_INCLUDE_DIRS}/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
-    )
+    target_link_libraries(PGE_SDL2 INTERFACE SDL2LibrarySO HIDAPILibrary)
+    target_link_libraries(PGE_SDL2_static INTERFACE SDL2LibrarySO HIDAPILibrary)
+
 elseif(SDL2_VIA_AUTOTOOLS)
     # ============================================================
     # Autotools build of SDL2 on platforms where CMake build is incomplete or not supported
@@ -118,7 +146,15 @@ elseif(SDL2_VIA_AUTOTOOLS)
         BUILD_BYPRODUCTS
             "${SDL2_SO_Lib}"
             "${SDL2_A_Lib}"
+            "${SDL2_main_Lib}"
     )
+    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
+    if((WIN32 OR HAIKU) AND NOT EMSCRIPTEN)
+        target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
+        target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
+    endif()
+
 else()
     # ============================================================
     # CMake build of SDL2 is a best choice for most of platforms
@@ -146,6 +182,7 @@ else()
         BUILD_BYPRODUCTS
             "${SDL2_SO_Lib}"
             "${SDL2_A_Lib}"
+            "${SDL2_main_Lib}"
     )
     add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
     if(WIN32)
@@ -159,4 +196,81 @@ else()
         IMPORTED_LOCATION
         "${SDL2_A_Lib}"
     )
+    target_link_libraries(PGE_SDL2 INTERFACE SDL2LibrarySO)
+    target_link_libraries(PGE_SDL2_static INTERFACE SDL2LibraryA)
+    if((WIN32 OR HAIKU) AND NOT EMSCRIPTEN)
+        target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
+        target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
+    endif()
 endif()
+
+set(SDL2_DEPENDENT_LIBS)
+set(SDL2_SO_DEPENDENT_LIBS)
+
+if(WIN32 AND NOT EMSCRIPTEN)
+    list(APPEND SDL2_DEPENDENT_LIBS
+        version opengl32 dbghelp advapi32 kernel32 winmm imm32 setupapi
+    )
+endif()
+
+if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE AND NOT ANDROID)
+    find_library(_LIB_GL GL)
+    if(_LIB_GL)
+        list(APPEND SDL2_DEPENDENT_LIBS ${_LIB_GL})
+        list(APPEND SDL2_SO_DEPENDENT_LIBS ${_LIB_GL})
+    endif()
+
+    find_library(_lib_dl dl)
+    if(_lib_dl)
+        list(APPEND SDL2_DEPENDENT_LIBS ${_lib_dl})
+        list(APPEND SDL2_SO_DEPENDENT_LIBS ${_lib_dl})
+    endif()
+endif()
+
+if(NOT EMSCRIPTEN AND NOT MSVC)
+    find_library(_lib_pthread pthread)
+    if(_lib_pthread)
+        list(APPEND SDL2_DEPENDENT_LIBS ${_lib_pthread})
+        list(APPEND SDL2_SO_DEPENDENT_LIBS ${_lib_pthread})
+    endif()
+endif()
+
+if(ANDROID)
+    list(APPEND SDL2_DEPENDENT_LIBS
+        GLESv1_CM GLESv2 OpenSLES log dl hidapi android
+    )
+endif()
+
+if(HAIKU)
+    list(APPEND SDL2_DEPENDENT_LIBS
+        be device game media
+    )
+endif()
+
+if(APPLE)
+    find_library(COREAUDIO_LIBRARY CoreAudio)
+    list(APPEND SDL2_DEPENDENT_LIBS ${COREAUDIO_LIBRARY})
+    find_library(COREVIDEO_LIBRARY CoreVideo)
+    list(APPEND SDL2_DEPENDENT_LIBS ${COREVIDEO_LIBRARY})
+    find_library(IOKIT_LIBRARY IOKit)
+    list(APPEND SDL2_DEPENDENT_LIBS ${IOKIT_LIBRARY})
+    find_library(CARBON_LIBRARY Carbon)
+    list(APPEND SDL2_DEPENDENT_LIBS ${CARBON_LIBRARY})
+    find_library(COCOA_LIBRARY Cocoa)
+    list(APPEND SDL2_DEPENDENT_LIBS ${COCOA_LIBRARY})
+    find_library(FORCEFEEDBAK_LIBRARY ForceFeedback)
+    list(APPEND SDL2_DEPENDENT_LIBS ${FORCEFEEDBAK_LIBRARY})
+    find_library(METAL_LIBRARY Metal)
+    list(APPEND SDL2_DEPENDENT_LIBS ${METAL_LIBRARY})
+    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+    list(APPEND SDL2_DEPENDENT_LIBS ${COREFOUNDATION_LIBRARY})
+    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+    list(APPEND SDL2_DEPENDENT_LIBS ${AUDIOTOOLBOX_LIBRARY})
+    find_library(AUDIOUNIT_LIBRARY AudioUnit)
+    list(APPEND SDL2_DEPENDENT_LIBS ${AUDIOUNIT_LIBRARY})
+    find_library(OPENGL_LIBRARY OpenGL)
+    list(APPEND SDL2_DEPENDENT_LIBS ${OPENGL_LIBRARY})
+endif()
+
+target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_SO_DEPENDENT_LIBS})
+target_link_libraries(PGE_SDL2_static INTERFACE ${SDL2_DEPENDENT_LIBS})
