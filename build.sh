@@ -72,6 +72,7 @@ do
 
             echo "--- Compile options ---"
             printf " \E[1;4msystem-png\E[0m       - Prefer to use libPNG and ZLib from system\n"
+            printf " \E[1;4msystem-libs\E[0m      - Prefer to use most of libraries from system\n"
             printf "\n"
             echo ""
 
@@ -255,6 +256,9 @@ do
             ;;
         system-png)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBPNG=ON"
+            ;;
+        system-libs)
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBFREETYPE=ON -DUSE_SYSTEM_LIBPNG=ON -DUSE_SYSTEM_SDL2=ON -DUSE_SYSTEM_SQLITE=ON"
             ;;
         noqt)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_ENABLE_QT=OFF"
