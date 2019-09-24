@@ -211,6 +211,9 @@ if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND SDL2_DEPENDENT_LIBS
         version opengl32 dbghelp advapi32 kernel32 winmm imm32 setupapi
     )
+    list(APPEND SDL2_SO_DEPENDENT_LIBS
+        version opengl32 dbghelp advapi32 kernel32 winmm imm32 setupapi
+    )
 endif()
 
 if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE AND NOT ANDROID)
