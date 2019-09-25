@@ -27,4 +27,5 @@ ExternalProject_Add(
 target_link_libraries(PGE_FreeImage INTERFACE
     "${libFreeType_Libs}"
     PGE_libPNG
+    PGE_ZLib
 )

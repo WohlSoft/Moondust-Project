@@ -78,4 +78,3 @@ target_link_libraries(PGE_SDLMixerX_static INTERFACE
 
 # Append licenses of libraries
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/SDL_Mixer_X/COPYING.txt" RENAME "License.SDL2_mixer_ext.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses")
-

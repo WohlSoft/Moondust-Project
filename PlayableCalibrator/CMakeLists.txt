@@ -95,12 +95,32 @@ add_executable(pge_calibrator
     ${PGE_FILE_LIBRARY_SRCS}
 )
 
-target_include_directories(pge_calibrator
-    PRIVATE
+add_library(PGE_Calibrator_QtLibs INTERFACE)
+
+target_include_directories(PGE_Calibrator_QtLibs
+    INTERFACE
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Concurrent_INCLUDE_DIRS}
+)
+
+# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
+target_compile_definitions(PGE_Calibrator_QtLibs
+    INTERFACE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
+    ${Qt5Widgets_DEFINITIONS}
+    ${Qt5Concurrent_DEFINITIONS}
+)
+
+target_link_libraries(PGE_Calibrator_QtLibs
+    INTERFACE
+    ${QT_EXTRA_LIBS_PRE}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
 )
 
 add_dependencies(pge_calibrator
@@ -116,13 +136,8 @@ list(APPEND PGE_CALIBRATOR_INSTALLS
 
 list(APPEND PGE_CALIBRATOR_LINK_LIBS
     ${UTILS_LIBS}
+    PGE_Calibrator_QtLibs
     PGE_FreeImage
-)
-
-# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
-target_compile_definitions(pge_calibrator
-    PRIVATE
-    ${Qt5Widgets_DEFINITIONS}
 )
 
 pge_set_nopie(pge_calibrator)
@@ -168,14 +183,6 @@ if(APPLE)
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS ${COREFOUNDATION_LIBRARY})
 endif()
-
-list(APPEND PGE_CALIBRATOR_LINK_LIBS
-    ${QT_EXTRA_LIBS_PRE}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
-    ${QT_EXTRA_LIBS}
-)
 
 target_link_libraries(pge_calibrator
     ${PGE_CALIBRATOR_LINK_LIBS}

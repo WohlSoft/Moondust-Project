@@ -115,15 +115,38 @@ add_dependencies(pge_musplay
     SDL2_Local
 )
 
+add_library(PGE_MusPlay_QtLibs INTERFACE)
+
 # The Qt5Widgets_INCLUDES also includes the include directories for
 # dependencies QtCore and QtGui
-target_include_directories(pge_musplay
-    PRIVATE
+target_include_directories(PGE_MusPlay_QtLibs
+    INTERFACE
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Network_INCLUDE_DIRS}
-    ${USE_SDL_MIXER_X_PREFIX}/include)
+    ${USE_SDL_MIXER_X_PREFIX}/include
+)
+
+# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
+target_compile_definitions(PGE_MusPlay_QtLibs
+    INTERFACE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
+    ${Qt5Widgets_DEFINITIONS}
+    ${Qt5Network_DEFINITIONS}
+)
+
+target_link_libraries(PGE_MusPlay_QtLibs
+    INTERFACE
+    ${QT_EXTRA_LIBS_PRE}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Network_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
+)
+
 
 set(PGE_MUSPLAY_LINK_LIBS)
 set(PGE_MUSPLAY_INSTALLS)
@@ -132,14 +155,7 @@ list(APPEND PGE_MUSPLAY_INSTALLS
     pge_musplay
 )
 
-# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
-target_compile_definitions(pge_musplay
-    PRIVATE
-    ${Qt5Core_DEFINITIONS}
-    ${Qt5Gui_DEFINITIONS}
-    ${Qt5Widgets_DEFINITIONS}
-    ${Qt5Network_DEFINITIONS}
-)
+list(APPEND PGE_MUSPLAY_LINK_LIBS PGE_MusPlay_QtLibs)
 
 option(USE_OFFICIAL_SDL_MIXER "Compile player in compatibility with official SDL Mixer variant" OFF)
 
@@ -191,17 +207,11 @@ if(APPLE)
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat_musplay.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
+    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+    list(APPEND PGE_MUSPLAY_LINK_LIBS ${COREFOUNDATION_LIBRARY})
+
     list(APPEND PGE_MUSPLAY_LINK_LIBS iconv)
 endif()
-
-list(APPEND PGE_MUSPLAY_LINK_LIBS
-    ${QT_EXTRA_LIBS_PRE}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Network_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
-    ${QT_EXTRA_LIBS}
-)
 
 target_link_libraries(pge_musplay
     ${PGE_MUSPLAY_LINK_LIBS}
