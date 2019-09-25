@@ -2,7 +2,7 @@
 
 add_library(PGE_FreeImage INTERFACE)
 
-set(libFreeType_Libs "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}FreeImageLite${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+set(libFreeImage_Libs "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}FreeImageLite${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
 ExternalProject_Add(
     FreeImage_Local
@@ -21,11 +21,11 @@ ExternalProject_Add(
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
         ${ANDROID_CMAKE_FLAGS}
     BUILD_BYPRODUCTS
-        "${libFreeType_Libs}"
+        "${libFreeImage_Libs}"
 )
 
 target_link_libraries(PGE_FreeImage INTERFACE
-    "${libFreeType_Libs}"
+    "${libFreeImage_Libs}"
     PGE_libPNG
     PGE_ZLib
 )

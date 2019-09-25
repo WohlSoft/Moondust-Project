@@ -38,7 +38,7 @@ if(PGE_ENABLE_STATIC_QT)
 
     list(APPEND QT_FOUND_EXTRA_LIBS PGE_FreeType)
 
-    list(APPEND QT_FOUND_EXTRA_LIBS PGE_libPNG)
+    list(APPEND QT_FOUND_EXTRA_LIBS PGE_libPNG PGE_ZLib)
 
     find_library(QT_PTHREAD pthread)
     #if(QT_PTHREAD)
