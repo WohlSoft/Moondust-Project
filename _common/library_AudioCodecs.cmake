@@ -13,6 +13,7 @@ if(USE_SYSTEM_LIBPNG)
 
 else()
     set(libZLib_A_Lib    "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}zlib${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+    message("-- ZLib will be built (as a part of AudioCodecs): ${libZLib_A_Lib} --")
     target_link_libraries(PGE_ZLib INTERFACE "${libZLib_A_Lib}")
 endif()
 

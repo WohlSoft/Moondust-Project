@@ -47,6 +47,9 @@ else()
         BUILD_BYPRODUCTS
             "${libFreeType_Libs}"
     )
+
+    message("-- FreeType will be built: ${libFreeType_Libs} --")
+
     target_link_libraries(PGE_FreeType INTERFACE ${libFreeType_Libs})
     target_include_directories(PGE_FreeType INTERFACE ${DEPENDENCIES_INSTALL_DIR}/include/freetype2)
 

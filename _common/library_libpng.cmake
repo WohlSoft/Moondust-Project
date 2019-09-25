@@ -42,5 +42,8 @@ else()
         BUILD_BYPRODUCTS
             "${libPNG_A_Lib}"
     )
+
+    message("-- libPNG will be built: ${libPNG_A_Lib} --")
+
     target_link_libraries(PGE_libPNG INTERFACE "${libPNG_A_Lib}")
 endif()

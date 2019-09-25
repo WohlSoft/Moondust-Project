@@ -52,6 +52,8 @@ else()
             "${libSQLite3_Lib}"
     )
 
+    message("-- SQLite3 will be built: ${libSQLite3_Lib} --")
+
     target_link_libraries(PGE_SQLite INTERFACE ${libSQLite3_Lib})
 
 endif()
