@@ -184,20 +184,9 @@ else()
             "${SDL2_A_Lib}"
             "${SDL2_main_Lib}"
     )
-    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
-    if(WIN32)
-        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_IMPLIB "${SDL2_SO_Lib}")
-    else()
-        set_property(TARGET SDL2LibrarySO PROPERTY IMPORTED_LOCATION "${SDL2_SO_Lib}")
-    endif()
 
-    add_library(SDL2LibraryA STATIC IMPORTED GLOBAL)
-    set_property(TARGET SDL2LibraryA PROPERTY
-        IMPORTED_LOCATION
-        "${SDL2_A_Lib}"
-    )
-    target_link_libraries(PGE_SDL2 INTERFACE SDL2LibrarySO)
-    target_link_libraries(PGE_SDL2_static INTERFACE SDL2LibraryA)
+    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
     if((WIN32 OR HAIKU) AND NOT EMSCRIPTEN)
         target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
         target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
@@ -227,14 +216,6 @@ if(NOT WIN32 AND NOT EMSCRIPTEN AND NOT APPLE AND NOT ANDROID)
     if(_lib_dl)
         list(APPEND SDL2_DEPENDENT_LIBS ${_lib_dl})
         list(APPEND SDL2_SO_DEPENDENT_LIBS ${_lib_dl})
-    endif()
-endif()
-
-if(NOT EMSCRIPTEN AND NOT MSVC)
-    find_library(_lib_pthread pthread)
-    if(_lib_pthread)
-        list(APPEND SDL2_DEPENDENT_LIBS ${_lib_pthread})
-        list(APPEND SDL2_SO_DEPENDENT_LIBS ${_lib_pthread})
     endif()
 endif()
 
@@ -273,6 +254,14 @@ if(APPLE)
     list(APPEND SDL2_DEPENDENT_LIBS ${AUDIOUNIT_LIBRARY})
     find_library(OPENGL_LIBRARY OpenGL)
     list(APPEND SDL2_DEPENDENT_LIBS ${OPENGL_LIBRARY})
+endif()
+
+if(NOT EMSCRIPTEN AND NOT MSVC)
+    find_library(_lib_pthread pthread)
+    if(_lib_pthread)
+        list(APPEND SDL2_DEPENDENT_LIBS ${_lib_pthread})
+        list(APPEND SDL2_SO_DEPENDENT_LIBS ${_lib_pthread})
+    endif()
 endif()
 
 target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_SO_DEPENDENT_LIBS})
