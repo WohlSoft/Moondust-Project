@@ -79,6 +79,7 @@ endif()
 
 add_dependencies(PNG2GIFs
     FreeImage_Local
+    libpng_Local
 )
 
 set(PNG2GIFs_LINK_LIBS)

@@ -125,6 +125,8 @@ target_link_libraries(PGE_Calibrator_QtLibs
 
 add_dependencies(pge_calibrator
     FreeImage_Local
+    libpng_Local
+    FREETYPE_Local
 )
 
 set(PGE_CALIBRATOR_LINK_LIBS)

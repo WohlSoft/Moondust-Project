@@ -79,6 +79,7 @@ endif()
 
 add_dependencies(LazyFixTool
     FreeImage_Local
+    libpng_Local
 )
 
 set(LazyFixTool_LINK_LIBS)

@@ -559,6 +559,8 @@ add_dependencies(pge_editor
     SDLMixerX_Local
     SDL2_Local
     FreeImage_Local
+    libpng_Local
+    FREETYPE_Local
     QtPropertyBrowser_Local
     editor_translations
 )

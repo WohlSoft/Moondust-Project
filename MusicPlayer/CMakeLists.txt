@@ -113,6 +113,8 @@ add_executable(pge_musplay
 add_dependencies(pge_musplay
     SDLMixerX_Local
     SDL2_Local
+    libpng_Local
+    FREETYPE_Local
 )
 
 add_library(PGE_MusPlay_QtLibs INTERFACE)

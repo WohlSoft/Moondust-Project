@@ -91,6 +91,11 @@ add_executable(pge_maintainer
     ${PGE_FILE_LIBRARY_SRCS}
 )
 
+add_dependencies(pge_maintainer
+    libpng_Local
+    FREETYPE_Local
+) # Needed for Qt to be linked
+
 add_library(PGE_Maintainer_QtLibs INTERFACE)
 
 # The Qt5Widgets_INCLUDES also includes the include directories for
