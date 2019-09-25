@@ -35,7 +35,7 @@ then
             libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev \
             libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev \
             libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev \
-            libproxy-dev ccache gcc-6 g++-6 libc6 libstdc++6 cmake
+            libproxy-dev ccache gcc-6 g++-6 libc6 libstdc++6 cmake ninja-build
     fi
 
     sudo update-alternatives --remove-all gcc

@@ -12,7 +12,7 @@ then
     if [[ "${IS_COVERITY_SCAN}" == "" ]] ;
     then
         TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > /home/runner/build_date_${GIT_BRANCH}_linux.txt
-        bash build.sh no-pause use-ccache deploy static-qt
+        bash build.sh no-pause ninja use-ccache deploy static-qt
     fi
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]];
 then
