@@ -122,6 +122,9 @@ target_link_libraries(PGE_Calibrator_QtLibs
     ${Qt5Core_LIBRARIES}
     ${QT_EXTRA_LIBS}
 )
+if(QT_PTHREAD)
+    target_link_libraries(PGE_Calibrator_QtLibs INTERFACE ${QT_PTHREAD})
+endif()
 
 add_dependencies(pge_calibrator
     FreeImage_Local
@@ -164,7 +167,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
             list(APPEND PGE_CALIBRATOR_LINK_LIBS "-static")
         endif()
     endif()
-    list(APPEND PGE_CALIBRATOR_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND PGE_CALIBRATOR_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 if(APPLE)

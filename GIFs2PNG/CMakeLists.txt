@@ -106,7 +106,7 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
     endif()
     find_library(_LIB_PTHREAD pthread)
     if(_LIB_PTHREAD)
-        list(APPEND LazyFixTool_LINK_LIBS ${_LIB_PTHREAD})
+        list(APPEND GIFs2PNG_LINK_LIBS ${_LIB_PTHREAD})
     endif()
 endif()
 

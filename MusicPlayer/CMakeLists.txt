@@ -129,6 +129,9 @@ target_include_directories(PGE_MusPlay_QtLibs
     ${Qt5Network_INCLUDE_DIRS}
     ${USE_SDL_MIXER_X_PREFIX}/include
 )
+if(QT_PTHREAD)
+    target_link_libraries(PGE_MusPlay_QtLibs INTERFACE ${QT_PTHREAD})
+endif()
 
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
 target_compile_definitions(PGE_MusPlay_QtLibs
@@ -189,7 +192,7 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
     endif()
     find_library(_LIB_PTHREAD pthread)
     if(_LIB_PTHREAD)
-        list(APPEND LazyFixTool_LINK_LIBS ${_LIB_PTHREAD})
+        list(APPEND PGE_MUSPLAY_LINK_LIBS ${_LIB_PTHREAD})
     endif()
 endif()
 
