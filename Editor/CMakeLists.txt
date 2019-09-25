@@ -479,9 +479,28 @@ add_executable(pge_editor
     ${UTILS_SRCS}
 )
 
+add_library(PGE_QtLibs INTERFACE)
+
+target_link_libraries(PGE_QtLibs INTERFACE
+    ${QT_EXTRA_LIBS_PRE}
+    PGE_QPropertyBrowser
+    ${Qt5Qml_LIBRARIES}
+    ${Qt5Concurrent_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Network_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
+)
+if(WIN32)
+    target_link_libraries(PGE_QtLibs INTERFACE
+        ${Qt5WinExtras_LIBRARIES}
+    )
+endif()
+
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
-target_compile_definitions(pge_editor
-    PRIVATE
+target_compile_definitions(PGE_QtLibs
+    INTERFACE
     ${Qt5Core_DEFINITIONS}
     ${Qt5Gui_DEFINITIONS}
     ${Qt5Widgets_DEFINITIONS}
@@ -490,14 +509,14 @@ target_compile_definitions(pge_editor
     ${Qt5Qml_DEFINITIONS}
 )
 if(WIN32)
-    target_compile_definitions(pge_editor
-        PRIVATE
+    target_compile_definitions(PGE_QtLibs
+        INTERFACE
         ${Qt5WinExtras_DEFINITIONS}
     )
 endif()
 
-target_include_directories(pge_editor
-    PRIVATE
+target_include_directories(PGE_QtLibs
+    INTERFACE
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
@@ -506,11 +525,12 @@ target_include_directories(pge_editor
     ${Qt5Qml_INCLUDE_DIRS}
 )
 if(WIN32)
-    target_include_directories(pge_editor
-        PRIVATE
+    target_include_directories(PGE_QtLibs
+        INTERFACE
         ${Qt5WinExtras_INCLUDE_DIRS}
     )
 endif()
+
 
 target_compile_definitions(pge_editor
     PRIVATE
@@ -552,8 +572,9 @@ list(APPEND PGE_EDITOR_INSTALLS
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
-    PGE_FreeImage
     PGE_QPropertyBrowser
+    PGE_QtLibs
+    PGE_FreeImage
 )
 
 if(PGE_STATIC_SDLMIXER)
@@ -573,7 +594,6 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
             list(APPEND PGE_EDITOR_LINK_LIBS "-static")
         endif()
     endif()
-    list(APPEND PGE_EDITOR_LINK_LIBS pthread)
 endif()
 
 
@@ -598,23 +618,7 @@ if(APPLE)
     list(APPEND PGE_EDITOR_LINK_LIBS iconv)
 endif()
 
-list(APPEND PGE_EDITOR_LINK_LIBS
-    ${QT_EXTRA_LIBS_PRE}
-    ${Qt5Qml_LIBRARIES}
-    ${Qt5Concurrent_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Network_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
-    ${QT_EXTRA_LIBS}
-)
-if(WIN32)
-    list(APPEND PGE_EDITOR_LINK_LIBS
-        ${Qt5WinExtras_LIBRARIES}
-    )
-endif()
-
-target_link_libraries(pge_editor
+target_link_libraries(pge_editor PUBLIC
     ${PGE_EDITOR_LINK_LIBS}
 )
 

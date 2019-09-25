@@ -17,10 +17,7 @@ if(USE_SYSTEM_SQLITE)
         find_library(SQLite3_LIBRARY NAMES sqlite3 sqlite)
         mark_as_advanced(SQLite3_LIBRARY)
 
-        find_package_handle_standard_args(SQLite3
-            REQUIRED_VARS SQLite3_INCLUDE_DIR SQLite3_LIBRARY)
-
-        if(SQLite3_FOUND)
+        if(SQLite3_INCLUDE_DIR AND SQLite3_LIBRARY)
             set(SQLite3_INCLUDE_DIRS ${SQLite3_INCLUDE_DIR})
             set(SQLite3_LIBRARIES ${SQLite3_LIBRARY})
         else()

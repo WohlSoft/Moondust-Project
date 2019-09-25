@@ -1,10 +1,19 @@
 
+add_library(PGE_ZLib INTERFACE)
 add_library(PGE_AudioCodecs INTERFACE)
 
-set(libZLib_AC_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}zlib${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+if(USE_SYSTEM_LIBPNG)
+    find_package(ZLIB)
+    message("-- Found ZLib: ${ZLIB_LIBRARIES} --")
+    target_link_libraries(PGE_ZLib INTERFACE "${LIBZLIB_LIBRARY}")
+    target_include_directories(PGE_ZLib INTERFACE "${ZLIB_INCLUDE_DIRS}")
+    target_link_libraries(PGE_libPNG INTERFACE "${LIBZLIB_LIBRARY}")
 
-if(NOT DEFINED libZLib_A_Lib)
-    set(libZLib_A_Lib "${libZLib_AC_A_Lib}")
+    set(libZLib_A_Lib "${ZLIB_LIBRARIES}")
+
+else()
+    set(libZLib_A_Lib    "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}zlib${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+    target_link_libraries(PGE_ZLib INTERFACE "${libZLib_A_Lib}")
 endif()
 
 set(AudioCodecs_Deps)
@@ -46,11 +55,11 @@ ExternalProject_Add(
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DADLMIDI_USE_DOSBOX_EMULATOR=ON>
     DEPENDS ${AudioCodecs_Deps}
     BUILD_BYPRODUCTS
-        "${AudioCodecs_Libs}"
-        "${libZLib_AC_A_Lib}"
+        ${AudioCodecs_Libs}
+        "${libZLib_A_Lib}"
 )
 
-target_link_libraries(PGE_AudioCodecs INTERFACE "${AudioCodecs_Libs}" "${libZLib_AC_A_Lib}")
+target_link_libraries(PGE_AudioCodecs INTERFACE "${AudioCodecs_Libs}" ${libZLib_A_Lib})
 
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libFLAC/COPYING.Xiph" RENAME "License.FLAC.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses")
 InstallTextFile(FILE "${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/libogg/COPYING" RENAME "License.OGG.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}/licenses")
