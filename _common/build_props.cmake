@@ -1,6 +1,8 @@
 # If platform is Emscripten
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
     set(EMSCRIPTEN 1 BOOLEAN)
+    unset(WIN32)
+    unset(APPLE)
 endif()
 
 # Strip garbage

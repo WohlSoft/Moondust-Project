@@ -79,7 +79,7 @@ endif()
 # Unix2Dos utility to converyt and install text files for Windows platform
 include(_common/tool_unix2dos.cmake)
 
-if(WIN32)
+if(WIN32 OR EMSCRIPTEN)
     set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)
 else()
     set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT ON)
