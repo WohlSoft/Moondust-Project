@@ -283,8 +283,12 @@ void ItemBoxListModel::setTableMode(bool isTable, int w, int h)
 
 void ItemBoxListModel::addElementsBegin(int allocate)
 {
-    beginInsertRows(QModelIndex(), m_elements.size(), m_elements.size() + allocate - 1);
-    if(allocate < 0)
+    if(allocate <= 0)
+        allocate = 1;
+    beginInsertRows(QModelIndex(),
+                    m_elements.size(),
+                    m_elements.size() + allocate - 1);
+    if(allocate > 0)
         m_elements.reserve(allocate);
 }
 
