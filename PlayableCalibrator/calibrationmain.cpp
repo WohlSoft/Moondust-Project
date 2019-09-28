@@ -230,7 +230,7 @@ void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 bool CalibrationMain::on_OpenSprite_clicked()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
-            trUtf8("Open sprite file"),(LastOpenDir.isEmpty()? AppPathManager::userAppDir() : LastOpenDir),
+            tr("Open sprite file"),(LastOpenDir.isEmpty()? AppPathManager::userAppDir() : LastOpenDir),
             tr("SMBX playble sprite (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;"
                "GIF images (*.gif);;"
                "PNG images (*.png);;"

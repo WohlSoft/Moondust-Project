@@ -17,7 +17,7 @@
  */
 
 #include <QSettings>
-#include <QDesktopWidget>
+#include <QScreen>
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
@@ -226,7 +226,14 @@ void DebuggerBox::on_DEBUG_AddCustomCounter_clicked()
 {
     CustomCounterGUI customCounterGui(mw());
     customCounterGui.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    customCounterGui.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), qApp->desktop()->availableGeometry()));
+    {
+        QList<QScreen*> screens = QGuiApplication::screens();
+        if(!screens.isEmpty())
+        {
+            auto rect = QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), screens[0]->availableGeometry());
+            customCounterGui.setGeometry(rect);
+        }
+    }
 
     if(customCounterGui.exec() == QDialog::Accepted)
     {
@@ -495,7 +502,14 @@ void DebuggerBox::on_DEBUG_CustomCountersList_customContextMenuRequested(const Q
     {
         CustomCounterGUI customCounterGui(mw());
         customCounterGui.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        customCounterGui.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), qApp->desktop()->availableGeometry()));
+        {
+            QList<QScreen*> screens = QGuiApplication::screens();
+            if(!screens.isEmpty())
+            {
+                auto rect = QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), screens[0]->availableGeometry());
+                customCounterGui.setGeometry(rect);
+            }
+        }
         customCounterGui.setCounterData(customCounters[itemID]);
 
         if(customCounterGui.exec() == QDialog::Accepted)

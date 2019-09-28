@@ -1,4 +1,4 @@
-﻿#ifndef MUSPLAY_USE_WINAPI
+#ifndef MUSPLAY_USE_WINAPI
 #include "assoc_files.h"
 #include "ui_assoc_files.h"
 #include <QListWidgetItem>
@@ -150,7 +150,7 @@ AssocFiles::~AssocFiles()
     delete ui;
 }
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(_WIN32)
 static bool xCopyFile(const QString &src, const QString &target)
 {
     QFile tmp;

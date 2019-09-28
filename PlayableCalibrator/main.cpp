@@ -60,8 +60,14 @@ int main(int argc, char *argv[])
     CalibrationMain w;
 
     w.setWindowFlags(w.windowFlags() & ~(Qt::WindowMaximizeButtonHint));
-    w.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-    w.size(), qApp->desktop()->availableGeometry(0)));
+    {
+        QList<QScreen*> screens = QGuiApplication::screens();
+        if(!screens.isEmpty())
+        {
+            auto rect = QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, w.size(), screens[0]->availableGeometry());
+            w.setGeometry(rect);
+        }
+    }
 
     if(!w.wasCanceled)
         w.show();
