@@ -50,7 +50,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     //NpcDialog * npcList = new NpcDialog(&configs);
     ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,this,ItemSelectDialog::TAB_NPC);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    npcList->setGeometry(util::alignToScreenCenter(npcList->size()));
     npcList->setWindowTitle(tr("Create new NPC.txt configuration file"));
     if(npcList->exec() == QDialog::Accepted)
     {

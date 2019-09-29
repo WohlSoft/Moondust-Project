@@ -260,18 +260,22 @@ void MainWindow::updateWindowMenu()
 
     QAction * empty = ui->menuWindow->addAction( tr("[No files open]") );
         empty->setDisabled(1);
-
         empty->setVisible( windows.isEmpty() );
 
-    for (int i = 0; i < windows.size(); ++i) {
+    for(auto *window : windows)
+    {
         QString text;
-        text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
+        text = QString("%1").arg(window->windowTitle());
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
-        action->setChecked( windows[i] == LastActiveSubWindow );
+        action->setChecked(window == LastActiveSubWindow);
 
-        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-        windowMapper->setMapping(action, windows.at(i));
+        QObject::connect(action, &QAction::triggered,
+        [this, window]()->void
+        {
+            LogDebug(QString("Toggling window '%1' [lambda-signal]").arg(window->windowTitle()));
+            setActiveSubWindow(window);
+        });
     }
 }
 

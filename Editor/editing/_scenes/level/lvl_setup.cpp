@@ -298,7 +298,7 @@ void LvlScene::setLayerToSelected()
     QString lName;
     auto *layerBox = new ToNewLayerBox(m_data, m_viewPort);
     layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
+    layerBox->setGeometry(util::alignToScreenCenter(layerBox->size()));
 
     if(layerBox->exec() == QDialog::Accepted)
     {

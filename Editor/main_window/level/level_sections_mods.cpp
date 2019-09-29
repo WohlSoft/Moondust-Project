@@ -32,7 +32,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
     {
         LvlCloneSection box(this);
         box.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
+        box.setGeometry(util::alignToScreenCenter(box.size()));
 
 
         //Creating of level files list
@@ -64,7 +64,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             progress.setWindowModality(Qt::WindowModal);
             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
             progress.setFixedSize(progress.size());
-            progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+            progress.setGeometry(util::alignToScreenCenter(progress.size()));
             progress.setCancelButton(0);
             progress.setMinimumDuration(0);
 

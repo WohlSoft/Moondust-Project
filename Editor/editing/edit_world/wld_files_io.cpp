@@ -22,7 +22,6 @@
 #include <QProgressDialog>
 #include <QLineEdit>
 #include <QCheckBox>
-#include <QDesktopWidget>
 #include <QInputDialog>
 
 #include <common_features/logger.h>
@@ -413,7 +412,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);
     progress.setAutoClose(false);
 

@@ -24,7 +24,6 @@
 #include <QMdiArea>
 #include <QPixmap>
 #include <QAbstractListModel>
-#include <QSignalMapper>
 #include <QProcess>
 #include <QList>
 #include <QPoint>
@@ -619,10 +618,6 @@ public:
         /// \return pointer to subWindow which case with target file
         ///
         QMdiSubWindow *findOpenedFileWin(const QString &fileName);
-        /*!
-         * \brief Sub-windows mapper
-         */
-        QSignalMapper *windowMapper;
         // //////////////////////////////////////////////////////
 
         // /////////////// Latest Active Window ///////////////////

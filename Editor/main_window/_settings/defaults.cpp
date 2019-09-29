@@ -86,7 +86,7 @@ void MainWindow::setUiDefults()
 #endif
 
     //MainWindow Geometry;
-    QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    QRect dg = util::getScreenGeometry();
 
     //Init default geometry of main window
     int margin = 100;
@@ -167,11 +167,6 @@ void MainWindow::setUiDefults()
     connect(&engine_proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(testingFinished()));
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptEpisode, &QAction::setDisabled);
-
-    windowMapper = new QSignalMapper(this);
-
-    connect(windowMapper, SIGNAL(mapped(QWidget *)),
-            this, SLOT(setActiveSubWindow(QWidget *)));
 
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
     ui->centralWidget->cascadeSubWindows();

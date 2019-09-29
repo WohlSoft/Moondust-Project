@@ -67,7 +67,7 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
 
     lockTilesetBox = false;
 
-    QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    QRect dg = util::getScreenGeometry();
     int GOffset = 240;
 
     mw()->addDockWidget(Qt::BottomDockWidgetArea, this);

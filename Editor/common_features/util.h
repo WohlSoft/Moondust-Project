@@ -21,6 +21,8 @@
 #define UTIL_H
 
 #include <QString>
+#include <QRect>
+
 class QDialog;
 class QLayout;
 class QLineEdit;
@@ -110,6 +112,18 @@ public:
      * \param dest Target array
      */
     static void CSV2DoubleArr(QString source, QVector<double> &dest);
+    /*!
+     * \brief Gives the geometry of choosen screen
+     * \param screenIndex Index of screen
+     * \return Rectangle of screen ceometry
+     */
+    static QRect getScreenGeometry(int screenIndex = -1);
+    /*!
+     * \brief Get the aligned rectangle inside of screen size
+     * \param size Size of object to align
+     * \return Aligned to center rectangle
+     */
+    static QRect alignToScreenCenter(const QSize size);
 };
 
 #endif // UTIL_H

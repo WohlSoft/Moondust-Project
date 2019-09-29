@@ -78,7 +78,7 @@ void WorldEdit::ExportingReady() //slot
                                  scene->captutedSize.size().toSize(),
                                  keepAspectRatio, MainWinConnect::pMainWin);
         imageExportDialog.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        imageExportDialog.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, imageExportDialog.size(), qApp->desktop()->availableGeometry()));
+        imageExportDialog.setGeometry(util::alignToScreenCenter(imageExportDialog.size()));
         if(imageExportDialog.exec()!=QDialog::Rejected)
         {
             LogDebug("ImageExport -> accepted");
@@ -118,7 +118,7 @@ void WorldEdit::ExportingReady() //slot
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
         progress.setFixedSize(progress.size());
-        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+        progress.setGeometry(util::alignToScreenCenter(progress.size()));
         progress.setCancelButton(0);
         progress.setMinimumDuration(0);
 

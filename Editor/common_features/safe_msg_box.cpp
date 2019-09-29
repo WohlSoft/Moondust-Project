@@ -19,8 +19,10 @@
 #include "safe_msg_box.h"
 #include <QApplication>
 #include <QMessageBox>
-#include <QDesktopWidget>
 #include <QMutexLocker>
+#include <QDesktopWidget>
+#include <QRect>
+#include <common_features/util.h>
 
 #define ToBTNS(btn) QMessageBox::StandardButtons(QMessageBox::StandardButton(btn))
 
@@ -142,7 +144,7 @@ void SafeMsgBox::richBox(QString title, QString text, unsigned long buttons, int
 #endif
     msgBox.setText(text);
     QSize mSize = msgBox.sizeHint();
-    QRect screenRect = QApplication::desktop()->screen()->rect();
+    QRect screenRect = util::getScreenGeometry();
     msgBox.move(QPoint(screenRect.width() / 2 - mSize.width() / 2,
                        screenRect.height() / 2 - mSize.height() / 2));
     msgBox.setIcon(QMessageBox::Icon(msgType));

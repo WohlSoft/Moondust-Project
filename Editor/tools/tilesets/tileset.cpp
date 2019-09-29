@@ -221,7 +221,7 @@ void tileset::mousePressEvent(QMouseEvent *event)
     drag->setHotSpot(event->pos() - square.topLeft());
     drag->setPixmap(pixmap);
 
-    if(drag->start(Qt::MoveAction) == 0)
+    if(drag->exec(Qt::MoveAction) == 0)
     {
         piecePixmaps.insert(found, pixmap);
         pieceRects.insert(found, square);
