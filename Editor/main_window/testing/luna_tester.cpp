@@ -264,7 +264,7 @@ void LunaWorker::terminate()
     if(m_process && (m_process->state() == QProcess::Running))
     {
         Q_PID pid = m_process->pid();
-        LogDebug(QString("LunaWorker: Killing by QProcess::kill()..."));
+        LogDebugNC(QString("LunaWorker: Killing by QProcess::kill()..."));
         QMetaObject::invokeMethod(m_process, "kill", Qt::QueuedConnection);
 #ifdef _WIN32
         if(pid)
@@ -274,12 +274,12 @@ void LunaWorker::terminate()
             HANDLE h_process = OpenProcess(PROCESS_TERMINATE, FALSE, lt_pid);
             if(NULL != h_process)
             {
-                LogDebug(QString("LunaWorker: Killing LunaLoader-exec with PID %1 by 'TerminateProcess()'...")
+                LogDebugNC(QString("LunaWorker: Killing LunaLoader-exec with PID %1 by 'TerminateProcess()'...")
                          .arg(lt_pid));
                 BOOL res = TerminateProcess(h_process, 0);
                 if(!res)
                 {
-                    LogDebug(
+                    LogDebugNC(
                         QString("LunaWorker: Failed to kill LunaLoader-exec with PID %1 by 'TerminateProcess()' with error '%3', possibly it's already terminated")
                             .arg(lt_pid)
                             .arg(GetLastError())
@@ -289,7 +289,7 @@ void LunaWorker::terminate()
             }
             else
             {
-                LogDebug("LunaWorker: LunaLoader-exec is not run");
+                LogDebugNC("LunaWorker: LunaLoader-exec is not run");
             }
         }
 
@@ -301,7 +301,7 @@ void LunaWorker::terminate()
         proc_count = getPidsByPath(smbxPath.toStdWString(), proc_id, 1024);
         if(proc_count > 0)
         {
-            LogDebug(QString("LunaWorker: Found matching PIDs for running %1, going to kill...")
+            LogDebugNC(QString("LunaWorker: Found matching PIDs for running %1, going to kill...")
                      .arg(ConfStatus::SmbxEXE_Name));
             for(DWORD i = 0; i < proc_count; i++)
             {
@@ -312,7 +312,7 @@ void LunaWorker::terminate()
                     BOOL res = TerminateProcess(h_process, 0);
                     if(!res)
                     {
-                        LogDebug(
+                        LogDebugNC(
                             QString("LunaWorker: Failed to kill %1 with PID %2 by 'TerminateProcess()' with error '%3', possibly it's already terminated.")
                                  .arg(ConfStatus::SmbxEXE_Name)
                                  .arg(f_pid)
@@ -324,12 +324,12 @@ void LunaWorker::terminate()
             }
         }
         else
-            LogDebug(QString("LunaWorker: No matching PIDs found for %1:").arg(ConfStatus::SmbxEXE_Name));
+            LogDebugNC(QString("LunaWorker: No matching PIDs found for %1:").arg(ConfStatus::SmbxEXE_Name));
 #else // _WIN32
         if(pid)
             kill(static_cast<pid_t>(pid), SIGTERM);
 #   ifdef __APPLE__
-        LogDebug(QString("LunaWorker: Killing %1 by 'kill'...").arg(ConfStatus::SmbxEXE_Name));
+        LogDebugNC(QString("LunaWorker: Killing %1 by 'kill'...").arg(ConfStatus::SmbxEXE_Name));
         QProcess ps;
         ps.start("/bin/ps", {"-A"});
         ps.waitForFinished();
@@ -345,14 +345,14 @@ void LunaWorker::terminate()
             while((pos = psReg.indexIn(psOne, pos)) != -1)
             {
                 pid_t toKill = static_cast<pid_t>(psReg.cap(1).toUInt());
-                LogDebug(QString("LunaWorker: kill -TERM %1").arg(toKill));
+                LogDebugNC(QString("LunaWorker: kill -TERM %1").arg(toKill));
                 kill(toKill, SIGTERM);
                 pos += psReg.matchedLength();
             }
         }
 #   else
         pid = find_pid(ConfStatus::SmbxEXE_Name.toUtf8().data());
-        LogDebug(QString("LunaWorker: Killing %1 by pid %2...")
+        LogDebugNC(QString("LunaWorker: Killing %1 by pid %2...")
             .arg(ConfStatus::SmbxEXE_Name)
             .arg(pid));
         if(pid)

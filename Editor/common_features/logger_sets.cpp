@@ -315,7 +315,7 @@ void LogWriter::uninstallConsole()
 {
     if(consoleConnector)
         delete consoleConnector;
-    consoleConnector=nullptr;
+    consoleConnector = nullptr;
 }
 
 void LoadLogSettings()

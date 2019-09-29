@@ -176,7 +176,7 @@ public:
         bool m_isAppInited;
 
         //! When application will be closed, restart it
-        bool m_isAppRestartRequested;
+        bool m_isAppRestartRequested = false;
 
         bool isAppRestartRequested();
 

@@ -232,6 +232,7 @@ MainWindow::~MainWindow()
     if(pge_thumbbar)
         delete pge_thumbbar;
 #endif
+    m_messageBoxer.disconnectAll();
     if(m_luna)
         delete m_luna;
     delete ui;
