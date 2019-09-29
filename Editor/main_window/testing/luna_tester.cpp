@@ -209,6 +209,13 @@ void LunaWorker::init()
     }
 }
 
+void LunaWorker::unInit()
+{
+    QObject::disconnect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                     this, &LunaWorker::processFinished);
+    QObject::disconnect(m_process, &QProcess::errorOccurred, this, &LunaWorker::errorOccurred);
+}
+
 LunaWorker::LunaWorker(QObject *parent) : QObject(parent)
 {
     m_lastStatus = QProcess::NotRunning;
@@ -219,8 +226,10 @@ LunaWorker::~LunaWorker()
     emit stopLoop();
     if(m_process)
     {
+        unInit();
         if(m_process->state() == QProcess::Running)
             m_process->kill();
+        m_process->waitForFinished(1000);
         delete m_process;
         m_process = nullptr;
     }
@@ -520,6 +529,7 @@ LunaTester::~LunaTester()
     }
     if(!m_thread.isNull())
     {
+        m_worker->unInit();
         m_worker->terminate();
         m_worker->quitLoop();
         m_thread->quit();

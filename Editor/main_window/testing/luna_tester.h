@@ -61,6 +61,7 @@ public slots:
 
 public:
     void terminate();
+    void unInit();
     bool isActive();
 
 private slots:
