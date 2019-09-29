@@ -34,6 +34,12 @@
 #include <glob.h>
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+#include <psapi.h>
+#include <stdio.h>
+#endif
+
 #include <QThread>
 #include <QEventLoop>
 #include <QDesktopWidget>
@@ -76,6 +82,72 @@ public:
 };
 
 static std::string readIPC(QProcess *input);
+
+#ifdef _WIN32
+static BOOL  checkProc(DWORD procId, const wchar_t *proc_name_wanted);
+static DWORD getPidsByPath(const std::wstring &process_path, DWORD *found_pids, DWORD found_pids_max_size);
+
+/* Checks matching of single process with full path string by PID */
+static BOOL checkProc(DWORD procId, const wchar_t *proc_name_wanted)
+{
+    wchar_t proc_name[MAX_PATH + 1] = L"<unknown>";
+    HMODULE h_mod = 0;
+    DWORD cbNeeded;
+    DWORD proc_name_len;
+    HANDLE h_process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, procId);
+
+    if(NULL == h_process)
+        return FALSE;
+
+    if(!EnumProcessModules(h_process, &h_mod, sizeof(h_mod), &cbNeeded))
+        return FALSE;
+
+    proc_name_len = GetModuleFileNameExW(h_process, h_mod, proc_name, MAX_PATH);
+    proc_name[proc_name_len] = '\0';
+
+    if(proc_name_len == 0)
+    {
+        proc_name_len = GetModuleBaseNameW(h_process, h_mod, proc_name, MAX_PATH);
+        proc_name[proc_name_len] = '\0';
+    }
+
+    CloseHandle(h_process);
+    return (lstrcmpiW(proc_name, proc_name_wanted) == 0);
+}
+
+/* Get all PIDs are matching given full path */
+static DWORD getPidsByPath(const std::wstring &process_path, DWORD *found_pids, DWORD found_pids_max_size)
+{
+    DWORD proc_id[1024];
+    DWORD ret_bytes = 0;
+    DWORD proc_count = 0;
+    unsigned int i;
+    DWORD found_pids_count = 0;
+
+    if(!EnumProcesses(proc_id, sizeof(proc_id), &ret_bytes))
+    {
+        LogCritical("ERROR: Can not execute EnumProcesses()...");
+        return 0;
+    }
+
+    proc_count = ret_bytes / sizeof(DWORD);
+
+    for(i = 0; i < proc_count; i++)
+    {
+        if(proc_id[i] != 0)
+        {
+            if(checkProc(proc_id[i], process_path.c_str()))
+            {
+                found_pids[found_pids_count++] = proc_id[i];
+                if(found_pids_count >= found_pids_max_size)
+                    break;
+            }
+        }
+    }
+
+    return found_pids_count;
+}
+#endif // _WIN32
 
 #if !defined(_WIN32) && !defined(__APPLE__)
 static pid_t find_pid(const char *process_name)
@@ -148,7 +220,7 @@ LunaWorker::~LunaWorker()
     if(m_process)
     {
         if(m_process->state() == QProcess::Running)
-            m_process->terminate();
+            m_process->kill();
         delete m_process;
         m_process = nullptr;
     }
@@ -183,14 +255,67 @@ void LunaWorker::terminate()
     if(m_process && (m_process->state() == QProcess::Running))
     {
         Q_PID pid = m_process->pid();
-        LogDebug(QString("LunaWorker: Killing by termiate()..."));
-        m_process->terminate();
+        LogDebug(QString("LunaWorker: Killing by QProcess::kill()..."));
+        QMetaObject::invokeMethod(m_process, "kill", Qt::QueuedConnection);
 #ifdef _WIN32
         if(pid)
         {
-            LogDebug(QString("LunaWorker: Killing %1 by 'taskkill'...").arg(ConfStatus::SmbxEXE_Name));
-            QProcess::startDetached("taskkill", {"/t", "/f", "/im", ConfStatus::SmbxEXE_Name});
+            DWORD lt_pid = static_cast<DWORD>(pid->dwProcessId);
+
+            HANDLE h_process = OpenProcess(PROCESS_TERMINATE, FALSE, lt_pid);
+            if(NULL != h_process)
+            {
+                LogDebug(QString("LunaWorker: Killing LunaLoader-exec with PID %1 by 'TerminateProcess()'...")
+                         .arg(lt_pid));
+                BOOL res = TerminateProcess(h_process, 0);
+                if(!res)
+                {
+                    LogDebug(
+                        QString("LunaWorker: Failed to kill LunaLoader-exec with PID %1 by 'TerminateProcess()' with error '%3', possibly it's already terminated")
+                            .arg(lt_pid)
+                            .arg(GetLastError())
+                    );
+                }
+                CloseHandle(h_process);
+            }
+            else
+            {
+                LogDebug("LunaWorker: LunaLoader-exec is not run");
+            }
         }
+
+        // Kill everything that has "smbx.exe"
+        DWORD proc_id[1024];
+        DWORD proc_count = 0;
+        QString smbxPath = ConfStatus::configDataPath + ConfStatus::SmbxEXE_Name;
+        smbxPath.replace('/', '\\');
+        proc_count = getPidsByPath(smbxPath.toStdWString(), proc_id, 1024);
+        if(proc_count > 0)
+        {
+            LogDebug(QString("LunaWorker: Found matching PIDs for running %1, going to kill...")
+                     .arg(ConfStatus::SmbxEXE_Name));
+            for(DWORD i = 0; i < proc_count; i++)
+            {
+                DWORD f_pid = proc_id[i];
+                HANDLE h_process = OpenProcess(PROCESS_TERMINATE, FALSE, f_pid);
+                if(NULL != h_process)
+                {
+                    BOOL res = TerminateProcess(h_process, 0);
+                    if(!res)
+                    {
+                        LogDebug(
+                            QString("LunaWorker: Failed to kill %1 with PID %2 by 'TerminateProcess()' with error '%3', possibly it's already terminated.")
+                                 .arg(ConfStatus::SmbxEXE_Name)
+                                 .arg(f_pid)
+                                 .arg(GetLastError())
+                        );
+                    }
+                    CloseHandle(h_process);
+                }
+            }
+        }
+        else
+            LogDebug(QString("LunaWorker: No matching PIDs found for %1:").arg(ConfStatus::SmbxEXE_Name));
 #else // _WIN32
         if(pid)
             kill(static_cast<pid_t>(pid), SIGTERM);
@@ -400,9 +525,6 @@ LunaTester::~LunaTester()
         m_thread->quit();
         m_thread->requestInterruption();
         m_thread->wait();
-#ifdef _WIN32 // WORKAROUND: kill LunaLoader-exec if it's still running
-        QProcess::startDetached("taskkill", {"/t", "/f", "/im", "LunaLoader-exec.exe"});
-#endif
     }
     m_worker.reset();
     m_thread.reset();
@@ -1070,7 +1192,7 @@ failed:
     msg.warning("LunaTester", tr("LunaLUA tester is not started!"), QMessageBox::Ok);
 }
 
-bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
+bool LunaTester::closeSmbxWindow()
 {
     if(m_killPreviousSession || (!isOutPipeOpen()) || (!isInPipeOpen()))
         return false;
@@ -1111,18 +1233,15 @@ bool LunaTester::closeSmbxWindow(SafeMsgBoxInterface &msg)
 #endif
             }
             else
-                msg.warning("LunaTester (closeSmbxWindow, obj[\"error\"])",
-                            "LunaLua returned error message:\n" +
-                            QString::fromStdString(inMessage),
-                            QMessageBox::Ok);
+                LogWarningQD("LunaTester (closeSmbxWindow, obj[\"error\"]): "
+                             "LunaLua returned error message:\n" +
+                             QString::fromStdString(inMessage));
         }
         else
         {
-            msg.warning("LunaTester (closeSmbxWindow)",
-                        "Error of parsing input data from LunaLua:\n" +
-                        err.errorString() +
-                        "\n\nData:\n" + QString::fromStdString(inMessage),
-                        QMessageBox::Warning);
+            LogWarningQD("LunaTester (closeSmbxWindow): Error of parsing "
+                         "input data from LunaLua:\n" + err.errorString() +
+                         "\n\nData:\n" + QString::fromStdString(inMessage));
         }
         return true;
     }
@@ -1238,7 +1357,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPa
             if(isOutPipeOpen())
             {
                 //Workaround to avoid weird crash
-                closeSmbxWindow(msg);
+                closeSmbxWindow();
                 //Then send level data to SMBX Engine
                 if(sendLevelData(in_levelData, levelPath, isUntitled))
                 {

@@ -589,6 +589,10 @@ if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
     set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
+if(WIN32)
+    list(APPEND PGE_EDITOR_LINK_LIBS kernel32 psapi) # Needed for LunaTester killer
+endif()
+
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
         set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-mwindows")
@@ -597,7 +601,6 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
         endif()
     endif()
 endif()
-
 
 if(APPLE)
     set_target_properties(pge_editor PROPERTIES
