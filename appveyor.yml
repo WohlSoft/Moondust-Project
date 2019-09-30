@@ -90,6 +90,7 @@ environment:
       MINGWx64Dest: no
 
 install:
+- cmd: tzutil /s "Russian Standard Time_dstoff"
 - cmd: _common/appveyor-ci/download.cmd
 - cmd: _common/appveyor-ci/install.cmd
 #  - ps: new-item C:\temp-d -itemtype directory
