@@ -89,7 +89,7 @@ void AssocFiles::on_reset_clicked()
 
     defaultFormats["voc"] = true;
     defaultFormats["ay"]  = true;
-    defaultFormats["bgs"] = true;
+    defaultFormats["gbs"] = true;
     defaultFormats["gym"] = true;
     defaultFormats["hes"] = true;
     defaultFormats["kss"] = true;
@@ -150,7 +150,7 @@ AssocFiles::~AssocFiles()
     delete ui;
 }
 
-#if !defined(__APPLE__) && !defined(_WIN32)
+#if defined(__linux__)
 static bool xCopyFile(const QString &src, const QString &target)
 {
     QFile tmp;
@@ -237,7 +237,7 @@ void AssocFiles::on_AssocFiles_accepted()
 {
     bool success = true;
 
-#ifdef _WIN32
+#if defined(_WIN32)
     QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
 
     success = registry_hkcu.isWritable();
@@ -255,7 +255,7 @@ void AssocFiles::on_AssocFiles_accepted()
         }
     }
 
-#elif !defined __APPLE__
+#elif defined(__linux__)
     const QString home = QDir::home().absolutePath();
 
     if(success) success = QDir().mkpath(home + "/.local/share/mime/packages");
@@ -323,6 +323,8 @@ void AssocFiles::on_AssocFiles_accepted()
 
     if(success) success = xRunCommand("update-desktop-database", {home + "/.local/share/applications"});
     if(success) success = xRunCommand("update-mime-database", {home + "/.local/share/mime"});
+#else
+    success = false;
 #endif
 
     if(!success)

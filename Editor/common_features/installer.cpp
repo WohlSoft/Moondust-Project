@@ -60,7 +60,7 @@ void Installer::moveFromAppToUser()
         QFile(ApplicationPath + "/" + f).remove();
 }
 
-#ifndef __APPLE__
+#if defined(__linux__)
 static bool xCopyFile(const QString &src, const QString &target)
 {
     QFile tmp;
@@ -185,7 +185,7 @@ bool Installer::associateFiles_thread()
 {
     bool success = true;
 
-#ifdef _WIN32
+#if defined(_WIN32)
     //QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
     QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
 
@@ -276,7 +276,7 @@ bool Installer::associateFiles_thread()
     // User variable(s)
     registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QString(ApplicationPath).replace("/", "\\") + "\"");
 
-#elif defined __APPLE__
+#elif defined(__APPLE__)
     // only useful when other apps have taken precedence over our file extensions and you want to reset it
     //Need write correct strings for allow associations for Mac OS:
 
@@ -309,7 +309,7 @@ bool Installer::associateFiles_thread()
     //Is not supported yet :P
     success = false;
 
-#else
+#elif defined(__linux__)
     QString home = QDir::home().absolutePath();
 
     // Here need correctly associate too
@@ -343,6 +343,10 @@ bool Installer::associateFiles_thread()
     if(success) success = xRunCommand("xdg-mime", {"default", "pge_editor.desktop", "application/x-pgex-world"});
     if(success) success = xRunCommand("update-desktop-database", {home + "/.local/share/applications"});
     if(success) success = xRunCommand("update-mime-database", {home + "/.local/share/mime"});
+#else
+    // Unsupported operating system
+    success = false;
+
 #endif
 
     return success;
