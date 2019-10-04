@@ -29,17 +29,6 @@ if(NOT CMAKE_BUILD_TYPE)
     message("== Using default build configuration which is a Release!")
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
-if(MSVC)
-    if(MSVC_VERSION GREATER_EQUAL "1900")
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-        if (_cpp_latest_flag_supported)
-            add_compile_options("/std:c++latest")
-        endif()
-    endif()
-endif()
-
 # Version
 include(version.cmake)
 # Default GIT version
@@ -65,6 +54,8 @@ include(../_common/Utils/Utils.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
+
+pge_cxx_standard(14)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -585,7 +576,7 @@ else()
     list(APPEND PGE_EDITOR_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
 
-if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
+if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT)
     set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 

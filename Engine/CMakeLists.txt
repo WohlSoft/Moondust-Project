@@ -17,17 +17,6 @@ if(NOT CMAKE_BUILD_TYPE)
     message("== Using default build configuration which is a Release!")
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
-if(MSVC)
-    if(MSVC_VERSION GREATER_EQUAL "1900")
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-        if (_cpp_latest_flag_supported)
-            add_compile_options("/std:c++latest")
-        endif()
-    endif()
-endif()
-
 if(ANDROID)
     include(AndroidNdkModules)
     android_ndk_import_module_cpufeatures()
@@ -58,6 +47,8 @@ include(../_common/Utils/openUrl.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
+
+pge_cxx_standard(14)
 
 set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
 if(_QT_LRELEASE_PROGRAM)
@@ -444,11 +435,8 @@ else()
     list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
 
-if(NOT APPLE)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        "-static-libgcc"
-        "-static-libstdc++"
-    )
+if(NOT APPLE AND NOT MSVC)
+	set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(ANDROID)

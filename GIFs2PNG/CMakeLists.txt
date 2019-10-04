@@ -12,17 +12,6 @@ if(NOT CMAKE_BUILD_TYPE)
     message("== Using default build configuration which is a Release!")
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
-if(MSVC)
-    if(MSVC_VERSION GREATER_EQUAL "1900")
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-        if (_cpp_latest_flag_supported)
-            add_compile_options("/std:c++latest")
-        endif()
-    endif()
-endif()
-
 # Version
 include(version.cmake)
 # Default GIT version
@@ -38,6 +27,8 @@ include(../_common/Utils/Utils.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/IniProcessor/IniProcessor.cmake)
+
+pge_cxx_standard(14)
 
 set(GIFs2PNG_SRCS)
 
@@ -95,7 +86,7 @@ list(APPEND GIFs2PNG_INSTALLS
     GIFs2PNG
 )
 
-if(NOT APPLE)
+if(NOT APPLE AND NOT MSVC)
     set_target_properties(GIFs2PNG PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 

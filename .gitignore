@@ -67,6 +67,7 @@ Makefile.*
 /bin-w32
 /bin-w64
 /bin-cmake*
+/out
 /bin-archives
 /ServerLib/bin
 /android-build

@@ -34,6 +34,8 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+pge_cxx_standard(14)
+
 # WORKAROUND: Avoid ImpLib file creation on a non-library project
 if(CYGWIN OR MINGW)
     # Prune --out-implib from executables. It doesn't make sense even
@@ -179,7 +181,7 @@ else()
     endif()
 endif()
 
-if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
+if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT)
     set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 

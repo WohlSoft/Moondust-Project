@@ -46,7 +46,7 @@ if(HAIKU OR EMSCRIPTEN OR ANDROID)
 endif()
 
 if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
-    find_package(Qt5 COMPONENTS Core)
+    find_package(Qt5 COMPONENTS Core QUIET) # Check is Qt available
     if(Qt5_FOUND)
         option(PGE_ENABLE_QT "Enable build of Qt-dependent components" ${PGE_ENABLE_QT_ENABLED_BY_DEFAULT})
         option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
