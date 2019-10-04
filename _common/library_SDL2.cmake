@@ -173,6 +173,7 @@ else()
             "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
             $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
             -DSDL_SHARED=${PGE_SHARED_SDLMIXER}
+            -DLIBC=ON
             # $<$<BOOL:WIN32>:-DWASAPI=OFF>  #For some experiment, enable WASAPI support
             $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
             $<$<BOOL:LINUX>:-DSNDIO=OFF>
