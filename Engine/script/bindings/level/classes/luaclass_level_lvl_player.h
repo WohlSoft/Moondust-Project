@@ -22,10 +22,6 @@
 
 #include <lua_includes/lua.hpp>
 #include <luabind/luabind.hpp>
-#include <luabind/function.hpp>
-#include <luabind/class.hpp>
-#include <luabind/detail/call_function.hpp>
-#include <luabind/operator.hpp>
 
 #include <scenes/level/lvl_player.h>
 

@@ -17,6 +17,9 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#include <luabind/luabind.hpp>
+#include <luabind/detail/primitives.hpp> // for null_type
+
 #include "luaclass_level_lvl_npc.h"
 #include "luaclass_level_lvl_player.h"
 
@@ -207,9 +210,10 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onTransform(unsigned long id)
 luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 {
     using namespace luabind;
+    using namespace luabind::detail;
     return class_<LVL_Npc,
                   PGE_Phys_Object,
-                  detail::null_type,
+                  null_type,
                   Binding_Level_ClassWrapper_LVL_NPC>("BaseNPC")
             /***
             Damage reasons enumeration (DamageReason)
