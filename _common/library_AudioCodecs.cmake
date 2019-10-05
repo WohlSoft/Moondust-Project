@@ -2,17 +2,17 @@
 add_library(PGE_ZLib INTERFACE)
 add_library(PGE_AudioCodecs INTERFACE)
 
+set(libZLib_A_Lib_buit    "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}zlib${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+
 if(USE_SYSTEM_LIBPNG)
     find_package(ZLIB)
     message("-- Found ZLib: ${ZLIB_LIBRARIES} --")
     target_link_libraries(PGE_ZLib INTERFACE "${LIBZLIB_LIBRARY}")
     target_include_directories(PGE_ZLib INTERFACE "${ZLIB_INCLUDE_DIRS}")
     target_link_libraries(PGE_libPNG INTERFACE "${LIBZLIB_LIBRARY}")
-
     set(libZLib_A_Lib "${ZLIB_LIBRARIES}")
-
 else()
-    set(libZLib_A_Lib    "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}zlib${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+    set(libZLib_A_Lib ${libZLib_A_Lib_buit})
     message("-- ZLib will be built (as a part of AudioCodecs): ${libZLib_A_Lib} --")
     target_link_libraries(PGE_ZLib INTERFACE "${libZLib_A_Lib}")
 endif()
@@ -58,7 +58,7 @@ ExternalProject_Add(
     DEPENDS ${AudioCodecs_Deps}
     BUILD_BYPRODUCTS
         ${AudioCodecs_Libs}
-        "${libZLib_A_Lib}"
+        "${libZLib_A_Lib_buit}"
 )
 
 target_link_libraries(PGE_AudioCodecs INTERFACE "${AudioCodecs_Libs}" ${libZLib_A_Lib})
