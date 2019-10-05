@@ -12,10 +12,7 @@
 #include <luabind/yield_policy.hpp>
 #include <luabind/detail/decorate_type.hpp>
 #include <luabind/detail/object.hpp>
-
-#ifdef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
 #include <tuple>
-#endif
 
 namespace luabind {
 	namespace detail {
@@ -32,11 +29,11 @@ namespace luabind {
 			virtual ~function_object()
 			{}
 
-			virtual int call(lua_State* L, invoke_context& ctx) /* const */ = 0;
-			virtual void format_signature(lua_State* L, char const* function) const = 0;
+			virtual int call(lua_State* L, invoke_context& ctx, const int args) const = 0;
+			virtual int format_signature(lua_State* L, char const* function, bool concat = true) const = 0;
 
 			lua_CFunction entry;
-			std::string name;
+            luabind::string name;
 			function_object* next;
 			object keepalive;
 		};
@@ -45,9 +42,9 @@ namespace luabind {
 		{
 			invoke_context()
 				: best_score((std::numeric_limits<int>::max)())
-				  //This need to avoid static analyzer's treats
-				, candidates{nullptr,nullptr,nullptr,nullptr,nullptr,
-				             nullptr,nullptr,nullptr,nullptr,nullptr}
+				//This need to avoid static analyzer's treats
+				, candidates{ nullptr,nullptr,nullptr,nullptr,nullptr,
+							 nullptr,nullptr,nullptr,nullptr,nullptr }
 				, candidate_index(0)
 			{}
 
@@ -128,180 +125,7 @@ namespace luabind {
 				static void postcall(lua_State* /*L*/, int /*results*/) {}
 			};
 
-#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
-			template< typename... ArgumentConverters >
-			struct compute_invoke_values {
-				using consumed_list = meta::index_list< FooFoo<ArgumentConverters>::consumed_args... >;
-				using stack_index_list = typename compute_stack_indices< consumed_list, 1 >::type;
-				enum { arity = meta::sum<consumed_list>::value };
-			};
-#endif
-
-
 		}
-
-#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
-		inline int match_deferred(lua_State* L, meta::index_list<>, meta::type_list<>)
-		{
-			return 0;
-		}
-
-		template< unsigned int StackIndex0, unsigned int... StackIndices,
-			typename ArgumentType0, typename... ArgumentTypes,
-			typename ArgumentConverter0, typename... ArgumentConverters >
-			int match_deferred(lua_State* L,
-				meta::index_list< StackIndex0, StackIndices... >,
-				meta::type_list< ArgumentType0, ArgumentTypes... >,
-				ArgumentConverter0& converter0, ArgumentConverters&... converters
-			)
-		{
-			const int this_match = converter0.match(L, decorated_type<ArgumentType0>(), StackIndex0);
-			const int other_match = match_deferred(L, meta::index_list<StackIndices...>(), meta::type_list<ArgumentTypes...>(), converters...);
-			return (this_match >= 0) ?	// could also sum them all up unconditionally
-				this_match + match_deferred(L, meta::index_list<StackIndices...>(), meta::type_list<ArgumentTypes...>(), converters...)
-				: no_match;
-		}
-
-		template< typename T, bool isvoid, bool memfun = std::is_member_function_pointer<T>::value > struct do_call_struct;
-
-		template< typename T >
-		struct do_call_struct< T, true, true /*memfun*/> {
-			template< typename F, typename ArgumentType0, typename... ArgumentTypes, unsigned int StackIndex0, unsigned int... StackIndices, typename ReturnConverter, typename Argument0Converter, typename... ArgumentConverters >
-			static void do_call(lua_State* L, F& f,
-				meta::index_list<StackIndex0, StackIndices...>, meta::type_list<ArgumentType0, ArgumentTypes...>,
-				ReturnConverter& result_converter, Argument0Converter& arg0_converter, ArgumentConverters&... arg_converters
-			)
-			{
-				((arg0_converter.to_cpp(L, decorated_type<ArgumentType0>(), StackIndex0)).*f)(
-					arg_converters.to_cpp(L, decorated_type<ArgumentTypes>(), StackIndices)...
-					);
-			}
-		};
-
-		template< typename T >
-		struct do_call_struct< T, false, true /*memfun*/> {
-			template< typename F, typename ArgumentType0, typename... ArgumentTypes, unsigned int StackIndex0, unsigned int... StackIndices, typename ReturnConverter, typename Argument0Converter, typename... ArgumentConverters >
-			static void do_call(lua_State* L, F& f,
-				meta::index_list<StackIndex0, StackIndices...>, meta::type_list<ArgumentType0, ArgumentTypes...>,
-				ReturnConverter& result_converter, Argument0Converter& arg0_converter, ArgumentConverters&... arg_converters
-			)
-			{
-				result_converter.to_lua(L,
-					((arg0_converter.to_cpp(L, decorated_type<ArgumentType0>(), StackIndex0)).*f)(
-						arg_converters.to_cpp(L, decorated_type<ArgumentTypes>(), StackIndices)...
-						)
-				);
-			}
-		};
-
-
-		template< typename T >
-		struct do_call_struct< T, true, false > {
-			template<
-				typename F,
-				typename... ArgumentTypes, unsigned int... StackIndices,
-				typename ReturnConverter, typename... ArgumentConverters
-			>
-				static void do_call(lua_State* L, F& f,
-					meta::index_list<StackIndices...>, meta::type_list<ArgumentTypes...>,
-					ReturnConverter& result_converter, ArgumentConverters&... arg_converters)
-			{
-				f(arg_converters.to_cpp(L, decorated_type<ArgumentTypes>(), StackIndices)...);
-			}
-		};
-
-		template< typename T >
-		struct do_call_struct< T, false, false > {
-			template<
-				typename F,
-				typename... ArgumentTypes, unsigned int... StackIndices,
-				typename ReturnConverter, typename... ArgumentConverters
-			>
-				static void do_call(lua_State* L, F& f,
-					meta::index_list<StackIndices...>, meta::type_list<ArgumentTypes...>,
-					ReturnConverter& result_converter, ArgumentConverters&... arg_converters)
-			{
-				result_converter.to_lua(L,
-					f(arg_converters.to_cpp(L, decorated_type<ArgumentTypes>(), StackIndices)...)
-				);
-			}
-		};
-
-		template< typename F, typename ReturnType, typename... Arguments,
-			typename ReturnConverter, typename... ArgumentConverters,
-			unsigned int Index0, unsigned int... Indices, typename PolicyList
-		>
-			int invoke3(lua_State* L, function_object const& self, invoke_context& ctx, F& f,
-				PolicyList, meta::index_list< Index0, Indices... > index_list, meta::type_list<ReturnType, Arguments...> signature_list,
-				ReturnConverter return_converter, ArgumentConverters... argument_converters)
-		{
-			using invoke_values       = typename call_detail_new::compute_invoke_values< ArgumentConverters... >;
-			using argument_list_type  = meta::type_list<Arguments...>;
-			using argument_index_list = meta::index_list<Indices...>;
-
-			int const arguments = lua_gettop(L);
-			int score = no_match;
-
-			if(invoke_values::arity == arguments) {
-				score = match_deferred(L, typename invoke_values::stack_index_list(), argument_list_type(), argument_converters...);
-			}
-
-			if(score >= 0 && score < ctx.best_score) {
-				ctx.best_score = score;
-				ctx.candidates[0] = &self;
-				ctx.candidate_index = 1;
-			}
-			else if(score == ctx.best_score) {
-				ctx.candidates[ctx.candidate_index++] = &self;
-			}
-
-			int results = 0;
-
-			if(self.next)
-			{
-				results = self.next->call(L, ctx);
-			}
-
-			if(score == ctx.best_score && ctx.candidate_index == 1)
-			{
-				do_call_struct<F, std::is_void<ReturnType>::value>::do_call(L, f, typename invoke_values::stack_index_list(), argument_list_type(), return_converter, argument_converters...);
-				meta::init_order{ (argument_converters.converter_postcall(L, decorated_type<Arguments>(), meta::get< typename invoke_values::stack_index_list, Indices - 1 >::value), 0)... };
-
-				results = lua_gettop(L) - invoke_values::arity;
-				if(has_call_policy<PolicyList, yield_policy>::value) {
-					results = lua_yield(L, results);
-				}
-
-				// call policiy list postcall
-				call_detail_new::policy_list_postcall < PolicyList, typename meta::push_front< typename invoke_values::stack_index_list, meta::index<invoke_values::arity> >::type >::postcall(L, results);
-			}
-
-			return results;
-		}
-
-		template< typename F, typename ReturnType, typename... Arguments, unsigned int Index0, unsigned int... Indices, typename PolicyList >
-		int invoke2(lua_State* L, function_object const& self, invoke_context& ctx, F& f,
-			meta::type_list<ReturnType, Arguments...> signature, meta::index_list<Index0, Indices...>, PolicyList)
-		{
-			using signature_type   = meta::type_list<ReturnType, Arguments...>;
-			using return_converter = specialized_converter_policy_n<0, PolicyList, ReturnType, cpp_to_lua>;
-			return invoke3(L, self, ctx, f,
-				PolicyList(), meta::index_list<Index0, Indices...>(), signature,
-				return_converter(), specialized_converter_policy_n<Indices, PolicyList, Arguments, lua_to_cpp>()...
-			);
-		}
-
-
-		template <class F, class Signature, typename... PolicyInjectors>
-		// boost::bind's operator() is const, std::bind's is not
-		inline int invoke(lua_State* L, function_object const& self, invoke_context& ctx, F& f, Signature,
-			meta::type_list< PolicyInjectors... > const& injectors)
-		{
-			return invoke2(L, self, ctx, f, Signature(), typename meta::make_index_range<0, meta::size<Signature>::value>::type(), injectors);
-		}
-#endif
-
-#ifdef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
 
 		// VC2013RC doesn't support expanding a template and its member template in one expression, that's why we have to to incrementally build
 		// the converter list instead of a single combined expansion.
@@ -311,9 +135,9 @@ namespace luabind {
 		template< typename Argument0, typename... Arguments, typename PolicyList, typename... CurrentConverters, unsigned int Counter >
 		struct compute_argument_converter_list< meta::type_list<Argument0, Arguments... >, PolicyList, meta::type_list<CurrentConverters...>, Counter >
 		{
-			using converter_type   = typename policy_detail::get_converter_policy<Counter, PolicyList>::type;
+			using converter_type = typename policy_detail::get_converter_policy<Counter, PolicyList>::type;
 			using this_specialized = typename converter_type::template specialize<Argument0, lua_to_cpp >::type;
-			using type             = typename compute_argument_converter_list<meta::type_list<Arguments...>, PolicyList, meta::type_list<CurrentConverters..., this_specialized>, Counter + 1>::type;
+			using type = typename compute_argument_converter_list<meta::type_list<Arguments...>, PolicyList, meta::type_list<CurrentConverters..., this_specialized>, Counter + 1>::type;
 		};
 
 		template<typename PolicyList, typename... CurrentConverters, unsigned int Counter >
@@ -337,19 +161,19 @@ namespace luabind {
 		template< typename ResultType, typename... Arguments, typename PolicyList >
 		struct invoke_traits< meta::type_list<ResultType, Arguments... >, PolicyList >
 		{
-			using signature_list   = meta::type_list<ResultType, Arguments...>;
-			using policy_list      = PolicyList;
-			using result_type      = ResultType;
+			using signature_list = meta::type_list<ResultType, Arguments...>;
+			using policy_list = PolicyList;
+			using result_type = ResultType;
 			using result_converter = specialized_converter_policy_n<0, PolicyList, result_type, cpp_to_lua >;
-			using argument_list    = meta::type_list<Arguments...>;
+			using argument_list = meta::type_list<Arguments...>;
 
-			using decorated_argument_list = meta::type_list< decorated_type<Arguments>... >;
+			using decorated_argument_list = meta::type_list< decorate_type_t<Arguments>... >;
 			// note that this is 0-based, so whenever you want to fetch from the converter list, you need to add 1
-			using argument_index_list           = typename meta::make_index_range< 0, sizeof...(Arguments) >::type;
-			using argument_converter_list       = typename compute_argument_converter_list<argument_list, PolicyList>::type;
+			using argument_index_list = typename meta::make_index_range< 0, sizeof...(Arguments) >::type;
+			using argument_converter_list = typename compute_argument_converter_list<argument_list, PolicyList>::type;
 			using argument_converter_tuple_type = typename meta::make_tuple<argument_converter_list>::type;
-			using consumed_list                 = typename build_consumed_list<argument_converter_list>::consumed_list;
-			using stack_index_list              = typename call_detail_new::compute_stack_indices< consumed_list, 1 >::type;
+			using consumed_list = typename build_consumed_list<argument_converter_list>::consumed_list;
+			using stack_index_list = typename call_detail_new::compute_stack_indices< consumed_list, 1 >::type;
 			enum { arity = meta::sum<consumed_list>::value };
 		};
 
@@ -358,7 +182,7 @@ namespace luabind {
 			template< typename TupleType >
 			static int match(lua_State* L, TupleType& tuple)
 			{
-				const int this_match = std::get<Index - 1>(tuple).match(L, decorated_type<typename SignatureList::template at<Index>>(), meta::get<StackIndexList, Index - 1>::value);
+				const int this_match = std::get<Index - 1>(tuple).match(L, decorate_type_t<typename SignatureList::template at<Index>>(), meta::get<StackIndexList, Index - 1>::value);
 				return this_match >= 0 ?	// could also sum them up unconditionally
 					this_match + match_struct<StackIndexList, SignatureList, End, Index + 1>::match(L, tuple)
 					: no_match;
@@ -387,8 +211,8 @@ namespace luabind {
 			{
 				static void call(lua_State* L, F& f, typename traits::argument_converter_tuple_type& argument_tuple)
 				{
-					using decorated_list   = typename traits::decorated_argument_list;
-					using stack_indices    = typename traits::stack_index_list;
+					using decorated_list = typename traits::decorated_argument_list;
+					using stack_indices = typename traits::stack_index_list;
 					using result_converter = typename traits::result_converter;
 
 					result_converter().to_lua(L,
@@ -412,7 +236,7 @@ namespace luabind {
 				static void call(lua_State* L, F& f, typename traits::argument_converter_tuple_type& argument_tuple)
 				{
 					using decorated_list = typename traits::decorated_argument_list;
-					using stack_indices  = typename traits::stack_index_list;
+					using stack_indices = typename traits::stack_index_list;
 
 					// This prevents unused warnings with empty parameter lists
 					(void)L;
@@ -436,8 +260,8 @@ namespace luabind {
 			{
 				static void call(lua_State* L, F& f, typename traits::argument_converter_tuple_type& argument_tuple)
 				{
-					using decorated_list   = typename traits::decorated_argument_list;
-					using stack_indices    = typename traits::stack_index_list;
+					using decorated_list = typename traits::decorated_argument_list;
+					using stack_indices = typename traits::stack_index_list;
 					using result_converter = typename traits::result_converter;
 
 					auto& object = std::get<0>(argument_tuple).to_cpp(L,
@@ -464,7 +288,7 @@ namespace luabind {
 				static void call(lua_State* L, F& f, typename traits::argument_converter_tuple_type& argument_tuple)
 				{
 					using decorated_list = typename traits::decorated_argument_list;
-					using stack_indices  = typename traits::stack_index_list;
+					using stack_indices = typename traits::stack_index_list;
 
 					auto& object = std::get<0>(argument_tuple).to_cpp(L, typename meta::get<typename traits::decorated_argument_list, 0>::type(), 1);
 
@@ -481,66 +305,92 @@ namespace luabind {
 				}
 			};
 
-			static int invoke(lua_State* L, function_object const& self, invoke_context& ctx, F& f) {
-				int const arguments = lua_gettop(L);
-				int score = no_match;
-
-				// Even match needs the tuple, since pointer_converters buffer the cast result
-				typename traits::argument_converter_tuple_type converter_tuple;
-
-				if(traits::arity == arguments) {
-					// Things to remember:
-					// 0 is the perfect match. match > 0 means that objects had to be casted, where the value
-					// is the total distance of all arguments to their given types (graph distance).
-					// This is why we can say MaxArguments = 100, MaxDerivationDepth = 100, so no match will be > 100*100=10k and -10k1 absorbs every match.
-					// This gets rid of the awkward checks during converter match traversal.
-					using struct_type = match_struct< typename traits::stack_index_list, typename traits::signature_list >;
-					score = struct_type::match(L, converter_tuple);
-				}
-
-				if(score >= 0 && score < ctx.best_score) {
-					ctx.best_score = score;
-					ctx.candidates[0] = &self;
-					ctx.candidate_index = 1;
-				}
-				else if(score == ctx.best_score) {
-					ctx.candidates[ctx.candidate_index++] = &self;
-				}
-
+			template< typename TupleType >
+			static int call_fun(lua_State* L, invoke_context& /*ctx*/, F& f, const int args, TupleType& tuple)
+			{
 				int results = 0;
 
-				if(self.next)
-				{
-					results = self.next->call(L, ctx);
+				call_struct<
+					std::is_member_function_pointer<F>::value,
+					std::is_void<typename traits::result_type>::value,
+					typename traits::argument_index_list
+				>::call(L, f, tuple);
+
+				results = lua_gettop(L) - args;
+				if (has_call_policy<PolicyList, yield_policy>::value) {
+					results = lua_yield(L, results);
 				}
 
-				if(score == ctx.best_score && ctx.candidate_index == 1)
-				{
-					call_struct<
-						std::is_member_function_pointer<F>::value,
-						std::is_void<typename traits::result_type>::value,
-						typename traits::argument_index_list
-					>::call(L, f, converter_tuple);
-
-					results = lua_gettop(L) - traits::arity;
-					if(has_call_policy<PolicyList, yield_policy>::value) {
-						results = lua_yield(L, results);
-					}
-
-					call_detail_new::policy_list_postcall < PolicyList, typename meta::push_front< typename traits::stack_index_list, meta::index<traits::arity> >::type >::postcall(L, results);
-				}
+				call_detail_new::policy_list_postcall < PolicyList, typename meta::push_front< typename traits::stack_index_list, meta::index<traits::arity> >::type >::postcall(L, results);
 
 				return results;
 			}
 
+			static int call_best_match(lua_State* L, function_object const& self, invoke_context& ctx, F& f, const int args)
+			{
+				// Even match needs the tuple, since pointer_converters buffer the cast result
+				typename traits::argument_converter_tuple_type converter_tuple;
+
+				int score = no_match;
+				if (traits::arity == args)
+				{
+					using struct_type = match_struct< typename traits::stack_index_list, typename traits::signature_list >;
+					score = struct_type::match(L, converter_tuple);
+				}
+
+				if (score >= 0 && score < ctx.best_score) {
+					ctx.best_score = score;
+					ctx.candidates[0] = &self;
+					ctx.candidate_index = 1;
+				}
+				else if (score == ctx.best_score) {
+					ctx.candidates[ctx.candidate_index++] = &self;
+				}
+
+				int results = 0;
+				if (self.next)
+					results = self.next->call(L, ctx, args);
+
+				if (ctx.best_score == score && ctx.candidate_index == 1)
+					results = call_fun(L, ctx, f, args, converter_tuple);
+
+				return results;
+			}
+
+			static int invoke(lua_State* L, function_object const& self, invoke_context& ctx, F& f) {
+				int const arguments = lua_gettop(L);
+
+#ifndef XRAY_SCRIPTS_NO_BACKWARDS_COMPATIBILITY
+				if (!self.next)
+				{
+					// Even match needs the tuple, since pointer_converters buffer the cast result
+					typename traits::argument_converter_tuple_type converter_tuple;
+
+					using struct_type = match_struct< typename traits::stack_index_list, typename traits::signature_list >;
+					ctx.best_score = struct_type::match(L, converter_tuple);
+					ctx.candidates[0] = &self;
+					ctx.candidate_index = 1;
+
+					return call_fun(L, ctx, f, arguments, converter_tuple);
+				}
+#endif
+
+				return call_best_match(L, self, ctx, f, arguments);
+			}
+
 		};
+
+		template< typename PolicyList, typename Signature, typename F>
+		inline int call_best_match(lua_State* L, function_object const& self, invoke_context& ctx, F& f, const int args)
+		{
+			return invoke_struct<PolicyList, Signature, F>::call_best_match(L, self, ctx, f, args);
+		}
 
 		template< typename PolicyList, typename Signature, typename F>
 		inline int invoke(lua_State* L, function_object const& self, invoke_context& ctx, F& f)
 		{
 			return invoke_struct<PolicyList, Signature, F>::invoke(L, self, ctx, f);
 		}
-#endif
 
 	}
 } // namespace luabind::detail

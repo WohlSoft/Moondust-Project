@@ -53,27 +53,28 @@ endif()
 
 set(LUABIND_SRCS)
 list(APPEND LUABIND_SRCS
-    src/class.cpp
-    src/class_info.cpp
-    src/class_registry.cpp
-    src/class_rep.cpp
-    src/create_class.cpp
-    src/error.cpp
-    src/exception_handler.cpp
-    src/function.cpp
-    src/function_introspection.cpp
-    src/inheritance.cpp
-    src/link_compatibility.cpp
-    src/object_rep.cpp
-    src/open.cpp
-    src/operator.cpp
-    src/pcall.cpp
-    src/scope.cpp
-    src/set_package_preload.cpp
-    src/stack_content_by_name.cpp
-    src/weak_ref.cpp
-    src/wrapper_base.cpp
-    src/headertest.cpp
+	src/class.cpp
+	src/class_info.cpp
+	src/class_registry.cpp
+	src/class_rep.cpp
+	src/create_class.cpp
+	src/error.cpp
+	src/exception_handler.cpp
+	src/function.cpp
+	src/function_introspection.cpp
+	src/headertest.cpp
+	src/inheritance.cpp
+	src/link_compatibility.cpp
+	src/memory.cpp
+	src/object_rep.cpp
+	src/open.cpp
+	src/operator.cpp
+	src/pcall.cpp
+	src/scope.cpp
+	src/set_package_preload.cpp
+	src/stack_content_by_name.cpp
+	src/weak_ref.cpp
+	src/wrapper_base.cpp
 )
 
 add_library(luabind STATIC
@@ -81,12 +82,12 @@ add_library(luabind STATIC
     ${LUABIND_SRCS}
 )
 
-target_compile_definitions(luabind PUBLIC -D_LIBLUABIND)
+target_compile_definitions(luabind PRIVATE -D_LIBLUABIND)
 if(NOT WIN32)
-    target_compile_definitions(luabind PUBLIC -DLUA_USE_LINUX)
+    target_compile_definitions(luabind PRIVATE -DLUA_USE_LINUX)
 endif()
 if(USE_LUAJIT)
-    target_compile_definitions(luabind PUBLIC -DUSE_LUA_JIT)
+    target_compile_definitions(luabind PRIVATE -DUSE_LUA_JIT)
 endif()
 
 install(DIRECTORY
@@ -111,7 +112,7 @@ if(USE_LUAJIT)
             DESTINATION include/lua_includes)
 endif()
 
-INSTALL(TARGETS luabind
+install(TARGETS luabind
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin

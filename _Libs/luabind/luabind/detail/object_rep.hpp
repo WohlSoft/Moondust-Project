@@ -106,7 +106,7 @@ namespace luabind {
 		{
 			static void apply(void* ptr)
 			{
-				delete static_cast<T*>(ptr);
+				luabind_delete(static_cast<T*>(ptr));
 			}
 		};
 

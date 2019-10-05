@@ -27,8 +27,8 @@
 #include <luabind/weak_ref.hpp>
 #include <luabind/detail/ref.hpp>
 #include <luabind/detail/meta.hpp>
+#include <luabind/error.hpp>
 #include <type_traits>
-#include <stdexcept>
 
 namespace luabind
 {
@@ -80,7 +80,7 @@ namespace luabind
 			if(lua_isnil(L, -1))
 			{
 				lua_pop(L, 1);
-				throw std::runtime_error("Attempt to call nonexistent function");
+				throw unresolved_name("Attempt to call nonexistent function", name);
 			}
 
 			// push the self reference as the first parameter

@@ -3,6 +3,7 @@
 
 #include <luabind/lua_proxy.hpp>
 #include <luabind/detail/call_function.hpp>
+#include <luabind/detail/push_to_lua.hpp>
 #include <ostream>
 
 #if LUA_VERSION_NUM < 502
@@ -15,47 +16,20 @@
 
 namespace luabind {
 
-	namespace detail
-	{
-
-		template<class T, typename... Policies>
-		void push(lua_State* interpreter, T& value, policy_list<Policies...> const& = no_policies())
-		{
-			using PolicyList = policy_list<Policies...>;
-			using unwrapped_type = T;
-			using converter_type = specialized_converter_policy_n<0, PolicyList, T, cpp_to_lua >;
-			converter_type().to_lua(interpreter, implicit_cast<unwrapped_type&>(value));
-		}
-
-	} // namespace detail
-
 	namespace adl {
 
 		template <class T>
 		class lua_proxy_interface;
 
-		///@TODO: replace by decltype construct
-		namespace is_object_interface_aux
+		namespace check_object_interface
 		{
-			typedef char(&yes)[1];
-			typedef char(&no)[2];
-
 			template <class T>
-			yes check(lua_proxy_interface<T>*);
-			no check(void*);
-
-			template <class T>
-			struct impl
-			{
-				static const bool value = sizeof(is_object_interface_aux::check((T*)0)) == sizeof(yes);
-				typedef std::integral_constant<bool, value> type;
-			};
-
+			std::true_type  check(lua_proxy_interface<T>*);
+			std::false_type check(void*);
 		} // namespace is_object_interface_aux
 
 		template <class T>
-		struct is_object_interface :
-			is_object_interface_aux::impl<T>::type
+		struct is_object_interface : public decltype(check_object_interface::check((remove_const_reference_t<T>*)nullptr))
 		{};
 
 		template <class R, class T, class U>
@@ -103,7 +77,7 @@ namespace luabind {
 
 		template<class LHS, class RHS>
 		typename enable_binary<bool, LHS, RHS>::type
-			operator==(LHS const& lhs, RHS const& rhs)
+			operator==(LHS&& lhs, RHS&& rhs)
 		{
 			lua_State* L = 0;
 			switch(binary_interpreter(L, lhs, rhs)) {
@@ -112,15 +86,15 @@ namespace luabind {
 			}
 			assert(L);
 			detail::stack_pop pop1(L, 1);
-			detail::push(L, lhs);
+			detail::push_to_lua(L, std::forward<LHS>(lhs));
 			detail::stack_pop pop2(L, 1);
-			detail::push(L, rhs);
+			detail::push_to_lua(L, std::forward<RHS>(rhs));
 			return lua_compare(L, -1, -2, LUA_OPEQ) != 0;
 		}
 
 		template<class LHS, class RHS>
 		typename enable_binary<bool, LHS, RHS>::type
-			operator<(LHS const& lhs, RHS const& rhs)
+			operator<(LHS&& lhs, RHS&& rhs)
 		{
 			lua_State* L = 0;
 			switch(binary_interpreter(L, lhs, rhs)) {
@@ -129,9 +103,9 @@ namespace luabind {
 			}
 			assert(L);
 			detail::stack_pop pop1(L, 1);
-			detail::push(L, lhs);
+			detail::push_to_lua(L, std::forward<LHS>(lhs));
 			detail::stack_pop pop2(L, 1);
-			detail::push(L, rhs);
+			detail::push_to_lua(L, std::forward<RHS>(rhs));
 			return lua_compare(L, -1, -2, LUA_OPLT) != 0;
 		}
 
@@ -210,7 +184,7 @@ namespace luabind {
 	}
 
 	template<class ValueWrapper>
-	std::string to_string(adl::lua_proxy_interface<ValueWrapper> const& v)
+    luabind::string to_string(adl::lua_proxy_interface<ValueWrapper> const& v)
 	{
 		using namespace luabind;
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(static_cast<ValueWrapper const&>(v));
@@ -218,7 +192,7 @@ namespace luabind {
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, static_cast<ValueWrapper const&>(v));
 		char const* p = lua_tostring(interpreter, -1);
 		std::size_t len = lua_rawlen(interpreter, -1);
-		return std::string(p, len);
+		return luabind::string(p, len);
 	}
 
 	namespace detail
@@ -236,10 +210,10 @@ namespace luabind {
 			detail::stack_pop pop(interpreter, 1);
 			specialized_converter_policy_n<0, Policies, T, lua_to_cpp> cv;
 
-			if(cv.match(interpreter, decorated_type<T>(), -1) < 0) {
+			if(cv.match(interpreter, decorate_type_t<T>(), -1) < 0) {
 				return error_policy.handle_error(interpreter, typeid(T));
 			}
-			return cv.to_cpp(interpreter, decorated_type<T>(), -1);
+			return cv.to_cpp(interpreter, decorate_type_t<T>(), -1);
 		}
 
 		template<class T>

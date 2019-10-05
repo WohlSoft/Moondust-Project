@@ -42,30 +42,27 @@ namespace luabind {
 		template <class U>
 		int match(lua_State* L, U, int index)
 		{
-			return default_converter<T*>::match(
-				L, decorated_type<T*>(), index);
+			return default_converter<T*>::match(L, decorate_type_t<T*>(), index);
 		}
 
 		template <class U>
 		std::shared_ptr<T> to_cpp(lua_State* L, U, int index)
 		{
-			T* raw_ptr = default_converter<T*>::to_cpp(
-				L, decorated_type<T*>(), index);
-			if(!raw_ptr)
+			T* raw_ptr = default_converter<T*>::to_cpp(L, decorate_type_t<T*>(), index);
+
+			if(!raw_ptr) {
 				return std::shared_ptr<T>();
-			return std::shared_ptr<T>(
-				raw_ptr, detail::shared_ptr_deleter(L, index));
+			} else {
+				return std::shared_ptr<T>(raw_ptr, detail::shared_ptr_deleter(L, index));
+			}
 		}
 
 		void to_lua(lua_State* L, std::shared_ptr<T> const& p)
 		{
-			if(detail::shared_ptr_deleter* d =
-				std::get_deleter<detail::shared_ptr_deleter>(p))
+			if(detail::shared_ptr_deleter* d = std::get_deleter<detail::shared_ptr_deleter>(p))
 			{
 				d->life_support.push(L);
-			}
-			else
-			{
+			} else {
 				detail::value_converter().to_lua(L, p);
 			}
 		}

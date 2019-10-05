@@ -71,10 +71,7 @@ namespace luabind {
 		template<class T>
 		wrap_base const* get_back_reference(T const& x)
 		{
-			return detail::get_back_reference_aux2(
-				x
-				, has_get_pointer<T>()
-			);
+			return detail::get_back_reference_aux2(x, has_get_pointer<T>());
 		}
 
 	} // namespace detail

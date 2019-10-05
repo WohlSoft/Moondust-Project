@@ -4,12 +4,27 @@
 
 #define LUABIND_BUILDING
 
+#include <luabind/function.hpp>
 #include <luabind/detail/object.hpp>
 #include <luabind/make_function.hpp>
 #include <luabind/detail/conversion_policies/conversion_policies.hpp>
 #include <luabind/detail/object.hpp>
+#include <luabind/lua_extensions.hpp>
 
 namespace luabind {
+
+    bool g_allow_nil_conversion = false;
+
+    LUABIND_API bool is_nil_conversion_allowed()
+    {
+	    return g_allow_nil_conversion;
+    }
+
+    LUABIND_API void allow_nil_conversion(bool allowed)
+    {
+	    g_allow_nil_conversion = allowed;
+    }
+
 	namespace detail {
 
 		namespace {
@@ -17,7 +32,7 @@ namespace luabind {
 			int function_destroy(lua_State* L)
 			{
 				function_object* fn = *(function_object**)lua_touserdata(L, 1);
-				delete fn;
+				luabind_delete(fn);
 				return 0;
 			}
 
@@ -46,13 +61,17 @@ namespace luabind {
 			// by luabind.
 			int function_tag = 0;
 
+			// same, but for non-default functions (not from m_default_members)
+			int function_tag_ndef = 0;
+
 		} // namespace unnamed
 
-		LUABIND_API bool is_luabind_function(lua_State* L, int index)
+		LUABIND_API bool is_luabind_function(lua_State* L, int index, bool allow_default /*= true*/)
 		{
 			if(!lua_getupvalue(L, index, 2))
 				return false;
-			bool result = lua_touserdata(L, -1) == &function_tag;
+			void* tag = lua_touserdata(L, -1);
+			bool result = (tag == &function_tag && allow_default) || tag == &function_tag_ndef;
 			lua_pop(L, 1);
 			return result;
 		}
@@ -88,14 +107,15 @@ namespace luabind {
 			context[name] = fn;
 		}
 
-		LUABIND_API object make_function_aux(lua_State* L, function_object* impl)
+		LUABIND_API object make_function_aux(lua_State* L, function_object* impl, bool default_scope /*= false*/)
 		{
 			void* storage = lua_newuserdata(L, sizeof(function_object*));
 			push_function_metatable(L);
 			*(function_object**)storage = impl;
 			lua_setmetatable(L, -2);
 
-			lua_pushlightuserdata(L, &function_tag);
+			void* tag = default_scope ? &function_tag : &function_tag_ndef;
+			lua_pushlightuserdata(L, tag);
 			lua_pushcclosure(L, impl->entry, 2);
 			stack_pop pop(L, 1);
 
@@ -108,9 +128,11 @@ namespace luabind {
 			char const* function_name =
 				overloads->name.empty() ? "<unknown>" : overloads->name.c_str();
 
+			int stacksize = lua_gettop(L);
+
 			if(candidate_index == 0)
 			{
-				int stacksize = lua_gettop(L);
+				// Overloads
 				lua_pushstring(L, "No matching overload found, candidates:\n");
 				int count = 0;
 				for(function_object const* f = overloads; f != 0; f = f->next)
@@ -120,12 +142,10 @@ namespace luabind {
 					f->format_signature(L, function_name);
 					++count;
 				}
-				lua_concat(L, lua_gettop(L) - stacksize);
 			}
 			else
 			{
 				// Ambiguous
-				int stacksize = lua_gettop(L);
 				lua_pushstring(L, "Ambiguous, candidates:\n");
 				for(int i = 0; i < candidate_index; ++i)
 				{
@@ -133,8 +153,31 @@ namespace luabind {
 						lua_pushstring(L, "\n");
 					candidates[i]->format_signature(L, function_name);
 				}
-				lua_concat(L, lua_gettop(L) - stacksize);
 			}
+
+			// Print all passed arguments and their types
+			lua_pushfstring(L, "\nPassed arguments [%d]: ", stacksize); // Args total cnt
+			if (stacksize == 0)
+				lua_pushstring(L, "<zero arguments>\n");
+			else
+			{
+				for (int _index = 1; _index <= stacksize; _index++)
+				{
+					if (_index > 1)
+						lua_pushstring(L, ", ");
+
+					// Arg Type
+					lua_pushstring(L, lua_typename(L, lua_type(L, _index)));
+					// Arg Value
+					lua_pushstring(L, " (");
+					const char* text = lua52L_tolstring(L, _index, NULL); // automatically pushed to stack
+					(void)text;
+					lua_pushstring(L, ")");
+				}
+			lua_pushstring(L, "\n");
+			}
+
+			lua_concat(L, lua_gettop(L) - stacksize);
 		}
 
 	} // namespace detail

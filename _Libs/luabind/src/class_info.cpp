@@ -49,8 +49,7 @@ namespace luabind {
 			// OK, o is a class rep, now at the top of the stack
 			crep = static_cast<detail::class_rep *>(lua_touserdata(L, -1));
 			lua_pop(L, 1);
-		}
-		else {
+		} else {
 
 			VERBOSE("Not a class rep");
 			detail::object_rep* obj = detail::get_instance(L, -1);
@@ -64,8 +63,7 @@ namespace luabind {
 				result.methods = newtable(L);
 				result.attributes = newtable(L);
 				return result;
-			}
-			else {
+			} else {
 				lua_pop(L, 1);
 				// OK, we were given an object - gotta get the crep.
 				crep = obj->crep();
@@ -97,8 +95,7 @@ namespace luabind {
 			if(lua_tocfunction(L, -1) == &detail::property_tag)
 			{
 				result.attributes[index++] = i.key();
-			}
-			else
+			} else
 			{
 				result.methods[i.key()] = *i;
 			}
@@ -111,7 +108,7 @@ namespace luabind {
 	{
 		detail::class_registry* reg = detail::class_registry::get_registry(L);
 
-		std::map<type_id, detail::class_rep*> const& classes = reg->get_classes();
+		luabind::map<type_id, detail::class_rep*> const& classes = reg->get_classes();
 
 		object result = newtable(L);
 		std::size_t index = 1;

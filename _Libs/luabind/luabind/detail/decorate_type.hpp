@@ -25,56 +25,61 @@
 #define LUABIND_DECORATE_TYPE_HPP_INCLUDED
 
 #include <luabind/config.hpp>
-#include <luabind/detail/primitives.hpp>
 
 namespace luabind {
-	namespace detail {
 
-		template<class T>
-		struct decorated_type_helper
-		{
-			using type = by_value<T>;
-		};
+	template<class T> struct by_value {};
+	template<class T> struct by_const_reference {};
+	template<class T> struct by_reference {};
+	template<class T> struct by_rvalue_reference {};
+	template<class T> struct by_pointer {};
+	template<class T> struct by_const_pointer {};
 
-		template<class T>
-		struct decorated_type_helper<T*>
-		{
-			using type = by_pointer<T>;
-		};
+	template<class T>
+	struct decorate_type
+	{
+		using type = by_value<T>;
+	};
 
-		template<class T>
-		struct decorated_type_helper<const T*>
-		{
-			using type = by_const_pointer<T>;
-		};
+	template<class T>
+	struct decorate_type<T*>
+	{
+		using type = by_pointer<T>;
+	};
 
-		template<class T>
-		struct decorated_type_helper<const T* const>
-		{
-			using type = by_const_pointer<T>;
-		};
+	template<class T>
+	struct decorate_type<const T*>
+	{
+		using type = by_const_pointer<T>;
+	};
 
-		template<class T>
-		struct decorated_type_helper<T&>
-		{
-			using type = by_reference<T>;
-		};
+	template<class T>
+	struct decorate_type<const T* const>
+	{
+		using type = by_const_pointer<T>;
+	};
 
-		template<class T>
-		struct decorated_type_helper<const T&>
-		{
-			using type = by_const_reference<T>;
-		};
+	template<class T>
+	struct decorate_type<T&>
+	{
+		using type = by_reference<T>;
+	};
 
-		template<class T>
-		struct decorated_type_helper<T&&>
-		{
-			using type = by_rvalue_reference<T>;
-		};
-	}
+	template<class T>
+	struct decorate_type<const T&>
+	{
+		using type = by_const_reference<T>;
+	};
+
+	template<class T>
+	struct decorate_type<T&&>
+	{
+		using type = by_rvalue_reference<T>;
+	};
 
 	template< typename T >
-	using decorated_type = typename luabind::detail::decorated_type_helper<T>::type;
+	using decorate_type_t = typename decorate_type<T>::type;
+
 }
 
 #endif // LUABIND_DECORATE_TYPE_HPP_INCLUDED

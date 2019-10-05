@@ -38,7 +38,10 @@ namespace luabind {
 
 	}
 
-	using yield = policy_list<call_policy_injector<detail::yield_policy>>;
+	namespace policy
+	{
+		using yield = call_policy_injector<detail::yield_policy>;
+	}
 }
 
 #endif // LUABIND_YIELD_POLICY_HPP_INCLUDED

@@ -40,10 +40,11 @@ namespace luabind {
 
 	} // namespace detail
 
-		// Caution: If we use the aliased type "policy_list" here, MSVC crashes.
-	template< unsigned int N >
-	using copy_policy = meta::type_list< converter_policy_injector< N, detail::copy_policy > >;
-
+	namespace policy
+	{
+		template<unsigned int N>
+		using copy = converter_policy_injector<N, detail::copy_policy>;
+	}
 } // namespace luabind
 
 #endif // LUABIND_COPY_POLICY_081021_HPP

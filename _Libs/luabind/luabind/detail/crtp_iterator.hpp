@@ -1,5 +1,6 @@
-#ifndef LUABIND_CRTP_ITERATOR_HPP_INCLUDED
+﻿#ifndef LUABIND_CRTP_ITERATOR_HPP_INCLUDED
 #define LUABIND_CRTP_ITERATOR_HPP_INCLUDED
+
 #include <iterator>
 
 namespace luabind {
@@ -54,10 +55,4 @@ namespace luabind {
 	}
 }
 
-
-
-
-
-
 #endif
-

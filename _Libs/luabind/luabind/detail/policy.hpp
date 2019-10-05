@@ -56,23 +56,25 @@ namespace luabind
 	// 0 stands for the return value, while 1 might denote an implicit "this" argument or the first
 	// actual argument of the function call.
 	template< unsigned int Index, typename T >
-	struct converter_policy_injector
+	struct converter_policy_injector : policy_list<converter_policy_injector<Index, T>>
 	{
-		enum { has_postcall = std::is_convertible<T, detail::converter_policy_has_postcall_tag >::value };
+		static constexpr bool has_postcall = std::is_convertible<T, detail::converter_policy_has_postcall_tag >::value;
 	};
 
 	// A call policy injector instructs the call mechanism to call certain static function "postcall" on type T
 	// after having executed a call.
 	template< typename T >
-	struct call_policy_injector
+    struct call_policy_injector : policy_list<call_policy_injector<T>>
 	{};
-
 
 	template< typename T, typename Enable = void >
 	struct default_converter;
 
 	namespace detail
 	{
+		struct lua_to_cpp {};
+		struct cpp_to_lua {};
+
 		struct default_policy
 		{
 			template<class T, class Direction>
@@ -102,6 +104,12 @@ namespace luabind
 			{
 				using type = ConverterPolicy;
 			};
+
+            template< unsigned int Index, typename ConverterPolicy >
+            struct get_converter_policy< Index, converter_policy_injector< Index, ConverterPolicy > >
+            {
+                using type = ConverterPolicy;
+            };
 
 			template< unsigned int Index >
 			struct get_converter_policy< Index, meta::type_list< > >
@@ -136,11 +144,17 @@ namespace luabind
 } // namespace luabind::detail
 
 namespace luabind {
-	extern LUABIND_API meta::index<0> return_value;
-	extern LUABIND_API meta::index<0> result;
-	extern LUABIND_API meta::index<1> _1;
-	extern LUABIND_API meta::index<2> _2;
-	extern LUABIND_API meta::index<3> _3;
+	constexpr meta::index<0> return_value;
+	constexpr meta::index<0> result;
+	constexpr meta::index<1> _1;
+	constexpr meta::index<2> _2;
+	constexpr meta::index<3> _3;
+	constexpr meta::index<4> _4;
+	constexpr meta::index<5> _5;
+	constexpr meta::index<6> _6;
+	constexpr meta::index<7> _7;
+	constexpr meta::index<8> _8;
+	constexpr meta::index<9> _9;
 }
 
 #endif // LUABIND_POLICY_HPP_INCLUDED

@@ -53,7 +53,7 @@ namespace luabind {
 		{
 			using value_type = typename std::remove_reference<T>::type;
 
-			std::unique_ptr<value_type> ptr(new value_type(std::move(x)));
+            luabind::unique_ptr<value_type> ptr(luabind_new<value_type>(std::move(x)));
 			make_pointer_instance(L, std::move(ptr));
 		}
 

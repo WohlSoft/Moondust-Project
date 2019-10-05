@@ -122,8 +122,11 @@ namespace luabind {
 
 namespace luabind
 {
-	template<unsigned int N, typename ElementPolicies = no_policies >
-	using container_policy = meta::type_list<converter_policy_injector<N, detail::container_policy<ElementPolicies>>>;
+	namespace policy
+	{
+		template<unsigned int N, typename ElementPolicies = no_policies>
+		using container = converter_policy_injector<N, detail::container_policy<ElementPolicies>>;
+	}
 }
 
 #endif // LUABIND_CONTAINER_POLICY_HPP_INCLUDED

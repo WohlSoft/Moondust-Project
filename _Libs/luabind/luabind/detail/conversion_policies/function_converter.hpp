@@ -1,4 +1,4 @@
-// Copyright Christian Neumüller 2013. Use, modification and distribution is
+// Copyright Christian NeumÃ¼ller 2013. Use, modification and distribution is
 // subject to the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -39,18 +39,17 @@ namespace luabind {
 
 		template< typename T >
 		struct is_function< std::function< T > > : public std::true_type {};
-
-		template< typename R, typename... Args, typename WrappedType >
-		struct call_types <std::function< R(Args...) >, WrappedType >
-		{
-			using signature_type = meta::type_list< R, Args... >;
-		};
-
 	}
+	
+	template< typename R, typename... Args, typename WrappedType >
+	struct deduce_signature <std::function< R(Args...) >, WrappedType >
+	{
+		using type = meta::type_list< R, Args... >;
+	};
 
 
 	template <typename F>
-	struct default_converter<F, typename std::enable_if<detail::is_function<F>::value>::type>
+	struct default_converter<F, typename std::enable_if<detail::is_function<remove_const_reference_t<F>>::value>::type>
 	{
 		using is_native = std::true_type;
 

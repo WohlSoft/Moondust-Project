@@ -25,11 +25,7 @@
 #define LUABIND_ADOPT_POLICY_HPP_INCLUDED
 
 #include <luabind/config.hpp>
-
-#ifndef LUABIND_WRAPPER_BASE_HPP_INCLUDED
-# include <luabind/wrapper_base.hpp>
-#endif
-
+#include <luabind/wrapper_base.hpp>
 #include <luabind/detail/policy.hpp>
 #include <luabind/back_reference_fwd.hpp>
 
@@ -60,11 +56,9 @@ namespace luabind {
 			template<class T>
 			T* to_cpp(lua_State* L, by_pointer<T>, int index)
 			{
-				T* ptr = pointer_converter::to_cpp(
-					L, decorated_type<T*>(), index);
+				T* ptr = pointer_converter::to_cpp(L, decorate_type_t<T*>(), index);
 
-				object_rep* obj = static_cast<object_rep*>(
-					lua_touserdata(L, index));
+				object_rep* obj = static_cast<object_rep*>(lua_touserdata(L, index));
 				obj->release();
 
 				adjust_backref_ownership(ptr, std::is_polymorphic<T>());
@@ -75,7 +69,7 @@ namespace luabind {
 			template<class T>
 			int match(lua_State* L, by_pointer<T>, int index)
 			{
-				return pointer_converter::match(L, decorated_type<T*>(), index);
+				return pointer_converter::match(L, decorate_type_t<T*>(), index);
 			}
 
 			template<class T>
@@ -91,7 +85,7 @@ namespace luabind {
 		template <class T>
 		struct pointer_or_default<void, T>
 		{
-			using type = std::unique_ptr<T>;
+			using type = luabind::unique_ptr<T>;
 		};
 
 		template <class Pointer>
@@ -136,9 +130,11 @@ namespace luabind {
 
 namespace luabind
 {
-	// Caution: if we use the aliased type "policy_list" here, MSVC crashes.
-	template<unsigned int N, typename Pointer = void>
-	using adopt_policy = meta::type_list<converter_policy_injector<N, detail::adopt_policy_impl<Pointer>>>;
+	namespace policy
+	{
+		template<unsigned int N, typename Pointer = void>
+		using adopt = converter_policy_injector<N, detail::adopt_policy_impl<Pointer>>;
+	}
 }
 
 #endif // LUABIND_ADOPT_POLICY_HPP_INCLUDE

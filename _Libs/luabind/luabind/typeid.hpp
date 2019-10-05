@@ -6,7 +6,7 @@
 # define LUABIND_TYPEID_081227_HPP
 
 # include <typeinfo>
-# include <luabind/detail/primitives.hpp>
+# include <luabind/detail/type_traits.hpp>
 
 namespace luabind {
 
@@ -14,7 +14,7 @@ namespace luabind {
 	{
 	public:
 		type_id()
-			: id(&typeid(detail::null_type))
+			: id(&typeid(null_type))
 		{}
 
 		type_id(std::type_info const& id)

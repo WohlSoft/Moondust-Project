@@ -42,6 +42,13 @@
 #define LUABIND_MAX_BASES 1
 #endif
 
+#ifdef NDEBUG
+# ifndef LUABIND_NO_ERROR_CHECKING
+#  define LUABIND_NO_ERROR_CHECKING
+# endif
+#define LUABIND_NO_EXCEPTIONS
+#endif
+
 // LUABIND_NO_ERROR_CHECKING
 // define this to remove all error checks
 // this will improve performance and memory
@@ -69,6 +76,23 @@
 // by luabind throws an exception (throwing exceptions through
 // C code has undefined behavior, lua is written in C).
 
+// LUABIND_XRAY_NO_BACKWARDS_COMPATIBILITY
+// In VS2017: Go to Property Manager -> Common.props -> C\C++ -> Preprocessor to turn it on\off
+// this define will turn OFF some code for backward compability with some original .lua-code
+// from XRay 1.6 Engine, like:
+//  - native converter from number to string\char*
+
+// XRAY_SCRIPTS_NO_BACKWARDS_COMPATIBILITY
+// In VS2017: Go to Property Manager -> Common.props -> C\C++ -> Preprocessor to turn it on\off
+// this define will turn OFF some code for backward compability with some original .lua-code
+// from XRay 1.6 Engine, like:
+//  - original script behaviour when you didn't pass some parametres
+//  - turn off "LUA error: cannot cast lua value to ..." 
+
+#ifdef DEBUG
+#define XRAY_SCRIPTS_NO_BACKWARDS_COMPATIBILITY
+#endif
+
 #ifdef LUABIND_DYNAMIC_LINK
 # if defined (_WIN32)
 #  ifdef LUABIND_BUILDING
@@ -83,7 +107,7 @@
 #   define LUABIND_API __attribute__ ((dllimport))
 #  endif
 # else
-#  if defined(_GNUC_) && _GNUC_ >=4
+#  if defined(__GNUC__) && __GNUC__ >=4
 #   define LUABIND_API __attribute__ ((visibility("default")))
 #  endif
 # endif
@@ -93,12 +117,18 @@
 # define LUABIND_API
 #endif
 
-// This switches between using tag arguments / structure specialization for code size tests
-#define LUABIND_NO_INTERNAL_TAG_ARGUMENTS
+#ifndef _WIN32
+#include <cstddef>
+#define __cdecl
+#endif // _WIN32
+#ifndef _FARQ
+#define _FARQ
+#endif // _FARQ
 
 namespace luabind {
 
 	LUABIND_API void disable_super_deprecation();
+	LUABIND_API void set_custom_type_marking(bool enable);
 
 	namespace detail {
 		const int max_argument_count = 100;
@@ -108,6 +138,8 @@ namespace luabind {
 	const int no_match = -(detail::max_argument_count*detail::max_hierarchy_depth + 1);
 
 } // namespace luabind
+
+#include <luabind/types.hpp>
 
 #endif // LUABIND_CONFIG_HPP_INCLUDED
 

@@ -66,7 +66,7 @@ namespace luabind {
 	{
 # ifndef LUABIND_NO_EXCEPTIONS
 		detail::register_exception_handler(
-			new detail::exception_handler<E, Handler>(handler)
+			luabind_new<detail::exception_handler<E, Handler>>(handler)
 		);
 # endif
 	}

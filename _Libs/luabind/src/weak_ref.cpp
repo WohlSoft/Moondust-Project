@@ -127,7 +127,7 @@ namespace luabind
 	}
 
 	weak_ref::weak_ref(lua_State* main, lua_State* L, int index)
-		: m_impl(new impl(main, L, index))
+		: m_impl(luabind_new<impl>(main, L, index))
 	{
 		m_impl->count = 1;
 	}
@@ -142,7 +142,7 @@ namespace luabind
 	{
 		if(m_impl && --m_impl->count == 0)
 		{
-			delete m_impl;
+			luabind_delete(m_impl);
 		}
 	}
 

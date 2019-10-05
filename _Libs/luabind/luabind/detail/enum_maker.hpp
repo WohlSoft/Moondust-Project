@@ -24,9 +24,6 @@
 #ifndef LUABIND_ENUM_MAKER_HPP_INCLUDED
 #define LUABIND_ENUM_MAKER_HPP_INCLUDED
 
-#include <vector>
-#include <string>
-
 #include <luabind/config.hpp>
 #include <luabind/detail/class_rep.hpp>
 
@@ -34,7 +31,7 @@ namespace luabind {
 
 	struct value;
 
-	struct value_vector : public std::vector<value>
+	struct value_vector : public luabind::vector<value>
 	{
 		// a bug in intel's compiler forces us to declare these constructors explicitly.
 		value_vector();
@@ -71,14 +68,14 @@ namespace luabind {
 	};
 
 	inline value_vector::value_vector()
-		: std::vector<value>()
+		: luabind::vector<value>()
 	{
 	}
 
 	inline value_vector::~value_vector() {}
 
 	inline value_vector::value_vector(const value_vector& rhs)
-		: std::vector<value>(rhs)
+		: luabind::vector<value>(rhs)
 	{
 	}
 

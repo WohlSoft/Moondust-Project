@@ -57,10 +57,12 @@ namespace luabind {
 		};
 
 	}
-
-	template<unsigned int N>
-	using raw_policy = meta::type_list< converter_policy_injector< N, detail::raw_policy > >();
-
+	
+	namespace policy
+	{
+        template<unsigned int N>
+		using raw = converter_policy_injector<N, detail::raw_policy>;
+	}
 } // namespace luabind
 
 #endif // LUABIND_RAW_POLICY_HPP_INCLUDED

@@ -73,7 +73,7 @@ namespace luabind {
 			return *touserdata<detail::function_object*>(std::get<1>(getupvalue(fn, 1)));
 		}
 
-		std::string get_function_name(argument const& fn) {
+		luabind::string get_function_name(argument const& fn) {
 			detail::function_object * f = get_function_object(fn);
 			if(!f) {
 				return "";

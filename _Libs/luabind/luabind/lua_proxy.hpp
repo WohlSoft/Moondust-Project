@@ -24,6 +24,7 @@
 #define LUABIND_VALUE_WRAPPER_050419_HPP
 
 #include <type_traits>
+#include <luabind/detail/type_traits.hpp>
 
 namespace luabind {
 
@@ -44,7 +45,7 @@ namespace luabind {
 
 	template< class T >
 	struct is_lua_proxy_arg
-		: std::conditional<is_lua_proxy_type<typename std::remove_const<typename std::remove_reference<T>::type>::type>::value, std::true_type, std::false_type >::type
+		: std::conditional<is_lua_proxy_type<remove_const_reference_t<T>>::value, std::true_type, std::false_type >::type
 	{};
 
 } // namespace luabind

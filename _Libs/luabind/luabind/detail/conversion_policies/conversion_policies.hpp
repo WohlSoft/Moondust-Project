@@ -23,7 +23,7 @@
 #ifndef LUABIND_CONVERSION_POLICIES_HPP_INCLUDED
 #define LUABIND_CONVERSION_POLICIES_HPP_INCLUDED
 
-#include <luabind/detail/typetraits.hpp>
+#include <luabind/detail/type_traits.hpp>
 #include <luabind/detail/meta.hpp>
 #include <luabind/detail/policy.hpp>
 #include <luabind/detail/conversion_policies/conversion_base.hpp>

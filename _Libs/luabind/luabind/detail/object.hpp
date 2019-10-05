@@ -29,7 +29,7 @@
 #include <luabind/handle.hpp>
 #include <luabind/from_stack.hpp>
 #include <luabind/detail/stack_utils.hpp>
-#include <luabind/detail/convert_to_lua.hpp> // REFACTOR
+#include <luabind/detail/push_to_lua.hpp>
 #include <luabind/typeid.hpp>
 #include <luabind/detail/crtp_iterator.hpp>
 #include <luabind/lua_proxy_interface.hpp>
@@ -63,17 +63,17 @@ namespace luabind {
 			}
 
 			template<class T>
-			object(lua_State* interpreter, T const& value)
+			object(lua_State* interpreter, T&& value)
 			{
-				detail::push(interpreter, value);
+				detail::push_to_lua(interpreter, std::forward<T>(value));
 				detail::stack_pop pop(interpreter, 1);
 				handle(interpreter, -1).swap(m_handle);
 			}
 
 			template<class T, class Policies>
-			object(lua_State* interpreter, T const& value, Policies const&)
+			object(lua_State* interpreter, T&& value, Policies const&)
 			{
-				detail::push(interpreter, value, Policies());
+				detail::push_to_lua<1, Policies>(interpreter, std::forward<T>(value));
 				detail::stack_pop pop(interpreter, 1);
 				handle(interpreter, -1).swap(m_handle);
 			}
@@ -246,19 +246,19 @@ namespace luabind {
 	}
 
 	template<class ValueWrapper, class K>
-	inline object gettable(ValueWrapper const& table, K const& key)
+	inline object gettable(ValueWrapper const& table, K&& key)
 	{
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(table);
 
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, table);
 		detail::stack_pop pop(interpreter, 2);
-		detail::push(interpreter, key);
+		detail::push_to_lua(interpreter, std::forward<K>(key));
 		lua_gettable(interpreter, -2);
 		return object(from_stack(interpreter, -1));
 	}
 
 	template<class ValueWrapper, class K, class T>
-	inline void settable(ValueWrapper const& table, K const& key, T const& value)
+	inline void settable(ValueWrapper const& table, K&& key, T&& value)
 	{
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(table);
 
@@ -266,13 +266,13 @@ namespace luabind {
 
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, table);
 		detail::stack_pop pop(interpreter, 1);
-		detail::push(interpreter, key);
-		detail::push(interpreter, value);
+		detail::push_to_lua(interpreter, std::forward<K>(key));
+		detail::push_to_lua(interpreter, std::forward<T>(value));
 		lua_settable(interpreter, -3);
 	}
 
 	template<class ValueWrapper, class K>
-	inline object rawget(ValueWrapper const& table, K const& key)
+	inline object rawget(ValueWrapper const& table, K&& key)
 	{
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(
 			table
@@ -280,13 +280,13 @@ namespace luabind {
 
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, table);
 		detail::stack_pop pop(interpreter, 2);
-		detail::push(interpreter, key);
+		detail::push_to_lua(interpreter, std::forward<K>(key));
 		lua_rawget(interpreter, -2);
 		return object(from_stack(interpreter, -1));
 	}
 
 	template<class ValueWrapper, class K, class T>
-	inline void rawset(ValueWrapper const& table, K const& key, T const& value)
+	inline void rawset(ValueWrapper const& table, K&& key, T&& value)
 	{
 		lua_State* interpreter = lua_proxy_traits<ValueWrapper>::interpreter(
 			table
@@ -296,8 +296,8 @@ namespace luabind {
 
 		lua_proxy_traits<ValueWrapper>::unwrap(interpreter, table);
 		detail::stack_pop pop(interpreter, 1);
-		detail::push(interpreter, key);
-		detail::push(interpreter, value);
+		detail::push_to_lua(interpreter, std::forward<K>(key));
+		detail::push_to_lua(interpreter, std::forward<T>(value));
 		lua_rawset(interpreter, -3);
 	}
 
@@ -379,6 +379,8 @@ namespace luabind {
 #if LUA_VERSION_NUM < 502
 #undef lua_pushglobaltable
 #endif
+
+#include <luabind/detail/conversion_policies/conversion_policies.hpp>
 
 #endif // LUABIND_OBJECT_050419_HPP
 

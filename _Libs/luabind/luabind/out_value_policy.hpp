@@ -25,11 +25,11 @@
 #define LUABIND_OUT_VALUE_POLICY_HPP_INCLUDED
 
 #include <luabind/config.hpp>
-#include <luabind/detail/policy.hpp>    // for find_conversion_policy, etc
-#include <luabind/detail/decorate_type.hpp>  // for decorated_type
-#include <luabind/detail/primitives.hpp>  // for by_pointer, by_reference, etc
-#include <luabind/detail/typetraits.hpp>  // for is_nonconst_pointer, is_nonconst_reference, etc
-#include <new>                          // for operator new
+#include <luabind/detail/policy.hpp>        // for find_conversion_policy, etc
+#include <luabind/detail/decorate_type.hpp> // for decorated_type
+#include <luabind/detail/primitives.hpp>    // for by_pointer, by_reference, etc
+#include <luabind/detail/type_traits.hpp>   // for is_nonconst_pointer, is_nonconst_reference, etc
+#include <new>                              // for operator new
 
 namespace luabind {
 	namespace detail {
@@ -58,7 +58,7 @@ namespace luabind {
 		template<class T>
 		struct indirect_sizeof
 		{
-			static const int value = sizeof(indirect_sizeof_test(decorated_type<T>()));
+			static const int value = sizeof(indirect_sizeof_test(decorate_type_t<T>()));
 		};
 
 		namespace out_value_detail {
@@ -130,13 +130,13 @@ namespace luabind {
 			T& to_cpp(lua_State* L, by_reference<T>, int index)
 			{
 				//specialized_converter_policy_n<1, Policies, T, lua_to_cpp> converter;
-				storage_.construct(converter_.to_cpp(L, decorated_type<T>(), index));
+				storage_.construct(converter_.to_cpp(L, decorate_type_t<T>(), index));
 				return storage_.get();
 			}
 
 			int match(lua_State* L, by_reference<T>, int index)
 			{
-				return converter_.match(L, decorated_type<T>(), index);
+				return converter_.match(L, decorate_type_t<T>(), index);
 			}
 
 			void converter_postcall(lua_State* L, by_reference<T>, int)
@@ -148,13 +148,13 @@ namespace luabind {
 
 			T* to_cpp(lua_State* L, by_pointer<T>, int index)
 			{
-				storage_.construct(converter_.to_cpp(L, decorated_type<T>(), index));
+				storage_.construct(converter_.to_cpp(L, decorate_type_t<T>(), index));
 				return &storage_.get();
 			}
 
 			int match(lua_State* L, by_pointer<T>, int index)
 			{
-				return converter_.match(L, decorated_type<T>(), index);
+				return converter_.match(L, decorate_type_t<T>(), index);
 			}
 
 			void converter_postcall(lua_State* L, by_pointer<T>, int)
@@ -261,11 +261,14 @@ namespace luabind {
 
 namespace luabind
 {
-	template<unsigned int N, class Policies = no_policies >
-	using out_value = meta::type_list<converter_policy_injector<N, detail::out_value_policy<Policies>>>;
+	namespace policy
+	{
+		template<unsigned int N>
+		using out_value = converter_policy_injector<N, detail::out_value_policy<>>;
 
-	template<unsigned int N, class Policies = no_policies >
-	using pure_out_value = meta::type_list<converter_policy_injector<N, detail::pure_out_value_policy<Policies>>>;
+		template<unsigned int N>
+		using pure_out_value = converter_policy_injector<N, detail::pure_out_value_policy<>>;
+	}
 }
 
 #endif // LUABIND_OUT_VALUE_POLICY_HPP_INCLUDED

@@ -38,7 +38,7 @@ namespace luabind {
 		struct dependency_policy
 		{
 			template< unsigned int... StackIndices >
-			static void postcall(lua_State* L, int /*results*/, meta::index_list<StackIndices...>)
+			static void postcall(lua_State* L, int results, meta::index_list<StackIndices...>)
 			{
 				object_rep* nurse = static_cast<object_rep*>(lua_touserdata(L, meta::get<meta::index_list<StackIndices...>, A>::value));
 
@@ -87,12 +87,14 @@ namespace luabind {
 
 namespace luabind
 {
-	// Caution: If we use the aliased type "policy_list" here, MSVC crashes.
-	template<unsigned int A, unsigned int B>
-	using dependency_policy = meta::type_list<call_policy_injector<detail::dependency_policy<A, B>>>;
+	namespace policy
+	{
+		template<unsigned int A, unsigned int B>
+		using dependency = call_policy_injector<detail::dependency_policy<A, B>>;
 
-	template<unsigned int A>
-	using return_internal_reference = meta::type_list<call_policy_injector<detail::dependency_policy<0, A>>>;
+		template<unsigned int A>
+		using return_ref = call_policy_injector<detail::dependency_policy<0, A>>;
+	}
 }
 
 #endif // LUABIND_DEPENDENCY_POLICY_HPP_INCLUDED

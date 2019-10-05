@@ -33,18 +33,14 @@ namespace luabind {
 				: function_object(&entry_point), f(f)
 			{}
 
-			int call(lua_State* L, invoke_context& ctx) /*const*/
+			int call(lua_State* L, invoke_context& ctx, const int args) const
 			{
-#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
-				return invoke(L, *this, ctx, f, Signature(), InjectorList());
-#else
-				return invoke<InjectorList, Signature>(L, *this, ctx, f);
-#endif
+				return call_best_match<InjectorList, Signature>(L, *this, ctx, f, args);
 			}
 
-			void format_signature(lua_State* L, char const* function) const
+			int format_signature(lua_State* L, char const* function, bool concat = true) const
 			{
-				detail::format_signature(L, function, Signature());
+				return detail::format_signature(L, function, Signature(), concat);
 			}
 
 			static bool invoke_defer(lua_State* L, function_object_impl* impl, invoke_context& ctx, int& results)
@@ -52,15 +48,13 @@ namespace luabind {
 				bool exception_caught = false;
 
 				try {
-#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
-					results = invoke(L, *impl, ctx, impl->f, Signature(), InjectorList());
-#else
 					results = invoke<InjectorList, Signature>(L, *impl, ctx, impl->f);
-#endif
 				}
 				catch(...) {
 					exception_caught = true;
+#ifndef LUABIND_NO_EXCEPTIONS
 					handle_exception_aux(L);
+#endif
 				}
 
 				return exception_caught;
@@ -79,16 +73,14 @@ namespace luabind {
 				bool exception_caught = invoke_defer(L, impl, ctx, results);
 				if(exception_caught) lua_error(L);
 # else
-#ifndef LUABIND_NO_INTERNAL_TAG_ARGUMENTS
-				results = invoke(L, *impl, ctx, impl->f, Signature(), InjectorList());
-#else
 				results = invoke<InjectorList, Signature>(L, *impl, ctx, impl->f);
-#endif
 # endif
+#ifdef XRAY_SCRIPTS_NO_BACKWARDS_COMPATIBILITY
 				if(!ctx) {
 					ctx.format_error(L, impl);
 					lua_error(L);
 				}
+#endif
 
 				return results;
 			}
@@ -100,27 +92,27 @@ namespace luabind {
 #  pragma pack(pop)
 # endif
 
-		LUABIND_API object make_function_aux(lua_State* L, function_object* impl);
+		LUABIND_API object make_function_aux(lua_State* L, function_object* impl, bool default_scope = false);
 		LUABIND_API void add_overload(object const&, char const*, object const&);
 
 	} // namespace detail
 
 	template <class F, typename... SignatureElements, typename... PolicyInjectors >
-	object make_function(lua_State* L, F f, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors... >)
+	object make_function(lua_State* L, F f, bool default_scope, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors... >)
 	{
-		return detail::make_function_aux(L, new detail::function_object_impl<F, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors...> >(f));
+		return detail::make_function_aux(L, luabind_new<detail::function_object_impl<F, meta::type_list< SignatureElements... >, meta::type_list< PolicyInjectors...>>>(f), default_scope);
 	}
 
 	template <class F, typename... PolicyInjectors >
-	object make_function(lua_State* L, F f, meta::type_list< PolicyInjectors... >)
+    object make_function(lua_State* L, F f, bool default_scope, meta::type_list< PolicyInjectors... >)
 	{
-		return make_function(L, f, typename detail::call_types<F>::signature_type(), meta::type_list< PolicyInjectors... >());
+		return make_function(L, f, default_scope, deduce_signature_t<F>(), meta::type_list< PolicyInjectors... >());
 	}
 
 	template <class F>
-	object make_function(lua_State* L, F f)
+	object make_function(lua_State* L, F f, bool default_scope)
 	{
-		return make_function(L, f, typename detail::call_types<F>::signature_type(), no_policies());
+		return make_function(L, f, default_scope, deduce_signature_t<F>(), no_policies());
 	}
 
 } // namespace luabind

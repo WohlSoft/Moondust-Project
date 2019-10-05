@@ -42,7 +42,7 @@ namespace luabind
 	// this exception usually means that the lua function you called
 	// from C++ failed with an error code. You will have to
 	// read the error code from the top of the lua stack
-	// note that std::string's copy constructor
+	// note that luabind::string's copy constructor
 	// may throw, if the copy constructor of an exception that is
 	// being thrown throws another exception, terminate will be called
 	// and the entire application is killed.
@@ -54,7 +54,7 @@ namespace luabind
 		virtual const char* what() const throw();
 
 	private:
-		std::string m_message;
+        luabind::string m_message;
 	};
 
 	// if an object_cast<>() fails, this is thrown
@@ -84,6 +84,12 @@ namespace luabind
 	LUABIND_API void set_pcall_callback(pcall_callback_fun e);
 	LUABIND_API pcall_callback_fun get_pcall_callback();
 
+    // thrown when trying to use unregistered class or call nonexistent function
+    class LUABIND_API unresolved_name : public std::runtime_error
+    {
+    public:
+        unresolved_name(const char* desc, const char* name);
+    };
 }
 
 #endif // LUABIND_ERROR_HPP_INCLUDED

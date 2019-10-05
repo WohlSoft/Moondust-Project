@@ -36,7 +36,7 @@ namespace luabind {
 	}
 
 	template<typename T>
-	T* get_pointer(const std::unique_ptr<T>& pointer)
+	T* get_pointer(const luabind::unique_ptr<T>& pointer)
 	{
 		return pointer.get();
 	}
@@ -63,7 +63,7 @@ namespace luabind {
 		};
 
 		template<typename T>
-		struct pointer_traits<std::unique_ptr<T>>
+		struct pointer_traits<luabind::unique_ptr<T>>
 		{
 			enum { is_pointer = true };
 			using value_type = T;
@@ -80,7 +80,7 @@ namespace luabind {
 		using is_pointer_to_const = std::is_const< typename pointer_traits<T>::value_type >;
 
 		template<typename T>
-		void release_ownership(std::unique_ptr<T>& p)
+		void release_ownership(luabind::unique_ptr<T>& p)
 		{
 			p.release();
 		}
@@ -112,7 +112,7 @@ namespace luabind {
 			T* get_pointer(T const volatile*);
 
 			template<class T>
-			T* get_pointer(std::unique_ptr<T> const&);
+			T* get_pointer(luabind::unique_ptr<T> const&);
 
 			template<class T>
 			T* get_pointer(std::shared_ptr<T> const&);

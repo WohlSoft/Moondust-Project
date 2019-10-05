@@ -32,8 +32,7 @@ namespace luabind
 		struct nil_type {};
 	}
 
-	// defined in class.cpp
-	extern LUABIND_API detail::nil_type nil;
+	constexpr detail::nil_type nil;
 }
 
 #endif

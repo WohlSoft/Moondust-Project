@@ -25,7 +25,9 @@
 
 #include <type_traits>
 #include <string>
+#include <luabind/detail/policy.hpp>
 #include <luabind/detail/conversion_policies/conversion_base.hpp>
+#include <luabind/detail/type_traits.hpp>
 #include <luabind/detail/call_traits.hpp>
 #include <luabind/lua_include.hpp>
 
@@ -35,10 +37,13 @@
 
 namespace luabind {
 
+    LUABIND_API bool is_nil_conversion_allowed();
+    LUABIND_API void allow_nil_conversion(bool allowed);
+
 	template <class T, class Derived = default_converter<T> >
 	struct native_converter_base
 	{
-		using is_native  = std::true_type;
+		using is_native = std::true_type;
 		using value_type = typename detail::call_traits<T>::value_type;
 		using param_type = typename detail::call_traits<T>::param_type;
 
@@ -48,28 +53,28 @@ namespace luabind {
 		void converter_postcall(lua_State*, U const&, int)
 		{}
 
-		int match(lua_State* L, detail::by_value<T>, int index)
+		int match(lua_State* L, by_value<T>, int index)
 		{
 			return Derived::compute_score(L, index);
 		}
 
-		int match(lua_State* L, detail::by_value<T const>, int index)
+		int match(lua_State* L, by_value<T const>, int index)
 		{
 			return Derived::compute_score(L, index);
 		}
 
 
-		int match(lua_State* L, detail::by_const_reference<T>, int index)
+		int match(lua_State* L, by_const_reference<T>, int index)
 		{
 			return Derived::compute_score(L, index);
 		}
 
-		value_type to_cpp(lua_State* L, detail::by_value<T>, int index)
+		value_type to_cpp(lua_State* L, by_value<T>, int index)
 		{
 			return derived().to_cpp_deferred(L, index);
 		}
 
-		value_type to_cpp(lua_State* L, detail::by_const_reference<T>, int index)
+		value_type to_cpp(lua_State* L, by_const_reference<T>, int index)
 		{
 			return derived().to_cpp_deferred(L, index);
 		}
@@ -87,9 +92,9 @@ namespace luabind {
 
 	template <typename QualifiedT>
 	struct integer_converter
-		: native_converter_base<typename std::remove_const<typename std::remove_reference<QualifiedT>::type>::type>
+		: native_converter_base<remove_const_reference_t<QualifiedT>>
 	{
-		using T          = typename std::remove_const<typename std::remove_reference<QualifiedT>::type>::type;
+		using T = remove_const_reference_t<QualifiedT>;
 		using value_type = typename native_converter_base<T>::value_type;
 		using param_type = typename native_converter_base<T>::param_type;
 
@@ -102,8 +107,7 @@ namespace luabind {
 		{
 			if((std::is_unsigned<value_type>::value && sizeof(value_type) >= sizeof(lua_Integer)) || (sizeof(value_type) > sizeof(lua_Integer))) {
 				return static_cast<T>(lua_tonumber(L, index));
-			}
-			else {
+			} else {
 				return static_cast<T>(lua_tointeger(L, index));
 			}
 		}
@@ -112,9 +116,8 @@ namespace luabind {
 		{
 			if((std::is_unsigned<value_type>::value && sizeof(value_type) >= sizeof(lua_Integer)) || (sizeof(value_type) > sizeof(lua_Integer)))
 			{
-				lua_pushnumber(L, value);
-			}
-			else {
+				lua_pushnumber(L, (lua_Number)value);
+			} else {
 				lua_pushinteger(L, static_cast<lua_Integer>(value));
 			}
 		}
@@ -122,9 +125,9 @@ namespace luabind {
 
 	template <typename QualifiedT>
 	struct number_converter
-		: native_converter_base<typename std::remove_const<typename std::remove_reference<QualifiedT>::type>::type>
+		: native_converter_base<remove_const_reference_t<QualifiedT>>
 	{
-		using T          = typename std::remove_const<typename std::remove_reference<QualifiedT>::type>::type;
+		using T = remove_const_reference_t<QualifiedT>;
 		using value_type = typename native_converter_base<T>::value_type;
 		using param_type = typename native_converter_base<T>::param_type;
 
@@ -176,38 +179,56 @@ namespace luabind {
 	{};
 
 	template <>
-	struct default_converter<std::string>
-		: native_converter_base<std::string>
+	struct default_converter<luabind::string>
+		: native_converter_base<luabind::string>
 	{
 		static int compute_score(lua_State* L, int index)
 		{
+#ifndef LUABIND_XRAY_NO_BACKWARDS_COMPATIBILITY
+			int type = lua_type(L, index);
+
+		    switch (type)
+		    {
+			case LUA_TSTRING:
+				return 0;
+			case LUA_TNUMBER:
+				return 1;
+		    // XXX: Do we need to convert nil here?
+			/*case LUA_TNIL:
+				if (is_nil_conversion_allowed())
+					return 0;*/
+		    }
+
+			return no_match;
+#else
 			return lua_type(L, index) == LUA_TSTRING ? 0 : no_match;
+#endif	
 		}
 
-		static std::string to_cpp_deferred(lua_State* L, int index)
+		static luabind::string to_cpp_deferred(lua_State* L, int index)
 		{
-			return std::string(lua_tostring(L, index), lua_rawlen(L, index));
+			return luabind::string(lua_tostring(L, index), lua_rawlen(L, index));
 		}
 
-		static void to_lua_deferred(lua_State* L, std::string const& value)
+		static void to_lua_deferred(lua_State* L, luabind::string const& value)
 		{
 			lua_pushlstring(L, value.data(), value.size());
 		}
 	};
 
 	template <>
-	struct default_converter<std::string&>
-		: default_converter<std::string>
+	struct default_converter<luabind::string&>
+		: default_converter<luabind::string>
 	{};
 
 	template <>
-	struct default_converter<std::string const>
-		: default_converter<std::string>
+	struct default_converter<luabind::string const>
+		: default_converter<luabind::string>
 	{};
 
 	template <>
-	struct default_converter<std::string const&>
-		: default_converter<std::string>
+	struct default_converter<luabind::string const&>
+		: default_converter<luabind::string>
 	{};
 
 	template <>
@@ -221,7 +242,23 @@ namespace luabind {
 		static int match(lua_State* L, U, int index)
 		{
 			int type = lua_type(L, index);
+
+#ifndef LUABIND_XRAY_NO_BACKWARDS_COMPATIBILITY
+			switch (type)
+			{
+			case LUA_TSTRING:
+				return 0;
+			case LUA_TNUMBER:
+				return 1;
+			case LUA_TNIL:
+				if (is_nil_conversion_allowed())
+			        return 0;
+			}
+
+			return no_match;
+#else
 			return (type == LUA_TSTRING || type == LUA_TNIL) ? 0 : no_match;
+#endif		
 		}
 
 		template <class U>
@@ -281,13 +318,13 @@ namespace luabind {
 	{};
 
 	template <typename T>
-	struct default_converter < T, typename std::enable_if< std::is_integral<typename std::remove_reference<T>::type>::value >::type >
+	struct default_converter < T, typename std::enable_if< std::is_integral<remove_const_reference_t<T>>::value >::type >
 		: integer_converter<T>
 	{
 	};
 
 	template <typename T>
-	struct default_converter < T, typename std::enable_if< std::is_floating_point<typename std::remove_reference<T>::type>::value >::type >
+	struct default_converter < T, typename std::enable_if< std::is_floating_point<remove_const_reference_t<T>>::value >::type >
 		: number_converter<T>
 	{
 	};

@@ -1,4 +1,4 @@
-// Copyright (c) 2003 Daniel Wallin and Arvid Norberg
+﻿// Copyright (c) 2003 Daniel Wallin and Arvid Norberg
 
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -129,12 +129,43 @@ namespace luabind {
 
 			const char* name = lua_tostring(L, 1);
 
+			// try to add class to the namespace if local "this" exists
+			int index = INT_MIN;
+			lua_Debug ar;
+			if (lua_getstack(L, 1, &ar))
+			{
+				int i = 1;
+				char const* local;
+				while (local = lua_getlocal(L, &ar, i++) , local)
+				{
+					if (!strcmp("this", local))
+					{
+						if (lua_istable(L, -1))
+							index = lua_gettop(L);
+						else
+						lua_pop(L, 1);
+						break;
+					}
+					lua_pop(L, 1); // remove variable value
+				}
+			}
+
 			void* c = lua_newuserdata(L, sizeof(class_rep));
 			new(c) class_rep(L, name);
 
 			// make the class globally available
-			lua_pushvalue(L, -1);
-			lua_setglobal(L, name);
+			if (index == INT_MIN)
+			{
+				lua_pushvalue(L, -1);
+				lua_setglobal(L, name);
+			}
+			else
+			{
+				lua_pushstring(L, name);
+				lua_pushvalue(L, -2);
+				lua_settable(L, index);
+				lua_remove(L, index);
+			}
 
 			// also add it to the closure as return value
 			lua_pushcclosure(L, &stage2, 1);

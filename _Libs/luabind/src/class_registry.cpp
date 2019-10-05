@@ -1,4 +1,4 @@
-// Copyright (c) 2004 Daniel Wallin
+﻿// Copyright (c) 2004 Daniel Wallin
 
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -130,7 +130,7 @@ namespace luabind {
 
 		class_rep* class_registry::find_class(type_id const& info) const
 		{
-			std::map<type_id, class_rep*>::const_iterator i(
+			luabind::map<type_id, class_rep*>::const_iterator i(
 				m_classes.find(info));
 
 			if(i == m_classes.end()) return 0; // the type is not registered

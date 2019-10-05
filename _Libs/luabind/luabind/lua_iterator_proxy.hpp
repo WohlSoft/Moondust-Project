@@ -50,10 +50,10 @@ namespace luabind {
 			}
 
 			template<class T>
-			iterator_proxy& operator=(T const& value)
+			iterator_proxy& operator=(T&& value)
 			{
 				lua_pushvalue(m_interpreter, m_key_index);
-				detail::push(m_interpreter, value);
+				detail::push_to_lua(m_interpreter, std::forward<T>(value));
 				AccessPolicy::set(m_interpreter, m_table_index);
 				return *this;
 			}
@@ -79,7 +79,6 @@ namespace luabind {
 			void push(lua_State* interpreter)
 			{
 				assert(interpreter == m_interpreter);
-				(void)interpreter; // Avoid unusege warning in release build
 				lua_pushvalue(m_interpreter, m_key_index);
 				AccessPolicy::get(m_interpreter, m_table_index);
 			}
@@ -159,8 +158,7 @@ namespace luabind {
 				if(lua_next(m_interpreter, -2) != 0) {
 					detail::stack_pop pop(m_interpreter, 2);
 					handle(m_interpreter, -2).swap(m_key);
-				}
-				else {
+				} else {
 					m_interpreter = 0;
 					return;
 				}
@@ -185,8 +183,7 @@ namespace luabind {
 				if(lua_next(m_interpreter, -2) != 0) {
 					m_key.replace(m_interpreter, -2);
 					lua_pop(m_interpreter, 2);
-				}
-				else {
+				} else {
 					m_interpreter = 0;
 					handle().swap(m_table);
 					handle().swap(m_key);
@@ -219,7 +216,7 @@ namespace luabind {
 
 	} // namespace detail
 
-	using iterator     = detail::basic_iterator<detail::basic_access>;
+	using iterator = detail::basic_iterator<detail::basic_access>;
 	using raw_iterator = detail::basic_iterator<detail::raw_access>;
 
 }

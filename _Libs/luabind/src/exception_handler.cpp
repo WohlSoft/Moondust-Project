@@ -51,6 +51,7 @@ namespace luabind {
 			}
 			catch(error const&)
 			{
+				// is always thrown in the context where an error message was already pushed to the lua stack.
 			}
 			catch(std::logic_error const& e)
 			{

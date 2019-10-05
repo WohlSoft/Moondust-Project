@@ -54,7 +54,10 @@ namespace luabind {
 
 namespace luabind
 {
-	using discard_result = meta::type_list<converter_policy_injector<0, detail::discard_result_policy>>;
+	namespace policy
+	{
+		using discard_result = converter_policy_injector<0, detail::discard_result_policy>;
+	}
 }
 
 #endif // LUABIND_DISCARD_RESULT_POLICY_HPP_INCLUDED

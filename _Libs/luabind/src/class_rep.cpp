@@ -1,4 +1,4 @@
-// Copyright (c) 2003 Daniel Wallin and Arvid Norberg
+﻿// Copyright (c) 2003 Daniel Wallin and Arvid Norberg
 
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -280,7 +280,7 @@ int luabind::detail::class_rep::static_class_gettable(lua_State* L)
 		return 1;
 	}
 
-	std::map<const char*, int, ltstr>::const_iterator j = crep->m_static_constants.find(key);
+    luabind::map<const char*, int, ltstr>::const_iterator j = crep->m_static_constants.find(key);
 
 	if(j != crep->m_static_constants.end())
 	{
@@ -336,7 +336,7 @@ void luabind::detail::finalize(lua_State* L, class_rep* crep)
 		lua_call(L, 1, 0);
 	}
 
-	for(const auto& baseinfo : crep->bases()) { 
+	for(const auto& baseinfo : crep->bases()) {
 		if(baseinfo.base) finalize(L, baseinfo.base);
 	}
 }

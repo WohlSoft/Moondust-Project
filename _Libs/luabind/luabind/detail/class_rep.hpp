@@ -1,4 +1,4 @@
-// Copyright (c) 2003 Daniel Wallin and Arvid Norberg
+﻿// Copyright (c) 2003 Daniel Wallin and Arvid Norberg
 
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -42,7 +42,7 @@
 namespace luabind {
 	namespace detail {
 
-		LUABIND_API std::string stack_content_by_name(lua_State* L, int start_index);
+		LUABIND_API luabind::string stack_content_by_name(lua_State* L, int start_index);
 
 		struct class_registration;
 
@@ -108,7 +108,7 @@ namespace luabind {
 
 			void add_base_class(const base_info& binfo);
 
-			const std::vector<base_info>& bases() const throw() { return m_bases; }
+			const luabind::vector<base_info>& bases() const throw() { return m_bases; }
 
 			void set_type(type_id const& t) { m_type = t; }
 			type_id const& type() const throw() { return m_type; }
@@ -145,6 +145,11 @@ namespace luabind {
 				return *m_classes;
 			}
 
+			luabind::map<const char*, int, ltstr> const& static_constants() const
+			{
+				return m_static_constants;
+			}
+
 		private:
 
 			// Code common to both constructors
@@ -162,7 +167,7 @@ namespace luabind {
 			// a list of info for every class this class derives from
 			// the information stored here is sufficient to do
 			// type casts to the base classes
-			std::vector<base_info> m_bases;
+			luabind::vector<base_info> m_bases;
 
 			// the class' name (as given when registered to lua with class_)
 			const char* m_name;
@@ -192,7 +197,7 @@ namespace luabind {
 			// of this class.
 			int m_instance_metatable;
 
-			std::map<const char*, int, ltstr> m_static_constants;
+			luabind::map<const char*, int, ltstr> m_static_constants;
 
 			// the first time an operator is invoked
 			// we check the associated lua table
@@ -207,8 +212,6 @@ namespace luabind {
 
 	}
 }
-
-//#include <luabind/detail/overload_rep_impl.hpp>
 
 #endif // LUABIND_CLASS_REP_HPP_INCLUDED
 
