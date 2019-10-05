@@ -234,7 +234,10 @@ MainWindow::~MainWindow()
 #endif
     m_messageBoxer.disconnectAll();
     if(m_luna)
+    {
+        m_luna->killEngine();
         delete m_luna;
+    }
     delete ui;
 
     MainWinConnect::pMainWin = nullptr;
