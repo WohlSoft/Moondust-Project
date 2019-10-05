@@ -95,7 +95,7 @@ if(LIBRARY_PROJECT AND NOT WIN32)
 endif()
 
 function(pge_cxx_standard STDVER)
-    if(MSVC AND (${CMAKE_VERSION} VERSION_LESS "3.9.0" AND MSVC_VERSION GREATER_EQUAL "1900"))
+    if(MSVC AND CMAKE_VERSION VERSION_LESS "3.9.0" AND MSVC_VERSION GREATER_EQUAL "1900")
         include(CheckCXXCompilerFlag)
         CHECK_CXX_COMPILER_FLAG("/std:c++${STDVER}" _cpp_stdxx_flag_supported)
         if (_cpp_stdxx_flag_supported)
