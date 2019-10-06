@@ -184,7 +184,7 @@ static pid_t find_pid(const char *process_name)
         */
         if (strcmp(readbuf, procname) == 0)
         {
-            pid = (pid_t)std::atoi(pglob.gl_pathv[i] + strlen("/proc/"));
+            pid = static_cast<pid_t>(std::atoi(pglob.gl_pathv[i] + strlen("/proc/")));
             break;
         }
     }
@@ -262,9 +262,6 @@ void LunaWorker::terminate()
 {
     if(m_process && (m_process->state() == QProcess::Running))
     {
-#ifndef _WIN32
-        Q_PID pid = m_process->pid();
-#endif
         LogDebugNC(QString("LunaWorker: Killing by QProcess::kill()..."));
         QMetaObject::invokeMethod(m_process, "kill", Qt::BlockingQueuedConnection);
 #ifdef _WIN32
@@ -301,8 +298,6 @@ void LunaWorker::terminate()
         else
             LogDebugNC(QString("LunaWorker: No matching PIDs found for %1:").arg(ConfStatus::SmbxEXE_Name));
 #else // _WIN32
-        if(pid)
-            kill(static_cast<pid_t>(pid), SIGTERM);
 #   ifdef __APPLE__
         LogDebugNC(QString("LunaWorker: Killing %1 by 'kill'...").arg(ConfStatus::SmbxEXE_Name));
         QProcess ps;
@@ -326,12 +321,12 @@ void LunaWorker::terminate()
             }
         }
 #   else
-        pid = find_pid(ConfStatus::SmbxEXE_Name.toUtf8().data());
+        pid_t pid = find_pid(ConfStatus::SmbxEXE_Name.toUtf8().data());
         LogDebugNC(QString("LunaWorker: Killing %1 by pid %2...")
             .arg(ConfStatus::SmbxEXE_Name)
             .arg(pid));
         if(pid)
-            kill(static_cast<pid_t>(pid), SIGKILL);
+            kill(pid, SIGKILL);
 #   endif //__APPLE__
 #endif // _WIN32
     }
