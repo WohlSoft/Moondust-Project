@@ -183,6 +183,8 @@ struct NpcSetup
     int32_t         special_spin_max = 0;
     //! Special option Spinbox: spining value step
     int32_t         special_spin_value_offset = 0;
+    //! Special option Spinbox: allow "auto-increment" feature to be used with line drawing tool, otherwise, hide it for this NPC
+    bool            special_spin_allow_autoincrement = true;
 
     //! Extra Settings JSON layout file name
     PGEString       extra_settings = "";
@@ -197,8 +199,10 @@ struct NpcSetup
     double          speed = 0.0;
     //! Let NPC simply moving right/left
     bool            movement = false;
-    //! Make NPC be statical body as blocks
+    //! Make NPC be statical body as blocks, also enables "sticked_on_layer" option by default
     bool            scenery = false;
+    //! NPC will use internal coordinates of parent layer, will follow motion of the parent layer
+    bool            sticked_on_layer = false;
     //! NPC can't be destroyed
     bool            immortal = false;
     //! NPC will keep it's position after deactivation and will not be returned back on re-activation
@@ -253,6 +257,8 @@ struct NpcSetup
     PGEString       direct_alt_rand;
     //! [In-Editor] Disable support for "Random" face direction value
     bool            direct_disable_random = false;
+    //! [In-Editor] Default value for direction field
+    int32_t         direct_default_value = -1;
 
 //    ; Physics
     //! Physical height of NPC hitbox

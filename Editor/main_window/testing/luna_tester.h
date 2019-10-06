@@ -61,6 +61,7 @@ public slots:
 
 public:
     void terminate();
+    void unInit();
     bool isActive();
 
 private slots:
@@ -97,6 +98,10 @@ public:
      * \brief Initialize LunaTester's runtime
      */
     void initRuntime();
+    /**
+     * @brief De-Initialize LunaTester's runtime and prelare to destruction
+     */
+    void unInitRuntime();
     //! Pointer to main window
     MainWindow *m_mw = nullptr;
     //! List of registered menu items
@@ -191,10 +196,9 @@ private:
     void lunaChkResetThread();
     /**
      * @brief Try to close SMBX's window
-     * @param msg Safe message box interface (to spawn message boxes at main window in main thread)
      * @return true if window successfully switched, false on failure
      */
-    bool closeSmbxWindow(SafeMsgBoxInterface &msg);
+    bool closeSmbxWindow();
     /**
      * @brief Switch to active LunaLUA testing window
      * @param msg Safe message box interface (to spawn message boxes at main window in main thread)

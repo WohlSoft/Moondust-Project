@@ -273,7 +273,7 @@ void g_AppSettings::on_buttonBox_accepted()
 
 void g_AppSettings::on_AssociateFiles_clicked()
 {
-    bool success = Installer::associateFiles();
+    bool success = Installer::associateFiles(this);
 
     if (success)
         QMessageBox::information(this, tr("Success"), tr("All file associations have been set"), QMessageBox::Ok);

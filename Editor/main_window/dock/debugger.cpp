@@ -17,7 +17,6 @@
  */
 
 #include <QSettings>
-#include <QDesktopWidget>
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
@@ -226,7 +225,7 @@ void DebuggerBox::on_DEBUG_AddCustomCounter_clicked()
 {
     CustomCounterGUI customCounterGui(mw());
     customCounterGui.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    customCounterGui.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), qApp->desktop()->availableGeometry()));
+    customCounterGui.setGeometry(util::alignToScreenCenter(customCounterGui.size()));
 
     if(customCounterGui.exec() == QDialog::Accepted)
     {
@@ -495,7 +494,7 @@ void DebuggerBox::on_DEBUG_CustomCountersList_customContextMenuRequested(const Q
     {
         CustomCounterGUI customCounterGui(mw());
         customCounterGui.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        customCounterGui.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), qApp->desktop()->availableGeometry()));
+        customCounterGui.setGeometry(util::alignToScreenCenter(customCounterGui.size()));
         customCounterGui.setCounterData(customCounters[itemID]);
 
         if(customCounterGui.exec() == QDialog::Accepted)

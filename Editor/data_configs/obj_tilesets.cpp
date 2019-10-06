@@ -91,7 +91,7 @@ void dataconfigs::loadTilesets()
     }
 
     // Sort all groups in the list
-    qSort(main_tilesets_grp);
+    std::sort(main_tilesets_grp.begin(), main_tilesets_grp.end());
 
     emit progressTitle(QObject::tr("Initializing tileset categories..."));
     main_tileset_categogies.reserve(tilesetCategoryNames.size());
@@ -106,5 +106,5 @@ void dataconfigs::loadTilesets()
     }
 
     // Sort all categories in the list
-    qSort(main_tileset_categogies);
+    std::sort(main_tileset_categogies.begin(), main_tileset_categogies.end());
 }

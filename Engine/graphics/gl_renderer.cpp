@@ -52,7 +52,7 @@
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 #include <common_features/fmt_format_ne.h>
-#include <fmt/fmt_time.h>
+#include <common_features/fmt_time_ne.h>
 
 #include <ctime>
 #include <chrono>
@@ -1045,7 +1045,7 @@ static std::string shoot_getTimedString(std::string path, const char *ext = "png
 {
     auto now = std::chrono::system_clock::now();
     std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
-    std::tm t = fmt::localtime(in_time_t);
+    std::tm t = fmt::localtime_ne(in_time_t);
     static int prevSec = 0;
     static int prevSecCounter = 0;
     if(prevSec != t.tm_sec)

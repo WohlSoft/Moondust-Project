@@ -31,6 +31,7 @@ public:
 
     void setDataObject(luabind::object dataObj);
     luabind::object getDataObject();
+    std::string getEventName();
     bool isCancellable();
     void setCancelled(bool cancelled, lua_State* L);
     bool getCancelled();
@@ -38,6 +39,7 @@ public:
 
 private:
     luabind::object eventData;
+    std::string eventName;
     bool eventCancellable;
     bool eventCancelled;
 };

@@ -98,7 +98,7 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
         size_t target_id = static_cast<size_t>(nearest->setup->setup.plSwitch_Button_id - 1);
-        std::vector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
+        std::vector<saveCharState> &states = player->m_scene->getGameState()->m_gameSave.characterStates;
         if(target_id >= states.size())
         {
             PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
@@ -246,18 +246,22 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     Maths::clearPrecision(m_momentum.y);
 
 //FIXME: Fix the missing in-area detector's trap position
-    if(m_parent && (m_bodytype == Body_DYNAMIC))
+    if(m_parent)
     {
-        //m_momentum_relative.saveOld();
-        m_momentum_relative.velX    = m_momentum.velX;
-        m_momentum_relative.velXsrc = m_momentum.velXsrc;
-        m_momentum_relative.velY    = m_momentum.velY;
+        if(m_bodytype == Body_DYNAMIC)
+        {
+            m_momentum_relative.velX    = m_momentum.velX;
+            m_momentum_relative.velXsrc = m_momentum.velXsrc;
+            m_momentum_relative.velY    = m_momentum.velY;
+        }
+        // Iterate relative movement if needed
+        m_momentum_relative.saveOld();
         m_momentum_relative.x += iterateX;
         m_momentum_relative.y += iterateY;
+
         Maths::clearPrecision(m_momentum_relative.x);
         Maths::clearPrecision(m_momentum_relative.y);
     }
-
     m_treemap.updatePos();
 }
 

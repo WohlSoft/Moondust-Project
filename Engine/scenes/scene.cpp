@@ -20,6 +20,7 @@
 #include "scene.h"
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
+#include <graphics/vsync_validator.h>
 #include <Utils/maths.h>
 
 #include <script/lua_event.h>
@@ -209,6 +210,26 @@ void Scene::renderMouse()
 int Scene::exec()
 {
     return 0;
+}
+
+void Scene::runVsyncValidator()
+{
+    if(!PGE_Window::vsync)
+        return; // Do nothing, VSync is disabled
+
+    auto vSyncProbe = VSyncValidator(this, PGE_Window::frameDelay);
+    while(!vSyncProbe.isComplete())
+    {
+        GlRenderer::clearScreen();
+        for(int i = 0; i < 10000; i++)
+        {
+            GlRenderer::renderRect(1.0f * float(i), 1.0f * float(i), 12.0f, 12.0f,
+                                   0.0f, 0.0f, 0.0f, 1.0f * float(i)/100.0f);
+        }
+        GlRenderer::flush();
+        GlRenderer::repaint();
+        vSyncProbe.update();
+    }
 }
 
 Scene::TypeOfScene Scene::type()

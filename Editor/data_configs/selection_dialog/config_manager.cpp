@@ -177,18 +177,15 @@ ConfigManager::ConfigManager(QWidget *parent) :
                    Qt::WindowCloseButtonHint |
                    Qt::WindowStaysOnTopHint);
 
-    setGeometry(QStyle::alignedRect(Qt::LeftToRight,
-                                    Qt::AlignCenter,
-                                    size(),
-                                    qApp->desktop()->availableGeometry()));
+    setGeometry(util::alignToScreenCenter(size()));
 
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
     ui->frame->setAutoFillBackground(false);
     ui->frame->setFrameShape(QFrame::NoFrame);
     ui->frame->setLineWidth(0);
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
@@ -205,7 +202,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+#endif
 
     connect(ui->configList, SIGNAL(clicked(QModelIndex)), ui->configList, SLOT(update()));
     connect(this, SIGNAL(accepted()), this, SLOT(saveCurrentSettings()));
@@ -356,9 +353,9 @@ bool ConfigManager::hasConfigPacks()
         QMessageBox msgBox(this);
         msgBox.setWindowTitle(tr("No config packs were found"));
         msgBox.setTextFormat(Qt::RichText); //this is what makes the links clickable
-        #if (QT_VERSION >= 0x050100)
+#if (QT_VERSION >= 0x050100)
         msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
-        #endif
+#endif
         msgBox.setText(
             tr("No configuration packages were found!<br>\n"
                "Please download and install them into this directory<br>\n<br>\n%1<br>\n<br>\n"
@@ -369,7 +366,7 @@ bool ConfigManager::hasConfigPacks()
                  "</a>")
         );
         QSize mSize = msgBox.sizeHint();
-        QRect screenRect = QDesktopWidget().screen()->rect();
+        QRect screenRect = util::getScreenGeometry();
         msgBox.move(QPoint(screenRect.width() / 2 - mSize.width() / 2,
                            screenRect.height() / 2 - mSize.height() / 2));
         msgBox.setIcon(QMessageBox::Warning);

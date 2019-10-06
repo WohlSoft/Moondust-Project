@@ -21,7 +21,6 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/graphics.h>
 #include <graphics/window.h>
-#include <graphics/vsync_validator.h>
 #include <gui/pge_msgbox.h>
 #include <settings/global_settings.h>
 #include <common_features/graphics_funcs.h>
@@ -195,14 +194,15 @@ void LoadingScene::render()
 
 int LoadingScene::exec()
 {
+    runVsyncValidator();
+
     m_doExit = false;
     times.init();
     times.start_common = SDL_GetTicks();
     m_gfx_frameSkip = g_AppSettings.frameSkip;
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
-    auto vSyncProbe = VSyncValidator(this, PGE_Window::frameDelay);
 
-    while(m_isRunning || !vSyncProbe.isComplete())
+    while(m_isRunning)
     {
         times.start_common = SDL_GetTicks();
 
@@ -239,8 +239,6 @@ int LoadingScene::exec()
             times.stop_render = 0;
             times.start_render = 0;
         }
-
-        vSyncProbe.update();
 
         /****************************************************************************/
         if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))

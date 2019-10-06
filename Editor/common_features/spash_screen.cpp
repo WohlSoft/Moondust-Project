@@ -15,19 +15,19 @@
 
 EditorSpashScreen::EditorSpashScreen()
 {
-    opacity=1;
-    width_ratio=1.0;
-    height_ratio=1.0;
+    opacity = 1;
+    width_ratio = 1.0;
+    height_ratio = 1.0;
     construct();
 }
 
 EditorSpashScreen::EditorSpashScreen(QPixmap &pixmap)
 {
-    opacity=1;
-    QPixmap newx(pixmap.width(), pixmap.height()+50);
+    opacity = 1;
+    QPixmap newx(pixmap.width(), pixmap.height() + 50);
     newx.fill(QColor(Qt::transparent));
     QPainter x(&newx);
-    x.drawPixmap(0,0, pixmap.width(), pixmap.height(), pixmap);
+    x.drawPixmap(0, 0, pixmap.width(), pixmap.height(), pixmap);
     x.end();
     setPixmap(newx);
     construct();
@@ -73,14 +73,14 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     }
 
     painter->setBrush(QBrush(Qt::black));
-    QPen progressLine_bar( QBrush(Qt::black), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QPen progressLine_bar(QBrush(Qt::black), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     painter->setPen(progressLine_bar);
     painter->drawRect(0, rect().height() - 5, rect().width(), 4);
 
     painter->setBrush(QBrush(Qt::green));
     painter->setPen(Qt::transparent);
 
-    int progressLineLength = Maths::iRound(double(rect().width()) *( (double)_percents/100.0));
+    int progressLineLength = Maths::iRound(double(rect().width()) * ((double)_percents / 100.0));
     painter->drawRect(rtl ? (rect().width() - progressLineLength) : 0,
                       rect().height() - 4,
                       progressLineLength,
@@ -127,43 +127,39 @@ void EditorSpashScreen::startAnimations()
 
 void EditorSpashScreen::opacityUP()
 {
-    if(opacity>=1.0)
-    {
-        opacity=1;
-    }
+    if(opacity >= 1.0)
+        opacity = 1;
     else
-    {
-        opacity+=0.09;
-    }
+        opacity += 0.09;
     repaint();
 }
 
 void EditorSpashScreen::progressValue(int val)
 {
-    _label_val=val;
+    _label_val = val;
     rebuildLabel();
 }
 
 void EditorSpashScreen::progressMax(int val)
 {
-    _label_max=val;
+    _label_max = val;
 }
 
 void EditorSpashScreen::progressTitle(QString val)
 {
-    _label_str=val;
+    _label_str = val;
     rebuildLabel();
 }
 
 void EditorSpashScreen::progressPartsMax(int val)
 {
-    _parts_max=val;
+    _parts_max = val;
     rebuildLabel();
 }
 
 void EditorSpashScreen::progressPartsVal(int val)
 {
-    _parts_val=val;
+    _parts_val = val;
 }
 
 void EditorSpashScreen::keyPressEvent(QKeyEvent *)
@@ -179,17 +175,17 @@ void EditorSpashScreen::closeEvent(QCloseEvent *e)
 
 void EditorSpashScreen::construct()
 {
-    _label_val=0.0;
-    _label_max=100.0;
-    _percents=0;
+    _label_val = 0.0;
+    _label_max = 100.0;
+    _percents = 0;
 
-    _parts_max=1.0;
-    _parts_val=0.0;
+    _parts_max = 1.0;
+    _parts_val = 0.0;
 
-    buffer=this->pixmap();
+    buffer = this->pixmap();
 
-    #ifdef Q_OS_ANDROID
-    QDesktopWidget* desktopWidget = qApp->desktop();
+#ifdef Q_OS_ANDROID
+    QDesktopWidget *desktopWidget = qApp->desktop();
     QRect screenGeometry = desktopWidget->screenGeometry();
     int screenWidth = screenGeometry.width();
     int screenHeight = screenGeometry.height();
@@ -198,13 +194,13 @@ void EditorSpashScreen::construct()
     buffer = buffer.scaled(screenWidth, screenHeight, Qt::KeepAspectRatio);
     height_ratio = qreal(buffer.height()) / oldHeight;
     width_ratio =  qreal(buffer.width()) / oldWidth;
-    #endif
+#endif
 
     QPixmap t = QPixmap(buffer.width(), buffer.height());
     t.fill(Qt::transparent);
     this->setPixmap(t);
 
-    opacity=0.0;
+    opacity = 0.0;
     scaler.setTimerType(Qt::PreciseTimer);
     scaler.setInterval(64);
     connect(&scaler, SIGNAL(timeout()), this, SLOT(opacityUP()));
@@ -212,8 +208,8 @@ void EditorSpashScreen::construct()
 
 void EditorSpashScreen::rebuildLabel()
 {
-    double onePice= ((_parts_val<_parts_max) ? (_label_val/_label_max) : 0.0);
-    _percents = (int)round( ( (_parts_val+onePice)/_parts_max )*100.0 );
+    double onePice = ((_parts_val < _parts_max) ? (_label_val / _label_max) : 0.0);
+    _percents = (int)round(((_parts_val + onePice) / _parts_max) * 100.0);
     _label = QString("%1% - %2").arg(_percents).arg(_label_str);
 }
 

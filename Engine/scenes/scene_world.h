@@ -54,6 +54,7 @@ class WorldScene final : public Scene
     friend class PGE_TextInputBox;
     friend class PGE_MenuBoxBase;
     friend class WldPathOpener;
+    friend class Binding_Core_Data;
 public:
     WorldScene();
     ~WorldScene() override;

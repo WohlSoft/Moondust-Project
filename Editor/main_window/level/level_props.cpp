@@ -35,7 +35,7 @@ void MainWindow::on_actionLevelProp_triggered()
         if(!e) return;
         LevelProps LevProps(e->LvlData, this);
         LevProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        LevProps.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, LevProps.size(), qApp->desktop()->availableGeometry()));
+        LevProps.setGeometry(util::alignToScreenCenter(LevProps.size()));
         if(LevProps.exec()==QDialog::Accepted)
         {
             QList<QVariant> lvlsetData;

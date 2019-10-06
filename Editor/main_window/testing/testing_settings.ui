@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>304</width>
-    <height>466</height>
+    <width>312</width>
+    <height>533</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -259,7 +259,7 @@
          <string>Allows you to destroy any objects with no exceptions.</string>
         </property>
         <property name="text">
-         <string>Chuck Norris</string>
+         <string>Bulldozer mode</string>
         </property>
        </widget>
       </item>

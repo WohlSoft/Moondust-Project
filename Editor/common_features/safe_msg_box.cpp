@@ -19,13 +19,82 @@
 #include "safe_msg_box.h"
 #include <QApplication>
 #include <QMessageBox>
+#include <QMutexLocker>
 #include <QDesktopWidget>
+#include <QRect>
+#include <common_features/util.h>
 
 #define ToBTNS(btn) QMessageBox::StandardButtons(QMessageBox::StandardButton(btn))
+
+void SafeMsgBox::initInterface(SafeMsgBoxInterface *source)
+{
+    QMutexLocker lock(&m_source_mtx); Q_UNUSED(lock);
+
+    if(m_source.find(source) != m_source.end())
+        return;
+    QObject::connect(source, SIGNAL(info(QString, QString, unsigned long, int *)),
+                     this, SLOT(info(QString, QString, unsigned long, int *)),
+                     Qt::BlockingQueuedConnection);
+    QObject::connect(source, SIGNAL(question(QString, QString, unsigned long, int *)),
+                     this, SLOT(question(QString, QString, unsigned long, int *)),
+                     Qt::BlockingQueuedConnection);
+    QObject::connect(source, SIGNAL(warning(QString, QString, unsigned long, int *)),
+                     this, SLOT(warning(QString, QString, unsigned long, int *)),
+                     Qt::BlockingQueuedConnection);
+    QObject::connect(source, SIGNAL(critical(QString, QString, unsigned long, int *)),
+                     this, SLOT(critical(QString, QString, unsigned long, int *)),
+                     Qt::BlockingQueuedConnection);
+    QObject::connect(source, SIGNAL(richBox(QString, QString, unsigned long, int, int *)),
+                     this, SLOT(richBox(QString, QString, unsigned long, int, int *)),
+                     Qt::BlockingQueuedConnection);
+    m_source.insert(source);
+}
+
+void SafeMsgBox::disconnectOne(SafeMsgBoxInterface *source)
+{
+    QMutexLocker lock(&m_source_mtx); Q_UNUSED(lock);
+
+    if(m_source.find(source) == m_source.end())
+        return;
+    QObject::disconnect(source, SIGNAL(info(QString, QString, unsigned long, int *)),
+                        this, SLOT(info(QString, QString, unsigned long, int *)));
+    QObject::disconnect(source, SIGNAL(question(QString, QString, unsigned long, int *)),
+                        this, SLOT(question(QString, QString, unsigned long, int *)));
+    QObject::disconnect(source, SIGNAL(warning(QString, QString, unsigned long, int *)),
+                        this, SLOT(warning(QString, QString, unsigned long, int *)));
+    QObject::disconnect(source, SIGNAL(critical(QString, QString, unsigned long, int *)),
+                        this, SLOT(critical(QString, QString, unsigned long, int *)));
+    QObject::disconnect(source, SIGNAL(richBox(QString, QString, unsigned long, int, int *)),
+                        this, SLOT(richBox(QString, QString, unsigned long, int, int *)));
+    m_source.remove(source);
+}
 
 SafeMsgBox::SafeMsgBox(QObject *parent) :
     QObject(parent)
 {}
+
+void SafeMsgBox::disconnectAll()
+{
+    QMutexLocker lock(&m_source_mtx); Q_UNUSED(lock);
+
+    if(m_source.isEmpty())
+        return;
+
+    for(auto *source : m_source)
+    {
+        QObject::disconnect(source, SIGNAL(info(QString, QString, unsigned long, int *)),
+                            this, SLOT(info(QString, QString, unsigned long, int *)));
+        QObject::disconnect(source, SIGNAL(question(QString, QString, unsigned long, int *)),
+                            this, SLOT(question(QString, QString, unsigned long, int *)));
+        QObject::disconnect(source, SIGNAL(warning(QString, QString, unsigned long, int *)),
+                            this, SLOT(warning(QString, QString, unsigned long, int *)));
+        QObject::disconnect(source, SIGNAL(critical(QString, QString, unsigned long, int *)),
+                            this, SLOT(critical(QString, QString, unsigned long, int *)));
+        QObject::disconnect(source, SIGNAL(richBox(QString, QString, unsigned long, int, int *)),
+                            this, SLOT(richBox(QString, QString, unsigned long, int, int *)));
+    }
+    m_source.clear();
+}
 
 void SafeMsgBox::info(QString title, QString text, unsigned long buttons, int *reply)
 {
@@ -70,12 +139,12 @@ void SafeMsgBox::richBox(QString title, QString text, unsigned long buttons, int
     msgBox.setWindowTitle(title);
     msgBox.setWindowModality(Qt::WindowModal);
     msgBox.setTextFormat(Qt::RichText); //this is what makes the links clickable
-#if (QT_VERSION >= 0x050100)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 1, 0)
     msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
 #endif
     msgBox.setText(text);
     QSize mSize = msgBox.sizeHint();
-    QRect screenRect = QApplication::desktop()->screen()->rect();
+    QRect screenRect = util::getScreenGeometry();
     msgBox.move(QPoint(screenRect.width() / 2 - mSize.width() / 2,
                        screenRect.height() / 2 - mSize.height() / 2));
     msgBox.setIcon(QMessageBox::Icon(msgType));
@@ -92,21 +161,13 @@ SafeMsgBoxInterface::SafeMsgBoxInterface(SafeMsgBox *target, QObject *parent):
     QObject(parent)
 {
     Q_ASSERT(target);
-    connect(this, SIGNAL(info(QString, QString, unsigned long, int *)),
-            target, SLOT(info(QString, QString, unsigned long, int *)),
-            Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(question(QString, QString, unsigned long, int *)),
-            target, SLOT(question(QString, QString, unsigned long, int *)),
-            Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(warning(QString, QString, unsigned long, int *)),
-            target, SLOT(warning(QString, QString, unsigned long, int *)),
-            Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(critical(QString, QString, unsigned long, int *)),
-            target, SLOT(critical(QString, QString, unsigned long, int *)),
-            Qt::BlockingQueuedConnection);
-    connect(this, SIGNAL(richBox(QString, QString, unsigned long, int, int *)),
-            target, SLOT(richBox(QString, QString, unsigned long, int, int *)),
-            Qt::BlockingQueuedConnection);
+    target->initInterface(this);
+    m_target = target;
+}
+
+SafeMsgBoxInterface::~SafeMsgBoxInterface()
+{
+    m_target->disconnectOne(this);
 }
 
 int SafeMsgBoxInterface::info(QString title, QString text, unsigned long buttons)

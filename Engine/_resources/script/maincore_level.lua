@@ -31,7 +31,7 @@ end
 
 function __create_luaplayer()
     local newPlayer = bases.player()
-	__refs.players[newPlayer] = true --Be sure that the garbage collector doesn't destory our object
+    __refs.players[newPlayer] = true --Be sure that the garbage collector doesn't destory our object
     return newPlayer
 end
 

@@ -34,17 +34,19 @@ bool LevelScene::setEntrance(unsigned long entr)
     player_defs.clear();
     unsigned int plr = 1;
 
-    for(unsigned long &xxx : m_gameState->game_state.currentCharacter)
+    auto &gameState = m_gameState->m_gameSave;
+
+    for(unsigned long &xxx : gameState.currentCharacter)
     {
         LVL_PlayerDef def;
         def.setPlayerID(static_cast<int>(plr));
         def.setCharacterID(xxx);
 
-        for(size_t j = 0; j < m_gameState->game_state.characterStates.size(); j++)
+        for(size_t j = 0; j < gameState.characterStates.size(); j++)
         {
-            if(m_gameState->game_state.characterStates[j].id == xxx)
+            if(gameState.characterStates[j].id == xxx)
             {
-                def.setState(m_gameState->game_state.characterStates[j].state);
+                def.setState(gameState.characterStates[j].state);
                 break;
             }
         }

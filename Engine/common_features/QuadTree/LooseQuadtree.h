@@ -1,6 +1,3 @@
-#ifndef LOOSEQUADTREE_LOOSEQUADTREE_H
-#define LOOSEQUADTREE_LOOSEQUADTREE_H
-
 /**
  * LooseQuadtree written by Zozo
  * use freely under MIT license
@@ -30,9 +27,11 @@
  *     BoundingBoxExtractor::ExtractBoundingBox(ObjectT* in, BoundingBox<Number>* out) implemented
  */
 
+#ifndef LOOSEQUADTREE_LOOSEQUADTREE_H
+#define LOOSEQUADTREE_LOOSEQUADTREE_H
 
-
-namespace loose_quadtree {
+namespace loose_quadtree
+{
 
 
 
@@ -113,6 +112,6 @@ private:
 
 } //loose_quadtree
 
-#include "LooseQuadtree-impl.h"
+#include "LooseQuadtree-impl.tcc"
 
 #endif //LOOSEQUADTREE_LOOSEQUADTREE_H

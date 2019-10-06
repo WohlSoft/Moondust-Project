@@ -49,6 +49,8 @@ void GameOverScene::render()
 
 int GameOverScene::exec()
 {
+    runVsyncValidator();
+
     PGE_QuestionBox continueOrQuit(this,
                                    //% "Game Over!"
                                    qtTrId("GAMEOVER_TITLE"),

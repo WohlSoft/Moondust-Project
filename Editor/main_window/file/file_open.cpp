@@ -143,7 +143,7 @@ void MainWindow::on_OpenFile_triggered()
     }
 
     QStringList fileName_DATA = QFileDialog::getOpenFileNames(this,
-                                trUtf8("Open file"),
+                                tr("Open file"),
                                 GlobalSettings::openPath,
                                 QString("All supported formats (*.lvlx *.wldx *.lvl *.wld npc-*.txt *.sav);;"
                                         "All SMBX files (*.lvl *.wld npc-*.txt);;"
@@ -187,7 +187,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         return;
     }
 
-    QMdiSubWindow *newSubWin = NULL;
+    QMdiSubWindow *newSubWin = nullptr;
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
     if(existing)
     {

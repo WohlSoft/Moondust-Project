@@ -18,6 +18,7 @@
  */
 
 #include "luaevents_core_engine.h"
+#include <common_features/fmt_format_ne.h>
 
 /***
 Callback events called by engine. There are must be defined in your script files where you want to handle those events.
@@ -42,6 +43,36 @@ LuaEvent BindingCore_Events_Engine::createInitEngineEvent(LuaEngine *engine)
 {
     LuaEvent event = LuaEvent(engine);
     event.setEventName("initEngine");
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createLoadEvent(LuaEngine *engine)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("load");
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createStartEvent(LuaEngine *engine)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("start");
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createTickEvent(LuaEngine *engine, double ticks)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("tick");
+    event.addParameter(ticks);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createTickEndEvent(LuaEngine *engine, double ticks)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("tickEnd");
+    event.addParameter(ticks);
     return event;
 }
 
@@ -76,6 +107,189 @@ LuaEvent BindingCore_Events_Engine::createLoopEvent(LuaEngine *engine, double ti
     LuaEvent event = LuaEvent(engine);
     event.setEventName("loop");
     event.addParameter(ticks);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createSaveEvent(LuaEngine *engine)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("save");
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createQuitEvent(LuaEngine *engine, int exitCode)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("quit");
+    event.addParameter(exitCode);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createExitLevelEvent(LuaEngine *engine, int exitCode)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("exitLevel");
+    event.addParameter(exitCode);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createJumpEvent(LuaEngine *engine, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("jump");
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createJumpEndEvent(LuaEngine *engine, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("jumpEnd");
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createKeyDownEvent(LuaEngine *engine, int keyCode, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("keyDown");
+    event.addParameter(keyCode);
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createKeyUpEvent(LuaEngine *engine, int keyCode, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("keyUp");
+    event.addParameter(keyCode);
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createInputUpdateEvent(LuaEngine *engine)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("inputUpdate");
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createMessageBoxEvent(LuaEngine *engine,
+                                                          Binding_Core_Class_SimpleEvent *eventContext,
+                                                          const std::string &messageText)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("messageBox");
+    event.addParameter(eventContext);
+    event.addParameter(messageText);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createEventEvent(LuaEngine *engine, const std::string &eventName)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("event");
+    event.addParameter(eventName);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createEventDirectEvent(LuaEngine *engine,
+                                                           Binding_Core_Class_SimpleEvent *eventContext,
+                                                           const std::string &eventName)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("eventDirect");
+    event.addParameter(eventContext);
+    event.addParameter(eventName);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createCameraUpdateEvent(LuaEngine *engine,
+                                                            Binding_Core_Class_SimpleEvent *eventContext,
+                                                            int cameraIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("cameraUpdate");
+    event.addParameter(eventContext);
+    event.addParameter(cameraIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createCameraUpdateDirectEvent(LuaEngine *engine,
+                                                                  Binding_Core_Class_SimpleEvent *eventContext,
+                                                                  PGE_LevelCamera *camera)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("cameraUpdateDirect");
+    event.addParameter(eventContext);
+    event.addParameter(camera);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createLoopSectionEvent(LuaEngine *engine, int sectionId, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("loopSection");
+    event.addParameter(sectionId);
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createLoopSectionXEvent(LuaEngine *engine, int sectionId, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName(fmt::format("loopSection{0}", sectionId));
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createLoadSectionEvent(LuaEngine *engine, int sectionId, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("loadSection");
+    event.addParameter(sectionId);
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createLoadSectionXEvent(LuaEngine *engine, int sectionId, int playerIndex)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName(fmt::format("loadSection{0}", sectionId));
+    event.addParameter(playerIndex);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createKeyboardPressEvent(LuaEngine *engine, int vkCode)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("keyboardPress");
+    event.addParameter(vkCode);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createKeyboardPressDirectEvent(LuaEngine *engine,
+                                                                   Binding_Core_Class_SimpleEvent *eventContext,
+                                                                   int vkCode)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("keyboardPressDirect");
+    event.addParameter(eventContext);
+    event.addParameter(vkCode);
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createDrawEvent(LuaEngine *engine)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("draw");
+    return event;
+}
+
+LuaEvent BindingCore_Events_Engine::createDrawEndEvent(LuaEngine *engine)
+{
+    LuaEvent event = LuaEvent(engine);
+    event.setEventName("drawEnd");
     return event;
 }
 

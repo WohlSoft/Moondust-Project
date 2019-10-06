@@ -247,53 +247,53 @@ and retry your recent actions to get more detailed information.</source>
         <translation>重新开始关卡</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="550"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="298"/>
+        <location filename="../scenes/scene_world.cpp" line="554"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="300"/>
         <source>Invalid playable character ID</source>
         <translation>错误的人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="559"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="307"/>
+        <location filename="../scenes/scene_world.cpp" line="563"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character state ID</source>
         <translation>错误的人物形态编号</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="432"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="434"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
 请问你将起点（或者传送入口）放置到了场景外的过大范围吗？</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="611"/>
-        <location filename="../scenes/scene_world.cpp" line="638"/>
+        <location filename="../scenes/scene_world.cpp" line="615"/>
+        <location filename="../scenes/scene_world.cpp" line="642"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="619"/>
-        <location filename="../scenes/scene_world.cpp" line="646"/>
+        <location filename="../scenes/scene_world.cpp" line="623"/>
+        <location filename="../scenes/scene_world.cpp" line="650"/>
         <source>Continue</source>
         <translation>继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="621"/>
+        <location filename="../scenes/scene_world.cpp" line="625"/>
         <source>Save and continue</source>
         <translation>保存并继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="623"/>
+        <location filename="../scenes/scene_world.cpp" line="627"/>
         <source>Save and quit</source>
         <translation>保存并退出</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="629"/>
         <source>Exit without saving</source>
         <translation>退出而不保存</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="648"/>
+        <location filename="../scenes/scene_world.cpp" line="652"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>

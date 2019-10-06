@@ -24,7 +24,6 @@
 #include <QMdiArea>
 #include <QPixmap>
 #include <QAbstractListModel>
-#include <QSignalMapper>
 #include <QProcess>
 #include <QList>
 #include <QPoint>
@@ -176,7 +175,7 @@ public:
         bool m_isAppInited;
 
         //! When application will be closed, restart it
-        bool m_isAppRestartRequested;
+        bool m_isAppRestartRequested = false;
 
         bool isAppRestartRequested();
 
@@ -302,6 +301,10 @@ public:
         void on_actionSwitch_to_Fullscreen_triggered(bool checked);
 
         //New file
+        /*!
+         * \brief Dialog to choice what new format to create
+         */
+        void on_actionNewFile_triggered();
         /*!
          * \brief Open level editing sub-window with a blank file
          */
@@ -615,10 +618,6 @@ public:
         /// \return pointer to subWindow which case with target file
         ///
         QMdiSubWindow *findOpenedFileWin(const QString &fileName);
-        /*!
-         * \brief Sub-windows mapper
-         */
-        QSignalMapper *windowMapper;
         // //////////////////////////////////////////////////////
 
         // /////////////// Latest Active Window ///////////////////
@@ -1017,6 +1016,15 @@ public:
         void on_actionWLDToolBox_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+// ////////////////////World MusicBoxes toolbox /////////////////
+    public:
+        //! World map music boxes toolbox
+        WorldMusicBoxItemBox * dock_WldMusicBoxes;
+
+    private slots:
+        void on_actionMusicBoxes_triggered(bool checked);
+// ////////////////////////////////////////////////////////
+
 // ///////////////World Item Properties box //////////////////
     public:
         //! World map item properties box
@@ -1108,7 +1116,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

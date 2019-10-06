@@ -295,10 +295,10 @@ class PGE_Phys_Object: public PGE_physBody
             void updateSize();
             void delFromScene();
             bool   m_is_registered = false;
-            double m_posX_registered = 0.0; //!< Synchronized with R-Tree position
-            double m_posY_registered = 0.0; //!< Synchronized with R-Tree position
-            double m_width_registered = 1.0;  //!< Synchronized with R-Tree Width
-            double m_height_registered = 1.0; //!< Synchronized with R-Tree Height
+            double m_posX_registered = 0.0; //!< Synchronized with QuadTree position
+            double m_posY_registered = 0.0; //!< Synchronized with QuadTree position
+            double m_width_registered = 1.0;  //!< Synchronized with QuadTree Width
+            double m_height_registered = 1.0; //!< Synchronized with QuadTree Height
         } m_treemap;
         Momentum            m_momentum_relative;//Momentum, relative to parent layer's position
         PGE_Phys_Object     *m_parent = nullptr;

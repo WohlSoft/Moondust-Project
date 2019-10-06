@@ -17,6 +17,9 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#include <luabind/luabind.hpp>
+#include <luabind/detail/primitives.hpp> // for null_type
+
 #include <scenes/level/lvl_block.h>
 
 /***
@@ -27,8 +30,9 @@ Level Block class and functions
 luabind::scope LVL_Block::bindToLua()
 {
     using namespace luabind;
+    using namespace luabind::detail;
     return
-        class_<LVL_Block, PGE_Phys_Object, detail::null_type, LVL_Block>("BaseBlock")
+        class_<LVL_Block, PGE_Phys_Object, null_type, LVL_Block>("BaseBlock")
             /***
             Block Object base class, inherited from @{PhysBaseClass.PhysBase}
             @type BaseBlock

@@ -445,6 +445,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 uint32_t npcImgW = static_cast<uint32_t>(capturedS.width());
                 uint32_t npcImgH = static_cast<uint32_t>(capturedS.height());
                 autoConf.gfxwidth = npcImgW;
+                autoConf.width = t_npc.setup.width;
+                autoConf.en_width = true;
                 t_npc.setup.applyNPCtxt(&autoConf, t_npc.setup, npcImgW, npcImgH);
             }
         }

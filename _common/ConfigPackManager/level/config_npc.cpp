@@ -101,9 +101,9 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("shell-effect",     effect_2,           pMerge(effect_2, 10u));
 
     //Physics
-    setup->read("physical-height",  height, pMerge(height, 0));
+    setup->read("physical-height",  height, pMerge(height, 0u));
     NumberLimiter::apply(height, 1u);
-    setup->read("physical-width",   width, pMerge(width, 0));
+    setup->read("physical-width",   width, pMerge(width, 0u));
     NumberLimiter::apply(width, 1u);
     setup->read("block-npc",        block_npc, pMerge(block_npc, false));
     setup->read("block-npc-top",    block_npc_top, pMerge(block_npc_top, false));
@@ -115,23 +115,23 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("adhesion",         adhesion,   pMerge(adhesion, false));
     setup->read("contact-padding",  contact_padding, pMerge(contact_padding, 0.0));
     setup->read("container",        container, pMerge(container, false));
-    setup->read("contents-id",      contents_id, pMerge(contents_id, 0));
+    setup->read("contents-id",      contents_id, pMerge(contents_id, 0u));
 
     setup->read("container-elastic",            container_elastic, pMerge(container_elastic, false));
-    setup->read("container-elastic-border-w",   container_elastic_border_w, pMerge(container_elastic_border_w, 4));
+    setup->read("container-elastic-border-w",   container_elastic_border_w, pMerge(container_elastic_border_w, 4u));
     NumberLimiter::apply(container_elastic_border_w, 0u);
     setup->read("container-show-contents",      container_show_contents, pMerge(container_show_contents, false));
     setup->read("container-content-z-offset",   container_content_z_offset, pMerge(container_content_z_offset, -0.00001));
     setup->read("container-crop-contents",      container_crop_contents, pMerge(container_crop_contents, false));
-    setup->read("container-align-contents",     container_align_contents, pMerge(container_align_contents, 0));
+    setup->read("container-align-contents",     container_align_contents, pMerge(container_align_contents, 0u));
     setup->read("no-npc-collisions",            no_npc_collisions, pMerge(no_npc_collisions, false));
 
     //Graphics
     setup->read("gfx-offset-x",     gfx_offset_x,   pMerge(gfx_offset_x, 0));
     setup->read("gfx-offset-y",     gfx_offset_y,   pMerge(gfx_offset_y, 0));
-    setup->read("frame-style",      framestyle,     pMerge(framestyle, 0));
+    setup->read("frame-style",      framestyle,     pMerge(framestyle, 0u));
     NumberLimiter::apply(framestyle, 0u, 4u);
-    setup->read("frames",       frames,         pMerge(frames, 1));//Real
+    setup->read("frames",       frames,         pMerge(frames, 1u));//Real
     pAlias("framecount",        frames);//Alias
     pAlias("frame-count",       frames);//Alias
     NumberLimiter::apply(frames, 1u);
@@ -144,7 +144,7 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("gfx-width",        gfx_w, pMerge(gfx_w, gfx_w));
     NumberLimiter::apply(gfx_w, 1u);
 
-    setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
+    setup->read("frame-delay", framespeed, pMerge(framespeed, 125u));//Real
     pAlias("frame-speed", framespeed);//Alias
     if(setup->hasKey("framespeed"))
     {
@@ -199,12 +199,12 @@ bool NpcSetup::parse(IniProcessing *setup,
                 i += framesOffset;
         }
 
-        if(frames_left.empty())
+        if(!frames_left.empty())
         {
             custom_ani_fl = frames_left.front();
             custom_ani_el = frames_left.back();
         }
-        if(frames_right.empty())
+        if(!frames_right.empty())
         {
             custom_ani_fr = frames_right.front();
             custom_ani_er = frames_right.back();
@@ -245,7 +245,7 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("custom-value-name", special_name,   pMerge(special_name, "Special option value"));
     pAlias("special-name", special_name);//Old name
 
-    setup->read("custom-value-type", special_type,   pMerge(special_type, 1));
+    setup->read("custom-value-type", special_type,   pMerge(special_type, 1u));
     pAlias("special-type", special_type);//Old name
 
     setup->read("custom-value-combobox-size", combobox_size, 0);
@@ -278,26 +278,31 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("custom-value-spin-value-offset", special_spin_value_offset, pMerge(special_spin_value_offset, 0));
     pAlias("special-spin-value-offset", special_spin_value_offset);//Old name
 
+    setup->read("custom-value-spin-allow-autoincrement", special_spin_allow_autoincrement, pMerge(special_spin_allow_autoincrement, true));
+    pAlias("special-spin-allow-autoincrement", special_spin_allow_autoincrement);//Style like old name
+
     setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
 
     /*************Build special value combobox***end*****/
-    setup->read("score",                score,                  pMerge(score, 0));
+    setup->read("score",                score,                  pMerge(score, 0u));
     setup->read("speed",                speed,                  pMerge(speed, 2.0));
     setup->read("coins",                coins,                  pMerge(coins, 0));
-    setup->read("moving",               movement,               pMerge(movement, 1));
-    setup->read("activity",             activity,               pMerge(activity, 1));
-    setup->read("scenery",              scenery,                pMerge(scenery, 0));
+    setup->read("moving",               movement,               pMerge(movement, true));
+    setup->read("activity",             activity,               pMerge(activity, true));
+    setup->read("static-body",          scenery,                pMerge(scenery, false));
+    pAlias("scenery",                   scenery);//Alias. DEPRECATED!
+    setup->read("sticked-on-layer",     sticked_on_layer,       pMerge(sticked_on_layer, scenery));
     setup->read("keep-position",        keep_position,          pMerge(keep_position, 0));
     setup->read("shared-animation",     shared_ani,             pMerge(shared_ani, 0));
     setup->read("immortal",             immortal,               pMerge(immortal, 0));
     setup->read("can-be-eaten",         can_be_eaten,           pMerge(can_be_eaten, 0));
     pAlias("yoshicaneat",               can_be_eaten);//Alias. DEPRECATED! Update all config packs and remove this!
     setup->read("takable",              takable,                pMerge(takable, 0));
-    setup->read("takable-sound-id",     takable_snd,            pMerge(takable_snd, 0));
+    setup->read("takable-sound-id",     takable_snd,            pMerge(takable_snd, 0u));
     setup->read("grab-side",            grab_side,              pMerge(grab_side, 0));
     setup->read("grab-top",             grab_top,               pMerge(grab_top, 0));
     setup->read("grab-any",             grab_any,               pMerge(grab_any, 0));
-    setup->read("default-health",       health,                 pMerge(health, 0));
+    setup->read("default-health",       health,                 pMerge(health, 0u));
     setup->read("hurtplayer",           hurt_player,            pMerge(hurt_player, 0));
     setup->read("hurtplayer-on-stomp",  hurt_player_on_stomp,   pMerge(hurt_player_on_stomp, 0));
     setup->read("hurtplayer-on-spinstomp", hurt_player_on_spinstomp, pMerge(hurt_player_on_spinstomp, 0));
@@ -318,10 +323,12 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("direction-alt-right-field",direct_alt_right,       pMerge(direct_alt_right, ""));
     setup->read("direction-alt-rand-field", direct_alt_rand,        pMerge(direct_alt_rand, ""));
     setup->read("direction-no-rand-field",  direct_disable_random,  pMerge(direct_disable_random, false));
+    setup->read("direction-default-value",  direct_default_value,   pMerge(direct_default_value, -1));
+    NumberLimiter::apply(direct_default_value, -1, +1);
 
     //Events
     setup->read("deactivate",           deactivation,           pMerge(deactivation, 0));
-    setup->read("deactivate-delay",     deactivationDelay,      pMerge(deactivationDelay, 4000));
+    setup->read("deactivate-delay",     deactivationDelay,      pMerge(deactivationDelay, 4000u));
     NumberLimiter::applyD(deactivationDelay, 4000u, 0u);
     setup->read("deactivate-off-room",  deactivate_off_room,    pMerge(deactivate_off_room, false));
     setup->read("bump-on-stomp",        bump_on_stomp,          pMerge(bump_on_stomp, true));

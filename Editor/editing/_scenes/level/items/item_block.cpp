@@ -18,7 +18,6 @@
 
 #include <QInputDialog>
 #include <QClipboard>
-#include <QDesktopWidget>
 
 #include <mainwindow.h>
 #include <editing/_dialogs/itemselectdialog.h>
@@ -33,6 +32,12 @@
 #include "../newlayerbox.h"
 
 #include <editing/_components/history/settings/lvl_block_userdata.hpp>
+
+static inline double sizableBlockZ(const LevelBlock &b)
+{
+    return (static_cast<double>(b.y) / 100000000000.0) + 1.0 -
+           (static_cast<double>(b.w) * 0.0000000000000001);
+}
 
 ItemBlock::ItemBlock(QGraphicsItem *parent)
     : LvlBaseItem(parent)
@@ -394,7 +399,7 @@ typeEventAgain:
                 (m_data.npc_id < 0 && m_data.npc_id != 0 ? m_data.npc_id * -1 : m_data.npc_id),
                 0, 0, 0, 0, 0, m_scene->m_mw);
         npcList->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+        npcList->setGeometry(util::alignToScreenCenter(npcList->size()));
         if(npcList->exec() == QDialog::Accepted)
         {
             //apply to all selected items.
@@ -652,7 +657,7 @@ void ItemBlock::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
     if(this->data(ITEM_BLOCK_IS_SIZABLE).toString() == "sizable")
-        this->setZValue(m_scene->Z_blockSizable + ((double)m_data.y / (double) 100000000000) + 1 - ((double)m_data.w * (double)0.0000000000000001));
+        this->setZValue(m_scene->Z_blockSizable + sizableBlockZ(m_data));
     if(m_data.meta.index < (unsigned int)m_scene->m_data->blocks.size())
     {
         //Check index
@@ -774,9 +779,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
 
         if(m_localProps.setup.sizable)
         {
-            setZValue(m_scene->Z_blockSizable + ((double)m_data.y / (double)100000000000)
-                      + 1 - ((double)m_data.w * (double)0.0000000000000001));  // applay sizable block Z
-
+            setZValue(m_scene->Z_blockSizable + sizableBlockZ(m_data));  // applay sizable block Z
             setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
         }
         else

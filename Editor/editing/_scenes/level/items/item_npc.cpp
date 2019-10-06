@@ -18,7 +18,6 @@
 
 #include <QInputDialog>
 #include <QClipboard>
-#include <QDesktopWidget>
 
 #include <mainwindow.h>
 #include <common_features/logger.h>
@@ -279,7 +278,7 @@ cancelTransform:
                 m_data.contents,
                 0, 0, 0, 0, 0, m_scene->m_subWindow);
         npcList->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+        npcList->setGeometry(util::alignToScreenCenter(npcList->size()));
         if(npcList->exec() == QDialog::Accepted)
         {
             //apply to all selected items.

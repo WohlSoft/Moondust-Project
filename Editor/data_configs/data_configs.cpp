@@ -163,6 +163,7 @@ bool dataconfigs::loadBasics()
         guiset.read("lvl-search", editor.default_visibility.lvl_search, false);
 
         guiset.read("wld-itembox", editor.default_visibility.wld_itembox, true);
+        guiset.read("wld-musicboxes", editor.default_visibility.wld_musicboxes, false);
         guiset.read("wld-settings", editor.default_visibility.wld_settings, false);
         guiset.read("wld-search", editor.default_visibility.wld_search, false);
 
@@ -180,6 +181,7 @@ bool dataconfigs::loadBasics()
         guiset.read("lvl-search-enforce-default", editor.default_visibility_enforce.lvl_search, false);
 
         guiset.read("wld-itembox-enforce-default", editor.default_visibility_enforce.wld_itembox, false);
+        guiset.read("wld-musicboxes-enforce-default", editor.default_visibility_enforce.wld_musicboxes, false);
         guiset.read("wld-settings-enforce-default", editor.default_visibility_enforce.wld_settings, false);
         guiset.read("wld-search-enforce-default", editor.default_visibility_enforce.wld_search, false);
 

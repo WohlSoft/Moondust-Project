@@ -25,6 +25,8 @@
 #include <scenes/level/lvl_block.h>
 #include <scenes/level/lvl_bgo.h>
 
+#include "bindings/core/classes/luaclass_core_data.h"
+
 #include "bindings/level/classes/luaclass_level_lvl_player.h"
 #include "bindings/level/classes/luaclass_level_lvl_npc.h"
 #include "bindings/level/classes/luaclass_level_physobj.h"
@@ -180,6 +182,7 @@ void LuaLevelEngine::setPlayerBaseClassPath(const std::string &playerBaseClassPa
 void LuaLevelEngine::onBindAll()
 {
     luabind::module(getNativeState())[
+        Binding_Core_Data::bindToLua(),
         Binding_Level_Class_PhysObj::bindBaseToLua(),
         Binding_Level_Class_PhysObj::bindToLua(),
         Binding_Level_Class_InAreaDetector::bindToLua(),

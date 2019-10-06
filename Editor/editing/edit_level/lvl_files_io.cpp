@@ -19,7 +19,6 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QInputDialog>
-#include <QDesktopWidget>
 
 #include <common_features/app_path.h>
 #include <common_features/main_window_ptr.h>
@@ -505,7 +504,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfi
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);
     progress.setAutoClose(false);
 

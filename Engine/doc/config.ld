@@ -33,6 +33,8 @@ file =
 
     '../script/bindings/core/classes/luaclass_core_simpleevent.cpp',
 
+    '../script/bindings/core/classes/luaclass_core_data.cpp',
+
     '../script/bindings/core/events/luaevents_core_engine.cpp',
 
     '../script/bindings/level/globalfuncs/luafuncs_level.cpp',

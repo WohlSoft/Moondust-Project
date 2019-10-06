@@ -35,19 +35,22 @@ SingleApplication::SingleApplication(QStringList &args) :
     _shouldContinue = false; // By default this is not the main process
 
     socket = new QUdpSocket();
-    server = NULL;
+    server = nullptr;
     QString isServerRuns;
 
     bool isRunning=false;
     m_sema.acquire();//Avoid races
-    if(m_shmem.attach()) //Detect shared memory copy
+
+    if(!m_shmem.create(1))//Detect shared memory copy
     {
-        isRunning = true;
-    }
-    else
-    {
-        m_shmem.create(1);
-        isRunning = false;
+        m_shmem.attach();
+        m_shmem.detach();
+        if(!m_shmem.create(1))
+        {
+            isRunning = true;
+            if(!m_shmem.attach())
+                qWarning() << "Can't re-attach existing shared memory!";
+        }
     }
 
     //Force run second copy of application

@@ -8,7 +8,6 @@ SET(BUILD_SHARED_LIBRARIES OFF)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
-    ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
     ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
@@ -16,17 +15,6 @@ link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
     message("== Using default build configuration which is a Release!")
-endif()
-
-set(CMAKE_CXX_STANDARD 14)
-if(MSVC)
-    if(MSVC_VERSION GREATER_EQUAL "1900")
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-        if (_cpp_latest_flag_supported)
-            add_compile_options("/std:c++latest")
-        endif()
-    endif()
 endif()
 
 if(ANDROID)
@@ -42,8 +30,6 @@ include(../_common/git_version.cmake)
 include(../_common/build_props.cmake)
 # Build properties for executable projects
 include(../_common/executable_build_props.cmake)
-# Find the SDL Mixer X library and it's dependencies
-include(../_common/find_sdl_mixer_x.cmake)
 
 # include shared code modules
 include(../_common/PGE_File_Formats/pge_file_library.cmake)
@@ -61,6 +47,8 @@ include(../_common/Utils/openUrl.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
+
+pge_cxx_standard(14)
 
 set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
 if(_QT_LRELEASE_PROGRAM)
@@ -121,6 +109,7 @@ list(APPEND PGE_ENGINE_SRCS
     common_features/point_mover.cpp
     common_features/QTranslatorX/ConvertUTF.c
     common_features/QTranslatorX/qm_translator.cpp
+    common_features/QuadTree/LooseQuadtree-impl.cpp
     common_features/rect.cpp
     common_features/rectf.cpp
     common_features/simple_animator.cpp
@@ -250,6 +239,7 @@ list(APPEND PGE_ENGINE_SRCS
     scenes/world/wld_pathopener.cpp
     scenes/world/wld_player_portrait.cpp
     scenes/world/wld_tilebox.cpp
+    script/bindings/core/classes/luaclass_core_data.cpp
     script/bindings/core/classes/luaclass_core_graphics.cpp
     script/bindings/core/classes/luaclass_core_scene_effects.cpp
     script/bindings/core/classes/luaclass_core_simpleevent.cpp
@@ -305,24 +295,26 @@ endif()
 
 if(EMSCRIPTEN)
     message("Is EMSCRIPTEN!")
-    set(PGE_PRELOAD_CONFIG_PACK "/home/vitaly/_git_repos/PGE-Project/bin/configs/A2XT" CACHE STRING "Path to config pack to pack")
+    set(PGE_PRELOAD_CONFIG_PACK "/home/vitaly/.PGE_Project/configs/A2XT" CACHE STRING "Path to config pack to pack")
     set(PGE_PRELOAD_CONFIG_PACK_NAME "A2XT" CACHE STRING "Name of folder of embedded config pack")
-    set(PGE_PRELOAD_EPISODE "/home/vitaly/_git_repos/PGE-Project/bin/worlds/Lowsers Conquest Demo v 2.1" CACHE STRING "Path to episode to pack")
+    set(PGE_PRELOAD_EPISODE "/home/vitaly/.PGE_Project/worlds/Lowsers Conquest Demo v 2.1" CACHE STRING "Path to episode to pack")
     set(PGE_PRELOAD_EPISODE_NAME "lcd" CACHE STRING "Name of folder of episode")
     set(PGE_RUN_SINGLE_LEVEL "worlds/lcd/Sky Tower.lvl" CACHE STRING "Full path to level which must be ran")
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2")
+#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2")
     # -DIS_CXX -s USE_PTHREADS=1
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s WASM=1 -s 'BINARYEN_METHOD=\"native-wasm\"'")
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s WASM=1 -s 'BINARYEN_METHOD=\"native-wasm\"'")
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1  -s 'EMTERPRETIFY_FILE=\"pge_engine.binary\"'")
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s ASSERTIONS=1")
     # -s \"EMTERPRETIFY_WHITELIST=['_main']\"
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s 'BINARYEN_TRAP_MODE=\"clamp\"'")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s TOTAL_MEMORY=83886080 --no-heap-copy -s ALLOW_MEMORY_GROWTH=1 -msse -msse2")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s \"EXTRA_EXPORTED_RUNTIME_METHODS=['Pointer_stringify']\"")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --embed-file \"${CMAKE_CURRENT_SOURCE_DIR}/languages/\"@\"languages/\"")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file \"${PGE_PRELOAD_CONFIG_PACK}\"@\"configs/${PGE_PRELOAD_CONFIG_PACK_NAME}/\"")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file \"${PGE_PRELOAD_EPISODE}\"@\"worlds/${PGE_PRELOAD_EPISODE_NAME}/\"")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_SDL=2-s ASYNCIFY")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s ASYNCIFY")
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s 'BINARYEN_TRAP_MODE=\"clamp\"'")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s TOTAL_MEMORY=83886080 --no-heap-copy -s ALLOW_MEMORY_GROWTH=1")
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s \"EXTRA_EXPORTED_RUNTIME_METHODS=['Pointer_stringify']\"")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --embed-file \"${CMAKE_CURRENT_SOURCE_DIR}/languages/\"@\"languages/\"")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_CONFIG_PACK}\"@\"configs/${PGE_PRELOAD_CONFIG_PACK_NAME}/\"")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_EPISODE}\"@\"worlds/${PGE_PRELOAD_EPISODE_NAME}/\"")
     # set(LINK_FLAGS "${LINK_FLAGS} -DIS_LINK -s USE_PTHREADS=1 -s FORCE_FILESYSTEM=1 --embed-file '${CMAKE_CURRENT_SOURCE_DIR}/@languages'")
 endif()
 
@@ -366,6 +358,8 @@ target_compile_definitions(pge_engine
     PRIVATE
     -DPGE_ENGINE
 )
+
+pge_set_nopie(pge_engine)
 
 # add "USE_LUA_JIT" when use LuaJIT or don't add when using PUC-Rio Lua
 if(PGE_USE_LUAJIT)
@@ -413,6 +407,12 @@ add_dependencies(pge_engine
     FREETYPE_Local
 )
 
+if(NOT SDL2_USE_SYSTEM)
+    add_dependencies(pge_engine SDL2_Local)
+else()
+    target_include_directories(pge_engine PRIVATE ${SDL2_INCLUDE_DIRS})
+endif()
+
 set(PGE_ENGINE_LINK_LIBS)
 set(PGE_ENGINE_INSTALLS)
 
@@ -420,44 +420,23 @@ list(APPEND PGE_ENGINE_INSTALLS
     pge_engine
 )
 
-if(PGE_USE_LUAJIT)
-    set(LUAJIT_LIBRARY
-        luajit$<$<CONFIG:Debug>:d>
-    )
-endif()
-
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
-    luabind$<$<CONFIG:Debug>:d>
-    ${LUAJIT_LIBRARY}
-    freetype$<$<CONFIG:Debug>:d>
-    sqlite3$<$<CONFIG:Debug>:d>
+    PGE_FreeImage
+    PGE_LuaBind
+    PGE_LuaJIT
+    PGE_FreeType
+    PGE_SQLite
 )
 
-list(APPEND PGE_ENGINE_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
-
-set(MIXER_LIBS)
-
 if(PGE_STATIC_SDLMIXER)
-    find_mixer_x(TARGET MIXER_LIBS
-                STATIC
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
 else()
-    find_mixer_x(TARGET MIXER_LIBS
-                SHARED
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
 
-list(APPEND PGE_ENGINE_LINK_LIBS ${MIXER_LIBS})
-
-if(NOT APPLE)
-    list(APPEND PGE_ENGINE_LINK_LIBS
-        "-static-libgcc"
-        "-static-libstdc++"
-    )
+if(NOT APPLE AND NOT MSVC)
+	set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(ANDROID)
@@ -471,7 +450,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC AND NOT ANDROID)
         set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-mconsole")
         list(APPEND PGE_ENGINE_LINK_LIBS "-static")
     endif()
-    list(APPEND PGE_ENGINE_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND PGE_ENGINE_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 if(APPLE)
@@ -499,29 +481,6 @@ if(APPLE)
             LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
         )
     endif()
-
-    find_library(COREAUDIO_LIBRARY CoreAudio)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${COREAUDIO_LIBRARY})
-    find_library(COREVIDEO_LIBRARY CoreVideo)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${COREVIDEO_LIBRARY})
-    find_library(IOKIT_LIBRARY IOKit)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${IOKIT_LIBRARY})
-    find_library(CARBON_LIBRARY Carbon)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${CARBON_LIBRARY})
-    find_library(COCOA_LIBRARY Cocoa)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${COCOA_LIBRARY})
-    find_library(FORCEFEEDBAK_LIBRARY ForceFeedback)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${FORCEFEEDBAK_LIBRARY})
-    find_library(METAL_LIBRARY Metal)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${METAL_LIBRARY})
-    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${COREFOUNDATION_LIBRARY})
-    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${AUDIOTOOLBOX_LIBRARY})
-    find_library(AUDIOUNIT_LIBRARY AudioUnit)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${AUDIOUNIT_LIBRARY})
-    find_library(OPENGL_LIBRARY OpenGL)
-    list(APPEND PGE_ENGINE_LINK_LIBS ${OPENGL_LIBRARY})
 endif()
 
 target_link_libraries(pge_engine

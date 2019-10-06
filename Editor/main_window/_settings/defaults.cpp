@@ -78,15 +78,15 @@ void MainWindow::setDefaults()
 
 void MainWindow::setUiDefults()
 {
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
-    #endif
+#endif
 
     //MainWindow Geometry;
-    QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    QRect dg = util::getScreenGeometry();
 
     //Init default geometry of main window
     int margin = 100;
@@ -96,6 +96,7 @@ void MainWindow::setUiDefults()
 
     dock_LvlItemBox      = new LevelItemBox(this);
     dock_WldItemBox      = new WorldItemBox(this);
+    dock_WldMusicBoxes   = new WorldMusicBoxItemBox(this);
 
     dock_LvlWarpProps    = new LvlWarpBox(this);
     dock_LvlItemProps    = new LvlItemProperties(this);
@@ -114,6 +115,7 @@ void MainWindow::setUiDefults()
     dock_VariablesBox    = new VariablesBox(this);
 
     tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
+    tabifyDockWidget(dock_WldItemBox, dock_WldMusicBoxes);
 
     //#ifndef Q_OS_WIN
     //tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
@@ -140,10 +142,10 @@ void MainWindow::setUiDefults()
     //DisableFloatFeature(dock_WldSearchBox);
     //DisableFloatFeature(dock_WldSettingsBox);
     //DisableFloatFeature(dock_DebuggerBox);
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
     DisableFloatFeature(dock_TilesetBox);
     DisableFloatFeature(dock_BookmarksBox);
-    #endif
+#endif
     //#endif
 
     //Add "New" tool button as menu
@@ -166,11 +168,6 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptEpisode, &QAction::setDisabled);
 
-    windowMapper = new QSignalMapper(this);
-
-    connect(windowMapper, SIGNAL(mapped(QWidget *)),
-            this, SLOT(setActiveSubWindow(QWidget *)));
-
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
     ui->centralWidget->cascadeSubWindows();
 
@@ -185,10 +182,10 @@ void MainWindow::setUiDefults()
     ui->actionFloodSectionOnly->setVisible(false);
     ui->actionFloodSectionOnly->setEnabled(false);
 
-    #ifndef Q_OS_WIN
+#ifndef Q_OS_WIN
     addToolBar(Qt::LeftToolBarArea, ui->LevelObjectToolbar);
     addToolBar(Qt::LeftToolBarArea, ui->WorldObjectToolbar);
-    #endif
+#endif
 
     {
         QAction *action = ui->menuSetGridSize->addAction(tr("Default by item"));
@@ -355,6 +352,9 @@ void MainWindow::setUiDefults()
         m_toolbarVanilla->setVisible(false);
     }
 
+    // Register hot key without adding into toolbar
+    addAction(ui->actionNewFile);
+
     ui->menuWindow->menuAction()->setEnabled(true);
     ui->menuLevel->menuAction()->setEnabled(false);
     ui->menuWorld->menuAction()->setEnabled(false);
@@ -368,6 +368,7 @@ void MainWindow::setUiDefults()
     ui->actionSection_Settings->setVisible(false);
     ui->actionWarpsAndDoors->setVisible(false);
     ui->actionWLDToolBox->setVisible(false);
+    ui->actionMusicBoxes->setVisible(false);
     ui->actionGridEn->setChecked(true);
 
     ui->actionTilesetBox->setVisible(false);
@@ -391,9 +392,9 @@ void MainWindow::setUiDefults()
     m_ui_musicVolume->setMaximumWidth(70);
     m_ui_musicVolume->setMinimumWidth(70);
     m_ui_musicVolume->setMinimum(0);
-    #ifndef MIX_MAX_VOLUME
-#define MIX_MAX_VOLUME 128
-    #endif
+#ifndef MIX_MAX_VOLUME
+#   define MIX_MAX_VOLUME 128
+#endif
     m_ui_musicVolume->setMaximum(MIX_MAX_VOLUME);
     m_ui_musicVolume->setValue(GlobalSettings::musicVolume);
 
@@ -407,12 +408,12 @@ void MainWindow::setUiDefults()
     zoom = new QLineEdit(ui->LevelSectionsToolBar);
     zoom->setValidator(new QIntValidator(0, 2001, zoom));
     zoom->setText("100");
-    #ifdef Q_OS_OSX
+#ifdef Q_OS_OSX
     zoom->setMinimumWidth(40);
     zoom->setMaximumWidth(50);
-    #else
+#else
     zoom->setMaximumWidth(28);
-    #endif
+#endif
     zoom->setEnabled(false);
 
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset, zoom);
@@ -420,10 +421,10 @@ void MainWindow::setUiDefults()
     /*********************Zoom field*************************/
 
     /***Hide all "under construction" elements in release builds***/
-    #ifndef DEBUG_BUILD
+#ifndef DEBUG_BUILD
     ui->actionVariables->setVisible(false);
     ui->actionScriptEditor->setVisible(false);
-    #endif
+#endif
     /**************************************************************/
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionSelect, &QAction::setEnabled);
@@ -459,9 +460,9 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setVisible);
 
     connect(this, &MainWindow::windowActiveLevelWorld,  ui->action_doSafeTest, &QAction::setEnabled);
-    #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     connect(this, &MainWindow::windowActiveLevel, ui->actionRunTestSMBX, &QAction::setEnabled);
-    #endif
+#endif
     connect(this, &MainWindow::windowActiveLevel, ui->LevelObjectToolbar, &QWidget::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->WorldObjectToolbar, &QWidget::setVisible);
 
@@ -479,6 +480,7 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionDebugger, &QAction::setVisible);
 
     connect(this, &MainWindow::windowActiveWorld, ui->actionWLDToolBox, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveWorld, ui->actionMusicBoxes, &QAction::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->actionWorld_settings, &QAction::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->actionWLD_SearchBox, &QAction::setVisible);
 

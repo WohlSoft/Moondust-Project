@@ -10,7 +10,10 @@ if(WIN32)
 endif()
 
 # let macOS Sierra to be a minimal supported platform (as Qt 5.12 does)
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
+if(APPLE)
+    set(PGE_OSX_TARGET "10.12" CACHE STRING "Minimal macOS version target")
+endif()
+set(CMAKE_OSX_DEPLOYMENT_TARGET ${PGE_OSX_TARGET})
 
 set(ANDROID_PLATFORM "android-16")
 

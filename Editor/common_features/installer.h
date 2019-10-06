@@ -27,10 +27,11 @@ class Installer : public QObject
     Q_OBJECT
 
 public:
-    Installer(QObject *parent=0);
+    Installer(QObject *parent = nullptr);
     ~Installer();
     static void moveFromAppToUser();
-    static bool associateFiles();
+    static bool associateFiles(QWidget *parent = nullptr);
+    static bool associateFiles_thread();
 };
 
 #endif // INSTALLER_H

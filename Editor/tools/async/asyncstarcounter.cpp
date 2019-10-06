@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+#include <common_features/util.h>
 #include "asyncstarcounter.h"
 
 
@@ -46,7 +47,7 @@ again:;
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);
 
 

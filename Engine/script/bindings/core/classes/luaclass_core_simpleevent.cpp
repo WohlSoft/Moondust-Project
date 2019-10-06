@@ -35,6 +35,11 @@ luabind::adl::object Binding_Core_Class_SimpleEvent::getDataObject()
     return eventData;
 }
 
+std::string Binding_Core_Class_SimpleEvent::getEventName()
+{
+    return eventName;
+}
+
 bool Binding_Core_Class_SimpleEvent::isCancellable()
 {
     return eventCancellable;
@@ -63,14 +68,19 @@ luabind::scope Binding_Core_Class_SimpleEvent::bindToLua()
     using namespace luabind;
     /***
     Simple utility class for a custom events
-    @type SimpleLuaEvent
+    @type Event
     */
-    return class_<Binding_Core_Class_SimpleEvent>("SimpleLuaEvent")
+    return class_<Binding_Core_Class_SimpleEvent>("Event")
             /***
             User data
             @tfield object data
             */
             .property("data", &Binding_Core_Class_SimpleEvent::getDataObject)
+            /***
+            Own name of event callback, <strong>Not a level/world event!</strong>
+            @tfield string Name of event
+            */
+            .property("eventName", &Binding_Core_Class_SimpleEvent::getEventName)
             /***
             Is this event cancellable
             @tfield bool cancellable true or false

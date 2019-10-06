@@ -17,6 +17,9 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#include <luabind/luabind.hpp>
+#include <luabind/detail/primitives.hpp> // for null_type
+
 #include <scenes/level/lvl_bgo.h>
 
 /***
@@ -27,11 +30,12 @@ Level BGO class and functions
 luabind::scope LVL_Bgo::bindToLua()
 {
     using namespace luabind;
+    using namespace luabind::detail;
     /***
     Background Object base class, inherited from @{PhysBaseClass.PhysBase}
     @type BaseBGO
     */
-    return class_<LVL_Bgo, PGE_Phys_Object, detail::null_type, LVL_Bgo>("BaseBGO")
+    return class_<LVL_Bgo, PGE_Phys_Object, null_type, LVL_Bgo>("BaseBGO")
             .def(constructor<>())
             /***
             ID of BGO registered in config pack (Read Only)

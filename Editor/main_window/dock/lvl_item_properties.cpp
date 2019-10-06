@@ -44,12 +44,16 @@
 static obj_npc &getNpcProps(LevelNPC &npc, MainWindow *mw)
 {
     int tarNPC = static_cast<int>(npc.id);
+    bool isLvlWin = ((mw->activeChildWindow() == MainWindow::WND_Level) && (mw->activeLvlEditWin()));
+    PGE_DataArray<obj_npc> &dataSource = isLvlWin ?
+                                         mw->activeLvlEditWin()->scene->m_localConfigNPCs :
+                                         mw->configs.main_npc;
     obj_npc *findNPC;
-    obj_npc &thisNPC = mw->configs.main_npc[tarNPC];
+    obj_npc &thisNPC = dataSource[tarNPC];
     if(thisNPC.setup.container && !thisNPC.setup.special_option)
-        findNPC = &mw->configs.main_npc[npc.contents];
+        findNPC = &dataSource[npc.contents];
     else
-        findNPC = &mw->configs.main_npc[tarNPC];
+        findNPC = &dataSource[tarNPC];
     return *findNPC;
 }
 
@@ -1467,7 +1471,7 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
         ui->line_6->show();
         switch(t_npc.setup.special_type)
         {
-        case 0:
+        case 0: // Combobox
             ui->PROPS_NPCBoxLabel->show();
             ui->PROPS_NPCBoxLabel->setText(t_npc.setup.special_name);
             ui->PROPS_NPCSpecialBox->show();
@@ -1494,18 +1498,18 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             }
 
             break;
-        case 1:
+        case 1: // Spinbox
             ui->PROPS_NpcSpinLabel->show();
             ui->PROPS_NpcSpinLabel->setText(t_npc.setup.special_name);
             ui->PROPS_NPCSpecialSpin->show();
 
-            if((npcPtr < 0) && (newItem))
-                ui->PROPS_NPCSpecialSpin_Auto->show();
-            if((npcPtr < 0) && (!dont_reset_props))
+            if(npcPtr < 0)
             {
-                ui->PROPS_NPCSpecialSpin_Auto->show();
-                ui->PROPS_NPCSpecialSpin_Auto->setChecked(false);
+                ui->PROPS_NPCSpecialSpin_Auto->setVisible(t_npc.setup.special_spin_allow_autoincrement);
+                if(!dont_reset_props)
+                    ui->PROPS_NPCSpecialSpin_Auto->setChecked(false);
             }
+
             if((newItem) && (!dont_reset_props))
             {
                 //Reset value to min, if it out of range
@@ -1525,7 +1529,7 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             LvlPlacingItems::npcSpecialAutoIncrement_begin = npc.special_data;
 
             break;
-        case 2:
+        case 2: // NPC-ID selector
             ui->PROPS_NPCNpcLabel->show();
             ui->PROPS_NPCNpcLabel->setText(t_npc.setup.special_name);
             ui->PROPS_NPCSpecialNPC->show();

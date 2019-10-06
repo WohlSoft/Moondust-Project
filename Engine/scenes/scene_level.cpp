@@ -917,7 +917,7 @@ void levelSceneLoopStep(void *scene)
     }
 
     /****************************************************************************/
-    #ifndef __EMSCRIPTEN__
+#if 1//ndef __EMSCRIPTEN__
     if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
     {
         if(!s->m_debug_slowTimeMode)
@@ -928,11 +928,13 @@ void levelSceneLoopStep(void *scene)
     else if(s->m_debug_slowTimeMode) {
         SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
     }
-    #endif
+#endif
 }
 
 int LevelScene::exec()
 {
+    runVsyncValidator();
+
     m_isLevelContinues = true;
     m_doExit = false;
     m_isRunning = true;
@@ -962,12 +964,12 @@ int LevelScene::exec()
     debug_TimeReal.restart();
     /*****************************************************/
 
-    #ifndef __EMSCRIPTEN__
+#if 1 //ndef __EMSCRIPTEN__
     while(m_isRunning)
         levelSceneLoopStep(this);
-    #else
+#else
     emscripten_set_main_loop_arg(levelSceneLoopStep, this, (int)PGE_Window::frameRate, 1);
-    #endif
+#endif
 
     return m_exitLevelCode;
 }
@@ -1026,11 +1028,11 @@ void LevelScene::setGameState(EpisodeState *_gameState)
 
     if(m_gameState)
     {
-        m_numberOfPlayers = m_gameState->numOfPlayers;
+        m_numberOfPlayers = m_gameState->m_numOfPlayers;
 
-        if((m_gameState->isEpisode) && (!m_gameState->isHubLevel))
+        if((m_gameState->m_isEpisode) && (!m_gameState->m_isHubLevel))
             initPauseMenu2();
-        else if(m_gameState->isTestingModeL)
+        else if(m_gameState->m_isTestingModeL)
             initPauseMenu3();
         else
             initPauseMenu1();

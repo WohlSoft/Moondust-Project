@@ -71,7 +71,7 @@ void PGE_EditorPluginManager::loadPluginsInDir(const QDir &dir)
         }
         else
         {
-            LogDebug("Found package, but not main.js!")
+            LogDebug("Found package, but not main.js!");
         }
     }
 }

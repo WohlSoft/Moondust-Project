@@ -17,7 +17,6 @@
  */
 
 #include <QInputDialog>
-#include <QDesktopWidget>
 #include <QStandardItemModel>
 
 #include <editing/_scenes/level/lvl_history_manager.h>
@@ -1163,7 +1162,9 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
         WLD_SetPoint *pointDialog = new WLD_SetPoint(mw());
 
         pointDialog->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        pointDialog->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, pointDialog->size(), qApp->desktop()->availableGeometry()));
+        pointDialog->setGeometry(util::alignToScreenCenter(pointDialog->size()));
+
+
 
         if((bool)(pointDialog->loadFile(wldPath, FileData, mw()->configs, GlobalSettings::LvlOpts)))
         {

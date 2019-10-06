@@ -3575,11 +3575,11 @@ If you want to have a full featured level testing, please install LunaLua:&lt;br
     </message>
     <message>
         <source>process execution is failed.</source>
-        <translation>Execution failed.</translation>
+        <translation type="vanished">Execution failed.</translation>
     </message>
     <message>
         <source>patching has failed.</source>
-        <translation>Patch failed.</translation>
+        <translation type="vanished">Patch failed.</translation>
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
@@ -3686,6 +3686,14 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>Terminate running process</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</translation>
     </message>
 </context>
 <context>
@@ -5350,12 +5358,12 @@ Physical env. zones:	 %6
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Custom background name which will be shown in the editor</translation>
+        <translation type="vanished">Custom background name which will be shown in the editor</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Create your background layers setup here...</translation>
+        <translation type="vanished">Create your background layers setup here...</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5364,7 +5372,22 @@ Physical env. zones:	 %6
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Default screen fill color</translation>
+        <translation type="vanished">Default screen fill color</translation>
+    </message>
+    <message>
+        <source>Name that will appear in the editor</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Name that will appear in the editor</translation>
+    </message>
+    <message>
+        <source>Backdrop fill color</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Backdrop fill color</translation>
+    </message>
+    <message>
+        <source>Add layers here, for example:</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Add layers here, for example:</translation>
     </message>
 </context>
 <context>
@@ -5742,11 +5765,11 @@ show the current playable character(s) and number of lives.</translation>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished">Please save the file</translation>
+        <translation>Please save the file</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished">Please save the file before selecting levels.</translation>
+        <translation>Please save the file before selecting levels.</translation>
     </message>
 </context>
 <context>
@@ -8946,15 +8969,27 @@ Please, choose the engine application yourself!</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Search Browser</translation>
+        <translation>Level itemset Browser</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
-        <translation>Search Browser</translation>
+        <translation>Browser of available items with a search</translation>
     </message>
     <message>
         <source>World map items browser</source>
-        <translation>Search Browser</translation>
+        <translation>World map Itemset Browser</translation>
+    </message>
+    <message>
+        <source>Music change points</source>
+        <translation>Music change points</translation>
+    </message>
+    <message>
+        <source>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</source>
+        <translation>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</translation>
     </message>
 </context>
 <context>
@@ -10676,7 +10711,7 @@ The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
         <source>Chuck Norris</source>
-        <translation>Chuck Norris</translation>
+        <translation type="vanished">Chuck Norris</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
@@ -10752,6 +10787,10 @@ Those preferences will makes no effect on a testing process before it will be fi
         <translation type="vanished">Hello!
 This dialog is not finished yet.
 Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</translation>
+    </message>
+    <message>
+        <source>Bulldozer mode</source>
+        <translation>Bulldozer mode</translation>
     </message>
 </context>
 <context>
@@ -12511,6 +12550,25 @@ Do you want to save your changes?</translation>
     <message>
         <source>World Map Items browser</source>
         <translation>Search Browser</translation>
+    </message>
+</context>
+<context>
+    <name>WorldMusicBoxItemBox</name>
+    <message>
+        <source>Music boxes</source>
+        <translation>Music boxes</translation>
+    </message>
+    <message>
+        <source>Music Box</source>
+        <translation>Music Box</translation>
+    </message>
+    <message>
+        <source>Please, save file</source>
+        <translation>Please, save file</translation>
+    </message>
+    <message>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation>Please, save file first, if you want to select custom music file.</translation>
     </message>
 </context>
 <context>

@@ -104,6 +104,8 @@ WorldData WldScene::copy(bool cut)
         }
     }
 
+    FileFormats::WorldPrepare(copyData); //Keep guarantee all elements sorted same as originally
+
     return copyData;
 }
 

@@ -22,7 +22,6 @@
 #include <QProgressDialog>
 #include <QLineEdit>
 #include <QCheckBox>
-#include <QDesktopWidget>
 #include <QInputDialog>
 
 #include <common_features/logger.h>
@@ -262,6 +261,8 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     FileKeeper fileKeeper = FileKeeper(fileName);
 
+    FileFormats::WorldPrepare(WldData); // Sort all data arrays
+
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
     if(fileName.endsWith(".wld", Qt::CaseInsensitive))
     {
@@ -411,7 +412,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);
     progress.setAutoClose(false);
 

@@ -91,15 +91,44 @@ add_executable(pge_maintainer
     ${PGE_FILE_LIBRARY_SRCS}
 )
 
+add_dependencies(pge_maintainer
+    libpng_Local
+    FREETYPE_Local
+) # Needed for Qt to be linked
+
+add_library(PGE_Maintainer_QtLibs INTERFACE)
+
 # The Qt5Widgets_INCLUDES also includes the include directories for
 # dependencies QtCore and QtGui
-target_include_directories(pge_maintainer
-    PRIVATE
+target_include_directories(PGE_Maintainer_QtLibs
+    INTERFACE
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Concurrent_INCLUDES_DIRS}
 )
+
+# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
+target_compile_definitions(PGE_Maintainer_QtLibs
+    INTERFACE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
+    ${Qt5Widgets_DEFINITIONS}
+    ${Qt5Concurrent_DEFINITIONS}
+)
+
+target_link_libraries(PGE_Maintainer_QtLibs INTERFACE
+    ${QT_EXTRA_LIBS_PRE}
+    ${Qt5Concurrent_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
+)
+if(QT_PTHREAD)
+    target_link_libraries(PGE_Maintainer_QtLibs INTERFACE ${QT_PTHREAD})
+endif()
+
 
 set(PGE_MAINTAINER_LINK_LIBS)
 set(PGE_MAINTAINER_INSTALLS)
@@ -108,14 +137,7 @@ list(APPEND PGE_MAINTAINER_INSTALLS
     pge_maintainer
 )
 
-# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
-target_compile_definitions(pge_maintainer
-    PRIVATE
-    ${Qt5Core_DEFINITIONS}
-    ${Qt5Gui_DEFINITIONS}
-    ${Qt5Widgets_DEFINITIONS}
-    ${Qt5Concurrent_DEFINITIONS}
-)
+list(APPEND PGE_MAINTAINER_LINK_LIBS PGE_Maintainer_QtLibs)
 
 if(WIN32)
     list(APPEND PGE_MAINTAINER_LINK_LIBS
@@ -134,7 +156,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
             list(APPEND PGE_MAINTAINER_LINK_LIBS "-static")
         endif()
     endif()
-    list(APPEND PGE_MAINTAINER_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND PGE_MAINTAINER_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 if(APPLE)
@@ -156,21 +181,11 @@ if(APPLE)
     list(APPEND PGE_MAINTAINER_LINK_LIBS ${COREFOUNDATION_LIBRARY})
 endif()
 
-list(APPEND PGE_MAINTAINER_LINK_LIBS
-    ${QT_EXTRA_LIBS_PRE}
-    ${Qt5Concurrent_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
-    ${QT_EXTRA_LIBS}
-)
-if(QT_PTHREAD)
-    list(APPEND PGE_MAINTAINER_LINK_LIBS ${QT_PTHREAD})
-endif()
-
 target_link_libraries(pge_maintainer
     ${PGE_MAINTAINER_LINK_LIBS}
 )
+
+pge_set_nopie(pge_maintainer)
 
 install(TARGETS ${PGE_MAINTAINER_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}"

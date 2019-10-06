@@ -3538,11 +3538,11 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>process execution is failed.</source>
-        <translation>не удалось запустить процесс.</translation>
+        <translation type="vanished">не удалось запустить процесс.</translation>
     </message>
     <message>
         <source>patching has failed.</source>
-        <translation>не удалось применить патч.</translation>
+        <translation type="vanished">не удалось применить патч.</translation>
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
@@ -3649,6 +3649,14 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>Прервать запущенный процесс</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation>%2 не найден!
+У Вас устаревная сборка SMBX (Vanilla)&lt;br&gt;!
+Это значит, что с данной сборкой невозможно запустить тестовый уровень на вашей операционной системе. LunaLua требуется для возможности запуска тестов через SMBX на не-Windows операционных системах.</translation>
     </message>
 </context>
 <context>
@@ -5305,12 +5313,12 @@ Physical env. zones:	%6
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Имя пользовательского фона, который будет показан в редакторе</translation>
+        <translation type="vanished">Имя пользовательского фона, который будет показан в редакторе</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Делайте слои фоновой композиции здесь...</translation>
+        <translation type="vanished">Делайте слои фоновой композиции здесь...</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5319,7 +5327,22 @@ Physical env. zones:	%6
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Цвет заливки экрана по-умолчанию</translation>
+        <translation type="vanished">Цвет заливки экрана по-умолчанию</translation>
+    </message>
+    <message>
+        <source>Name that will appear in the editor</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Имя, которое отобразится в редакторе</translation>
+    </message>
+    <message>
+        <source>Backdrop fill color</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Цвет заливки фона</translation>
+    </message>
+    <message>
+        <source>Add layers here, for example:</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Добавлять слои здесь, например:</translation>
     </message>
 </context>
 <context>
@@ -5704,11 +5727,11 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished">Пожалуйста, сохраните файл</translation>
+        <translation>Пожалуйста, сохраните файл</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished">Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
+        <translation>Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
 </context>
 <context>
@@ -8950,6 +8973,18 @@ Please, choose the engine application yourself!</source>
         <source>World map items browser</source>
         <translation>Обозреватель элементов Карты Мира</translation>
     </message>
+    <message>
+        <source>Music change points</source>
+        <translation>Точки смены музыки</translation>
+    </message>
+    <message>
+        <source>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</source>
+        <translation>Невозможно загрузить конфигурацию:
+%1.
+Для подробностей, смотрите %2.</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -10668,7 +10703,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Chuck Norris</source>
-        <translation>&quot;Чак Норрис&quot;</translation>
+        <translation type="vanished">&quot;Чак Норрис&quot;</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
@@ -10745,6 +10780,10 @@ Those preferences will makes no effect on a testing process before it will be fi
 Этот диалог ещё не доработан!
 Эти настройки никак не повлияют на процесс тестирования до тех пор, пока работа не будет закончена.
 Извините.</translation>
+    </message>
+    <message>
+        <source>Bulldozer mode</source>
+        <translation>Режим бульдозера</translation>
     </message>
 </context>
 <context>
@@ -12504,6 +12543,25 @@ Do you want to save your changes?</source>
     <message>
         <source>World Map Items browser</source>
         <translation>Обозреватель элементов Карты Мира</translation>
+    </message>
+</context>
+<context>
+    <name>WorldMusicBoxItemBox</name>
+    <message>
+        <source>Music boxes</source>
+        <translation>Музыкальные шкатулки</translation>
+    </message>
+    <message>
+        <source>Music Box</source>
+        <translation>Муз.Шкатулка</translation>
+    </message>
+    <message>
+        <source>Please, save file</source>
+        <translation>Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation>Файл нужно сохранить, чтобы можно было выбирать свою музыку.</translation>
     </message>
 </context>
 <context>

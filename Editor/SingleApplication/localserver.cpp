@@ -29,18 +29,23 @@ LocalServer::LocalServer() :
     m_shmem(PGE_EDITOR_SHARED_MEMORY),
     m_isWorking(false)
 {
-    #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     //Just keep compatibility with WinAPI
     m_shmem.setNativeKey(PGE_EDITOR_SHARED_MEMORY);
-    #endif
+#endif
 
     if(!m_shmem.create(4096, QSharedMemory::ReadWrite))
-        qWarning() << m_shmem.errorString();
-    else
     {
-        //! Zero data in the memory
-        memset(m_shmem.data(), 0, 4096);
+        m_shmem.attach();
+        m_shmem.detach();
+        if(!m_shmem.create(4096, QSharedMemory::ReadWrite))
+            qWarning() << m_shmem.errorString();
     }
+
+    //! Zero data in the memory
+    if(m_shmem.isAttached())
+        std::memset(m_shmem.data(), 0, 4096);
+
     //Initialize commands map
     initCommands();
 }

@@ -47,6 +47,7 @@ public:
 
         level_item_browser,
         world_item_browser,
+        world_music_boxes,
 
         file_open,
         file_new,

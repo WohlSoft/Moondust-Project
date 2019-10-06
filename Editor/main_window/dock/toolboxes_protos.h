@@ -19,6 +19,7 @@ class LvlEventsBox;
 
 class WorldSettingsBox;
 class WorldItemBox;
+class WorldMusicBoxItemBox;
 class WLD_ItemProps;
 class WldSearchBox;
 
@@ -39,8 +40,8 @@ class WldSearchBox;
     \
     friend class WorldSettingsBox;\
     friend class WorldItemBox;\
+    friend class WorldMusicBoxItemBox;\
     friend class WLD_ItemProps;\
     friend class WldSearchBox;
-
 
 #endif // TOOLBOXES_PROTOS_H

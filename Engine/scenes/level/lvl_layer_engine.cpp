@@ -101,8 +101,8 @@ void LVL_LayerEngine::show(std::string layer, bool smoke)
             {
                 PGE_Phys_Object::Momentum momentum = blk->m_momentum_relative;
                 Layer &lyrn = getLayer(blk->data.layer);//Get block's original layer
-                momentum.x -= lyrn.m_rtree.m_offsetX;
-                momentum.y -= lyrn.m_rtree.m_offsetY;
+                momentum.x -= lyrn.m_subtree.m_offsetX;
+                momentum.y -= lyrn.m_subtree.m_offsetY;
                 spawnSmokeAt(momentum.centerX(), momentum.centerY());
             }
         }
@@ -213,19 +213,19 @@ void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Objec
 {
     if(enabled)
     {
-        if(!lyr.m_rtree.m_scene)
+        if(!lyr.m_subtree.m_scene)
         {
-            lyr.m_rtree.m_scene = m_scene;
-            lyr.m_rtree.m_momentum = item->m_momentum;
-            lyr.m_rtree.m_momentum.saveOld();
+            lyr.m_subtree.m_scene = m_scene;
+            lyr.m_subtree.m_momentum = item->m_momentum;
+            lyr.m_subtree.m_momentum.saveOld();
             //Keep initial position of layer itself
-            lyr.m_rtree.m_momentum_relative = lyr.m_rtree.m_momentum;
+            lyr.m_subtree.m_momentum_relative = lyr.m_subtree.m_momentum;
             // Register tree on the root
-            lyr.m_rtree.m_treemap.addToScene();
+            lyr.m_subtree.m_treemap.addToScene();
         }
         else
         {
-            PGE_Phys_Object::Momentum m = lyr.m_rtree.m_momentum;
+            PGE_Phys_Object::Momentum m = lyr.m_subtree.m_momentum;
             if(item->left() < m.left())
                 m.setLeft(item->left() - std::min(m.velXsrc, 0.0) - 4.0);
             if(item->top() < m.top())
@@ -234,23 +234,23 @@ void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Objec
                 m.setRight(item->right() + std::max(m.velXsrc, 0.0) + 4.0);
             if(item->bottom() > m.bottom())
                 m.setBottom(item->bottom() + std::max(m.velY, 0.0) + 4.0);
-            lyr.m_rtree.m_momentum = m;
-            lyr.m_rtree.m_momentum_relative = m;
-            lyr.m_rtree.m_momentum_relative.x += lyr.m_rtree.m_offsetX;
-            lyr.m_rtree.m_momentum_relative.y += lyr.m_rtree.m_offsetY;
-            lyr.m_rtree.m_momentum_relative.oldx += lyr.m_rtree.m_offsetXold;
-            lyr.m_rtree.m_momentum_relative.oldy += lyr.m_rtree.m_offsetYold;
-            lyr.m_rtree.m_momentum_relative.saveOld();
-            lyr.m_rtree.m_treemap.updatePosAndSize();
+            lyr.m_subtree.m_momentum = m;
+            lyr.m_subtree.m_momentum_relative = m;
+            lyr.m_subtree.m_momentum_relative.x += lyr.m_subtree.m_offsetX;
+            lyr.m_subtree.m_momentum_relative.y += lyr.m_subtree.m_offsetY;
+            lyr.m_subtree.m_momentum_relative.oldx += lyr.m_subtree.m_offsetXold;
+            lyr.m_subtree.m_momentum_relative.oldy += lyr.m_subtree.m_offsetYold;
+            lyr.m_subtree.m_momentum_relative.saveOld();
+            lyr.m_subtree.m_treemap.updatePosAndSize();
         }
 
         item->m_momentum_relative   = item->m_momentum;
         if(keepAbsPos)
         {
-            item->m_momentum_relative.x += lyr.m_rtree.m_offsetX;
-            item->m_momentum_relative.y += lyr.m_rtree.m_offsetY;
-            item->m_momentum_relative.oldx += lyr.m_rtree.m_offsetXold;
-            item->m_momentum_relative.oldy += lyr.m_rtree.m_offsetYold;
+            item->m_momentum_relative.x += lyr.m_subtree.m_offsetX;
+            item->m_momentum_relative.y += lyr.m_subtree.m_offsetY;
+            item->m_momentum_relative.oldx += lyr.m_subtree.m_offsetXold;
+            item->m_momentum_relative.oldy += lyr.m_subtree.m_offsetYold;
             item->m_momentum_relative.saveOld();
         }
 
@@ -259,27 +259,27 @@ void LVL_LayerEngine::setItemMovable(LVL_LayerEngine::Layer &lyr, PGE_Phys_Objec
             //Untegister from root
             item->m_treemap.delFromScene();
         }
-        item->m_parent = &lyr.m_rtree;
+        item->m_parent = &lyr.m_subtree;
         //Syncronize modified momentum and register in the SubTree
         item->m_treemap.addToScene(keepAbsPos);
     }
     else
     {
-        if(lyr.m_rtree.m_scene)
+        if(lyr.m_subtree.m_scene)
         {
             if(keepAbsPos && item->m_parent)
             {
-                item->m_momentum_relative.x -= lyr.m_rtree.m_offsetX;
-                item->m_momentum_relative.y -= lyr.m_rtree.m_offsetY;
-                item->m_momentum_relative.oldx -= lyr.m_rtree.m_offsetXold;
-                item->m_momentum_relative.oldy -= lyr.m_rtree.m_offsetYold;
+                item->m_momentum_relative.x -= lyr.m_subtree.m_offsetX;
+                item->m_momentum_relative.y -= lyr.m_subtree.m_offsetY;
+                item->m_momentum_relative.oldx -= lyr.m_subtree.m_offsetXold;
+                item->m_momentum_relative.oldy -= lyr.m_subtree.m_offsetYold;
                 item->m_momentum = item->m_momentum_relative;
                 item->m_treemap.delFromScene();
             } else {
                 if(item->m_parent)
                     item->m_treemap.delFromScene();
                 else
-                    lyr.m_rtree.unregisterElement(item);
+                    lyr.m_subtree.remove(item);
             }
             item->m_parent = nullptr;
             //Register in the root
@@ -309,7 +309,7 @@ void LVL_LayerEngine::installLayerMotion(std::string layer, double speedX, doubl
         l.m_speedX = speedX;
         l.m_speedY = speedY;
         l.m_members = &lyr.m_members;
-        l.m_subtree = &lyr.m_rtree;
+        l.m_subtree = &lyr.m_subtree;
         m_movingLayers.insert({layer, l});
     }
 }

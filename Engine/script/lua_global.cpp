@@ -29,7 +29,7 @@ namespace LuaGlobal {
 
     void remove(lua_State *L)
     {
-        decltype(engines)::iterator it = engines.find(L);
+        auto it = engines.find(L);
         if(it != engines.end())
             engines.erase(it);
     }
@@ -49,6 +49,11 @@ namespace LuaGlobal {
     LuaLevelEngine *getLevelEngine(lua_State *L)
     {
         return dynamic_cast<LuaLevelEngine*>(getEngine(L));
+    }
+
+    LuaWorldEngine *getWorldEngine(lua_State *L)
+    {
+        return dynamic_cast<LuaWorldEngine*>(getEngine(L));
     }
 
 }

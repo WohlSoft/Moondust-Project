@@ -10,6 +10,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QMoveEvent>
+#include <QToolTip>
 #include <cmath>
 
 #include "ui_mainwindow.h"
@@ -80,6 +81,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     connect(ui->volume, &QSlider::valueChanged, [this](int x)
     {
         on_volume_valueChanged(x);
+        QToolTip::showText(QCursor::pos(), QString("%1").arg(x), this);
     });
 
     connect(m_seekBar, &SeekBar::positionSeeked, this, &MusPlayer_Qt::musicPosition_seeked);
@@ -103,6 +105,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     ui->volume->setValue(setup.value("Volume", 128).toInt());
     m_prevTrackID = ui->trackID->value();    
     ui->gme_setup->setEnabled(false);
+    ui->tempoFrame->setEnabled(false);
 
     currentMusic = setup.value("RecentMusic", "").toString();
     restoreGeometry(setup.value("Window-Geometry").toByteArray());
@@ -186,6 +189,8 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     QAction *stop        = x.addAction("Stop");
     x.addSeparator();
     QAction *reverb       = x.addAction("Reverb");
+    QAction *resetTempo   = x.addAction("Reset tempo");
+    resetTempo->setEnabled(ui->tempoFrame->isEnabled());
     reverb->setCheckable(true);
     reverb->setChecked(PGE_MusicPlayer::reverbEnabled);
     QAction *assoc_files = x.addAction("Associate files");
@@ -219,6 +224,8 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
         ui->actionEnableReverb->setChecked(reverb->isChecked());
         on_actionEnableReverb_triggered(reverb->isChecked());
     }
+    else if(resetTempo == ret)
+        ui->tempo->setValue(0);
     else if(assoc_files == ret)
         on_actionFileAssoc_triggered();
     //    else if(ret == play_list)
@@ -414,6 +421,10 @@ void MusPlayer_Qt::on_play_clicked()
 
     if(PGE_MusicPlayer::MUS_openFile(musicPath))
     {
+        ui->tempo->blockSignals(true);
+        ui->tempo->setValue(0);
+        ui->tempo->blockSignals(false);
+        ui->tempoFrame->setEnabled((Mix_GetMusicTempo(PGE_MusicPlayer::play_mus) >= 0.0));
         PGE_MusicPlayer::MUS_changeVolume(ui->volume->value());
         playSuccess = PGE_MusicPlayer::MUS_playMusic();
         ui->play->setToolTip(tr("Pause"));
@@ -504,6 +515,17 @@ void MusPlayer_Qt::on_trackID_editingFinished()
         }
     }
 #endif
+}
+
+void MusPlayer_Qt::on_tempo_valueChanged(int tempo)
+{
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
+    {
+        double tempoFactor = 1.0 + 0.01 * double(tempo);
+        Mix_SetMusicTempo(PGE_MusicPlayer::play_mus, tempoFactor);
+        qDebug() << "Changed tempo factor: " << tempoFactor;
+        QToolTip::showText(QCursor::pos(), QString("%1").arg(tempoFactor), this);
+    }
 }
 
 void MusPlayer_Qt::on_recordWav_clicked(bool checked)

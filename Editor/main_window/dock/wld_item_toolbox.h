@@ -35,7 +35,7 @@ class WorldItemBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
     friend class MainWindow;
 private:
-    explicit WorldItemBox(QWidget *parent = 0);
+    explicit WorldItemBox(QWidget *parent = nullptr);
     ~WorldItemBox();
 
 public:
@@ -62,7 +62,7 @@ private:
     ItemBoxListModel *m_sceneryModel = nullptr;
     ItemBoxListModel *m_pathsModel = nullptr;
     ItemBoxListModel *m_levelsModel = nullptr;
-    ItemBoxListModel *m_musicboxModel = nullptr;
+    ItemBoxListModel *m_musicBoxModel = nullptr;
 };
 
 #endif // WLD_ITEM_TOOLBOX_H

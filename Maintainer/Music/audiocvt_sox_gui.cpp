@@ -49,7 +49,6 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     connect(&converter, SIGNAL(readyRead()), this, SLOT(consoleMessage()) );
     converter.setTextModeEnabled(true);
     converter.setProcessChannelMode(QProcess::MergedChannels);
-    converter.setReadChannelMode(QProcess::MergedChannels);
 
     connect(this, SIGNAL(doNextStep(int, int)), this, SLOT(nextStep_x(int,int)));
     connect(this, SIGNAL(gotMax(int)), ui->progress, SLOT(setMaximum(int)));

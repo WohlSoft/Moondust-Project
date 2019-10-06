@@ -118,7 +118,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     //progress.setWindowModality(Qt::WindowModal);
     progress.setModal(true);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setCancelButton(0);
     progress.setMinimumDuration(1);
     progress.setAutoClose(false);

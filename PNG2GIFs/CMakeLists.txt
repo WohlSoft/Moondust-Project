@@ -12,17 +12,6 @@ if(NOT CMAKE_BUILD_TYPE)
     message("== Using default build configuration which is a Release!")
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
-if(MSVC)
-    if(MSVC_VERSION GREATER_EQUAL "1900")
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-        if (_cpp_latest_flag_supported)
-            add_compile_options("/std:c++latest")
-        endif()
-    endif()
-endif()
-
 # Version
 include(version.cmake)
 # Default GIT version
@@ -38,6 +27,8 @@ include(../_common/Utils/Utils.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/IniProcessor/IniProcessor.cmake)
+
+pge_cxx_standard(14)
 
 set(PNG2GIFs_SRCS)
 
@@ -79,6 +70,7 @@ endif()
 
 add_dependencies(PNG2GIFs
     FreeImage_Local
+    libpng_Local
 )
 
 set(PNG2GIFs_LINK_LIBS)
@@ -86,16 +78,14 @@ set(PNG2GIFs_INSTALLS)
 
 list(APPEND PNG2GIFs_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
+    PGE_FreeImage
 )
-
-list(APPEND PNG2GIFs_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
 
 list(APPEND PNG2GIFs_INSTALLS
     PNG2GIFs
 )
 
-if(NOT APPLE)
+if(NOT APPLE AND NOT MSVC)
     set_target_properties(PNG2GIFs PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
@@ -104,12 +94,17 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
         set_target_properties(PNG2GIFs PROPERTIES LINK_FLAGS "-mconsole")
         list(APPEND PNG2GIFs_LINK_LIBS "-static")
     endif()
-    list(APPEND PNG2GIFs_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND PNG2GIFs_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 target_link_libraries(PNG2GIFs
     ${PNG2GIFs_LINK_LIBS}
 )
+
+pge_set_nopie(PNG2GIFs)
 
 install(TARGETS ${PNG2GIFs_INSTALLS}
         RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"

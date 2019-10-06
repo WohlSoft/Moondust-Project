@@ -43,8 +43,8 @@ void LevelScene::restoreDestroyedBlocks(bool smoke)
         {
             PGE_Phys_Object::Momentum momentum = blk->m_momentum_relative;
             LVL_LayerEngine::Layer &lyrn = m_layers.getLayer(blk->data.layer);//Get block's original layer
-            momentum.x -= lyrn.m_rtree.m_offsetX;
-            momentum.y -= lyrn.m_rtree.m_offsetY;
+            momentum.x -= lyrn.m_subtree.m_offsetX;
+            momentum.y -= lyrn.m_subtree.m_offsetY;
             m_layers.spawnSmokeAt(momentum.centerX(), momentum.centerY());
         }
     }

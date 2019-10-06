@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopWidget>
-
 #include <common_features/app_path.h>
 #include <common_features/util.h>
 
@@ -228,13 +226,12 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
 
     DataSize += 3;
     DataSize += 6;
-
     QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, DataSize, this);
          progress.setWindowTitle(tr("Loading World map data"));
          progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
-         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+         progress.setGeometry(util::alignToScreenCenter(progress.size()));
          progress.setMinimumDuration(0);
 
     if(! DrawObjects(progress) )

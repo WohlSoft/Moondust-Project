@@ -46,7 +46,7 @@ if(HAIKU OR EMSCRIPTEN OR ANDROID)
 endif()
 
 if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
-    find_package(Qt5 COMPONENTS Core)
+    find_package(Qt5 COMPONENTS Core QUIET) # Check is Qt available
     if(Qt5_FOUND)
         option(PGE_ENABLE_QT "Enable build of Qt-dependent components" ${PGE_ENABLE_QT_ENABLED_BY_DEFAULT})
         option(PGE_ENABLE_STATIC_QT "Use static library deployment of Qt (Set this flag when you are using static build of Qt!)" OFF)
@@ -79,7 +79,7 @@ endif()
 # Unix2Dos utility to converyt and install text files for Windows platform
 include(_common/tool_unix2dos.cmake)
 
-if(WIN32)
+if(WIN32 OR EMSCRIPTEN)
     set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)
 else()
     set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT ON)
@@ -111,25 +111,27 @@ endif()
 
 # Dependent libraries
 include(_common/library_libpng.cmake)
-include(_common/library_FreeImage.cmake)
-if(TARGET libpng_Local)
-    add_dependencies(FreeImage_Local libpng_Local)
-endif()
-include(_common/library_FreeType.cmake)
 include(_common/library_sqlite.cmake)
 include(_common/library_luajit.cmake)
 include(_common/library_luabind.cmake)
 include(_common/library_SDL2.cmake)
 include(_common/library_AudioCodecs.cmake)
-if(TARGET libpng_Local)
-    add_dependencies(libpng_Local AudioCodecs_Local)
-endif()
+include(_common/library_FreeImage.cmake)
+include(_common/library_FreeType.cmake)
 include(_common/library_SDLMixerX.cmake)
 include(_common/library_QtPropertyBrowser.cmake)
 
-# Build dependent libraries only. Workaround for Ninja
-add_custom_target(libs
-    DEPENDS
+if(NOT USE_SYSTEM_LIBPNG)
+    add_dependencies(libpng_Local AudioCodecs_Local) #Zlib is needed to libPNG
+    add_dependencies(FREETYPE_Local libpng_Local) #libPNG is needed to FreeType
+    add_dependencies(FreeImage_Local libpng_Local) #libPNG needed to FreeImage
+endif()
+
+if(NOT USE_SYSTEM_LIBPNG AND NOT USE_SYSTEM_LIBFREETYPE)
+    add_dependencies(FREETYPE_Local AudioCodecs_Local) #Zlib is needed to FreeType
+endif()
+
+set(LIBS_TARGETS
     SDLMixerX_Local
     SDL2_Local
     LuaBind_Local
@@ -137,6 +139,9 @@ add_custom_target(libs
     SQLite_Local
     FREETYPE_Local
 )
+
+# Build dependent libraries only
+add_custom_target(libs DEPENDS ${LIBS_TARGETS})
 
 if(PGE_ENABLE_QT) # Build if Qt support enabled
     add_dependencies(libs QtPropertyBrowser_Local)
@@ -326,7 +331,7 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
         add_custom_target(install_tools_windeploy
             WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/tools"
             COMMAND ${CMAKE_COMMAND} -E tar "-xjvf"
-                "${CMAKE_SOURCE_DIR}/_Misc/tools/sox-win32.tar.gz" -C "tools"
+                "${CMAKE_SOURCE_DIR}/_Misc/tools/sox-win32.tar.gz"
             DEPENDS mkdir_tools_windeploy
             COMMENT "Unpacking extra Win32 tools..."
         )

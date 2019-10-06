@@ -32,6 +32,8 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+pge_cxx_standard(14)
+
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
@@ -95,16 +97,41 @@ add_executable(pge_calibrator
     ${PGE_FILE_LIBRARY_SRCS}
 )
 
-target_include_directories(pge_calibrator
-    PRIVATE
+add_library(PGE_Calibrator_QtLibs INTERFACE)
+
+target_include_directories(PGE_Calibrator_QtLibs
+    INTERFACE
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Concurrent_INCLUDE_DIRS}
 )
 
+# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
+target_compile_definitions(PGE_Calibrator_QtLibs
+    INTERFACE
+    ${Qt5Core_DEFINITIONS}
+    ${Qt5Gui_DEFINITIONS}
+    ${Qt5Widgets_DEFINITIONS}
+    ${Qt5Concurrent_DEFINITIONS}
+)
+
+target_link_libraries(PGE_Calibrator_QtLibs
+    INTERFACE
+    ${QT_EXTRA_LIBS_PRE}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
+)
+if(QT_PTHREAD)
+    target_link_libraries(PGE_Calibrator_QtLibs INTERFACE ${QT_PTHREAD})
+endif()
+
 add_dependencies(pge_calibrator
     FreeImage_Local
+    libpng_Local
+    FREETYPE_Local
 )
 
 set(PGE_CALIBRATOR_LINK_LIBS)
@@ -116,16 +143,11 @@ list(APPEND PGE_CALIBRATOR_INSTALLS
 
 list(APPEND PGE_CALIBRATOR_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
+    PGE_Calibrator_QtLibs
+    PGE_FreeImage
 )
 
-list(APPEND PGE_CALIBRATOR_LINK_LIBS "${libPNG_A_Lib}" "${libZLib_A_Lib}")
-
-# We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
-target_compile_definitions(pge_calibrator
-    PRIVATE
-    ${Qt5Widgets_DEFINITIONS}
-)
+pge_set_nopie(pge_calibrator)
 
 if(WIN32)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS
@@ -133,7 +155,10 @@ if(WIN32)
     )
 else()
     if(UNIX AND NOT APPLE)
-        list(APPEND PGE_CALIBRATOR_LINK_LIBS dl)
+        find_library(_lib_dl dl)
+        if(_lib_dl)
+            list(APPEND PGE_CALIBRATOR_LINK_LIBS ${_lib_dl})
+        endif()
     endif()
 endif()
 
@@ -144,7 +169,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
             list(APPEND PGE_CALIBRATOR_LINK_LIBS "-static")
         endif()
     endif()
-    list(APPEND PGE_CALIBRATOR_LINK_LIBS pthread)
+    find_library(_LIB_PTHREAD pthread)
+    if(_LIB_PTHREAD)
+        list(APPEND PGE_CALIBRATOR_LINK_LIBS ${_LIB_PTHREAD})
+    endif()
 endif()
 
 if(APPLE)
@@ -165,14 +193,6 @@ if(APPLE)
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS ${COREFOUNDATION_LIBRARY})
 endif()
-
-list(APPEND PGE_CALIBRATOR_LINK_LIBS
-    ${QT_EXTRA_LIBS_PRE}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
-    ${QT_EXTRA_LIBS}
-)
 
 target_link_libraries(pge_calibrator
     ${PGE_CALIBRATOR_LINK_LIBS}

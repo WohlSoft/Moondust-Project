@@ -50,6 +50,7 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
     setMusic(checked);
 }
 
+// TODO: Refactor this
 void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cmus)
 {
     QString root = ".";
@@ -166,29 +167,31 @@ void LvlMusPlay::setNoMusic()
     currentMusicPath.clear();
 }
 
+// TODO: Refactor this
 void LvlMusPlay::updateMusic()
 {
     int w_id = MainWinConnect::pMainWin->activeChildWindow();
 
     switch(w_id)
     {
-    case 0:
+    case MainWindow::WND_NoWindow:
         setNoMusic();
         updatePlayerState(false);
         break;
-    case 1:
+    case MainWindow::WND_Level:
         MainWinConnect::pMainWin->dock_LvlSectionProps->loadMusic();
         break;
-    case 2:
+    case MainWindow::WND_NpcTxt:
         setNoMusic();
         updatePlayerState(false);
         break;
-    case 3:
+    case MainWindow::WND_World:
         {
             WorldEdit *w = MainWinConnect::pMainWin->activeWldEditWin();
-            if(!w) return;
-            setMusic(LvlMusPlay::WorldMusic, w->currentMusic, w->currentCustomMusic);
-            updatePlayerState(true);
+            if(!w)
+                return;
+            setMusic(LvlMusPlay::WorldMusic, static_cast<unsigned long>(w->currentMusic), w->currentCustomMusic);
+            MainWinConnect::pMainWin->setMusic();
         }
         break;
     default: break;
