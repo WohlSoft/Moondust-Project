@@ -98,6 +98,10 @@ public:
      * \brief Initialize LunaTester's runtime
      */
     void initRuntime();
+    /**
+     * @brief De-Initialize LunaTester's runtime and prelare to destruction
+     */
+    void unInitRuntime();
     //! Pointer to main window
     MainWindow *m_mw = nullptr;
     //! List of registered menu items

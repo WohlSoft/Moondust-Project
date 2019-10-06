@@ -235,7 +235,7 @@ MainWindow::~MainWindow()
     m_messageBoxer.disconnectAll();
     if(m_luna)
     {
-        m_luna->killEngine();
+        m_luna->unInitRuntime();
         delete m_luna;
     }
     delete ui;

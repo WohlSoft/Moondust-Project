@@ -91,12 +91,12 @@ static DWORD getPidsByPath(const std::wstring &process_path, DWORD *found_pids, 
 static BOOL checkProc(DWORD procId, const wchar_t *proc_name_wanted)
 {
     wchar_t proc_name[MAX_PATH + 1] = L"<unknown>";
-    HMODULE h_mod = 0;
+    HMODULE h_mod = nullptr;
     DWORD cbNeeded;
     DWORD proc_name_len;
     HANDLE h_process = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, procId);
 
-    if(NULL == h_process)
+    if(nullptr == h_process)
         return FALSE;
 
     if(!EnumProcessModules(h_process, &h_mod, sizeof(h_mod), &cbNeeded))
@@ -211,9 +211,17 @@ void LunaWorker::init()
 
 void LunaWorker::unInit()
 {
-    QObject::disconnect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-                     this, &LunaWorker::processFinished);
-    QObject::disconnect(m_process, &QProcess::errorOccurred, this, &LunaWorker::errorOccurred);
+    emit stopLoop();
+    if(m_process)
+    {
+        QObject::disconnect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                         this, &LunaWorker::processFinished);
+        QObject::disconnect(m_process, &QProcess::errorOccurred, this, &LunaWorker::errorOccurred);
+        terminate();
+        QThread::msleep(1000);//Workaround
+        delete m_process;
+        m_process = nullptr;
+    }
 }
 
 LunaWorker::LunaWorker(QObject *parent) : QObject(parent)
@@ -223,16 +231,7 @@ LunaWorker::LunaWorker(QObject *parent) : QObject(parent)
 
 LunaWorker::~LunaWorker()
 {
-    emit stopLoop();
-    if(m_process)
-    {
-        unInit();
-        if(m_process->state() == QProcess::Running)
-            m_process->kill();
-        m_process->waitForFinished(1000);
-        delete m_process;
-        m_process = nullptr;
-    }
+    unInit();
 }
 
 void LunaWorker::setEnv(const QHash<QString, QString> &env)
@@ -265,14 +264,14 @@ void LunaWorker::terminate()
     {
         Q_PID pid = m_process->pid();
         LogDebugNC(QString("LunaWorker: Killing by QProcess::kill()..."));
-        QMetaObject::invokeMethod(m_process, "kill", Qt::QueuedConnection);
+        QMetaObject::invokeMethod(m_process, "kill", Qt::BlockingQueuedConnection);
 #ifdef _WIN32
         if(pid)
         {
             DWORD lt_pid = static_cast<DWORD>(pid->dwProcessId);
 
             HANDLE h_process = OpenProcess(PROCESS_TERMINATE, FALSE, lt_pid);
-            if(NULL != h_process)
+            if(nullptr != h_process)
             {
                 LogDebugNC(QString("LunaWorker: Killing LunaLoader-exec with PID %1 by 'TerminateProcess()'...")
                          .arg(lt_pid));
@@ -307,7 +306,7 @@ void LunaWorker::terminate()
             {
                 DWORD f_pid = proc_id[i];
                 HANDLE h_process = OpenProcess(PROCESS_TERMINATE, FALSE, f_pid);
-                if(NULL != h_process)
+                if(nullptr != h_process)
                 {
                     BOOL res = TerminateProcess(h_process, 0);
                     if(!res)
@@ -522,22 +521,7 @@ LunaTester::LunaTester() :
 
 LunaTester::~LunaTester()
 {
-    if(m_helper.isRunning())
-    {
-        killEngine();
-        m_helper.waitForFinished();
-    }
-    if(!m_thread.isNull())
-    {
-        m_worker->unInit();
-        m_worker->terminate();
-        m_worker->quitLoop();
-        m_thread->quit();
-        m_thread->requestInterruption();
-        m_thread->wait();
-    }
-    m_worker.reset();
-    m_thread.reset();
+    unInitRuntime();
 }
 
 void LunaTester::initRuntime()
@@ -567,6 +551,24 @@ void LunaTester::initRuntime()
                 &LunaWorker::readStd, Qt::BlockingQueuedConnection);
         m_thread->start();
     }
+}
+
+void LunaTester::unInitRuntime()
+{
+    if(m_helper.isRunning())
+    {
+        killEngine();
+        m_helper.waitForFinished();
+    }
+    if(!m_thread.isNull() && !m_worker.isNull())
+    {
+        m_worker->unInit();
+        m_thread->quit();
+        m_thread->requestInterruption();
+        m_thread->wait();
+    }
+    m_worker.reset();
+    m_thread.reset();
 }
 
 void LunaTester::initLunaMenu(MainWindow *mw,
@@ -1138,9 +1140,9 @@ bool LunaTester::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitle
 void LunaTester::lunaChkResetThread()
 {
     QMutexLocker mlocker(&this->m_engine_mutex);
-    Q_UNUSED(mlocker);
+    Q_UNUSED(mlocker)
     QThreadPointNuller tlocker(&this->m_helperThread);
-    Q_UNUSED(tlocker);
+    Q_UNUSED(tlocker)
     SafeMsgBoxInterface msg(&m_mw->m_messageBoxer);
     this->m_helperThread = QThread::currentThread();
 
@@ -1324,9 +1326,9 @@ bool LunaTester::switchToSmbxWindow(SafeMsgBoxInterface &msg)
 void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPath, bool isUntitled)
 {
     QMutexLocker mlocker(&this->m_engine_mutex);
-    Q_UNUSED(mlocker);
+    Q_UNUSED(mlocker)
     QThreadPointNuller tlocker(&this->m_helperThread);
-    Q_UNUSED(tlocker);
+    Q_UNUSED(tlocker)
 
     SafeMsgBoxInterface msg(&m_mw->m_messageBoxer);
 
@@ -1464,18 +1466,18 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPa
 
                 //***********************Attempt to make symbolic link*******************************/
                 bool needToCopyEverything = true;
-                typedef BOOL *(WINAPI * FUNK_OF_SYMLINKS)(TCHAR * linkFileName, TCHAR * existingFileName, DWORD flags);
-                HMODULE hKernel32 = NULL;
-                FUNK_OF_SYMLINKS fCreateSymbolicLink = NULL;
+                typedef BOOL *(WINAPI * FUNK_OF_SYMLINKS)(wchar_t *linkFileName, wchar_t *existingFileName, DWORD flags);
+                HMODULE hKernel32 = nullptr;
+                FUNK_OF_SYMLINKS fCreateSymbolicLink = nullptr;
                 hKernel32 = LoadLibraryW(L"KERNEL32.DLL");
                 if(hKernel32)
                 {
-                    fCreateSymbolicLink = (FUNK_OF_SYMLINKS)(void*)GetProcAddress(hKernel32, "CreateSymbolicLinkW");
+                    fCreateSymbolicLink = reinterpret_cast<FUNK_OF_SYMLINKS>(reinterpret_cast<void*>(GetProcAddress(hKernel32, "CreateSymbolicLinkW")));
                     if(fCreateSymbolicLink) //Try to make a symblic link
                     {
                         QString newPath = dst_Episode + "templevel/";
-                        if(fCreateSymbolicLink((TCHAR *)newPath.toStdWString().c_str(),
-                                               (TCHAR *)src_customPath.toStdWString().c_str(), 0x1))
+                        if(fCreateSymbolicLink(const_cast<wchar_t *>(newPath.toStdWString().c_str()),
+                                               const_cast<wchar_t *>(src_customPath.toStdWString().c_str()), 0x1))
                             needToCopyEverything = false;
                     }
                 }
@@ -1535,8 +1537,8 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPa
                         inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
                     if(!needToCopyEverything)
                     {
-                        if(fCreateSymbolicLink((TCHAR *)MusicNewPath.toStdWString().c_str(),
-                                               (TCHAR *)MusicFileName.toStdWString().c_str(), 0x0) == 0)
+                        if(fCreateSymbolicLink(const_cast<wchar_t*>(MusicNewPath.toStdWString().c_str()),
+                                               const_cast<wchar_t*>(MusicFileName.toStdWString().c_str()), 0x0) == FALSE)
                         {
                             mus.copy(MusicNewPath);//Copy file if impossible to make symbolic link to it
                         }

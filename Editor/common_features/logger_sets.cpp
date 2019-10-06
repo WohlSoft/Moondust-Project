@@ -34,6 +34,8 @@
 #include "app_path.h"
 #include "logger_sets.h"
 
+#undef DEBUG_BUILD
+
 QString         LogWriter::DebugLogFile;
 PGE_LogLevel    LogWriter::logLevel;
 
@@ -70,9 +72,8 @@ static QString PgeLL2Str(PGE_LogLevel type)
         return "System";
     case PGE_LogLevel::NoLog:
         return "NoLog";
-    default:
-        return "Unknown";
     }
+    return "Unknown";
 }
 
 
@@ -174,7 +175,7 @@ void LogWriter::writeLog(PGE_LogLevel type, const QString &msg)
 {
     QString txt;
 
-#ifndef DEBUG_BUILD
+#if 1//ndef DEBUG_BUILD
     if(type == PGE_LogLevel::NoLog)
         return;
     if(type > logLevel)
@@ -298,9 +299,6 @@ void LogWriter::logMessageHandler(QtMsgType type,
         LogWriter::consoleConnector->log(msg, QString("Info"));
         break;
     }
-
-    if(type == QtFatalMsg)
-        abort();
 }
 
 void LogWriter::installConsole(DevConsole* console)
@@ -327,7 +325,8 @@ static QMutex logger_mutex;
 
 void WriteToLog(PGE_LogLevel type, const QString &msg, bool noConsole)
 {
-    QMutexLocker muLocker(&logger_mutex); Q_UNUSED(muLocker);
+    QMutexLocker muLocker(&logger_mutex);
+    Q_UNUSED(muLocker)
     LogWriter::writeLog(type, msg);
 
     if(noConsole)
