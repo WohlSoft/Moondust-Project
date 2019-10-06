@@ -218,7 +218,7 @@ void LunaWorker::unInit()
                          this, &LunaWorker::processFinished);
         QObject::disconnect(m_process, &QProcess::errorOccurred, this, &LunaWorker::errorOccurred);
         terminate();
-        QThread::msleep(1000);//Workaround
+        QThread::msleep(1000);
         delete m_process;
         m_process = nullptr;
     }
@@ -262,36 +262,12 @@ void LunaWorker::terminate()
 {
     if(m_process && (m_process->state() == QProcess::Running))
     {
+#ifndef _WIN32
         Q_PID pid = m_process->pid();
+#endif
         LogDebugNC(QString("LunaWorker: Killing by QProcess::kill()..."));
         QMetaObject::invokeMethod(m_process, "kill", Qt::BlockingQueuedConnection);
 #ifdef _WIN32
-        if(pid)
-        {
-            DWORD lt_pid = static_cast<DWORD>(pid->dwProcessId);
-
-            HANDLE h_process = OpenProcess(PROCESS_TERMINATE, FALSE, lt_pid);
-            if(nullptr != h_process)
-            {
-                LogDebugNC(QString("LunaWorker: Killing LunaLoader-exec with PID %1 by 'TerminateProcess()'...")
-                         .arg(lt_pid));
-                BOOL res = TerminateProcess(h_process, 0);
-                if(!res)
-                {
-                    LogDebugNC(
-                        QString("LunaWorker: Failed to kill LunaLoader-exec with PID %1 by 'TerminateProcess()' with error '%3', possibly it's already terminated")
-                            .arg(lt_pid)
-                            .arg(GetLastError())
-                    );
-                }
-                CloseHandle(h_process);
-            }
-            else
-            {
-                LogDebugNC("LunaWorker: LunaLoader-exec is not run");
-            }
-        }
-
         // Kill everything that has "smbx.exe"
         DWORD proc_id[1024];
         DWORD proc_count = 0;
@@ -415,6 +391,13 @@ void LunaWorker::processLoop()
                      &loop, &QEventLoop::quit,
                      Qt::BlockingQueuedConnection);
     loop.exec();
+
+    if(m_process) // Interrupt running process
+    {
+        m_process->kill();
+        m_process->waitForFinished(2000);
+    }
+
     emit loopFinished();
 }
 

@@ -34,7 +34,10 @@
 #include "app_path.h"
 #include "logger_sets.h"
 
-#undef DEBUG_BUILD
+#ifdef DEBUG_BUILD
+#define ONSCREEN_LOGGING
+#endif
+
 
 QString         LogWriter::DebugLogFile;
 PGE_LogLevel    LogWriter::logLevel;
@@ -161,7 +164,7 @@ static void writeToFile(const QString &txt)
 }
 
 
-#ifdef DEBUG_BUILD
+#ifdef ONSCREEN_LOGGING
 static void writeToScreen(const QString &txt)
 {
     QTextStream ts(stdout);
@@ -175,7 +178,7 @@ void LogWriter::writeLog(PGE_LogLevel type, const QString &msg)
 {
     QString txt;
 
-#if 1//ndef DEBUG_BUILD
+#ifndef ONSCREEN_LOGGING
     if(type == PGE_LogLevel::NoLog)
         return;
     if(type > logLevel)
@@ -204,7 +207,7 @@ void LogWriter::writeLog(PGE_LogLevel type, const QString &msg)
         break;
     }
 
-#ifdef DEBUG_BUILD
+#ifdef ONSCREEN_LOGGING
     writeToScreen(txt);
     if(type == PGE_LogLevel::NoLog)
         return;
@@ -221,7 +224,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
 
     PGE_LogLevel ptype = qMsg2PgeLL(type);
 
-#ifndef DEBUG_BUILD
+#ifndef ONSCREEN_LOGGING
     if(ptype == PGE_LogLevel::NoLog)
         return;
     if(ptype > logLevel)
@@ -269,7 +272,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
                 .arg(lMessage.constData());
     }
 
-#ifdef DEBUG_BUILD
+#ifdef ONSCREEN_LOGGING
     writeToScreen(txt);
     if(ptype == PGE_LogLevel::NoLog)
         return;
