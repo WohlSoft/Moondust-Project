@@ -34,7 +34,7 @@ static std::wstring Str2WStr(const std::string &path)
 {
     std::wstring wpath;
     wpath.resize(path.size());
-    int newlen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), path.length(), &wpath[0], path.length());
+    int newlen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), static_cast<int>(path.length()), &wpath[0], static_cast<int>(path.length()));
     wpath.resize(newlen);
     return wpath;
 }

@@ -29,9 +29,16 @@
 #include <vector>
 
 #ifdef PGE_ENGINE
-#include <SDL2/SDL_main.h>
+#   include <SDL2/SDL_main.h>
 #else
-#include "utf8main.h"
+#   include "utf8main.h"
+#endif
+
+#ifndef _In_
+#   define _In_
+#endif
+#ifndef _In_opt_
+#   define _In_opt_
 #endif
 
 extern int  main(int argc, char *argv[]);
@@ -49,16 +56,16 @@ static void buildUtf8Args(std::vector<std::string> &utf8_args)
     for(int i = 0; i < argc; i++)
     {
         wchar_t *argW = argvW[i];
-        int argWlen = wcslen(argW);
+        size_t argWlen = wcslen(argW);
         std::string arg;
         arg.resize(argWlen * 2);
-        size_t newLen = WideCharToMultiByte(CP_UTF8, 0, argW, argWlen, &arg[0], arg.size(), 0, 0);
+        size_t newLen = WideCharToMultiByte(CP_UTF8, 0, argW, static_cast<int>(argWlen), &arg[0], static_cast<int>(arg.size()), 0, 0);
         arg.resize(newLen);
         utf8_args.push_back(arg);
     }
 }
 
-int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int)
+int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PSTR, _In_ int)
 {
     //! Storage of UTF8-encoded command line arguments
     std::vector<std::string>  g_utf8_args;
@@ -67,10 +74,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, PSTR, int)
 
     buildUtf8Args(g_utf8_args);
 
-    #ifdef UTF8Main_Debug
+#ifdef UTF8Main_Debug
     printf("UTF8 ARGS RAN!\n");
     fflush(stdout);
-    #endif
+#endif
 
     size_t argc = g_utf8_args.size();
     g_utf8_argvV.reserve(argc);

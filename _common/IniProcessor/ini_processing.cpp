@@ -27,6 +27,11 @@
 /* Stop parsing on first error (default is to keep parsing). */
 //#define INI_STOP_ON_FIRST_ERROR
 
+#ifdef _MSC_VER
+#pragma warning (disable : 4127)
+#pragma warning (disable : 4244)
+#endif
+
 #include "ini_processing.h"
 #include <cstdio>
 #include <cctype>
@@ -37,15 +42,17 @@
 #include <algorithm>
 #include <assert.h>
 #ifdef _WIN32
-    #ifdef _MSC_VER
-        #ifdef _WIN64
-            typedef __int64 ssize_t;
-        #else
+#   ifdef _MSC_VER
+#       ifdef _WIN64
+        typedef __int64 ssize_t;
+#       else
             typedef __int32 ssize_t;
-        #endif
-        #define NOMINMAX //Don't override std::min and std::max
-    #endif
-#include <windows.h>
+#       endif
+#       ifndef NOMINMAX
+#           define NOMINMAX //Don't override std::min and std::max
+#       endif
+#   endif
+#   include <windows.h>
 #endif
 
 #ifdef USE_FILE_MAPPER
@@ -712,10 +719,10 @@ void IniProcessing::read(const char *key, bool &dest, bool defVal)
         }
 
         bool isNum = true;
-        isNum &= std::isdigit(buff[i]) || (buff[i] == '-') || (buff[i] == '+');
+        isNum = isNum && (std::isdigit(buff[i]) || (buff[i] == '-') || (buff[i] == '+'));
 
-        for(size_t i = 1; i < ss; i++)
-            isNum &= std::isdigit(buff[i]);
+        for(size_t j = 1; j < ss; j++)
+            isNum = (isNum && std::isdigit(buff[j]));
 
         if(isNum)
         {
@@ -1330,21 +1337,21 @@ static inline bool isFloatValue(const std::string &str)
 
 bool IniProcessing::writeIniFile()
 {
-    #ifdef _WIN32
+#ifdef _WIN32
     //Convert UTF8 file path into UTF16 to support non-ASCII paths on Windows
     std::wstring dest;
     dest.resize(m_params.filePath.size());
     int newSize = MultiByteToWideChar(CP_UTF8,
                                       0,
                                       m_params.filePath.c_str(),
-                                      dest.size(),
-                                      (wchar_t *)dest.c_str(),
-                                      dest.size());
+                                      static_cast<int>(dest.size()),
+                                      &dest[0],
+                                      static_cast<int>(dest.size()));
     dest.resize(newSize);
     FILE *cFile = _wfopen(dest.c_str(), L"wb");
-    #else
+#else
     FILE *cFile = fopen(m_params.filePath.c_str(), "wb");
-    #endif
+#endif
     if(!cFile)
         return false;
 

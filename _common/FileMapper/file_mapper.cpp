@@ -22,11 +22,11 @@
 
 #include "file_mapper.h"
 #if defined(__unix__) || defined(__APPLE__) || defined(__HAIKU__)
-#define FileMapper_POSIX
+#   define FileMapper_POSIX
 #elif _WIN32
-#define FileMapper_Windows
+#   define FileMapper_Windows
 #else
-#error Unsupported operating system!
+#   error Unsupported operating system!
 #endif
 
 #include <stdio.h>
@@ -149,7 +149,7 @@ bool FileMapper::FileMapper_private::openFile(const std::string &path)
     m_error.clear();
     std::wstring wpath;
     wpath.resize(path.size());
-    int newlen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), path.length(), &wpath[0], path.length());
+    int newlen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), static_cast<int>(path.length()), &wpath[0], static_cast<int>(path.length()));
     wpath.resize(newlen);
     m_File = CreateFileW(wpath.c_str(), GENERIC_READ, 1, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if(m_File == INVALID_HANDLE_VALUE)

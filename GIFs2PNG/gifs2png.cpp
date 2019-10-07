@@ -38,7 +38,7 @@
 
 static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
 {
-    #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
     FileMapper fileMap;
     if(!fileMap.open_file(file.c_str()))
         return NULL;
@@ -53,14 +53,14 @@ static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
     fileMap.close_file();
     if(!img)
         return NULL;
-    #else
+#else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
     if(formato  == FIF_UNKNOWN)
         return NULL;
     FIBITMAP *img = FreeImage_Load(formato, file.c_str());
     if(!img)
         return NULL;
-    #endif
+#endif
 
     if(convertTo32bit)
     {
@@ -121,7 +121,7 @@ static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, FI
                                     int(Fpix.rgbBlue)) / 3);
             if(newAlpha > 255)
                 newAlpha = 255;
-            Npix.rgbReserved = newAlpha;
+            Npix.rgbReserved = static_cast<BYTE>(newAlpha);
 
             FreeImage_SetPixelColor(image, x, y, &Npix);
         }
