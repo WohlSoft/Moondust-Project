@@ -263,7 +263,9 @@ void LvlItemProperties::LvlItemProps(int Type,
 
     LvlPlacingItems::npcSpecialAutoIncrement = false;
 
+    ui->extraSettings->setToolTip("");
     ui->extraSettings->setMinimumHeight(0);
+    ui->extraSettings->setStyleSheet("");
     if(m_extraSettings)
     {
         delete m_extraSettings;
@@ -827,9 +829,20 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultDir,
         if(m_extraSettings)
         {
             if(!m_extraSettings->loadLayout(properties.toUtf8(), rawLayout))
+            {
                 LogWarning(m_extraSettings->errorString());
-            ui->extraSettings->layout()->addWidget(m_extraSettings->getWidget());
-            JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
+                ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                              .arg(esLayoutFile)
+                                              .arg(m_extraSettings->errorString()));
+                ui->extraSettings->setMinimumHeight(12);
+                ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+            }
+            auto *widget = m_extraSettings->getWidget();
+            if(widget)
+            {
+                ui->extraSettings->layout()->addWidget(widget);
+                JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
+            }
         }
         layoutFile.close();
     }
