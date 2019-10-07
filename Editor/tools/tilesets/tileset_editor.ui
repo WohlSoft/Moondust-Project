@@ -105,7 +105,7 @@
            <x>0</x>
            <y>0</y>
            <width>322</width>
-           <height>235</height>
+           <height>217</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -151,7 +151,7 @@
          <bool>true</bool>
         </property>
         <property name="dragDropMode">
-         <enum>QAbstractItemView::DragDrop</enum>
+         <enum>QAbstractItemView::DragOnly</enum>
         </property>
         <property name="defaultDropAction">
          <enum>Qt::IgnoreAction</enum>
