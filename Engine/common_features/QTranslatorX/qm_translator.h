@@ -3,7 +3,7 @@
 ** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
-** Copyright (C) 2016 Vitaliy Novichkov <admin@wohlnet.ru>
+** Copyright (C) 2016-2019 Vitaliy Novichkov <admin@wohlnet.ru>
 **
 ** This file use a part of the QtCore module of the Qt Toolkit,
 ** ported into pure STL to allow support of qm translations in the non-Qt projects.
