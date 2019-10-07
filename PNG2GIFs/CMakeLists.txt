@@ -58,6 +58,9 @@ if(WIN32 AND NOT EMSCRIPTEN)
         -D_UNICODE
         -DNOMINMAX
     )
+    if(MSVC)
+        target_compile_definitions(PNG2GIFs PRIVATE -DWIN32_CONSOLE)
+    endif()
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)

@@ -65,7 +65,13 @@ static void buildUtf8Args(std::vector<std::string> &utf8_args)
     }
 }
 
+#ifdef WIN32_CONSOLE
+#undef main
+int main()
+#   define main UTF8_Main
+#else
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PSTR, _In_ int)
+#endif
 {
     //! Storage of UTF8-encoded command line arguments
     std::vector<std::string>  g_utf8_args;
