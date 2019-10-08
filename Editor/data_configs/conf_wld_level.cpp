@@ -77,6 +77,7 @@ void dataconfigs::loadWorldLevels()
         total_data += levels_total;
         setup.read("config-dir", folderWldLevelPoints.items, "");
         setup.read("extra-settings", folderWldLevelPoints.extraSettings, folderWldLevelPoints.items);
+        setup.read("extra-settings-combined-view", folderWldLevelPoints.extraSettingsCombinedView, true);
         if(!folderWldLevelPoints.items.isEmpty())
         {
             folderWldLevelPoints.items = config_dir + folderWldLevelPoints.items;

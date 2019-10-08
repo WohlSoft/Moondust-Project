@@ -341,6 +341,7 @@ private:
         QString graphics;
         QString items;
         QString extraSettings;
+        bool    extraSettingsCombinedView = true;
     };
 
     ResourceFolder folderLvlBgo;
