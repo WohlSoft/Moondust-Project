@@ -19,6 +19,7 @@
 #include <audio/music_player.h>
 #include <editing/_dialogs/musicfilelist.h>
 #include <editing/_scenes/level/lvl_history_manager.h>
+#include <common_features/json_settings_widget.h>
 #include <main_window/dock/lvl_events_box.h>
 
 #include <ui_mainwindow.h>
@@ -121,6 +122,79 @@ void LvlSectionProps::focusInEvent(QFocusEvent *ev)
     QDockWidget::focusInEvent(ev);
     //ev->accept();
     //qApp->setActiveWindow(mw());
+}
+
+void LvlSectionProps::updateExtraSettingsWidget()
+{
+    LevelEdit *edit = nullptr;
+    QString defaultDir = mw()->configs.config_dir;
+
+    if((mw()->activeChildWindow() == MainWindow::WND_Level) && (edit = mw()->activeLvlEditWin()))
+    {
+        CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
+        uLVL.setDefaultDir(defaultDir);
+
+        QString esLayoutFile = uLVL.getCustomFile("lvl_section.json");
+        if(esLayoutFile.isEmpty())
+            return;
+
+        auto &section = edit->LvlData.sections[edit->LvlData.CurSection];
+
+        QFile layoutFile(esLayoutFile);
+        if(!layoutFile.open(QIODevice::ReadOnly))
+            return;
+
+        ui->extraSettings->setToolTip("");
+        ui->extraSettings->setMinimumHeight(0);
+        ui->extraSettings->setStyleSheet("");
+        if(m_extraSettings)
+        {
+            delete m_extraSettings;
+            m_extraSettings = nullptr;
+        }
+
+        QByteArray rawLayout = layoutFile.readAll();
+        m_extraSettings = new JsonSettingsWidget(ui->extraSettings);
+        if(m_extraSettings)
+        {
+            if(!m_extraSettings->loadLayout(section.custom_params.toUtf8(), rawLayout))
+            {
+                LogWarning(m_extraSettings->errorString());
+                ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                              .arg(esLayoutFile)
+                                              .arg(m_extraSettings->errorString()));
+                ui->extraSettings->setMinimumHeight(12);
+                ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+            }
+            auto *widget = m_extraSettings->getWidget();
+            if(widget)
+            {
+                ui->extraSettings->layout()->addWidget(widget);
+                JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, &LvlSectionProps::onExtraSettingsChanged);
+            }
+        }
+        layoutFile.close();
+    }
+}
+
+void LvlSectionProps::onExtraSettingsChanged()
+{
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        if(!edit)
+            return;
+        auto &section = edit->LvlData.sections[edit->LvlData.CurSection];
+        QString custom_params = m_extraSettings->saveSettings();
+        QList<QVariant> xtraSetupData;
+        xtraSetupData.push_back(section.custom_params);
+        xtraSetupData.push_back(custom_params);
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection,
+                                                         HistorySettings::SETTING_SEC_XTRA,
+                                                         QVariant(xtraSetupData));
+        section.custom_params = custom_params;
+        edit->LvlData.meta.modified = true;
+    }
 }
 
 // Level Section tool box show/hide
@@ -293,6 +367,8 @@ void LvlSectionProps::refreshFileData()
 
         ui->LVLPropsMusicCustom->setText(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
         ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
+
+        updateExtraSettingsWidget();
 
         loadMusic();
     }

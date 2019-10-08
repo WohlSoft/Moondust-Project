@@ -7,6 +7,7 @@
 
 class MainWindow;
 class QPushButton;
+class JsonSettingsWidget;
 
 namespace Ui {
 class LvlSectionProps;
@@ -60,6 +61,11 @@ protected:
     virtual void focusInEvent(QFocusEvent * ev);
 
 private:
+    void updateExtraSettingsWidget();
+    void onExtraSettingsChanged();
+
+    JsonSettingsWidget *m_extraSettings = nullptr;
+
     Ui::LvlSectionProps *ui;
 };
 
