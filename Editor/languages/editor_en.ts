@@ -1499,6 +1499,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation>SMBX World Map</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation>Please wait...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -3307,6 +3311,20 @@ Do you want to save your changes?</translation>
         <source>Trigger event</source>
         <translation>Trigger event</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation>No settings available</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Error in the file %1:
+%2</translation>
+    </message>
 </context>
 <context>
     <name>LevelToolBox</name>
@@ -4538,6 +4556,12 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <source>[none]</source>
         <translation>[none]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Error in the file %1:
+%2</translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -5388,6 +5412,12 @@ Physical env. zones:	 %6
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Add layers here, for example:</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Error in the file %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -9834,7 +9864,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Level Name</translation>
+        <translation type="vanished">Level Name</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -10310,6 +10340,14 @@ Reason: %1
 Reason: %1
 
 </translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation>Настройки уровня</translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
+        <translation>Section extra settings</translation>
     </message>
 </context>
 <context>

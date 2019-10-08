@@ -192,17 +192,17 @@ and retry your recent actions to get more detailed information.</source>
         <translation>引擎已损坏</translation>
     </message>
     <message id="GAMEOVER_TITLE">
-        <location filename="../scenes/scene_gameover.cpp" line="54"/>
+        <location filename="../scenes/scene_gameover.cpp" line="56"/>
         <source>Game Over!</source>
         <translation>游戏结束！</translation>
     </message>
     <message id="GAMEOVER_CONTINUE">
-        <location filename="../scenes/scene_gameover.cpp" line="60"/>
+        <location filename="../scenes/scene_gameover.cpp" line="62"/>
         <source>Continue</source>
         <translation>继续</translation>
     </message>
     <message id="GAMEOVER_EXIT">
-        <location filename="../scenes/scene_gameover.cpp" line="62"/>
+        <location filename="../scenes/scene_gameover.cpp" line="64"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
@@ -247,53 +247,53 @@ and retry your recent actions to get more detailed information.</source>
         <translation>重新开始关卡</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="554"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="300"/>
+        <location filename="../scenes/scene_world.cpp" line="550"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
         <source>Invalid playable character ID</source>
         <translation>错误的人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="563"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
+        <location filename="../scenes/scene_world.cpp" line="559"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
         <source>Invalid playable character state ID</source>
         <translation>错误的人物形态编号</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="434"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="436"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
 请问你将起点（或者传送入口）放置到了场景外的过大范围吗？</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="615"/>
-        <location filename="../scenes/scene_world.cpp" line="642"/>
+        <location filename="../scenes/scene_world.cpp" line="611"/>
+        <location filename="../scenes/scene_world.cpp" line="638"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="623"/>
-        <location filename="../scenes/scene_world.cpp" line="650"/>
+        <location filename="../scenes/scene_world.cpp" line="619"/>
+        <location filename="../scenes/scene_world.cpp" line="646"/>
         <source>Continue</source>
         <translation>继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="621"/>
         <source>Save and continue</source>
         <translation>保存并继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="627"/>
+        <location filename="../scenes/scene_world.cpp" line="623"/>
         <source>Save and quit</source>
         <translation>保存并退出</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="629"/>
+        <location filename="../scenes/scene_world.cpp" line="625"/>
         <source>Exit without saving</source>
         <translation>退出而不保存</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="652"/>
+        <location filename="../scenes/scene_world.cpp" line="648"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
@@ -532,7 +532,7 @@ Entrance point: %2</source>
 %1</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
-        <location filename="../graphics/vsync_validator.cpp" line="70"/>
+        <location filename="../graphics/vsync_validator.cpp" line="77"/>
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation>检测到帧率过高，为防止出现问题，垂直同步已关闭。请在你的显卡上开启垂直同步。</translation>
     </message>

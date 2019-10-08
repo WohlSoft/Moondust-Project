@@ -1232,6 +1232,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation>SMBX 大地图文件</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">请稍候……</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -2712,6 +2716,19 @@ Do you want to save your changes?</source>
         <source>Event:</source>
         <translation>事件：</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">通用</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LunaTester</name>
@@ -3506,6 +3523,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <source>[none]</source>
         <translation>[无]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -3942,6 +3964,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>在此处加入图层，例如：</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6472,7 +6499,7 @@ Error description:
     </message>
     <message>
         <source>Level Name</source>
-        <translation>关卡名</translation>
+        <translation type="vanished">关卡名</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -6879,6 +6906,14 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>LTR</source>
         <translation>从左到右</translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

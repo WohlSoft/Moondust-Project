@@ -1269,6 +1269,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <comment>File Types</comment>
         <translation>Mappa SMBX</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Attendere...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -2821,6 +2825,19 @@ Vuoi salvare i cambiamenti?</translation>
         <source>Trigger event</source>
         <translation>Evento successivo</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Generale</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelToolBox</name>
@@ -3778,6 +3795,11 @@ Questa opzione usa il bug di SMBX del rendering degli oggetti di sfondo. Per far
         <source>[none]</source>
         <translation>[nessuno]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -4286,6 +4308,11 @@ Sone di Ambiente Fisico:	%6
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7094,7 +7121,7 @@ Descrizione errore:
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Nome livello</translation>
+        <translation type="vanished">Nome livello</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -7509,6 +7536,14 @@ Il numero massimo di musiche è %2.</translation>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

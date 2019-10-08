@@ -1453,6 +1453,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation>Карта мира SMBX</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation>Пожалуйста, подождите...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -3265,6 +3269,20 @@ Do you want to save your changes?</source>
         <source>Trigger event</source>
         <translation>Триггер события</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Основное</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation>Отсутствуют доступные настройки</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Ошибка в файле %1:
+%2</translation>
+    </message>
 </context>
 <context>
     <name>LevelToolBox</name>
@@ -4473,6 +4491,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <source>[none]</source>
         <translation>[нет]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Ошибка в файле %1:
+%2</translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -5343,6 +5367,12 @@ Physical env. zones:	%6
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Добавлять слои здесь, например:</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Ошибка в файле %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -9826,7 +9856,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Имя уровня</translation>
+        <translation type="vanished">Имя уровня</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -10301,6 +10331,14 @@ Reason: %1
 Этому послужила причина: %1
 
 </translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
+        <translation>Расширенные настройки секции</translation>
     </message>
 </context>
 <context>

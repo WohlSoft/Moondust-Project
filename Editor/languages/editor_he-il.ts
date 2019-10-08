@@ -1195,6 +1195,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -2625,6 +2629,19 @@ Do you want to save your changes?</source>
         <source>Event:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LunaTester</name>
@@ -3384,6 +3401,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -3793,6 +3815,11 @@ Physical env. zones:	%6
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6329,10 +6356,6 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Level Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>BGO Sorting Priority</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6534,6 +6557,14 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

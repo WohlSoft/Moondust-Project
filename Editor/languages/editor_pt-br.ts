@@ -1352,6 +1352,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation>Arquivo de mundo SMBX</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Aguarde...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -3006,6 +3010,19 @@ Deseja salvar sua mudanças?</translation>
         <source>Trigger event</source>
         <translation>Ativar evento</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Geral</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LunaTester</name>
@@ -4025,6 +4042,11 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
         <source>[none]</source>
         <translation>[nada]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -4487,6 +4509,11 @@ para trás)</translation>
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7419,7 +7446,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Nome do nível</translation>
+        <translation type="vanished">Nome do nível</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -7824,6 +7851,14 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

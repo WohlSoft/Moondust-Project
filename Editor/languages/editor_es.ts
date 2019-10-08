@@ -1504,6 +1504,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation>Mapa SMBX</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Por favor, espere...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -3232,6 +3236,19 @@ Do you want to save your changes?</source>
         <source>Trigger event</source>
         <translation>Evento seguido</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">General</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelToolBox</name>
@@ -4402,6 +4419,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <source>[none]</source>
         <translation>[nada]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -5271,6 +5293,11 @@ Zonas físicas de ambiente:	%6
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9457,7 +9484,7 @@ cuando guarde su archivo</translation>
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Nombre del nivel</translation>
+        <translation type="vanished">Nombre del nivel</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -9898,6 +9925,14 @@ El máximo es %2.</translation>
     <message>
         <source>NPC user data change</source>
         <translation>Cambio de datos de PNJ de usuairo</translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

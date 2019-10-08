@@ -1484,6 +1484,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation>SMBX Welt Datei</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Bitte Warten...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -3223,6 +3227,19 @@ Möchtest du die Änderungen speichern?</translation>
         <source>Autoplay music</source>
         <translation type="vanished">Musik automatisch abspielen</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Allgemein</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelToolBox</name>
@@ -4300,6 +4317,11 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <source>[none]</source>
         <translation>[Nichts]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -5142,6 +5164,11 @@ Physikalische Umgebungen:	%6</translation>
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9266,7 +9293,7 @@ Grund: Arbeitspeicherverletzung [SIGSERV]</translation>
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Level Name</translation>
+        <translation type="vanished">Level Name</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -9684,6 +9711,14 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

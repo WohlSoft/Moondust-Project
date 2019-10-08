@@ -1284,6 +1284,10 @@ pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze mo�
         <comment>File Types</comment>
         <translation>Plik Mapy SMBX</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Proszę czekać...</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
@@ -2909,6 +2913,19 @@ Czy chcesz zapisać zmiany?</translation>
         <source>Trigger event</source>
         <translation>Uruchom event</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LunaTester</name>
@@ -3789,6 +3806,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <source>[none]</source>
         <translation>[nic]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -4241,6 +4263,11 @@ Woda, ruchome piaski itp.:	%6</translation>
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7072,7 +7099,7 @@ Opis błędu:
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Tytuł poziomu</translation>
+        <translation type="vanished">Tytuł poziomu</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -7481,6 +7508,14 @@ Maksymalny numer bloków muzyki to %2.</translation>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
