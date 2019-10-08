@@ -1,5 +1,5 @@
 Editor 0.3.2-dev
-- Added support for element (Block, BGO, NPC) and section Extra Settings (Levels only)
+- Added support for element (Block, BGO, NPC), section, and level-wide Extra Settings
 - Config pack is able to specify the default file format
 - When SMBX64 formats are default, the strict mode is turned on in untitled files
 - Added Chinese translation by 快乐爱的小精灵

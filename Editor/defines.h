@@ -253,7 +253,7 @@ public:
         case SETTING_SECBACKGROUNDIMG: return QObject::tr("Background Image");
         case SETTING_SECMUSIC: return QObject::tr("Music");
         case SETTING_SECCUSTOMMUSIC: return QObject::tr("Custom Music");
-        case SETTING_LEVELNAME: return QObject::tr("Level Name");
+        case SETTING_LEVELNAME: return QObject::tr("Level Settings");
         case SETTING_SEC_XTRA: return QObject::tr("Section extra settings");
         case SETTING_BGOSORTING: return QObject::tr("BGO Sorting Priority");
         case SETTING_LVL_CUSTOM: return QObject::tr("Unknown");

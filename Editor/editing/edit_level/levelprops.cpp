@@ -17,6 +17,9 @@
  */
 
 #include <PGE_File_Formats/lvl_filedata.h>
+#include <common_features/json_settings_widget.h>
+
+#include <mainwindow.h>
 
 #include "levelprops.h"
 #include <ui_levelprops.h>
@@ -26,9 +29,18 @@ LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LevelProps)
 {
-    currentData = &FileData;
+    if(parent)
+    {
+        if(std::strcmp(parent->metaObject()->className(), "MainWindow")==0)
+            m_mw = qobject_cast<MainWindow *>(parent);
+        else
+            m_mw = nullptr;
+    }
+
+    m_currentData = &FileData;
     ui->setupUi(this);
-    ui->LVLPropLevelTitle->setText(currentData->LevelName);
+    ui->LVLPropLevelTitle->setText(m_currentData->LevelName);
+    initAdvancedSettings();
 }
 
 LevelProps::~LevelProps()
@@ -38,11 +50,53 @@ LevelProps::~LevelProps()
 
 void LevelProps::on_LVLPropButtonBox_accepted()
 {
-    LevelTitle = ui->LVLPropLevelTitle->text().simplified().remove('\"');
+    m_levelTitle = ui->LVLPropLevelTitle->text().simplified().remove('\"');
     accept();
 }
 
 void LevelProps::on_LVLPropButtonBox_rejected()
 {
     reject();
+}
+
+void LevelProps::initAdvancedSettings()
+{
+    QString defaultDir = m_mw->configs.config_dir;
+    CustomDirManager uLVL(m_currentData->meta.path, m_currentData->meta.filename);
+    uLVL.setDefaultDir(defaultDir);
+
+    QString esLayoutFile = uLVL.getCustomFile("lvl_settings.json");
+    if(esLayoutFile.isEmpty())
+        return;
+
+    QFile layoutFile(esLayoutFile);
+    if(!layoutFile.open(QIODevice::ReadOnly))
+        return;
+
+    QByteArray rawLayout = layoutFile.readAll();
+    m_extraSettings = new JsonSettingsWidget(ui->advancedSettings);
+    if(m_extraSettings)
+    {
+        if(!m_extraSettings->loadLayout(m_currentData->custom_params.toUtf8(), rawLayout))
+        {
+            LogWarning(m_extraSettings->errorString());
+            ui->advancedNone->setText(tr("Error in the file %1:\n%2")
+                                      .arg(esLayoutFile)
+                                      .arg(m_extraSettings->errorString()));
+            ui->advancedNone->setStyleSheet("*{background-color: #FF0000;}");
+        }
+        auto *widget = m_extraSettings->getWidget();
+        if(widget)
+        {
+            ui->advancedSettings->layout()->addWidget(widget);
+            JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, &LevelProps::onExtraSettingsChanged);
+            ui->advancedNone->setVisible(false);
+        }
+    }
+    layoutFile.close();
+}
+
+void LevelProps::onExtraSettingsChanged()
+{
+    m_customParams = m_extraSettings->saveSettings();
 }

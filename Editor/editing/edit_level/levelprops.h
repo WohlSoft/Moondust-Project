@@ -24,6 +24,9 @@
 
 #include <PGE_File_Formats/lvl_filedata.h>
 
+class MainWindow;
+class JsonSettingsWidget;
+
 namespace Ui {
 class LevelProps;
 }
@@ -35,7 +38,8 @@ class LevelProps : public QDialog
 public:
     explicit LevelProps(LevelData &FileData,QWidget *parent = 0);
     ~LevelProps();
-    QString LevelTitle;
+    QString m_levelTitle;
+    QString m_customParams;
 
 private slots:
     void on_LVLPropButtonBox_accepted();
@@ -43,8 +47,14 @@ private slots:
     void on_LVLPropButtonBox_rejected();
 
 private:
-    Ui::LevelProps *ui;
-    LevelData *currentData;
+    void initAdvancedSettings();
+    void onExtraSettingsChanged();
+
+    JsonSettingsWidget *m_extraSettings = nullptr;
+
+    Ui::LevelProps *ui = nullptr;
+    LevelData *m_currentData = nullptr;
+    MainWindow *m_mw = nullptr;
 };
 
 #endif // LEVELPROPS_H

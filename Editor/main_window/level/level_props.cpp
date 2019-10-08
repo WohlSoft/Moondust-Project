@@ -33,18 +33,21 @@ void MainWindow::on_actionLevelProp_triggered()
     {
         LevelEdit * e=activeLvlEditWin();
         if(!e) return;
-        LevelProps LevProps(e->LvlData, this);
-        LevProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        LevProps.setGeometry(util::alignToScreenCenter(LevProps.size()));
-        if(LevProps.exec()==QDialog::Accepted)
+        LevelProps levelProps(e->LvlData, this);
+        levelProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        levelProps.setGeometry(util::alignToScreenCenter(levelProps.size()));
+        if(levelProps.exec() == QDialog::Accepted)
         {
             QList<QVariant> lvlsetData;
             lvlsetData.push_back(e->LvlData.LevelName);
-            lvlsetData.push_back(LevProps.LevelTitle);
+            lvlsetData.push_back(e->LvlData.custom_params);
+            lvlsetData.push_back(levelProps.m_levelTitle);
+            lvlsetData.push_back(levelProps.m_customParams);
             e->scene->m_history->addChangeLevelSettings(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
-            e->LvlData.LevelName = LevProps.LevelTitle;
+            e->LvlData.LevelName = levelProps.m_levelTitle;
+            e->LvlData.custom_params = levelProps.m_customParams;
             e->LvlData.meta.modified = true;
-            e->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? e->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
+            e->setWindowTitle( QString(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle).replace("&", "&&&") );
             updateWindowMenu();
         }
     }
