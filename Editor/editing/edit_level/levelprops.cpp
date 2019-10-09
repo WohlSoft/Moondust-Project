@@ -99,4 +99,5 @@ void LevelProps::initAdvancedSettings()
 void LevelProps::onExtraSettingsChanged()
 {
     m_customParams = m_extraSettings->saveSettings();
+    LogDebug("Extra Settings change: " + m_customParams);
 }
