@@ -90,6 +90,8 @@ LevelData LvlScene::copy(bool cut)
         }
     }
 
+    FileFormats::arrayIdLevelSortBGOs(copyData);
+
     return copyData;
 }
 
