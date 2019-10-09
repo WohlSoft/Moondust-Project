@@ -84,6 +84,8 @@ void LevelEdit::prepareLevelFile(LevelData &data)
 
     dataconfigs *config = scene->m_configs;
 
+    FileFormats::arrayIdLevelSortBGOs(data);
+
     // TODO: make here the synchronizarion with the main scene
     // Instead of real-time in-scene synchronization, total performance
     // and safety of workflow turning into one huge hell.

@@ -30,6 +30,10 @@
 
 #include <editing/_components/history/settings/lvl_bgo_userdata.hpp>
 
+static inline double bgoZ(const LevelBGO &b)
+{
+    return (static_cast<double>(b.meta.array_id) * 0.000000000001);
+}
 
 ItemBGO::ItemBGO(QGraphicsItem *parent) : LvlBaseItem(parent)
 {
@@ -644,7 +648,7 @@ void ItemBGO::setZMode(int mode, qreal offset, bool init)
         break;
     }
 
-    setZValue(targetZ);
+    setZValue(targetZ + bgoZ(m_data));
 
     if(!init) arrayApply();
 }
