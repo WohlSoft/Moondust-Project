@@ -166,6 +166,9 @@ void LvlItemProperties::setSMBX64Strict(bool en)
     bool zPos_hide = (c.editor.supported_features.level_bgo_z_position == EditorSetup::FeaturesSupport::F_HIDDEN);
     bool zPos_active = (c.editor.supported_features.level_bgo_z_position == EditorSetup::FeaturesSupport::F_ENABLED);
 
+    bool sp_hide = (c.editor.supported_features.level_bgo_smbx64_sp == EditorSetup::FeaturesSupport::F_HIDDEN);
+    bool sp_active = (c.editor.supported_features.level_bgo_smbx64_sp == EditorSetup::FeaturesSupport::F_ENABLED);
+
     ui->PROPS_BGO_Z_Pos->setEnabled(!en);
     ui->PROPS_BGO_Z_Pos->setVisible(!zLayer_hide || !zPos_hide);
 
@@ -180,6 +183,9 @@ void LvlItemProperties::setSMBX64Strict(bool en)
 
     ui->PROPS_BGO_Z_Offset->setHidden(zPos_hide);
     ui->PROPS_BGO_Z_Offset_label->setHidden(zPos_hide);
+
+    ui->smbx64SpGroup->setHidden(sp_hide);
+    ui->smbx64SpGroup->setEnabled(sp_active);
 }
 /******************Combo boxes*********************************/
 

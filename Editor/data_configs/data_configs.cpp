@@ -228,6 +228,7 @@ bool dataconfigs::loadBasics()
 
         guiset.readEnum("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-bgo-z-position", editor.supported_features.level_bgo_z_position, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-bgo-smbx64-sp", editor.supported_features.level_bgo_smbx64_sp, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
         guiset.readEnum("level-warp-two-way", editor.supported_features.level_warp_two_way, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-portal", editor.supported_features.level_warp_portal, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);

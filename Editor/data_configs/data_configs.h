@@ -109,6 +109,7 @@ struct EditorSetup
 
         State level_bgo_z_layer = F_ENABLED;
         State level_bgo_z_position = F_ENABLED;
+        State level_bgo_smbx64_sp = F_ENABLED;
 
         State level_warp_two_way = F_ENABLED;
         State level_warp_portal = F_ENABLED;
