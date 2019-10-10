@@ -455,9 +455,13 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         else if(!control.compare("checkBox", Qt::CaseInsensitive))
         {
             bool valueDefault = o["value-default"].toBool();
+            bool textVisible = true;
+            if(o.keys().contains("text-visible"))
+                textVisible = o["text-visible"].toBool();
             item = manager->addProperty(QVariant::Bool, title);
             item->setValue(retrieve_property(setupTree, name, valueDefault));
             item->setToolTip(tooltip);
+            item->setAttribute(QLatin1String("textVisible"), textVisible);
             item->setPropertyId(setupTree.getPropertyId(name));
             target->addSubProperty(item);
         }
@@ -657,6 +661,8 @@ QtAbstractPropertyBrowser *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidg
     title = layoutData["title"].toString();
     if(style == "groupbox")
         gui = new QtGroupBoxPropertyBrowser(qobject_cast<QWidget*>(parent()));
+    else if(style == "frame")
+        gui = new QtGroupBoxPropertyBrowser(qobject_cast<QWidget*>(parent()), true);
     else if(style == "button")
         gui = new QtButtonPropertyBrowser(qobject_cast<QWidget*>(parent()));
     else // "tree" is default
