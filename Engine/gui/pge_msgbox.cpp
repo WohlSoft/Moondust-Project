@@ -94,6 +94,11 @@ void PGE_MsgBox::construct(std::string msg,
     PGE_Size boxSize = FontManager::textSize(m_message, m_fontID, 27);
     setBoxSize(boxSize.w() / 2, boxSize.h() / 2, _padding);
 
+    D_pLogDebug("Message box title sizes: %d x %d (len: %zu)\n"
+                "-------------\n"
+                "%s\n"
+                "-------------", boxSize.w(), boxSize.h(), m_message.size(), m_message.c_str());
+
     if((pos.x() == -1) && (pos.y() == -1))
     {
         m_sizeRect.setLeft(static_cast<int>(PGE_Window::Width / 2 - m_width - m_padding));

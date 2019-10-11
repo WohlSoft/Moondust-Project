@@ -271,7 +271,7 @@ PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool 
     uint32_t x = 0;
     for(size_t i = 0; i < text.size(); i++, x++)
     {
-        char &cx = text[i];
+        const char &cx = text[i];
         UTF8 uch = static_cast<unsigned char>(cx);
 
         switch(cx)
@@ -313,33 +313,34 @@ PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool 
         default:
         {
             CharMap::iterator rc = m_charMap.find(get_utf8_char(&cx));
+            bool need_a_ttf = false;
             if(rc != m_charMap.end())
             {
                 RasChar &rch = rc->second;
+                need_a_ttf = !rch.valid;
                 if(rch.valid)
-                {
                     widthSumm += (m_letterWidth - rch.padding_left - rch.padding_right + m_interLetterSpace);
-                }
-                else
-                {
-                    TtfFont *font = reinterpret_cast<TtfFont*>(FontManager::getDefaultTtfFont());
-                    if(font)
-                    {
-                        TtfFont::TheGlyphInfo glyph = font->getGlyphInfo(&cx, m_letterWidth);
-                        widthSumm += glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (m_letterWidth >> 2);
-                    } else {
-                        widthSumm += m_letterWidth + m_interLetterSpace;
-                    }
-                }
-                if(widthSumm > widthSummMax)
-                    widthSummMax = widthSumm;
             }
             else
+                need_a_ttf = true;
+
+            if(need_a_ttf)
             {
-                widthSumm += (m_letterWidth + m_interLetterSpace);
-                if(widthSumm > widthSummMax)
-                    widthSummMax = widthSumm;
+                TtfFont *font = reinterpret_cast<TtfFont*>(FontManager::getDefaultTtfFont());
+                if(font)
+                {
+                    TtfFont::TheGlyphInfo glyph = font->getGlyphInfo(&cx, m_letterWidth);
+                    uint32_t glyph_width = glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (m_letterWidth >> 2);
+                    // Raster fonts are monospace fonts. TTF glyphs shoudn't break mono-width until they are wider than a cell
+                    widthSumm += glyph_width > m_letterWidth ? glyph_width : m_letterWidth;
+                } else {
+                    widthSumm += m_letterWidth + m_interLetterSpace;
+                }
             }
+
+            if(widthSumm > widthSummMax)
+                widthSummMax = widthSumm;
+
             break;
         }
 

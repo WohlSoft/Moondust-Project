@@ -373,9 +373,9 @@ static uint32_t numerusHelper(int32_t n, const uint8_t *rules, uint32_t rulesSiz
 static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const char *context,
                                  const char *sourceText, const char *comment, uint32_t numerus)
 {
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("-----> Try take message...!\n");
-    #endif
+#endif
 
     const uchar *tn = 0;
     uint32_t tn_length = 0;
@@ -423,9 +423,9 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
                 return std::u16string(u"<qm-error 4>");
             if(!match(m, len, sourceText, sourceTextLen))
             {
-                #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("-----> Source text doesn't match!\n");
-                #endif
+#endif
                 return std::u16string();
             }
             m += len;
@@ -441,9 +441,9 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
                 return std::u16string(u"<qm-error 6>");
             if(!match(m, len, context, contextLen))
             {
-                #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("-----> Tag gontext doesn't match!\n");
-                #endif
+#endif
                 return std::u16string();
             }
             m += len;
@@ -463,36 +463,36 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         }
         break;
         default:
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("-----> Wrong tag!\n");
-            #endif
+#endif
             return std::u16string();
         }
     }
 end:
     if(!tn)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("-----> Empty TN!\n");
-        #endif
+#endif
         return std::u16string();
     }
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("-----> Almost got...!\n");
-    #endif
+#endif
 
-    UTF16   *utf16str = reinterpret_cast<UTF16 *>(const_cast<uchar*>(tn));
+    UTF16   *utf16str = reinterpret_cast<UTF16 *>(const_cast<uchar *>(tn));
     size_t  utf16str_len = tn_length / 2;
 
-    #if MACHINE_BYTEORDER == MACHINE_LITTLE_ENDIAN
+#if MACHINE_BYTEORDER == MACHINE_LITTLE_ENDIAN
     std::u16string outStr(reinterpret_cast<char16_t *>(utf16str), utf16str_len);
     char16_t *ustr = &outStr[0];
     for(uint32_t i = 0; i < utf16str_len; i++)
         ustr[i] = ((ustr[i] >> 8) & 0x00FF) + ((ustr[i] << 8) & 0xFF00);
     return outStr;
-    #else
+#else
     return std::u16string((char16_t *)utf16str, utf16str_len);
-    #endif
+#endif
 }
 
 
@@ -521,9 +521,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
 
     if(!m_offsetLength)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> ZERO OFFSETS LENGTH!");
-        #endif
+#endif
         goto searchDependencies;
     }
 
@@ -533,9 +533,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
     */
     if(m_contextLength)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> Finding contexts...!");
-        #endif
+#endif
         uint16_t hTableSize = read16be(m_contextArray);
         uint32_t g = elfHash(context) % hTableSize;
         const uint8_t *c = m_contextArray + 2 + (g << 1);
@@ -543,9 +543,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
         c += 2;
         if(off == 0)
         {
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("--> Zero offset...!\n");
-            #endif
+#endif
             return std::u16string();
         }
         c = m_contextArray + (2 + (hTableSize << 1) + (off << 1));
@@ -556,9 +556,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
             uint8_t len = read8(c++);
             if(len == 0)
             {
-                #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("--> Zero length...!\n");
-                #endif
+#endif
                 return std::u16string();
             }
             if(match(c, len, context, contextLen))
@@ -568,17 +568,17 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
     }
     else
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> Contexts are empty!\n");
-        #endif
+#endif
     }
 
     numItems = m_offsetLength / (2 * sizeof(unsigned));
     if(!numItems)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> NO ITEMS!\n");
-        #endif
+#endif
         goto searchDependencies;
     }
 
@@ -634,9 +634,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
         comment = "";
     }
 
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("--> Nothing found!\n");
-    #endif
+#endif
 
 searchDependencies:
     for(QmTranslatorX *translator : m_subTranslators)
@@ -652,18 +652,23 @@ std::string QmTranslatorX::do_translate8(const char *context, const char *source
 {
     std::u16string str  = do_translate(context, sourceText, comment, n);
     size_t utf16len    = str.size();
-    size_t utf8bytelen = str.size() * sizeof(char16_t) + 1;
-    char *utf8str = reinterpret_cast<char *>(std::malloc(utf8bytelen));
-    std::memset(utf8str, 0, utf8bytelen);
+    size_t utf8bytelen = str.size() * sizeof(char32_t) + 1;
+    unsigned long utf8FinalLen = 0;
+    std::string outstr;
+    outstr.resize(utf8bytelen);
+    char *utf8str = &outstr[0];
+
     if(utf16len > 0)
     {
         const UTF16 *pUtf16 = reinterpret_cast<const UTF16 *>(str.data());
         UTF8  *pUtf8  = reinterpret_cast<UTF8 *>(utf8str);
         ConvertUTF16toUTF8(&pUtf16, pUtf16 + utf16len,
-                           &pUtf8,  pUtf8 + utf8bytelen, lenientConversion);
+                           &pUtf8,  pUtf8 + utf8bytelen, lenientConversion, &utf8FinalLen);
+        utf8str[static_cast<size_t>(utf8FinalLen)] = '\0';
+        assert(utf8FinalLen < utf8bytelen);
+        outstr.resize(static_cast<size_t>(utf8FinalLen));
     }
-    std::string outstr(utf8str);
-    std::free(utf8str);
+
     return outstr;
 }
 
@@ -671,19 +676,23 @@ std::u32string QmTranslatorX::do_translate32(const char *context, const char *so
 {
     std::u16string str = do_translate(context, sourceText, comment, n);
     size_t utf16len = str.size();
-    size_t utf32len = str.size() + 1;
-    size_t utf32bytelen = utf32len * sizeof(char32_t);
-    char32_t *utf32str = reinterpret_cast<char32_t *>(std::malloc(utf32bytelen));
-    std::memset(utf32str, 0, utf32bytelen);
+    size_t utf32len = str.size();
+    unsigned long utf32FinalLen = 0;
+    std::u32string outstr;
+    outstr.resize(utf32len + 1);
+    char32_t *utf32str = &outstr[0];
+
     if(utf16len > 0)
     {
         const UTF16 *pUtf16 =  reinterpret_cast<const UTF16 *>(str.data());
         UTF32 *pUtf32  = reinterpret_cast<UTF32 *>(utf32str);
         ConvertUTF16toUTF32(&pUtf16, pUtf16 + utf16len,
-                            &pUtf32, pUtf32 + utf32len, lenientConversion);
+                            &pUtf32, pUtf32 + utf32len, lenientConversion, &utf32FinalLen);
+        outstr[utf32FinalLen] = 0;
     }
-    std::u32string outstr(utf32str);
-    std::free(utf32str);
+
+    outstr.resize(utf32FinalLen);
+
     return outstr;
 }
 
@@ -695,9 +704,9 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     if(m_fileData)
         close();
 
-    #ifndef _WIN32
+#ifndef _WIN32
     FILE *file = std::fopen(filePath, "rb");
-    #else
+#else
     wchar_t filePathW[MAX_PATH + 1];
     {
         size_t utf8len  = std::strlen(filePath);
@@ -708,7 +717,7 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
         filePathW[utf16len] = L'\0';
     }
     FILE *file = _wfopen(filePathW, L"rb");
-    #endif
+#endif
     if(!file)
         return false;//err("Can't open file!", 2);
 
@@ -787,33 +796,33 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
         {
             m_contextArray = data;
             m_contextLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has contexts array!\n");
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::Hashes)
         {
             m_offsetArray = data;
             m_offsetLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has hashes! %i\n", offsetLength);
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::Messages)
         {
             m_messageArray = data;
             m_messageLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has messages! %i\n", messageLength);
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::NumerusRules)
         {
             m_numerusRulesArray = data;
             m_numerusRulesLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has numerus rules! %i\n", numerusRulesLength);
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::Dependencies)
         {
@@ -830,9 +839,9 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
                 //Avoid infinite loop if got len is zero or larger than left bytes block
                 if((gotLen == 0) || (gotLen > blockLen))
                 {
-                    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                     printf("Dependencies tag loop: INFINITE LOOP DETECTED!\n");
-                    #endif
+#endif
                     break;
                 }
 
@@ -841,15 +850,15 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
                 {
                     //List of dependent files
                     dependencies.push_back(dep);
-                    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                     printf("Dependency: %s\n", dep.c_str());
-                    #endif
+#endif
                 }
                 blockLen -= gotLen;
             }
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Had deps!\n");
-            #endif
+#endif
         }
         data += blockLen;
     }
@@ -857,16 +866,16 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
     if(dependencies.empty() && (!m_offsetArray || !m_messageArray))
         ok = false;
 
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("Dependencies valid: %i\n", ok);
-    #endif
+#endif
 
     if(ok && !isValidNumerusRules(m_numerusRulesArray, m_numerusRulesLength))
         ok = false;
 
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("Numerus rules valid: %i\n", ok);
-    #endif
+#endif
 
     //Process loading of sub-translators
     if(ok)
@@ -901,16 +910,16 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
         m_contextLength   = 0;
         m_offsetLength    = 0;
         m_numerusRulesLength = 0;
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("LOADING FAILED!\n");
-        #endif
+#endif
         return false;
     }
     else
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("LOADING PASSED!\n");
-        #endif
+#endif
         return true;
     }
 }
