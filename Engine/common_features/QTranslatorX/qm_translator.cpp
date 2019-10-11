@@ -662,7 +662,7 @@ std::string QmTranslatorX::do_translate8(const char *context, const char *source
     {
         const UTF16 *pUtf16 = reinterpret_cast<const UTF16 *>(str.data());
         UTF8  *pUtf8  = reinterpret_cast<UTF8 *>(utf8str);
-        ConvertUTF16toUTF8(&pUtf16, pUtf16 + utf16len,
+        qmTr_ConvertUTF16toUTF8(&pUtf16, pUtf16 + utf16len,
                            &pUtf8,  pUtf8 + utf8bytelen, lenientConversion, &utf8FinalLen);
         utf8str[static_cast<size_t>(utf8FinalLen)] = '\0';
         assert(utf8FinalLen < utf8bytelen);
@@ -686,7 +686,7 @@ std::u32string QmTranslatorX::do_translate32(const char *context, const char *so
     {
         const UTF16 *pUtf16 =  reinterpret_cast<const UTF16 *>(str.data());
         UTF32 *pUtf32  = reinterpret_cast<UTF32 *>(utf32str);
-        ConvertUTF16toUTF32(&pUtf16, pUtf16 + utf16len,
+        qmTr_ConvertUTF16toUTF32(&pUtf16, pUtf16 + utf16len,
                             &pUtf32, pUtf32 + utf32len, lenientConversion, &utf32FinalLen);
         outstr[utf32FinalLen] = 0;
     }
