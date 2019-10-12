@@ -107,7 +107,6 @@ list(APPEND PGE_ENGINE_SRCS
     common_features/point.cpp
     common_features/pointf.cpp
     common_features/point_mover.cpp
-    common_features/QTranslatorX/ConvertUTF.c
     common_features/QTranslatorX/qm_translator.cpp
     common_features/QuadTree/LooseQuadtree-impl.cpp
     common_features/rect.cpp

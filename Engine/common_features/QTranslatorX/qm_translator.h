@@ -86,6 +86,7 @@ public:
     bool loadData(const uint8_t *data, size_t len, uint8_t *directory = nullptr);
     bool isEmpty();
     void close();
+
 private:
     bool loadDataPrivate(uint8_t *data, size_t len, uint8_t *directory = nullptr);
 };

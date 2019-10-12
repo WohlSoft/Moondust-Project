@@ -58,13 +58,299 @@
 #endif
 
 #include "qm_translator.h"
-#include "ConvertUTF.h"
+
+
+/* ---------------- UTF converters ------------------*/
+
+/*
+ * Copyright 2001-2004 Unicode, Inc.
+ *
+ * Disclaimer
+ *
+ * This source code is provided as is by Unicode, Inc. No claims are
+ * made as to fitness for any particular purpose. No warranties of any
+ * kind are expressed or implied. The recipient agrees to determine
+ * applicability of information provided. If this file has been
+ * purchased on magnetic or optical media from Unicode, Inc., the
+ * sole remedy for any claim will be exchange of defective media
+ * within 90 days of receipt.
+ *
+ * Limitations on Rights to Redistribute This Code
+ *
+ * Unicode, Inc. hereby grants the right to freely use the information
+ * supplied in this file in the creation of products supporting the
+ * Unicode Standard, and to make copies of this file in any form
+ * for internal or external distribution as long as this notice
+ * remains attached.
+ */
+
+typedef uint32_t  UTF32;  /* at least 32 bits */
+typedef uint16_t  UTF16;  /* at least 16 bits */
+typedef uint8_t   UTF8;   /* typically 8 bits */
+
+/* Some fundamental constants */
+#define UNI_REPLACEMENT_CHAR static_cast<UTF32>(0x0000FFFDu)
+#define UNI_MAX_BMP          static_cast<UTF32>(0x0000FFFFu)
+#define UNI_MAX_UTF16        static_cast<UTF32>(0x0010FFFFu)
+#define UNI_MAX_UTF32        static_cast<UTF32>(0x7FFFFFFFu)
+#define UNI_MAX_LEGAL_UTF32  static_cast<UTF32>(0x0010FFFFu)
+
+typedef enum
+{
+    conversionOK,       /* conversion successful */
+    sourceExhausted,    /* partial character in source, but hit end */
+    targetExhausted,    /* insuff. room in target for conversion */
+    sourceIllegal       /* source sequence is illegal/malformed */
+} qmTrConversionResult;
+
+typedef enum
+{
+    strictConversion = 0,
+    lenientConversion
+} qmTrConversionFlags;
+
+static const int   g_halfShift  = 10; /* used for shifting by 10 bits */
+
+static const UTF32 g_halfBase = 0x0010000UL;
+static const UTF32 g_halfMask = 0x3FFUL;
+
+#define UNI_SUR_HIGH_START  static_cast<UTF32>(0xD800u)
+#define UNI_SUR_HIGH_END    static_cast<UTF32>(0xDBFFu)
+#define UNI_SUR_LOW_START   static_cast<UTF32>(0xDC00u)
+#define UNI_SUR_LOW_END     static_cast<UTF32>(0xDFFFu)
+
+/*
+ * Once the bits are split out into bytes of UTF-8, this is a mask OR-ed
+ * into the first byte, depending on how many bytes follow.  There are
+ * as many entries in this table as there are UTF-8 sequence types.
+ * (I.e., one byte sequence, two byte... etc.). Remember that sequencs
+ * for *legal* UTF-8 will be 4 or fewer bytes total.
+ */
+static const UTF8 g_utf_firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };
+
+/* The interface converts a whole buffer to avoid function-call overhead.
+ * Constants have been gathered. Loops & conditionals have been removed as
+ * much as possible for efficiency, in favor of drop-through switches.
+ * (See "Note A" at the bottom of the file for equivalent code.)
+ * If your compiler supports it, the "isLegalUTF8" call can be turned
+ * into an inline function.
+ */
+static qmTrConversionResult qmTr_ConvertUTF16toUTF8(
+    const std::u16string &sourceStr,
+    std::string &targetStr,
+    qmTrConversionFlags flags
+)
+{
+    qmTrConversionResult result = conversionOK;
+    const UTF16 *source;
+    const UTF16 *sourceEnd;
+    UTF8 *targetStart;
+    UTF8 *target;
+    UTF8 *targetEnd;
+    size_t writeLength = 0;
+
+    if(sourceStr.empty())
+        return result;
+
+    targetStr.clear();
+    targetStr.resize(sourceStr.size() * sizeof(char32_t) + 1);
+
+    source = reinterpret_cast<const UTF16*>(sourceStr.data());
+    sourceEnd = source + sourceStr.size();
+    target = reinterpret_cast<UTF8*>(&targetStr[0]);
+    targetStart = target;
+    targetEnd = target + targetStr.size();
+
+    while(source < sourceEnd)
+    {
+        UTF32 ch;
+        unsigned short bytesToWrite = 0;
+        const UTF32 byteMask = 0xBF;
+        const UTF32 byteMark = 0x80;
+        const UTF16 *oldSource = source; /* In case we have to back up because of target overflow. */
+        ch = *source++;
+        /* If we have a surrogate pair, convert to UTF32 first. */
+        if(ch >= UNI_SUR_HIGH_START && ch <= UNI_SUR_HIGH_END)
+        {
+            /* If the 16 bits following the high surrogate are in the source buffer... */
+            if(source < sourceEnd)
+            {
+                UTF32 ch2 = *source;
+                /* If it's a low surrogate, convert to UTF32. */
+                if(ch2 >= UNI_SUR_LOW_START && ch2 <= UNI_SUR_LOW_END)
+                {
+                    ch = ((ch - UNI_SUR_HIGH_START) << g_halfShift)
+                         + (ch2 - UNI_SUR_LOW_START) + g_halfBase;
+                    ++source;
+                }
+                else if(flags == strictConversion)      /* it's an unpaired high surrogate */
+                {
+                    --source; /* return to the illegal value itself */
+                    result = sourceIllegal;
+                    break;
+                }
+            }
+            else
+            {
+                /* We don't have the 16 bits following the high surrogate. */
+                --source; /* return to the high surrogate */
+                result = sourceExhausted;
+                break;
+            }
+        }
+        else if(flags == strictConversion)
+        {
+            /* UTF-16 surrogate values are illegal in UTF-32 */
+            if(ch >= UNI_SUR_LOW_START && ch <= UNI_SUR_LOW_END)
+            {
+                --source; /* return to the illegal value itself */
+                result = sourceIllegal;
+                break;
+            }
+        }
+        /* Figure out how many bytes the result will require */
+        if(ch < (UTF32)0x80)
+            bytesToWrite = 1;
+        else if(ch < (UTF32)0x800)
+            bytesToWrite = 2;
+        else if(ch < (UTF32)0x10000)
+            bytesToWrite = 3;
+        else if(ch < (UTF32)0x110000)
+            bytesToWrite = 4;
+        else
+        {
+            bytesToWrite = 3;
+            ch = UNI_REPLACEMENT_CHAR;
+        }
+
+        target += bytesToWrite;
+        if(target >= targetEnd)
+        {
+            source = oldSource; /* Back up source pointer! */
+            target -= bytesToWrite;
+            result = targetExhausted;
+            break;
+        }
+        switch(bytesToWrite)    /* note: everything falls through. */
+        {
+        case 4: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
+        case 3: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
+        case 2: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
+        case 1: *--target = (UTF8)(ch | g_utf_firstByteMark[bytesToWrite]);  /*fallthrough*/
+        }
+        target += bytesToWrite;
+    }
+
+    writeLength = static_cast<size_t>(target - targetStart);
+
+    targetStr[writeLength] = '\0';
+    targetStr.resize(writeLength);
+
+    return result;
+}
+
+
+static qmTrConversionResult qmTr_ConvertUTF16toUTF32(
+    const std::u16string &sourceStr,
+    std::u32string &targetStr,
+    qmTrConversionFlags flags
+)
+{
+    qmTrConversionResult result = conversionOK;
+    const UTF16 *source;
+    const UTF16 *sourceEnd;
+    UTF32 *targetStart;
+    UTF32 *target;
+    UTF32 *targetEnd;
+    UTF32 ch, ch2;
+    size_t writeLength = 0;
+
+    if(sourceStr.empty())
+        return result;
+
+    targetStr.clear();
+    targetStr.resize(sourceStr.size() * sizeof(char32_t) + 1);
+
+    source = reinterpret_cast<const UTF16*>(sourceStr.data());
+    sourceEnd = source + sourceStr.size();
+    target = reinterpret_cast<UTF32*>(&targetStr[0]);
+    targetStart = target;
+    targetEnd = target + targetStr.size();
+
+    while(source < sourceEnd)
+    {
+        const UTF16 *oldSource = source; /*  In case we have to back up because of target overflow. */
+        ch = *source++;
+        /* If we have a surrogate pair, convert to UTF32 first. */
+        if(ch >= UNI_SUR_HIGH_START && ch <= UNI_SUR_HIGH_END)
+        {
+            /* If the 16 bits following the high surrogate are in the source buffer... */
+            if(source < sourceEnd)
+            {
+                ch2 = *source;
+                /* If it's a low surrogate, convert to UTF32. */
+                if(ch2 >= UNI_SUR_LOW_START && ch2 <= UNI_SUR_LOW_END)
+                {
+                    ch = ((ch - UNI_SUR_HIGH_START) << g_halfShift)
+                         + (ch2 - UNI_SUR_LOW_START) + g_halfBase;
+                    ++source;
+                }
+                else if(flags == strictConversion)      /* it's an unpaired high surrogate */
+                {
+                    --source; /* return to the illegal value itself */
+                    result = sourceIllegal;
+                    break;
+                }
+            }
+            else     /* We don't have the 16 bits following the high surrogate. */
+            {
+                --source; /* return to the high surrogate */
+                result = sourceExhausted;
+                break;
+            }
+        }
+        else if(flags == strictConversion)
+        {
+            /* UTF-16 surrogate values are illegal in UTF-32 */
+            if(ch >= UNI_SUR_LOW_START && ch <= UNI_SUR_LOW_END)
+            {
+                --source; /* return to the illegal value itself */
+                result = sourceIllegal;
+                break;
+            }
+        }
+        if(target >= targetEnd)
+        {
+            source = oldSource; /* Back up source pointer! */
+            result = targetExhausted;
+            break;
+        }
+        *target++ = ch;
+    }
+
+    writeLength = static_cast<size_t>(target - targetStart);
+
+    targetStr[writeLength] = 0;
+    targetStr.resize(writeLength);
+
+#ifdef CVTUTF_DEBUG
+    if(result == sourceIllegal)
+    {
+        fprintf(stderr, "ConvertUTF16toUTF32 illegal seq 0x%04x,%04x\n", ch, ch2);
+        fflush(stderr);
+    }
+#endif
+
+    return result;
+}
+
+/* ---------------- UTF converters --END-------------*/
 
 typedef uint8_t     uchar;
 
 //magic number for the file
-static const int32_t MagicLength = 16;
-static const uint8_t magic[MagicLength] =
+static const int32_t g_qm_magicLength = 16;
+static const uint8_t g_qm_magic[g_qm_magicLength] =
 {
     0x3c, 0xb8, 0x64, 0x18, 0xca, 0xef, 0x9c, 0x95,
     0xcd, 0x21, 0x1c, 0xbf, 0x60, 0xa1, 0xbd, 0xdd
@@ -651,23 +937,9 @@ searchDependencies:
 std::string QmTranslatorX::do_translate8(const char *context, const char *sourceText, const char *comment, int32_t n)
 {
     std::u16string str  = do_translate(context, sourceText, comment, n);
-    size_t utf16len    = str.size();
-    size_t utf8bytelen = str.size() * sizeof(char32_t) + 1;
-    unsigned long utf8FinalLen = 0;
     std::string outstr;
-    outstr.resize(utf8bytelen);
-    char *utf8str = &outstr[0];
 
-    if(utf16len > 0)
-    {
-        const UTF16 *pUtf16 = reinterpret_cast<const UTF16 *>(str.data());
-        UTF8  *pUtf8  = reinterpret_cast<UTF8 *>(utf8str);
-        qmTr_ConvertUTF16toUTF8(&pUtf16, pUtf16 + utf16len,
-                           &pUtf8,  pUtf8 + utf8bytelen, lenientConversion, &utf8FinalLen);
-        utf8str[static_cast<size_t>(utf8FinalLen)] = '\0';
-        assert(utf8FinalLen < utf8bytelen);
-        outstr.resize(static_cast<size_t>(utf8FinalLen));
-    }
+    qmTr_ConvertUTF16toUTF8(str, outstr, lenientConversion);
 
     return outstr;
 }
@@ -675,30 +947,16 @@ std::string QmTranslatorX::do_translate8(const char *context, const char *source
 std::u32string QmTranslatorX::do_translate32(const char *context, const char *sourceText, const char *comment, int32_t n)
 {
     std::u16string str = do_translate(context, sourceText, comment, n);
-    size_t utf16len = str.size();
-    size_t utf32len = str.size();
-    unsigned long utf32FinalLen = 0;
     std::u32string outstr;
-    outstr.resize(utf32len + 1);
-    char32_t *utf32str = &outstr[0];
 
-    if(utf16len > 0)
-    {
-        const UTF16 *pUtf16 =  reinterpret_cast<const UTF16 *>(str.data());
-        UTF32 *pUtf32  = reinterpret_cast<UTF32 *>(utf32str);
-        qmTr_ConvertUTF16toUTF32(&pUtf16, pUtf16 + utf16len,
-                            &pUtf32, pUtf32 + utf32len, lenientConversion, &utf32FinalLen);
-        outstr[utf32FinalLen] = 0;
-    }
-
-    outstr.resize(utf32FinalLen);
+    qmTr_ConvertUTF16toUTF32(str, outstr, lenientConversion);
 
     return outstr;
 }
 
 bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
 {
-    uint8_t magicBuffer[MagicLength];
+    uint8_t magicBuffer[g_qm_magicLength];
     size_t  fileGotLen = 0;
 
     if(m_fileData)
@@ -721,13 +979,13 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
     if(!file)
         return false;//err("Can't open file!", 2);
 
-    if(std::fread(magicBuffer, 1, MagicLength, file) < MagicLength)
+    if(std::fread(magicBuffer, 1, g_qm_magicLength, file) < g_qm_magicLength)
     {
         std::fclose(file);
         return false;//err("ERROR READING MAGIC NUMBER!!!", 3);
     }
 
-    if(std::memcmp(magicBuffer, magic, MagicLength) != 0)
+    if(std::memcmp(magicBuffer, g_qm_magic, g_qm_magicLength) != 0)
     {
         std::fclose(file);
         return false;//err("MAGIC NUMBER DOESN'T CASE!", 4);
@@ -778,7 +1036,7 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
     bool ok = true;
     const uint8_t *end = data + len;
 
-    data += MagicLength;
+    data += g_qm_magicLength;
     while(data < end - 4)
     {
         uint8_t  tag = read8(data++);
