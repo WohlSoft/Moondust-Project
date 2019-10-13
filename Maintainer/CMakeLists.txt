@@ -151,7 +151,7 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_maintainer PROPERTIES LINK_FLAGS "-mwindows")
+        set_target_properties(pge_maintainer PROPERTIES WIN32_EXECUTABLE ON)
         if(NOT PGE_ENABLE_STATIC_QT)
             list(APPEND PGE_MAINTAINER_LINK_LIBS "-static")
         endif()

@@ -14,6 +14,7 @@ flag_cmake_it_ninja=false
 flag_cmake_deploy=false
 flag_cmake_static_qt=false
 flag_debug_build=false
+flag_portable=false
 
 for var in "$@"
 do
@@ -46,7 +47,8 @@ do
                 printf " \E[0;4;44;37m<To use LDoc you need to build the project first!>\E[0m\n"
             fi
 
-            printf " \E[1;4mpack-src\E[0m         - Create the source code archive (git-archive-all is required!)'\n"
+            printf " \E[1;4mpack-src\E[0m         - Create the source code archive\n"
+            printf "                    (git-archive-all is required!)\n"
             if [[ "$(which git-archive-all)" == "" ]]; then
                 printf " \E[0;4;41;37m<git-archive-all is not installed!>\E[0m\n"
             fi
@@ -62,7 +64,7 @@ do
                 printf " \E[0;4;41;37m<ninja is not installed!>\E[0m\n"
             fi
 
-            printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed (CMake only build)'\n"
+            printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed'\n"
             printf " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
             if [[ "$(which ccache)" == "" ]]; then
                 printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
@@ -76,11 +78,20 @@ do
             printf "\n"
             echo ""
 
+            echo "--- Deployment options ---"
+            printf " \E[1;4mportable\E[0m         - Deploy a portable installation that will don't store\n"
+            printf "                    settings, logs, and game saves in system or home directory.\n"
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                printf " \E[0;4;44;37m<Not supported on macOS, this option will take no effect>\E[0m\n"
+            fi
+            printf "\n"
+            echo ""
+
             echo "--- Disable building of components ---"
             printf " \E[1;4mnoqt\E[0m             - Skip building of components are using Qt\n"
             printf " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment (Qt5)\n"
             printf " \E[1;4mnoengine\E[0m         - Skip building of PGE Engine compoment (SDL2)\n"
-            printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment (Qt5)\n"
+            printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator (Qt5)\n"
             printf " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment (Qt5)\n"
             printf " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment (Qt5)\n"
             printf " \E[1;4mnomusicplayer\E[0m    - Skip building of PGE MusPlay compoment (Qt5)\n"
@@ -90,12 +101,14 @@ do
             echo ""
 
             echo "--- Special ---"
-            printf " \E[1;4mdebug-script\E[0m      - Show some extra information to debug this script\n"
+            printf " \E[1;4mdebug-script\E[0m     - Show some extra information to debug this script\n"
             echo ""
 
             echo "--- For fun ---"
-            printf " \E[1;4mcolors\E[0m           - Prints various blocks of different color with showing their codes\n"
-            printf " \E[1;4mcool\E[0m             - Prints some strings inside the lines (test of printLine command)\n"
+            printf " \E[1;4mcolors\E[0m           - Prints various blocks of different color\n"
+            printf "                    with showing their codes\n"
+            printf " \E[1;4mcool\E[0m             - Prints some strings inside the lines\n"
+            printf "                    (test of printLine command)\n"
             echo ""
 
             #printf "==== \e[43mIMPORTANT!\e[0m ====\n"
@@ -129,6 +142,9 @@ do
             ;;
         deploy)
                 flag_cmake_deploy=true
+            ;;
+        portable)
+                flag_portable=true
             ;;
         static-qt)
                 flag_cmake_static_qt=true
@@ -493,7 +509,7 @@ if ${flag_cmake_deploy} ; then
     echo "Deploying..."
     cmake --build . --target put_online_help
     checkState
-    if [[ "$OSTYPE" != "darwin"* ]]; then
+    if [[ ${flag_portable} == true && "$OSTYPE" != "darwin"* ]]; then
         cmake --build . --target enable_portable
         checkState
     fi

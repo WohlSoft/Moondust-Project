@@ -577,7 +577,7 @@ else()
 endif()
 
 if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT)
-    set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+    set_property(TARGET pge_editor APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
 endif()
 
 if(WIN32)
@@ -586,7 +586,7 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-mwindows")
+        set_target_properties(pge_editor PROPERTIES WIN32_EXECUTABLE ON)
         if(NOT PGE_ENABLE_STATIC_QT)
             list(APPEND PGE_EDITOR_LINK_LIBS "-static")
         endif()

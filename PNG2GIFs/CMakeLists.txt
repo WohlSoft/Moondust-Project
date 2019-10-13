@@ -89,12 +89,12 @@ list(APPEND PNG2GIFs_INSTALLS
 )
 
 if(NOT APPLE AND NOT MSVC)
-    set_target_properties(PNG2GIFs PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+    set_property(TARGET PNG2GIFs APPEND_STRING PROPERTY LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(PNG2GIFs PROPERTIES LINK_FLAGS "-mconsole")
+        set_target_properties(PNG2GIFs PROPERTIES WIN32_EXECUTABLE OFF)
         list(APPEND PNG2GIFs_LINK_LIBS "-static")
     endif()
     find_library(_LIB_PTHREAD pthread)

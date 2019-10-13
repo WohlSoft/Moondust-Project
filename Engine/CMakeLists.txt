@@ -3,7 +3,7 @@ project(MoondustEngine C CXX)
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
-SET(BUILD_SHARED_LIBRARIES OFF)
+set(BUILD_SHARED_LIBRARIES OFF)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -435,7 +435,7 @@ else()
 endif()
 
 if(NOT APPLE AND NOT MSVC)
-	set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+    set_property(TARGET pge_engine APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
 endif()
 
 if(ANDROID)
@@ -446,7 +446,8 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC AND NOT ANDROID)
     if(WIN32)
-        set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-mconsole")
+#        set_property(TARGET pge_engine APPEND_STRING PROPERTY LINK_FLAGS " -mconsole")
+        set_target_properties(pge_engine PROPERTIES WIN32_EXECUTABLE OFF)
         list(APPEND PGE_ENGINE_LINK_LIBS "-static")
     endif()
     find_library(_LIB_PTHREAD pthread)
@@ -476,8 +477,8 @@ if(APPLE)
     if(PGE_USE_LUAJIT)
         # Required to link on 64-bit macOS
         # See: http://luajit.org/install.html
-        set_target_properties(pge_engine PROPERTIES
-            LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
+        set_property(TARGET pge_engine APPEND_STRING PROPERTY
+            LINK_FLAGS " -pagezero_size 10000 -image_base 100000000"
         )
     endif()
 endif()
