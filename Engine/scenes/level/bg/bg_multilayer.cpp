@@ -183,8 +183,8 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
 
         const double  sWidth    = box.width();
         const double  sHeight   = box.height();
-        const double  fWidth     = static_cast<double>(layer.texture.frame_w) + layer.setup.margin_x_right + layer.setup.margin_x_left + layer.setup.padding_horizontal;
-        const double  fHeight    = static_cast<double>(layer.texture.frame_h) + layer.setup.margin_y_bottom + layer.setup.margin_y_top + layer.setup.padding_vertical;
+        const double  fWidth    = static_cast<double>(layer.texture.frame_w) + layer.setup.margin_x_right + layer.setup.margin_x_left + layer.setup.padding_horizontal;
+        const double  fHeight   = static_cast<double>(layer.texture.frame_h) + layer.setup.margin_y_bottom + layer.setup.margin_y_top + layer.setup.padding_vertical;
 
         double      pointX = x;
         double      pointY = y;
