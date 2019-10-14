@@ -78,8 +78,8 @@ void LevelScene::process_InterprocessCommands()
                     obj_block &bl = ConfigManager::lvl_block_indexes[m_placingMode_block.id];
                     m_placingMode_animated = bl.setup.animated;
                     m_placingMode_animatorID = bl.animator_ID;
-                    m_placingMode_drawSize.setX(m_placingMode_texture.w);
-                    m_placingMode_drawSize.setY(m_placingMode_texture.h / static_cast<int>(bl.setup.frames));
+                    m_placingMode_drawSize.setX(m_placingMode_texture.frame_w);
+                    m_placingMode_drawSize.setY(m_placingMode_texture.frame_h);
                 }
             }
             else if(raw.compare(0, 9, "BGO_PLACE") == 0)
@@ -96,8 +96,8 @@ void LevelScene::process_InterprocessCommands()
                     obj_bgo &bg = ConfigManager::lvl_bgo_indexes[m_placingMode_bgo.id];
                     m_placingMode_animated = bg.setup.animated;
                     m_placingMode_animatorID = bg.animator_ID;
-                    m_placingMode_drawSize.setX(m_placingMode_texture.w);
-                    m_placingMode_drawSize.setY(m_placingMode_texture.h);
+                    m_placingMode_drawSize.setX(m_placingMode_texture.frame_w);
+                    m_placingMode_drawSize.setY(m_placingMode_texture.frame_h);
                 }
             }
             else if(raw.compare(0, 9, "NPC_PLACE") == 0)
@@ -189,7 +189,10 @@ void LevelScene::drawPlacingItem()
         break;
 
     case 2:
-        if(m_placingMode_animated) x = ConfigManager::Animator_NPC[m_placingMode_animatorID].image(m_placingMode_npc.direct);
+        if(m_placingMode_animated)
+            x = ConfigManager::Animator_NPC[m_placingMode_animatorID].image(m_placingMode_npc.direct);
+        else
+            x = AniPos(0, m_placingMode_drawSize.y() / m_placingMode_texture.h);
 
         d = m_placingMode_npc.direct;
 

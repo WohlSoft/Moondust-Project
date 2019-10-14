@@ -536,7 +536,11 @@ void AdvNpcAnimator::createAnimationFrames()
 {
     m_frames.clear();
     for(int i = 0; (m_frameHeight * i < m_spriteHeight); i++)
-        m_frames.push_back(AniPos((m_frameHeight * i) / m_spriteHeight, (m_frameHeight * i + m_frameHeight) / m_spriteHeight));
+    {
+        double ani_t = (m_frameHeight * i) / m_spriteHeight;
+        double ani_b = (m_frameHeight * i + m_frameHeight) / m_spriteHeight;
+        m_frames.push_back(AniPos(ani_t, ani_b));
+    }
 }
 
 int AdvNpcAnimator::getFrameNumL(int num)
