@@ -270,7 +270,7 @@ int main(int argc, char *argv[])
                 "path to a directory where the converted images will be saved",
                 false, "", "/path/to/output/directory/");
         TCLAP::UnlabeledMultiArg<std::string> inputFileNames("filePath(s)",
-                "Input GIF file(s)",
+                "Input PNG file(s)",
                 true,
                 "Input file path(s)");
 
