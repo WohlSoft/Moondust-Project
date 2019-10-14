@@ -88,7 +88,7 @@ list(APPEND LazyFixTool_INSTALLS
     LazyFixTool
 )
 
-if(NOT APPLE AND NOT MSVC)
+if(NOT APPLE AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
     set_property(TARGET LazyFixTool APPEND_STRING PROPERTY LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 

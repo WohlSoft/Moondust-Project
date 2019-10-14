@@ -434,7 +434,7 @@ else()
     list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
 
-if(NOT APPLE AND NOT MSVC)
+if(NOT APPLE AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
     set_property(TARGET pge_engine APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
 endif()
 

@@ -89,7 +89,7 @@ list(APPEND GIFs2PNG_INSTALLS
     GIFs2PNG
 )
 
-if(NOT APPLE AND NOT MSVC)
+if(NOT APPLE AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
     set_property(TARGET GIFs2PNG APPEND_STRING PROPERTY LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 

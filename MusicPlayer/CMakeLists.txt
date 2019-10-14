@@ -181,7 +181,7 @@ else()
     endif()
 endif()
 
-if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT)
+if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT AND NOT USE_SYSTEM_LIBC)
     set_property(TARGET pge_musplay APPEND_STRING PROPERTY LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 

@@ -109,6 +109,8 @@ if(ANDROID)
     )
 endif()
 
+option(USE_SYSTEM_LIBC "Don't link libc and libstdc++ statically and use directly from the system" OFF)
+
 # Dependent libraries
 include(_common/library_libpng.cmake)
 include(_common/library_sqlite.cmake)
