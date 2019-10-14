@@ -470,7 +470,7 @@ bool WorldEdit::maybeSave()
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(userFriendlyCurrentFile() + tr(" not saved"));
-        QLineEdit *wldNameBox = new QLineEdit();
+        QLineEdit *wldNameBox = new QLineEdit(sav);
         sav->addUserItem(tr("World title:"), wldNameBox);
         sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);

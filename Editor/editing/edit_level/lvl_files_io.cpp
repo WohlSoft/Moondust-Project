@@ -111,8 +111,8 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
         util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
-        QLineEdit *lvlNameBox = new QLineEdit();
-        QCheckBox *mkDirCustom = new QCheckBox();
+        QLineEdit *lvlNameBox = new QLineEdit(sav);
+        QCheckBox *mkDirCustom = new QCheckBox(sav);
         mkDirCustom->setText(QString(""));
         sav->addUserItem(tr("Level title: "), lvlNameBox);
         sav->addUserItem(tr("Make custom folder"), mkDirCustom);
