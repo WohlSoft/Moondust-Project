@@ -4,22 +4,22 @@
 <context>
     <name></name>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="242"/>
+        <location filename="../gui/pge_msgbox.cpp" line="247"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="257"/>
+        <location filename="../gui/pge_msgbox.cpp" line="262"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="272"/>
+        <location filename="../gui/pge_msgbox.cpp" line="277"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="287"/>
+        <location filename="../gui/pge_msgbox.cpp" line="292"/>
         <source>Fatal error</source>
         <translation>错误</translation>
     </message>

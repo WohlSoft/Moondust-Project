@@ -524,22 +524,22 @@ Software renderer will be started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="242"/>
+        <location filename="../gui/pge_msgbox.cpp" line="247"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="257"/>
+        <location filename="../gui/pge_msgbox.cpp" line="262"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="272"/>
+        <location filename="../gui/pge_msgbox.cpp" line="277"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="287"/>
+        <location filename="../gui/pge_msgbox.cpp" line="292"/>
         <source>Fatal error</source>
         <translation type="unfinished"></translation>
     </message>
