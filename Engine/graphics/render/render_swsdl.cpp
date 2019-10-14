@@ -31,9 +31,6 @@
 
 #include "../gl_debug.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB
-#endif
 #include <FreeImageLite.h>
 
 

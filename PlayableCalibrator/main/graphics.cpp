@@ -19,9 +19,6 @@
 
 #include "graphics.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
 #include <QFile>
 

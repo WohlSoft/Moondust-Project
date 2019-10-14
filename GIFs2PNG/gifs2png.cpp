@@ -29,9 +29,6 @@
 #include <tclap/CmdLine.h>
 #include "version.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
 
 #include "common_features/config_manager.h"

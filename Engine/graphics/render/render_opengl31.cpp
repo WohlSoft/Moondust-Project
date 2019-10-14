@@ -36,9 +36,6 @@
 
 #include "../gl_debug.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB
-#endif
 #include <FreeImageLite.h>
 
 Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),

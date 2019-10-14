@@ -51,11 +51,6 @@
 
 #include "mainwindow.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-//#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
-#endif
-
 #include <FreeImageLite.h>
 
 static bool initied_sdl = false;

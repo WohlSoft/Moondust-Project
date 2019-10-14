@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 3.2)
 project(MoondustLazyFixTool C CXX)
 
+set(CMAKE_INSTALL_RPATH ".")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include

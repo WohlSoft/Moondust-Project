@@ -28,9 +28,6 @@
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
 
 static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)

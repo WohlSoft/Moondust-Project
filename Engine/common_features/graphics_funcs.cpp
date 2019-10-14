@@ -32,7 +32,6 @@
 
 #ifdef _WIN32
 #include <SDL2/SDL_syswm.h>
-#define FREEIMAGE_LIB 1
 #endif
 #include <FreeImageLite.h>
 

@@ -28,11 +28,7 @@
 
 #include "graphics_funcs.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
-
 #include <QtDebug>
 
 
