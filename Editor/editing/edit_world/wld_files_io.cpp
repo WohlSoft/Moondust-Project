@@ -120,7 +120,6 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     if(savOptionsDialog)
     {
         SavingNotificationDialog *sav = new SavingNotificationDialog(false, SavingNotificationDialog::D_QUESTION, this);
-        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
         QLineEdit *wldNameBox = new QLineEdit();
@@ -128,8 +127,10 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
         sav->addUserItem(tr("Episode Title: "), wldNameBox);
         sav->addUserItem(tr("Make custom folder"), mkDirCustom);
         mkDirCustom->setToolTip(tr("Note: Custom folders are not supported for legacy SMBX Engine!"));
-        sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);
+        sav->adjustSize();
+        util::DialogToCenter(sav, true);
+        sav->fixSize();
 
         if(sav->exec() == QDialog::Accepted)
         {
@@ -466,14 +467,15 @@ bool WorldEdit::maybeSave()
     if(WldData.meta.modified)
     {
         SavingNotificationDialog *sav = new SavingNotificationDialog(true, SavingNotificationDialog::D_WARN, this);
-        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(userFriendlyCurrentFile() + tr(" not saved"));
         QLineEdit *wldNameBox = new QLineEdit(sav);
         sav->addUserItem(tr("World title:"), wldNameBox);
-        sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);
+        sav->adjustSize();
+        util::DialogToCenter(sav, true);
+        sav->fixSize();
 
         if(sav->exec() == QDialog::Accepted)
         {

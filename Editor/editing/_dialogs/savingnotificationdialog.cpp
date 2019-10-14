@@ -85,10 +85,9 @@ void SavingNotificationDialog::setSavingTitle(const QString &title)
     ui->label_Title->setText(title);
 }
 
-void SavingNotificationDialog::setAdjustSize(const int &width, const int &height)
+void SavingNotificationDialog::fixSize()
 {
-    setMinimumSize(width, height);
-    setMaximumSize(width, height);
+    setFixedSize(sizeHint());
 }
 
 void SavingNotificationDialog::addUserItem(const QString &desc, QWidget *wid)
