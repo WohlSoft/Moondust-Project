@@ -103,7 +103,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     //ui->playListPop->setVisible(false);
 
     ui->volume->setValue(setup.value("Volume", 128).toInt());
-    m_prevTrackID = ui->trackID->value();    
+    m_prevTrackID = ui->trackID->value();
     ui->gme_setup->setEnabled(false);
     ui->tempoFrame->setEnabled(false);
 
@@ -404,7 +404,7 @@ void MusPlayer_Qt::on_play_clicked()
 #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     QString midiRawArgs = m_setupMidi->getRawMidiArgs();
     if(ui->gme_setup->isEnabled())
-        musicPath += "|" + ui->trackID->text();
+        musicPath += "|" + ui->trackID->text() + ";" + midiRawArgs;
     else if((PGE_MusicPlayer::type == MUS_MID || PGE_MusicPlayer::type == MUS_ADLMIDI))
     {
         if(midiRawArgs.isEmpty())

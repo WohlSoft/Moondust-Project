@@ -457,7 +457,10 @@ void SetupMidi::on_midiRawArgs_editingFinished()
 {
     if(ui->midiRawArgs->isModified())
     {
-        if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus) && (PGE_MusicPlayer::type == MUS_MID || PGE_MusicPlayer::type == MUS_ADLMIDI))
+        if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus) &&
+          (PGE_MusicPlayer::type == MUS_MID ||
+           PGE_MusicPlayer::type == MUS_ADLMIDI ||
+           PGE_MusicPlayer::type == MUS_GME))
         {
             emit songRestartNeeded();
         }
