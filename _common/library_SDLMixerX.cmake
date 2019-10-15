@@ -64,7 +64,7 @@ target_link_libraries(PGE_SDLMixerX_static INTERFACE
     PGE_AudioCodecs
 )
 
-if(PGE_SHARED_SDLMIXER)
+if(PGE_SHARED_SDLMIXER AND NOT WIN32)
     install(FILES ${SDL_MixerX_SO_Lib} DESTINATION "${PGE_INSTALL_DIRECTORY}")
 endif()
 

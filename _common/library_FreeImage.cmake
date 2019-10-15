@@ -50,6 +50,6 @@ target_link_libraries(PGE_FreeImage INTERFACE
     PGE_ZLib
 )
 
-if(USE_SHARED_FREEIMAGE)
+if(USE_SHARED_FREEIMAGE AND NOT WIN32)
     install(FILES ${libFreeImage_Libs} DESTINATION ${PGE_INSTALL_DIRECTORY})
 endif()
