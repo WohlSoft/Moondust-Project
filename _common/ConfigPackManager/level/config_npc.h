@@ -189,6 +189,9 @@ struct NpcSetup
     //! Extra Settings JSON layout file name
     PGEString       extra_settings = "";
 
+    //! Is this a meta-object that should be never shown in game or exported images (screenshots)
+    bool            is_meta_object = false;
+
     //;game process
     //! [Gameplay] Scores code are will be added to player on beating this NPC
     uint32_t        score = 0;

@@ -21,14 +21,79 @@
    <property name="sizeConstraint">
     <enum>QLayout::SetMinimumSize</enum>
    </property>
-   <item row="1" column="0" colspan="4">
-    <widget class="QLabel" name="exportRect">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string notr="true">Will be exported:
-Top:___
-Left:___
-Right:_____
-Bottom:____</string>
+      <string>Width</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="size05x">
+     <property name="text">
+      <string notr="true">0.5x</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="3">
+    <widget class="QSpinBox" name="imgHeight">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="suffix">
+      <string> px</string>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QPushButton" name="size1x">
+     <property name="text">
+      <string notr="true">1x</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" colspan="3">
+    <widget class="QSpinBox" name="imgWidth">
+     <property name="whatsThis">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="suffix">
+      <string> px</string>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QLabel" name="label_4">
+     <property name="font">
+      <font>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="text">
+      <string>Please, select target image size:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="4">
+    <widget class="QCheckBox" name="hideGrid">
+     <property name="text">
+      <string>Hide grid (if it is shown)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="4">
+    <widget class="QCheckBox" name="hidePaths">
+     <property name="text">
+      <string>Hide all paths and levels like &quot;game already stated&quot;</string>
      </property>
     </widget>
    </item>
@@ -55,34 +120,35 @@ Bottom:____</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="0" colspan="4">
-    <widget class="QCheckBox" name="hideGrid">
+   <item row="1" column="0" colspan="4">
+    <widget class="QLabel" name="exportRect">
      <property name="text">
-      <string>Hide grid (if it is shown)</string>
+      <string notr="true">Will be exported:
+Top:___
+Left:___
+Right:_____
+Bottom:____</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Width</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1" colspan="3">
-    <widget class="QSpinBox" name="imgWidth">
+   <item row="7" column="0" colspan="4">
+    <widget class="QCheckBox" name="keepAspectRatio">
      <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-     <property name="suffix">
-      <string> px</string>
-     </property>
-     <property name="maximum">
-      <number>999999999</number>
+     <property name="text">
+      <string>Keep original aspect ratio</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="0" colspan="4">
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Height</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0" colspan="4">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -102,48 +168,6 @@ Bottom:____</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="4">
-    <widget class="QLabel" name="label_4">
-     <property name="font">
-      <font>
-       <italic>true</italic>
-      </font>
-     </property>
-     <property name="text">
-      <string>Please, select target image size:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Height</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="4">
-    <widget class="QCheckBox" name="hidePaths">
-     <property name="text">
-      <string>Hide all paths and levels like &quot;game already stated&quot;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="3">
-    <widget class="QSpinBox" name="imgHeight">
-     <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="suffix">
-      <string> px</string>
-     </property>
-     <property name="maximum">
-      <number>999999999</number>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="3">
     <widget class="QPushButton" name="size2x">
      <property name="text">
@@ -151,27 +175,10 @@ Bottom:____</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="4">
-    <widget class="QCheckBox" name="keepAspectRatio">
-     <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
+   <item row="10" column="0" colspan="4">
+    <widget class="QCheckBox" name="hideMetaObjects">
      <property name="text">
-      <string>Keep original aspect ratio</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="size05x">
-     <property name="text">
-      <string notr="true">0.5x</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
-    <widget class="QPushButton" name="size1x">
-     <property name="text">
-      <string notr="true">1x</string>
+      <string>Hide meta-objects</string>
      </property>
     </widget>
    </item>

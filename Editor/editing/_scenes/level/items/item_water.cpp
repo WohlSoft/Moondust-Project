@@ -63,8 +63,8 @@ void ItemPhysEnv::construct()
 
     setData(ITEM_TYPE, "Water");
     setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
-    setData(ITEM_WIDTH, (int)m_data.w);
-    setData(ITEM_HEIGHT, (int)m_data.h);
+    setData(ITEM_WIDTH, static_cast<int>(m_data.w));
+    setData(ITEM_HEIGHT, static_cast<int>(m_data.h));
 }
 
 ItemPhysEnv::~ItemPhysEnv()

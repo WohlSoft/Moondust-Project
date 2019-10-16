@@ -986,6 +986,8 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
     setData(ITEM_WIDTH,  QString::number(m_localProps.setup.width));  //width
     setData(ITEM_HEIGHT, QString::number(m_localProps.setup.height));  //height
 
+    setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
+
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);
 }

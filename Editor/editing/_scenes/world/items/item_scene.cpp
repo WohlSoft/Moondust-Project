@@ -352,6 +352,7 @@ void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *a
     {
         m_localProps = *mergedSet;
         m_gridSize = m_localProps.setup.grid;
+        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
     if(animator_id)
         setAnimator(*animator_id);

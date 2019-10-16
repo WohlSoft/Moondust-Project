@@ -71,6 +71,9 @@ struct BgoSetup
     //! Extra Settings JSON layout file name
     PGEString   extra_settings = "";
 
+    //! Is this a meta-object that should be never shown in game or exported images (screenshots)
+    bool        is_meta_object = false;
+
     /**
      * @brief Base Z-Layer type
      */

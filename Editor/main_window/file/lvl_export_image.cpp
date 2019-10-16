@@ -30,6 +30,8 @@
 #include "ui_lvl_export_image.h"
 #include <editing/edit_level/level_edit.h>
 #include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_npc.h>
 #include <ui_leveledit.h>
 
 //Export whole section
@@ -167,16 +169,41 @@ void LevelEdit::ExportingReady() //slot
         QList<QGraphicsItem*> allBlocks = scene->items();
         for(QGraphicsItem* it : allBlocks)
         {
-            if(it->data(ITEM_TYPE).toString() != "Block")
+            if(it->data(ITEM_TYPE).toString() != "Block" &&
+               it->data(ITEM_TYPE).toString() != "BGO" &&
+               it->data(ITEM_TYPE).toString() != "NPC")
                 continue;
+
             //Exclude already hidden elements
             if(!it->isVisible())
                 continue;
-            ItemBlock *blk = dynamic_cast<ItemBlock*>(it);
-            if(blk && blk->m_data.invisible)
+
+            if(it->data(ITEM_TYPE).toString() == "Block")
             {
-                it->setVisible(false);
-                invisibleBlocks.push_back(it);
+                auto *blk = dynamic_cast<ItemBlock*>(it);
+                if(blk && (blk->m_data.invisible || blk->data(ITEM_IS_META).toBool()))
+                {
+                    it->setVisible(false);
+                    invisibleBlocks.push_back(it);
+                }
+            }
+            else if(it->data(ITEM_TYPE).toString() == "BGO")
+            {
+                auto *blk = dynamic_cast<ItemBGO*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
+                {
+                    it->setVisible(false);
+                    invisibleBlocks.push_back(it);
+                }
+            }
+            else if(it->data(ITEM_TYPE).toString() == "NPC")
+            {
+                auto *blk = dynamic_cast<ItemNPC*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
+                {
+                    it->setVisible(false);
+                    invisibleBlocks.push_back(it);
+                }
             }
         }
     }

@@ -57,6 +57,8 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     setup->read("category", category,   pMergeMe(category));
     setup->read("description", description, pMerge(description, ""));
     setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
+    setup->read("is-meta-object", is_meta_object, pMerge(is_meta_object, false));
+    pAlias("hide-on-exported-images", is_meta_object);//Alias
 
     setup->read("image",    image_n,    pMerge(image_n, ""));
     if(!merge_with && !PGE_ImageInfo::getImageSize(imgPath + image_n, &w, &h, &errCode))

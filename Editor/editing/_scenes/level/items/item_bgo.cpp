@@ -587,6 +587,7 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
         m_gridOffsetX = m_localProps.setup.grid_offset_x;
         m_gridOffsetY = m_localProps.setup.grid_offset_y;
         setZMode(m_data.z_mode, m_data.z_offset, true);
+        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
 
     if(animator_id)

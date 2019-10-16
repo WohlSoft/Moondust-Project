@@ -22,6 +22,7 @@ Editor 0.3.2-dev
 - Added a grid drawing in the Tileset Editor's scene
 - Fixed confusion of world map scenery order while going through editing history or copy-pasting
 - Fixed unnecessary music enabling bug on a world map
+- Added "is-meta-object" element option in a config pack to hide elements from exported images or from the game entirely
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

@@ -282,6 +282,8 @@ bool NpcSetup::parse(IniProcessing *setup,
     pAlias("special-spin-allow-autoincrement", special_spin_allow_autoincrement);//Style like old name
 
     setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
+    setup->read("is-meta-object", is_meta_object, pMerge(is_meta_object, false));
+    pAlias("hide-on-exported-images", is_meta_object);//Alias
 
     /*************Build special value combobox***end*****/
     setup->read("score",                score,                  pMerge(score, 0u));

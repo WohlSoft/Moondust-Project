@@ -66,6 +66,9 @@ struct WldGenericSetup
     //! Extra Settings JSON layout file name
     PGEString   extra_settings = "";
 
+    //! Is this a meta-object that should be never shown in game or exported images (screenshots)
+    bool        is_meta_object = false;
+
     //! Has element an animated sprite?
     bool        animated = false;
     //! Phyiscal count of animation frames on the sprite

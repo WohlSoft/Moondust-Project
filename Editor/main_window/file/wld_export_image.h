@@ -38,6 +38,7 @@ public:
     bool hidePaths = false;
     bool hideMusBoxes = false;
     bool hideGrid = false;
+    bool hideMetas = false;
 
     ~WldSaveImage();
 
@@ -48,6 +49,7 @@ private slots:
     void on_SaveProportion_clicked(bool checked);
     void on_HidePaths_clicked(bool checked);
     void on_HideMusBoxes_clicked(bool checked);
+    void on_hideMetaObjects_clicked(bool checked);
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
