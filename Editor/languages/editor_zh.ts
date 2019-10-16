@@ -493,15 +493,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source> blocks</source>
-        <translation>个砖块</translation>
+        <translation> 个砖块</translation>
     </message>
     <message>
         <source>per </source>
-        <translation>每</translation>
+        <translation>每 </translation>
     </message>
     <message>
         <source> second</source>
-        <translation>秒</translation>
+        <translation> 秒</translation>
     </message>
 </context>
 <context>
@@ -1238,14 +1238,14 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished">请稍候……</translation>
+        <translation>请稍候……</translation>
     </message>
 </context>
 <context>
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1368,7 +1368,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemBlock</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1567,7 +1567,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1789,7 +1789,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemNPC</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1975,7 +1975,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -2417,7 +2417,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Level title: </source>
-        <translation>关卡标题：</translation>
+        <translation>关卡标题： </translation>
     </message>
     <message>
         <source>Make custom folder</source>
@@ -2508,7 +2508,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source> not saved</source>
-        <translation>未保存</translation>
+        <translation> 未保存</translation>
     </message>
     <message>
         <source>1/%1 Loading user data...</source>
@@ -2630,43 +2630,43 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Drop</source>
-        <translation></translation>
+        <translation>Drop 键</translation>
     </message>
     <message>
         <source>Jump</source>
-        <translation></translation>
+        <translation>跳跃键</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation></translation>
+        <translation>左键</translation>
     </message>
     <message>
         <source>Alt-Jump</source>
-        <translation></translation>
+        <translation>第二跳跃键</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation></translation>
+        <translation>右键</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation>开始键</translation>
     </message>
     <message>
         <source>Alt-Run</source>
-        <translation></translation>
+        <translation>第二奔跑键</translation>
     </message>
     <message>
         <source>Run</source>
-        <translation></translation>
+        <translation>奔跑键</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation></translation>
+        <translation>上键</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation></translation>
+        <translation>下键</translation>
     </message>
     <message>
         <source>Title</source>
@@ -2722,16 +2722,17 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">通用</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <source>No settings available</source>
-        <translation type="unfinished"></translation>
+        <translation>无设置可用</translation>
     </message>
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>文件 %1 出错:
+%2</translation>
     </message>
 </context>
 <context>
@@ -3075,7 +3076,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>bps</source>
-        <translation>bps</translation>
+        <translation>砖块 / 秒</translation>
     </message>
     <message>
         <source>Vertical speed:</source>
@@ -3119,11 +3120,11 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>左键</translation>
+        <translation>左端</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation>顶部</translation>
+        <translation>顶端</translation>
     </message>
     <message>
         <source>Define new:</source>
@@ -3131,11 +3132,11 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Bottom</source>
-        <translation>底部</translation>
+        <translation>底端</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation>右键</translation>
+        <translation>右端</translation>
     </message>
     <message>
         <source>Set music</source>
@@ -3247,7 +3248,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Copyed Event %1</source>
-        <translation></translation>
+        <translation>已复制的事件 %1</translation>
     </message>
     <message>
         <source>Get section size</source>
@@ -3327,7 +3328,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Destroyed: </source>
-        <translation>砖块破碎：</translation>
+        <translation>砖块破碎： </translation>
     </message>
     <message>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
@@ -3530,7 +3531,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>文件 %1 出错:
+%2</translation>
     </message>
 </context>
 <context>
@@ -3561,7 +3563,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>New Layer %1</source>
-        <translation></translation>
+        <translation>新建图层 %1</translation>
     </message>
     <message>
         <source>Remove layer</source>
@@ -3972,7 +3974,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>文件 %1 出错:
+%2</translation>
     </message>
 </context>
 <context>
@@ -4666,8 +4669,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Section 16</source>
-        <translation>场景 16
-</translation>
+        <translation>场景 16</translation>
     </message>
     <message>
         <source>Section 17</source>
@@ -4819,7 +4821,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;播放动态对象中的动画/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;如果当前地图中对象过多，推荐&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;关闭&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;此选项！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;播放动态对象中的动画&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;如果当前地图中对象过多，推荐&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;关闭&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;此选项。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;empty&gt;</source>
@@ -5256,7 +5258,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>编译到：</translation>
+        <translation>编译到： </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
@@ -5673,7 +5675,8 @@ Do you want to clone another section?</source>
     <message>
         <source>File doesn&apos;t use custom graphics.
 </source>
-        <translation>该文件未使用自定义素材。</translation>
+        <translation>该文件未使用自定义素材。
+</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
@@ -6199,7 +6202,7 @@ Error description:
     </message>
     <message>
         <source>Not Moveable</source>
-        <translation></translation>
+        <translation>不可移动</translation>
     </message>
     <message>
         <source>Message</source>
@@ -6913,11 +6916,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Level Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>关卡设置</translation>
     </message>
     <message>
         <source>Section extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>场景附加设置</translation>
     </message>
 </context>
 <context>
@@ -7573,7 +7576,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation></translation>
+        <translation>删除图块组</translation>
     </message>
     <message>
         <source>Add tileset</source>
@@ -7627,7 +7630,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation></translation>
+        <translation>目录排序宽度</translation>
     </message>
 </context>
 <context>
@@ -7638,7 +7641,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Search: </source>
-        <translation>搜索：</translation>
+        <translation>搜索： </translation>
     </message>
     <message>
         <source>New tileset</source>
@@ -8438,7 +8441,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Episode Title: </source>
-        <translation>地图标题：</translation>
+        <translation>地图标题： </translation>
     </message>
     <message>
         <source>Make custom folder</source>
@@ -8526,7 +8529,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source> not saved</source>
-        <translation>文件未保存</translation>
+        <translation> 未保存</translation>
     </message>
     <message>
         <source>World title:</source>
@@ -8886,8 +8889,8 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation>拖放项目到此框！
-右击删除！</translation>
+        <translation>拖放项目到此框。
+右击删除。</translation>
     </message>
 </context>
 </TS>
