@@ -1286,7 +1286,7 @@ Please save them before doing anything else.</translation>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>Hide invisible blocks</translation>
+        <translation type="vanished">Hide invisible blocks</translation>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
@@ -1299,6 +1299,10 @@ Please save them before doing anything else.</translation>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Tile background image (recommended)</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation>Hide invisible blocks and meta-objects</translation>
     </message>
 </context>
 <context>
@@ -11964,6 +11968,10 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation>Hide meta-objects</translation>
     </message>
 </context>
 <context>

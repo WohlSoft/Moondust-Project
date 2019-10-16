@@ -1241,7 +1241,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>Спрятать невидимые блоки</translation>
+        <translation type="vanished">Спрятать невидимые блоки</translation>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
@@ -1254,6 +1254,10 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Замостить фон</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation>Спрятать невидимые блоки и мета-объекты</translation>
     </message>
 </context>
 <context>
@@ -11957,6 +11961,10 @@ Bottom:	%4</source>
 Лево:	%2
 Право:	%3
 Низ:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation>Спрятать мета-объекты</translation>
     </message>
 </context>
 <context>

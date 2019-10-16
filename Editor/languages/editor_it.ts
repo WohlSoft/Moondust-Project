@@ -1063,11 +1063,15 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>Nascondi blocchi invisibili</translation>
+        <translation type="vanished">Nascondi blocchi invisibili</translation>
     </message>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Sfondo completo</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9111,6 +9115,10 @@ Alto:	%1
 Sinistra:	%2
 Destra:	%3
 Basso:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

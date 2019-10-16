@@ -974,10 +974,6 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please, select target image size:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -999,6 +995,10 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7572,6 +7572,10 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

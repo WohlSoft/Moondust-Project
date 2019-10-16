@@ -995,10 +995,6 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save proportion</source>
         <translation type="vanished">Зберегти пропорції</translation>
     </message>
@@ -1032,6 +1028,10 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7783,6 +7783,10 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

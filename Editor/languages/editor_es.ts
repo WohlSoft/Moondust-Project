@@ -1292,7 +1292,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>Ocultar bloques invisibles</translation>
+        <translation type="vanished">Ocultar bloques invisibles</translation>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
@@ -1305,6 +1305,10 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Fondo en azulejos</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11779,6 +11783,10 @@ Arriba:	%1
 Izquierda:	%2
 Derecha:	%3
 Abajo:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1033,10 +1033,6 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Width</source>
         <translation>Szerokość</translation>
     </message>
@@ -1083,6 +1079,10 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Powtarzaj tło</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8816,6 +8816,10 @@ Góra:	%1
 Lewo:	%2
 Prawo:	%3
 Dół:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

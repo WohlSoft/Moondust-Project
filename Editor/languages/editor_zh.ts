@@ -1014,7 +1014,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>隐藏隐形砖块</translation>
+        <translation type="vanished">隐藏隐形砖块</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
@@ -1031,6 +1031,10 @@ Please save them before doing anything else.</source>
     <message>
         <source>Hide grid (if it is shown)</source>
         <translation>隐藏网格</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8176,6 +8180,10 @@ Bottom:	%4</source>
 左：	%2
 右：	%3
 下：	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

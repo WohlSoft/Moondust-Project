@@ -1275,10 +1275,6 @@ Bitte speichere sie sofort ab!.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hide editor-only meta-signs pictures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1289,6 +1285,10 @@ Bitte speichere sie sofort ab!.</translation>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Gekachelter Hintergrund</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11120,6 +11120,10 @@ Oben:	%1
 Links:	%2
 Rechts:	%3
 Unten:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

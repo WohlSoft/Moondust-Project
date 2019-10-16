@@ -1143,10 +1143,6 @@ Please save them first before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hide editor-only meta-signs pictures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1157,6 +1153,10 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Plano de fundo em tiles</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9175,6 +9175,10 @@ Topo:	%1
 Esquera:	%2
 Direita:	%3
 Fundo:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
