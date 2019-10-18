@@ -1034,7 +1034,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏隐形砖块及元对象</translation>
     </message>
 </context>
 <context>
@@ -8186,7 +8186,7 @@ Bottom:	%4</source>
     </message>
     <message>
         <source>Hide meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏元对象</translation>
     </message>
 </context>
 <context>
