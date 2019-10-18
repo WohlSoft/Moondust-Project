@@ -3307,8 +3307,8 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <source>Abort</source>
         <translation type="unfinished">Beëindig</translation>
     </message>
@@ -6877,11 +6877,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/file/file_save.cpp" line="34"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished">Beëindig</translation>
     </message>
@@ -7122,11 +7122,11 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7154,8 +7154,8 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10526,8 +10526,8 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <source>Abort</source>
         <translation type="unfinished">Beëindig</translation>
     </message>
