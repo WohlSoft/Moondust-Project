@@ -368,7 +368,7 @@ do
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
             find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
-            for lang in bg bs de en es fr "he-il" "id" it ja "nl" pl "pt-br" "pt-pt" ru sv sr uk zh; do
+            for lang in bg bs de en es fr "he-il" "id" it ja "nl" "nb-no" pl "pt-br" "pt-pt" ru sv sr uk zh; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/editor_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
@@ -381,7 +381,7 @@ do
             cd Engine
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
-            for lang in de bs en es "he-il" it jp "nl" pl "pt" ru sv sr zh; do
+            for lang in de bs en es "he-il" it jp "nl" "nb-no" pl "pt" ru sv sr zh; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/engine_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
