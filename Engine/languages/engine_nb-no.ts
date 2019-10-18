@@ -6,22 +6,22 @@
     <message id="MSGBOX_INFO">
         <location filename="../gui/pge_msgbox.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informasjon</translation>
     </message>
     <message id="MSGBOX_WARN">
         <location filename="../gui/pge_msgbox.cpp" line="262"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Advarsel</translation>
     </message>
     <message id="MSGBOX_ERROR">
         <location filename="../gui/pge_msgbox.cpp" line="277"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Feil</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_msgbox.cpp" line="292"/>
         <source>Fatal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fatal feil</translation>
     </message>
     <message id="CONFIG_SELECT">
         <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="60"/>
@@ -91,22 +91,22 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_UNHEXC_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="290"/>
         <source>Unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Uhåndtert unntak.</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <location filename="../common_features/crash_handler.cpp" line="292"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Motoren har kræsjet som følge av et uhåndtert unntak.</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="304"/>
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fri for minne.</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="306"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Motoren har kræsjet som følge av å ha sluppet opp for minne. Prøv å lukke andre programmer og start motoren på ny.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="342"/>
@@ -131,27 +131,27 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="408"/>
         <source>Wrong CPU Instruction!</source>
-        <translation type="unfinished"></translation>
+        <translation>Feil prosessorinstruks.</translation>
     </message>
     <message id="CRASH_ILL_MSG">
         <location filename="../common_features/crash_handler.cpp" line="410"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation type="unfinished"></translation>
+        <translation>Motoren har kræsjet som følge av feil prosessorinstruks</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="465"/>
         <source>Wrong arithmetical operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Feil aritmetisk operasjon</translation>
     </message>
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="467"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation type="unfinished"></translation>
+        <translation>Motoren har kræsjet som følge av feil aritmetisk operasjon.</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="479"/>
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbrutt</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
         <location filename="../common_features/crash_handler.cpp" line="481"/>
@@ -183,69 +183,69 @@ and retry your recent actions to get more detailed information.</source>
     <message id="GAMEOVER_TITLE">
         <location filename="../scenes/scene_gameover.cpp" line="56"/>
         <source>Game Over!</source>
-        <translation type="unfinished"></translation>
+        <translation>Spillet er over for denne gang.</translation>
     </message>
     <message id="GAMEOVER_CONTINUE">
         <location filename="../scenes/scene_gameover.cpp" line="62"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsett</translation>
     </message>
     <message id="GAMEOVER_EXIT">
         <location filename="../scenes/scene_gameover.cpp" line="64"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="31"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="60"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="87"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause</translation>
     </message>
     <message id="LVL_MENU_PAUSE_CONTINUE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="40"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="69"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="95"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsett</translation>
     </message>
     <message id="LVL_MENU_PAUSE_CONTINUESAVE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="42"/>
         <source>Save and continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre og fortsett</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXITSAVE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="44"/>
         <source>Save and quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre og avslutt</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXITNOSAVE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="46"/>
         <source>Exit without saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt uten å lagre</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXIT">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="71"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="99"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt</translation>
     </message>
     <message id="LVL_MENU_PAUSE_REPLAY">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="97"/>
         <source>Replay level</source>
-        <translation type="unfinished"></translation>
+        <translation>Start nivå på ny</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
         <location filename="../scenes/scene_world.cpp" line="550"/>
         <source>Invalid playable character ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig spillbar karakter-ID</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
         <location filename="../scenes/scene_world.cpp" line="559"/>
         <source>Invalid playable character state ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig spillbar karaktertilstands-ID</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="436"/>
@@ -257,58 +257,58 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <location filename="../scenes/scene_world.cpp" line="611"/>
         <location filename="../scenes/scene_world.cpp" line="638"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
         <location filename="../scenes/scene_world.cpp" line="619"/>
         <location filename="../scenes/scene_world.cpp" line="646"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsett</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
         <location filename="../scenes/scene_world.cpp" line="621"/>
         <source>Save and continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre og fortsett</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
         <location filename="../scenes/scene_world.cpp" line="623"/>
         <source>Save and quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre og avslutt</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
         <location filename="../scenes/scene_world.cpp" line="625"/>
         <source>Exit without saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt uten å lagre</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
         <location filename="../scenes/scene_world.cpp" line="648"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt</translation>
     </message>
     <message id="MAINMENU_1_PLAYER_GAME">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="360"/>
         <source>1 Player Game</source>
-        <translation type="unfinished"></translation>
+        <translation>1 spiller</translation>
     </message>
     <message id="MAINMENU_2_PLAYER_GAME">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="362"/>
         <source>2 Player Game</source>
-        <translation type="unfinished"></translation>
+        <translation>2 spillere</translation>
     </message>
     <message id="MAINMENU_PLAY_SINGLE_LEVEL">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="364"/>
         <source>Play level</source>
-        <translation type="unfinished"></translation>
+        <translation>Spill nivå</translation>
     </message>
     <message id="MAINMENU_OPTIONS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="366"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Innstillinger</translation>
     </message>
     <message id="MAINMENU_EXIT">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="368"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt</translation>
     </message>
     <message id="MAINMENU_OPTIONS_TEST_SCRS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="374"/>
@@ -444,7 +444,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     <message id="SDL_INIT_ERROR">
         <location filename="../main.cpp" line="116"/>
         <source>Unable to init SDL!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke igangsette SDL.</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
         <location filename="../main.cpp" line="177"/>
@@ -460,13 +460,13 @@ configuration packages are not found!</source>
     <message id="CONFIG_SELECT_TEST">
         <location filename="../main.cpp" line="190"/>
         <source>Choose a game to test:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg et spill å teste:</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <location filename="../main.cpp" line="417"/>
         <location filename="../main.cpp" line="561"/>
         <source>No opened files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen åpnede filer</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
         <location filename="../main.cpp" line="432"/>
@@ -474,24 +474,29 @@ configuration packages are not found!</source>
 Fail to start world map
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>FEIL:
+Klarte ikke å starte verdenskart
+
+%1</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="450"/>
         <source>World map was closed with error.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdenskartet ble lukket med feil.
+%1</translation>
     </message>
     <message id="MSG_START_LEVEL">
         <location filename="../main.cpp" line="467"/>
         <source>Start level
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Start nivå
+%1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
         <location filename="../main.cpp" line="469"/>
         <source>Type an exit code (signed integer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv inn avslutningskode (signert heltall)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
         <location filename="../main.cpp" line="639"/>
