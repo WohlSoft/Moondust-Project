@@ -6,32 +6,32 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="20"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Innstillinger</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="68"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>Grunnleggende</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="99"/>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Vindusoppsett</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="111"/>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egne undervinduer (klassisk stil)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="124"/>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fanebaserte fanevinduer (modern stil)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="140"/>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikkspiller</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="152"/>
@@ -47,12 +47,12 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="171"/>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>Ytelse</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="183"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasjon</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="196"/>
@@ -63,17 +63,17 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="215"/>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasjonselementsgrense</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="231"/>
         <source>Collision detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollisjonsoppdagelse</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="247"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="259"/>
@@ -88,7 +88,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="314"/>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Handling for midtklikk</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="320"/>
@@ -235,7 +235,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="661"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="669"/>
@@ -245,32 +245,32 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="674"/>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosjektil</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="682"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>Forsinkelse (sekunder):</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="711"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Varighet</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="732"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Venstre</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="739"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilfeldig</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="746"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Høyre</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="781"/>

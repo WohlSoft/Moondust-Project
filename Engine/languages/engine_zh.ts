@@ -105,7 +105,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_UNHEXC_MSG">
         <location filename="../common_features/crash_handler.cpp" line="292"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation>发生未处理异常，因此引擎已崩溃！</translation>
+        <translation>发生未处理异常，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="304"/>
@@ -115,7 +115,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="306"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>由于内存不足，因此引擎已崩溃！请关闭其他应用再重新开始游戏。</translation>
+        <translation>由于内存不足，因此引擎已停止运行！请关闭其他应用再重新开始游戏。</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="342"/>
@@ -125,7 +125,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="344"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation>由于 alarm() 超时，因此引擎已关闭！</translation>
+        <translation>由于 alarm() 超时，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="389"/>
@@ -135,7 +135,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="391"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation>由于物理内存地址错误，因此引擎已崩溃</translation>
+        <translation>由于物理内存地址错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="408"/>
@@ -145,7 +145,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_ILL_MSG">
         <location filename="../common_features/crash_handler.cpp" line="410"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation>由于 CPU 命令错误，因此引擎已崩溃</translation>
+        <translation>由于 CPU 命令错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="465"/>
@@ -155,7 +155,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="467"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation>由于算法错误，因此引擎已崩溃！</translation>
+        <translation>由于算法错误，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="479"/>
@@ -165,7 +165,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_ABORT_TITLE.">
         <location filename="../common_features/crash_handler.cpp" line="481"/>
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation>由于致命错误，因此引擎异常终止。</translation>
+        <translation>由于致命错误，因此引擎已停止运行。</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="526"/>
@@ -177,7 +177,7 @@ therefore you can use same link to get updated version.</source>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <translation>由于段落错误，因此引擎已崩溃。
+        <translation>由于段落错误，因此引擎已停止运行。
 请使用内置调试器进行调试并对最近的操作
 进行重试以获得更多的详细信息。</translation>
     </message>
@@ -263,7 +263,7 @@ and retry your recent actions to get more detailed information.</source>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
-请问你将起点（或者传送入口）放置到了场景外的过大范围吗？</translation>
+请问您将起点（或者传送入口）放在场景以外的范围了吗？</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
         <location filename="../scenes/scene_world.cpp" line="611"/>
