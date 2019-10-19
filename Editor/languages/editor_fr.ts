@@ -1992,11 +1992,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile PNJ (chaque image)</translation>
     </message>
     <message>
         <source>Mouse click Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement de clic de souris</translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Once)</source>
