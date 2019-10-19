@@ -2216,7 +2216,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>ItemTile</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>Tile-ID: %1</source>
