@@ -551,7 +551,7 @@ You can use any configuration package here:&lt;br&gt;%2</source>
 Veuillez les télécharger et les installer dans ce répertoire &lt;br&gt;
 &lt;br&gt;
 %1&lt;br&gt;
-&lt;br&gt; 
+&lt;br&gt;
 Vous pouvez utiliser n&apos;importe quel paquet de configuration ici :&lt;br&gt;%2</translation>
     </message>
     <message>
@@ -977,15 +977,15 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est la &lt;span style=&quot; font-weight:600;&quot;&gt;Largeur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette largeur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Conserver les proportions d&apos;origine</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -993,7 +993,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauteur</translation>
     </message>
     <message>
         <source>Hide warps and water markers (recommended)</source>
@@ -1005,11 +1005,11 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer la grille (si elle est affichée)</translation>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer les blocs invisibles et les méta-objets</translation>
     </message>
 </context>
 <context>
@@ -1062,7 +1062,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementAddLayer</name>
     <message>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un calque</translation>
     </message>
 </context>
 <context>
@@ -1076,67 +1076,67 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementChangedNewLayer</name>
     <message>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau calque</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementLayerChanged</name>
     <message>
         <source>Change Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le calque</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Fusionner le calque</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementModification</name>
     <message>
         <source>Simple Modification History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique des modifications simples</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementModifyEvent</name>
     <message>
         <source>Remove Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer l&apos;événement</translation>
     </message>
     <message>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un événement</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementNewLayer</name>
     <message>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau calque</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementPlaceDoor</name>
     <message>
         <source>Place Door</source>
-        <translation type="unfinished"></translation>
+        <translation>Placer la pointe de porte</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRemoveLayer</name>
     <message>
         <source>Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le calque</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRemoveLayerAndSave</name>
     <message>
         <source>Remove Layer and keep items</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le calque et conserver les éléments</translation>
     </message>
 </context>
 <context>
@@ -1150,42 +1150,42 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementRenameEvent</name>
     <message>
         <source>Rename Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer l&apos;événement</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRenameLayer</name>
     <message>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer le calque</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementReplacePlayerPoint</name>
     <message>
         <source>Place Player Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Placer le point du joueur</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementResizeBlock</name>
     <message>
         <source>Resize Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionner le bloc</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementResizeSection</name>
     <message>
         <source>Resize Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionner la section</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementResizeWater</name>
     <message>
         <source>Resize Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionner la zone d&apos;eau</translation>
     </message>
 </context>
 <context>
@@ -1193,168 +1193,168 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de niveau PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Carte du monde PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de niveau SMBX</translation>
     </message>
     <message>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Carte du monde SMBX</translation>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez patienter...</translation>
     </message>
 </context>
 <context>
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Calque : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à un nouveau calque…</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[masqué]</translation>
     </message>
     <message>
         <source>Change Z-Offset...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le décalage Z…</translation>
     </message>
     <message>
         <source>Z-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Calque Z</translation>
     </message>
     <message>
         <source>Background-2</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrière-plan</translation>
     </message>
     <message>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrière-plan</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation>Premier plan</translation>
     </message>
     <message>
         <source>Foreground-2</source>
-        <translation type="unfinished"></translation>
+        <translation>Premier plan 2</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer en</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 de cette section en</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tout les %1 en</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>BGO-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID BGO : % 1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1 dans cette section</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés…</translation>
     </message>
     <message>
         <source>Z-Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Décalage Z</translation>
     </message>
     <message>
         <source>Please enter the Z-value offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez entrer la valeur du décalage Z :</translation>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>Marges de la section</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner la distance par rapport aux limites de la section (en pixels) pour supprimer des éléments.</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier les données brutes de l&apos;utilisateur…</translation>
     </message>
 </context>
 <context>
     <name>ItemBlock</name>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Calque : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à un nouveau calque…</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[masqué]</translation>
     </message>
     <message>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation>Invisible</translation>
     </message>
     <message>
         <source>Slippery</source>
@@ -1362,7 +1362,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionner</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
@@ -1370,100 +1370,101 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer en</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 de cette section en</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 en</translation>
     </message>
     <message>
         <source>Make message box...</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une boîte de message…</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>Block-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de bloc : %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1 dans cette section</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés…</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>Marges de la section</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner la distance par rapport aux limites de la section (en pixels) pour supprimer des éléments.</translation>
     </message>
     <message>
         <source>Event name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de l&apos;événement</translation>
     </message>
     <message>
         <source>Please enter the name of event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez entrer le nom de l&apos;événement :</translation>
     </message>
     <message>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez entrer le message qui s&apos;affichera.
+(La longueur maximale des lignes est de 27 caractères)</translation>
     </message>
     <message>
         <source>Hit message text</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquez sur le texte du message</translation>
     </message>
     <message>
         <source>Event created</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement créé</translation>
     </message>
     <message>
         <source>Message event created!</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement de message créé !</translation>
     </message>
     <message>
         <source>&apos;Hit&apos; event slot is used</source>
@@ -1475,7 +1476,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier les données brutes de l&apos;utilisateur…</translation>
     </message>
 </context>
 <context>
@@ -1483,37 +1484,37 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher par nom</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher par ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher par ID (Contenu)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trier par</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Décroissant</translation>
     </message>
     <message>
         <source>Uniform item sizes view</source>
@@ -1523,12 +1524,12 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les éléments personnalisés</translation>
     </message>
     <message>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les éléments standards</translation>
     </message>
 </context>
 <context>
@@ -1539,23 +1540,23 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Calque : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à un nouveau calque…</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[masqué]</translation>
     </message>
     <message>
         <source>Jump to exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à la sortie</translation>
     </message>
     <message>
         <source>Jump to entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à l&apos;entrée</translation>
     </message>
     <message>
         <source>No Vehicles</source>
@@ -1563,11 +1564,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoriser les éléments</translation>
     </message>
     <message>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Verrouillé</translation>
     </message>
     <message>
         <source>Need a bomb</source>
@@ -1579,38 +1580,38 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés…</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
 </context>
 <context>
     <name>ItemLevel</name>
     <message>
         <source>Open target file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le fichier cible : %1</translation>
     </message>
     <message>
         <source>Path background</source>
@@ -1622,110 +1623,111 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Toujours visible</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>Level-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de niveau : %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer en</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 en</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés…</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
 </context>
 <context>
     <name>ItemMsgBox</name>
     <message>
         <source>Set message box</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir le texte du message</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est le message qui sera affiché si le joueur parle avec le PNJ.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt; Tous les guillemets et retours à la ligne seront supprimés.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrez le message de dialogue du PNJ :
+(La longueur maximale par ligne est de 27 caractères)</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
-        <translation type="unfinished"></translation>
+        <translation>Amical (On ne peut pas parler aux PNJ non amicaux)</translation>
     </message>
 </context>
 <context>
     <name>ItemMusic</name>
     <message>
         <source>&lt;Silence&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Aucun&gt;</translation>
     </message>
     <message>
         <source>Play this</source>
-        <translation type="unfinished"></translation>
+        <translation>Jouer ceci</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>World-Music-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de musique de monde : %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2830,7 +2832,7 @@ To use LunaTester you should have right Integration configuration package!</sour
     </message>
     <message>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -4109,7 +4111,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5284,7 +5286,7 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
         <translation type="unfinished"></translation>
@@ -6280,14 +6282,14 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -6332,7 +6334,7 @@ Forum link: wohlsoft.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>

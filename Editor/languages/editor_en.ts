@@ -10347,7 +10347,7 @@ Reason: %1
     </message>
     <message>
         <source>Level Settings</source>
-        <translation>Настройки уровня</translation>
+        <translation>Level Settings</translation>
     </message>
     <message>
         <source>Section extra settings</source>
