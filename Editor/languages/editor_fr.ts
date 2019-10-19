@@ -1972,7 +1972,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Custom liquid</source>
-        <translation type="unfinished"></translation>
+        <translation>Liquide personnalisé</translation>
     </message>
     <message>
         <source>Gravity Field</source>
