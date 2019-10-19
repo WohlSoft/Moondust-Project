@@ -5,267 +5,267 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation>Lecteur de musique</translation>
     </message>
     <message>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lire la musique automatiquement après l&apos;ouverture du fichier</translation>
     </message>
     <message>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>Performance</translation>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animation</translation>
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite d&apos;éléments d&apos;animation</translation>
     </message>
     <message>
         <source>Collision detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Détection des collisions</translation>
     </message>
     <message>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposition des fenêtres</translation>
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sous-fenêtres séparées (style classique)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sous-fenêtres à onglets (style moderne)</translation>
     </message>
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>La musique sera lue automatiquement lorsque vous ouvrez un fichier de niveau</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nombre d&apos;éléments maximum qui peuvent être animés à un moment donné. Si cette limite est dépassée, l&apos;animation sera mise en pause jusqu&apos;à ce que vous augmentiez la limite ou supprimiez les éléments en excès.</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers</translation>
     </message>
     <message>
         <source>Associate file extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Associer les extensions de fichier</translation>
     </message>
     <message>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur</translation>
     </message>
     <message>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Actions du bouton central de la souris</translation>
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le mode de placement de l&apos;élément sélectionné</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Basculer en faisant glisser le curseur de la souris lorsque la sélection est vide</translation>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode de placement</translation>
     </message>
     <message>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation type="unfinished"></translation>
+        <translation>La boîte de propriétés ne s&apos;affichera pas automatiquement lorsque vous sélectionnez un élément à placer.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pas afficher la boîte de propriétés lors du déplacement d&apos;éléments</translation>
     </message>
     <message>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique</translation>
     </message>
     <message>
         <source>Max history entries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre maximum d&apos;entrées dans l&apos;historique :</translation>
     </message>
     <message>
         <source>Maximum number of remembered history actions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille maximale de l’historique.</translation>
     </message>
     <message>
         <source>Screen capture default size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille par défaut de la capture d&apos;écran</translation>
     </message>
     <message>
         <source>Use custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnalisé :</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur :</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauteur :</translation>
     </message>
     <message>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuster à la taille de la fenêtre</translation>
     </message>
     <message>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeurs par défaut</translation>
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation>Onglets d&apos;événements classiques à développer automatiquement</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordinaire</translation>
     </message>
     <message>
         <source>Layer movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouvement du calque</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement déclencheur</translation>
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Boutons de maintien</translation>
     </message>
     <message>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres PNJ</translation>
     </message>
     <message>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Générateur</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Chaîne</translation>
     </message>
     <message>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation>Projectile</translation>
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>Délai (secondes) :</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauche</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Aléatoire</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Droite</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation>Chaînes et portes</translation>
     </message>
     <message>
         <source>Warp type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de chaîne :</translation>
     </message>
     <message>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation>0 - Instantané</translation>
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation>1 - Tuyau</translation>
     </message>
     <message>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation>2 - Porte</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - Portail</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vue</translation>
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte à outils des éléments de niveau</translation>
     </message>
     <message>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra</translation>
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Remarque : Certains paramètres n&apos;appliqueront leurs modifications qu&apos;après le redémarrage de l&apos;éditeur</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer la mise à l&apos;échelle automatique sur les moniteurs haute résolution</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les onglets horizontalement</translation>
     </message>
     <message>
         <source>Display tabs vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les onglets verticalement</translation>
     </message>
     <message>
         <source>World Map Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte à outils d&apos;éléments de la carte du monde</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les éléments sélectionnés à la position du curseur</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation>Section de défilement automatique</translation>
     </message>
     <message>
         <source>Layer visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Visibilité des calques</translation>
     </message>
     <message>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de section</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Thème</translation>
     </message>
     <message>
         <source>Tileset Item toolbox</source>
@@ -273,31 +273,31 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Journalisation</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de journal</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
         <source>Log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de journal</translation>
     </message>
     <message>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Environnement</translation>
     </message>
     <message>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom par défaut :</translation>
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom par défaut qui sera mis en place à l&apos;ouverture ou à la création du fichier.</translation>
     </message>
 </context>
 <context>
@@ -308,7 +308,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Counting stars...</source>
@@ -319,7 +319,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir l&apos;audio (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -327,23 +327,23 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <source>Make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Effectuer une sauvegarde</translation>
     </message>
     <message>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>Rééchantillonner à</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur SoX</translation>
     </message>
     <message>
         <source>SoX executable path is not defined.
@@ -357,23 +357,23 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il n&apos;y a rien à faire.</translation>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun fichier à convertir</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter</translation>
     </message>
     <message>
         <source>Operation canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Opération annulée</translation>
     </message>
     <message>
         <source>Sorry, SoX has crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Désolé, SoX a planté</translation>
     </message>
     <message>
         <source>SoX returned a non-zero exit code: %1
@@ -382,7 +382,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Operation complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Opération terminée</translation>
     </message>
     <message>
         <source>All files successfully converted!
@@ -391,7 +391,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>No tasks defined. Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune tâche définie. Il n&apos;y a rien à faire.</translation>
     </message>
     <message>
         <source>Open SoX executable path</source>
@@ -399,11 +399,11 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Select file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez le fichier à convertir</translation>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Qu&apos;est-ce que vous voulez ?</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
@@ -428,31 +428,31 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Le format des fichiers ne sera pas modifié</translation>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir le débit</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Les fichiers seront convertis en MP3</translation>
     </message>
     <message>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Les fichiers seront convertis en FLAC</translation>
     </message>
     <message>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Les fichiers seront convertis en OGG</translation>
     </message>
     <message>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir la qualité</translation>
     </message>
     <message>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Les fichiers seront convertis en WAV</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
@@ -464,79 +464,81 @@ Please set SoX path first</source>
     <name>BlocksPerSecondDialog</name>
     <message>
         <source>Blocks per second calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculateur de blocs par seconde</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille des blocs :</translation>
     </message>
     <message>
         <source> blocks</source>
-        <translation type="unfinished"></translation>
+        <translation> blocs</translation>
     </message>
     <message>
         <source>per </source>
-        <translation type="unfinished"></translation>
+        <translation>par </translation>
     </message>
     <message>
         <source> second</source>
-        <translation type="unfinished"></translation>
+        <translation> seconde</translation>
     </message>
 </context>
 <context>
     <name>BookmarksBox</name>
     <message>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Repères de position</translation>
     </message>
     <message>
         <source>Remove selected bookmark from list</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le repère sélectionné de la liste</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Remember current screen position on the level map or on the world map
 and store a bookmark.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mémorise la position actuelle de l&apos;écran dans le niveau ou la carte du monde
+et enregistre un repère.</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Scroll to the saved position in the selected item.
 You also can double-click an item to scroll to its bookmarked position.</source>
-        <translation type="unfinished"></translation>
+        <translation>Faites défiler jusqu&apos;à la position enregistrée dans l&apos;élément sélectionné.
+Vous pouvez également double-cliquer sur un élément pour le faire défiler jusqu&apos;à sa position dans les repères.</translation>
     </message>
     <message>
         <source>Go To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller à…</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Renommer le repère</translation>
     </message>
 </context>
 <context>
     <name>ConfigManager</name>
     <message>
         <source>Configuration Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestionnaire de configuration</translation>
     </message>
     <message>
         <source>Please select the game configuration you want to start the Editor with</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner la configuration de jeu avec laquelle vous souhaitez démarrer l&apos;éditeur</translation>
     </message>
     <message>
         <source>Ask every startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Demander à chaque démarrage</translation>
     </message>
     <message>
         <source>No config packs were found</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun paquet de configuration n&apos;a été trouvé</translation>
     </message>
     <message>
         <source>No configuration packages were found!&lt;br&gt;
@@ -545,370 +547,378 @@ Please download and install them into this directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun paquet de configuration n&apos;a été trouvé !&lt;br&gt;
+Veuillez les télécharger et les installer dans ce répertoire &lt;br&gt;
+&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt; 
+Vous pouvez utiliser n&apos;importe quel paquet de configuration ici :&lt;br&gt;%2</translation>
     </message>
     <message>
         <source>Configuration package is not configured!</source>
-        <translation type="unfinished"></translation>
+        <translation>Le paquet de configuration n&apos;est pas configuré !</translation>
     </message>
     <message>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le paquet de configuration « %1 » n&apos;est pas encore configuré.
+Voulez-vous le configurer ?</translation>
     </message>
     <message>
         <source>Configuration script failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Le script de configuration a échoué</translation>
     </message>
     <message>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;outil de configuration a rencontré une erreur : %1 à la ligne %2.
+Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>No configuration needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune configuration nécessaire</translation>
     </message>
     <message>
         <source>This config pack has no configuring tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce paquet de configuration n&apos;a pas d&apos;outil de configuration.</translation>
     </message>
 </context>
 <context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
-        <translation type="unfinished"></translation>
+        <translation>État de configuration actuel</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>État</translation>
     </message>
     <message>
         <source>Objects defined:</source>
-        <translation type="unfinished"></translation>
+        <translation>Objets définis :</translation>
     </message>
     <message>
         <source>Configuration name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la configuration :</translation>
     </message>
     <message>
         <source>Configuration path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin de configuration :</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoires</translation>
     </message>
     <message>
         <source>Configuration directories:</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoires de configuration :</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreurs</translation>
     </message>
     <message>
         <source>Configuration Loading Errors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreurs de chargement de la configuration :</translation>
     </message>
     <message>
         <source>Music (level) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musique (niveau) (%1/%2)</translation>
     </message>
     <message>
         <source>Music (world map) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musique (carte du monde) (%1/%2)</translation>
     </message>
     <message>
         <source>Music (special) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musique (spéciale) (%1/%2)</translation>
     </message>
     <message>
         <source>Sounds (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sons (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Blocks (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau : Blocs (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Background objects (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau : Objets d&apos;arrière-plan (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Background images (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau : Images d&apos;arrière-plan (%1/%2)</translation>
     </message>
     <message>
         <source>Level: NPCs (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau : PNJ (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte du monde : Tuiles de terrain (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Scenery (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte du monde : Paysages (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte du monde : Tuiles de chemin (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte du monde : Tuiles d&apos;entrée de niveau (%1/%2)</translation>
     </message>
     <message>
         <source>Default rotation rules (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Règles de rotation par défaut (%1)</translation>
     </message>
     <message>
         <source>Level data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données de niveau</translation>
     </message>
     <message>
         <source>World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données de la carte du monde</translation>
     </message>
     <message>
         <source>Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnages</translation>
     </message>
     <message>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>Mondes de jeu</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Musique</translation>
     </message>
     <message>
         <source>Sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Sons</translation>
     </message>
     <message>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données personnalisées</translation>
     </message>
     <message>
         <source>[Error list is empty, congratulations!]</source>
-        <translation type="unfinished"></translation>
+        <translation>[La liste des erreurs est vide, félicitations !]</translation>
     </message>
 </context>
 <context>
     <name>CrashHandler</name>
     <message>
         <source>Crash</source>
-        <translation type="unfinished"></translation>
+        <translation>Plantage</translation>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous voudrez peut-être signaler ces données aux développeurs ou les publier sur :</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oh oh, PGE Editor a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Forum PGE (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Exit from application</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortie de l&apos;application</translation>
     </message>
     <message>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Récupération de plantage</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation type="unfinished"></translation>
+        <translation>Depuis le dernier plantage, l&apos;éditeur à récupéré certains fichiers.
+Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translation>
     </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>
     <message>
         <source>Custom Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Compteur personnalisé</translation>
     </message>
     <message>
         <source>Please add the Item IDs which will be in this custom group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez ajouter les identifiants des éléments qui seront dans ce groupe personnalisé :</translation>
     </message>
     <message>
         <source>Item type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;élément :</translation>
     </message>
     <message>
         <source>Counter name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du compteur :</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloc</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>PNJ</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuile de terrain</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Paysage</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Musique</translation>
     </message>
     <message>
         <source>Change item...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier l&apos;élément…</translation>
     </message>
 </context>
 <context>
     <name>DebuggerBox</name>
     <message>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Débogueur</translation>
     </message>
     <message>
         <source>Mouse coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordonnées de la souris</translation>
     </message>
     <message>
         <source>Go to point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Allez au point :</translation>
     </message>
     <message>
         <source>Go!</source>
-        <translation type="unfinished"></translation>
+        <translation>C&apos;est parti !</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Contenus</translation>
     </message>
     <message>
         <source>Custom counters</source>
-        <translation type="unfinished"></translation>
+        <translation>Compteurs personnalisés</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiser</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Édition</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Console de développement</translation>
     </message>
     <message>
         <source>Type commands here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tapez des commandes ici…</translation>
     </message>
     <message>
         <source>Send Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Envoyer la commande</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Système</translation>
     </message>
     <message>
         <source>Clear System Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer le journal du système</translation>
     </message>
     <message>
         <source>Clear All Logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer tous les journaux</translation>
     </message>
     <message>
         <source>Clear %1 Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer %1 jounal</translation>
     </message>
     <message>
         <source>Prints this help text</source>
-        <translation type="unfinished"></translation>
+        <translation>Affiche ce texte d&apos;aide</translation>
     </message>
     <message>
         <source>Prints a test command</source>
-        <translation type="unfinished"></translation>
+        <translation>Affiche une commande de test</translation>
     </message>
     <message>
         <source>Prints the editor version</source>
-        <translation type="unfinished"></translation>
+        <translation>Affiche la version de l&apos;éditeur</translation>
     </message>
     <message>
         <source>Quits the program</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitte le programme</translation>
     </message>
     <message>
         <source>Saves the application settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistre les paramètres de l&apos;application</translation>
     </message>
     <message>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
-        <translation type="unfinished"></translation>
+        <translation>Arguments  : {SomeString} Calcule le hachage MD5 de la chaîne de caractères</translation>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation type="unfinished"></translation>
+        <translation>Argument : {String array} valide le tableau de chaînes PGE-X</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
-        <translation type="unfinished"></translation>
+        <translation>Simule le signal de plantage</translation>
     </message>
     <message>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Argument : {Path to file} teste si le fichier est au format PGE-X</translation>
     </message>
     <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
@@ -920,7 +930,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation type="unfinished"></translation>
+        <translation>Montre divers chemins importants !</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -928,30 +938,30 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Throws an unhandled exception to crash the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Déclenche une exception non gérée pour faire planter l&apos;éditeur</translation>
     </message>
     <message>
         <source>Does a segmentation violation</source>
-        <translation type="unfinished"></translation>
+        <translation>Provoque une erreur de segmentation, à des fins de crash-test</translation>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>Crée et supprime ItemSelectDialog pour analyser les fuites de mémoire</translation>
     </message>
 </context>
 <context>
     <name>ExportToImage</name>
     <message>
         <source>Export to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter en image</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est la &lt;span style=&quot; font-weight:600;&quot;&gt;Hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Force vertical background tiling</source>
@@ -959,11 +969,11 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Please, select target image size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner la taille de l&apos;image cible :</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1006,31 +1016,31 @@ Please save them before doing anything else.</source>
     <name>GreetingDialog</name>
     <message>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bienvenue !</translation>
     </message>
     <message>
         <source>Choose the workspace layout you want to use:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez la disposition de &apos;espace de travail que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Modern</source>
-        <translation type="unfinished"></translation>
+        <translation>Moderne</translation>
     </message>
     <message>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation>Classique</translation>
     </message>
     <message>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Interface moderne conçue pour plus de commodité, fonctionne bien sur des écrans de taille différente.</translation>
     </message>
     <message>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une interface classique qui sera familière aux utilisateurs de longue date de l&apos;ancien éditeur SMBX.</translation>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bienvenue dans PGE Editor !</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1040,7 +1050,12 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Astuce 1 :&lt;/b&gt; Vous pouvez modifier la disposition à tout moment depuis le menu &lt;u&gt;Aide&lt;/u&gt;, les boîtes d&apos;outils dans le menu &lt;u&gt;Vue&lt;/u&gt;, et les cases à cocher de disposition des fenêtres dans le menu &lt;u&gt;Fenêtre&lt;/u&gt;.&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Astuce 2 :&lt;/b&gt; Contrairement à l&apos;ancien éditeur, de nombreuses fonctions sont rapidement accessibles à partir du menu contextuel (ouvert par un clic droit),
+ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet éditeur vous permet également de sélectionner plusieurs objets à la fois !&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Astuce 3 :&lt;/b&gt; Utilisez le bouton central de la souris pour basculer entre le placement de l&apos;objet sélectionné et la copie d&apos;un groupe d&apos;objets !&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -4316,7 +4331,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Repères de position</translation>
     </message>
     <message>
         <source>Open...</source>
@@ -4602,7 +4617,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Modern GUI</source>
-        <translation type="unfinished"></translation>
+        <translation>Interface graphique moderne</translation>
     </message>
     <message>
         <source>Variables</source>
@@ -4670,7 +4685,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Welcome dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte de dialogue de bienvenue</translation>
     </message>
     <message>
         <source>Test world map (Alpha)</source>
@@ -4876,7 +4891,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Tip of the day...</source>
-        <translation type="unfinished"></translation>
+        <translation>Astuce du jour…</translation>
     </message>
     <message>
         <source>Start Engine</source>
@@ -7061,27 +7076,27 @@ Data may be corrupted!</source>
     <name>TipOfDay</name>
     <message>
         <source>Tip of day</source>
-        <translation type="unfinished"></translation>
+        <translation>Astuce du jour</translation>
     </message>
     <message>
         <source>Did you know?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le saviez-vous ?</translation>
     </message>
     <message>
         <source>Show tip at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les astuces au démarrage</translation>
     </message>
     <message>
         <source>Previouse tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Astuce précédente</translation>
     </message>
     <message>
         <source>Next tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Astuce suivante</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>
