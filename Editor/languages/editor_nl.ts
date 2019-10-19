@@ -3307,8 +3307,8 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <source>Abort</source>
         <translation type="unfinished">Beëindig</translation>
     </message>
@@ -6501,127 +6501,127 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2774"/>
+        <location filename="../mainwindow.ui" line="2760"/>
         <source>Convert Audio files...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2838"/>
+        <location filename="../mainwindow.ui" line="2824"/>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2861"/>
+        <location filename="../mainwindow.ui" line="2847"/>
         <source>Circular fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2864"/>
+        <location filename="../mainwindow.ui" line="2850"/>
         <source>Circular fill (Shift+C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2882"/>
+        <location filename="../mainwindow.ui" line="2868"/>
         <source>Show grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2890"/>
+        <location filename="../mainwindow.ui" line="2876"/>
         <source>Modern GUI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2901"/>
+        <location filename="../mainwindow.ui" line="2887"/>
         <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2913"/>
+        <location filename="../mainwindow.ui" line="2899"/>
         <source>Go to top-right of the section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2925"/>
+        <location filename="../mainwindow.ui" line="2911"/>
         <source>Go to right-bottom of the section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2930"/>
+        <location filename="../mainwindow.ui" line="2916"/>
         <source>Script Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2938"/>
+        <location filename="../mainwindow.ui" line="2924"/>
         <source>Run configure tool...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2943"/>
+        <location filename="../mainwindow.ui" line="2929"/>
         <source>Open local script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2946"/>
+        <location filename="../mainwindow.ui" line="2932"/>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2954"/>
+        <location filename="../mainwindow.ui" line="2940"/>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2988"/>
+        <location filename="../mainwindow.ui" line="2974"/>
         <source>Welcome dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2996"/>
+        <location filename="../mainwindow.ui" line="2982"/>
         <source>Test world map (Alpha)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3014"/>
+        <location filename="../mainwindow.ui" line="3000"/>
         <source>Music change points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2951"/>
+        <location filename="../mainwindow.ui" line="2937"/>
         <source>Open episode script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2959"/>
+        <location filename="../mainwindow.ui" line="2945"/>
         <source>Level local (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2962"/>
+        <location filename="../mainwindow.ui" line="2948"/>
         <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2967"/>
+        <location filename="../mainwindow.ui" line="2953"/>
         <source>Level global (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2970"/>
+        <location filename="../mainwindow.ui" line="2956"/>
         <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2975"/>
+        <location filename="../mainwindow.ui" line="2961"/>
         <source>World map script (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2978"/>
+        <location filename="../mainwindow.ui" line="2964"/>
         <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2983"/>
+        <location filename="../mainwindow.ui" line="2969"/>
         <source>Item default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6792,82 +6792,77 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2711"/>
-        <source>LunaLua</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="2725"/>
         <source>Don&apos;t fill out of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2730"/>
+        <location filename="../mainwindow.ui" line="2716"/>
         <source>SMBX-like GUI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2738"/>
+        <location filename="../mainwindow.ui" line="2724"/>
         <source>Run testing of saved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2746"/>
+        <location filename="../mainwindow.ui" line="2732"/>
         <source>Change log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2754"/>
+        <location filename="../mainwindow.ui" line="2740"/>
         <source>Check for updates...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2766"/>
+        <location filename="../mainwindow.ui" line="2752"/>
         <source>Run testing in the SMBX (LunaDLL required)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2782"/>
+        <location filename="../mainwindow.ui" line="2768"/>
         <source>Clear NPC garbadge...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2793"/>
-        <location filename="../mainwindow.ui" line="2799"/>
+        <location filename="../mainwindow.ui" line="2779"/>
+        <location filename="../mainwindow.ui" line="2785"/>
         <source>More sections...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2804"/>
+        <location filename="../mainwindow.ui" line="2790"/>
         <source>Tip of the day...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2816"/>
+        <location filename="../mainwindow.ui" line="2802"/>
         <source>Start Engine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2819"/>
+        <location filename="../mainwindow.ui" line="2805"/>
         <source>Launch game engine application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2827"/>
+        <location filename="../mainwindow.ui" line="2813"/>
         <source>Open folder of current file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2830"/>
+        <location filename="../mainwindow.ui" line="2816"/>
         <source>Open folder which contains currently opened file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2835"/>
+        <location filename="../mainwindow.ui" line="2821"/>
         <source>Open custom data folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2846"/>
+        <location filename="../mainwindow.ui" line="2832"/>
         <source>Wrap Vertically</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6877,11 +6872,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
         <location filename="../main_window/file/file_save.cpp" line="34"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished">Beëindig</translation>
     </message>
@@ -7122,11 +7117,11 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7154,8 +7149,8 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10526,8 +10521,8 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
         <source>Abort</source>
         <translation type="unfinished">Beëindig</translation>
     </message>

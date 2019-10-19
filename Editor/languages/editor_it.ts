@@ -5847,7 +5847,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover√
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>

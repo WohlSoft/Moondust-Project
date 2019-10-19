@@ -2700,20 +2700,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <enum>QAction::NoRole</enum>
    </property>
   </action>
-  <action name="actionLunaLua">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>LunaLua</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
   <action name="actionFloodSectionOnly">
    <property name="checkable">
     <bool>true</bool>

@@ -7047,7 +7047,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>

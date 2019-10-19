@@ -5009,10 +5009,6 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>LunaLua</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1299,7 +1299,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1414,7 +1414,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1503,7 +1503,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nom</translation>
     </message>
     <message>
         <source>ID</source>
@@ -1595,7 +1595,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -1662,7 +1662,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -1745,7 +1745,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -1784,19 +1784,19 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direction</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gauche</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aléatoire</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droite</translation>
     </message>
     <message>
         <source>Friendly</source>
@@ -1860,7 +1860,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1931,7 +1931,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2050,7 +2050,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -2065,19 +2065,19 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direction</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gauche</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droite</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
 </context>
 <context>
@@ -2120,7 +2120,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2163,31 +2163,31 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNJ</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tuile de terrain</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paysage</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chemin</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Niveau</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Musique</translation>
     </message>
     <message>
         <source>Extra Data:</source>
@@ -2250,7 +2250,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2269,7 +2269,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
     <message>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
@@ -2286,7 +2286,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parcourir</translation>
     </message>
     <message>
         <source>Flags</source>
@@ -2298,7 +2298,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Démarrer</translation>
     </message>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
@@ -2352,7 +2352,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -2515,11 +2515,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNJ</translation>
     </message>
     <message>
         <source>Copy graphic to custom folder</source>
@@ -2562,7 +2562,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gauche</translation>
     </message>
     <message>
         <source>Alt-Jump</source>
@@ -2570,11 +2570,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droite</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Démarrer</translation>
     </message>
     <message>
         <source>Alt-Run</source>
@@ -2642,7 +2642,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Événement déclencheur</translation>
     </message>
     <message>
         <source>General</source>
@@ -2978,7 +2978,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Section de défilement automatique</translation>
     </message>
     <message>
         <source>Section</source>
@@ -2986,7 +2986,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paramètres de section</translation>
     </message>
     <message>
         <source>Current section:</source>
@@ -3010,7 +3010,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gauche</translation>
     </message>
     <message>
         <source>Top</source>
@@ -3026,7 +3026,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droite</translation>
     </message>
     <message>
         <source>Set music</source>
@@ -3046,7 +3046,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ordinaire</translation>
     </message>
     <message>
         <source>Do end game:</source>
@@ -3098,7 +3098,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Démarrer</translation>
     </message>
     <message>
         <source>Jump</source>
@@ -3110,7 +3110,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Événement déclencheur</translation>
     </message>
     <message>
         <source>Delay</source>
@@ -3158,7 +3158,7 @@ Do you want to continue?</source>
     <name>LvlHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Place</source>
@@ -3201,7 +3201,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bloc</translation>
     </message>
     <message>
         <source>Slippery</source>
@@ -3245,15 +3245,15 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Largeur :</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hauteur :</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>Z-Position</source>
@@ -3302,7 +3302,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNJ</translation>
     </message>
     <message>
         <source>Up</source>
@@ -3330,39 +3330,39 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direction</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gauche</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aléatoire</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droite</translation>
     </message>
     <message>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Générateur</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type :</translation>
     </message>
     <message>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaîne</translation>
     </message>
     <message>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Projectile</translation>
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Délai (secondes) :</translation>
     </message>
     <message>
         <source>Contains of current NPC-Container</source>
@@ -3430,11 +3430,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ajouter</translation>
     </message>
     <message>
         <source>Lock</source>
@@ -3541,7 +3541,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bloc</translation>
     </message>
     <message>
         <source>Reset Search Fields</source>
@@ -3573,7 +3573,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type :</translation>
     </message>
     <message>
         <source>Search Block</source>
@@ -3597,7 +3597,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>Search BGO</source>
@@ -3609,7 +3609,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNJ</translation>
     </message>
     <message>
         <source>[None]</source>
@@ -3657,19 +3657,19 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direction</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gauche</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aléatoire</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droite</translation>
     </message>
     <message>
         <source>Case Sensitive?</source>
@@ -3724,7 +3724,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parcourir…</translation>
     </message>
     <message>
         <source>Edit a custom background config...</source>
@@ -3778,7 +3778,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Musique</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -3842,11 +3842,11 @@ Physical env. zones:	%6
     <name>LvlWarpBox</name>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaînes et portes</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Général</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -3888,19 +3888,19 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">0 - Instantané</translation>
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 - Tuyau</translation>
     </message>
     <message>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2 - Porte</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3 - Portail</translation>
     </message>
     <message>
         <source>Message which will be shown if the player
@@ -4024,11 +4024,11 @@ Measured in pixels per 1/65 seconds.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gauche</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Droite</translation>
     </message>
     <message>
         <source>Up</source>
@@ -4199,7 +4199,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Niveau</translation>
     </message>
     <message>
         <source>Current section</source>
@@ -4211,7 +4211,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vue</translation>
     </message>
     <message>
         <source>Window</source>
@@ -4271,7 +4271,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaînes et portes</translation>
     </message>
     <message>
         <source>Test</source>
@@ -4299,7 +4299,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Données personnalisées</translation>
     </message>
     <message>
         <source>Script</source>
@@ -4323,7 +4323,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Débogueur</translation>
     </message>
     <message>
         <source>Testing options...</source>
@@ -4397,7 +4397,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
     <message>
         <source>Save all</source>
@@ -4413,7 +4413,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Contenus</translation>
     </message>
     <message>
         <source>Contents (F1)</source>
@@ -4850,10 +4850,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>LunaLua</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5023,7 +5019,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animation</translation>
     </message>
     <message>
         <source>&lt;empty&gt;</source>
@@ -5083,7 +5079,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
     <message>
         <source>Configuration is busy</source>
@@ -5393,7 +5389,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Il n&apos;y a rien à faire.</translation>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
@@ -5529,7 +5525,7 @@ Please save the file first.</source>
     <message>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chaînes et portes</translation>
     </message>
     <message>
         <source>Water</source>
@@ -5615,7 +5611,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> px</translation>
     </message>
     <message>
         <source>Height</source>
@@ -5909,7 +5905,7 @@ Error description:
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direction</translation>
     </message>
     <message>
         <source>Included NPC</source>
@@ -6197,7 +6193,7 @@ Error description:
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Musique</translation>
     </message>
     <message>
         <source>Custom Music</source>
@@ -6765,35 +6761,35 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bloc</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNJ</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tuile de terrain</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paysage</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chemin</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Niveau</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type :</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -6813,11 +6809,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hauteur :</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Largeur :</translation>
     </message>
     <message>
         <source>Show custom only</source>
@@ -6866,7 +6862,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nom</translation>
     </message>
     <message>
         <source>ID</source>
@@ -6975,7 +6971,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
     <message>
         <source>Tilesets list:</source>
@@ -7146,7 +7142,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
     <message>
         <source>Click to check updates</source>
@@ -7240,11 +7236,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
 </context>
 <context>
@@ -7255,7 +7251,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Niveau</translation>
     </message>
     <message>
         <source>Big path background</source>
@@ -7291,7 +7287,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parcourir</translation>
     </message>
     <message>
         <source>Go to coordinates:</source>
@@ -7375,7 +7371,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mode de placement</translation>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
@@ -7418,7 +7414,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animation</translation>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>
@@ -7453,7 +7449,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -7492,7 +7488,7 @@ because object configurations are not loaded
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
         <source>Place</source>
@@ -7531,7 +7527,7 @@ because object configurations are not loaded
     <name>WldSaveImage</name>
     <message>
         <source>Export to image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter en image</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
@@ -7539,7 +7535,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Please, select target image size:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Veuillez sélectionner la taille de l&apos;image cible :</translation>
     </message>
     <message>
         <source>Height</source>
@@ -7547,7 +7543,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
@@ -7563,11 +7559,11 @@ because object configurations are not loaded
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> px</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est la &lt;span style=&quot; font-weight:600;&quot;&gt;Hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width</source>
@@ -7648,7 +7644,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type :</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -7664,7 +7660,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tuile de terrain</translation>
     </message>
     <message>
         <source>Search Terrain Tile</source>
@@ -7672,7 +7668,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paysage</translation>
     </message>
     <message>
         <source>Search Scenery</source>
@@ -7680,7 +7676,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chemin</translation>
     </message>
     <message>
         <source>Search Path</source>
@@ -7688,7 +7684,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Niveau</translation>
     </message>
     <message>
         <source>Level file</source>
@@ -7914,7 +7910,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
     <message>
         <source> not saved</source>
@@ -7934,7 +7930,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paysage</translation>
     </message>
     <message>
         <source>Paths</source>
@@ -8020,7 +8016,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parcourir</translation>
     </message>
     <message>
         <source>Counting...</source>
@@ -8032,7 +8028,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
     <message>
         <source>Counting stars...</source>
@@ -8055,7 +8051,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
 </context>
 <context>
@@ -8108,11 +8104,11 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parcourir</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Démarrer</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -8125,7 +8121,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
     <message>
         <source>Flags</source>
@@ -8187,7 +8183,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parcourir</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
@@ -8196,7 +8192,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Démarrer</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
@@ -8204,7 +8200,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer</translation>
     </message>
     <message>
         <source>Flags</source>

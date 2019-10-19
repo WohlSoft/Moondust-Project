@@ -4991,10 +4991,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>LunaLua</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation type="unfinished"></translation>
     </message>

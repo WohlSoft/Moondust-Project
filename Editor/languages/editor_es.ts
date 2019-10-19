@@ -7332,7 +7332,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>

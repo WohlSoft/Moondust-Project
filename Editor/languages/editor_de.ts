@@ -6702,7 +6702,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
