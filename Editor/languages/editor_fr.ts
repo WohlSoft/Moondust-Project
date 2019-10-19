@@ -2260,14 +2260,14 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
 </context>
 <context>
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Outil LazyFix</translation>
     </message>
     <message>
         <source>Close</source>
