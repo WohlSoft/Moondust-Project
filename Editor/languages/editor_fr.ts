@@ -1715,19 +1715,19 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>World-Music-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de musique de monde : %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Copy</source>
