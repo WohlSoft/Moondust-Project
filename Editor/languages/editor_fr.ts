@@ -2000,11 +2000,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile PNJ/Joueur (une fois)</translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile PNJ/Joueur (chaque image)</translation>
     </message>
     <message>
         <source>Collision script</source>
