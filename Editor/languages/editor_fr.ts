@@ -2020,7 +2020,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Air chamber</source>
-        <translation type="unfinished"></translation>
+        <translation>Chambre à air</translation>
     </message>
     <message>
         <source>NPC Hurting Field</source>
