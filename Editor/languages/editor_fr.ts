@@ -2008,15 +2008,15 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Collision script</source>
-        <translation type="unfinished"></translation>
+        <translation>Script de collision</translation>
     </message>
     <message>
         <source>Mouse click Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Script de clic de souris</translation>
     </message>
     <message>
         <source>Collision Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement de collision</translation>
     </message>
     <message>
         <source>Air chamber</source>
