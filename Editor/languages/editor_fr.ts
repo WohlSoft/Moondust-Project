@@ -1711,7 +1711,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>World-Music-ID: %1</source>
