@@ -1810,23 +1810,23 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Set message...</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir le message…</translation>
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir comme Boss</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer en</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 de cette section en</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 en</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
@@ -1854,15 +1854,15 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1874,7 +1874,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés…</translation>
     </message>
     <message>
         <source>Margin of section</source>
@@ -1890,105 +1890,105 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier les données brutes de l&apos;utilisateur…</translation>
     </message>
 </context>
 <context>
     <name>ItemPath</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>Path-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de chemin : %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer en</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 en</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
 </context>
 <context>
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Calque : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à un nouveau calque…</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[masqué]</translation>
     </message>
     <message>
         <source>Environment type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;environnement</translation>
     </message>
     <message>
         <source>Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Eau</translation>
     </message>
     <message>
         <source>Quicksand</source>
-        <translation type="unfinished"></translation>
+        <translation>Sables mouvants</translation>
     </message>
     <message>
         <source>Custom liquid</source>
-        <translation type="unfinished"></translation>
+        <translation>Liquide personnalisé</translation>
     </message>
     <message>
         <source>Gravity Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Champ de gravité</translation>
     </message>
     <message>
         <source>Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile (une fois)</translation>
     </message>
     <message>
         <source>Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile (chaque image)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile PNJ (une fois)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
