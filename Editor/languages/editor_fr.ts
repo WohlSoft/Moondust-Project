@@ -1976,11 +1976,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Gravity Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Champ de gravité</translation>
     </message>
     <message>
         <source>Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile (Une fois)</translation>
     </message>
     <message>
         <source>Touch Event (Every frame)</source>
