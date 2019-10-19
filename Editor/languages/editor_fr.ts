@@ -1878,11 +1878,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>Marges de la section</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner la distance par rapport aux limites de la section (en pixels) pour supprimer des éléments.</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
