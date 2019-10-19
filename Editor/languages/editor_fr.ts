@@ -1980,15 +1980,15 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Touch Event (Once)</source>
-        <translation>Événement tactile (Une fois)</translation>
+        <translation>Événement tactile (une fois)</translation>
     </message>
     <message>
         <source>Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile (chaque image)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Événement tactile PNJ (une fois)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
