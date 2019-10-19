@@ -1731,82 +1731,82 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer en</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer tous les %1 en</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
 </context>
 <context>
     <name>ItemNPC</name>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Calque : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à un nouveau calque…</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[masqué]</translation>
     </message>
     <message>
         <source>Edit NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier la configuration du PNJ</translation>
     </message>
     <message>
         <source>New NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouvelle configuration de PNJ</translation>
     </message>
     <message>
         <source>Set %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir %1</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished">Direction</translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Gauche</translation>
+        <translation>Gauche</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished">Aléatoire</translation>
+        <translation>Aléatoire</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished">Droite</translation>
+        <translation>Droite</translation>
     </message>
     <message>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation>Amical</translation>
     </message>
     <message>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne bouge pas</translation>
     </message>
     <message>
         <source>Set message...</source>
@@ -1834,23 +1834,23 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier les préférences</translation>
     </message>
     <message>
         <source>NPC-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de PNJ : % 1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : X, Y, Largeur, Hauteur</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : Gauche, Haut, Droite, Bas</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -1866,11 +1866,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1 dans cette section</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les %1</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -1878,15 +1878,15 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>Marges de la section</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner la distance par rapport aux limites de la section (en pixels) pour supprimer des éléments.</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Les préférences ont été copiées : %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
