@@ -2275,7 +2275,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoire d&apos;entrée contenant les fichiers GIF SMBX (*.gif et *m.gif)</translation>
     </message>
     <message>
         <source>Output directory, where the fixed images will be saved.
@@ -2284,7 +2284,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher des images dans les sous-répertoires</translation>
     </message>
     <message>
         <source>Browse</source>
