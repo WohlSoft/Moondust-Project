@@ -1298,10 +1298,10 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Совет 1:&lt;/b&gt; Вы сможете переключить интерфейс через меню &lt;u&gt;Справка&lt;/u&gt;, или переключая панели инструментов через меню &lt;u&gt;Вид&lt;/u&gt; и переключение режимов дочерних окон или вкладок в меню &lt;u&gt;Окно&lt;/u&gt;.&lt;br&gt;
-&lt;br&gt;
-&lt;b&gt;Совет 2:&lt;/b&gt; В отличии от старого редактора, большинство возможностей доступно через контекстное меню (открывается нажатием правой кнопки мыши), окна инструментов из панелей значков (перетаскиваемые панели со значками в верхней части окна) и меню. Этот редактор использует мульти-выбор!&lt;br&gt;
-&lt;br&gt;
+        <translation>&lt;p&gt;&lt;b&gt;Совет 1:&lt;/b&gt; Вы сможете переключить интерфейс через меню &lt;u&gt;Справка&lt;/u&gt;, или переключая панели инструментов через меню &lt;u&gt;Вид&lt;/u&gt; и переключение режимов дочерних окон или вкладок в меню &lt;u&gt;Окно&lt;/u&gt;.&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Совет 2:&lt;/b&gt; В отличии от старого редактора, большинство возможностей доступно через контекстное меню (открывается нажатием правой кнопки мыши), окна инструментов из панелей значков (перетаскиваемые панели со значками в верхней части окна) и меню. Этот редактор использует мульти-выбор!&lt;br/&gt;
+&lt;br/&gt;
 &lt;b&gt;Совет 3:&lt;/b&gt; Используйте среднюю кнопку мыши чтобы включать размещение выбранного элемента, или дублировать группу!&lt;/p&gt;</translation>
     </message>
 </context>
@@ -8107,7 +8107,7 @@ File not exist.</source>
     </message>
     <message>
         <source>Untitled file</source>
-        <translation>Untitled file</translation>
+        <translation>Безымянный файл</translation>
     </message>
     <message>
         <source>Please save file to the disk first.</source>
@@ -13405,7 +13405,7 @@ Right-click to remove!</source>
         <translation>Перетащи объекты
 в эту область!
 Клик правой кнопкой
-мыши чтобы удалить!</translation>
+мыши чтобы удалить.</translation>
     </message>
 </context>
 </TS>
