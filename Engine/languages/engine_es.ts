@@ -482,7 +482,7 @@ sin embargo puede usar el mismo enlace para la versión actualizada.</translatio
     </message>
     <message id="VSYNC_ERROR_INFO">
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Los Cuadros por segundo detectados son muy altos. Sincronización vertical será deshabilitada para prevenir resultados problemáticos. Por favor, habilite Sincronización vertical en su controlador de video</translation>
     </message>
 </context>
 </TS>
