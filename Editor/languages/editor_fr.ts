@@ -1948,27 +1948,27 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Calque : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à un nouveau calque…</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[masqué]</translation>
     </message>
     <message>
         <source>Environment type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type d&apos;environnement</translation>
     </message>
     <message>
         <source>Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Eau</translation>
     </message>
     <message>
         <source>Quicksand</source>
-        <translation type="unfinished"></translation>
+        <translation>Sables mouvants</translation>
     </message>
     <message>
         <source>Custom liquid</source>
