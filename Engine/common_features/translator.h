@@ -27,7 +27,7 @@ class PGE_Translator
 public:
     PGE_Translator();
     void init();
-    void toggleLanguage(std::string lang);
+    void toggleLanguage(std::string lang, std::string region = std::string());
 private:
     friend std::string qtTrId(const char* string);
 
@@ -35,7 +35,9 @@ private:
     //QTranslator     m_translator;   /**< contains the translations for this application */
     //QTranslator     m_translatorQt; /**< contains the translations for qt */
     QmTranslatorX   m_translator;   /**< contains the translations for this application */
+    QmTranslatorX   m_translatorEn; /**< contains the English translations as fallback */
     std::string     m_currLang;     /**< contains the currently loaded language */
+    std::string     m_currRegion; /**< contains the currently loaded language */
     std::string     m_langPath;     /**< Path of language files. This is always fixed to /languages. */
 };
 

@@ -54,6 +54,8 @@ void PGE_Translator::init()
     if(m_isInit)
         return;
     std::string defaultLocale = "en";
+    std::string defaultRegion = "";
+    // TODO: Make also recognize the "region"
 #if defined(_WIN32)
     // Win32 way
     LCID locale = GetSystemDefaultLCID();
@@ -104,7 +106,7 @@ void PGE_Translator::init()
 
     m_langPath = AppPathManager::languagesDir();
     pLogDebug("Initializing translator in the path: %s", m_langPath.c_str());
-    toggleLanguage(defaultLocale);
+    toggleLanguage(defaultLocale, defaultRegion);
     pLogDebug("Locale detected: %s", m_currLang.c_str());
 #ifdef __EMSCRIPTEN__
     printf("Using English language file %s\n", m_langPath.c_str());
@@ -129,67 +131,65 @@ static uint8_t *rwDumpFile(const char *path, size_t &size)
     }
     return nullptr;
 }
+
+static bool loadTranslationFile(QmTranslatorX &tr, const std::string &path, unsigned char *dirPath)
+{
+    size_t size = 0;
+    uint8_t *array = nullptr;
+    bool ret = false;
+
+    array = rwDumpFile(path.c_str(), size);
+    if(array)
+    {
+        ret = tr.loadData(array, size, dirPath);
+        SDL_free(array);
+    }
+
+    return ret;
+}
+
+#else
+static bool loadTranslationFile(QmTranslatorX &tr, const std::string &path, unsigned char *dirPath)
+{
+    return tr.loadFile(path.c_str(), dirPath);
+}
 #endif
 
-void PGE_Translator::toggleLanguage(std::string lang)
+void PGE_Translator::toggleLanguage(std::string lang, std::string region)
 {
-    if(!m_isInit || (m_currLang != lang))
+    if(!m_isInit || (m_currLang != lang) || (m_currRegion != region))
     {
         if(m_isInit)
+        {
             m_translator.close();
+            m_translatorEn.close();
+        }
 
         m_currLang = lang;
+        m_currRegion = region;
 
-        std::string langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
-#ifdef __ANDROID__
-        bool ok = false;
-        size_t size = 0;
-        uint8_t *array = rwDumpFile(langFilePath.c_str(), size);
-        if(array)
+        std::string langFileEnPath  = m_langPath + "/engine_en.qm";
+        std::string langFilePath    = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
+        std::string langFileRegPath = m_langPath + fmt::format_ne("/engine_{0}-{1}.qm", m_currLang, m_currRegion);
+        bool isEnglish = (langFilePath == langFileEnPath);
+        unsigned char *dirPath = reinterpret_cast<unsigned char *>(&m_langPath[0]);
+        bool ok = false, okEn = false;
+
+        // Loading English separately as a fallback
+        okEn = loadTranslationFile(m_translatorEn, langFileEnPath, dirPath);
+        if(!okEn)
+            pLogWarning("Failed to open English translation file %s!", langFileEnPath.c_str());
+
+        if(!isEnglish)
         {
-            ok = m_translator.loadData(array, size,
-                                       reinterpret_cast<unsigned char *>(&m_langPath[0]));
-            SDL_free(array);
+            // Try "lang-region"
+            ok = loadTranslationFile(m_translator, langFileRegPath, dirPath);
+            if(!ok)// Try "lang"
+                ok = loadTranslationFile(m_translator, langFilePath, dirPath);
             if(!ok)
-            {
-                pLogWarning("Failed to open translation file %s!", langFilePath.c_str());
-            }
+                pLogWarning("Can't open one of translation files (%s or %s)!", langFilePath.c_str(), langFileRegPath.c_str());
         }
-        else
-        {
-            pLogWarning("Can't open translation file %s!", langFilePath.c_str());
-        }
-#else
-        bool ok = m_translator.loadFile(langFilePath.c_str(),
-                                        reinterpret_cast<unsigned char *>(&m_langPath[0]));
-#endif
-        if(!ok)
-        {
-            m_currLang = "en"; //set to English if no other translations are found
-            langFilePath = m_langPath + fmt::format_ne("/engine_{0}.qm", m_currLang);
 
-#ifdef __ANDROID__
-            bool enOk = false;
-            size_t enSize = 0;
-            uint8_t *enData = rwDumpFile(langFilePath.c_str(), enSize);
-            if(enData)
-            {
-                enOk = m_translator.loadData(enData, enSize,
-                                           reinterpret_cast<unsigned char *>(&m_langPath[0]));
-                SDL_free(enData);
-                if(!enOk)
-                    pLogWarning("Failed to open English translation file %s!", langFilePath.c_str());
-            }
-#else
-            m_translator.loadFile(langFilePath.c_str(),
-                                  reinterpret_cast<unsigned char *>(&m_langPath[0]));
-#endif
-
-#ifdef __EMSCRIPTEN__
-            printf("Loading language file %s\n", langFilePath.c_str());
-            fflush(stdout);
-#endif
-        }
         m_isInit = true;
     }
 }
@@ -198,9 +198,22 @@ std::string qtTrId(const char* string)
 {
     if(!g_translator)
         return string;
-    std::string out = g_translator->m_translator.do_translate8(nullptr, string, nullptr, -1);
-    if(out.empty())
-        return std::string(string);
-    else
-        return out;
+
+    std::string out;
+
+    if(!g_translator->m_translator.isEmpty())
+    {
+        out = g_translator->m_translator.do_translate8(nullptr, string, nullptr, -1);
+        if(!out.empty())
+            return out;
+    }
+
+    if(g_translator->m_translatorEn.isEmpty())
+    {
+        out = g_translator->m_translatorEn.do_translate8(nullptr, string, nullptr, -1);
+        if(!out.empty())
+            return out;
+    }
+
+    return std::string(string);
 }
