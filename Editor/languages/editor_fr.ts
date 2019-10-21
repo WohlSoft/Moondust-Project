@@ -881,7 +881,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Oh non, Éditeur PGE a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
+        <translation type="unfinished">Oh non, Éditeur PGE a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -912,11 +912,11 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Publier un rapport sur le forum de PGE (wohlsoft.ru/forum/)</translation>
+        <translation type="unfinished">Publier un rapport sur le forum de PGE (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Déposer un ticket sur le dépôt GitHub (WohlSoft/PGE-Project)</translation>
+        <translation type="unfinished">Déposer un ticket sur le dépôt GitHub (WohlSoft/PGE-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -1362,7 +1362,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args : {commandes du moteur} Envoie une commande ou un message vers le moteur PGE s&apos;il est en cours d&apos;exécution</translation>
+        <translation type="unfinished">Args : {commandes du moteur} Envoie une commande ou un message vers le moteur PGE s&apos;il est en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1491,7 +1491,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>Bienvenue dans l&apos;Éditeur PGE !</translation>
+        <translation type="unfinished">Bienvenue dans l&apos;Éditeur PGE !</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1651,12 +1651,12 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Fichier de niveau PGE</translation>
+        <translation type="unfinished">Fichier de niveau PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Carte de monde PGE</translation>
+        <translation type="unfinished">Carte de monde PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -4949,7 +4949,7 @@ Zones d&apos;env. physique : 			%6
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>Définit le type de passage :
+        <translation type="unfinished">Définit le type de passage :
 0 - Instantané, le joueur sera téléporté instantanément et la vitesse de déplacement sera réinitialisée à 0.
 1 - Tuyau, entrée et sortie directionnelles.
 2 - Porte, le joueur peut entrer en appuyant sur la flèche du haut.
@@ -6414,7 +6414,7 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>Test du moteur de jeu PGE</translation>
+        <translation type="unfinished">Test du moteur de jeu PGE</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6423,7 +6423,7 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>Bonjour ! Vous essayez de tester un niveau avec le moteur PGE.
+        <translation type="unfinished">Bonjour ! Vous essayez de tester un niveau avec le moteur PGE.
 Le moteur PGE n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de PGE pour les cas où vous souhaitez tester le moteur PGE lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à PGE.</translation>
     </message>
     <message>
@@ -7832,7 +7832,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
+        <translation type="unfinished">Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
 Motif : Dépassement de mémoire !
 
 Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
@@ -7844,7 +7844,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
 Motif : Exception non gérée
 
 Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
@@ -7856,7 +7856,7 @@ Lien du forum : wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
 Motif : %1
 
 </translation>
