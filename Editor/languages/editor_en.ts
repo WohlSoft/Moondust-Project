@@ -2508,7 +2508,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>[Empty]</source>
-        <translation></translation>
+        <translation>[Empty]</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -3533,7 +3533,10 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation></translation>
+        <translation>Violation of SMBX64 standard has beeen found!
+%1, legacy engine may crash!
+Suggested to remove all excess elements.
+Are you want continue process?</translation>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
