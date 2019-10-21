@@ -2167,7 +2167,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>[Empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Vide]</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -6684,7 +6684,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Block user data change</source>
