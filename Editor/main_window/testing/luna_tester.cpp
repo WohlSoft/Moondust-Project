@@ -244,6 +244,13 @@ void LunaWorker::setEnv(const QHash<QString, QString> &env)
     m_process->setProcessEnvironment(e);
 }
 
+void LunaWorker::setWorkPath(const QString &wDir)
+{
+    if(!m_process)
+        return;
+    m_process->setWorkingDirectory(wDir);
+}
+
 void LunaWorker::start(const QString &command, const QStringList &args, bool *ok, QString *errString)
 {
     init();
@@ -517,6 +524,8 @@ void LunaTester::initRuntime()
                          thread_ptr, SLOT(quit()));
         QObject::connect(this, &LunaTester::engineSetEnv, worker_ptr,
                 &LunaWorker::setEnv, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &LunaTester::engineSetWorkPath, worker_ptr,
+                &LunaWorker::setWorkPath, Qt::BlockingQueuedConnection);
         QObject::connect(this, &LunaTester::engineStart, worker_ptr,
                 &LunaWorker::start, Qt::BlockingQueuedConnection);
         QObject::connect(this, &LunaTester::engineWrite, worker_ptr,
@@ -1585,6 +1594,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPa
             bool engineStartedSuccess = true;
             QString engineStartupErrorString;
             useWine(command, params);
+            emit engineSetWorkPath(smbxPath);
             emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
 
             if(engineStartedSuccess)
@@ -1650,6 +1660,7 @@ void LunaTester::lunaRunGame()
         QString engineStartupErrorString;
         killEngine();// Kill previously running game
         useWine(command, params);
+        emit engineSetWorkPath(smbxPath);
         emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
 
         if(!engineStartedSuccess)

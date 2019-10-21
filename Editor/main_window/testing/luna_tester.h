@@ -48,6 +48,7 @@ public:
 
 public slots:
     void setEnv(const QHash<QString, QString> &env);
+    void setWorkPath(const QString &wDir);
     void start(const QString &command, const QStringList &args, bool *ok, QString *errString);
 
     void write(const QString &out, bool *ok);
@@ -216,6 +217,7 @@ private:
 
 signals:
     void engineSetEnv(const QHash<QString, QString> &env);
+    void engineSetWorkPath(const QString &wPath);
     void engineStart(const QString &command, const QStringList &args, bool *ok, QString *errString);
     void engineWrite(const QString &out, bool *ok);
     void engineRead(QString *in, bool *ok);
