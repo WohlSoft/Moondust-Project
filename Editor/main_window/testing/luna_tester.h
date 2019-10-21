@@ -38,6 +38,7 @@ class MainWindow;
 class LunaWorker : public QObject
 {
     Q_OBJECT
+    QString m_workingPath;
     QProcess *m_process = nullptr;
     QProcess::ProcessState m_lastStatus = QProcess::NotRunning;
     bool m_isRunning = false;

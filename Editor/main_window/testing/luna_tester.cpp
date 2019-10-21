@@ -150,47 +150,57 @@ static DWORD getPidsByPath(const std::wstring &process_path, DWORD *found_pids, 
 #endif // _WIN32
 
 #if !defined(_WIN32) && !defined(__APPLE__)
-static pid_t find_pid(const char *process_name)
+static pid_t find_pid(const QString &proc_name)
 {
+    const std::string process_name = proc_name.toStdString();
     pid_t pid = -1;
     glob_t pglob;
-    char *procname, *readbuf;
-    int buflen = strlen(process_name) + 2;
-    unsigned i;
+    char real_path[PATH_MAX] = {0};
+    char cmdline_buffer[PATH_MAX] = {0};
+
     /* Get a list of all comm files. man 5 proc */
-    if (glob("/proc/*/comm", 0, nullptr, &pglob) != 0)
+    if (glob("/proc/*/exe", 0, nullptr, &pglob) != 0)
         return pid;
-    /* The comm files include trailing newlines, so... */
-    procname = (char*)malloc(buflen);
-    strcpy(procname, process_name);
-    procname[buflen - 2] = '\n';
-    procname[buflen - 1] = 0;
-    /* readbuff will hold the contents of the comm files. */
-    readbuf = (char*)malloc(buflen);
-    for (i = 0; i < pglob.gl_pathc; ++i)
+
+    for(size_t i = 0; i < pglob.gl_pathc; ++i)
     {
-        FILE *comm;
-        char *ret;
-        /* Read the contents of the file. */
-        if ((comm = fopen(pglob.gl_pathv[i], "r")) == nullptr)
+        std::memset(real_path, 0, PATH_MAX);
+        std::memset(cmdline_buffer, 0, PATH_MAX);
+        size_t len = std::strlen(pglob.gl_pathv[i]);
+
+        if(nullptr == realpath(pglob.gl_pathv[i], real_path))
             continue;
-        ret = fgets(readbuf, buflen, comm);
-        fclose(comm);
-        if (ret == nullptr)
+
+        if(nullptr == std::strstr(real_path, "wine-preloader"))
             continue;
+
+        std::string cmdline_path = std::string(pglob.gl_pathv[i], len - 3);
+        cmdline_path += "cmdline";
+
+        FILE *cline = std::fopen(cmdline_path.c_str(), "rb");
+        if(!cline)
+            continue;
+
+        std::fread(cmdline_buffer, 1, PATH_MAX, cline);
+        std::fclose(cline);
+        for(size_t j = 0; j < PATH_MAX; j++)
+        {
+            char &c = cmdline_buffer[j];
+            if(c == '\\')
+                c = '/';
+        }
+
         /*
-        If comm matches our process name, extract the process ID from the
+        If exe matches our process path, extract the process ID from the
         path, convert it to a pid_t, and return it.
         */
-        if (strcmp(readbuf, procname) == 0)
+        if(nullptr != std::strstr(cmdline_buffer, process_name.c_str()))
         {
             pid = static_cast<pid_t>(std::atoi(pglob.gl_pathv[i] + strlen("/proc/")));
             break;
         }
     }
     /* Clean up. */
-    free(procname);
-    free(readbuf);
     globfree(&pglob);
     return pid;
 }
@@ -246,6 +256,7 @@ void LunaWorker::setEnv(const QHash<QString, QString> &env)
 
 void LunaWorker::setWorkPath(const QString &wDir)
 {
+    m_workingPath = wDir;
     if(!m_process)
         return;
     m_process->setWorkingDirectory(wDir);
@@ -256,6 +267,7 @@ void LunaWorker::start(const QString &command, const QStringList &args, bool *ok
     init();
     Q_ASSERT(m_process);
     LogDebug(QString("LunaTester: starting command: %1 %2").arg(command).arg(args.join(' ')));
+    m_process->setWorkingDirectory(m_workingPath);
     m_process->start(command, args);
     m_lastStatus = m_process->state();
     *ok = m_process->waitForStarted();
@@ -269,8 +281,6 @@ void LunaWorker::terminate()
 {
     if(m_process && (m_process->state() == QProcess::Running))
     {
-        LogDebugNC(QString("LunaWorker: Killing by QProcess::kill()..."));
-        QMetaObject::invokeMethod(m_process, "kill", Qt::BlockingQueuedConnection);
 #ifdef _WIN32
         // Kill everything that has "smbx.exe"
         DWORD proc_id[1024];
@@ -328,14 +338,17 @@ void LunaWorker::terminate()
             }
         }
 #   else
-        pid_t pid = find_pid(ConfStatus::SmbxEXE_Name.toUtf8().data());
+        pid_t pid = find_pid(ConfStatus::configDataPath + ConfStatus::SmbxEXE_Name);
         LogDebugNC(QString("LunaWorker: Killing %1 by pid %2...")
             .arg(ConfStatus::SmbxEXE_Name)
             .arg(pid));
-        if(pid)
+        if(pid > 0)
             kill(pid, SIGKILL);
 #   endif //__APPLE__
 #endif // _WIN32
+
+        LogDebugNC(QString("LunaWorker: Killing by QProcess::kill()..."));
+        QMetaObject::invokeMethod(m_process, "kill", Qt::BlockingQueuedConnection);
     }
 }
 
