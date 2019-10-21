@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation>Sous-fenêtres à onglets (style moderne)</translation>
+        <translation>Onglets (style moderne)</translation>
     </message>
     <message>
         <source>Music will automatically play when you open a level file</source>
@@ -165,7 +165,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Warp</source>
-        <translation>Chaîne</translation>
+        <translation>Passage</translation>
     </message>
     <message>
         <source>Projectile</source>
@@ -193,11 +193,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation>Chaînes et portes</translation>
+        <translation>Passages et portes</translation>
     </message>
     <message>
         <source>Warp type:</source>
-        <translation>Type de chaîne :</translation>
+        <translation>Type de passage :</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -245,7 +245,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>World Map Item toolbox</source>
-        <translation>Boîte à outils d&apos;éléments de la carte du monde</translation>
+        <translation>Boîte à outils d&apos;éléments de la carte de monde</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
@@ -269,7 +269,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Tileset Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte des jeux de tuiles</translation>
     </message>
     <message>
         <source>Logging</source>
@@ -308,7 +308,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Abort</source>
-        <translation>Annuler</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>Counting stars...</source>
@@ -425,7 +425,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
         <source>Convert into new format
 (select a tab to choose target format)</source>
         <translation>Convertir dans un nouveau format
-(Sélectionnez un onglet pour choisir le format cible)</translation>
+(Sélectionnez un onglet pour choisir le format de destination)</translation>
     </message>
     <message>
         <source>Don&apos;t change format</source>
@@ -506,7 +506,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
     <message>
         <source>Remember current screen position on the level map or on the world map
 and store a bookmark.</source>
-        <translation>Mémorise la position actuelle de l&apos;écran dans le niveau ou la carte du monde
+        <translation>Mémorise la position actuelle de l&apos;écran dans le niveau ou la carte de monde
 et enregistre un repère.</translation>
     </message>
     <message>
@@ -641,7 +641,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Music (world map) (%1/%2)</source>
-        <translation>Musique (carte du monde) (%1/%2)</translation>
+        <translation>Musique (carte de monde) (%1/%2)</translation>
     </message>
     <message>
         <source>Music (special) (%1/%2)</source>
@@ -669,19 +669,19 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation>Carte du monde : Tuiles de terrain (%1/%2)</translation>
+        <translation>Carte de monde : Tuiles de terrain (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Scenery (%1/%2)</source>
-        <translation>Carte du monde : Paysages (%1/%2)</translation>
+        <translation>Carte de monde : Paysages (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation>Carte du monde : Tuiles de chemin (%1/%2)</translation>
+        <translation>Carte de monde : Tuiles de chemin (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation>Carte du monde : Tuiles d&apos;entrée de niveau (%1/%2)</translation>
+        <translation>Carte de monde : Tuiles d&apos;entrée de niveau (%1/%2)</translation>
     </message>
     <message>
         <source>Default rotation rules (%1)</source>
@@ -693,7 +693,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>World map data</source>
-        <translation>Données de la carte du monde</translation>
+        <translation>Données de la carte de monde</translation>
     </message>
     <message>
         <source>Characters</source>
@@ -732,11 +732,11 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Oh oh, PGE Editor a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
+        <translation>Oh oh, Éditeur MPJ a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation>Forum PGE (http://wohlsoft.ru/forum/)</translation>
+        <translation>Forum MPJ (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Exit from application</source>
@@ -786,7 +786,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>BGO</source>
-        <translation>BGO</translation>
+        <translation>Objets d&apos;arrière-plan</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -916,7 +916,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation>Argument : {String array} valide le tableau de chaînes PGE-X</translation>
+        <translation>Argument : {String array} valide le tableau de chaînes MPJ-X</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
@@ -924,7 +924,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation>Argument : {Path to file} teste si le fichier est au format PGE-X</translation>
+        <translation>Argument : {Path to file} teste si le fichier est au format MPJ-X</translation>
     </message>
     <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
@@ -932,7 +932,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Arguments : {engine commands} Envoie une commande ou un message vers le moteur PGE s&apos;il est en cours d&apos;exécution</translation>
+        <translation>Arguments : {engine commands} Envoie une commande ou un message vers le moteur MPJ s&apos;il est en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -963,7 +963,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est la &lt;span style=&quot; font-weight:600;&quot;&gt;Hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -983,7 +983,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est la &lt;span style=&quot; font-weight:600;&quot;&gt;Largeur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette largeur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;largeur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette largeur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1007,7 +1007,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Masquer les images des méta-symboles de l&apos;éditeur</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
@@ -1046,7 +1046,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>Bienvenue dans PGE Editor !</translation>
+        <translation>Bienvenue dans Éditeur MPJ !</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1199,12 +1199,12 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Fichier de niveau PGE</translation>
+        <translation>Fichier de niveau MPJ</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Carte du monde PGE</translation>
+        <translation>Carte de monde MPJ</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -1214,7 +1214,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation>Carte du monde SMBX</translation>
+        <translation>Carte de monde SMBX</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1245,7 +1245,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Background-2</source>
-        <translation>Arrière-plan</translation>
+        <translation>Arrière-plan 2</translation>
     </message>
     <message>
         <source>Background</source>
@@ -1273,7 +1273,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation>Transformer tout les %1 en</translation>
+        <translation>Transformer tous les %1 en</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -1281,7 +1281,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>BGO-ID: %1</source>
-        <translation>ID BGO : % 1</translation>
+        <translation>ID d&apos;objet d&apos;arrière-plan : % 1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -1525,7 +1525,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uniformiser les tailles des éléments</translation>
     </message>
     <message>
         <source>Show custom elements</source>
@@ -1621,11 +1621,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Path background</source>
-        <translation>Chemin de l&apos;arrière-plan</translation>
+        <translation>Chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Big Path background</source>
-        <translation>Chemin du grand arrière-plan</translation>
+        <translation>Grand chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Always Visible</source>
@@ -2030,7 +2030,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation type="unfinished">Champ de blessure du PNJ</translation>
+        <translation>Champ de blessure du PNJ</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2171,7 +2171,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>BGO</source>
-        <translation>BGO</translation>
+        <translation>Objets d&apos;arrière-plan</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -2363,7 +2363,7 @@ Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;
     </message>
     <message>
         <source>Abort</source>
-        <translation>Annuler</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -2487,7 +2487,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>2/%1 Loading BGOs...</source>
-        <translation>Chargement des BGO… (2/%1)</translation>
+        <translation>Chargement des objets d&apos;arrière-plan… (2/%1)</translation>
     </message>
     <message>
         <source>3/%1 Loading Blocks...</source>
@@ -2538,7 +2538,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation>BGO</translation>
+        <translation>Objets d&apos;arrière-plan</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -2577,7 +2577,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>Drop</source>
-        <translation>Supprimer</translation>
+        <translation>Jeter</translation>
     </message>
     <message>
         <source>Jump</source>
@@ -2758,7 +2758,7 @@ Il est conseillé de désactiver cette fonctionnalité sur les ordinateurs lents
     </message>
     <message>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation>LunaTester ne peut pas être utilisé sur les cartes du monde car le moteur SMBX ne fourni pas la possibilité de tester les cartes du monde. Chargez directement un épisode, ou utilisez le moteur PGE pour tester votre fichier de carte du monde.</translation>
+        <translation>LunaTester ne peut pas être utilisé sur les cartes de monde car le moteur SMBX ne fourni pas la possibilité de tester les cartes de monde. Chargez directement un épisode, ou utilisez le moteur MPJ pour tester votre fichier de carte de monde.</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
@@ -2808,7 +2808,7 @@ Pour exécuter des tests via SMBX, vous devez utiliser le paquet de configuratio
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>Le moteur SMBX teste déjà un autre niveau.
-Souhaitez-vous interrompre le processus de test en cours ?</translation>
+Souhaitez-vous abandonner le processus de test en cours ?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -2915,7 +2915,7 @@ Cela signifie qu&apos;il est impossible de lancer le test de niveau sur votre sy
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt;ne sont pas supportés pour plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne sont pas supportés pour plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight :600 ;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration : underline ;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration : underline ;&quot;&gt;SMBX-38A&lt;/span&gt;ne sont pas supportés pour plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration : underline ;&quot;&gt;SMBX-1…7&lt;/span&gt; ne sont pas supportés pour plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -3138,7 +3138,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Alt-run</source>
-        <translation>Saut alternatif</translation>
+        <translation>Course alternative</translation>
     </message>
     <message>
         <source>Start</source>
@@ -3298,7 +3298,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation>BGO</translation>
+        <translation>Objets d&apos;arrière-plan</translation>
     </message>
     <message>
         <source>Z-Position</source>
@@ -3343,8 +3343,8 @@ Souhaitez-vous continuer ?</translation>
     <message>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation>Ceci définit la priorité de tri du tableau. Avec cette option, vous pouvez faire apparaître les BGO au premier plan. (Définissez ceci à -1 pour utiliser la valeur par défaut de la configuration globale de BGO).
-Ceci tire avantage du rendu BGO bugué de SMBX. Pour ce faire, il suffit de placer l&apos;un des BGO au premier plan sur la carte (par exemple, une vis pneumatique). Cette option ne sera pas sauvegardée dans le fichier LVL, vous devrez donc définir cette option à chaque ouverture de ce niveau.</translation>
+        <translation>Ceci définit la priorité de tri du tableau. Avec cette option, vous pouvez faire apparaître les objets d&apos;arrière-plan au premier plan. (Définissez ceci à -1 pour utiliser la valeur par défaut de la configuration globale des objets d&apos;arrière-plan).
+Ceci tire avantage du rendu bugué des objet d&apos;arrière-plan de SMBX. Pour ce faire, il suffit de placer l&apos;un des objets arrière-plan au premier plan sur la carte (par exemple, une vis pneumatique). Cette option ne sera pas sauvegardée dans le fichier LVL, vous devrez donc définir cette option à chaque ouverture de ce niveau.</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -3364,7 +3364,7 @@ Ceci tire avantage du rendu BGO bugué de SMBX. Pour ce faire, il suffit de plac
     </message>
     <message>
         <source>Talk:</source>
-        <translation>Parole :</translation>
+        <translation>Dialogue :</translation>
     </message>
     <message>
         <source>Activate:</source>
@@ -3400,7 +3400,7 @@ Ceci tire avantage du rendu BGO bugué de SMBX. Pour ce faire, il suffit de plac
     </message>
     <message>
         <source>Warp</source>
-        <translation>Chaîne</translation>
+        <translation>Passage</translation>
     </message>
     <message>
         <source>Projectile</source>
@@ -3420,7 +3420,7 @@ Ceci tire avantage du rendu BGO bugué de SMBX. Pour ce faire, il suffit de plac
     </message>
     <message>
         <source>Talk message:</source>
-        <translation>Message de conversation :</translation>
+        <translation>Message de dialogue :</translation>
     </message>
     <message>
         <source>Friendly</source>
@@ -3452,7 +3452,7 @@ Ceci tire avantage du rendu BGO bugué de SMBX. Pour ce faire, il suffit de plac
     </message>
     <message>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation>ID de BGO : %1, ID de tableau : %2</translation>
+        <translation>ID d&apos;objet d&apos;arrière-plan : %1, ID de tableau : %2</translation>
     </message>
     <message>
         <source>NPC ID: %1, Array ID: %2</source>
@@ -3546,7 +3546,7 @@ Tous les objets de ce calque seront supprimés !</translation>
     </message>
     <message>
         <source>Search User BGOs %1</source>
-        <translation>Recherche de BGO personnalisés %1</translation>
+        <translation>Recherche d&apos;objets d&apos;arrière-plan personnalisés %1</translation>
     </message>
     <message>
         <source>Search User NPCs %1</source>
@@ -3586,7 +3586,7 @@ Physical env. zones:	%6
 Blocs :								%2
 Objets d&apos;arrière-plan :				%3
 Personnages non-joueurs :		%4
-Entrées de portail : 				%5
+Entrées de passage : 				%5
 Zones d&apos;env. physique : 			%6
 </translation>
     </message>
@@ -3655,7 +3655,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>BGO</source>
-        <translation>BGO</translation>
+        <translation>Objet d&apos;arrière-plan</translation>
     </message>
     <message>
         <source>Search BGO</source>
@@ -3751,11 +3751,11 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Next BGO</source>
-        <translation>BGO suivant</translation>
+        <translation>Objet d&apos;arrière-plan suivant</translation>
     </message>
     <message>
         <source>BGO search completed!</source>
-        <translation>Recherche de BGO terminée !</translation>
+        <translation>Recherche d&apos;objet d&apos;arrière-plan terminée !</translation>
     </message>
     <message>
         <source>Next NPC</source>
@@ -3849,7 +3849,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>[No image]</source>
-        <translation>[Pas d&apos;image]</translation>
+        <translation>[Aucune image]</translation>
     </message>
     <message>
         <source>[Silence]</source>
@@ -3901,7 +3901,7 @@ Zones d&apos;env. physique : 			%6
     <name>LvlWarpBox</name>
     <message>
         <source>Warps and Doors</source>
-        <translation>Portails et portes</translation>
+        <translation>Passages et portes</translation>
     </message>
     <message>
         <source>Main</source>
@@ -3943,11 +3943,11 @@ Zones d&apos;env. physique : 			%6
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>Définit le type d&apos;entrée/sortie :
+        <translation>Définit le type de passage :
 0 - Instantané, le joueur sera téléporté instantanément et la vitesse de déplacement sera réinitialisée à 0.
 1 - Tuyau, entrée et sortie directionnelles.
 2 - Porte, le joueur peut entrer avec une clé.
-3 - Portail, le joueur sera téléporté, mais en conservant la vitesse de déplacement (Moteur PGE uniquement).</translation>
+3 - Portail, le joueur sera téléporté, mais en conservant la vitesse de déplacement (Moteur MPJ uniquement).</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -3977,7 +3977,7 @@ n&apos;a pas le nombre d&apos;étoiles requis</translation>
     </message>
     <message>
         <source>Need stars</source>
-        <translation>Étoiles requises</translation>
+        <translation>Il faut des étoiles</translation>
     </message>
     <message>
         <source>Required number of stars
@@ -4111,7 +4111,7 @@ Mesurée en pixels par 1/65 secondes.</translation>
     </message>
     <message>
         <source>Warp to World map</source>
-        <translation>Aller à la position sur la carte du monde</translation>
+        <translation>Aller à la position sur la carte de monde</translation>
     </message>
     <message>
         <source>X:</source>
@@ -4120,7 +4120,7 @@ Mesurée en pixels par 1/65 secondes.</translation>
     <message>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
-        <translation>Coordonnées cibles du joueur sur la carte du monde
+        <translation>Coordonnées cibles du joueur sur la carte de monde
 lorsqu&apos;il sort d&apos;un niveau à travers ce passage.</translation>
     </message>
     <message>
@@ -4129,7 +4129,7 @@ lorsqu&apos;il sort d&apos;un niveau à travers ce passage.</translation>
     </message>
     <message>
         <source>Browse the world map to set an exit point</source>
-        <translation>Parcourir la carte du monde pour définir un point de sortie</translation>
+        <translation>Parcourir la carte de monde pour définir un point de sortie</translation>
     </message>
     <message>
         <source>Set</source>
@@ -4196,7 +4196,7 @@ show the current playable character(s) and number of lives.</source>
     <message>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation>Entrer par le passage #</translation>
+        <translation>Entrer par le passage N°</translation>
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
@@ -4222,24 +4222,24 @@ Chaque paire de points de passage nécessite un passage d&apos;entrée.</transla
     </message>
     <message>
         <source>World map files not found</source>
-        <translation>Fichiers de cartes du monde non trouvés</translation>
+        <translation>Fichiers de cartes de monde non trouvés</translation>
     </message>
     <message>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
-        <translation>Vous n&apos;avez placé aucun fichier de carte du monde avec ce fichier de niveau.
-Veuillez placer ce niveau avec une carte du monde, ou créer une nouvelle carte du monde dans le même dossier que le fichier de niveau.
+        <translation>Vous n&apos;avez placé aucun fichier de carte de monde avec ce fichier de niveau.
+Veuillez placer ce niveau avec une carte de monde, ou créer une nouvelle carte de monde dans le même dossier que le fichier de niveau.
 Chemin de fichier : %1</translation>
     </message>
     <message>
         <source>Select world map file</source>
-        <translation>Sélectionner le fichier de carte du monde</translation>
+        <translation>Sélectionner le fichier de carte de monde</translation>
     </message>
     <message>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
-        <translation>Plus d&apos;un fichier de carte du monde ont été trouvés.
+        <translation>Plus d&apos;un fichier de carte de monde ont été trouvés.
 Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
@@ -4323,7 +4323,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Level Sections Switch</source>
-        <translation type="unfinished">Basculer de section de niveau</translation>
+        <translation>Basculer de section de niveau</translation>
     </message>
     <message>
         <source>Section Settings</source>
@@ -4399,7 +4399,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Tileset Item Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte des jeux de tuiles</translation>
     </message>
     <message>
         <source>Debugger</source>
@@ -4653,7 +4653,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
-        <translation type="unfinished">Correction des éléments graphiques incomplets (LazyFixTool)…</translation>
+        <translation>Correction des éléments graphiques incomplets (LazyFixTool)…</translation>
     </message>
     <message>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
@@ -4816,7 +4816,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Tileset Groups Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de groupes de jeux de tuiles</translation>
     </message>
     <message>
         <source>Zoom In</source>
@@ -4928,7 +4928,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation type="unfinished"></translation>
+        <translation>Autocode [Langage orginal de Lunadll]</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -5160,7 +5160,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Abort</source>
-        <translation>Annuler</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>Configuration is busy</source>
@@ -5412,7 +5412,7 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>Test du moteur de jeu PGE</translation>
+        <translation>Test du moteur de jeu MPJ</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -5421,8 +5421,8 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>Bonjour ! Vous essayez de tester un niveau avec le moteur PGE.
-Le moteur PGE n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de PGE pour les cas où vous souhaitez tester le moteur PGE lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à PGE.</translation>
+        <translation>Bonjour ! Vous essayez de tester un niveau avec le moteur MPJ.
+Le moteur MPJ n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de MPJ pour les cas où vous souhaitez tester le moteur MPJ lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à MPJ.</translation>
     </message>
     <message>
         <source>Clonning of section...</source>
@@ -5482,7 +5482,7 @@ Souhaitez-vous cloner une autre section ?</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation type="unfinished">Il n&apos;y a rien à faire.</translation>
+        <translation>Il n&apos;y a rien à faire.</translation>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
@@ -5654,7 +5654,7 @@ Pour commencer à utiliser le nouveau paquet de configuration, vous devez redém
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigateur de jeux d&apos;éléments du niveau</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
@@ -5662,7 +5662,7 @@ Pour commencer à utiliser le nouveau paquet de configuration, vous devez redém
     </message>
     <message>
         <source>World map items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigateur de jeux d&apos;éléments de la carte de monde</translation>
     </message>
     <message>
         <source>Music change points</source>
@@ -5796,11 +5796,11 @@ Voir %2 pour plus d&apos;information.</translation>
     </message>
     <message>
         <source>Left-Right direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauche-Droite</translation>
     </message>
     <message>
         <source>Left-Right-Grabbed</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauche-Droite-Saisi</translation>
     </message>
     <message>
         <source>Foreground</source>
@@ -6280,7 +6280,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Is Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>La section s&apos;enroule horizontalement</translation>
     </message>
     <message>
         <source>No Back</source>
@@ -6320,7 +6320,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Big Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Grand chemin an arrière-plan</translation>
     </message>
     <message>
         <source>Character</source>
@@ -6360,7 +6360,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Path Background</source>
-        <translation>Chemin de l&apos;arrière-plan</translation>
+        <translation>Chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Exit at bottom</source>
@@ -6640,15 +6640,15 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>Loading rotation rules table...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement du tableau des règles de rotation…</translation>
     </message>
     <message>
         <source>Loading Tilesets...</source>
-        <translation>Chargement des ensembles de tuiles…</translation>
+        <translation>Chargement des jeux de tuiles…</translation>
     </message>
     <message>
         <source>Loading Tileset groups...</source>
-        <translation>Chargements des groupes d&apos;ensembles de tuiles…</translation>
+        <translation>Chargements des groupes de jeux de tuiles…</translation>
     </message>
     <message>
         <source>Finishing loading...</source>
@@ -6692,11 +6692,11 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>BGO user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Modification des données utilisateur d&apos;objet d&apos;arrière plan</translation>
     </message>
     <message>
         <source>NPC user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Modification des données utilisateur de PNJ</translation>
     </message>
     <message>
         <source>Level Settings</source>
@@ -6811,7 +6811,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
-        <translation>Vous permet de marcher n&apos;importe où sur la carte du monde indépendamment des chemins.</translation>
+        <translation>Vous permet de marcher n&apos;importe où sur la carte de monde indépendamment des chemins.</translation>
     </message>
     <message>
         <source>World freedom</source>
@@ -6905,7 +6905,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished">Paysage</translation>
+        <translation>Paysage</translation>
     </message>
     <message>
         <source>Path</source>
@@ -7034,7 +7034,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de boîte de jeu de tuiles</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -7086,7 +7086,7 @@ Si vous souhaitez créer des jeux de tuiles spécifiques à un niveau/monde avec
     </message>
     <message>
         <source>Order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Poids de commande</translation>
     </message>
     <message>
         <source>Tileset group name:</source>
@@ -7098,109 +7098,112 @@ Si vous souhaitez créer des jeux de tuiles spécifiques à un niveau/monde avec
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Définit la priorité de commande personnalisée. Si les valeurs de poids sont égales entre différents groupes de tuiles ou égales à -1, les groupes de tuiles seront classés par ordre alphabétique.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Tilesets list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste des jeux de tuiles :</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Aperçu</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Bas</translation>
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le jeu de tuiles</translation>
     </message>
     <message>
         <source>Add tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un jeu de tuiles</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <source>Select Tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le jeu de tuiles</translation>
     </message>
     <message>
         <source>There is already a file called &apos;%1&apos;!
 Import anyway and overwrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>Il y a déjà un fichier nommé « %1 » !
+Importer quand même et remplacer ?</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement du jeu de tuiles !</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement du jeu de tuiles !
+Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>Select Tileset Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le groupe de jeux de tuiles</translation>
     </message>
     <message>
         <source>Failed to load tileset group!</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement du groupe de jeux de tuiles !</translation>
     </message>
     <message>
         <source>Failed to load tileset group!
 Data may be corrupted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement du  groupe de jeux de tuiles !
+Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez entrer un nom de fichier !</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du fichier :</translation>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Poids de l&apos;ordre de catégorie</translation>
     </message>
 </context>
 <context>
     <name>TilesetItemBox</name>
     <message>
         <source>Tileset Item Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte des jeux de tuiles</translation>
     </message>
     <message>
         <source>Search: </source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher : </translation>
     </message>
     <message>
         <source>New tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau jeu de tuiles</translation>
     </message>
     <message>
         <source>File not saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier non enregistré</translation>
     </message>
     <message>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier non enregistré sur le disque.</translation>
     </message>
     <message>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Groupe :</translation>
     </message>
 </context>
 <context>
@@ -7234,243 +7237,243 @@ Data may be corrupted!</source>
     <name>ToNewLayerBox</name>
     <message>
         <source>Add to new layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter à un nouveau calque</translation>
     </message>
     <message>
         <source>New layer name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du nouveau calque</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Masqué</translation>
     </message>
     <message>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Verrouillé</translation>
     </message>
     <message>
         <source>Layer exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Le calque existe déjà</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; is exist, please, set other name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le calque « %1 » existe déjà, veuillez utiliser un autre nom.</translation>
     </message>
 </context>
 <context>
     <name>UpdateChecker</name>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier les mises à jour</translation>
     </message>
     <message>
         <source>Stable builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Versions stables</translation>
     </message>
     <message>
         <source>Check for latest stable builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifie si une nouvelle version stable est disponible</translation>
     </message>
     <message>
         <source>Check automatically every startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier automatiquement à chaque démarrage</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Click to check updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquez pour vérifier les mises à jour</translation>
     </message>
     <message>
         <source>Check laboratory updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier les mises à jour de pré-version</translation>
     </message>
     <message>
         <source>Here you can get bug fixes and new features before new stable will be released</source>
-        <translation type="unfinished"></translation>
+        <translation>Ici vous pouvez obtenir des corrections de bugs et des nouvelles fonctionnalités avant qu&apos;elles ne soient disponibles dans les versions stables</translation>
     </message>
     <message>
         <source>Laboratory builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Pré-versions</translation>
     </message>
     <message>
         <source>Check stable updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier les mises à jour stables</translation>
     </message>
     <message>
         <source>This is an update checker dialog. Here you can check available updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il s&apos;agit d&apos;une boîte de dialogue de vérification des mises à jour. Ici, vous pouvez vérifier si des mises à jour sont disponibles.</translation>
     </message>
     <message>
         <source>Checking...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification…</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Check failed: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la vérification : %1.</translation>
     </message>
     <message>
         <source>Check failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la vérification !</translation>
     </message>
     <message>
         <source>Redirect to %1 ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediriger vers %1 ?</translation>
     </message>
     <message>
         <source>You have a latest version!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous disposez déjà de la dernière version !</translation>
     </message>
     <message>
         <source>Available new update!</source>
-        <translation type="unfinished"></translation>
+        <translation>Une nouvelle version est disponible !</translation>
     </message>
     <message>
         <source>Latest update is</source>
-        <translation type="unfinished"></translation>
+        <translation>La dernière version est</translation>
     </message>
     <message>
         <source>One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Une ou plusieurs erreurs SSL se sont produites : %1</translation>
     </message>
 </context>
 <context>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Modification des données utilisateur</translation>
     </message>
 </context>
 <context>
     <name>VariablesBox</name>
     <message>
         <source>Variables [Under Construction]</source>
-        <translation type="unfinished"></translation>
+        <translation>Variables [En construction]</translation>
     </message>
     <message>
         <source>Show variables group</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher le groupe de variabes</translation>
     </message>
     <message>
         <source>Global</source>
-        <translation type="unfinished"></translation>
+        <translation>Globales</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Locales</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Toutes</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Ajouter</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>WLD_ItemProps</name>
     <message>
         <source>Item Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés de l&apos;élément</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished">Niveau</translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <source>Big path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Grand chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Game start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Point de départ du jeu</translation>
     </message>
     <message>
         <source>Always visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Toujours visible</translation>
     </message>
     <message>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous pouvez définir une condition pour ouvrir les chemins dans une direction spécifique (contrôles de chaque côté de ces flèches), en fonction du code de sortie du niveau.</translation>
     </message>
     <message>
         <source>Level file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de niveau :</translation>
     </message>
     <message>
         <source>Level title</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du niveau</translation>
     </message>
     <message>
         <source>Enter to door ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrée par la porte N° :</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Parcourir</translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
         <source>Go to coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller aux coordonnées :</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir</translation>
     </message>
     <message>
         <source>Open path by exists:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir les chemins par type de sortie :</translation>
     </message>
     <message>
         <source>Open the Western (left) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le chemin Ouest (gauche) par type de sortie</translation>
     </message>
     <message>
         <source>Open the Eastern (right) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le chemin Est (droit) pour le type de sortie</translation>
     </message>
     <message>
         <source>Open the Northern (upper) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le chemin Nord (haut) par type de sortie</translation>
     </message>
     <message>
         <source>Open the Southern (lower) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le chemin Sud (bas) par type de sortie</translation>
     </message>
     <message>
         <source>Level ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de niveau : %1, ID de tableau : %2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Position : [%1, %2]</translation>
     </message>
     <message>
         <source>* - Any</source>
-        <translation type="unfinished"></translation>
+        <translation>* - Toutes</translation>
     </message>
     <message>
         <source>0 - None</source>
-        <translation type="unfinished"></translation>
+        <translation>0 - Aucune</translation>
     </message>
     <message>
         <source>1 - Card Roulette Exit</source>
@@ -7478,27 +7481,27 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>2 - Sortie SMB3 défaite de Boss</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - A marché en dehors de l&apos;écran</translation>
     </message>
     <message>
         <source>4 - Secret Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>5 - Sortie secrète</translation>
     </message>
     <message>
         <source>5 - Crystal Sphare Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>5 - Sortie SMB2 Sphère de cristal</translation>
     </message>
     <message>
         <source>6 - Warp Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>6 - Sortie par passage/porte</translation>
     </message>
     <message>
         <source>7 - Star Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>7 - A récupéré une étoile</translation>
     </message>
     <message>
         <source>8 - Tape Exit</source>
@@ -7506,211 +7509,214 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished">Mode de placement</translation>
+        <translation>Mode de placement</translation>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>Placez d&apos;abord des éléments sur la carte puis ouvrez le menu « Propriétés » du menu contextuel.</translation>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez enregistrer le fichier</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez enregistrer le fichier avant de sélectionner des niveaux.</translation>
     </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
     <message>
         <source>Selecting point on the world map</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un point sur la carte de monde</translation>
     </message>
     <message>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Remarque : Utilisez la molette de la souris pour faire défiler la carte. Vous pouvez défiler horizontalement en restant appuyé sur la touche CTRL.</translation>
     </message>
     <message>
         <source>Current Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Point courant :</translation>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifie la position courante du dernier point sélectionné. Si aucun point n&apos;est défini, la position ne sera pas modifiée.</translation>
     </message>
     <message>
         <source>Go to point</source>
-        <translation type="unfinished"></translation>
+        <translation>Aller au point</translation>
     </message>
     <message>
         <source>Start and stop animation of placed on the map items.</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer et arrête les animations des éléments placés sur la carte.</translation>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished">Animation</translation>
+        <translation>Animation</translation>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Retourner à la position x0-y0 de la carte.</translation>
     </message>
     <message>
         <source>Reset position</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser la position de la caméra</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur de lecture du fichier</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier %1 :
+%2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Les configurations ne sont pas chargées</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le monde de niveaux %1 :
+car les configurations des objets ne sont pas chargées
+Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.INI avec les paramètres des objets.</translation>
     </message>
     <message>
         <source>Loading World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement des données de la carte de monde</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement des données personnalisées (1/%1)</translation>
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des tuiles (1/%1)</translation>
     </message>
     <message>
         <source>2/%1 Applying Sceneries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des paysages… (2/%1)</translation>
     </message>
     <message>
         <source>3/%1 Applying Paths...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des chemins… (3/%1)</translation>
     </message>
     <message>
         <source>4/%1 Applying Levels...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des niveaux… (4/%1)</translation>
     </message>
     <message>
         <source>5/%1 Applying Musics...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des boîtes à musique… (5/%1)</translation>
     </message>
     <message>
         <source>Point is not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun point n&apos;est sélectionné</translation>
     </message>
     <message>
         <source>Select the point on the world map first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez d&apos;abord un point sur la carte de monde.</translation>
     </message>
 </context>
 <context>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Placer</translation>
     </message>
     <message>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Placer et remplacer</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplacer</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Tourner</translation>
     </message>
     <message>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Retourner</translation>
     </message>
     <message>
         <source>Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer</translation>
     </message>
     <message>
         <source>Undone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Action annulée : %1</translation>
     </message>
     <message>
         <source>Redone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Action rétablie : %1</translation>
     </message>
 </context>
 <context>
     <name>WldSaveImage</name>
     <message>
         <source>Export to image</source>
-        <translation type="unfinished">Exporter en image</translation>
+        <translation>Exporter en image</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer la grille (si elle est affichée)</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
-        <translation type="unfinished">Veuillez sélectionner la taille de l&apos;image cible :</translation>
+        <translation>Veuillez sélectionner la taille de l&apos;image cible :</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauteur</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsque cette case est cochée, cela permettra de calculer la taille de la dimension opposée (hauteur ou largeur) pour créer une image cible avec les bonnes proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Conserver les proportions d&apos;origine</translation>
     </message>
     <message>
         <source>Export selected rectangle to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter la zone sélectionnée en image</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;largeur&lt;/span&gt; de l&apos;image. L&apos;image cible redimensionnée à cette largeur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est la &lt;span style=&quot; font-weight:600;&quot;&gt;Hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit de la &lt;span style=&quot; font-weight:600;&quot;&gt;hauteur&lt;/span&gt; de l&apos;image cible. L&apos;image cible sera redimensionnée à cette hauteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur</translation>
     </message>
     <message>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer tous les chemins et niveaux</translation>
     </message>
     <message>
         <source>Hide music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer les boîtes à musique</translation>
     </message>
     <message>
         <source>Will be exported:
@@ -7718,40 +7724,46 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
-        <translation type="unfinished"></translation>
+        <translation>Seront exportés :
+Haut :		%1
+Gauche :	%2
+Droite :	%3
+Bas :		%4</translation>
     </message>
     <message>
         <source>Hide meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer les méta-objets</translation>
     </message>
 </context>
 <context>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de tuiles personnalisées %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de paysages personnalisés %1</translation>
     </message>
     <message>
         <source>Search User Paths %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de chemins personnalisés %1</translation>
     </message>
     <message>
         <source>Search User Levels %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de niveaux personnalisés %1</translation>
     </message>
     <message>
         <source>Wrong custom images</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers personnalisés d&apos;images incorrects</translation>
     </message>
     <message>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce niveau contient des fichiers d&apos;éléments graphiques personnalisés incorrects.
+Vous verrez des « fantômes » ou d&apos;autres images factices au lieu de vos éléments graphiques personnalisés. Cela est probablement dû à une mauvaise conversion, comme le passage de BMP à GIF.
+Veuillez reconvertir vos images dans un format valide et essayer de recharger ce niveau.</translation>
     </message>
     <message>
         <source>Tiles:		%1
@@ -7760,386 +7772,399 @@ Paths:	%3
 Levels:	%4
 Music boxes:		%5
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tuiles :				%1
+Paysages :			%2
+Chemins :			%3
+Niveaux :			%4
+Boîtes à musique :	%5
+</translation>
     </message>
 </context>
 <context>
     <name>WldSearchBox</name>
     <message>
         <source>Search of items on the World Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher des éléments sur la carte de monde</translation>
     </message>
     <message>
         <source>Search?</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher ?</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Type :</translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[vide]</translation>
     </message>
     <message>
         <source>Reset Search Fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Réinitialiser les champs de recherche</translation>
     </message>
     <message>
         <source>Search Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher une tuile</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished">Tuile de terrain</translation>
+        <translation>Tuile de terrain</translation>
     </message>
     <message>
         <source>Search Terrain Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher une tuile de terrain</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished">Paysage</translation>
+        <translation>Paysage</translation>
     </message>
     <message>
         <source>Search Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher un paysage</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished">Chemin</translation>
+        <translation>Chemin</translation>
     </message>
     <message>
         <source>Search Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher un chemin</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished">Niveau</translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <source>Level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de niveau</translation>
     </message>
     <message>
         <source>Big Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Grand chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Toujours visible</translation>
     </message>
     <message>
         <source>Game start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Point de départ du jeu</translation>
     </message>
     <message>
         <source>Contains Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Contient le nom</translation>
     </message>
     <message>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Search Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher un niveau</translation>
     </message>
     <message>
         <source>Music box</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte à musique</translation>
     </message>
     <message>
         <source>Search Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher une boîte à musique</translation>
     </message>
     <message>
         <source>Next Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau suivant</translation>
     </message>
     <message>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter la recherche</translation>
     </message>
     <message>
         <source>Search Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche terminée</translation>
     </message>
     <message>
         <source>Level search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de niveau terminée !</translation>
     </message>
     <message>
         <source>Next Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuile suivante</translation>
     </message>
     <message>
         <source>Tile search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de tuile terminée !</translation>
     </message>
     <message>
         <source>Next Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Paysage suivant</translation>
     </message>
     <message>
         <source>Scenery search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de paysage terminée !</translation>
     </message>
     <message>
         <source>Next Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemin suivant</translation>
     </message>
     <message>
         <source>Path search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de chemin terminée !</translation>
     </message>
     <message>
         <source>Next Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Musique suivante</translation>
     </message>
     <message>
         <source>Music search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de musique terminée !</translation>
     </message>
 </context>
 <context>
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte de monde</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement des données personnalisées (1/%1)</translation>
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des tuiles (1/%1)</translation>
     </message>
     <message>
         <source>2/%1 Applying Sceneries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des paysages… (2/%1)</translation>
     </message>
     <message>
         <source>3/%1 Applying Paths...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des chemins… (3/%1)</translation>
     </message>
     <message>
         <source>4/%1 Applying Levels...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des niveaux… (4/%1)</translation>
     </message>
     <message>
         <source>5/%1 Applying Musics...</source>
-        <translation type="unfinished"></translation>
+        <translation>Application des boîtes à musique… (5/%1)</translation>
     </message>
     <message>
         <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sans nom %1</translation>
     </message>
     <message>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrement</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer sous</translation>
     </message>
     <message>
         <source>File save error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur d&apos;enregistrement du fichier</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer le fichier %1 :
+%2.</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur de lecture du fichier</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le fichier %1 :
+%2.</translation>
     </message>
     <message>
         <source>Export selected area to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter la zone sélectionnée en image</translation>
     </message>
     <message>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>Image PNG (*.png)</translation>
     </message>
     <message>
         <source>Saving section image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrement de l&apos;image de la section…</translation>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez patienter...</translation>
     </message>
     <message>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez entrer un nom d&apos;épisode pour « %1 » !</translation>
     </message>
     <message>
         <source>Episode Title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du monde : </translation>
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un dossier personnalisé</translation>
     </message>
     <message>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
-        <translation type="unfinished"></translation>
+        <translation>Remarque :  Les dossiers personnalisés ne sont pas pris en charge par l&apos;ancien moteur SMBX !</translation>
     </message>
     <message>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;extension n&apos;est pas définie</translation>
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;extension de fichier n&apos;est pas définie, veuillez entrer une extension de fichier !</translation>
     </message>
     <message>
         <source>SMBX file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de fichier SMBX</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dans quelle version souhaitez-vous enregistrer ? (entre 0 et 64)</translation>
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation>La limite SMBX64 a été dépassée</translation>
     </message>
     <message>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir enregistrer dans ce format ?
+Dépasser la limite SMBX64 pourrait faire planter SMBX avec une erreur « Indice en dehors des limites ».
+
+L&apos;installation de LunaLUA étend partiellement ces limites.</translation>
     </message>
     <message>
         <source>Loading World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement des données de la carte de monde</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurations personnalisées invalides</translation>
     </message>
     <message>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette carte de monde possède des fichiers de configuration qui ne peuvent pas être chargés. Pour éviter ce message la prochaine fois, veuillez corriger les erreurs suivantes dans vos fichiers de configuration et dans les dossiers personnalisés :
+
+%1</translation>
     </message>
     <message>
         <source>World title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom du monde :</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source> not saved</source>
-        <translation type="unfinished"></translation>
+        <translation> non enregistré</translation>
     </message>
     <message>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>« %1 » a été modifié.
+Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
 </context>
 <context>
     <name>WorldItemBox</name>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrain</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished">Paysage</translation>
+        <translation>Paysage</translation>
     </message>
     <message>
         <source>Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemins</translation>
     </message>
     <message>
         <source>Levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveaux</translation>
     </message>
     <message>
         <source>Music Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîtes à musique</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez enregistrer le fichier</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez d&apos;abord enregistrer le fichier si vous souhaitez sélectionner un fichier de musique personnalisé.</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigateur de recherche</translation>
     </message>
 </context>
 <context>
     <name>WorldMusicBoxItemBox</name>
     <message>
         <source>Music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîtes à musique</translation>
     </message>
     <message>
         <source>Music Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Boîte à musique</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez enregistrer le fichier</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez d&apos;abord enregistrer le fichier si vous souhaitez sélectionner un fichier de musique personnalisé.</translation>
     </message>
 </context>
 <context>
     <name>WorldSettingsBox</name>
     <message>
         <source>World Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres du monde</translation>
     </message>
     <message>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Compter</translation>
     </message>
     <message>
         <source>Intro level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau d&apos;introduction :</translation>
     </message>
     <message>
         <source>Disable characters:</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver les personnages :</translation>
     </message>
     <message>
         <source>Credits of this episode (SMBX allows only 5 lines):</source>
-        <translation type="unfinished"></translation>
+        <translation>Crédits d&apos;épisode supplémentaires (SMBX ne permet que 5 lignes) :</translation>
     </message>
     <message>
         <source>Episode title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de l&apos;épisode :</translation>
     </message>
     <message>
         <source>Restart last level after fail</source>
-        <translation type="unfinished"></translation>
+        <translation>Redémarrer le dernier niveau après la mort</translation>
     </message>
     <message>
         <source>Hub-styled world (without world map)</source>
@@ -8147,31 +8172,31 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Total stars:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre total d&apos;étoiles :</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Parcourir</translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
         <source>Counting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Compte du nombre d&apos;étoiles…</translation>
     </message>
     <message>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Compte les étoiles dans les niveaux placés</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>Compte du nombre d&apos;étoiles…</translation>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom du niveau qui sera chargé au premier lancement du jeu.</translation>
     </message>
     <message>
         <source>Main hub level:</source>
@@ -8182,11 +8207,11 @@ Do you want to save your changes?</source>
     <name>aboutDialog</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>
@@ -8200,180 +8225,193 @@ Do you want to save your changes?</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous possédez un ancien paquet de configuration.
+&lt;br&gt;L&apos;éditeur sera lancé, mais vous pourriez rencontrer des problèmes avec les éléments ou les paramètres.
+&lt;br&gt;
+&lt;br&gt;Veuillez télécharger et installer la dernière version de votre paquet de configuration :
+&lt;br&gt;
+&lt;br&gt;Télécharger : %1
+&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec MPJ.
+&lt;br&gt;Cependant vous pouvez utiliser le même lien pour obtenir une version plus récente</translation>
     </message>
 </context>
 <context>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir le fichier de journal</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers texte (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation>Succès</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les associations de fichiers on été définies</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>
     <name>gifs2png_gui</name>
     <message>
         <source>Convert masked GIFs into the PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir les masques de GIF en PNG</translation>
     </message>
     <message>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cet outil convertit les éléments graphiques SMBX GIF en PNG en utilisant le masque comme clé de transparence.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Parcourir</translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Démarrer</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez l&apos;emplacement de destination de(s) image(s) PNG
+(Si aucun emplacement n&apos;est spécifié, elles seront enregistrées dans le répertoire d&apos;entrée)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher des images dans les sous-répertoires</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Drapeaux</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Remarque : Si la conversion entraîne des images défectueuses, exécutez l&apos;outil LazyFix pour essayer de les corriger et réessayez</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez l&apos;emplacement source des fichiers SMBX GIF (*.gif et *m.gif)</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer les images originales après la conversion si elle réussit</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le répertoire source</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le répertoire de destination</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoire source non spécifié</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez spécifier le répertoire source</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Outil non trouvé</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;exécuter l&apos;application :
+%1
+Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;elle est installée correctement.</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Passer la conversion des arrière-plans (ne pas convertir background2-*.gif)</translation>
     </message>
 </context>
 <context>
     <name>png2gifs_gui</name>
     <message>
         <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir les images PNG en masques de GIF</translation>
     </message>
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cet outil convertit les images PNG avec transparence intégrée en éléments graphiques SMBX au format GIF avec un masque de transparence séparé.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Parcourir</translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoire de destination, où les fichiers GIF seront enregistrés (*.gif et *m.gif)
+(Si ce champ est laissé vide, les images cibles seront enregistrées dans le répertoire d&apos;origine)</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Démarrer</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher des images dans les sous-répertoires</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Drapeaux</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier source contenant les images PNG (*.png)</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer les images source après la conversion si elle réussit</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le répertoire source</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le répertoire de destination</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Le répertoire source n&apos;est pas défini</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez définir le répertoire source</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Outil non trouvé</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;exécuter l&apos;application :
+%1
+Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;elle est installée correctement.</translation>
     </message>
 </context>
 <context>
@@ -8381,7 +8419,8 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation type="unfinished"></translation>
+        <translation>Glissez-déposez des éléments dans cette boîte.
+Cliquez droit pour supprimer.</translation>
     </message>
 </context>
 <context>
@@ -8438,6 +8477,40 @@ Reason: %1
 
 </source>
         <translation>Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+Motif : %1
+
+</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>Nous sommes désolé, mais l&apos;éditeur MPJ a planté. 
+Motif : Plus de mémoire !
+
+Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation>Nous sommes désolés, mais l&apos;éditeur MPJ à planté. 
+Motif : Exception non gérée
+
+Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
+
+Lien du forum : wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation>Nous sommes désolés, mais l&apos;éditeur MPJ a planté. 
 Motif : %1
 
 </translation>
