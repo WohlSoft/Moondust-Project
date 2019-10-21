@@ -10300,7 +10300,7 @@ The maximum number of Music boxes is %2.</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation></translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Block user data change</source>
