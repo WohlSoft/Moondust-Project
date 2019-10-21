@@ -1237,7 +1237,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>Vous possédez un ancien paquet de configuration.
+        <translation type="unfinished">Vous possédez un ancien paquet de configuration.
 &lt;br&gt;L&apos;éditeur sera lancé, mais vous pourriez rencontrer des problèmes avec les éléments ou les paramètres.
 &lt;br&gt;
 &lt;br&gt;Veuillez télécharger et installer la dernière version de votre paquet de configuration :
