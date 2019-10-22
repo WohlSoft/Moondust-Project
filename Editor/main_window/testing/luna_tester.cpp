@@ -1341,7 +1341,7 @@ void LunaTester::lunaRunnerThread(LevelData in_levelData, const QString &levelPa
     if(smbx64limits != FileFormats::SMBX64_FINE)
     {
         int reply = msg.warning(tr("SMBX64 limits are excited!"),
-                                tr("Violation of SMBX64 standard has beeen found!\n"
+                                tr("Violation of SMBX64 standard has been found!\n"
                                    "%1\n"
                                    ", legacy engine may crash!\n"
                                    "Suggested to remove all excess elements.\n"

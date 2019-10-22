@@ -715,7 +715,7 @@
   </action>
   <action name="Exit">
    <property name="text">
-    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Edit from the editor">Exit</string>
+    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Exit from the editor">Exit</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
