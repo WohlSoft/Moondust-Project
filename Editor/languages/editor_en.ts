@@ -1383,7 +1383,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation>Merge Layer</translation>
+        <translation>Merge of layers</translation>
     </message>
 </context>
 <context>
@@ -3533,7 +3533,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation>Violation of SMBX64 standard has beeen found!
+        <translation>Violation of SMBX64 standard has been found!
 %1, legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</translation>

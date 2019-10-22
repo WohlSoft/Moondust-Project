@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation>Limite d&apos;éléments d&apos;animation</translation>
+        <translation>Nombre maximum d&apos;éléments d&apos;animation</translation>
     </message>
     <message>
         <source>Collision detection</source>
@@ -50,12 +50,12 @@
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation>La musique sera lue automatiquement lorsque vous ouvrez un fichier de niveau</translation>
+        <translation>La musique sera jouée automatiquement lorsque vous ouvrirez un fichier de niveau</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>Nombre d&apos;éléments maximum qui peuvent être animés à un moment donné. Si cette limite est dépassée, l&apos;animation sera mise en pause jusqu&apos;à ce que vous augmentiez la limite ou supprimiez les éléments en excès.</translation>
+        <translation>Nombre d&apos;éléments maximum qui peuvent être animés à un moment donné. Si cette limite est dépassée, les animations seront mises en pause jusqu&apos;à ce que vous augmentiez la limite ou supprimiez les éléments en excès.</translation>
     </message>
     <message>
         <source>Files</source>
@@ -75,11 +75,11 @@
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation>Modifier le mode de placement de l&apos;élément sélectionné</translation>
+        <translation type="unfinished">Modifie le mode de placement à partir de l&apos;élément sélectionné</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation>Basculer en faisant glisser le curseur de la souris lorsque la sélection est vide</translation>
+        <translation>Basculer en mode de déplacement lorsque la sélection est vide</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -89,11 +89,11 @@
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>La boîte de propriétés ne s&apos;affichera pas automatiquement lorsque vous sélectionnez un élément à placer.</translation>
+        <translation>La boîte des propriétés ne sera pas affichée automatiquement lorsque vous sélectionnez un élément à placer.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation>Ne pas afficher la boîte de propriétés lors du déplacement d&apos;éléments</translation>
+        <translation>Ne pas afficher la boîte des propriétés lors du placement des éléments</translation>
     </message>
     <message>
         <source>History</source>
@@ -133,27 +133,27 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation>Onglets d&apos;événements classiques à développer automatiquement</translation>
+        <translation>Onglets de la boîte « Éléments classiques » a étendre automatiquement</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Ordinaire</translation>
+        <translation>Commun</translation>
     </message>
     <message>
         <source>Layer movement</source>
-        <translation>Mouvement du calque</translation>
+        <translation>Déplacement des couches</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation>Événement déclencheur</translation>
+        <translation>Déclencher l&apos;évènement</translation>
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation>Boutons de maintien</translation>
+        <translation>Maintenir les boutons</translation>
     </message>
     <message>
         <source>NPC settings</source>
-        <translation>Paramètres PNJ</translation>
+        <translation>Paramètres des PNJ</translation>
     </message>
     <message>
         <source>Generator</source>
@@ -221,7 +221,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation>Boîte à outils des éléments de niveau</translation>
+        <translation>Boîte à outils du niveau</translation>
     </message>
     <message>
         <source>Extra</source>
@@ -229,7 +229,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation>Remarque : Certains paramètres n&apos;appliqueront leurs modifications qu&apos;après le redémarrage de l&apos;éditeur</translation>
+        <translation>Remarque : Certains paramètres ne seront appliqués qu&apos;après le redémarrage de l&apos;éditeur</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
@@ -245,7 +245,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>World Map Item toolbox</source>
-        <translation>Boîte à outils d&apos;éléments de la carte de monde</translation>
+        <translation>Boîte à outils de la carte de monde</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
@@ -253,7 +253,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation>Section de défilement automatique</translation>
+        <translation>Défiler la section automatiquement</translation>
     </message>
     <message>
         <source>Layer visibility</source>
@@ -297,7 +297,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation>Zoom par défaut qui sera mis en place à l&apos;ouverture ou à la création du fichier.</translation>
+        <translation>Zoom par défaut qui sera défini à l&apos;ouverture ou à la création du fichier.</translation>
     </message>
 </context>
 <context>
@@ -407,15 +407,15 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation>Qu&apos;est-ce que vous voulez ?</translation>
+        <translation>Que souhaitez-vous faire ?</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
-        <translation>Convertir la musique de la section de niveau actuel</translation>
+        <translation>Convertir la musique de la section de niveau courant</translation>
     </message>
     <message>
         <source>Convert all music files on current level</source>
-        <translation>Convertir tous les fichiers de musique du niveau actuel</translation>
+        <translation>Convertir tous les fichiers de musique du niveau courant</translation>
     </message>
     <message>
         <source>Convert specified files</source>
@@ -474,7 +474,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Taille des blocs :</translation>
+        <translation>Taille de bloc :</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -516,7 +516,7 @@ et enregistre un repère.</translation>
     <message>
         <source>Scroll to the saved position in the selected item.
 You also can double-click an item to scroll to its bookmarked position.</source>
-        <translation>Faites défiler jusqu&apos;à la position enregistrée dans l&apos;élément sélectionné.
+        <translation>Fait défiler jusqu&apos;à la position enregistrée dans l&apos;élément sélectionné.
 Vous pouvez également double-cliquer sur un élément pour le faire défiler jusqu&apos;à sa position dans les repères.</translation>
     </message>
     <message>
@@ -554,7 +554,7 @@ Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
         <translation>Aucun paquet de configuration n&apos;a été trouvé !&lt;br&gt;
-Veuillez les télécharger et les installer dans ce répertoire &lt;br&gt;
+Veuillez les télécharger et les installer dans ce répertoire&lt;br&gt;
 &lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
@@ -568,7 +568,7 @@ Vous pouvez utiliser n&apos;importe quel paquet de configuration ici :&lt;br&gt;
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>Le paquet de configuration « %1 » n&apos;est pas encore configuré.
-Voulez-vous le configurer ?</translation>
+Souhaitez-vous le configurer ?</translation>
     </message>
     <message>
         <source>Configuration script failed</source>
@@ -609,7 +609,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Configuration path:</source>
-        <translation>Chemin de configuration :</translation>
+        <translation>Emplacement de la configuration :</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -693,7 +693,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>World map data</source>
-        <translation>Données de la carte de monde</translation>
+        <translation>Données de carte de monde</translation>
     </message>
     <message>
         <source>Characters</source>
@@ -732,15 +732,15 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Oh oh, Éditeur MPJ a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
+        <translation>Oh non, Éditeur PGE a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation>Forum MPJ (http://wohlsoft.ru/forum/)</translation>
+        <translation>Forum PGE (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Exit from application</source>
-        <translation>Sortie de l&apos;application</translation>
+        <translation>Quitter l&apos;application</translation>
     </message>
     <message>
         <source>Crash recovery</source>
@@ -829,7 +829,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Go to point:</source>
-        <translation>Allez au point :</translation>
+        <translation>Aller au point :</translation>
     </message>
     <message>
         <source>Go!</source>
@@ -888,11 +888,11 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Clear %1 Log</source>
-        <translation>Effacer %1 jounal</translation>
+        <translation>Vider le journal %1</translation>
     </message>
     <message>
         <source>Prints this help text</source>
-        <translation>Affiche ce texte d&apos;aide</translation>
+        <translation>Affiche cette page d&apos;aide</translation>
     </message>
     <message>
         <source>Prints a test command</source>
@@ -912,11 +912,11 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
-        <translation>Arguments  : {SomeString} Calcule le hachage MD5 de la chaîne de caractères</translation>
+        <translation>Args  : {Chaîne} Calcule le hachage MD5 de la chaîne de caractères</translation>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation>Argument : {String array} valide le tableau de chaînes MPJ-X</translation>
+        <translation>Arg : {Tableau de chaînes} valide le tableau de chaînes PGE-X</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
@@ -924,23 +924,23 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation>Argument : {Path to file} teste si le fichier est au format MPJ-X</translation>
+        <translation>Arg : {Chemin vers un fichier} teste si le fichier est au format PGE-X</translation>
     </message>
     <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
-        <translation>Arguments : {Music type (lvl wld spc), Music ID} Joue la musique par défaut par identifiant spécifique</translation>
+        <translation>Args : {Type de musique (spécifique à un niveau de monde), ID de musique} Joue la musique par défaut par identifiant spécifique</translation>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Arguments : {engine commands} Envoie une commande ou un message vers le moteur MPJ s&apos;il est en cours d&apos;exécution</translation>
+        <translation>Args : {commandes du moteur} Envoie une commande ou un message vers le moteur PGE s&apos;il est en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation>Montre divers chemins importants !</translation>
+        <translation>Affiche divers chemins importants !</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation>Arguments : {[Number] Megabytes} | Remplit la mémoire avec la quantité de données sélectionnée (Soyez prudent avec ça !)</translation>
+        <translation>Args : {[Nombre] Mégabits} | Remplit la mémoire avec la quantité de données sélectionnée (Soyez prudent avec ça !)</translation>
     </message>
     <message>
         <source>Throws an unhandled exception to crash the editor</source>
@@ -952,14 +952,14 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation>Crée et supprime ItemSelectDialog pour analyser les fuites de mémoire</translation>
+        <translation>Crée et supprime la classe ItemSelectDialog pour analyser les fuites de mémoire</translation>
     </message>
 </context>
 <context>
     <name>ExportToImage</name>
     <message>
         <source>Export to image</source>
-        <translation>Exporter en image</translation>
+        <translation>Exporter en tant qu&apos;image</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1007,7 +1007,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished">Masquer les images des méta-symboles de l&apos;éditeur</translation>
+        <translation>Masquer les images des méta-symboles de l&apos;éditeur</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
@@ -1026,7 +1026,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Choose the workspace layout you want to use:</source>
-        <translation>Sélectionnez la disposition de &apos;espace de travail que vous souhaitez utiliser :</translation>
+        <translation>Sélectionnez la disposition de l&apos;espace de travail que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Modern</source>
@@ -1046,7 +1046,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>Bienvenue dans Éditeur MPJ !</translation>
+        <translation>Bienvenue dans l&apos;Éditeur PGE !</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1068,7 +1068,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementAddLayer</name>
     <message>
         <source>Add Layer</source>
-        <translation>Ajouter un calque</translation>
+        <translation>Ajouter une couche</translation>
     </message>
 </context>
 <context>
@@ -1082,21 +1082,21 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementChangedNewLayer</name>
     <message>
         <source>New Layer</source>
-        <translation>Nouveau calque</translation>
+        <translation>Nouvelle couche</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementLayerChanged</name>
     <message>
         <source>Change Layer</source>
-        <translation>Modifier le calque</translation>
+        <translation>Changer de couche</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation>Fusionner le calque</translation>
+        <translation>Fusion des calques</translation>
     </message>
 </context>
 <context>
@@ -1121,28 +1121,28 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementNewLayer</name>
     <message>
         <source>New Layer</source>
-        <translation>Nouveau calque</translation>
+        <translation>Nouvelle couche</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementPlaceDoor</name>
     <message>
         <source>Place Door</source>
-        <translation>Placer la pointe de porte</translation>
+        <translation>Placer le point de la porte</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRemoveLayer</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Supprimer le calque</translation>
+        <translation>Supprimer la couche</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRemoveLayerAndSave</name>
     <message>
         <source>Remove Layer and keep items</source>
-        <translation>Supprimer le calque et conserver les éléments</translation>
+        <translation>Supprimer la couche et conserver les éléments</translation>
     </message>
 </context>
 <context>
@@ -1163,7 +1163,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementRenameLayer</name>
     <message>
         <source>Rename Layer</source>
-        <translation>Renommer le calque</translation>
+        <translation>Renommer la couche</translation>
     </message>
 </context>
 <context>
@@ -1199,12 +1199,12 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Fichier de niveau MPJ</translation>
+        <translation>Fichier de niveau PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Carte de monde MPJ</translation>
+        <translation>Carte de monde PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -1225,11 +1225,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation>Calque : </translation>
+        <translation>Couche : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>Ajouter à un nouveau calque…</translation>
+        <translation>Ajouter à une nouvelle couche…</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1241,7 +1241,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Z-Layer</source>
-        <translation>Calque Z</translation>
+        <translation>Couche Z</translation>
     </message>
     <message>
         <source>Background-2</source>
@@ -1348,11 +1348,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>ItemBlock</name>
     <message>
         <source>Layer: </source>
-        <translation>Calque : </translation>
+        <translation>Couche : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>Ajouter à un nouveau calque…</translation>
+        <translation>Ajouter à une nouvelle couche…</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1372,7 +1372,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation>Modifier le PNJ contenu…</translation>
+        <translation>Modifier le PNJ contenu dans l&apos;objet…</translation>
     </message>
     <message>
         <source>Transform into</source>
@@ -1525,7 +1525,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished">Uniformiser les tailles des éléments</translation>
+        <translation>Uniformiser le taille des éléments</translation>
     </message>
     <message>
         <source>Show custom elements</source>
@@ -1546,11 +1546,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Layer: </source>
-        <translation>Calque : </translation>
+        <translation>Couche : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>Ajouter à un nouveau calque…</translation>
+        <translation>Ajouter à une nouvelle couche…</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1566,11 +1566,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation>Refuser les véhicules</translation>
+        <translation>Ne pas autoriser les véhicules</translation>
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation>Autoriser les éléments</translation>
+        <translation>Autoriser les objets</translation>
     </message>
     <message>
         <source>Locked</source>
@@ -1692,7 +1692,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;C&apos;est le message qui sera affiché si le joueur parle avec le PNJ.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt; Tous les guillemets et retours à la ligne seront supprimés.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit du message qui sera affiché si le joueur parle avec le PNJ.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt; Tous les guillemets et retours à la ligne seront supprimés.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
@@ -1768,11 +1768,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>ItemNPC</name>
     <message>
         <source>Layer: </source>
-        <translation>Calque : </translation>
+        <translation>Couche : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>Ajouter à un nouveau calque…</translation>
+        <translation>Ajouter à une nouvelle couche…</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1836,7 +1836,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation>Modifier le PNJ contenu…</translation>
+        <translation>Modifier le PNJ contenu dans l&apos;objet…</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -1844,7 +1844,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>NPC-ID: %1</source>
-        <translation>ID de PNJ : % 1</translation>
+        <translation>ID de PNJ : %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -1954,11 +1954,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation>Calque : </translation>
+        <translation>Couche : </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation>Ajouter à un nouveau calque…</translation>
+        <translation>Ajouter à une nouvelle couche…</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -1986,19 +1986,19 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Touch Event (Once)</source>
-        <translation>Événement tactile (une fois)</translation>
+        <translation>Événement tactile (une seule fois)</translation>
     </message>
     <message>
         <source>Touch Event (Every frame)</source>
-        <translation>Événement tactile (chaque image)</translation>
+        <translation>Événement tactile (à chaque image)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Once)</source>
-        <translation>Événement tactile PNJ (une fois)</translation>
+        <translation>Événement tactile de PNJ (une seule fois)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
-        <translation>Événement tactile PNJ (chaque image)</translation>
+        <translation>Événement tactile de PNJ (à chaque image)</translation>
     </message>
     <message>
         <source>Mouse click Event</source>
@@ -2006,11 +2006,11 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation>Événement tactile PNJ/Joueur (une fois)</translation>
+        <translation>Événement tactile de PNJ/Joueur (une seule fois)</translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation>Événement tactile PNJ/Joueur (chaque image)</translation>
+        <translation>Événement tactile de PNJ/Joueur (à chaque image)</translation>
     </message>
     <message>
         <source>Collision script</source>
@@ -2167,7 +2167,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>[Empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Vide]</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -2332,7 +2332,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Outil non trouvé</translation>
+        <translation>Outil introuvable</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
@@ -2399,7 +2399,7 @@ List of known SMBX versions and format codes:
 %1
 (To allow level file work in specific SMBX version,
 version code must be less or equal specific code)</source>
-        <translation>Quelle version souhaitez-vous enregistrer ? (entre 0 et 64)
+        <translation>Sous quelle version souhaitez-vous enregistrer ? (entre 0 et 64)
 Liste des versions de SMBX connues et codes de format :
 %1
 (Pour autoriser le fichier de niveau à fonctionner dans une version spécifique de SMBX,
@@ -2500,7 +2500,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     <message>
         <source>5/%1 Loading PhysEZ...</source>
         <comment>PhysEZ - Physical Environment Zone.</comment>
-        <translation>Chargement de PhyzEZ… (5/%1)</translation>
+        <translation>Chargement des zones d&apos;environnement physique… (5/%1)</translation>
     </message>
     <message>
         <source>6/%1 Loading Doors...</source>
@@ -2758,7 +2758,7 @@ Il est conseillé de désactiver cette fonctionnalité sur les ordinateurs lents
     </message>
     <message>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation>LunaTester ne peut pas être utilisé sur les cartes de monde car le moteur SMBX ne fourni pas la possibilité de tester les cartes de monde. Chargez directement un épisode, ou utilisez le moteur MPJ pour tester votre fichier de carte de monde.</translation>
+        <translation>LunaTester ne peut pas être utilisé sur les cartes de monde car le moteur SMBX ne fourni pas la possibilité de tester les cartes de monde. Chargez directement un épisode, ou utilisez le moteur PGE pour tester votre fichier de carte de monde.</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
@@ -2788,7 +2788,10 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Des violations de la norme SMBX64 ont été trouvées !
+%1, l&apos;ancien moteur pourrait planter !
+Il est recommandé de supprimer tous les éléments en excès.
+Souhaitez-vous continuer le processus ?</translation>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
@@ -2802,7 +2805,7 @@ Pour exécuter des tests via SMBX, vous devez utiliser le paquet de configuratio
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX Test est déjà en cours d&apos;exécution</translation>
+        <translation>Un test de SMBX est déjà en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
@@ -3002,7 +3005,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Layers movement</source>
-        <translation>Mouvement du calque</translation>
+        <translation>Déplacement du calque</translation>
     </message>
     <message>
         <source>Horisontal speed:</source>
@@ -3018,11 +3021,11 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Set moving layer</source>
-        <translation>Définir le mouvement du calque</translation>
+        <translation>Définir le déplacement du calque</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation>Section de défilement automatique</translation>
+        <translation>Défiler la section automatiquement</translation>
     </message>
     <message>
         <source>Section</source>
@@ -3090,11 +3093,11 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Ordinaire</translation>
+        <translation>Commun</translation>
     </message>
     <message>
         <source>Do end game:</source>
-        <translation>Déclenchement de la fin du jeu :</translation>
+        <translation>Déclencher la fin du jeu :</translation>
     </message>
     <message>
         <source>Play sound:</source>
@@ -3118,7 +3121,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>
-        <translation>Maintien automatique des commandes du joueur</translation>
+        <translation>Maintenir automatiquement les commandes du joueur</translation>
     </message>
     <message>
         <source>Run</source>
@@ -3190,7 +3193,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation>Veuillez passer de a section actuelle à la section %1 pour capturer les données pour cet évènement</translation>
+        <translation>Veuillez passer de la section actuelle à la section %1 pour capturer les données pour cet évènement</translation>
     </message>
     <message>
         <source>Please, enter message
@@ -3310,7 +3313,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Z-Layer:</source>
-        <translation>Calque Z :</translation>
+        <translation>Couche Z :</translation>
     </message>
     <message>
         <source>Background-2</source>
@@ -3412,7 +3415,7 @@ Ceci tire avantage du rendu bugué des objet d&apos;arrière-plan de SMBX. Pour 
     </message>
     <message>
         <source>Contains of current NPC-Container</source>
-        <translation>Contenu du conteneur actuel</translation>
+        <translation>Contenu du conteneur courant</translation>
     </message>
     <message>
         <source>Auto-increment</source>
@@ -3473,7 +3476,7 @@ Ceci tire avantage du rendu bugué des objet d&apos;arrière-plan de SMBX. Pour 
     <name>LvlLayersBox</name>
     <message>
         <source>Layers</source>
-        <translation>Calques</translation>
+        <translation>Couches</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3554,7 +3557,7 @@ Tous les objets de ce calque seront supprimés !</translation>
     </message>
     <message>
         <source>Wrong custom images</source>
-        <translation>Fichiers image personnalisés incorrects</translation>
+        <translation>Fichiers d&apos;image personnalisés incorrects</translation>
     </message>
     <message>
         <source>This level have a wrong custom graphics files.
@@ -3611,7 +3614,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Layer:</source>
-        <translation>Calque :</translation>
+        <translation>Couche :</translation>
     </message>
     <message>
         <source>Slippery:</source>
@@ -3675,7 +3678,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Attached layer:</source>
-        <translation>Calque lié :</translation>
+        <translation>Couche liée :</translation>
     </message>
     <message>
         <source>Search NPC</source>
@@ -3786,7 +3789,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Edit a custom background config...</source>
-        <translation>Modifier une configuration d&apos;arrière -plan personnalisé…</translation>
+        <translation>Modifier une configuration d&apos;arrière-plan personnalisé…</translation>
     </message>
     <message>
         <source>No turn back (disable moving to left)</source>
@@ -3800,11 +3803,11 @@ Zones d&apos;env. physique : 			%6
     <message>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation>Enrouler horizontalement</translation>
+        <translation>Balayage horizontal</translation>
     </message>
     <message>
         <source>Wrap vertically</source>
-        <translation>Enrouler verticalement</translation>
+        <translation>Balayage vertical</translation>
     </message>
     <message>
         <source>Current Section</source>
@@ -3888,7 +3891,7 @@ Zones d&apos;env. physique : 			%6
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation>Ajoutez des calques ici, par exemple :</translation>
+        <translation>Ajoutez des couches ici, par exemple :</translation>
     </message>
     <message>
         <source>Error in the file %1:
@@ -3909,17 +3912,17 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Layer:</source>
-        <translation>Calque :</translation>
+        <translation>Coucher :</translation>
     </message>
     <message>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation>Refuser les véhicules</translation>
+        <translation>Ne pas autoriser les véhicules</translation>
     </message>
     <message>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation>Autoriser les éléments</translation>
+        <translation>Autoriser les objets</translation>
     </message>
     <message>
         <source>Locked</source>
@@ -3931,7 +3934,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Place exit point or quickly jump to existing warp</source>
-        <translation>Placez le point de sortie ou sautez rapidement au point de sortie existant</translation>
+        <translation>Place le point de sortie ou va directement au point de sortie existant</translation>
     </message>
     <message>
         <source>Point already placed</source>
@@ -3947,7 +3950,7 @@ Zones d&apos;env. physique : 			%6
 0 - Instantané, le joueur sera téléporté instantanément et la vitesse de déplacement sera réinitialisée à 0.
 1 - Tuyau, entrée et sortie directionnelles.
 2 - Porte, le joueur peut entrer avec une clé.
-3 - Portail, le joueur sera téléporté, mais en conservant la vitesse de déplacement (Moteur MPJ uniquement).</translation>
+3 - Portail, le joueur sera téléporté, mais en conservant la vitesse de déplacement (Moteur PGE uniquement).</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -3987,7 +3990,7 @@ pour entrer ici</translation>
     </message>
     <message>
         <source>Warp type</source>
-        <translation>Type d&apos;entrée/sortie</translation>
+        <translation>Type de passage</translation>
     </message>
     <message>
         <source>If this setting is enabled, even if this warp leads to another level, the
@@ -4001,7 +4004,7 @@ nombre d&apos;étoiles existantes et collectées dans le niveau ne sera pas affi
     </message>
     <message>
         <source>Place entrance point or quickly jump to already placed</source>
-        <translation>Placez le point d&apos;entrée ou sautez rapidement à une entrée existante</translation>
+        <translation>Place le point d&apos;entrée ou va directement vers une entrée existante</translation>
     </message>
     <message>
         <source>Set Entrance</source>
@@ -4020,7 +4023,7 @@ nombre d&apos;étoiles existantes et collectées dans le niveau ne sera pas affi
 when player passes through this warp.
 They will be given back when player
 finishes the level or lose a life.</source>
-        <translation>Tous les véhicules montés seront supprimés
+        <translation>Tous les véhicules utilisés seront supprimés
 lorsque le joueur passera par ce passage.
 Ils seront redonnés au joueur quand il
 terminera le niveau ou perdra une vie.</translation>
@@ -4213,7 +4216,7 @@ show the current playable character(s) and number of lives.</source>
     <message>
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
-        <translation>Créée un nouveau passage d&apos;entrée.
+        <translation>Crée un nouveau passage d&apos;entrée.
 Chaque paire de points de passage nécessite un passage d&apos;entrée.</translation>
     </message>
     <message>
@@ -4222,7 +4225,7 @@ Chaque paire de points de passage nécessite un passage d&apos;entrée.</transla
     </message>
     <message>
         <source>World map files not found</source>
-        <translation>Fichiers de cartes de monde non trouvés</translation>
+        <translation>Fichiers de cartes de monde introuvables</translation>
     </message>
     <message>
         <source>You haven&apos;t available world map files with this level file.
@@ -4271,7 +4274,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Open Recent</source>
-        <translation>Fichiers récents</translation>
+        <translation>Récemment ouvert</translation>
     </message>
     <message>
         <source>Language</source>
@@ -4343,7 +4346,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Layers</source>
-        <translation>Calques</translation>
+        <translation>Couches</translation>
     </message>
     <message>
         <source>Events</source>
@@ -5744,7 +5747,7 @@ Voir %2 pour plus d&apos;information.</translation>
     </message>
     <message>
         <source>Turn on cliff</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Détection des bords de plateforme</translation>
     </message>
     <message>
         <source>Disable Block collision</source>
@@ -6028,7 +6031,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation>Refuser les véhicules</translation>
+        <translation>Ne pas autoriser les véhicules</translation>
     </message>
     <message>
         <source>Two-way warp</source>
@@ -6036,7 +6039,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation>Autoriser les éléments</translation>
+        <translation>Autoriser les objets</translation>
     </message>
     <message>
         <source>Allow NPC inter level</source>
@@ -6684,7 +6687,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Block user data change</source>
@@ -8514,6 +8517,20 @@ Reason: %1
 Motif : %1
 
 </translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>Mettre fin au processus en cours d&apos;exécution</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation>Affiche un écran vierge au lieu d&apos;un écran de chargement.
+Dans l&apos;écran de chargement de niveau de l&apos;ancien moteur, le(s) joueur(s)
+jouable(s) et le nombre de vies seront affichés à la place.</translation>
     </message>
 </context>
 </TS>

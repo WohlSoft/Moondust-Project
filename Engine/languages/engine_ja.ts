@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="ja">
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
@@ -13,7 +13,7 @@
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">メモリ不足です！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
@@ -21,7 +21,7 @@
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <source>Time out!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">タイムアウト！</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <source>Engine has abourted because alarm() time out!</source>
@@ -53,7 +53,7 @@
     </message>
     <message id="CRASH_ABORT_TITLE">
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">中断</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
         <source>Engine has been aborted because critical error was occouped.</source>

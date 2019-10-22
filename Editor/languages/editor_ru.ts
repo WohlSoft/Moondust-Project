@@ -1337,7 +1337,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation>Объединить Слой</translation>
+        <translation>Объединение слоёв</translation>
     </message>
 </context>
 <context>
@@ -2466,7 +2466,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>[Empty]</source>
-        <translation></translation>
+        <translation>[Пусто]</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -3493,8 +3493,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 Suggested to remove all excess elements.
 Are you want continue process?</source>
         <translation>Обнаружено нарушение стандарта SMBX64!
-%1
-, устаревший движок может не заработать!
+%1, устаревший движок может не заработать!
 Рекомендуется удалить все лишние элементы.
 Хотите продолжить процесс?</translation>
     </message>
