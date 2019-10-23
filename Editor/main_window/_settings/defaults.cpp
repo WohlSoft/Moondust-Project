@@ -460,9 +460,6 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setVisible);
 
     connect(this, &MainWindow::windowActiveLevelWorld,  ui->action_doSafeTest, &QAction::setEnabled);
-#ifdef Q_OS_WIN
-    connect(this, &MainWindow::windowActiveLevel, ui->actionRunTestSMBX, &QAction::setEnabled);
-#endif
     connect(this, &MainWindow::windowActiveLevel, ui->LevelObjectToolbar, &QWidget::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->WorldObjectToolbar, &QWidget::setVisible);
 
@@ -522,7 +519,6 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_FlipVertical, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_RotateLeft, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_RotateRight, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel, ui->actionAdditional_Settings, &QAction::setEnabled);
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuScript->menuAction(), &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCreateScriptLocal, &QAction::setEnabled);
