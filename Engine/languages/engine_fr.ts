@@ -424,7 +424,7 @@ Point d&apos;entrée N° : %2</translation>
     <message id="VIDEO_FRAME_TIME">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="434"/>
         <source>Frame time (ms.)</source>
-        <translation>Images par seconde (en ms)</translation>
+        <translation type="unfinished">Images par seconde (en ms)</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER1">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="452"/>
