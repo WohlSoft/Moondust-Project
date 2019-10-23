@@ -16,17 +16,17 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="99"/>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Vensterindeling</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="111"/>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparte subvensters (Klassieke stijl)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="124"/>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Subvensters met tabbladen (Moderne stijl)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="140"/>
@@ -218,28 +218,28 @@
         <location filename="../main_window/tools/app_settings.ui" line="152"/>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muziek zal automatisch afspelen wanneer je een level-bestand opent</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="155"/>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>Muziek automatisch afspelen na openen van het bestand</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="196"/>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maximum aantal elementen dat tegelijkertijd geanimeerd kunnen worden. Als deze limiet wordt overschreden, worden de animaties onderbroken totdat u de limiet verhoogt of overtollige elementen verwijdert.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="215"/>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Animatievoorwerpen limiet</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="314"/>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Middelste muisknop acties</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="320"/>
@@ -249,39 +249,39 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="327"/>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de plaatsingsmodus van het geselecteerde voorwerp</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="334"/>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Schakel slepen om te scrollen terwijl er niets is geselecteerd</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="344"/>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Plaatsingsmodus</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="350"/>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappenvenster zal niet automatisch weergegeven worden wanneer je een voorwerp selecteert om te plaatsen.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="354"/>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappenvenster niet tonen wanneer voorwerpen worden geplaatst</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="386"/>
         <source>Max history entries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale geschiedenis elementen:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="393"/>
         <source>Maximum number of remembered history actions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale grootte van de geschiedenislijst.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="490"/>
@@ -301,12 +301,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="538"/>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassieke event tabbladen om automatisch uit te breiden</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="682"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertraging (seconden):</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="711"/>
@@ -376,12 +376,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="970"/>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="976"/>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Opmerking: Sommige wijzigingen zullen pas na het herstarten van het programma geactiveerd worden</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="989"/>
@@ -445,7 +445,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="864"/>
         <source>Level Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau Gereedschapskist</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="887"/>
