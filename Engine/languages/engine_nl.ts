@@ -5,11 +5,11 @@
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
         <source>Unhandled exception!</source>
-        <translation>Onbehandelde exceptie!</translation>
+        <translation>Onbehandelde uitzondering!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation>Het programma is gecrashed omdat het een onbehandelde exceptie accepteerde!</translation>
+        <translation>Het programma is gecrashed omdat het een onbehandelde uitzondering accepteerde!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <source>Out of memory!</source>
@@ -17,7 +17,7 @@
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>Het programma is gecrashed wegensr geheugentekort! Probeer andere applicaties te sluiten alvorens het spel opnieuw te starten.</translation>
+        <translation>Het programma is gecrashed wegens geheugentekort! Probeer andere applicaties te sluiten alvorens het spel opnieuw te starten.</translation>
     </message>
     <message id="CRASH_KILLED_TITLE">
         <source>Killed!</source>
@@ -45,11 +45,11 @@
     </message>
     <message id="CRASH_FPE_TITLE">
         <source>Wrong arithmetical operation</source>
-        <translation>Verkeerde arithmetische operatie</translation>
+        <translation>Foute arithmetische operatie</translation>
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation>The programma is gecrashed door een verkeerde arithmetische operatie!</translation>
+        <translation>The programma is gecrashed door een foute arithmetische operatie!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <source>Aborted</source>
@@ -73,7 +73,7 @@ and retry your recent action to take more detail info.</oldsource>
         <translatorcomment>Feels a bit iffy</translatorcomment>
         <translation>Het programma is gecrashed door een segmentatie-fout.
 Run het debug-programma binnen deze applicatie
-en doe uw stappen opnieuw om meer info te krijgen.</translation>
+en doe je laatste stappen opnieuw om meer info te krijgen.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
         <source>Interrupt</source>
@@ -87,11 +87,11 @@ en doe uw stappen opnieuw om meer info te krijgen.</translation>
         <source>Unable to find OpenGL support!
 Software renderer will be started.</source>
         <translation>Kan OpenGL support niet vinden!
-Software renderaar wordt opgestart.</translation>
+Software renderer wordt opgestart.</translation>
     </message>
     <message id="NO_RENDERER_ERROR">
         <source>Renderer is not selected!</source>
-        <translation>Renderaar is niet geselecteerd!</translation>
+        <translation>Renderer is niet geselecteerd!</translation>
     </message>
     <message id="WINDOW_CREATE_ERROR">
         <source>Unable to create window!</source>
@@ -157,7 +157,7 @@ Kon wereldmap niet opstarten
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
         <source>Type an exit code (signed integer)</source>
-        <translation>Typ een uitgangscode (teken + geheel getal)</translation>
+        <translation>Typ een afsluitcode (+ of - teken en geheel getal)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
         <source>Warp exit
@@ -197,7 +197,7 @@ Ingangspunt #: %2</translation>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Fatale fout: onmogelijk om startpositie te vinden.
-Heeft u de startpositie of het startportaal te ver buiten de sectie gezet?</translation>
+Heeft u de startpositie of het startpunt te ver buiten de sectie gezet?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <source>Pause</source>
@@ -265,11 +265,11 @@ Heeft u de startpositie of het startportaal te ver buiten de sectie gezet?</tran
     </message>
     <message id="MAINMENU_1_PLAYER_GAME">
         <source>1 Player Game</source>
-        <translation>Alleen Spelen</translation>
+        <translation>1 speler</translation>
     </message>
     <message id="MAINMENU_2_PLAYER_GAME">
         <source>2 Player Game</source>
-        <translation>Samen Spelen</translation>
+        <translation>2 spelers</translation>
     </message>
     <message id="MAINMENU_PLAY_SINGLE_LEVEL">
         <source>Play level</source>
@@ -346,11 +346,11 @@ Heeft u de startpositie of het startportaal te ver buiten de sectie gezet?</tran
     </message>
     <message id="VIDEO_ENABLE_FRSKIP">
         <source>Enable frame-skip</source>
-        <translation>Frame-skip aanzetten</translation>
+        <translation>Frame-skip inschakelen</translation>
     </message>
     <message id="VIDEO_ENABLE_VSYNC">
         <source>Enable V-Sync</source>
-        <translation>V-Sync Aanzetten</translation>
+        <translation>V-Sync inschakelen</translation>
     </message>
     <message id="VIDEO_FRAME_TIME">
         <source>Frame time (ms.)</source>
@@ -394,52 +394,55 @@ Heeft u de startpositie of het startportaal te ver buiten de sectie gezet?</tran
     </message>
     <message id="CRASH_BUS_TITLE">
         <source>Physical memory address error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fysiek geheugenadres fout!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <source>Engine has crashed because a physical memory address error</source>
-        <translation type="unfinished"></translation>
+        <translation>Het programma is gecrashed door een fysiek geheugenadres fout</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
         <source>Config packs not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratiepakketten niet gevonden</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <oldsource>Can&apos;t start game engine, because available
 configuration packages are not found!</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Kan het spel niet starten, omdat er geen beschikbare
+configuratiepakketten zijn gevonden!</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <source>Config pack directory error</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratiepakket map fout</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
         <source>Config directory is not found at:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratiemap is niet gevonden op:
+%1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <source>Missing main.ini</source>
-        <translation type="unfinished"></translation>
+        <translation>main.ini bestand ontbreekt</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
         <source>Can&apos;t open the &apos;main.ini&apos; config file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan het &apos;main.ini&apos; configuratiebestand niet openen!</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <source>Missing config pack data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontbrekende configuratiepakket  datamap</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Het datapad van het configuratiepakket bestaat niet:
+%1</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
         <source>Legacy configuration package</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouder configuratiepakket</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK">
         <source>You have a legacy configuration package.
@@ -459,19 +462,27 @@ Please download and install latest version of a configuration package:
 Download: %1
 Note: most of config packs are updates togeter with PGE,
 therefore you can use same link to get updated version.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Je hebt een ouder configuratiepakket
+Het spel zal opnieuw opstarten, maar het zou kunnen dat je problemen krijgt tijdens het spelen.
+
+Gelieve de laatste versie van het configuratiepakket te downloaderen en installeren:
+
+Download: %1
+
+Opmerking: De meeste configuratiepaketten worden samen met PGE geüpdate,
+je kan dus dezelfde link gebruiken om een nieuwe versie te downloaderen.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongeldige main.ini</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er is een fout opgetreden in main.ini lijn %1.</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
-        <translation type="unfinished"></translation>
+        <translation>De gedetecteerde framerate is te hoog. V-Sync wordt uitgeschakeld om problemen te voorkomen. Schakel V-Sync in het videostuurprogramma.</translation>
     </message>
 </context>
 </TS>
