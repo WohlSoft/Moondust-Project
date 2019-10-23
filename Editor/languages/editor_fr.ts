@@ -134,7 +134,7 @@ Motif : %1
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished">Modifie le mode de placement à partir de l&apos;élément sélectionné</translation>
+        <translation>Modifie le mode de placement à partir de l&apos;élément sélectionné</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
@@ -316,7 +316,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Layer visibility</source>
-        <translation>Visibilité des calques</translation>
+        <translation>Visibilité des couches</translation>
     </message>
     <message>
         <source>Section settings</source>
@@ -1155,7 +1155,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation>Fusion des calques</translation>
+        <translation>Fusion des couches</translation>
     </message>
 </context>
 <context>
@@ -2958,7 +2958,7 @@ Cela signifie qu&apos;il est impossible de lancer le test de niveau sur votre sy
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished">Termine le processus en cours d&apos;exécution</translation>
+        <translation>Termine le processus en cours d&apos;exécution</translation>
     </message>
 </context>
 <context>
@@ -3044,7 +3044,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Layer visibly</source>
-        <translation>Visibilité du calque</translation>
+        <translation>Visibilité de la couche</translation>
     </message>
     <message>
         <source>Disable smoke effects</source>
@@ -3064,7 +3064,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Layers movement</source>
-        <translation>Déplacement du calque</translation>
+        <translation>Déplacement de la couche</translation>
     </message>
     <message>
         <source>Horisontal speed:</source>
@@ -3080,7 +3080,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Set moving layer</source>
-        <translation>Définir le déplacement du calque</translation>
+        <translation>Définir le déplacement de la couche</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
@@ -3340,11 +3340,11 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Layer empty:</source>
-        <translation>Le calque est vide :</translation>
+        <translation>La couche est vide :</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation>Calque courant :</translation>
+        <translation>Couche courante :</translation>
     </message>
     <message>
         <source>Invisible</source>
@@ -3434,7 +3434,7 @@ Ceci tire avantage du rendu bugué des objet d&apos;arrière-plan de SMBX. Pour 
     </message>
     <message>
         <source>Attach to:</source>
-        <translation>Attacher au calque :</translation>
+        <translation>Attacher à la couche :</translation>
     </message>
     <message>
         <source>Direction</source>
@@ -3551,49 +3551,49 @@ Ceci tire avantage du rendu bugué des objet d&apos;arrière-plan de SMBX. Pour 
     </message>
     <message>
         <source>Layers merge</source>
-        <translation>Fusion des calques</translation>
+        <translation>Fusion des couches</translation>
     </message>
     <message>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation>Le calque portant le nom « %1 » existe déjà, souhaitez-vous fusionner les calques ?</translation>
+        <translation>La couche portant le nom « %1 » existe déjà, souhaitez-vous fusionner les couches ?</translation>
     </message>
     <message>
         <source>New Layer %1</source>
-        <translation>Nouveau calque %1</translation>
+        <translation>Nouvelle couche %1</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation>Supprimer le calque</translation>
+        <translation>Supprimer la couche</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation>Êtes-vous sûr de vouloir supprimer ce calque ?
-Tous les objets de ce claque seront déplacés vers le calque « Par défaut ».</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer cette couche ?
+Tous les objets de cette couche seront déplacés vers la couche « Par défaut ».</translation>
     </message>
     <message>
         <source>Rename layer</source>
-        <translation>Renommer le calque</translation>
+        <translation>Renommer la couche</translation>
     </message>
     <message>
         <source>Remove layer with items</source>
-        <translation>Supprimer le calque et les éléments</translation>
+        <translation>Supprimer la couche et les éléments</translation>
     </message>
     <message>
         <source>Remove Layer and keep items</source>
-        <translation>Supprimer le calque et conserver les éléments</translation>
+        <translation>Supprimer la couche et conserver les éléments</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation>Êtes-vous sûr de vouloir supprimer ce calque ?
-Tous les objets de ce calque seront déplacés vers le calque « Par défaut » !</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer cette couche ?
+Tous les objets de cette couche seront déplacés vers la couche « Par défaut » !</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation>Êtes-vous sûr de vouloir supprimer ce calque ?
-Tous les objets de ce calque seront supprimés !</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer cette couche ?
+Tous les objets de cette couche seront supprimés !</translation>
     </message>
 </context>
 <context>
@@ -3713,7 +3713,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
-        <translation>Évènement de calque vide :</translation>
+        <translation>Évènement de couche vide :</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -3757,7 +3757,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Evt empty layer:</source>
-        <translation>Évènement de calque vide :</translation>
+        <translation>Évènement de couche vide :</translation>
     </message>
     <message>
         <source>Doesn&apos;t move</source>
@@ -4318,8 +4318,8 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished">Afficher un écran vide au lieu de l&apos;écran de chargement.
-Dans l&apos;écran de chargement de l&apos;ancien moteur Legacy, il y aurait autrement
+        <translation>Afficher un écran vide au lieu de l&apos;écran de chargement.
+Dans l&apos;écran de chargement de l&apos;ancien moteur, il y aurait autrement
 affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
     </message>
 </context>
@@ -5738,7 +5738,7 @@ Voir %2 pour plus d&apos;information.</translation>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
-        <translation type="unfinished">Impossible de commencer les tests, le moteur n&apos;a pas été trouvé :
+        <translation>Impossible de commencer les tests, moteur introuvable :
 %1
 Veuillez choisir l&apos;application de moteur vous-même !</translation>
     </message>
@@ -5810,7 +5810,7 @@ Veuillez choisir l&apos;application de moteur vous-même !</translation>
     </message>
     <message>
         <source>Turn on cliff</source>
-        <translation type="unfinished">Détection des bords de plateforme</translation>
+        <translation>Détection des bords de plateforme</translation>
     </message>
     <message>
         <source>Disable Block collision</source>
@@ -5922,11 +5922,11 @@ Veuillez choisir l&apos;application de moteur vous-même !</translation>
     </message>
     <message>
         <source>Middle of cell by center</source>
-        <translation>Milieu de la cellule par centrage</translation>
+        <translation>Milieu de la cellule à partir du centre</translation>
     </message>
     <message>
         <source>Edge of cell by center</source>
-        <translation>Bord de la cellule par centrage</translation>
+        <translation>Bord de la cellule à partir du centre</translation>
     </message>
     <message>
         <source>Align at</source>
@@ -6039,7 +6039,7 @@ Description de l&apos;erreur :
     <name>QMessageBox</name>
     <message>
         <source>File association failed.</source>
-        <translation>L&apos;association des fichiers à échoué.</translation>
+        <translation>L&apos;association des fichiers a échoué.</translation>
     </message>
 </context>
 <context>
@@ -6054,7 +6054,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Z-Layer</source>
-        <translation>Calque Z</translation>
+        <translation>Couche Z</translation>
     </message>
     <message>
         <source>Z-Offset</source>
@@ -6082,7 +6082,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Included NPC</source>
-        <translation>Modifier le PNJ contenu</translation>
+        <translation>Modifier le PNJ contenu dans le bloc</translation>
     </message>
     <message>
         <source>Water Type</source>
@@ -6090,7 +6090,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Layer</source>
-        <translation>Calque</translation>
+        <translation>Couche</translation>
     </message>
     <message>
         <source>No Vehicles</source>
@@ -6106,7 +6106,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Allow NPC inter level</source>
-        <translation>Autoriser les éléments à travers les niveaux</translation>
+        <translation>Autoriser les objets à travers les niveaux</translation>
     </message>
     <message>
         <source>Locked</source>
@@ -6142,7 +6142,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Need Stars message</source>
-        <translation>Message en cas de besoin d&apos;étoiles</translation>
+        <translation>Message affiché s&apos;il faut des étoiles</translation>
     </message>
     <message>
         <source>Cannon exit projectile speed</source>
@@ -6182,11 +6182,11 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Generator Time</source>
-        <translation>Durée du générateur</translation>
+        <translation>Intervalle entre les tirs</translation>
     </message>
     <message>
         <source>Attach Layer</source>
-        <translation>Attacher au calque</translation>
+        <translation>Attacher à la couche</translation>
     </message>
     <message>
         <source>Event Block Destroyed</source>
@@ -6198,11 +6198,11 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Event Layer Empty</source>
-        <translation>Évènement : Calque vide</translation>
+        <translation>Évènement : Couche vide</translation>
     </message>
     <message>
         <source>Event NPC Activate</source>
-        <translation>Évènement : Activation du PNJ</translation>
+        <translation>Évènement : PNJ activé</translation>
     </message>
     <message>
         <source>Event NPC Die</source>
@@ -6226,55 +6226,55 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Layer Smoke Effect</source>
-        <translation>Effet de fumée de calque</translation>
+        <translation>Effet de fumée de la couche</translation>
     </message>
     <message>
         <source>Add Hide Layer</source>
-        <translation>Ajouter le calque dans la liste des calques masqués</translation>
+        <translation>Ajouter la couche dans la liste des couches masquées</translation>
     </message>
     <message>
         <source>Remove Hide Layer</source>
-        <translation>Supprimer le calque de la liste des calques masqués</translation>
+        <translation>Supprimer la couche de la liste des couches masquées</translation>
     </message>
     <message>
         <source>Add Show Layer</source>
-        <translation>Ajouter le calque dans a liste des calques affichés</translation>
+        <translation>Ajouter la couche dans a liste des couches affichées</translation>
     </message>
     <message>
         <source>Remove Show Layer</source>
-        <translation>Supprimer le calque de la liste des calques affichés</translation>
+        <translation>Supprimer la couche de la liste des couches affichées</translation>
     </message>
     <message>
         <source>Add Toggle Layer</source>
-        <translation>Ajouter le calque dans la liste des calques affichés/masqués</translation>
+        <translation>Ajouter la couche dans la liste des couches affichées/masquées</translation>
     </message>
     <message>
         <source>Remove Toggle Layer</source>
-        <translation>Supprimer le calque de la liste des calques affichés/masqués</translation>
+        <translation>Supprimer la couche de la liste des couches affichées/masquées</translation>
     </message>
     <message>
         <source>Moving Layer</source>
-        <translation>Déplacer le calque</translation>
+        <translation>Déplacer la couche</translation>
     </message>
     <message>
         <source>Layer Speed Horizontal</source>
-        <translation>Vitesse horizontale du calque</translation>
+        <translation>Vitesse horizontale de la couche</translation>
     </message>
     <message>
         <source>Layer Speed Vertical</source>
-        <translation>Vitesse verticale du calque</translation>
+        <translation>Vitesse verticale de la couche</translation>
     </message>
     <message>
         <source>Autoscroll Layer</source>
-        <translation>Section de défilement automatique</translation>
+        <translation>Défiler la section automatiquement</translation>
     </message>
     <message>
         <source>Autoscroll Layer Speed Horizontal</source>
-        <translation>Vitesse horizontale de section de défilement automatique</translation>
+        <translation>Vitesse de défilement horizontal de la section</translation>
     </message>
     <message>
         <source>Autoscroll Layer Speed Vertical</source>
-        <translation>Vitesse verticale de section de défilement automatique</translation>
+        <translation>Vitesse de défilement vertical de la section</translation>
     </message>
     <message>
         <source>Section Size</source>
@@ -6318,15 +6318,15 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Alt Run Key Activate</source>
-        <translation>Activation du bouton course alternative</translation>
+        <translation>Activation du bouton de course alternative</translation>
     </message>
     <message>
         <source>Jump Key Activate</source>
-        <translation>Activation du bouton saut</translation>
+        <translation>Activation du bouton de saut</translation>
     </message>
     <message>
         <source>Alt Jump Key Activate</source>
-        <translation>Activation du bouton saut alternatif</translation>
+        <translation>Activation du bouton de saut alternatif</translation>
     </message>
     <message>
         <source>Drop Key Activate</source>
@@ -6386,7 +6386,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Big Path Background</source>
-        <translation>Grand chemin an arrière-plan</translation>
+        <translation>Grand chemin en arrière-plan</translation>
     </message>
     <message>
         <source>Character</source>
@@ -6410,7 +6410,7 @@ Description de l&apos;erreur :
     </message>
     <message>
         <source>Hub styled world</source>
-        <translation type="unfinished"></translation>
+        <translation>Monde en hub</translation>
     </message>
     <message>
         <source>Intro Level</source>
@@ -6626,8 +6626,8 @@ Le nombre maximum de zones d&apos;eau est de %2.</translation>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation>La norme SMBX64 ne permet pas d&apos;enregistrer %1 calques.
-Le nombre maximum de calques est de %2.</translation>
+        <translation>La norme SMBX64 ne permet pas d&apos;enregistrer %1 couches.
+Le nombre maximum de couches est de %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
@@ -6707,7 +6707,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>Fatal</source>
-        <translation>Fatal</translation>
+        <translation>Fatale</translation>
     </message>
     <message>
         <source>Critical</source>
@@ -6754,8 +6754,8 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
-Motif : Plus de mémoire !
+        <translation>Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
+Motif : Dépassement de mémoire !
 
 Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
     </message>
@@ -6766,7 +6766,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+        <translation>Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
 Motif : Exception non gérée
 
 Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
@@ -6778,7 +6778,7 @@ Lien du forum : wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+        <translation>Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
 Motif : %1
 
 </translation>
@@ -6792,7 +6792,7 @@ Motif : %1
     </message>
     <message>
         <source>Discard</source>
-        <translation>Annuler</translation>
+        <translation>Abandonner</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6827,7 +6827,7 @@ Motif : %1
     </message>
     <message>
         <source>Import from file...</source>
-        <translation>Importer depuis un fichier…</translation>
+        <translation>Importer à partir d&apos;un fichier…</translation>
     </message>
     <message>
         <source>Close script editor</source>
@@ -6904,7 +6904,7 @@ Motif : %1
     </message>
     <message>
         <source>Allows you to fly up to the space!</source>
-        <translation>Vous permet de voler dans l&apos;espace !</translation>
+        <translation>Vous permet de voler jusque dans l&apos;espace !</translation>
     </message>
     <message>
         <source>Testing settings</source>
@@ -7022,7 +7022,7 @@ Motif : %1
     </message>
     <message>
         <source>Show custom only</source>
-        <translation>Afficher ceux personnalisés uniquement</translation>
+        <translation>Afficher uniquement les personnalisés</translation>
     </message>
     <message>
         <source>Current Level/World specific</source>
@@ -7111,7 +7111,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation>Éditeur de boîte de jeu de tuiles</translation>
+        <translation>Éditeur de jeux de tuiles</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -7140,7 +7140,7 @@ Si vous souhaitez créer des jeux de tuiles spécifiques à un niveau/monde avec
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation>Voulez-vous supprimer ce jeu de tuiles ?</translation>
+        <translation>Souhaitez-vous supprimer ce jeu de tuiles ?</translation>
     </message>
     <message>
         <source>Tileset removed</source>
@@ -7163,7 +7163,7 @@ Si vous souhaitez créer des jeux de tuiles spécifiques à un niveau/monde avec
     </message>
     <message>
         <source>Order weight</source>
-        <translation>Poids de commande</translation>
+        <translation>Poids de la commande</translation>
     </message>
     <message>
         <source>Tileset group name:</source>
@@ -7175,7 +7175,7 @@ Si vous souhaitez créer des jeux de tuiles spécifiques à un niveau/monde avec
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation>Définit la priorité de commande personnalisée. Si les valeurs de poids sont égales entre différents groupes de tuiles ou égales à -1, les groupes de tuiles seront classés par ordre alphabétique.</translation>
+        <translation>Définit la priorité de la commande personnalisée. Si les valeurs de poids sont égales entre différents groupes de tuiles ou égales à -1, les groupes de tuiles seront classés par ordre alphabétique.</translation>
     </message>
     <message>
         <source>Open</source>
@@ -7314,11 +7314,11 @@ Des données pourraient être corrompues !</translation>
     <name>ToNewLayerBox</name>
     <message>
         <source>Add to new layer</source>
-        <translation>Ajouter à un nouveau calque</translation>
+        <translation>Ajouter à une nouvelle couche</translation>
     </message>
     <message>
         <source>New layer name</source>
-        <translation>Nom du nouveau calque</translation>
+        <translation>Nom de la nouvelle couche</translation>
     </message>
     <message>
         <source>Hidden</source>
@@ -7330,11 +7330,11 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>Layer exists</source>
-        <translation>Le calque existe déjà</translation>
+        <translation>La couche existe déjà</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; is exist, please, set other name.</source>
-        <translation>Le calque « %1 » existe déjà, veuillez utiliser un autre nom.</translation>
+        <translation>La couche « %1 » existe déjà, veuillez utiliser un autre nom.</translation>
     </message>
 </context>
 <context>
@@ -7435,7 +7435,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>Show variables group</source>
-        <translation>Afficher le groupe de variabes</translation>
+        <translation>Afficher le groupe de variables</translation>
     </message>
     <message>
         <source>Global</source>
@@ -7524,7 +7524,7 @@ Des données pourraient être corrompues !</translation>
     <message>
         <source>Open the Eastern (right) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation>Ouvrir le chemin Est (droit) pour le type de sortie</translation>
+        <translation>Ouvrir le chemin Est (droit) par type de sortie</translation>
     </message>
     <message>
         <source>Open the Northern (upper) path by exit type</source>
@@ -7554,11 +7554,11 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>1 - Card Roulette Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>1 - Sortie « Carte Roulette »</translation>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Sortie SMB3 défaite de Boss</translation>
+        <translation>2 - Sortie « Défaite de Boss »</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -7570,7 +7570,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - Sortie SMB2 Sphère de cristal</translation>
+        <translation>5 - Sortie « Sphère de cristal »</translation>
     </message>
     <message>
         <source>6 - Warp Exit</source>
@@ -7582,7 +7582,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>8 - Tape Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>8 - Sortie « Bande de but »</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -7745,7 +7745,7 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     <name>WldSaveImage</name>
     <message>
         <source>Export to image</source>
-        <translation>Exporter en image</translation>
+        <translation>Exporter en tant qu&apos;image</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
@@ -7769,7 +7769,7 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     </message>
     <message>
         <source>Export selected rectangle to image</source>
-        <translation>Exporter la zone sélectionnée en image</translation>
+        <translation>Exporter la zone sélectionnée en tant qu&apos;image</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -7816,7 +7816,7 @@ Bas :		%4</translation>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation>Recherche de tuiles personnalisées %1</translation>
+        <translation>Recherche de tuiles de terrain personnalisées %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
@@ -8064,7 +8064,7 @@ Boîtes à musique :	%5
     </message>
     <message>
         <source>Export selected area to image</source>
-        <translation>Exporter la zone sélectionnée en image</translation>
+        <translation>Exporter la zone sélectionnée en tant qu&apos;image</translation>
     </message>
     <message>
         <source>PNG Image (*.png)</source>
@@ -8108,7 +8108,7 @@ Boîtes à musique :	%5
     </message>
     <message>
         <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation>Dans quelle version souhaitez-vous enregistrer ? (entre 0 et 64)</translation>
+        <translation>Sous quelle version souhaitez-vous enregistrer ? (entre 0 et 64)</translation>
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
@@ -8245,7 +8245,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>Hub-styled world (without world map)</source>
-        <translation type="unfinished"></translation>
+        <translation>Monde en hub (désactive la carte de monde)</translation>
     </message>
     <message>
         <source>Total stars:</source>
@@ -8277,7 +8277,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>Main hub level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau principal du hub :</translation>
     </message>
 </context>
 <context>
@@ -8308,7 +8308,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;Veuillez télécharger et installer la dernière version de votre paquet de configuration :
 &lt;br&gt;
 &lt;br&gt;Télécharger : %1
-&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec MPJ.
+&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec PGE.
 &lt;br&gt;Cependant vous pouvez utiliser le même lien pour obtenir une version plus récente</translation>
     </message>
 </context>
@@ -8402,7 +8402,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Outil non trouvé</translation>
+        <translation>Outil introuvable</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
@@ -8480,7 +8480,7 @@ Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Outil non trouvé</translation>
+        <translation>Outil introuvable</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
@@ -8497,7 +8497,7 @@ Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
         <translation>Glissez-déposez des éléments dans cette boîte.
-Cliquez droit pour supprimer.</translation>
+Cliquez-droit pour supprimer.</translation>
     </message>
 </context>
 </TS>
