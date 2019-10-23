@@ -41,7 +41,8 @@ aboutDialog::aboutDialog(QWidget *parent) :
 #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
+       QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)
     {
         if(QtWin::isCompositionEnabled())
         {
@@ -77,6 +78,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
                        );
 
     QFile mFile(":/credits.html");
+
     if(!mFile.open(QFile::ReadOnly | QFile::Text))
         return;
 
