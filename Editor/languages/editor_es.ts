@@ -7091,7 +7091,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Item default</source>
-        <translation>Item default</translation>
+        <translation type="vanished">Item default</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
@@ -7320,15 +7320,15 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Opciones adicionales</translation>
+        <translation type="vanished">Opciones adicionales</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Compilar a: </translation>
+        <translation type="vanished">Compilar a: </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Lenguaje de Lunadll]</translation>
+        <translation type="vanished">Autocode [Lenguaje de Lunadll]</translation>
     </message>
     <message>
         <source>LunaLua</source>
@@ -7356,7 +7356,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Probar en SMBX (requiere LunaDLL)</translation>
+        <translation type="vanished">Probar en SMBX (requiere LunaDLL)</translation>
     </message>
     <message>
         <source>Convert Audio files...</source>

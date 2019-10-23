@@ -5015,7 +5015,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Item default</source>
-        <translation>对象默认</translation>
+        <translation type="vanished">对象默认</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
@@ -5254,15 +5254,15 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>其他设置</translation>
+        <translation type="vanished">其他设置</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>编译到： </translation>
+        <translation type="vanished">编译到： </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>LunaDLL 代码</translation>
+        <translation type="vanished">LunaDLL 代码</translation>
     </message>
     <message>
         <source>LunaLua</source>
@@ -5290,7 +5290,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>在 SMBX 测试 （需要 LunaDLL）</translation>
+        <translation type="vanished">在 SMBX 测试 （需要 LunaDLL）</translation>
     </message>
     <message>
         <source>Convert Audio files...</source>

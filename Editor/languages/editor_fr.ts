@@ -2,6 +2,65 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
+    <name></name>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="vanished">Termine le processus en cours d&apos;exécution</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation type="vanished">Afficher un écran vide au lieu de l&apos;écran de chargement.
+Dans l&apos;écran de chargement de l&apos;ancien moteur Legacy, il y aurait autrement
+affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="vanished">Impossible de commencer les tests, le moteur n&apos;a pas été trouvé :
+%1
+Veuillez choisir l&apos;application de moteur vous-même !</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="vanished">Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
+Motif : Plus de mémoire !
+
+Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="vanished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+Motif : Exception non gérée
+
+Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
+
+Lien du forum : wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation type="vanished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+Motif : %1
+
+</translation>
+    </message>
+</context>
+<context>
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
@@ -2872,12 +2931,6 @@ Pour utiliser LunaTester, vous devez utiliser la paquet de configuration d&apos;
         <translation>Impossible de lancer le moteur SMBX, en raison de %1</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Met fin au processus LunaTester afin que le moteur puisse être chargé à partir de zéro.</translation>
     </message>
@@ -2900,6 +2953,12 @@ That means, impossible to launch level testing on your operating operating. Luna
         <translation>%2 introuvable !
 Vous avez un SMBX vierge !&lt;br&gt;
 Cela signifie qu&apos;il est impossible de lancer le test de niveau sur votre système d&apos;exploitation. LunaLua est nécessaire pour lancer le test de niveau avec SMBX sur les systèmes d&apos;exploitation différents de Windows.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished">Termine le processus en cours d&apos;exécution</translation>
     </message>
 </context>
 <context>
@@ -4187,12 +4246,6 @@ Si défini à zéro, le joueur démarrera au point de démarrage prédéfini du 
         <translation>Rechercher un autre fichier de niveau</translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation>Masquer l&apos;écran d&apos;entrée du niveau</translation>
     </message>
@@ -4260,6 +4313,14 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     <message>
         <source>Please save the file before selecting levels.</source>
         <translation>Veuillez enregistrer le fichier avant de sélectionner les niveaux.</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished">Afficher un écran vide au lieu de l&apos;écran de chargement.
+Dans l&apos;écran de chargement de l&apos;ancien moteur Legacy, il y aurait autrement
+affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
     </message>
 </context>
 <context>
@@ -4764,7 +4825,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Item default</source>
-        <translation>Par défaut</translation>
+        <translation type="vanished">Par défaut</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
@@ -4923,15 +4984,15 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Paramètres supplémentaires</translation>
+        <translation type="vanished">Paramètres supplémentaires</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Compiler pour : </translation>
+        <translation type="vanished">Compiler pour : </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Langage original de Lunadll]</translation>
+        <translation type="vanished">Autocode [Langage original de Lunadll]</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -4955,7 +5016,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Tester dans SMBX (LunaDLL requis)</translation>
+        <translation type="vanished">Tester dans SMBX (LunaDLL requis)</translation>
     </message>
     <message>
         <source>Convert Audio files...</source>
@@ -5374,12 +5435,6 @@ Le paquet de configuration contient des erreurs.</translation>
         <translation>Moteur introuvable</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Choose the Engine application</source>
         <translation>Choisir l&apos;application du moteur</translation>
     </message>
@@ -5678,6 +5733,14 @@ See %2 for more information.</source>
         <translation>La configuration ne peut pas être chargée :
 %1.
 Voir %2 pour plus d&apos;information.</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="unfinished">Impossible de commencer les tests, le moteur n&apos;a pas été trouvé :
+%1
+Veuillez choisir l&apos;application de moteur vous-même !</translation>
     </message>
 </context>
 <context>
@@ -6390,22 +6453,6 @@ Description de l&apos;erreur :
         <translation>Nombre total d&apos;étoiles</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>Le terminal a été fermé [SIGHUP]</translation>
     </message>
@@ -6440,13 +6487,6 @@ Forum link: wohlsoft.ru/forum</source>
     <message>
         <source>Interrupted! [SIGINT]</source>
         <translation>Interrompu ! [SIGINT]</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cut top here</source>
@@ -6708,6 +6748,40 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     <message>
         <source>Section extra settings</source>
         <translation>Paramètres supplémentaires de section</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="unfinished">Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
+Motif : Plus de mémoire !
+
+Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+Motif : Exception non gérée
+
+Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
+
+Lien du forum : wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+Motif : %1
+
+</translation>
     </message>
 </context>
 <context>
@@ -8424,113 +8498,6 @@ Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;
 Right-click to remove!</source>
         <translation>Glissez-déposez des éléments dans cette boîte.
 Cliquez droit pour supprimer.</translation>
-    </message>
-</context>
-<context>
-    <name></name>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Termine le processus en cours d&apos;exécution</translation>
-    </message>
-    <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
-show the current playable character(s) and number of lives.</source>
-        <translation>Afficher un écran vide au lieu de l&apos;écran de chargement.
-Dans l&apos;écran de chargement de l&apos;ancien moteur Legacy, il y aurait autrement
-affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start testing, engine is not found: 
-%1
-Please, choose the engine application yourself!</source>
-        <translation>Impossible de commencer les tests, le moteur n&apos;a pas été trouvé :
-%1
-Veuillez choisir l&apos;application de moteur vous-même !</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
-Motif : Plus de mémoire !
-
-Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
-Motif : Exception non gérée
-
-Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
-
-Lien du forum : wohlsoft.ru/forum</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: %1
-
-</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
-Motif : %1
-
-</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Nous sommes désolé, mais l&apos;éditeur MPJ a planté. 
-Motif : Plus de mémoire !
-
-Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur MPJ à planté. 
-Motif : Exception non gérée
-
-Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
-
-Lien du forum : wohlsoft.ru/forum</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: %1
-
-</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur MPJ a planté. 
-Motif : %1
-
-</translation>
-    </message>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Mettre fin au processus en cours d&apos;exécution</translation>
-    </message>
-    <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
-show the current playable character(s) and number of lives.</source>
-        <translation>Affiche un écran vierge au lieu d&apos;un écran de chargement.
-Dans l&apos;écran de chargement de niveau de l&apos;ancien moteur, le(s) joueur(s)
-jouable(s) et le nombre de vies seront affichés à la place.</translation>
     </message>
 </context>
 </TS>

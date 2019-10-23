@@ -5765,10 +5765,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5966,15 +5962,15 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Configurações adicionais</translation>
+        <translation type="vanished">Configurações adicionais</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Compilar para:</translation>
+        <translation type="vanished">Compilar para:</translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Linguagem Original LunaDLL]</translation>
+        <translation type="vanished">Autocode [Linguagem Original LunaDLL]</translation>
     </message>
     <message>
         <source>LunaLua</source>
@@ -6002,7 +5998,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Rodar teste em SMBX (Requer LunaDLL)</translation>
+        <translation type="vanished">Rodar teste em SMBX (Requer LunaDLL)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>

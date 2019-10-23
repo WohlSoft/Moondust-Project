@@ -5751,7 +5751,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover√
     </message>
     <message>
         <source>Item default</source>
-        <translation>Oggetto standard</translation>
+        <translation type="vanished">Oggetto standard</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
@@ -5835,15 +5835,15 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover√
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Opzioni aggiuntive</translation>
+        <translation type="vanished">Opzioni aggiuntive</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Compila a: </translation>
+        <translation type="vanished">Compila a: </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Linguaggio Originale Lunadll]</translation>
+        <translation type="vanished">Autocode [Linguaggio Originale Lunadll]</translation>
     </message>
     <message>
         <source>LunaLua</source>
@@ -5871,7 +5871,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover√
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Avvia test in SMBX (LunaDLL richiesto)</translation>
+        <translation type="vanished">Avvia test in SMBX (LunaDLL richiesto)</translation>
     </message>
     <message>
         <source>Convert Audio files...</source>

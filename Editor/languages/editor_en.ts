@@ -6817,7 +6817,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Item default</source>
-        <translation>Item default</translation>
+        <translation type="vanished">Item default</translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -7038,15 +7038,15 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Additional Settings</translation>
+        <translation type="vanished">Additional Settings</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Compile To: </translation>
+        <translation type="vanished">Compile To: </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Lunadll Original Language]</translation>
+        <translation type="vanished">Autocode [Lunadll Original Language]</translation>
     </message>
     <message>
         <source>LunaLua</source>
@@ -7074,7 +7074,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Test in SMBX (LunaDLL required)</translation>
+        <translation type="vanished">Test in SMBX (LunaDLL required)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>

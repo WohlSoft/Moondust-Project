@@ -6473,10 +6473,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6690,15 +6686,15 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Zusätzliche Einstellungen</translation>
+        <translation type="vanished">Zusätzliche Einstellungen</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Kompeliere Zu:</translation>
+        <translation type="vanished">Kompeliere Zu:</translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Lunadll Originale Programmiersprache]</translation>
+        <translation type="vanished">Autocode [Lunadll Originale Programmiersprache]</translation>
     </message>
     <message>
         <source>LunaLua</source>
@@ -6726,7 +6722,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Starte test in SMBX (Benötigt LunaDLL)</translation>
+        <translation type="vanished">Starte test in SMBX (Benötigt LunaDLL)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
