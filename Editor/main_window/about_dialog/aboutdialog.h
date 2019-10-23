@@ -22,8 +22,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class aboutDialog;
+namespace Ui
+{
+    class aboutDialog;
 }
 
 class aboutDialog : public QDialog
@@ -37,7 +38,7 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-//    void on_actionCloseDialog_activated();
+    //void on_actionCloseDialog_activated();
 
 private:
     Ui::aboutDialog *ui;

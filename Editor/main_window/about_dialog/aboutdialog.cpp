@@ -35,18 +35,18 @@ aboutDialog::aboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
     {
         if(QtWin::isCompositionEnabled())
         {
             this->setAttribute(Qt::WA_TranslucentBackground, true);
-            QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+            QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
             QtWin::enableBlurBehindWindow(this);
         }
         else
@@ -55,7 +55,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+#endif
 
     SDL_version sdlVer;
     SDL_GetVersion(&sdlVer);
@@ -73,13 +73,12 @@ aboutDialog::aboutDialog(QWidget *parent) :
                              .arg(qVersion())
                              .arg(sdlVer.major).arg(sdlVer.minor).arg(sdlVer.patch)
                              .arg(mixerXVer->major).arg(mixerXVer->minor).arg(mixerXVer->patch)
-                             )
-                        );
+                            )
+                       );
 
     QFile mFile(":/credits.html");
-    if(!mFile.open(QFile::ReadOnly | QFile::Text)){
+    if(!mFile.open(QFile::ReadOnly | QFile::Text))
         return;
-    }
 
     QTextStream in(&mFile);
     in.setCodec("UTF-8");
