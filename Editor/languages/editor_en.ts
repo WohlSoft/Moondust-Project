@@ -11612,11 +11612,11 @@ Data may be corrupted!</translation>
     </message>
     <message>
         <source>1 - Card Roulette Exit</source>
-        <translation>1 - SMB3 Card Roulette exit</translation>
+        <translation>1 - Card Roulette exit</translation>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - SMB3 Boss defeat exit</translation>
+        <translation>2 - Boss defeat exit</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -11628,7 +11628,7 @@ Data may be corrupted!</translation>
     </message>
     <message>
         <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - SMB2 Crystal Sphere exit</translation>
+        <translation>5 - Crystal Sphere exit</translation>
     </message>
     <message>
         <source>6 - Warp Exit</source>
@@ -11640,7 +11640,7 @@ Data may be corrupted!</translation>
     </message>
     <message>
         <source>8 - Tape Exit</source>
-        <translation>8 - SMW Goal Tape exit</translation>
+        <translation>8 - Goal Tape exit</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -11981,7 +11981,7 @@ Bottom:	%4</translation>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation>Search Custom Tiles %1</translation>
+        <translation>Search Custom Terrain Tiles %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
