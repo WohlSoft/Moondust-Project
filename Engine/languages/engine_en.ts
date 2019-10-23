@@ -435,7 +435,7 @@ configuration packages are not found!</translation>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <translation>Config pack data path not exists:
+        <translation>Config pack data path does not exist:
 %1</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
@@ -476,7 +476,7 @@ therefore you can use same link to get updated version.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <translation>Error has occouped in main.ini in line %1.</translation>
+        <translation>Error has occured in main.ini in line %1.</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
