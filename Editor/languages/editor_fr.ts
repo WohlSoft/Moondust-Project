@@ -4584,7 +4584,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Wrap Horizontally</source>
-        <translation>Enrouler horizontalement</translation>
+        <translation>Balayage horizontal</translation>
     </message>
     <message>
         <source>Offscreen exit</source>
@@ -4596,11 +4596,11 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Export to image...</source>
-        <translation>Exporter en image…</translation>
+        <translation>Exporter en tant qu&apos;image…</translation>
     </message>
     <message>
         <source>Export current section to image (F12)</source>
-        <translation>Exporter la section courante en image (F12)</translation>
+        <translation>Exporter la section courante en tant qu&apos;image (F12)</translation>
     </message>
     <message>
         <source>Properties...</source>

@@ -746,7 +746,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>啊！PGE 编辑器程序崩溃啦！&lt;br&gt;崩溃详细信息:</translation>
+        <translation>啊！PGE 编辑器程序异常终止！&lt;br&gt;详细信息:</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
