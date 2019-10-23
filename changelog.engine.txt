@@ -6,6 +6,7 @@
 - Added Data() class into Lua API to store any custom data in game save
 - Fixed incorrect utf8 processing of translation data
 - Fixed unstable glypth length value in message box with mixed TTF and raster fonts
+- Added French translation by NathanBnm
 
 0.3.2
 - Fixed incorrect management of custom config files caused missing of them
