@@ -154,7 +154,7 @@ Veuillez télécharger et installer la dernière version de paquet de configurat
 
 Télécharger : %1
 
-Remarque : La plupart des paquets de configuration sont mis à jour avec MPJ.
+Remarque : La plupart des paquets de configuration sont mis à jour avec PGE.
 Cependant vous pouvez utiliser le même lien pour obtenir la version la plus récente.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
@@ -180,7 +180,7 @@ Cependant vous pouvez utiliser le même lien pour obtenir la version la plus ré
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
         <location filename="../main.cpp" line="177"/>
         <source>Config packs not found</source>
-        <translation>Paquets de configuration non trouvés</translation>
+        <translation>Paquets de configuration introuvables</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
         <location filename="../main.cpp" line="180"/>
@@ -414,7 +414,7 @@ Point d&apos;entrée N° : %2</translation>
     <message id="VIDEO_ENABLE_FRSKIP">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="420"/>
         <source>Enable frame-skip</source>
-        <translation>Activer le passage des cinématiques</translation>
+        <translation>Activer le saut d&apos;images</translation>
     </message>
     <message id="VIDEO_ENABLE_VSYNC">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="422"/>
