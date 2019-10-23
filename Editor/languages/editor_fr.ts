@@ -4370,7 +4370,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Éditeur - Moteur de Jeu de Plateforme</translation>
+        <translation>Éditeur - Platformer Game Engine</translation>
     </message>
     <message>
         <source>Section modifications</source>
@@ -4620,7 +4620,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Retour à la partie inférieure gauche de la section du niveau ou aux coordonnées x = 0 : y = 0 sur la carte de monde</translation>
+        <translation>Retourne à la partie inférieure gauche de la section du niveau ou aux coordonnées x = 0 : y = 0 sur la carte de monde</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -4632,7 +4632,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Retour à la partie supérieure gauche de la section du niveau ou aux coordonnées x = 0 : y = 0 sur la carte de monde</translation>
+        <translation>Retourne à la partie supérieure gauche de la section du niveau ou aux coordonnées x = 0 : y = 0 sur la carte de monde</translation>
     </message>
     <message>
         <source>Level Search</source>
@@ -4656,15 +4656,15 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
-        <translation>Correction des éléments graphiques incomplets (LazyFixTool)…</translation>
+        <translation>Correction des graphismes (LazyFixTool)…</translation>
     </message>
     <message>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
-        <translation>Conversion de fichiers GIF avec masque en PNG (GIFs2PNG)…</translation>
+        <translation>Conversion de fichiers GIF avec un masque en PNG (GIFs2PNG)…</translation>
     </message>
     <message>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
-        <translation>Conversion de fichiers PNG avec masque en GIF (PNGs2GIFs)…</translation>
+        <translation>Conversion de fichiers PNG avec un masque en GIF (PNGs2GIFs)…</translation>
     </message>
     <message>
         <source>World settings</source>
@@ -4764,7 +4764,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Item default</source>
-        <translation>Élément par défaut</translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
@@ -4843,11 +4843,11 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Export section to image...</source>
-        <translation>Exporter la section en image…</translation>
+        <translation>Exporter la section en tant qu&apos;image…</translation>
     </message>
     <message>
         <source>Export whole level section to image</source>
-        <translation>Exporte toute la section du niveau en image</translation>
+        <translation>Exporte toute la section du niveau en tant qu&apos;image</translation>
     </message>
     <message>
         <source>Test level (Alpha)</source>
@@ -4931,7 +4931,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Langage orginal de Lunadll]</translation>
+        <translation>Autocode [Langage original de Lunadll]</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -4999,7 +4999,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Wrap Vertically</source>
-        <translation>Enrouler verticalement</translation>
+        <translation>Balayage vertical</translation>
     </message>
     <message>
         <source>Placing</source>
@@ -5371,7 +5371,7 @@ Le paquet de configuration contient des erreurs.</translation>
     </message>
     <message>
         <source>Engine is not found</source>
-        <translation>Le moteur n&apos;a pas été trouvé</translation>
+        <translation>Moteur introuvable</translation>
     </message>
     <message>
         <source>Can&apos;t start testing, engine is not found:
@@ -5415,7 +5415,7 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>Test du moteur de jeu MPJ</translation>
+        <translation>Test du moteur de jeu PGE</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -5424,8 +5424,8 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>Bonjour ! Vous essayez de tester un niveau avec le moteur MPJ.
-Le moteur MPJ n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de MPJ pour les cas où vous souhaitez tester le moteur MPJ lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à MPJ.</translation>
+        <translation>Bonjour ! Vous essayez de tester un niveau avec le moteur PGE.
+Le moteur PGE n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de PGE pour les cas où vous souhaitez tester le moteur PGE lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à PGE.</translation>
     </message>
     <message>
         <source>Clonning of section...</source>
