@@ -11607,7 +11607,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Выход босса SMB3</translation>
+        <translation>2 - Победа над боссом</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -11970,7 +11970,7 @@ Bottom:	%4</source>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation>Поиск польз. Плиток %1</translation>
+        <translation>Поиск польз. Ландшафтных Плиток %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
