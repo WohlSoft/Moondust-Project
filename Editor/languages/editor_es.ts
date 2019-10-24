@@ -1417,7 +1417,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>Tiene un paquete de configuración viejo.
+        <translation type="unfinished">Tiene un paquete de configuración viejo.
 El editor va a iniciarse, pero tal vez tenga algunos problemas con objetos u opciones.
 
 Por favor descargue e instale la última versión del paquete:
