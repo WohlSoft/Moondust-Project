@@ -5,7 +5,7 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation>Настройки</translation>
+        <translation>Параметри</translation>
     </message>
     <message>
         <source>Main</source>
@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Autoplay music after opening file</source>
-        <translation>Автовмикання музики</translation>
+        <translation>Автозапуск музики після відкриття файлу</translation>
     </message>
     <message>
         <source>Performance</source>
@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation>Межа об&apos;єктів</translation>
+        <translation>Обмеження елементів для анімації</translation>
     </message>
     <message>
         <source>Collision detection</source>
@@ -273,7 +273,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation>Журнал</translation>
+        <translation>Ведення журналу</translation>
     </message>
     <message>
         <source>Log level</source>
@@ -971,7 +971,7 @@ Please save them before doing anything else.</source>
     <name>ExportToImage</name>
     <message>
         <source>Export to image</source>
-        <translation>Експорт в зображення</translation>
+        <translation>Експортувати як зображення</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -979,7 +979,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source> px</source>
-        <translation>px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Force vertical background tiling</source>
