@@ -188,7 +188,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC-Einstellungen</translation>
     </message>
     <message>
         <source>Generator</source>
@@ -208,7 +208,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation>Verzögerung:</translation>
+        <translation>Verzögerung (in Sekunden):</translation>
     </message>
     <message>
         <source>Direction</source>
