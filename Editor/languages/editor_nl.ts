@@ -16,17 +16,17 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="99"/>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Vensterindeling</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="111"/>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aparte subvensters (Klassieke stijl)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="124"/>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Subvensters met tabbladen (Moderne stijl)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="140"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="231"/>
         <source>Collision detection</source>
-        <translation>Botsing detectie</translation>
+        <translation>Botsingsdetectie</translation>
     </message>
     <message>
         <source>Document view</source>
@@ -218,95 +218,95 @@
         <location filename="../main_window/tools/app_settings.ui" line="152"/>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muziek zal automatisch afspelen wanneer je een level-bestand opent</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="155"/>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>Muziek automatisch afspelen na openen van het bestand</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="196"/>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maximum aantal elementen dat tegelijkertijd geanimeerd kunnen worden. Als deze limiet wordt overschreden, worden de animaties onderbroken totdat u de limiet verhoogt of overtollige elementen verwijdert.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="215"/>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Animatievoorwerpen limiet</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="314"/>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Middelste muisknop acties</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="320"/>
         <source>Copy selected items to cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiëer het geselecteerde voorwerp op de cursorpositie</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="327"/>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de plaatsingsmodus van het geselecteerde voorwerp</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="334"/>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Schakel slepen om te scrollen terwijl er niets is geselecteerd</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="344"/>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Plaatsingsmodus</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="350"/>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappenvenster zal niet automatisch weergegeven worden wanneer je een voorwerp selecteert om te plaatsen.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="354"/>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappenvenster niet tonen wanneer voorwerpen worden geplaatst</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="386"/>
         <source>Max history entries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale geschiedenis elementen:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="393"/>
         <source>Maximum number of remembered history actions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale grootte van de geschiedenislijst.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="490"/>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Omgeving</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="496"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Standaard zoom:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="503"/>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Standaard zoom dat geïnstalleerd zal worden bij het openen of maken van een bestand.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="538"/>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassieke event tabbladen om automatisch uit te breiden</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="682"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertraging (seconden):</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="711"/>
@@ -366,27 +366,27 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="899"/>
         <source>Tileset Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorwerpen Gereedschapskist</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="923"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="970"/>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="976"/>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Opmerking: Sommige wijzigingen zullen pas na het herstarten van het programma geactiveerd worden</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="989"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Activeer automatische schaalvergroting op hoge-DPI-monitoren</translation>
     </message>
     <message>
         <source>Level item Toolbox</source>
@@ -426,26 +426,26 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="828"/>
         <source>World Map Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereldmap Gereedschapskist</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="834"/>
         <location filename="../main_window/tools/app_settings.ui" line="870"/>
         <location filename="../main_window/tools/app_settings.ui" line="905"/>
         <source>Display tabs horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabbladen horizontaal tonen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="841"/>
         <location filename="../main_window/tools/app_settings.ui" line="877"/>
         <location filename="../main_window/tools/app_settings.ui" line="912"/>
         <source>Display tabs vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabbladen verticaal tonen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="864"/>
         <source>Level Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau Gereedschapskist</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="887"/>
@@ -491,7 +491,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Aantal sterren in toegankelijke nieveaus aan het berekenen</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="46"/>
@@ -543,55 +543,58 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="121"/>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX executable pad is niet gedefinieerd.
+Kies eerst het SoX-pad</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="129"/>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX executable path is ongeldig.
+Kies eerst het SoX-pad</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="418"/>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen acties mogelijk.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="206"/>
         <source>Operation canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerking afgebroken</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="219"/>
         <source>Sorry, SoX has crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry, SoX is gecrasht</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="234"/>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX gaf een niet-nulsom afsluitcode: %1
+%2</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="293"/>
         <source>Operation complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerking voltooid</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="419"/>
         <source>No tasks defined. Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn geen taken gedefinieerd. Geen acties mogelijk.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="455"/>
         <source>Open SoX executable path</source>
-        <translation type="unfinished"></translation>
+        <translation>Open het SoX executable pad</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="468"/>
         <source>Select file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een bestand om om te zetten</translation>
     </message>
     <message>
         <source>SoX binary path is not defined.
@@ -659,7 +662,7 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
         <source>What do you want?</source>
-        <translation>Wat wilt u?</translation>
+        <translation>Kies een actie</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="132"/>
@@ -669,12 +672,12 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert all music files on current level</source>
-        <translation>Wijzig al de muziekbestanden van het huidige niveau</translation>
+        <translation>Wijzig alle muziekbestanden van het huidige niveau</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="149"/>
         <source>Convert specified files</source>
-        <translation>Specifieke bestanden wijzigen</translation>
+        <translation>Gespecifieerde bestanden wijzigen</translation>
     </message>
     <message>
         <source>Convert into new format
@@ -694,17 +697,17 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
         <source>SoX executable path:</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX executable pad:</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="45"/>
         <source>Make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Backup aamaken</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="208"/>
         <source>The files&apos; format will not be changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Het formaat van de bestanden zullen onveranderd blijven</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="231"/>
@@ -746,7 +749,8 @@ Gelieve eerst een SoX pad aan te maken</translation>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="538"/>
         <source>Convert into new format
 (select a tab to choose target format)</source>
-        <translation type="unfinished"></translation>
+        <translation>Omzetten naar een nieuw formaat
+(selecteer een tabblad om het doelformaat te kiezen)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -767,7 +771,7 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="50"/>
         <source>Block Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok grootte:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="57"/>
@@ -782,7 +786,7 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="79"/>
         <source> second</source>
-        <translation>seconde</translation>
+        <translation> seconde</translation>
     </message>
 </context>
 <context>
