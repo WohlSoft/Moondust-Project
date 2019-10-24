@@ -1198,7 +1198,7 @@ Please save them before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>Вибачте, але ви використовуєте застарілий конфігураційний пакет.
+        <translation type="unfinished">Вибачте, але ви використовуєте застарілий конфігураційний пакет.
 &lt;br&gt;Редагувач запуститься, однак можуть виникнути проблеми з ігровими елементами або з їх налаштуваннями.
 &lt;br&gt;
 &lt;br&gt;Будь ласка, завантажте й встановіть останню версію вашого конфіг-пакету:
