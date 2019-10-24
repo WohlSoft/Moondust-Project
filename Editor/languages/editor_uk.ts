@@ -41,16 +41,16 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Окремі вікна (Классичний стиль)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкладки (Сучасний стиль)</translation>
     </message>
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Музика буде грати автоматично, коли ти відкриеш файл рівня.</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файли</translation>
     </message>
     <message>
         <source>Associate file extensions</source>
@@ -83,7 +83,7 @@
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим розміщення </translation>
     </message>
     <message>
         <source>Properties box will not be shown atomatically when you select an item to place,
