@@ -7931,11 +7931,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>1 - Card Roulette Exit</source>
-        <translation>1 - SMB3 卡牌过关</translation>
+        <translation>1 - 卡牌过关</translation>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - SMB3 Boss 击败后过关</translation>
+        <translation>2 - Boss 击败后过关</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -7947,7 +7947,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - SMB2 水晶球过关</translation>
+        <translation>5 - 水晶球过关</translation>
     </message>
     <message>
         <source>6 - Warp Exit</source>
@@ -7959,7 +7959,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>8 - Tape Exit</source>
-        <translation>8 - SMW 终点杆过关</translation>
+        <translation>8 - 终点杆过关</translation>
     </message>
     <message>
         <source>Placement mode</source>
