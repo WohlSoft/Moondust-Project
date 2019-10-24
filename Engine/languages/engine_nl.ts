@@ -9,7 +9,7 @@
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation>Het programma is gecrashed omdat het een onbehandelde uitzondering accepteerde!</translation>
+        <translation>Het programma is gecrasht omdat het een onbehandelde uitzondering accepteerde!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <source>Out of memory!</source>
@@ -17,7 +17,7 @@
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>Het programma is gecrashed wegens geheugentekort! Probeer andere applicaties te sluiten alvorens het spel opnieuw te starten.</translation>
+        <translation>Het programma is gecrasht wegens geheugentekort! Probeer andere applicaties te sluiten alvorens het spel opnieuw te starten.</translation>
     </message>
     <message id="CRASH_KILLED_TITLE">
         <source>Killed!</source>
@@ -41,7 +41,7 @@
     </message>
     <message id="CRASH_ILL_MSG">
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation>Het programma is gecrashed door een verkeerde CPU opdracht</translation>
+        <translation>Het programma is gecrasht door een verkeerde CPU opdracht</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <source>Wrong arithmetical operation</source>
@@ -49,7 +49,7 @@
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation>The programma is gecrashed door een foute arithmetische operatie!</translation>
+        <translation>The programma is gecrasht door een foute arithmetische operatie!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <source>Aborted</source>
@@ -71,7 +71,7 @@ and retry your recent actions to get more detailed information.</source>
 Run debugging with a built in debug mode application
 and retry your recent action to take more detail info.</oldsource>
         <translatorcomment>Feels a bit iffy</translatorcomment>
-        <translation>Het programma is gecrashed door een segmentatie-fout.
+        <translation>Het programma is gecrasht door een segmentatie-fout.
 Run het debug-programma binnen deze applicatie
 en doe je laatste stappen opnieuw om meer info te krijgen.</translation>
     </message>
@@ -398,7 +398,7 @@ Heeft u de startpositie of het startpunt te ver buiten de sectie gezet?</transla
     </message>
     <message id="CRASH_BUS_MSG">
         <source>Engine has crashed because a physical memory address error</source>
-        <translation>Het programma is gecrashed door een fysiek geheugenadres fout</translation>
+        <translation>Het programma is gecrasht door een fysiek geheugenadres fout</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
         <source>Config packs not found</source>
