@@ -3206,7 +3206,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Search Browser</translation>
+        <translation>Browser of Level items</translation>
     </message>
 </context>
 <context>
@@ -12598,7 +12598,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation>Search Browser</translation>
+        <translation>Browser of World Map items</translation>
     </message>
 </context>
 <context>

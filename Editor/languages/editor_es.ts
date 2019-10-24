@@ -1510,7 +1510,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished">Por favor, espere...</translation>
+        <translation>Por favor, espere...</translation>
     </message>
 </context>
 <context>
@@ -3242,7 +3242,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">General</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>No settings available</source>
@@ -12414,15 +12414,15 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Music Box</source>
-        <translation type="unfinished">Cajas de música</translation>
+        <translation>Cajas de música</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished">Por favor, guarde el archivo</translation>
+        <translation>Por favor, guarde el archivo</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished">Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
+        <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
     </message>
 </context>
 <context>

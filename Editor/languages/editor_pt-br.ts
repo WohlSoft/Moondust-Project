@@ -4865,11 +4865,11 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor salve o arquivo</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor salve o arquivo antes de selecionar niveis</translation>
     </message>
 </context>
 <context>
@@ -5208,15 +5208,15 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuda</translation>
     </message>
     <message>
         <source>Set align grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurar tamanho da malha de alinhagem</translation>
     </message>
     <message>
         <source>LunaLUA scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>Scripts de LunaLua</translation>
     </message>
     <message>
         <source>Configuration</source>
