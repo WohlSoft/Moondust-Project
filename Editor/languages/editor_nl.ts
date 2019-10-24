@@ -743,7 +743,8 @@ Gelieve eerst een SoX pad aan te maken</translation>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="505"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hier kan je snel je muziek of geluidseffect (SFX) bestanden wijzigen die&lt;br&gt; verkeerd geformateerd zijn (verkeerde sample-rate, slechte codec, etc.).&lt;/p&gt;
+&lt;p&gt;Deze functie gebruikt de &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio-omzetter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="538"/>
@@ -810,13 +811,15 @@ Gelieve eerst een SoX pad aan te maken</translation>
         <location filename="../main_window/dock/bookmarks_box.ui" line="73"/>
         <source>Remember current screen position on the level map or on the world map
 and store a bookmark.</source>
-        <translation type="unfinished"></translation>
+        <translation>Onthoud de huidige schermpositie in het niveau of wereldmap
+en sla een bladwijzer op.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="90"/>
         <source>Scroll to the saved position in the selected item.
 You also can double-click an item to scroll to its bookmarked position.</source>
-        <translation type="unfinished"></translation>
+        <translation>Scrol naar de opgeslagen positie in het geslecteerde voorwerp.
+Je kan ook een voorwerp dubbelklikken om naar de bladwijzerpositie te scrollen.</translation>
     </message>
     <message>
         <source>Remember current screen position on the level map or on the world map
@@ -851,17 +854,17 @@ Je kan ook het voorwerp dubbelklikken om terug naar de bladwijzer te gaan.</tran
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="14"/>
         <source>Configuration Manager</source>
-        <translation>Configuratie  Beheerder</translation>
+        <translation>Configuratie Beheerder</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="82"/>
         <source>Please select the game configuration you want to start the Editor with</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve de spelconfiguratie te kiezen waarmee het bewerkingsprogramma opstart</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="111"/>
         <source>Ask every startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Bij elke opstarting vragen</translation>
     </message>
     <message>
         <source>Please select the game configuration with which you wish to start the Editor with </source>
@@ -892,7 +895,7 @@ U kunt hier configuratiepakketten vinden:&lt;br&gt;%2</translation>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="354"/>
         <source>No config packs were found</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen configuratiepakket gevonden</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="360"/>
@@ -902,7 +905,12 @@ Please download and install them into this directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen configuratiepakketten gevonden!&lt;br&gt;
+Gelieve er te downloaden en instaleren in deze map&lt;br&gt;
+&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Je kan de volgende pakketten gebruiken:&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="493"/>
@@ -919,18 +927,19 @@ Wilt u het nu configureren?</translation>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="541"/>
         <source>Configuration script failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Het configuratiescript is mislukt</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="542"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Het configuratieprogramma heeft een fout aangetroffen: %1 op regel %2.
+Bestandspad: %3</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="554"/>
         <source>No configuration needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen configuratie nodig</translation>
     </message>
     <message>
         <source>Error of the configuring script</source>
@@ -949,7 +958,7 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="555"/>
         <source>This config pack has no configuring tool.</source>
-        <translation>Dit configuratiepakket heeft geen configuratie-instrument.</translation>
+        <translation>Dit configuratiepakket heeft geen configuratieprogramma.</translation>
     </message>
 </context>
 <context>
@@ -979,7 +988,7 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="128"/>
         <source>Directories</source>
-        <translation>Directory&apos;s</translation>
+        <translation>Mappen</translation>
     </message>
     <message>
         <source>Config directories:</source>
@@ -988,22 +997,22 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="49"/>
         <source>Objects defined:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gedefinieerde objecten:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="76"/>
         <source>Configuration name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Naam van de configuratie:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="89"/>
         <source>Configuration path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratiepad:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="140"/>
         <source>Configuration directories:</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratiemappen:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="196"/>
@@ -1023,7 +1032,7 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="223"/>
         <source>Configuration Loading Errors:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fouten bij het laden van de configuratie:</translation>
     </message>
     <message>
         <source>Errors of configuration loading:</source>
@@ -1071,7 +1080,7 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
         <source>Music (world map) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Muziek (wereldmap) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="122"/>
@@ -1106,12 +1115,12 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="135"/>
         <source>World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereldmap data</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="148"/>
         <source>[Error list is empty, congratulations!]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Het foutenlijst is leeg, gefeliciteerd!]</translation>
     </message>
     <message>
         <source>World data</source>
@@ -1157,22 +1166,22 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="33"/>
         <source>You might want to report this data to developers or post it at:</source>
-        <translation>U zou best deze data naar de ontwikkelaars rapporteren or deze hier te posten:</translation>
+        <translation>U zou best deze data naar de ontwikkelaars rapporteren of hier posten:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="53"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oh nee, het PGE bewerkingsprogramma is gecrasht :(&lt;br&gt;Gedetailleerde crashrapport:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="77"/>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>PGE Forum (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="84"/>
         <source>Exit from application</source>
-        <translation type="unfinished"></translation>
+        <translation>Applicatie sluiten</translation>
     </message>
     <message>
         <source>Ouch, PGE Editor has crashed :(&lt;br&gt;Detailed crash information data:</source>
@@ -1194,14 +1203,14 @@ Bestandspad:%3</translation>
         <location filename="../common_features/crashhandler.cpp" line="399"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crash herstel</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="400"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>Het programma heeft een paar bestanden kunnen redden van de laatste crash.
-Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
+Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     </message>
 </context>
 <context>
@@ -1209,7 +1218,7 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="20"/>
         <source>Custom Counter</source>
-        <translation>Aangepaste Teller</translation>
+        <translation>Zelfgemaakte Teller</translation>
     </message>
     <message>
         <source>Please add the Item&apos;s ID which will be in this custom group:</source>
@@ -1227,12 +1236,12 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add the Item IDs which will be in this custom group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve de voorwerp-IDs toe te voegen die deel zullen uitmaken van de zelfgemaakte groep:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="91"/>
         <source>Counter name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Teller naam:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
@@ -1357,12 +1366,12 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../dev_console/devconsole.ui" line="14"/>
         <source>Developer Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontwikkelaarsconsole</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="47"/>
         <source>Type commands here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ de opdrachten hier...</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="59"/>
@@ -1396,7 +1405,7 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="270"/>
         <source>Prints a test command</source>
-        <translation>Print een test-opdracht</translation>
+        <translation>Drukt een test-opdracht</translation>
     </message>
     <message>
         <source>Prints the version</source>
@@ -1405,7 +1414,7 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="272"/>
         <source>Quits the program</source>
-        <translation>Sluit het programma</translation>
+        <translation>Sluit het programma af</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="273"/>
@@ -1441,32 +1450,32 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="279"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation>Args: [Number] Gigabytes | Overbelast het geheugen (Wees voorzichtig)</translation>
+        <translation>Args: {[Number] Megabytes} | Overbelast het geheugen met de geselecteerde data (Wees hier voorzichtig mee)</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="269"/>
         <source>Prints this help text</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukt deze helptekst af</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="271"/>
         <source>Prints the editor version</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukt de versie van het bewerkignsprogramma af</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="274"/>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
-        <translation type="unfinished"></translation>
+        <translation>Args: [Tekst] berekent de MD5 hash van de tekst</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="275"/>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation type="unfinished"></translation>
+        <translation>Arg: [Tekstreeks] valideert de PGE-X tekstreeks (string array)</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="278"/>
         <source>Simulates crash signal</source>
-        <translation type="unfinished"></translation>
+        <translation>Simuleert het crashsignaal</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="280"/>
@@ -1476,22 +1485,22 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="281"/>
         <source>Does a segmentation violation</source>
-        <translation>Maakt een segmentatie fout</translation>
+        <translation>Veroorzaakt een segmentatie fout, voor crash-testdoeleinden</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="282"/>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>Maakt en verwijdert ItemSelectDialog om geheugenlekken te analyseren</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="284"/>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Arg: [Bestandspad] test of het bestand in de PGE-X bestandsformaat is</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="286"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation type="unfinished"></translation>
+        <translation>Args: [programma bevelen] Stuurt een bevel of bericht naar het PGE-programma als het open is</translation>
     </message>
 </context>
 <context>
@@ -1524,12 +1533,12 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="65"/>
         <source>Please, select target image size:</source>
-        <translation>Gelieve ge grootte te selecteren voor de gekozen afbeelding:</translation>
+        <translation>Gelieve de grootte te selecteren voor de gekozen afbeelding:</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Als dit aangevinkt is, zal dit de dimensies van de grootte omwisselen om een afbeelding met correcte proporties te maken.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Als dit aangevinkt is, zal dit de grootte van de omgekeerde dimensies verekenen om een afbeelding met correcte proporties te maken.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Save proportion</source>
@@ -1538,7 +1547,7 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="129"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dit is de &lt;span style=&quot; font-weight:600;&quot;&gt;breedte&lt;/span&gt; van de gekozen afbeelding. De afbeelding wordt naar dit vrebreed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dit is de &lt;span style=&quot; font-weight:600;&quot;&gt;breedte&lt;/span&gt; van de gekozen afbeelding. De afbeelding wordt naar dit verbreed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="122"/>
@@ -1563,7 +1572,7 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
         <source>Export current section to image</source>
-        <translation>Exporteer huidige segment naar afbeelding</translation>
+        <translation>Exporteer huidige sectie naar afbeelding</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
@@ -1573,7 +1582,7 @@ Gelieve ze eerst op te slaan alvorens werk voor te zetten.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="172"/>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewaar de oorspronkelijke beeldverhouding</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="179"/>
