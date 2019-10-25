@@ -805,7 +805,7 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="60"/>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="73"/>
@@ -1252,7 +1252,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="254"/>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="50"/>
@@ -1350,7 +1350,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Verwijder</translation>
     </message>
 </context>
 <context>
@@ -1513,7 +1513,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="142"/>
         <source>Hide warps and water markers (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Verberg portalen en gearceerde watergebieden (aanbevolen)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="149"/>
@@ -1557,17 +1557,17 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="39"/>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Verberg bewerkingsprogramma-specifieke informatie-icoontjes</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
         <source>Force vertical background tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwing verticale achtergrond betegeling</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="53"/>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster verbergen (als dit wordt weergegeven)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
@@ -1587,7 +1587,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="179"/>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Onzichtbare blokken en meta objecten verbergen</translation>
     </message>
     <message>
         <source>Tiled background</source>
@@ -1599,37 +1599,37 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="14"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Welkom!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="39"/>
         <source>Choose the workspace layout you want to use:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kies de werkruimte-indeling die u wilt gebruiken:</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
         <source>Modern</source>
-        <translation type="unfinished"></translation>
+        <translation>Modern</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="94"/>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassiek</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="110"/>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Moderne gebruikersinterface ontworpen voor gemak, werkt op alle schermen en diverse formaten.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Een klassiekere interface die meer zal lijken op het oude SMBX bewerkingsprogramma.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Welkom bij het PGE bewerkingsprogramma!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -1640,7 +1640,12 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; U kunt de lay-out op elk moment wijzigen vanuit het &lt;u&gt;Help&lt;/u&gt; menu, van gereedschap veranderen in het &lt;u&gt;Beeld&lt;/u&gt;-menu en de selectievakjes voor de Window Layout (Vensterindeling) veranderen in het &lt;u&gt;Venster&lt;/u&gt;-menu.&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Tip 2:&lt;/b&gt; In tegenstelling tot het oude bewerkingsprogramma zijn veel functies snel toegankelijk vanuit het contextmenu (geopend door met de rechtermuisknop te klikken),
+evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook meerdere voorwerpen tegelijkertijd selecteren!&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Tip 3:&lt;/b&gt; Gebruik de middelste muisknop om te kiezen tussen het plaatsen en een massa te kopiëren van het geselecteerde voorwerp!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1656,7 +1661,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementaddwarp.cpp" line="38"/>
         <source>Add Warp</source>
-        <translation>Portaal Toevoegen</translation>
+        <translation>Portaal ingang toevoegen</translation>
     </message>
 </context>
 <context>
@@ -1672,7 +1677,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementlayerchanged.cpp" line="26"/>
         <source>Change Layer</source>
-        <translation>Laag Veranderen</translation>
+        <translation>Van Laag Veranderen</translation>
     </message>
 </context>
 <context>
@@ -1738,7 +1743,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovelayerandsave.cpp" line="26"/>
         <source>Remove Layer and keep items</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag verwijderen en voorwerpen behouden</translation>
     </message>
 </context>
 <context>
@@ -1746,7 +1751,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovewarp.cpp" line="37"/>
         <source>Remove Warp</source>
-        <translation>Portaal Verwijderen</translation>
+        <translation>Portaal ingang verwijderen</translation>
     </message>
 </context>
 <context>
@@ -1778,7 +1783,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizeblock.cpp" line="18"/>
         <source>Resize Block</source>
-        <translation>Blokgrootte Veranderen</translation>
+        <translation>Blokgrootte wijzigen</translation>
     </message>
 </context>
 <context>
@@ -1786,7 +1791,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizesection.cpp" line="17"/>
         <source>Resize Section</source>
-        <translation>Sectiegrootte Veranderen</translation>
+        <translation>Sectiegrootte wijzigen</translation>
     </message>
 </context>
 <context>
@@ -1794,7 +1799,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizewater.cpp" line="18"/>
         <source>Resize Water</source>
-        <translation>Watervlakgrootte Veranderen</translation>
+        <translation>Watervlakgrootte wijzigen</translation>
     </message>
 </context>
 <context>
@@ -1803,7 +1808,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/installer.cpp" line="165"/>
         <location filename="../common_features/installer.cpp" line="166"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Even geduld...</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="256"/>
@@ -1845,7 +1850,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="92"/>
         <source>[hidden]</source>
-        <translation>[Verstopt]</translation>
+        <translation>[Verborgen]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="104"/>
@@ -1951,7 +1956,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="149"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruwe gebruikersdata wijzigen...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="152"/>
@@ -1962,7 +1967,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="181"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="332"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve aan te geven hoe ver buiten de speelgrens (in pixels) voorwerpen verwijderd moeten worden.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="277"/>
@@ -1980,7 +1985,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="422"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="433"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorkeursinstellingen zijn gekopiëerd: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="180"/>
@@ -2002,7 +2007,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="91"/>
         <source>Layer: </source>
-        <translation>Laag:</translation>
+        <translation>Laag: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="94"/>
@@ -2012,7 +2017,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="102"/>
         <source>[hidden]</source>
-        <translation>[Verstopt]</translation>
+        <translation>[Verborgen]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
@@ -2032,7 +2037,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
         <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijzig de blokinhoud...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
@@ -2053,7 +2058,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
         <source>Make message box...</source>
-        <translation type="unfinished"></translation>
+        <translation>Maak een tekstvlak aan...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="134"/>
@@ -2063,7 +2068,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="135"/>
         <source>Block-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok-ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
@@ -2093,7 +2098,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
@@ -2108,7 +2113,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>WIjzig ruwe gebruikersdata...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
@@ -2121,34 +2126,35 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="186"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorkeursinstellingen zijn gekopiëerd: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="239"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="443"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve aan te geven hoe ver buiten de speelgrens (in pixels) voorwerpen verwijderd moeten worden.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="322"/>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve een bericht in te vullen dat getoond wordt.
+(Maximum 27 tekens per regel)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="353"/>
         <source>Event created</source>
-        <translation type="unfinished"></translation>
+        <translation>Event aangemaakt</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="354"/>
         <source>Message event created!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bericht event aangemaakt!</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="360"/>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry, de positie van het &apos;Botsing&apos; event is al in gebruik door dit event: &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="238"/>
@@ -2159,22 +2165,22 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="314"/>
         <source>Event name</source>
-        <translation type="unfinished"></translation>
+        <translation>Event naam</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="315"/>
         <source>Please enter the name of event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve de eventnaam in te vullen:</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="323"/>
         <source>Hit message text</source>
-        <translation type="unfinished"></translation>
+        <translation>Botsing-geactiveerd bericht</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="359"/>
         <source>&apos;Hit&apos; event slot is used</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Botsing&apos; event slot is in gebruik</translation>
     </message>
 </context>
 <context>
@@ -2183,25 +2189,25 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="30"/>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken op Naam</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="34"/>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken op ID</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="37"/>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken op ID (Inhoud)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="41"/>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sorteren op</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="43"/>
@@ -2213,31 +2219,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="47"/>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="51"/>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dalende</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="58"/>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uniforme voorwerpengrootte weergave</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="62"/>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelfgemaakte voorwerpen tonen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="65"/>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Standaardvoorwerpen tonen</translation>
     </message>
 </context>
 <context>
@@ -2245,7 +2251,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="83"/>
         <source>Open target level: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Open gekozen niveau: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="88"/>
@@ -2255,52 +2261,52 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="92"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe laag aanmaken...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="99"/>
         <source>[hidden]</source>
-        <translation type="unfinished">[Verstopt]</translation>
+        <translation>[Verborgen]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="112"/>
         <source>Jump to exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Naar uitgang gaan</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="117"/>
         <source>Jump to entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Naar ingang gaan</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="121"/>
         <source>No Vehicles</source>
-        <translation type="unfinished"></translation>
+        <translation>Vervoer weigeren</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="125"/>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorwerpen toestaan</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="129"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Vergrendeld</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="132"/>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation>Bom noodzakelijk</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="135"/>
         <source>Required special state</source>
-        <translation type="unfinished"></translation>
+        <translation>Vereist speciale toestand</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="141"/>
         <source>Copy preferences</source>
-        <translation type="unfinished">Kopiëer instellingen</translation>
+        <translation>Kopiëer voorkeursinstellingen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="142"/>
@@ -2320,7 +2326,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="148"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="151"/>
@@ -2332,7 +2338,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="334"/>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="345"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorkeursinstellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -2340,22 +2346,22 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="71"/>
         <source>Open target file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Open gekozen bestand: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="75"/>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrondpad</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="79"/>
         <source>Big Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Grote Achtergrondpad</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="83"/>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Altijd Zichtbaar</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="88"/>
@@ -2365,7 +2371,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="90"/>
         <source>Level-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau-ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="91"/>
@@ -2405,7 +2411,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="101"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
@@ -2547,7 +2553,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
         <source>[hidden]</source>
-        <translation type="unfinished">[Verstopt]</translation>
+        <translation>[Verborgen]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="130"/>
@@ -2786,7 +2792,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="102"/>
         <source>[hidden]</source>
-        <translation type="unfinished">[Verstopt]</translation>
+        <translation>[Verborgen]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="112"/>
