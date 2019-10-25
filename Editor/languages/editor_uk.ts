@@ -67,7 +67,7 @@
     </message>
     <message>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор</translation>
     </message>
     <message>
         <source>Middle mouse button actions</source>
@@ -75,7 +75,7 @@
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити режим розміщення вибраного предмета</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
