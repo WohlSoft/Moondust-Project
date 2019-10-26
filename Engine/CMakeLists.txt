@@ -12,6 +12,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
     ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
+    ${CMAKE_CURRENT_SOURCE_DIR}/../_common/ # PGE-FL
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -35,7 +36,6 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 
 # include shared code modules
-include(../_common/PGE_File_Formats/pge_file_library.cmake)
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
 include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
@@ -331,7 +331,6 @@ set(PGE_ENGINE_SRC_ARGS
     ${FILEMAPPER_SRCS}
     ${FMT_SRCS}
     ${INIPROCESSOR_SRCS}
-    ${PGE_FILE_LIBRARY_SRCS}
     ${PGE_GAMESAVE_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTF8MAIN_SRCS}
@@ -406,6 +405,7 @@ add_dependencies(pge_engine
     LuaBind_Local
     FreeImage_Local
     SQLite_Local
+    PGE_FileFormats
     FREETYPE_Local
 )
 
@@ -424,6 +424,7 @@ list(APPEND PGE_ENGINE_INSTALLS
 
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
+    PGE_FileFormats
     PGE_FreeImage
     PGE_LuaBind
     PGE_LuaJIT

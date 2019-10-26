@@ -122,6 +122,7 @@ include(_common/library_FreeImage.cmake)
 include(_common/library_FreeType.cmake)
 include(_common/library_SDLMixerX.cmake)
 include(_common/library_QtPropertyBrowser.cmake)
+include(_common/library_PGE_FL.cmake)
 
 if(NOT USE_SYSTEM_LIBPNG)
     add_dependencies(libpng_Local AudioCodecs_Local) #Zlib is needed to libPNG

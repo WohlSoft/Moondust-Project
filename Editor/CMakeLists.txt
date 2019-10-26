@@ -21,6 +21,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/_includes
     ${DEPENDENCIES_INSTALL_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../_common/ # PGE-FL
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -46,8 +47,6 @@ include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
-add_definitions(-DPGE_FILES_QT)
-include(../_common/PGE_File_Formats/pge_file_library.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
@@ -464,7 +463,6 @@ add_executable(pge_editor
     ${DIRMANAGER_SRCS}
     ${FILEMAPPER_SRCS}
     ${INIPROCESSOR_SRCS}
-    ${PGE_FILE_LIBRARY_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTF8MAIN_SRCS}
     ${UTILS_SRCS}
@@ -475,6 +473,7 @@ add_library(PGE_QtLibs INTERFACE)
 target_link_libraries(PGE_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
     PGE_QPropertyBrowser
+    PGE_FileFormatsQt
     ${Qt5Qml_LIBRARIES}
     ${Qt5Concurrent_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
@@ -498,6 +497,7 @@ target_compile_definitions(PGE_QtLibs
     ${Qt5Network_DEFINITIONS}
     ${Qt5Concurrent_DEFINITIONS}
     ${Qt5Qml_DEFINITIONS}
+    -DPGE_FILES_QT
 )
 if(WIN32)
     target_compile_definitions(PGE_QtLibs
@@ -552,6 +552,7 @@ add_dependencies(pge_editor
     FreeImage_Local
     libpng_Local
     FREETYPE_Local
+    PGE_FileFormatsQt
     QtPropertyBrowser_Local
     editor_translations
 )

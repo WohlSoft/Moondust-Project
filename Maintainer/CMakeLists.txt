@@ -18,6 +18,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../_common/ # PGE-FL
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -31,9 +32,6 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
-
-add_definitions(-DPGE_FILES_QT)
-include(../_common/PGE_File_Formats/pge_file_library.cmake)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -88,12 +86,12 @@ endif()
 
 add_executable(pge_maintainer
     ${PGE_MAINTAINER_SRCS}
-    ${PGE_FILE_LIBRARY_SRCS}
 )
 
 add_dependencies(pge_maintainer
     libpng_Local
     FREETYPE_Local
+    PGE_FileFormatsQt
 ) # Needed for Qt to be linked
 
 add_library(PGE_Maintainer_QtLibs INTERFACE)
@@ -115,10 +113,12 @@ target_compile_definitions(PGE_Maintainer_QtLibs
     ${Qt5Gui_DEFINITIONS}
     ${Qt5Widgets_DEFINITIONS}
     ${Qt5Concurrent_DEFINITIONS}
+    -DPGE_FILES_QT
 )
 
 target_link_libraries(PGE_Maintainer_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
+    PGE_FileFormatsQt
     ${Qt5Concurrent_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
     ${Qt5Gui_LIBRARIES}
