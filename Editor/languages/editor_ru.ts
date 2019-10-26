@@ -2785,7 +2785,7 @@ Please, check the application directory and make sure it is installed properly.<
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Редактирование уровня</translation>
+        <translation type="vanished">Редактирование уровня</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -9089,7 +9089,7 @@ Do you want to continue?</source>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Редактирование настройки НИП</translation>
+        <translation type="vanished">Редактирование настройки НИП</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -12290,7 +12290,7 @@ Music boxes:		%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Карта Мира</translation>
+        <translation type="vanished">Карта Мира</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

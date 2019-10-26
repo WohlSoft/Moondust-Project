@@ -2567,7 +2567,7 @@ Por favor, verifique a pasta do aplicativo.</translation>
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Edição do nível</translation>
+        <translation type="vanished">Edição do nível</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -6736,7 +6736,7 @@ Quer continuar?</translation>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Editor de configurações de NPC</translation>
+        <translation type="vanished">Editor de configurações de NPC</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -9412,7 +9412,7 @@ Caixas de música:	%5</translation>
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Mapa do mundo</translation>
+        <translation type="vanished">Mapa do mundo</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

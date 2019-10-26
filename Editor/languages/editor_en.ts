@@ -2827,7 +2827,7 @@ Please check the application directory and make sure it is installed properly.</
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Level edit</translation>
+        <translation type="vanished">Level edit</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -9097,7 +9097,7 @@ Do you want to continue?</source>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Edit NPC Configuration</translation>
+        <translation type="vanished">Edit NPC Configuration</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -12301,7 +12301,7 @@ Music boxes:	%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>World Map</translation>
+        <translation type="vanished">World Map</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

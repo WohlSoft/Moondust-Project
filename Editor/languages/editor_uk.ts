@@ -2392,10 +2392,6 @@ Please, check the application directory and make sure it is installed properly.<
 <context>
     <name>LevelEdit</name>
     <message>
-        <source>Level edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export current section to image</source>
         <translation type="unfinished">Зробити знімок секції у файл</translation>
     </message>
@@ -5706,10 +5702,6 @@ See %2 for more information.</source>
 <context>
     <name>NpcEdit</name>
     <message>
-        <source>NPC Configuration edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NPC ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7527,7 +7519,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Режим розміщення </translation>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
@@ -7953,10 +7945,6 @@ Music boxes:		%5
 </context>
 <context>
     <name>WorldEdit</name>
-    <message>
-        <source>World Map</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>1/%1 Loading user data</source>
         <translation type="unfinished"></translation>

@@ -2406,7 +2406,7 @@ Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Édition de niveau</translation>
+        <translation type="vanished">Édition de niveau</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -5762,7 +5762,7 @@ Veuillez choisir l&apos;application de moteur vous-même !</translation>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Modifier la configuration du PNJ</translation>
+        <translation type="vanished">Modifier la configuration du PNJ</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -8004,7 +8004,7 @@ Boîtes à musique :	%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Carte de monde</translation>
+        <translation type="vanished">Carte de monde</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

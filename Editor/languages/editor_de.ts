@@ -2746,7 +2746,7 @@ Bitte überprüfe den Anwendungspfad.</translation>
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Level Editor</translation>
+        <translation type="vanished">Level Editor</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -8554,7 +8554,7 @@ Möchtest du fortfahren?</translation>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>NPC Konfiguationseditor</translation>
+        <translation type="vanished">NPC Konfiguationseditor</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -11450,7 +11450,7 @@ Musicboxen:		%5</translation>
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Weltkarte</translation>
+        <translation type="vanished">Weltkarte</translation>
     </message>
     <message>
         <source>Untitled %1</source>

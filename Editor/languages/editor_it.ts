@@ -2480,7 +2480,7 @@ Controlla la cartella dell&apos;applicazione e assicurati che sia installata cor
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Modifica del livello</translation>
+        <translation type="vanished">Modifica del livello</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -6482,7 +6482,7 @@ vuoi continuare lo stesso?</translation>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Modifica configurazione NPC</translation>
+        <translation type="vanished">Modifica configurazione NPC</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -9333,7 +9333,7 @@ Musiche:		%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Mappa</translation>
+        <translation type="vanished">Mappa</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

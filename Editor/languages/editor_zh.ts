@@ -2381,7 +2381,7 @@ Please, check the application directory and make sure it is installed properly.<
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>关卡编辑</translation>
+        <translation type="vanished">关卡编辑</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -5894,7 +5894,7 @@ See %2 for more information.</source>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>编辑 NPC 配置</translation>
+        <translation type="vanished">编辑 NPC 配置</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -8381,7 +8381,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>大地图</translation>
+        <translation type="vanished">大地图</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

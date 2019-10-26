@@ -2938,11 +2938,6 @@ Please, check the application directory and make sure it is installed properly.<
 <context>
     <name>LevelEdit</name>
     <message>
-        <location filename="../editing/edit_level/leveledit.ui" line="35"/>
-        <source>Level edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="133"/>
         <source>Export current section to image</source>
         <translation type="unfinished"></translation>
@@ -2958,8 +2953,8 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6584,11 +6579,11 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
         <location filename="../main_window/file/file_save.cpp" line="34"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6689,8 +6684,8 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6803,11 +6798,11 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7180,11 +7175,6 @@ Please save the file first.</source>
 </context>
 <context>
     <name>NpcEdit</name>
-    <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="37"/>
-        <source>NPC Configuration edit</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="95"/>
         <source>Physics</source>
@@ -9974,11 +9964,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 <context>
     <name>WorldEdit</name>
     <message>
-        <location filename="../editing/edit_world/world_edit.ui" line="17"/>
-        <source>World Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="109"/>
         <source>Export selected area to image</source>
         <translation type="unfinished"></translation>
@@ -9994,8 +9979,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2320,10 +2320,6 @@ Please, check the application directory and make sure it is installed properly.<
 <context>
     <name>LevelEdit</name>
     <message>
-        <source>Level edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5559,10 +5555,6 @@ See %2 for more information.</source>
 <context>
     <name>NpcEdit</name>
     <message>
-        <source>NPC Configuration edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NPC ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7738,10 +7730,6 @@ Music boxes:		%5
 </context>
 <context>
     <name>WorldEdit</name>
-    <message>
-        <source>World Map</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>1/%1 Loading user data</source>
         <translation type="unfinished"></translation>

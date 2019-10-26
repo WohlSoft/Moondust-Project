@@ -2756,7 +2756,7 @@ Por favor, controle la ruta de aplicación.</translation>
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Edición de nivel</translation>
+        <translation type="vanished">Edición de nivel</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -8739,7 +8739,7 @@ Do you want to continue?</source>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Editar configuración de PNJ</translation>
+        <translation type="vanished">Editar configuración de PNJ</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -12118,7 +12118,7 @@ Cajas de música:		%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Mapa</translation>
+        <translation type="vanished">Mapa</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

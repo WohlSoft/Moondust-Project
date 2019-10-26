@@ -2543,7 +2543,7 @@ Proszę sprawdź folder aplikacji.</translation>
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Edytuj Poziom</translation>
+        <translation type="vanished">Edytuj Poziom</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -6481,7 +6481,7 @@ See %2 for more information.</source>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Edytuj NPC</translation>
+        <translation type="vanished">Edytuj NPC</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -9049,7 +9049,7 @@ Bloki muzyczne:		%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Mapa świata</translation>
+        <translation type="vanished">Mapa świata</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
