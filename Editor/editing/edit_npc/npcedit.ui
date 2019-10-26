@@ -34,7 +34,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>NPC Configuration edit</string>
+   <string notr="true">--npc-config--</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
@@ -84,8 +84,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1114</width>
-        <height>615</height>
+        <width>1116</width>
+        <height>617</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,10" columnstretch="25,25,25,25">
