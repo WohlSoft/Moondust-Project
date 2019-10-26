@@ -528,7 +528,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="22"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="170"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="120"/>
@@ -1845,7 +1845,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="84"/>
         <source>Add to new layer...</source>
-        <translation>Op nieuwe laag toevoegen...</translation>
+        <translation>Toevoegen op nieuwe laag...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="92"/>
@@ -1985,7 +1985,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="422"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="433"/>
         <source>Preferences have been copied: %1</source>
-        <translation>Voorkeursinstellingen zijn gekopiëerd: %1</translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="180"/>
@@ -2012,7 +2012,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="94"/>
         <source>Add to new layer...</source>
-        <translation>Naar nieuwe laag toevoegen...</translation>
+        <translation>Toevoegen op nieuwe laag...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="102"/>
@@ -2037,7 +2037,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
         <source>Change included NPC...</source>
-        <translation>Wijzig de blokinhoud...</translation>
+        <translation>Inhoud wijzigen...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
@@ -2113,7 +2113,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
         <source>Edit raw user data...</source>
-        <translation>WIjzig ruwe gebruikersdata...</translation>
+        <translation>Ruwe gebruikersdata wijzigen...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
@@ -2126,7 +2126,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="186"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
         <source>Preferences have been copied: %1</source>
-        <translation>Voorkeursinstellingen zijn gekopiëerd: %1</translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="239"/>
@@ -2261,7 +2261,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="92"/>
         <source>Add to new layer...</source>
-        <translation>Nieuwe laag aanmaken...</translation>
+        <translation>Toevoegen op nieuwe laag...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="99"/>
@@ -2306,7 +2306,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="141"/>
         <source>Copy preferences</source>
-        <translation>Kopiëer voorkeursinstellingen</translation>
+        <translation>Kopiëer instellingen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="142"/>
@@ -2338,7 +2338,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="334"/>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="345"/>
         <source>Preferences have been copied: %1</source>
-        <translation>Voorkeursinstellingen zijn gekopiëerd: %1</translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -2429,7 +2429,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="245"/>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="257"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -2450,12 +2450,12 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
         <translation>Typ hier de dialoogtekst:
-(27 characters per lijn)</translation>
+(27 tekens per lijn)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="90"/>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vriendelijk (Vijandige NPCs kunnen niet worden aangesproken)</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly npc&apos;s can&apos;t be talked to)</source>
@@ -2467,12 +2467,12 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="84"/>
         <source>&lt;Silence&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Geen&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="87"/>
         <source>Play this</source>
-        <translation type="unfinished"></translation>
+        <translation>Speel dit af</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="90"/>
@@ -2482,7 +2482,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="92"/>
         <source>World-Music-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereld Muziek ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="94"/>
@@ -2522,7 +2522,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="109"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
@@ -2535,7 +2535,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="155"/>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="167"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -2543,12 +2543,12 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="104"/>
         <source>Layer: </source>
-        <translation type="unfinished">Laag:</translation>
+        <translation>Laag: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="107"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen op nieuwe laag...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
@@ -2558,17 +2558,17 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="130"/>
         <source>Edit NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>WIjzig NPC-instellingen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="132"/>
         <source>New NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe NPC-instelling</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="137"/>
         <source>Set %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bepalen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="137"/>
@@ -2593,22 +2593,22 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation>Vriendelijk</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="157"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbeweeglijk</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="161"/>
         <source>Set message...</source>
-        <translation type="unfinished"></translation>
+        <translation>Voeg dialoog toe...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="164"/>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellen als Baas</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="169"/>
@@ -2628,7 +2628,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
         <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhoud wijzigen...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
@@ -2638,7 +2638,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
         <source>NPC-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC-ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
@@ -2668,7 +2668,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="192"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
@@ -2683,7 +2683,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruwe gebruikersdata wijzigen...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
@@ -2700,7 +2700,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="241"/>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="469"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve aan te geven hoe ver buiten de speelgrens (in pixels) voorwerpen verwijderd moeten worden.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="304"/>
@@ -2708,7 +2708,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="324"/>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="335"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -2721,7 +2721,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="69"/>
         <source>Path-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pad-ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="70"/>
@@ -2761,7 +2761,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="80"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
@@ -2774,7 +2774,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="112"/>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="124"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -2787,7 +2787,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="94"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen op nieuwe laag...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="102"/>
@@ -2797,87 +2797,87 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="112"/>
         <source>Environment type</source>
-        <translation type="unfinished"></translation>
+        <translation>Omgevingstype</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
         <source>Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Water</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
         <source>Quicksand</source>
-        <translation type="unfinished"></translation>
+        <translation>Drijfzand</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
         <source>Custom liquid</source>
-        <translation type="unfinished"></translation>
+        <translation>Andere vloeistoffen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
         <source>Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aanraking-geactiveerde event (Eenmalig)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
         <source>Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aanraking-geactiveerde event (Elke frame)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
         <source>NPC Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC-aanraking geactiveerde event (Eenmalig)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
         <source>NPC Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC-aanraking geactiveerde event (Elke frame)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
         <source>Mouse click Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Muisklik-geactiveerde event</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
         <source>Gravity Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Zwaartekrachtsveld</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC/Speler-aanraking geactiveerde event (Eenmalig)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC/Speler-aanraking geactiveerde event (Elke frame)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
         <source>Collision script</source>
-        <translation type="unfinished"></translation>
+        <translation>Botsing-geactiveerde script</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
         <source>Mouse click Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Muisklik-geactiveerde Script</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
         <source>Collision Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Botsing-geactiveerde event</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
         <source>Air chamber</source>
-        <translation type="unfinished"></translation>
+        <translation>Luchtkamer</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
         <source>NPC Hurting Field</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC Beschadigingszone</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="149"/>
@@ -2912,13 +2912,13 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="184"/>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="195"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -2926,7 +2926,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
         <source>Set %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bepalen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
@@ -2946,7 +2946,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="101"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
 </context>
 <context>
@@ -2959,7 +2959,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="78"/>
         <source>Scenery-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Decoratie-ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="80"/>
@@ -2999,7 +2999,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="93"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="94"/>
@@ -3012,7 +3012,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="131"/>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="143"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -3020,12 +3020,12 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="14"/>
         <source>Select Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorwerp selecteren</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="30"/>
         <source>Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokken</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="51"/>
@@ -3037,7 +3037,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="719"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="850"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="58"/>
@@ -3049,7 +3049,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="697"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="828"/>
         <source>Category:</source>
-        <translation type="unfinished"></translation>
+        <translation>Categorie:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="68"/>
@@ -3061,7 +3061,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="675"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="806"/>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Groep:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="79"/>
@@ -3081,12 +3081,12 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="820"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="842"/>
         <source>[all]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Alles]</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="180"/>
         <source>[Empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Leeg]</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="114"/>
@@ -3126,27 +3126,27 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="884"/>
         <source>Extra Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra Data:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="251"/>
         <source>NPC from List</source>
-        <translation type="unfinished"></translation>
+        <translation>Van NPC lijst</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="252"/>
         <source>Coins</source>
-        <translation type="unfinished"></translation>
+        <translation>Munten</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="917"/>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="917"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla het bestand op om eigen muziek te gebruiken.</translation>
     </message>
 </context>
 <context>
@@ -3159,7 +3159,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="69"/>
         <source>Tile-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegel-ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="70"/>
@@ -3199,7 +3199,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="80"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
@@ -3212,7 +3212,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="112"/>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="124"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
 </context>
 <context>
@@ -3220,28 +3220,29 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="26"/>
         <source>LazyFix tool</source>
-        <translation type="unfinished"></translation>
+        <translation>LazyFix hulpprogramma</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="90"/>
         <source>Close</source>
-        <translation type="unfinished">Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="80"/>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoermap die de SMBX GIF-bestanden bevatten (*. gif en * m. gif)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitvoermap, waar de herstelde afbeeldingen worden opgeslagen.
+(Als dit veld leeg bijft, worden de afbeeldingen samen met hun back-ups  in de map van de oorspronkelijke afbeeldingen opgeslagen)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="97"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken naar afbeeldingen in submappen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="104"/>
@@ -3252,55 +3253,57 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="118"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlaggen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="148"/>
         <source>Don&apos;t create back-up</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen back-up aanmaken</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="155"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="172"/>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dit hulpprogramma dient om slordig gemaakte SMBX afbeelding-maskers te herstellen. Dit wordt gedaan via kleurvergelijking. De oorspronkelijke afbeeldingen worden overschreven, maar back-ups zullen worden aangemaakt in een nieuwe map in het geval dat er iets fout loopt.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="44"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoermap openen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="55"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitvoermap openen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="68"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoermap is niet ingesteld</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="68"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve de invoermap in te stellen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="85"/>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Hulpprogramma niet gevonden</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="85"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan deze applicatie niet opstarten:
+%1
+Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
 </context>
 <context>
@@ -3318,12 +3321,12 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="138"/>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG-afbeelding (*. png)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <source>Saving section image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie-afbeelding aan het opslagen...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
@@ -3334,60 +3337,60 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="147"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Even geduld...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="42"/>
         <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Naamloze %1</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="111"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau titel invoeren voor &apos;%1&apos;!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="112"/>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan het opslaan</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="116"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="573"/>
         <source>Level title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau titel: </translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="117"/>
         <source>Make custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe map aanmaken</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="178"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="456"/>
         <source>File read error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij het lezen van het bestand</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="245"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="272"/>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandsextensie niet ingesteld</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="246"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="273"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandsextensie is niet ingesteld, gelieve een geldige bestandsextensie in te voeren!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="188"/>
         <source>SMBX file version</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX bestandsextensie</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="189"/>
@@ -3396,13 +3399,16 @@ List of known SMBX versions and format codes:
 %1
 (To allow level file work in specific SMBX version,
 version code must be less or equal specific code)</source>
-        <translation type="unfinished"></translation>
+        <translation>Als welke versie wil je dit opslaan? (van 0 tot 64)
+Lijst van gekende SMBX versies en formaatcodes:
+%1
+(Niveaus moeten dezelfde of oudere versie hebben als SMBX om geopend te kunnen worden)</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="391"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="406"/>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation>De SMBX64 limiet is overschreden</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="407"/>
@@ -3410,14 +3416,17 @@ version code must be less or equal specific code)</source>
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wilt u het bestand toch opslaan?
+Overschrijding van de SMBX64 limieten kan SMBX crashen met een &apos; subscript buiten bereik &apos; fout.
+
+Het installeren van LunaLUA vergroot de limieten gedeeltelijk.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="337"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="359"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="427"/>
         <source>File save error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij het opslaan van het bestand</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="338"/>
@@ -3425,24 +3434,26 @@ Installed LunaLUA partially extends than limits.</source>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="428"/>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan %1 bestand niet opslaan:
+%2.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="457"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan %1 bestand niet lezen:
+%2.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="504"/>
         <source>Loading level data</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau gegevens aan het laden</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="547"/>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation>Foute configuratie-aanpassingen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="548"/>
@@ -3633,7 +3644,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="199"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="206"/>
@@ -4287,7 +4298,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1449"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1463"/>
@@ -4362,7 +4373,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="69"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="83"/>
@@ -4725,7 +4736,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="63"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="73"/>
@@ -6055,7 +6066,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="816"/>
         <source>Close</source>
-        <translation>Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="824"/>
@@ -7328,7 +7339,7 @@ Do you want to clone another section?</source>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="398"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Even geduld...</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="438"/>
@@ -8839,7 +8850,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/script/script_editor.ui" line="72"/>
         <source>Close script editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_editor.ui" line="77"/>
@@ -9272,7 +9283,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="138"/>
         <source>Close</source>
-        <translation type="unfinished">Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="145"/>
@@ -9417,7 +9428,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="79"/>
         <source>Close</source>
-        <translation type="unfinished">Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
 </context>
 <context>
@@ -9479,7 +9490,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="93"/>
         <source>Close</source>
-        <translation type="unfinished">Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="198"/>
@@ -9606,7 +9617,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/variables_box.ui" line="100"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
 </context>
 <context>
@@ -9913,7 +9924,7 @@ because object configurations are not loaded
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="52"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="67"/>
@@ -10460,7 +10471,7 @@ Music boxes:		%5
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="123"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Even geduld...</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="123"/>
@@ -10693,7 +10704,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.ui" line="147"/>
         <source>Close</source>
-        <translation type="unfinished">Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
 </context>
 <context>
@@ -10766,7 +10777,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="177"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="198"/>
@@ -10787,7 +10798,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="52"/>
         <source>Close</source>
-        <translation type="unfinished">Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="156"/>
@@ -10807,34 +10818,36 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="45"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoermap openen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="57"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitvoermap openen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="70"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoermap niet gespecifieerd</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="70"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve de invoermap in te stellen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="87"/>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Hulpprogramma niet gevonden</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="87"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan deze applicatie niet opstarten:
+%1
+Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
 </context>
 <context>
@@ -10865,7 +10878,7 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="101"/>
@@ -10875,7 +10888,7 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="111"/>
         <source>Close</source>
-        <translation type="unfinished">Sluit</translation>
+        <translation>Sluiten</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="125"/>
@@ -10895,34 +10908,36 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="44"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoermap openen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="56"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitvoermap openen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="69"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoermap is niet ingesteld</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="69"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve de invoermap in te stellen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="86"/>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Hulpprogramma niet gevonden</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="86"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan deze applicatie niet opstarten:
+%1
+Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
 </context>
 <context>
@@ -10937,7 +10952,8 @@ Rechtermuisknop om te verwijderen!</translation>
         <location filename="../tools/tilesets/tileset.cpp" line="98"/>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sleep voorwerpen in dit vakje.
+Rechtermuis klikken om te verwijderen.</translation>
     </message>
 </context>
 </TS>

@@ -2355,7 +2355,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation>NPC Hurting Field</translation>
+        <translation>NPC Hurtfield</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2820,7 +2820,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 Please, check the application directory and make sure it is installed properly.</source>
         <translation>Can&apos;t run application:
 %1
-Please, check the application directory and make sure it is installed properly.</translation>
+Please check the application directory and make sure it is installed properly.</translation>
     </message>
 </context>
 <context>
@@ -2957,7 +2957,7 @@ Installed LunaLUA partially extends than limits.</source>
         <translation>Do you want to save the file anyway?
 Exceeding the SMBX64 limits may crash SMBX with a &apos;Subscript out of range&apos; error.
 
-Installing LunaLUA partially extends theese limits.</translation>
+Installing LunaLUA partially extends these limits.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 blocks
@@ -12876,7 +12876,7 @@ therefore you can use same link to get updated version</source>
 Please, check the application directory and make sure it is installed properly.</source>
         <translation>Can&apos;t run application:
 %1
-Please, check the application directory and make sure it is installed properly.</translation>
+Please check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
@@ -13442,7 +13442,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Please, set the source directory</translation>
+        <translation>Please set the source directory</translation>
     </message>
     <message>
         <source>Tool not found</source>
@@ -13454,7 +13454,7 @@ Do you want to save your changes?</translation>
 Please, check the application directory and make sure it is installed properly.</source>
         <translation>Can&apos;t run application:
 %1
-Please, check the application directory and make sure it is installed properly.</translation>
+Please check the application directory and make sure it is installed properly.</translation>
     </message>
 </context>
 <context>

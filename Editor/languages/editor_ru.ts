@@ -2313,7 +2313,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation>Повреждающее поле для нИП</translation>
+        <translation>Поле урона для нИП</translation>
     </message>
     <message>
         <source>Copy preferences</source>
