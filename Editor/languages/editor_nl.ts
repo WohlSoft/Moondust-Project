@@ -1314,7 +1314,7 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Oh nee, het PGE bewerkingsprogramma is gecrasht :(&lt;br&gt;Gedetailleerde crashrapport:</translation>
+        <translation type="unfinished">Oh nee, het PGE bewerkingsprogramma is gecrasht :(&lt;br&gt;Gedetailleerde crashrapport:</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -1962,7 +1962,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="294"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args: [programma bevelen] Stuurt een bevel of bericht naar het PGE-programma als het open is</translation>
+        <translation type="unfinished">Args: [programma bevelen] Stuurt een bevel of bericht naar het PGE-programma als het open is</translation>
     </message>
 </context>
 <context>
@@ -2110,7 +2110,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation>Welkom bij het PGE bewerkingsprogramma!</translation>
+        <translation type="unfinished">Welkom bij het PGE bewerkingsprogramma!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -6449,7 +6449,7 @@ wanneer u vanuit dit portaal een niveau verlaat.</translation>
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>Definieert het type portaal:
+        <translation type="unfinished">Definieert het type portaal:
 0 - Onmiddellijk, de speler wordt onmiddellijk geteleporteerd en de bewegingssnelheid wordt teruggezet naar 0.
 1 - Pijp, directionele portaal in-en-uitgang.
 2 - Deur, speler kan binnenkomen met de boven toets.
@@ -8380,7 +8380,7 @@ Het configuratiepakket bevat fouten.</translation>
         <location filename="../testing/pge_engine.cpp" line="74"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>Hallo! U bent op het punt om een niveau in het PGE Programma te testen.
+        <translation type="unfinished">Hallo! U bent op het punt om een niveau in het PGE Programma te testen.
 Het PGE Programma is nog steeds vrij vroeg in de ntwikkelingsstadium, en er zullen vele functie missen of niet correct werken. Als u een niveau of episode aan het maken bent in het oorspronkelijk SMBX programma die je wilt uittesten met een compleet werkend programma, gelieve dan SMBX zelf te gebruiken. Gebruik PGE Testen voor gevallen waarbij je het PGE Programma zelf of componenten van het programma wilt testen.</translation>
     </message>
     <message>
@@ -8436,7 +8436,7 @@ U kan testen zonder op te slaan met behulp van het menu-item &quot;Niveau Testen
     <message>
         <location filename="../testing/pge_engine.cpp" line="69"/>
         <source>PGE Engine testing</source>
-        <translation>PGE Programma testen</translation>
+        <translation type="unfinished">PGE Programma testen</translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="72"/>
@@ -9743,7 +9743,7 @@ Foutbeschrijving:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
+        <translation type="unfinished">Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
 Reden: Geheugentekort!
 
 Om dit te voorkomen, probeer om andere, onbelangrijke programma&apos;s te sluiten om meer geheugen vrij te maken.</translation>
@@ -9766,7 +9766,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
+        <translation type="unfinished">Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
 Reden: Onbehandelde exceptie!
 
 Gelieve de makers te contacteren op de forum om dit probleem op te lossen, met dank
@@ -9814,7 +9814,7 @@ Forum link: wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation>Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
+        <translation type="unfinished">Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
 Reden: %1
 
 </translation>
