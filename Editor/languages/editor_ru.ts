@@ -3037,7 +3037,7 @@ because object configurations are not loaded
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished">На этом уровне имеются некоторые неправильные файлы конфигураций, которые не могут загрузиться. Чтобы это сообщение не появлялось в следующий раз, пожалуйста, исправьте следующие ошибки в ваших конфигурационных файлах в пользовательских папках:
+        <translation>На этом уровне имеются некоторые неправильные файлы конфигураций, которые не могут загрузиться. Чтобы это сообщение не появлялось в следующий раз, пожалуйста, исправьте следующие ошибки в ваших конфигурационных файлах в пользовательских папках:
 
 %1</translation>
     </message>
