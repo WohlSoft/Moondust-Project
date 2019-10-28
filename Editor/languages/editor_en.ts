@@ -3079,7 +3079,7 @@ Please check that the config/SMBX directory exists and contains the *.INI files 
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix the followers errors in your config files that are in the current and in the custom folders:
+        <translation>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix the following errors in your config files that are in the current and in the custom folders:
 
 %1</translation>
     </message>
