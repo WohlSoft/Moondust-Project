@@ -3544,7 +3544,7 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="21"/>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorwerp Bladervenster</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="66"/>
@@ -3597,7 +3597,7 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="32"/>
         <source>Level Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau Instellingen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="75"/>
@@ -3612,7 +3612,7 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="158"/>
         <source>Disable player controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Spelerbesturing uitschakelen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="164"/>
@@ -3622,7 +3622,7 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="171"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Springen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="178"/>
