@@ -2089,7 +2089,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation>Champ de blessure du PNJ</translation>
+        <translation>Champ de blessure de PNJ</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2522,7 +2522,7 @@ L&apos;installation de LunaLUA étend partiellement ces limites.</translation>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation>Ce niveau possède certains fichiers de configuration invalides qui ne peuvent pas être chargés. Pour éviter cette boîte de message la prochaine fois, veuillez corriger les erreurs suivantes dans vos fichiers de configuration dans les dossiers actuels et personnalisés :
+        <translation type="unfinished">Ce niveau possède certains fichiers de configuration invalides qui ne peuvent pas être chargés. Pour éviter cette boîte de message la prochaine fois, veuillez corriger les erreurs suivantes dans vos fichiers de configuration dans les dossiers actuels et personnalisés :
 
 %1</translation>
     </message>
@@ -2621,7 +2621,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Navigateur de recherche</translation>
+        <translation>Navigateur de niveaux</translation>
     </message>
 </context>
 <context>
@@ -8191,7 +8191,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation>Navigateur de recherche</translation>
+        <translation>Navigateur de cartes de monde</translation>
     </message>
 </context>
 <context>
