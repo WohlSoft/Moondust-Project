@@ -2522,7 +2522,7 @@ L&apos;installation de LunaLUA étend partiellement ces limites.</translation>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished">Ce niveau possède certains fichiers de configuration invalides qui ne peuvent pas être chargés. Pour éviter cette boîte de message la prochaine fois, veuillez corriger les erreurs suivantes dans vos fichiers de configuration dans les dossiers actuels et personnalisés :
+        <translation>Ce niveau possède certains fichiers de configuration invalides qui ne peuvent pas être chargés. Pour éviter cette boîte de message la prochaine fois, veuillez corriger les erreurs suivantes dans vos fichiers de configuration dans les dossiers actuels et personnalisés :
 
 %1</translation>
     </message>
