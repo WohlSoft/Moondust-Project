@@ -10,6 +10,7 @@ CMAKE_GENERATOR="Unix Makefiles"
 flag_debugThisScript=false
 flag_debugDependencies=false
 flag_pack_src=false
+flag_pack_src_gz=false
 flag_cmake_it_ninja=false
 flag_cmake_deploy=false
 flag_cmake_static_qt=false
@@ -127,6 +128,9 @@ do
             ;;
         pack-src)
                 flag_pack_src=true
+            ;;
+        gz)
+                flag_pack_src_gz=true
             ;;
         cmake-it)
                 # dummy
@@ -406,9 +410,14 @@ if ${flag_pack_src} ; then
     if [[ ! -d bin-archives ]]; then
         mkdir bin-archives
     fi
+    if ${flag_pack_src_gz} ; then
+        ARFORMAT=gz
+    else
+        ARFORMAT=bz2
+    fi
 
     echo "Packing source code..."
-    git archive-all -v --force-submodules bin-archives/pge-project-full-src.tar.bz2
+    git archive-all -v --force-submodules bin-archives/pge-project-full-src.tar.${ARFORMAT}
     checkState
 
     printLine "Packed!" "\E[0;42;37m" "\E[0;32m"
