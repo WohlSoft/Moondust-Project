@@ -10,7 +10,7 @@ function(qtDeployAdd _target)
     set(WINDEPLOY_LIST ${WINDEPLOY_LIST} PARENT_SCOPE)
 endfunction()
 
-function(pgeSetupQtDeploymet _is_static_qt)
+function(pgeSetupQtDeploymet _is_static_qt _is_shared_mixer)
     if(WIN32)
         add_custom_target(windeploy)
     endif()
@@ -70,7 +70,7 @@ function(pgeSetupQtDeploymet _is_static_qt)
         add_custom_target(pge_windeploy) # DUMMY
     endif()
 
-    if(WIN32 AND (NOT ${_is_static_qt} OR PGE_SHARED_SDLMIXER))
+    if(WIN32 AND (NOT ${_is_static_qt} OR ${_is_shared_mixer}))
         set(MINGW_BIN_PATH $ENV{MinGW})
         if(NOT MINGW_BIN_PATH)
             set(MINGW_BIN_PATH "${QT_BINLIB_DIR}")

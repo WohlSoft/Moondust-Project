@@ -209,7 +209,7 @@ if(PGE_ENABLE_QT AND NOT ANDROID)
         qtDeployAdd(pge_maintainer)
     endif()
 
-    pgeSetupQtDeploymet(${PGE_ENABLE_STATIC_QT})
+    pgeSetupQtDeploymet(${PGE_ENABLE_STATIC_QT} ${PGE_SHARED_SDLMIXER})
 endif()
 
 # Append Project License file
