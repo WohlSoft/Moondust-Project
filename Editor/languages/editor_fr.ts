@@ -2089,7 +2089,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation>Champ de blessure du PNJ</translation>
+        <translation>Champ de blessure de PNJ</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2621,7 +2621,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Navigateur de recherche</translation>
+        <translation>Navigateur de niveaux</translation>
     </message>
 </context>
 <context>
@@ -8191,7 +8191,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation>Navigateur de recherche</translation>
+        <translation>Navigateur de cartes de monde</translation>
     </message>
 </context>
 <context>

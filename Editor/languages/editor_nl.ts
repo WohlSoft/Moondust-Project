@@ -1032,7 +1032,7 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="223"/>
         <source>Configuration Loading Errors:</source>
-        <translation type="unfinished">Fouten bij het laden van de configuratie:</translation>
+        <translation>Fouten bij het laden van de configuratie:</translation>
     </message>
     <message>
         <source>Errors of configuration loading:</source>
@@ -1604,7 +1604,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="39"/>
         <source>Choose the workspace layout you want to use:</source>
-        <translation type="unfinished">Kies de werkruimte-indeling die u wilt gebruiken:</translation>
+        <translation>Kies de werkruimte-indeling die u wilt gebruiken:</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
@@ -2043,17 +2043,17 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="127"/>
         <source>Transform into</source>
-        <translation type="unfinished">Verander naar</translation>
+        <translation>Verander naar</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished">Verander alle %1 in deze sectie naar</translation>
+        <translation>Verander alle %1 in deze sectie naar</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished">Verander alle %1 naar</translation>
+        <translation>Verander alle %1 naar</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
@@ -2063,7 +2063,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="134"/>
         <source>Copy preferences</source>
-        <translation type="unfinished">Kopiëer instellingen</translation>
+        <translation>Kopiëer instellingen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="135"/>
@@ -2073,17 +2073,17 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished">Positie: X, Y</translation>
+        <translation>Positie: X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished">Positie X, Y, Breedte, Hoogte</translation>
+        <translation>Positie X, Y, Breedte, Hoogte</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished">Positie: Links, Top, Rechts, Bodem</translation>
+        <translation>Positie: Links, Top, Rechts, Bodem</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
@@ -2103,12 +2103,12 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished">Verwijder alle %1 in deze sectie</translation>
+        <translation>Verwijder alle %1 in deze sectie</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="147"/>
         <source>Remove all %1</source>
-        <translation type="unfinished">Verwijder alle %1</translation>
+        <translation>Verwijder alle %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
@@ -3455,54 +3455,57 @@ Het installeren van LunaLUA vergroot de limieten gedeeltelijk.</translation>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dit niveau heeft foute configuratiebestanden die niet geladen kunnen worden. Om deze foutmelding te voorkomen moet je de volgende foutmeldingen oplossen in je configuratiebestanden binnen de huidige en  zelfgemaakte mappen:
+
+%1</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="569"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; werd gewijzigd.
+Wil je je wijzigingen opslaan?</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="571"/>
         <source> not saved</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> is niet opgeslagen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="38"/>
         <source>1/%1 Loading user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 bijgevoegde data aan het laden...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="46"/>
         <source>1/%1 Loading Backgrounds...</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 Achtergronden aan het laden...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="55"/>
         <source>2/%1 Loading BGOs...</source>
-        <translation type="unfinished"></translation>
+        <translation>2/%1 Decoratie aan het laden...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="64"/>
         <source>3/%1 Loading Blocks...</source>
-        <translation type="unfinished"></translation>
+        <translation>3/%1 Blokken aan het laden...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="73"/>
         <source>4/%1 Loading NPCs...</source>
-        <translation type="unfinished"></translation>
+        <translation>4/%1 NPC&apos;s aan het laden...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="83"/>
         <source>5/%1 Loading PhysEZ...</source>
         <comment>PhysEZ - Physical Environment Zone.</comment>
-        <translation type="unfinished"></translation>
+        <translation>5/%1 vloeistofvelden aan het laden...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="92"/>
         <source>6/%1 Loading Doors...</source>
-        <translation type="unfinished"></translation>
+        <translation>6/%1 Deuren aan het laden...</translation>
     </message>
 </context>
 <context>
@@ -3510,18 +3513,18 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="20"/>
         <source>Level files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau-bestandenlijst</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="30"/>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="33"/>
         <source>Please, select level file from list for use them:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve een niveau-bestand te kiezen uit deze lijst:</translation>
     </message>
 </context>
 <context>
@@ -3541,7 +3544,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="21"/>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorwerp Bladervenster</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="66"/>
@@ -3555,7 +3558,7 @@ Do you want to save your changes?</source>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="329"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="480"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="189"/>
@@ -3572,21 +3575,21 @@ Do you want to save your changes?</source>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="361"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="412"/>
         <source>&lt;Save file first&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Bestand eerst opslaan&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="316"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="367"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="418"/>
         <source>Copy graphic to custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphics kopiëren naar niveau-mapje</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="317"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="368"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="419"/>
         <source>Copy graphic to episode folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphics kopiëren naar episode-mapje</translation>
     </message>
 </context>
 <context>
@@ -3594,7 +3597,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="32"/>
         <source>Level Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau Instellingen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="75"/>
@@ -3609,7 +3612,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="158"/>
         <source>Disable player controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Spelerbesturing uitschakelen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="164"/>
@@ -3619,7 +3622,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="171"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Springen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="178"/>
