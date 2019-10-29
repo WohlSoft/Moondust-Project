@@ -1,43 +1,13 @@
 cmake_minimum_required (VERSION 3.2)
 project (Moondust LANGUAGES C CXX)
 
-string(COMPARE EQUAL "${Moondust_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" insource)
-if(insource)
-    message(FATAL_ERROR "
-==== Build in source directory is not allowed! ====
-Please run cmake configure from another directory, for example, create a 'build' sub-directory, and run 'cmake ..' from it."
-)
-endif()
-
-include(ExternalProject)
-
 set(PGE_INSTALL_DIRECTORY "Moondust" CACHE STRING "Name of directory where all binary and data files are will be installed")
-
-# Destinition bitness of the build
-if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-    set(PGE_ARCHITECTURE_BITS "32")
-elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(PGE_ARCHITECTURE_BITS "64")
-else()
-    set(PGE_ARCHITECTURE_BITS "unk")
-endif()
 
 include(_common/git_info.cmake)
 message("== Current GIT hash [${GIT_COMMIT_HASH}], branch [${GIT_BRANCH}], package [${PACKAGE_SUFFIX}] ==")
 
-include(_common/build_env.cmake)
+include(_common/build_env_pge.cmake)
 include(_common/deployment.cmake)
-
-if(APPLE)
-    # Prevent "directory not exists" warnings when building XCode as project
-    file(MAKE_DIRECTORY ${DEPENDENCIES_INSTALL_DIR}/lib/Debug)
-    file(MAKE_DIRECTORY ${DEPENDENCIES_INSTALL_DIR}/lib/Release)
-    # Don't store built executables into "Debug" and "Release" folders
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
-    set(CMAKE_BUNDLE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
-    set(CMAKE_BUNDLE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
-endif()
 
 set(PGE_ENABLE_QT_ENABLED_BY_DEFAULT ON)
 if(HAIKU OR EMSCRIPTEN OR ANDROID)
@@ -72,9 +42,6 @@ if(PGE_ENABLE_QT_ENABLED_BY_DEFAULT)
     endif()
 endif()
 
-# Unix2Dos utility to converyt and install text files for Windows platform
-include(_common/tool_unix2dos.cmake)
-
 if(WIN32 OR EMSCRIPTEN)
     set(PGE_STATIC_SDLMIXER_PLATFORM_DEFAULT OFF)
 else()
@@ -92,21 +59,10 @@ endif()
 # Version of complete toolchain
 include(version.cmake)
 
-if(ANDROID)
-    set(ANDROID_CMAKE_FLAGS
-        "-DANDROID_ABI=${ANDROID_ABI}"
-        "-DANDROID_NDK=${ANDROID_NDK}"
-        "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
-        "-DANDROID_PLATFORM=${ANDROID_PLATFORM}"
-        "-DANDROID_TOOLCHAIN=${ANDROID_TOOLCHAIN}"
-        "-DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
-        "-DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}"
-        "-DANDROID_ARM_NEON=${ANDROID_ARM_NEON}"
-    )
-endif()
-
 option(USE_SYSTEM_LIBC "Don't link libc and libstdc++ statically and use directly from the system" OFF)
 
+# Unix2Dos utility to converyt and install text files for Windows platform
+include(_common/tool_unix2dos.cmake)
 # Dependent libraries
 include(_common/library_libpng.cmake)
 include(_common/library_sqlite.cmake)
@@ -137,14 +93,18 @@ set(LIBS_TARGETS
     FreeImage_Local
     SQLite_Local
     FREETYPE_Local
+    pgefl
 )
+
+if(PGE_ENABLE_QT) # Build if Qt support enabled
+    list(APPEND LIBS_TARGETS
+        QtPropertyBrowser_Local
+        pgefl_qt
+    )
+endif()
 
 # Build dependent libraries only
 add_custom_target(libs DEPENDS ${LIBS_TARGETS})
-
-if(PGE_ENABLE_QT) # Build if Qt support enabled
-    add_dependencies(libs QtPropertyBrowser_Local)
-endif()
 
 option(PGE_BUILD_ENGINE "Build the Runtime Engine component" ON)
 if(PGE_BUILD_ENGINE)

@@ -13,5 +13,4 @@ if(WIN32)
     )
 endif()
 
-include(_common/unix2dos_copy.cmake)
-
+include(${CMAKE_CURRENT_LIST_DIR}/unix2dos_copy.cmake)
