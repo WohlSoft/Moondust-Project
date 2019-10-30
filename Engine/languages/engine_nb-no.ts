@@ -26,7 +26,7 @@
     <message id="CONFIG_SELECT">
         <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="60"/>
         <source>Choose a game:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg et spill:</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <location filename="../data_configs/config_manager.cpp" line="115"/>
@@ -42,12 +42,12 @@
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <location filename="../data_configs/config_manager.cpp" line="127"/>
         <source>Missing main.ini</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Manglende main.ini</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
         <location filename="../data_configs/config_manager.cpp" line="129"/>
         <source>Can&apos;t open the &apos;main.ini&apos; config file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åpne «main.ini»-oppsettsfil.</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <location filename="../data_configs/config_manager.cpp" line="150"/>
@@ -328,32 +328,32 @@ Did you placed player start point (or entrance warp point) too far off of the se
     <message id="MAINMENU_OPTIONS_VIDEO">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="380"/>
         <source>Video settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoinnstillinger</translation>
     </message>
     <message id="MAINMENU_OPTIONS_MUS_VOL">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="382"/>
         <source>Music volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikklydstyrke</translation>
     </message>
     <message id="MAINMENU_OPTIONS_SND_VOL">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="385"/>
         <source>Sound volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydstyrke for lyder</translation>
     </message>
     <message id="MAINMENU_OPTIONS_FULLSCR">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="388"/>
         <source>Full Screen mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fullskjermsmodus</translation>
     </message>
     <message id="TESTSCR_CREDITS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="396"/>
         <source>Credits</source>
-        <translation type="unfinished"></translation>
+        <translation>Bidragsytere</translation>
     </message>
     <message id="TESTSCR_LOADING_SCREEN">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="398"/>
         <source>Loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Innlastingsskjerm</translation>
     </message>
     <message id="TESTSCR_GAMEOVER">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="400"/>
@@ -363,27 +363,27 @@ Did you placed player start point (or entrance warp point) too far off of the se
     <message id="TEST_MSGBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="406"/>
         <source>Message box</source>
-        <translation type="unfinished"></translation>
+        <translation>Meldingsboks</translation>
     </message>
     <message id="TEST_MENUBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="408"/>
         <source>Menu box</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyboks</translation>
     </message>
     <message id="TEST_TEXTINPUTBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="410"/>
         <source>Text Input box</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstfeltboks</translation>
     </message>
     <message id="TEST_QUESTION_BOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="412"/>
         <source>Question box</source>
-        <translation type="unfinished"></translation>
+        <translation>Spørsmålsboks</translation>
     </message>
     <message id="VIDEO_SHOW_DEBUG">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="418"/>
         <source>Show debug info</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis feilrettingsinfo</translation>
     </message>
     <message id="VIDEO_ENABLE_FRSKIP">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="420"/>
@@ -413,7 +413,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     <message id="PLAYER_CONTROLS_SETUP_KEYBOARD">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="504"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_JOYSTICK">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="511"/>
@@ -423,13 +423,13 @@ Did you placed player start point (or entrance warp point) too far off of the se
     <message id="PLAYER_CONTROLS_SETUP_INPUT_TYPE">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="515"/>
         <source>Input:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inndata:</translation>
     </message>
     <message id="MSG_PLEASEWAIT">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="545"/>
         <location filename="../scenes/title/ttl_main_menu.cpp" line="575"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vent…</translation>
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="662"/>
