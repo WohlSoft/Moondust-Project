@@ -3602,12 +3602,12 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="75"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Algemeen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="96"/>
         <source>No settings available</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen instellingen beschikbaar</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="158"/>
@@ -3617,7 +3617,7 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="164"/>
         <source>Drop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Power up laten vallen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="171"/>
@@ -3632,12 +3632,12 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="185"/>
         <source>Alt-Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-springen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="192"/>
         <source>Right</source>
-        <translation type="unfinished">Rechts</translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="199"/>
@@ -3647,32 +3647,32 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="206"/>
         <source>Alt-Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-Lopen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="213"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Lopen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="220"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Op</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="227"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Neer</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="308"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="130"/>
         <source>Physics</source>
-        <translation type="unfinished"></translation>
+        <translation>Fysica</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="137"/>
@@ -3682,58 +3682,59 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="145"/>
         <source>Physics type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Omgevingsfysica:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="240"/>
         <source>Timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Timer</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="277"/>
         <source>Time limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tijdslimiet:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="284"/>
         <source>Timer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Timer actie:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="291"/>
         <source>Event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Event:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="246"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Inschakelen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="314"/>
         <source>Level name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau naam:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="253"/>
         <source> sec.</source>
-        <translation type="unfinished"></translation>
+        <translation> sec.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="264"/>
         <source>Kill all players</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle spelers doden</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="269"/>
         <source>Trigger event</source>
-        <translation type="unfinished">Gebeurtenis activeren</translation>
+        <translation>Event activeren</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.cpp" line="83"/>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fout in het bestand %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -3741,147 +3742,150 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="700"/>
         <source>Reset checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Herstartpunten resetten</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="701"/>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle herstartpunten resetten.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1624"/>
         <location filename="../main_window/testing/luna_tester.cpp" line="1632"/>
         <location filename="../main_window/testing/luna_tester.cpp" line="1683"/>
         <source>LunaTester error</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester fout</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="722"/>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="803"/>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="692"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Niveau testen</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="694"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Start het niveau in het SMBX programma.
+Deze functie vereist LunaLua.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="705"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenGL uitschakelen</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="706"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="712"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>In de achtergrond blijven draaien</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="714"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit laat toe om niveaus sneller te openen na de eerste opstarting.
+Dit veriest een krachtige computer, anders kan het programma hangen bij de volgende test start.
+Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="720"/>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hangende lader beïndigen</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="726"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lopend proces beëindigen</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="729"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="733"/>
         <source>Start Legacy Engine</source>
         <comment>Launch legacy engine in game mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX programma opstarten</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="735"/>
         <source>Launch legacy engine in game mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oud SMBX programma in spelmodus gebruiken.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="838"/>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester kan niet gebruikt worden op de wereldmap omdat het SMBX programma niet toelaat om mappen te testen. Laad de map in de episode zelf, of gebruik het PGE programma om je wereldmap bestand te testen.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="861"/>
         <source>Are you really want to terminate loader thread?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="872"/>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Laad-draad (thread) is niet actief.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="887"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="894"/>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester is succesvol afgesloten.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="902"/>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LuneTester is niet actief.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1180"/>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Herstartpunten succesvol gereset!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1192"/>
         <source>LunaTester error!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester fout!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1204"/>
         <source>LunaLUA tester is not started!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester kon niet gestart worden!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1343"/>
         <source>SMBX64 limits are excited!</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 limieten overschreden!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1344"/>
@@ -3890,35 +3894,40 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Er is een overtreding van SMBX64 standaard gebeurd!
+%1, oorspronkelijke programma kan vastlopen!
+Het is aanbevolen om alle overtollige elementen te verwijderen.
+Wilt u doorgaan met het proces?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1360"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX map was niet correct geconfigureerd</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1361"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 niet gevonden!
+Voor het uitvoeren van testen in SMBX moet u het SMBX-integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1384"/>
         <source>SMBX Test is already runned</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SMBX-test is al actief</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1385"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Het SMBX programma is al een ander niveau aan het testen.
+Wilt u het huidige testproces sluiten?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1404"/>
         <location filename="../main_window/testing/luna_tester.cpp" line="1576"/>
         <source>Vanilla SMBX detected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vanilla SMBX gedetecteerd!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1405"/>
@@ -3932,7 +3941,16 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 niet gevonden!
+Je hebt een vanilla SMBX! &lt;br&gt;
+Dat betekent dat het onmogelijk is om het testen niveaus automatisch te starten. Om uw niveau te testen, wordt een dummy episode gegenereerd, die u handmatig starten en selecteren. &lt;br&gt;
+&lt;br&gt;
+Naam van de te genereren episode: %1 &lt;br&gt;
+&lt;br&gt;
+Wilt u nog een test lanceren? &lt;br&gt;
+&lt;br&gt;
+Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
+%3</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1561"/>
@@ -3951,33 +3969,36 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 niet gevonden!
+Je hebt een vanilla SMBX! &lt;br&gt;
+Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1625"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon niveau niet naar LunaLua sturen!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1633"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1648"/>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX programma-map was niet correct geconfigureerd</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1649"/>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 niet gevonden!
+Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1684"/>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
 </context>
 <context>
@@ -3985,85 +4006,87 @@ To use LunaTester you should have right Integration configuration package!</sour
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="20"/>
         <source>Clone section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie klonen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="50"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Bron</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="43"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Opmerking: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8... 64 &lt;span style=&quot; text-decoration: underline;&quot;&gt; SMBX-38A &lt;/span&gt;-formaten ondersteunen niet meer dan 21 secties. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1... 7 &lt;/span&gt;-formaten ondersteunen niet meer dan 6 secties. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="30"/>
         <source>Margin (How far outside of the target section items can be copied, in pixels):</source>
-        <translation type="unfinished"></translation>
+        <translation>Marge (Hoe ver buiten de doelsectie voorwerpen moeten worden gekopieerd, in pixels):</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="57"/>
         <source>Please select the source file and the section to clone, as well as the destination file and target section to clone into.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer het bronbestand en de sectie om te klonen, evenals het doelbestand en de sectie waar het wordt gekloond.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="93"/>
         <source>Destiation</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestemming</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="75"/>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="102"/>
         <source>Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="81"/>
         <source>[Uninitialized]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Niet geïnitialiseerd]</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="106"/>
         <source>[Used]</source>
-        <translation type="unfinished"></translation>
+        <translation>[In Gebruik]</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="117"/>
         <source>Initialize new section</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe sectie initialiseren</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="133"/>
         <source>Sections aren&apos;t selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen geselecteerde secties</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="134"/>
         <source>Source and Destination sections should be selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>De bron-en doel secties moeten geselecteerd worden!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="165"/>
         <source>Empty section</source>
-        <translation type="unfinished"></translation>
+        <translation>Lege sectie</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="166"/>
         <source>Source section is empty!
 Please select another section, or clear.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bron sectie is leeg!
+Gelieve een andere sectie te selecteren.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="198"/>
         <source>Destination section is in use, therefore it will be overridden with removing of all it&apos;s objects.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Doel sectie is in gebruik. Klonen naar deze sectie zal alle objecten die al aanwezig zijn verwijderen.
+Wilt u toch doorgaan?</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="197"/>
         <source>Section is used</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie is al in gebruik</translation>
     </message>
 </context>
 <context>
@@ -4071,48 +4094,48 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="23"/>
         <source>Classic Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassieke events</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="58"/>
         <source>Events list</source>
-        <translation type="unfinished"></translation>
+        <translation>Event lijst</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="189"/>
         <source>Layer visibly</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag visibiliteit</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="229"/>
         <source>Disable smoke effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Rook-overgangseffect uitschakelen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="311"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Tonen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="324"/>
         <source>Toggle</source>
-        <translation type="unfinished"></translation>
+        <translation>Omschakelen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="255"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbergen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="448"/>
         <source>Layers movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag beweging</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="604"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="752"/>
         <source>Horisontal speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontale snelheid:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="542"/>
@@ -4120,139 +4143,139 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="678"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="691"/>
         <source>bps</source>
-        <translation type="unfinished"></translation>
+        <translation>bps</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="549"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="759"/>
         <source>Vertical speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikale snelheid:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="497"/>
         <source>Set moving layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies bewegende laag</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="622"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished">Autoscroll sectie</translation>
+        <translation>Autoscroll sectie</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="665"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="365"/>
         <source>Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="793"/>
         <source>Section settings</source>
-        <translation type="unfinished">Sectie instellingen</translation>
+        <translation>Sectie instellingen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="839"/>
         <source>Current section:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie instellingen wijzigen:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="862"/>
         <source>Set size and position</source>
-        <translation type="unfinished"></translation>
+        <translation>Grootte en positie instellen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1014"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1053"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1127"/>
         <source>Don&apos;t change</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet veranderen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="974"/>
         <source>Capture...</source>
-        <translation type="unfinished"></translation>
+        <translation>Leg vast...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1021"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1060"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1134"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Terug naar standaardinstellingen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="936"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="942"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1456"/>
         <source>Left</source>
-        <translation type="unfinished">Links</translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="904"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1028"/>
         <source>Define new:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe definiëren:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="917"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="923"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Beneden</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="955"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="961"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1470"/>
         <source>Right</source>
-        <translation type="unfinished">Rechts</translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1047"/>
         <source>Set music</source>
-        <translation type="unfinished"></translation>
+        <translation>Muziek veranderen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1067"/>
         <source>Replace music to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Muziek veranderen naar:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1121"/>
         <source>Set background</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrond veranderen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1141"/>
         <source>Replace background to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrond veranderen naar:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1216"/>
         <source>Common</source>
-        <translation type="unfinished">Algemeen</translation>
+        <translation>Algemeen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1310"/>
         <source>Do end game:</source>
-        <translation type="unfinished"></translation>
+        <translation>Activeer einde van het spel:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1266"/>
         <source>Play sound:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geluid afspelen:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1297"/>
         <source>Test</source>
-        <translation type="unfinished">Test</translation>
+        <translation>Test</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1362"/>
         <source>Display message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bericht weergeven:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1327"/>
@@ -4262,12 +4285,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1332"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Einde spel: &quot;Bowser verslagen&quot;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1380"/>
         <source>Player Control hold keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Spelbesturing overnemen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1421"/>
