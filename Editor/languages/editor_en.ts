@@ -3536,7 +3536,7 @@ Are you want continue process?</source>
         <translation>Violation of SMBX64 standard has been found!
 %1, legacy engine may crash!
 Suggested to remove all excess elements.
-Are you want continue process?</translation>
+Do you want to continue the process?</translation>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
@@ -3579,7 +3579,7 @@ That means, impossible to launch level testing automatically. To test your level
 &lt;br&gt;
 Name of episode to generate: %1&lt;br&gt;
 &lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
+Do you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, please install LunaLua:&lt;br&gt;
 %3</translation>
@@ -3652,7 +3652,7 @@ To use LunaTester you must use the Integration configuration package!</translati
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>Could not launch launch SMBX Engine, due to %1</translation>
+        <translation>Could not launch SMBX Engine, due to %1</translation>
     </message>
     <message>
         <source>SMBX Level test</source>
@@ -3718,7 +3718,7 @@ You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
         <translation>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</translation>
+That means that it&apos;s impossible to launch level testing on your operating system. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</translation>
     </message>
 </context>
 <context>
@@ -3991,7 +3991,7 @@ That means, impossible to launch level testing on your operating operating. Luna
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats do not support more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats do not support more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -4038,7 +4038,7 @@ That means, impossible to launch level testing on your operating operating. Luna
         <source>Source section is empty!
 Please select another section, or clear.</source>
         <translation>Source section is empty!
-Please select another section, or clear.</translation>
+Please select another section.</translation>
     </message>
     <message>
         <source>Section is used</source>
