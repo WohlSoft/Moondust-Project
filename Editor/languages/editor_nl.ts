@@ -3617,7 +3617,7 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="164"/>
         <source>Drop</source>
-        <translation type="unfinished">Power up laten vallen</translation>
+        <translation>Power-up droppen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="171"/>
@@ -4280,12 +4280,12 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1327"/>
         <source>Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1332"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation type="unfinished">Einde spel: &quot;Bowser verslagen&quot;</translation>
+        <translation>Einde spel: &quot;EIndbaas verslagen&quot;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1380"/>
@@ -4295,27 +4295,27 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1421"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Lopen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1435"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Neer</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1414"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Op</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1428"/>
         <source>Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Power-up droppen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1442"/>
         <source>Alt-run</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-lopen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1449"/>
@@ -4325,43 +4325,43 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1463"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Springen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1477"/>
         <source>Alt-jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-springen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1511"/>
         <source>Trigger event</source>
-        <translation type="unfinished">Gebeurtenis activeren</translation>
+        <translation>Event activeren</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1558"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertraging</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="151"/>
         <source>Autostart event</source>
-        <translation type="unfinished"></translation>
+        <translation>Event automatisch starten</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="97"/>
         <source>Create copy of event</source>
-        <translation type="unfinished"></translation>
+        <translation>Maak een kopie van de event</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="274"/>
         <source>[Silence]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Stilte]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="379"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="2235"/>
         <source>[none]</source>
-        <translation type="unfinished"></translation>
+        <translation>[geen]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1111"/>
