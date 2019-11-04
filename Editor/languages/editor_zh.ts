@@ -2962,7 +2962,7 @@ You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
         <translation>没有找到 %2！
 您使用的是 SMBX 1.3！&lt;br&gt;
-因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试.</translation>
+因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
     </message>
 </context>
 <context>
@@ -3023,7 +3023,7 @@ That means, impossible to launch level testing on your operating operating. Luna
         <source>Source section is empty!
 Please select another section, or clear.</source>
         <translation>源文件的场景是空的！
-请选择另一个场景或清除场景。</translation>
+请选择另一个场景。</translation>
     </message>
     <message>
         <source>Section is used</source>
