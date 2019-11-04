@@ -3519,7 +3519,7 @@ Do you want to abort current testing process?</source>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation>Обнаружен старый SMBX (Vanilla SMBX)!</translation>
+        <translation>Обнаружена устаревшая сборка SMBX!</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -3533,12 +3533,12 @@ Are you still want to launch a test?&lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
         <translation>%2 не найден!
-Вы имеете Vanilla SMBX!&lt;br&gt;
-Это значит, что автозапуск теста уровня невозможен. Чтобы запустить тест уровня, будет сгенерирован временный эпизод, который вы можете запустить и выбрать вручную.&lt;br&gt;
+Обнаружен устаревшая сборка SMBX (&quot;ванильный&quot;, &quot;vanilla&quot;)!&lt;br&gt;
+Это значит, что автозапуск теста уровня невозможен. Из-за чего для возможности запустить тестовый уровень, будет сгенерирован временный эпизод, который вы сможете запустить, выбрав вручную.&lt;br&gt;
 &lt;br&gt;
 Имя генерируемого эпизода: %1&lt;br&gt;
 &lt;br&gt;
-Вы уверены, что хотите запустить тест?&lt;br&gt;
+Вы уверены, что всё ещё хотите запустить тест?&lt;br&gt;
 &lt;br&gt;
 Если вы хотите полноценный тест уровней, вам нужно загрузить LunaLUA здесь:&lt;br&gt;
 %3</translation>
@@ -3611,7 +3611,7 @@ To use LunaTester you should have right Integration configuration package!</sour
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>Невозможно запустить устаревший движок, потому что %1</translation>
+        <translation>Невозможно запустить SMBX-движок, потому что %1</translation>
     </message>
     <message>
         <source>SMBX Level test</source>
@@ -3676,7 +3676,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
         <translation>%2 не найден!
-У Вас устаревная сборка SMBX (Vanilla)&lt;br&gt;!
+У Вас устаревшая сборка SMBX (&quot;ванильная&quot;, &quot;Vanilla&quot;)&lt;br&gt;!
 Это значит, что с данной сборкой невозможно запустить тестовый уровень на вашей операционной системе. LunaLua требуется для возможности запуска тестов через SMBX на не-Windows операционных системах.</translation>
     </message>
 </context>
@@ -4146,7 +4146,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>Конец игры &quot;Боузер побеждён&quot;</translation>
+        <translation>Конец игры &quot;Поражение финального босса&quot;</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>

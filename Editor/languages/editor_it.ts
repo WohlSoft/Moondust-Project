@@ -1031,7 +1031,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. l&apos;immagine verra&apos; scalata con questa larghezza.&lt;/p&gt;&lt;/bod&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. l&apos;immagine verra&apos; scalata con questa larghezza.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1757,7 +1757,7 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo è un messaggio, che verrà mostrato se il personaggio parlerà con l&apos;NPC. &lt;/p&gt;&lt;p&gt;&lt;span stile=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt; tutti i &quot; e le lettere con &apos;-&apos; verranno rimosse.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo è un messaggio, che verrà mostrato se il personaggio parlerà con l&apos;NPC. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt; tutti i &quot; e le lettere con &apos;-&apos; verranno rimosse.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
@@ -9082,7 +9082,7 @@ perché le configurazioni degli oggetti non sono state caricate
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. L&apos;immagine verra&apos; scalata a questa larghezza.&lt;/p&gt;&lt;/bod&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. L&apos;immagine verra&apos; scalata a questa larghezza.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source> px</source>
