@@ -4215,7 +4215,7 @@ the destination section first with &apos;Delete Section&apos;.</translation>
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>Game end: &quot;Bowser defeat&quot;</translation>
+        <translation>Game end: &quot;Final boss defeat&quot;</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>
