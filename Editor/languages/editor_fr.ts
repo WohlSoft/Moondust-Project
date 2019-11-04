@@ -2977,7 +2977,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight :600 ;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration : underline ;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -3176,7 +3176,7 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>Fin de jeu : « Défaite de Bowser »</translation>
+        <translation>Fin de jeu : « Défaite de Boss final »</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>
