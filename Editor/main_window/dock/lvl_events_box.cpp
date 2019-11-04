@@ -1902,7 +1902,7 @@ void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
         if(curSectionField != edit->LvlData.CurSection)
         {
             QMessageBox::information(this, tr("Get section size"),
-                                     tr("Please, set current section to %1 for capture data for this event").arg(curSectionField + 1),
+                                     tr("Please, set current section to %1 for capture data for this event").arg(curSectionField),
                                      QMessageBox::Ok);
             return;
         }
