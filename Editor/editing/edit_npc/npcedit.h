@@ -33,7 +33,8 @@
 
 #define NPC_EDIT_CLASS "NpcEdit"
 
-namespace Ui {
+namespace Ui
+{
 class NpcEdit;
 }
 
@@ -53,7 +54,7 @@ public:
     void newFile(unsigned long npcID);
     bool loadFile(const QString &fileName, NPCConfigFile FileData);
     NPCConfigFile NpcData;
-    unsigned long npc_id;
+    unsigned long m_currentNpcId = 0;
 
     bool save(bool savOptionsDialog = false);
 
@@ -64,7 +65,10 @@ public:
     bool saveFile(const QString &fileName, const bool addToRecent = true);
 
     QString userFriendlyCurrentFile();
-    QString currentFile() { return curFile; }
+    QString currentFile()
+    {
+        return curFile;
+    }
 
     void makeCrashState();
 
@@ -75,8 +79,8 @@ public:
 
     QString curFile;
 
-    bool m_isModyfied;
-    bool m_isUntitled;
+    bool m_isModified = false;
+    bool m_isUntitled = true;
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -173,12 +177,21 @@ private slots:
 private:
     Ui::NpcEdit *ui;
 
-    dataconfigs *pConfigs;
-    NPCConfigFile StartNPCData;
-    NPCConfigFile DefaultNPCData;
-    void setDefaultData(unsigned long npc_id);
+    unsigned int    m_fileType = 2;
 
-    QGraphicsScene * PreviewScene;
+    dataconfigs     *m_configPack = nullptr;
+    NPCConfigFile   m_npcDataBackup;
+    NPCConfigFile   m_npcDataDefault;
+    void setDefaultData(unsigned long m_currentNpcId);
+
+    QGraphicsScene    *m_previewScene = nullptr;
+    ItemNPC           *m_npcPreviewBody = nullptr;
+    QGraphicsRectItem *m_npcPreviewHitBox = nullptr;
+
+    QPixmap m_npcImage;
+    QPixmap m_npcImageMask;
+    obj_npc m_npcSetupDefault;
+    int     m_npcDirection = -1;
 
     void loadPreview();
     void updatePreview();
@@ -186,19 +199,10 @@ private:
     void loadImageFile();
     void refreshImageFile();
 
-    ItemNPC* npcPreview;
-    QGraphicsRectItem * physics;
-
-    QPixmap npcImage;
-    QPixmap npcMask;
-    obj_npc defaultNPC;
-    int direction;
-
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    unsigned int FileType;
 };
 
 #endif // NPCEDIT_H

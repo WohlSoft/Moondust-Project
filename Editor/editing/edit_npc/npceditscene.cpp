@@ -20,5 +20,4 @@
 
 NpcEditScene::NpcEditScene(QObject *parent) :
     QGraphicsScene(parent)
-{
-}
+{}

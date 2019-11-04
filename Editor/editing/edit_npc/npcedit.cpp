@@ -24,20 +24,12 @@
 
 
 NpcEdit::NpcEdit(MainWindow *mw,
-                 dataconfigs * configs,
+                 dataconfigs *configs,
                  QWidget *parent) :
     EditBase(mw, parent),
     ui(new Ui::NpcEdit)
 {
-    pConfigs = configs;
-    PreviewScene=NULL;
-    physics=NULL;
-    npcPreview=NULL;
-    npc_id = 0;
-    FileType = 2;
-    direction = -1;
-    m_isUntitled = true;
-    m_isModyfied  = false;
+    m_configPack = configs;
     ui->setupUi(this);
 }
 
@@ -55,17 +47,13 @@ void NpcEdit::reTranslate()
 
 void NpcEdit::closeEvent(QCloseEvent *event)
 {
-    if (maybeSave()) {
-        if(physics) delete physics;
-        if(npcPreview) delete npcPreview;
-        if(PreviewScene)
-        {
-            delete PreviewScene;
-        }
+    if(maybeSave())
+    {
+        delete m_npcPreviewHitBox;
+        delete m_npcPreviewBody;
+        delete m_previewScene;
         event->accept();
-    } else {
-        event->ignore();
     }
+    else
+        event->ignore();
 }
-
-

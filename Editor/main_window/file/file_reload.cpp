@@ -191,7 +191,7 @@ void MainWindow::on_actionReload_triggered()
         }
 
         wnGeom = LastActiveSubWindow->geometry();
-        npcEdit->m_isModyfied = false;
+        npcEdit->m_isModified = false;
         npcEdit->close();
         //NpcEdit *child = createNPCChild();
         //QMdiSubWindow *npcWindow = LastActiveSubWindow;

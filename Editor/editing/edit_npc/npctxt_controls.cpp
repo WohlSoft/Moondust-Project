@@ -25,7 +25,7 @@
 
 void NpcEdit::on_ResetNPCData_clicked()
 {
-    NpcData = StartNPCData; //Restore first version
+    NpcData = m_npcDataBackup; //Restore first version
     setDataBoxes();
     if(!m_isUntitled) documentNotModified();
 }
@@ -37,7 +37,7 @@ void NpcEdit::on_en_GFXOffsetX_clicked(bool checked)
 {
     ui->GFXOffSetX->setEnabled(checked);
     ui->offsetx_label->setEnabled(checked);
-    NpcData.en_gfxoffsetx=checked;
+    NpcData.en_gfxoffsetx = checked;
 
     updatePreview();
     documentWasModified();
@@ -48,7 +48,7 @@ void NpcEdit::on_en_GFXOffsetY_clicked(bool checked)
 {
     ui->GFXOffSetY->setEnabled(checked);
     ui->offsety_label->setEnabled(checked);
-    NpcData.en_gfxoffsety=checked;
+    NpcData.en_gfxoffsety = checked;
 
     updatePreview();
     documentWasModified();
@@ -60,7 +60,7 @@ void NpcEdit::on_En_GFXw_clicked(bool checked)
 
     ui->GFXw->setEnabled(checked);
     ui->gwidth_label->setEnabled(checked);
-    NpcData.en_gfxwidth=checked;
+    NpcData.en_gfxwidth = checked;
 
     updatePreview();
     documentWasModified();
@@ -71,7 +71,7 @@ void NpcEdit::on_En_GFXh_clicked(bool checked)
 {
     ui->GFXh->setEnabled(checked);
     ui->gheight_label->setEnabled(checked);
-    NpcData.en_gfxheight=checked;
+    NpcData.en_gfxheight = checked;
 
     updatePreview();
     documentWasModified();
@@ -82,7 +82,7 @@ void NpcEdit::on_En_Frames_clicked(bool checked)
 {
     ui->Frames->setEnabled(checked);
     ui->frames_label->setEnabled(checked);
-    NpcData.en_frames=checked;
+    NpcData.en_frames = checked;
 
     updatePreview();
     documentWasModified();
@@ -93,7 +93,7 @@ void NpcEdit::on_En_Framespeed_clicked(bool checked)
 {
     ui->Framespeed->setEnabled(checked);
     ui->framespeed_label->setEnabled(checked);
-    NpcData.en_framespeed=checked;
+    NpcData.en_framespeed = checked;
 
     updatePreview();
     documentWasModified();
@@ -104,7 +104,7 @@ void NpcEdit::on_En_Framestyle_clicked(bool checked)
 {
     ui->FrameStyle->setEnabled(checked);
     ui->framestyle_label->setEnabled(checked);
-    NpcData.en_framestyle=checked;
+    NpcData.en_framestyle = checked;
 
     updatePreview();
     documentWasModified();
@@ -114,7 +114,7 @@ void NpcEdit::on_En_Framestyle_clicked(bool checked)
 void NpcEdit::on_En_IsForeground_clicked(bool checked)
 {
     ui->IsForeground->setEnabled(checked);
-    NpcData.en_foreground=checked;
+    NpcData.en_foreground = checked;
 
     documentWasModified();
 }
@@ -123,7 +123,7 @@ void NpcEdit::on_En_IsForeground_clicked(bool checked)
 void NpcEdit::on_En_GrabSide_clicked(bool checked)
 {
     ui->GrabSide->setEnabled(checked);
-    NpcData.en_grabside=checked;
+    NpcData.en_grabside = checked;
 
     documentWasModified();
 }
@@ -132,7 +132,7 @@ void NpcEdit::on_En_GrabSide_clicked(bool checked)
 void NpcEdit::on_En_GrabTop_clicked(bool checked)
 {
     ui->GrabTop->setEnabled(checked);
-    NpcData.en_grabtop=checked;
+    NpcData.en_grabtop = checked;
 
     documentWasModified();
 }
@@ -141,7 +141,7 @@ void NpcEdit::on_En_GrabTop_clicked(bool checked)
 void NpcEdit::on_En_JumpHurt_clicked(bool checked)
 {
     ui->JumpHurt->setEnabled(checked);
-    NpcData.en_jumphurt=checked;
+    NpcData.en_jumphurt = checked;
 
     documentWasModified();
 }
@@ -150,7 +150,7 @@ void NpcEdit::on_En_JumpHurt_clicked(bool checked)
 void NpcEdit::on_En_DontHurt_clicked(bool checked)
 {
     ui->DontHurt->setEnabled(checked);
-    NpcData.en_nohurt=checked;
+    NpcData.en_nohurt = checked;
 
     documentWasModified();
 }
@@ -160,7 +160,7 @@ void NpcEdit::on_En_Score_clicked(bool checked)
 {
     ui->Score->setEnabled(checked);
     ui->score_label->setEnabled(checked);
-    NpcData.en_score=checked;
+    NpcData.en_score = checked;
 
     documentWasModified();
 }
@@ -169,7 +169,7 @@ void NpcEdit::on_En_Score_clicked(bool checked)
 void NpcEdit::on_En_NoEat_clicked(bool checked)
 {
     ui->NoEat->setEnabled(checked);
-    NpcData.en_noyoshi=checked;
+    NpcData.en_noyoshi = checked;
 
     documentWasModified();
 }
@@ -178,7 +178,7 @@ void NpcEdit::on_En_NoEat_clicked(bool checked)
 void NpcEdit::on_En_NoFireball_clicked(bool checked)
 {
     ui->NoFireball->setEnabled(checked);
-    NpcData.en_nofireball=checked;
+    NpcData.en_nofireball = checked;
 
     documentWasModified();
 }
@@ -187,7 +187,7 @@ void NpcEdit::on_En_NoFireball_clicked(bool checked)
 void NpcEdit::on_En_NoIceball_clicked(bool checked)
 {
     ui->NoIceball->setEnabled(checked);
-    NpcData.en_noiceball=checked;
+    NpcData.en_noiceball = checked;
 
     documentWasModified();
 }
@@ -197,7 +197,7 @@ void NpcEdit::on_En_Width_clicked(bool checked)
 {
     ui->Width->setEnabled(checked);
     ui->width_label->setEnabled(checked);
-    NpcData.en_width=checked;
+    NpcData.en_width = checked;
 
     updatePreview();
     documentWasModified();
@@ -208,7 +208,7 @@ void NpcEdit::on_En_Height_clicked(bool checked)
 {
     ui->Height->setEnabled(checked);
     ui->height_label->setEnabled(checked);
-    NpcData.en_height=checked;
+    NpcData.en_height = checked;
 
     updatePreview();
     documentWasModified();
@@ -219,7 +219,7 @@ void NpcEdit::on_En_Speed_clicked(bool checked)
 {
     ui->Speed->setEnabled(checked);
     ui->speed_label->setEnabled(checked);
-    NpcData.en_speed=checked;
+    NpcData.en_speed = checked;
 
     documentWasModified();
 }
@@ -228,7 +228,7 @@ void NpcEdit::on_En_Speed_clicked(bool checked)
 void NpcEdit::on_En_PlayerBlock_clicked(bool checked)
 {
     ui->PlayerBlock->setEnabled(checked);
-    NpcData.en_playerblock=checked;
+    NpcData.en_playerblock = checked;
 
     documentWasModified();
 }
@@ -237,7 +237,7 @@ void NpcEdit::on_En_PlayerBlock_clicked(bool checked)
 void NpcEdit::on_En_PlayerBlockTop_clicked(bool checked)
 {
     ui->PlayerBlockTop->setEnabled(checked);
-    NpcData.en_playerblocktop=checked;
+    NpcData.en_playerblocktop = checked;
 
     documentWasModified();
 }
@@ -246,7 +246,7 @@ void NpcEdit::on_En_PlayerBlockTop_clicked(bool checked)
 void NpcEdit::on_En_NPCBlock_clicked(bool checked)
 {
     ui->NPCBlock->setEnabled(checked);
-    NpcData.en_npcblock=checked;
+    NpcData.en_npcblock = checked;
 
     documentWasModified();
 }
@@ -255,7 +255,7 @@ void NpcEdit::on_En_NPCBlock_clicked(bool checked)
 void NpcEdit::on_En_NPCBlockTop_clicked(bool checked)
 {
     ui->NPCBlockTop->setEnabled(checked);
-    NpcData.en_npcblocktop=checked;
+    NpcData.en_npcblocktop = checked;
 
     documentWasModified();
 }
@@ -264,7 +264,7 @@ void NpcEdit::on_En_NPCBlockTop_clicked(bool checked)
 void NpcEdit::on_En_NoBlockCollision_clicked(bool checked)
 {
     ui->NoBlockCollision->setEnabled(checked);
-    NpcData.en_noblockcollision=checked;
+    NpcData.en_noblockcollision = checked;
 
     documentWasModified();
 }
@@ -273,7 +273,7 @@ void NpcEdit::on_En_NoBlockCollision_clicked(bool checked)
 void NpcEdit::on_En_NoGravity_clicked(bool checked)
 {
     ui->NoGravity->setEnabled(checked);
-    NpcData.en_nogravity=checked;
+    NpcData.en_nogravity = checked;
 
     documentWasModified();
 }
@@ -282,7 +282,7 @@ void NpcEdit::on_En_NoGravity_clicked(bool checked)
 void NpcEdit::on_En_TurnCliff_clicked(bool checked)
 {
     ui->TurnCliff->setEnabled(checked);
-    NpcData.en_cliffturn=checked;
+    NpcData.en_cliffturn = checked;
 
     documentWasModified();
 }
@@ -336,7 +336,7 @@ void NpcEdit::on_Frames_valueChanged(int arg1)
 void NpcEdit::on_Framespeed_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.framespeed=arg1;
+    NpcData.framespeed = arg1;
     updatePreview();
 }
 
@@ -344,7 +344,7 @@ void NpcEdit::on_Framespeed_valueChanged(int arg1)
 void NpcEdit::on_FrameStyle_currentIndexChanged(int index)
 {
     documentWasModified();
-    NpcData.framestyle=index;
+    NpcData.framestyle = index;
     updatePreview();
 }
 
@@ -352,70 +352,70 @@ void NpcEdit::on_FrameStyle_currentIndexChanged(int index)
 void NpcEdit::on_IsForeground_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.foreground=arg1;
+    NpcData.foreground = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_GrabSide_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.grabside=arg1;
+    NpcData.grabside = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_GrabTop_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.grabtop=arg1;
+    NpcData.grabtop = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_JumpHurt_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.jumphurt=arg1;
+    NpcData.jumphurt = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_DontHurt_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.nohurt=arg1;
+    NpcData.nohurt = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_Score_currentIndexChanged(int index)
 {
     documentWasModified();
-    NpcData.score=index;
+    NpcData.score = index;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_NoEat_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.noyoshi=arg1;
+    NpcData.noyoshi = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_NoFireball_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.nofireball=arg1;
+    NpcData.nofireball = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_NoIceball_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.noiceball=arg1;
+    NpcData.noiceball = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_Width_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.width=arg1;
+    NpcData.width = arg1;
     updatePreview();
 }
 
@@ -423,7 +423,7 @@ void NpcEdit::on_Width_valueChanged(int arg1)
 void NpcEdit::on_Height_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.height=arg1;
+    NpcData.height = arg1;
     updatePreview();
 }
 
@@ -438,49 +438,49 @@ void NpcEdit::on_Speed_valueChanged(double arg1)
 void NpcEdit::on_PlayerBlock_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.playerblock=arg1;
+    NpcData.playerblock = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_PlayerBlockTop_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.playerblocktop=arg1;
+    NpcData.playerblocktop = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_NPCBlock_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.npcblock=arg1;
+    NpcData.npcblock = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_NPCBlockTop_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.npcblocktop=arg1;
+    NpcData.npcblocktop = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_NoBlockCollision_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.noblockcollision=arg1;
+    NpcData.noblockcollision = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_NoGravity_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.nogravity=arg1;
+    NpcData.nogravity = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
 void NpcEdit::on_TurnCliff_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.cliffturn=arg1;
+    NpcData.cliffturn = arg1;
 }
 
 
@@ -490,7 +490,7 @@ void NpcEdit::on_TurnCliff_stateChanged(int arg1)
 void NpcEdit::on_En_NoHammer_clicked(bool checked)
 {
     ui->NoHammer->setEnabled(checked);
-    NpcData.en_nohammer=checked;
+    NpcData.en_nohammer = checked;
 
     documentWasModified();
 }
@@ -499,7 +499,7 @@ void NpcEdit::on_En_NoHammer_clicked(bool checked)
 void NpcEdit::on_NoHammer_stateChanged(int arg1)
 {
     documentWasModified();
-    NpcData.nohammer=arg1;
+    NpcData.nohammer = arg1;
 }
 ////////////////////////////////////////////////////////////////
 
@@ -508,7 +508,7 @@ void NpcEdit::on_NoHammer_stateChanged(int arg1)
 void NpcEdit::on_En_NoShell_clicked(bool checked)
 {
     ui->NoShell->setEnabled(checked);
-    NpcData.en_noshell=checked;
+    NpcData.en_noshell = checked;
 
     documentWasModified();
 }
@@ -516,7 +516,7 @@ void NpcEdit::on_En_NoShell_clicked(bool checked)
 void NpcEdit::on_NoShell_stateChanged(int checked)
 {
     documentWasModified();
-    NpcData.noshell=checked;
+    NpcData.noshell = checked;
 }
 ////////////////////////////////////////////////////////////////
 
@@ -525,14 +525,14 @@ void NpcEdit::on_NoShell_stateChanged(int checked)
 void NpcEdit::on_En_Name_clicked(bool checked)
 {
     ui->Name->setEnabled(checked);
-    NpcData.en_name=checked;
+    NpcData.en_name = checked;
 
     documentWasModified();
 }
 void NpcEdit::on_Name_textEdited(const QString &arg1)
 {
     documentWasModified();
-    NpcData.name=arg1;
+    NpcData.name = arg1;
 }
 ////////////////////////////////////////////////////////////////
 
@@ -540,13 +540,13 @@ void NpcEdit::on_En_Health_clicked(bool checked)
 {
     ui->Health->setEnabled(checked);
     ui->health_label->setEnabled(checked);
-    NpcData.en_health=checked;
+    NpcData.en_health = checked;
     documentNotModified();
 }
 void NpcEdit::on_Health_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.health=arg1;
+    NpcData.health = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -555,13 +555,13 @@ void NpcEdit::on_En_GridSize_clicked(bool checked)
 {
     ui->GridSize->setEnabled(checked);
     ui->grid_label->setEnabled(checked);
-    NpcData.en_grid=checked;
+    NpcData.en_grid = checked;
     documentNotModified();
 }
 void NpcEdit::on_GridSize_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.grid=arg1;
+    NpcData.grid = arg1;
 }
 ////////////////////////////////////////////////////////////////
 
@@ -569,13 +569,13 @@ void NpcEdit::on_En_GridOffsetX_clicked(bool checked)
 {
     ui->GridOffsetX->setEnabled(checked);
     ui->gridoffsetx_label->setEnabled(checked);
-    NpcData.en_gridoffsetx=checked;
+    NpcData.en_gridoffsetx = checked;
     documentNotModified();
 }
 void NpcEdit::on_GridOffsetX_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.gridoffsetx=arg1;
+    NpcData.gridoffsetx = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -584,13 +584,13 @@ void NpcEdit::on_En_GridOffsetY_clicked(bool checked)
 {
     ui->GridOffsetY->setEnabled(checked);
     ui->gridoffsety_label->setEnabled(checked);
-    NpcData.en_gridoffsety=checked;
+    NpcData.en_gridoffsety = checked;
     documentNotModified();
 }
 void NpcEdit::on_GridOffsetY_valueChanged(int arg1)
 {
     documentWasModified();
-    NpcData.gridoffsety=arg1;
+    NpcData.gridoffsety = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -599,13 +599,13 @@ void NpcEdit::on_En_AlignAt_clicked(bool checked)
 {
     ui->AlignAt->setEnabled(checked);
     ui->alignat_label->setEnabled(checked);
-    NpcData.en_gridalign=checked;
+    NpcData.en_gridalign = checked;
     documentNotModified();
 }
 void NpcEdit::on_AlignAt_currentIndexChanged(int index)
 {
     documentWasModified();
-    NpcData.gridalign=index;
+    NpcData.gridalign = index;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -614,7 +614,7 @@ void NpcEdit::on_DirectLeft_clicked()
 {
     ui->DirectLeft->setChecked(true);
     ui->DirectRight->setChecked(false);
-    direction = -1;
+    m_npcDirection = -1;
     updatePreview();
 }
 
@@ -622,151 +622,151 @@ void NpcEdit::on_DirectRight_clicked()
 {
     ui->DirectRight->setChecked(true);
     ui->DirectLeft->setChecked(false);
-    direction = 1;
+    m_npcDirection = 1;
     updatePreview();
 }
 ////////////////////////////////////////////////////////////////
 
 void NpcEdit::loadPreview()
 {
-    if(PreviewScene==NULL) PreviewScene = new QGraphicsScene();
-    if(physics==NULL) physics = new QGraphicsRectItem();
-    PreviewScene->setSceneRect(0,0, ui->PreviewBox->width()-20, ui->PreviewBox->height()-20);
-    if(npcPreview==NULL)
+    if(m_previewScene == NULL) m_previewScene = new QGraphicsScene();
+    if(m_npcPreviewHitBox == NULL) m_npcPreviewHitBox = new QGraphicsRectItem();
+    m_previewScene->setSceneRect(0, 0, ui->PreviewBox->width() - 20, ui->PreviewBox->height() - 20);
+    if(m_npcPreviewBody == NULL)
     {
-        npcPreview = new ItemNPC(true);
-        npcPreview->setScenePoint();
+        m_npcPreviewBody = new ItemNPC(true);
+        m_npcPreviewBody->setScenePoint();
     }
 
-    if((npc_id<=0)||(!pConfigs->main_npc.contains(npc_id)))
+    if((m_currentNpcId <= 0) || (!m_configPack->main_npc.contains(m_currentNpcId)))
     {
-        npc_id=1;
+        m_currentNpcId = 1;
         LogWarning(QString("NPC-Edit Preview -> NPC Entry not found"));
-        npcImage = Themes::Image(Themes::dummy_npc);
-        pConfigs->main_npc[1].copyTo(defaultNPC);
-        defaultNPC.setup.frames=1;
-        defaultNPC.cur_image=&npcImage;
+        m_npcImage = Themes::Image(Themes::dummy_npc);
+        m_configPack->main_npc[1].copyTo(m_npcSetupDefault);
+        m_npcSetupDefault.setup.frames = 1;
+        m_npcSetupDefault.cur_image = &m_npcImage;
     }
     else
     {
-        pConfigs->main_npc[npc_id].copyTo(defaultNPC);
-        LogDebug(QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(defaultNPC.setup.id).arg(defaultNPC.setup.name));
+        m_configPack->main_npc[m_currentNpcId].copyTo(m_npcSetupDefault);
+        LogDebug(QString("NPC-Edit Preview -> Detected NPC-%1 named as \"%2\"").arg(m_npcSetupDefault.setup.id).arg(m_npcSetupDefault.setup.name));
         if(m_isUntitled)
-            npcImage = *defaultNPC.cur_image;
+            m_npcImage = *m_npcSetupDefault.cur_image;
         else
             loadImageFile();
     }
 
-    obj_npc targetNPC = defaultNPC;
-    uint32_t npcImgW = static_cast<uint32_t>(npcImage.size().width());
-    uint32_t npcImgH = static_cast<uint32_t>(npcImage.size().height());
+    obj_npc targetNPC = m_npcSetupDefault;
+    uint32_t npcImgW = static_cast<uint32_t>(m_npcImage.size().width());
+    uint32_t npcImgH = static_cast<uint32_t>(m_npcImage.size().height());
     targetNPC.setup.applyNPCtxt(&NpcData, targetNPC.setup, npcImgW, npcImgH);
 
     LevelNPC npcData = FileFormats::CreateLvlNpc();
-    npcData.id = npc_id;
+    npcData.id = m_currentNpcId;
     npcData.x = 10;
     npcData.y = 10;
-    npcData.direct = direction;
-    npcPreview->setNpcData(npcData, &targetNPC);
-    npcPreview->setFlag(QGraphicsItem::ItemIsSelectable, false);
-    npcPreview->setFlag(QGraphicsItem::ItemIsMovable, false);
-    npcPreview->setZValue(1);
-    PreviewScene->addItem(npcPreview);
+    npcData.direct = m_npcDirection;
+    m_npcPreviewBody->setNpcData(npcData, &targetNPC);
+    m_npcPreviewBody->setFlag(QGraphicsItem::ItemIsSelectable, false);
+    m_npcPreviewBody->setFlag(QGraphicsItem::ItemIsMovable, false);
+    m_npcPreviewBody->setZValue(1);
+    m_previewScene->addItem(m_npcPreviewBody);
 
-    if(npcPreview->m_localProps.setup.frames>1)
-    {
-        npcPreview->setData(4, "animated");
-    }
+    if(m_npcPreviewBody->m_localProps.setup.frames > 1)
+        m_npcPreviewBody->setData(4, "animated");
 
-    physics->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-    physics->setBrush(Qt::transparent);
-    physics->setRect(0,0, npcPreview->m_localProps.setup.width, npcPreview->m_localProps.setup.height);
+    m_npcPreviewHitBox->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+    m_npcPreviewHitBox->setBrush(Qt::transparent);
+    m_npcPreviewHitBox->setRect(0, 0, m_npcPreviewBody->m_localProps.setup.width, m_npcPreviewBody->m_localProps.setup.height);
 
-    physics->setZValue(777);
-    ui->PreviewBox->setScene(PreviewScene);
+    m_npcPreviewHitBox->setZValue(777);
+    ui->PreviewBox->setScene(m_previewScene);
     ui->PreviewBox->setBackgroundBrush(Qt::white);
 
-    PreviewScene->addItem(physics);
+    m_previewScene->addItem(m_npcPreviewHitBox);
 
-    npcPreview->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
-                );
-    physics->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
-                );
+    m_npcPreviewBody->setPos(
+        (m_previewScene->width() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.width) / qreal(2)),
+        (m_previewScene->height() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.height) / qreal(2))
+    );
+    m_npcPreviewHitBox->setPos(
+        (m_previewScene->width() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.width) / qreal(2)),
+        (m_previewScene->height() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.height) / qreal(2))
+    );
 
-    npcPreview->_internal_animator->connect(npcPreview->_internal_animator,
-                                            SIGNAL(onFrame()),
-                                            PreviewScene,
-                                            SLOT(update()));
+    m_npcPreviewBody->_internal_animator->connect(m_npcPreviewBody->_internal_animator,
+            SIGNAL(onFrame()),
+            m_previewScene,
+            SLOT(update()));
 }
 
 void NpcEdit::updatePreview()
 {
-    if(!physics || !npcPreview)
+    if(!m_npcPreviewHitBox || !m_npcPreviewBody)
         return;
 
-    obj_npc merged = defaultNPC;
-    uint32_t npcImgW = static_cast<uint32_t>(npcImage.size().width());
-    uint32_t npcImgH = static_cast<uint32_t>(npcImage.size().height());
+    obj_npc merged = m_npcSetupDefault;
+    uint32_t npcImgW = static_cast<uint32_t>(m_npcImage.size().width());
+    uint32_t npcImgH = static_cast<uint32_t>(m_npcImage.size().height());
     merged.setup.applyNPCtxt(&NpcData, merged.setup, npcImgW, npcImgH);
 
     LevelNPC npcData = FileFormats::CreateLvlNpc();
-    npcData.id = npc_id;
+    npcData.id = m_currentNpcId;
     npcData.x = 10;
     npcData.y = 10;
-    npcData.direct = direction;
-    npcPreview->setNpcData(npcData, &merged);
+    npcData.direct = m_npcDirection;
+    m_npcPreviewBody->setNpcData(npcData, &merged);
 
-    physics->setRect(0,0, npcPreview->m_localProps.setup.width, npcPreview->m_localProps.setup.height);
-    npcPreview->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
-                );
-    physics->setPos(
-                (PreviewScene->width()/2)-(qreal(npcPreview->m_localProps.setup.width)/qreal(2)) ,
-                (PreviewScene->height()/2)-(qreal(npcPreview->m_localProps.setup.height)/qreal(2))
-                );
+    m_npcPreviewHitBox->setRect(0, 0, m_npcPreviewBody->m_localProps.setup.width, m_npcPreviewBody->m_localProps.setup.height);
+    m_npcPreviewBody->setPos(
+        (m_previewScene->width() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.width) / qreal(2)),
+        (m_previewScene->height() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.height) / qreal(2))
+    );
+    m_npcPreviewHitBox->setPos(
+        (m_previewScene->width() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.width) / qreal(2)),
+        (m_previewScene->height() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.height) / qreal(2))
+    );
 
-    PreviewScene->update();
+    m_previewScene->update();
 }
 
 
 void NpcEdit::loadImageFile()
 {
-    QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
+    QString imagePath = QFileInfo(curFile).dir().absolutePath() + "/";
     CustomDirManager fileDir(imagePath, "npcx");
-    QString CustomImage=fileDir.getCustomFile(defaultNPC.setup.image_n);
+    QString CustomImage = fileDir.getCustomFile(m_npcSetupDefault.setup.image_n);
     QImage tempImg;
 
     if(!CustomImage.isEmpty())
     {
         if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
         {
-            QString CustomMask=fileDir.getCustomFile(defaultNPC.setup.mask_n);
+            QString CustomMask = fileDir.getCustomFile(m_npcSetupDefault.setup.mask_n);
             GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask);
-        } else {
-            GraphicsHelps::loadQImage(tempImg, CustomImage);
         }
-        LogDebug(QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+        else
+            GraphicsHelps::loadQImage(tempImg, CustomImage);
+        LogDebug(QString("Image size %1 %2").arg(m_npcImage.width()).arg(m_npcImage.height()));
         LogDebug(QString("Loaded custom NPC image: %1").arg(CustomImage));
         if(tempImg.isNull())
         {
             LogDebug(QString("Loading custom NPC Image was failed, using default image"));
-            if(defaultNPC.cur_image)
-                npcImage = *defaultNPC.cur_image;
-        } else {
-            npcImage = QPixmap::fromImage(tempImg);
-            defaultNPC.cur_image = &npcImage;
+            if(m_npcSetupDefault.cur_image)
+                m_npcImage = *m_npcSetupDefault.cur_image;
+        }
+        else
+        {
+            m_npcImage = QPixmap::fromImage(tempImg);
+            m_npcSetupDefault.cur_image = &m_npcImage;
         }
     }
     else
     {
-        if(defaultNPC.cur_image)
-            npcImage = *defaultNPC.cur_image;
-        LogDebug(QString("System image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+        if(m_npcSetupDefault.cur_image)
+            m_npcImage = *m_npcSetupDefault.cur_image;
+        LogDebug(QString("System image size %1 %2").arg(m_npcImage.width()).arg(m_npcImage.height()));
     }
 }
 
@@ -774,5 +774,5 @@ void NpcEdit::refreshImageFile()
 {
     loadImageFile();
     //npcPreview->AnimationStop();
-    npcPreview->setMainPixmap(npcImage);
+    m_npcPreviewBody->setMainPixmap(m_npcImage);
 }
