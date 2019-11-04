@@ -49,9 +49,9 @@ void NpcEdit::closeEvent(QCloseEvent *event)
 {
     if(maybeSave())
     {
-        delete m_npcPreviewHitBox;
-        delete m_npcPreviewBody;
-        delete m_previewScene;
+        m_npcPreviewHitBox.reset();
+        m_npcPreviewBody.reset();
+        m_previewScene.reset();
         event->accept();
     }
     else

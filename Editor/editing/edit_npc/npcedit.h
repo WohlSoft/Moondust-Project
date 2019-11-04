@@ -23,6 +23,7 @@
 #include <QWidget>
 #include <QFile>
 #include <QMessageBox>
+#include <memory>
 
 #include <data_configs/data_configs.h>
 #include <PGE_File_Formats/npc_filedata.h>
@@ -184,9 +185,9 @@ private:
     NPCConfigFile   m_npcDataDefault;
     void setDefaultData(unsigned long m_currentNpcId);
 
-    QGraphicsScene    *m_previewScene = nullptr;
-    ItemNPC           *m_npcPreviewBody = nullptr;
-    QGraphicsRectItem *m_npcPreviewHitBox = nullptr;
+    std::unique_ptr<QGraphicsScene>     m_previewScene;
+    std::unique_ptr<ItemNPC>            m_npcPreviewBody;
+    std::unique_ptr<QGraphicsRectItem>  m_npcPreviewHitBox;
 
     QPixmap m_npcImage;
     QPixmap m_npcImageMask;

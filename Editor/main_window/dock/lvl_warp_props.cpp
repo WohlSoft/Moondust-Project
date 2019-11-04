@@ -1168,27 +1168,29 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
 
         if((bool)(pointDialog->loadFile(wldPath, FileData, mw()->configs, GlobalSettings::LvlOpts)))
         {
-            pointDialog->ResetPosition();
+            pointDialog->resetPosition();
             if(ui->WarpToMapX->text().isEmpty() || ui->WarpToMapY->text().isEmpty())
             {
-                pointDialog->mapPointIsNull = true;
+                pointDialog->m_mapPointIsNull = true;
             }
             else
             {
                 pointDialog->pointSelected(
                     QPoint(ui->WarpToMapX->text().toInt(),
-                           ui->WarpToMapY->text().toInt()));
-                pointDialog->goTo(ui->WarpToMapX->text().toInt() + 16, ui->WarpToMapY->text().toInt() + 16,
-                                  false,
-                                  QPoint(-qRound(qreal(pointDialog->gViewPort()->width()) / 2), -qRound(qreal(pointDialog->gViewPort()->height()) / 2))
-                                 );
-                pointDialog->m_scene->m_pointSelector.setPoint(pointDialog->mapPoint);
+                           ui->WarpToMapY->text().toInt())
+                );
+                pointDialog->goTo(ui->WarpToMapX->text().toInt() + 16,
+                                  ui->WarpToMapY->text().toInt() + 16,
+                                  QPoint(-qRound(qreal(pointDialog->gViewPort()->width()) / 2),
+                                         -qRound(qreal(pointDialog->gViewPort()->height()) / 2))
+                );
+                pointDialog->m_scene->m_pointSelector.setPoint(pointDialog->m_mapPoint);
             }
 
             if(pointDialog->exec() == QDialog::Accepted)
             {
-                ui->WarpToMapX->setText(QString::number(pointDialog->mapPoint.x()));
-                ui->WarpToMapY->setText(QString::number(pointDialog->mapPoint.y()));
+                ui->WarpToMapX->setText(QString::number(pointDialog->m_mapPoint.x()));
+                ui->WarpToMapY->setText(QString::number(pointDialog->m_mapPoint.y()));
                 ui->WarpToMapX->setModified(true);
                 ui->WarpToMapY->setModified(true);
                 on_WarpToMapX_editingFinished();

@@ -629,12 +629,14 @@ void NpcEdit::on_DirectRight_clicked()
 
 void NpcEdit::loadPreview()
 {
-    if(m_previewScene == NULL) m_previewScene = new QGraphicsScene();
-    if(m_npcPreviewHitBox == NULL) m_npcPreviewHitBox = new QGraphicsRectItem();
+    if(m_previewScene.get() == nullptr)
+        m_previewScene.reset(new QGraphicsScene());
+    if(m_npcPreviewHitBox.get() == nullptr)
+        m_npcPreviewHitBox.reset(new QGraphicsRectItem());
     m_previewScene->setSceneRect(0, 0, ui->PreviewBox->width() - 20, ui->PreviewBox->height() - 20);
-    if(m_npcPreviewBody == NULL)
+    if(m_npcPreviewBody.get() == nullptr)
     {
-        m_npcPreviewBody = new ItemNPC(true);
+        m_npcPreviewBody.reset(new ItemNPC(true));
         m_npcPreviewBody->setScenePoint();
     }
 
@@ -671,7 +673,7 @@ void NpcEdit::loadPreview()
     m_npcPreviewBody->setFlag(QGraphicsItem::ItemIsSelectable, false);
     m_npcPreviewBody->setFlag(QGraphicsItem::ItemIsMovable, false);
     m_npcPreviewBody->setZValue(1);
-    m_previewScene->addItem(m_npcPreviewBody);
+    m_previewScene->addItem(m_npcPreviewBody.get());
 
     if(m_npcPreviewBody->m_localProps.setup.frames > 1)
         m_npcPreviewBody->setData(4, "animated");
@@ -681,10 +683,10 @@ void NpcEdit::loadPreview()
     m_npcPreviewHitBox->setRect(0, 0, m_npcPreviewBody->m_localProps.setup.width, m_npcPreviewBody->m_localProps.setup.height);
 
     m_npcPreviewHitBox->setZValue(777);
-    ui->PreviewBox->setScene(m_previewScene);
+    ui->PreviewBox->setScene(m_previewScene.get());
     ui->PreviewBox->setBackgroundBrush(Qt::white);
 
-    m_previewScene->addItem(m_npcPreviewHitBox);
+    m_previewScene->addItem(m_npcPreviewHitBox.get());
 
     m_npcPreviewBody->setPos(
         (m_previewScene->width() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.width) / qreal(2)),
@@ -695,10 +697,12 @@ void NpcEdit::loadPreview()
         (m_previewScene->height() / 2) - (qreal(m_npcPreviewBody->m_localProps.setup.height) / qreal(2))
     );
 
-    m_npcPreviewBody->_internal_animator->connect(m_npcPreviewBody->_internal_animator,
-            SIGNAL(onFrame()),
-            m_previewScene,
-            SLOT(update()));
+    QObject::connect(
+        m_npcPreviewBody->_internal_animator,
+        SIGNAL(onFrame()),
+        m_previewScene.get(),
+        SLOT(update())
+    );
 }
 
 void NpcEdit::updatePreview()

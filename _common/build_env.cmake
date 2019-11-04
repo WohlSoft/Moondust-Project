@@ -3,6 +3,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+
 # Set debug postfix for everything
 set(CMAKE_DEBUG_POSTFIX "d")
 if(WIN32)
@@ -43,8 +45,7 @@ if(NOT CMAKE_BUILD_TYPE)
     message("== Using default build configuration which is a Release!")
 endif()
 
-string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
-if (CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
+if(CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
     add_definitions(-DNDEBUG)
 endif()
 
