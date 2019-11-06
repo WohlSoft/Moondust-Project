@@ -1308,14 +1308,14 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar bloques y metaobjetos invisibles</translation>
     </message>
 </context>
 <context>
     <name>GreetingDialog</name>
     <message>
         <source>Welcome!</source>
-        <translation>¡Bienvenido!</translation>
+        <translation>¡Le damos la bienvenida!</translation>
     </message>
     <message>
         <source>Choose the workspace layout you want to use:</source>
