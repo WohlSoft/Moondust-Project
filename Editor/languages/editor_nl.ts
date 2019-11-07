@@ -4366,28 +4366,29 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1111"/>
         <source>New Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe event %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1163"/>
         <source>Copyed Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Event gekopiëerd %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1904"/>
         <source>Get section size</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie grootte ophalen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1905"/>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation type="unfinished"></translation>
+        <translation>U moet zich op sectie %1 bevinden om data te kunnen opnemen voor dit event</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="2225"/>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef een bericht op
+(Max. lengte per regel is 27 tekens)</translation>
     </message>
 </context>
 <context>
@@ -4395,7 +4396,7 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="69"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="83"/>
