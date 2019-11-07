@@ -5082,7 +5082,7 @@ Physical env. zones:	%6
 </source>
         <translation>Player start points:	 %1
 Blocks:			 %2
-Background objects&apos;s:	 %3
+Background objects:	 %3
 Non-playable characters: %4
 Warp entries:		 %5
 Physical env. zones:	 %6
@@ -5149,7 +5149,7 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Evt. Hit</translation>
+        <translation>Evt. Hit:</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -5376,7 +5376,7 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation>Please, save file first, if you want to manage custom background config files.</translation>
+        <translation>Please save the file first, if you want to manage custom background config files.</translation>
     </message>
     <message>
         <source>Choose a background first</source>
@@ -5384,7 +5384,7 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Please, choose the background image first.</source>
-        <translation>Please, choose the background image first.</translation>
+        <translation>Please choose the background image first.</translation>
     </message>
     <message>
         <source>Custom background name which will be shown in the editor</source>
