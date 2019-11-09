@@ -32,7 +32,7 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>Separata underfönster (klassisk stil)</translation>
+        <translation type="unfinished">Separata underfönster (klassisk stil)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
@@ -363,7 +363,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Räknar stjärnor...</translation>
+        <translation type="unfinished">Räknar stjärnor...</translation>
     </message>
 </context>
 <context>
