@@ -125,9 +125,9 @@ static QString getCurrentUserName()
 
 #ifdef _WIN32
     wchar_t userNameW[256];
-    DWORD usernameLen = 0;
+    DWORD usernameLen = 256;
     GetUserNameW(userNameW, &usernameLen);
-    userNameW[usernameLen] = L'\0';
+    userNameW[usernameLen--] = L'\0';
     user = QString::fromWCharArray(userNameW, usernameLen);
 #else
     struct passwd *pwd = getpwuid(getuid());
@@ -149,7 +149,7 @@ static void removePersonalData(QString &log)
     {
         log.replace(homePath, "{...}");
 #ifdef _WIN32
-        homePath.replace('\\', '/');
+        homePath.replace('/', '\\');
         log.replace(homePath, "{...}");
 #endif
     }
