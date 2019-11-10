@@ -28,8 +28,10 @@
 #ifdef _WIN32
 #   include <windows.h>
 #   include <dbghelp.h>
+#   include <shlobj.h>
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
 #   include <execinfo.h>
+#   include <pwd.h>
 #   include <unistd.h>
 #elif defined(__ANDROID__)
 #   include <unwind.h>
@@ -165,18 +167,89 @@ static void androidDumpBacktrace(std::ostringstream &os, void **buffer, size_t c
 }
 #endif
 
+static std::string getCurrentUserName()
+{
+    std::string user;
+
+#ifdef _WIN32
+    char    userName[UNLEN + 1];
+    wchar_t userNameW[UNLEN + 1];
+    DWORD usernameLen = 0;
+    GetUserNameW(userNameW, &usernameLen);
+    userNameW[usernameLen] = L'\0';
+    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, userNameW, usernameLen, userName, UNLEN + 1, 0, 0);
+    userName[nCnt] = '\0';
+    user = std::string(userName);
+
+#else
+    struct passwd *pwd = getpwuid(getuid());
+    if(pwd == nullptr)
+        return "UnknownUser"; // Failed to get a user name!
+    user = std::string(pwd->pw_name);
+
+#endif
+
+    return user;
+}
+
+static std::string getCurrentHomePath()
+{
+    std::string homedir;
+
+#ifdef _WIN32
+    char    homeDir[MAX_PATH * 4];
+    wchar_t homeDirW[MAX_PATH];
+    SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, homeDirW);
+    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, homeDirW, -1, homeDir, MAX_PATH * 4, 0, 0);
+    homeDir[nCnt] = '\0';
+    homedir = std::string(homeDir);
+
+#else
+    struct passwd *pwd = getpwuid(getuid());
+    if(pwd == nullptr)
+        return "/home/<unknown>"; // Failed to get a user name!
+    homedir = std::string(pwd->pw_dir);
+
+#endif
+
+    return homedir;
+}
+
+static void replaceStr(std::string &data, std::string toSearch, std::string replaceStr)
+{
+    size_t pos = data.find(toSearch);
+
+    while(pos != std::string::npos)
+    {
+        data.replace(pos, toSearch.size(), replaceStr);
+        pos =data.find(toSearch, pos + replaceStr.size());
+    }
+}
+
+static void removePersonalData(std::string &log)
+{
+    std::string user = getCurrentUserName();
+    std::string homePath = getCurrentHomePath();
+
+    // Replace username
+    if(!homePath.empty())
+    {
+        replaceStr(log, homePath, "{...}");
+#ifdef _WIN32
+        replaceStr(homePath, "\\", "/");
+        replaceStr(log, homePath, "{...}");
+#endif
+    }
+    replaceStr(log, user, "anonymouse");
+}
+
 static std::string getStacktrace()
 {
+    D_pLogDebugNA("Initializing std::string...");
+    std::string bkTrace;
+
 #if defined(_WIN32)
-    //StackTracer tracer;
-    //tracer.runStackTracerForAllThreads();
-    //return tracer.theOutput();
-    //dbg::stack s;
-    //std::stringstream out;
-    //std::copy(s.begin(), s.end(), std::ostream_iterator<dbg::stack_frame>(out, "\n"));
-    std::string stack;
-    GetStackWalk(stack);
-    return stack;
+    GetStackWalk(bkTrace);
 
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
     void  *array[400];
@@ -186,8 +259,6 @@ static std::string getStacktrace()
     size = backtrace(array, 400);
     D_pLogDebugNA("Converting...");
     strings = backtrace_symbols(array, size);
-    D_pLogDebugNA("Initializing std::string...");
-    std::string bkTrace;
     D_pLogDebugNA("Filling std::string...");
 
     for(int j = 0; j < size; j++)
@@ -197,7 +268,6 @@ static std::string getStacktrace()
     }
 
     D_pLogDebugNA("DONE!");
-    return bkTrace;
 
 #elif defined(__ANDROID__)
     const size_t max = 400;
@@ -205,11 +275,14 @@ static std::string getStacktrace()
     std::ostringstream oss;
     androidDumpBacktrace(oss, buffer, captureBacktrace(buffer, max));
     D_pLogDebugNA("DONE!");
-    return oss.str();
+    bkTrace = oss.str();
 
 #else
-    return std::string("<Stack trace not supported for this platform!>");
+    bkTrace = "<Stack trace not supported for this platform!>";
 #endif
+
+    removePersonalData(bkTrace);
+    return bkTrace;
 }
 
 static void msgBox(std::string title, std::string text)

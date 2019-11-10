@@ -20,18 +20,20 @@
 #include <QMessageBox>
 #include <SDL2/SDL_version.h>
 #include <SDL2/SDL_mixer_ext.h>
-#ifdef _WIN32
-#include <windows.h>
-#include <dbghelp.h>
-#define USE_STACK_WALKER
-#ifdef USE_STACK_WALKER
-#include <StackWalker/StackWalker.h>
-#endif
-#elif (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__)
-#include <execinfo.h>
-#include <unistd.h>
-#endif
 #include <signal.h>
+
+#ifdef _WIN32
+#   include <windows.h>
+#   include <dbghelp.h>
+#   define USE_STACK_WALKER
+#   ifdef USE_STACK_WALKER
+#       include <StackWalker/StackWalker.h>
+#   endif
+#elif (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__)
+#   include <execinfo.h>
+#   include <pwd.h>
+#   include <unistd.h>
+#endif
 
 #include <dev_console/devconsole.h>
 #include <version.h>
@@ -71,10 +73,10 @@ static const char *g_messageToUser =
 #ifdef _WIN32
 static bool GetStackWalk(std::string &outWalk)
 {
-    #ifdef USE_STACK_WALKER
+#ifdef USE_STACK_WALKER
     StackWalkerToString x(outWalk);
     x.ShowCallstack();
-    #else
+#else
     //
     // http://blog.aaronballman.com/2011/04/generating-a-stack-crawl/
     //
@@ -112,38 +114,74 @@ static bool GetStackWalk(std::string &outWalk)
         }
     }
     ::SymCleanup(::GetCurrentProcess());
-    #endif
+#endif
     return true;
 }
 #endif
 
+static QString getCurrentUserName()
+{
+    QString user;
+
+#ifdef _WIN32
+    wchar_t userNameW[UNLEN + 1];
+    DWORD usernameLen = UNLEN + 1;
+    GetUserNameW(userNameW, &usernameLen);
+    userNameW[usernameLen] = L'\n';
+    user = QString::fromWCharArray(userNameW, usernameLen);
+#else
+    struct passwd *pwd = getpwuid(getuid());
+    if(pwd == nullptr)
+        return "UnknownUser"; // Failed to get a user name!
+    user = QString::fromLocal8Bit(pwd->pw_name);
+#endif
+
+    return user;
+}
+
+static void removePersonalData(QString &log)
+{
+    QString user = getCurrentUserName();
+    QString homePath = QDir::homePath();
+
+    // Replace username
+    if(!homePath.isEmpty())
+    {
+        log.replace(homePath, "{...}");
+#ifdef _WIN32
+        homePath.replace('\\', '/');
+        log.replace(homePath, "{...}");
+#endif
+    }
+    log.replace(user, "anonymouse");
+}
+
+
 QString CrashHandler::getStacktrace()
 {
-    #ifdef _WIN32
-    //StackTracer tracer;
-    //tracer.runStackTracerForAllThreads();
-    //return tracer.theOutput();
-    //dbg::stack s;
-    //std::stringstream out;
-    //std::copy(s.begin(), s.end(), std::ostream_iterator<dbg::stack_frame>(out, "\n"));
+    QString bkTrace;
+
+#ifdef _WIN32
     std::string stack;
     GetStackWalk(stack);
-    return QString::fromStdString(stack);
-    #elif (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__)
+    bkTrace = QString::fromStdString(stack);
+
+#elif (defined(__linux__) && !defined(__ANDROID__)) || defined(__APPLE__)
     void *array[401];
     int size;
     char **strings;
     size = backtrace(array, 400);
     strings = backtrace_symbols(array, size);
-    QString bkTrace("");
-
     for(int j = 0; j < size; j++)
         bkTrace += QString(strings[j]) + "\n";
 
+#else
+    bkTrace = "<Stack trace is not implemented for your platform>";
+
+#endif
+
+    removePersonalData(bkTrace);
     return bkTrace;
-    #else
-    return QString("");
-    #endif
 }
 
 CrashHandler::CrashHandler(QString &crashText, QWidget *parent) :
@@ -177,7 +215,7 @@ void CrashHandler::crashBySIGNAL(int signalid)
 
     switch(signalid)
     {
-        #ifndef _WIN32  //Unsupported signals by Windows
+#ifndef _WIN32  //Unsupported signals by Windows
 
     case SIGHUP:
         sigtype = QObject::tr("Terminal was closed [SIGHUP]");
@@ -199,7 +237,7 @@ void CrashHandler::crashBySIGNAL(int signalid)
     case SIGUSR1:
     case SIGUSR2:
         return;
-        #endif
+#endif
 
     case SIGILL:
         sigtype = QObject::tr("Wrong CPU Instruction [SIGILL]");
@@ -405,12 +443,12 @@ void CrashHandler::checkCrashsaves()
 
 void CrashHandler::initCrashHandlers()
 {
-    #if !defined(DEBUG_BUILD) && !defined(__APPLE__)
+#if !defined(DEBUG_BUILD) && !defined(__APPLE__)
     std::set_terminate(&crashByUnhandledException);
-    #endif
-    #ifndef DEBUG_BUILD
+#endif
+#ifndef DEBUG_BUILD
     std::set_new_handler(&crashByFlood);
-    #ifndef _WIN32 //Unsupported signals by Windows
+#ifndef _WIN32 //Unsupported signals by Windows
     signal(SIGHUP,  &crashBySIGNAL);
     signal(SIGQUIT, &crashBySIGNAL);
     signal(SIGALRM, &crashBySIGNAL);
@@ -418,13 +456,13 @@ void CrashHandler::initCrashHandlers()
     signal(SIGURG,  &crashBySIGNAL);
     signal(SIGUSR1, &crashBySIGNAL);
     signal(SIGUSR2, &crashBySIGNAL);
-    #endif
+#endif
     signal(SIGILL,  &crashBySIGNAL);
     signal(SIGFPE,  &crashBySIGNAL);
     signal(SIGSEGV, &crashBySIGNAL);
     signal(SIGINT,  &crashBySIGNAL);
     signal(SIGABRT, &crashBySIGNAL);
-    #endif
+#endif
 }
 
 void CrashHandler::on_pgeForumButton_clicked()
