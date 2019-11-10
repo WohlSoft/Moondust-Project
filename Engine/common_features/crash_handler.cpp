@@ -172,12 +172,12 @@ static std::string getCurrentUserName()
     std::string user;
 
 #ifdef _WIN32
-    char    userName[UNLEN + 1];
-    wchar_t userNameW[UNLEN + 1];
+    char    userName[256];
+    wchar_t userNameW[256];
     DWORD usernameLen = 0;
     GetUserNameW(userNameW, &usernameLen);
     userNameW[usernameLen] = L'\0';
-    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, userNameW, usernameLen, userName, UNLEN + 1, 0, 0);
+    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, userNameW, usernameLen, userName, 256, 0, 0);
     userName[nCnt] = '\0';
     user = std::string(userName);
 

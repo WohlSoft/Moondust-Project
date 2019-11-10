@@ -124,10 +124,10 @@ static QString getCurrentUserName()
     QString user;
 
 #ifdef _WIN32
-    wchar_t userNameW[UNLEN + 1];
-    DWORD usernameLen = UNLEN + 1;
+    wchar_t userNameW[256];
+    DWORD usernameLen = 0;
     GetUserNameW(userNameW, &usernameLen);
-    userNameW[usernameLen] = L'\n';
+    userNameW[usernameLen] = L'\0';
     user = QString::fromWCharArray(userNameW, usernameLen);
 #else
     struct passwd *pwd = getpwuid(getuid());
