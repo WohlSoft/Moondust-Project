@@ -3709,7 +3709,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Évènement de frappe</translation>
+        <translation>Évènement de frappe :</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
