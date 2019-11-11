@@ -179,7 +179,7 @@ void LevelEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool c
     if(SwitchToSection)
     {
         int section = findNearestSection(LvlData, x, y);
-        m_mw->SetCurrentLevelSection(section);
+        m_mw->setCurrentLevelSection(section);
     }
 
     qreal zoom = 1.0;

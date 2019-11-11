@@ -190,8 +190,8 @@ void LvlSectionProps::onExtraSettingsChanged()
         xtraSetupData.push_back(section.custom_params);
         xtraSetupData.push_back(custom_params);
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection,
-                                                         HistorySettings::SETTING_SEC_XTRA,
-                                                         QVariant(xtraSetupData));
+                HistorySettings::SETTING_SEC_XTRA,
+                QVariant(xtraSetupData));
         section.custom_params = custom_params;
         edit->LvlData.meta.modified = true;
     }
@@ -451,10 +451,8 @@ void LvlSectionProps::on_ResizeSection_clicked()
         if(!edit) return;
         qApp->setActiveWindow(mw());
         edit->setFocus();
-        if(edit->scene->m_resizeBox == NULL)
-        {
+        if(edit->scene->m_resizeBox == nullptr)
             edit->scene->setSectionResizer(true);
-        }
     }
 }
 

@@ -126,7 +126,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
         zoom->setText(QString::number(lvlWin->getZoom()));
 
-        SetCurrentLevelSection(0, 1);
+        setCurrentLevelSection(0, 1);
 
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();

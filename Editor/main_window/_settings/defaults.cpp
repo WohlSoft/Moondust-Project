@@ -117,6 +117,28 @@ void MainWindow::setUiDefults()
     tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
     tabifyDockWidget(dock_WldItemBox, dock_WldMusicBoxes);
 
+    m_sectionButtons[0] = ui->actionSection_1;
+    m_sectionButtons[1] = ui->actionSection_2;
+    m_sectionButtons[2] = ui->actionSection_3;
+    m_sectionButtons[3] = ui->actionSection_4;
+    m_sectionButtons[4] = ui->actionSection_5;
+    m_sectionButtons[5] = ui->actionSection_6;
+    m_sectionButtons[6] = ui->actionSection_7;
+    m_sectionButtons[7] = ui->actionSection_8;
+    m_sectionButtons[8] = ui->actionSection_9;
+    m_sectionButtons[9] = ui->actionSection_10;
+    m_sectionButtons[10] = ui->actionSection_11;
+    m_sectionButtons[11] = ui->actionSection_12;
+    m_sectionButtons[12] = ui->actionSection_13;
+    m_sectionButtons[13] = ui->actionSection_14;
+    m_sectionButtons[14] = ui->actionSection_15;
+    m_sectionButtons[15] = ui->actionSection_16;
+    m_sectionButtons[16] = ui->actionSection_17;
+    m_sectionButtons[17] = ui->actionSection_18;
+    m_sectionButtons[18] = ui->actionSection_19;
+    m_sectionButtons[19] = ui->actionSection_20;
+    m_sectionButtons[20] = ui->actionSection_21;
+
     //#ifndef Q_OS_WIN
     //tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
     //tabifyDockWidget(dock_LvlSectionProps, dock_LvlItemProps);
@@ -525,27 +547,7 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCreateScriptEpisode, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuLunaLUA_scripts->menuAction(), &QAction::setEnabled);
 
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_1, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_2, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_3, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_4, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_5, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_6, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_7, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_8, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_9, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_10, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_11, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_12, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_13, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_14, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_15, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_16, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_17, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_18, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_19, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_20, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_21, &QAction::setEnabled);
+    for(size_t i = 0; i < m_sectionButtonsCount; i++)
+        connect(this, &MainWindow::windowActiveLevel,   m_sectionButtons[i], &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel,   ui->actionSectionMore, &QAction::setEnabled);
-
 }

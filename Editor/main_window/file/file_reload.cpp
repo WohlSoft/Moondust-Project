@@ -89,7 +89,7 @@ void MainWindow::on_actionReload_triggered()
         int lastSection = 0;
         QHash<int, QPair<long, long> > sectionPoss;
         lastSection = lvlEdit->LvlData.CurSection;
-        SetCurrentLevelSection(lastSection); //Need to remember position of current section
+        setCurrentLevelSection(lastSection); //Need to remember position of current section
 
         for(int i = 0; i < lvlEdit->LvlData.sections.size(); i++)
         {
@@ -135,7 +135,7 @@ void MainWindow::on_actionReload_triggered()
                 }
             }
 
-            SetCurrentLevelSection(lastSection);
+            setCurrentLevelSection(lastSection);
             child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
             child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
 

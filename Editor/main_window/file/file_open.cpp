@@ -233,7 +233,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->ResetPosition();
             dock_LvlItemBox->initItemLists();
             statusBar()->showMessage(tr("Level file loaded"), 2000);
-            SetCurrentLevelSection(0);
+            setCurrentLevelSection(0);
             dock_LvlWarpProps->init();
             dock_LvlLayers->setLayersBox();
 

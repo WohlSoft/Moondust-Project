@@ -237,7 +237,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             // Toggle destinition section if destinition level is same as currently toggled
             if(activeLvlWin == dst)
-                SetCurrentLevelSection(d_id);
+                setCurrentLevelSection(d_id);
             else // Or just change current section of that level without refreshing of current view
                 dst->setCurrentSection(d_id);
 
@@ -287,14 +287,14 @@ void MainWindow::on_actionSCT_Delete_triggered()
                     (edit->LvlData.sections[i].size_top != 0)
                 )
                 {
-                    SetCurrentLevelSection(i);
+                    setCurrentLevelSection(i);
                     switched = true;
                     break;
                 }
             }
 
             if(!switched)
-                SetCurrentLevelSection(0);
+                setCurrentLevelSection(0);
 
             //Pop last section entry if possible
             if(deletedSection > 20 && edit->LvlData.sections.size() > 21)

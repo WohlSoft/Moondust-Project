@@ -840,9 +840,13 @@ public:
 
 
 // ///////////////////Section toobar///////////////////////
+    public:
+        const size_t m_sectionButtonsCount = 21;
+        QAction *m_sectionButtons[21] = {0};
+
     public slots:
         //Switch section
-        void SetCurrentLevelSection(int SctId, int open=0);
+        void setCurrentLevelSection(int sectionId, int open = 0);
         void on_actionGotoLeftBottom_triggered();
         void on_actionGotoLeftTop_triggered();
         void on_actionGotoTopRight_triggered();
