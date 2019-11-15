@@ -272,11 +272,8 @@ void LvlItemProperties::LvlItemProps(int Type,
     ui->extraSettings->setToolTip("");
     ui->extraSettings->setMinimumHeight(0);
     ui->extraSettings->setStyleSheet("");
-    if(m_extraSettings)
-    {
-        delete m_extraSettings;
-        m_extraSettings = nullptr;
-    }
+    m_extraSettings.reset();
+    m_extraGlobalSettings.reset();
 
     ui->PROPS_BlkEventDestroyedLock->setVisible(isPlacingNew);
     ui->PROPS_BlkEventHitLock->setVisible(isPlacingNew);
@@ -286,6 +283,8 @@ void LvlItemProperties::LvlItemProps(int Type,
     ui->PROPS_NpcEventDeathLock->setVisible(isPlacingNew);
     ui->PROPS_NpcEventTalkLock->setVisible(isPlacingNew);
     ui->PROPS_NpcEventLEmptyLock->setVisible(isPlacingNew);
+
+    QString configDir = mw()->configs.config_dir;
 
     /*
     long blockPtr; //ArrayID of editing item (-1 - use system)
@@ -411,8 +410,10 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         initExtraSettingsWidget(mw()->configs.getBlockExtraSettingsPath(),
                                 t_block.setup.extra_settings,
-                                bgo.meta.custom_params,
-                                &LvlItemProperties::onExtraSettingsBlockChanged);
+                                configDir + "global_block.json",
+                                block.meta.custom_params,
+                                &LvlItemProperties::onExtraSettingsBlockChanged,
+                                &LvlItemProperties::onExtraSettingsBlockGlobalChanged);
 
         LvlItemPropsLock = false;
         LockItemProps = false;
@@ -498,8 +499,10 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         initExtraSettingsWidget(mw()->configs.getBgoExtraSettingsPath(),
                                 t_bgo.setup.extra_settings,
+                                configDir + "global_bgo.json",
                                 bgo.meta.custom_params,
-                                &LvlItemProperties::onExtraSettingsBGOChanged);
+                                &LvlItemProperties::onExtraSettingsBGOChanged,
+                                &LvlItemProperties::onExtraSettingsBGOGlobalChanged);
 
         LvlItemPropsLock = false;
         LockItemProps = false;
@@ -738,8 +741,10 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         initExtraSettingsWidget(mw()->configs.getNpcExtraSettingsPath(),
                                 t_npc.setup.extra_settings,
+                                configDir + "global_bgo.json",
                                 npc.meta.custom_params,
-                                &LvlItemProperties::onExtraSettingsNPCChanged);
+                                &LvlItemProperties::onExtraSettingsNPCChanged,
+                                &LvlItemProperties::onExtraSettingsNPCGlobalChanged);
 
         LvlItemPropsLock = false;
         LockItemProps = false;
@@ -813,44 +818,89 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
 
 void LvlItemProperties::initExtraSettingsWidget(const QString &defaultDir,
                                                 const QString &layoutPath,
+                                                const QString &layoutPathGlobal,
                                                 QString &properties,
-                                                void (LvlItemProperties::*callback)())
+                                                void (LvlItemProperties::*callback)(),
+                                                void (LvlItemProperties::*callbackGlobal)())
 {
     LevelEdit *edit = nullptr;
-    if(!layoutPath.isEmpty() && (mw()->activeChildWindow() == MainWindow::WND_Level) && (edit = mw()->activeLvlEditWin()))
+    if((!layoutPath.isEmpty() || !layoutPathGlobal.isEmpty()) &&
+        (mw()->activeChildWindow() == MainWindow::WND_Level) &&
+        (edit = mw()->activeLvlEditWin()))
     {
         CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
         uLVL.setDefaultDir(defaultDir);
 
         QString esLayoutFile = uLVL.getCustomFile(layoutPath);
-        if(esLayoutFile.isEmpty())
-            return;
+        QString gsLayoutFile = uLVL.getCustomFile(layoutPathGlobal);
+        bool hasError = false;
 
-        QFile layoutFile(esLayoutFile);
-        if(!layoutFile.open(QIODevice::ReadOnly))
-            return;
-
-        QByteArray rawLayout = layoutFile.readAll();
-        m_extraSettings = new JsonSettingsWidget(ui->extraSettings);
-        if(m_extraSettings)
+        // Global object's extra settings
+        if(!gsLayoutFile.isEmpty())
         {
-            if(!m_extraSettings->loadLayout(properties.toUtf8(), rawLayout))
+            QFile layoutFile(gsLayoutFile);
+            if(layoutFile.open(QIODevice::ReadOnly))
             {
-                LogWarning(m_extraSettings->errorString());
-                ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
-                                              .arg(esLayoutFile)
-                                              .arg(m_extraSettings->errorString()));
-                ui->extraSettings->setMinimumHeight(12);
-                ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
-            }
-            auto *widget = m_extraSettings->getWidget();
-            if(widget)
-            {
-                ui->extraSettings->layout()->addWidget(widget);
-                JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
+                QByteArray rawLayout = layoutFile.readAll();
+                m_extraGlobalSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+                Q_ASSERT(m_extraGlobalSettings.get());
+
+                if(!m_extraGlobalSettings->loadLayout(properties.toUtf8(), rawLayout))
+                {
+                    LogWarning(m_extraGlobalSettings->errorString());
+                    ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                                  .arg(esLayoutFile)
+                                                  .arg(m_extraGlobalSettings->errorString()));
+                    ui->extraSettings->setMinimumHeight(12);
+                    ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+                    hasError = true;
+                }
+                auto *widget = m_extraGlobalSettings->getWidget();
+                if(widget)
+                {
+                    ui->extraSettings->layout()->addWidget(widget);
+                    JsonSettingsWidget::connect(m_extraGlobalSettings.get(),
+                                                &JsonSettingsWidget::settingsChanged,
+                                                this,
+                                                callbackGlobal);
+                }
+
+                layoutFile.close();
             }
         }
-        layoutFile.close();
+
+        // Local object's extra settings
+        if(!hasError && !esLayoutFile.isEmpty())
+        {
+            QFile layoutFile(esLayoutFile);
+            if(layoutFile.open(QIODevice::ReadOnly))
+            {
+                QByteArray rawLayout = layoutFile.readAll();
+                m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+                Q_ASSERT(m_extraSettings.get());
+
+                if(!m_extraSettings->loadLayout(properties.toUtf8(), rawLayout))
+                {
+                    LogWarning(m_extraSettings->errorString());
+                    ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                                  .arg(esLayoutFile)
+                                                  .arg(m_extraSettings->errorString()));
+                    ui->extraSettings->setMinimumHeight(12);
+                    ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+                }
+                auto *widget = m_extraSettings->getWidget();
+                if(widget)
+                {
+                    ui->extraSettings->layout()->addWidget(widget);
+                    JsonSettingsWidget::connect(m_extraSettings.get(),
+                                                &JsonSettingsWidget::settingsChanged,
+                                                this,
+                                                callback);
+                }
+
+                layoutFile.close();
+            }
+        }
     }
 }
 
@@ -881,6 +931,11 @@ void LvlItemProperties::onExtraSettingsBlockChanged()
     }
 }
 
+void LvlItemProperties::onExtraSettingsBlockGlobalChanged()
+{
+
+}
+
 void LvlItemProperties::onExtraSettingsBGOChanged()
 {
     QString custom_params = m_extraSettings->saveSettings();
@@ -908,6 +963,11 @@ void LvlItemProperties::onExtraSettingsBGOChanged()
     }
 }
 
+void LvlItemProperties::onExtraSettingsBGOGlobalChanged()
+{
+
+}
+
 void LvlItemProperties::onExtraSettingsNPCChanged()
 {
     QString custom_params = m_extraSettings->saveSettings();
@@ -933,6 +993,11 @@ void LvlItemProperties::onExtraSettingsNPCChanged()
         }
         edit->scene->m_history->addChangeSettings(selData, new NPCHistory_UserData(), custom_params);
     }
+}
+
+void LvlItemProperties::onExtraSettingsNPCGlobalChanged()
+{
+
 }
 
 

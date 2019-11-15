@@ -45,10 +45,13 @@ public:
 
     bool loadSettings(const QByteArray &rawData);
     bool loadSettings(const QString &rawData);
+    bool loadSettings(const QJsonDocument &rawData);
     QString saveSettings();
+    QJsonDocument getSettings();
 
     bool loadLayout(const QByteArray &layout);
     bool loadLayout(const QByteArray &settings, const QByteArray &layout);
+    bool loadLayout(const QJsonDocument &settings, const QByteArray &layout);
     bool loadLayoutFromFile(const QString &settings_path, const QString &layout_path);
 
     bool isValid();
