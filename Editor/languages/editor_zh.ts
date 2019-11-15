@@ -3713,7 +3713,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>顶砖块事件</translation>
+        <translation>顶砖块事件：</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
