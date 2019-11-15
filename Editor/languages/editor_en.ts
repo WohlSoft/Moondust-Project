@@ -8559,7 +8559,7 @@ Please, choose the engine application yourself!</translation>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>File is not saved!
-Do you want to save file or you want to run test of copy which is currently saved on the disk?</translation>
+Do you want to save the file or you want to run a test on a copy which is currently saved on the disk?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -9002,7 +9002,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
 Please, choose the engine application yourself!</source>
         <translation>Can&apos;t start testing, engine is not found: 
 %1
-Please, choose the engine application yourself!</translation>
+Please choose the engine application yourself!</translation>
     </message>
     <message>
         <source>Level items browser</source>
@@ -9991,11 +9991,11 @@ Forum link: wohlsoft.ru/forum</translation>
     </message>
     <message>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
-        <translation>Editor was abourted because alarm() time out! [SIGALRM]</translation>
+        <translation>Editor was aborted because alarm() time out! [SIGALRM]</translation>
     </message>
     <message>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
-        <translation>Editor was abourted due to a physical memory error! [SIGBUS]</translation>
+        <translation>Editor was aborted due to a physical memory error! [SIGBUS]</translation>
     </message>
     <message>
         <source>Wrong CPU Instruction [SIGILL]</source>
@@ -12613,11 +12613,11 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation>Please, save file</translation>
+        <translation>Please save the file</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>Please, save file first, if you want to select custom music file.</translation>
+        <translation>Please save the file first, if you want to select custom music file.</translation>
     </message>
 </context>
 <context>
