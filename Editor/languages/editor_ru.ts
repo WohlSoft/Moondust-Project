@@ -6629,11 +6629,11 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Go to left-bottom of the section</source>
-        <translation>Перейти к лево-нижнему углу секции</translation>
+        <translation>Перейти к нижне-левому углу секции</translation>
     </message>
     <message>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Вернуться к лево-нижнему углу Секции Уровня или к координате x=0:y=0 на Карте Мира</translation>
+        <translation>Вернуться к нижне-левому углу секции уровня или к координатам x=0:y=0 на карте мира</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6651,11 +6651,11 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Go to the left-top of the section</source>
-        <translation>Перейти к лево-верхнему углу секции</translation>
+        <translation>Перейти к верхне-левому углу секции</translation>
     </message>
     <message>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Вернуться к лево-верхнему углу Секции Уровня или к координате x=0:y=0 на Карте Мира</translation>
+        <translation>Вернуться к верхне-левому углу секции уровня или к координатам x=0:y=0 на карте мира</translation>
     </message>
     <message>
         <source>Level Search</source>
@@ -6723,7 +6723,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Go to right-bottom of the section</source>
-        <translation>Перейти к право-нижнему углу секции</translation>
+        <translation>Перейти к нижне-правому углу секции</translation>
     </message>
     <message>
         <source>Script Editor</source>
@@ -6739,7 +6739,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
-        <translation>Открыть локальный сценарий уровня / карты мира. Будет создан если не существует.</translation>
+        <translation>Открыть локальный сценарий уровня / карты мира. Если файл не существует, то будет создван новый, с нуля.</translation>
     </message>
     <message>
         <source>Open episode script</source>
@@ -6747,7 +6747,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
-        <translation>Открыть общий сценарий эпизода. Будет создан если не существует.</translation>
+        <translation>Открыть общий сценарий эпизода. Если файл не существует, будет создан новый, с нуля.</translation>
     </message>
     <message>
         <source>Level local (%1)</source>
@@ -6920,7 +6920,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Открыть пользовательскую папку: папка с именем, совпадающая с базовым именем текущего файла.</translation>
+        <translation>Открыть пользовательскую папку: папку, чьё имя совпадает с базовым именем текущего файла.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -8546,7 +8546,7 @@ Please, choose the engine application yourself!</source>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>Файл не сохранён!
-Хотите сохранить файл или хотите запустить тест сохранённой копии на диске?</translation>
+Хотите сохранить файл или же хотите запустить тест сохранённой копии с диска?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
