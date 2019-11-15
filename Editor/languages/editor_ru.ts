@@ -5100,7 +5100,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Сб. Стукнут</translation>
+        <translation>Сб. Стукнут:</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -5327,7 +5327,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation>Файл нужно сохранить, чтобы можно было работать с пользовательскими конфигами фонов.</translation>
+        <translation>Чтобы можно было работать с конфигами фонов, файл нужно сохранить.</translation>
     </message>
     <message>
         <source>Choose a background first</source>

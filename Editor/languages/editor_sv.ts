@@ -5,7 +5,7 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>Main</source>
@@ -13,131 +13,131 @@
     </message>
     <message>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Fönsterlayout</translation>
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Separata underfönster (klassisk stil)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Underfönster med flikar (modern stil)</translation>
     </message>
     <message>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikspelare</translation>
     </message>
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musik kommer spelas upp automatiskt när du öppnar en nivåfil</translation>
     </message>
     <message>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>Spela upp musik automatiskt efter att filen har öppnats</translation>
     </message>
     <message>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>Prestanda</translation>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animering</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maximalt antal element som kan animeras vid en given tidspunkt. Om denna gräns överskrids, kommer animering att pausas tills du höjer gränsen eller tar bort överflödiga element.</translation>
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Animeringsobjektgräns</translation>
     </message>
     <message>
         <source>Collision detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollisionsidentifiering</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer</translation>
     </message>
     <message>
         <source>Associate file extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Associera filändelser</translation>
     </message>
     <message>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigerare</translation>
     </message>
     <message>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Åtgärd för musens mittenknapp</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera markerade objekt till markörens position</translation>
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra placeringsläget för det valda objektet</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Växla mellan att dra och rulla när markeringen är tom</translation>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Placeringsläge</translation>
     </message>
     <message>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egenskapsrutan kommer inte visas automatiskt när du väljer ett objekt att placera.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa inte egenskapsrutan när du placerar objekt</translation>
     </message>
     <message>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historik</translation>
     </message>
     <message>
         <source>Max history entries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Högsta antal historikobjekt:</translation>
     </message>
     <message>
         <source>Maximum number of remembered history actions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Högsta storleken på historikkön.</translation>
     </message>
     <message>
         <source>Screen capture default size</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardstorlek för Skärmavbildning</translation>
     </message>
     <message>
         <source>Use custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd anpassad:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bredd:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Höjd:</translation>
     </message>
     <message>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassa till fönsterstorlek</translation>
     </message>
     <message>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardvärden</translation>
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna dessa flikar automatiskt i Klassiska Event-fönstret</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
@@ -145,95 +145,95 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>Allmänt</translation>
     </message>
     <message>
         <source>Layer visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagersynlighet</translation>
     </message>
     <message>
         <source>Layer movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerrörelse</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation>Utlös event</translation>
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Håll ned knappar</translation>
     </message>
     <message>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sektioninställningar</translation>
     </message>
     <message>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC-inställningar</translation>
     </message>
     <message>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ:</translation>
     </message>
     <message>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Warp</translation>
     </message>
     <message>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation>Projektil</translation>
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördröjning (sekunder):</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Riktning</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänster</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Slumpmässigt</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Höger</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation>Warps och dörrar</translation>
     </message>
     <message>
         <source>Warp type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Warptyp:</translation>
     </message>
     <message>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation>0 - Omedelbar</translation>
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation>1 - Rör</translation>
     </message>
     <message>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation>2 - Dörr</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - Portal</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa</translation>
     </message>
     <message>
         <source>World Map Item toolbox</source>
@@ -241,19 +241,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Display tabs horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa flikar horisontellt</translation>
     </message>
     <message>
         <source>Display tabs vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa flikar vertikalt</translation>
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verktygslåda</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>Tileset Item toolbox</source>
@@ -261,129 +261,129 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggning</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggningsnivå</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Bläddra</translation>
     </message>
     <message>
         <source>Log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggfil</translation>
     </message>
     <message>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra</translation>
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Obs: Vissa inställningar behöver en omstart för att tillämpas</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera automatisk skalning på skärmar med hög DPI</translation>
     </message>
     <message>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Miljö</translation>
     </message>
     <message>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardzoom:</translation>
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardzoom som kommer att användas vid öppning eller skapande av filer.</translation>
     </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
     <message>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräknar totalt antal stjärnor i tillgängliga nivåer</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>Räknar stjärnor...</translation>
     </message>
 </context>
 <context>
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera ljud (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökväg för SoX:</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bläddra...</translation>
     </message>
     <message>
         <source>Make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Gör säkerhetskopiering</translation>
     </message>
     <message>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>Resampla till</translation>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vad vill du?</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera musik i aktuell sektion</translation>
     </message>
     <message>
         <source>Convert all music files on current level</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera alla musikfiler på aktuell nivå</translation>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera angivna filer</translation>
     </message>
     <message>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra inte format</translation>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Filernas format kommer inte att ändras</translation>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange bithastighet</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer kommer att konverteras till MP3</translation>
     </message>
     <message>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer kommer att konverteras till FLAC</translation>
     </message>
     <message>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer kommer att konverteras till OGG</translation>
     </message>
     <message>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange kvalitet</translation>
     </message>
     <message>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer kommer att konverteras till WAV</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
@@ -393,90 +393,95 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Convert into new format
 (select a tab to choose target format)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera till nytt format
+(välj en flik för att välja målformat)</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX-fel</translation>
     </message>
     <message>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökvägen för SoX är inte definierad.
+Vänligen ange sökvägen för SoX först</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökvägen för SoX är ogiltig.
+Vänligen ange sökvägen för SoX först</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har inget att göra.</translation>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga filer att konvertera</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stanna</translation>
     </message>
     <message>
         <source>Operation canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Åtgärden avbröts</translation>
     </message>
     <message>
         <source>Sorry, SoX has crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledsen, men SoX har kraschat</translation>
     </message>
     <message>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX returnerade en avslutningskod som inte är noll: %1
+%2</translation>
     </message>
     <message>
         <source>Operation complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Åtgärden slutförd</translation>
     </message>
     <message>
         <source>All files successfully converted!
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla filer har konverterats!
+%1</translation>
     </message>
     <message>
         <source>No tasks defined. Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga uppgifter definierade. Inget att göra.</translation>
     </message>
     <message>
         <source>Open SoX executable path</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna sökvägen för SoX</translation>
     </message>
     <message>
         <source>Select file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj fil som ska konverteras</translation>
     </message>
 </context>
 <context>
     <name>BlocksPerSecondDialog</name>
     <message>
         <source>Blocks per second calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Block per sekund kalkylator</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blockstorlek:</translation>
     </message>
     <message>
         <source> blocks</source>
-        <translation type="unfinished"></translation>
+        <translation> block</translation>
     </message>
     <message>
         <source>per </source>
-        <translation type="unfinished"></translation>
+        <translation>per </translation>
     </message>
     <message>
         <source> second</source>
@@ -487,15 +492,15 @@ Please set SoX path first</source>
     <name>BookmarksBox</name>
     <message>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionsbokmärken</translation>
     </message>
     <message>
         <source>Remove selected bookmark from list</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort valt bokmärke från listan</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>Remember current screen position on the level map or on the world map
