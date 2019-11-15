@@ -414,7 +414,6 @@ void LvlItemProperties::LvlItemProps(int Type,
                                 block.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBlockChanged,
                                 &LvlItemProperties::onExtraSettingsBlockGlobalChanged);
-
         LvlItemPropsLock = false;
         LockItemProps = false;
 
