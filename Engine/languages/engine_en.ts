@@ -17,7 +17,7 @@
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>Engine has crashed because out of memory! Try to close other applications and restart game.</translation>
+        <translation>Engine has crashed because out of memory! Try to close other applications and restart the game.</translation>
     </message>
     <message id="CRASH_KILLED_TITLE">
         <source>Killed!</source>

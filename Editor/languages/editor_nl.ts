@@ -805,7 +805,7 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="60"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="73"/>
@@ -1252,7 +1252,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="254"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="50"/>
@@ -1350,7 +1350,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -1840,7 +1840,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="81"/>
         <source>Layer: </source>
-        <translation>Laag:</translation>
+        <translation>Laag: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="84"/>
@@ -1941,7 +1941,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="144"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="145"/>
@@ -2088,17 +2088,17 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopiëer</translation>
+        <translation>Kopiëer</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="142"/>
         <source>Cut</source>
-        <translation type="unfinished">Knip</translation>
+        <translation>Knip</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
@@ -2160,7 +2160,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="238"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="442"/>
         <source>Margin of section</source>
-        <translation type="unfinished">Sectiemarge</translation>
+        <translation>Sectiemarge</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="314"/>
@@ -2326,7 +2326,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="148"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="151"/>
@@ -2411,7 +2411,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="101"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
@@ -2522,7 +2522,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="109"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
@@ -2668,7 +2668,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="192"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
@@ -2761,7 +2761,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="80"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
@@ -2912,7 +2912,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="184"/>
@@ -2946,7 +2946,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="101"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -2999,7 +2999,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="93"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="94"/>
@@ -3199,7 +3199,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="80"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
@@ -3301,7 +3301,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished">Kan deze applicatie niet opstarten:
+        <translation>Kan deze applicatie niet opstarten:
 %1
 Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
@@ -3657,12 +3657,12 @@ Wil je je wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="220"/>
         <source>Up</source>
-        <translation>Op</translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="227"/>
         <source>Down</source>
-        <translation>Neer</translation>
+        <translation>Onder</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="308"/>
@@ -3894,7 +3894,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation type="unfinished">Er is een overtreding van SMBX64 standaard gebeurd!
+        <translation>Er is een overtreding van SMBX64 standaard gebeurd!
 %1, oorspronkelijke programma kan vastlopen!
 Het is aanbevolen om alle overtollige elementen te verwijderen.
 Wilt u doorgaan met het proces?</translation>
@@ -3998,7 +3998,7 @@ Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!<
     <message>
         <location filename="../main_window/testing/luna_tester.cpp" line="1684"/>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="unfinished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
+        <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
 </context>
 <context>
@@ -4016,7 +4016,7 @@ Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!<
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="43"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; Opmerking: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8... 64 &lt;span style=&quot; text-decoration: underline;&quot;&gt; SMBX-38A &lt;/span&gt;-formaten ondersteunen niet meer dan 21 secties. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1... 7 &lt;/span&gt;-formaten ondersteunen niet meer dan 6 secties. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Opmerking:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8... 64&lt;/span&gt; en &lt;span style=&quot; text-decoration: underline;&quot;&gt; SMBX-38A &lt;/span&gt;-formaten ondersteunen niet meer dan 21 secties. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1... 7 &lt;/span&gt;-formaten ondersteunen niet meer dan 6 secties. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="30"/>
@@ -4073,7 +4073,7 @@ Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!<
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="166"/>
         <source>Source section is empty!
 Please select another section, or clear.</source>
-        <translation type="unfinished">Bron sectie is leeg!
+        <translation>Bron sectie is leeg!
 Gelieve een andere sectie te selecteren.</translation>
     </message>
     <message>
@@ -4300,12 +4300,12 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1435"/>
         <source>Down</source>
-        <translation>Neer</translation>
+        <translation>Onder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1414"/>
         <source>Up</source>
-        <translation>Op</translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1428"/>
@@ -4401,42 +4401,42 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="83"/>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Plaatsen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="98"/>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Plaatsen &amp; Overschrijven</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="126"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Verplaatsen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="425"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Draaien</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="439"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Omdraaien</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="453"/>
         <source>Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformeren</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="494"/>
         <source>Undone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongedaan gemaakte actie: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="508"/>
         <source>Redone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Herstelde actie: %1</translation>
     </message>
 </context>
 <context>
@@ -4444,32 +4444,32 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="26"/>
         <source>Item Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorwerp Instellingen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="90"/>
         <source>Block</source>
-        <translation type="unfinished">Blok</translation>
+        <translation>Blok</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="375"/>
         <source>Slippery</source>
-        <translation type="unfinished">Slibberig</translation>
+        <translation>Slibberig</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="388"/>
         <source>Resize</source>
-        <translation type="unfinished">Grootte wijzigen</translation>
+        <translation>Grootte wijzigen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="333"/>
         <source>Block contents:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok inhoud:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="320"/>
         <source>Destroyed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Vernietigd: </translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="149"/>
@@ -4480,30 +4480,30 @@ Wilt u toch doorgaan?</translation>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="957"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1308"/>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Event niet resetten naar &apos;none&apos;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="133"/>
         <source>Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Events</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="204"/>
         <source>Hited:</source>
-        <translation type="unfinished"></translation>
+        <translation>Botsing:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="340"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="894"/>
         <source>Layer empty:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lege Laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="265"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="580"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="837"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Huidige Laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="120"/>
@@ -4528,17 +4528,17 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="594"/>
         <source>Z-Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-Positie</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="600"/>
         <source>Z-Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-Verspringing:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="607"/>
         <source>Z-Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-Laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="618"/>
@@ -4568,154 +4568,155 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="514"/>
         <source>SMBX64 defines:</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX formaat:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="550"/>
         <source>Sort priority:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorteerprioriteit:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="526"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiermee stelt u de sorteer array prioriteit in. Met deze optie kunt u achtergrondobjecten (BGO) op de voorgrond laten verschijnen. (Stel deze in op-1 om de standaardwaarde van de Global BGO config te gebruiken).
+Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, plaatst u één van de voorgrond BGO&apos;s op de kaart (bijvoorbeeld lucht-schroef). Deze optie wordt niet opgeslagen in het LVL-bestand, dus u moet deze optie telkens instellen wanneer u dit niveau opent.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="683"/>
         <source>NPC</source>
-        <translation type="unfinished">NPC</translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1038"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished">Vertraging (seconden):</translation>
+        <translation>Vertraging (seconden):</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1199"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1259"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Onder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="982"/>
         <source>Death:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dood:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="801"/>
         <source>Talk:</source>
-        <translation type="unfinished"></translation>
+        <translation>Praten:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="724"/>
         <source>Activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Activeren:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="975"/>
         <source>Attach to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan laag koppelen:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1081"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1358"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="594"/>
         <source>Direction</source>
-        <translation type="unfinished">Richting</translation>
+        <translation>Richting</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1169"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1385"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="595"/>
         <source>Left</source>
-        <translation type="unfinished">Links</translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1392"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="597"/>
         <source>Random</source>
-        <translation type="unfinished">Willekeurig</translation>
+        <translation>Willekeurig</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1229"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1399"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="598"/>
         <source>Right</source>
-        <translation type="unfinished">Rechts</translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="850"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1001"/>
         <source>Generator</source>
-        <translation type="unfinished">Generator</translation>
+        <translation>Generator</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1031"/>
         <source>Type:</source>
-        <translation type="unfinished">Type:</translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1049"/>
         <source>Warp</source>
-        <translation type="unfinished">Portaal</translation>
+        <translation>Portaal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1054"/>
         <source>Projectile</source>
-        <translation type="unfinished">Projectiel</translation>
+        <translation>Projectiel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="872"/>
         <source>Contains of current NPC-Container</source>
-        <translation type="unfinished"></translation>
+        <translation>Huidige blokinhoud</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1448"/>
         <source>Auto-increment</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisch incrementeren</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1332"/>
         <source>Talk message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Praatbericht:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1441"/>
         <source>Friendly</source>
-        <translation type="unfinished">Vriendelijk</translation>
+        <translation>Vriendelijk</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1339"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished">Onbeweeglijk</translation>
+        <translation>Onbeweeglijk</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="794"/>
         <source>Set as Boss</source>
-        <translation type="unfinished">Instellen als Baas</translation>
+        <translation>Instellen als Baas</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="308"/>
         <source>Block ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok ID: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="354"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="458"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="593"/>
         <source>Position: [%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Positie: [%1,%2]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="368"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1145"/>
         <source>%1 coins</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 munt(en)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="369"/>
@@ -4724,29 +4725,30 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1556"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1908"/>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[leeg]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="444"/>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO ID: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="523"/>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC ID: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="627"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1803"/>
         <source>[none]</source>
-        <translation type="unfinished"></translation>
+        <translation>[geen]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="840"/>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout in het bestand %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -4754,77 +4756,80 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="35"/>
         <source>Layers</source>
-        <translation type="unfinished">Lagen</translation>
+        <translation>Lagen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="63"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="73"/>
         <source>Add</source>
-        <translation type="unfinished">Toevoegen</translation>
+        <translation>Toevoegen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="83"/>
         <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Vergrendelen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="720"/>
         <source>Layers merge</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagen samenvoegen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="721"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag met de naam &apos;%1&apos; bestaat al, wilt u de lagen samenvoegen?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="799"/>
         <source>New Layer %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe Laag %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="869"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="903"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="911"/>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag verwijderen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bent u zeker dat u deze laag wilt verwijderen?
+Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
         <source>Remove Layer and keep items</source>
-        <translation type="unfinished">Laag verwijderen en voorwerpen behouden</translation>
+        <translation>Laag verwijderen en voorwerpen behouden</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bent u zeker dat u deze laag wilt verwijderen?
+Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="912"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bent u zeker dat u deze laag wilt verwijderen?
+Alle voorwerpen zullen verdwijnen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
         <source>Rename layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag hernoemen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="890"/>
         <source>Remove layer with items</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag samen met voorwerpen verwijderen</translation>
     </message>
 </context>
 <context>
@@ -4832,46 +4837,47 @@ All elements of this layer will be removed too!</source>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="116"/>
         <source>Search User Backgrounds %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan het zoeken naar zelfgemaakte Achtegronden %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="201"/>
         <source>Search User Blocks %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan het zoeken naar zelfgemaakte Blokken %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="278"/>
         <source>Search User BGOs %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan het zoeken naar zelfgemaakte BGO&apos;s %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="357"/>
         <source>Search User NPCs %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aan het zoeken naar zelfgemaakte NPC&apos;s %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="490"/>
         <source>Wrong custom images</source>
-        <translation type="unfinished"></translation>
+        <translation>Foute zelfgemaakte afbeeldingsbestanden</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="491"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit niveau heeft foute zelfgemaakte afbeeldingsbestanden.
+U zult &apos;spoken&apos; of andere dummy (poppen) icoontjes zien in de plaats van uw afbeeldingen. Dit is waarschijnlijk te wijten aan een slechte conversie, zoals van BMP naar GIF. Converteer uw afbeeldingen naar een geldig formaat en probeer dit niveau opnieuw te laden.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="237"/>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sectie instellingen...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="238"/>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation>Niveau instellingen...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="270"/>
@@ -4882,7 +4888,13 @@ Non-playable characters&apos;s:	%4
 Warp entries:		%5
 Physical env. zones:	%6
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Speler startpunten:	%1
+Blokken:			%2
+Achtergrondsvoorwerpen:		%3
+Niet-speelbare personages: %4
+Portaal ingangen:		%5
+Fysieke omgevingszones:	%6
+</translation>
     </message>
 </context>
 <context>
@@ -4890,12 +4902,12 @@ Physical env. zones:	%6
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="21"/>
         <source>Search of items on the level</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken naar voorwerpen in dit niveau</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="44"/>
         <source>Block</source>
-        <translation type="unfinished">Blok</translation>
+        <translation>Blok</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="68"/>
@@ -4911,31 +4923,31 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="450"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="476"/>
         <source>Reset Search Fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoekvelden resetten</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="78"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="346"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="813"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Data</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="85"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="360"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="472"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="109"/>
         <source>Slippery:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slibberig:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="126"/>
         <source>Contains NPC:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezit NPC:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="136"/>
@@ -4949,19 +4961,19 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="442"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="462"/>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[leeg]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="152"/>
         <source>Invisible:</source>
-        <translation type="unfinished"></translation>
+        <translation>Onzichtbar:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="159"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="353"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="666"/>
         <source>Type:</source>
-        <translation type="unfinished">Type:</translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="166"/>
@@ -4969,34 +4981,34 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="280"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="431"/>
         <source>Search Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="180"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="301"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="645"/>
         <source>Search?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="211"/>
         <source>Ev. Destroyed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. Vernietigd:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="218"/>
         <source>Ev. Hited</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. Botsing:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="225"/>
         <source>Ev. Layer Empty:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. Lege Laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="267"/>
         <source>BGO</source>
-        <translation type="unfinished">Achtergrondsvoorwerp</translation>
+        <translation>Achtergrondsvoorwerp</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="308"/>
@@ -5004,12 +5016,12 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="317"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="451"/>
         <source>Search BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrondsvoorwerp zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="367"/>
         <source>Sort priority:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorteerprioriteit:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="411"/>
@@ -5024,12 +5036,12 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.ui" line="771"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="783"/>
         <source>[None]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Geen]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="514"/>
         <source>Attached layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gekoppelde laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="652"/>
@@ -5037,84 +5049,84 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="354"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="477"/>
         <source>Search NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="715"/>
         <source>Evt activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. Activatie:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="722"/>
         <source>Evt death:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. Dood:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="729"/>
         <source>Evt talk:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. Praten:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="736"/>
         <source>Evt empty layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. Lege Laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="492"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished">Onbeweeglijk</translation>
+        <translation>Onbeweeglijk</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="465"/>
         <source>Friendly</source>
-        <translation type="unfinished">Vriendelijk</translation>
+        <translation>Vriendelijk</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="458"/>
         <source>Set as Boss</source>
-        <translation type="unfinished">Instellen als Baas</translation>
+        <translation>Instellen als Baas</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="438"/>
         <source>Contains Msg:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezit bericht:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="575"/>
         <source>Direction</source>
-        <translation type="unfinished">Richting</translation>
+        <translation>Richting</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="599"/>
         <source>Left</source>
-        <translation type="unfinished">Links</translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="609"/>
         <source>Random</source>
-        <translation type="unfinished">Willekeurig</translation>
+        <translation>Willekeurig</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="619"/>
         <source>Right</source>
-        <translation type="unfinished">Rechts</translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="555"/>
         <source>Case Sensitive?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoofdlettergevoelig?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="259"/>
         <source>Next Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Volgende Blok</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="260"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="297"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="334"/>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop met Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="266"/>
@@ -5124,35 +5136,35 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="340"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="355"/>
         <source>Search Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoektocht Voltooid</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="266"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="281"/>
         <source>Block search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok Zoektocht Voltooid!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="296"/>
         <source>Next BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>Volgende BGO</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="303"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="318"/>
         <source>BGO search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO Zoektocht Voltooid!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="333"/>
         <source>Next NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Volgende NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="340"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="355"/>
         <source>NPC search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC Zoektocht Voltooid!</translation>
     </message>
 </context>
 <context>
@@ -5161,17 +5173,17 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="24"/>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="125"/>
         <source>Section Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie Instellingen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="179"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation type="unfinished"></translation>
+        <translation>Bij het verlaten van het scherm, zal de speler aan de andere kant verschijnen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="149"/>
         <source>Off screen exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Schermgrens uitgang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="427"/>
@@ -5181,142 +5193,143 @@ Physical env. zones:	%6
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="287"/>
         <source>Edit a custom background config...</source>
-        <translation type="unfinished"></translation>
+        <translation>Een zelfgemaakte achtergrondsconfiguratie aanpassen...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="169"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Éénrichtingscamera (geen terugkering)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="159"/>
         <source>Underwater</source>
-        <translation type="unfinished">Onderwater</translation>
+        <translation>Onderwater</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="182"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Horizontale schermgrens aansluiting</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="192"/>
         <source>Wrap vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Verticale schermgrens aansluiting</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="46"/>
         <source>Current Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Huidige sectie</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="80"/>
         <source>Section:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="253"/>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stijl</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="280"/>
         <source>Background image</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrondsafbeelding</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="496"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="473"/>
         <source>Resize section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectiegrootte wijzigen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="489"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Doorvoeren</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="350"/>
         <source>Music</source>
-        <translation type="unfinished">Muziek</translation>
+        <translation>Muziek</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="401"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelfgemaakt</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="417"/>
         <source>Music file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Muziekbestand:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="163"/>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout in het bestand %1:
+%2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="223"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="224"/>
         <source>[No image]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Geen afbeelding]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="225"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="226"/>
         <source>[Silence]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Stilte]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="523"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="663"/>
         <source>Please, save file</source>
-        <translation type="unfinished">Gelieve het bestand op te slaan</translation>
+        <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="523"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve het bestand eerst op te slaan, zodat je zelfgemaakte achtergondsconfiguaratie bestanden kan wijzigen.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="531"/>
         <source>Choose a background first</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies eerst een achtergrond</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="532"/>
         <source>Please, choose the background image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve eerst een achtergrondsafbeelding te kiezen.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="559"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Naam dat in het programma zal verschijnen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="563"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrond vulkleur</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="568"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voeg hier lagen toe, bijvoorbeeld:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="663"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished">Sla het bestand op om eigen muziek te gebruiken.</translation>
+        <translation>Gelieve het bestand eerst op te slaan voordat je eigen muziek kan gebruiken.</translation>
     </message>
 </context>
 <context>
@@ -5324,34 +5337,35 @@ Physical env. zones:	%6
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="39"/>
         <source>Warps and Doors</source>
-        <translation type="unfinished">Portalen en deuren</translation>
+        <translation>Portalen en deuren</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="812"/>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="827"/>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestemming co-ordinaten van de speler op de wereldmap
+wanneer je vanuit dit portaal een niveau verlaat.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="835"/>
         <source>Browse the world map to set an exit point</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladeren op de wereldmap om een uitgangspunt te plaatsen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="854"/>
         <source>Main</source>
-        <translation type="unfinished">Hoofd</translation>
+        <translation>Hoofd</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="917"/>
         <source>Place exit point or quickly jump to existing warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Plaats het uitgangspunt of spring naar het bestaande uitgangspunt</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="967"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Laag:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1044"/>
@@ -5360,35 +5374,42 @@ when you exit from a level through this warp.</source>
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Definieert het type portaal:
+0 - Onmiddellijk, de speler wordt onmiddellijk geteleporteerd en de bewegingssnelheid wordt teruggezet naar 0.
+1 - Pijp, directionele portaal in-en-uitgang.
+2 - Deur, speler kan binnenkomen met de boven toets.
+3 - Portaal, de speler wordt geteleporteerd, maar met behoud van beweging (alleen PGE programma).</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1087"/>
         <source>Message which will be shown if the player
 does not have the required number of stars</source>
-        <translation type="unfinished"></translation>
+        <translation>Bericht dat getoond zal worden als
+de speler niet de nodige sterren bezit</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1115"/>
         <source>Required number of stars
 to enter this warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Aantal sterren nodig
+om dit portaal te gebruiken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1133"/>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>Als deze instelling is ingeschakeld, zal zelfs als dit portaal naar een ander niveau leidt,
+het aantal bestaande en verzamelde sterren in het niveau niet worden weergegeven.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1137"/>
         <source>Don&apos;t show level completion amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon geen voltooiingsstatus van het niveau</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1215"/>
         <source>Trigger event when he player enters this warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Event triggeren bij het gebruiken van dit portaal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1252"/>
@@ -5396,191 +5417,199 @@ number of existing and collected stars in the level will not be shown.</source>
 when player passes through this warp.
 They will be given back when player
 finishes the level or lose a life.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle berede voertuigen zullen weggenomen worden
+wanneer de speler dit portaal gebruikt.
+De speler zal ze terug krijgen wanneer
+die het nieveau wint of verliest.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1258"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation type="unfinished">Vervoer weigeren</translation>
+        <translation>Vervoer weigeren</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1265"/>
         <source>Player can carry items and NPCs through this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>Speler kan voorwerpen en voertuigen door portaal brengen.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1268"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation type="unfinished">Voorwerpen toestaan</translation>
+        <translation>Voorwerpen toestaan</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1278"/>
         <source>Locked</source>
-        <translation type="unfinished">Vergrendeld</translation>
+        <translation>Vergrendeld</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1509"/>
         <source>The speed at which the player will exit the warp.
 Measured in pixels per 1/65 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>De snelheid waarmee de speler zal uitgeschoten worden.
+In pixels per 1/65 van een seconde.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1526"/>
         <source>The direction in which the player will exit the warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>De richting waarin de speler het portaal zal verlaten.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="920"/>
         <source>Set Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitgang Plaatsen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="930"/>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1174"/>
         <source>Point already placed</source>
-        <translation type="unfinished"></translation>
+        <translation>Punt al geplaatst</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1064"/>
         <source>0 - Instant</source>
-        <translation type="unfinished">0 - Onmiddelijk</translation>
+        <translation>0 - Onmiddelijk</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1069"/>
         <source>1 - Pipe</source>
-        <translation type="unfinished">1 -  Pijp</translation>
+        <translation>1 - Pijp</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1074"/>
         <source>2 - Door</source>
-        <translation type="unfinished">2 - Deur</translation>
+        <translation>2 - Deur</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1079"/>
         <source>3 - Portal</source>
-        <translation type="unfinished">3 - Portaal</translation>
+        <translation>3 - Portaal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1095"/>
         <source>Need stars message</source>
-        <translation type="unfinished"></translation>
+        <translation>Onvoldoende sterren bericht</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1102"/>
         <source>Need stars</source>
-        <translation type="unfinished"></translation>
+        <translation>Nodige sterren</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1126"/>
         <source>Warp type</source>
-        <translation type="unfinished"></translation>
+        <translation>Portaal type</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1154"/>
         <source>Place entrance point or quickly jump to already placed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingangspunt plaatsen of springen naar bestaande ingang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1157"/>
         <source>Set Entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingang plaatsen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1208"/>
         <source>On-Enter event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bij-Ingaan event:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1275"/>
         <source>Entrance closed with a lock. Need a key to open it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingang op slot. Sleutel nodig om te gebruiken.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1288"/>
         <source>Bomb needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bom nodig</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1299"/>
         <source>Sp. State only</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkel Sp. status</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1325"/>
         <source>Allow entering from both sides of this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laat toe om portaal van beiden kanten te gebruiken.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1328"/>
         <source>Two-way warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Tweerichtingsportaal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1374"/>
         <source>If this field is not empty, player will travel from the current level to the specified one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wanneer dit vakje ingevuld is, zal de speler van de huigide naar het gespecifieerde niveau reizen.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1388"/>
         <source>Determines the warp through which the player will enter the target level.
 If set to zero, the player will start at the pre-defined level start point.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bepaalt het portaal waarmee de speler het niveau zal binnenkomen.
+Op nul zal de speler beginnen op het gedifinieerde beginpunt.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1437"/>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toont een lege scherm in plaats van een laadscherm.
+In het oorspronkelijk programma, toonde de laadscherm
+de huidige speelbare personage(s) en het aantal levens.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1459"/>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>Brengt meegenomen voorwerpen mee naar het portaal bestemmingsniveau.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1478"/>
         <source>Cannon shoot exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kannonschot uitgang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1502"/>
         <source>Projectile speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Projectiel snelheid:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1529"/>
         <source>Cannon exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanon uitgang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="185"/>
         <source>Pipe direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Pijp richting</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="112"/>
         <source>Choose a warp entry to edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kies een bestaand portaal om te bewerken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="137"/>
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Een nieuw portaal ingang maken.
+Elk portaal is deel van een paar en vereist een ingang.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="215"/>
         <source>Entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="264"/>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="628"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Onder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="294"/>
@@ -5598,150 +5627,157 @@ Every warp point pair requires a warp entry.</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="373"/>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="487"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="454"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Afsluiten</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="733"/>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
-        <translation type="unfinished"></translation>
+        <translation>DIt portaal eindigt het niveau
+wanneer dit vlag is aangevinkt, kan je enkel een ingangsportaal plaatsen.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="744"/>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorkomt dat portalen in het niveau dit als een uitgang kan gebruiken.
+Wordt gebruikt om een portaal te maken vanuit een ander niveau.
+Als deze vlag is aangevinkt, kan enkel een uitgang geplaatst worden.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="781"/>
         <source>Warp to World map</source>
-        <translation type="unfinished"></translation>
+        <translation>Ga naar Wereldmap Positie</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="805"/>
         <source>X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="820"/>
         <source>Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="838"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Plaatsen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="709"/>
         <source>Level door</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau deur</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="737"/>
         <source>Exit only</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkel uitgang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="749"/>
         <source>Enter only</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkel ingang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1285"/>
         <source>Entrance closed with a lock. Need to blow up the lock to open it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingang is dichtgetimmerd. Het moet opgeblazen worden om te kunnen gebruiken.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1295"/>
         <source>The player can only enter this warp under a special state.
 The special state is defined by the active configuration pack.</source>
-        <translation type="unfinished"></translation>
+        <translation>De speler kan dit portaal enkel gebruiken onder een specifieke status.
+Deze status is definieerd door het actieve configuratiepakket.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1350"/>
         <source>Warp to other level</source>
-        <translation type="unfinished"></translation>
+        <translation>Portaal naar niveau</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1381"/>
         <source>Level file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau bestand:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1424"/>
         <source>Browse for another level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladeren voor een ander niveau bestand</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1442"/>
         <source>Hide level enter screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Verberg niveau inkom scherm</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1449"/>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ingang aan portaal #</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1462"/>
         <source>Allow inter-level NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Inter-niveau NPC toelaten</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="160"/>
         <source>Remove current warp entry with all placed points.</source>
-        <translation type="unfinished"></translation>
+        <translation>Huidig portaal verwijderen.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1126"/>
         <source>World map files not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereldmap bestanden niet gevonden</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1127"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Er is geen wereldmap bestand bij dit niveau.
+Gelieve een wereldmap bestand te plaatsen of the maken in hetzelfde map as het niveaubestand.
+Bestandspad: %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1138"/>
         <source>Select world map file</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een wereldmap bestand</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1139"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Meer dan één wereldmapbestand gevonden.
+Selecteer de wereldmap die u wilt gebruiken:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1151"/>
         <source>File open error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij openen van het bestand</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1152"/>
         <source>Can&apos;t open the file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan het niveau bestand niet openen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1358"/>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1359"/>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>
 </context>
 <context>
@@ -5749,32 +5785,32 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="105"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="109"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuw</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="121"/>
         <source>Open Recent</source>
-        <translation type="unfinished"></translation>
+        <translation>Recent geopened</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="157"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Taal</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="180"/>
         <source>Level</source>
-        <translation type="unfinished">Niveau</translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="187"/>
         <source>Current section</source>
-        <translation type="unfinished"></translation>
+        <translation>Huidige sectie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="244"/>
@@ -5784,7 +5820,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="253"/>
         <source>View</source>
-        <translation type="unfinished">Beeld</translation>
+        <translation>Beeld</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="283"/>
@@ -5804,27 +5840,27 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="444"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Algemeen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="472"/>
         <source>CommonEdit Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerken</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="501"/>
         <source>EditingTools</source>
-        <translation type="unfinished"></translation>
+        <translation>Gereedschap</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="536"/>
         <source>LevelObj Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="603"/>
         <source>Level Sections Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>Van niveau-sectie veranderen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1440"/>
@@ -5845,7 +5881,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="1524"/>
         <source>Section Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie-Instellingen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1376"/>
@@ -5855,12 +5891,12 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="2299"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Doorvoeren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2314"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2097"/>
@@ -5885,7 +5921,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="675"/>
         <source>Resizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Vergroten/kleinen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1420"/>
@@ -5895,7 +5931,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="1792"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schakel animaties in voor voorwerpen&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Als de map te veel voorwerpen bezit, is het aanbevolen om deze optie &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;uit te schakelen&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2108"/>
@@ -5950,12 +5986,12 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="1556"/>
         <source>Go to left-bottom of the section</source>
-        <translation type="unfinished"></translation>
+        <translation>Ga naar de linkeronderhoek van de sectie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1559"/>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation type="unfinished"></translation>
+        <translation>Keer terug naar linkeronderhoek van de niveau-sectie, of op punt (0,0) van de wereldmap</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1931"/>
@@ -5971,120 +6007,120 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2082"/>
         <source>Go to the left-top of the section</source>
-        <translation type="unfinished"></translation>
+        <translation>ga naa de linkerbovenhoek van de sectie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2085"/>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation type="unfinished"></translation>
+        <translation>Keer terug naar de linkerbovenhoek van de niveau-sectie, of op punt (0,0) van de wereldmap</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2221"/>
         <source>Lock Scenery tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrondsvoorwerpen vergrendelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2272"/>
         <source>Rectangular fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechthoek vulling</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2275"/>
         <source>Rectangular Fill (Shift+S)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechthoek Gereedschap (Shift+S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2417"/>
         <source>Tileset Item Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau-betegelingsvenster</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2429"/>
         <source>Debugger</source>
-        <translation type="unfinished">Debugger</translation>
+        <translation>Debugger</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2550"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished">Bladwijzerposities</translation>
+        <translation>Bladwijzerposities</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="701"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>Openen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="153"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Help</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="337"/>
         <source>Set align grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Rastergrootte instellen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="386"/>
         <source>LunaLUA scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLua scripts</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="404"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="414"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="704"/>
         <source>Open (Ctrl+O)</source>
-        <translation type="unfinished"></translation>
+        <translation>Openen (Ctrl+O)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="718"/>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <extracomment>Exit from the editor</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Afsluiten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="733"/>
         <source>Level...</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="745"/>
         <source>World map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereldmap...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="757"/>
         <source>NPC config...</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC configuratie...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="772"/>
         <location filename="../main_window/windows_extras.cpp" line="20"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="775"/>
         <source>Save (Ctrl+S)</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan (Ctrl+S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="796"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="799"/>
         <source>Save as (Ctrl+Shift+S)</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan als (Ctrl+Shift+S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="816"/>
@@ -6094,189 +6130,189 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="824"/>
         <source>Save all</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles opslaan</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="827"/>
         <source>Save all (Ctrl+Alt+S)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles opslaan (Ctrl+Alt+S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="835"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Over</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="849"/>
         <source>Contents</source>
-        <translation type="unfinished">Inhoud</translation>
+        <translation>Inhoud</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="852"/>
         <source>Contents (F1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhoud (F1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="874"/>
         <location filename="../mainwindow.ui" line="877"/>
         <source>Section 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 0</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="896"/>
         <location filename="../mainwindow.ui" line="899"/>
         <source>Section 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 1</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="918"/>
         <location filename="../mainwindow.ui" line="921"/>
         <source>Section 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="940"/>
         <location filename="../mainwindow.ui" line="943"/>
         <source>Section 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 3</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="962"/>
         <location filename="../mainwindow.ui" line="965"/>
         <source>Section 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 4</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="984"/>
         <location filename="../mainwindow.ui" line="987"/>
         <source>Section 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 5</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1006"/>
         <location filename="../mainwindow.ui" line="1009"/>
         <source>Section 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1028"/>
         <location filename="../mainwindow.ui" line="1031"/>
         <source>Section 7</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 7</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1050"/>
         <location filename="../mainwindow.ui" line="1053"/>
         <source>Section 8</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 8</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1072"/>
         <location filename="../mainwindow.ui" line="1075"/>
         <source>Section 9</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 9</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1094"/>
         <location filename="../mainwindow.ui" line="1097"/>
         <source>Section 10</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 10</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1116"/>
         <location filename="../mainwindow.ui" line="1119"/>
         <source>Section 11</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 11</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1138"/>
         <location filename="../mainwindow.ui" line="1141"/>
         <source>Section 12</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 12</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1160"/>
         <location filename="../mainwindow.ui" line="1163"/>
         <source>Section 13</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 13</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1182"/>
         <location filename="../mainwindow.ui" line="1185"/>
         <source>Section 14</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 14</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1204"/>
         <location filename="../mainwindow.ui" line="1207"/>
         <source>Section 15</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 15</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1226"/>
         <location filename="../mainwindow.ui" line="1229"/>
         <source>Section 16</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 16</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1248"/>
         <location filename="../mainwindow.ui" line="1251"/>
         <source>Section 17</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 17</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1270"/>
         <location filename="../mainwindow.ui" line="1273"/>
         <source>Section 18</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 18</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1292"/>
         <location filename="../mainwindow.ui" line="1295"/>
         <source>Section 19</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 19</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1314"/>
         <location filename="../mainwindow.ui" line="1317"/>
         <source>Section 20</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie 20</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1331"/>
         <source>Wrap Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Scherm horizontaal aansluiten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1348"/>
         <source>Offscreen exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Schermgrens uitgang</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1362"/>
         <source>No turn back</source>
-        <translation type="unfinished"></translation>
+        <translation>Eenrichtingscamera</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1387"/>
         <source>Export to image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer naar afbeelding...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1390"/>
         <source>Export current section to image (F12)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer huidige sectie naar afbeelding (F12)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1401"/>
         <location filename="../mainwindow.ui" line="1425"/>
         <source>Properties...</source>
-        <translation type="unfinished">Instelllingen...</translation>
+        <translation>Instelllingen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1412"/>
         <source>Disable world map</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereldmap uitschakelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1482"/>
@@ -6465,93 +6501,93 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2123"/>
         <source>Level Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken naar voorwerpen in het niveau</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2126"/>
         <source>Search for an Item on the Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoekt naar voorwerpen in dit niveau</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2134"/>
         <source>Refresh menus</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu&apos;s herladen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2145"/>
         <source>Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Fullscreen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2153"/>
         <source>Tilesets Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegelset Bewerker</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2161"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Herstel slordige graphics (LazyFixTool)...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2169"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Converteer gif met masker tot PNG (GIFs2PNG)...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2177"/>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Converteer PNG tot gif met masker (PNG2GIFs)...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2192"/>
         <source>World settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereld instellingen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2208"/>
         <source>Lock Terrain tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Terreintegels vergrendelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2234"/>
         <source>Lock Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle paden vergrendelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2247"/>
         <source>Lock Levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle niveaus vergrendelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2260"/>
         <source>Lock Music Boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle muziekdozen vergrendelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2358"/>
         <source>Show Developer Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontwikkelaarsconsole weergeven</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2434"/>
         <source>Change configuration pack...</source>
-        <translation type="unfinished"></translation>
+        <translation>Van configuratiepakket veranderen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2458"/>
         <source>Test level (Alpha)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau testen (Alpha)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2472"/>
         <location filename="../mainwindow.ui" line="2475"/>
         <source>Testing options...</source>
-        <translation type="unfinished"></translation>
+        <translation>Testopties....</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2553"/>
         <source>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla specifieke camera posities als bladwijzer op. U kunt dan deze bladwijzers gebruiken om snel naar belangrijke posities terug te keren op grote mappen.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2712"/>
@@ -6561,77 +6597,77 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2776"/>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opent een episode map: Het heeft dezelfde naam als dat van het huidig bestand.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2799"/>
         <source>Circular fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Circulair vullen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2802"/>
         <source>Circular fill (Shift+C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Elips gereedschap (Shift+C)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2820"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster weergeven</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2828"/>
         <source>Modern GUI</source>
-        <translation type="unfinished"></translation>
+        <translation>Moderne GUI</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2839"/>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Variabelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2851"/>
         <source>Go to top-right of the section</source>
-        <translation type="unfinished"></translation>
+        <translation>Ga naar de rechterbovenhoek van de sectie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2863"/>
         <source>Go to right-bottom of the section</source>
-        <translation type="unfinished"></translation>
+        <translation>Ga naar de rechteronderhoek van de sectie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2868"/>
         <source>Script Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Script bewerken</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2876"/>
         <source>Run configure tool...</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratieprogramma uitvoeren...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2881"/>
         <source>Open local script</source>
-        <translation type="unfinished"></translation>
+        <translation>Locale script openen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2884"/>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opent het locale niveau / wereldmap script. Als het niet bestaat, wordt een bestand aangemaakt.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2892"/>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opent het gemeenschappelijk episode script. Als het niet bestaat, wordt een bestand aangemaakt.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2921"/>
         <source>Welcome dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Welkom dialoog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2929"/>
         <source>Test world map (Alpha)</source>
-        <translation type="unfinished"></translation>
+        <translation>Test wereldmap (Alpha)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2947"/>
@@ -6641,192 +6677,192 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2889"/>
         <source>Open episode script</source>
-        <translation type="unfinished"></translation>
+        <translation>Open episode script</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2897"/>
         <source>Level local (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau-lokaal (%1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2900"/>
         <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokale niveau script voor het huidige niveau. Nieuwe script bestandsnaam om het oude &quot;lunadll.lua&quot; te vervangen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2905"/>
         <source>Level global (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau-globaal (%1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2908"/>
         <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>globale niveau script voor het hele episode. Nieuwe script bestandsnaam om het oude &quot;lunadll.lua&quot; te vervangen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2913"/>
         <source>World map script (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereldmap script (%1)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2916"/>
         <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Globale wereldmap script. Nieuwe script bestandsnaam om het oude &quot;lunaoverworld.lua&quot; te vervangen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2290"/>
         <source>Overwrite mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Overschrijf modus</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2302"/>
         <source>Apply (Enter)</source>
-        <translation type="unfinished"></translation>
+        <translation>Doorvoeren (Enter)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2317"/>
         <source>Cancel (Esc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren (Esc)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2332"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Lijn Gereedschap</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2335"/>
         <source>Line (Shift+D)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lijn (Shift+D)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2350"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken op wereldmap</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2366"/>
         <source>Tileset Groups Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegelgroep Bewerker</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2378"/>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Inzoomen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2390"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitzoomen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2402"/>
         <source>Reset Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Standaard Zoom</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2445"/>
         <source>Semi-transparent paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Semi-transparante paden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2450"/>
         <source>Export section to image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer sectie naar afbeelding....</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2453"/>
         <source>Export whole level section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteer het hele niveau sectie naar afbeelding</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2490"/>
         <source>Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Opvul gereedschap</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2498"/>
         <source>Clear unused data</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongebruikte gegevens wissen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2513"/>
         <source>Show properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappen weergeven</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2516"/>
         <source>Show properties of item</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschappen van voorwerp weergeven</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2524"/>
         <source>Sprite Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprite Bewerken</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2532"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2535"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2561"/>
         <source>Clone section to...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie klonen naar ...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2572"/>
         <location filename="../mainwindow.ui" line="2621"/>
         <source>Rotate left</source>
-        <translation type="unfinished"></translation>
+        <translation>Linksom draaien</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2580"/>
         <location filename="../mainwindow.ui" line="2629"/>
         <source>Rotate right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechtsom roteren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2591"/>
         <location filename="../mainwindow.ui" line="2637"/>
         <source>Flip horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontaal spiegelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2602"/>
         <location filename="../mainwindow.ui" line="2645"/>
         <source>Flip vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Verticaal spiegelen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2613"/>
         <source>Align selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectie aligneren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2650"/>
         <source>Fix wrong masks</source>
-        <translation type="unfinished"></translation>
+        <translation>Slechte maskers herstellen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2653"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
-        <translation type="unfinished"></translation>
+        <translation>Dit werktuig herstelt visuele bugs veroorzaakt door afbeeldingen met slechte maskers</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2664"/>
         <source>Delete section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie verwijderen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2675"/>
         <source>Don&apos;t fill out of section</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet buiten de sectie vullen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2680"/>
@@ -6851,48 +6887,48 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2720"/>
         <source>Clear NPC garbadge...</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC&apos;s opruimen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2731"/>
         <location filename="../mainwindow.ui" line="2737"/>
         <source>More sections...</source>
-        <translation type="unfinished"></translation>
+        <translation>Meer secties...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2742"/>
         <source>Tip of the day...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tip van de dag...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2754"/>
         <source>Start Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Programma Opstarten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2757"/>
         <source>Launch game engine application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spel engine applicatie opstarten.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2765"/>
         <source>Open folder of current file</source>
-        <translation type="unfinished"></translation>
+        <translation>Open de map van het huidig bestand</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2768"/>
         <source>Open folder which contains currently opened file</source>
-        <translation type="unfinished"></translation>
+        <translation>Opent de map waar het huidig bestand zich in bevindt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2773"/>
         <source>Open custom data folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Open zelfgemaakte data-map</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2784"/>
         <source>Wrap Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Scherm vertikaal aansluiten</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="72"/>
@@ -7180,7 +7216,7 @@ The configuration pack was loaded, but contains errors.</source>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
         <source>[all]</source>
-        <translation type="unfinished">[Alles]</translation>
+        <translation>[Alle]</translation>
     </message>
     <message>
         <location filename="../main_window/edit/edit_clipboard.cpp" line="36"/>
@@ -7553,12 +7589,12 @@ Please save the file first.</source>
     <message>
         <location filename="../main_window/view/view.cpp" line="77"/>
         <source>Custom align grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Aangepaste aflijningsraster-grootte</translation>
     </message>
     <message>
         <location filename="../main_window/view/view.cpp" line="78"/>
         <source>Please enter grid alignment size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Voer de grootte van de rasteruitlijning in:</translation>
     </message>
 </context>
 <context>
@@ -7667,7 +7703,7 @@ Please save the file first.</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="385"/>
         <source>Alignment in the editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitlijning van het bewerkingsprogramma:</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="392"/>
@@ -7797,7 +7833,7 @@ Please save the file first.</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="734"/>
         <source>Align at</source>
-        <translation type="unfinished"></translation>
+        <translation>Aligneren naar</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="943"/>
@@ -8308,7 +8344,7 @@ Error description:
     <message>
         <location filename="../defines.h" line="249"/>
         <source>Is Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Sectie sluit horizontaal aan</translation>
     </message>
     <message>
         <location filename="../defines.h" line="250"/>
@@ -9268,7 +9304,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="27"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="102"/>
@@ -9318,7 +9354,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="219"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Onder</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetgroupeditor.ui" line="226"/>
@@ -9637,7 +9673,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/variables_box.ui" line="100"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -9945,7 +9981,7 @@ because object configurations are not loaded
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="52"/>
         <source>Remove</source>
-        <translation>Verwijder</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="67"/>
@@ -10863,7 +10899,7 @@ therefore you can use same link to get updated version</source>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished">Kan deze applicatie niet opstarten:
+        <translation>Kan deze applicatie niet opstarten:
 %1
 Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
@@ -10953,7 +10989,7 @@ Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd i
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished">Kan deze applicatie niet opstarten:
+        <translation>Kan deze applicatie niet opstarten:
 %1
 Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>

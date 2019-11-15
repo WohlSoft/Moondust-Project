@@ -3709,7 +3709,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Évènement de frappe</translation>
+        <translation>Évènement de frappe :</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -5048,7 +5048,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Ouvrir le dossier qui contient le fichier actuellement ouvert</translation>
+        <translation>Ouvre le dossier contenant le fichier actuellement ouvert</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
@@ -5056,7 +5056,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Ouvrir un dossier personnalisé : un dossier dont le nom est égal au nom de base du fichier actuellement ouvert.</translation>
+        <translation>Ouvre un dossier personnalisé : un dossier dont le nom est égal au nom de base du fichier actuellement ouvert.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>

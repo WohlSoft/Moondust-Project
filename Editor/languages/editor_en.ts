@@ -5082,7 +5082,7 @@ Physical env. zones:	%6
 </source>
         <translation>Player start points:	 %1
 Blocks:			 %2
-Background objects&apos;s:	 %3
+Background objects:	 %3
 Non-playable characters: %4
 Warp entries:		 %5
 Physical env. zones:	 %6
@@ -5149,7 +5149,7 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Evt. Hit</translation>
+        <translation>Evt. Hit:</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -5376,7 +5376,7 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation>Please, save file first, if you want to manage custom background config files.</translation>
+        <translation>Please save the file first, if you want to manage custom background config files.</translation>
     </message>
     <message>
         <source>Choose a background first</source>
@@ -5384,7 +5384,7 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Please, choose the background image first.</source>
-        <translation>Please, choose the background image first.</translation>
+        <translation>Please choose the background image first.</translation>
     </message>
     <message>
         <source>Custom background name which will be shown in the editor</source>
@@ -6659,11 +6659,11 @@ show the current playable character(s) and number of lives.</translation>
     </message>
     <message>
         <source>Go to left-bottom of the section</source>
-        <translation>Go to left-bottom of the section</translation>
+        <translation>Go to bottom-left of the section</translation>
     </message>
     <message>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</translation>
+        <translation>Return to the bottom-left of the Level Section or the x=0:y=0 coordinates on the World map</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6681,11 +6681,11 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Go to the left-top of the section</source>
-        <translation>Go to the left-top of the section</translation>
+        <translation>Go to the top-left of the section</translation>
     </message>
     <message>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</translation>
+        <translation>Return to the top-left of the Level Section or x=0:y=0 coordinate on the World map</translation>
     </message>
     <message>
         <source>Level Search</source>
@@ -6753,7 +6753,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Go to right-bottom of the section</source>
-        <translation>Go to right-bottom of the section</translation>
+        <translation>Go to bottom-right of the section</translation>
     </message>
     <message>
         <source>Script Editor</source>
@@ -6769,7 +6769,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
-        <translation>Open the level / world map local script. If it does not exist, a file will be created.</translation>
+        <translation>Opens the level / world map local script. If it does not exist, a file will be created.</translation>
     </message>
     <message>
         <source>Open episode script</source>
@@ -6777,7 +6777,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
-        <translation>Open the episode common script. If it does not exist, a file will be created.</translation>
+        <translation>Opens the episode common script. If it does not exist, a file will be created.</translation>
     </message>
     <message>
         <source>Level local (%1)</source>
@@ -6942,7 +6942,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Open folder which contains currently opened file</translation>
+        <translation>Opens the folder which contains the currently opened file</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
@@ -6950,7 +6950,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Open a custom folder: a folder with a name equal to the basename of the currently opened file.</translation>
+        <translation>Opens a custom folder: a folder with a name equal to the basename of the currently opened file.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
