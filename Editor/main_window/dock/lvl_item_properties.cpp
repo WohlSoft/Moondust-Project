@@ -411,7 +411,7 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         initExtraSettingsWidget(mw()->configs.getBlockExtraSettingsPath(),
                                 t_block.setup.extra_settings,
-                                bgo.meta.custom_params,
+                                block.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBlockChanged);
 
         LvlItemPropsLock = false;
