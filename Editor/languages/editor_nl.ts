@@ -8693,171 +8693,191 @@ Bestand: %1</translation>
         <location filename="../main_window/file/file_open.cpp" line="293"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij openen bestand</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="300"/>
         <source>Unknown values are presented</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekende data waarden ondekt</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="301"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Uw bestand bevat onbekende data dat verwijderd zal worden
+als u het bestand opslaat</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="30"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 secties op te slagen.
+Het maximaal aantal secties is %2.
+Alle grenzen en instellingen voor secties hoger dan 21 zullen verloren worden
+als u in dit formaat opslaat.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="39"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 blokken op te slagen.
+Het maximum aantal blokken is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="46"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 decoraties op te slagen.
+Het maximum aantal decoraties is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="53"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 NPC&apos;s op te slagen.
+Het maximum aantal NPC&apos;s is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="60"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 portalen op te slagen.
+Het maximum aantal portalen is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="67"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 watersecties op te slagen.
+Het maximum aantal watersecties is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="74"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 lagen op te slagen.
+Het maximum aantal lagen is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="81"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 events op te slagen.
+Het maximum aantal events is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="88"/>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn problemen ondervonden tijdsens het voorbereiden om in SMBX64 level formaat op te slaan:
+
+%1 Gelieve overtollige elementen (of installingen) van dit niveau te verwijderen, of om het in LVLX formaat op te slaan.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="102"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 tegels op te slagen.
+Het maximum aantal tegels is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="109"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 decoraties op te slagen.
+Het maximum aantal decoraties is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="116"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 paden op te slagen.
+Het maximum aantal paden is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="123"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 niveaus op te slagen.
+Het maximum aantal niveaus is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="131"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standaard laat niet toe om %1 muziekdozen op te slagen.
+Het maximum aantal muziekdozen is %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="138"/>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn problemen ondervonden tijdsens het voorbereiden om in SMBX64 wereldmap formaat op te slaan:
+
+%1 Gelieve overtollige elementen (of installingen) van dit niveau te verwijderen, of om het in WLDX formaat op te slaan.</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_rotation_tables.cpp" line="49"/>
         <source>Loading rotation rules table...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotatie-regels tabel aan het laden...</translation>
     </message>
     <message>
         <location filename="../data_configs/obj_tilesets.cpp" line="43"/>
         <source>Loading Tilesets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegelsets aan het laden....</translation>
     </message>
     <message>
         <location filename="../data_configs/obj_tilesets.cpp" line="70"/>
         <source>Loading Tileset groups...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegelset groepen aan het laden...</translation>
     </message>
     <message>
         <location filename="../data_configs/obj_tilesets.cpp" line="96"/>
         <source>Initializing tileset categories...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
         <location filename="../data_configs/data_configs.cpp" line="508"/>
         <source>Finishing loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lading aan het finaliseren...</translation>
     </message>
     <message>
         <location filename="../common_features/logger_sets.cpp" line="86"/>
         <source>Disable logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggen uitschakelen</translation>
     </message>
     <message>
         <location filename="../common_features/logger_sets.cpp" line="87"/>
         <source>System messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Systeemberichten</translation>
     </message>
     <message>
         <location filename="../common_features/logger_sets.cpp" line="88"/>
         <source>Fatal</source>
-        <translation type="unfinished"></translation>
+        <translation>Fatale</translation>
     </message>
     <message>
         <location filename="../common_features/logger_sets.cpp" line="89"/>
         <source>Critical</source>
-        <translation type="unfinished"></translation>
+        <translation>Kritieke</translation>
     </message>
     <message>
         <location filename="../common_features/logger_sets.cpp" line="90"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Waarschuwing</translation>
     </message>
     <message>
         <location filename="../common_features/logger_sets.cpp" line="91"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Debuggen</translation>
     </message>
     <message>
         <location filename="../main_window/translator.cpp" line="136"/>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <location filename="../editing/_components/history/settings/lvl_bgo_userdata.hpp" line="45"/>
