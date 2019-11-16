@@ -5456,7 +5456,7 @@ Souhaitez-vous abandonner le processus de test en cours ?</translation>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>Le fichier n&apos;est pas enregistré !
-Souhaitez-vous enregistrer le fichier ou souhaitez-vous exécuter les tests sur la copie actuellement enregistrée sur le disque ?</translation>
+Souhaitez-vous enregistrer le fichier ou souhaitez-vous exécuter un test sur une copie actuellement enregistrée sur le disque ?</translation>
     </message>
     <message>
         <source>Save file first</source>
