@@ -10164,7 +10164,7 @@ All boundaries and settings of more than 21 sections will be lost.</source>
         <translation>SMBX64 standard doesn&apos;t allow saving %1 sections.
 The maximum number of sections is %2.
 All boundaries and settings of sections higher than 21 will be lost
-f you save in this format.</translation>
+if you save in this format.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
