@@ -76,7 +76,6 @@ void dataconfigs::loadWorldScene()
         total_data += scenery_total;
         setup.read("config-dir", folderWldScenery.items, "");
         setup.read("extra-settings", folderWldScenery.extraSettings, folderWldScenery.items);
-        setup.read("extra-settings-combined-view", folderWldScenery.extraSettingsCombinedView, true);
         if(!folderWldScenery.items.isEmpty())
         {
             folderWldScenery.items = config_dir + folderWldScenery.items;

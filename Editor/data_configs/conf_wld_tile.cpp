@@ -75,7 +75,6 @@ void dataconfigs::loadWorldTiles()
         total_data += tiles_total;
         setup.read("config-dir", folderWldTerrain.items, "");
         setup.read("extra-settings", folderWldTerrain.extraSettings, folderWldTerrain.items);
-        setup.read("extra-settings-combined-view", folderWldTerrain.extraSettingsCombinedView, true);
         if(!folderWldTerrain.items.isEmpty())
         {
             folderWldTerrain.items = config_dir + folderWldTerrain.items;

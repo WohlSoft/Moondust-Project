@@ -109,7 +109,6 @@ void dataconfigs::loadLevelBlocks()
 
         setup.read("config-dir", folderLvlBlocks.items, "");
         setup.read("extra-settings", folderLvlBlocks.extraSettings, folderLvlBlocks.items);
-        setup.read("extra-settings-combined-view", folderLvlBlocks.extraSettingsCombinedView, true);
         if(!folderLvlBlocks.items.isEmpty())
         {
             folderLvlBlocks.items = config_dir + folderLvlBlocks.items;

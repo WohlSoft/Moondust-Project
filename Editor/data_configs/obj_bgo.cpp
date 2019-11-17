@@ -104,7 +104,6 @@ void dataconfigs::loadLevelBGO()
         total_data += bgo_total;
         setup.read("config-dir", folderLvlBgo.items, "");
         setup.read("extra-settings", folderLvlBgo.extraSettings, folderLvlBgo.items);
-        setup.read("extra-settings-combined-view", folderLvlBgo.extraSettingsCombinedView, true);
         if(!folderLvlBgo.items.isEmpty())
         {
             folderLvlBgo.items = config_dir + folderLvlBgo.items;

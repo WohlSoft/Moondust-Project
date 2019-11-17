@@ -139,15 +139,11 @@ private:
                                  const QString &layoutPath,
                                  const QString &layoutPathGlobal,
                                  QString &properties,
-                                 void (LvlItemProperties::*callback)(),
-                                 void (LvlItemProperties::*callbackGlobal)());
+                                 void (LvlItemProperties::*callback)());
 
     void onExtraSettingsBlockChanged();
-    void onExtraSettingsBlockGlobalChanged();
     void onExtraSettingsBGOChanged();
-    void onExtraSettingsBGOGlobalChanged();
     void onExtraSettingsNPCChanged();
-    void onExtraSettingsNPCGlobalChanged();
 
     int npcSpecSpinOffset;
     int npcSpecSpinOffset_2;
