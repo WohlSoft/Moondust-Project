@@ -23,6 +23,7 @@
 #include <QDockWidget>
 #include "mwdock_base.h"
 #include <PGE_File_Formats/lvl_filedata.h>
+#include <memory>
 
 class MainWindow;
 class QComboBox;
@@ -136,6 +137,7 @@ private:
 
     void initExtraSettingsWidget(const QString &defaultDir,
                                  const QString &layoutPath,
+                                 const QString &layoutPathGlobal,
                                  QString &properties,
                                  void (LvlItemProperties::*callback)());
 
@@ -147,7 +149,8 @@ private:
     int npcSpecSpinOffset_2;
     bool LockItemProps;
 
-    JsonSettingsWidget *m_extraSettings = nullptr;
+    std::unique_ptr<JsonSettingsWidget> m_extraSettings;
+    std::unique_ptr<JsonSettingsWidget> m_extraGlobalSettings;
 
     int curItemType;
     QString BlockEventDestroy;

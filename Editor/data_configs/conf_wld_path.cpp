@@ -76,7 +76,6 @@ void dataconfigs::loadWorldPaths()
         total_data += path_total;
         setup.read("config-dir", folderWldPaths.items, "");
         setup.read("extra-settings", folderWldPaths.extraSettings, folderWldPaths.items);
-        setup.read("extra-settings-combined-view", folderWldPaths.extraSettingsCombinedView, true);
         if(!folderWldPaths.items.isEmpty())
         {
             folderWldPaths.items = config_dir + folderWldPaths.items;

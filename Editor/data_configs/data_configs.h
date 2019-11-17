@@ -318,6 +318,8 @@ public:
     QString getPathPath();
     QString getWlvlPath();
 
+    bool isExtraSettingsLocalAtRoot();
+
     QString getBgoExtraSettingsPath();
     QString getBlockExtraSettingsPath();
     QString getNpcExtraSettingsPath();
@@ -342,8 +344,9 @@ private:
         QString graphics;
         QString items;
         QString extraSettings;
-        bool    extraSettingsCombinedView = true;
     };
+
+    bool m_extraSettingsLocalAtRoot = true;
 
     ResourceFolder folderLvlBgo;
     ResourceFolder folderLvlBG;

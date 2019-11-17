@@ -233,9 +233,22 @@ bool JsonSettingsWidget::loadSettings(const QString &rawData)
     return m_setupStack.loadSetup(rawData.toUtf8(), m_errorString);
 }
 
+bool JsonSettingsWidget::loadSettings(const QJsonDocument &rawData)
+{
+    m_errorString.clear();
+    m_setupStack.m_setupTree.clear();
+    m_setupStack.m_setupCache = rawData;
+    return true;
+}
+
 QString JsonSettingsWidget::saveSettings()
 {
     return m_setupStack.saveSetup();
+}
+
+QJsonDocument JsonSettingsWidget::getSettings()
+{
+    return m_setupStack.m_setupCache;
 }
 
 bool JsonSettingsWidget::loadLayout(const QByteArray &layout)
@@ -245,6 +258,13 @@ bool JsonSettingsWidget::loadLayout(const QByteArray &layout)
 }
 
 bool JsonSettingsWidget::loadLayout(const QByteArray &settings, const QByteArray &layout)
+{
+    if(!loadSettings(settings))
+        return false;
+    return loadLayout(layout);
+}
+
+bool JsonSettingsWidget::loadLayout(const QJsonDocument &settings, const QByteArray &layout)
 {
     if(!loadSettings(settings))
         return false;

@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QJsonObject>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 #include <common_features/json_settings_widget.h>
@@ -272,11 +273,8 @@ void LvlItemProperties::LvlItemProps(int Type,
     ui->extraSettings->setToolTip("");
     ui->extraSettings->setMinimumHeight(0);
     ui->extraSettings->setStyleSheet("");
-    if(m_extraSettings)
-    {
-        delete m_extraSettings;
-        m_extraSettings = nullptr;
-    }
+    m_extraSettings.reset();
+    m_extraGlobalSettings.reset();
 
     ui->PROPS_BlkEventDestroyedLock->setVisible(isPlacingNew);
     ui->PROPS_BlkEventHitLock->setVisible(isPlacingNew);
@@ -286,6 +284,8 @@ void LvlItemProperties::LvlItemProps(int Type,
     ui->PROPS_NpcEventDeathLock->setVisible(isPlacingNew);
     ui->PROPS_NpcEventTalkLock->setVisible(isPlacingNew);
     ui->PROPS_NpcEventLEmptyLock->setVisible(isPlacingNew);
+
+    QString configDir = mw()->configs.config_dir;
 
     /*
     long blockPtr; //ArrayID of editing item (-1 - use system)
@@ -411,9 +411,9 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         initExtraSettingsWidget(mw()->configs.getBlockExtraSettingsPath(),
                                 t_block.setup.extra_settings,
+                                configDir + "global_block.json",
                                 block.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBlockChanged);
-
         LvlItemPropsLock = false;
         LockItemProps = false;
 
@@ -498,6 +498,7 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         initExtraSettingsWidget(mw()->configs.getBgoExtraSettingsPath(),
                                 t_bgo.setup.extra_settings,
+                                configDir + "global_bgo.json",
                                 bgo.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBGOChanged);
 
@@ -738,6 +739,7 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         initExtraSettingsWidget(mw()->configs.getNpcExtraSettingsPath(),
                                 t_npc.setup.extra_settings,
+                                configDir + "global_npc.json",
                                 npc.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsNPCChanged);
 
@@ -813,50 +815,156 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
 
 void LvlItemProperties::initExtraSettingsWidget(const QString &defaultDir,
                                                 const QString &layoutPath,
+                                                const QString &layoutPathGlobal,
                                                 QString &properties,
                                                 void (LvlItemProperties::*callback)())
 {
     LevelEdit *edit = nullptr;
-    if(!layoutPath.isEmpty() && (mw()->activeChildWindow() == MainWindow::WND_Level) && (edit = mw()->activeLvlEditWin()))
+    if((!layoutPath.isEmpty() || !layoutPathGlobal.isEmpty()) &&
+        (mw()->activeChildWindow() == MainWindow::WND_Level) &&
+        (edit = mw()->activeLvlEditWin()))
     {
         CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
         uLVL.setDefaultDir(defaultDir);
 
         QString esLayoutFile = uLVL.getCustomFile(layoutPath);
-        if(esLayoutFile.isEmpty())
-            return;
+        QString gsLayoutFile = uLVL.getCustomFile(layoutPathGlobal);
+        bool hasError = false;
 
-        QFile layoutFile(esLayoutFile);
-        if(!layoutFile.open(QIODevice::ReadOnly))
-            return;
+        QJsonParseError errCode = QJsonParseError();
+        QJsonDocument tree;
+        if(!properties.isEmpty())
+            tree = QJsonDocument::fromJson(properties.toUtf8(), &errCode);
 
-        QByteArray rawLayout = layoutFile.readAll();
-        m_extraSettings = new JsonSettingsWidget(ui->extraSettings);
-        if(m_extraSettings)
+        // Global object's extra settings
+        if(!gsLayoutFile.isEmpty())
         {
-            if(!m_extraSettings->loadLayout(properties.toUtf8(), rawLayout))
+            QFile layoutFile(gsLayoutFile);
+            if(layoutFile.open(QIODevice::ReadOnly))
             {
-                LogWarning(m_extraSettings->errorString());
-                ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
-                                              .arg(esLayoutFile)
-                                              .arg(m_extraSettings->errorString()));
-                ui->extraSettings->setMinimumHeight(12);
-                ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
-            }
-            auto *widget = m_extraSettings->getWidget();
-            if(widget)
-            {
-                ui->extraSettings->layout()->addWidget(widget);
-                JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, callback);
+                QByteArray rawLayout = layoutFile.readAll();
+                m_extraGlobalSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+                Q_ASSERT(m_extraGlobalSettings.get());
+
+                QJsonDocument branch = tree;
+                if(errCode.error == QJsonParseError::NoError)
+                {
+                    QJsonObject root = branch.object();
+                    auto global_key = root.find("global");
+                    if(global_key != root.end())
+                    {
+                        auto global_val = global_key.value();
+                        if(global_val.isObject())
+                            branch.setObject(global_val.toObject());
+                        else
+                            branch = QJsonDocument();
+                    } else
+                        branch = QJsonDocument();
+                } else
+                    branch = QJsonDocument();
+
+                if(!m_extraGlobalSettings->loadLayout(branch, rawLayout))
+                {
+                    LogWarning(m_extraGlobalSettings->errorString());
+                    ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                                  .arg(esLayoutFile)
+                                                  .arg(m_extraGlobalSettings->errorString()));
+                    ui->extraSettings->setMinimumHeight(12);
+                    ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+                    hasError = true;
+                }
+                auto *widget = m_extraGlobalSettings->getWidget();
+                if(widget)
+                {
+                    ui->extraSettings->layout()->addWidget(widget);
+                    JsonSettingsWidget::connect(m_extraGlobalSettings.get(),
+                                                &JsonSettingsWidget::settingsChanged,
+                                                this,
+                                                callback);
+                }
+
+                layoutFile.close();
             }
         }
-        layoutFile.close();
+
+        // Local object's extra settings
+        if(!hasError && !esLayoutFile.isEmpty())
+        {
+            QFile layoutFile(esLayoutFile);
+            if(layoutFile.open(QIODevice::ReadOnly))
+            {
+                QByteArray rawLayout = layoutFile.readAll();
+                m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+                Q_ASSERT(m_extraSettings.get());
+
+                QJsonDocument branch = tree;
+                if(errCode.error == QJsonParseError::NoError)
+                {
+                    QJsonObject root = branch.object();
+                    auto local_key = root.find("local");
+                    if(local_key != root.end())
+                    {
+                        auto local_val = local_key.value();
+                        if(local_val.isObject())
+                            branch.setObject(local_val.toObject());
+                    } else {
+                        root.remove("global");
+                        branch.setObject(root);
+                    }
+                }
+
+                if(!m_extraSettings->loadLayout(branch, rawLayout))
+                {
+                    LogWarning(m_extraSettings->errorString());
+                    ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                                  .arg(esLayoutFile)
+                                                  .arg(m_extraSettings->errorString()));
+                    ui->extraSettings->setMinimumHeight(12);
+                    ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+                }
+                auto *widget = m_extraSettings->getWidget();
+                if(widget)
+                {
+                    ui->extraSettings->layout()->addWidget(widget);
+                    JsonSettingsWidget::connect(m_extraSettings.get(),
+                                                &JsonSettingsWidget::settingsChanged,
+                                                this,
+                                                callback);
+                }
+
+                layoutFile.close();
+            }
+        }
     }
+}
+
+static QString extraGetSettings(JsonSettingsWidget *localWidget,
+                                JsonSettingsWidget *globalWidget,
+                                bool atRoot)
+{
+    QJsonDocument local = localWidget->getSettings();
+    QJsonDocument global = globalWidget->getSettings();
+    QJsonObject l = local.object();
+    QJsonObject g = global.object();
+    QJsonObject mix;
+
+    if(atRoot) // Store all local settings in the root
+        mix = l;
+    else // Otherwise, store them into "local" branch
+        if(!l.isEmpty())
+            mix["local"] = l;
+
+    if(!g.isEmpty())
+        mix["global"] = g;
+
+    return QString::fromUtf8(QJsonDocument(mix).toJson());
 }
 
 void LvlItemProperties::onExtraSettingsBlockChanged()
 {
-    QString custom_params = m_extraSettings->saveSettings();
+    QString custom_params = extraGetSettings(m_extraSettings.get(),
+                                             m_extraGlobalSettings.get(),
+                                             mw()->configs.isExtraSettingsLocalAtRoot());
     if(blockPtr < 0)
         LvlPlacingItems::blockSet.meta.custom_params = custom_params;
     else
@@ -883,7 +991,9 @@ void LvlItemProperties::onExtraSettingsBlockChanged()
 
 void LvlItemProperties::onExtraSettingsBGOChanged()
 {
-    QString custom_params = m_extraSettings->saveSettings();
+    QString custom_params = extraGetSettings(m_extraSettings.get(),
+                                             m_extraGlobalSettings.get(),
+                                             mw()->configs.isExtraSettingsLocalAtRoot());
     if(bgoPtr < 0)
         LvlPlacingItems::bgoSet.meta.custom_params = custom_params;
     else
@@ -910,7 +1020,9 @@ void LvlItemProperties::onExtraSettingsBGOChanged()
 
 void LvlItemProperties::onExtraSettingsNPCChanged()
 {
-    QString custom_params = m_extraSettings->saveSettings();
+    QString custom_params = extraGetSettings(m_extraSettings.get(),
+                                             m_extraGlobalSettings.get(),
+                                             mw()->configs.isExtraSettingsLocalAtRoot());
     if(npcPtr < 0)
         LvlPlacingItems::npcSet.meta.custom_params = custom_params;
     else

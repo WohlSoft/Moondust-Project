@@ -170,7 +170,10 @@ void LvlSectionProps::updateExtraSettingsWidget()
             if(widget)
             {
                 ui->extraSettings->layout()->addWidget(widget);
-                JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, &LvlSectionProps::onExtraSettingsChanged);
+                JsonSettingsWidget::connect(m_extraSettings,
+                                            &JsonSettingsWidget::settingsChanged,
+                                            this,
+                                            &LvlSectionProps::onExtraSettingsChanged);
             }
         }
         layoutFile.close();

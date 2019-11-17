@@ -104,7 +104,6 @@ void dataconfigs::loadLevelNPC()
 
         setup.read("config-dir", folderLvlNPC.items, "");
         setup.read("extra-settings", folderLvlNPC.extraSettings, folderLvlNPC.items);
-        setup.read("extra-settings-combined-view", folderLvlNPC.extraSettingsCombinedView, true);
         if(!folderLvlNPC.items.isEmpty())
         {
             folderLvlNPC.items = config_dir + folderLvlNPC.items;
