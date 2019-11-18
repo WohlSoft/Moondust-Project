@@ -10729,7 +10729,7 @@ The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
         <source>2 Player settings</source>
-        <translation>2 Player settings</translation>
+        <translation>Player 2 settings</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
@@ -10819,7 +10819,7 @@ The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
         <source>1 Player settings</source>
-        <translation>1 Player settings</translation>
+        <translation>Player 1 settings</translation>
     </message>
     <message>
         <source>WIP</source>
@@ -11723,9 +11723,8 @@ Data may be corrupted!</translation>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Cannot open level world %1:
-because object configurations are not loaded
-Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
+        <translation>Cannot open level world %1 because object configurations are not loaded
+Please check that the config pack&apos;s directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
         <source>Loading World map data</source>
@@ -11981,19 +11980,19 @@ Bottom:	%4</translation>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation>Search Custom Terrain Tiles %1</translation>
+        <translation>Searching Custom Terrain Tiles %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
-        <translation>Search Custom Scenery %1</translation>
+        <translation>Searching Custom Scenery %1</translation>
     </message>
     <message>
         <source>Search User Paths %1</source>
-        <translation>Search Custom Paths %1</translation>
+        <translation>Searching Custom Paths %1</translation>
     </message>
     <message>
         <source>Search User Levels %1</source>
-        <translation>Search Custom Levels %1</translation>
+        <translation>Searching Custom Levels %1</translation>
     </message>
     <message>
         <source>Wrong custom images</source>
