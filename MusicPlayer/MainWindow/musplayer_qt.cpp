@@ -31,6 +31,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
     PGE_MusicPlayer::setMainWindow(this);
+    PGE_MusicPlayer::initHooks();
 #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_musplay.icns"));
 #endif
@@ -261,6 +262,26 @@ void MusPlayer_Qt::restartMusic()
     }
 }
 
+void MusPlayer_Qt::musicStopped()
+{
+    m_positionWatcher.stop();
+    ui->playingTimeLabel->setText("--:--:--");
+    m_seekBar->setPosition(0.0);
+    m_seekBar->setEnabled(false);
+    ui->play->setToolTip(tr("Play"));
+    ui->play->setIcon(QIcon(":/buttons/play.png"));
+
+    if(ui->recordWav->isChecked())
+    {
+        ui->recordWav->setChecked(false);
+        PGE_MusicPlayer::stopWavRecording();
+        ui->open->setEnabled(true);
+        ui->play->setEnabled(true);
+        m_blinker.stop();
+        ui->recordWav->setStyleSheet("");
+    }
+}
+
 //void MusPlayer_Qt::setPlayListMode(bool plMode)
 //{
 //    on_stop_clicked();
@@ -354,23 +375,8 @@ void MusPlayer_Qt::on_open_clicked()
 
 void MusPlayer_Qt::on_stop_clicked()
 {
-    m_positionWatcher.stop();
-    ui->playingTimeLabel->setText("--:--:--");
-    m_seekBar->setPosition(0.0);
-    m_seekBar->setEnabled(false);
+    musicStopped();
     PGE_MusicPlayer::MUS_stopMusic();
-    ui->play->setToolTip(tr("Play"));
-    ui->play->setIcon(QIcon(":/buttons/play.png"));
-
-    if(ui->recordWav->isChecked())
-    {
-        ui->recordWav->setChecked(false);
-        PGE_MusicPlayer::stopWavRecording();
-        ui->open->setEnabled(true);
-        ui->play->setEnabled(true);
-        m_blinker.stop();
-        ui->recordWav->setStyleSheet("");
-    }
 }
 
 void MusPlayer_Qt::on_play_clicked()
@@ -668,7 +674,7 @@ void MusPlayer_Qt::on_actionEnableReverb_triggered(bool checked)
 {
     PGE_MusicPlayer::reverbEnabled = checked;
     if(PGE_MusicPlayer::reverbEnabled)
-        Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, reverbEffectDone, NULL);
+        Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, reverbEffectDone, nullptr);
     else
         Mix_UnregisterEffect(MIX_CHANNEL_POST, reverbEffect);
 }
@@ -678,4 +684,44 @@ void MusPlayer_Qt::on_actionFileAssoc_triggered()
     AssocFiles af(this);
     af.setWindowModality(Qt::WindowModal);
     af.exec();
+}
+
+void MusPlayer_Qt::cleanLoopChecks()
+{
+    ui->actionLoopForever->setChecked(false);
+    ui->actionPlay1Time->setChecked(false);
+    ui->actionPlay2Times->setChecked(false);
+    ui->actionPlay3Times->setChecked(false);
+}
+
+void MusPlayer_Qt::on_actionLoopForever_triggered()
+{
+    cleanLoopChecks();
+    ui->actionLoopForever->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(-1);
+    restartMusic();
+}
+
+void MusPlayer_Qt::on_actionPlay1Time_triggered()
+{
+    cleanLoopChecks();
+    ui->actionPlay1Time->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(0);
+    restartMusic();
+}
+
+void MusPlayer_Qt::on_actionPlay2Times_triggered()
+{
+    cleanLoopChecks();
+    ui->actionPlay2Times->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(2);
+    restartMusic();
+}
+
+void MusPlayer_Qt::on_actionPlay3Times_triggered()
+{
+    cleanLoopChecks();
+    ui->actionPlay3Times->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(3);
+    restartMusic();
 }

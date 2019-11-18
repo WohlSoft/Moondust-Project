@@ -58,7 +58,8 @@ void SfxTester::dragEnterEvent(QDragEnterEvent *e)
 void SfxTester::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
-    switch (e->type()) {
+    switch (e->type())
+    {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
@@ -150,7 +151,9 @@ void SfxTester::on_sfx_fadeIn_clicked()
                                     ui->sfx_timed->value(),
                                     ui->sfx_volume->value()) == -1)
     {
-        QMessageBox::warning(this, "SFX play error!", QString("Mix_PlayChannelTimedVolume: ") + Mix_GetError());
+        QMessageBox::warning(this,
+                             "SFX play error!",
+                             QString("Mix_PlayChannelTimedVolume: %1").arg(Mix_GetError()));
     }
 #else
     int chan = Mix_FadeInChannelTimed(0,
@@ -177,4 +180,76 @@ void SfxTester::on_sfx_fadeout_clicked()
     if(!m_testSfx)
         return;
     Mix_FadeOutChannel(0, ui->sfx_fadems->value());
+}
+
+void SfxTester::on_positionAngle_sliderMoved(int value)
+{
+    m_angle = (Sint16)(value);
+    updatePositionEffect();
+}
+
+void SfxTester::on_positionDistance_sliderMoved(int value)
+{
+    m_distance = (Uint8)value;
+    updatePositionEffect();
+}
+
+void SfxTester::on_positionReset_clicked()
+{
+    m_angle = 0;
+    m_distance = 0;
+    ui->positionAngle->setValue(0);
+    ui->positionDistance->setValue(0);
+    updatePositionEffect();
+}
+
+void SfxTester::on_panningLeft_valueChanged(int value)
+{
+    m_panLeft = (Uint8)value;
+    updatePanningEffect();
+}
+
+void SfxTester::on_panningRight_valueChanged(int value)
+{
+    m_panRight = (Uint8)value;
+    updatePanningEffect();
+}
+
+void SfxTester::on_stereoFlip_clicked(bool value)
+{
+    m_channelFlip = value ? 1 : 0;
+    updateChannelsFlip();
+}
+
+void SfxTester::on_panningReset_clicked()
+{
+    m_channelFlip = 0;
+    m_panLeft = 255;
+    m_panRight = 255;
+    ui->panningLeft->blockSignals(true);
+    ui->panningLeft->setValue(255);
+    ui->panningLeft->blockSignals(false);
+    ui->panningRight->blockSignals(true);
+    ui->panningRight->setValue(255);
+    ui->panningRight->blockSignals(false);
+    ui->stereoFlip->blockSignals(true);
+    ui->stereoFlip->setChecked(false);
+    ui->stereoFlip->blockSignals(false);
+    updatePanningEffect();
+    updateChannelsFlip();
+}
+
+void SfxTester::updatePositionEffect()
+{
+    Mix_SetPosition(0, m_angle, m_distance);
+}
+
+void SfxTester::updatePanningEffect()
+{
+    Mix_SetPanning(0, m_panLeft, m_panRight);
+}
+
+void SfxTester::updateChannelsFlip()
+{
+    Mix_SetReverseStereo(0, m_channelFlip);
 }

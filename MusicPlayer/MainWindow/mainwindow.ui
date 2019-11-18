@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>461</width>
-    <height>275</height>
+    <height>289</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -515,7 +515,7 @@ border-bottom-color: rgb(0, 120, 0);
      <x>0</x>
      <y>0</y>
      <width>461</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -530,11 +530,23 @@ border-bottom-color: rgb(0, 120, 0);
     <property name="title">
      <string>Setup</string>
     </property>
+    <widget class="QMenu" name="menuMusicLooping">
+     <property name="title">
+      <string>Music looping</string>
+     </property>
+     <addaction name="actionLoopForever"/>
+     <addaction name="separator"/>
+     <addaction name="actionPlay1Time"/>
+     <addaction name="actionPlay2Times"/>
+     <addaction name="actionPlay3Times"/>
+    </widget>
     <addaction name="actionMidiSetup"/>
     <addaction name="actionSfxTesting"/>
     <addaction name="actionFileAssoc"/>
     <addaction name="separator"/>
     <addaction name="actionEnableReverb"/>
+    <addaction name="separator"/>
+    <addaction name="menuMusicLooping"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -595,6 +607,41 @@ border-bottom-color: rgb(0, 120, 0);
   <action name="actionFileAssoc">
    <property name="text">
     <string>File associations...</string>
+   </property>
+  </action>
+  <action name="actionLoopForever">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Loop forever</string>
+   </property>
+  </action>
+  <action name="actionPlay1Time">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Play 1 time</string>
+   </property>
+  </action>
+  <action name="actionPlay2Times">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Play 2 times</string>
+   </property>
+  </action>
+  <action name="actionPlay3Times">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Play 3 times</string>
    </property>
   </action>
  </widget>

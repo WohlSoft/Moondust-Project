@@ -28,22 +28,24 @@ namespace PGE_MusicPlayer
     extern Mix_Music *play_mus;
     extern Mix_MusicType type;
     extern bool reverbEnabled;
+    extern void initHooks();
     extern void setMainWindow(void *mwp);
     extern const char* musicTypeC();
     extern QString musicType();
     extern void MUS_stopMusic();
-    #ifndef MUSPLAY_USE_WINAPI
+#ifndef MUSPLAY_USE_WINAPI
     extern QString MUS_getMusTitle();
     extern QString MUS_getMusArtist();
     extern QString MUS_getMusAlbum();
     extern QString MUS_getMusCopy();
-    #else
+#else
     extern const char* MUS_getMusTitle();
     extern const char* MUS_getMusArtist();
     extern const char* MUS_getMusAlbum();
     extern const char* MUS_getMusCopy();
-    #endif
+#endif
     extern void setPlayListMode(bool playList);
+    extern void setMusicLoops(int loops);
     extern bool MUS_playMusic();
     extern void MUS_changeVolume(int volume);
     extern bool MUS_openFile(QString musFile);
