@@ -6861,7 +6861,7 @@ Motif : %1
     <name>TestingSettings</name>
     <message>
         <source>2 Player settings</source>
-        <translation>2 Paramètres du joueur</translation>
+        <translation>Paramètres du joueur 2</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
