@@ -11768,11 +11768,11 @@ Please check that the config pack&apos;s directory exists and contains the *.INI
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration package has errors</translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</translation>
     </message>
 </context>
 <context>
