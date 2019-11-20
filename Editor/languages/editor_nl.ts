@@ -10324,12 +10324,12 @@ Muziekdozen:	%5
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="153"/>
         <source>Search Terrain Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Terreintegel Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="161"/>
         <source>Scenery</source>
-        <translation type="unfinished">Decoratie</translation>
+        <translation>Decoratie</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="267"/>
@@ -10337,12 +10337,12 @@ Muziekdozen:	%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="398"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="413"/>
         <source>Search Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Decoratie Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="275"/>
         <source>Path</source>
-        <translation type="unfinished">Pad</translation>
+        <translation>Pad</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="381"/>
