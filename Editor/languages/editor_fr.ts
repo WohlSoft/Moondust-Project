@@ -470,7 +470,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
-        <translation>Convertir la musique de la section de niveau courant</translation>
+        <translation>Convertir la musique de la section du niveau courant</translation>
     </message>
     <message>
         <source>Convert all music files on current level</source>
@@ -776,7 +776,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>[Error list is empty, congratulations!]</source>
-        <translation>[La liste des erreurs est vide, félicitations !]</translation>
+        <translation>[La liste d&apos;erreurs est vide, félicitations !]</translation>
     </message>
 </context>
 <context>
@@ -1584,7 +1584,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation>Uniformiser le taille des éléments</translation>
+        <translation>Uniformiser la taille des éléments</translation>
     </message>
     <message>
         <source>Show custom elements</source>
@@ -2609,7 +2609,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
-        <translation>Copier les éléments graphiques vers le dossier des épisodes</translation>
+        <translation>Copier les éléments graphiques vers le dossier de l&apos;épisode</translation>
     </message>
     <message>
         <source>Search</source>
@@ -3647,7 +3647,7 @@ Physical env. zones:	%6
         <translation>Point de démarrage du joueur :	%1
 Blocs :								%2
 Objets d&apos;arrière-plan :				%3
-Personnages non-joueurs :		%4
+Personnages non-joueurs :			%4
 Entrées de passage : 				%5
 Zones d&apos;env. physique : 			%6
 </translation>
@@ -3971,7 +3971,7 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Layer:</source>
-        <translation>Coucher :</translation>
+        <translation>Couche :</translation>
     </message>
     <message>
         <source>No Vehicles</source>
@@ -5004,7 +5004,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Run testing of saved file</source>
-        <translation>Tester un fichier sauvegarder</translation>
+        <translation>Tester un fichier sauvegardé</translation>
     </message>
     <message>
         <source>Change log</source>
@@ -5180,7 +5180,7 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Draw Water zone</source>
-        <translation>Dessiner un zone d&apos;eau</translation>
+        <translation>Dessiner une zone d&apos;eau</translation>
     </message>
     <message>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
@@ -5544,7 +5544,7 @@ Souhaitez-vous cloner une autre section ?</translation>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
-        <translation>Ce fichier n&apos;utilise pas de d&apos;éléments graphiques GIF avec des masques transparents ou n&apos;est pas un fichier d&apos;élément graphique personnalisé.</translation>
+        <translation>Ce fichier n&apos;utilise pas d&apos;éléments graphiques GIF avec des masques transparents ou n&apos;est pas un fichier d&apos;élément graphique personnalisé.</translation>
     </message>
     <message>
         <source>Fixing of masks...</source>
