@@ -31,9 +31,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     m_mw = qobject_cast<MainWindow *>(parent);
 
     m_sceneCreated = false;
-    m_fileType = 0;
     m_mapPoint = QPoint(-1, -1);
-    m_lastExportPath = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
 
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
@@ -59,7 +57,9 @@ void WLD_SetPoint::updateScene()
 {
     if(m_scene->m_opts.animationEnabled)
     {
-        QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+        QRect viewport_rect(0, 0,
+                            ui->graphicsView->viewport()->width(),
+                            ui->graphicsView->viewport()->height());
         m_scene->update(ui->graphicsView->mapToScene(viewport_rect).boundingRect());
     }
 }
@@ -111,33 +111,12 @@ void WLD_SetPoint::goTo(long x, long y, QPoint offset)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options)
+bool WLD_SetPoint::loadFile(const QString &fileName, const WorldData &fileData, dataconfigs &configs, EditingSettings options)
 {
-    QFile file(fileName);
-    m_wldData = FileData;
-    setCurrentFile(fileName);
-    m_wldData.meta.modified = false;
-    m_wldData.meta.untitled = false;
-    if(!file.open(QFile::ReadOnly | QFile::Text))
-    {
-        QMessageBox::warning(this, tr("File read error"),
-                             tr("Cannot read file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
-        return false;
-    }
-    StartWldData = m_wldData; //Save current history for made reset
+    m_worldData = fileData;
+    setWindowModified(false);
+    m_worldData.meta.modified = false;
+    m_worldData.meta.untitled = false;
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
@@ -168,7 +147,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     LogDebug(QString(">>Starting to load file"));
 
     //Declaring of the scene
-    m_scene.reset(new WldScene(m_mw, ui->graphicsView, configs, m_wldData, this));
+    m_scene.reset(new WldScene(m_mw, ui->graphicsView, configs, m_worldData, this));
     Q_ASSERT(m_scene.get());
 
     m_scene->m_opts = options;
@@ -201,9 +180,9 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);
 
-    if(! DrawObjects(progress))
+    if(!buildScene(progress))
     {
-        m_wldData.meta.modified = false;
+        m_worldData.meta.modified = false;
         this->close();
         return false;
     }
@@ -217,8 +196,8 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
 
     setAutoUpdateTimer(31);
 
-    m_wldData.meta.modified = false;
-    m_wldData.meta.untitled = false;
+    m_worldData.meta.modified = false;
+    m_worldData.meta.untitled = false;
 
     progress.deleteLater();
 
@@ -236,66 +215,71 @@ void WLD_SetPoint::pointSelected(QPoint p)
 
 
 
-bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
+bool WLD_SetPoint::buildScene(QProgressDialog &progress)
 {
     //int DataSize = progress.maximum();
-    int TotalSteps = 5;
+    int totalSteps = 5;
 
     if(!progress.wasCanceled())
-
-        progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
+        progress.setLabelText(tr("1/%1 Loading user data").arg(totalSteps));
 
     qApp->processEvents();
     m_scene->loadUserData(progress);
 
-    if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled())
+        return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("1/%1 Applying Tiles").arg(TotalSteps));
+        progress.setLabelText(tr("1/%1 Applying Tiles").arg(totalSteps));
 
     progress.setValue(progress.value() + 1);
     qApp->processEvents();
     m_scene->setTiles(progress);
 
-    if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled())
+        return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("2/%1 Applying Sceneries...").arg(TotalSteps));
+        progress.setLabelText(tr("2/%1 Applying Sceneries...").arg(totalSteps));
 
     progress.setValue(progress.value() + 1);
     qApp->processEvents();
     m_scene->setSceneries(progress);
 
-    if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled())
+        return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("3/%1 Applying Paths...").arg(TotalSteps));
+        progress.setLabelText(tr("3/%1 Applying Paths...").arg(totalSteps));
 
     progress.setValue(progress.value() + 1);
     qApp->processEvents();
     m_scene->setPaths(progress);
 
-    if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled())
+        return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("4/%1 Applying Levels...").arg(TotalSteps));
+        progress.setLabelText(tr("4/%1 Applying Levels...").arg(totalSteps));
 
     progress.setValue(progress.value() + 1);
     progress.setValue(progress.value() + 1);
     qApp->processEvents();
     m_scene->setLevels(progress);
 
-    if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled())
+        return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("5/%1 Applying Musics...").arg(TotalSteps));
+        progress.setLabelText(tr("5/%1 Applying Musics...").arg(totalSteps));
 
     progress.setValue(progress.value() + 1);
     qApp->processEvents();
 
     m_scene->setMusicBoxes(progress);
 
-    if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled())
+        return false;
 
     if(m_scene->m_opts.animationEnabled)
         m_scene->startAnimation(); //Apply block animation
@@ -305,19 +289,12 @@ bool WLD_SetPoint::DrawObjects(QProgressDialog &progress)
         ui->graphicsView->setScene(m_scene.get());
         m_sceneCreated = true;
     }
+
     if(!progress.wasCanceled())
         progress.setValue(progress.maximum());
+
     return true;
 }
-
-
-
-void WLD_SetPoint::documentWasModified()
-{
-    m_wldData.meta.modified = true;
-}
-
-
 
 
 
@@ -326,11 +303,6 @@ void WLD_SetPoint::documentWasModified()
 
 
 //////// Common
-QString WLD_SetPoint::userFriendlyCurrentFile()
-{
-    return strippedName(m_curFile);
-}
-
 void WLD_SetPoint::closeEvent(QCloseEvent *event)
 {
     if(!m_sceneCreated)
@@ -356,14 +328,10 @@ void WLD_SetPoint::unloadData()
         return;
 
     stopAutoUpdateTimer();
-    //LvlMusPlay::musicForceReset = true;
-    //MainWinConnect::pMainWin->setMusicButton(false);
-    //MainWinConnect::pMainWin->setMusic(false);
 
     m_scene->setMessageBoxItem(false);
-
     m_scene->clear();
-    LogDebug("!<-Cleared->!");
+    LogDebug("!<-Clean->!");
 
     LogDebug("!<-Delete animators->!");
     while(! m_scene->m_animatorsTerrain.isEmpty())
@@ -407,23 +375,6 @@ QWidget *WLD_SetPoint::gViewPort()
     return ui->graphicsView->viewport();
 }
 
-void WLD_SetPoint::setCurrentFile(const QString &fileName)
-{
-    QFileInfo info(fileName);
-    m_curFile = info.canonicalFilePath();
-    m_isUntitled = false;
-    m_wldData.meta.path = info.absoluteDir().absolutePath();
-    m_wldData.meta.filename = util::getBaseFilename(info.fileName());
-    m_wldData.meta.untitled = false;
-    //document()->setModified(false);
-    setWindowModified(false);
-    //setWindowTitle(WldData.EpisodeTitle =="" ? userFriendlyCurrentFile() : WldData.EpisodeTitle );
-}
-
-QString WLD_SetPoint::strippedName(const QString &fullFileName)
-{
-    return QFileInfo(fullFileName).fileName();
-}
 
 
 void WLD_SetPoint::on_buttonBox_clicked(QAbstractButton *button)
