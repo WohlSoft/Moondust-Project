@@ -9979,7 +9979,7 @@ Forum link: wohlsoft.ru/forum</source>
     </message>
     <message>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
-        <translation>Работа редактора прервана, поскольку время alarm() истекло! [SIGALRM]</translation>
+        <translation>Работа редактора прервана, поскольку время &quot;alarm()&quot; истекло! [SIGALRM]</translation>
     </message>
     <message>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
@@ -10149,9 +10149,8 @@ File: %1
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 секций
-Максимальное число секций -  %2.
-
-Все границы и настройки секций с номером старше 21 будут утеряны.</translation>
+Максимальное число секций - %2.
+Все настройки и границы секций с номером старше 21 будут утеряны.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
@@ -10717,7 +10716,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>2 Player settings</source>
-        <translation>Настройка 2-го игрока</translation>
+        <translation>Настройки 2-го игрока</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
@@ -10807,7 +10806,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>1 Player settings</source>
-        <translation>Настройка 1-го игрока</translation>
+        <translation>Настройки 1-го игрока</translation>
     </message>
     <message>
         <source>WIP</source>
@@ -11760,11 +11759,11 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигурационный пакет содержит ошибки</translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно загрузить карту мира &quot;%1&quot;, потому что конфигурационный пакет содержит ошибки.</translation>
     </message>
 </context>
 <context>
@@ -12614,7 +12613,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>Файл нужно сохранить, чтобы можно было выбирать свою музыку.</translation>
+        <translation>Чтобы можно было выбирать пользовательскую музыку, файл нужно сохранить.</translation>
     </message>
 </context>
 <context>
