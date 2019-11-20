@@ -10365,7 +10365,7 @@ Muziekdozen:	%5
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="429"/>
         <source>Big Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Grote Achtergrondpad</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="436"/>
