@@ -1367,7 +1367,7 @@ Please save them first before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>Обнаружено, что используется устаревший конфигурационный пакет.
+        <translation type="unfinished">Обнаружено, что используется устаревший конфигурационный пакет.
 &lt;br&gt;Редактор запустится, однако, имеются возможные проблемы с игровыми элементами или с их настройками.
 &lt;br&gt;
 &lt;br&gt;Пожалуйста, загрузите и установите последнюю версию вашего конфиг-пакета:
