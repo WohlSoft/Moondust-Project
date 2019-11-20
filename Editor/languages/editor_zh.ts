@@ -8018,23 +8018,23 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>File read error</source>
-        <translation>文件读取失败</translation>
+        <translation type="vanished">文件读取失败</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>读取文件 %1 失败：
+        <translation type="vanished">读取文件 %1 失败：
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>配置加载失败</translation>
+        <translation type="vanished">配置加载失败</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>打开大地图文件 %1 失败：
+        <translation type="vanished">打开大地图文件 %1 失败：
 因为没有读取对象的设置。
 请检查是否存在 config/SMBX 目录以及是否包含 *.INI 文件和对象设置。</translation>
     </message>
@@ -8077,6 +8077,14 @@ because object configurations are not loaded
     <message>
         <source>Select the point on the world map first.</source>
         <translation>请先选择大地图的坐标。</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

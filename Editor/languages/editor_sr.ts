@@ -909,13 +909,13 @@ File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="399"/>
+        <location filename="../common_features/crashhandler.cpp" line="437"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="400"/>
+        <location filename="../common_features/crashhandler.cpp" line="438"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
@@ -2953,8 +2953,8 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4238,14 +4238,14 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1081"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1358"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="594"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="595"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1169"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1385"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="595"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="596"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4257,7 +4257,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1229"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1399"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="598"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="599"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4278,7 +4278,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1392"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="597"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="598"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4300,22 +4300,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="354"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="458"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="593"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="594"/>
         <source>Position: [%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="368"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1145"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1257"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="369"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="620"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1146"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1556"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1908"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="621"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1258"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1668"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2020"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4325,18 +4325,19 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="523"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="524"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="627"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1803"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="628"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1915"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="840"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="869"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="919"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -4856,58 +4857,58 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="223"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="224"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="226"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="227"/>
         <source>[No image]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="225"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="226"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="228"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="229"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="523"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="663"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="524"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="664"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="523"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="524"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="531"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="532"/>
         <source>Choose a background first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="532"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="533"/>
         <source>Please, choose the background image first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="559"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="560"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="563"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="564"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="568"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="569"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="663"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="664"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5294,12 +5295,12 @@ Measured in pixels per 1/65 seconds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1126"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1124"/>
         <source>World map files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1127"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1125"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -5317,22 +5318,22 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1151"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1156"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1152"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1157"/>
         <source>Can&apos;t open the file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1358"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1357"/>
         <source>Please save the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1359"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1358"/>
         <source>Please save the file before selecting levels.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6579,11 +6580,11 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/file/file_save.cpp" line="34"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6684,8 +6685,8 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6798,11 +6799,11 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7025,12 +7026,12 @@ Do you want to clone another section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections.cpp" line="292"/>
+        <location filename="../main_window/level/level_sections.cpp" line="283"/>
         <source>Section %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections.cpp" line="300"/>
+        <location filename="../main_window/level/level_sections.cpp" line="291"/>
         <source>Initialize section %1...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7082,74 +7083,74 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="191"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="213"/>
         <source>Default by item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="212"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="234"/>
         <source>Custom...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="223"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="225"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="245"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="247"/>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="236"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="238"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="258"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="260"/>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="249"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="251"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="271"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="273"/>
         <source>Items</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="262"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="264"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="284"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="286"/>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="278"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="280"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="300"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="302"/>
         <source>Section</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="290"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="292"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="312"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="314"/>
         <source>World settings</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="302"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="304"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="324"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="326"/>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="314"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="316"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="336"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="338"/>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="342"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="344"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="364"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="366"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7423,12 +7424,12 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="68"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="69"/>
         <source>Load file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="69"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="70"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
@@ -7455,12 +7456,12 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="177"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="176"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="178"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="177"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
@@ -7551,7 +7552,7 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="165"/>
+        <location filename="../common_features/crashhandler.cpp" line="203"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -7559,7 +7560,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="171"/>
+        <location filename="../common_features/crashhandler.cpp" line="209"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
@@ -7569,52 +7570,52 @@ Forum link: wohlsoft.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="183"/>
+        <location filename="../common_features/crashhandler.cpp" line="221"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="187"/>
+        <location filename="../common_features/crashhandler.cpp" line="225"/>
         <source>Quit command [SIGQUIT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="191"/>
+        <location filename="../common_features/crashhandler.cpp" line="229"/>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="195"/>
+        <location filename="../common_features/crashhandler.cpp" line="233"/>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="205"/>
+        <location filename="../common_features/crashhandler.cpp" line="243"/>
         <source>Wrong CPU Instruction [SIGILL]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="209"/>
+        <location filename="../common_features/crashhandler.cpp" line="247"/>
         <source>Floating-point exception [SIGFPE]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="213"/>
+        <location filename="../common_features/crashhandler.cpp" line="251"/>
         <source>Aborted! [SIGABRT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="217"/>
+        <location filename="../common_features/crashhandler.cpp" line="255"/>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="221"/>
+        <location filename="../common_features/crashhandler.cpp" line="259"/>
         <source>Interrupted! [SIGINT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="228"/>
+        <location filename="../common_features/crashhandler.cpp" line="266"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
@@ -8176,37 +8177,37 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_scene.cpp" line="91"/>
+        <location filename="../data_configs/conf_wld_scene.cpp" line="90"/>
         <source>Loading Sceneries...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_block.cpp" line="124"/>
+        <location filename="../data_configs/obj_block.cpp" line="123"/>
         <source>Loading Blocks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_npc.cpp" line="119"/>
+        <location filename="../data_configs/obj_npc.cpp" line="118"/>
         <source>Loading NPCs...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="92"/>
+        <location filename="../data_configs/conf_wld_level.cpp" line="91"/>
         <source>Loading Level images...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_path.cpp" line="91"/>
+        <location filename="../data_configs/conf_wld_path.cpp" line="90"/>
         <source>Loading Paths images...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_tile.cpp" line="90"/>
+        <location filename="../data_configs/conf_wld_tile.cpp" line="89"/>
         <source>Loading Tiles...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="508"/>
+        <location filename="../data_configs/data_configs.cpp" line="515"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8231,7 +8232,7 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/obj_bgo.cpp" line="119"/>
+        <location filename="../data_configs/obj_bgo.cpp" line="118"/>
         <source>Loading BGOs...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8469,7 +8470,7 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/script/script_editor.cpp" line="197"/>
+        <location filename="../main_window/script/script_editor.cpp" line="199"/>
         <source>Empty script has been added!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9456,76 +9457,63 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="166"/>
-        <source>File read error</source>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="136"/>
+        <source>Configuration package has errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="167"/>
-        <source>Cannot read file %1:
-%2.</source>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="137"/>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="187"/>
-        <source>Configurations not loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="188"/>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="229"/>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="230"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="174"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="175"/>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="229"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="174"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="279"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="223"/>
         <source>1/%1 Loading user data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="287"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="232"/>
         <source>1/%1 Applying Tiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="296"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="242"/>
         <source>2/%1 Applying Sceneries...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="305"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="252"/>
         <source>3/%1 Applying Paths...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="314"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="262"/>
         <source>4/%1 Applying Levels...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="324"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="273"/>
         <source>5/%1 Applying Musics...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="468"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="385"/>
         <source>Point is not selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="468"/>
+        <location filename="../editing/_dialogs/wld_setpoint.cpp" line="386"/>
         <source>Select the point on the world map first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9979,8 +9967,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10316,7 +10304,7 @@ Do you want to save your changes?</source>
 <context>
     <name>dataconfigs</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="278"/>
+        <location filename="../data_configs/data_configs.cpp" line="285"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;

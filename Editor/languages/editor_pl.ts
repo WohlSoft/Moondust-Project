@@ -8647,23 +8647,23 @@ Informacje mogą być uszkodzone!</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Błąd odczytywania pliku</translation>
+        <translation type="vanished">Błąd odczytywania pliku</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Nie można odczytać pliku %1:
+        <translation type="vanished">Nie można odczytać pliku %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Konfiguracja nie załadowana</translation>
+        <translation type="vanished">Konfiguracja nie załadowana</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Nie można otworzyć świata %1:
+        <translation type="vanished">Nie można otworzyć świata %1:
 bo konfiguracje nie są załadowane.
 Sprawdź czy folder config/SMBX istnieje i zwiera pliki *.ini z ustawieniami obiektu.</translation>
     </message>
@@ -8706,6 +8706,14 @@ Sprawdź czy folder config/SMBX istnieje i zwiera pliki *.ini z ustawieniami obi
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Wybierz punkt na mapie.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

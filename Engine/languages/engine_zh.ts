@@ -98,82 +98,82 @@ therefore you can use same link to get updated version.</source>
         <translation>main.ini 在第 %1 行出现错误。</translation>
     </message>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="290"/>
+        <location filename="../common_features/crash_handler.cpp" line="363"/>
         <source>Unhandled exception!</source>
         <translation>未处理异常！</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="292"/>
+        <location filename="../common_features/crash_handler.cpp" line="365"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>发生未处理异常，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="304"/>
+        <location filename="../common_features/crash_handler.cpp" line="377"/>
         <source>Out of memory!</source>
         <translation>内存不足！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="306"/>
+        <location filename="../common_features/crash_handler.cpp" line="379"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation>由于内存不足，因此引擎已停止运行！请关闭其他应用再重新开始游戏。</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="342"/>
+        <location filename="../common_features/crash_handler.cpp" line="415"/>
         <source>Time out!</source>
         <translation>超时！</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="344"/>
+        <location filename="../common_features/crash_handler.cpp" line="417"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation>由于 alarm() 超时，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="389"/>
+        <location filename="../common_features/crash_handler.cpp" line="462"/>
         <source>Physical memory address error!</source>
         <translation>物理内存地址错误！</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="391"/>
+        <location filename="../common_features/crash_handler.cpp" line="464"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation>由于物理内存地址错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="408"/>
+        <location filename="../common_features/crash_handler.cpp" line="481"/>
         <source>Wrong CPU Instruction!</source>
         <translation>CPU 命令错误！</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="410"/>
+        <location filename="../common_features/crash_handler.cpp" line="483"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation>由于 CPU 命令错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="465"/>
+        <location filename="../common_features/crash_handler.cpp" line="538"/>
         <source>Wrong arithmetical operation</source>
         <translation>算法错误</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="467"/>
+        <location filename="../common_features/crash_handler.cpp" line="540"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <translation>由于算法错误，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="479"/>
+        <location filename="../common_features/crash_handler.cpp" line="552"/>
         <source>Aborted</source>
         <translation>异常终止</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="481"/>
+        <location filename="../common_features/crash_handler.cpp" line="554"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation>由于致命错误，因此引擎已停止运行。</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="526"/>
+        <location filename="../common_features/crash_handler.cpp" line="599"/>
         <source>Segmentation fault</source>
         <translation>段落错误</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="530"/>
+        <location filename="../common_features/crash_handler.cpp" line="603"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
@@ -182,12 +182,12 @@ and retry your recent actions to get more detailed information.</source>
 进行重试以获得更多的详细信息。</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="539"/>
+        <location filename="../common_features/crash_handler.cpp" line="612"/>
         <source>Interrupt</source>
         <translation>中断</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="541"/>
+        <location filename="../common_features/crash_handler.cpp" line="614"/>
         <source>Engine has been interrupted</source>
         <translation>引擎已损坏</translation>
     </message>
@@ -247,14 +247,14 @@ and retry your recent actions to get more detailed information.</source>
         <translation>重新开始关卡</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="550"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
+        <location filename="../scenes/scene_world.cpp" line="550"/>
         <source>Invalid playable character ID</source>
         <translation>错误的人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="559"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
+        <location filename="../scenes/scene_world.cpp" line="559"/>
         <source>Invalid playable character state ID</source>
         <translation>错误的人物形态编号</translation>
     </message>

@@ -767,7 +767,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Block</source>
@@ -846,7 +846,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
 </context>
 <context>
@@ -1289,7 +1289,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1404,7 +1404,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1585,7 +1585,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -1652,7 +1652,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -1735,7 +1735,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -1774,19 +1774,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Riktning</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vänster</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Slumpmässigt</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höger</translation>
     </message>
     <message>
         <source>Friendly</source>
@@ -1850,7 +1850,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1921,7 +1921,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2040,7 +2040,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -2055,19 +2055,19 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Riktning</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vänster</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höger</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
 </context>
 <context>
@@ -2110,7 +2110,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2240,7 +2240,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2276,7 +2276,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bläddra</translation>
     </message>
     <message>
         <source>Flags</source>
@@ -2288,7 +2288,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
@@ -2432,7 +2432,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
@@ -2548,7 +2548,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vänster</translation>
     </message>
     <message>
         <source>Alt-Jump</source>
@@ -2556,11 +2556,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höger</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <source>Alt-Run</source>
@@ -2616,7 +2616,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utlös event</translation>
     </message>
     <message>
         <source>Time limit:</source>
@@ -2980,7 +2980,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sektioninställningar</translation>
     </message>
     <message>
         <source>Current section:</source>
@@ -3004,7 +3004,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vänster</translation>
     </message>
     <message>
         <source>Top</source>
@@ -3020,7 +3020,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höger</translation>
     </message>
     <message>
         <source>Set music</source>
@@ -3040,7 +3040,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Allmänt</translation>
     </message>
     <message>
         <source>Play sound:</source>
@@ -3092,7 +3092,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <source>Jump</source>
@@ -3104,7 +3104,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utlös event</translation>
     </message>
     <message>
         <source>Delay</source>
@@ -3144,7 +3144,7 @@ Do you want to continue?</source>
     <name>LvlHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Place</source>
@@ -3231,11 +3231,11 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bredd:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höjd:</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -3308,7 +3308,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generator</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -3328,27 +3328,27 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Typ:</translation>
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fördröjning (sekunder):</translation>
     </message>
     <message>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Warp</translation>
     </message>
     <message>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Projektil</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Riktning</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vänster</translation>
     </message>
     <message>
         <source>Up</source>
@@ -3356,7 +3356,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höger</translation>
     </message>
     <message>
         <source>Down</source>
@@ -3368,7 +3368,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Slumpmässigt</translation>
     </message>
     <message>
         <source>Contains of current NPC-Container</source>
@@ -3416,7 +3416,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Add</source>
@@ -3559,7 +3559,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Typ:</translation>
     </message>
     <message>
         <source>Search Block</source>
@@ -3627,19 +3627,19 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Riktning</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vänster</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Slumpmässigt</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höger</translation>
     </message>
     <message>
         <source>Search NPC</source>
@@ -3739,7 +3739,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bläddra...</translation>
     </message>
     <message>
         <source>Background image</source>
@@ -3828,7 +3828,7 @@ Physical env. zones:	%6
     <name>LvlWarpBox</name>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Warps och dörrar</translation>
     </message>
     <message>
         <source>Choose a warp entry to edit</source>
@@ -3857,11 +3857,11 @@ Every warp point pair requires a warp entry.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vänster</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höger</translation>
     </message>
     <message>
         <source>Up</source>
@@ -3949,19 +3949,19 @@ when you exit from a level through this warp.</source>
     </message>
     <message>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">0 - Omedelbar</translation>
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 - Rör</translation>
     </message>
     <message>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2 - Dörr</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3 - Portal</translation>
     </message>
     <message>
         <source>Message which will be shown if the player
@@ -4209,7 +4209,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Visa</translation>
     </message>
     <message>
         <source>Set align grid size</source>
@@ -4583,11 +4583,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Warps och dörrar</translation>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animering</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -4849,7 +4849,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Positionsbokmärken</translation>
     </message>
     <message>
         <source>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</source>
@@ -5183,7 +5183,7 @@ File not exist.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
         <source>Saving</source>
@@ -5389,7 +5389,7 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Du har inget att göra.</translation>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
@@ -5491,7 +5491,7 @@ Please save the file first.</source>
     <message>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Warps och dörrar</translation>
     </message>
     <message>
         <source>Water</source>
@@ -6030,7 +6030,7 @@ Reason: %1
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Riktning</translation>
     </message>
     <message>
         <source>Included NPC</source>
@@ -6751,7 +6751,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Typ:</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -6771,11 +6771,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Höjd:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bredd:</translation>
     </message>
     <message>
         <source>Show custom only</source>
@@ -7202,7 +7202,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
 </context>
 <context>
@@ -7245,7 +7245,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bläddra</translation>
     </message>
     <message>
         <source>Go to coordinates:</source>
@@ -7333,7 +7333,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Placeringsläge</translation>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
@@ -7376,7 +7376,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animering</translation>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>
@@ -7387,31 +7387,12 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File read error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -7445,12 +7426,20 @@ because object configurations are not loaded
         <source>Select the point on the world map first.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta bort</translation>
     </message>
     <message>
         <source>Place</source>
@@ -7610,7 +7599,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Typ:</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -7838,7 +7827,7 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
@@ -7974,7 +7963,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bläddra</translation>
     </message>
     <message>
         <source>Counting...</source>
@@ -7982,15 +7971,15 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beräknar totalt antal stjärnor i tillgängliga nivåer</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Räknar stjärnor...</translation>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>
@@ -8062,7 +8051,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bläddra</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -8071,7 +8060,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
@@ -8141,7 +8130,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bläddra</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
@@ -8150,7 +8139,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>

@@ -7382,25 +7382,6 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File read error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7438,6 +7419,14 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Select the point on the world map first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
