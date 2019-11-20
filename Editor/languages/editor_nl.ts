@@ -10350,12 +10350,12 @@ Muziekdozen:	%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="435"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="450"/>
         <source>Search Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Pad Zoeken</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="389"/>
         <source>Level</source>
-        <translation type="unfinished">Niveau</translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="419"/>
