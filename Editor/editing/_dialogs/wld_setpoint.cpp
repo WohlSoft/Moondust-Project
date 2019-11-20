@@ -111,7 +111,9 @@ void WLD_SetPoint::goTo(long x, long y, QPoint offset)
 }
 
 
-bool WLD_SetPoint::loadFile(const QString &fileName, const WorldData &fileData, dataconfigs &configs, EditingSettings options)
+bool WLD_SetPoint::loadFile(const WorldData &fileData,
+                            dataconfigs &configs,
+                            EditingSettings options)
 {
     m_worldData = fileData;
     setWindowModified(false);
@@ -126,27 +128,24 @@ bool WLD_SetPoint::loadFile(const QString &fileName, const WorldData &fileData, 
     ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
     ui->graphicsView->viewport()->setMouseTracking(true);
 
-    //Check if data configs exists
+    // Check is config pack valid
     if(configs.check())
     {
-        LogCritical(QString("Error! *.INI configs not loaded"));
-
-        QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot open level world %1:\nbecause object configurations are not loaded\n."
-                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings.")
-                             .arg(fileName));
-
-        LogCritical(QString(" << close subWindow"));
-
+        LogCritical(QString("WLD_SetPoint: Error! config pack is invalid"));
+        QMessageBox::warning(this,
+                             tr("Configuration package has errors"),
+                             tr("Cannot load the \"%1\" world map because of errors in a configuration package.")
+                             .arg(fileData.meta.filename));
+        LogCritical(QString("WLD_SetPoint: close subWindow"));
         this->close();
 
-        LogCritical(QString(" << closed, return false"));
+        LogCritical(QString("WLD_SetPoint: closed, return false"));
         return false;
     }
 
     LogDebug(QString(">>Starting to load file"));
 
-    //Declaring of the scene
+    // Initializing the scene
     m_scene.reset(new WldScene(m_mw, ui->graphicsView, configs, m_worldData, this));
     Q_ASSERT(m_scene.get());
 
@@ -155,7 +154,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, const WorldData &fileData, 
 
     ui->animation->setChecked(m_scene->m_opts.animationEnabled);
 
-    //Preparing point selection mode
+    // Preparing a point selection mode
     m_scene->SwitchEditingMode(WldScene::MODE_SetPoint);
     if(m_mapPointIsNull)
         m_scene->m_pointSelector.m_pointNotPlaced = true;
@@ -166,13 +165,13 @@ bool WLD_SetPoint::loadFile(const QString &fileName, const WorldData &fileData, 
     }
     m_scene->setItemPlacer(5);
 
-    connect(&m_scene->m_pointSelector, &WldPointSelector::pointSelected, this, &WLD_SetPoint::pointSelected);
+    QObject::connect(&m_scene->m_pointSelector,
+                     &WldPointSelector::pointSelected,
+                     this,
+                     &WLD_SetPoint::pointSelected);
 
-    int DataSize = 0;
-
-    DataSize += 3;
-    DataSize += 6;
-    QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, DataSize, this);
+    int dataSize = 3 + 6;
+    QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, dataSize, this);
     progress.setWindowTitle(tr("Loading World map data"));
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
@@ -327,13 +326,12 @@ void WLD_SetPoint::unloadData()
     if(!m_sceneCreated)
         return;
 
+    LogDebug("WLD_SetPoint: Clean scene");
     stopAutoUpdateTimer();
-
     m_scene->setMessageBoxItem(false);
     m_scene->clear();
-    LogDebug("!<-Clean->!");
 
-    LogDebug("!<-Delete animators->!");
+    LogDebug("WLD_SetPoint: Delete animators");
     while(! m_scene->m_animatorsTerrain.isEmpty())
     {
         SimpleAnimator *tmp = m_scene->m_animatorsTerrain.first();
@@ -364,10 +362,10 @@ void WLD_SetPoint::unloadData()
     m_scene->m_localConfigPaths.clear();
     m_scene->m_localConfigLevels.clear();
 
-    LogDebug("!<-Delete scene->!");
+    LogDebug("WLD_SetPoint: Delete scene");
     m_scene.reset();
     m_sceneCreated = false;
-    LogDebug("!<-Deleted->!");
+    LogDebug("WLD_SetPoint: Scene clean up completed");
 }
 
 QWidget *WLD_SetPoint::gViewPort()
@@ -383,7 +381,10 @@ void WLD_SetPoint::on_buttonBox_clicked(QAbstractButton *button)
     {
         if(m_mapPointIsNull)
         {
-            QMessageBox::information(this, tr("Point is not selected"), tr("Select the point on the world map first."), QMessageBox::Ok);
+            QMessageBox::information(this,
+                                     tr("Point is not selected"),
+                                     tr("Select the point on the world map first."),
+                                     QMessageBox::Ok);
             return;
         }
 

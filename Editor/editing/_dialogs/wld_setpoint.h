@@ -29,7 +29,9 @@ public:
 
     WorldData m_worldData;
 
-    bool loadFile(const QString &fileName, const WorldData &FileData, dataconfigs &configs, EditingSettings options);
+    bool loadFile(const WorldData &FileData,
+                  dataconfigs &configs,
+                  EditingSettings options);
 
     void resetPosition();
     void goTo(long x, long y, QPoint offset = QPoint(0, 0));
