@@ -135,7 +135,8 @@ protected:
 private:
     void processNpcContainerButton(QPushButton *btn);
 
-    void initExtraSettingsWidget(const QString &defaultDir,
+    void initExtraSettingsWidget(const QString &defaultLocalDir,
+                                 const QString &defaultGlobalDir,
                                  const QString &layoutPath,
                                  const QString &layoutPathGlobal,
                                  QString &properties,

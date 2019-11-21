@@ -410,8 +410,9 @@ void LvlItemProperties::LvlItemProps(int Type,
         }
 
         initExtraSettingsWidget(mw()->configs.getBlockExtraSettingsPath(),
+                                configDir,
                                 t_block.setup.extra_settings,
-                                configDir + "global_block.json",
+                                "global_block.json",
                                 block.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBlockChanged);
         LvlItemPropsLock = false;
@@ -497,8 +498,9 @@ void LvlItemProperties::LvlItemProps(int Type,
         ui->PROPS_BGO_smbx64_sp->setValue(bgo.smbx64_sp);
 
         initExtraSettingsWidget(mw()->configs.getBgoExtraSettingsPath(),
+                                configDir,
                                 t_bgo.setup.extra_settings,
-                                configDir + "global_bgo.json",
+                                "global_bgo.json",
                                 bgo.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBGOChanged);
 
@@ -738,8 +740,9 @@ void LvlItemProperties::LvlItemProps(int Type,
         }
 
         initExtraSettingsWidget(mw()->configs.getNpcExtraSettingsPath(),
+                                configDir,
                                 t_npc.setup.extra_settings,
-                                configDir + "global_npc.json",
+                                "global_npc.json",
                                 npc.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsNPCChanged);
 
@@ -813,7 +816,8 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
     LvlItemPropsLock = false;
 }
 
-void LvlItemProperties::initExtraSettingsWidget(const QString &defaultDir,
+void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
+                                                const QString &defaultGlobalDir,
                                                 const QString &layoutPath,
                                                 const QString &layoutPathGlobal,
                                                 QString &properties,
@@ -825,9 +829,10 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultDir,
         (edit = mw()->activeLvlEditWin()))
     {
         CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
-        uLVL.setDefaultDir(defaultDir);
 
+        uLVL.setDefaultDir(defaultLocalDir);
         QString esLayoutFile = uLVL.getCustomFile(layoutPath);
+        uLVL.setDefaultDir(defaultGlobalDir);
         QString gsLayoutFile = uLVL.getCustomFile(layoutPathGlobal);
         bool hasError = false;
 
