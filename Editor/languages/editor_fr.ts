@@ -1521,7 +1521,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Hit message text</source>
-        <translation>Cliquez sur le texte du message</translation>
+        <translation>Message lors de la frappe</translation>
     </message>
     <message>
         <source>Event created</source>
@@ -4008,7 +4008,7 @@ Zones d&apos;env. physique : 			%6
         <translation>Définit le type de passage :
 0 - Instantané, le joueur sera téléporté instantanément et la vitesse de déplacement sera réinitialisée à 0.
 1 - Tuyau, entrée et sortie directionnelles.
-2 - Porte, le joueur peut entrer avec une clé.
+2 - Porte, le joueur peut entrer en appuyant sur la flèche du haut.
 3 - Portail, le joueur sera téléporté, mais en conservant la vitesse de déplacement (Moteur PGE uniquement).</translation>
     </message>
     <message>
@@ -4084,7 +4084,7 @@ They will be given back when player
 finishes the level or lose a life.</source>
         <translation>Tous les véhicules utilisés seront supprimés
 lorsque le joueur passera par ce passage.
-Ils seront redonnés au joueur quand il
+Ils seront rendus au joueur quand il
 terminera le niveau ou perdra une vie.</translation>
     </message>
     <message>
@@ -7703,11 +7703,11 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation type="unfinished"></translation>
+        <translation>La paquet de configuration comporte des erreurs</translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger la carte de monde « %1 », car il y a des erreurs dans un paquet de configuration.</translation>
     </message>
 </context>
 <context>
