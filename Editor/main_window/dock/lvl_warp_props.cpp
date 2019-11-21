@@ -1101,20 +1101,18 @@ void LvlWarpBox::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg
 
 void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
 {
-    if(lockWarpSetSettings) return;
+    if(lockWarpSetSettings)
+        return;
 
-    // QMessageBox::information(this, "Comming soon", "Selecting point from world map comming with WorldMap Editor in next versions of this programm", QMessageBox::Ok);
-
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
+    int windowType = mw()->activeChildWindow();
+    if(windowType == MainWindow::WND_Level)
     {
-        QString woldMaps_path;
-        QString woldMaps_file;
-        woldMaps_path = mw()->activeLvlEditWin()->LvlData.meta.path;
-
+        QString woldMapsPath = mw()->activeLvlEditWin()->LvlData.meta.path;
+        QString woldMapsFile;
         QStringList filters;
         QStringList files;
-        QDir levelDir(woldMaps_path);
+        QDir levelDir(woldMapsPath);
+
         filters << "*.wld" << "*.wldx";
         levelDir.setSorting(QDir::Name);
         levelDir.setNameFilters(filters);
@@ -1127,46 +1125,56 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
                                  tr("You haven't available world map files with this level file.\n"
                                     "Please, put this level file with a world map, "
                                     "or create new world map in the same fomder with this level file.\n"
-                                    "File path: %1").arg(woldMaps_path), QMessageBox::Ok);
+                                    "File path: %1").arg(woldMapsPath), QMessageBox::Ok);
             return;
         }
 
         bool ok = true;
         if(files.count() == 1)
-            woldMaps_file = files.first();
+            woldMapsFile = files.first();
         else
-            woldMaps_file = QInputDialog::getItem(this, tr("Select world map file"),
+        {
+            woldMapsFile = QInputDialog::getItem(this,
+                                                  tr("Select world map file"),
                                                   tr("Found more than one world map files.\n"
-                                                          "Please, select necessary world map in a list:"),
+                                                     "Please, select necessary world map in a list:"),
                                                   files, 0, false, &ok);
+        }
 
-        if(woldMaps_file.isEmpty() || !ok) return;
+        if(woldMapsFile.isEmpty() || !ok)
+            return;
 
-        QString wldPath = QString("%1/%2").arg(woldMaps_path).arg(woldMaps_file);
+        QString wldPath = QString("%1/%2")
+                .arg(woldMapsPath)
+                .arg(woldMapsFile);
 
 
         QFile file(wldPath);
         if(!file.open(QIODevice::ReadOnly))
         {
-            QMessageBox::critical(this, tr("File open error"),
-                                  tr("Can't open the file!"), QMessageBox::Ok);
+            QMessageBox::critical(this,
+                                  tr("File open error"),
+                                  tr("Can't open the file!"),
+                                  QMessageBox::Ok);
             return;
         }
         WorldData FileData;
         if(!FileFormats::OpenWorldFile(wldPath, FileData))
         {
-            mw()->formatErrorMsgBox(wldPath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
+            mw()->formatErrorMsgBox(wldPath,
+                                    FileData.meta.ERROR_info,
+                                    FileData.meta.ERROR_linenum,
+                                    FileData.meta.ERROR_linedata);
             return;
         }
 
-        WLD_SetPoint *pointDialog = new WLD_SetPoint(mw());
+        std::unique_ptr<WLD_SetPoint> pointDialog;
+        pointDialog.reset(new WLD_SetPoint(mw()));
 
         pointDialog->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         pointDialog->setGeometry(util::alignToScreenCenter(pointDialog->size()));
 
-
-
-        if((bool)(pointDialog->loadFile(wldPath, FileData, mw()->configs, GlobalSettings::LvlOpts)))
+        if(pointDialog->loadFile(FileData, mw()->configs, GlobalSettings::LvlOpts))
         {
             pointDialog->resetPosition();
             if(ui->WarpToMapX->text().isEmpty() || ui->WarpToMapY->text().isEmpty())
@@ -1197,18 +1205,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
                 on_WarpToMapY_editingFinished();
             }
         }
-        else
-        {
-            //pointDialog->close();
-        }
-        delete pointDialog;
-
-        //QMessageBox::information(this, "Gotten file", QString("%1/%2").arg(woldMaps_path).arg(woldMaps_file), QMessageBox::Ok);
-
-        //ui->FileList->insertItems(levelDir.entryList().size(), levelDir.entryList(filters) );
     }
-
-
 }
 
 

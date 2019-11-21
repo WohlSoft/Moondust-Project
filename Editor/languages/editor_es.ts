@@ -11519,23 +11519,23 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Error de lectura</translation>
+        <translation type="vanished">Error de lectura</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>No se puede leer archivo %1:
+        <translation type="vanished">No se puede leer archivo %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Configuraciones no cargadas</translation>
+        <translation type="vanished">Configuraciones no cargadas</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>No se puede abrir nivel %1:
+        <translation type="vanished">No se puede abrir nivel %1:
 porque las configuraciones no están cargadas. 
 Por favor vea que config/SMBX realmente existe y contiene los archivos INI con objetos.</translation>
     </message>
@@ -11578,6 +11578,14 @@ Por favor vea que config/SMBX realmente existe y contiene los archivos INI con o
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Seleccionar el punto en el mapa primero.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

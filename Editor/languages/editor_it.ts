@@ -8946,23 +8946,23 @@ I dati potrebbero essere corrotti!</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Errore lettura file</translation>
+        <translation type="vanished">Errore lettura file</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Impossibile leggere file: %1:
+        <translation type="vanished">Impossibile leggere file: %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Configurazioni non caricate</translation>
+        <translation type="vanished">Configurazioni non caricate</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Impossibile aprire livello del mondo %1:
+        <translation type="vanished">Impossibile aprire livello del mondo %1:
 perché le configurazioni degli oggetti non sono state caricate
 .Controlla che la cartella config/SMBX esista e contenga i file *.INI con le impostazioni degli oggetti.</translation>
     </message>
@@ -9005,6 +9005,14 @@ perché le configurazioni degli oggetti non sono state caricate
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Seleziona prima il punto sulla mappa.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

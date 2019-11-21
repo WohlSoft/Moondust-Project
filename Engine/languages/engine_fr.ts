@@ -4,82 +4,82 @@
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="290"/>
+        <location filename="../common_features/crash_handler.cpp" line="363"/>
         <source>Unhandled exception!</source>
         <translation>Exception non gérée !</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="292"/>
+        <location filename="../common_features/crash_handler.cpp" line="365"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>Le moteur a planté en raison d&apos;une exception non gérée !</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="304"/>
+        <location filename="../common_features/crash_handler.cpp" line="377"/>
         <source>Out of memory!</source>
         <translation>Mémoire insuffisante !</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="306"/>
+        <location filename="../common_features/crash_handler.cpp" line="379"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation>Le moteur a planté en raison d&apos;une mémoire insuffisante ! Essayez de fermer d&apos;autres applications et redémarrez le jeu.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="342"/>
+        <location filename="../common_features/crash_handler.cpp" line="415"/>
         <source>Time out!</source>
         <translation>Temps écoulé !</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="344"/>
+        <location filename="../common_features/crash_handler.cpp" line="417"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation>Le moteur s&apos;est interrompu car le signal alarm() s&apos;est écoulé !</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="389"/>
+        <location filename="../common_features/crash_handler.cpp" line="462"/>
         <source>Physical memory address error!</source>
         <translation>Erreur d&apos;adresse mémoire physique !</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="391"/>
+        <location filename="../common_features/crash_handler.cpp" line="464"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation>Le moteur a planté en raison d&apos;une erreur d&apos;adresse de mémoire physique</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="408"/>
+        <location filename="../common_features/crash_handler.cpp" line="481"/>
         <source>Wrong CPU Instruction!</source>
         <translation>Mauvaise instruction CPU !</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="410"/>
+        <location filename="../common_features/crash_handler.cpp" line="483"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation>Le moteur a planté en raison d&apos;une mauvaise instruction CPU</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="465"/>
+        <location filename="../common_features/crash_handler.cpp" line="538"/>
         <source>Wrong arithmetical operation</source>
         <translation>Mauvaise opération arithmétique</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="467"/>
+        <location filename="../common_features/crash_handler.cpp" line="540"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <translation>Le moteur a planté en raison d&apos;une mauvaise opération arithmétique !</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="479"/>
+        <location filename="../common_features/crash_handler.cpp" line="552"/>
         <source>Aborted</source>
         <translation>Abandon</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="481"/>
+        <location filename="../common_features/crash_handler.cpp" line="554"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation>Le moteur a été interrompu car une erreur critique s&apos;est produite.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="526"/>
+        <location filename="../common_features/crash_handler.cpp" line="599"/>
         <source>Segmentation fault</source>
         <translation>Erreur de segmentation</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="530"/>
+        <location filename="../common_features/crash_handler.cpp" line="603"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
@@ -88,12 +88,12 @@ Exécutez le débogage avec une application intégrée en mode de débogage
 et recommencez vos dernières actions pour obtenir des informations plus détaillées.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="539"/>
+        <location filename="../common_features/crash_handler.cpp" line="612"/>
         <source>Interrupt</source>
         <translation>Interrompu</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="541"/>
+        <location filename="../common_features/crash_handler.cpp" line="614"/>
         <source>Engine has been interrupted</source>
         <translation>Le moteur a été interrompu</translation>
     </message>
@@ -253,14 +253,14 @@ Point d&apos;entrée N° : %2</translation>
 %1</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="550"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
+        <location filename="../scenes/scene_world.cpp" line="550"/>
         <source>Invalid playable character ID</source>
         <translation>ID de personnage jouable invalide</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="559"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
+        <location filename="../scenes/scene_world.cpp" line="559"/>
         <source>Invalid playable character state ID</source>
         <translation>ID de personnage jouable invalide</translation>
     </message>

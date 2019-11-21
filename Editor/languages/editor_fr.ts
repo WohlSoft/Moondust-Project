@@ -6861,7 +6861,7 @@ Motif : %1
     <name>TestingSettings</name>
     <message>
         <source>2 Player settings</source>
-        <translation>2 Paramètres du joueur</translation>
+        <translation>Paramètres du joueur 2</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
@@ -7641,23 +7641,23 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Erreur de lecture du fichier</translation>
+        <translation type="vanished">Erreur de lecture du fichier</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Impossible de lire le fichier %1 :
+        <translation type="vanished">Impossible de lire le fichier %1 :
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Les configurations ne sont pas chargées</translation>
+        <translation type="vanished">Les configurations ne sont pas chargées</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Impossible d&apos;ouvrir le monde de niveaux %1 :
+        <translation type="vanished">Impossible d&apos;ouvrir le monde de niveaux %1 :
 car les configurations des objets ne sont pas chargées
 Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.INI avec les paramètres des objets.</translation>
     </message>
@@ -7700,6 +7700,14 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Sélectionnez d&apos;abord un point sur la carte de monde.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

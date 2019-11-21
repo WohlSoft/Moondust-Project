@@ -10729,7 +10729,7 @@ The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
         <source>2 Player settings</source>
-        <translation>2 Player settings</translation>
+        <translation>Player 2 settings</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
@@ -10819,7 +10819,7 @@ The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
         <source>1 Player settings</source>
-        <translation>1 Player settings</translation>
+        <translation>Player 1 settings</translation>
     </message>
     <message>
         <source>WIP</source>
@@ -11707,25 +11707,24 @@ Data may be corrupted!</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>File read error</translation>
+        <translation type="vanished">File read error</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Cannot read file %1:
+        <translation type="vanished">Cannot read file %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Configurations not loaded</translation>
+        <translation type="vanished">Configurations not loaded</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Cannot open level world %1:
-because object configurations are not loaded
-Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
+        <translation type="vanished">Cannot open level world %1 because object configurations are not loaded
+Please check that the config pack&apos;s directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
         <source>Loading World map data</source>
@@ -11766,6 +11765,14 @@ Please check that the config/SMBX directory exists and contains the *.INI files 
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Select a point on the world map first.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11981,19 +11988,19 @@ Bottom:	%4</translation>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation>Search Custom Terrain Tiles %1</translation>
+        <translation>Searching Custom Terrain Tiles %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
-        <translation>Search Custom Scenery %1</translation>
+        <translation>Searching Custom Scenery %1</translation>
     </message>
     <message>
         <source>Search User Paths %1</source>
-        <translation>Search Custom Paths %1</translation>
+        <translation>Searching Custom Paths %1</translation>
     </message>
     <message>
         <source>Search User Levels %1</source>
-        <translation>Search Custom Levels %1</translation>
+        <translation>Searching Custom Levels %1</translation>
     </message>
     <message>
         <source>Wrong custom images</source>

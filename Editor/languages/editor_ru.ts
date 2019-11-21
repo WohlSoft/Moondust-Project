@@ -11698,23 +11698,23 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Ошибка чтения файла</translation>
+        <translation type="vanished">Ошибка чтения файла</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Невозможно прочитать файл %1:
+        <translation type="vanished">Невозможно прочитать файл %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Конфигурации не загружены</translation>
+        <translation type="vanished">Конфигурации не загружены</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Невозможно открыть файл %1:
+        <translation type="vanished">Невозможно открыть файл %1:
 Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
@@ -11757,6 +11757,14 @@ because object configurations are not loaded
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Сначала укажите точку на карте мира.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

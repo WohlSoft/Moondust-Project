@@ -22,22 +22,16 @@ class WLD_SetPoint : public QDialog
     Q_OBJECT
 
 public:
-    explicit WLD_SetPoint(QWidget *parent = 0);
+    explicit WLD_SetPoint(QWidget *parent = nullptr);
     ~WLD_SetPoint();
     QPoint  m_mapPoint;
     bool    m_mapPointIsNull = true;
 
-    WorldData m_wldData;
+    WorldData m_worldData;
 
-    long m_currentMusic = 0;
-
-    bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options);
-
-    QString userFriendlyCurrentFile();
-    QString currentFile()
-    {
-        return m_curFile;
-    }
+    bool loadFile(const WorldData &FileData,
+                  dataconfigs &configs,
+                  EditingSettings options);
 
     void resetPosition();
     void goTo(long x, long y, QPoint offset = QPoint(0, 0));
@@ -47,9 +41,6 @@ public:
     std::unique_ptr<WldScene> m_scene;
 
     bool m_sceneCreated = false;
-    bool m_isUntitled = true;
-
-    QString m_curFile;
 
     std::unique_ptr<QTimer> m_updateTimer;
     void setAutoUpdateTimer(int ms);
@@ -73,18 +64,8 @@ private slots:
     void on_GotoPoint_clicked();
     void on_animation_clicked(bool checked);
 
-
 private:
-    void documentWasModified();
-
-    WorldData StartWldData;
-    bool DrawObjects(QProgressDialog &progress);
-
-    void setCurrentFile(const QString &fileName);
-    void setDataBoxes();
-    QString strippedName(const QString &fullFileName);
-    QString m_lastExportPath;
-    unsigned int m_fileType = 0;
+    bool buildScene(QProgressDialog &progress);
 
     std::unique_ptr<Ui::WLD_SetPoint> ui;
 };

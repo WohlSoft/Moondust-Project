@@ -10891,23 +10891,23 @@ Daten könnten fehlerhaft sein!</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Lesefehler</translation>
+        <translation type="vanished">Lesefehler</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Kann Datei %1 nicht lesen:
+        <translation type="vanished">Kann Datei %1 nicht lesen:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Konnte Konfiguartion nicht laden</translation>
+        <translation type="vanished">Konnte Konfiguartion nicht laden</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Kann nicht Weltdatei öffnen %1:
+        <translation type="vanished">Kann nicht Weltdatei öffnen %1:
 Weil Objektkonfiguation nicht geladen ist.
 Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und deine Objektkonfiguationen exsistieren.
 </translation>
@@ -10951,6 +10951,14 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Wähle einen Punkt auf der Weltkarte aus!.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
