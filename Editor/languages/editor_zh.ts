@@ -8080,11 +8080,11 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation type="unfinished"></translation>
+        <translation>配置包有错误</translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载大地图 &quot;%1&quot;，因为配置包有错误。</translation>
     </message>
 </context>
 <context>
@@ -8603,7 +8603,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>请先保存文件后再选择音乐。</translation>
+        <translation>请先保存文件，再选择音乐。</translation>
     </message>
 </context>
 <context>
