@@ -947,11 +947,21 @@ static QString extraGetSettings(JsonSettingsWidget *localWidget,
                                 JsonSettingsWidget *globalWidget,
                                 bool atRoot)
 {
-    QJsonDocument local = localWidget->getSettings();
-    QJsonDocument global = globalWidget->getSettings();
-    QJsonObject l = local.object();
-    QJsonObject g = global.object();
+    QJsonObject l;
+    QJsonObject g;
     QJsonObject mix;
+
+    if(localWidget)
+    {
+        QJsonDocument local = localWidget->getSettings();
+        l = local.object();
+    }
+
+    if(globalWidget)
+    {
+        QJsonDocument global = globalWidget->getSettings();
+        g = global.object();
+    }
 
     if(atRoot) // Store all local settings in the root
         mix = l;
