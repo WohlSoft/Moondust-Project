@@ -3617,7 +3617,7 @@ Wilt u uw wijzigingen opslaan?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="164"/>
         <source>Drop</source>
-        <translation>Power-up droppen</translation>
+        <translation>Droppen</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="171"/>
@@ -4310,7 +4310,7 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1428"/>
         <source>Drop</source>
-        <translation>Power-up droppen</translation>
+        <translation>Droppen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1442"/>
