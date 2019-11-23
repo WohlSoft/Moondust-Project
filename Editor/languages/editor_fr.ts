@@ -6839,7 +6839,7 @@ Motif : %1
     </message>
     <message>
         <source>Empty script has been added!</source>
-        <translation>Un fichier vide a été créé !</translation>
+        <translation>Un script vide a été créé !</translation>
     </message>
 </context>
 <context>
