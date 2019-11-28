@@ -65,6 +65,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 {
     setVisible(false);
     ui->setupUi(this);
+    m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
     setAttribute(Qt::WA_LayoutUsesWidgetRect);
     setAttribute(Qt::WA_ShowWithoutActivating);
     setFocusPolicy(Qt::StrongFocus);
@@ -109,6 +110,14 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 
 LvlItemProperties::~LvlItemProperties()
 {
+    if(m_extraSettings.get())
+        ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+    if(m_extraGlobalSettings.get())
+        ui->extraSettings->layout()->removeWidget(m_extraGlobalSettings.get()->getWidget());
+    ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
+    m_extraSettings.reset();
+    m_extraGlobalSettings.reset();
+    m_extraSettingsSpacer.reset();
     delete ui;
 }
 
@@ -273,6 +282,11 @@ void LvlItemProperties::LvlItemProps(int Type,
     ui->extraSettings->setToolTip("");
     ui->extraSettings->setMinimumHeight(0);
     ui->extraSettings->setStyleSheet("");
+    if(m_extraSettings.get())
+        ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+    if(m_extraGlobalSettings.get())
+        ui->extraSettings->layout()->removeWidget(m_extraGlobalSettings.get()->getWidget());
+    ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
     m_extraSettings.reset();
     m_extraGlobalSettings.reset();
 
@@ -835,6 +849,7 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
         uLVL.setDefaultDir(defaultGlobalDir);
         QString gsLayoutFile = uLVL.getCustomFile(layoutPathGlobal);
         bool hasError = false;
+        bool spacerNeeded = false;
 
         QJsonParseError errCode = QJsonParseError();
         QJsonDocument tree;
@@ -874,7 +889,6 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                     ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
                                                   .arg(esLayoutFile)
                                                   .arg(m_extraGlobalSettings->errorString()));
-                    ui->extraSettings->setMinimumHeight(12);
                     ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
                     hasError = true;
                 }
@@ -886,6 +900,7 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                                                 &JsonSettingsWidget::settingsChanged,
                                                 this,
                                                 callback);
+                    spacerNeeded = spacerNeeded || m_extraGlobalSettings->spacerNeeded();
                 }
 
                 layoutFile.close();
@@ -924,7 +939,6 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                     ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
                                                   .arg(esLayoutFile)
                                                   .arg(m_extraSettings->errorString()));
-                    ui->extraSettings->setMinimumHeight(12);
                     ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
                 }
                 auto *widget = m_extraSettings->getWidget();
@@ -935,11 +949,16 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                                                 &JsonSettingsWidget::settingsChanged,
                                                 this,
                                                 callback);
+                    spacerNeeded = spacerNeeded || m_extraSettings->spacerNeeded();
                 }
 
                 layoutFile.close();
             }
         }
+
+        ui->extraSettings->setMinimumHeight(spacerNeeded ? 0 : 150);
+        if(spacerNeeded)
+            ui->extraSettings->layout()->addItem(m_extraSettingsSpacer.get());
     }
 }
 

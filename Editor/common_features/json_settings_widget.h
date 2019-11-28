@@ -54,6 +54,8 @@ public:
     bool loadLayout(const QJsonDocument &settings, const QByteArray &layout);
     bool loadLayoutFromFile(const QString &settings_path, const QString &layout_path);
 
+    bool spacerNeeded();
+
     bool isValid();
 
     QWidget *getWidget();
@@ -67,6 +69,7 @@ private:
     QString     m_errorString;
     SetupStack  m_setupStack;
     QtAbstractPropertyBrowser *m_browser = nullptr;
+    bool m_spacerNeeded = false;
 
     QVariant retrieve_property(const SetupStack &setupTree, QString prop, const QVariant &defaultValue);
 

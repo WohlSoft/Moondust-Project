@@ -296,6 +296,11 @@ bool JsonSettingsWidget::loadLayoutFromFile(const QString &settings_path, const 
     return loadLayout(a);
 }
 
+bool JsonSettingsWidget::spacerNeeded()
+{
+    return m_spacerNeeded;
+}
+
 bool JsonSettingsWidget::isValid()
 {
     return (m_browser != nullptr) && m_errorString.isEmpty();
@@ -680,16 +685,26 @@ QtAbstractPropertyBrowser *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidg
     style = layoutData["style"].toString();
     title = layoutData["title"].toString();
     if(style == "groupbox")
+    {
         gui = new QtGroupBoxPropertyBrowser(qobject_cast<QWidget*>(parent()));
+        m_spacerNeeded = true;
+    }
     else if(style == "frame")
+    {
         gui = new QtGroupBoxPropertyBrowser(qobject_cast<QWidget*>(parent()), true);
+        m_spacerNeeded = true;
+    }
     else if(style == "button")
+    {
         gui = new QtButtonPropertyBrowser(qobject_cast<QWidget*>(parent()));
+        m_spacerNeeded = true;
+    }
     else // "tree" is default
     {
         QtTreePropertyBrowser *gui_t = new QtTreePropertyBrowser(qobject_cast<QWidget*>(parent()));
         gui_t->setPropertiesWithoutValueMarked(true);
         gui = gui_t;
+        m_spacerNeeded = false;
     }
 
     QtVariantPropertyManager *variantManager = new QtVariantPropertyManager(gui);
