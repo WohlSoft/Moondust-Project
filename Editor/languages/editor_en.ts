@@ -3206,7 +3206,7 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Browser of Level items</translation>
+        <translation>Search Browser</translation>
     </message>
 </context>
 <context>
