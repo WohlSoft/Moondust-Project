@@ -2621,7 +2621,7 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Navigateur de niveaux</translation>
+        <translation>Navigateur de recherche</translation>
     </message>
 </context>
 <context>
