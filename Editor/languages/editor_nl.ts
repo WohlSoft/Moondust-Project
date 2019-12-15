@@ -3544,7 +3544,7 @@ Wilt u uw wijzigingen opslaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="21"/>
         <source>Level items browser</source>
-        <translation>Voorwerp Bladervenster</translation>
+        <translation>Zoekvenster</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="66"/>
@@ -6930,7 +6930,7 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../mainwindow.ui" line="2784"/>
         <source>Wrap Vertically</source>
-        <translation>Scherm vertikaal aansluiten</translation>
+        <translation>Scherm verticaal aansluiten</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="72"/>
