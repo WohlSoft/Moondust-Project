@@ -3164,7 +3164,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation>Обозреватель элементов Уровня</translation>
+        <translation>Обозреватель элементов</translation>
     </message>
 </context>
 <context>
