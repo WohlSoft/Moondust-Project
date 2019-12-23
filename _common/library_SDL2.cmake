@@ -52,7 +52,7 @@ if(SDL2_USE_SYSTEM)
     message("== SDL2 will be used from system!")
 
     find_package(SDL2 REQUIRED)
-    message("-- Found SDL2: ${SDL2_LIBRARIES} --")
+    message("-- Found SDL2: ${SDL2_LIBRARIES} ${SDL2_INCLUDE_DIRS} --")
 
     if(TARGET SDL2::SDL2)
         target_link_libraries(PGE_SDL2 INTERFACE SDL2::SDL2)
