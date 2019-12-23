@@ -18,8 +18,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
-    ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
-    ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
+    ${DEPENDENCIES_INSTALL_DIR}/include/SDL2
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -58,6 +57,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} $
 qt5_wrap_ui(UIS_HDRS
     MainWindow/mainwindow.ui
     MainWindow/sfx_tester.ui
+    MainWindow/setup_audio.ui
     MainWindow/setup_midi.ui
     AssocFiles/assoc_files.ui
 )
