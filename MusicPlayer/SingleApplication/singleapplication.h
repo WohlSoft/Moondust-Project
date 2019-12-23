@@ -1,5 +1,5 @@
 #pragma once
-#if !defined(APPLICATION_H) && !defined(MUSPLAY_USE_WINAPI)
+#ifndef APPLICATION_H
 #define APPLICATION_H
 
 #include <QObject>
@@ -41,13 +41,13 @@ private:
     //! Shared memory, stable way to avoid concurrent running multiple copies of same application
     QSharedMemory m_shmem;
     //! Client socket pointer
-    QUdpSocket* socket;
+    QUdpSocket* m_socket;
     //! Pointer to currently working local server copy
-    LocalServer* server;
+    LocalServer* m_server;
     //! Recently accepted arguments
-    QStringList _arguments;
+    QStringList m_arguments;
     //! Allows contination of application running. If false - another copy of same application already ranned
-    bool _shouldContinue;
+    bool m_shouldContinue;
 
 };
 

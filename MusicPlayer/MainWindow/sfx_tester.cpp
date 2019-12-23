@@ -117,7 +117,6 @@ void SfxTester::on_sfx_play_clicked()
     if(!m_testSfx)
         return;
 
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     if(Mix_PlayChannelTimedVolume(0,
                                   m_testSfx,
                                   ui->sfx_loops->value(),
@@ -126,16 +125,6 @@ void SfxTester::on_sfx_play_clicked()
     {
         QMessageBox::warning(this, "SFX play error!", QString("Mix_PlayChannelTimedVolume: ") + Mix_GetError());
     }
-#else
-    int chan = Mix_PlayChannelTimed(0,
-                                    m_testSfx,
-                                    ui->sfx_loops->value(),
-                                    ui->sfx_timed->value());
-    if(chan == -1)
-        QMessageBox::warning(this, "SFX play error!", QString("Mix_PlayChannelTimed: ") + Mix_GetError());
-    else
-        Mix_Volume(chan, ui->sfx_volume->value());
-#endif
 }
 
 void SfxTester::on_sfx_fadeIn_clicked()
@@ -143,7 +132,6 @@ void SfxTester::on_sfx_fadeIn_clicked()
     if(!m_testSfx)
         return;
 
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
     if(Mix_FadeInChannelTimedVolume(0,
                                     m_testSfx,
                                     ui->sfx_loops->value(),
@@ -155,17 +143,6 @@ void SfxTester::on_sfx_fadeIn_clicked()
                              "SFX play error!",
                              QString("Mix_PlayChannelTimedVolume: %1").arg(Mix_GetError()));
     }
-#else
-    int chan = Mix_FadeInChannelTimed(0,
-                                     m_testSfx,
-                                     ui->sfx_loops->value(),
-                                     ui->sfx_fadems->value(),
-                                     ui->sfx_timed->value());
-    if(chan == -1)
-        QMessageBox::warning(this, "SFX play error!", QString("Mix_PlayChannelTimed: ") + Mix_GetError());
-    else
-        Mix_Volume(chan, ui->sfx_volume->value());
-#endif
 }
 
 void SfxTester::on_sfx_stop_clicked()

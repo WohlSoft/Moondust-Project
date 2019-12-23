@@ -1,8 +1,7 @@
-#if !defined(MUSPLAYER_QT_H) && !defined(MUSPLAY_USE_WINAPI)
+#ifndef MUSPLAYER_QT_H
 #define MUSPLAYER_QT_H
 
 #include "musplayer_base.h"
-//#include "mw_qt/playlist_model.h"
 
 #include <QMainWindow>
 
@@ -57,6 +56,9 @@ public slots:
     //void playList_pushCurrent(bool x = false);
     //void playList_popCurrent(bool x = false);
     //void playListNext();
+
+private slots:
+    void on_actionAudioSetup_triggered();
 
 private slots:
     void restartMusic();

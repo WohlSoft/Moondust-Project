@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 #pragma once
-#if !defined(PGE_EDITORAPPLICATION_H) && !defined(MUSPLAY_USE_WINAPI)
+#ifndef PGE_EDITORAPPLICATION_H
 #define PGE_EDITORAPPLICATION_H
 
 #include <QApplication>
@@ -29,7 +29,7 @@ Note: Class wasn't disabled completely to avoid "Note: No relevant classes found
 */
 
 #if defined(DEFINE_Q_OS_MACX) && !defined(Q_OS_MACX)
-#define Q_OS_MACX # Workaround for MOC
+#define Q_OS_MACX // Workaround for MOC
 #endif
 
 /**

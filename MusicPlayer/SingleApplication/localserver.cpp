@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#ifndef MUSPLAY_USE_WINAPI
 
 #include <QFile>
 #include <QStringList>
@@ -37,13 +35,13 @@ void IntProcServer::stateChanged(QAbstractSocket::SocketState stat)
 {
     switch(stat)
     {
-        case QAbstractSocket::UnconnectedState: qDebug()<<"The socket is not connected.";break;
-        case QAbstractSocket::HostLookupState: qDebug()<<"The socket is performing a host name lookup.";break;
-        case QAbstractSocket::ConnectingState: qDebug()<<"The socket has started establishing a connection.";break;
-        case QAbstractSocket::ConnectedState: qDebug()<<"A connection is established.";break;
-        case QAbstractSocket::BoundState: qDebug()<<"The socket is bound to an address and port.";break;
-        case QAbstractSocket::ClosingState: qDebug()<<"The socket is about to close (data may still be waiting to be written).";break;
-        case QAbstractSocket::ListeningState: qDebug()<<"[For internal]";break;
+    case QAbstractSocket::UnconnectedState: qDebug()<<"The socket is not connected.";break;
+    case QAbstractSocket::HostLookupState: qDebug()<<"The socket is performing a host name lookup.";break;
+    case QAbstractSocket::ConnectingState: qDebug()<<"The socket has started establishing a connection.";break;
+    case QAbstractSocket::ConnectedState: qDebug()<<"A connection is established.";break;
+    case QAbstractSocket::BoundState: qDebug()<<"The socket is bound to an address and port.";break;
+    case QAbstractSocket::ClosingState: qDebug()<<"The socket is about to close (data may still be waiting to be written).";break;
+    case QAbstractSocket::ListeningState: qDebug()<<"[For internal]";break;
     }
 }
 
@@ -52,7 +50,7 @@ void IntProcServer::doReadData()
     while (hasPendingDatagrams())
     {
         QByteArray datagram;
-        datagram.resize(pendingDatagramSize());
+        datagram.resize((int)pendingDatagramSize());
         QHostAddress sender;
         quint16 senderPort;
         readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
@@ -62,18 +60,13 @@ void IntProcServer::doReadData()
 
 void IntProcServer::displayError(QTcpSocket::SocketError socketError)
 {
-    switch (socketError)
-    {
-        default:
-            qDebug() << QString("SDL2 Mixer X SingleAPP: The following error occurred: %1.")
-                                     .arg(errorString());
-    }
+    Q_UNUSED(socketError);
+    qDebug() << QString("SDL2 Mixer X SingleAPP: The following error occurred: %1.").arg(errorString());
 }
 
-IntProcServer *ipServer=NULL;
 
 
-
+static IntProcServer *ipServer = nullptr;
 
 /**
  * @brief LocalServer::LocalServer
@@ -85,9 +78,7 @@ LocalServer::LocalServer()
     connect(ipServer, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
     connect(this, SIGNAL(privateDataReceived(QString)), this, SLOT(slotOnData(QString)));
     if(!ipServer->bind(QHostAddress::LocalHost, 58234,  QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress))
-    {
         qWarning() << ipServer->errorString();
-    }
 }
 
 
@@ -118,9 +109,7 @@ void LocalServer::run()
 void LocalServer::exec()
 {
     while(ipServer->isOpen())
-    {
         msleep(100);
-    }
 }
 
 
@@ -141,13 +130,9 @@ void LocalServer::slotOnData(QString data)
     foreach(QString c, args)
     {
         if(c.startsWith("CMD:", Qt::CaseInsensitive))
-        {
             onCMD(c);
-        }
         else
-        {
             emit dataReceived(c);
-        }
     }
 }
 
@@ -168,27 +153,25 @@ void LocalServer::onCMD(QString data)
         int cmdID = commands.indexOf(data);
         switch(cmdID)
         {
-            case 0:
-            {
-                emit showUp();
-                break;
-            }
-            case 1:
-            {
-                QUdpSocket answer;
-                answer.connectToHost(QHostAddress::LocalHost, 58235);
-                answer.waitForConnected(100);
-                answer.write(QString("Yes, I'm runs!").toUtf8());
-                answer.waitForBytesWritten(100);
-                answer.flush();
-                break;
-            }
-            default:
-                emit acceptedCommand(data);
+        case 0:
+        {
+            emit showUp();
+            break;
+        }
+        case 1:
+        {
+            QUdpSocket answer;
+            answer.connectToHost(QHostAddress::LocalHost, 58235);
+            answer.waitForConnected(100);
+            answer.write(QString("Yes, I'm runs!").toUtf8());
+            answer.waitForBytesWritten(100);
+            answer.flush();
+            break;
+        }
+        default:
+            emit acceptedCommand(data);
         }
     }
     else
         emit acceptedCommand(data);
 }
-
-#endif

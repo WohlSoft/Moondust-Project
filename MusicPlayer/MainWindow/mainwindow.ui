@@ -540,6 +540,7 @@ border-bottom-color: rgb(0, 120, 0);
      <addaction name="actionPlay2Times"/>
      <addaction name="actionPlay3Times"/>
     </widget>
+    <addaction name="actionAudioSetup"/>
     <addaction name="actionMidiSetup"/>
     <addaction name="actionSfxTesting"/>
     <addaction name="actionFileAssoc"/>
@@ -642,6 +643,11 @@ border-bottom-color: rgb(0, 120, 0);
    </property>
    <property name="text">
     <string>Play 3 times</string>
+   </property>
+  </action>
+  <action name="actionAudioSetup">
+   <property name="text">
+    <string>Audio Setup...</string>
    </property>
   </action>
  </widget>

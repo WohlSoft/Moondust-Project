@@ -1,9 +1,8 @@
 #include "mus_player.h"
 
-#ifndef MUSPLAY_USE_WINAPI
 #include <QMessageBox>
+#include <QSettings>
 #include "../MainWindow/musplayer_qt.h"
-#endif
 
 #include "../wave_writer.h"
 
@@ -12,28 +11,136 @@
  */
 namespace PGE_MusicPlayer
 {
-    Mix_Music *play_mus = nullptr;
+    static MusPlayer_Qt *mw = nullptr;
+
+    Mix_Music *s_playMus = nullptr;
     Mix_MusicType type  = MUS_NONE;
     bool reverbEnabled = false;
 
     static bool g_playlistMode = false;
-    static bool g_skipPlayList = false;
     static int  g_loopsCount = -1;
+    static bool g_hooksDisabled = false;
+
+    static int      g_sample_rate = MIX_DEFAULT_FREQUENCY;
+    static Uint16   g_sample_format = MIX_DEFAULT_FORMAT;
+    static int      g_channels = MIX_DEFAULT_CHANNELS;
 
     static void musicStoppedHook();
+
+    static const char *format_to_string(Uint16 format)
+    {
+        switch(format)
+        {
+        case AUDIO_U8:
+            return "U8";
+        case AUDIO_S8:
+            return "S8";
+        case AUDIO_U16LSB:
+            return "U16LSB";
+        case AUDIO_S16LSB:
+            return "S16LSB";
+        case AUDIO_U16MSB:
+            return "U16MSB";
+        case AUDIO_S16MSB:
+            return "S16MSB";
+        case AUDIO_S32MSB:
+            return "S32MSB";
+        case AUDIO_S32LSB:
+            return "S32LSB";
+        case AUDIO_F32MSB:
+            return "F32MSB";
+        case AUDIO_F32LSB:
+            return "F32LSB";
+        default:
+            return "Unknown";
+        }
+    }
+
+    void loadAudioSettings()
+    {
+        QSettings setup;
+        g_sample_rate = setup.value("Audio-SampleRate", 44100).toInt();
+        g_sample_format = static_cast<Uint16>(setup.value("Audio-SampleFormat", AUDIO_S16).toUInt());
+        g_channels = setup.value("Audio-Channels", 2).toInt();
+    }
+
+    void saveAudioSettings()
+    {
+        QSettings setup;
+        setup.setValue("Audio-SampleRate", g_sample_rate);
+        setup.setValue("Audio-SampleFormat", g_sample_format);
+        setup.setValue("Audio-Channels", g_channels);
+        setup.sync();
+    }
+
+    int getSampleRate()
+    {
+        return g_sample_rate;
+    }
+
+    Uint16 getSampleFormat()
+    {
+        return g_sample_format;
+    }
+
+    int getChannels()
+    {
+        return g_channels;
+    }
+
+    void setSpec(int rate, Uint16 format, int channels)
+    {
+        g_sample_rate = rate;
+        g_sample_format = format;
+        g_channels = channels;
+    }
+
+    bool openAudio(QString &error)
+    {
+        return openAudioWithSpec(error, g_sample_rate, g_sample_format, g_channels);
+    }
+
+    bool openAudioWithSpec(QString &error, int rate, Uint16 format, int channels)
+    {
+        if(Mix_OpenAudio(rate, format, channels, 4096) == -1)
+        {
+            error = QString("Failed to open audio stream: %1\n\n"
+                            "Given spec:\n"
+                            "- Sample rate %2\n"
+                            "- Sample format %3\n"
+                            "- Channels count %4\n")
+                    .arg(Mix_GetError())
+                    .arg(rate)
+                    .arg(format_to_string(format))
+                    .arg(channels);
+            return false;
+        }
+        Mix_AllocateChannels(16);
+        return true;
+    }
+
+    void closeAudio()
+    {
+        if(mw)
+            QMetaObject::invokeMethod(mw, "musicStopped", Qt::QueuedConnection);
+        Mix_CloseAudio();
+    }
+
+    bool reloadAudio(QString &error)
+    {
+        closeAudio();
+        return openAudio(error);
+    }
 
     void initHooks()
     {
         Mix_HookMusicFinished(&musicStoppedHook);
     }
 
-#ifndef MUSPLAY_USE_WINAPI
-    static MusPlayer_Qt *mw = nullptr;
     void setMainWindow(void *mwp)
     {
         mw = reinterpret_cast<MusPlayer_Qt*>(mwp);
     }
-#endif
 
     const char *musicTypeC()
     {
@@ -47,11 +154,18 @@ namespace PGE_MusicPlayer
                    type == MUS_MP3 ? "MP3" :
                    type == MUS_FLAC ? "FLAC" :
 #ifdef SDL_MIXER_X
-#   if SDL_MIXER_MAJOR_VERSION > 2 || (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION >= 2)
+#   if SDL_MIXER_MAJOR_VERSION > 2 || \
+    (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION >= 2)
                    type == MUS_OPUS ? "OPUS" :
 #   endif
                    type == MUS_ADLMIDI ? "IMF/MUS/XMI" :
                    type == MUS_GME ? "Game Music Emulator" :
+#else
+#   if SDL_MIXER_MAJOR_VERSION > 2 || \
+    (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION > 0) || \
+    (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION == 0 && SDL_MIXER_PATCHLEVEL >= 4)
+                   type == MUS_OPUS ? "OPUS" :
+#   endif
 #endif
                    "<Unknown>");
     }
@@ -66,154 +180,65 @@ namespace PGE_MusicPlayer
      */
     static void error(QString msg)
     {
-#ifndef MUSPLAY_USE_WINAPI
-        QMessageBox::warning(nullptr, "SDL2 Mixer ext error", msg, QMessageBox::Ok);
-#else
-        MessageBoxA(NULL, msg.c_str(), "SDL2 Mixer ext error", MB_OK | MB_ICONWARNING);
-#endif
+        QMessageBox::warning(nullptr,
+                             "SDL2 Mixer ext error",
+                             msg,
+                             QMessageBox::Ok);
     }
 
-    /*!
-     * \brief Stop music playing
-     */
-    void MUS_stopMusic()
+    void stopMusic()
     {
-        g_skipPlayList = true;
-        Mix_HaltMusicStream(PGE_MusicPlayer::play_mus);
-        g_skipPlayList = false;
+        Mix_HaltMusicStream(PGE_MusicPlayer::s_playMus);
     }
 
-#ifndef MUSPLAY_USE_WINAPI
-    /*!
-     * \brief Get music title of current track
-     * \return music title of current music file
-     */
-    QString MUS_getMusTitle()
+    void disableHooks()
     {
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-        if(play_mus)
-            return QString(Mix_GetMusicTitle(play_mus));
+        g_hooksDisabled = true;
+    }
+
+    void enableHooks()
+    {
+        g_hooksDisabled = false;
+    }
+
+    QString getMusTitle()
+    {
+        if(s_playMus)
+            return QString(Mix_GetMusicTitle(s_playMus));
         else
-#endif
             return QString("[No music]");
     }
 
-    /*!
-     * \brief Get music artist tag text of current music track
-     * \return music artist tag text of current music track
-     */
-    QString MUS_getMusArtist()
+    QString getMusArtist()
     {
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-        if(play_mus)
-            return QString(Mix_GetMusicArtistTag(play_mus));
+        if(s_playMus)
+            return QString(Mix_GetMusicArtistTag(s_playMus));
         else
-#endif
             return QString("[Unknown Artist]");
     }
 
-    /*!
-     * \brief Get music album tag text of current music track
-     * \return music ablum tag text of current music track
-     */
-    QString MUS_getMusAlbum()
+    QString getMusAlbum()
     {
-        #if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-        if(play_mus)
-            return QString(Mix_GetMusicAlbumTag(play_mus));
+        if(s_playMus)
+            return QString(Mix_GetMusicAlbumTag(s_playMus));
         else
-        #endif
             return QString("[Unknown Album]");
     }
 
-    /*!
-     * \brief Get music copyright tag text of current music track
-     * \return music copyright tag text of current music track
-     */
-    QString MUS_getMusCopy()
+    QString getMusCopy()
     {
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-        if(play_mus)
-            return QString(Mix_GetMusicCopyrightTag(play_mus));
+        if(s_playMus)
+            return QString(Mix_GetMusicCopyrightTag(s_playMus));
         else
-#endif
             return QString("");
-    }
-#else
-    /*!
-     * \brief Get music title of current track
-     * \return music title of current music file
-     */
-    const char *MUS_getMusTitle()
-    {
-        if(play_mus)
-            return Mix_GetMusicTitle(play_mus);
-        else
-            return "[No music]";
-    }
-
-    /*!
-     * \brief Get music artist tag text of current music track
-     * \return music artist tag text of current music track
-     */
-    const char *MUS_getMusArtist()
-    {
-        if(play_mus)
-            return Mix_GetMusicArtistTag(play_mus);
-        else
-            return "[Unknown Artist]";
-    }
-
-    /*!
-     * \brief Get music album tag text of current music track
-     * \return music ablum tag text of current music track
-     */
-    const char *MUS_getMusAlbum()
-    {
-        if(play_mus)
-            return Mix_GetMusicAlbumTag(play_mus);
-        else
-            return "[Unknown Album]";
-    }
-
-    /*!
-     * \brief Get music copyright tag text of current music track
-     * \return music copyright tag text of current music track
-     */
-    const char *MUS_getMusCopy()
-    {
-        if(play_mus)
-            return Mix_GetMusicCopyrightTag(play_mus);
-        else
-            return "";
-    }
-#endif
-
-    static void playListProcess()
-    {
-        if(g_skipPlayList)
-            return;
-#ifndef MUSPLAY_USE_WINAPI
-        if(mw)
-            QMetaObject::invokeMethod(mw, "playListNext", Qt::QueuedConnection);
-#endif
     }
 
     static void musicStoppedHook()
     {
-#ifndef MUSPLAY_USE_WINAPI
+        if(g_hooksDisabled)
+            return;
         if(mw)
             QMetaObject::invokeMethod(mw, "musicStopped", Qt::QueuedConnection);
-#endif
-    }
-
-    void setPlayListMode(bool playList)
-    {
-        g_playlistMode = playList;
-        if(playList)
-            Mix_HookMusicFinished(&playListProcess);
-        else
-            Mix_HookMusicFinished(&musicStoppedHook);
     }
 
     void setMusicLoops(int loops)
@@ -221,100 +246,88 @@ namespace PGE_MusicPlayer
         g_loopsCount = loops;
     }
 
-    /*!
-     * \brief Start playing of currently opened music track
-     */
-    bool MUS_playMusic()
+    bool playMusic()
     {
-        if(play_mus)
+        if(s_playMus)
         {
-            if(Mix_PlayMusic(play_mus, g_playlistMode ? 0 : g_loopsCount) == -1)
+            if(Mix_PlayMusic(s_playMus, g_playlistMode ? 0 : g_loopsCount) == -1)
             {
                 error(QString("Mix_PlayMusic: ") + Mix_GetError());
                 return false;
                 // well, there's no music, but most games don't break without music...
             }
-            //QString("Music is %1\n").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
         }
         else
         {
             error(QString("Play nothing: Mix_PlayMusic: ") + Mix_GetError());
             return false;
         }
-        //qDebug() << QString("Check Error of SDL: %1\n").arg(Mix_GetError());
         return true;
     }
 
-    /*!
-     * \brief Sets volume level of current music stream
-     * \param volume level of volume from 0 tp 128
-     */
-    void MUS_changeVolume(int volume)
+    void changeVolume(int volume)
     {
-        Mix_VolumeMusicStream(PGE_MusicPlayer::play_mus, volume);
+        Mix_VolumeMusicStream(PGE_MusicPlayer::s_playMus, volume);
         DebugLog(QString("Mix_VolumeMusic: %1\n").arg(volume));
     }
 
-    /*!
-     * \brief Open music file
-     * \param musFile Full path to music file
-     * \return true if music file was successfully opened, false if loading was failed
-     */
-    bool MUS_openFile(QString musFile)
+    bool openFile(QString musFile)
     {
         type = MUS_NONE;
-        if(play_mus != nullptr)
+        if(s_playMus != nullptr)
         {
-            Mix_FreeMusic(play_mus);
-            play_mus = nullptr;
+            Mix_FreeMusic(s_playMus);
+            s_playMus = nullptr;
         }
 
-#ifndef MUSPLAY_USE_WINAPI
         QByteArray p = musFile.toUtf8();
-        play_mus = Mix_LoadMUS(p.data());
-#else
-        play_mus = Mix_LoadMUS(musFile.c_str());
-#endif
-        if(!play_mus)
+        s_playMus = Mix_LoadMUS(p.data());
+        if(!s_playMus)
         {
             error(QString("Mix_LoadMUS(\"" + QString(musFile) + "\"): ") + Mix_GetError());
             return false;
         }
-        type = Mix_GetMusicType(play_mus);
+        type = Mix_GetMusicType(s_playMus);
         DebugLog(QString("Music type: %1").arg(musicType()));
         return true;
     }
 
-    static bool wavOpened = false;
+
+
+
+    static void* s_wavCtx = nullptr;
 
     // make a music play function
     // it expects udata to be a pointer to an int
-    static void myMusicPlayer(void * /*udata*/, Uint8 *stream, int len)
+    static void myMusicPlayer(void *udata, Uint8 *stream, int len)
     {
-        wave_write((short *)stream, len / 2);
+        ctx_wave_write(udata, reinterpret_cast<const short *>(stream), len / 2);
     }
 
     void startWavRecording(QString target)
     {
-        if(wavOpened) return;
-        if(!play_mus) return;
+        if(s_wavCtx)
+            return;
+        if(!s_playMus)
+            return;
 
         /* Record 20 seconds to wave file */
-#ifndef MUSPLAY_USE_WINAPI
-        wave_open(44100, target.toLocal8Bit().data());
-#else
-        wave_open(44100, target.c_str());
-#endif
-        wave_enable_stereo();
-        Mix_SetPostMix(myMusicPlayer, nullptr);
-        wavOpened = true;
+        s_wavCtx = ctx_wave_open(44100, target.toLocal8Bit().data());
+        ctx_wave_enable_stereo(s_wavCtx);
+        Mix_SetPostMix(myMusicPlayer, s_wavCtx);
     }
 
     void stopWavRecording()
     {
-        if(!wavOpened) return;
-        wave_close();
-        Mix_SetPostMix(NULL, NULL);
-        wavOpened = false;
+        if(!s_wavCtx)
+            return;
+        ctx_wave_close(s_wavCtx);
+        s_wavCtx = nullptr;
+        Mix_SetPostMix(nullptr, nullptr);
+    }
+
+    bool isWavRecordingWorks()
+    {
+        return (s_wavCtx != nullptr);
     }
 }

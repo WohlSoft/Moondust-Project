@@ -61,6 +61,7 @@ void LabelMarquee::paintEvent(QPaintEvent * /*event*/)
 {
     QPainter p(this);
     QRect r = rect();
+    // FIXME: Fix the chopping of the right side of the string while drawing shorter strings
     p.drawText(QRect(-m_offset, (r.height() / 2) - (m_textHeight / 2), m_textWidth, m_textHeight),
                Qt::AlignLeft|Qt::AlignTop, m_text);
 }
@@ -90,7 +91,7 @@ void LabelMarquee::processMarquee()
     {
         m_offset = 0;
         repaint();
-        return;//Marquee is not neede here
+        return; // Marquee is not neede here
     }
 
     m_offset += 4;

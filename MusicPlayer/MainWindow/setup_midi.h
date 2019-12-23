@@ -41,6 +41,12 @@ private slots:
     void on_adl_vibrato_clicked();
     void on_adl_scalableModulation_clicked();
 
+    void on_timidityCfgPathBrowse_clicked();
+    void on_timidityCfgPath_editingFinished();
+
+    void on_fluidSynthSF2PathsBrowse_clicked();
+    void on_fluidSynthSF2Paths_editingFinished();
+
     void updateAutoArgs();
 
     void on_mididevice_currentIndexChanged(int index);
@@ -50,7 +56,6 @@ private slots:
     void on_midiRawArgs_editingFinished();
 
     void on_opn_use_custom_clicked(bool checked);
-
     void on_adl_use_custom_clicked(bool checked);
 
 signals:
@@ -60,6 +65,8 @@ private:
     Ui::SetupMidi *ui;
     void restartForAdl();
     void restartForOpn();
+    void restartForTimidity();
+    void restartForFluidSynth();
     bool m_setupLock = false;
 };
 

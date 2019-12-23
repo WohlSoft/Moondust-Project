@@ -81,6 +81,7 @@ list(APPEND SDLMixer_MusPlay_SRC
     MainWindow/musplayer_base.cpp
     MainWindow/musplayer_qt.cpp
     MainWindow/seek_bar.cpp
+    MainWindow/setup_audio.cpp
     MainWindow/setup_midi.cpp
     MainWindow/sfx_tester.cpp
     Player/mus_player.cpp

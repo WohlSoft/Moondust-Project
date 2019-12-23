@@ -1,4 +1,3 @@
-#ifndef MUSPLAY_USE_WINAPI
 #include "assoc_files.h"
 #include "ui_assoc_files.h"
 #include <QListWidgetItem>
@@ -332,5 +331,3 @@ void AssocFiles::on_AssocFiles_accepted()
     else
         QMessageBox::information(this, tr("Success"), tr("All files has been associated!"));
 }
-
-#endif
