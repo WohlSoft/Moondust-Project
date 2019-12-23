@@ -128,7 +128,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Screen capture default size</source>
-        <translation type="unfinished"></translation>
+        <translation>Captura de tela tamanho padrão</translation>
     </message>
     <message>
         <source>Use custom:</source>
@@ -136,15 +136,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Largura:</translation>
+        <translation>Largura:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Altura:</translation>
+        <translation>Altura:</translation>
     </message>
     <message>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustar ao tamanho da janela</translation>
     </message>
     <message>
         <source>Defaults</source>
@@ -160,7 +160,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Layer movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Movimentação de Camada</translation>
     </message>
     <message>
         <source>Trigger event</source>
@@ -168,15 +168,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Segurar Botões</translation>
     </message>
     <message>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra</translation>
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Nota: Algumas configurações vão só se aplicar depois de reiniciar o editor</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
@@ -224,7 +224,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Direita</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
@@ -232,7 +232,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Warp type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de Warp</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -272,7 +272,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar items selecionados para a posição do cursor</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
@@ -280,7 +280,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Layer visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualização da Camada</translation>
     </message>
     <message>
         <source>Section settings</source>
@@ -348,11 +348,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambiente</translation>
     </message>
     <message>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom padrão:</translation>
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
@@ -614,16 +614,17 @@ Pegue quaisquer pacotes de configuração aqui:&lt;br&gt;%2</translation>
     </message>
     <message>
         <source>Configuration package is not configured!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pacote de configuração não está configurado!</translation>
     </message>
     <message>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; do pacote de configuração não está configurado ainda.
+Você gostaria de configurá-lo?</translation>
     </message>
     <message>
         <source>Configuration script failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Falha na configuração do script</translation>
     </message>
     <message>
         <source>Configuring tool encountered an error: %1 at line %2.
@@ -632,11 +633,11 @@ File path: %3</source>
     </message>
     <message>
         <source>No configuration needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhuma configuração necessária</translation>
     </message>
     <message>
         <source>This config pack has no configuring tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este pacote de configuração não há ferramenta de configuração.</translation>
     </message>
 </context>
 <context>
@@ -736,19 +737,19 @@ File path: %3</source>
     </message>
     <message>
         <source>Level: Blocks (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel: Blocos (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Background objects (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel: Objetos de fundo (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Background images (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel: Imagens de fundo (%1/%2)</translation>
     </message>
     <message>
         <source>Level: NPCs (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel: NPCs (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Terrain tiles (%1/%2)</source>
@@ -756,15 +757,15 @@ File path: %3</source>
     </message>
     <message>
         <source>World map: Scenery (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa mundi: Cenário (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa mundi: Blocos de caminho (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa mundi: Blocos de entrada de nivel (%1/%2)</translation>
     </message>
     <message>
         <source>Default rotation rules (%1)</source>
@@ -811,11 +812,11 @@ File path: %3</source>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
-        <translation type="unfinished"></translation>
+        <translation>Você poderia reportar essa informação para os desenvolvedores ou poderia postar em:</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uh-oh, PGE Editor crashou :(&lt;br&gt;Informação detalhada:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;You might want to post this data at:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -823,7 +824,7 @@ File path: %3</source>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Forum do PGE (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</source>
@@ -850,12 +851,13 @@ Dados sobre o erro que causou isso:</translation>
     <message>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished">Recuperação de arquivos</translation>
+        <translation>Recuperação de arquivo</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desde o último crash, o editor recuperou alguns arquivos.
+Por favor salve eles antes de fazer qualquer coisa.</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recorved some files.
@@ -875,7 +877,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Please add the Item IDs which will be in this custom group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor adicione os IDs dos Items que estarão nesse grupo customizado:</translation>
     </message>
     <message>
         <source>Item type:</source>
@@ -911,7 +913,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloco de terreno</translation>
     </message>
     <message>
         <source>Scenery</source>
@@ -989,7 +991,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Type commands here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Escreva comandos aqui...</translation>
     </message>
     <message>
         <source>Send Command</source>
@@ -1065,7 +1067,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra varios caminhos importantes!</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -1124,7 +1126,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Manter a proporção da janela original</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -1140,7 +1142,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Hide warps and water markers (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Esconder warps e marcadores de água (recomendado)</translation>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
@@ -1148,7 +1150,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Esconder grade (se estiver mostrando)</translation>
     </message>
     <message>
         <source>Tiled background</source>
@@ -1156,30 +1158,30 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Esconder blocos invisíveis e meta-objetos</translation>
     </message>
 </context>
 <context>
     <name>GreetingDialog</name>
     <message>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bem-vindo!</translation>
     </message>
     <message>
         <source>Choose the workspace layout you want to use:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolha o layout de área de trabalho que quer usar:</translation>
     </message>
     <message>
         <source>Modern</source>
-        <translation type="unfinished"></translation>
+        <translation>Moderno</translation>
     </message>
     <message>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation>Clássico</translation>
     </message>
     <message>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
-        <translation type="unfinished"></translation>
+        <translation>UI moderna feita para conveniência, funciona bem em janelas de vários tamanhos.</translation>
     </message>
     <message>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
@@ -1187,7 +1189,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bem-vindo ao PGE Editor!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1232,7 +1234,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation>Camadas achatas</translation>
+        <translation>Mistura de camadas</translation>
     </message>
 </context>
 <context>
@@ -1354,7 +1356,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished">Aguarde...</translation>
+        <translation>Aguarde...</translation>
     </message>
 </context>
 <context>
@@ -1369,7 +1371,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[escondido]</translation>
     </message>
     <message>
         <source>Change Z-Offset...</source>
@@ -1405,15 +1407,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar todos %1 nessa sessão em</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar todos 1% em</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferências </translation>
     </message>
     <message>
         <source>BGO-ID: %1</source>
@@ -1421,15 +1423,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição: Esquerda, Topo, Direita, Fundo</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -1445,11 +1447,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover todos %1 nessa sessão</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover todos %1</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -1465,15 +1467,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished">Margem de seção</translation>
+        <translation>Margem de sessão</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, escolha o quão longe itens fora das margens da seção serão removidos (em pixels)</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencias foram copiadas: %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
@@ -1496,7 +1498,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[escondido]</translation>
     </message>
     <message>
         <source>Invisible</source>
@@ -1516,31 +1518,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar todos %1 nessa sessão em</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar todos %1 em</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar preferências</translation>
     </message>
     <message>
         <source>Block-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID-do-Bloco: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posição: Esquerda, Cima, Direita, Baixo</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
