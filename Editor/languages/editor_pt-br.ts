@@ -886,7 +886,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Uh-oh, PGE Editor crashou :(&lt;br&gt;Informação detalhada:</translation>
+        <translation type="unfinished">Uh-oh, PGE Editor crashou :(&lt;br&gt;Informação detalhada:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;You might want to post this data at:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1545,7 +1545,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>Bem-vindo ao PGE Editor!</translation>
+        <translation type="unfinished">Bem-vindo ao PGE Editor!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
