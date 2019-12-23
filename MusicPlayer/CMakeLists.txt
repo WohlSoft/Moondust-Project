@@ -175,6 +175,10 @@ else()
         -DUSE_SDL_MIXER_X
     )
 
+    if(MINGW) # Required for SDL_Main
+        list(APPEND PGE_MUSPLAY_LINK_LIBS mingw32)
+    endif()
+
     if(PGE_STATIC_SDLMIXER)
         list(APPEND PGE_MUSPLAY_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
     else()
