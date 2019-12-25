@@ -21,7 +21,7 @@
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_msgbox.cpp" line="292"/>
         <source>Fatal error</source>
-        <translation>错误</translation>
+        <translation>致命错误</translation>
     </message>
     <message id="CONFIG_SELECT">
         <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="60"/>
