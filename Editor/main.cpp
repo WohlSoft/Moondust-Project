@@ -159,6 +159,9 @@ int main(int argc, char *argv[])
     app     = new PGE_Application(argc, argv);
     args    = app->arguments();
 
+    // Workaround: https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
+    setlocale(LC_NUMERIC, "C");
+
 #ifdef Q_OS_MAC
     QDir dir(QApplication::applicationDirPath());
     dir.cdUp();

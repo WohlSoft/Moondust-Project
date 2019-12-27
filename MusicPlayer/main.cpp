@@ -36,7 +36,10 @@ extern "C" int main(int argc, char *argv[])
     QApplication::setApplicationName("PGE Music Player");
 
     PGE_Application a(argc, argv);
-    QStringList args=a.arguments();
+    // https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
+    setlocale(LC_NUMERIC, "C");
+
+    QStringList args = a.arguments();
     SingleApplication *as = new SingleApplication(args);
     if(!as->shouldContinue())
     {
@@ -48,7 +51,7 @@ extern "C" int main(int argc, char *argv[])
     a.setStyle("GTK");
 #endif
 
-    if(SDL_Init(SDL_INIT_AUDIO) ==-1 )
+    if(SDL_Init(SDL_INIT_AUDIO) == -1)
         error(QString("Failed to initialize audio: ") + SDL_GetError());
 
     if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MOD | MIX_INIT_MID ) == -1)

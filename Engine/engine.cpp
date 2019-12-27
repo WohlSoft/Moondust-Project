@@ -255,6 +255,9 @@ bool PGEEngineApp::initSDL()
     if(!res)
         enable(LIBSDL);
 
+    // Workaround: https://discourse.libsdl.org/t/26995
+    setlocale(LC_NUMERIC, "C");
+
     const char *error = SDL_GetError();
     if(*error != '\0')
         pLogWarning("Error while SDL Initialization: %s", error);
