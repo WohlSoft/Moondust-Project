@@ -9,6 +9,7 @@
 #   define SDL_MIXER_GE21
 #endif
 
+#include <locale.h>
 #include <QApplication>
 #include <QtDebug>
 #include <QMessageBox>

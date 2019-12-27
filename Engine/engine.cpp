@@ -20,6 +20,7 @@
 #include <ctime>
 #include <iostream>
 #include <utility>
+#include <locale.h>
 
 #ifdef _WIN32
 #include <windows.h>

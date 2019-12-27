@@ -30,6 +30,7 @@
 #endif
 
 #include <iostream>
+#include <locale.h>
 #include "version.h"
 
 #include <common_features/logger.h>
