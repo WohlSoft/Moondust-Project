@@ -12,6 +12,7 @@ endif()
 
 # Needed for external projects
 include(ExternalProject)
+include(GNUInstallDirs)
 
 # Destinition bitness of the build
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
@@ -38,6 +39,21 @@ if(ANDROID)
         "-DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}"
         "-DANDROID_ARM_NEON=${ANDROID_ARM_NEON}"
     )
+endif()
+
+if(UNIX) # When include/library/binary directory name is not usual in a system, make symbolic links for them
+    if(NOT "${CMAKE_INSTALL_LIBDIR}" STREQUAL "lib")
+        file(MAKE_DIRECTORY "${DEPENDENCIES_INSTALL_DIR}")
+        execute_process(COMMAND ln -s "lib" "${DEPENDENCIES_INSTALL_DIR}/${CMAKE_INSTALL_LIBDIR}")
+    endif()
+    if(NOT "${CMAKE_INSTALL_BINDIR}" STREQUAL "bin")
+        file(MAKE_DIRECTORY "${DEPENDENCIES_INSTALL_DIR}")
+        execute_process(COMMAND ln -s "bin" "${DEPENDENCIES_INSTALL_DIR}/${CMAKE_INSTALL_BINDIR}")
+    endif()
+    if(NOT "${CMAKE_INSTALL_INCLUDEDIR}" STREQUAL "include")
+        file(MAKE_DIRECTORY "${DEPENDENCIES_INSTALL_DIR}")
+        execute_process(COMMAND ln -s "include" "${DEPENDENCIES_INSTALL_DIR}/${CMAKE_INSTALL_INCLUDEDIR}")
+    endif()
 endif()
 
 if(APPLE)
