@@ -33,6 +33,8 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+pge_cxx_standard(14)
+
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
