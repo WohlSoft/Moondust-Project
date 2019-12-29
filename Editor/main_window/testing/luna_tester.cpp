@@ -214,7 +214,9 @@ void LunaWorker::init()
         m_process = new QProcess;
         QObject::connect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                          this, &LunaWorker::processFinished);
+#if QT_VERSION >= 0x050600
         QObject::connect(m_process, &QProcess::errorOccurred, this, &LunaWorker::errorOccurred);
+#endif
         m_lastStatus = m_process->state();
     }
 }
@@ -226,7 +228,9 @@ void LunaWorker::unInit()
     {
         QObject::disconnect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                          this, &LunaWorker::processFinished);
+#if QT_VERSION >= 0x050600
         QObject::disconnect(m_process, &QProcess::errorOccurred, this, &LunaWorker::errorOccurred);
+#endif
         terminate();
         QThread::msleep(1000);
         delete m_process;
