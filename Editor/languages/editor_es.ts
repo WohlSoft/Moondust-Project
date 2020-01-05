@@ -5554,7 +5554,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 Si esto está activo, es posible establecer sólo punto de entrada.</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Sólo salida</translation>
     </message>
     <message>
@@ -5566,7 +5566,7 @@ If this flag is enabled, you can only place a warp exit.</source>
 Si está activo, es posible definir sólo puntos de salida.</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Sólo entrada</translation>
     </message>
     <message>

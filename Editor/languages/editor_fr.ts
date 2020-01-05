@@ -4208,7 +4208,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 Si ce drapeau est activé, vous pouvez uniquement placer un passage d&apos;entrée.</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Sortie uniquement</translation>
     </message>
     <message>
@@ -4220,7 +4220,7 @@ Utilisé pour créer un passage vers un autre niveau.
 Si ce drapeau est activé, vous ne pouvez placer qu&apos;un passage de sortie.</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Entrée uniquement</translation>
     </message>
     <message>

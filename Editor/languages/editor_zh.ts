@@ -4225,7 +4225,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 如果开启此选项，您只能放置入口点。</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>仅出口</translation>
     </message>
     <message>
@@ -4238,7 +4238,7 @@ If this flag is enabled, you can only place a warp exit.</source>
 如果开启此选项，您只能放置出口点。</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>仅入口</translation>
     </message>
     <message>

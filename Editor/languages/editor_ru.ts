@@ -5632,7 +5632,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 Если этот флаг включён, возможно разместить только одну входную точку.</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Только выход</translation>
     </message>
     <message>
@@ -5645,7 +5645,7 @@ If this flag is enabled, you can only place a warp exit.</source>
 Если этот флаг включён, возможно размещение только одной выходной точки.</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Только вход</translation>
     </message>
     <message>

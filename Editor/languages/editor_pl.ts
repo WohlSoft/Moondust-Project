@@ -4520,7 +4520,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 Można umieścić tylko wejście.</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Tylko wyjście</translation>
     </message>
     <message>
@@ -4532,7 +4532,7 @@ Tylko do wejść do poziomu.
 Po użyciu można wstawić tylko wyjście.</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Tylko wejście</translation>
     </message>
     <message>

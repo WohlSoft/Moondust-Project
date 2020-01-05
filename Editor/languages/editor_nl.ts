@@ -5678,12 +5678,12 @@ Als deze vlag is aangevinkt, kan enkel een uitgang geplaatst worden.</translatio
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="737"/>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Enkel uitgang</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="749"/>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Enkel ingang</translation>
     </message>
     <message>

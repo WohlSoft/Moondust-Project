@@ -4988,7 +4988,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="737"/>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5000,7 +5000,7 @@ If this flag is enabled, you can only place a warp exit.</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="749"/>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

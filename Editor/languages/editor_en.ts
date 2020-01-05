@@ -5685,8 +5685,8 @@ If this flag is enabled, you can only place a warp entrance.</source>
 If this flag is enabled, you can only place a warp entrance.</translation>
     </message>
     <message>
-        <source>Exit only</source>
-        <translation>Exit only</translation>
+        <source>To other level</source>
+        <translation>To other level</translation>
     </message>
     <message>
         <source>Prevents any in-level warp to exit at this warp.
@@ -5697,8 +5697,8 @@ Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</translation>
     </message>
     <message>
-        <source>Enter only</source>
-        <translation>Enter only</translation>
+        <source>From other level</source>
+        <translation>From other level</translation>
     </message>
     <message>
         <source>Warp to other level</source>

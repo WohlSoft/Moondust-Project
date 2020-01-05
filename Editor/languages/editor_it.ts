@@ -4569,7 +4569,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 Se questa opzione è attivata, potrai piazzare solo l&apos;entrata del trasporto.</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Solo uscita</translation>
     </message>
     <message>
@@ -4581,7 +4581,7 @@ Usato per creare un trasporto da un altro livello.
 Se questa opzione è abilitata, potrai piazzare solo l&apos;uscita del trasporto.</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Solo entrata</translation>
     </message>
     <message>
