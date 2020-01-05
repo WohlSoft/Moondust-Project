@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>262</width>
-    <height>512</height>
+    <width>277</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -30,7 +30,7 @@
    <string>Section Settings</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,0,0,0,0,0,0,0">
+   <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,0,0,0,0,0,0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -46,22 +46,6 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <item row="7" column="0" colspan="2">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Minimum</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="3" column="0" colspan="2">
      <widget class="QScrollArea" name="LVLPropSettingsScroll">
       <property name="frameShape">
@@ -81,8 +65,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>262</width>
-         <height>493</height>
+         <width>277</width>
+         <height>481</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -91,7 +75,7 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,1000">
         <property name="leftMargin">
          <number>0</number>
         </property>
