@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>269</width>
-    <height>517</height>
+    <width>262</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,19 +32,19 @@
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,0,0,0,0,0,0,0">
     <property name="leftMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="topMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="rightMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="spacing">
-     <number>3</number>
+     <number>0</number>
     </property>
     <item row="7" column="0" colspan="2">
      <spacer name="verticalSpacer">
@@ -81,8 +81,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>259</width>
-         <height>484</height>
+         <width>262</width>
+         <height>493</height>
         </rect>
        </property>
        <property name="sizePolicy">
