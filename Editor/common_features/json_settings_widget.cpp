@@ -653,10 +653,19 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             QJsonArray children = o["children"].toArray();
             if(!children.isEmpty())
             {
+                bool noBranch = (name == "..");
+                if(noBranch && title == name)
+                    title.clear();
+
                 QtProperty *subGroup = manager->addProperty(QtVariantPropertyManager::groupTypeId(), title);
-                setupTree.m_setupTree.push(name);
+
+                if(!noBranch)
+                    setupTree.m_setupTree.push(name);
+
                 loadLayoutEntries(setupTree, children, manager, subGroup, err, parent);
-                setupTree.m_setupTree.pop();
+
+                if(!noBranch)
+                    setupTree.m_setupTree.pop();
                 target->addSubProperty(subGroup);
             }
         }
