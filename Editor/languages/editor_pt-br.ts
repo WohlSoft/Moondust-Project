@@ -1546,15 +1546,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1 nessa sessão</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
     <message>
         <source>Margin of section</source>
@@ -1704,7 +1704,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[escondido]</translation>
     </message>
     <message>
         <source>Jump to exit</source>
@@ -1740,11 +1740,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -1760,7 +1760,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -1791,11 +1791,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -1823,7 +1823,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -1831,7 +1831,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -1880,11 +1880,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -1912,11 +1912,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1931,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[escondido]</translation>
     </message>
     <message>
         <source>Edit NPC-Configuration</source>
@@ -1983,7 +1983,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Transformar todos %1 nessa sessão em</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
@@ -2003,11 +2003,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -2027,11 +2027,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1 nessa sessão</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -2047,7 +2047,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
@@ -2066,11 +2066,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -2098,11 +2098,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2117,7 +2117,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[escondido]</translation>
     </message>
     <message>
         <source>Environment type</source>
@@ -2193,7 +2193,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -2217,7 +2217,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2255,11 +2255,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -2287,11 +2287,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2338,7 +2338,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bloco de terreno</translation>
     </message>
     <message>
         <source>Tile</source>
@@ -2397,11 +2397,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Posição: X, Y, Largura, Altura</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -2429,11 +2429,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover todos %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferencias foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -8297,7 +8297,7 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bloco de terreno</translation>
     </message>
     <message>
         <source>Scenery</source>
@@ -9120,7 +9120,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esconder grade (se estiver mostrando)</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
@@ -9136,7 +9136,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Manter a proporção da janela original</translation>
     </message>
     <message>
         <source>Save proportion</source>
@@ -9303,7 +9303,7 @@ Caixas de música:	%5</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bloco de terreno</translation>
     </message>
     <message>
         <source>Search Terrain Tile</source>

@@ -385,7 +385,7 @@ do
             cd Engine
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
-            for lang in de bs en es fr "he-il" it ja "nl" "nb-no" pl "pt" ru sv sr zh; do
+            for lang in de bs en es fr "he-il" it ja "nl" "nb-no" pl "pt-br" "pt-pt" ru sv sr zh; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/engine_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
