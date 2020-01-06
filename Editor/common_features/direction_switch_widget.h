@@ -60,6 +60,7 @@ private:
     void drawButton(QPainter &painter,
                     int cellWidth, int cellHeight,
                     DirectionSwitchWidget::Sides side);
+    void alignRect(QRect &r);
 
     int m_direction = 0;
     Sides m_currentSide = S_UNKNOWN;

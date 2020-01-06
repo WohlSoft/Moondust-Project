@@ -154,10 +154,29 @@ void DirectionSwitchWidget::drawButton(QPainter &painter, int cellWidth, int cel
     }
 }
 
+void DirectionSwitchWidget::alignRect(QRect &r)
+{
+    if(r.width() > r.height())
+    {
+        int w = r.height();
+        int x = (r.width() - w) / 2;
+        r.setX(x);
+        r.setWidth(w);
+    }
+    else if(r.width() < r.height())
+    {
+        int h = r.width();
+        int y = (r.height() - h) / 2;
+        r.setY(y);
+        r.setHeight(h);
+    }
+}
+
 void DirectionSwitchWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     QRect r = rect();
+    alignRect(r);
 
     painter.setPen(Qt::NoPen);
     painter.setBrush(QBrush(Qt::transparent));
@@ -279,40 +298,54 @@ bool DirectionSwitchWidget::event(QEvent *event)
 DirectionSwitchWidget::Sides DirectionSwitchWidget::findSide(int x, int y)
 {
     QRect r = rect();
+    alignRect(r);
+
     int cellWidth = r.width() / 3;
     int cellHeight = r.height() / 3;
     Sides side = S_UNKNOWN;
 
-    if(x >= cellWidth && x < (cellWidth * 2) && y >= 0 && y < cellHeight)
+    if(x >= r.x() + cellWidth && x < r.x() + (cellWidth * 2) &&
+       y >= r.y() && y < r.y() + cellHeight)
     {
         side = S_TOP;
     }
-    else if(x >= cellWidth && x < (cellWidth * 2) && y >= (cellHeight * 2) && y < (cellHeight * 3))
+    else if(x >= r.x() + cellWidth && x < r.x() + (cellWidth * 2) &&
+            y >= r.y() + (cellHeight * 2) && y < r.y() + (cellHeight * 3))
     {
         side = S_BOTTOM;
     }
-    else if(x >= 0 && x < cellWidth && y >= cellHeight && y < (cellHeight * 2))
+    else if(x >= r.x() && x < r.x() + cellWidth &&
+            y >= r.y() + cellHeight && y < r.y() + (cellHeight * 2))
     {
         side = S_LEFT;
     }
-    else if(x >= (cellWidth * 2) && x < (cellWidth * 3) && y >= cellHeight && y < (cellHeight * 2))
+    else if(x >= r.x() + (cellWidth * 2) && x < r.x() + (cellWidth * 3) &&
+            y >= r.y() + cellHeight && y < r.y() + (cellHeight * 2))
     {
         side = S_RIGHT;
     }
 
-    else if(m_hasDiagonals && x >= 0 && x < cellWidth && y >= 0 && y < cellHeight)
+    else if(m_hasDiagonals &&
+            x >= r.x() && x < r.x() + cellWidth &&
+            y >= r.y() && y < r.y() + cellHeight)
     {
         side = S_TOP_LEFT;
     }
-    else if(m_hasDiagonals && x >= (cellWidth * 2) && x < (cellWidth * 3) && y >= 0 && y < cellHeight)
+    else if(m_hasDiagonals &&
+            x >= r.x() + (cellWidth * 2) && x < r.x() + (cellWidth * 3) &&
+            y >= r.y() && y < r.y() + cellHeight)
     {
         side = S_TOP_RIGHT;
     }
-    else if(m_hasDiagonals && x >= 0 && x < cellWidth && y >= (cellHeight * 2) && y < (cellHeight * 3))
+    else if(m_hasDiagonals &&
+            x >= r.x() && x < r.x() + cellWidth &&
+            y >= r.y() + (cellHeight * 2) && y < r.y() + (cellHeight * 3))
     {
         side = S_BOTTOM_LEFT;
     }
-    else if(m_hasDiagonals && x >= (cellWidth * 2) && x < (cellWidth * 3) && y >= (cellHeight * 2) && y < (cellHeight * 3))
+    else if(m_hasDiagonals &&
+            x >= r.x() + (cellWidth * 2) && x < r.x() + (cellWidth * 3) &&
+            y >= r.y() + (cellHeight * 2) && y < r.y() + (cellHeight * 3))
     {
         side = S_BOTTOM_RIGHT;
     }
@@ -333,29 +366,39 @@ DirectionSwitchWidget::Sides DirectionSwitchWidget::findSide(const QPoint &pos)
 QRect DirectionSwitchWidget::getRect(DirectionSwitchWidget::Sides side)
 {
     QRect r = rect();
+    alignRect(r);
     int cellWidth = r.width() / 3;
     int cellHeight = r.height() / 3;
 
     switch(side)
     {
     case S_CENTER:
-        return QRect(cellWidth, cellHeight, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x() + cellWidth, r.y() + cellHeight,
+                     cellWidth - 1, cellHeight - 1);
     case S_LEFT:
-        return QRect(0, cellHeight, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x(), r.y() + cellHeight,
+                     cellWidth - 1, cellHeight - 1);
     case S_RIGHT:
-        return QRect(cellWidth * 2, cellHeight, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x() + cellWidth * 2, r.y() + cellHeight,
+                     cellWidth - 1, cellHeight - 1);
     case S_TOP:
-        return QRect(cellWidth, 0, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x() + cellWidth, r.y(),
+                     cellWidth - 1, cellHeight - 1);
     case S_BOTTOM:
-        return QRect(cellWidth, cellHeight * 2, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x() + cellWidth, r.y() + cellHeight * 2,
+                     cellWidth - 1, cellHeight - 1);
     case S_TOP_LEFT:
-        return QRect(0, 0, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x(), r.y(),
+                     cellWidth - 1, cellHeight - 1);
     case S_TOP_RIGHT:
-        return QRect(cellWidth * 2, 0, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x() + cellWidth * 2, r.y(),
+                     cellWidth - 1, cellHeight - 1);
     case S_BOTTOM_LEFT:
-        return QRect(0, cellHeight * 2, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x(), r.y() + cellHeight * 2,
+                     cellWidth - 1, cellHeight - 1);
     case S_BOTTOM_RIGHT:
-        return QRect(cellWidth * 2, cellHeight * 2, cellWidth - 1, cellHeight - 1);
+        return QRect(r.x() + cellWidth * 2, r.y() + cellHeight * 2,
+                     cellWidth - 1, cellHeight - 1);
     default:
     case S_UNKNOWN:
         return QRect();
