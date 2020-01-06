@@ -80,9 +80,9 @@
   <widget class="DirectionSwitchWidget" name="test2" native="true">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>100</x>
      <y>40</y>
-     <width>61</width>
+     <width>111</width>
      <height>61</height>
     </rect>
    </property>
@@ -92,7 +92,7 @@
   <customwidget>
    <class>DirectionSwitchWidget</class>
    <extends>QWidget</extends>
-   <header>../../../Editor/common_features/direction_switch_widget.h</header>
+   <header location="global">common_features/direction_switch_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

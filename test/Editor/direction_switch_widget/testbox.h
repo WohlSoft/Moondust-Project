@@ -2,7 +2,7 @@
 #define TESTBOX_H
 
 #include <QDialog>
-#include "../../../Editor/common_features/direction_switch_widget.h"
+#include <common_features/direction_switch_widget.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TestBox; }

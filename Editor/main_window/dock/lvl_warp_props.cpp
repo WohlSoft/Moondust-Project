@@ -25,6 +25,7 @@
 #include <editing/_dialogs/wld_setpoint.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <common_features/direction_switch_widget.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -49,6 +50,36 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     ui->setupUi(this);
     lockWarpSetSettings = false;
 
+    ui->entrance->setPixmap(DirectionSwitchWidget::S_CENTER, QPixmap(":/arrows/arrows/box.png"));
+    ui->entrance->setPixmap(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/black_right.png"));
+    ui->entrance->setPixmap(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/black_left.png"));
+    ui->entrance->setPixmap(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/black_down.png"));
+    ui->entrance->setPixmap(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/black_up.png"));
+    ui->entrance->setPixmapOn(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/red_right.png"));
+    ui->entrance->setPixmapOn(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/red_left.png"));
+    ui->entrance->setPixmapOn(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/red_down.png"));
+    ui->entrance->setPixmapOn(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/red_up.png"));
+    ui->entrance->mapValue(DirectionSwitchWidget::S_LEFT, LevelDoor::ENTRANCE_RIGHT);
+    ui->entrance->mapValue(DirectionSwitchWidget::S_RIGHT, LevelDoor::ENTRANCE_LEFT);
+    ui->entrance->mapValue(DirectionSwitchWidget::S_TOP, LevelDoor::ENTRANCE_DOWN);
+    ui->entrance->mapValue(DirectionSwitchWidget::S_BOTTOM, LevelDoor::ENTRANCE_UP);
+
+    ui->exit->setPixmap(DirectionSwitchWidget::S_CENTER, QPixmap(":/arrows/arrows/box.png"));
+    ui->exit->setPixmap(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/black_left.png"));
+    ui->exit->setPixmap(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/black_right.png"));
+    ui->exit->setPixmap(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/black_up.png"));
+    ui->exit->setPixmap(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/black_down.png"));
+    ui->exit->setPixmapOn(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/green_left.png"));
+    ui->exit->setPixmapOn(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/green_right.png"));
+    ui->exit->setPixmapOn(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/green_up.png"));
+    ui->exit->setPixmapOn(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/green_down.png"));
+    ui->exit->mapValue(DirectionSwitchWidget::S_LEFT, LevelDoor::EXIT_LEFT);
+    ui->exit->mapValue(DirectionSwitchWidget::S_RIGHT, LevelDoor::EXIT_RIGHT);
+    ui->exit->mapValue(DirectionSwitchWidget::S_TOP, LevelDoor::EXIT_UP);
+    ui->exit->mapValue(DirectionSwitchWidget::S_BOTTOM, LevelDoor::EXIT_DOWN);
+
+    re_translate_widgets();
+
     QRect mwg = mw()->geometry();
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
@@ -62,6 +93,9 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
         height()
     );
 
+    connect(ui->entrance, &DirectionSwitchWidget::clicked, this, &LvlWarpBox::entrance_clicked);
+    connect(ui->exit, &DirectionSwitchWidget::clicked, this, &LvlWarpBox::exit_clicked);
+
     connect(mw(), SIGNAL(setSMBX64Strict(bool)),
             this, SLOT(setSMBX64Strict(bool)));
 
@@ -73,6 +107,18 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
 LvlWarpBox::~LvlWarpBox()
 {
     delete ui;
+}
+
+void LvlWarpBox::re_translate_widgets()
+{
+    ui->entrance->mapToolTip(DirectionSwitchWidget::S_LEFT, tr("Right"));
+    ui->entrance->mapToolTip(DirectionSwitchWidget::S_RIGHT, tr("Left"));
+    ui->entrance->mapToolTip(DirectionSwitchWidget::S_TOP, tr("Down"));
+    ui->entrance->mapToolTip(DirectionSwitchWidget::S_BOTTOM, tr("Up"));
+    ui->exit->mapToolTip(DirectionSwitchWidget::S_LEFT, tr("Left"));
+    ui->exit->mapToolTip(DirectionSwitchWidget::S_RIGHT, tr("Right"));
+    ui->exit->mapToolTip(DirectionSwitchWidget::S_TOP, tr("Up"));
+    ui->exit->mapToolTip(DirectionSwitchWidget::S_BOTTOM, tr("Down"));
 }
 
 QComboBox *LvlWarpBox::cbox_layer()
@@ -134,26 +180,24 @@ void LvlWarpBox::re_translate()
     lockWarpSetSettings = true;
     int doorType = ui->WarpType->currentIndex(); //backup combobox's index
     ui->retranslateUi(this);
+    re_translate_widgets();
     ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
     lockWarpSetSettings = false;
 }
 
 void LvlWarpBox::init()
 {
-    int WinType = mw()->activeChildWindow();
-
-    if(WinType == MainWindow::WND_Level)
+    int winType = mw()->activeChildWindow();
+    if(winType == MainWindow::WND_Level)
     {
         ui->WarpList->clear();
-        foreach(LevelDoor door, mw()->activeLvlEditWin()->LvlData.doors)
-        {
+        for(LevelDoor &door : mw()->activeLvlEditWin()->LvlData.doors)
             ui->WarpList->addItem(doorTitle(door), door.meta.array_id);
-        }
+
         if(ui->WarpList->count() <= 0)
             setDoorData(-1);
         else
             setDoorData(ui->WarpList->currentIndex());
-
     }
 }
 
@@ -195,13 +239,14 @@ void LvlWarpBox::setDoorData(long index)
     if(WinType == MainWindow::WND_Level)
     {
         LevelEdit *le = mw()->activeLvlEditWin();
+        int warpId = ui->WarpList->currentData().toInt();
         if((le->LvlData.doors.size() > 0) && (cIndex < le->LvlData.doors.size()))
         {
-            foreach(LevelDoor door, le->LvlData.doors)
+            for(LevelDoor &door : le->LvlData.doors)
             {
-                if(door.meta.array_id == (unsigned long)ui->WarpList->currentData().toInt())
+                if(door.meta.array_id == static_cast<unsigned long>(warpId))
                 {
-                    ui->WarpList->setItemText(cIndex, doorTitle(door));
+                    ui->WarpList->setItemText(static_cast<int>(cIndex), doorTitle(door));
                     ui->WarpRemove->setEnabled(true);
 
                     ui->warpBoxDirect->setEnabled(true);
@@ -245,43 +290,8 @@ void LvlWarpBox::setDoorData(long index)
                             ui->WarpEnterEvent->setCurrentIndex(0);
                     }
 
-                    switch(door.idirect)
-                    {
-                    case LevelDoor::ENTRANCE_UP:
-                        ui->Entr_Up->setChecked(true);
-                        break;
-                    case LevelDoor::ENTRANCE_LEFT:
-                        ui->Entr_Left->setChecked(true);
-                        break;
-                    case LevelDoor::ENTRANCE_DOWN:
-                        ui->Entr_Down->setChecked(true);
-                        break;
-                    case LevelDoor::ENTRANCE_RIGHT:
-                        ui->Entr_Right->setChecked(true);
-                        break;
-                    default:
-                        ui->Entr_Down->setChecked(true);
-                        break;
-                    }
-
-                    switch(door.odirect)
-                    {
-                    case LevelDoor::EXIT_DOWN:
-                        ui->Exit_Down->setChecked(true);
-                        break;
-                    case LevelDoor::EXIT_RIGHT:
-                        ui->Exit_Right->setChecked(true);
-                        break;
-                    case LevelDoor::EXIT_UP:
-                        ui->Exit_Up->setChecked(true);
-                        break;
-                    case LevelDoor::EXIT_LEFT:
-                        ui->Exit_Left->setChecked(true);
-                        break;
-                    default:
-                        ui->Exit_Up->setChecked(true);
-                        break;
-                    }
+                    ui->entrance->setDirection(door.idirect);
+                    ui->exit->setDirection(door.odirect);
 
                     ui->WarpEnableCannon->setChecked(door.cannon_exit);
                     ui->WarpCannonSpeed->setEnabled(door.cannon_exit && !le->LvlData.meta.smbx64strict);
@@ -297,7 +307,7 @@ void LvlWarpBox::setDoorData(long index)
                     ui->WarpSetExit->setEnabled(((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)));
 
                     ui->WarpLevelFile->setText(door.lname);
-                    ui->WarpToExitNu->setValue(door.warpto);
+                    ui->WarpToExitNu->setValue(static_cast<int>(door.warpto));
 
                     ui->WarpHideLevelEnterScreen->setChecked(door.hide_entering_scene);
                     ui->WarpAllowNPC_IL->setChecked(door.allownpc_interlevel);
@@ -339,12 +349,14 @@ void LvlWarpBox::on_WarpAdd_clicked()
         LevelEdit *edit = mw()->activeLvlEditWin();
         LevelDoor newDoor = FileFormats::CreateLvlWarp();
         newDoor.meta.array_id = edit->LvlData.doors_array_id++;
-        newDoor.meta.index = edit->LvlData.doors.size();
+        newDoor.meta.index = static_cast<unsigned int>(edit->LvlData.doors.size());
         newDoor.type = GlobalSettings::LvlItemDefaults.warp_type;//Apply initial warp type value
         edit->LvlData.doors.push_back(newDoor);
         edit->LvlData.meta.modified = true;
 
-        edit->scene->m_history->addAddWarp(newDoor.meta.array_id, ui->WarpList->count(), newDoor.meta.index);
+        edit->scene->m_history->addAddWarp(static_cast<int>(newDoor.meta.array_id),
+                                           ui->WarpList->count(),
+                                           static_cast<int>(newDoor.meta.index));
 
         ui->WarpList->addItem(doorTitle(newDoor), newDoor.meta.array_id);
         ui->WarpList->setCurrentIndex(ui->WarpList->count() - 1);
@@ -687,10 +699,11 @@ void LvlWarpBox::on_WarpType_currentIndexChanged(int index)
     {
         QList<QVariant> warpTypeData;
         LevelEdit *edit = mw()->activeLvlEditWin();
+        unsigned int warpId = static_cast<unsigned>(ui->WarpList->currentData().toInt());
 
         for(int i = 0; i < edit->LvlData.doors.size(); i++)
         {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id == warpId)
             {
                 warpTypeData.push_back(edit->LvlData.doors[i].type);
                 warpTypeData.push_back(index);
@@ -699,10 +712,10 @@ void LvlWarpBox::on_WarpType_currentIndexChanged(int index)
             }
         }
 
-        ui->WarpEntranceGrp->setEnabled(index == 1);
-        ui->WarpExitGrp->setEnabled(index == 1);
+        ui->WarpEntranceGrp->setEnabled(index == LevelDoor::WARP_PIPE);
+        ui->WarpExitGrp->setEnabled(index == LevelDoor::WARP_PIPE);
 
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_WARPTYPE, QVariant(warpTypeData));
+        edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId), HistorySettings::SETTING_WARPTYPE, QVariant(warpTypeData));
         edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
         edit->LvlData.meta.modified = true;
     }
@@ -716,10 +729,11 @@ void LvlWarpBox::on_WarpNeedAStars_valueChanged(int arg1)
     {
         QList<QVariant> starData;
         LevelEdit *edit = mw()->activeLvlEditWin();
+        unsigned int warpId = static_cast<unsigned>(ui->WarpList->currentData().toInt());
 
         for(int i = 0; i < edit->LvlData.doors.size(); i++)
         {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
+            if(edit->LvlData.doors[i].meta.array_id == warpId)
             {
                 starData.push_back(edit->LvlData.doors[i].stars);
                 starData.push_back(arg1);
@@ -727,7 +741,7 @@ void LvlWarpBox::on_WarpNeedAStars_valueChanged(int arg1)
                 break;
             }
         }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_NEEDASTAR, QVariant(starData));
+        edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId), HistorySettings::SETTING_NEEDASTAR, QVariant(starData));
         edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
         edit->LvlData.meta.modified = true;
     }
@@ -754,7 +768,8 @@ void LvlWarpBox::on_WarpNeedAStarsMsg_editingFinished()
                 break;
             }
         }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_NEEDASTAR_MSG, QVariant(starData));
+        edit->scene->m_history->addChangeWarpSettings(ui->WarpList->currentData().toInt(),
+                                                      HistorySettings::SETTING_NEEDASTAR_MSG, QVariant(starData));
         edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
         edit->LvlData.meta.modified = true;
     }
@@ -775,20 +790,19 @@ void LvlWarpBox::on_WarpHideStars_clicked(bool checked)
                 break;
             }
         }
-        edit->scene->m_history->addChangeWarpSettings(ui->WarpList->currentData().toInt(), HistorySettings::SETTING_HIDE_STAR_NUMBER, QVariant(checked));
+        edit->scene->m_history->addChangeWarpSettings(ui->WarpList->currentData().toInt(),
+                                                      HistorySettings::SETTING_HIDE_STAR_NUMBER, QVariant(checked));
         edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
         edit->LvlData.meta.modified = true;
     }
 }
 
-
-/////////Entrance Direction/////////////////
-void LvlWarpBox::on_Entr_Down_clicked()
+void LvlWarpBox::entrance_clicked(int direction)
 {
     if(lockWarpSetSettings) return;
 
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
+    int winType = mw()->activeChildWindow();
+    if(winType == MainWindow::WND_Level)
     {
         QList<QVariant> dirData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -798,100 +812,24 @@ void LvlWarpBox::on_Entr_Down_clicked()
             if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].idirect);
-                dirData.push_back(3);
-                edit->LvlData.doors[i].idirect = 3;
+                dirData.push_back(direction);
+                edit->LvlData.doors[i].idirect = direction;
                 break;
             }
         }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
-        edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
-        edit->LvlData.meta.modified = true;
-    }
-
-}
-void LvlWarpBox::on_Entr_Right_clicked()
-{
-    if(lockWarpSetSettings) return;
-
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
-    {
-        QList<QVariant> dirData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-
-        for(int i = 0; i < edit->LvlData.doors.size(); i++)
-        {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
-            {
-                dirData.push_back(edit->LvlData.doors[i].idirect);
-                dirData.push_back(4);
-                edit->LvlData.doors[i].idirect = 4;
-                break;
-            }
-        }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
-        edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
-        edit->LvlData.meta.modified = true;
-    }
-}
-void LvlWarpBox::on_Entr_Up_clicked()
-{
-    if(lockWarpSetSettings) return;
-
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
-    {
-        QList<QVariant> dirData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-
-        for(int i = 0; i < edit->LvlData.doors.size(); i++)
-        {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
-            {
-                dirData.push_back(edit->LvlData.doors[i].idirect);
-                dirData.push_back(1);
-                edit->LvlData.doors[i].idirect = 1;
-                break;
-            }
-        }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
-        edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
-        edit->LvlData.meta.modified = true;
-    }
-}
-void LvlWarpBox::on_Entr_Left_clicked()
-{
-    if(lockWarpSetSettings) return;
-
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
-    {
-        QList<QVariant> dirData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-
-        for(int i = 0; i < edit->LvlData.doors.size(); i++)
-        {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
-            {
-                dirData.push_back(edit->LvlData.doors[i].idirect);
-                dirData.push_back(2);
-                edit->LvlData.doors[i].idirect = 2;
-                break;
-            }
-        }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
+        edit->scene->m_history->addChangeWarpSettings(ui->WarpList->currentData().toInt(),
+                                                      HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
         edit->LvlData.meta.modified = true;
     }
 }
 
-/////////Exit Direction/////////////////
-void LvlWarpBox::on_Exit_Up_clicked()
+void LvlWarpBox::exit_clicked(int direction)
 {
     if(lockWarpSetSettings) return;
 
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
+    int winType = mw()->activeChildWindow();
+    if(winType == MainWindow::WND_Level)
     {
         QList<QVariant> dirData;
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -901,96 +839,23 @@ void LvlWarpBox::on_Exit_Up_clicked()
             if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
             {
                 dirData.push_back(edit->LvlData.doors[i].odirect);
-                dirData.push_back(3);
-                edit->LvlData.doors[i].odirect = 3;
+                dirData.push_back(direction);
+                edit->LvlData.doors[i].odirect = direction;
                 break;
             }
         }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
+        edit->scene->m_history->addChangeWarpSettings(ui->WarpList->currentData().toInt(),
+                                                      HistorySettings::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
         edit->LvlData.meta.modified = true;
     }
 }
-void LvlWarpBox::on_Exit_Left_clicked()
-{
-    if(lockWarpSetSettings) return;
 
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
-    {
-        QList<QVariant> dirData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-
-        for(int i = 0; i < edit->LvlData.doors.size(); i++)
-        {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
-            {
-                dirData.push_back(edit->LvlData.doors[i].odirect);
-                dirData.push_back(4);
-                edit->LvlData.doors[i].odirect = 4;
-                break;
-            }
-        }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
-        edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
-        edit->LvlData.meta.modified = true;
-    }
-}
-void LvlWarpBox::on_Exit_Down_clicked()
-{
-    if(lockWarpSetSettings) return;
-
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
-    {
-        QList<QVariant> dirData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-
-        for(int i = 0; i < edit->LvlData.doors.size(); i++)
-        {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
-            {
-                dirData.push_back(edit->LvlData.doors[i].odirect);
-                dirData.push_back(1);
-                edit->LvlData.doors[i].odirect = 1;
-                break;
-            }
-        }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
-        edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
-        edit->LvlData.meta.modified = true;
-    }
-}
-void LvlWarpBox::on_Exit_Right_clicked()
-{
-    if(lockWarpSetSettings) return;
-
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
-    {
-        QList<QVariant> dirData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-
-        for(int i = 0; i < edit->LvlData.doors.size(); i++)
-        {
-            if(edit->LvlData.doors[i].meta.array_id == (unsigned int)ui->WarpList->currentData().toInt())
-            {
-                dirData.push_back(edit->LvlData.doors[i].odirect);
-                dirData.push_back(2);
-                edit->LvlData.doors[i].odirect = 2;
-                break;
-            }
-        }
-        edit->scene->m_history->addChangeWarpSettings((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
-        edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
-        edit->LvlData.meta.modified = true;
-    }
-}
 
 void LvlWarpBox::on_WarpEnableCannon_clicked(bool checked)
 {
-    int WinType = mw()->activeChildWindow();
-    if(WinType == MainWindow::WND_Level)
+    int winType = mw()->activeChildWindow();
+    if(winType == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -1002,7 +867,9 @@ void LvlWarpBox::on_WarpEnableCannon_clicked(bool checked)
                 break;
             }
         }
-        edit->scene->m_history->addChangeWarpSettings(ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENABLE_CANNON, QVariant(checked));
+        edit->scene->m_history->addChangeWarpSettings(ui->WarpList->currentData().toInt(),
+                                                      HistorySettings::SETTING_ENABLE_CANNON,
+                                                      QVariant(checked));
         edit->scene->doorPointsSync((unsigned int)ui->WarpList->currentData().toInt());
         edit->LvlData.meta.modified = true;
     }

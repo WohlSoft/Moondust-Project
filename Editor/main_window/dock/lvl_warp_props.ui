@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>710</height>
+    <width>338</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -53,8 +53,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>360</width>
-      <height>690</height>
+      <width>338</width>
+      <height>734</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_6">
@@ -172,12 +172,6 @@ Every warp point pair requires a warp entry.</string>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>100</height>
-        </size>
-       </property>
        <property name="title">
         <string>Pipe direction</string>
        </property>
@@ -202,12 +196,6 @@ Every warp point pair requires a warp entry.</string>
         </property>
         <item>
          <widget class="QGroupBox" name="WarpEntranceGrp">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>111</height>
-           </size>
-          </property>
           <property name="title">
            <string>Entrance</string>
           </property>
@@ -236,232 +224,15 @@ Every warp point pair requires a warp entry.</string>
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="2" column="4">
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
+           <item row="0" column="0">
+            <widget class="DirectionSwitchWidget" name="entrance" native="true">
+             <property name="minimumSize">
               <size>
                <width>60</width>
-               <height>20</height>
+               <height>60</height>
               </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="Entr_Down">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Down</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_down.png</normaloff>
-               <normalon>:/arrows/arrows/red_down.png</normalon>:/arrows/arrows/black_down.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
              </property>
             </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QPushButton" name="Entr_Left">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Left</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_left.png</normaloff>
-               <normalon>:/arrows/arrows/red_left.png</normalon>:/arrows/arrows/black_left.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="Entr_Right">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Right</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_right.png</normaloff>
-               <normalon>:/arrows/arrows/red_right.png</normalon>:/arrows/arrows/black_right.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="label_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../../_resources/editor.qrc">:/arrows/arrows/box.png</pixmap>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QPushButton" name="Entr_Up">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Up</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_up.png</normaloff>
-               <normalon>:/arrows/arrows/red_up.png</normalon>:/arrows/arrows/black_up.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>60</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="2">
-            <spacer name="verticalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>22</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="4" column="2">
-            <spacer name="verticalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>22</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
@@ -470,12 +241,6 @@ Every warp point pair requires a warp entry.</string>
          <widget class="QGroupBox" name="WarpExitGrp">
           <property name="enabled">
            <bool>true</bool>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>111</height>
-           </size>
           </property>
           <property name="title">
            <string>Exit</string>
@@ -502,227 +267,13 @@ Every warp point pair requires a warp entry.</string>
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="5" column="2">
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>22</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="4" column="2">
-            <widget class="QPushButton" name="Exit_Down">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="0" column="0">
+            <widget class="DirectionSwitchWidget" name="exit" native="true">
              <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Down</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_down.png</normaloff>
-               <normalon>:/arrows/arrows/green_down.png</normalon>:/arrows/arrows/black_down.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>0</width>
-               <height>22</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="Exit_Left">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Left</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_left.png</normaloff>
-               <normalon>:/arrows/arrows/green_left.png</normalon>:/arrows/arrows/black_left.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="4">
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
               <size>
                <width>60</width>
-               <height>20</height>
+               <height>60</height>
               </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="Exit_Up">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Up</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_up.png</normaloff>
-               <normalon>:/arrows/arrows/green_up.png</normalon>:/arrows/arrows/black_up.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>60</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="2" column="3">
-            <widget class="QPushButton" name="Exit_Right">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Right</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/arrows/arrows/black_right.png</normaloff>
-               <normalon>:/arrows/arrows/green_right.png</normalon>:/arrows/arrows/black_right.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="autoExclusive">
-              <bool>true</bool>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="label_7">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="pixmap">
-              <pixmap resource="../../_resources/editor.qrc">:/arrows/arrows/box.png</pixmap>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -1588,6 +1139,14 @@ Measured in pixels per 1/65 seconds.</string>
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DirectionSwitchWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">common_features/direction_switch_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../_resources/editor.qrc"/>
  </resources>
