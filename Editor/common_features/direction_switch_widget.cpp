@@ -125,6 +125,7 @@ void DirectionSwitchWidget::mouseReleaseEvent(QMouseEvent *e)
         {
             m_direction = newVal;
             emit directionChanged(m_direction);
+            emit clicked(m_direction);
         }
     }
     m_pressSide = S_UNKNOWN;

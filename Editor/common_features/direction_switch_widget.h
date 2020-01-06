@@ -50,6 +50,7 @@ protected:
 
 signals:
     void directionChanged(int direction);
+    void clicked(int direction);
 
 private:
     Sides findSide(int x, int y);
