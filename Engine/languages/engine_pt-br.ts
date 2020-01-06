@@ -13,7 +13,7 @@
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem memória!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
@@ -21,7 +21,7 @@
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <source>Time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Expirou!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <source>Engine has abourted because alarm() time out!</source>
@@ -45,7 +45,7 @@
     </message>
     <message id="CRASH_FPE_TITLE">
         <source>Wrong arithmetical operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Operação aritmética errada</translation>
     </message>
     <message id="CRASH_FPE_MSG">
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
@@ -71,11 +71,11 @@ and retry your recent actions to get more detailed information.</source>
     </message>
     <message id="CRASH_INT_TITLE">
         <source>Interrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Interromper</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <source>Engine has been interrupted</source>
-        <translation type="unfinished"></translation>
+        <translation>O mecanismo foi interrompido</translation>
     </message>
     <message id="CONFIG_SELECT">
         <source>Choose a game:</source>
@@ -104,23 +104,23 @@ Software renderer will be started.</source>
     </message>
     <message id="MSGBOX_INFO">
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informação</translation>
     </message>
     <message id="MSGBOX_WARN">
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso</translation>
     </message>
     <message id="MSGBOX_ERROR">
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <source>Fatal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro fatal</translation>
     </message>
     <message id="SDL_INIT_ERROR">
         <source>Unable to init SDL!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível iniciar SDL!</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
         <source>Choose a game to test:</source>
@@ -180,95 +180,95 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_CONTINUE">
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_CONTINUESAVE">
         <source>Save and continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e continuar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXITSAVE">
         <source>Save and quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e sair</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXITNOSAVE">
         <source>Exit without saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair sem guardar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXIT">
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message id="LVL_MENU_PAUSE_REPLAY">
         <source>Replay level</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiniciar nível</translation>
     </message>
     <message id="GAMEOVER_TITLE">
         <source>Game Over!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fim de Jogo!</translation>
     </message>
     <message id="GAMEOVER_CONTINUE">
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
     <message id="GAMEOVER_EXIT">
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
         <source>Save and continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e continuar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
         <source>Save and quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e sair</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
         <source>Exit without saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair sem guardar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message id="MAINMENU_1_PLAYER_GAME">
         <source>1 Player Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogo de 1 Jogador</translation>
     </message>
     <message id="MAINMENU_2_PLAYER_GAME">
         <source>2 Player Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogo de 2 Jogadores</translation>
     </message>
     <message id="MAINMENU_PLAY_SINGLE_LEVEL">
         <source>Play level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nível de jogo</translation>
     </message>
     <message id="MAINMENU_OPTIONS">
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções</translation>
     </message>
     <message id="MAINMENU_EXIT">
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message id="MAINMENU_OPTIONS_TEST_SCRS">
         <source>Test of screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Teste de ecrãs</translation>
     </message>
     <message id="MAINMENU_OPTIONS_TEST_MSGS">
         <source>Test of message boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Teste de caixas de mensagem</translation>
     </message>
     <message id="MAINMENU_OPTIONS_CONTROLLS">
         <source>Player controlling</source>
@@ -276,51 +276,51 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MAINMENU_OPTIONS_VIDEO">
         <source>Video settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições de vídeo</translation>
     </message>
     <message id="MAINMENU_OPTIONS_MUS_VOL">
         <source>Music volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume da música</translation>
     </message>
     <message id="MAINMENU_OPTIONS_SND_VOL">
         <source>Sound volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume do som</translation>
     </message>
     <message id="MAINMENU_OPTIONS_FULLSCR">
         <source>Full Screen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de Ecrã Completo</translation>
     </message>
     <message id="TESTSCR_CREDITS">
         <source>Credits</source>
-        <translation type="unfinished"></translation>
+        <translation>Créditos</translation>
     </message>
     <message id="TESTSCR_LOADING_SCREEN">
         <source>Loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecrã de carregamento</translation>
     </message>
     <message id="TESTSCR_GAMEOVER">
         <source>Game over screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecrã de fim de jogo</translation>
     </message>
     <message id="TEST_MSGBOX">
         <source>Message box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de mensagem</translation>
     </message>
     <message id="TEST_MENUBOX">
         <source>Menu box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de menu</translation>
     </message>
     <message id="TEST_TEXTINPUTBOX">
         <source>Text Input box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de entrada de texto</translation>
     </message>
     <message id="TEST_QUESTION_BOX">
         <source>Question box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de questão</translation>
     </message>
     <message id="VIDEO_SHOW_DEBUG">
         <source>Show debug info</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar informação de depuração</translation>
     </message>
     <message id="VIDEO_ENABLE_FRSKIP">
         <source>Enable frame-skip</source>
@@ -328,7 +328,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="VIDEO_ENABLE_VSYNC">
         <source>Enable V-Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Ativar V-Sync</translation>
     </message>
     <message id="VIDEO_FRAME_TIME">
         <source>Frame time (ms.)</source>
@@ -336,27 +336,27 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="CONTROLLS_SETUP_PLAYER1">
         <source>Player 1 controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlos do Jogador 1</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER2">
         <source>Player 2 controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlos do Jogador 2</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_KEYBOARD">
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Tecaldo</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_JOYSTICK">
         <source>Joystick: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Joystick: %1</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_INPUT_TYPE">
         <source>Input:</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada:</translation>
     </message>
     <message id="MSG_PLEASEWAIT">
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, aguarde...</translation>
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
         <source>&lt;episodes not found&gt;</source>
@@ -364,7 +364,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
         <source>&lt;levels not found&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;níveis não encontrados&gt;</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
         <source>Config packs not found</source>
