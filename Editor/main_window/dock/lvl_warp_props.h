@@ -5,7 +5,8 @@
 #include <QDockWidget>
 #include "mwdock_base.h"
 
-namespace Ui {
+namespace Ui
+{
 class LvlWarpBox;
 }
 
@@ -35,9 +36,9 @@ public slots:
 
 public slots:
     // Warps and doors
-    void setDoorData(long index=-1);
+    void setDoorData(long index = -1);
     void SwitchToDoor(long arrayID);
-    QComboBox* getWarpList();
+    QComboBox *getWarpList();
     void setWarpRemoveButtonEnabled(bool isEnabled);
     void removeItemFromWarpList(int index);
 
