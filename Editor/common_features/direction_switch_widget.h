@@ -38,6 +38,7 @@ public:
     void setPixmap(Sides side, const QPixmap &pixmap);
     void setPixmapOn(Sides side, const QPixmap &pixmap);
     void mapValue(Sides side, int value);
+    void unMapValue(Sides side);
     void mapToolTip(Sides side, QString toolTip);
 
 protected:

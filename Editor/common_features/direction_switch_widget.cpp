@@ -82,6 +82,12 @@ void DirectionSwitchWidget::mapValue(DirectionSwitchWidget::Sides side, int valu
     m_valuesMap[side] = value;
 }
 
+void DirectionSwitchWidget::unMapValue(DirectionSwitchWidget::Sides side)
+{
+    if(m_valuesMap.contains(side))
+        m_valuesMap.remove(side);
+}
+
 void DirectionSwitchWidget::mapToolTip(DirectionSwitchWidget::Sides side, QString toolTip)
 {
     m_toolTipsMap[side] = toolTip;
