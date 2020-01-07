@@ -7,11 +7,34 @@
 #include <QToolTip>
 #include <QStyleOptionFrame>
 
+
+/**
+ * @brief Turn a full-size rectangle into square and align it into center of given area
+ * @param r Rectangle to squarize
+ */
+static void toSquareAndAlignToCenter(QRect &r)
+{
+    if(r.width() > r.height()) // If width is bigger than height
+    {
+        int w = r.height(); // Take height size and set it to width
+        int x = (r.width() - w) / 2;
+        r.setX(x); // Move to center
+        r.setWidth(w);
+    }
+    else if(r.width() < r.height()) // If height is bigger than width
+    {
+        int h = r.width(); // Take width size and set it to height
+        int y = (r.height() - h) / 2;
+        r.setY(y); // Move to center
+        r.setHeight(h);
+    }
+}
+
 DirectionSwitchWidget::DirectionSwitchWidget(QWidget *parent) : QWidget(parent)
 {
     setMinimumWidth(60);
     setMinimumHeight(60);
-    setMouseTracking(true);
+    setMouseTracking(true); // Mouse tracking is needed to highlight hovering buttons and show tooltips
 }
 
 DirectionSwitchWidget::~DirectionSwitchWidget()
@@ -32,9 +55,9 @@ bool DirectionSwitchWidget::useDiagonals()
 void DirectionSwitchWidget::setDirection(int direction)
 {
     m_direction = direction;
-    for(auto it = m_valuesMap.begin(); it != m_valuesMap.end(); it++)
+    for(auto it = m_valuesMap.begin(); it != m_valuesMap.end(); it++) // Find a mapped value
     {
-        if(it.value() == direction)
+        if(it.value() == direction) // If it is matching, take as a current side
         {
             m_currentSide = it.key();
             break;
@@ -98,8 +121,8 @@ void DirectionSwitchWidget::mousePressEvent(QMouseEvent *e)
     if(e->button() != Qt::LeftButton)
         return;
 
-    Sides s = findSide(e->x(), e->y());
-    if(s != S_UNKNOWN)
+    Sides s = findSide(e->x(), e->y()); // Find the side under mouse cursor
+    if(s != S_UNKNOWN) // If anything was found, press it!
     {
         m_pressSide = s;
         update();
@@ -109,8 +132,8 @@ void DirectionSwitchWidget::mousePressEvent(QMouseEvent *e)
 
 void DirectionSwitchWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    Sides r = findSide(e->x(), e->y());
-    if(r != m_hoverSide)
+    Sides r = findSide(e->x(), e->y()); // Find the side under mouse cursor
+    if(r != m_hoverSide) // If anything was found, highlight it!
     {
         m_hoverSide = r;
         update();
@@ -123,25 +146,31 @@ void DirectionSwitchWidget::mouseReleaseEvent(QMouseEvent *e)
     if(e->button() != Qt::LeftButton)
         return;
 
+    // The "Button pressed" event should happen once mouse was released together with hovering a target button
+    // It's possible to "cancel" the pressing by moving mouse out of a button and releasing it
+
     if(m_hoverSide == m_pressSide && (m_pressSide != S_UNKNOWN))
     {
-        int newVal = m_valuesMap[m_hoverSide];
+        int newVal = m_valuesMap[m_hoverSide]; // Find a side value that was pressed
         m_currentSide = m_hoverSide;
-        if(newVal != m_direction)
+        if(newVal != m_direction) // If it was REALLY changed
         {
-            m_direction = newVal;
+            m_direction = newVal; // Assign and emit all value change signals
             emit directionChanged(m_direction);
             emit clicked(m_direction);
         }
     }
-    m_pressSide = S_UNKNOWN;
-    m_hoverSide = findSide(e->x(), e->y());
+    m_pressSide = S_UNKNOWN; // Clear pressed state
+    m_hoverSide = findSide(e->x(), e->y()); // Keep hover side same
+    // Repaint widget
     update();
     repaint();
 }
 
 void DirectionSwitchWidget::leaveEvent(QEvent *)
 {
+    // We should reset hover state on widget leave event
+    // Otherwise, it may stay "hovering" if you'll move mouse too fast
     m_hoverSide = S_UNKNOWN;
     update();
     repaint();
@@ -150,31 +179,15 @@ void DirectionSwitchWidget::leaveEvent(QEvent *)
 void DirectionSwitchWidget::drawButton(QPainter &painter, int cellWidth, int cellHeight,
                                        DirectionSwitchWidget::Sides side)
 {
-    if(m_pixmaps.contains(side))
+    if(m_pixmaps.contains(side)) // Find existing pixmap
     {
-        const QPixmap &c = getPixMap(side);
+        const QPixmap &c = getPixMap(side); // Get a pixmap for the side
+        // Align pixmap to the center of a side on a 3x3 grid
         int offsetX = (cellWidth / 2) - (c.width() / 2);
         int offsetY = (cellHeight / 2) - (c.height() / 2);
-        QRect p = getRect(side);
+        QRect p = getRect(side); // Get the position and size of 3x3 grid cell for a widget's side
+        // Finally, draw the pixmap
         painter.drawPixmap(p.left() + offsetX, p.top() + offsetY, c);
-    }
-}
-
-void DirectionSwitchWidget::alignRect(QRect &r)
-{
-    if(r.width() > r.height())
-    {
-        int w = r.height();
-        int x = (r.width() - w) / 2;
-        r.setX(x);
-        r.setWidth(w);
-    }
-    else if(r.width() < r.height())
-    {
-        int h = r.width();
-        int y = (r.height() - h) / 2;
-        r.setY(y);
-        r.setHeight(h);
     }
 }
 
@@ -182,32 +195,38 @@ void DirectionSwitchWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     QRect r = rect();
-    alignRect(r);
+    toSquareAndAlignToCenter(r);
 
     painter.setPen(Qt::NoPen);
     painter.setBrush(QBrush(Qt::transparent));
     painter.drawRect(r);
 
+    // When widget is disabled, set the 50% opacity of drawn content
     if(!isEnabled())
     {
         painter.setOpacity(0.5);
     }
 
+    // We should know a size of each cell of 3x3 grid
     int cellWidth = r.width() / 3;
     int cellHeight = r.height() / 3;
 
     if(m_rotatingCenter)
     {
-        if(m_pixmaps.contains(S_CENTER))
+        // For a rotating center, we will do own logic here and we'll don't use drawButton() call
+        if(m_pixmaps.contains(S_CENTER)) // Check is center pixmap available
         {
-            const QPixmap &c = getPixMap(S_CENTER);
+            const QPixmap &c = getPixMap(S_CENTER); // Take it
+            // To avoid glitches, rememer a current state of painter first
             painter.save();
+            // To correctly rotate a pixmap, move an anchor into the center of the area
             painter.translate(r.center().x() + 1, r.center().y() + 1);
+            // For each side, rotate a pixmap with giving degrees values
             switch(m_currentSide)
             {
             default:
             case S_TOP:
-                painter.rotate(0.0);
+                painter.rotate(0.0); // Pointing up is a default state of pixmap, don't rotate
                 break;
             case S_BOTTOM:
                 painter.rotate(180.0);
@@ -231,8 +250,12 @@ void DirectionSwitchWidget::paintEvent(QPaintEvent *)
                 painter.rotate(180.0 - 45.0);
                 break;
             }
+            // After rotating of picture, we should align it
+            // (the rotation is happens at left-top corner anchor by default)
             painter.drawPixmap(-c.width() / 2, -c.height() / 2, c);
+            // Reset any transforms we did
             painter.resetTransform();
+            // Restore painter's state that was saved before
             painter.restore();
         }
     }
@@ -245,7 +268,7 @@ void DirectionSwitchWidget::paintEvent(QPaintEvent *)
     drawButton(painter, cellWidth, cellHeight, S_TOP);
     drawButton(painter, cellWidth, cellHeight, S_BOTTOM);
 
-    if(m_hasDiagonals)
+    if(m_hasDiagonals) // Draw diagonals when they are enabled
     {
         drawButton(painter, cellWidth, cellHeight, S_TOP_LEFT);
         drawButton(painter, cellWidth, cellHeight, S_TOP_RIGHT);
@@ -253,6 +276,7 @@ void DirectionSwitchWidget::paintEvent(QPaintEvent *)
         drawButton(painter, cellWidth, cellHeight, S_BOTTOM_RIGHT);
     }
 
+    // Highlight a hovering but not pressed yet button
     if((m_hoverSide != S_UNKNOWN) && (m_pressSide == S_UNKNOWN))
     {
         painter.save();
@@ -264,6 +288,7 @@ void DirectionSwitchWidget::paintEvent(QPaintEvent *)
         style()->drawPrimitive(QStyle::PE_Frame, &option, &painter, this);
         painter.restore();
     }
+    // Highlight a hovering and pressed button
     else if(m_hoverSide == m_pressSide && (m_pressSide != S_UNKNOWN))
     {
         painter.save();
@@ -276,6 +301,7 @@ void DirectionSwitchWidget::paintEvent(QPaintEvent *)
         painter.restore();
     }
 
+    // When widget is disabled, fill it with dotties to distort it's view
     if(!isEnabled())
     {
         painter.setBrush(QBrush(Qt::black, Qt::Dense4Pattern));
@@ -304,7 +330,7 @@ bool DirectionSwitchWidget::event(QEvent *event)
 DirectionSwitchWidget::Sides DirectionSwitchWidget::findSide(int x, int y)
 {
     QRect r = rect();
-    alignRect(r);
+    toSquareAndAlignToCenter(r);
 
     int cellWidth = r.width() / 3;
     int cellHeight = r.height() / 3;
@@ -372,7 +398,7 @@ DirectionSwitchWidget::Sides DirectionSwitchWidget::findSide(const QPoint &pos)
 QRect DirectionSwitchWidget::getRect(DirectionSwitchWidget::Sides side)
 {
     QRect r = rect();
-    alignRect(r);
+    toSquareAndAlignToCenter(r);
     int cellWidth = r.width() / 3;
     int cellHeight = r.height() / 3;
 
